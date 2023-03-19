@@ -348,9 +348,6 @@
   <data name="Settings" xml:space="preserve">
     <value>Beállítások</value>
   </data>
-  <data name="SettingsHaveBeenReset" xml:space="preserve">
-    <value>A beállítások vissza lettek állítva!</value>
-  </data>
   <data name="SNMP" xml:space="preserve">
     <value>SNMP</value>
   </data>
@@ -882,7 +879,7 @@ First make a backup copy of your profile files before enabling encryption!</valu
     <value>Hostname or IP address</value>
   </data>
   <data name="Hosts" xml:space="preserve">
-    <value>Hosts</value>
+    <value>Host(s)</value>
   </data>
   <data name="ID" xml:space="preserve">
     <value>ID</value>
@@ -990,12 +987,6 @@ Create one...</value>
   <data name="Override" xml:space="preserve">
     <value>override</value>
   </data>
-  <data name="OverwriteSettingsInDestinationFolderMessage" xml:space="preserve">
-    <value>Overwrite settings in the destination folder?
-
-"Overwrite" will overwrite the settings file in the destination folder.
-"Use other" will use the existing setting file in the destination folder and restart the application afterwards.</value>
-  </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
@@ -1095,18 +1086,6 @@ Create one...</value>
   <data name="SelectAScreenResolution" xml:space="preserve">
     <value>Select a screen resolution</value>
   </data>
-  <data name="SettingsAreOverwrittenMessage" xml:space="preserve">
-    <value>Settings are overwritten!</value>
-  </data>
-  <data name="SettingsAreResetMessage" xml:space="preserve">
-    <value>Settings are reset!</value>
-  </data>
-  <data name="SelectTheSettingsYouWantToExport" xml:space="preserve">
-    <value>Select the settings you want to export:</value>
-  </data>
-  <data name="SelectTheSettingsYouWantToImport" xml:space="preserve">
-    <value>Select the settings you want to import:</value>
-  </data>
   <data name="ThisWillResetAllSettings" xml:space="preserve">
     <value>This will reset all settings!</value>
   </data>
@@ -1126,15 +1105,6 @@ A backup of the settings file was created in the settings folder and the setting
 
 Profile files are not affected!</value>
   </data>
-  <data name="SettingsSuccessfullyExported" xml:space="preserve">
-    <value>Settings successfully exported!</value>
-  </data>
-  <data name="SettingsSuccessfullyImported" xml:space="preserve">
-    <value>Settings successfully imported!</value>
-  </data>
-  <data name="SettingsSuccessfullyReset" xml:space="preserve">
-    <value>Settings successfully reset!</value>
-  </data>
   <data name="ShowClosedPorts" xml:space="preserve">
     <value>Show closed ports</value>
   </data>
@@ -1144,8 +1114,8 @@ Profile files are not affected!</value>
   <data name="ShowOnlyMostCommonQueryTypes" xml:space="preserve">
     <value>Show only most common query types</value>
   </data>
-  <data name="ShowScanResultForAllIPAddresses" xml:space="preserve">
-    <value>Show scan result for all IP addresses</value>
+  <data name="ShowUnreachableIPAddressesAndPorts" xml:space="preserve">
+    <value>Show unreachable IP addresses and ports</value>
   </data>
   <data name="ShowStatistics" xml:space="preserve">
     <value>Show statistics</value>
@@ -1406,7 +1376,7 @@ Profile files are not affected!</value>
     <value>Connections</value>
   </data>
   <data name="EnterValidIPScanRange" xml:space="preserve">
-    <value>Enter a valid ip range!</value>
+    <value>Enter a valid IP range!</value>
   </data>
   <data name="EnterValidIPv4Address" xml:space="preserve">
     <value>Enter a valid IPv4 address!</value>
@@ -1759,9 +1729,6 @@ Profile files are not affected!</value>
   <data name="Yellow" xml:space="preserve">
     <value>Yellow</value>
   </data>
-  <data name="EnterValidValueBetween25and100" xml:space="preserve">
-    <value>Enter a valid value between 25 and 100!</value>
-  </data>
   <data name="ProfileWithThisNameAlreadyExists" xml:space="preserve">
     <value>A profile with this name already exists!</value>
   </data>
@@ -1897,11 +1864,11 @@ Profile files are not affected!</value>
   <data name="AddIPv4Address" xml:space="preserve">
     <value>Add IPv4 address</value>
   </data>
-  <data name="HostThreads" xml:space="preserve">
-    <value>Host threads</value>
+  <data name="MaxHostThreads" xml:space="preserve">
+    <value>Max. concurrent host threads</value>
   </data>
-  <data name="PortThreads" xml:space="preserve">
-    <value>Port threads</value>
+  <data name="MaxPortThreads" xml:space="preserve">
+    <value>Max. concurrent port threads</value>
   </data>
   <data name="PowerShell" xml:space="preserve">
     <value>PowerShell</value>
@@ -1955,11 +1922,11 @@ Profile files are not affected!</value>
     <value>Background job</value>
   </data>
   <data name="HelpMessage_BackgroundJob" xml:space="preserve">
-    <value>The background job will save settings, profiles and credentials every x-minutes.
+    <value>The background job will save settings and profiles every x-minutes.
 
 Value 0 will disable this feature.
 
-Changing this value requires a restart of the application to take effect.</value>
+Changes to this value will take effect after restarting the application.</value>
   </data>
   <data name="RunBackgroundJobEveryXMinute" xml:space="preserve">
     <value>Run background job every x-minute</value>
@@ -2088,8 +2055,8 @@ is disabled!</value>
   <data name="UseCustomIPv4AddressAPI" xml:space="preserve">
     <value>Use custom IPv4 address API</value>
   </data>
-  <data name="HelpMessage_CustomPublicIPAddressAPI" xml:space="preserve">
-    <value>URL to a web service that can be reached via http or https and returns an IP address as response.</value>
+  <data name="HelpMessage_CustomPublicIPv4AddressAPI" xml:space="preserve">
+    <value>URL to a web service that can be reached via http or https and returns an IPv4 address like "xx.xx.xx.xx" as response.</value>
   </data>
   <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
     <value>Could not parse public ip address from "{0}"! Try another service or use the default... </value>
@@ -2220,8 +2187,8 @@ $$hostname$$	--&gt;	Állomásnév</value>
   <data name="Restart" xml:space="preserve">
     <value>Újraindítás</value>
   </data>
-  <data name="WarningMessage_CouldNotResolvIPAddressForHostname" xml:space="preserve">
-    <value>Nem sikerült az IP-cím feloldása állomásnévre!</value>
+  <data name="WarningMessage_CouldNotResolveIPAddressForHostname" xml:space="preserve">
+    <value>Could not resolve ip address for hostname!</value>
   </data>
   <data name="CtrlAltDel" xml:space="preserve">
     <value>Ctrl+Alt+Del</value>
@@ -2381,9 +2348,6 @@ $$hostname$$	--&gt;	Állomásnév</value>
   </data>
   <data name="TheApplicationWillBeRestarted" xml:space="preserve">
     <value>The application will be restarted...</value>
-  </data>
-  <data name="UseOtherFolder" xml:space="preserve">
-    <value>Use other folder</value>
   </data>
   <data name="ClouldNotExportFileSeeErrorMessageXX" xml:space="preserve">
     <value>Could not export file! See error message: "{0}"</value>
@@ -2837,24 +2801,11 @@ Otherwise, the profile may be corrupted and you want to report the issue on GitH
   <data name="Merge" xml:space="preserve">
     <value>Merge</value>
   </data>
-  <data name="MergeProfileFilesInDestinationFolderMessage" xml:space="preserve">
-    <value>The destination folder already contains files. If you click Merge, the current profiles are copied to the folder.</value>
-  </data>
-  <data name="OverwriteProfilesInDestinationFolderMessage" xml:space="preserve">
-    <value>Overwrite profiles in destination folder?
-
-"Overwrite" will copy the profile files to the destination folder and overwrite existing profile files.
-"Merge" will copy the profile files to the destination folder, but won't overwrite exitsting profile files.
-"Use other folder" will use the existing profile files in the destination folder.</value>
-  </data>
   <data name="UseOther" xml:space="preserve">
     <value>Use other</value>
   </data>
   <data name="Move" xml:space="preserve">
     <value>Move</value>
-  </data>
-  <data name="ProfileFilesWillBeMovedMessage" xml:space="preserve">
-    <value>Profile files will be moved to the selected destination folder.</value>
   </data>
   <data name="LastScanAtX" xml:space="preserve">
     <value>Last scan at {0}</value>
@@ -2964,10 +2915,10 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>Enter a valid IPv6 address!</value>
   </data>
   <data name="HelpMessage_PublicIPv4Address" xml:space="preserve">
-    <value>Public accessible IPv4 address.</value>
+    <value>Public IPv4 address reachable via ICMP.</value>
   </data>
   <data name="HelpMessage_PublicIPv6Address" xml:space="preserve">
-    <value>Public accessible IPv6 address.</value>
+    <value>Public IPv6 address reachable via ICMP.</value>
   </data>
   <data name="PublicIPv4Address" xml:space="preserve">
     <value>Public IPv4 address</value>
@@ -3053,17 +3004,11 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   <data name="CustomThemes" xml:space="preserve">
     <value>Custom themes</value>
   </data>
-  <data name="ImportSettingsQuestion" xml:space="preserve">
-    <value>Import settings?</value>
-  </data>
   <data name="ResetSettingsQuestion" xml:space="preserve">
     <value>Reset settings?</value>
   </data>
   <data name="SettingsResetExclamationMark" xml:space="preserve">
     <value>Settings reset!</value>
-  </data>
-  <data name="OverwriteExistingSettingsFileQuestion" xml:space="preserve">
-    <value>Overwrite existing settings file?</value>
   </data>
   <data name="ApplicationName_AWSSessionManager" xml:space="preserve">
     <value>AWS Session Manager</value>
@@ -3173,8 +3118,8 @@ If not set, the default AWS CLI settings are used.</value>
   <data name="ApplyThemeToPowerShellConsole" xml:space="preserve">
     <value>Apply theme to PowerShell console</value>
   </data>
-  <data name="PowerShellConsoleColorCanBeChangedUnderGeneralApperance" xml:space="preserve">
-    <value>The color of the PowerShell console can be changed to the application theme under General &gt; Appearance</value>
+  <data name="PowerShellConsoleColorCanBeChangedUnderSettingsGeneralApperance" xml:space="preserve">
+    <value>The color of the PowerShell console can be changed to the application theme under Settings &gt; General &gt; Appearance</value>
   </data>
   <data name="HelpMessage_ApplyThemeToPowerShellConsole" xml:space="preserve">
     <value>If you enable this option, the default PowerShell console settings in the registry under HKCU:\Console are overridden so that the PowerShell console window matches the application theme. This is a global system setting that may affect the appearance of the normal PowerShell window.
@@ -3259,5 +3204,125 @@ If the option is disabled again, the values are no longer modified. However, the
   </data>
   <data name="NoValidTigerVNCPath" xml:space="preserve">
     <value>A valid path to TigerVNC should end with "vncviewer-*.exe" or "vncviewer64-*.exe"!</value>
+  </data>
+  <data name="ApplicationName_SNTPLookup" xml:space="preserve">
+    <value>SNTP Lookup</value>
+  </data>
+  <data name="Library_nulastudioNetBeauty_Description" xml:space="preserve">
+    <value>Move a .NET Framework/.NET Core app runtime components and dependencies into a sub-directory and make it beauty.</value>
+  </data>
+  <data name="AddATabToPerformASNTPLookup" xml:space="preserve">
+    <value>Add a tab to perform a SNTP lookup...</value>
+  </data>
+  <data name="SNTPServers" xml:space="preserve">
+    <value>SNTP server(s)</value>
+  </data>
+  <data name="HelpMessage_CustomPublicIPv6AddressAPI" xml:space="preserve">
+    <value>URL to a web service that can be reached via http or https and returns an IPv6 address like "xxxx:xx:xxx::xx" as response.</value>
+  </data>
+  <data name="IPEndPoint" xml:space="preserve">
+    <value>IP endpoint</value>
+  </data>
+  <data name="LocalEndTime" xml:space="preserve">
+    <value>Local end time</value>
+  </data>
+  <data name="LocalStartTime" xml:space="preserve">
+    <value>Local start time</value>
+  </data>
+  <data name="NetworkTime" xml:space="preserve">
+    <value>Network time</value>
+  </data>
+  <data name="Offset" xml:space="preserve">
+    <value>Offset</value>
+  </data>
+  <data name="RoundTripDelay" xml:space="preserve">
+    <value>Round trip delay</value>
+  </data>
+  <data name="Server" xml:space="preserve">
+    <value>Server</value>
+  </data>
+  <data name="SNTPLookup" xml:space="preserve">
+    <value>SNTP Lookup</value>
+  </data>
+  <data name="AddSNTPServer" xml:space="preserve">
+    <value>Add SNTP server</value>
+  </data>
+  <data name="DeleteSNTPServer" xml:space="preserve">
+    <value>Delete SNTP server</value>
+  </data>
+  <data name="DeleteSNTPServerMessage" xml:space="preserve">
+    <value>The selected SNTP server will be deleted permanently.</value>
+  </data>
+  <data name="EditSNTPServer" xml:space="preserve">
+    <value>Edit SNTP server</value>
+  </data>
+  <data name="SNTPServerWithThisNameAlreadyExists" xml:space="preserve">
+    <value>An SNTP server with this name already exists!</value>
+  </data>
+  <data name="EnterValidHostnameOrIPAddress" xml:space="preserve">
+    <value>Enter a valid hostname (like "server-01" or "example.com") or a valid IP address (like 192.168.178.1)!</value>
+  </data>
+  <data name="Servers" xml:space="preserve">
+    <value>Server(s)</value>
+  </data>
+  <data name="EnterMasterPasswordToUnlockProfile" xml:space="preserve">
+    <value>Enter master password to unlock the profile file:</value>
+  </data>
+  <data name="UnlockProfileFile" xml:space="preserve">
+    <value>Unlock profile file</value>
+  </data>
+  <data name="PortState_TimedOut" xml:space="preserve">
+    <value>Timed out</value>
+  </data>
+  <data name="Hostkey" xml:space="preserve">
+    <value>Hostkey</value>
+  </data>
+  <data name="SettingsAreResetAndApplicationWillBeRestartedMessage" xml:space="preserve">
+    <value>The settings will be reset and the application will be restarted afterwards!</value>
+  </data>
+  <data name="SettingsHaveBeenReset" xml:space="preserve">
+    <value>A beállítások vissza lettek állítva!</value>
+  </data>
+  <data name="PingStatus" xml:space="preserve">
+    <value>Ping status</value>
+  </data>
+  <data name="ThreadPoolAdditionalMinThreads" xml:space="preserve">
+    <value>ThreadPool additional min. threads</value>
+  </data>
+  <data name="HelpMessage_ThreadPoolAdditionalMinThreads" xml:space="preserve">
+    <value>This setting specifies the minimum number of threads that will be created from the application's ThreadPool on demand. This can improve the performance for example of the IP scanner or port scanner.
+	
+The value is added to the default min. threads (number of CPU threads). The value 0 leaves the default settings. If the value is higher than the default max. threads of the ThreadPool, this value is used.
+
+If the value is too high, performance problems may occur.
+
+Changes to this value will take effect after the application is restarted. Whether the value was set successfully can be seen in the log file under %LocalAppData%\NETworkManager\NETworkManager.log</value>
+  </data>
+  <data name="MaxThreadsOnlyGoToSettingsGeneralGeneral" xml:space="preserve">
+    <value>These settings only change the maximum number of concurrently executed threads per host/port scan. Go to Settings &gt; General &gt; General to adjust the (min) threads of the application.</value>
+  </data>
+  <data name="PortStatus" xml:space="preserve">
+    <value>Port status</value>
+  </data>
+  <data name="PingDetails" xml:space="preserve">
+    <value>Ping details</value>
+  </data>
+  <data name="NoOpenPortsFound" xml:space="preserve">
+    <value>No open ports found!</value>
+  </data>
+  <data name="PortScanIsDisabled" xml:space="preserve">
+    <value>Port scan is disabled!</value>
+  </data>
+  <data name="ScanPorts" xml:space="preserve">
+    <value>Scan ports</value>
+  </data>
+  <data name="CouldNotFindApplicationXXXMessage" xml:space="preserve">
+    <value>Could not find the application "{0}". Maybe the application was hidden in the settings?</value>
+  </data>
+  <data name="StatusWindow" xml:space="preserve">
+    <value>Status window</value>
+  </data>
+  <data name="ShowAddressBar" xml:space="preserve">
+    <value>Show address bar</value>
   </data>
 </root>
