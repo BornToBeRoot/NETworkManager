@@ -32,6 +32,8 @@ Release date: **xx.xx.2023**
   - Option added to limit the number of concurrent threads per host scan (256) & port scan (5). Increasing the values can speed up the scan, but can also lead to resource problems. [#2026](https://github.com/BornToBeRoot/NETworkManager/pull/2026){:target="\_blank"}
 - **Port Scanner**
   - Option added to limit the number of concurrent threads per host scan (5) & port scan (256). Increasing the values can speed up the scan, but can also lead to resource problems. [#2026](https://github.com/BornToBeRoot/NETworkManager/pull/2026){:target="\_blank"}
+- **Web Console**
+  - Add cancel button (and `Esc` key) to stop navigation to a website [#2069](https://github.com/BornToBeRoot/NETworkManager/pull/2069){:target="\_blank"}
 
 ## Bugfixes
 
@@ -54,6 +56,8 @@ Release date: **xx.xx.2023**
   - Resize command in TabControl context menu in a dragged out window not working [#2060](https://github.com/BornToBeRoot/NETworkManager/pull/2060){:target="\_blank"}
 - **Web Console**
   - Reload command in TabControl context menu in main window not working [#2060](https://github.com/BornToBeRoot/NETworkManager/pull/2060){:target="\_blank"}
+  - Validate URL in the bar to prevent app crash [#2069](https://github.com/BornToBeRoot/NETworkManager/pull/2069){:target="\_blank"}
+  - Update URL in the bar when the source (WebView2) has changed [#2069](https://github.com/BornToBeRoot/NETworkManager/pull/2069){:target="\_blank"}
 - **Lookup - OUI**
   - Export to CSV fixed if `Vendor` contains a comma [#2026](https://github.com/BornToBeRoot/NETworkManager/pull/2026){:target="\_blank"}
 - **Lookup - Port**
