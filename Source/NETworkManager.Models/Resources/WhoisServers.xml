@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--Whois servers by domain from IANA
-Generated 12/19/2022 22:43:18-->
+Generated 03/19/2023 18:43:27-->
 <WhoisServers>
   <WhoisServer>
     <TLD>AAA</TLD>
@@ -2958,10 +2958,6 @@ Generated 12/19/2022 22:43:18-->
     </Server>
   </WhoisServer>
   <WhoisServer>
-    <TLD>LINDE</TLD>
-    <Server>whois.nic.linde</Server>
-  </WhoisServer>
-  <WhoisServer>
     <TLD>LINK</TLD>
     <Server>whois.uniregistry.net</Server>
   </WhoisServer>
@@ -2989,7 +2985,7 @@ Generated 12/19/2022 22:43:18-->
   </WhoisServer>
   <WhoisServer>
     <TLD>LLP</TLD>
-    <Server>whois.uniregistry.net</Server>
+    <Server>whois.nic.llp</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>LOAN</TLD>
@@ -3083,10 +3079,6 @@ Generated 12/19/2022 22:43:18-->
   <WhoisServer>
     <TLD>MA</TLD>
     <Server>whois.registre.ma</Server>
-  </WhoisServer>
-  <WhoisServer>
-    <TLD>MACYS</TLD>
-    <Server>whois.nic.macys</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>MADRID</TLD>
@@ -4771,8 +4763,7 @@ Generated 12/19/2022 22:43:18-->
   </WhoisServer>
   <WhoisServer>
     <TLD>TAOBAO</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.taobao</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>TARGET</TLD>
@@ -4929,8 +4920,7 @@ Generated 12/19/2022 22:43:18-->
   </WhoisServer>
   <WhoisServer>
     <TLD>TMALL</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.tmall</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>TN</TLD>
@@ -4986,7 +4976,7 @@ Generated 12/19/2022 22:43:18-->
   </WhoisServer>
   <WhoisServer>
     <TLD>TR</TLD>
-    <Server>whois.nic.tr</Server>
+    <Server>whois.trabis.gov.tr</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>TRADE</TLD>

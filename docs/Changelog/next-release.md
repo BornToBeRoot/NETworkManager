@@ -69,3 +69,6 @@ Release date: **xx.xx.2023**
 - Code cleanup [#2024](https://github.com/BornToBeRoot/NETworkManager/pull/2024){:target="\_blank"} [#2026](https://github.com/BornToBeRoot/NETworkManager/pull/2026){:target="\_blank"} [#2060](https://github.com/BornToBeRoot/NETworkManager/pull/2060){:target="\_blank"} [#2068](https://github.com/BornToBeRoot/NETworkManager/pull/2068){:target="\_blank"}
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="\_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="\_blank"}
+- Update OUI list [#2071](https://github.com/BornToBeRoot/NETworkManager/pull/2071){:target="\_blank"}
+- Update Whois list [#2071](https://github.com/BornToBeRoot/NETworkManager/pull/2071){:target="\_blank"}
+- Update Port list [#2071](https://github.com/BornToBeRoot/NETworkManager/pull/2071){:target="\_blank"}
