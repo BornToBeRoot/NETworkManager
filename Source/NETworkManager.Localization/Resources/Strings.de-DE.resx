@@ -3322,4 +3322,7 @@ Wenn der Wert zu hoch ist, können Leistungsprobleme auftreten.
   <data name="StatusWindow" xml:space="preserve">
     <value>Status-Fenster</value>
   </data>
+  <data name="ShowAddressBar" xml:space="preserve">
+    <value>Adressleiste anzeigen</value>
+  </data>
 </root>
