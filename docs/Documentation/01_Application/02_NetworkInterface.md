@@ -18,17 +18,18 @@ On the **Information** tab, you can see all the important details of the selecte
 
 In addition, further actions can be performed using the buttons at the bottom left:
 
-- **Network connections...** - Opens the `Control Panel > Network and Internet > Network Connections` window
-- **Flush DNS cache** - Flush the DNS cache (`ipconfig /flushdns`)
+- **Network connections...** - Opens the `Control Panel > Network and Internet > Network Connections` window.
+- **IP Scanner** - Opens the [IP Scanner](/Documentation/Application/IPScanner) tool and forwards the IPv4 address and subnetmask of the _selected_ network adapter.
+- **Flush DNS cache** - Flush the DNS cache (`ipconfig /flushdns`).
 - **Release & Renew**
   - **IPv4**
-    - **Release & Renew** - Releases the current IPv4 addresses obtained via DHCP and renews them via DHCP for the _selected_ network adapter that is configured to automatically obtain an IPv4 address (`ipconfig /release && ipconfig /renew`)
-    - **Release** - Releases the current IPv4 addresses obtained via DHCP for the _selected_ network adapter that is configured to automatically obtain an IPv4 address. (`ipconfig /release`)
-    - **Renew** - Renews the current IPv4 address via DHCP for the _selected_ network adapter that is configured to automatically obtain an IPv4 address. (`ipconfig /renew`)
+    - **Release & Renew** - Releases the current IPv4 addresses obtained via DHCP and renews them via DHCP for the _selected_ network adapter that is configured to automatically obtain an IPv4 address (`ipconfig /release && ipconfig /renew <ADAPTER>`).
+    - **Release** - Releases the current IPv4 addresses obtained via DHCP for the _selected_ network adapter that is configured to automatically obtain an IPv4 address (`ipconfig /release <ADAPTER>`).
+    - **Renew** - Renews the current IPv4 address via DHCP for the _selected_ network adapter that is configured to automatically obtain an IPv4 address (`ipconfig /renew <ADAPTER>`).
   - **IPv6**
-    - **Release & Renew** - Releases the current IPv6 addresses obtained via DHCPv6 and renews them via DHCPv6 for the _selected_ adapter that ist configured to automatically obtain an IPv6 address (`ipconfig /release6 && ipconfig /renew6`)
-    - **Release** - Releases the current IPv6 addresses obtained via DHCPv6 for the _selected_ network adapter that is configured to automatically obtain an IPv6 address. (`ipconfig /release6`)
-    - **Renew** - Renews the current IPv6 address via DHCPv6 for the _selected_ network adapter that is configured to automatically obtain an IPv6 address. (`ipconfig /renew6`)
+    - **Release & Renew** - Releases the current IPv6 addresses obtained via DHCPv6 and renews them via DHCPv6 for the _selected_ adapter that ist configured to automatically obtain an IPv6 address (`ipconfig /release6 && ipconfig /renew6 <ADAPTER>`).
+    - **Release** - Releases the current IPv6 addresses obtained via DHCPv6 for the _selected_ network adapter that is configured to automatically obtain an IPv6 address (`ipconfig /release6 <ADAPTER>`).
+    - **Renew** - Renews the current IPv6 address via DHCPv6 for the _selected_ network adapter that is configured to automatically obtain an IPv6 address (`ipconfig /renew6 <ADAPTER>`).
 
 ![NetworkInterface_Information](02_NetworkInterface_Information.png)
 
