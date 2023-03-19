@@ -6,14 +6,17 @@
         xmlns:networkManagerControls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+        xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
         xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"        
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:webview="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         mah:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance networkManagerControls:WebConsoleControl}">
     <UserControl.Resources>
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:BooleanToVisibilityHiddenConverter x:Key="BooleanToVisibilityHiddenConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -21,7 +24,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="10">
+        <Grid Grid.Row="0" Margin="10,10,10,5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="10" />
@@ -34,7 +37,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Button Command="{Binding GoBackCommand}" Grid.Column="0" Style="{StaticResource CleanButton}">
-                <Rectangle Width="24" Height="24" >
+                <Rectangle Width="20" Height="20" >
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ArrowLeftCircleOutline}" />
                     </Rectangle.OpacityMask>
@@ -50,8 +53,8 @@
                     </Rectangle.Style>
                 </Rectangle>
             </Button>
-            <Button Command="{Binding GoForwardCommand}" Grid.Column="2"  Style="{StaticResource CleanButton}">
-                <Rectangle Width="24" Height="24" >
+            <Button Command="{Binding GoForwardCommand}" Grid.Column="2" Style="{StaticResource CleanButton}">
+                <Rectangle Width="20" Height="20" >
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ArrowRightCircleOutline}" />
                     </Rectangle.OpacityMask>
@@ -68,7 +71,7 @@
                 </Rectangle>
             </Button>
             <Button Command="{Binding ReloadCommand}" Grid.Column="4" Style="{StaticResource CleanButton}">
-                <Rectangle Width="24" Height="24" >
+                <Rectangle Width="20" Height="20" >
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
                     </Rectangle.OpacityMask>
@@ -84,18 +87,56 @@
                     </Rectangle.Style>
                 </Rectangle>
             </Button>
-            <TextBox x:Name="txtBoxAddress" Text="{Binding Url, UpdateSourceTrigger=PropertyChanged}" Grid.Column="6" Style="{StaticResource DefaultTextBox}" />
-            <Button Command="{Binding NavigateCommand}" IsDefault="True" Grid.Column="8" Style="{StaticResource CleanButton}">
-                <Rectangle Width="24" Height="24" >
+            <TextBox x:Name="TextBoxUrl" Grid.Column="6" Style="{StaticResource DefaultTextBox}">
+                <TextBox.Text>
+                    <Binding Path="Url" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                            <validators:HttpAndHttpsUriValidator ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>                        
+                    </Binding>                
+                </TextBox.Text>
+            </TextBox>
+            <Button Command="{Binding NavigateCommand}" IsDefault="{Binding IsLoading, Converter={StaticResource BooleanReverseConverter}}" Visibility="{Binding IsLoading,Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Grid.Column="8">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
+                        <Setter Property="IsEnabled" Value="False" />
+                        <Style.Triggers>                            
+                            <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxUrl}" Value="False">
+                                <Setter Property="IsEnabled" Value="True" />
+                            </DataTrigger>                            
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Rectangle Width="20" Height="20" >
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Play}" />
                     </Rectangle.OpacityMask>
                     <Rectangle.Style>
                         <Style TargetType="{x:Type Rectangle}">
                             <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                            <Setter Property="IsEnabled" Value="True" />
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
                                     <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                </DataTrigger>                                
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+                </Rectangle>
+            </Button>
+            <Button Command="{Binding StopCommand}" IsCancel="{Binding IsLoading}" Style="{StaticResource CleanButton}" Visibility="{Binding IsLoading,Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Grid.Column="8">                
+                <Rectangle Width="20" Height="20" >
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=WindowClose}" />
+                    </Rectangle.OpacityMask>
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                            <Setter Property="IsEnabled" Value="True" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                    <Setter Property="Fill" Value="Red" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -103,7 +144,7 @@
                 </Rectangle>
             </Button>
         </Grid>
-        <mah:MetroProgressBar Grid.Row="1" IsIndeterminate="True" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,0,0,10"/>
+        <mah:MetroProgressBar Grid.Row="1" IsIndeterminate="True" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityHiddenConverter}}" Margin="0,0,0,5" />
         <webview:WebView2 Grid.Row="2" x:Name="Browser2">
             <webview:WebView2.Style>
                 <Style TargetType="{x:Type webview:WebView2}">

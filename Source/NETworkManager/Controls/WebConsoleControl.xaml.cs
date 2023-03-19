@@ -79,10 +79,15 @@ public partial class WebConsoleControl : INotifyPropertyChanged
         _sessionInfo = info;
 
         Browser2.NavigationStarting += Browser2_NavigationStarting;
-        Browser2.NavigationCompleted += Browser2_NavigationCompleted;
-        Browser2.WebMessageReceived += Browser2_WebMessageReceived;
+        Browser2.NavigationCompleted += Browser2_NavigationCompleted;        
+        Browser2.SourceChanged += Browser2_SourceChanged;        
 
         Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
+    }
+
+    private void Browser2_SourceChanged(object sender, CoreWebView2SourceChangedEventArgs e)
+    {
+        Url = Browser2.Source.ToString();
     }
 
     private async void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -90,77 +95,59 @@ public partial class WebConsoleControl : INotifyPropertyChanged
         // Connect after the control is drawn and only on the first init
         if (_initialized)
             return;
-                    
+
         // Set user data folder - Fix #382            
         var webView2Environment = await CoreWebView2Environment.CreateAsync(null, GlobalStaticConfiguration.WebConsole_Cache);
         await Browser2.EnsureCoreWebView2Async(webView2Environment);
 
-        Connect();
+        Navigate(_sessionInfo.Url);
 
         _initialized = true;
     }
-
-    private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
-    {
-        CloseTab();
-    }
     #endregion
 
-    #region ICommands & Actions
-    public ICommand NavigateCommand
-    {
-        get { return new RelayCommand(p => NavigateAction(), NavigateCommand_CanExecute); }
-    }
 
-    private bool NavigateCommand_CanExecute(object obj)
-    {
-        return !IsLoading;
-    }
+    #region ICommands & Actions
+
+    private bool NavigateCommand_CanExecute(object obj) => !IsLoading;
+
+    public ICommand NavigateCommand => new RelayCommand(p => NavigateAction(), NavigateCommand_CanExecute);
 
     private void NavigateAction()
     {
-        Browser2.CoreWebView2.Navigate(Url);
+        Navigate(Url);        
     }
 
-    public ICommand ReloadCommand
+    private bool StopCommand_CanExecute(object obj) => IsLoading;
+
+    public ICommand StopCommand => new RelayCommand(p => StopAction(), StopCommand_CanExecute);
+
+    private void StopAction()
     {
-        get { return new RelayCommand(p => ReloadAction(), ReloadCommand_CanExecute); }
+        Stop();
     }
 
-    private bool ReloadCommand_CanExecute(object obj)
-    {
-        return !IsLoading;
-    }
+    private bool ReloadCommand_CanExecute(object obj) => !IsLoading;
 
+    public ICommand ReloadCommand => new RelayCommand(p => ReloadAction(), ReloadCommand_CanExecute);
+    
     private void ReloadAction()
     {
-        Browser2.Reload();
+        Browser2.Reload();        
     }
 
-    public ICommand GoBackCommand
-    {
-        get { return new RelayCommand(p => GoBackAction(), GoBackCommand_CanExecute); }
-    }
+    private bool GoBackCommand_CanExecute(object obj) => !IsLoading && Browser2.CanGoBack;
 
-    private bool GoBackCommand_CanExecute(object obj)
-    {
-        return !IsLoading && Browser2.CanGoBack;
-    }
+    public ICommand GoBackCommand => new RelayCommand(p => GoBackAction(), GoBackCommand_CanExecute);
 
     private void GoBackAction()
     {
         Browser2.GoBack();
     }
 
-    public ICommand GoForwardCommand
-    {
-        get { return new RelayCommand(p => GoForwardAction(), GoForwardCommand_CanExecute); }
-    }
+    private bool GoForwardCommand_CanExecute(object obj) => !IsLoading && Browser2.CanGoForward;
 
-    private bool GoForwardCommand_CanExecute(object obj)
-    {
-        return !IsLoading && Browser2.CanGoForward;
-    }
+    public ICommand GoForwardCommand => new RelayCommand(p => GoForwardAction(), GoForwardCommand_CanExecute);
 
     private void GoForwardAction()
     {
@@ -169,9 +156,14 @@ public partial class WebConsoleControl : INotifyPropertyChanged
     #endregion
 
     #region Methods       
-    private void Connect()
+    private void Navigate(string url)
     {
-        Browser2.Source = new Uri(_sessionInfo.Url);
+        Browser2.Source = new Uri(url);
+    }
+
+    private void Stop()
+    {
+        Browser2.Stop();
     }
 
     public void CloseTab()
@@ -181,6 +173,11 @@ public partial class WebConsoleControl : INotifyPropertyChanged
     #endregion
 
     #region Events
+    private void Browser2_NavigationStarting(object sender, CoreWebView2NavigationStartingEventArgs e)
+    {
+        IsLoading = true;
+    }
+    
     private void Browser2_NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
     {
         if (FirstLoad)
@@ -189,17 +186,9 @@ public partial class WebConsoleControl : INotifyPropertyChanged
         IsLoading = false;
     }
 
-    private void Browser2_NavigationStarting(object sender, CoreWebView2NavigationStartingEventArgs e)
+    private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
     {
-        IsLoading = true;
-
-        Url = e.Uri.ToString();
-    }
-
-    private void Browser2_WebMessageReceived(object sender, CoreWebView2WebMessageReceivedEventArgs e)
-    {
-        string uri = e.TryGetWebMessageAsString();
-        Url = uri;
+        CloseTab();
     }
     #endregion
 }
