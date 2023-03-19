@@ -143,6 +143,7 @@ public static class GlobalStaticConfiguration
     public static int TigerVNC_DefaultVNCPort => 5900;
 
     // WebConsole
+    public static bool WebConsole_ShowAddressBar => true;
     public static string WebConsole_Cache => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AssemblyManager.Current.Name, "WebConsole_Cache");
 
     // Application: SNMP

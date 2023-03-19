@@ -68,6 +68,8 @@ public partial class WebConsoleControl : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+
+    public bool ShowAddressBar => SettingsManager.Current.WebConsole_ShowAddressBar;
     #endregion
 
     #region Constructor, load
@@ -80,11 +82,13 @@ public partial class WebConsoleControl : INotifyPropertyChanged
 
         Browser2.NavigationStarting += Browser2_NavigationStarting;
         Browser2.NavigationCompleted += Browser2_NavigationCompleted;        
-        Browser2.SourceChanged += Browser2_SourceChanged;        
+        Browser2.SourceChanged += Browser2_SourceChanged;
+
+        SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
 
         Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
     }
-
+    
     private void Browser2_SourceChanged(object sender, CoreWebView2SourceChangedEventArgs e)
     {
         Url = Browser2.Source.ToString();
@@ -184,6 +188,16 @@ public partial class WebConsoleControl : INotifyPropertyChanged
             FirstLoad = false;
 
         IsLoading = false;
+    }
+
+    private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+            case nameof(SettingsInfo.WebConsole_ShowAddressBar):
+                OnPropertyChanged(nameof(ShowAddressBar));
+                break;
+        }
     }
 
     private void Dispatcher_ShutdownStarted(object sender, EventArgs e)

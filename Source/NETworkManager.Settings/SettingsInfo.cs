@@ -3078,7 +3078,7 @@ public class SettingsInfo : INotifyPropertyChanged
     }
     #endregion
 
-    #region WebConsole
+    #region Web Console
     private ObservableCollection<string> _webConsole_UrlHistory = new();
     public ObservableCollection<string> WebConsole_UrlHistory
     {
@@ -3119,6 +3119,22 @@ public class SettingsInfo : INotifyPropertyChanged
                 return;
 
             _webConsole_ProfileWidth = value;
+            OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
+    
+
+    private bool _webConsole_ShowAddressBar = GlobalStaticConfiguration.WebConsole_ShowAddressBar;
+    public bool WebConsole_ShowAddressBar
+    {
+        get => _webConsole_ShowAddressBar;
+        set
+        {
+            if (value == _webConsole_ShowAddressBar)
+                return;
+
+            _webConsole_ShowAddressBar = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }

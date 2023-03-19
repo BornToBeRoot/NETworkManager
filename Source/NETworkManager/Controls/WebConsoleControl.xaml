@@ -24,7 +24,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="10,10,10,5">
+        <Grid Grid.Row="0" Margin="10" Visibility="{Binding ShowAddressBar, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="10" />
@@ -87,24 +87,25 @@
                     </Rectangle.Style>
                 </Rectangle>
             </Button>
-            <TextBox x:Name="TextBoxUrl" Grid.Column="6" Style="{StaticResource DefaultTextBox}">
+            <TextBox x:Name="TextBoxUrl" Grid.Column="6" Style="{StaticResource DefaultTextBox}" IsReadOnly="{Binding IsLoading}">
                 <TextBox.Text>
                     <Binding Path="Url" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                             <validators:HttpAndHttpsUriValidator ValidatesOnTargetUpdated="True" />
-                        </Binding.ValidationRules>                        
-                    </Binding>                
+                        </Binding.ValidationRules>
+                    </Binding>
                 </TextBox.Text>
             </TextBox>
+            <mah:ProgressRing Grid.Column="6" Width="20" Height="20" HorizontalAlignment="Right" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityHiddenConverter}}" Margin="0,0,4,0" />
             <Button Command="{Binding NavigateCommand}" IsDefault="{Binding IsLoading, Converter={StaticResource BooleanReverseConverter}}" Visibility="{Binding IsLoading,Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Grid.Column="8">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
                         <Setter Property="IsEnabled" Value="False" />
-                        <Style.Triggers>                            
+                        <Style.Triggers>
                             <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxUrl}" Value="False">
                                 <Setter Property="IsEnabled" Value="True" />
-                            </DataTrigger>                            
+                            </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Button.Style>
@@ -119,13 +120,13 @@
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
                                     <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                                </DataTrigger>                                
+                                </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Rectangle.Style>
                 </Rectangle>
             </Button>
-            <Button Command="{Binding StopCommand}" IsCancel="{Binding IsLoading}" Style="{StaticResource CleanButton}" Visibility="{Binding IsLoading,Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Grid.Column="8">                
+            <Button Command="{Binding StopCommand}" IsCancel="{Binding IsLoading}" Style="{StaticResource CleanButton}" Visibility="{Binding IsLoading,Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Grid.Column="8">
                 <Rectangle Width="20" Height="20" >
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=WindowClose}" />
@@ -143,8 +144,7 @@
                     </Rectangle.Style>
                 </Rectangle>
             </Button>
-        </Grid>
-        <mah:MetroProgressBar Grid.Row="1" IsIndeterminate="True" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityHiddenConverter}}" Margin="0,0,0,5" />
+        </Grid>      
         <webview:WebView2 Grid.Row="2" x:Name="Browser2">
             <webview:WebView2.Style>
                 <Style TargetType="{x:Type webview:WebView2}">
