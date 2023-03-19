@@ -24,9 +24,9 @@ public enum SettingsViewName
     PuTTY,
     AWSSessionManager,
     TigerVNC,
+    WebConsole,
     SNMP,
     SNTPLookup,
     WakeOnLAN,
-    //Whois,
     BitCalculator
 }

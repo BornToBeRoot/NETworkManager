@@ -121,10 +121,10 @@ public class SettingsViewModel : ViewModelBase
     private PuTTYSettingsView _puTTYSettingsView;
     private AWSSessionManagerSettingsView _awsSessionManagerSettingsView;
     private TigerVNCSettingsView _tigerVNCSettingsView;
+    private WebConsoleSettingsView _webConsoleSettingsView;
     private SNMPSettingsView _snmpSettingsView;
     private SNTPLookupSettingsView _sntpLookupSettingsView;
-    private WakeOnLANSettingsView _wakeOnLANSettingsView;
-    //private WhoisSettingsView _whoisSettingsView;
+    private WakeOnLANSettingsView _wakeOnLANSettingsView;   
     private BitCalculatorSettingsView _bitCalculatorSettingsView;
     #endregion
 
@@ -293,6 +293,11 @@ public class SettingsViewModel : ViewModelBase
 
                 SettingsContent = _tigerVNCSettingsView;
                 break;
+            case SettingsViewName.WebConsole:
+                _webConsoleSettingsView ??= new WebConsoleSettingsView();
+                
+                SettingsContent = _webConsoleSettingsView;
+                break;
             case SettingsViewName.SNMP:
                 _snmpSettingsView ??= new SNMPSettingsView();
 
@@ -307,14 +312,7 @@ public class SettingsViewModel : ViewModelBase
                 _wakeOnLANSettingsView ??= new WakeOnLANSettingsView();
 
                 SettingsContent = _wakeOnLANSettingsView;
-                break;
-            /*
-            case SettingsViewName.Whois:
-                _whoisSettingsView ??= new WhoisSettingsView();
-
-                SettingsContent = _whoisSettingsView;
-                break;
-            */
+                break;            
             case SettingsViewName.BitCalculator:
                 _bitCalculatorSettingsView ??= new BitCalculatorSettingsView();
 

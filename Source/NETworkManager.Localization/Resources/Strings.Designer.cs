@@ -7888,6 +7888,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show address bar ähnelt.
+        /// </summary>
+        public static string ShowAddressBar {
+            get {
+                return ResourceManager.GetString("ShowAddressBar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Show closed ports ähnelt.
         /// </summary>
         public static string ShowClosedPorts {
