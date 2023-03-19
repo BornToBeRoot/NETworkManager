@@ -33,6 +33,7 @@ Release date: **xx.xx.2023**
 - **Port Scanner**
   - Option added to limit the number of concurrent threads per host scan (5) & port scan (256). Increasing the values can speed up the scan, but can also lead to resource problems. [#2026](https://github.com/BornToBeRoot/NETworkManager/pull/2026){:target="\_blank"}
 - **Web Console**
+  - Address bar can be hidden in the settings (default: visible) [#2070](https://github.com/BornToBeRoot/NETworkManager/pull/2070){:target="\_blank"}
   - Add cancel button (and `Esc` key) to stop navigation to a website [#2069](https://github.com/BornToBeRoot/NETworkManager/pull/2069){:target="\_blank"}
 
 ## Bugfixes
