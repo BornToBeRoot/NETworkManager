@@ -3357,6 +3357,6 @@ Forse l'applicazione era nascosta nelle impostazioni?</value>
     <value>Finestra di stato</value>
   </data>
   <data name="ShowAddressBar" xml:space="preserve">
-    <value>Show address bar</value>
+    <value>Visualizza barra indirizzi</value>
   </data>
 </root>
