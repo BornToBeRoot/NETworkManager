@@ -3323,6 +3323,6 @@ As alterações nesse valor entrarão em vigor depois que o aplicativo for reini
     <value>Janela de status</value>
   </data>
   <data name="ShowAddressBar" xml:space="preserve">
-    <value>Show address bar</value>
+    <value>Mostrar barra de endereço</value>
   </data>
 </root>
