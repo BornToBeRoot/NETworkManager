@@ -879,7 +879,7 @@
     <value>Ime gostitelja ali naslov IP</value>
   </data>
   <data name="Hosts" xml:space="preserve">
-    <value>Host(s)</value>
+    <value>Gostitelji</value>
   </data>
   <data name="ID" xml:space="preserve">
     <value>ID</value>
@@ -1111,7 +1111,7 @@ Ustvarite enega...</value>
     <value>Prikaži samo najpogostejše vrste poizvedb</value>
   </data>
   <data name="ShowUnreachableIPAddressesAndPorts" xml:space="preserve">
-    <value>Show unreachable IP addresses and ports</value>
+    <value>Prikaži nedosegljive naslove IP in vrata</value>
   </data>
   <data name="ShowStatistics" xml:space="preserve">
     <value>Prikaži statistiko</value>
@@ -1372,7 +1372,7 @@ Ustvarite enega...</value>
     <value>Povezave</value>
   </data>
   <data name="EnterValidIPScanRange" xml:space="preserve">
-    <value>Enter a valid IP range!</value>
+    <value>Vnesit veljaven obseg IP!</value>
   </data>
   <data name="EnterValidIPv4Address" xml:space="preserve">
     <value>Vnesite veljaven naslov IPv4! </value>
@@ -1861,10 +1861,10 @@ Ustvarite enega...</value>
     <value>Dodaj naslov IPv4</value>
   </data>
   <data name="MaxHostThreads" xml:space="preserve">
-    <value>Max. concurrent host threads</value>
+    <value>Najv. sočasnih gostiteljskih niti</value>
   </data>
   <data name="MaxPortThreads" xml:space="preserve">
-    <value>Max. concurrent port threads</value>
+    <value>Najv. sočasnih niti vrat</value>
   </data>
   <data name="PowerShell" xml:space="preserve">
     <value>PowerShell</value>
@@ -1918,11 +1918,11 @@ Ustvarite enega...</value>
     <value>Posel v ozadju</value>
   </data>
   <data name="HelpMessage_BackgroundJob" xml:space="preserve">
-    <value>The background job will save settings and profiles every x-minutes.
+    <value>Posel v ozadju bo shranil nastavitve in profile vsakih x minut. 
 
-Value 0 will disable this feature.
+Vrednost 0 onemogoči to funkcijo. 
 
-Changes to this value will take effect after restarting the application.</value>
+Spremembe te vrednosti bodo uveljavljene po ponovnem zagonu aplikacije.</value>
   </data>
   <data name="RunBackgroundJobEveryXMinute" xml:space="preserve">
     <value>Zaženi posel v ozadju vsakih x-minut</value>
@@ -1940,9 +1940,7 @@ Changes to this value will take effect after restarting the application.</value>
     <value>Preveri javni naslov IP</value>
   </data>
   <data name="FirstRunMessage" xml:space="preserve">
-    <value>Thank you for using NETworkManager!
-
-In order to provide additional features, services on the Internet are used that are not operated by me. You can deselect them below in the privacy section. No data is transmitted to me at any time.</value>
+    <value>Za zagotavljanje dodatnih funkcij se uporabljajo storitve na internetu, ki jih ne upravljam jaz. Izbiro lahko prekličete spodaj v razdelku o zasebnosti. V nobenem trenutku se mi ne posredujejo nobeni podatki.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Ob zagonu programa ta v ozadju preveri, če je na GitHubu na voljo nova različica programa.
@@ -2052,7 +2050,7 @@ je onemogočeno!</value>
     <value>Uporabi API poljubnega naslova IPv4</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv4AddressAPI" xml:space="preserve">
-    <value>URL to a web service that can be reached via http or https and returns an IPv4 address like "xx.xx.xx.xx" as response.</value>
+    <value>URL do spletne storitve, ki je dosegljiva prek http ali https in kot odgovor vrne naslov IPv4, kot je "xx.xx.xx.xx".</value>
   </data>
   <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
     <value>Javnega naslova IP ni bilo mogoče razčleniti iz "{0}"! Poskusite drugo storitev ali uporabite privzeto...</value>
@@ -2184,7 +2182,7 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>Znova zaženi</value>
   </data>
   <data name="WarningMessage_CouldNotResolveIPAddressForHostname" xml:space="preserve">
-    <value>Could not resolve ip address for hostname!</value>
+    <value>Ni bilo mogoče razrešiti naslova IP za ime gostitelja!</value>
   </data>
   <data name="CtrlAltDel" xml:space="preserve">
     <value>Ctrl+Alt+Del</value>
@@ -2859,7 +2857,7 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>Seznam domen najvišje ravni iz iana.org, ki se uporablja za poizvedovanje whois strežnikov TLD s whois.iana.org prek vrat 43</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
-    <value>OUI data from ieee.org.</value>
+    <value>Podatki OUI z ieee.org.</value>
   </data>
   <data name="Resource_ServiceNamePortNumber_Description" xml:space="preserve">
     <value>Ime storitve in register številke vrat transportnega protokola z iana.org.</value>
@@ -2907,10 +2905,10 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>Vnesite veljaven naslov IPv6!</value>
   </data>
   <data name="HelpMessage_PublicIPv4Address" xml:space="preserve">
-    <value>Public IPv4 address reachable via ICMP.</value>
+    <value>Javni naslov IPv4, dosegljiv prek ICMP.</value>
   </data>
   <data name="HelpMessage_PublicIPv6Address" xml:space="preserve">
-    <value>Public IPv6 address reachable via ICMP.</value>
+    <value>Javni naslov IPv6, dosegljiv prek ICMP.</value>
   </data>
   <data name="PublicIPv4Address" xml:space="preserve">
     <value>Javni naslov IPv4.</value>
@@ -3105,7 +3103,7 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>Uporabi temo za konzolo PowerShell</value>
   </data>
   <data name="PowerShellConsoleColorCanBeChangedUnderSettingsGeneralApperance" xml:space="preserve">
-    <value>The color of the PowerShell console can be changed to the application theme under Settings &gt; General &gt; Appearance</value>
+    <value>Barvo konzole PowerShell lahko spremenite v temo aplikacije pod Nastavitve &gt; Splošno &gt; Videz</value>
   </data>
   <data name="HelpMessage_ApplyThemeToPowerShellConsole" xml:space="preserve">
     <value>Če omogočite to možnost, se privzete nastavitve konzole PowerShell v registru pod HKCU:\Console preglasijo, tako da se okno konzole PowerShell ujema s temo aplikacije. To je globalna sistemska nastavitev, ki lahko vpliva na videz običajnega okna PowerShell. 
@@ -3192,123 +3190,117 @@ V zgornjem desnem kotu kliknite na gumb za Pomoč/Dokumentacijo (levo od gumba z
     <value>Veljavna pot do TigerVNC se mora končati z "vncviewer-*.exe" ali "vncviewer64-*.exe"!</value>
   </data>
   <data name="ApplicationName_SNTPLookup" xml:space="preserve">
-    <value>SNTP Lookup</value>
+    <value>Iskanje SNTP</value>
   </data>
   <data name="Library_nulastudioNetBeauty_Description" xml:space="preserve">
-    <value>Move a .NET Framework/.NET Core app runtime components and dependencies into a sub-directory and make it beauty.</value>
+    <value>Premaknite sestavine in odvisnosti izvajalnega okolja aplikacije .NET Framework/.NET Core v podmapo in ga polepšajte.</value>
   </data>
   <data name="AddATabToPerformASNTPLookup" xml:space="preserve">
-    <value>Add a tab to perform a SNTP lookup...</value>
+    <value>Dodaj zavihek za iskanje SNTP...</value>
   </data>
   <data name="SNTPServers" xml:space="preserve">
-    <value>SNTP server(s)</value>
+    <value>Strežniki SNTP</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv6AddressAPI" xml:space="preserve">
-    <value>URL to a web service that can be reached via http or https and returns an IPv6 address like "xxxx:xx:xxx::xx" as response.</value>
+    <value>URL do spletne storitve, ki je dosegljiva prek http ali https in kot odgovor vrne naslov IPv6, kot je "xxxx:xx:xxx::xx".</value>
   </data>
   <data name="IPEndPoint" xml:space="preserve">
-    <value>IP endpoint</value>
+    <value>Končna točka IP</value>
   </data>
   <data name="LocalEndTime" xml:space="preserve">
-    <value>Local end time</value>
+    <value>Lokalni končni čas</value>
   </data>
   <data name="LocalStartTime" xml:space="preserve">
-    <value>Local start time</value>
+    <value>Lokalni začetni čas</value>
   </data>
   <data name="NetworkTime" xml:space="preserve">
-    <value>Network time</value>
+    <value>Omrežni čas</value>
   </data>
   <data name="Offset" xml:space="preserve">
-    <value>Offset</value>
+    <value>Odmik</value>
   </data>
   <data name="RoundTripDelay" xml:space="preserve">
-    <value>Round trip delay</value>
+    <value>Povratna zamuda</value>
   </data>
   <data name="Server" xml:space="preserve">
-    <value>Server</value>
+    <value>Strežnik</value>
   </data>
   <data name="SNTPLookup" xml:space="preserve">
-    <value>SNTP Lookup</value>
+    <value>Iskanje SNTP</value>
   </data>
   <data name="AddSNTPServer" xml:space="preserve">
-    <value>Add SNTP server</value>
+    <value>Dodaj strežnik SNTP</value>
   </data>
   <data name="DeleteSNTPServer" xml:space="preserve">
-    <value>Delete SNTP server</value>
+    <value>Izbriši strežnik SNTP</value>
   </data>
   <data name="DeleteSNTPServerMessage" xml:space="preserve">
-    <value>The selected SNTP server will be deleted permanently.</value>
+    <value>Izbrani strežnik SNTP bo trajno izbrisan.</value>
   </data>
   <data name="EditSNTPServer" xml:space="preserve">
-    <value>Edit SNTP server</value>
+    <value>Uredi strežnik SNTP</value>
   </data>
   <data name="SNTPServerWithThisNameAlreadyExists" xml:space="preserve">
-    <value>An SNTP server with this name already exists!</value>
+    <value>Strežnik SNTP s tem imenom že obstaja!</value>
   </data>
   <data name="EnterValidHostnameOrIPAddress" xml:space="preserve">
-    <value>Enter a valid hostname (like "server-01" or "example.com") or a valid IP address (like 192.168.178.1)!</value>
+    <value>Vnesite veljavno ime gostitelja (na primer "server-01" ali "primer.com") ali veljaven naslov IP (na primer 192.168.178.1)!</value>
   </data>
   <data name="Servers" xml:space="preserve">
-    <value>Server(s)</value>
+    <value>Strežniki</value>
   </data>
   <data name="EnterMasterPasswordToUnlockProfile" xml:space="preserve">
-    <value>Enter master password to unlock the profile file:</value>
+    <value>Vnesi glavno geslo za odklepanje datoteke profila:</value>
   </data>
   <data name="UnlockProfileFile" xml:space="preserve">
-    <value>Unlock profile file</value>
+    <value>Odkleni datoteko profila</value>
   </data>
   <data name="PortState_TimedOut" xml:space="preserve">
-    <value>Timed out</value>
+    <value>Časovna omejitev je potekla</value>
   </data>
   <data name="Hostkey" xml:space="preserve">
-    <value>Hostkey</value>
+    <value>Ključ gostitelja</value>
   </data>
   <data name="SettingsAreResetAndApplicationWillBeRestartedMessage" xml:space="preserve">
-    <value>The settings will be reset and the application will be restarted afterwards!</value>
+    <value>Nastavitve bodo ponastavljene in aplikacija se bo nato znova zagnala!</value>
   </data>
   <data name="SettingsHaveBeenReset" xml:space="preserve">
     <value>Nastavitve so ponastavljene!</value>
   </data>
   <data name="PingStatus" xml:space="preserve">
-    <value>Ping status</value>
+    <value>Stanje Pinga</value>
   </data>
   <data name="ThreadPoolAdditionalMinThreads" xml:space="preserve">
-    <value>ThreadPool additional min. threads</value>
+    <value>Dodatnih najm. niti ThreadPool </value>
   </data>
   <data name="HelpMessage_ThreadPoolAdditionalMinThreads" xml:space="preserve">
-    <value>This setting specifies the minimum number of threads that will be created from the application's ThreadPool on demand. This can improve the performance for example of the IP scanner or port scanner.
-	
-The value is added to the default min. threads (number of CPU threads). The value 0 leaves the default settings. If the value is higher than the default max. threads of the ThreadPool, this value is used.
-
-If the value is too high, performance problems may occur.
-
-Changes to this value will take effect after the application is restarted. Whether the value was set successfully can be seen in the log file under %LocalAppData%\NETworkManager\NETworkManager.log</value>
+    <value>Ta nastavitev določa najmanjše število niti, ki bodo na zahtevo ustvarjene iz ThreadPoola aplikacije. To lahko izboljša delovanje na primer skenerja IP ali skenerja vrat. Vrednost se doda privzeti min. niti (število niti procesorja). Vrednost 0 pusti privzete nastavitve. Če je vrednost višja od privzete najv. niti ThreadPool, se uporabi ta vrednost. Če je vrednost previsoka, lahko pride do težav z delovanjem. Spremembe te vrednosti bodo uveljavljene po ponovnem zagonu aplikacije. Ali je bila vrednost uspešno nastavljena, lahko vidite v dnevniški datoteki pod %LocalAppData%\NETworkManager\NETworkManager.log</value>
   </data>
   <data name="MaxThreadsOnlyGoToSettingsGeneralGeneral" xml:space="preserve">
-    <value>These settings only change the maximum number of concurrently executed threads per host/port scan. Go to Settings &gt; General &gt; General to adjust the (min) threads of the application.</value>
+    <value>Te nastavitve spremenijo samo največje število sočasno izvedenih niti na skeniranje gostitelja/vrat. Pojdite v Nastavitve &gt; Splošno &gt; Splošno, da prilagodite (najm.) niti aplikacije.</value>
   </data>
   <data name="PortStatus" xml:space="preserve">
-    <value>Port status</value>
+    <value>Stanje vrat</value>
   </data>
   <data name="PingDetails" xml:space="preserve">
-    <value>Ping details</value>
+    <value>Podrobnsti Pinga</value>
   </data>
   <data name="NoOpenPortsFound" xml:space="preserve">
-    <value>No open ports found!</value>
+    <value>Ni najdenih odprtih vrat!</value>
   </data>
   <data name="PortScanIsDisabled" xml:space="preserve">
-    <value>Port scan is disabled!</value>
+    <value>Skeniranje vrat je onemogočeno</value>
   </data>
   <data name="ScanPorts" xml:space="preserve">
-    <value>Scan ports</value>
+    <value>Skeniraj vrata</value>
   </data>
   <data name="CouldNotFindApplicationXXXMessage" xml:space="preserve">
-    <value>Could not find the application "{0}". Maybe the application was hidden in the settings?</value>
+    <value>Ni bilo mogoče najti aplikacije "{0}". Morda je bila aplikacija skrita v nastavitvah?</value>
   </data>
   <data name="StatusWindow" xml:space="preserve">
-    <value>Status window</value>
+    <value>Statusno okno</value>
   </data>
   <data name="ShowAddressBar" xml:space="preserve">
-    <value>Show address bar</value>
+    <value>Prikaži naslovno vrstico</value>
   </data>
 </root>
