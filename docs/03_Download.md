@@ -59,7 +59,7 @@ Release date: **19.03.2023**
 </table>
 
 {: .note }
-If you don't see the new features ([AWS Session Manager](./Documentation/Application/AWSSessionManager), [Bit Calculator](./Documentation/Application/BitCalculator) or [SNTP Lookup](./Documentation/Application/SNTPLookup)), try to reset the settings. You can do this under [`Settings > Settings > Reset`](./Documentation/Settings/Settings#reset) or by starting the application with the following parameter [`NETworkManager.exe --reset-settings`](./Documentation/CommandLineArguments#--reset-settings). The profiles are not affected when the settings are reset.
+If you don't see the new features ([AWS Session Manager](/NETworkManager//Documentation/Application/AWSSessionManager), [Bit Calculator](/NETworkManager//Documentation/Application/BitCalculator) or [SNTP Lookup](/NETworkManager//Documentation/Application/SNTPLookup)), try to reset the settings. You can do this under [`Settings > Settings > Reset`](/NETworkManager//Documentation/Settings/Settings#reset) or by starting the application with the following parameter [`NETworkManager.exe --reset-settings`](/NETworkManager//Documentation/CommandLineArguments#--reset-settings). The profiles are not affected when the settings are reset.
 
 Pre-release versions are available [here](https://github.com/BornToBeRoot/NETworkManager/releases){:target="\_blank"}.
 

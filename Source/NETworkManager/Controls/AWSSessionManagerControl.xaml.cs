@@ -15,17 +15,8 @@ using NETworkManager.Models.AWS;
 
 namespace NETworkManager.Controls;
 
-public partial class AWSSessionManagerControl : INotifyPropertyChanged
+public partial class AWSSessionManagerControl : UserControlBase
 {
-    #region PropertyChangedEventHandler
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-    #endregion
-
     #region Variables
     private bool _initialized;
     private bool _closing;      // When the tab is closed --> OnClose()

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System;
 using System.Windows.Threading;
@@ -11,17 +10,8 @@ using NETworkManager.Settings;
 
 namespace NETworkManager.Controls;
 
-public partial class WebConsoleControl : INotifyPropertyChanged
+public partial class WebConsoleControl : UserControlBase
 {
-    #region PropertyChangedEventHandler
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-    #endregion
-
     #region Variables
     private bool _initialized;
 
@@ -109,8 +99,7 @@ public partial class WebConsoleControl : INotifyPropertyChanged
         _initialized = true;
     }
     #endregion
-
-
+    
     #region ICommands & Actions
 
     private bool NavigateCommand_CanExecute(object obj) => !IsLoading;

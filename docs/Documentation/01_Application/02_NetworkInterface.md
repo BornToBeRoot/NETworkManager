@@ -19,7 +19,7 @@ On the **Information** tab, you can see all the important details of the selecte
 In addition, further actions can be performed using the buttons at the bottom left:
 
 - **Network connections...** - Opens the `Control Panel > Network and Internet > Network Connections` window.
-- **IP Scanner** - Opens the [IP Scanner](/Documentation/Application/IPScanner) tool and forwards the IPv4 address and subnetmask of the _selected_ network adapter.
+- **IP Scanner** - Opens the [IP Scanner](/NETworkManager/Documentation/Application/IPScanner) tool and forwards the IPv4 address and subnetmask of the _selected_ network adapter.
 - **Flush DNS cache** - Flush the DNS cache (`ipconfig /flushdns`).
 - **Release & Renew**
   - **IPv4**

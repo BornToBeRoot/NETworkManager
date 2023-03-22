@@ -1,18 +1,10 @@
-﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using NETworkManager.Utilities;
+using System;
 
 namespace NETworkManager.Settings;
 
-public class ConfigurationInfo : INotifyPropertyChanged
+public class ConfigurationInfo : PropertyChangedBase
 {
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-
     public bool IsAdmin { get; set; }
     public string ExecutionPath { get; set; }
     public string ApplicationFullName { get; set; }

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="NETworkManager.Controls.TigerVNCControl"
+﻿<local:UserControlBase x:Class="NETworkManager.Controls.TigerVNCControl"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,16 +6,16 @@
         xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
         xmlns:windowsForms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-        xmlns:networkManagerControls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager"
+        xmlns:local="clr-namespace:NETworkManager.Controls"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         mah:DialogParticipation.Register="{Binding}"
-        mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance networkManagerControls:TigerVNCControl}">
-    <UserControl.Resources>
+        mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance local:TigerVNCControl}">
+    <local:UserControlBase.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanReverseToVisibilityHiddenConverter x:Key="BooleanReverseToVisibilityHiddenConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-    </UserControl.Resources>
+    </local:UserControlBase.Resources>
     <Grid SizeChanged="TigerVNCGrid_SizeChanged">
         <!-- Background color will prevent flickering when app inside the panel is closed -->
         <WindowsFormsHost Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Background="{DynamicResource MahApps.Brushes.Window.Background}">  
@@ -35,4 +35,4 @@
             <TextBlock Grid.Row="3" Text="{x:Static localization:Strings.ConnectingDots}" Style="{StaticResource MessageTextBlock}" Visibility="{Binding IsConnecting, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
         </Grid>
     </Grid>
-</UserControl>
+</local:UserControlBase>

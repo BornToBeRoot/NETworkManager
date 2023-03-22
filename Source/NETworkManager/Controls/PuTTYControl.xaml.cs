@@ -1,7 +1,5 @@
 ﻿// Contains code from: https://stackoverflow.com/questions/5028598/hosting-external-app-in-wpf-window
 
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System;
 using System.Windows.Threading;
@@ -16,17 +14,8 @@ using PuTTY = NETworkManager.Models.PuTTY.PuTTY;
 
 namespace NETworkManager.Controls;
 
-public partial class PuTTYControl : INotifyPropertyChanged
+public partial class PuTTYControl : UserControlBase
 {
-    #region PropertyChangedEventHandler
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-    #endregion
-
     #region Variables
     private bool _initialized;
     private bool _closing;       // When the tab is closed --> OnClose()

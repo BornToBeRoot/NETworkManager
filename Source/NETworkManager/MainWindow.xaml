@@ -7,6 +7,7 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:interactivity="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:asf="clr-namespace:AirspaceFixer;assembly=AirspaceFixer"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"                     
         xmlns:resources="clr-namespace:NETworkManager.Properties"
@@ -194,7 +195,7 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Border Grid.Column="0" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0,0,1,0">
+            <Border Grid.Column="0" Grid.Row="0" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0,0,1,0">
                 <Grid x:Name="ApplicationViewGrid">
                     <Grid.RowDefinitions>
                         <!-- 1 = Search, 2 = ApplicationList, 3 = Settings-->
@@ -667,7 +668,9 @@
                     </interactivity:Interaction.Triggers>
                 </Grid>
             </Border>
-            <ContentControl x:Name="ContentControlApplication" Grid.Column="1" />
+            <asf:AirspacePanel Grid.Column="1" Grid.Row="0" FixAirspace="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsDialogOpen}">
+                <ContentControl x:Name="ContentControlApplication"  />
+            </asf:AirspacePanel>
         </Grid>
         <Grid>
             <Grid.Style>
