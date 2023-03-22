@@ -124,7 +124,7 @@ List of `tcp` ports to scan for each IP address.
 **Default:** `22; 53; 80; 139; 389; 636; 443; 445; 3389`
 
 {: .note }
-Multiple ports and port ranges can be combined with a semicolon (e.g. `22; 80; 443`). Only common and known ports should be scanned to check if a host is reachable. Use the [Port Scanner](/Documentation/Application/PortScanner) for a detailed port scan.
+Multiple ports and port ranges can be combined with a semicolon (e.g. `22; 80; 443`). Only common and known ports should be scanned to check if a host is reachable. Use the [Port Scanner](/NETworkManager/Documentation/Application/PortScanner) for a detailed port scan.
 
 ### Timeout (ms)
 
@@ -178,7 +178,7 @@ Maximal number of threads that are used to scan for active hosts (IP addresses).
 Too many simultaneous requests may be blocked by a firewall. You can reduce the number of threads to avoid this, but this will increase the scan time.<br/><br/>Too many threads can also cause performance problems on the device.
 
 {: .note }
-This setting only change the maximum number of concurrently executed threads per host scan. See also the [General](/Documentation/Settings/General) settings to configure the application wide thread pool.
+This setting only change the maximum number of concurrently executed threads per host scan. See also the [General](/NETworkManager/Documentation/Settings/General) settings to configure the application wide thread pool.
 
 ### Max. concurrent port threads
 
@@ -192,4 +192,4 @@ Maximal number of threads that are used to scan for open ports for each host (IP
 Too many simultaneous requests may be blocked by a firewall. You can reduce the number of threads to avoid this, but this will increase the scan time.<br/><br/>Too many threads can also cause performance problems on the device.
 
 {: .note }
-This setting only change the maximum number of concurrently executed threads per port scan. See also the [General](/Documentation/Settings/General) settings to configure the application wide thread pool.
+This setting only change the maximum number of concurrently executed threads per port scan. See also the [General](/NETworkManager/Documentation/Settings/General) settings to configure the application wide thread pool.

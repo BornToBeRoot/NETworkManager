@@ -8,31 +8,31 @@ permalink: /Features
 
 # Features
 
-- [Dashboard](Documentation/Application/Dashboard)
-- [Network Interface](Documentation/Application/NetworkInterface) - Information, Bandwidth, Configure
-- [WiFi](Documentation/Application/WiFi) - Networks, Channels
-- [IP Scanner](Documentation/Application/IPScanner)
-- [Port Scanner](Documentation/Application/PortScanner)
-- [Ping Monitor](Documentation/Application/PingMonitor)
-- [Traceroute](Documentation/Application/Traceroute)
-- [DNS Lookup](Documentation/Application/DNSLookup)
-- [Remote Desktop](Documentation/Application/RemoteDesktop)
-- [PowerShell](Documentation/Application/PowerShell)
-- [PuTTY](Documentation/Application/PuTTY) (requires [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html){:target="\_blank"})
-- [AWS Session Manager](Documentation/Application/AWSSessionManager) (requires [AWS CLI](https://aws.amazon.com/cli/){:target="\_blank"} and [AWS Session Manager plugin](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html){:target="\_blank"})
-- [TigerVNC](Documentation/Application/TigerVNC) (requires [TigerVNC](https://tigervnc.org/){:target="\_blank"})
-- [Web Console](Documentation/Application/WebConsole) (requires [Microsoft Edge - WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/){:target="\_blank"})
-- [SNMP](Documentation/Application/SNMP) - Get, Walk, Set
-- [SNTP Lookup](Documentation/Application/SNTPLookup)
-- [Discovery Protocol](Documentation/Application/DiscoveryProtocol) - LLDP, CDP
-- [Wake on LAN](Documentation/Application/WakeOnLAN)
-- [Whois](Documentation/Application/Whois)
-- [Subnet Calculator](Documentation/Application/SubnetCalculator) - Calculator, Subnetting, Supernetting
-- [Bit Calculator](Documentation/Application/BitCalculator)
-- [Lookup](Documentation/Application/Lookup) - OUI, Port
-- [Connections](Documentation/Application/Connections)
-- [Listeners](Documentation/Application/Listeners)
-- [ARP Table](Documentation/Application/ARPTable)
+- [Dashboard](/NETworkManager/Documentation/Application/Dashboard)
+- [Network Interface](/NETworkManager/Documentation/Application/NetworkInterface) - Information, Bandwidth, Configure
+- [WiFi](/NETworkManager/Documentation/Application/WiFi) - Networks, Channels
+- [IP Scanner](/NETworkManager/Documentation/Application/IPScanner)
+- [Port Scanner](/NETworkManager/Documentation/Application/PortScanner)
+- [Ping Monitor](/NETworkManager/Documentation/Application/PingMonitor)
+- [Traceroute](/NETworkManager/Documentation/Application/Traceroute)
+- [DNS Lookup](/NETworkManager/Documentation/Application/DNSLookup)
+- [Remote Desktop](/NETworkManager/Documentation/Application/RemoteDesktop)
+- [PowerShell](/NETworkManager/Documentation/Application/PowerShell)
+- [PuTTY](/NETworkManager/Documentation/Application/PuTTY) (requires [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html){:target="\_blank"})
+- [AWS Session Manager](/NETworkManager/Documentation/Application/AWSSessionManager) (requires [AWS CLI](https://aws.amazon.com/cli/){:target="\_blank"} and [AWS Session Manager plugin](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html){:target="\_blank"})
+- [TigerVNC](/NETworkManager/Documentation/Application/TigerVNC) (requires [TigerVNC](https://tigervnc.org/){:target="\_blank"})
+- [Web Console](/NETworkManager/Documentation/Application/WebConsole) (requires [Microsoft Edge - WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/){:target="\_blank"})
+- [SNMP](/NETworkManager/Documentation/Application/SNMP) - Get, Walk, Set
+- [SNTP Lookup](/NETworkManager/Documentation/Application/SNTPLookup)
+- [Discovery Protocol](/NETworkManager/Documentation/Application/DiscoveryProtocol) - LLDP, CDP
+- [Wake on LAN](/NETworkManager/Documentation/Application/WakeOnLAN)
+- [Whois](/NETworkManager/Documentation/Application/Whois)
+- [Subnet Calculator](/NETworkManager/Documentation/Application/SubnetCalculator) - Calculator, Subnetting, Supernetting
+- [Bit Calculator](/NETworkManager/Documentation/Application/BitCalculator)
+- [Lookup](/NETworkManager/Documentation/Application/Lookup) - OUI, Port
+- [Connections](/NETworkManager/Documentation/Application/Connections)
+- [Listeners](/NETworkManager/Documentation/Application/Listeners)
+- [ARP Table](/NETworkManager/Documentation/Application/ARPTable)
 
 ## Profiles
 
