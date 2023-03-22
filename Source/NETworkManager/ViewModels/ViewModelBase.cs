@@ -1,14 +1,8 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
+﻿using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
-public abstract class ViewModelBase : INotifyPropertyChanged
+public abstract class ViewModelBase : PropertyChangedBase
 {
-    public event PropertyChangedEventHandler PropertyChanged;
 
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
 }

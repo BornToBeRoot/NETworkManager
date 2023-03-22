@@ -17,17 +17,8 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.Settings;
 
-public class SettingsInfo : INotifyPropertyChanged
+public class SettingsInfo : PropertyChangedBase
 {
-    #region Events
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-    #endregion
-
     #region Variables
     [XmlIgnore] public bool SettingsChanged { get; set; }
 
