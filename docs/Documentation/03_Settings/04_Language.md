@@ -10,6 +10,8 @@ permalink: /Documentation/Settings/Language
 
 # Language
 
+### Language
+
 Language for the user interface of the application.
 
 **Type:** `NETworkManager.Localization.LocalizationInfo`

@@ -9,3 +9,36 @@ permalink: /Documentation/Settings/Profiles
 ---
 
 # Profiles
+
+### Location
+
+Folder where the application profiles are stored.
+
+**Type**: `String`
+
+**Default**:
+
+| Version        | Path                                              |
+| -------------- | ------------------------------------------------- |
+| Setup / Archiv | `%UserProfile%\Documents\NETworkManager\Profiles` |
+| Portable       | `<APP_FOLDER>\Profiles`                           |
+
+{: .note}
+It is recommended to backup the above files on a regular basis.
+
+{: .note}
+To restore the profiles, close the application and copy the files from the backup to the above location.
+
+### Profiles
+
+List of profile files.
+
+**Type**: `List<NETworkManager.Profiles.ProfileFileInfo>`
+
+**Default**: `[Default]`
+
+{: .information}
+Profile files can be encrypted with a master password. Right click on a profile and select `Encryption... > Enable encryption...`. See [FAQ > Profile encryption](NETworkManager/FAQ#profile-encryption) for more details.
+
+{: .note}
+At least one profile is required and must exist.

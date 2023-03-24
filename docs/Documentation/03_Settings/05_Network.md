@@ -10,8 +10,6 @@ permalink: /Documentation/Settings/Network
 
 # Network
 
-## DNS
-
 ### Use custom DNS server
 
 Enables or disables the custom DNS server(s) for all DNS queries. If disabled, the DNS servers configured in Windows are used. If enabled, the servers configured under [DNS server(s)](#dns-servers) will be used.
