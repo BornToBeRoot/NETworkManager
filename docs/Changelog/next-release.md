@@ -20,8 +20,15 @@ Release date: **xx.xx.2023**
 ## Improvements
 
 ## Bugfixes
+- Status window is now automatically closed again if it was opened by a network change event [#2105](https://github.com/BornToBeRoot/NETworkManager/pull/2105){:target="\_blank"}
 
 ## Other
 - Code cleanup [#2100](https://github.com/BornToBeRoot/NETworkManager/pull/2100){:target="\_blank"}
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="\_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="\_blank"}
+- Add documentation for:
+  - Settings > Window [#2105](https://github.com/BornToBeRoot/NETworkManager/pull/2105){:target="\_blank"}
+  - Settings > Status [#2105](https://github.com/BornToBeRoot/NETworkManager/pull/2105){:target="\_blank"}
+  - Settings > HotKeys [#2105](https://github.com/BornToBeRoot/NETworkManager/pull/2105){:target="\_blank"}
+  - Settings > Autostart [#2105](https://github.com/BornToBeRoot/NETworkManager/pull/2105){:target="\_blank"}
+  - Settings > Profiles [#2105](https://github.com/BornToBeRoot/NETworkManager/pull/2105){:target="\_blank"}
