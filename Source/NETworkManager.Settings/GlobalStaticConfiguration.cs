@@ -17,7 +17,11 @@ public static class GlobalStaticConfiguration
 {
     // Type to search (average type speed --> 187 chars/min)
     public static TimeSpan SearchDispatcherTimerTimeSpan => new(0, 0, 0, 0, 750);
-    
+
+    // Status window delay in ms
+    public static int StatusWindowDelayBeforeOpen => 5000;
+
+
     // Filter
     public static string ApplicationFileExtensionFilter => "Application (*.exe)|*.exe";
     public static string PuTTYPrivateKeyFileExtensionFilter => "PuTTY Private Key Files (*.ppk)|*.ppk";

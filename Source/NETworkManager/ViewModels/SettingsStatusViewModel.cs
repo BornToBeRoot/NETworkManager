@@ -24,23 +24,6 @@ public class SettingsStatusViewModel : ViewModelBase
         }
     }
 
-    private string _ipAddressToDetectLocalIPAddressBasedOnRouting;
-    public string IPAddressToDetectLocalIPAddressBasedOnRouting
-    {
-        get => _ipAddressToDetectLocalIPAddressBasedOnRouting;
-        set
-        {
-            if (value == _ipAddressToDetectLocalIPAddressBasedOnRouting)
-                return;
-
-            if (!_isLoading)
-                SettingsManager.Current.Status_IPAddressToDetectLocalIPAddressBasedOnRouting = value;
-
-            _ipAddressToDetectLocalIPAddressBasedOnRouting = value;
-            OnPropertyChanged();
-        }
-    }
-
     private int _windowCloseTime;
     public int WindowCloseTime
     {
@@ -73,7 +56,6 @@ public class SettingsStatusViewModel : ViewModelBase
     private void LoadSettings()
     {
         ShowWindowOnNetworkChange = SettingsManager.Current.Status_ShowWindowOnNetworkChange;
-        IPAddressToDetectLocalIPAddressBasedOnRouting = SettingsManager.Current.Status_IPAddressToDetectLocalIPAddressBasedOnRouting;
         WindowCloseTime = SettingsManager.Current.Status_WindowCloseTime;
     }
     #endregion

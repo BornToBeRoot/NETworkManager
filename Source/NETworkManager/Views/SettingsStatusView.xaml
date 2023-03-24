@@ -6,24 +6,12 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-        xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
+        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"        
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsStatusViewModel}">
     <StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.StatusWindow}" />
-        <mahAppsControls:ToggleSwitch Header="{x:Static localization:Strings.ShowStatusWindowOnNetworkChange}" IsOn="{Binding ShowWindowOnNetworkChange}" Margin="0,0,0,10"/>
-        <TextBlock Text="{x:Static localization:Strings.IPAddressToDetectLocalIPAddressBasedOnRouting}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10" mahAppsControls:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4DNSServer}" Style="{StaticResource DefaultTextBox}">
-            <TextBox.Text>
-                <Binding Path="IPAddressToDetectLocalIPAddressBasedOnRouting" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                    <Binding.ValidationRules>
-                        <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                        <validators:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
-                    </Binding.ValidationRules>
-                </Binding>
-            </TextBox.Text>
-        </TextBox>
-        <TextBlock Text="{x:Static localization:Strings.TimeInSecondsHowLongTheWindowShouldBeDisplayed}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <mahAppsControls:ToggleSwitch Header="{x:Static localization:Strings.ShowStatusWindowOnNetworkChange}" IsOn="{Binding ShowWindowOnNetworkChange}" Margin="0,0,0,10"/>        
+        <TextBlock Text="{x:Static localization:Strings.TimeInSecondsHowLongTheStatusWindowIsShown}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding WindowCloseTime}" Maximum="120" Minimum="3" Interval="1" />
     </StackPanel>
 </UserControl>

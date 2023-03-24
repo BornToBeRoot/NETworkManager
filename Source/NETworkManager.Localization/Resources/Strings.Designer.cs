@@ -8734,11 +8734,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Time in seconds how long the window should be displayed ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Time in seconds how long the status window is shown ähnelt.
         /// </summary>
-        public static string TimeInSecondsHowLongTheWindowShouldBeDisplayed {
+        public static string TimeInSecondsHowLongTheStatusWindowIsShown {
             get {
-                return ResourceManager.GetString("TimeInSecondsHowLongTheWindowShouldBeDisplayed", resourceCulture);
+                return ResourceManager.GetString("TimeInSecondsHowLongTheStatusWindowIsShown", resourceCulture);
             }
         }
         
@@ -9022,11 +9022,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Untray / Bring window to front ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Untray / Bring window to foreground ähnelt.
         /// </summary>
-        public static string UntrayBringWindowToFront {
+        public static string UntrayBringWindowToForeground {
             get {
-                return ResourceManager.GetString("UntrayBringWindowToFront", resourceCulture);
+                return ResourceManager.GetString("UntrayBringWindowToForeground", resourceCulture);
             }
         }
         
@@ -9371,6 +9371,15 @@ namespace NETworkManager.Localization.Resources {
         public static string WarningMessage_ProfileFileNotEncryptedStoringPasswords {
             get {
                 return ResourceManager.GetString("WarningMessage_ProfileFileNotEncryptedStoringPasswords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enabling this setting is not recommended. Multiple instances of the application share the same settings and profile files. The last instance to be closed may overwrite changes made by other instances. ähnelt.
+        /// </summary>
+        public static string WarnMessage_MultipleInstances {
+            get {
+                return ResourceManager.GetString("WarnMessage_MultipleInstances", resourceCulture);
             }
         }
         

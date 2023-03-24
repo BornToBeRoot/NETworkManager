@@ -12,7 +12,14 @@
         <controls:ToggleSwitch Header="{x:Static localization:Strings.MinimizeInsteadOfTerminating}" IsOn="{Binding MinimizeInsteadOfTerminating}" Margin="0,0,0,10" />
         <controls:ToggleSwitch Header="{x:Static localization:Strings.MinimizeToTrayInsteadOfTaskbar}" IsOn="{Binding MinimizeToTrayInsteadOfTaskbar}" Margin="0,0,0,10" />
         <controls:ToggleSwitch Header="{x:Static localization:Strings.ConfirmClose}" IsOn="{Binding ConfirmClose}" Margin="0,0,0,10"/>
-        <controls:ToggleSwitch Header="{x:Static localization:Strings.MultipleInstances}" IsOn="{Binding MultipleInstances}" Margin="0,0,0,20"/>
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+            <controls:ToggleSwitch Header="{x:Static localization:Strings.MultipleInstances}" IsOn="{Binding MultipleInstances}"/>
+            <Rectangle Width="24" Height="24" ToolTip="{x:Static localization:Strings.WarnMessage_MultipleInstances}" Style="{StaticResource WarnImageRectangle}" VerticalAlignment="Top" Margin="10,0,0,0">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource WarnToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
+        </StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Tray}" />
         <controls:ToggleSwitch Header="{x:Static localization:Strings.AlwaysShowIconInTray}" IsOn="{Binding AlwaysShowIconInTray}" Margin="0,0,0,20" />
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.SplashScreen}" />

@@ -1174,8 +1174,8 @@ Profile files are not affected!</value>
   <data name="UnkownError" xml:space="preserve">
     <value>Unkown error!</value>
   </data>
-  <data name="UntrayBringWindowToFront" xml:space="preserve">
-    <value>Untray / Bring window to front</value>
+  <data name="UntrayBringWindowToForeground" xml:space="preserve">
+    <value>Untray / Bring window to foreground</value>
   </data>
   <data name="URL" xml:space="preserve">
     <value>URL</value>
@@ -2229,8 +2229,8 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="ShowStatusWindowOnNetworkChange" xml:space="preserve">
     <value>Show status window on network change</value>
   </data>
-  <data name="TimeInSecondsHowLongTheWindowShouldBeDisplayed" xml:space="preserve">
-    <value>Time in seconds how long the window should be displayed</value>
+  <data name="TimeInSecondsHowLongTheStatusWindowIsShown" xml:space="preserve">
+    <value>Time in seconds how long the status window is shown</value>
   </data>
   <data name="WiFi" xml:space="preserve">
     <value>WiFi</value>
@@ -3324,5 +3324,8 @@ Changes to this value will take effect after the application is restarted. Wheth
   </data>
   <data name="ShowAddressBar" xml:space="preserve">
     <value>Show address bar</value>
+  </data>
+  <data name="WarnMessage_MultipleInstances" xml:space="preserve">
+    <value>Enabling this setting is not recommended. Multiple instances of the application share the same settings and profile files. The last instance to be closed may overwrite changes made by other instances.</value>
   </data>
 </root>
