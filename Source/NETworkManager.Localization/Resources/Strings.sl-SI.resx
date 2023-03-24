@@ -391,7 +391,7 @@
     <value>Preverjanje ni uspelo!</value>
   </data>
   <data name="WakeOnLAN" xml:space="preserve">
-    <value>Zbudi LAN</value>
+    <value>Zbudi lokalno omrežje</value>
   </data>
   <data name="Website" xml:space="preserve">
     <value>Spletna stran</value>
@@ -579,10 +579,10 @@
     <value>Hitrost</value>
   </data>
   <data name="StartMinimizedInTray" xml:space="preserve">
-    <value>Začni pomanjšano v programski vrstici</value>
+    <value>Zaženi pomanjšano v programski vrstici</value>
   </data>
   <data name="StartWithWindows" xml:space="preserve">
-    <value>Začni s sistemom Windows (trenutni uporabnik)</value>
+    <value>Zaženi ob zagonu Windows (trenutni uporabnik)</value>
   </data>
   <data name="StaticIPv4Address" xml:space="preserve">
     <value>Statični naslov IPv4</value>
@@ -1138,7 +1138,7 @@ Ustvarite enega...</value>
     <value>Telnet</value>
   </data>
   <data name="TheApplicationCanBeStartedWithoutParameters" xml:space="preserve">
-    <value>Programa je mogoče zagnati brez parametrov!</value>
+    <value>Program je mogoče zagnati brez parametrov!</value>
   </data>
   <data name="TheFollowingHostnamesCouldNotBeResolved" xml:space="preserve">
     <value>Naslednjih imen gostiteljev ni bilo mogoče razrešiti:</value>
@@ -1940,7 +1940,9 @@ Spremembe te vrednosti bodo uveljavljene po ponovnem zagonu aplikacije.</value>
     <value>Preveri javni naslov IP</value>
   </data>
   <data name="FirstRunMessage" xml:space="preserve">
-    <value>Za zagotavljanje dodatnih funkcij se uporabljajo storitve na internetu, ki jih ne upravljam jaz. Izbiro lahko prekličete spodaj v razdelku o zasebnosti. V nobenem trenutku se mi ne posredujejo nobeni podatki.</value>
+    <value>Hvala, ker uporabljate NETworkManager! 
+
+Za zagotavljanje dodatnih funkcij se uporabljajo storitve na internetu, ki jih ne upravljam jaz. Izbiro lahko prekličete spodaj v razdelku o zasebnosti. V nobenem trenutku se mi ne posredujejo nobeni podatki.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Ob zagonu programa ta v ozadju preveri, če je na GitHubu na voljo nova različica programa.
@@ -2107,7 +2109,7 @@ je onemogočeno!</value>
     <value>Samodejno zaznaj kakovost povezave</value>
   </data>
   <data name="RemoteDesktopNetworkConnectionType_LAN" xml:space="preserve">
-    <value>Lokalno omrežje LAN (10 Mbps ali več)</value>
+    <value>Lokalno omrežje (10 Mbps ali več)</value>
   </data>
   <data name="RemoteDesktopNetworkConnectionType_Modem" xml:space="preserve">
     <value>Modem (56 kbps)</value>
@@ -2542,7 +2544,7 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>Sled poti</value>
   </data>
   <data name="ApplicationName_WakeOnLAN" xml:space="preserve">
-    <value>Zbudi LAN</value>
+    <value>Zbudi lokalno omrežje</value>
   </data>
   <data name="ApplicationName_WebConsole" xml:space="preserve">
     <value>Spletna konzola</value>
@@ -2635,7 +2637,7 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>Videz</value>
   </data>
   <data name="SettingsViewName_Autostart" xml:space="preserve">
-    <value>Samodejni začetek</value>
+    <value>Samodejni zagon</value>
   </data>
   <data name="SettingsViewName_General" xml:space="preserve">
     <value>Splošno</value>
@@ -2875,7 +2877,7 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>Preklic licence</value>
   </data>
   <data name="Library_CsWinRT_Description" xml:space="preserve">
-    <value>C#/WinRT ponuja pakirano podporo za projekcijo WinRT za jezik C#.</value>
+    <value>C#/WinRT zagotavlja zapakirano podporo za projekcijo WinRT za jezik C#.</value>
   </data>
   <data name="Library_PowerShellSDK_Description" xml:space="preserve">
     <value>Runtime za gostovanje PowerShell</value>
