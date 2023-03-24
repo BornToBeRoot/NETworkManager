@@ -393,21 +393,6 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private string _status_IPAddressToDetectLocalIPAddressBasedOnRouting = GlobalStaticConfiguration.Status_IPAddressToDetectLocalIPAddressBasedOnRouting;
-    public string Status_IPAddressToDetectLocalIPAddressBasedOnRouting
-    {
-        get => _status_IPAddressToDetectLocalIPAddressBasedOnRouting;
-        set
-        {
-            if (value == _status_IPAddressToDetectLocalIPAddressBasedOnRouting)
-                return;
-
-            _status_IPAddressToDetectLocalIPAddressBasedOnRouting = value;
-            OnPropertyChanged();
-            SettingsChanged = true;
-        }
-    }
-
     // Autostart
     private bool _autostart_StartMinimizedInTray;
     public bool Autostart_StartMinimizedInTray

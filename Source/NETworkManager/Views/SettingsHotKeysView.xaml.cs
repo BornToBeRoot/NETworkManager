@@ -2,11 +2,11 @@
 
 namespace NETworkManager.Views;
 
-public partial class SettingsHotKeysView
+public partial class SettingsHotkeysView
 {
-    private readonly SettingsHotKeysViewModel _viewModel = new SettingsHotKeysViewModel();
+    private readonly SettingsHotKeysViewModel _viewModel = new();
 
-    public SettingsHotKeysView()
+    public SettingsHotkeysView()
     {
         InitializeComponent();
         DataContext = _viewModel;

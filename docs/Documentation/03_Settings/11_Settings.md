@@ -10,7 +10,7 @@ permalink: /Documentation/Settings/Settings
 
 # Settings
 
-## Location
+### Location
 
 Folder where the application settings are stored.
 
@@ -29,7 +29,7 @@ It is recommended to backup the above files on a regular basis.
 {: .note}
 To restore the settings, close the application and copy the files from the backup to the above location.
 
-## Reset
+### Reset
 
 Button to reset all application settings to their default values.
 

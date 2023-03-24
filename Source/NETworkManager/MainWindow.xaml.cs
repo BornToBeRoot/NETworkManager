@@ -1592,9 +1592,9 @@ public partial class MainWindow : INotifyPropertyChanged
     #endregion
 
     #region Status window
-    private void OpenStatusWindow(bool activate)
+    private void OpenStatusWindow(bool fromNetworkChangeEvent)
     {
-        _statusWindow.ShowWindow(activate);
+        _statusWindow.ShowWindow(fromNetworkChangeEvent);
     }
 
     private async void OnNetworkHasChanged()
@@ -1604,8 +1604,8 @@ public partial class MainWindow : INotifyPropertyChanged
 
         _isNetworkChanging = true;
 
-        // Wait 5 seconds, because the event may be triggered several times.
-        await Task.Delay(5000);
+        // Wait, because the event may be triggered several times.
+        await Task.Delay(GlobalStaticConfiguration.StatusWindowDelayBeforeOpen);
 
         _log.Info("Network availability or address has changed!");
 

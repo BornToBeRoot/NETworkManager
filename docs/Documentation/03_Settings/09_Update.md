@@ -10,8 +10,6 @@ permalink: /Documentation/Settings/Update
 
 # Update
 
-## Update
-
 ### Check for updates at startup
 
 Check for new program versions on GitHub when the application is launched.

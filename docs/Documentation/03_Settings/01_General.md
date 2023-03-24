@@ -10,8 +10,6 @@ permalink: /Documentation/Settings/General
 
 # General
 
-## Default application
-
 ### Show the following application on startup:
 
 Default application that is displayed when the application is launched.
@@ -19,8 +17,6 @@ Default application that is displayed when the application is launched.
 Type: `NETworkManager.Models.ApplicationName`
 
 Default: `Dashboard`
-
-## Visible applications in the bar:
 
 ### Visible applications
 
@@ -38,8 +34,6 @@ Type: `NETworkManager.Models.ApplicationName`
 
 Default: `None`
 
-## Background job
-
 ### Run background job every x-minutes
 
 Run a background job every x-minutes to save profiles and settings.
@@ -51,8 +45,6 @@ Default: `5` [Min `0`, Max `120`]
 {: .note }
 The value 0 will disable the background job. Changes to this value will take effect after restarting the application.
 
-## History
-
 ### Number of stored entries
 
 Maximum number of entries stored in the history for several application inputs.
@@ -60,8 +52,6 @@ Maximum number of entries stored in the history for several application inputs.
 Type: `Integer`
 
 Default: `5` [Min `0`, Max `25`]
-
-## Multithreading
 
 ### ThreadPool additional min. threads
 

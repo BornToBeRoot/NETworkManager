@@ -105,7 +105,7 @@ public class SettingsViewModel : ViewModelBase
     private SettingsLanguageView _settingsLanguageView;
     private SettingsNetworkView _settingsNetworkView;
     private SettingsStatusView _settingsStatusView;
-    private SettingsHotKeysView _settingsHotKeysView;
+    private SettingsHotkeysView _settingsHotKeysView;
     private SettingsAutostartView _settingsAutostartView;
     private SettingsUpdateView _settingsUpdateView;
     private SettingsSettingsView _settingsSettingsView;
@@ -214,7 +214,7 @@ public class SettingsViewModel : ViewModelBase
                 SettingsContent = _settingsStatusView;
                 break;
             case SettingsViewName.HotKeys:
-                _settingsHotKeysView ??= new SettingsHotKeysView();
+                _settingsHotKeysView ??= new SettingsHotkeysView();
 
                 SettingsContent = _settingsHotKeysView;
                 break;
