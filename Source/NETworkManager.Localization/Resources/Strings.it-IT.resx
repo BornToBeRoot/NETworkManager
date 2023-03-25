@@ -1184,8 +1184,8 @@ I file del profilo non sono interessati dal problema!</value>
   <data name="UnkownError" xml:space="preserve">
     <value>Errore sconosciuto!</value>
   </data>
-  <data name="UntrayBringWindowToFront" xml:space="preserve">
-    <value>Rimuovi dall'area di notifica / porta in primo piano</value>
+  <data name="UntrayBringWindowToForeground" xml:space="preserve">
+    <value>Porta la finestra in primo piano</value>
   </data>
   <data name="URL" xml:space="preserve">
     <value>URL</value>
@@ -2248,8 +2248,8 @@ $$hostname$$	--&gt;	Nome host</value>
   <data name="ShowStatusWindowOnNetworkChange" xml:space="preserve">
     <value>Visualizza la finestra di stato al cambio della rete</value>
   </data>
-  <data name="TimeInSecondsHowLongTheWindowShouldBeDisplayed" xml:space="preserve">
-    <value>Tempo in secondi per quanto tempo deve essere visualizzata la finestra</value>
+  <data name="TimeInSecondsHowLongTheStatusWindowIsShown" xml:space="preserve">
+    <value>Tempo in secondi di visualizzazione della finestra di stato</value>
   </data>
   <data name="WiFi" xml:space="preserve">
     <value>WiFi</value>
@@ -3358,5 +3358,10 @@ Forse l'applicazione era nascosta nelle impostazioni?</value>
   </data>
   <data name="ShowAddressBar" xml:space="preserve">
     <value>Visualizza barra indirizzi</value>
+  </data>
+  <data name="WarnMessage_MultipleInstances" xml:space="preserve">
+    <value>L'attivazione di questa impostazione non è consigliata. 
+Più istanze dell'applicazione condividono le stesse impostazioni e file di profilo. 
+L'ultima istanza da chiudere potrebbe sovrascrivere le modifiche apportate da altre istanze.</value>
   </data>
 </root>
