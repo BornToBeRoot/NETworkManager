@@ -266,7 +266,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
         get => _gatewayServerLogonMethod;
         set
         {
-            if (value == _gatewayServerLogonMethod)
+            if (Equals(value, _gatewayServerLogonMethod))                
                 return;
 
             if (!_isLoading)

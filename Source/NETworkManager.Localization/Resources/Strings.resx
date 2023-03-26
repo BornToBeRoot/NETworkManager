@@ -3355,4 +3355,7 @@ Changes to this value will take effect after the application is restarted. Wheth
   <data name="RemoteDesktopGatewayServerLogonMethod_Userpass" xml:space="preserve">
     <value>Ask for password (NTLM)</value>
   </data>
+  <data name="UseGatewayCredentials" xml:space="preserve">
+    <value>Use gateway credentials</value>
+  </data>
 </root>

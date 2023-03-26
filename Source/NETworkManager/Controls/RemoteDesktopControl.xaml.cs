@@ -164,9 +164,13 @@ public partial class RemoteDesktopControl : UserControlBase
         RdpClient.AdvancedSettings9.RDPPort = _rdpSessionInfo.Port;
 
         // Credentials
-        if (_rdpSessionInfo.CustomCredentials)
+        if (_rdpSessionInfo.UseCredentials)
         {
             RdpClient.UserName = _rdpSessionInfo.Username;
+
+            if (!string.IsNullOrEmpty(_rdpSessionInfo.Domain))
+                RdpClient.Domain = _rdpSessionInfo.Domain;
+
             RdpClient.AdvancedSettings9.ClearTextPassword = SecureStringHelper.ConvertToString(_rdpSessionInfo.Password);
         }
 
@@ -179,15 +183,16 @@ public partial class RemoteDesktopControl : UserControlBase
             RdpClient.TransportSettings2.GatewayCredsSource = (uint)_rdpSessionInfo.GatewayServerLogonMethod;
             RdpClient.TransportSettings2.GatewayCredSharing = _rdpSessionInfo.GatewayServerShareCredentialsWithRemoteComputer ? 1u : 0u;
 
-            // Credentials
-            /*
-            if(_rdpSessionInfo.GatewayServerLogonMethod == GatewayUserSelectedCredsSource.Userpass)
+            // Credentials            
+            if (_rdpSessionInfo.UseGatewayServerCredentials && _rdpSessionInfo.GatewayServerLogonMethod == GatewayUserSelectedCredsSource.Userpass)
             {
                 RdpClient.TransportSettings2.GatewayUsername = _rdpSessionInfo.GatewayServerUsername;
-                RdpClient.TransportSettings2.GatewayDomain = _rdpSessionInfo.GatewayServerDomain;
+
+                if (!string.IsNullOrEmpty(_rdpSessionInfo.GatewayServerDomain))
+                    RdpClient.TransportSettings2.GatewayDomain = _rdpSessionInfo.GatewayServerDomain;
+                
                 RdpClient.TransportSettings2.GatewayPassword = SecureStringHelper.ConvertToString(_rdpSessionInfo.GatewayServerPassword);
             }
-            */
         }
         else
         {

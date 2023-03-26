@@ -6,8 +6,9 @@ public class RemoteDesktopSessionInfo
 {
     public string Hostname { get; set; }
     public int Port { get; set; }
-    public bool CustomCredentials { get; set; }
+    public bool UseCredentials { get; set; }
     public string Username { get; set; }
+    public string Domain { get; set; }
     public SecureString Password { get; set; }
     public bool AdjustScreenAutomatically { get; set; }
     public bool UseCurrentViewSize { get; set; }
@@ -21,6 +22,10 @@ public class RemoteDesktopSessionInfo
     public bool GatewayServerBypassLocalAddresses { get; set; }
     public GatewayUserSelectedCredsSource GatewayServerLogonMethod { get; set; }
     public bool GatewayServerShareCredentialsWithRemoteComputer { get; set; }
+    public bool UseGatewayServerCredentials { get; set; }
+    public string GatewayServerUsername { get; set; }
+    public string GatewayServerDomain { get; set; }
+    public SecureString GatewayServerPassword { get; set; }
     public AudioRedirectionMode AudioRedirectionMode { get; set; }
     public AudioCaptureRedirectionMode AudioCaptureRedirectionMode { get; set; }
     public KeyboardHookMode KeyboardHookMode { get; set; }

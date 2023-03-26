@@ -379,7 +379,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
             if (instance.UseCredentials)
             {
-                sessionInfo.CustomCredentials = true;
+                sessionInfo.UseCredentials = true;
 
                 sessionInfo.Username = instance.Username;
                 sessionInfo.Password = instance.Password;
@@ -438,7 +438,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
             if (instance.UseCredentials)
             {
-                sessionInfo.CustomCredentials = true;
+                sessionInfo.UseCredentials = true;
                 sessionInfo.Username = instance.Username;
                 sessionInfo.Password = instance.Password;
             }

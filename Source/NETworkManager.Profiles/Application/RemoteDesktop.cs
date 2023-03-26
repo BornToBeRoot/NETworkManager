@@ -206,16 +206,18 @@ public static class RemoteDesktop
         // Set credentials
         if (profile.RemoteDesktop_UseCredentials)
         {
-            info.CustomCredentials = true;
+            info.UseCredentials = true;
 
             info.Username = profile.RemoteDesktop_Username;
+            info.Domain = profile.RemoteDesktop_Domain;
             info.Password = profile.RemoteDesktop_Password;
         }
         else if (group.RemoteDesktop_UseCredentials)
         {
-            info.CustomCredentials = true;
+            info.UseCredentials = true;
 
             info.Username = group.RemoteDesktop_Username;
+            info.Domain = group.RemoteDesktop_Domain;
             info.Password = group.RemoteDesktop_Password;
         }
 

@@ -9229,6 +9229,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Use gateway credentials ähnelt.
+        /// </summary>
+        public static string UseGatewayCredentials {
+            get {
+                return ResourceManager.GetString("UseGatewayCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Use only TCP ähnelt.
         /// </summary>
         public static string UseOnlyTCP {

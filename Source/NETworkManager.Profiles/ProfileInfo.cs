@@ -70,11 +70,9 @@ public class ProfileInfo
     public bool RemoteDesktop_Enabled { get; set; }
     public bool RemoteDesktop_InheritHost { get; set; } = true;
     public string RemoteDesktop_Host { get; set; }
-
     public bool RemoteDesktop_UseCredentials { get; set; }
-
     public string RemoteDesktop_Username { get; set; }
-
+    public string RemoteDesktop_Domain { get; set; }
     [XmlIgnore]
     public SecureString RemoteDesktop_Password { get; set; }
     public bool RemoteDesktop_OverrideDisplay { get; set; }
@@ -255,6 +253,7 @@ public class ProfileInfo
         RemoteDesktop_Host = profile.RemoteDesktop_Host;
         RemoteDesktop_UseCredentials = profile.RemoteDesktop_UseCredentials;
         RemoteDesktop_Username = profile.RemoteDesktop_Username;
+        RemoteDesktop_Domain = profile.RemoteDesktop_Domain;
         RemoteDesktop_Password = profile.RemoteDesktop_Password;
         RemoteDesktop_OverrideDisplay = profile.RemoteDesktop_OverrideDisplay;
         RemoteDesktop_AdjustScreenAutomatically = profile.RemoteDesktop_AdjustScreenAutomatically;

@@ -543,8 +543,6 @@ public static class ProfileManager
     {
         List<GroupInfoSerializable> groupsSerializable = new();
 
-        string groupRemoteDesktopPassword = string.Empty;
-
         foreach (GroupInfo group in groups)
         {
             // Don't save temp groups
@@ -553,30 +551,23 @@ public static class ProfileManager
 
             List<ProfileInfoSerializable> profilesSerializable = new();
 
-            string profileRemoteDesktopPassword = string.Empty;
-
             foreach (ProfileInfo profile in group.Profiles)
             {
                 if (profile.IsDynamic)
                     continue;
 
-                if (profile.RemoteDesktop_Password != null)
-                    profileRemoteDesktopPassword = SecureStringHelper.ConvertToString(profile.RemoteDesktop_Password);
-
                 profilesSerializable.Add(new ProfileInfoSerializable(profile)
                 {
-                    RemoteDesktop_Password = profileRemoteDesktopPassword
+                    RemoteDesktop_Password = profile.RemoteDesktop_Password != null ? SecureStringHelper.ConvertToString(profile.RemoteDesktop_Password) : string.Empty,
                 });
             }
-
-            if (group.RemoteDesktop_Password != null)
-                groupRemoteDesktopPassword = SecureStringHelper.ConvertToString(group.RemoteDesktop_Password);
 
             groupsSerializable.Add(new GroupInfoSerializable(group)
             {
                 Profiles = profilesSerializable,
-                RemoteDesktop_Password = groupRemoteDesktopPassword
-            });
+                RemoteDesktop_Password = group.RemoteDesktop_Password != null ? SecureStringHelper.ConvertToString(group.RemoteDesktop_Password) : string.Empty,
+                RemoteDesktop_GatewayPassword = group.RemoteDesktop_GatewayServerPassword != null ? SecureStringHelper.ConvertToString(group.RemoteDesktop_GatewayServerPassword) : string.Empty,
+            }) ;
         }
 
         return groupsSerializable;
@@ -636,7 +627,8 @@ public static class ProfileManager
                 Profiles = profiles,
 
                 // Convert passwort to secure string
-                RemoteDesktop_Password = !string.IsNullOrEmpty(groupSerializable.RemoteDesktop_Password) ? SecureStringHelper.ConvertToSecureString(groupSerializable.RemoteDesktop_Password) : null
+                RemoteDesktop_Password = !string.IsNullOrEmpty(groupSerializable.RemoteDesktop_Password) ? SecureStringHelper.ConvertToSecureString(groupSerializable.RemoteDesktop_Password) : null,
+                RemoteDesktop_GatewayServerPassword = !string.IsNullOrEmpty(groupSerializable.RemoteDesktop_GatewayPassword) ? SecureStringHelper.ConvertToSecureString(groupSerializable.RemoteDesktop_GatewayPassword) : null
             });
         }
 
