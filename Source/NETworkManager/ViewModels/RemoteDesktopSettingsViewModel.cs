@@ -206,90 +206,90 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
         }
     }
 
-    private bool _enableRDGatewayServer;
-    public bool EnableRDGatewayServer
+    private bool _enableGatewayServer;
+    public bool EnableGatewayServer
     {
-        get => _enableRDGatewayServer;
+        get => _enableGatewayServer;
         set
         {
-            if (value == _enableRDGatewayServer)
+            if (value == _enableGatewayServer)
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.RemoteDesktop_EnableRDGatewayServer = value;
+                SettingsManager.Current.RemoteDesktop_EnableGatewayServer = value;
 
-            _enableRDGatewayServer = value;
+            _enableGatewayServer = value;
             OnPropertyChanged();
         }
     }
 
-    private string _rdGatewayServerName;
-    public string RDGatewayServerName
+    private string _gatewayServerHostname;
+    public string GatewayServerHostname
     {
-        get => _rdGatewayServerName;
+        get => _gatewayServerHostname;
         set
         {
-            if (value == _rdGatewayServerName)
+            if (value == _gatewayServerHostname)
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.RemoteDesktop_RDGatewayServerName = value;
+                SettingsManager.Current.RemoteDesktop_GatewayServerHostname = value;
 
-            _rdGatewayServerName = value;
+            _gatewayServerHostname = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _rdGatewayServerBypassLocalAddresses;
-    public bool RDGatewayServerBypassLocalAddresses
+    private bool _gatewayServerBypassLocalAddresses;
+    public bool GatewayServerBypassLocalAddresses
     {
-        get => _rdGatewayServerBypassLocalAddresses;
+        get => _gatewayServerBypassLocalAddresses;
         set
         {
-            if (value == _rdGatewayServerBypassLocalAddresses)
+            if (value == _gatewayServerBypassLocalAddresses)
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.RemoteDesktop_RDGatewayServerBypassLocalAddresses = value;
+                SettingsManager.Current.RemoteDesktop_GatewayServerBypassLocalAddresses = value;
 
-            _rdGatewayServerBypassLocalAddresses = value;
+            _gatewayServerBypassLocalAddresses = value;
             OnPropertyChanged();
         }
     }
 
-    public IEnumerable<GatewayUserSelectedCredsSource> RDGatewayServerLogonMethods => System.Enum.GetValues(typeof(GatewayUserSelectedCredsSource)).Cast<GatewayUserSelectedCredsSource>();
+    public IEnumerable<GatewayUserSelectedCredsSource> GatewayServerLogonMethods => System.Enum.GetValues(typeof(GatewayUserSelectedCredsSource)).Cast<GatewayUserSelectedCredsSource>();
 
-    private GatewayUserSelectedCredsSource _rdGatewayServerLogonMethod;
+    private GatewayUserSelectedCredsSource _gatewayServerLogonMethod;
 
-    public GatewayUserSelectedCredsSource RDGatewayServerLogonMethod
+    public GatewayUserSelectedCredsSource GatewayServerLogonMethod
     {
-        get => _rdGatewayServerLogonMethod;
+        get => _gatewayServerLogonMethod;
         set
         {
-            if (value == _rdGatewayServerLogonMethod)
+            if (value == _gatewayServerLogonMethod)
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.RemoteDesktop_RDGatewayServerLogonMethod = value;
+                SettingsManager.Current.RemoteDesktop_GatewayServerLogonMethod = value;
 
-            _rdGatewayServerLogonMethod = value;
+            _gatewayServerLogonMethod = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _rdGatewayServerShareCredentialsWithRemoteComputer;
-    public bool RDGatewayServerShareCredentialsWithRemoteComputer
+    private bool _gatewayServerShareCredentialsWithRemoteComputer;
+    public bool GatewayServerShareCredentialsWithRemoteComputer
     {
-        get => _rdGatewayServerShareCredentialsWithRemoteComputer;
+        get => _gatewayServerShareCredentialsWithRemoteComputer;
         set
         {
-            if (value == _rdGatewayServerShareCredentialsWithRemoteComputer)
+            if (value == _gatewayServerShareCredentialsWithRemoteComputer)
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.RemoteDesktop_RDGatewayServerShareCredentialsWithRemoteComputer = value;
+                SettingsManager.Current.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer = value;
 
-            _rdGatewayServerShareCredentialsWithRemoteComputer = value;
+            _gatewayServerShareCredentialsWithRemoteComputer = value;
             OnPropertyChanged();
         }
     }
@@ -634,11 +634,11 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
         Port = SettingsManager.Current.RemoteDesktop_Port;
         EnableCredSspSupport = SettingsManager.Current.RemoteDesktop_EnableCredSspSupport;
         AuthenticationLevel = SettingsManager.Current.RemoteDesktop_AuthenticationLevel;
-        EnableRDGatewayServer = SettingsManager.Current.RemoteDesktop_EnableRDGatewayServer;
-        RDGatewayServerName = SettingsManager.Current.RemoteDesktop_RDGatewayServerName;
-        RDGatewayServerBypassLocalAddresses = SettingsManager.Current.RemoteDesktop_RDGatewayServerBypassLocalAddresses;
-        RDGatewayServerLogonMethod = RDGatewayServerLogonMethods.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_RDGatewayServerLogonMethod);
-        RDGatewayServerShareCredentialsWithRemoteComputer = SettingsManager.Current.RemoteDesktop_RDGatewayServerShareCredentialsWithRemoteComputer;
+        EnableGatewayServer = SettingsManager.Current.RemoteDesktop_EnableGatewayServer;
+        GatewayServerHostname = SettingsManager.Current.RemoteDesktop_GatewayServerHostname;
+        GatewayServerBypassLocalAddresses = SettingsManager.Current.RemoteDesktop_GatewayServerBypassLocalAddresses;
+        GatewayServerLogonMethod = GatewayServerLogonMethods.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_GatewayServerLogonMethod);
+        GatewayServerShareCredentialsWithRemoteComputer = SettingsManager.Current.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
         AudioRedirectionMode = AudioRedirectionModes.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_AudioRedirectionMode);
         AudioCaptureRedirectionMode = AudioCaptureRedirectionModes.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_AudioCaptureRedirectionMode);
         KeyboardHookMode = KeyboardHookModes.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_KeyboardHookMode);

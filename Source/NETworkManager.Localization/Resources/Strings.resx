@@ -3331,14 +3331,14 @@ Changes to this value will take effect after the application is restarted. Wheth
   <data name="BypassForLocalAddresses" xml:space="preserve">
     <value>Bypass for local addresses</value>
   </data>
-  <data name="EnableRDGatewayServer" xml:space="preserve">
-    <value>Enable RD Gateway server</value>
+  <data name="EnableGatewayServer" xml:space="preserve">
+    <value>Enable gateway server</value>
   </data>
   <data name="LogonMethod" xml:space="preserve">
     <value>Logon method</value>
   </data>
-  <data name="RDGatewayServer" xml:space="preserve">
-    <value>RD Gateway server</value>
+  <data name="GatewayServer" xml:space="preserve">
+    <value>Gateway server</value>
   </data>
   <data name="ServerName" xml:space="preserve">
     <value>Server name</value>
@@ -3346,13 +3346,13 @@ Changes to this value will take effect after the application is restarted. Wheth
   <data name="ShareGatewayCredentialsWithRemoteComputer" xml:space="preserve">
     <value>Share Gateway credentials with remote computer</value>
   </data>
-  <data name="RemoteDesktopRDGatewayServerLogonMethod_Any" xml:space="preserve">
+  <data name="RemoteDesktopGatewayServerLogonMethod_Any" xml:space="preserve">
     <value>Allow me to select later</value>
   </data>
-  <data name="RemoteDesktopRDGatewayServerLogonMethod_Smartcard" xml:space="preserve">
+  <data name="RemoteDesktopGatewayServerLogonMethod_Smartcard" xml:space="preserve">
     <value>Smart card</value>
   </data>
-  <data name="RemoteDesktopRDGatewayServerLogonMethod_Userpass" xml:space="preserve">
+  <data name="RemoteDesktopGatewayServerLogonMethod_Userpass" xml:space="preserve">
     <value>Ask for password (NTLM)</value>
   </data>
 </root>

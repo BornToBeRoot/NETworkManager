@@ -127,9 +127,9 @@ public static class GlobalStaticConfiguration
 
     public static int RemoteDesktop_ColorDepth = 32;
     public static int RemoteDesktop_Port => 3389;
-    public static bool RemoteDesktop_RDGatewayServerBypassLocalAddresses => true;
-    public static GatewayUserSelectedCredsSource RemoteDesktop_RDGatewayServerLogonMethod => GatewayUserSelectedCredsSource.Any;
-    public static bool RemoteDesktop_RDGatewayServerShareCredentialsWithRemoteComputer => true;
+    public static bool RemoteDesktop_GatewayServerBypassLocalAddresses => true;
+    public static GatewayUserSelectedCredsSource RemoteDesktop_GatewayServerLogonMethod => GatewayUserSelectedCredsSource.Any;
+    public static bool RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer => true;
     public static AudioRedirectionMode RemoteDesktop_AudioRedirectionMode => AudioRedirectionMode.PlayOnThisComputer;
     public static AudioCaptureRedirectionMode RemoteDesktop_AudioCaptureRedirectionMode => AudioCaptureRedirectionMode.DoNotRecord;
     public static KeyboardHookMode RemoteDesktop_KeyboardHookMode => KeyboardHookMode.OnTheRemoteComputer;

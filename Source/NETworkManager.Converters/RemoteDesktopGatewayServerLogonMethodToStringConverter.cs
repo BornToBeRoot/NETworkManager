@@ -9,7 +9,7 @@ namespace NETworkManager.Converters;
 /// <summary>
 /// Convert <see cref="GatewayUserSelectedCredsSource"/> to translated <see cref="string"/> or wise versa.
 /// </summary>
-public sealed class RemoteDesktopRDGatewayServerLogonMethodToStringConverter : IValueConverter
+public sealed class RemoteDesktopGatewayServerLogonMethodToStringConverter : IValueConverter
 {
     /// <summary>
     /// Convert <see cref="GatewayUserSelectedCredsSource"/> to translated <see cref="string"/>. 
@@ -24,7 +24,7 @@ public sealed class RemoteDesktopRDGatewayServerLogonMethodToStringConverter : I
         if (value is not GatewayUserSelectedCredsSource gatewayUserSelectedCredsSource)
             return "-/-";
 
-        return RemoteDesktopRDGatewayServerLogonMethodTranslator.GetInstance().Translate(gatewayUserSelectedCredsSource);
+        return RemoteDesktopGatewayServerLogonMethodTranslator.GetInstance().Translate(gatewayUserSelectedCredsSource);
     }
 
     /// <summary>

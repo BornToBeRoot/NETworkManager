@@ -4,7 +4,7 @@
     /// Specifies the RD Gateway server usage method.
     /// Docs: https://learn.microsoft.com/en-us/windows/win32/termserv/imsrdpclienttransportsettings-gatewayusagemethod
     /// </summary>
-    public enum GatewayUsageMethod : ulong
+    public enum GatewayUsageMethod : uint
     {
         /// <summary>
         /// Do not use an RD Gateway server. In the Remote Desktop Connection (RDC) client UI, 

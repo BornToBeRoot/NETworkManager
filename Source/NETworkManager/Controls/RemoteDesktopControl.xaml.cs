@@ -159,13 +159,40 @@ public partial class RemoteDesktopControl : UserControlBase
 
         RdpClient.CreateControl();
 
+        // General
         RdpClient.Server = _rdpSessionInfo.Hostname;
         RdpClient.AdvancedSettings9.RDPPort = _rdpSessionInfo.Port;
 
+        // Credentials
         if (_rdpSessionInfo.CustomCredentials)
         {
             RdpClient.UserName = _rdpSessionInfo.Username;
             RdpClient.AdvancedSettings9.ClearTextPassword = SecureStringHelper.ConvertToString(_rdpSessionInfo.Password);
+        }
+
+        // RD Gateway
+        if (_rdpSessionInfo.EnableRDGatewayServer && !string.IsNullOrEmpty(_rdpSessionInfo.GatewayServerHostname))
+        {
+            RdpClient.TransportSettings2.GatewayProfileUsageMethod = (uint)GatewayProfileUsageMethod.Explicit;
+            RdpClient.TransportSettings2.GatewayUsageMethod = (uint)(_rdpSessionInfo.GatewayServerBypassLocalAddresses ? GatewayUsageMethod.Detect : GatewayUsageMethod.Direct);
+            RdpClient.TransportSettings2.GatewayHostname = _rdpSessionInfo.GatewayServerHostname;
+            RdpClient.TransportSettings2.GatewayCredsSource = (uint)_rdpSessionInfo.GatewayServerLogonMethod;
+            RdpClient.TransportSettings2.GatewayCredSharing = _rdpSessionInfo.GatewayServerShareCredentialsWithRemoteComputer ? 1u : 0u;
+
+            // Credentials
+            /*
+            if(_rdpSessionInfo.GatewayServerLogonMethod == GatewayUserSelectedCredsSource.Userpass)
+            {
+                RdpClient.TransportSettings2.GatewayUsername = _rdpSessionInfo.GatewayServerUsername;
+                RdpClient.TransportSettings2.GatewayDomain = _rdpSessionInfo.GatewayServerDomain;
+                RdpClient.TransportSettings2.GatewayPassword = SecureStringHelper.ConvertToString(_rdpSessionInfo.GatewayServerPassword);
+            }
+            */
+        }
+        else
+        {
+            RdpClient.TransportSettings2.GatewayProfileUsageMethod = (uint)GatewayProfileUsageMethod.Default;
+            RdpClient.TransportSettings2.GatewayUsageMethod = (uint)GatewayUsageMethod.NoneDirect;
         }
 
         // AdvancedSettings
@@ -235,9 +262,11 @@ public partial class RemoteDesktopControl : UserControlBase
         RdpClient.OnConnected += RdpClient_OnConnected;
         RdpClient.OnDisconnected += RdpClient_OnDisconnected;
 
+        // Static settings
         RdpClient.AdvancedSettings9.EnableWindowsKey = 1;       // Enable window key
         RdpClient.AdvancedSettings9.allowBackgroundInput = 1;   // Background input to send keystrokes like ctrl+alt+del
 
+        // Connect
         RdpClient.Connect();
     }
 

@@ -2925,20 +2925,20 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enable gateway server ähnelt.
+        /// </summary>
+        public static string EnableGatewayServer {
+            get {
+                return ResourceManager.GetString("EnableGatewayServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Enable log ähnelt.
         /// </summary>
         public static string EnableLog {
             get {
                 return ResourceManager.GetString("EnableLog", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Enable RD Gateway server ähnelt.
-        /// </summary>
-        public static string EnableRDGatewayServer {
-            get {
-                return ResourceManager.GetString("EnableRDGatewayServer", resourceCulture);
             }
         }
         
@@ -3553,6 +3553,15 @@ namespace NETworkManager.Localization.Resources {
         public static string GatewayRouter {
             get {
                 return ResourceManager.GetString("GatewayRouter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Gateway server ähnelt.
+        /// </summary>
+        public static string GatewayServer {
+            get {
+                return ResourceManager.GetString("GatewayServer", resourceCulture);
             }
         }
         
@@ -6363,15 +6372,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die RD Gateway server ähnelt.
-        /// </summary>
-        public static string RDGatewayServer {
-            get {
-                return ResourceManager.GetString("RDGatewayServer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Received ähnelt.
         /// </summary>
         public static string Received {
@@ -7065,6 +7065,33 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Allow me to select later ähnelt.
+        /// </summary>
+        public static string RemoteDesktopGatewayServerLogonMethod_Any {
+            get {
+                return ResourceManager.GetString("RemoteDesktopGatewayServerLogonMethod_Any", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Smart card ähnelt.
+        /// </summary>
+        public static string RemoteDesktopGatewayServerLogonMethod_Smartcard {
+            get {
+                return ResourceManager.GetString("RemoteDesktopGatewayServerLogonMethod_Smartcard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ask for password (NTLM) ähnelt.
+        /// </summary>
+        public static string RemoteDesktopGatewayServerLogonMethod_Userpass {
+            get {
+                return ResourceManager.GetString("RemoteDesktopGatewayServerLogonMethod_Userpass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die On the remote computer ähnelt.
         /// </summary>
         public static string RemoteDesktopKeyboardHookMode_OnTheRemoteComputer {
@@ -7142,33 +7169,6 @@ namespace NETworkManager.Localization.Resources {
         public static string RemoteDesktopNetworkConnectionType_WAN {
             get {
                 return ResourceManager.GetString("RemoteDesktopNetworkConnectionType_WAN", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Allow me to select later ähnelt.
-        /// </summary>
-        public static string RemoteDesktopRDGatewayServerLogonMethod_Any {
-            get {
-                return ResourceManager.GetString("RemoteDesktopRDGatewayServerLogonMethod_Any", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Smart card ähnelt.
-        /// </summary>
-        public static string RemoteDesktopRDGatewayServerLogonMethod_Smartcard {
-            get {
-                return ResourceManager.GetString("RemoteDesktopRDGatewayServerLogonMethod_Smartcard", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Ask for password (NTLM) ähnelt.
-        /// </summary>
-        public static string RemoteDesktopRDGatewayServerLogonMethod_Userpass {
-            get {
-                return ResourceManager.GetString("RemoteDesktopRDGatewayServerLogonMethod_Userpass", resourceCulture);
             }
         }
         

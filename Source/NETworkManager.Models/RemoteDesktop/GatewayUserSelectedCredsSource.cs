@@ -4,7 +4,7 @@
     /// Specifies the RD Gateway authentication method.
     /// Docs: https://learn.microsoft.com/en-us/windows/win32/termserv/imsrdpclienttransportsettings-gatewayuserselectedcredssource
     /// </summary>
-    public enum GatewayUserSelectedCredsSource : ulong
+    public enum GatewayUserSelectedCredsSource : uint
     {
         /// <summary>
         /// Use a password (NTLM) as the authentication method for RD Gateway.

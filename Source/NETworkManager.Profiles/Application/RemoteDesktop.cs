@@ -26,6 +26,13 @@ public static class RemoteDesktop
             EnableCredSspSupport = SettingsManager.Current.RemoteDesktop_EnableCredSspSupport,
             AuthenticationLevel = SettingsManager.Current.RemoteDesktop_AuthenticationLevel,
 
+            // RD Gateway
+            EnableRDGatewayServer = SettingsManager.Current.RemoteDesktop_EnableGatewayServer,
+            GatewayServerHostname = SettingsManager.Current.RemoteDesktop_GatewayServerHostname,
+            GatewayServerBypassLocalAddresses = SettingsManager.Current.RemoteDesktop_GatewayServerBypassLocalAddresses,
+            GatewayServerLogonMethod = SettingsManager.Current.RemoteDesktop_GatewayServerLogonMethod,
+            GatewayServerShareCredentialsWithRemoteComputer = SettingsManager.Current.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer,
+            
             // Remote audio
             AudioRedirectionMode = SettingsManager.Current.RemoteDesktop_AudioRedirectionMode,
             AudioCaptureRedirectionMode = SettingsManager.Current.RemoteDesktop_AudioCaptureRedirectionMode,

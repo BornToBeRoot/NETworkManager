@@ -16,6 +16,11 @@ public class RemoteDesktopSessionInfo
     public int ColorDepth { get; set; }
     public bool EnableCredSspSupport { get; set; }
     public uint AuthenticationLevel { get; set; }
+    public bool EnableRDGatewayServer { get; set; }
+    public string GatewayServerHostname { get; set; }
+    public bool GatewayServerBypassLocalAddresses { get; set; }
+    public GatewayUserSelectedCredsSource GatewayServerLogonMethod { get; set; }
+    public bool GatewayServerShareCredentialsWithRemoteComputer { get; set; }
     public AudioRedirectionMode AudioRedirectionMode { get; set; }
     public AudioCaptureRedirectionMode AudioCaptureRedirectionMode { get; set; }
     public KeyboardHookMode KeyboardHookMode { get; set; }

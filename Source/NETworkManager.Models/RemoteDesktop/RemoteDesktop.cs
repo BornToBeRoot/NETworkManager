@@ -4,7 +4,7 @@ namespace NETworkManager.Models.RemoteDesktop;
 
 public static class RemoteDesktop
 {
-    public static List<string> ScreenResolutions => new List<string>
+    public static List<string> ScreenResolutions => new()
     {
         "640x480",
         "800x600",
@@ -20,7 +20,7 @@ public static class RemoteDesktop
         "1920x1080"
     };
 
-    public static List<int> ColorDepths => new List<int>
+    public static List<int> ColorDepths => new()
     {
         15,
         16,
@@ -30,7 +30,7 @@ public static class RemoteDesktop
 
     public static RemoteDesktopKeystrokeInfo GetKeystroke(Keystroke keystroke)
     {
-        RemoteDesktopKeystrokeInfo info = new RemoteDesktopKeystrokeInfo();
+        RemoteDesktopKeystrokeInfo info = new();
 
         switch (keystroke)
         {

@@ -1995,76 +1995,76 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _remoteDesktop_EnableRDGatewayServer;
-    public bool RemoteDesktop_EnableRDGatewayServer
+    private bool _remoteDesktop_EnableGatewayServer;
+    public bool RemoteDesktop_EnableGatewayServer
     {
-        get => _remoteDesktop_EnableRDGatewayServer;
+        get => _remoteDesktop_EnableGatewayServer;
         set
         {
-            if (value == _remoteDesktop_EnableRDGatewayServer)
+            if (value == _remoteDesktop_EnableGatewayServer)
                 return;
 
-            _remoteDesktop_EnableRDGatewayServer = value;
+            _remoteDesktop_EnableGatewayServer = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
     }
 
-    private string _remoteDesktop_RDGatewayServerName;
-    public string RemoteDesktop_RDGatewayServerName
+    private string _remoteDesktop_GatewayServerHostname;
+    public string RemoteDesktop_GatewayServerHostname
     {
-        get => _remoteDesktop_RDGatewayServerName;
+        get => _remoteDesktop_GatewayServerHostname;
         set
         {
-            if (value == _remoteDesktop_RDGatewayServerName)
+            if (value == _remoteDesktop_GatewayServerHostname)
                 return;
 
-            _remoteDesktop_RDGatewayServerName = value;
+            _remoteDesktop_GatewayServerHostname = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
     }
 
-    private bool _remoteDesktop_RDGatewayServerBypassLocalAddresses = GlobalStaticConfiguration.RemoteDesktop_RDGatewayServerBypassLocalAddresses;
-    public bool RemoteDesktop_RDGatewayServerBypassLocalAddresses
+    private bool _remoteDesktop_GatewayServerBypassLocalAddresses = GlobalStaticConfiguration.RemoteDesktop_GatewayServerBypassLocalAddresses;
+    public bool RemoteDesktop_GatewayServerBypassLocalAddresses
     {
-        get => _remoteDesktop_RDGatewayServerBypassLocalAddresses;
+        get => _remoteDesktop_GatewayServerBypassLocalAddresses;
         set
         {
-            if (value == _remoteDesktop_RDGatewayServerBypassLocalAddresses)
+            if (value == _remoteDesktop_GatewayServerBypassLocalAddresses)
                 return;
 
-            _remoteDesktop_RDGatewayServerBypassLocalAddresses = value;
+            _remoteDesktop_GatewayServerBypassLocalAddresses = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
     }
 
-    private GatewayUserSelectedCredsSource _remoteDesktop_RDGatewayServerLogonMethod = GlobalStaticConfiguration.RemoteDesktop_RDGatewayServerLogonMethod;
-    public GatewayUserSelectedCredsSource RemoteDesktop_RDGatewayServerLogonMethod
+    private GatewayUserSelectedCredsSource _remoteDesktop_GatewayServerLogonMethod = GlobalStaticConfiguration.RemoteDesktop_GatewayServerLogonMethod;
+    public GatewayUserSelectedCredsSource RemoteDesktop_GatewayServerLogonMethod
     {
-        get => _remoteDesktop_RDGatewayServerLogonMethod;
+        get => _remoteDesktop_GatewayServerLogonMethod;
         set
         {
-            if (value == _remoteDesktop_RDGatewayServerLogonMethod)
+            if (value == _remoteDesktop_GatewayServerLogonMethod)
                 return;
 
-            _remoteDesktop_RDGatewayServerLogonMethod = value;
+            _remoteDesktop_GatewayServerLogonMethod = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
     }
 
-    private bool _remoteDesktop_RDGatewayServerShareCredentialsWithRemoteComputer = GlobalStaticConfiguration.RemoteDesktop_RDGatewayServerShareCredentialsWithRemoteComputer;
-    public bool RemoteDesktop_RDGatewayServerShareCredentialsWithRemoteComputer
+    private bool _remoteDesktop_GatewayServerShareCredentialsWithRemoteComputer = GlobalStaticConfiguration.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+    public bool RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer
     {
-        get => _remoteDesktop_RDGatewayServerShareCredentialsWithRemoteComputer;
+        get => _remoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
         set
         {
-            if (value == _remoteDesktop_RDGatewayServerShareCredentialsWithRemoteComputer)
+            if (value == _remoteDesktop_GatewayServerShareCredentialsWithRemoteComputer)
                 return;
 
-            _remoteDesktop_RDGatewayServerShareCredentialsWithRemoteComputer = value;
+            _remoteDesktop_GatewayServerShareCredentialsWithRemoteComputer = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }

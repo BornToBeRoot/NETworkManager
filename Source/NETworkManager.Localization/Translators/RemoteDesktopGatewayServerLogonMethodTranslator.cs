@@ -6,12 +6,12 @@ namespace NETworkManager.Localization.Translators;
 /// <summary>
 /// Class to translate <see cref="GatewayUserSelectedCredsSource"/>.
 /// </summary>
-public class RemoteDesktopRDGatewayServerLogonMethodTranslator : SingletonBase<RemoteDesktopRDGatewayServerLogonMethodTranslator>, ILocalizationStringTranslator
+public class RemoteDesktopGatewayServerLogonMethodTranslator : SingletonBase<RemoteDesktopGatewayServerLogonMethodTranslator>, ILocalizationStringTranslator
 {
     /// <summary>
     /// Constant to identify the strings in the language files.
     /// </summary>
-    private const string _identifier = "RemoteDesktopRDGatewayServerLogonMethod_";
+    private const string _identifier = "RemoteDesktopGatewayServerLogonMethod_";
 
     /// <summary>
     /// Method to translate <see cref="GatewayUserSelectedCredsSource"/>.
