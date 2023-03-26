@@ -27,6 +27,9 @@ Release date: **xx.xx.2023**
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="\_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="\_blank"}
 - Add documentation for:
+  - Application > Connections [#2109](https://github.com/BornToBeRoot/NETworkManager/pull/2109){:target="\_blank"}
+  - Application > Listerers [#2109](https://github.com/BornToBeRoot/NETworkManager/pull/2109){:target="\_blank"}
+  - Application > ARP Table [#2109](https://github.com/BornToBeRoot/NETworkManager/pull/2109){:target="\_blank"}
   - Settings > Window [#2105](https://github.com/BornToBeRoot/NETworkManager/pull/2105){:target="\_blank"}
   - Settings > Status [#2105](https://github.com/BornToBeRoot/NETworkManager/pull/2105){:target="\_blank"}
   - Settings > HotKeys [#2105](https://github.com/BornToBeRoot/NETworkManager/pull/2105){:target="\_blank"}
