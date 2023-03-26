@@ -10,4 +10,6 @@ permalink: /Documentation/Application/Connections
 
 # Connections
 
+In **Connections** you can see all the connections with source and destination IP addresses and port that are currently running on your computer.
+
 ![Connections](23_Connections.png)
