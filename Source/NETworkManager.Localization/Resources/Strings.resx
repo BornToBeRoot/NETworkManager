@@ -3328,4 +3328,31 @@ Changes to this value will take effect after the application is restarted. Wheth
   <data name="WarnMessage_MultipleInstances" xml:space="preserve">
     <value>Enabling this setting is not recommended. Multiple instances of the application share the same settings and profile files. The last instance to be closed may overwrite changes made by other instances.</value>
   </data>
+  <data name="BypassForLocalAddresses" xml:space="preserve">
+    <value>Bypass for local addresses</value>
+  </data>
+  <data name="EnableRDGatewayServer" xml:space="preserve">
+    <value>Enable RD Gateway server</value>
+  </data>
+  <data name="LogonMethod" xml:space="preserve">
+    <value>Logon method</value>
+  </data>
+  <data name="RDGatewayServer" xml:space="preserve">
+    <value>RD Gateway server</value>
+  </data>
+  <data name="ServerName" xml:space="preserve">
+    <value>Server name</value>
+  </data>
+  <data name="ShareGatewayCredentialsWithRemoteComputer" xml:space="preserve">
+    <value>Share Gateway credentials with remote computer</value>
+  </data>
+  <data name="RemoteDesktopRDGatewayServerLogonMethod_Any" xml:space="preserve">
+    <value>Allow me to select later</value>
+  </data>
+  <data name="RemoteDesktopRDGatewayServerLogonMethod_Smartcard" xml:space="preserve">
+    <value>Smart card</value>
+  </data>
+  <data name="RemoteDesktopRDGatewayServerLogonMethod_Userpass" xml:space="preserve">
+    <value>Ask for password (NTLM)</value>
+  </data>
 </root>

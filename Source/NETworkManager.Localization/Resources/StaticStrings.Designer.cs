@@ -142,6 +142,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die gw.example.com ähnelt.
+        /// </summary>
+        public static string ExampleGatewayDomain {
+            get {
+                return ResourceManager.GetString("ExampleGatewayDomain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Servers ähnelt.
         /// </summary>
         public static string ExampleGroupServers {
@@ -156,6 +165,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ExampleGroupSwitche {
             get {
                 return ResourceManager.GetString("ExampleGroupSwitche", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die server-01.example.com ähnelt.
+        /// </summary>
+        public static string ExampleHostFQDN {
+            get {
+                return ResourceManager.GetString("ExampleHostFQDN", resourceCulture);
             }
         }
         
@@ -201,6 +219,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ExampleHostRange {
             get {
                 return ResourceManager.GetString("ExampleHostRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die server-01.example.com:3389 ähnelt.
+        /// </summary>
+        public static string ExampleHostWithRDPPort {
+            get {
+                return ResourceManager.GetString("ExampleHostWithRDPPort", resourceCulture);
             }
         }
         

@@ -50,7 +50,7 @@
                 </TextBox.Text>
             </TextBox>
             <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Host}" />
-            <ComboBox x:Name="ComboBoxHost" Grid.Column="2" Grid.Row="1" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}" IsEnabled="{Binding ConnectAs, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource EditableComboBox}">
+            <ComboBox x:Name="ComboBoxHost" Grid.Column="2" Grid.Row="1" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostWithRDPPort}" IsEnabled="{Binding ConnectAs, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
