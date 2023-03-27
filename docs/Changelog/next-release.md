@@ -20,6 +20,8 @@ Release date: **xx.xx.2023**
   - Support for Remote Desktop Gateway server added [#2108](https://github.com/BornToBeRoot/NETworkManager/pull/2108){:target="\_blank"}
 
 ## Improvements
+- Remote Desktop
+  - Domain added to credentials [#2108](https://github.com/BornToBeRoot/NETworkManager/pull/2108){:target="\_blank"}
 
 ## Bugfixes
 - Status window is now automatically closed again if it was opened by a network change event [#2105](https://github.com/BornToBeRoot/NETworkManager/pull/2105){:target="\_blank"}
@@ -29,6 +31,7 @@ Release date: **xx.xx.2023**
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="\_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="\_blank"}
 - Add documentation for:
+  - Application > Lookup [#2112](https://github.com/BornToBeRoot/NETworkManager/pull/2112){:target="\_blank"}
   - Application > Connections [#2109](https://github.com/BornToBeRoot/NETworkManager/pull/2109){:target="\_blank"}
   - Application > Listerers [#2109](https://github.com/BornToBeRoot/NETworkManager/pull/2109){:target="\_blank"}
   - Application > ARP Table [#2109](https://github.com/BornToBeRoot/NETworkManager/pull/2109){:target="\_blank"}
