@@ -3358,4 +3358,7 @@ Changes to this value will take effect after the application is restarted. Wheth
   <data name="UseGatewayCredentials" xml:space="preserve">
     <value>Use gateway credentials</value>
   </data>
+  <data name="RemoteDesktopDisconnectReason_50331661" xml:space="preserve">
+    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server is temporarily unavailable. Try reconnecting later or contact your network administrator for assistance.</value>
+  </data>
 </root>

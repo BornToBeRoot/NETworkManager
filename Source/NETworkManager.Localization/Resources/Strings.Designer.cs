@@ -6624,6 +6624,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Your computer can&apos;t connect to the remote computer because the Remote Desktop Gateway server is temporarily unavailable. Try reconnecting later or contact your network administrator for assistance. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331661 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331661", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Socket closed. ähnelt.
         /// </summary>
         public static string RemoteDesktopDisconnectReason_AtClientWinsockFDCLOSE {

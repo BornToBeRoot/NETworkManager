@@ -346,111 +346,68 @@ public partial class RemoteDesktopControl : UserControlBase
         Disconnect();
     }
 
+    /// <summary>
+    /// Get disconnect reason by code.
+    /// Docs: https://social.technet.microsoft.com/wiki/contents/articles/37870.remote-desktop-client-troubleshooting-disconnect-codes-and-reasons.aspx
+    /// </summary>
+    /// <param name="reason">Disconnect code</param>
+    /// <returns>Disconnect message</returns>
     private static string GetDisconnectReason(int reason)
     {
-        switch (reason)
+        return reason switch
         {
-            case 0:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_NoInfo;
-            case 1:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_LocalNotError;
-            case 2:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_RemoteByUser;
-            case 3:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_ByServer;
-            case 4:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached;
-            case 260:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_DNSLookupFailed;
-            case 262:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_OutOfMemory;
-            case 264:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_ConnectionTimedOut;
-            case 516:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SocketConnectFailed;
-            case 518:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_OutOfMemory2;
-            case 520:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_HostNotFound;
-            case 772:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_WinsockSendFailed;
-            case 774:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_OutOfMemory3;
-            case 776:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_InvalidIPAddr;
-            case 1028:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SocketRecvFailed;
-            case 1030:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_InvalidSecurityData;
-            case 1032:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_InternalError;
-            case 1286:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_InvalidEncryption;
-            case 1288:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_DNSLookupFailed2;
-            case 1540:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_GetHostByNameFailed;
-            case 1542:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_InvalidServerSecurityInfo;
-            case 1544:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_TimerError;
-            case 1796:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_TimeoutOccurred;
-            case 1798:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_ServerCertificateUnpackErr;
-            case 2052:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_InvalidIP;
-            case 2055:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrLogonFailure;
-            case 2056:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_LicensingFailed;
-            case 2308:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_AtClientWinsockFDCLOSE;
-            case 2310:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_InternalSecurityError;
-            case 2312:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_LicensingTimeout;
-            case 2566:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_InternalSecurityError2;
-            case 2567:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrNoSuchUser;
-            case 2822:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_EncryptionError;
-            case 2823:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrAccountDisabled;
-            case 3078:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_DecryptionError;
-            case 3079:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrAccountRestriction;
-            case 3080:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_ClientDecompressionError;
-            case 3335:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrAccountLockedOut;
-            case 3591:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrAccountExpired;
-            case 3847:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrPasswordExpired;
-            case 4360:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_UnableToReconnectToRemoteSession;
-            case 4615:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrPasswordMustChange;
-            case 5639:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrDelegationPolicy;
-            case 5895:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrPolicyNTLMOnly;
-            case 6151:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrNoAuthenticatingAuthority;
-            case 6919:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrCertExpired;
-            case 7175:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrSmartcardWrongPIN;
-            case 8455:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrFreshCredRequiredByServer;
-            case 8711:
-                return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrSmartcardCardBlocked;
-            default:
-                return "Disconnect reason code " + reason + " not found in resources!" + Environment.NewLine + "(You can report this on GitHub)";
-        }
+            0 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_NoInfo,
+            1 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_LocalNotError,
+            2 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_RemoteByUser,
+            3 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_ByServer,
+            4 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached,
+            260 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_DNSLookupFailed,
+            262 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_OutOfMemory,
+            264 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_ConnectionTimedOut,
+            516 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_SocketConnectFailed,
+            518 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_OutOfMemory2,
+            520 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_HostNotFound,
+            772 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_WinsockSendFailed,
+            774 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_OutOfMemory3,
+            776 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_InvalidIPAddr,
+            1028 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_SocketRecvFailed,
+            1030 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_InvalidSecurityData,
+            1032 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_InternalError,
+            1286 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_InvalidEncryption,
+            1288 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_DNSLookupFailed2,
+            1540 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_GetHostByNameFailed,
+            1542 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_InvalidServerSecurityInfo,
+            1544 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_TimerError,
+            1796 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_TimeoutOccurred,
+            1798 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_ServerCertificateUnpackErr,
+            2052 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_InvalidIP,
+            2055 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrLogonFailure,
+            2056 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_LicensingFailed,
+            2308 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_AtClientWinsockFDCLOSE,
+            2310 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_InternalSecurityError,
+            2312 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_LicensingTimeout,
+            2566 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_InternalSecurityError2,
+            2567 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrNoSuchUser,
+            2822 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_EncryptionError,
+            2823 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrAccountDisabled,
+            3078 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_DecryptionError,
+            3079 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrAccountRestriction,
+            3080 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_ClientDecompressionError,
+            3335 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrAccountLockedOut,
+            3591 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrAccountExpired,
+            3847 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrPasswordExpired,
+            4360 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_UnableToReconnectToRemoteSession,
+            4615 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrPasswordMustChange,
+            5639 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrDelegationPolicy,
+            5895 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrPolicyNTLMOnly,
+            6151 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrNoAuthenticatingAuthority,
+            6919 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrCertExpired,
+            7175 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrSmartcardWrongPIN,
+            8455 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrFreshCredRequiredByServer,
+            8711 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrSmartcardCardBlocked,
+            50331661 => Localization.Resources.Strings.RemoteDesktopDisconnectReason_50331661,
+            _ => "Disconnect reason code " + reason + " not found in resources!" + Environment.NewLine + "(Please report this on GitHub issues)",
+        };
     }
     #endregion
 
