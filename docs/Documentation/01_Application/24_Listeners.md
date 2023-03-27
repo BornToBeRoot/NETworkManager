@@ -12,7 +12,7 @@ permalink: /Documentation/Application/Listeners
 
 In **Listeners** you can see all the listeners with IP addresses and port that are currently running on your computer.
 
-{. .note}
+{: .note}
 Right-click on the result to copy or export the information.
 
 ![Listeners](24_Listeners.png)
