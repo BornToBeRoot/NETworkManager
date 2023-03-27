@@ -5,11 +5,11 @@ namespace NETworkManager.Models.RemoteDesktop;
 public class RemoteDesktopSessionInfo
 {
     public string Hostname { get; set; }
-    public int Port { get; set; }
     public bool UseCredentials { get; set; }
     public string Username { get; set; }
     public string Domain { get; set; }
     public SecureString Password { get; set; }
+    public int Port { get; set; }
     public bool AdjustScreenAutomatically { get; set; }
     public bool UseCurrentViewSize { get; set; }
     public int DesktopWidth { get; set; }
@@ -17,7 +17,7 @@ public class RemoteDesktopSessionInfo
     public int ColorDepth { get; set; }
     public bool EnableCredSspSupport { get; set; }
     public uint AuthenticationLevel { get; set; }
-    public bool EnableRDGatewayServer { get; set; }
+    public bool EnableGatewayServer { get; set; }
     public string GatewayServerHostname { get; set; }
     public bool GatewayServerBypassLocalAddresses { get; set; }
     public GatewayUserSelectedCredsSource GatewayServerLogonMethod { get; set; }

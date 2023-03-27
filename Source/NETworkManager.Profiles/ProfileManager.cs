@@ -559,6 +559,7 @@ public static class ProfileManager
                 profilesSerializable.Add(new ProfileInfoSerializable(profile)
                 {
                     RemoteDesktop_Password = profile.RemoteDesktop_Password != null ? SecureStringHelper.ConvertToString(profile.RemoteDesktop_Password) : string.Empty,
+                    RemoteDesktop_GatewayServerPassword = profile.RemoteDesktop_GatewayServerPassword != null ? SecureStringHelper.ConvertToString(profile.RemoteDesktop_GatewayServerPassword) : string.Empty,
                 });
             }
 
@@ -566,7 +567,7 @@ public static class ProfileManager
             {
                 Profiles = profilesSerializable,
                 RemoteDesktop_Password = group.RemoteDesktop_Password != null ? SecureStringHelper.ConvertToString(group.RemoteDesktop_Password) : string.Empty,
-                RemoteDesktop_GatewayPassword = group.RemoteDesktop_GatewayServerPassword != null ? SecureStringHelper.ConvertToString(group.RemoteDesktop_GatewayServerPassword) : string.Empty,
+                RemoteDesktop_GatewayServerPassword = group.RemoteDesktop_GatewayServerPassword != null ? SecureStringHelper.ConvertToString(group.RemoteDesktop_GatewayServerPassword) : string.Empty,
             }) ;
         }
 
@@ -616,7 +617,8 @@ public static class ProfileManager
             {
                 ProfileInfo profile = new(profileSerializable)
                 {
-                    RemoteDesktop_Password = !string.IsNullOrEmpty(profileSerializable.RemoteDesktop_Password) ? SecureStringHelper.ConvertToSecureString(profileSerializable.RemoteDesktop_Password) : null
+                    RemoteDesktop_Password = !string.IsNullOrEmpty(profileSerializable.RemoteDesktop_Password) ? SecureStringHelper.ConvertToSecureString(profileSerializable.RemoteDesktop_Password) : null,
+                    RemoteDesktop_GatewayServerPassword = !string.IsNullOrEmpty(profileSerializable.RemoteDesktop_GatewayServerPassword) ? SecureStringHelper.ConvertToSecureString(profileSerializable.RemoteDesktop_GatewayServerPassword) : null,
                 };
 
                 profiles.Add(profile);
@@ -628,7 +630,7 @@ public static class ProfileManager
 
                 // Convert passwort to secure string
                 RemoteDesktop_Password = !string.IsNullOrEmpty(groupSerializable.RemoteDesktop_Password) ? SecureStringHelper.ConvertToSecureString(groupSerializable.RemoteDesktop_Password) : null,
-                RemoteDesktop_GatewayServerPassword = !string.IsNullOrEmpty(groupSerializable.RemoteDesktop_GatewayPassword) ? SecureStringHelper.ConvertToSecureString(groupSerializable.RemoteDesktop_GatewayPassword) : null
+                RemoteDesktop_GatewayServerPassword = !string.IsNullOrEmpty(groupSerializable.RemoteDesktop_GatewayServerPassword) ? SecureStringHelper.ConvertToSecureString(groupSerializable.RemoteDesktop_GatewayServerPassword) : null
             });
         }
 

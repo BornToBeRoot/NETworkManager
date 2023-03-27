@@ -17,7 +17,7 @@ public class GroupInfoSerializable : GroupInfo
     /// <summary>
     /// Override the default remote desktop gateway password to make it serializable.
     /// </summary>
-    public new string RemoteDesktop_GatewayPassword { get; set; }
+    public new string RemoteDesktop_GatewayServerPassword { get; set; }
 
     public GroupInfoSerializable()
     {

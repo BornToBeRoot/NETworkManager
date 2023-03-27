@@ -14,6 +14,7 @@ using NETworkManager.Profiles;
 using NETworkManager.Models.PuTTY;
 using System.Security;
 using NETworkManager.Models;
+using Microsoft.PowerShell.Commands;
 
 namespace NETworkManager.ViewModels;
 
@@ -578,6 +579,20 @@ public class ProfileViewModel : ViewModelBase
         }
     }
 
+    private string _remoteDesktop_Domain;
+    public string RemoteDesktop_Domain
+    {
+        get => _remoteDesktop_Domain;
+        set
+        {
+            if (value == _remoteDesktop_Domain)
+                return;
+
+            _remoteDesktop_Domain = value;
+            OnPropertyChanged();
+        }
+    }
+
     private bool _remoteDesktop_IsPasswordEmpty = true; // Initial it's empty
     public bool RemoteDesktop_IsPasswordEmpty
     {
@@ -593,10 +608,6 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private SecureString _remoteDesktop_Password;
-
-    /// <summary>
-    /// RemoteDesktop password as secure string.
-    /// </summary>
     public SecureString RemoteDesktop_Password
     {
         get => _remoteDesktop_Password;
@@ -859,6 +870,180 @@ public class ProfileViewModel : ViewModelBase
                 return;
 
             _remoteDesktop_AuthenticationLevel = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _remoteDesktop_OverrideGatewayServer;
+    public bool RemoteDesktop_OverrideGatewayServer
+    {
+        get => _remoteDesktop_OverrideGatewayServer;
+        set
+        {
+            if (value == _remoteDesktop_OverrideGatewayServer)
+                return;
+
+            _remoteDesktop_OverrideGatewayServer = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _remoteDesktop_EnableGatewayServer;
+    public bool RemoteDesktop_EnableGatewayServer
+    {
+        get => _remoteDesktop_EnableGatewayServer;
+        set
+        {
+            if (value == _remoteDesktop_EnableGatewayServer)
+                return;
+
+            _remoteDesktop_EnableGatewayServer = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _remoteDesktop_GatewayServerHostname;
+    public string RemoteDesktop_GatewayServerHostname
+    {
+        get => _remoteDesktop_GatewayServerHostname;
+        set
+        {
+            if (value == _remoteDesktop_GatewayServerHostname)
+                return;
+
+            _remoteDesktop_GatewayServerHostname = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _remoteDesktop_GatewayServerBypassLocalAddresses;
+    public bool RemoteDesktop_GatewayServerBypassLocalAddresses
+    {
+        get => _remoteDesktop_GatewayServerBypassLocalAddresses;
+        set
+        {
+            if (value == _remoteDesktop_GatewayServerBypassLocalAddresses)
+                return;
+
+            _remoteDesktop_GatewayServerBypassLocalAddresses = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public IEnumerable<GatewayUserSelectedCredsSource> RemoteDesktop_GatewayServerLogonMethods => Enum.GetValues(typeof(GatewayUserSelectedCredsSource)).Cast<GatewayUserSelectedCredsSource>();
+
+    private GatewayUserSelectedCredsSource _remoteDesktop_GatewayServerLogonMethod;
+
+    public GatewayUserSelectedCredsSource RemoteDesktop_GatewayServerLogonMethod
+    {
+        get => _remoteDesktop_GatewayServerLogonMethod;
+        set
+        {
+            if (Equals(value, _remoteDesktop_GatewayServerLogonMethod))
+                return;
+
+            _remoteDesktop_GatewayServerLogonMethod = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _remoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+    public bool RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer
+    {
+        get => _remoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+        set
+        {
+            if (value == _remoteDesktop_GatewayServerShareCredentialsWithRemoteComputer)
+                return;
+
+            _remoteDesktop_GatewayServerShareCredentialsWithRemoteComputer = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _remoteDesktop_UseGatewayServerCredentials;
+    public bool RemoteDesktop_UseGatewayServerCredentials
+    {
+        get => _remoteDesktop_UseGatewayServerCredentials;
+        set
+        {
+            if (value == _remoteDesktop_UseGatewayServerCredentials)
+                return;
+
+            _remoteDesktop_UseGatewayServerCredentials = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _remoteDesktop_GatewayServerUsername;
+    public string RemoteDesktop_GatewayServerUsername
+    {
+        get => _remoteDesktop_GatewayServerUsername;
+        set
+        {
+            if (value == _remoteDesktop_GatewayServerUsername)
+                return;
+
+            _remoteDesktop_GatewayServerUsername = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _remoteDesktop_GatewayServerDomain;
+    public string RemoteDesktop_GatewayServerDomain
+    {
+        get => _remoteDesktop_GatewayServerDomain;
+        set
+        {
+            if (value == _remoteDesktop_GatewayServerDomain)
+                return;
+
+            _remoteDesktop_GatewayServerDomain = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _remoteDesktop_IsGatewayServerPasswordEmpty = true; // Initial it's empty
+    public bool RemoteDesktop_IsGatewayServerPasswordEmpty
+    {
+        get => _remoteDesktop_IsGatewayServerPasswordEmpty;
+        set
+        {
+            if (value == _remoteDesktop_IsGatewayServerPasswordEmpty)
+                return;
+
+            _remoteDesktop_IsGatewayServerPasswordEmpty = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private SecureString _remoteDesktop_GatewayServerPassword;
+    public SecureString RemoteDesktop_GatewayServerPassword
+    {
+        get => _remoteDesktop_GatewayServerPassword;
+        set
+        {
+            if (value == _remoteDesktop_GatewayServerPassword)
+                return;
+
+            // Validate the password string
+            RemoteDesktop_IsGatewayServerPasswordEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
+
+            _remoteDesktop_GatewayServerPassword = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _remoteDesktop_GatewayServerPasswordChanged;
+    public bool RemoteDesktop_GatewayServerPasswordChanged
+    {
+        get => _remoteDesktop_GatewayServerPasswordChanged;
+        set
+        {
+            if (value == _remoteDesktop_GatewayServerPasswordChanged)
+                return;
+
+            _remoteDesktop_GatewayServerPasswordChanged = value;
             OnPropertyChanged();
         }
     }
@@ -2286,6 +2471,7 @@ public class ProfileViewModel : ViewModelBase
         RemoteDesktop_Host = profileInfo.RemoteDesktop_Host;
         RemoteDesktop_UseCredentials = profileInfo.RemoteDesktop_UseCredentials;
         RemoteDesktop_Username = profileInfo.RemoteDesktop_Username;
+        RemoteDesktop_Domain = profileInfo.RemoteDesktop_Domain;
         RemoteDesktop_Password = profileInfo.RemoteDesktop_Password;
         RemoteDesktop_OverrideDisplay = profileInfo.RemoteDesktop_OverrideDisplay;
         RemoteDesktop_AdjustScreenAutomatically = profileInfo.RemoteDesktop_AdjustScreenAutomatically;
@@ -2303,6 +2489,16 @@ public class ProfileViewModel : ViewModelBase
         RemoteDesktop_EnableCredSspSupport = profileInfo.RemoteDesktop_EnableCredSspSupport;
         RemoteDesktop_OverrideAuthenticationLevel = profileInfo.RemoteDesktop_OverrideAuthenticationLevel;
         RemoteDesktop_AuthenticationLevel = profileInfo.RemoteDesktop_AuthenticationLevel;
+        RemoteDesktop_OverrideGatewayServer = profileInfo.RemoteDesktop_OverrideGatewayServer;
+        RemoteDesktop_EnableGatewayServer = profileInfo.RemoteDesktop_EnableGatewayServer;
+        RemoteDesktop_GatewayServerHostname = profileInfo.RemoteDesktop_GatewayServerHostname;
+        RemoteDesktop_GatewayServerBypassLocalAddresses = profileInfo.RemoteDesktop_GatewayServerBypassLocalAddresses;
+        RemoteDesktop_GatewayServerLogonMethod = profileInfo.RemoteDesktop_GatewayServerLogonMethod;
+        RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer = profileInfo.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+        RemoteDesktop_UseGatewayServerCredentials = profileInfo.RemoteDesktop_UseGatewayServerCredentials;
+        RemoteDesktop_GatewayServerUsername = profileInfo.RemoteDesktop_GatewayServerUsername;
+        RemoteDesktop_GatewayServerDomain = profileInfo.RemoteDesktop_GatewayServerDomain;
+        RemoteDesktop_GatewayServerPassword = profileInfo.RemoteDesktop_GatewayServerPassword;
         RemoteDesktop_OverrideAudioRedirectionMode = profileInfo.RemoteDesktop_OverrideAudioRedirectionMode;
         RemoteDesktop_AudioRedirectionMode = RemoteDesktop_AudioRedirectionModes.FirstOrDefault(x => x == profileInfo.RemoteDesktop_AudioRedirectionMode);
         RemoteDesktop_OverrideAudioCaptureRedirectionMode = profileInfo.RemoteDesktop_OverrideAudioCaptureRedirectionMode;
@@ -2449,14 +2645,20 @@ public class ProfileViewModel : ViewModelBase
 
     public ICommand RemoteDesktopPasswordChangedCommand => new RelayCommand(p => RemoteDesktopPasswordChangedAction());
 
-    #endregion
-
-    #region Methods      
     private void RemoteDesktopPasswordChangedAction()
     {
         RemoteDesktop_PasswordChanged = true;
     }
 
+    public ICommand RemoteDesktopGatewayServerPasswordChangedCommand => new RelayCommand(p => RemoteDesktopGatewayServerPasswordChangedAction());
+
+    private void RemoteDesktopGatewayServerPasswordChangedAction()
+    {
+        RemoteDesktop_GatewayServerPasswordChanged = true;
+    }
+    #endregion
+
+    #region Methods      
     private void ChangeNetworkConnectionTypeSettings(NetworkConnectionType connectionSpeed)
     {
         switch (connectionSpeed)

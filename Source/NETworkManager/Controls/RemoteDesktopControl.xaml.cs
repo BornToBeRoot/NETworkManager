@@ -161,7 +161,6 @@ public partial class RemoteDesktopControl : UserControlBase
 
         // General
         RdpClient.Server = _rdpSessionInfo.Hostname;
-        RdpClient.AdvancedSettings9.RDPPort = _rdpSessionInfo.Port;
 
         // Credentials
         if (_rdpSessionInfo.UseCredentials)
@@ -174,8 +173,29 @@ public partial class RemoteDesktopControl : UserControlBase
             RdpClient.AdvancedSettings9.ClearTextPassword = SecureStringHelper.ConvertToString(_rdpSessionInfo.Password);
         }
 
-        // RD Gateway
-        if (_rdpSessionInfo.EnableRDGatewayServer && !string.IsNullOrEmpty(_rdpSessionInfo.GatewayServerHostname))
+        // Network
+        RdpClient.AdvancedSettings9.RDPPort = _rdpSessionInfo.Port;
+
+        // Display
+        RdpClient.ColorDepth = _rdpSessionInfo.ColorDepth;      // 8, 15, 16, 24
+
+        if (_rdpSessionInfo.AdjustScreenAutomatically || _rdpSessionInfo.UseCurrentViewSize)
+        {
+            RdpClient.DesktopWidth = (int)RdpGrid.ActualWidth;
+            RdpClient.DesktopHeight = (int)RdpGrid.ActualHeight;
+        }
+        else
+        {
+            RdpClient.DesktopWidth = _rdpSessionInfo.DesktopWidth;
+            RdpClient.DesktopHeight = _rdpSessionInfo.DesktopHeight;
+        }
+
+        // Authentication
+        RdpClient.AdvancedSettings9.AuthenticationLevel = _rdpSessionInfo.AuthenticationLevel;
+        RdpClient.AdvancedSettings9.EnableCredSspSupport = _rdpSessionInfo.EnableCredSspSupport;
+
+        // Gateway server
+        if (_rdpSessionInfo.EnableGatewayServer && !string.IsNullOrEmpty(_rdpSessionInfo.GatewayServerHostname))
         {
             RdpClient.TransportSettings2.GatewayProfileUsageMethod = (uint)GatewayProfileUsageMethod.Explicit;
             RdpClient.TransportSettings2.GatewayUsageMethod = (uint)(_rdpSessionInfo.GatewayServerBypassLocalAddresses ? GatewayUsageMethod.Detect : GatewayUsageMethod.Direct);
@@ -184,13 +204,13 @@ public partial class RemoteDesktopControl : UserControlBase
             RdpClient.TransportSettings2.GatewayCredSharing = _rdpSessionInfo.GatewayServerShareCredentialsWithRemoteComputer ? 1u : 0u;
 
             // Credentials            
-            if (_rdpSessionInfo.UseGatewayServerCredentials && _rdpSessionInfo.GatewayServerLogonMethod == GatewayUserSelectedCredsSource.Userpass)
+            if (_rdpSessionInfo.UseGatewayServerCredentials && Equals(_rdpSessionInfo.GatewayServerLogonMethod, GatewayUserSelectedCredsSource.Userpass))
             {
                 RdpClient.TransportSettings2.GatewayUsername = _rdpSessionInfo.GatewayServerUsername;
 
                 if (!string.IsNullOrEmpty(_rdpSessionInfo.GatewayServerDomain))
                     RdpClient.TransportSettings2.GatewayDomain = _rdpSessionInfo.GatewayServerDomain;
-                
+
                 RdpClient.TransportSettings2.GatewayPassword = SecureStringHelper.ConvertToString(_rdpSessionInfo.GatewayServerPassword);
             }
         }
@@ -199,11 +219,11 @@ public partial class RemoteDesktopControl : UserControlBase
             RdpClient.TransportSettings2.GatewayProfileUsageMethod = (uint)GatewayProfileUsageMethod.Default;
             RdpClient.TransportSettings2.GatewayUsageMethod = (uint)GatewayUsageMethod.NoneDirect;
         }
-
-        // AdvancedSettings
-        RdpClient.AdvancedSettings9.AuthenticationLevel = _rdpSessionInfo.AuthenticationLevel;
-        RdpClient.AdvancedSettings9.EnableCredSspSupport = _rdpSessionInfo.EnableCredSspSupport;
-
+        
+        // Remote audio
+        RdpClient.AdvancedSettings9.AudioRedirectionMode = (uint)_rdpSessionInfo.AudioRedirectionMode;
+        RdpClient.AdvancedSettings9.AudioCaptureRedirectionMode = _rdpSessionInfo.AudioCaptureRedirectionMode == 0;
+                        
         // Keyboard
         RdpClient.SecuredSettings3.KeyboardHookMode = (int)_rdpSessionInfo.KeyboardHookMode;
 
@@ -214,10 +234,6 @@ public partial class RemoteDesktopControl : UserControlBase
         RdpClient.AdvancedSettings9.RedirectPorts = _rdpSessionInfo.RedirectPorts;
         RdpClient.AdvancedSettings9.RedirectSmartCards = _rdpSessionInfo.RedirectSmartCards;
         RdpClient.AdvancedSettings9.RedirectPrinters = _rdpSessionInfo.RedirectPrinters;
-
-        // Audio
-        RdpClient.AdvancedSettings9.AudioRedirectionMode = (uint)_rdpSessionInfo.AudioRedirectionMode;
-        RdpClient.AdvancedSettings9.AudioCaptureRedirectionMode = _rdpSessionInfo.AudioCaptureRedirectionMode == 0;
 
         // Performance
         RdpClient.AdvancedSettings9.BitmapPeristence = _rdpSessionInfo.PersistentBitmapCaching ? 1 : 0;
@@ -247,20 +263,6 @@ public partial class RemoteDesktopControl : UserControlBase
                 RdpClient.AdvancedSettings9.PerformanceFlags |= RemoteDesktopPerformanceConstants.TS_PERF_DISABLE_THEMING;
         }
 
-        // Display
-        RdpClient.ColorDepth = _rdpSessionInfo.ColorDepth;      // 8, 15, 16, 24
-
-        if (_rdpSessionInfo.AdjustScreenAutomatically || _rdpSessionInfo.UseCurrentViewSize)
-        {
-            RdpClient.DesktopWidth = (int)RdpGrid.ActualWidth;
-            RdpClient.DesktopHeight = (int)RdpGrid.ActualHeight;
-        }
-        else
-        {
-            RdpClient.DesktopWidth = _rdpSessionInfo.DesktopWidth;
-            RdpClient.DesktopHeight = _rdpSessionInfo.DesktopHeight;
-        }
-
         FixWindowsFormsHostSize();
 
         // Events
@@ -282,14 +284,14 @@ public partial class RemoteDesktopControl : UserControlBase
 
         IsConnecting = true;
 
-        if (_rdpSessionInfo.AdjustScreenAutomatically)
+        if (_rdpSessionInfo.AdjustScreenAutomatically || _rdpSessionInfo.UseCurrentViewSize)
         {
             RdpClient.DesktopWidth = (int)RdpGrid.ActualWidth;
             RdpClient.DesktopHeight = (int)RdpGrid.ActualHeight;
         }
 
         FixWindowsFormsHostSize();
-
+        
         RdpClient.Connect();
     }
 
@@ -470,10 +472,10 @@ public partial class RemoteDesktopControl : UserControlBase
     private void RdpGrid_SizeChanged(object sender, SizeChangedEventArgs e)
     {
         if (IsConnected && _rdpSessionInfo.AdjustScreenAutomatically && !IsReconnecting)
-            InitiateReconnection();
+            ReconnectOnSizeChanged();
     }
 
-    private async Task InitiateReconnection()
+    private async Task ReconnectOnSizeChanged()
     {
         IsReconnecting = true;
 
