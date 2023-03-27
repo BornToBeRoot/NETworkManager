@@ -26,6 +26,13 @@ public static class RemoteDesktop
             EnableCredSspSupport = SettingsManager.Current.RemoteDesktop_EnableCredSspSupport,
             AuthenticationLevel = SettingsManager.Current.RemoteDesktop_AuthenticationLevel,
 
+            // Gateway server
+            EnableGatewayServer = SettingsManager.Current.RemoteDesktop_EnableGatewayServer,
+            GatewayServerHostname = SettingsManager.Current.RemoteDesktop_GatewayServerHostname,
+            GatewayServerBypassLocalAddresses = SettingsManager.Current.RemoteDesktop_GatewayServerBypassLocalAddresses,
+            GatewayServerLogonMethod = SettingsManager.Current.RemoteDesktop_GatewayServerLogonMethod,
+            GatewayServerShareCredentialsWithRemoteComputer = SettingsManager.Current.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer,
+            
             // Remote audio
             AudioRedirectionMode = SettingsManager.Current.RemoteDesktop_AudioRedirectionMode,
             AudioCaptureRedirectionMode = SettingsManager.Current.RemoteDesktop_AudioCaptureRedirectionMode,
@@ -66,6 +73,24 @@ public static class RemoteDesktop
         // Override hostname
         info.Hostname = profile.RemoteDesktop_Host;
 
+        // Set credentials
+        if (profile.RemoteDesktop_UseCredentials)
+        {
+            info.UseCredentials = true;
+
+            info.Username = profile.RemoteDesktop_Username;
+            info.Domain = profile.RemoteDesktop_Domain;
+            info.Password = profile.RemoteDesktop_Password;
+        }
+        else if (group.RemoteDesktop_UseCredentials)
+        {
+            info.UseCredentials = true;
+
+            info.Username = group.RemoteDesktop_Username;
+            info.Domain = group.RemoteDesktop_Domain;
+            info.Password = group.RemoteDesktop_Password;
+        }
+
         // Network
         if (profile.RemoteDesktop_OverridePort)
             info.Port = profile.RemoteDesktop_Port;
@@ -100,6 +125,32 @@ public static class RemoteDesktop
             info.AuthenticationLevel = profile.RemoteDesktop_AuthenticationLevel;
         else if (group.RemoteDesktop_OverrideAuthenticationLevel)
             info.AuthenticationLevel = group.RemoteDesktop_AuthenticationLevel;
+
+        // Gateway server
+        if (profile.RemoteDesktop_OverrideGatewayServer)
+        {
+            info.EnableGatewayServer = profile.RemoteDesktop_EnableGatewayServer;
+            info.GatewayServerHostname = profile.RemoteDesktop_GatewayServerHostname;
+            info.GatewayServerBypassLocalAddresses = profile.RemoteDesktop_GatewayServerBypassLocalAddresses;
+            info.GatewayServerLogonMethod = profile.RemoteDesktop_GatewayServerLogonMethod;
+            info.GatewayServerShareCredentialsWithRemoteComputer = profile.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+            info.UseGatewayServerCredentials = profile.RemoteDesktop_UseGatewayServerCredentials;
+            info.GatewayServerUsername = profile.RemoteDesktop_GatewayServerUsername;
+            info.GatewayServerDomain = profile.RemoteDesktop_GatewayServerDomain;
+            info.GatewayServerPassword = profile.RemoteDesktop_GatewayServerPassword;
+        }
+        else if (group.RemoteDesktop_OverrideGatewayServer)
+        {
+            info.EnableGatewayServer = group.RemoteDesktop_EnableGatewayServer;
+            info.GatewayServerHostname = group.RemoteDesktop_GatewayServerHostname;
+            info.GatewayServerBypassLocalAddresses = group.RemoteDesktop_GatewayServerBypassLocalAddresses;
+            info.GatewayServerLogonMethod = group.RemoteDesktop_GatewayServerLogonMethod;
+            info.GatewayServerShareCredentialsWithRemoteComputer = group.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+            info.UseGatewayServerCredentials = group.RemoteDesktop_UseGatewayServerCredentials;
+            info.GatewayServerUsername = group.RemoteDesktop_GatewayServerUsername;
+            info.GatewayServerDomain = group.RemoteDesktop_GatewayServerDomain;
+            info.GatewayServerPassword = group.RemoteDesktop_GatewayServerPassword;
+        }
 
         // Remote audio
         if (profile.RemoteDesktop_OverrideAudioRedirectionMode)
@@ -195,23 +246,7 @@ public static class RemoteDesktop
             info.VisualStyles = profile.RemoteDesktop_VisualStyles;
         else if (group.RemoteDesktop_OverrideVisualStyles)
             info.VisualStyles = group.RemoteDesktop_VisualStyles;
-
-        // Set credentials
-        if (profile.RemoteDesktop_UseCredentials)
-        {
-            info.CustomCredentials = true;
-
-            info.Username = profile.RemoteDesktop_Username;
-            info.Password = profile.RemoteDesktop_Password;
-        }
-        else if (group.RemoteDesktop_UseCredentials)
-        {
-            info.CustomCredentials = true;
-
-            info.Username = group.RemoteDesktop_Username;
-            info.Password = group.RemoteDesktop_Password;
-        }
-
+        
         return info;
     }
 }

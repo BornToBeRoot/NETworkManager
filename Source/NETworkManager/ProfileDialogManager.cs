@@ -31,7 +31,7 @@ public static class ProfileDialogManager
             await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
             viewModel.OnProfileManagerDialogClose();
 
-            ProfileManager.AddProfile(ParseProfileInfo(instance));                
+            ProfileManager.AddProfile(ParseProfileInfo(instance));
         }, async instance =>
         {
             await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
@@ -150,7 +150,7 @@ public static class ProfileDialogManager
             await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
             viewModel.OnProfileManagerDialogClose();
 
-            ProfileManager.AddGroup(ParseGroupInfo(instance));                
+            ProfileManager.AddGroup(ParseGroupInfo(instance));
         }, async instance =>
         {
             await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
@@ -276,6 +276,7 @@ public static class ProfileDialogManager
             RemoteDesktop_Host = instance.RemoteDesktop_InheritHost ? instance.Host?.Trim() : instance.RemoteDesktop_Host?.Trim(),
             RemoteDesktop_UseCredentials = instance.RemoteDesktop_UseCredentials,
             RemoteDesktop_Username = instance.RemoteDesktop_UseCredentials ? instance.RemoteDesktop_Username : string.Empty, // Remove sensitive info on disable
+            RemoteDesktop_Domain = instance.RemoteDesktop_UseCredentials ? instance.RemoteDesktop_Domain : string.Empty, // Remove sensitive info on disable
             RemoteDesktop_Password = instance.RemoteDesktop_UseCredentials ? instance.RemoteDesktop_Password : new SecureString(), // Remove sensitive info on disable
             RemoteDesktop_OverrideDisplay = instance.RemoteDesktop_OverrideDisplay,
             RemoteDesktop_AdjustScreenAutomatically = instance.RemoteDesktop_AdjustScreenAutomatically,
@@ -294,6 +295,16 @@ public static class ProfileDialogManager
             RemoteDesktop_EnableCredSspSupport = instance.RemoteDesktop_EnableCredSspSupport,
             RemoteDesktop_OverrideAuthenticationLevel = instance.RemoteDesktop_OverrideAuthenticationLevel,
             RemoteDesktop_AuthenticationLevel = instance.RemoteDesktop_AuthenticationLevel,
+            RemoteDesktop_OverrideGatewayServer = instance.RemoteDesktop_OverrideGatewayServer,
+            RemoteDesktop_EnableGatewayServer = instance.RemoteDesktop_EnableGatewayServer,
+            RemoteDesktop_GatewayServerHostname = instance.RemoteDesktop_GatewayServerHostname,
+            RemoteDesktop_GatewayServerBypassLocalAddresses = instance.RemoteDesktop_GatewayServerBypassLocalAddresses,
+            RemoteDesktop_GatewayServerLogonMethod = instance.RemoteDesktop_GatewayServerLogonMethod,
+            RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer = instance.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer,
+            RemoteDesktop_UseGatewayServerCredentials = instance.RemoteDesktop_UseGatewayServerCredentials,
+            RemoteDesktop_GatewayServerUsername = instance.RemoteDesktop_EnableGatewayServer && Equals(instance.RemoteDesktop_GatewayServerLogonMethod, Models.RemoteDesktop.GatewayUserSelectedCredsSource.Userpass) && instance.RemoteDesktop_UseGatewayServerCredentials ? instance.RemoteDesktop_GatewayServerUsername : string.Empty, // Remove sensitive info on disable
+            RemoteDesktop_GatewayServerDomain = instance.RemoteDesktop_EnableGatewayServer && Equals(instance.RemoteDesktop_GatewayServerLogonMethod, Models.RemoteDesktop.GatewayUserSelectedCredsSource.Userpass) && instance.RemoteDesktop_UseGatewayServerCredentials ? instance.RemoteDesktop_GatewayServerDomain : string.Empty, // Remove sensitive info on disable
+            RemoteDesktop_GatewayServerPassword = instance.RemoteDesktop_EnableGatewayServer && Equals(instance.RemoteDesktop_GatewayServerLogonMethod, Models.RemoteDesktop.GatewayUserSelectedCredsSource.Userpass) && instance.RemoteDesktop_UseGatewayServerCredentials ? instance.RemoteDesktop_GatewayServerPassword : new SecureString(), // Remove sensitive info on disable
             RemoteDesktop_OverrideAudioRedirectionMode = instance.RemoteDesktop_OverrideAudioRedirectionMode,
             RemoteDesktop_AudioRedirectionMode = instance.RemoteDesktop_AudioRedirectionMode,
             RemoteDesktop_OverrideAudioCaptureRedirectionMode = instance.RemoteDesktop_OverrideAudioCaptureRedirectionMode,
@@ -405,9 +416,9 @@ public static class ProfileDialogManager
         string name = instance.Name.Trim();
 
         // Update group in profiles
-        if(profiles.Count > 0)
+        if (profiles.Count > 0)
         {
-            if(!string.IsNullOrEmpty(instance.Group.Name) && !string.Equals(instance.Group.Name, name, System.StringComparison.Ordinal))
+            if (!string.IsNullOrEmpty(instance.Group.Name) && !string.Equals(instance.Group.Name, name, System.StringComparison.Ordinal))
             {
                 foreach (ProfileInfo profile in profiles)
                     profile.Group = name;
@@ -427,6 +438,7 @@ public static class ProfileDialogManager
             // Remote Desktop
             RemoteDesktop_UseCredentials = instance.RemoteDesktop_UseCredentials,
             RemoteDesktop_Username = instance.RemoteDesktop_UseCredentials ? instance.RemoteDesktop_Username : string.Empty, // Remove sensitive info on disable
+            RemoteDesktop_Domain = instance.RemoteDesktop_UseCredentials ? instance.RemoteDesktop_Domain : string.Empty, // Remove sensitive info on disable
             RemoteDesktop_Password = instance.RemoteDesktop_UseCredentials ? instance.RemoteDesktop_Password : new SecureString(), // Remove sensitive info on disable
             RemoteDesktop_OverrideDisplay = instance.RemoteDesktop_OverrideDisplay,
             RemoteDesktop_AdjustScreenAutomatically = instance.RemoteDesktop_AdjustScreenAutomatically,
@@ -445,6 +457,16 @@ public static class ProfileDialogManager
             RemoteDesktop_EnableCredSspSupport = instance.RemoteDesktop_EnableCredSspSupport,
             RemoteDesktop_OverrideAuthenticationLevel = instance.RemoteDesktop_OverrideAuthenticationLevel,
             RemoteDesktop_AuthenticationLevel = instance.RemoteDesktop_AuthenticationLevel,
+            RemoteDesktop_OverrideGatewayServer = instance.RemoteDesktop_OverrideGatewayServer,
+            RemoteDesktop_EnableGatewayServer = instance.RemoteDesktop_EnableGatewayServer,
+            RemoteDesktop_GatewayServerHostname = instance.RemoteDesktop_GatewayServerHostname,
+            RemoteDesktop_GatewayServerBypassLocalAddresses = instance.RemoteDesktop_GatewayServerBypassLocalAddresses,
+            RemoteDesktop_GatewayServerLogonMethod = instance.RemoteDesktop_GatewayServerLogonMethod,
+            RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer = instance.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer,
+            RemoteDesktop_UseGatewayServerCredentials = instance.RemoteDesktop_UseGatewayServerCredentials,
+            RemoteDesktop_GatewayServerUsername = instance.RemoteDesktop_EnableGatewayServer && Equals(instance.RemoteDesktop_GatewayServerLogonMethod, Models.RemoteDesktop.GatewayUserSelectedCredsSource.Userpass) && instance.RemoteDesktop_UseGatewayServerCredentials ? instance.RemoteDesktop_GatewayServerUsername : string.Empty, // Remove sensitive info on disable
+            RemoteDesktop_GatewayServerDomain = instance.RemoteDesktop_EnableGatewayServer && Equals(instance.RemoteDesktop_GatewayServerLogonMethod, Models.RemoteDesktop.GatewayUserSelectedCredsSource.Userpass) && instance.RemoteDesktop_UseGatewayServerCredentials ? instance.RemoteDesktop_GatewayServerDomain : string.Empty, // Remove sensitive info on disable
+            RemoteDesktop_GatewayServerPassword = instance.RemoteDesktop_EnableGatewayServer && Equals(instance.RemoteDesktop_GatewayServerLogonMethod, Models.RemoteDesktop.GatewayUserSelectedCredsSource.Userpass) && instance.RemoteDesktop_UseGatewayServerCredentials ? instance.RemoteDesktop_GatewayServerPassword : new SecureString(), // Remove sensitive info on disable
             RemoteDesktop_OverrideAudioRedirectionMode = instance.RemoteDesktop_OverrideAudioRedirectionMode,
             RemoteDesktop_AudioRedirectionMode = instance.RemoteDesktop_AudioRedirectionMode,
             RemoteDesktop_OverrideAudioCaptureRedirectionMode = instance.RemoteDesktop_OverrideAudioCaptureRedirectionMode,

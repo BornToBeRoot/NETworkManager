@@ -15,46 +15,58 @@ namespace NETworkManager.Settings;
 
 public static class GlobalStaticConfiguration
 {
+    #region Global settings
     // Type to search (average type speed --> 187 chars/min)
     public static TimeSpan SearchDispatcherTimerTimeSpan => new(0, 0, 0, 0, 750);
 
     // Status window delay in ms
     public static int StatusWindowDelayBeforeOpen => 5000;
 
+    // Profile config
+    public static bool Profile_ExpandProfileView => true;
+    public static double Profile_WidthCollapsed => 40;
+    public static double Profile_DefaultWidthExpanded => 250;
+    public static double Profile_MaxWidthExpanded => 500;
+    public static double Profile_FloatPointFix => 1.0;
+    public static int Profile_EncryptionKeySize => 256;
+    public static int Profile_EncryptionIterations => 1000000;    
 
-    // Filter
+    // Filter for file dialog
     public static string ApplicationFileExtensionFilter => "Application (*.exe)|*.exe";
     public static string PuTTYPrivateKeyFileExtensionFilter => "PuTTY Private Key Files (*.ppk)|*.ppk";
     public static string ZipFileExtensionFilter => "ZIP Archive (*.zip)|*.zip";
     public static string XmlFileExtensionFilter => "XML-File (*.xml)|*.xml";
+    #endregion
 
-    // Settings
+    #region Default settings
+    // Settings: General
     public static ApplicationName General_DefaultApplicationViewName => ApplicationName.Dashboard;
     public static int General_BackgroundJobInterval => 5;
     public static int General_ThreadPoolAdditionalMinThreads => 512;
     public static int General_HistoryListEntries => 10;
+
+    // Settings: Window
     public static bool SplashScreen_Enabled => true;
+
+    // Settings: Appearance
     public static string Appearance_Theme => "Dark";
     public static string Appearance_Accent => "Lime";
     public static bool Appearance_UseCustomTheme => false;
+
+    // Settings: Network
     public static bool Network_ResolveHostnamePreferIPv4 => true;
+
+    // Settings: Status
     public static bool Status_ShowWindowOnNetworkChange => true;
     public static int Status_WindowCloseTime => 10;
-    public static string Status_IPAddressToDetectLocalIPAddressBasedOnRouting => "1.1.1.1";
-
-    // Fixes
-    public static double FloatPointFix => 1.0;
 
     // HotKey
     public static int HotKey_ShowWindowKey => 79;
     public static int HotKey_ShowWindowModifier => 3;
 
-    // Profile
-    public static double Profile_WidthCollapsed => 40;
-    public static double Profile_DefaultWidthExpanded => 250;
-    public static double Profile_MaxWidthExpanded => 350;
-    public static int Profile_EncryptionKeySize => 256;
-    public static int Profile_EncryptionIterations => 1000000;
+    // Update
+    public static bool Update_CheckForUpdatesAtStartup => true;
+    public static bool Update_CheckForPreReleases => false;
 
     // Application: Dashboard
     public static string Dashboard_PublicIPv4Address => "1.1.1.1";
@@ -72,7 +84,7 @@ public static class GlobalStaticConfiguration
     // Application: IP Scanner    
     public static int IPScanner_ICMPAttempts => 2;
     public static int IPScanner_ICMPTimeout => 4000;
-    public static int IPScanner_ICMPBuffer => 32;    
+    public static int IPScanner_ICMPBuffer => 32;
     public static bool IPScanner_DNSShowErrorMessage => false;
     public static bool IPScanner_PortScanEnabled => true;
     public static string IPScanner_PortScanPorts => "22; 53; 80; 139; 389; 636; 443; 445; 3389";
@@ -115,9 +127,14 @@ public static class GlobalStaticConfiguration
 
     public static int RemoteDesktop_ColorDepth = 32;
     public static int RemoteDesktop_Port => 3389;
+    public static bool RemoteDesktop_GatewayServerBypassLocalAddresses => true;
+    public static GatewayUserSelectedCredsSource RemoteDesktop_GatewayServerLogonMethod => GatewayUserSelectedCredsSource.Any;
+    public static bool RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer => true;
     public static AudioRedirectionMode RemoteDesktop_AudioRedirectionMode => AudioRedirectionMode.PlayOnThisComputer;
     public static AudioCaptureRedirectionMode RemoteDesktop_AudioCaptureRedirectionMode => AudioCaptureRedirectionMode.DoNotRecord;
     public static KeyboardHookMode RemoteDesktop_KeyboardHookMode => KeyboardHookMode.OnTheRemoteComputer;
+    public static bool RemoteDesktop_RedirectClipboard => true;
+    public static bool RemoteDesktop_EnableCredSspSupport => true;
     public static uint RemoteDesktop_AuthenticationLevel => 2;
 
     public static NetworkConnectionType RemoteDesktop_NetworkConnectionType => NetworkConnectionType.DetectAutomatically;
@@ -200,4 +217,5 @@ public static class GlobalStaticConfiguration
     // Application: ARP Table
     public static ExportFileType ARPTable_ExportFileType => ExportFileType.CSV;
     public static AutoRefreshTimeInfo ARPTable_AutoRefreshTime => AutoRefreshTime.GetDefaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
+    #endregion
 }

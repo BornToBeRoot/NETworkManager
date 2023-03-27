@@ -1267,6 +1267,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Bypass for local addresses ähnelt.
+        /// </summary>
+        public static string BypassForLocalAddresses {
+            get {
+                return ResourceManager.GetString("BypassForLocalAddresses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Bytes ähnelt.
         /// </summary>
         public static string Bytes {
@@ -2916,6 +2925,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enable gateway server ähnelt.
+        /// </summary>
+        public static string EnableGatewayServer {
+            get {
+                return ResourceManager.GetString("EnableGatewayServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Enable log ähnelt.
         /// </summary>
         public static string EnableLog {
@@ -3535,6 +3553,15 @@ namespace NETworkManager.Localization.Resources {
         public static string GatewayRouter {
             get {
                 return ResourceManager.GetString("GatewayRouter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Gateway server ähnelt.
+        /// </summary>
+        public static string GatewayServer {
+            get {
+                return ResourceManager.GetString("GatewayServer", resourceCulture);
             }
         }
         
@@ -4796,6 +4823,15 @@ namespace NETworkManager.Localization.Resources {
         public static string LogMode {
             get {
                 return ResourceManager.GetString("LogMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Logon method ähnelt.
+        /// </summary>
+        public static string LogonMethod {
+            get {
+                return ResourceManager.GetString("LogonMethod", resourceCulture);
             }
         }
         
@@ -6588,6 +6624,285 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Your computer can&apos;t connect to the remote computer due to one of the following reasons:  1) The requested Remote Desktop Gateway server address and the server SSL certificate subject name do not match. 2) The certificate is expired or revoked. 3) The certificate root authority does not trust the certificate.  Contact your network administrator for assistance. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331651 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331651", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die This computer can&apos;t verify the identity of the RD Gateway &quot;&quot;. It&apos;s not safe to connect to servers that can&apos;t be identified. Contact your network administrator for assistance. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331653 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331653", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Your computer can&apos;t connect to the remote computer because the Remote Desktop Gateway server address requested and the certificate subject name do not match. Contact your network administrator for assistance. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331654 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331654", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Your computer can&apos;t connect to the remote computer because the Remote Desktop Gateway server&apos;s certificate has expired or has been revoked. Contact your network administrator for assistance. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331655 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331655", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die An error occurred while sending data to the Remote Desktop Gateway server. The server is temporarily unavailable or a network connection is down. Try again later, or contact your network administrator for assistance. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331657 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331657", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die An error occurred while receiving data from the Remote Desktop Gateway server. Either the server is temporarily unavailable or a network connection is down. Try again later, or contact your network administrator for assistance. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331658 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331658", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Your computer can&apos;t connect to the remote computer because the Remote Desktop Gateway server address is unreachable or incorrect. Type a valid Remote Desktop Gateway server address. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331660 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331660", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Your computer can&apos;t connect to the remote computer because the Remote Desktop Gateway server is temporarily unavailable. Try reconnecting later or contact your network administrator for assistance. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331661 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331661", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Your computer can&apos;t connect to the remote computer because the Remote Desktop Gateway server is running low on server resources and is temporarily unavailable. Try reconnecting later or contact your network administrator for assistance. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331663 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331663", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The Remote Desktop Gateway server has ended the connection. Try reconnecting later or contact your network administrator for assistance. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331672 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331672", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The Remote Desktop Gateway server administrator has ended the connection. Try reconnecting later or contact your network administrator for assistance. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331673 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331673", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Remote Desktop can&apos;t connect to the remote computer &quot;&quot; for one of these reasons:  1) Your user account is not listed in the RD Gateway&apos;s permission list 2) You might have specified the remote computer in NetBIOS format (for example, computer1), but the RD Gateway is expecting an FQDN or IP address format (for example, computer1.fabrikam.com or 157.60.0.1).  Contact your network administrator for assistance. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331675 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331675", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Remote Desktop can&apos;t connect to the remote computer &quot;&quot; for one of these reasons:  1) Your user account is not authorized to access the RD Gateway &quot;&quot; 2) Your computer is not authorized to access the RD Gateway &quot;&quot; 3) You are using an incompatible authentication method (for example, the RD Gateway might be expecting a smart card but you provided a password)  Contact your network administrator for assistance. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331676 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331676", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Your computer can&apos;t connect to the remote computer because your network administrator has restricted access to this RD Gateway server. Contact your network administrator for assistance. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331679 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331679", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Your computer can&apos;t connect to the remote computer because the web proxy server requires authentication. To allow unauthenticated traffic to an RD Gateway server through your web proxy server, contact your network administrator. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331680 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331680", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Your computer can&apos;t connect to the remote computer because the Remote Desktop Gateway server reached its maximum allowed connections. Try reconnecting later or contact your network administrator for assistance. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331682 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331682", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Your computer can&apos;t connect to the remote computer because the Remote Desktop Gateway server does not support the request. Contact your network administrator for assistance. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331683 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331683", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Your computer can&apos;t connect to the remote computer because the client does not support one of the Remote Desktop Gateway&apos;s capabilities. Contact your network administrator for assistance. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331684 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331684", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Your computer can&apos;t connect to the remote computer because the Remote Desktop Gateway server and this computer are incompatible. Contact your network administrator for assistance. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331685 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331685", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Your computer can&apos;t connect to the remote computer because no certificate was configured to use at the Remote Desktop Gateway server. Contact your network administrator for assistance. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331688 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331688", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Your computer can&apos;t connect to the remote computer because the RD Gateway server that you are trying to connect to is not allowed by your computer administrator. If you are the administrator, add this Remote Desktop Gateway server name to the trusted Remote Desktop Gateway server list on your computer and then try connecting again. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331689 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331689", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Your computer can&apos;t connect to the remote computer because your computer or device did not meet the Network Access Protection requirements set by your network administrator, for one of the following reasons:  1) The Remote Desktop Gateway server name and the server&apos;s public key certificate subject name do not match. 2) The certificate has expired or has been revoked. 3) The certificate root authority does not trust the certificate. 4) The certificate key extension does not support encryption. 5) Your comput [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331690 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331690", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Your computer can&apos;t connect to the remote computer because a user name and password are required to authenticate to the Remote Desktop Gateway server instead of smart card credentials. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331691 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331691", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Your computer can&apos;t connect to the remote computer because smart card credentials are required to authenticate to the Remote Desktop Gateway server instead of a user name and password. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331692 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331692", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Your computer can&apos;t connect to the remote computer because an invalid cookie was sent to the Remote Desktop Gateway server. Contact your network administrator for assistance. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331700 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331700", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Your computer can&apos;t connect to the remote computer because the cookie was rejected by the Remote Desktop Gateway server. Contact your network administrator for assistance. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331701 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331701", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Your computer can&apos;t connect to the remote computer because the Remote Desktop Gateway server is expecting an authentication method different from the one attempted. Contact your network administrator for assistance. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331703 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331703", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The RD Gateway connection ended because periodic user authentication failed. Try reconnecting with a correct user name and password. If the reconnection fails, contact your network administrator for further assistance. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331704 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331704", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The RD Gateway connection ended because periodic user authorization failed. Try reconnecting with a correct user name and password. If the reconnection fails, contact your network administrator for further assistance. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331705 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331705", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Your computer can&apos;t connect to the remote computer because the Remote Desktop Gateway and the remote computer are unable to exchange policies. This could happen due to one of the following reasons:     1. The remote computer is not capable of exchanging policies with the Remote Desktop Gateway.     2. The remote computer&apos;s configuration does not permit a new connection.     3. The connection between the Remote Desktop Gateway and the remote computer ended.    Contact your network administrator for assistanc [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331707 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331707", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The RD Gateway connection ended because periodic user authorization failed. Your computer or device didn&apos;t pass the Network Access Protection (NAP) requirements set by your network administrator. Contact your network administrator for assistance. ähnelt.
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_50331713 {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_50331713", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Socket closed. ähnelt.
         /// </summary>
         public static string RemoteDesktopDisconnectReason_AtClientWinsockFDCLOSE {
@@ -7025,6 +7340,33 @@ namespace NETworkManager.Localization.Resources {
         public static string RemoteDesktopDisconnectReason_WinsockSendFailed {
             get {
                 return ResourceManager.GetString("RemoteDesktopDisconnectReason_WinsockSendFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Allow me to select later ähnelt.
+        /// </summary>
+        public static string RemoteDesktopGatewayServerLogonMethod_Any {
+            get {
+                return ResourceManager.GetString("RemoteDesktopGatewayServerLogonMethod_Any", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Smart card ähnelt.
+        /// </summary>
+        public static string RemoteDesktopGatewayServerLogonMethod_Smartcard {
+            get {
+                return ResourceManager.GetString("RemoteDesktopGatewayServerLogonMethod_Smartcard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ask for password (NTLM) ähnelt.
+        /// </summary>
+        public static string RemoteDesktopGatewayServerLogonMethod_Userpass {
+            get {
+                return ResourceManager.GetString("RemoteDesktopGatewayServerLogonMethod_Userpass", resourceCulture);
             }
         }
         
@@ -7677,6 +8019,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Server name ähnelt.
+        /// </summary>
+        public static string ServerName {
+            get {
+                return ResourceManager.GetString("ServerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Server(s) ähnelt.
         /// </summary>
         public static string Servers {
@@ -7875,6 +8226,15 @@ namespace NETworkManager.Localization.Resources {
         public static string SettingsViewName_Window {
             get {
                 return ResourceManager.GetString("SettingsViewName_Window", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Share Gateway credentials with remote computer ähnelt.
+        /// </summary>
+        public static string ShareGatewayCredentialsWithRemoteComputer {
+            get {
+                return ResourceManager.GetString("ShareGatewayCredentialsWithRemoteComputer", resourceCulture);
             }
         }
         
@@ -9144,6 +9504,15 @@ namespace NETworkManager.Localization.Resources {
         public static string UseCustomThemes {
             get {
                 return ResourceManager.GetString("UseCustomThemes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Use gateway credentials ähnelt.
+        /// </summary>
+        public static string UseGatewayCredentials {
+            get {
+                return ResourceManager.GetString("UseGatewayCredentials", resourceCulture);
             }
         }
         

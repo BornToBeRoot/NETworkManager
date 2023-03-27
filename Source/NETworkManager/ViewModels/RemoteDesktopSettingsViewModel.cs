@@ -206,6 +206,94 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
         }
     }
 
+    private bool _enableGatewayServer;
+    public bool EnableGatewayServer
+    {
+        get => _enableGatewayServer;
+        set
+        {
+            if (value == _enableGatewayServer)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.RemoteDesktop_EnableGatewayServer = value;
+
+            _enableGatewayServer = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _gatewayServerHostname;
+    public string GatewayServerHostname
+    {
+        get => _gatewayServerHostname;
+        set
+        {
+            if (value == _gatewayServerHostname)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.RemoteDesktop_GatewayServerHostname = value;
+
+            _gatewayServerHostname = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _gatewayServerBypassLocalAddresses;
+    public bool GatewayServerBypassLocalAddresses
+    {
+        get => _gatewayServerBypassLocalAddresses;
+        set
+        {
+            if (value == _gatewayServerBypassLocalAddresses)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.RemoteDesktop_GatewayServerBypassLocalAddresses = value;
+
+            _gatewayServerBypassLocalAddresses = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public IEnumerable<GatewayUserSelectedCredsSource> GatewayServerLogonMethods => System.Enum.GetValues(typeof(GatewayUserSelectedCredsSource)).Cast<GatewayUserSelectedCredsSource>();
+
+    private GatewayUserSelectedCredsSource _gatewayServerLogonMethod;
+
+    public GatewayUserSelectedCredsSource GatewayServerLogonMethod
+    {
+        get => _gatewayServerLogonMethod;
+        set
+        {
+            if (Equals(value, _gatewayServerLogonMethod))                
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.RemoteDesktop_GatewayServerLogonMethod = value;
+
+            _gatewayServerLogonMethod = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _gatewayServerShareCredentialsWithRemoteComputer;
+    public bool GatewayServerShareCredentialsWithRemoteComputer
+    {
+        get => _gatewayServerShareCredentialsWithRemoteComputer;
+        set
+        {
+            if (value == _gatewayServerShareCredentialsWithRemoteComputer)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer = value;
+
+            _gatewayServerShareCredentialsWithRemoteComputer = value;
+            OnPropertyChanged();
+        }
+    }
+
     public IEnumerable<AudioRedirectionMode> AudioRedirectionModes => System.Enum.GetValues(typeof(AudioRedirectionMode)).Cast<AudioRedirectionMode>();
 
     private AudioRedirectionMode _audioRedirectionMode;
@@ -546,6 +634,11 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
         Port = SettingsManager.Current.RemoteDesktop_Port;
         EnableCredSspSupport = SettingsManager.Current.RemoteDesktop_EnableCredSspSupport;
         AuthenticationLevel = SettingsManager.Current.RemoteDesktop_AuthenticationLevel;
+        EnableGatewayServer = SettingsManager.Current.RemoteDesktop_EnableGatewayServer;
+        GatewayServerHostname = SettingsManager.Current.RemoteDesktop_GatewayServerHostname;
+        GatewayServerBypassLocalAddresses = SettingsManager.Current.RemoteDesktop_GatewayServerBypassLocalAddresses;
+        GatewayServerLogonMethod = GatewayServerLogonMethods.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_GatewayServerLogonMethod);
+        GatewayServerShareCredentialsWithRemoteComputer = SettingsManager.Current.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
         AudioRedirectionMode = AudioRedirectionModes.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_AudioRedirectionMode);
         AudioCaptureRedirectionMode = AudioCaptureRedirectionModes.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_AudioCaptureRedirectionMode);
         KeyboardHookMode = KeyboardHookModes.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_KeyboardHookMode);

@@ -16,6 +16,8 @@ Release date: **xx.xx.2023**
 - [.NET Desktop Runtime 6.x (LTS)](https://dotnet.microsoft.com/download/dotnet/6.0){:target="\_blank"}
 
 ## What's new?
+- Remote Desktop
+  - Support for Remote Desktop Gateway server added [#2108](https://github.com/BornToBeRoot/NETworkManager/pull/2108){:target="\_blank"}
 
 ## Improvements
 

@@ -70,11 +70,10 @@ public class ProfileInfo
     public bool RemoteDesktop_Enabled { get; set; }
     public bool RemoteDesktop_InheritHost { get; set; } = true;
     public string RemoteDesktop_Host { get; set; }
-
     public bool RemoteDesktop_UseCredentials { get; set; }
-
     public string RemoteDesktop_Username { get; set; }
-
+    public string RemoteDesktop_Domain { get; set; }
+    
     [XmlIgnore]
     public SecureString RemoteDesktop_Password { get; set; }
     public bool RemoteDesktop_OverrideDisplay { get; set; }
@@ -94,6 +93,18 @@ public class ProfileInfo
     public bool RemoteDesktop_EnableCredSspSupport { get; set; }
     public bool RemoteDesktop_OverrideAuthenticationLevel { get; set; }
     public uint RemoteDesktop_AuthenticationLevel { get; set; } = GlobalStaticConfiguration.RemoteDesktop_AuthenticationLevel;
+    public bool RemoteDesktop_OverrideGatewayServer { get; set; }
+    public bool RemoteDesktop_EnableGatewayServer { get; set; }
+    public string RemoteDesktop_GatewayServerHostname { get; set; }
+    public bool RemoteDesktop_GatewayServerBypassLocalAddresses { get; set; } = GlobalStaticConfiguration.RemoteDesktop_GatewayServerBypassLocalAddresses;
+    public GatewayUserSelectedCredsSource RemoteDesktop_GatewayServerLogonMethod { get; set; } = GlobalStaticConfiguration.RemoteDesktop_GatewayServerLogonMethod;
+    public bool RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer { get; set; } = GlobalStaticConfiguration.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+    public bool RemoteDesktop_UseGatewayServerCredentials { get; set; }
+    public string RemoteDesktop_GatewayServerUsername { get; set; }
+    public string RemoteDesktop_GatewayServerDomain { get; set; }
+
+    [XmlIgnore]
+    public SecureString RemoteDesktop_GatewayServerPassword { get; set; }
     public bool RemoteDesktop_OverrideAudioRedirectionMode { get; set; }
     public AudioRedirectionMode RemoteDesktop_AudioRedirectionMode { get; set; } = GlobalStaticConfiguration.RemoteDesktop_AudioRedirectionMode;
     public bool RemoteDesktop_OverrideAudioCaptureRedirectionMode { get; set; }
@@ -255,6 +266,7 @@ public class ProfileInfo
         RemoteDesktop_Host = profile.RemoteDesktop_Host;
         RemoteDesktop_UseCredentials = profile.RemoteDesktop_UseCredentials;
         RemoteDesktop_Username = profile.RemoteDesktop_Username;
+        RemoteDesktop_Domain = profile.RemoteDesktop_Domain;
         RemoteDesktop_Password = profile.RemoteDesktop_Password;
         RemoteDesktop_OverrideDisplay = profile.RemoteDesktop_OverrideDisplay;
         RemoteDesktop_AdjustScreenAutomatically = profile.RemoteDesktop_AdjustScreenAutomatically;
@@ -273,6 +285,16 @@ public class ProfileInfo
         RemoteDesktop_EnableCredSspSupport = profile.RemoteDesktop_EnableCredSspSupport;
         RemoteDesktop_OverrideAuthenticationLevel = profile.RemoteDesktop_OverrideAuthenticationLevel;
         RemoteDesktop_AuthenticationLevel = profile.RemoteDesktop_AuthenticationLevel;
+        RemoteDesktop_OverrideGatewayServer = profile.RemoteDesktop_OverrideGatewayServer;
+        RemoteDesktop_EnableGatewayServer = profile.RemoteDesktop_EnableGatewayServer;
+        RemoteDesktop_GatewayServerHostname = profile.RemoteDesktop_GatewayServerHostname;
+        RemoteDesktop_GatewayServerBypassLocalAddresses = profile.RemoteDesktop_GatewayServerBypassLocalAddresses;
+        RemoteDesktop_GatewayServerLogonMethod = profile.RemoteDesktop_GatewayServerLogonMethod;
+        RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer = profile.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+        RemoteDesktop_UseGatewayServerCredentials = profile.RemoteDesktop_UseGatewayServerCredentials;
+        RemoteDesktop_GatewayServerUsername = profile.RemoteDesktop_GatewayServerUsername;
+        RemoteDesktop_GatewayServerDomain = profile.RemoteDesktop_GatewayServerDomain;
+        RemoteDesktop_GatewayServerPassword = profile.RemoteDesktop_GatewayServerPassword;
         RemoteDesktop_OverrideAudioRedirectionMode = profile.RemoteDesktop_OverrideAudioRedirectionMode;
         RemoteDesktop_AudioRedirectionMode = profile.RemoteDesktop_AudioRedirectionMode;
         RemoteDesktop_OverrideAudioCaptureRedirectionMode = profile.RemoteDesktop_OverrideAudioCaptureRedirectionMode;

@@ -456,7 +456,7 @@ public class SettingsInfo : PropertyChangedBase
     }
 
     // Update
-    private bool _update_CheckForUpdatesAtStartup = true;
+    private bool _update_CheckForUpdatesAtStartup = GlobalStaticConfiguration.Update_CheckForUpdatesAtStartup;
     public bool Update_CheckForUpdatesAtStartup
     {
         get => _update_CheckForUpdatesAtStartup;
@@ -471,7 +471,7 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _update_CheckForPreReleases;
+    private bool _update_CheckForPreReleases = GlobalStaticConfiguration.Update_CheckForPreReleases;
     public bool Update_CheckForPreReleases
     {
         get => _update_CheckForPreReleases;
@@ -486,22 +486,7 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    // Profiles
-    private string _profiles_CustomProfilesLocation;
-    public string Profiles_CustomProfilesLocation
-    {
-        get => _profiles_CustomProfilesLocation;
-        set
-        {
-            if (value == _profiles_CustomProfilesLocation)
-                return;
-
-            _profiles_CustomProfilesLocation = value;
-            OnPropertyChanged();
-            SettingsChanged = true;
-        }
-    }
-
+    // Profiles    
     private string _profiles_LastSelected;
     public string Profiles_LastSelected
     {
@@ -659,7 +644,7 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _networkInterface_ExpandProfileView = true;
+    private bool _networkInterface_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
     public bool NetworkInterface_ExpandProfileView
     {
         get => _networkInterface_ExpandProfileView;
@@ -680,7 +665,7 @@ public class SettingsInfo : PropertyChangedBase
         get => _networkInterface_ProfileWidth;
         set
         {
-            if (Math.Abs(value - _networkInterface_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
+            if (Math.Abs(value - _networkInterface_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
             _networkInterface_ProfileWidth = value;
@@ -1011,7 +996,7 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _ipScanner_ExpandProfileView = true;
+    private bool _ipScanner_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
     public bool IPScanner_ExpandProfileView
     {
         get => _ipScanner_ExpandProfileView;
@@ -1032,7 +1017,7 @@ public class SettingsInfo : PropertyChangedBase
         get => _ipScanner_ProfileWidth;
         set
         {
-            if (Math.Abs(value - _ipScanner_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
+            if (Math.Abs(value - _ipScanner_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
             _ipScanner_ProfileWidth = value;
@@ -1192,7 +1177,7 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _portScanner_ExpandProfileView = true;
+    private bool _portScanner_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
     public bool PortScanner_ExpandProfileView
     {
         get => _portScanner_ExpandProfileView;
@@ -1213,7 +1198,7 @@ public class SettingsInfo : PropertyChangedBase
         get => _portScanner_ProfileWidth;
         set
         {
-            if (Math.Abs(value - _portScanner_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
+            if (Math.Abs(value - _portScanner_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
             _portScanner_ProfileWidth = value;
@@ -1374,7 +1359,7 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _pingMonitor_ExpandProfileView = true;
+    private bool _pingMonitor_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
     public bool PingMonitor_ExpandProfileView
     {
         get => _pingMonitor_ExpandProfileView;
@@ -1395,7 +1380,7 @@ public class SettingsInfo : PropertyChangedBase
         get => _pingMonitor_ProfileWidth;
         set
         {
-            if (Math.Abs(value - _pingMonitor_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
+            if (Math.Abs(value - _pingMonitor_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
             _pingMonitor_ProfileWidth = value;
@@ -1481,7 +1466,7 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _traceroute_ExpandProfileView = true;
+    private bool _traceroute_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
     public bool Traceroute_ExpandProfileView
     {
         get => _traceroute_ExpandProfileView;
@@ -1502,7 +1487,7 @@ public class SettingsInfo : PropertyChangedBase
         get => _traceroute_ProfileWidth;
         set
         {
-            if (Math.Abs(value - _traceroute_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
+            if (Math.Abs(value - _traceroute_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
             _traceroute_ProfileWidth = value;
@@ -1753,7 +1738,7 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _dnsLookup_ExpandProfileView = true;
+    private bool _dnsLookup_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
     public bool DNSLookup_ExpandProfileView
     {
         get => _dnsLookup_ExpandProfileView;
@@ -1774,7 +1759,7 @@ public class SettingsInfo : PropertyChangedBase
         get => _dnsLookup_ProfileWidth;
         set
         {
-            if (Math.Abs(value - _dnsLookup_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
+            if (Math.Abs(value - _dnsLookup_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
             _dnsLookup_ProfileWidth = value;
@@ -1980,7 +1965,7 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _remoteDesktop_EnableCredSspSupport = true;
+    private bool _remoteDesktop_EnableCredSspSupport = GlobalStaticConfiguration.RemoteDesktop_EnableCredSspSupport;
     public bool RemoteDesktop_EnableCredSspSupport
     {
         get => _remoteDesktop_EnableCredSspSupport;
@@ -2005,6 +1990,81 @@ public class SettingsInfo : PropertyChangedBase
                 return;
 
             _remoteDesktop_AuthenticationLevel = value;
+            OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
+
+    private bool _remoteDesktop_EnableGatewayServer;
+    public bool RemoteDesktop_EnableGatewayServer
+    {
+        get => _remoteDesktop_EnableGatewayServer;
+        set
+        {
+            if (value == _remoteDesktop_EnableGatewayServer)
+                return;
+
+            _remoteDesktop_EnableGatewayServer = value;
+            OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
+
+    private string _remoteDesktop_GatewayServerHostname;
+    public string RemoteDesktop_GatewayServerHostname
+    {
+        get => _remoteDesktop_GatewayServerHostname;
+        set
+        {
+            if (value == _remoteDesktop_GatewayServerHostname)
+                return;
+
+            _remoteDesktop_GatewayServerHostname = value;
+            OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
+
+    private bool _remoteDesktop_GatewayServerBypassLocalAddresses = GlobalStaticConfiguration.RemoteDesktop_GatewayServerBypassLocalAddresses;
+    public bool RemoteDesktop_GatewayServerBypassLocalAddresses
+    {
+        get => _remoteDesktop_GatewayServerBypassLocalAddresses;
+        set
+        {
+            if (value == _remoteDesktop_GatewayServerBypassLocalAddresses)
+                return;
+
+            _remoteDesktop_GatewayServerBypassLocalAddresses = value;
+            OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
+
+    private GatewayUserSelectedCredsSource _remoteDesktop_GatewayServerLogonMethod = GlobalStaticConfiguration.RemoteDesktop_GatewayServerLogonMethod;
+    public GatewayUserSelectedCredsSource RemoteDesktop_GatewayServerLogonMethod
+    {
+        get => _remoteDesktop_GatewayServerLogonMethod;
+        set
+        {
+            if (value == _remoteDesktop_GatewayServerLogonMethod)
+                return;
+
+            _remoteDesktop_GatewayServerLogonMethod = value;
+            OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
+
+    private bool _remoteDesktop_GatewayServerShareCredentialsWithRemoteComputer = GlobalStaticConfiguration.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+    public bool RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer
+    {
+        get => _remoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+        set
+        {
+            if (value == _remoteDesktop_GatewayServerShareCredentialsWithRemoteComputer)
+                return;
+
+            _remoteDesktop_GatewayServerShareCredentialsWithRemoteComputer = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
@@ -2055,7 +2115,7 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _remoteDesktop_RedirectClipboard = true;
+    private bool _remoteDesktop_RedirectClipboard = GlobalStaticConfiguration.RemoteDesktop_RedirectClipboard;
     public bool RemoteDesktop_RedirectClipboard
     {
         get => _remoteDesktop_RedirectClipboard;
@@ -2280,7 +2340,7 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _remoteDesktop_ExpandProfileView = true;
+    private bool _remoteDesktop_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
     public bool RemoteDesktop_ExpandProfileView
     {
         get => _remoteDesktop_ExpandProfileView;
@@ -2301,7 +2361,7 @@ public class SettingsInfo : PropertyChangedBase
         get => _remoteDesktop_ProfileWidth;
         set
         {
-            if (Math.Abs(value - _remoteDesktop_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
+            if (Math.Abs(value - _remoteDesktop_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
             _remoteDesktop_ProfileWidth = value;
@@ -2387,7 +2447,7 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _powerShell_ExpandProfileView = true;
+    private bool _powerShell_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
     public bool PowerShell_ExpandProfileView
     {
         get => _powerShell_ExpandProfileView;
@@ -2408,7 +2468,7 @@ public class SettingsInfo : PropertyChangedBase
         get => _powerShell_ProfileWidth;
         set
         {
-            if (Math.Abs(value - _powerShell_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
+            if (Math.Abs(value - _powerShell_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
             _powerShell_ProfileWidth = value;
@@ -2659,7 +2719,7 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _puTTY_ExpandProfileView = true;
+    private bool _puTTY_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
     public bool PuTTY_ExpandProfileView
     {
         get => _puTTY_ExpandProfileView;
@@ -2680,7 +2740,7 @@ public class SettingsInfo : PropertyChangedBase
         get => _puTTY_ProfileWidth;
         set
         {
-            if (Math.Abs(value - _puTTY_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
+            if (Math.Abs(value - _puTTY_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
             _puTTY_ProfileWidth = value;
@@ -2931,7 +2991,7 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _awsSessionManager_ExpandProfileView = true;
+    private bool _awsSessionManager_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
     public bool AWSSessionManager_ExpandProfileView
     {
         get => _awsSessionManager_ExpandProfileView;
@@ -2952,7 +3012,7 @@ public class SettingsInfo : PropertyChangedBase
         get => _awsSessionManager_ProfileWidth;
         set
         {
-            if (Math.Abs(value - _awsSessionManager_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
+            if (Math.Abs(value - _awsSessionManager_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
             _awsSessionManager_ProfileWidth = value;
@@ -2993,7 +3053,7 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _tigerVNC_ExpandProfileView = true;
+    private bool _tigerVNC_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
     public bool TigerVNC_ExpandProfileView
     {
         get => _tigerVNC_ExpandProfileView;
@@ -3014,7 +3074,7 @@ public class SettingsInfo : PropertyChangedBase
         get => _tigerVNC_ProfileWidth;
         set
         {
-            if (Math.Abs(value - _tigerVNC_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
+            if (Math.Abs(value - _tigerVNC_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
             _tigerVNC_ProfileWidth = value;
@@ -3070,7 +3130,7 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _webConsole_ExpandProfileView = true;
+    private bool _webConsole_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
     public bool WebConsole_ExpandProfileView
     {
         get => _webConsole_ExpandProfileView;
@@ -3091,7 +3151,7 @@ public class SettingsInfo : PropertyChangedBase
         get => _webConsole_ProfileWidth;
         set
         {
-            if (Math.Abs(value - _webConsole_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
+            if (Math.Abs(value - _webConsole_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
             _webConsole_ProfileWidth = value;
@@ -3099,7 +3159,7 @@ public class SettingsInfo : PropertyChangedBase
             SettingsChanged = true;
         }
     }
-    
+
 
     private bool _webConsole_ShowAddressBar = GlobalStaticConfiguration.WebConsole_ShowAddressBar;
     public bool WebConsole_ShowAddressBar
@@ -3469,7 +3529,7 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _wakeOnLAN_ExpandProfileView = true;
+    private bool _wakeOnLAN_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
     public bool WakeOnLAN_ExpandProfileView
     {
         get => _wakeOnLAN_ExpandProfileView;
@@ -3490,7 +3550,7 @@ public class SettingsInfo : PropertyChangedBase
         get => _wakeOnLAN_ProfileWidth;
         set
         {
-            if (Math.Abs(value - _wakeOnLAN_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
+            if (Math.Abs(value - _wakeOnLAN_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
             _wakeOnLAN_ProfileWidth = value;
@@ -3771,7 +3831,7 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _whois_ExpandProfileView = true;
+    private bool _whois_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
     public bool Whois_ExpandProfileView
     {
         get => _whois_ExpandProfileView;
@@ -3792,7 +3852,7 @@ public class SettingsInfo : PropertyChangedBase
         get => _whois_ProfileWidth;
         set
         {
-            if (Math.Abs(value - _whois_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
+            if (Math.Abs(value - _whois_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
             _whois_ProfileWidth = value;

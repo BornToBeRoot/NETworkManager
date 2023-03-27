@@ -324,4 +324,13 @@
   <data name="ExamplePuTTYProfile" xml:space="preserve">
     <value>NETworkManager</value>
   </data>
+  <data name="ExampleHostFQDN" xml:space="preserve">
+    <value>server-01.example.com</value>
+  </data>
+  <data name="ExampleGatewayDomain" xml:space="preserve">
+    <value>gw.example.com</value>
+  </data>
+  <data name="ExampleHostWithRDPPort" xml:space="preserve">
+    <value>server-01.example.com:3389</value>
+  </data>
 </root>

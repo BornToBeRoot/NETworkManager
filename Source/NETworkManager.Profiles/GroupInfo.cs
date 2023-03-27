@@ -25,6 +25,7 @@ public class GroupInfo
 
     public bool RemoteDesktop_UseCredentials { get; set; }
     public string RemoteDesktop_Username { get; set; }
+    public string RemoteDesktop_Domain { get; set; }
 
     [XmlIgnore]
     public SecureString RemoteDesktop_Password { get; set; }
@@ -45,6 +46,18 @@ public class GroupInfo
     public bool RemoteDesktop_EnableCredSspSupport { get; set; }
     public bool RemoteDesktop_OverrideAuthenticationLevel { get; set; }
     public uint RemoteDesktop_AuthenticationLevel { get; set; } = GlobalStaticConfiguration.RemoteDesktop_AuthenticationLevel;
+    public bool RemoteDesktop_OverrideGatewayServer { get; set; }
+    public bool RemoteDesktop_EnableGatewayServer { get; set; }
+    public string RemoteDesktop_GatewayServerHostname { get; set; }
+    public bool RemoteDesktop_GatewayServerBypassLocalAddresses { get; set; } = GlobalStaticConfiguration.RemoteDesktop_GatewayServerBypassLocalAddresses;
+    public GatewayUserSelectedCredsSource RemoteDesktop_GatewayServerLogonMethod { get; set; } = GlobalStaticConfiguration.RemoteDesktop_GatewayServerLogonMethod;
+    public bool RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer { get; set; } = GlobalStaticConfiguration.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+    public bool RemoteDesktop_UseGatewayServerCredentials { get; set; }
+    public string RemoteDesktop_GatewayServerUsername { get; set; }
+    public string RemoteDesktop_GatewayServerDomain { get; set; }
+
+    [XmlIgnore]
+    public SecureString RemoteDesktop_GatewayServerPassword { get; set; }
     public bool RemoteDesktop_OverrideAudioRedirectionMode { get; set; }
     public AudioRedirectionMode RemoteDesktop_AudioRedirectionMode { get; set; } = GlobalStaticConfiguration.RemoteDesktop_AudioRedirectionMode;
     public bool RemoteDesktop_OverrideAudioCaptureRedirectionMode { get; set; }
@@ -141,6 +154,7 @@ public class GroupInfo
         // Remote Desktop
         RemoteDesktop_UseCredentials = group.RemoteDesktop_UseCredentials;
         RemoteDesktop_Username = group.RemoteDesktop_Username;
+        RemoteDesktop_Domain = group.RemoteDesktop_Domain;
         RemoteDesktop_Password = group.RemoteDesktop_Password;
         RemoteDesktop_OverrideDisplay = group.RemoteDesktop_OverrideDisplay;
         RemoteDesktop_AdjustScreenAutomatically = group.RemoteDesktop_AdjustScreenAutomatically;
@@ -159,6 +173,16 @@ public class GroupInfo
         RemoteDesktop_EnableCredSspSupport = group.RemoteDesktop_EnableCredSspSupport;
         RemoteDesktop_OverrideAuthenticationLevel = group.RemoteDesktop_OverrideAuthenticationLevel;
         RemoteDesktop_AuthenticationLevel = group.RemoteDesktop_AuthenticationLevel;
+        RemoteDesktop_OverrideGatewayServer = group.RemoteDesktop_OverrideGatewayServer;
+        RemoteDesktop_EnableGatewayServer = group.RemoteDesktop_EnableGatewayServer;
+        RemoteDesktop_GatewayServerHostname = group.RemoteDesktop_GatewayServerHostname;
+        RemoteDesktop_GatewayServerBypassLocalAddresses = group.RemoteDesktop_GatewayServerBypassLocalAddresses;
+        RemoteDesktop_GatewayServerLogonMethod = group.RemoteDesktop_GatewayServerLogonMethod;
+        RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer = group.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+        RemoteDesktop_UseGatewayServerCredentials = group.RemoteDesktop_UseGatewayServerCredentials;
+        RemoteDesktop_GatewayServerUsername = group.RemoteDesktop_GatewayServerUsername;
+        RemoteDesktop_GatewayServerDomain = group.RemoteDesktop_GatewayServerDomain;
+        RemoteDesktop_GatewayServerPassword = group.RemoteDesktop_GatewayServerPassword;
         RemoteDesktop_OverrideAudioRedirectionMode = group.RemoteDesktop_OverrideAudioRedirectionMode;
         RemoteDesktop_AudioRedirectionMode = group.RemoteDesktop_AudioRedirectionMode;
         RemoteDesktop_OverrideAudioCaptureRedirectionMode = group.RemoteDesktop_OverrideAudioCaptureRedirectionMode;
