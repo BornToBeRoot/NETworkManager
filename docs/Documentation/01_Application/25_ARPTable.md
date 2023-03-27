@@ -16,7 +16,7 @@ In addition, further actions can be performed using the buttons at the bottom le
 - **Delete entry** - Delete the currently selected entry from the ARP table.
 - **Delete table** - Delete all entries from the ARP table.
 
-{. .note}
+{: .note}
 Right-click on the result to copy or export the information.
 
 ![ARPTable](25_ARPTable.png)
