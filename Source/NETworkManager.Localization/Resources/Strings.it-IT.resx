@@ -3364,4 +3364,178 @@ Forse l'applicazione era nascosta nelle impostazioni?</value>
 Più istanze dell'applicazione condividono le stesse impostazioni e file di profilo. 
 L'ultima istanza da chiudere potrebbe sovrascrivere le modifiche apportate da altre istanze.</value>
   </data>
+  <data name="BypassForLocalAddresses" xml:space="preserve">
+    <value>Bypass per indirizzi locali</value>
+  </data>
+  <data name="EnableGatewayServer" xml:space="preserve">
+    <value>Abilita server gateway</value>
+  </data>
+  <data name="LogonMethod" xml:space="preserve">
+    <value>Metodo accesso</value>
+  </data>
+  <data name="GatewayServer" xml:space="preserve">
+    <value>Server gateway</value>
+  </data>
+  <data name="ServerName" xml:space="preserve">
+    <value>Nome server</value>
+  </data>
+  <data name="ShareGatewayCredentialsWithRemoteComputer" xml:space="preserve">
+    <value>Condividi le credenziali del gateway con il computer remoto</value>
+  </data>
+  <data name="RemoteDesktopGatewayServerLogonMethod_Any" xml:space="preserve">
+    <value>Consenti di selezionarlo più tardi</value>
+  </data>
+  <data name="RemoteDesktopGatewayServerLogonMethod_Smartcard" xml:space="preserve">
+    <value>Smart card</value>
+  </data>
+  <data name="RemoteDesktopGatewayServerLogonMethod_Userpass" xml:space="preserve">
+    <value>Richiedi password (NTLM)</value>
+  </data>
+  <data name="UseGatewayCredentials" xml:space="preserve">
+    <value>Usa credenziali gateway</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331661" xml:space="preserve">
+    <value>Questo computer non può connettersi al computer remoto perché il server gateway desktop remoto è temporaneamente non disponibile. 
+Prova a riconnetterti più tardi o contatta per assistenza l'amministratore di rete.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331651" xml:space="preserve">
+    <value>Questo computer non può connettersi al computer remoto a causa di uno dei seguenti motivi: 
+1) L'indirizzo del server gateway desktop remoto richiesto ed il nome del soggetto del certificato SSL del server non corrispondono. 
+2) Il certificato è scaduto o revocato. 
+3) L'autorità del certificato principale non considera attendibile il certificato. Per assistenza contatta l'amministratore di rete.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331653" xml:space="preserve">
+    <value>Questo computer non è in grado di verificare l'identità del gateway desktop remoto. 
+Non è sicuro connettersi a server che non possono essere identificati.
+Per assistenza contatta l'amministratore di rete.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331654" xml:space="preserve">
+    <value>Questo computer non può connettersi al computer remoto perché l'indirizzo del server gateway desktop remoto richiesto e il nome del soggetto del certificato non corrispondono. 
+Per assistenza contatta l'amministratore di rete.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331655" xml:space="preserve">
+    <value>Questo computer non può connettersi al computer remoto perché il certificato del server gateway desktop remoto è scaduto o è stato revocato. 
+Per assistenza contatta l'amministratore di rete.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331657" xml:space="preserve">
+    <value>Si è verificato un errore durante l'invio dei dati al server gateway desktop remoto. 
+Il server è temporaneamente non disponibile o una connessione di rete non è attiva. 
+Riprova più tardi o contatta l'amministratore di rete per assistenza.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331658" xml:space="preserve">
+    <value>Si è verificato un errore durante la ricezione dei dati dal server gateway desktop remoto. 
+Il server è temporaneamente non disponibile o una connessione di rete non è attiva. 
+Riprova più tardi o contatta l'amministratore di rete per assistenza.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331660" xml:space="preserve">
+    <value>Questo computer non può connettersi al computer remoto perché l'indirizzo del server gateway desktop remoto non è raggiungibile o non è corretto. 
+Inserisci un indirizzo valido del server gateway desktop remoto.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331663" xml:space="preserve">
+    <value>Questo computer non può connettersi al computer remoto perché il server gateway desktop remoto sta esaurendo le risorse del server ed è temporaneamente non disponibile. 
+Prova a riconnetterti più tardi o contatta l'amministratore di rete per assistenza.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331672" xml:space="preserve">
+    <value>Il server gateway desktop remoto ha terminato la connessione. 
+Prova a riconnetterti più tardi o contatta l'amministratore di rete per assistenza.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331673" xml:space="preserve">
+    <value>L'amministratore del server gateway desktop remoto ha terminato la connessione. 
+Prova a riconnetterti più tardi o contatta l'amministratore di rete per assistenza.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331675" xml:space="preserve">
+    <value>Il desktop remoto non può connettersi al computer remoto per uno di questi motivi: 
+1) L'account utente non è elencato nell'elenco delle autorizzazioni del gateway desktop remoto 
+2) Potresti aver specificato il computer remoto in formato NetBIOS (ad esempio, computer1) , ma il gateway desktop remoto prevede un nome di dominio completo o un formato di indirizzo IP (ad esempio, computer1.fabrikam.com o 157.60.0.1). 
+Per assistenza contatta l'amministratore di rete.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331676" xml:space="preserve">
+    <value>Desktop remoto non può connettersi al computer remoto per uno di questi motivi: 
+1) L'account utente non è autorizzato ad accedere al gateway RD 
+2) Il computer non è autorizzato ad accedere al Gateway RD 
+3) Stai usano un metodo di autenticazione non compatibile (ad esempio, il gateway desktop remoto potrebbe essere in attesa di una smart card ma hai fornito una password). 
+Per assistenza contatta l'amministratore di rete.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331679" xml:space="preserve">
+    <value>Questo computer non può connettersi al computer remoto perché l'amministratore di rete ha limitato l'accesso a questo server gateway  desktop remoto. 
+Per assistenza contatta l'amministratore di rete.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331680" xml:space="preserve">
+    <value>Questo computer non può connettersi al computer remoto perché il server proxy web richiede l'autenticazione. 
+Per consentire il traffico non autenticato ad un server gateway desktop remoto tramite il server proxy Web, contatta l'amministratore di rete.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331682" xml:space="preserve">
+    <value>Questo computer non può connettersi al computer remoto perché il server gateway desktop remoto ha raggiunto il numero massimo di connessioni consentite. 
+Prova a riconnetterti più tardi o contatta l'amministratore di rete per assistenza.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331683" xml:space="preserve">
+    <value>Questo computer non può connettersi al computer remoto perché il server gateway desktop remoto non supporta la richiesta. 
+Per assistenza contatta l'amministratore di rete.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331684" xml:space="preserve">
+    <value>Questo computer non può connettersi al computer remoto perché il client non supporta una delle funzionalità del gateway desktop remoto. 
+Per assistenza contatta l'amministratore di rete.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331685" xml:space="preserve">
+    <value>Questo computer non può connettersi al computer remoto perché il server gateway desktop remoto e questo computer non sono compatibili. 
+Per assistenza contatta l'amministratore di rete.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331688" xml:space="preserve">
+    <value>Questo computer non può connettersi al computer remoto perché non è stato configurato un certificato  per l'uso nel server gateway desktop remoto. 
+Per assistenza contatta l'amministratore di rete.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331689" xml:space="preserve">
+    <value>Questo computer non può connettersi al computer remoto perché il server gateway desktop remoto a cui stai tentando di connetterti non è autorizzato dall'amministratore del computer. 
+Se sei l'amministratore, aggiungi nel computer il nome del server gateway desktop remoto all'elenco dei server gateway desktop remoto attendibili, quindi riprova a connetterti.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331690" xml:space="preserve">
+    <value>Questo computer non può connettersi al computer remoto perché questo  computer o dispositivo non soddisfa i requisiti di protezione accesso alla rete impostati dall'amministratore di rete, per uno dei seguenti motivi: 
+1) Il nome del server gateway desktop remoto e il certificato della chiave pubblica del server il nome del soggetto non corrispondono. 
+2) Il certificato è scaduto o è stato revocato. 
+3) L'autorità del certificato principale non considera attendibile il certificato. 
+4) L'estensione della chiave del certificato non supporta la crittografia. 
+5) Il computer non è in grado di verificare l'elenco di revoca dei certificati. 
+Per assistenza contatta l'amministratore di rete.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331691" xml:space="preserve">
+    <value>Questo computer non può connettersi al computer remoto perché sono necessari un nome utente e una password per l'autenticazione al server gateway desktop remoto anziché le credenziali della smart card.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331692" xml:space="preserve">
+    <value>Questo computer non può connettersi al computer remoto perché sono necessarie per l'autenticazione al server gateway desktop remoto le credenziali della smart card invece di un nome utente e una password.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331700" xml:space="preserve">
+    <value>Questo computer non può connettersi al computer remoto perché è stato inviato un cookie non valido al server gateway desktop remoto. 
+Per assistenza contatta l'amministratore di rete.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331701" xml:space="preserve">
+    <value>Questo computer non può connettersi al computer remoto perché il cookie è stato rifiutato dal server gateway desktop remoto. 
+Per assistenza contatta l'amministratore di rete.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331703" xml:space="preserve">
+    <value>Questo computer non può connettersi al computer remoto perché il server gateway desktop remoto prevede un metodo di autenticazione diverso da quello usato. 
+Per assistenza contatta l'amministratore di rete.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331704" xml:space="preserve">
+    <value>La connessione al gateway desktop remoto è terminata perché l'autenticazione utente periodica non è riuscita. 
+Prova a riconnetterti con un nome utente e una password corretti. 
+Se la riconnessione non riesce, contatta l'amministratore di rete per ulteriore assistenza.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331705" xml:space="preserve">
+    <value>La connessione al gateway desktop remoto è terminata perché l'autorizzazione utente periodica non è riuscita. 
+Prova a riconnetterti con un nome utente e una password corretti. 
+Se la riconnessione non riesce, contattare l'amministratore di rete per ulteriore assistenza.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331707" xml:space="preserve">
+    <value>Questo computer non può connettersi al computer remoto perché il gateway desktop remoto ed il computer remoto non sono in grado di scambiare i criteri. 
+Ciò potrebbe verificarsi a causa di uno dei seguenti motivi: 
+1. Il computer remoto non è in grado di scambiare criteri con il gateway desktop remoto. 
+2. La configurazione del computer remoto non consente una nuova connessione. 
+3. La connessione tra gateway desktop remoto ed il computer remoto è terminata. 
+Per assistenza contatta l'amministratore di rete.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331713" xml:space="preserve">
+    <value>La connessione al gateway desktop remoto è terminata perché l'autorizzazione utente periodica non è riuscita. 
+Questo computer o dispositivo non ha superato i requisiti NAP (Network Access Protection) impostati dall'amministratore di rete. 
+Per assistenza contattare l'amministratore di rete.</value>
+  </data>
 </root>
