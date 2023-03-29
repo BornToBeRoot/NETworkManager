@@ -125,9 +125,14 @@ public class WiFiViewModel : ViewModelBase
 
             // Start timer to refresh automatically
             if (value)
-                StartOrUpdateAutoRefreshTimer(AutoRefreshTime.CalculateTimeSpan(SelectedAutoRefreshTime));
+            {
+                _autoRefreshTimer.Interval = AutoRefreshTime.CalculateTimeSpan(SelectedAutoRefreshTime);
+                _autoRefreshTimer.Start();
+            }
             else
-                StopAutoRefreshTimer();
+            {
+                _autoRefreshTimer.Stop();
+            }
 
             OnPropertyChanged();
         }
@@ -150,7 +155,10 @@ public class WiFiViewModel : ViewModelBase
             _selectedAutoRefreshTime = value;
 
             if (AutoRefreshEnabled)
-                StartOrUpdateAutoRefreshTimer(AutoRefreshTime.CalculateTimeSpan(value));
+            {
+                _autoRefreshTimer.Interval = AutoRefreshTime.CalculateTimeSpan(value);
+                _autoRefreshTimer.Start();
+            }
 
             OnPropertyChanged();
         }
@@ -343,7 +351,7 @@ public class WiFiViewModel : ViewModelBase
                 return false;
             }
         };
-        
+
         // Auto refresh
         AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
         SelectedAutoRefreshTime = AutoRefreshTimes.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => x.Value == SettingsManager.Current.WiFi_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.WiFi_AutoRefreshTime.TimeUnit);
@@ -421,9 +429,9 @@ public class WiFiViewModel : ViewModelBase
         IsAdaptersLoading = false;
     }
 
-    private async Task Scan(WiFiAdapter adapter, bool fromBackground = false)
+    private async Task Scan(WiFiAdapter adapter, bool refreshing = false)
     {
-        if (fromBackground)
+        if (refreshing)
         {
             StatusMessage = Localization.Resources.Strings.SearchingForNetworksDots;
             IsBackgroundSearchRunning = true;
@@ -458,7 +466,7 @@ public class WiFiViewModel : ViewModelBase
         IsStatusMessageDisplayed = true;
         StatusMessage = string.Format(Localization.Resources.Strings.LastScanAtX, DateTime.Now.ToLongTimeString());
 
-        if (fromBackground)
+        if (refreshing)
             IsBackgroundSearchRunning = false;
         else
             IsNetworksLoading = false;
@@ -515,34 +523,6 @@ public class WiFiViewModel : ViewModelBase
         });
     }
 
-    private void StartOrUpdateAutoRefreshTimer(TimeSpan timeSpan)
-    {
-        _autoRefreshTimer.Stop();
-        _autoRefreshTimer.Interval = timeSpan;
-        _autoRefreshTimer.Start();
-    }
-
-    private void StopAutoRefreshTimer()
-    {
-        _autoRefreshTimer.Stop();
-    }
-        
-    private void PauseAutoRefreshTimer()
-    {
-        if (!AutoRefreshEnabled)
-            return;
-
-        _autoRefreshTimer.Stop();        
-    }
-
-    private void ResumeAutoRefreshTimer()
-    {
-        if (!AutoRefreshEnabled)
-            return;
-
-        _autoRefreshTimer.Start();
-    }    
-
     private async Task Export()
     {
         var customDialog = new CustomDialog
@@ -580,12 +560,16 @@ public class WiFiViewModel : ViewModelBase
 
     public void OnViewVisible()
     {
-        ResumeAutoRefreshTimer();
+        // Temporarily stop timer...
+        if (AutoRefreshEnabled)
+            _autoRefreshTimer.Stop();
     }
 
     public void OnViewHide()
     {
-        PauseAutoRefreshTimer();
+        // Temporarily stop timer...
+        if (AutoRefreshEnabled)
+            _autoRefreshTimer.Stop();
     }
 
     #endregion
@@ -601,10 +585,6 @@ public class WiFiViewModel : ViewModelBase
 
         // Restart timer...
         _autoRefreshTimer.Start();
-    }
-    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-
     }
     #endregion
 }

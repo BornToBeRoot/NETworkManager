@@ -4017,16 +4017,16 @@ public class SettingsInfo : PropertyChangedBase
     #endregion
 
     #region ARPTable
-    private bool _arpTable_AutoRefresh;
-    public bool ARPTable_AutoRefresh
+    private bool _arpTable_AutoRefreshEnabled;
+    public bool ARPTable_AutoRefreshEnabled
     {
-        get => _arpTable_AutoRefresh;
+        get => _arpTable_AutoRefreshEnabled;
         set
         {
-            if (value == _arpTable_AutoRefresh)
+            if (value == _arpTable_AutoRefreshEnabled)
                 return;
 
-            _arpTable_AutoRefresh = value;
+            _arpTable_AutoRefreshEnabled = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }

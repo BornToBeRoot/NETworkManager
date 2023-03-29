@@ -500,7 +500,6 @@
                                 </liveChart:Axis>
                             </liveChart:CartesianChart.AxisY>
                         </liveChart:CartesianChart>
-
                         <Grid Grid.Row="6">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
