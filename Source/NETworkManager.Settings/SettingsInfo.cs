@@ -721,16 +721,16 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _wiFi_AutoRefresh;
-    public bool WiFi_AutoRefresh
+    private bool _wiFi_AutoRefreshEnabled;
+    public bool WiFi_AutoRefreshEnabled
     {
-        get => _wiFi_AutoRefresh;
+        get => _wiFi_AutoRefreshEnabled;
         set
         {
-            if (value == _wiFi_AutoRefresh)
+            if (value == _wiFi_AutoRefreshEnabled)
                 return;
 
-            _wiFi_AutoRefresh = value;
+            _wiFi_AutoRefreshEnabled = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }

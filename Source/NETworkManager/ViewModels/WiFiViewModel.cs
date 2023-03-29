@@ -15,6 +15,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Automation.Peers;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -28,8 +29,7 @@ public class WiFiViewModel : ViewModelBase
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly bool _isLoading;
-    private readonly DispatcherTimer _autoRefreshTimer = new DispatcherTimer();
-    private bool _isTimerPaused;
+    private readonly DispatcherTimer _autoRefreshTimer = new();
 
     private bool _sdkContractsFailedToLoad;
     public bool SDKContractsFailedToLoad
@@ -59,7 +59,7 @@ public class WiFiViewModel : ViewModelBase
         }
     }
 
-    private List<WiFiAdapterInfo> _adapters = new List<WiFiAdapterInfo>();
+    private List<WiFiAdapterInfo> _adapters = new();
     public List<WiFiAdapterInfo> Adapters
     {
         get => _adapters;
@@ -109,28 +109,25 @@ public class WiFiViewModel : ViewModelBase
         }
     }
 
-    private bool _autoRefresh;
-    public bool AutoRefresh
+    private bool _autoRefreshEnabled;
+    public bool AutoRefreshEnabled
     {
-        get => _autoRefresh;
+        get => _autoRefreshEnabled;
         set
         {
-            if (value == _autoRefresh)
+            if (value == _autoRefreshEnabled)
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.WiFi_AutoRefresh = value;
+                SettingsManager.Current.WiFi_AutoRefreshEnabled = value;
 
-            _autoRefresh = value;
+            _autoRefreshEnabled = value;
 
             // Start timer to refresh automatically
-            if (!_isLoading)
-            {
-                if (value)
-                    StartAutoRefreshTimer();
-                else
-                    StopAutoRefreshTimer();
-            }
+            if (value)
+                StartOrUpdateAutoRefreshTimer(AutoRefreshTime.CalculateTimeSpan(SelectedAutoRefreshTime));
+            else
+                StopAutoRefreshTimer();
 
             OnPropertyChanged();
         }
@@ -152,8 +149,8 @@ public class WiFiViewModel : ViewModelBase
 
             _selectedAutoRefreshTime = value;
 
-            if (AutoRefresh)
-                ChangeAutoRefreshTimerInterval(AutoRefreshTime.CalculateTimeSpan(value));
+            if (AutoRefreshEnabled)
+                StartOrUpdateAutoRefreshTimer(AutoRefreshTime.CalculateTimeSpan(value));
 
             OnPropertyChanged();
         }
@@ -216,7 +213,7 @@ public class WiFiViewModel : ViewModelBase
         }
     }
 
-    private ObservableCollection<WiFiNetworkInfo> _networks = new ObservableCollection<WiFiNetworkInfo>();
+    private ObservableCollection<WiFiNetworkInfo> _networks = new();
     public ObservableCollection<WiFiNetworkInfo> Networks
     {
         get => _networks;
@@ -346,21 +343,25 @@ public class WiFiViewModel : ViewModelBase
                 return false;
             }
         };
-
+        
+        // Auto refresh
         AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
-        SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => (x.Value == SettingsManager.Current.WiFi_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.WiFi_AutoRefreshTime.TimeUnit));
+        SelectedAutoRefreshTime = AutoRefreshTimes.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => x.Value == SettingsManager.Current.WiFi_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.WiFi_AutoRefreshTime.TimeUnit);
 
         _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
 
-        LoadSettings();
+        // Load network adapters
+        LoadAdapters(SettingsManager.Current.WiFi_InterfaceId);
 
-        LoadAdapters();
+        // Load settings
+        LoadSettings();
 
         _isLoading = false;
     }
 
     private void LoadSettings()
     {
+        AutoRefreshEnabled = SettingsManager.Current.WiFi_AutoRefreshEnabled;
         Show2dot4GHzNetworks = SettingsManager.Current.WiFi_Show2dot4GHzNetworks;
         Show5GHzNetworks = SettingsManager.Current.WiFi_Show5GHzNetworks;
     }
@@ -373,7 +374,7 @@ public class WiFiViewModel : ViewModelBase
 
     private void ReloadAdapterAction()
     {
-        ReloadAdapter();
+        LoadAdapters(SelectedAdapter?.NetworkInterfaceInfo.Id);
     }
 
     public ICommand ScanNetworksCommand => new RelayCommand(p => ScanNetworksAction(), ScanNetworks_CanExecute);
@@ -394,7 +395,7 @@ public class WiFiViewModel : ViewModelBase
     #endregion
 
     #region Methods
-    private async Task LoadAdapters()
+    private async Task LoadAdapters(string adapterId = null)
     {
         IsAdaptersLoading = true;
 
@@ -402,39 +403,15 @@ public class WiFiViewModel : ViewModelBase
         {
             Adapters = await WiFi.GetAdapterAsync();
 
-            // Get the last selected interface, if it is still available on this machine...
+            // Check if we found any adapters
             if (Adapters.Count > 0)
             {
-                var info = Adapters.FirstOrDefault(s => s.NetworkInterfaceInfo.Id.ToString() == SettingsManager.Current.WiFi_InterfaceId);
-
-                SelectedAdapter = info ?? Adapters[0];
+                // Check for existing adapter id or select the first one
+                if (string.IsNullOrEmpty(adapterId))
+                    SelectedAdapter = Adapters.FirstOrDefault();
+                else
+                    SelectedAdapter = Adapters.FirstOrDefault(s => s.NetworkInterfaceInfo.Id.ToString() == adapterId) ?? Adapters.FirstOrDefault();
             }
-        }
-        catch (FileNotFoundException) // This exception is thrown, when the Microsoft.Windows.SDK.Contracts is not available...
-        {
-            SDKContractsFailedToLoad = true;
-        }
-
-        IsAdaptersLoading = false;
-    }
-
-    private async Task ReloadAdapter()
-    {
-        IsAdaptersLoading = true;
-
-        await Task.Delay(2000); // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
-
-        string id = string.Empty;
-
-        if (SelectedAdapter != null)
-            id = SelectedAdapter.NetworkInterfaceInfo.Id;
-
-        try
-        {
-            Adapters = await WiFi.GetAdapterAsync();
-
-            if (Adapters.Count > 0)
-                SelectedAdapter = string.IsNullOrEmpty(id) ? Adapters.FirstOrDefault() : Adapters.FirstOrDefault(x => x.NetworkInterfaceInfo.Id == id);
         }
         catch (FileNotFoundException) // This exception is thrown, when the Microsoft.Windows.SDK.Contracts is not available...
         {
@@ -489,7 +466,7 @@ public class WiFiViewModel : ViewModelBase
 
     private ChartValues<double> GetDefaultChartValues(WiFi.Radio radio)
     {
-        ChartValues<double> values = new ChartValues<double>();
+        ChartValues<double> values = new();
 
         for (int i = 0; i < (radio == WiFi.Radio.One ? Radio1Labels.Length : Radio2Labels.Length); i++)
             values.Add(-1);
@@ -538,15 +515,10 @@ public class WiFiViewModel : ViewModelBase
         });
     }
 
-    private void ChangeAutoRefreshTimerInterval(TimeSpan timeSpan)
+    private void StartOrUpdateAutoRefreshTimer(TimeSpan timeSpan)
     {
+        _autoRefreshTimer.Stop();
         _autoRefreshTimer.Interval = timeSpan;
-    }
-
-    private void StartAutoRefreshTimer()
-    {
-        ChangeAutoRefreshTimerInterval(AutoRefreshTime.CalculateTimeSpan(SelectedAutoRefreshTime));
-
         _autoRefreshTimer.Start();
     }
 
@@ -554,29 +526,22 @@ public class WiFiViewModel : ViewModelBase
     {
         _autoRefreshTimer.Stop();
     }
-
+        
     private void PauseAutoRefreshTimer()
     {
-        if (!_autoRefreshTimer.IsEnabled)
+        if (!AutoRefreshEnabled)
             return;
 
-        _autoRefreshTimer.Stop();
-        _isTimerPaused = true;
+        _autoRefreshTimer.Stop();        
     }
 
     private void ResumeAutoRefreshTimer()
     {
-        if (!_isTimerPaused)
+        if (!AutoRefreshEnabled)
             return;
 
         _autoRefreshTimer.Start();
-        _isTimerPaused = false;
-    }
-
-    private async Task Connect()
-    {
-
-    }
+    }    
 
     private async Task Export()
     {
@@ -639,6 +604,7 @@ public class WiFiViewModel : ViewModelBase
     }
     private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
+
     }
     #endregion
 }
