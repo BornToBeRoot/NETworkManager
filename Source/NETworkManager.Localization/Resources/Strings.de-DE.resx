@@ -967,7 +967,7 @@ Erstelle eins...</value>
     <value>Nur bei Vollbild anwenden</value>
   </data>
   <data name="RemoteDesktopKeyboardHookMode_OnTheRemoteComputer" xml:space="preserve">
-    <value>Auf dem Remote-Computer</value>
+    <value>Auf dem Remotecomputer</value>
   </data>
   <data name="RemoteDesktopKeyboardHookMode_OnThisComputer" xml:space="preserve">
     <value>Auf diesem Computer</value>
@@ -1174,7 +1174,7 @@ Profildateien sind nicht betroffen!</value>
   <data name="UnkownError" xml:space="preserve">
     <value>Unbekannter Fehler!</value>
   </data>
-  <data name="UntrayBringWindowToFront" xml:space="preserve">
+  <data name="UntrayBringWindowToForeground" xml:space="preserve">
     <value>Untray / Fenster in den Vordergrund bringen</value>
   </data>
   <data name="URL" xml:space="preserve">
@@ -2229,8 +2229,8 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="ShowStatusWindowOnNetworkChange" xml:space="preserve">
     <value>Statusfenster bei Netzwerkwechsel anzeigen</value>
   </data>
-  <data name="TimeInSecondsHowLongTheWindowShouldBeDisplayed" xml:space="preserve">
-    <value>Zeit in Sekunden, wie lange das Fenster angezeigt werden soll</value>
+  <data name="TimeInSecondsHowLongTheStatusWindowIsShown" xml:space="preserve">
+    <value>Zeit in Sekunden, wie lange das Statusfenster angezeigt wird</value>
   </data>
   <data name="WiFi" xml:space="preserve">
     <value>WLAN</value>
@@ -3324,5 +3324,131 @@ Wenn der Wert zu hoch ist, können Leistungsprobleme auftreten.
   </data>
   <data name="ShowAddressBar" xml:space="preserve">
     <value>Adressleiste anzeigen</value>
+  </data>
+  <data name="WarnMessage_MultipleInstances" xml:space="preserve">
+    <value>Es wird nicht empfohlen, diese Einstellung zu aktivieren. Mehrere Instanzen der Anwendung teilen sich die gleichen Einstellungen und Profildateien. Die letzte Instanz, die geschlossen wird, kann Änderungen überschreiben, die von anderen Instanzen vorgenommen wurden.</value>
+  </data>
+  <data name="BypassForLocalAddresses" xml:space="preserve">
+    <value>Für lokale Adressen umgangen</value>
+  </data>
+  <data name="EnableGatewayServer" xml:space="preserve">
+    <value>Gatewayserver aktivieren</value>
+  </data>
+  <data name="LogonMethod" xml:space="preserve">
+    <value>Anmeldemethode</value>
+  </data>
+  <data name="GatewayServer" xml:space="preserve">
+    <value>Gatewayserver</value>
+  </data>
+  <data name="ServerName" xml:space="preserve">
+    <value>Servername</value>
+  </data>
+  <data name="ShareGatewayCredentialsWithRemoteComputer" xml:space="preserve">
+    <value>Gateway-Zugangsdaten mit Remotecomputer teilen</value>
+  </data>
+  <data name="RemoteDesktopGatewayServerLogonMethod_Any" xml:space="preserve">
+    <value>Auswahl später durchführen</value>
+  </data>
+  <data name="RemoteDesktopGatewayServerLogonMethod_Smartcard" xml:space="preserve">
+    <value>Smartcard oder Windows Hello for Business</value>
+  </data>
+  <data name="RemoteDesktopGatewayServerLogonMethod_Userpass" xml:space="preserve">
+    <value>Kennwort anfordern (NTLM)</value>
+  </data>
+  <data name="UseGatewayCredentials" xml:space="preserve">
+    <value>Gateway-Zugangsdaten verwenden</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331661" xml:space="preserve">
+    <value>Ihr Computer kann keine Verbindung zum Remotecomputer herstellen, da der Remote Desktop Gateway-Server vorübergehend nicht verfügbar ist. Versuchen Sie, die Verbindung später wiederherzustellen, oder wenden Sie sich an Ihren Netzwerkadministrator, um Hilfe zu erhalten.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331651" xml:space="preserve">
+    <value>Ihr Computer kann aus einem der folgenden Gründe keine Verbindung mit dem Remotecomputer herstellen: 1) Die angeforderte Remotedesktop-Gateway-Serveradresse und der Betreff des SSL-Zertifikats des Servers stimmen nicht überein. 2) Das Zertifikat ist abgelaufen oder widerrufen. 3) Die Stammzertifizierungsstelle traut dem Zertifikat nicht. Wenden Sie sich an Ihren Netzwerkadministrator, um Hilfe zu erhalten.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331653" xml:space="preserve">
+    <value>Dieser Computer kann die Identität des RD-Gateways "" nicht verifizieren. Es ist nicht sicher, eine Verbindung zu Servern herzustellen, die nicht identifiziert werden können. Wenden Sie sich an Ihren Netzwerkadministrator, um Hilfe zu erhalten.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331654" xml:space="preserve">
+    <value>Ihr Computer kann keine Verbindung zum Remotecomputer herstellen, weil die angeforderte Remote Desktop Gateway-Serveradresse und der Zertifikatsbetreffsname nicht übereinstimmen. Wenden Sie sich an Ihren Netzwerkadministrator, um Hilfe zu erhalten.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331655" xml:space="preserve">
+    <value>Ihr Computer kann keine Verbindung zum Remotecomputer herstellen, weil das Zertifikat des Remotedesktop-Gatewayservers abgelaufen ist oder widerrufen wurde. Wenden Sie sich an Ihren Netzwerkadministrator, um Hilfe zu erhalten.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331657" xml:space="preserve">
+    <value>Beim Senden von Daten an den Remotedesktop-Gateway-Server ist ein Fehler aufgetreten. Der Server ist vorübergehend nicht verfügbar oder eine Netzwerkverbindung ist gestört. Versuchen Sie es später noch einmal, oder wenden Sie sich an Ihren Netzwerkadministrator, um Hilfe zu erhalten.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331658" xml:space="preserve">
+    <value>Beim Empfang von Daten vom Remotedesktop-Gatewayserver ist ein Fehler aufgetreten. Entweder ist der Server vorübergehend nicht verfügbar oder eine Netzwerkverbindung ist gestört. Versuchen Sie es später noch einmal, oder wenden Sie sich an Ihren Netzwerkadministrator, um Hilfe zu erhalten.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331660" xml:space="preserve">
+    <value>Ihr Computer kann keine Verbindung zum Remotecomputer herstellen, weil die Adresse des Remotedesktop-Gatewayservers unerreichbar oder falsch ist. Geben Sie eine gültige Remotedesktop-Gateway-Serveradresse ein.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331663" xml:space="preserve">
+    <value>Ihr Computer kann keine Verbindung zum Remotecomputer herstellen, da der Remotedesktop-Gatewayserver nur über geringe Serverressourcen verfügt und vorübergehend nicht verfügbar ist. Versuchen Sie, die Verbindung später wiederherzustellen, oder wenden Sie sich an Ihren Netzwerkadministrator, um Hilfe zu erhalten.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331672" xml:space="preserve">
+    <value>Der Remotedesktop-Gatewayserver hat die Verbindung beendet. Versuchen Sie, die Verbindung später wiederherzustellen, oder wenden Sie sich an Ihren Netzwerkadministrator, um Hilfe zu erhalten.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331673" xml:space="preserve">
+    <value>Der Remote Desktop Gateway-Serveradministrator hat die Verbindung beendet. Versuchen Sie, die Verbindung später wiederherzustellen, oder wenden Sie sich an Ihren Netzwerkadministrator, um Hilfe zu erhalten.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331675" xml:space="preserve">
+    <value>Remotedesktop kann aus einem der folgenden Gründe keine Verbindung mit dem entfernten Computer herstellen "": 1) Ihr Benutzerkonto ist nicht in der Berechtigungsliste des RD-Gateways aufgeführt. 2) Sie haben den Remotecomputer möglicherweise im NetBIOS-Format angegeben (z. B. computer1), aber das RD-Gateway erwartet ein FQDN- oder IP-Adressformat (z. B. computer1.fabrikam.com oder 157.60.0.1). Wenden Sie sich an Ihren Netzwerkadministrator, um Hilfe zu erhalten.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331676" xml:space="preserve">
+    <value>Remotedesktop kann aus einem der folgenden Gründe keine Verbindung mit dem entfernten Computer herstellen "": 1) Ihr Benutzerkonto ist nicht für den Zugriff auf den RD-Gateway autorisiert "" 2) Ihr Computer ist nicht für den Zugriff auf den RD-Gateway autorisiert "" 3) Sie verwenden eine inkompatible Authentifizierungsmethode (z. B. erwartet der RD-Gateway eine Smartcard, Sie haben jedoch ein Kennwort angegeben). Wenden Sie sich an Ihren Netzwerkadministrator.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331679" xml:space="preserve">
+    <value>Ihr Computer kann keine Verbindung zum Remotecomputer herstellen, weil der Netzwerkadministrator den Zugriff auf diesen RD Gatewayserver eingeschränkt hat. Wenden Sie sich an Ihren Netzwerkadministrator, um Hilfe zu erhalten.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331680" xml:space="preserve">
+    <value>Ihr Computer kann keine Verbindung zum Remotecomputer herstellen, da der Web-Proxy-Server eine Authentifizierung erfordert. Wenden Sie sich an Ihren Netzwerkadministrator, um unauthentifizierten Datenverkehr zu einem RD-Gatewayserver über Ihren Webproxyserver zuzulassen.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331682" xml:space="preserve">
+    <value>Ihr Computer kann keine Verbindung zum Remotecomputer herstellen, weil der Remotedesktop-Gatewayserver die maximal zulässige Anzahl von Verbindungen erreicht hat. Versuchen Sie, die Verbindung später wieder herzustellen, oder wenden Sie sich an Ihren Netzwerkadministrator.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331683" xml:space="preserve">
+    <value>Ihr Computer kann keine Verbindung zum Remotecomputer herstellen, da der Remotedesktop Gatewayserver die Anforderung nicht unterstützt. Wenden Sie sich an Ihren Netzwerkadministrator, um Hilfe zu erhalten.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331684" xml:space="preserve">
+    <value>Ihr Computer kann keine Verbindung zum Remotecomputer herstellen, weil der Client eine der Funktionen von Remote Desktop Gateway nicht unterstützt. Wenden Sie sich an Ihren Netzwerkadministrator, um Hilfe zu erhalten.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331685" xml:space="preserve">
+    <value>Ihr Computer kann keine Verbindung zum Remotecomputer herstellen, weil der Remotedesktop-Gatewayserver und dieser Computer nicht kompatibel sind. Wenden Sie sich an Ihren Netzwerkadministrator, um Hilfe zu erhalten.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331688" xml:space="preserve">
+    <value>Ihr Computer kann keine Verbindung zum Remotecomputer herstellen, da kein Zertifikat für die Verwendung auf dem Remotedesktop-Gatewayserver konfiguriert wurde. Wenden Sie sich an Ihren Netzwerkadministrator, um Hilfe zu erhalten.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331689" xml:space="preserve">
+    <value>Ihr Computer kann keine Verbindung zum Remotecomputer herstellen, weil der RD-Gatewayserver, zu dem Sie eine Verbindung herstellen möchten, vom Computeradministrator nicht zugelassen ist. Wenn Sie der Administrator sind, fügen Sie den Namen dieses Remotedesktop-Gatewayservers zur Liste der vertrauenswürdigen Remotedesktop-Gatewayserver auf Ihrem Computer hinzu und versuchen Sie dann erneut, eine Verbindung herzustellen.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331690" xml:space="preserve">
+    <value>Ihr Computer kann keine Verbindung zum Remotecomputer herstellen, weil Ihr Computer oder Gerät die vom Netzwerkadministrator festgelegten Anforderungen für den Netzwerkzugriffsschutz aus einem der folgenden Gründe nicht erfüllt: 1) Der Name des Remotedesktop-Gatewayservers und der Betreff des Zertifikats für den öffentlichen Schlüssel des Servers stimmen nicht überein. 2) Das Zertifikat ist abgelaufen oder wurde widerrufen. 3) Die Stammzertifizierungsstelle vertraut dem Zertifikat nicht. 4) Die Schlüsselerweiterung des Zertifikats unterstützt keine Verschlüsselung. 5) Ihr Computer kann die Zertifikatswiderrufsliste nicht verifizieren. Wenden Sie sich an Ihren Netzwerkadministrator, um Hilfe zu erhalten.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331691" xml:space="preserve">
+    <value>Ihr Computer kann keine Verbindung zum Remotecomputer herstellen, da für die Authentifizierung beim Remotedesktop-Gatewayserver ein Benutzername und ein Kennwort anstelle von Smartcard-Anmeldeinformationen erforderlich sind.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331692" xml:space="preserve">
+    <value>Ihr Computer kann keine Verbindung zum Remotecomputer herstellen, weil für die Authentifizierung beim Remotedesktop-Gatewayserver Smartcard-Anmeldeinformationen anstelle eines Benutzernamens und Kennworts erforderlich sind.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331700" xml:space="preserve">
+    <value>Ihr Computer kann keine Verbindung zum Remotecomputer herstellen, da ein ungültiges Cookie an den Remotedesktop-Gatewayderver gesendet wurde. Wenden Sie sich an Ihren Netzwerkadministrator, um Hilfe zu erhalten.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331701" xml:space="preserve">
+    <value>Ihr Computer kann keine Verbindung zum Remotecomputer herstellen, da das Cookie vom Remotedesktop-Gatewayserver abgelehnt wurde. Wenden Sie sich an Ihren Netzwerkadministrator, um Hilfe zu erhalten.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331703" xml:space="preserve">
+    <value>Ihr Computer kann keine Verbindung zum Remotecomputer herstellen, weil der Remotedesktop-Gatewayserver eine andere Authentifizierungsmethode erwartet als die, die versucht wurde. Wenden Sie sich an Ihren Netzwerkadministrator, um Hilfe zu erhalten.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331704" xml:space="preserve">
+    <value>Die RD-Gateway-Verbindung wurde beendet, weil die periodische Benutzerauthentifizierung fehlgeschlagen ist. Versuchen Sie, die Verbindung mit einem korrekten Benutzernamen und Kennwort wiederherzustellen. Wenn die Wiederherstellung der Verbindung fehlschlägt, wenden Sie sich an Ihren Netzwerkadministrator, um weitere Unterstützung zu erhalten.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331705" xml:space="preserve">
+    <value>Die RD-Gateway-Verbindung wurde beendet, weil die periodische Benutzerautorisierung fehlgeschlagen ist. Versuchen Sie, die Verbindung mit einem korrekten Benutzernamen und Kennwort wiederherzustellen. Wenn die erneute Verbindung fehlschlägt, wenden Sie sich an Ihren Netzwerkadministrator, um weitere Unterstützung zu erhalten.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331707" xml:space="preserve">
+    <value>Ihr Computer kann keine Verbindung mit dem Remotecomputer herstellen, weil Remotedesktop-Gateway und der Remotecomputer keine Richtlinien austauschen können. Dies kann aus einem der folgenden Gründe geschehen: 1. Der Remotecomputer ist nicht in der Lage, Richtlinien mit dem Remotedesktop-Gateway auszutauschen. 2. Die Konfiguration des Remotecomputers lässt eine neue Verbindung nicht zu. 3. Die Verbindung zwischen dem Remotedesktop-Gateway und dem Remotecomputer wurde beendet. Wenden Sie sich an Ihren Netzwerkadministrator, um Hilfe zu erhalten.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331713" xml:space="preserve">
+    <value>Die RD-Gateway-Verbindung wurde beendet, weil die periodische Benutzerautorisierung fehlgeschlagen ist. Ihr Computer oder Gerät hat die vom Netzwerkadministrator festgelegten NAP-Anforderungen (Network Access Protection) nicht erfüllt. Wenden Sie sich an Ihren Netzwerkadministrator, um Hilfe zu erhalten.</value>
   </data>
 </root>
