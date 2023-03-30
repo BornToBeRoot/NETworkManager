@@ -24,8 +24,7 @@ public class ARPTableViewModel : ViewModelBase
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly bool _isLoading;
-    private readonly DispatcherTimer _autoRefreshTimer = new DispatcherTimer();
-    private bool _isTimerPaused;
+    private readonly DispatcherTimer _autoRefreshTimer = new();
 
     private string _search;
     public string Search
@@ -44,7 +43,7 @@ public class ARPTableViewModel : ViewModelBase
         }
     }
 
-    private ObservableCollection<ARPInfo> _arpInfoResults = new ObservableCollection<ARPInfo>();
+    private ObservableCollection<ARPInfo> _arpInfoResults = new();
     public ObservableCollection<ARPInfo> ARPInfoResults
     {
         get => _arpInfoResults;
@@ -88,27 +87,29 @@ public class ARPTableViewModel : ViewModelBase
         }
     }
 
-    private bool _autoRefresh;
-    public bool AutoRefresh
+    private bool _autoRefreshEnabled;
+    public bool AutoRefreshEnabled
     {
-        get => _autoRefresh;
+        get => _autoRefreshEnabled;
         set
         {
-            if (value == _autoRefresh)
+            if (value == _autoRefreshEnabled)
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.ARPTable_AutoRefresh = value;
+                SettingsManager.Current.ARPTable_AutoRefreshEnabled = value;
 
-            _autoRefresh = value;
+            _autoRefreshEnabled = value;
 
             // Start timer to refresh automatically
-            if (!_isLoading)
+            if (value)
             {
-                if (value)
-                    StartAutoRefreshTimer();
-                else
-                    StopAutoRefreshTimer();
+                _autoRefreshTimer.Interval = AutoRefreshTime.CalculateTimeSpan(SelectedAutoRefreshTime);
+                _autoRefreshTimer.Start();
+            }
+            else
+            {
+                _autoRefreshTimer.Stop();
             }
 
             OnPropertyChanged();
@@ -131,8 +132,11 @@ public class ARPTableViewModel : ViewModelBase
 
             _selectedAutoRefreshTime = value;
 
-            if (AutoRefresh)
-                ChangeAutoRefreshTimerInterval(AutoRefreshTime.CalculateTimeSpan(value));
+            if (AutoRefreshEnabled)
+            {
+                _autoRefreshTimer.Interval = AutoRefreshTime.CalculateTimeSpan(value);
+                _autoRefreshTimer.Start();
+            }
 
             OnPropertyChanged();
         }
@@ -192,7 +196,7 @@ public class ARPTableViewModel : ViewModelBase
         ARPInfoResultsView.SortDescriptions.Add(new SortDescription(nameof(ARPInfo.IPAddressInt32), ListSortDirection.Ascending));
         ARPInfoResultsView.Filter = o =>
         {
-            if (!(o is ARPInfo info))
+            if (o is not ARPInfo info)
                 return false;
 
             if (string.IsNullOrEmpty(Search))
@@ -202,29 +206,17 @@ public class ARPTableViewModel : ViewModelBase
             return info.IPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.MACAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || (info.IsMulticast ? Localization.Resources.Strings.Yes : Localization.Resources.Strings.No).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
-        AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
-        SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => (x.Value == SettingsManager.Current.ARPTable_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.ARPTable_AutoRefreshTime.TimeUnit));
+        // Get ARP table
+        Refresh();
 
+        // Auto refresh
         _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
 
-        LoadSettings();
+        AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
+        SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => (x.Value == SettingsManager.Current.ARPTable_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.ARPTable_AutoRefreshTime.TimeUnit));
+        AutoRefreshEnabled = SettingsManager.Current.ARPTable_AutoRefreshEnabled;
 
         _isLoading = false;
-
-        Run();
-    }
-
-    private async Task Run()
-    {
-        await Refresh();
-
-        if (AutoRefresh)
-            StartAutoRefreshTimer();
-    }
-
-    private void LoadSettings()
-    {
-        AutoRefresh = SettingsManager.Current.ARPTable_AutoRefresh;
     }
     #endregion
 
@@ -412,51 +404,18 @@ public class ARPTableViewModel : ViewModelBase
         IsRefreshing = false;
     }
 
-    private void ChangeAutoRefreshTimerInterval(TimeSpan timeSpan)
+    public void OnViewVisible()
     {
-        _autoRefreshTimer.Interval = timeSpan;
-    }
-
-    private void StartAutoRefreshTimer()
-    {
-        ChangeAutoRefreshTimerInterval(AutoRefreshTime.CalculateTimeSpan(SelectedAutoRefreshTime));
-
-        _autoRefreshTimer.Start();
-    }
-
-    private void StopAutoRefreshTimer()
-    {
-        _autoRefreshTimer.Stop();
-    }
-
-    private void PauseAutoRefreshTimer()
-    {
-        if (!_autoRefreshTimer.IsEnabled)
-            return;
-
-        _autoRefreshTimer.Stop();
-
-        _isTimerPaused = true;
-    }
-
-    private void ResumeAutoRefreshTimer()
-    {
-        if (!_isTimerPaused)
-            return;
-
-        _autoRefreshTimer.Start();
-
-        _isTimerPaused = false;
+        // Restart timer...
+        if (AutoRefreshEnabled)
+            _autoRefreshTimer.Start();
     }
 
     public void OnViewHide()
     {
-        PauseAutoRefreshTimer();
-    }
-
-    public void OnViewVisible()
-    {
-        ResumeAutoRefreshTimer();
+        // Temporarily stop timer...
+        if (AutoRefreshEnabled)
+            _autoRefreshTimer.Stop();
     }
     #endregion
 

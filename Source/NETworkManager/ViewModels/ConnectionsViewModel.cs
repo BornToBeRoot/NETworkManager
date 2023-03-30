@@ -26,8 +26,7 @@ public class ConnectionsViewModel : ViewModelBase
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly bool _isLoading;
-    private readonly DispatcherTimer _autoRefreshTimer = new DispatcherTimer();
-    private bool _isTimerPaused;
+    private readonly DispatcherTimer _autoRefreshTimer = new();
 
     private string _search;
     public string Search
@@ -46,7 +45,7 @@ public class ConnectionsViewModel : ViewModelBase
         }
     }
 
-    private ObservableCollection<ConnectionInfo> _connectionResults = new ObservableCollection<ConnectionInfo>();
+    private ObservableCollection<ConnectionInfo> _connectionResults = new();
     public ObservableCollection<ConnectionInfo> ConnectionResults
     {
         get => _connectionResults;
@@ -90,27 +89,29 @@ public class ConnectionsViewModel : ViewModelBase
         }
     }
 
-    private bool _autoRefresh;
-    public bool AutoRefresh
+    private bool _autoRefreshEnabled;
+    public bool AutoRefreshEnabled
     {
-        get => _autoRefresh;
+        get => _autoRefreshEnabled;
         set
         {
-            if (value == _autoRefresh)
+            if (value == _autoRefreshEnabled)
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.Connections_AutoRefresh = value;
+                SettingsManager.Current.Connections_AutoRefreshEnabled = value;
 
-            _autoRefresh = value;
+            _autoRefreshEnabled = value;
 
             // Start timer to refresh automatically
-            if (!_isLoading)
+            if (value)
             {
-                if (value)
-                    StartAutoRefreshTimer();
-                else
-                    StopAutoRefreshTimer();
+                _autoRefreshTimer.Interval = AutoRefreshTime.CalculateTimeSpan(SelectedAutoRefreshTime);
+                _autoRefreshTimer.Start();
+            }
+            else
+            {
+                _autoRefreshTimer.Stop();
             }
 
             OnPropertyChanged();
@@ -133,8 +134,11 @@ public class ConnectionsViewModel : ViewModelBase
 
             _selectedAutoRefreshTime = value;
 
-            if (AutoRefresh)
-                ChangeAutoRefreshTimerInterval(AutoRefreshTime.CalculateTimeSpan(value));
+            if (AutoRefreshEnabled)
+            {
+                _autoRefreshTimer.Interval = AutoRefreshTime.CalculateTimeSpan(value);
+                _autoRefreshTimer.Start();
+            }
 
             OnPropertyChanged();
         }
@@ -195,36 +199,27 @@ public class ConnectionsViewModel : ViewModelBase
         ConnectionResultsView.SortDescriptions.Add(new SortDescription(nameof(ConnectionInfo.LocalIPAddressInt32), ListSortDirection.Ascending));
         ConnectionResultsView.Filter = o =>
         {
+            if (o is not ConnectionInfo info)
+                return false;
+
             if (string.IsNullOrEmpty(Search))
                 return true;
-            
+
             // Search by local/remote IP Address, local/remote Port, Protocol and State
-            return o is ConnectionInfo info && (info.LocalIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.LocalPort.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.RemoteIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.RemotePort.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.Protocol.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || TcpStateTranslator.GetInstance().Translate(info.TcpState).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1);
+            return info.LocalIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.LocalPort.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.RemoteIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.RemotePort.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.Protocol.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || TcpStateTranslator.GetInstance().Translate(info.TcpState).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
         };
+
+        // Get connections
+        Refresh();
+
+        // Auto refresh
+        _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
 
         AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
         SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => (x.Value == SettingsManager.Current.Connections_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.Connections_AutoRefreshTime.TimeUnit));
-
-        _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
-
-        LoadSettings();
-
+        AutoRefreshEnabled = SettingsManager.Current.Connections_AutoRefreshEnabled;
+        
         _isLoading = false;
-
-        Run();
-    }
-
-    private async Task Run()
-    {
-        await Refresh();
-
-        if (AutoRefresh)
-            StartAutoRefreshTimer();
-    }
-
-    private void LoadSettings()
-    {
-        AutoRefresh = SettingsManager.Current.Connections_AutoRefresh;
     }
     #endregion
 
@@ -334,52 +329,20 @@ public class ConnectionsViewModel : ViewModelBase
 
         IsRefreshing = false;
     }
-
-    private void ChangeAutoRefreshTimerInterval(TimeSpan timeSpan)
-    {
-        _autoRefreshTimer.Interval = timeSpan;
-    }
-
-    private void StartAutoRefreshTimer()
-    {
-        ChangeAutoRefreshTimerInterval(AutoRefreshTime.CalculateTimeSpan(SelectedAutoRefreshTime));
-
-        _autoRefreshTimer.Start();
-    }
-
-    private void StopAutoRefreshTimer()
-    {
-        _autoRefreshTimer.Stop();
-    }
-
-    private void PauseAutoRefreshTimer()
-    {
-        if (!_autoRefreshTimer.IsEnabled)
-            return;
-
-        _autoRefreshTimer.Stop();
-        _isTimerPaused = true;
-    }
-
-    private void ResumeAutoRefreshTimer()
-    {
-        if (!_isTimerPaused)
-            return;
-
-        _autoRefreshTimer.Start();
-        _isTimerPaused = false;
-    }
-
+    
     public void OnViewVisible()
     {
-        ResumeAutoRefreshTimer();
+        // Restart timer...
+        if (AutoRefreshEnabled)
+            _autoRefreshTimer.Start();
     }
 
     public void OnViewHide()
     {
-        PauseAutoRefreshTimer();
+        // Temporarily stop timer...
+        if (AutoRefreshEnabled)
+            _autoRefreshTimer.Stop();
     }
-
     #endregion
 
     #region Events

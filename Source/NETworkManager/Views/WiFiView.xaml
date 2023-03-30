@@ -330,7 +330,7 @@
                                     <TextBlock Style="{StaticResource AccentTextBlock}" Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Text="{Binding StatusMessage}" VerticalAlignment="Center" />
                                 </WrapPanel>
                                 <WrapPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
-                                    <CheckBox IsChecked="{Binding AutoRefresh}" Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" Margin="0,0,10,0"/>
+                                    <CheckBox IsChecked="{Binding AutoRefreshEnabled}" Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" Margin="0,0,10,0"/>
                                     <ComboBox ItemsSource="{Binding AutoRefreshTimes}" SelectedItem="{Binding SelectedAutoRefreshTime}" MinWidth="150">
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate DataType="utilities:AutoRefreshTimeInfo">
@@ -353,7 +353,7 @@
                                                 <DataTrigger Binding="{Binding IsNetworksLoading}" Value="True">
                                                     <Setter Property="IsEnabled" Value="False" />
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding AutoRefresh}" Value="True">
+                                                <DataTrigger Binding="{Binding AutoRefreshEnabled}" Value="True">
                                                     <Setter Property="IsEnabled" Value="False" />
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -500,7 +500,6 @@
                                 </liveChart:Axis>
                             </liveChart:CartesianChart.AxisY>
                         </liveChart:CartesianChart>
-
                         <Grid Grid.Row="6">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -514,7 +513,7 @@
                                 <TextBlock Style="{StaticResource AccentTextBlock}" Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Text="{Binding StatusMessage}" VerticalAlignment="Center" />
                             </WrapPanel>
                             <WrapPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
-                                <CheckBox IsChecked="{Binding AutoRefresh}" Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" Margin="0,0,10,0"/>
+                                <CheckBox IsChecked="{Binding AutoRefreshEnabled}" Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" Margin="0,0,10,0"/>
                                 <ComboBox ItemsSource="{Binding AutoRefreshTimes}" SelectedItem="{Binding SelectedAutoRefreshTime}" MinWidth="150">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate DataType="utilities:AutoRefreshTimeInfo">
@@ -537,7 +536,7 @@
                                             <DataTrigger Binding="{Binding IsNetworksLoading}" Value="True">
                                                 <Setter Property="IsEnabled" Value="False" />
                                             </DataTrigger>
-                                            <DataTrigger Binding="{Binding AutoRefresh}" Value="True">
+                                            <DataTrigger Binding="{Binding AutoRefreshEnabled}" Value="True">
                                                 <Setter Property="IsEnabled" Value="False" />
                                             </DataTrigger>
                                         </Style.Triggers>

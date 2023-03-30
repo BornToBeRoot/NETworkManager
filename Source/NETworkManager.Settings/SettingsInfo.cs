@@ -721,16 +721,16 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _wiFi_AutoRefresh;
-    public bool WiFi_AutoRefresh
+    private bool _wiFi_AutoRefreshEnabled;
+    public bool WiFi_AutoRefreshEnabled
     {
-        get => _wiFi_AutoRefresh;
+        get => _wiFi_AutoRefreshEnabled;
         set
         {
-            if (value == _wiFi_AutoRefresh)
+            if (value == _wiFi_AutoRefreshEnabled)
                 return;
 
-            _wiFi_AutoRefresh = value;
+            _wiFi_AutoRefreshEnabled = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
@@ -3893,16 +3893,16 @@ public class SettingsInfo : PropertyChangedBase
     #endregion
 
     #region Connections
-    private bool _connections_AutoRefresh;
-    public bool Connections_AutoRefresh
+    private bool _connections_AutoRefreshEnabled;
+    public bool Connections_AutoRefreshEnabled
     {
-        get => _connections_AutoRefresh;
+        get => _connections_AutoRefreshEnabled;
         set
         {
-            if (value == _connections_AutoRefresh)
+            if (value == _connections_AutoRefreshEnabled)
                 return;
 
-            _connections_AutoRefresh = value;
+            _connections_AutoRefreshEnabled = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
@@ -3955,16 +3955,16 @@ public class SettingsInfo : PropertyChangedBase
     #endregion
 
     #region Listeners
-    private bool _listeners_AutoRefresh;
-    public bool Listeners_AutoRefresh
+    private bool _listeners_AutoRefreshEnabled;
+    public bool Listeners_AutoRefreshEnabled
     {
-        get => _listeners_AutoRefresh;
+        get => _listeners_AutoRefreshEnabled;
         set
         {
-            if (value == _listeners_AutoRefresh)
+            if (value == _listeners_AutoRefreshEnabled)
                 return;
 
-            _listeners_AutoRefresh = value;
+            _listeners_AutoRefreshEnabled = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
@@ -4017,16 +4017,16 @@ public class SettingsInfo : PropertyChangedBase
     #endregion
 
     #region ARPTable
-    private bool _arpTable_AutoRefresh;
-    public bool ARPTable_AutoRefresh
+    private bool _arpTable_AutoRefreshEnabled;
+    public bool ARPTable_AutoRefreshEnabled
     {
-        get => _arpTable_AutoRefresh;
+        get => _arpTable_AutoRefreshEnabled;
         set
         {
-            if (value == _arpTable_AutoRefresh)
+            if (value == _arpTable_AutoRefreshEnabled)
                 return;
 
-            _arpTable_AutoRefresh = value;
+            _arpTable_AutoRefreshEnabled = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }

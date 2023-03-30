@@ -22,6 +22,14 @@ Release date: **xx.xx.2023**
 ## Improvements
 - Remote Desktop
   - Domain added to credentials [#2108](https://github.com/BornToBeRoot/NETworkManager/pull/2108){:target="\_blank"}
+- WiFi
+  - Automatically refresh is now enabled if it was enabled on the last exit [#2116](https://github.com/BornToBeRoot/NETworkManager/pull/2116){:target="\_blank"}
+- Connections
+  - Automatically refresh is now enabled if it was enabled on the last exit [#2116](https://github.com/BornToBeRoot/NETworkManager/pull/2116){:target="\_blank"}
+- Listeners
+  - Automatically refresh is now enabled if it was enabled on the last exit [#2116](https://github.com/BornToBeRoot/NETworkManager/pull/2116){:target="\_blank"}
+- ARP Table
+  - Automatically refresh is now enabled if it was enabled on the last exit [#2116](https://github.com/BornToBeRoot/NETworkManager/pull/2116){:target="\_blank"}
 
 ## Bugfixes
 - Status window is now automatically closed again if it was opened by a network change event [#2105](https://github.com/BornToBeRoot/NETworkManager/pull/2105){:target="\_blank"}
