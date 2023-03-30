@@ -3350,7 +3350,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>Allow me to select later</value>
   </data>
   <data name="RemoteDesktopGatewayServerLogonMethod_Smartcard" xml:space="preserve">
-    <value>Smart card</value>
+    <value>Smart card or Windows Hello for Business</value>
   </data>
   <data name="RemoteDesktopGatewayServerLogonMethod_Userpass" xml:space="preserve">
     <value>Ask for password (NTLM)</value>

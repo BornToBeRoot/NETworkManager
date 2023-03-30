@@ -13,6 +13,7 @@
 
         /// <summary>
         /// Use a smart card as the authentication method for RD Gateway.
+        /// Should also support Windows Hello for Business.
         /// </summary>
         Smartcard,
 

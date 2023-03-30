@@ -7353,7 +7353,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Smart card ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Smart card or Windows Hello for Business ähnelt.
         /// </summary>
         public static string RemoteDesktopGatewayServerLogonMethod_Smartcard {
             get {
