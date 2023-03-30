@@ -206,23 +206,17 @@ public class ARPTableViewModel : ViewModelBase
             return info.IPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.MACAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || (info.IsMulticast ? Localization.Resources.Strings.Yes : Localization.Resources.Strings.No).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
-        // Auto refresh
-        AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
-        SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => (x.Value == SettingsManager.Current.ARPTable_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.ARPTable_AutoRefreshTime.TimeUnit));
-
-        _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
-
+        // Get ARP table
         Refresh();
 
-        // Load settings
-        LoadSettings();
+        // Auto refresh
+        _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
+
+        AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
+        SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => (x.Value == SettingsManager.Current.ARPTable_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.ARPTable_AutoRefreshTime.TimeUnit));
+        AutoRefreshEnabled = SettingsManager.Current.ARPTable_AutoRefreshEnabled;
 
         _isLoading = false;
-    }
-
-    private void LoadSettings()
-    {
-        AutoRefreshEnabled = SettingsManager.Current.ARPTable_AutoRefreshEnabled;
     }
     #endregion
 

@@ -24,8 +24,7 @@ public class ListenersViewModel : ViewModelBase
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly bool _isLoading;
-    private readonly DispatcherTimer _autoRefreshTimer = new DispatcherTimer();
-    private bool _isTimerPaused;
+    private readonly DispatcherTimer _autoRefreshTimer = new();
 
     private string _search;
     public string Search
@@ -44,7 +43,7 @@ public class ListenersViewModel : ViewModelBase
         }
     }
 
-    private ObservableCollection<ListenerInfo> _listenerResults = new ObservableCollection<ListenerInfo>();
+    private ObservableCollection<ListenerInfo> _listenerResults = new();
     public ObservableCollection<ListenerInfo> ListenerResults
     {
         get => _listenerResults;
@@ -88,27 +87,29 @@ public class ListenersViewModel : ViewModelBase
         }
     }
 
-    private bool _autoRefresh;
-    public bool AutoRefresh
+    private bool _autoRefreshEnabled;
+    public bool AutoRefreshEnabled
     {
-        get => _autoRefresh;
+        get => _autoRefreshEnabled;
         set
         {
-            if (value == _autoRefresh)
+            if (value == _autoRefreshEnabled)
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.Listeners_AutoRefresh = value;
+                SettingsManager.Current.Listeners_AutoRefreshEnabled = value;
 
-            _autoRefresh = value;
+            _autoRefreshEnabled = value;
 
             // Start timer to refresh automatically
-            if (!_isLoading)
+            if (value)
             {
-                if (value)
-                    StartAutoRefreshTimer();
-                else
-                    StopAutoRefreshTimer();
+                _autoRefreshTimer.Interval = AutoRefreshTime.CalculateTimeSpan(SelectedAutoRefreshTime);
+                _autoRefreshTimer.Start();
+            }
+            else
+            {
+                _autoRefreshTimer.Stop();
             }
 
             OnPropertyChanged();
@@ -131,8 +132,11 @@ public class ListenersViewModel : ViewModelBase
 
             _selectedAutoRefreshTime = value;
 
-            if (AutoRefresh)
-                ChangeAutoRefreshTimerInterval(AutoRefreshTime.CalculateTimeSpan(value));
+            if (AutoRefreshEnabled)
+            {
+                _autoRefreshTimer.Interval = AutoRefreshTime.CalculateTimeSpan(value);
+                _autoRefreshTimer.Start();
+            }
 
             OnPropertyChanged();
         }
@@ -195,7 +199,7 @@ public class ListenersViewModel : ViewModelBase
         ListenerResultsView.Filter = o =>
         {
 
-            if (!(o is ListenerInfo info))
+            if (o is not ListenerInfo info)
                 return false;
 
             if (string.IsNullOrEmpty(Search))
@@ -205,30 +209,17 @@ public class ListenersViewModel : ViewModelBase
             return info.IPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.Port.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.Protocol.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
-        AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
-        SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => (x.Value == SettingsManager.Current.Listeners_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.Listeners_AutoRefreshTime.TimeUnit));
+        // Get listeners
+        Refresh();
 
+        // Auto refresh
         _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
 
-        LoadSettings();
+        AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
+        SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => (x.Value == SettingsManager.Current.Listeners_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.Listeners_AutoRefreshTime.TimeUnit));
+        AutoRefreshEnabled = SettingsManager.Current.Listeners_AutoRefreshEnabled;
 
         _isLoading = false;
-
-        Run();
-    }
-
-    private async Task Run()
-    {
-        await Refresh();
-
-        if (AutoRefresh)
-            StartAutoRefreshTimer();
-    }
-
-
-    private void LoadSettings()
-    {
-        AutoRefresh = SettingsManager.Current.Listeners_AutoRefresh;
     }
     #endregion
 
@@ -315,48 +306,18 @@ public class ListenersViewModel : ViewModelBase
         IsRefreshing = false;
     }
 
-    private void ChangeAutoRefreshTimerInterval(TimeSpan timeSpan)
-    {
-        _autoRefreshTimer.Interval = timeSpan;
-    }
-
-    private void StartAutoRefreshTimer()
-    {
-        ChangeAutoRefreshTimerInterval(AutoRefreshTime.CalculateTimeSpan(SelectedAutoRefreshTime));
-
-        _autoRefreshTimer.Start();
-    }
-
-    private void StopAutoRefreshTimer()
-    {
-        _autoRefreshTimer.Stop();
-    }
-
-    private void PauseAutoRefreshTimer()
-    {
-        if (!_autoRefreshTimer.IsEnabled)
-            return;
-
-        _autoRefreshTimer.Stop();
-        _isTimerPaused = true;
-    }
-
-    private void ResumeAutoRefreshTimer()
-    {
-        if (!_isTimerPaused)
-            return;
-
-        _autoRefreshTimer.Start();
-        _isTimerPaused = false;
-    }
-    public void OnViewHide()
-    {
-        PauseAutoRefreshTimer();
-    }
-
     public void OnViewVisible()
     {
-        ResumeAutoRefreshTimer();
+        // Restart timer...
+        if (AutoRefreshEnabled)
+            _autoRefreshTimer.Start();
+    }
+
+    public void OnViewHide()
+    {
+        // Temporarily stop timer...
+        if (AutoRefreshEnabled)
+            _autoRefreshTimer.Stop();
     }
     #endregion
 

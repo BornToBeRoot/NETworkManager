@@ -352,14 +352,15 @@ public class WiFiViewModel : ViewModelBase
             }
         };
 
-        // Auto refresh
-        AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
-        SelectedAutoRefreshTime = AutoRefreshTimes.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => x.Value == SettingsManager.Current.WiFi_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.WiFi_AutoRefreshTime.TimeUnit);
-
-        _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
-
         // Load network adapters
         LoadAdapters(SettingsManager.Current.WiFi_InterfaceId);
+
+        // Auto refresh
+        _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
+
+        AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
+        SelectedAutoRefreshTime = AutoRefreshTimes.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => x.Value == SettingsManager.Current.WiFi_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.WiFi_AutoRefreshTime.TimeUnit);
+        AutoRefreshEnabled = SettingsManager.Current.WiFi_AutoRefreshEnabled;
 
         // Load settings
         LoadSettings();
@@ -369,7 +370,6 @@ public class WiFiViewModel : ViewModelBase
 
     private void LoadSettings()
     {
-        AutoRefreshEnabled = SettingsManager.Current.WiFi_AutoRefreshEnabled;
         Show2dot4GHzNetworks = SettingsManager.Current.WiFi_Show2dot4GHzNetworks;
         Show5GHzNetworks = SettingsManager.Current.WiFi_Show5GHzNetworks;
     }
