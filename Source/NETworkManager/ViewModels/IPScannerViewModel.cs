@@ -664,7 +664,6 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
         {
-            //lock (Results)
             Results.Add(ipScannerHostInfo);
         }));
     }
