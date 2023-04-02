@@ -18,12 +18,14 @@ Release date: **xx.xx.2023**
 ## What's new?
 - Remote Desktop
   - Support for Remote Desktop Gateway server added [#2108](https://github.com/BornToBeRoot/NETworkManager/pull/2108){:target="\_blank"}
+- SNMP
+  - Cancel is now supported by the underlying library [#2124](https://github.com/BornToBeRoot/NETworkManager/pull/2124){:target="\_blank"}
 
 ## Improvements
-- Remote Desktop
-  - Domain added to credentials [#2108](https://github.com/BornToBeRoot/NETworkManager/pull/2108){:target="\_blank"}
 - WiFi
   - Automatically refresh is now enabled if it was enabled on the last exit [#2116](https://github.com/BornToBeRoot/NETworkManager/pull/2116){:target="\_blank"}
+- Remote Desktop
+  - Domain added to credentials [#2108](https://github.com/BornToBeRoot/NETworkManager/pull/2108){:target="\_blank"}
 - Connections
   - Automatically refresh is now enabled if it was enabled on the last exit [#2116](https://github.com/BornToBeRoot/NETworkManager/pull/2116){:target="\_blank"}
 - Listeners

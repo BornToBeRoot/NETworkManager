@@ -4,14 +4,8 @@ using Lextm.SharpSnmpLib.Security;
 using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Drawing.Drawing2D;
 using System.Net;
-using System.Security;
-using System.Threading;
 using System.Threading.Tasks;
-using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
-using System.Web.Services.Description;
-using Newtonsoft.Json.Bson;
 
 namespace NETworkManager.Models.Network;
 
@@ -71,9 +65,9 @@ public partial class SNMPClient
                 VersionCode version = options.Version == SNMPVersion.V1 ? VersionCode.V1 : VersionCode.V2;
                 IPEndPoint ipEndPoint = new(ipAddress, options.Port);
                 OctetString community = new(SecureStringHelper.ConvertToString(options.Community));
-                List<Variable> oids = new() { new(new ObjectIdentifier(oid)) };
+                List<Variable> variables = new() { new(new ObjectIdentifier(oid)) };
 
-                var results = await Messenger.GetAsync(version, ipEndPoint, community, oids, options.CancellationToken);
+                var results = await Messenger.GetAsync(version, ipEndPoint, community, variables, options.CancellationToken);
 
                 foreach (var result in results)
                     OnReceived(new SNMPReceivedArgs(result.Id, result.Data));
@@ -90,6 +84,52 @@ public partial class SNMPClient
             {
                 OnComplete();
             }
+        }, options.CancellationToken);
+    }
+
+    public void GetAsyncV3(IPAddress ipAddress, string oid, SNMPOptionsV3 options)
+    {
+        Task.Run(async () =>
+        {
+            try
+            {
+                IPEndPoint ipEndpoint = new(ipAddress, options.Port);
+                OctetString username = new(options.Username);
+                List<Variable> variables = new() { new Variable(new ObjectIdentifier(oid)) };
+
+                Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
+                ReportMessage report = await discovery.GetResponseAsync(ipEndpoint, options.CancellationToken);
+
+                IPrivacyProvider privacy = GetPrivacyProvider(options);
+
+                GetRequestMessage request = new(VersionCode.V3, Messenger.NextMessageId, Messenger.NextMessageId, username, OctetString.Empty, variables, privacy, Messenger.MaxMessageSize, report);
+                ISnmpMessage reply = await request.GetResponseAsync(ipEndpoint, options.CancellationToken);
+
+                if (reply.Pdu().ErrorStatus.ToInt32() == 0)
+                {
+                    var result = reply.Pdu().Variables[0];
+
+                    OnReceived(new SNMPReceivedArgs(result.Id, result.Data));
+                }
+                else
+                {
+                    // Show error... maybe add detailed message later.
+                    OnError();
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                OnUserHasCanceled();
+            }
+            catch (ErrorException)
+            {
+                OnError();
+            }
+            finally
+            {
+                OnComplete();
+            }
+
         }, options.CancellationToken);
     }
 
@@ -126,6 +166,43 @@ public partial class SNMPClient
         }, options.CancellationToken);
     }
 
+    public void WalkAsyncV3(IPAddress ipAddress, string oid, SNMPOptionsV3 options)
+    {
+        Task.Run(async () =>
+        {
+            try
+            {
+                IPEndPoint ipEndpoint = new(ipAddress, options.Port);
+                OctetString username = new(options.Username);
+                ObjectIdentifier table = new(oid);
+
+                Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
+                ReportMessage report = await discovery.GetResponseAsync(ipEndpoint, options.CancellationToken);
+
+                IPrivacyProvider privacy = GetPrivacyProvider(options);
+
+                var results = new List<Variable>();
+                
+                await Messenger.BulkWalkAsync(VersionCode.V3, ipEndpoint, username, OctetString.Empty, table, results, 10, options.WalkMode, privacy, report, options.CancellationToken);
+
+                foreach (var result in results)
+                    OnReceived(new SNMPReceivedArgs(result.Id, result.Data));
+            }
+            catch (OperationCanceledException)
+            {
+                OnUserHasCanceled();
+            }
+            catch (ErrorException)
+            {
+                OnError();
+            }
+            finally
+            {
+                OnComplete();
+            }
+        }, options.CancellationToken);
+    }
+
     public void SetAsync(IPAddress ipAddress, string oid, string data, SNMPOptions options)
     {
         Task.Run(async () =>
@@ -138,6 +215,8 @@ public partial class SNMPClient
                 List<Variable> variables = new() { new Variable(new ObjectIdentifier(oid), new OctetString(data)) };
 
                 await Messenger.SetAsync(version, ipEndPoint, community, variables, options.CancellationToken);
+
+                OnDataUpdated();
             }
             catch (OperationCanceledException)
             {
@@ -154,46 +233,43 @@ public partial class SNMPClient
         });
     }
 
-    /*
-    public void GetAsyncV3(IPAddress ipAddress, string oid, SNMPOptionsV3 options)
+    public void SetAsyncV3(IPAddress ipAddress, string oid, string data, SNMPOptionsV3 options)
     {
-        Task.Run(() =>
+        Task.Run(async () =>
         {
             try
             {
                 IPEndPoint ipEndpoint = new(ipAddress, options.Port);
+                OctetString username = new(options.Username);
+                List<Variable> variables = new() { new Variable(new ObjectIdentifier(oid), new OctetString(data)) };
 
-
-                // Discovery
-                var discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
-                var report = discovery.GetResponse(Timeout, ipEndpoint);
+                Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
+                ReportMessage report = await discovery.GetResponseAsync(ipEndpoint, options.CancellationToken);
 
                 IPrivacyProvider privacy = GetPrivacyProvider(options);
 
+                SetRequestMessage request = new(VersionCode.V3, Messenger.NextMessageId, Messenger.NextMessageId, username, OctetString.Empty, variables, privacy, Messenger.MaxMessageSize, report);
+                ISnmpMessage reply = await request.GetResponseAsync(ipEndpoint);
 
-
-
-
-                var request = new GetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextRequestId, new OctetString(username), new List<Variable> { new Variable(new ObjectIdentifier(oid)) }, privacy, Messenger.MaxMessageSize, report);
-                var reply = request.GetResponse(Timeout, ipEndpoint);
-
-                var result = reply.Pdu().Variables[0];
-
-                OnReceived(new SNMPReceivedArgs(result.Id, result.Data));
-
-                OnComplete();
+                if (reply.Pdu().ErrorStatus.ToInt32() == 0)
+                    OnDataUpdated();
+                else
+                    OnError();
             }
-            catch (Lextm.SharpSnmpLib.Messaging.TimeoutException)
+            catch (OperationCanceledException)
             {
-                OnTimeoutReached();
+                OnUserHasCanceled();
             }
             catch (ErrorException)
             {
                 OnError();
             }
+            finally
+            {
+                OnComplete();
+            }
         }, options.CancellationToken);
     }
-    */
 
     private static IPrivacyProvider GetPrivacyProvider(SNMPOptionsV3 options)
     {
