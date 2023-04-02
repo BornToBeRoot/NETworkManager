@@ -554,7 +554,7 @@ public class SNMPViewModel : ViewModelBase
         snmpClient.Received += Snmp_Received;
         snmpClient.DataUpdated += SnmpClient_DataUpdated;
         snmpClient.Error += Snmp_Error;
-        snmpClient.UserHasCanceled += Snmp_UserHasCanceled;
+        snmpClient.Canceled += Snmp_Canceled;
         snmpClient.Complete += Snmp_Complete;
 
         if (Version != SNMPVersion.V3)
@@ -607,6 +607,9 @@ public class SNMPViewModel : ViewModelBase
                     break;
             }
         }
+
+        // Set timeout
+        _cancellationTokenSource.CancelAfter(SettingsManager.Current.SNMP_Timeout);
 
         // Add to history...
         AddHostToHistory(Host);
@@ -668,21 +671,15 @@ public class SNMPViewModel : ViewModelBase
         IsStatusMessageDisplayed = true;
     }
 
-    private void Snmp_TimeoutReached(object sender, EventArgs e)
-    {
-        StatusMessage = Localization.Resources.Strings.TimeoutOnSNMPQuery;
-        IsStatusMessageDisplayed = true;
-    }
-
     private void Snmp_Error(object sender, EventArgs e)
     {
         StatusMessage = Mode == SNMPMode.Set ? Localization.Resources.Strings.ErrorInResponseCheckIfYouHaveWritePermissions : Localization.Resources.Strings.ErrorInResponse;
         IsStatusMessageDisplayed = true;
     }
 
-    private void Snmp_UserHasCanceled(object sender, EventArgs e)
+    private void Snmp_Canceled(object sender, EventArgs e)
     {
-        StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
+        StatusMessage = CancelScan ? Localization.Resources.Strings.CanceledByUserMessage : Localization.Resources.Strings.TimeoutOnSNMPQuery;
         IsStatusMessageDisplayed = true;
     }
 

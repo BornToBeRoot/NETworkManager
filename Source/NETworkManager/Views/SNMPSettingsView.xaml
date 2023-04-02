@@ -11,11 +11,9 @@
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.SNMP}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock Text="{x:Static localization:Strings.WalkMode}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
-        <ComboBox ItemsSource="{Binding WalkModes}" SelectedItem="{Binding WalkMode}" Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" />
-        <!--        
+        <ComboBox ItemsSource="{Binding WalkModes}" SelectedItem="{Binding WalkMode}" Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" />              
         <TextBlock Text="{x:Static localization:Strings.TimeoutMS}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
-        <mah:NumericUpDown Value="{Binding Timeout}" Maximum="900000" Minimum="100" Interval="100" Margin="0,0,0,10" />
-        -->
+        <mah:NumericUpDown Value="{Binding Timeout}" Maximum="900000" Minimum="100" Interval="100" Margin="0,0,0,10" />        
         <TextBlock Text="{x:Static localization:Strings.Port}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
         <TextBox Width="150" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort161}" Style="{StaticResource DefaultTextBox}">
             <TextBox.Text>

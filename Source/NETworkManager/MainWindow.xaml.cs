@@ -1574,8 +1574,6 @@ public partial class MainWindow : INotifyPropertyChanged
         if (!SettingsManager.Current.Appearance_PowerShellModifyGlobalProfile)
             return;
 
-        Debug.WriteLine("Test");
-
         HashSet<string> paths = new();
 
         // PowerShell

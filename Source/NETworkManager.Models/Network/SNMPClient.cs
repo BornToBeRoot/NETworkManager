@@ -40,11 +40,11 @@ public partial class SNMPClient
         Complete?.Invoke(this, EventArgs.Empty);
     }
 
-    public event EventHandler UserHasCanceled;
+    public event EventHandler Canceled;
 
-    protected virtual void OnUserHasCanceled()
+    protected virtual void OnCanceled()
     {
-        UserHasCanceled?.Invoke(this, EventArgs.Empty);
+        Canceled?.Invoke(this, EventArgs.Empty);
     }
     #endregion
 
@@ -74,7 +74,7 @@ public partial class SNMPClient
             }
             catch (OperationCanceledException)
             {
-                OnUserHasCanceled();
+                OnCanceled();
             }
             catch (ErrorException)
             {
@@ -119,7 +119,7 @@ public partial class SNMPClient
             }
             catch (OperationCanceledException)
             {
-                OnUserHasCanceled();
+                OnCanceled();
             }
             catch (ErrorException)
             {
@@ -153,7 +153,7 @@ public partial class SNMPClient
             }
             catch (OperationCanceledException)
             {
-                OnUserHasCanceled();
+                OnCanceled();
             }
             catch (ErrorException)
             {
@@ -190,7 +190,7 @@ public partial class SNMPClient
             }
             catch (OperationCanceledException)
             {
-                OnUserHasCanceled();
+                OnCanceled();
             }
             catch (ErrorException)
             {
@@ -220,7 +220,7 @@ public partial class SNMPClient
             }
             catch (OperationCanceledException)
             {
-                OnUserHasCanceled();
+                OnCanceled();
             }
             catch (ErrorException)
             {
@@ -258,7 +258,7 @@ public partial class SNMPClient
             }
             catch (OperationCanceledException)
             {
-                OnUserHasCanceled();
+                OnCanceled();
             }
             catch (ErrorException)
             {
