@@ -12,7 +12,6 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using static NETworkManager.Models.Network.SNMP;
 using NETworkManager.Controls;
 using Dragablz;
 using MahApps.Metro.Controls;
@@ -20,7 +19,7 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
 using System.Security;
-using Amazon.EC2.Model;
+using System.Threading;
 
 namespace NETworkManager.ViewModels;
 
@@ -28,6 +27,8 @@ public class SNMPViewModel : ViewModelBase
 {
     #region Variables
     private readonly IDialogCoordinator _dialogCoordinator;
+
+    private CancellationTokenSource _cancellationTokenSource;
 
     public readonly int TabId;
 
@@ -304,7 +305,21 @@ public class SNMPViewModel : ViewModelBase
         }
     }
 
-    private ObservableCollection<SNMPReceivedInfo> _queryResults = new ObservableCollection<SNMPReceivedInfo>();
+    private bool _cancelScan;
+    public bool CancelScan
+    {
+        get => _cancelScan;
+        set
+        {
+            if (value == _cancelScan)
+                return;
+
+            _cancelScan = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private ObservableCollection<SNMPReceivedInfo> _queryResults = new();
     public ObservableCollection<SNMPReceivedInfo> QueryResults
     {
         get => _queryResults;
@@ -489,7 +504,15 @@ public class SNMPViewModel : ViewModelBase
     #endregion
 
     #region Methods
-    private async void Work()
+    private void Work()
+    {
+        if (IsRunning)
+            StopWork();
+        else
+            StartWork();
+    }
+
+    private async void StartWork()
     {
         IsStatusMessageDisplayed = false;
         IsRunning = true;
@@ -523,44 +546,77 @@ public class SNMPViewModel : ViewModelBase
             ipAddress = dnsResult.Value;
         }
 
+        _cancellationTokenSource = new CancellationTokenSource();
+
         // SNMP...
-        var snmp = new SNMP
-        {
-            Port = SettingsManager.Current.SNMP_Port,
-            Timeout = SettingsManager.Current.SNMP_Timeout
-        };
+        SNMPClient snmpClient = new();
 
-        snmp.Received += Snmp_Received;
-        snmp.TimeoutReached += Snmp_TimeoutReached;
-        snmp.Error += Snmp_Error;
-        snmp.UserHasCanceled += Snmp_UserHasCanceled;
-        snmp.Complete += Snmp_Complete;
+        snmpClient.Received += Snmp_Received;
+        snmpClient.DataUpdated += SnmpClient_DataUpdated;
+        snmpClient.Error += Snmp_Error;
+        snmpClient.UserHasCanceled += Snmp_UserHasCanceled;
+        snmpClient.Complete += Snmp_Complete;
 
-        switch (Mode)
+        if (Version != SNMPVersion.V3)
         {
-            case SNMPMode.Get:
-                if (Version != SNMPVersion.V3)
-                    snmp.GetV1V2CAsync(Version, ipAddress, Community, OID);
-                else
-                    snmp.Getv3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv);
-                break;
-            case SNMPMode.Walk:
-                if (Version != SNMPVersion.V3)
-                    snmp.WalkV1V2CAsync(Version, ipAddress, Community, OID, SettingsManager.Current.SNMP_WalkMode);
-                else
-                    snmp.WalkV3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, SettingsManager.Current.SNMP_WalkMode);
-                break;
-            case SNMPMode.Set:
-                if (Version != SNMPVersion.V3)
-                    snmp.SetV1V2CAsync(Version, ipAddress, Community, OID, Data);
-                else
-                    snmp.SetV3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, Data);
-                break;
+            var snmpOptions = new SNMPOptions(
+                Community,
+                Version,
+                SettingsManager.Current.SNMP_Port,
+                SettingsManager.Current.SNMP_WalkMode,
+                _cancellationTokenSource.Token
+            );
+
+            switch (Mode)
+            {
+                case SNMPMode.Get:
+                    snmpClient.GetAsync(ipAddress, OID, snmpOptions);
+                    break;
+                case SNMPMode.Walk:
+                    snmpClient.WalkAsync(ipAddress, OID, snmpOptions);
+                    break;
+                case SNMPMode.Set:
+                    snmpClient.SetAsync(ipAddress, OID, Data, snmpOptions);
+                    break;
+            }
+        }
+        else
+        {
+            var snmpOptionsV3 = new SNMPOptionsV3(
+                Security,
+                Username,
+                AuthenticationProvider,
+                Auth,
+                PrivacyProvider,
+                Priv,
+                SettingsManager.Current.SNMP_Port,
+                SettingsManager.Current.SNMP_WalkMode,
+                _cancellationTokenSource.Token
+            );
+
+            switch (Mode)
+            {
+                case SNMPMode.Get:
+                    snmpClient.GetAsyncV3(ipAddress, OID, snmpOptionsV3);
+                    break;
+                case SNMPMode.Walk:
+                    snmpClient.WalkAsyncV3(ipAddress, OID, snmpOptionsV3);
+                    break;
+                case SNMPMode.Set:
+                    snmpClient.SetAsyncV3(ipAddress, OID, Data, snmpOptionsV3);
+                    break;
+            }
         }
 
         // Add to history...
         AddHostToHistory(Host);
         AddOIDToHistory(OID);
+    }
+
+    private void StopWork()
+    {
+        CancelScan = true;
+        _cancellationTokenSource.Cancel();
     }
 
     public void OnClose()
@@ -602,40 +658,37 @@ public class SNMPViewModel : ViewModelBase
 
         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
         {
-            //lock (QueryResults)
             QueryResults.Add(snmpReceivedInfo);
         }));
+    }
+
+    private void SnmpClient_DataUpdated(object sender, EventArgs e)
+    {
+        StatusMessage = Localization.Resources.Strings.DataHasBeenUpdated;
+        IsStatusMessageDisplayed = true;
     }
 
     private void Snmp_TimeoutReached(object sender, EventArgs e)
     {
         StatusMessage = Localization.Resources.Strings.TimeoutOnSNMPQuery;
         IsStatusMessageDisplayed = true;
-        IsRunning = false;
     }
 
     private void Snmp_Error(object sender, EventArgs e)
     {
         StatusMessage = Mode == SNMPMode.Set ? Localization.Resources.Strings.ErrorInResponseCheckIfYouHaveWritePermissions : Localization.Resources.Strings.ErrorInResponse;
         IsStatusMessageDisplayed = true;
-        IsRunning = false;
     }
 
     private void Snmp_UserHasCanceled(object sender, EventArgs e)
     {
         StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
         IsStatusMessageDisplayed = true;
-        IsRunning = false;
     }
 
     private void Snmp_Complete(object sender, EventArgs e)
     {
-        if (Mode == SNMPMode.Set)
-        {
-            StatusMessage = Localization.Resources.Strings.DataHasBeenUpdated;
-            IsStatusMessageDisplayed = true;
-        }
-
+        CancelScan = false;
         IsRunning = false;
     }
 

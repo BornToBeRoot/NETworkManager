@@ -283,10 +283,9 @@ public class SNTPLookupViewModel : ViewModelBase
             }
         }
 
-        SNTPLookupSettings settings = new()
-        {
-            Timeout = SettingsManager.Current.SNTPLookup_Timeout
-        };
+        SNTPLookupSettings settings = new(
+            SettingsManager.Current.SNTPLookup_Timeout
+        );
 
         SNTPLookup lookup = new(settings);
 
@@ -296,7 +295,7 @@ public class SNTPLookupViewModel : ViewModelBase
 
         lookup.QueryAsync(SNTPServer.Servers, SettingsManager.Current.Network_ResolveHostnamePreferIPv4);
     }
-    
+
     public void OnClose()
     {
 

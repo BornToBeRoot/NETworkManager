@@ -1,5 +1,4 @@
-﻿using Amazon.Util.Internal;
-using NETworkManager.Utilities;
+﻿using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Net;
