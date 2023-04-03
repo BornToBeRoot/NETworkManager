@@ -1170,8 +1170,8 @@ Ustvarite enega...</value>
   <data name="UnkownError" xml:space="preserve">
     <value>Neznana napaka!</value>
   </data>
-  <data name="UntrayBringWindowToFront" xml:space="preserve">
-    <value>Postavi iz programske vrstice/Prinesi okno naprej</value>
+  <data name="UntrayBringWindowToForeground" xml:space="preserve">
+    <value>Odstrani iz programske vrstice/Postavi okno v ospredje</value>
   </data>
   <data name="URL" xml:space="preserve">
     <value>URL naslov</value>
@@ -2225,8 +2225,8 @@ $$hostname$$--&gt;Ime gostitelja</value>
   <data name="ShowStatusWindowOnNetworkChange" xml:space="preserve">
     <value>Prikaži statusno okno ob spremembi omrežja</value>
   </data>
-  <data name="TimeInSecondsHowLongTheWindowShouldBeDisplayed" xml:space="preserve">
-    <value>Čas v sekundah za prikaz okna</value>
+  <data name="TimeInSecondsHowLongTheStatusWindowIsShown" xml:space="preserve">
+    <value>Čas prikaza statusnega okna  (sekund)</value>
   </data>
   <data name="WiFi" xml:space="preserve">
     <value>Brezžično omrežje Wi-Fi</value>
@@ -3304,5 +3304,131 @@ V zgornjem desnem kotu kliknite na gumb za Pomoč/Dokumentacijo (levo od gumba z
   </data>
   <data name="ShowAddressBar" xml:space="preserve">
     <value>Prikaži naslovno vrstico</value>
+  </data>
+  <data name="WarnMessage_MultipleInstances" xml:space="preserve">
+    <value>Omogočanje te nastavitve ni priporočljivo. Več primerkov aplikacije ima enake nastavitve in datoteke profila. Zadnji zaprti primerek lahko prepiše spremembe, ki so jih naredili drugi primerki.</value>
+  </data>
+  <data name="BypassForLocalAddresses" xml:space="preserve">
+    <value>Obvoz lokalnih naslovov</value>
+  </data>
+  <data name="EnableGatewayServer" xml:space="preserve">
+    <value>Omogoči prehodni strežnik</value>
+  </data>
+  <data name="LogonMethod" xml:space="preserve">
+    <value>Način prijave</value>
+  </data>
+  <data name="GatewayServer" xml:space="preserve">
+    <value>Prehodni strežnik</value>
+  </data>
+  <data name="ServerName" xml:space="preserve">
+    <value>Ime strežnika</value>
+  </data>
+  <data name="ShareGatewayCredentialsWithRemoteComputer" xml:space="preserve">
+    <value>Deli poverilnice prehoda z oddaljenim računalnikom</value>
+  </data>
+  <data name="RemoteDesktopGatewayServerLogonMethod_Any" xml:space="preserve">
+    <value>Dovoli mi, da izberem pozneje</value>
+  </data>
+  <data name="RemoteDesktopGatewayServerLogonMethod_Smartcard" xml:space="preserve">
+    <value>Pametna kartica ali 'Windows Hello za podjetja'</value>
+  </data>
+  <data name="RemoteDesktopGatewayServerLogonMethod_Userpass" xml:space="preserve">
+    <value>Zahtevaj geslo (NTLM)</value>
+  </data>
+  <data name="UseGatewayCredentials" xml:space="preserve">
+    <value>Uporabi poverilnice prehoda</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331661" xml:space="preserve">
+    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker Prehodni strežnik za oddaljeno namizje trenutno ni dostopen. Poskusite znova vzpostaviti povezavo pozneje ali se za pomoč obrnite na skrbnika omrežja.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331651" xml:space="preserve">
+    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom zaradi enega od naslednjih razlogov: 1) Zahtevani naslov Prehodnega strežnika za oddaljeno namizje in ime subjekta potrdila SSL strežnika se ne ujemata. 2) Potrdilo je poteklo ali je preklicano. 3) Korenski organ potrdila ne zaupa potrdilu. Za pomoč se obrnite na skrbnika omrežja.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331653" xml:space="preserve">
+    <value>Ta računalnik ne more preveriti identitete prehoda RD "". Povezovanje s strežniki, ki jih ni mogoče identificirati, ni varno. Za pomoč se obrnite na skrbnika omrežja.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331654" xml:space="preserve">
+    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker se zahtevani naslov Prehodnega strežnika za oddaljeno namizje in ime predmeta potrdila ne ujemata. Za pomoč se obrnite na skrbnika omrežja.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331655" xml:space="preserve">
+    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker je potrdilo Prehodnega strežnika za oddaljeno namizje poteklo ali je bilo preklicano. Za pomoč se obrnite na skrbnika omrežja.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331657" xml:space="preserve">
+    <value>Med pošiljanjem podatkov na Prehodni strežnik oddaljenega namizja je prišlo do napake. Strežnik začasno ni dostopen ali pa je omrežna povezava prekinjena. Poskusite znova pozneje ali se za pomoč obrnite na skrbnika omrežja.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331658" xml:space="preserve">
+    <value>Med prejemanjem podatkov s Prehodnega strežnika za oddaljeno namizje je prišlo do napake. Strežnik začasno ni dostopen ali pa je omrežna povezava prekinjena. Poskusite znova pozneje ali se za pomoč obrnite na skrbnika omrežja.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331660" xml:space="preserve">
+    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker je naslov Prehodnega strežnika za oddaljeno namizje nedosegljiv ali napačen. Vnesite veljaven naslov Prehodnega strežnika za oddaljeno namizje.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331663" xml:space="preserve">
+    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker Prehodnem strežniku za oddaljeno namizje primanjkuje strežniških virov in začasno ni dostopen. Poskusite znova vzpostaviti povezavo pozneje ali se za pomoč obrnite na skrbnika omrežja.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331672" xml:space="preserve">
+    <value>Prehodni strežnik za oddaljeno namizje je prekinil povezavo. Poskusite znova vzpostaviti povezavo pozneje ali se za pomoč obrnite na skrbnika omrežja.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331673" xml:space="preserve">
+    <value>Skrbnik Prehodnega strežnika za oddaljeno namizje je prekinil povezavo. Poskusite znova vzpostaviti povezavo pozneje ali se za pomoč obrnite na skrbnika omrežja.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331675" xml:space="preserve">
+    <value>Oddaljeno namizje se ne more povezati z oddaljenim računalnikom "" zaradi enega od teh razlogov: 1) Vaš uporabniški račun ni naveden na seznamu dovoljenj prehoda RD 2) Morda ste določili oddaljeni računalnik v formatu NetBIOS (na primer računalnik1) , vendar prehod RD pričakuje FQDN ali obliko naslova IP (na primer computer1.fabrikam.com ali 157.60.0.1). Za pomoč se obrnite na skrbnika omrežja.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331676" xml:space="preserve">
+    <value>Oddaljeno namizje se ne more povezati z oddaljenim računalnikom "" zaradi enega od teh razlogov: 1) Vaš uporabniški račun ni pooblaščen za dostop do prehoda RD "" 2) Vaš računalnik ni pooblaščen za dostop do prehoda RD "" 3) Vi uporabljate nezdružljivi način preverjanja pristnosti (na primer, prehod RD morda pričakuje pametno kartico, vi pa ste vnesli geslo) Za pomoč se obrnite na skrbnika omrežja.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331679" xml:space="preserve">
+    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker je skrbnik omrežja omejil dostop do tega Prehodnega strežnika RD. Za pomoč se obrnite na skrbnika omrežja.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331680" xml:space="preserve">
+    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker spletni namestniški strežnik zahteva preverjanje pristnosti. Če želite omogočiti nepreverjen promet do Prehodnega strežnika RD prek vašega spletnega namestniškega strežnika, se obrnite na skrbnika omrežja.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331682" xml:space="preserve">
+    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker je Prehodni strežnik za oddaljeno namizje dosegel največje dovoljeno število povezav. Poskusite znova vzpostaviti povezavo pozneje ali se za pomoč obrnite na skrbnika omrežja.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331683" xml:space="preserve">
+    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker Prehodni strežnik za oddaljeno namizje ne podpira zahteve. Za pomoč se obrnite na skrbnika omrežja.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331684" xml:space="preserve">
+    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker odjemalec ne podpira ene od zmožnosti prehoda za oddaljeno namizje. Za pomoč se obrnite na skrbnika omrežja.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331685" xml:space="preserve">
+    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker Prehodni strežnik za oddaljeno namizje in ta računalnik nista združljiva. Za pomoč se obrnite na skrbnika omrežja.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331688" xml:space="preserve">
+    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker ni bilo nastavljeno nobeno potrdilo za uporabo na Prehodnem strežniku za oddaljeno namizje. Za pomoč se obrnite na skrbnika omrežja.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331689" xml:space="preserve">
+    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker skrbnik računalnika ne dovoli Prehodnega strežnika za oddaljeno namizje, s katerim se poskušate povezati. Če ste skrbnik, dodajte to ime Prehodnega strežnika za oddaljeno namizje na seznam zaupanja vrednih Strežnikov prehoda za oddaljeno namizje v vašem računalniku in se nato poskusite znova povezati.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331690" xml:space="preserve">
+    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker vaš računalnik ali naprava ni izpolnjevala zahtev za zaščito dostopa do omrežja, ki jih je določil skrbnik omrežja, zaradi enega od naslednjih razlogov: 1) Ime Prehodnega strežnika za oddaljeno namizje in potrdilo javnega ključa strežnika ime predmeta se ne ujema. 2) Potrdilo je poteklo ali je bilo preklicano. 3) Korenski organ potrdila ne zaupa potrdilu. 4) Razširitev ključa potrdila ne podpira šifriranja. 5) Vaš računalnik ne more preveriti seznama preklicanih potrdil. Za pomoč se obrnite na skrbnika omrežja.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331691" xml:space="preserve">
+    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker sta za preverjanje pristnosti na Prehodnem strežniku za oddaljeno namizje potrebna uporabniško ime in geslo namesto poverilnic pametne kartice.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331692" xml:space="preserve">
+    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker so za preverjanje pristnosti na Prehodnem strežniku za oddaljeno namizje namesto uporabniškega imena in gesla potrebne poverilnice pametne kartice.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331700" xml:space="preserve">
+    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker je bil Prehodnem strežniku za oddaljeno namizje poslan neveljaven piškotek. Za pomoč se obrnite na skrbnika omrežja.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331701" xml:space="preserve">
+    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker je Prehodni strežnik za oddaljeno namizje zavrnil piškotek. Za pomoč se obrnite na skrbnika omrežja.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331703" xml:space="preserve">
+    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker Prehodni strežnik za oddaljeno namizje pričakuje drugačen način preverjanja pristnosti od tistega, ki je bil uporabljen. Za pomoč se obrnite na skrbnika omrežja.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331704" xml:space="preserve">
+    <value>Povezava s prehodom oddaljenega namizja se je prekinila, ker periodično preverjanje pristnosti uporabnika ni uspelo. Poskusite se znova povezati s pravilnim uporabniškim imenom in geslom. Če ponovna povezava ne uspe, se za nadaljnjo pomoč obrnite na skrbnika omrežja.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331705" xml:space="preserve">
+    <value>Povezava s prehodom oddaljenega namizja, ker periodično pooblastilo uporabnika ni uspelo. Poskusite se znova povezati s pravilnim uporabniškim imenom in geslom. Če ponovna povezava ne uspe, se za nadaljnjo pomoč obrnite na skrbnika omrežja.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331707" xml:space="preserve">
+    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker prehod za oddaljeno namizje in oddaljeni računalnik ne moreta izmenjati politik. To se lahko zgodi zaradi enega od naslednjih razlogov: 1. Oddaljeni računalnik ne more izmenjevati politik s prehodom za oddaljeno namizje. 2. Nastavitve oddaljenega računalnika ne dovoljuje nove povezave. 3. Povezava med prehodom za oddaljeno namizje in oddaljenim računalnikom je prekinjena. Za pomoč se obrnite na skrbnika omrežja.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331713" xml:space="preserve">
+    <value>Povezava s prehodom oddaljenega namizja je končana, ker ni uspelo periodično pooblastilo uporabnika. Vaš računalnik ali naprava nista prestala zahtev za zaščito dostopa do omrežja (NAP), ki jih je določil skrbnik omrežja. Za pomoč se obrnite na skrbnika omrežja.</value>
   </data>
 </root>
