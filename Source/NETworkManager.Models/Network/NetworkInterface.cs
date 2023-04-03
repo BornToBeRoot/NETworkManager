@@ -30,7 +30,7 @@ public partial class NetworkInterface
 
     public static List<NetworkInterfaceInfo> GetNetworkInterfaces()
     {
-        var listNetworkInterfaceInfo = new List<NetworkInterfaceInfo>();
+        List<NetworkInterfaceInfo> listNetworkInterfaceInfo = new();
 
         foreach (var networkInterface in System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces())
         {

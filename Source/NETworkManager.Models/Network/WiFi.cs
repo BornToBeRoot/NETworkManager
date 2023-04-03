@@ -1,67 +1,92 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.Devices.WiFi;
 using Windows.Networking.Connectivity;
 
 //https://docs.microsoft.com/en-us/uwp/api/windows.devices.wifi.wifiadapter.requestaccessasync
-//var access = await WiFiAdapter.RequestAccessAsync();
+//var access = await WiFiAdapter.RequestAccessAsync() == WiFiAccessStatus.Allowed;
 
 namespace NETworkManager.Models.Network;
 
-public class WiFi
+public static class WiFi
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     public static async Task<List<WiFiAdapterInfo>> GetAdapterAsync()
     {
-        List<WiFiAdapterInfo> wifiAdapters = new List<WiFiAdapterInfo>();
-        List<NetworkInterfaceInfo> networkInterfaces = await NetworkInterface.GetNetworkInterfacesAsync();
+        List<WiFiAdapterInfo> wifiAdapterInfos = new();
 
-        foreach (WiFiAdapter wifiAdapter in await WiFiAdapter.FindAllAdaptersAsync())
+        IReadOnlyList<WiFiAdapter> wifiAdapters = await WiFiAdapter.FindAllAdaptersAsync();
+
+        if (wifiAdapters.Count > 0)
         {
-            foreach (NetworkInterfaceInfo networkInterface in networkInterfaces)
-            {
-                if (!wifiAdapter.NetworkAdapter.NetworkAdapterId.ToString().Equals(networkInterface.Id.TrimStart('{').TrimEnd('}'), StringComparison.OrdinalIgnoreCase))
-                    continue;
+            List<NetworkInterfaceInfo> networkInterfaces = await NetworkInterface.GetNetworkInterfacesAsync();
 
-                wifiAdapters.Add(new WiFiAdapterInfo
+            foreach (var wifiAdapter in wifiAdapters)
+            {
+                var networkInteraceInfo = networkInterfaces.FirstOrDefault(x => x.Id.TrimStart('{').TrimEnd('}').Equals(wifiAdapter.NetworkAdapter.NetworkAdapterId.ToString(), StringComparison.OrdinalIgnoreCase));
+
+                wifiAdapterInfos.Add(new WiFiAdapterInfo
                 {
-                    NetworkInterfaceInfo = networkInterface,
+                    NetworkInterfaceInfo = networkInteraceInfo,
                     WiFiAdapter = wifiAdapter
                 });
             }
         }
 
-        return wifiAdapters;
+        return wifiAdapterInfos;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="adapter"></param>
+    /// <returns></returns>
     public static async Task<IEnumerable<WiFiNetworkInfo>> GetNetworksAsync(WiFiAdapter adapter)
     {
-        List<WiFiNetworkInfo> wifiNetworks = new List<WiFiNetworkInfo>();
+        List<WiFiNetworkInfo> wifiNetworkInfos = new();
 
         await adapter.ScanAsync();
 
-        foreach (var network in adapter.NetworkReport.AvailableNetworks)
+        foreach (var availableNetwork in adapter.NetworkReport.AvailableNetworks)
         {
-            wifiNetworks.Add(new WiFiNetworkInfo()
+            wifiNetworkInfos.Add(new WiFiNetworkInfo()
             {
-                BSSID = network.Bssid,
-                SSID = network.Ssid,
-                ChannelCenterFrequencyInKilohertz = network.ChannelCenterFrequencyInKilohertz,
-                SignalBars = network.SignalBars,
-                IsWiFiDirect = network.IsWiFiDirect,
-                NetworkRssiInDecibelMilliwatts = network.NetworkRssiInDecibelMilliwatts,
-                PhyKind = network.PhyKind,
-                NetworkKind = network.NetworkKind,
-                AuthenticationType = network.SecuritySettings.NetworkAuthenticationType,
-                EncryptionType = network.SecuritySettings.NetworkEncryptionType,
-                BeaconInterval = network.BeaconInterval,
-                Uptime = network.Uptime
+                AvailableNetwork = availableNetwork,
+                IsConnected = false
             });
         }
 
-        return wifiNetworks;
+        //_ = GetConnectionProfile();
+
+        return wifiNetworkInfos;
     }
 
+    /*
+    public static ConnectionProfile GetConnectionProfile()
+    {
+        var x = NetworkInformation.GetConnectionProfiles();
+
+        foreach(var y in x.Where(u => u.IsWwanConnectionProfile))
+        {
+            Debug.WriteLine(y);
+        }
+
+     
+    return x.FirstOrDefault(u => u.IsWlanConnectionProfile);
+    }
+    */
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="kilohertz"></param>
+    /// <returns></returns>
     public static int GetChannelFromChannelFrequency(int kilohertz)
     {
         return (double)ConvertChannelFrequencyToGigahertz(kilohertz) switch
@@ -110,11 +135,21 @@ public class WiFi
         };
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="kilohertz"></param>
+    /// <returns></returns>
     public static double ConvertChannelFrequencyToGigahertz(int kilohertz)
     {
         return Convert.ToDouble(kilohertz) / 1000 / 1000;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="kilohertz"></param>
+    /// <returns></returns>
     public static bool Is2dot4GHzNetwork(int kilohertz)
     {
         var x = ConvertChannelFrequencyToGigahertz(kilohertz);
@@ -122,6 +157,11 @@ public class WiFi
         return x >= 2.412 && x <= 2.472;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="kilohertz"></param>
+    /// <returns></returns>
     public static bool Is5GHzNetwork(int kilohertz)
     {
         var x = ConvertChannelFrequencyToGigahertz(kilohertz);
@@ -129,6 +169,11 @@ public class WiFi
         return x >= 5.180 && x <= 5.825;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="networkAuthenticationType"></param>
+    /// <returns></returns>
     public static string GetHumanReadableNetworkAuthenticationType(NetworkAuthenticationType networkAuthenticationType)
     {
         return networkAuthenticationType switch
@@ -147,6 +192,11 @@ public class WiFi
         };
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="phyKind"></param>
+    /// <returns></returns>
     public static string GetHumandReadablePhyKind(WiFiPhyKind phyKind)
     {
         return phyKind switch
@@ -161,11 +211,5 @@ public class WiFi
             WiFiPhyKind.HE => "802.11ax",
             _ => "-/-",
         };
-    }
-
-    public enum Radio
-    {
-        One,
-        Two
     }
 }
