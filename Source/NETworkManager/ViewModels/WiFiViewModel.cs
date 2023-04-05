@@ -27,7 +27,7 @@ public class WiFiViewModel : ViewModelBase
     #region  Variables 
     private readonly IDialogCoordinator _dialogCoordinator;
 
-    private readonly bool _isLoading;    
+    private readonly bool _isLoading;
     private readonly DispatcherTimer _autoRefreshTimer = new();
 
     private bool _sdkContractsFailedToLoad;
@@ -335,8 +335,7 @@ public class WiFiViewModel : ViewModelBase
 
                 if (string.IsNullOrEmpty(Search))
                     return true;
-
-
+                
                 // Search by: SSID, Security, Channel, BSSID (MAC address), Vendor, Phy kind
                 return info.AvailableNetwork.Ssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                 WiFi.GetHumanReadableNetworkAuthenticationType(info.AvailableNetwork.SecuritySettings.NetworkAuthenticationType).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
@@ -407,7 +406,7 @@ public class WiFiViewModel : ViewModelBase
         IsAdaptersLoading = true;
 
         try
-        {            
+        {
             Adapters = await WiFi.GetAdapterAsync();
 
             // Check if we found any adapters

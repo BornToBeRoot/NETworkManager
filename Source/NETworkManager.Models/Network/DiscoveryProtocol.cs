@@ -105,7 +105,7 @@ public partial class DiscoveryProtocol
                 powerShell.AddScript(PSDiscoveryProtocolModule);
                 powerShell.AddScript($"Invoke-DiscoveryProtocolCapture -Duration {duration}" + (protocol != Protocol.LLDP_CDP ? $" -Type {protocol}" : "") + " -Force | Get-DiscoveryProtocolData");
 
-                Collection<PSObject> PSOutput = powerShell.Invoke();
+                Collection<PSObject> psOutputs = powerShell.Invoke();
 
                 if (powerShell.Streams.Error.Count > 0)
                 {
@@ -136,7 +136,7 @@ public partial class DiscoveryProtocol
                     OnWarningReceived(new DiscoveryProtocolWarningArgs(stringBuilder.ToString()));
                 }
 
-                foreach (PSObject outputItem in PSOutput)
+                foreach (PSObject outputItem in psOutputs)
                 {
                     if (outputItem == null)
                         continue;

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Management.Automation;
 using System.Threading.Tasks;
 using Windows.Devices.WiFi;
 using Windows.Networking.Connectivity;
@@ -51,36 +53,88 @@ public static class WiFi
     {
         List<WiFiNetworkInfo> wifiNetworkInfos = new();
 
+        // Scan network adapter async
         await adapter.ScanAsync();
+
+        // Try to get the current connected wifi network of this network adapter
+        var connectedNetwork = TryGetConnectedNetworkFromAdapter(adapter.NetworkAdapter.NetworkAdapterId.ToString());
 
         foreach (var availableNetwork in adapter.NetworkReport.AvailableNetworks)
         {
             wifiNetworkInfos.Add(new WiFiNetworkInfo()
             {
                 AvailableNetwork = availableNetwork,
-                IsConnected = false
+                // Add scan timestamp from adapter...
+                IsConnected = availableNetwork.Bssid.Equals(connectedNetwork.BSSID, StringComparison.OrdinalIgnoreCase) && availableNetwork.Ssid.Equals(connectedNetwork.SSID, StringComparison.OrdinalIgnoreCase)
             });
         }
-
-        //_ = GetConnectionProfile();
 
         return wifiNetworkInfos;
     }
 
-    /*
-    public static ConnectionProfile GetConnectionProfile()
+    /// <summary>
+    /// Try to get the current connected wifi network (SSID and BSSID) of a network adapter from 
+    /// netsh.exe.
+    /// 
+    /// Calling netsh.exe and parsing the output feels so dirty, but Microsoft's API returns only 
+    /// the WLAN profile and the SSID of the connected network. The BSSID is needed to find a 
+    /// specific access point among several.
+    /// </summary>
+    /// <param name="networkAdapterId">GUID of the network adapter.</param>
+    /// <returns>SSID and BSSID of the connected wifi network. Values are null if not detected.</returns>
+    private static (string SSID, string BSSID) TryGetConnectedNetworkFromAdapter(string networkAdapterId)
     {
-        var x = NetworkInformation.GetConnectionProfiles();
+        string ssid = null;
+        string bssid = null;
 
-        foreach(var y in x.Where(u => u.IsWwanConnectionProfile))
+        using (System.Management.Automation.PowerShell powerShell = System.Management.Automation.PowerShell.Create())
         {
-            Debug.WriteLine(y);
+            powerShell.AddScript("netsh wlan show interfaces");
+
+            Collection<PSObject> psOutputs = powerShell.Invoke();
+
+            /*
+            if (powerShell.Streams.Error.Count > 0) { // Handle error? }
+            if (powerShell.Streams.Warning.Count > 0) { // Handle warning? }
+            */
+
+            /* Each object looks like this:
+            * 
+            * Name : Wireless
+            * Description : Intel ...
+            * GUID : 90d8...
+            * SSID : Devices
+            * BSSID : 6a:d7:...
+            */
+
+            bool foundAdapter = false;
+
+            foreach (PSObject outputItem in psOutputs)
+            {
+                // Find line with the network adapter id...
+                if (outputItem.ToString().Contains(networkAdapterId, StringComparison.OrdinalIgnoreCase))
+                    foundAdapter = true;
+
+                if (foundAdapter)
+                {
+                    // Extract SSID from the line
+                    if (outputItem.ToString().Contains(" SSID ", StringComparison.OrdinalIgnoreCase))
+                        ssid = outputItem.ToString().Split(':')[1].Trim();
+
+                    // Extract BSSID from the line
+                    if (outputItem.ToString().Contains(" BSSID ", StringComparison.OrdinalIgnoreCase))
+                        bssid = outputItem.ToString().Split(':', 2)[1].Trim();
+
+                    // Break if we got the values, otherwise we might overwrite them
+                    // with values from another adapter.
+                    if (!string.IsNullOrEmpty(ssid) && !string.IsNullOrEmpty(bssid))
+                        break;
+                }
+            }
         }
 
-     
-    return x.FirstOrDefault(u => u.IsWlanConnectionProfile);
+        return (ssid, bssid);
     }
-    */
 
     /// <summary>
     /// 

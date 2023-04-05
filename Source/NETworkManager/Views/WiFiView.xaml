@@ -194,7 +194,7 @@
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
-                                </controls2:MultiSelectDataGrid.RowStyle>
+                                </controls2:MultiSelectDataGrid.RowStyle>                             
                                 <controls2:MultiSelectDataGrid.Columns>
                                     <DataGridTemplateColumn SortMemberPath="ChannelCenterFrequencyInKilohertz" >
                                         <DataGridTemplateColumn.CellTemplate>
@@ -281,6 +281,7 @@
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
                                     <DataGridTextColumn Header="{x:Static localization:Strings.SSID}" Binding="{Binding AvailableNetwork.Ssid}" SortMemberPath="AvailableNetwork.Ssid" />
+                                    <DataGridCheckBoxColumn Header="{x:Static localization:Strings.Connected}" Binding="{Binding IsConnected}" SortMemberPath="IsConnected" />
                                     <DataGridTextColumn Header="{x:Static localization:Strings.Security}" Binding="{Binding AvailableNetwork.SecuritySettings.NetworkAuthenticationType, Converter={StaticResource WiFiAuthenticationTypeToHumanReadableStringConverter}}" SortMemberPath="AvailableNetwork.SecuritySettings.NetworkAuthenticationType" />
                                     <DataGridTextColumn Header="{x:Static localization:Strings.Frequency}" Binding="{Binding AvailableNetwork.ChannelCenterFrequencyInKilohertz, Converter={StaticResource WiFiChannelCenterFrequencyToFrequencyStringConverter}}" SortMemberPath="AvailableNetwork.ChannelCenterFrequencyInKilohertz" />
                                     <DataGridTextColumn Header="{x:Static localization:Strings.Channel}" Binding="{Binding AvailableNetwork.ChannelCenterFrequencyInKilohertz, Converter={StaticResource WiFiChannelCenterFrequencyToChannelStringConvertert}}" SortMemberPath="AvailableNetwork.ChannelCenterFrequencyInKilohertz" />
@@ -293,7 +294,7 @@
                                     <DataGridTextColumn Header="{x:Static localization:Strings.NetworkKind}" Binding="{Binding AvailableNetwork.NetworkKind}" SortMemberPath="AvailableNetwork.NetworkKind" />
                                     <DataGridTextColumn Header="{x:Static localization:Strings.BeaconInterval}" Binding="{Binding AvailableNetwork.BeaconInterval, Converter={StaticResource TimeSpanToMillisecondConverter}}" SortMemberPath="AvailableNetwork.BeaconInterval" />
                                     <DataGridTextColumn Header="{x:Static localization:Strings.Uptime}" Binding="{Binding AvailableNetwork.Uptime, Converter={StaticResource TimeSpanToStringConverter}}" SortMemberPath="AvailableNetwork.Uptime" />
-                                </controls2:MultiSelectDataGrid.Columns>                             
+                                </controls2:MultiSelectDataGrid.Columns>
                             </controls2:MultiSelectDataGrid>
                             <TextBlock Grid.Row="2" Text="{x:Static localization:Strings.NoWiFiNetworksFound}">
                                 <TextBlock.Style>
