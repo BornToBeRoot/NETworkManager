@@ -322,27 +322,27 @@ public class WiFiViewModel : ViewModelBase
 
         // Result view + search
         NetworksView = CollectionViewSource.GetDefaultView(Networks);
-        NetworksView.SortDescriptions.Add(new SortDescription($"{nameof(WiFiNetworkInfo.AvailableNetwork)}.{nameof(WiFiNetworkInfo.AvailableNetwork.Ssid)}", ListSortDirection.Ascending));
+        NetworksView.SortDescriptions.Add(new SortDescription($"{nameof(WiFiNetworkInfo.WiFiAvailableNetwork)}.{nameof(WiFiNetworkInfo.WiFiAvailableNetwork.Ssid)}", ListSortDirection.Ascending));
         NetworksView.Filter = o =>
         {
             if (o is WiFiNetworkInfo info)
             {
-                if (WiFi.Is2dot4GHzNetwork(info.AvailableNetwork.ChannelCenterFrequencyInKilohertz) && !Show2dot4GHzNetworks)
+                if (WiFi.Is2dot4GHzNetwork(info.WiFiAvailableNetwork.ChannelCenterFrequencyInKilohertz) && !Show2dot4GHzNetworks)
                     return false;
 
-                if (WiFi.Is5GHzNetwork(info.AvailableNetwork.ChannelCenterFrequencyInKilohertz) && !Show5GHzNetworks)
+                if (WiFi.Is5GHzNetwork(info.WiFiAvailableNetwork.ChannelCenterFrequencyInKilohertz) && !Show5GHzNetworks)
                     return false;
 
                 if (string.IsNullOrEmpty(Search))
                     return true;
-                
+
                 // Search by: SSID, Security, Channel, BSSID (MAC address), Vendor, Phy kind
-                return info.AvailableNetwork.Ssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                WiFi.GetHumanReadableNetworkAuthenticationType(info.AvailableNetwork.SecuritySettings.NetworkAuthenticationType).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                $"{WiFi.GetChannelFromChannelFrequency(info.AvailableNetwork.ChannelCenterFrequencyInKilohertz)}".IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                info.AvailableNetwork.Bssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                OUILookup.Lookup(info.AvailableNetwork.Bssid).FirstOrDefault()?.Vendor.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                WiFi.GetHumandReadablePhyKind(info.AvailableNetwork.PhyKind).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
+                return info.WiFiAvailableNetwork.Ssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                WiFi.GetHumanReadableNetworkAuthenticationType(info.WiFiAvailableNetwork.SecuritySettings.NetworkAuthenticationType).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                $"{WiFi.GetChannelFromChannelFrequency(info.WiFiAvailableNetwork.ChannelCenterFrequencyInKilohertz)}".IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                info.WiFiAvailableNetwork.Bssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                OUILookup.Lookup(info.WiFiAvailableNetwork.Bssid).FirstOrDefault()?.Vendor.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                WiFi.GetHumandReadablePhyKind(info.WiFiAvailableNetwork.PhyKind).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
             }
             else
             {
@@ -440,34 +440,27 @@ public class WiFiViewModel : ViewModelBase
             IsNetworksLoading = true;
         }
 
-        IEnumerable<WiFiNetworkInfo> networks = await WiFi.GetNetworksAsync(adapter);
+        WiFiNetworkScanInfo wiFiNetworkScanInfo = await WiFi.GetNetworksAsync(adapter);
 
         Networks.Clear();
-
         Radio1Series.Clear();
         Radio2Series.Clear();
 
-        foreach (var network in networks)
+        foreach (var network in wiFiNetworkScanInfo.WiFiNetworkInfos)
         {
-            // Identify hidden networks
-            //if (string.IsNullOrEmpty(network.AvailableNetwork.Ssid))
-            //    network.AvailableNetwork.Ssid = Localization.Resources.Strings.HiddenNetwork;
-
             Networks.Add(network);
 
-            if (WiFi.ConvertChannelFrequencyToGigahertz(network.AvailableNetwork.ChannelCenterFrequencyInKilohertz) < 5) // 2.4 GHz
+            if (WiFi.ConvertChannelFrequencyToGigahertz(network.WiFiAvailableNetwork.ChannelCenterFrequencyInKilohertz) < 5) // 2.4 GHz
                 AddNetworkToRadio1Chart(network);
             else
                 AddNetworkToRadio2Chart(network);
         }
 
         IsStatusMessageDisplayed = true;
-        StatusMessage = string.Format(Localization.Resources.Strings.LastScanAtX, DateTime.Now.ToLongTimeString());
+        StatusMessage = string.Format(Localization.Resources.Strings.LastScanAtX, wiFiNetworkScanInfo.Timestamp.ToLongTimeString());
 
-        if (refreshing)
-            IsBackgroundSearchRunning = false;
-        else
-            IsNetworksLoading = false;
+        IsBackgroundSearchRunning = false;
+        IsNetworksLoading = false;
     }
 
     private ChartValues<double> GetDefaultChartValues(WiFiRadio radio)
@@ -484,7 +477,7 @@ public class WiFiViewModel : ViewModelBase
     {
         ChartValues<double> values = GetDefaultChartValues(radio);
 
-        double reverseMilliwatts = 100 - (network.AvailableNetwork.NetworkRssiInDecibelMilliwatts * -1);
+        double reverseMilliwatts = 100 - (network.WiFiAvailableNetwork.NetworkRssiInDecibelMilliwatts * -1);
 
         values[index - 2] = -1;
         values[index - 1] = reverseMilliwatts;
@@ -497,11 +490,11 @@ public class WiFiViewModel : ViewModelBase
 
     private void AddNetworkToRadio1Chart(WiFiNetworkInfo network)
     {
-        int index = Array.IndexOf(Radio1Labels, $"{WiFi.GetChannelFromChannelFrequency(network.AvailableNetwork.ChannelCenterFrequencyInKilohertz)}");
+        int index = Array.IndexOf(Radio1Labels, $"{WiFi.GetChannelFromChannelFrequency(network.WiFiAvailableNetwork.ChannelCenterFrequencyInKilohertz)}");
 
         Radio1Series.Add(new LineSeries
         {
-            Title = network.AvailableNetwork.Ssid,
+            Title = $"{network.WiFiAvailableNetwork.Ssid} ({network.WiFiAvailableNetwork.Bssid})",
             Values = SetChartValues(network, WiFiRadio.One, index),
             PointGeometry = null,
             LineSmoothness = 0
@@ -510,11 +503,11 @@ public class WiFiViewModel : ViewModelBase
 
     private void AddNetworkToRadio2Chart(WiFiNetworkInfo network)
     {
-        int index = Array.IndexOf(Radio2Labels, $"{WiFi.GetChannelFromChannelFrequency(network.AvailableNetwork.ChannelCenterFrequencyInKilohertz)}");
+        int index = Array.IndexOf(Radio2Labels, $"{WiFi.GetChannelFromChannelFrequency(network.WiFiAvailableNetwork.ChannelCenterFrequencyInKilohertz)}");
 
         Radio2Series.Add(new LineSeries
         {
-            Title = network.AvailableNetwork.Ssid,
+            Title = $"{network.WiFiAvailableNetwork.Ssid} ({network.WiFiAvailableNetwork.Bssid})",
             Values = SetChartValues(network, WiFiRadio.Two, index),
             PointGeometry = null,
             LineSmoothness = 0

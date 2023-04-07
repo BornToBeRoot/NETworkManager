@@ -49,27 +49,33 @@ public static class WiFi
     /// </summary>
     /// <param name="adapter"></param>
     /// <returns></returns>
-    public static async Task<IEnumerable<WiFiNetworkInfo>> GetNetworksAsync(WiFiAdapter adapter)
+    public static async Task<WiFiNetworkScanInfo> GetNetworksAsync(WiFiAdapter adapter)
     {
-        List<WiFiNetworkInfo> wifiNetworkInfos = new();
-
         // Scan network adapter async
         await adapter.ScanAsync();
 
         // Try to get the current connected wifi network of this network adapter
-        var connectedNetwork = TryGetConnectedNetworkFromAdapter(adapter.NetworkAdapter.NetworkAdapterId.ToString());
+        var (ssid, bssid) = TryGetConnectedNetworkFromAdapter(adapter.NetworkAdapter.NetworkAdapterId.ToString());
+
+        List<WiFiNetworkInfo> wifiNetworkInfos = new();
 
         foreach (var availableNetwork in adapter.NetworkReport.AvailableNetworks)
         {
             wifiNetworkInfos.Add(new WiFiNetworkInfo()
             {
-                AvailableNetwork = availableNetwork,
+                WiFiAvailableNetwork = availableNetwork,
+                
                 // Add scan timestamp from adapter...
-                IsConnected = availableNetwork.Bssid.Equals(connectedNetwork.BSSID, StringComparison.OrdinalIgnoreCase) && availableNetwork.Ssid.Equals(connectedNetwork.SSID, StringComparison.OrdinalIgnoreCase)
+                IsConnected = availableNetwork.Bssid.Equals(bssid, StringComparison.OrdinalIgnoreCase)
             });
         }
 
-        return wifiNetworkInfos;
+        return new WiFiNetworkScanInfo()
+        {
+            NetworkAdapterId = adapter.NetworkAdapter.NetworkAdapterId,
+            WiFiNetworkInfos = wifiNetworkInfos,
+            Timestamp = adapter.NetworkReport.Timestamp.LocalDateTime
+        };
     }
 
     /// <summary>
