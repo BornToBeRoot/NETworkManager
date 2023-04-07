@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<ProjectGuid>{008467AF-D83F-4B1E-8733-B65136F595F2}</ProjectGuid>
 		<OutputType>Library</OutputType>
@@ -22,6 +22,6 @@
 		<Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Octokit" Version="5.0.2" />
+		<PackageReference Include="Octokit" Version="5.0.3" />
 	</ItemGroup>
 </Project>
