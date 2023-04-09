@@ -10,12 +10,17 @@ public class WiFiNetworkInfo
 {
     #region Variables
     /// <summary>
-    /// Informations about an available wifi network.
+    /// Informations about an available WiFi network.
     /// </summary>
     public WiFiAvailableNetwork WiFiAvailableNetwork { get; set; }
 
     /// <summary>
-    /// Indicates if the network is connected to the current network adapter.
+    /// Indicates if the WiFi network Ssid is hidden.
+    /// </summary>
+    public bool IsHidden { get; set; }
+
+    /// <summary>
+    /// Indicates if the WiFi network is connected to the current WiFi adapter.
     /// </summary>
     public bool IsConnected { get; set; }
     #endregion

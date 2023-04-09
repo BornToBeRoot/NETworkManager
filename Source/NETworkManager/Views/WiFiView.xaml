@@ -33,7 +33,6 @@
         <converters:WiFiAuthenticationTypeToHumanReadableStringConverter x:Key="WiFiAuthenticationTypeToHumanReadableStringConverter" />
         <converters:WiFiChannelCenterFrequencyToChannelStringConvertert x:Key="WiFiChannelCenterFrequencyToChannelStringConvertert" />
         <converters:WiFiChannelCenterFrequencyToFrequencyStringConverter x:Key="WiFiChannelCenterFrequencyToFrequencyStringConverter" />
-        <converters:WiFiHiddenSsidToStringConverter x:Key="WiFiHiddenSsidToStringConverter" />
         <converters:WiFiNetworkRssiInDecibelMilliwattsToSignalStrengthStringConverter x:Key="WiFiNetworkRssiInDecibelMilliwattsToSignalStrengthStringConverter" />
         <converters:WiFiPhyKindToStringConverter x:Key="WiFiPhyKindToStringConverter" />
     </UserControl.Resources>
@@ -164,6 +163,25 @@
                                 <controls2:MultiSelectDataGrid.Resources>
                                     <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                                     <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                                        <MenuItem Header="{x:Static localization:Strings.ConnectDots}" Command="{Binding ConnectCommand}" Visibility="{Binding SelectedNetwork.IsConnected, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+                                            <MenuItem.Icon>
+                                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                    <Rectangle.OpacityMask>
+                                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
+                                                    </Rectangle.OpacityMask>
+                                                </Rectangle>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <MenuItem Header="{x:Static localization:Strings.DisconnectDots}" Command="{Binding DisconnectCommand}" Visibility="{Binding SelectedNetwork.IsConnected, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                            <MenuItem.Icon>
+                                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                    <Rectangle.OpacityMask>
+                                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
+                                                    </Rectangle.OpacityMask>
+                                                </Rectangle>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <Separator />
                                         <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
                                             <MenuItem.Icon>
                                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
@@ -281,7 +299,18 @@
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
-                                    <DataGridTextColumn Header="{x:Static localization:Strings.SSID}" Binding="{Binding WiFiAvailableNetwork.Ssid, Converter={StaticResource WiFiHiddenSsidToStringConverter}}" SortMemberPath="WiFiAvailableNetwork.Ssid" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.SSID}" SortMemberPath="WiFiAvailableNetwork.Ssid">
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}" >
+                                                <Setter Property="Text" Value="{Binding WiFiAvailableNetwork.Ssid}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsHidden}" Value="True">
+                                                        <Setter Property="Text" Value="{x:Static localization:Strings.HiddenNetwork}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
                                     <DataGridCheckBoxColumn Header="{x:Static localization:Strings.Connected}" Binding="{Binding IsConnected}" SortMemberPath="IsConnected" />
                                     <DataGridTextColumn Header="{x:Static localization:Strings.Security}" Binding="{Binding WiFiAvailableNetwork.SecuritySettings.NetworkAuthenticationType, Converter={StaticResource WiFiAuthenticationTypeToHumanReadableStringConverter}}" SortMemberPath="WiFiAvailableNetwork.SecuritySettings.NetworkAuthenticationType" />
                                     <DataGridTextColumn Header="{x:Static localization:Strings.Frequency}" Binding="{Binding WiFiAvailableNetwork.ChannelCenterFrequencyInKilohertz, Converter={StaticResource WiFiChannelCenterFrequencyToFrequencyStringConverter}}" SortMemberPath="WiFiAvailableNetwork.ChannelCenterFrequencyInKilohertz" />
@@ -328,6 +357,10 @@
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
                                 <WrapPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,10,0" Visibility="{Binding IsConnectionStatusMessageDisplayed,Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                        <TextBlock Style="{StaticResource AccentTextBlock}" Text="{Binding ConnectionStatusMessage}" VerticalAlignment="Center" Margin="0,0,10,0" />
+                                        <Rectangle Width="1" Stroke="{DynamicResource MahApps.Brushes.Accent}" VerticalAlignment="Stretch" />
+                                    </WrapPanel>
                                     <loadingIndicators:LoadingIndicator IsActive="True" Style="{DynamicResource LoadingIndicatorPulseStyle}" Visibility="{Binding IsBackgroundSearchRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Width="24" Height="24" VerticalAlignment="Center" SpeedRatio="1" Margin="0,0,10,0" />
                                     <TextBlock Style="{StaticResource AccentTextBlock}" Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Text="{Binding StatusMessage}" VerticalAlignment="Center" />
                                 </WrapPanel>
@@ -591,10 +624,10 @@
                     <!-- SDK.Contracts not found -->
                 </Grid>
             </TabItem>
-            </TabControl>
-            <!-- SDK.Contracts not found -->
-            <Grid Visibility="{Binding SDKContractsFailedToLoad, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                <TextBlock HorizontalAlignment="Stretch" Text="{x:Static localization:Strings.MicrosoftWindowsSDKContractsIsNotAvailable}" Style="{StaticResource MessageTextBlock}" />
-            </Grid>
-            </Grid>
+        </TabControl>
+        <!-- SDK.Contracts not found -->
+        <Grid Visibility="{Binding SDKContractsFailedToLoad, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+            <TextBlock HorizontalAlignment="Stretch" Text="{x:Static localization:Strings.MicrosoftWindowsSDKContractsIsNotAvailable}" Style="{StaticResource MessageTextBlock}" />
+        </Grid>
+    </Grid>
 </UserControl>

@@ -29,7 +29,7 @@ public class WiFiViewModel : ViewModelBase
 
     private readonly bool _isLoading;
     private readonly DispatcherTimer _autoRefreshTimer = new();
-    private WiFiNetworkScanInfo _wiFiNetworkScanInfo = null;
+    private readonly DispatcherTimer _hideConnectionStatusMessageTimer = new();
 
     private bool _sdkContractsFailedToLoad;
     public bool SDKContractsFailedToLoad
@@ -312,6 +312,34 @@ public class WiFiViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
+    private bool _isConnectionStatusMessageDisplayed;
+    public bool IsConnectionStatusMessageDisplayed
+    {
+        get => _isConnectionStatusMessageDisplayed;
+        set
+        {
+            if (value == _isConnectionStatusMessageDisplayed)
+                return;
+
+            _isConnectionStatusMessageDisplayed = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _connectionStatusMessage;
+    public string ConnectionStatusMessage
+    {
+        get => _connectionStatusMessage;
+        set
+        {
+            if (value == _connectionStatusMessage)
+                return;
+
+            _connectionStatusMessage = value;
+            OnPropertyChanged();
+        }
+    }
     #endregion
 
     #region Constructor, load settings
@@ -361,6 +389,10 @@ public class WiFiViewModel : ViewModelBase
         SelectedAutoRefreshTime = AutoRefreshTimes.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => x.Value == SettingsManager.Current.WiFi_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.WiFi_AutoRefreshTime.TimeUnit);
         AutoRefreshEnabled = SettingsManager.Current.WiFi_AutoRefreshEnabled;
 
+        // Hide ConnectionStatusMessage automatically
+        _hideConnectionStatusMessageTimer.Interval = new TimeSpan(0, 0, 15);
+        _hideConnectionStatusMessageTimer.Tick += HideConnectionStatusMessageTimer_Tick;
+
         // Load settings
         LoadSettings();
 
@@ -386,11 +418,25 @@ public class WiFiViewModel : ViewModelBase
 
     public ICommand ScanNetworksCommand => new RelayCommand(p => ScanNetworksAction(), ScanNetworks_CanExecute);
 
-    private bool ScanNetworks_CanExecute(object obj) => !IsAdaptersLoading && !IsNetworksLoading;
+    private bool ScanNetworks_CanExecute(object obj) => !IsAdaptersLoading && !IsNetworksLoading && !IsBackgroundSearchRunning;
 
     private async Task ScanNetworksAction()
     {
         await Scan(SelectedAdapter, true);
+    }
+
+    public ICommand ConnectCommand => new RelayCommand(p => ConnectAction());
+
+    private void ConnectAction()
+    {
+
+    }
+
+    public ICommand DisconnectCommand => new RelayCommand(p => DisconnectAction());
+
+    private void DisconnectAction()
+    {
+        Disconnect();
     }
 
     public ICommand ExportCommand => new RelayCommand(p => ExportAction());
@@ -428,8 +474,6 @@ public class WiFiViewModel : ViewModelBase
         IsAdaptersLoading = false;
     }
 
-
-
     private async Task Scan(WiFiAdapterInfo adapterInfo, bool refreshing = false)
     {
         if (refreshing)
@@ -446,35 +490,34 @@ public class WiFiViewModel : ViewModelBase
         string statusMessage = string.Empty;
 
         try
-        {            
-            _wiFiNetworkScanInfo = await WiFi.GetNetworksAsync(adapterInfo.WiFiAdapter);
+        {
+            WiFiNetworkScanInfo wiFiNetworkScanInfo = await WiFi.GetNetworksAsync(adapterInfo.WiFiAdapter);
 
             // Clear the values after the scan to make the UI smoother
             Networks.Clear();
             Radio1Series.Clear();
             Radio2Series.Clear();
 
-            foreach (var network in _wiFiNetworkScanInfo.WiFiNetworkInfos)
+            foreach (var network in wiFiNetworkScanInfo.WiFiNetworkInfos)
             {
                 Networks.Add(network);
 
                 if (WiFi.ConvertChannelFrequencyToGigahertz(network.WiFiAvailableNetwork.ChannelCenterFrequencyInKilohertz) < 5) // 2.4 GHz
-                    AddNetworkToRadio1Chart(network);
+                    Radio1Series.Add(GetSeriesCollection(network, WiFiRadio.One));
                 else
-                    AddNetworkToRadio2Chart(network);
+                    Radio2Series.Add(GetSeriesCollection(network, WiFiRadio.Two));
             }
 
-            
-            statusMessage = string.Format(Localization.Resources.Strings.LastScanAtX, _wiFiNetworkScanInfo.Timestamp.ToLongTimeString());
+            statusMessage = string.Format(Localization.Resources.Strings.LastScanAtX, wiFiNetworkScanInfo.Timestamp.ToLongTimeString());
         }
         catch (Exception ex)
-        {            
+        {
             // Clear the existing old values if an error occours
             Networks.Clear();
             Radio1Series.Clear();
             Radio2Series.Clear();
-            
-            statusMessage = string.Format(Localization.Resources.Strings.ErrorWhileScanningWiFiAdapterXXXWithErrorXXX , adapterInfo.NetworkInterfaceInfo.Name, ex.Message);
+
+            statusMessage = string.Format(Localization.Resources.Strings.ErrorWhileScanningWiFiAdapterXXXWithErrorXXX, adapterInfo.NetworkInterfaceInfo.Name, ex.Message);
         }
         finally
         {
@@ -496,7 +539,7 @@ public class WiFiViewModel : ViewModelBase
         return values;
     }
 
-    private ChartValues<double> SetChartValues(WiFiNetworkInfo network, WiFiRadio radio, int index)
+    private ChartValues<double> GetChartValues(WiFiNetworkInfo network, WiFiRadio radio, int index)
     {
         ChartValues<double> values = GetDefaultChartValues(radio);
 
@@ -511,30 +554,36 @@ public class WiFiViewModel : ViewModelBase
         return values;
     }
 
-    private void AddNetworkToRadio1Chart(WiFiNetworkInfo network)
+    private LineSeries GetSeriesCollection(WiFiNetworkInfo network, WiFiRadio radio)
     {
-        int index = Array.IndexOf(Radio1Labels, $"{WiFi.GetChannelFromChannelFrequency(network.WiFiAvailableNetwork.ChannelCenterFrequencyInKilohertz)}");
+        int index = Array.IndexOf(radio == WiFiRadio.One ? Radio1Labels : Radio2Labels, $"{WiFi.GetChannelFromChannelFrequency(network.WiFiAvailableNetwork.ChannelCenterFrequencyInKilohertz)}");
 
-        Radio1Series.Add(new LineSeries
+        return new LineSeries
         {
             Title = $"{network.WiFiAvailableNetwork.Ssid} ({network.WiFiAvailableNetwork.Bssid})",
-            Values = SetChartValues(network, WiFiRadio.One, index),
+            Values = GetChartValues(network, radio, index),
             PointGeometry = null,
             LineSmoothness = 0
-        });
+        };
     }
 
-    private void AddNetworkToRadio2Chart(WiFiNetworkInfo network)
+    private async void Disconnect()
     {
-        int index = Array.IndexOf(Radio2Labels, $"{WiFi.GetChannelFromChannelFrequency(network.WiFiAvailableNetwork.ChannelCenterFrequencyInKilohertz)}");
+        var connectedNetwork = Networks.FirstOrDefault(x => x.IsConnected);
 
-        Radio2Series.Add(new LineSeries
+        WiFi.Disconnect(SelectedAdapter.WiFiAdapter);
+
+        if (connectedNetwork != null)
         {
-            Title = $"{network.WiFiAvailableNetwork.Ssid} ({network.WiFiAvailableNetwork.Bssid})",
-            Values = SetChartValues(network, WiFiRadio.Two, index),
-            PointGeometry = null,
-            LineSmoothness = 0
-        });
+            ConnectionStatusMessage = string.Format(Localization.Resources.Strings.WiFiDisconnectMessage, connectedNetwork.WiFiAvailableNetwork.Ssid, connectedNetwork.WiFiAvailableNetwork.Bssid);
+            IsConnectionStatusMessageDisplayed = true;
+
+            // Hide message automatically
+            _hideConnectionStatusMessageTimer.Start();
+        }
+
+        // Refresh
+        await Scan(SelectedAdapter, true);
     }
 
     private async Task Export()
@@ -585,7 +634,6 @@ public class WiFiViewModel : ViewModelBase
         if (AutoRefreshEnabled)
             _autoRefreshTimer.Stop();
     }
-
     #endregion
 
     #region Events
@@ -599,6 +647,12 @@ public class WiFiViewModel : ViewModelBase
 
         // Restart timer...
         _autoRefreshTimer.Start();
+    }
+
+    private void HideConnectionStatusMessageTimer_Tick(object sender, EventArgs e)
+    {
+        _hideConnectionStatusMessageTimer.Stop();
+        IsConnectionStatusMessageDisplayed = false;
     }
     #endregion
 }

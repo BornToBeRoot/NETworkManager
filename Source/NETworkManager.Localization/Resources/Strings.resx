@@ -3457,4 +3457,13 @@ Changes to this value will take effect after the application is restarted. Wheth
   <data name="ErrorWhileScanningWiFiAdapterXXXWithErrorXXX" xml:space="preserve">
     <value>Error while scanning WiFi adapter "{0}" with error: "{1}"</value>
   </data>
+  <data name="ConnectDots" xml:space="preserve">
+    <value>Connect...</value>
+  </data>
+  <data name="DisconnectDots" xml:space="preserve">
+    <value>Disconnect...</value>
+  </data>
+  <data name="WiFiDisconnectMessage" xml:space="preserve">
+    <value>{0} ({1}) disconnected!</value>
+  </data>
 </root>

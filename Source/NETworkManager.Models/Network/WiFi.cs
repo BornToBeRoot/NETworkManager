@@ -47,34 +47,33 @@ public static class WiFi
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="adapter"></param>
+    /// <param name="wifiAdapter"></param>
     /// <returns></returns>
-    public static async Task<WiFiNetworkScanInfo> GetNetworksAsync(WiFiAdapter adapter)
+    public static async Task<WiFiNetworkScanInfo> GetNetworksAsync(WiFiAdapter wifiAdapter)
     {
         // Scan network adapter async
-        await adapter.ScanAsync();
+        await wifiAdapter.ScanAsync();
 
         // Try to get the current connected wifi network of this network adapter
-        var (ssid, bssid) = TryGetConnectedNetworkFromAdapter(adapter.NetworkAdapter.NetworkAdapterId.ToString());
+        var (ssid, bssid) = TryGetConnectedNetworkFromWiFiAdapter(wifiAdapter.NetworkAdapter.NetworkAdapterId.ToString());
 
         List<WiFiNetworkInfo> wifiNetworkInfos = new();
 
-        foreach (var availableNetwork in adapter.NetworkReport.AvailableNetworks)
+        foreach (var availableNetwork in wifiAdapter.NetworkReport.AvailableNetworks)
         {
             wifiNetworkInfos.Add(new WiFiNetworkInfo()
             {
                 WiFiAvailableNetwork = availableNetwork,
-                
-                // Add scan timestamp from adapter...
+                IsHidden = string.IsNullOrEmpty(availableNetwork.Ssid),
                 IsConnected = availableNetwork.Bssid.Equals(bssid, StringComparison.OrdinalIgnoreCase)
             });
         }
 
         return new WiFiNetworkScanInfo()
         {
-            NetworkAdapterId = adapter.NetworkAdapter.NetworkAdapterId,
+            NetworkAdapterId = wifiAdapter.NetworkAdapter.NetworkAdapterId,
             WiFiNetworkInfos = wifiNetworkInfos,
-            Timestamp = adapter.NetworkReport.Timestamp.LocalDateTime
+            Timestamp = wifiAdapter.NetworkReport.Timestamp.LocalDateTime
         };
     }
 
@@ -86,9 +85,9 @@ public static class WiFi
     /// the WLAN profile and the SSID of the connected network. The BSSID is needed to find a 
     /// specific access point among several.
     /// </summary>
-    /// <param name="networkAdapterId">GUID of the network adapter.</param>
+    /// <param name="wifiAdapterId">GUID of the network adapter.</param>
     /// <returns>SSID and BSSID of the connected wifi network. Values are null if not detected.</returns>
-    private static (string SSID, string BSSID) TryGetConnectedNetworkFromAdapter(string networkAdapterId)
+    private static (string SSID, string BSSID) TryGetConnectedNetworkFromWiFiAdapter(string wifiAdapterId)
     {
         string ssid = null;
         string bssid = null;
@@ -118,7 +117,7 @@ public static class WiFi
             foreach (PSObject outputItem in psOutputs)
             {
                 // Find line with the network adapter id...
-                if (outputItem.ToString().Contains(networkAdapterId, StringComparison.OrdinalIgnoreCase))
+                if (outputItem.ToString().Contains(wifiAdapterId, StringComparison.OrdinalIgnoreCase))
                     foundAdapter = true;
 
                 if (foundAdapter)
@@ -140,6 +139,11 @@ public static class WiFi
         }
 
         return (ssid, bssid);
+    }
+
+    public static void Disconnect(WiFiAdapter wifiAdapter)
+    {
+        wifiAdapter.Disconnect();
     }
 
     /// <summary>

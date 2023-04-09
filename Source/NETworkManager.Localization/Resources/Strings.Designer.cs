@@ -1708,6 +1708,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Connect... ähnelt.
+        /// </summary>
+        public static string ConnectDots {
+            get {
+                return ResourceManager.GetString("ConnectDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Connected ähnelt.
         /// </summary>
         public static string Connected {
@@ -2579,6 +2588,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Disconnect {
             get {
                 return ResourceManager.GetString("Disconnect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Disconnect... ähnelt.
+        /// </summary>
+        public static string DisconnectDots {
+            get {
+                return ResourceManager.GetString("DisconnectDots", resourceCulture);
             }
         }
         
@@ -9857,6 +9875,15 @@ namespace NETworkManager.Localization.Resources {
         public static string WiFi {
             get {
                 return ResourceManager.GetString("WiFi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {0} ({1}) disconnected! ähnelt.
+        /// </summary>
+        public static string WiFiDisconnectMessage {
+            get {
+                return ResourceManager.GetString("WiFiDisconnectMessage", resourceCulture);
             }
         }
         
