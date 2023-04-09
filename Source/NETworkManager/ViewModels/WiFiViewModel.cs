@@ -29,6 +29,7 @@ public class WiFiViewModel : ViewModelBase
 
     private readonly bool _isLoading;
     private readonly DispatcherTimer _autoRefreshTimer = new();
+    private WiFiNetworkScanInfo _wiFiNetworkScanInfo = null;
 
     private bool _sdkContractsFailedToLoad;
     public bool SDKContractsFailedToLoad
@@ -86,7 +87,7 @@ public class WiFiViewModel : ViewModelBase
                 if (!_isLoading)
                     SettingsManager.Current.WiFi_InterfaceId = value.NetworkInterfaceInfo.Id;
 
-                Scan(value.WiFiAdapter);
+                Scan(value);
             }
 
             _selectedAdapters = value;
@@ -389,7 +390,7 @@ public class WiFiViewModel : ViewModelBase
 
     private async Task ScanNetworksAction()
     {
-        await Scan(SelectedAdapter.WiFiAdapter, true);
+        await Scan(SelectedAdapter, true);
     }
 
     public ICommand ExportCommand => new RelayCommand(p => ExportAction());
@@ -427,7 +428,9 @@ public class WiFiViewModel : ViewModelBase
         IsAdaptersLoading = false;
     }
 
-    private async Task Scan(WiFiAdapter adapter, bool refreshing = false)
+
+
+    private async Task Scan(WiFiAdapterInfo adapterInfo, bool refreshing = false)
     {
         if (refreshing)
         {
@@ -440,27 +443,47 @@ public class WiFiViewModel : ViewModelBase
             IsNetworksLoading = true;
         }
 
-        WiFiNetworkScanInfo wiFiNetworkScanInfo = await WiFi.GetNetworksAsync(adapter);
+        string statusMessage = string.Empty;
 
-        Networks.Clear();
-        Radio1Series.Clear();
-        Radio2Series.Clear();
+        try
+        {            
+            _wiFiNetworkScanInfo = await WiFi.GetNetworksAsync(adapterInfo.WiFiAdapter);
 
-        foreach (var network in wiFiNetworkScanInfo.WiFiNetworkInfos)
-        {
-            Networks.Add(network);
+            // Clear the values after the scan to make the UI smoother
+            Networks.Clear();
+            Radio1Series.Clear();
+            Radio2Series.Clear();
 
-            if (WiFi.ConvertChannelFrequencyToGigahertz(network.WiFiAvailableNetwork.ChannelCenterFrequencyInKilohertz) < 5) // 2.4 GHz
-                AddNetworkToRadio1Chart(network);
-            else
-                AddNetworkToRadio2Chart(network);
+            foreach (var network in _wiFiNetworkScanInfo.WiFiNetworkInfos)
+            {
+                Networks.Add(network);
+
+                if (WiFi.ConvertChannelFrequencyToGigahertz(network.WiFiAvailableNetwork.ChannelCenterFrequencyInKilohertz) < 5) // 2.4 GHz
+                    AddNetworkToRadio1Chart(network);
+                else
+                    AddNetworkToRadio2Chart(network);
+            }
+
+            
+            statusMessage = string.Format(Localization.Resources.Strings.LastScanAtX, _wiFiNetworkScanInfo.Timestamp.ToLongTimeString());
         }
+        catch (Exception ex)
+        {            
+            // Clear the existing old values if an error occours
+            Networks.Clear();
+            Radio1Series.Clear();
+            Radio2Series.Clear();
+            
+            statusMessage = string.Format(Localization.Resources.Strings.ErrorWhileScanningWiFiAdapterXXXWithErrorXXX , adapterInfo.NetworkInterfaceInfo.Name, ex.Message);
+        }
+        finally
+        {
+            IsStatusMessageDisplayed = true;
+            StatusMessage = statusMessage;
 
-        IsStatusMessageDisplayed = true;
-        StatusMessage = string.Format(Localization.Resources.Strings.LastScanAtX, wiFiNetworkScanInfo.Timestamp.ToLongTimeString());
-
-        IsBackgroundSearchRunning = false;
-        IsNetworksLoading = false;
+            IsBackgroundSearchRunning = false;
+            IsNetworksLoading = false;
+        }
     }
 
     private ChartValues<double> GetDefaultChartValues(WiFiRadio radio)
@@ -572,7 +595,7 @@ public class WiFiViewModel : ViewModelBase
         _autoRefreshTimer.Stop();
 
         // Scan networks
-        await Scan(SelectedAdapter.WiFiAdapter, true);
+        await Scan(SelectedAdapter, true);
 
         // Restart timer...
         _autoRefreshTimer.Start();

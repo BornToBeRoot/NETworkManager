@@ -3294,6 +3294,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error while scanning WiFi adapter &quot;{0}&quot; with error: &quot;{1}&quot; ähnelt.
+        /// </summary>
+        public static string ErrorWhileScanningWiFiAdapterXXXWithErrorXXX {
+            get {
+                return ResourceManager.GetString("ErrorWhileScanningWiFiAdapterXXXWithErrorXXX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Everything ähnelt.
         /// </summary>
         public static string Everything {

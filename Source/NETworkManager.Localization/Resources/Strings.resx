@@ -3454,4 +3454,7 @@ Changes to this value will take effect after the application is restarted. Wheth
   <data name="Connected" xml:space="preserve">
     <value>Connected</value>
   </data>
+  <data name="ErrorWhileScanningWiFiAdapterXXXWithErrorXXX" xml:space="preserve">
+    <value>Error while scanning WiFi adapter "{0}" with error: "{1}"</value>
+  </data>
 </root>
