@@ -16,13 +16,18 @@ Release date: **xx.xx.2023**
 - [.NET Desktop Runtime 6.x (LTS)](https://dotnet.microsoft.com/download/dotnet/6.0){:target="\_blank"}
 
 ## What's new?
+- WiFi
+  - Connect to or disconnect from a WiFi network has been added. To do this, right-click on a WiFi network and open the ContextMenu. [#2133](https://github.com/BornToBeRoot/NETworkManager/pull/2133){:target="\_blank"}  
 - Remote Desktop
-  - Support for Remote Desktop Gateway server added [#2108](https://github.com/BornToBeRoot/NETworkManager/pull/2108){:target="\_blank"}
+  - Support for Remote Desktop Gateway server has been added [#2108](https://github.com/BornToBeRoot/NETworkManager/pull/2108){:target="\_blank"}
 - SNMP
-  - Cancel is now supported by the underlying library [#2124](https://github.com/BornToBeRoot/NETworkManager/pull/2124){:target="\_blank"}
-
+  - SNMP query can now be canceled (It's supported by the library now) [#2124](https://github.com/BornToBeRoot/NETworkManager/pull/2124){:target="\_blank"}
+  
 ## Improvements
 - WiFi
+  - Show current connected network [#2133](https://github.com/BornToBeRoot/NETworkManager/pull/2133){:target="\_blank"}
+  - Bssid to channel ToolTip added [#2133](https://github.com/BornToBeRoot/NETworkManager/pull/2133){:target="\_blank"}
+  - Show error message if scan fails (e.g. wifi adapter is unplugged while scanning) [#2133](https://github.com/BornToBeRoot/NETworkManager/pull/2133){:target="\_blank"}
   - Automatically refresh is now enabled if it was enabled on the last exit [#2116](https://github.com/BornToBeRoot/NETworkManager/pull/2116){:target="\_blank"}
 - Remote Desktop
   - Domain added to credentials [#2108](https://github.com/BornToBeRoot/NETworkManager/pull/2108){:target="\_blank"}
@@ -32,9 +37,9 @@ Release date: **xx.xx.2023**
   - Automatically refresh is now enabled if it was enabled on the last exit [#2116](https://github.com/BornToBeRoot/NETworkManager/pull/2116){:target="\_blank"}
 - ARP Table
   - Automatically refresh is now enabled if it was enabled on the last exit [#2116](https://github.com/BornToBeRoot/NETworkManager/pull/2116){:target="\_blank"}
-
-## Bugfixes
 - Status window is now automatically closed again if it was opened by a network change event [#2105](https://github.com/BornToBeRoot/NETworkManager/pull/2105){:target="\_blank"}
+## Bugfixes
+
 
 ## Other
 - Code cleanup [#2100](https://github.com/BornToBeRoot/NETworkManager/pull/2100){:target="\_blank"}

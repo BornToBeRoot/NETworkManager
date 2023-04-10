@@ -2592,15 +2592,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Disconnect... ähnelt.
-        /// </summary>
-        public static string DisconnectDots {
-            get {
-                return ResourceManager.GetString("DisconnectDots", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Disconnected ähnelt.
         /// </summary>
         public static string Disconnected {
