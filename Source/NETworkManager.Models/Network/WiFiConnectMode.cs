@@ -1,5 +1,8 @@
 ﻿namespace NETworkManager.Models.Network;
 
+/// <summary>
+/// Enum for the WiFi connect mode.
+/// </summary>
 public enum WiFiConnectMode
 {
     /// <summary>

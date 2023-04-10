@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Management.Automation;
 using System.Threading.Tasks;
-using System.Windows.Media.Animation;
 using Windows.Devices.WiFi;
-using Windows.Foundation.Metadata;
 using Windows.Networking.Connectivity;
 
 //https://docs.microsoft.com/en-us/uwp/api/windows.devices.wifi.wifiadapter.requestaccessasync
@@ -18,9 +15,9 @@ namespace NETworkManager.Models.Network;
 public static class WiFi
 {
     /// <summary>
-    /// 
+    /// Get all WiFi adapters async with additional information from <see cref="NetworkInterface"/>.
     /// </summary>
-    /// <returns></returns>
+    /// <returns><see cref="WiFiAdapterInfo"/> with <see cref="NetworkInterface"/> and <see cref="WiFiAdapter"/> as <see cref="List{T}"/>.</returns>
     public static async Task<List<WiFiAdapterInfo>> GetAdapterAsync()
     {
         List<WiFiAdapterInfo> wifiAdapterInfos = new();
@@ -47,10 +44,10 @@ public static class WiFi
     }
 
     /// <summary>
-    /// 
+    /// Get all available WiFi networks for an adapter with additional informations.
     /// </summary>
-    /// <param name="wifiAdapter"></param>
-    /// <returns></returns>
+    /// <param name="wifiAdapter">WiFi adapter as <see cref="WiFiAdapter"/>.</param>
+    /// <returns>A report as <see cref="WiFiNetworkScanInfo"/> including a list of <see cref="WiFiNetworkInfo"/>.</returns>
     public static async Task<WiFiNetworkScanInfo> GetNetworksAsync(WiFiAdapter wifiAdapter)
     {
         // Scan network adapter async
@@ -143,11 +140,21 @@ public static class WiFi
         return (ssid, bssid);
     }
 
+    /// <summary>
+    /// Disconnect the wifi adapter from the current wifi network.
+    /// </summary>
+    /// <param name="wifiAdapter">WiFi adapter from which the wifi network should be disconnected.</param>
     public static void Disconnect(WiFiAdapter wifiAdapter)
     {
         wifiAdapter.Disconnect();
     }
 
+    /// <summary>
+    /// Get the connect mode of a wifi network like Open, Eap (WPA2-Enterprise) 
+    /// or Psk (WPA2-Personal).
+    /// </summary>
+    /// <param name="network">WiFi network as <see cref="WiFiAvailableNetwork"/>.</param>
+    /// <returns>Connect mode as <see cref="WiFiConnectMode"/>.</returns>
     public static WiFiConnectMode GetConnectMode(WiFiAvailableNetwork network)
     {
         // Enterprise
@@ -164,6 +171,12 @@ public static class WiFi
         return WiFiConnectMode.Psk;
     }
 
+    /// <summary>
+    /// Check if WPS is available for a wifi network.
+    /// </summary>
+    /// <param name="adapter">WiFi adapter as <see cref="WiFiAdapter"/>.</param>
+    /// <param name="network">WiFi network as <see cref="WiFiAvailableNetwork"/>.</param>
+    /// <returns></returns>
     public static async Task<bool> IsWpsAvailable(WiFiAdapter adapter, WiFiAvailableNetwork network)
     {
         var result = await adapter.GetWpsConfigurationAsync(network);
@@ -172,10 +185,10 @@ public static class WiFi
     }
 
     /// <summary>
-    /// 
+    /// Get the WiFi channel from channel frequency.
     /// </summary>
-    /// <param name="kilohertz"></param>
-    /// <returns></returns>
+    /// <param name="kilohertz">Input like 2422000 or 5240000.</param>
+    /// <returns>WiFi channel like 3 or 48.</returns>
     public static int GetChannelFromChannelFrequency(int kilohertz)
     {
         return (double)ConvertChannelFrequencyToGigahertz(kilohertz) switch
@@ -225,20 +238,15 @@ public static class WiFi
     }
 
     /// <summary>
-    /// 
+    /// Convert the channel frequency to gigahertz.
     /// </summary>
-    /// <param name="kilohertz"></param>
-    /// <returns></returns>
+    /// <param name="kilohertz">Frequency in kilohertz like 2422000 or 5240000.</param>
+    /// <returns>Frequency in gigahertz like 2.422 or 5.240.</returns>
     public static double ConvertChannelFrequencyToGigahertz(int kilohertz)
     {
         return Convert.ToDouble(kilohertz) / 1000 / 1000;
     }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="kilohertz"></param>
-    /// <returns></returns>
+        
     public static bool Is2dot4GHzNetwork(int kilohertz)
     {
         var x = ConvertChannelFrequencyToGigahertz(kilohertz);
@@ -246,11 +254,6 @@ public static class WiFi
         return x >= 2.412 && x <= 2.472;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="kilohertz"></param>
-    /// <returns></returns>
     public static bool Is5GHzNetwork(int kilohertz)
     {
         var x = ConvertChannelFrequencyToGigahertz(kilohertz);
@@ -258,11 +261,7 @@ public static class WiFi
         return x >= 5.180 && x <= 5.825;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="networkAuthenticationType"></param>
-    /// <returns></returns>
+
     public static string GetHumanReadableNetworkAuthenticationType(NetworkAuthenticationType networkAuthenticationType)
     {
         return networkAuthenticationType switch
@@ -276,16 +275,12 @@ public static class WiFi
             NetworkAuthenticationType.SharedKey80211 => "WEP",
             NetworkAuthenticationType.Ihv => "IHV",
             NetworkAuthenticationType.Unknown => "Unkown",
-            NetworkAuthenticationType.None => "-/-",            
+            NetworkAuthenticationType.None => "-/-",
             _ => "-/-",
         };
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="phyKind"></param>
-    /// <returns></returns>
+
     public static string GetHumandReadablePhyKind(WiFiPhyKind phyKind)
     {
         return phyKind switch
