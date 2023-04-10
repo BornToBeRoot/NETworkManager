@@ -17,7 +17,8 @@ Release date: **xx.xx.2023**
 
 ## What's new?
 - WiFi
-  - Connect to or disconnect from a WiFi network has been added. To do this, right-click on a WiFi network and open the ContextMenu. [#2133](https://github.com/BornToBeRoot/NETworkManager/pull/2133){:target="\_blank"}
+  - Connect to a WiFi network has been added. Supported networks / methods are `Open`, `WPS`, `WPA PSK (Pre-shared key)` and `WPA Enterprise`. To do this, right-click on a selected WiFi network to open the ContextMenu and select `Connect...`. [#2133](https://github.com/BornToBeRoot/NETworkManager/pull/2133){:target="\_blank"}
+  - Disconnect from a WiFi network has been added. To do this, right-click on the connected WiFi network to open the ContextMenu and select `Disconnect`. [#2133](https://github.com/BornToBeRoot/NETworkManager/pull/2133){:target="\_blank"}
 - Remote Desktop
   - Support for Remote Desktop Gateway server has been added [#2108](https://github.com/BornToBeRoot/NETworkManager/pull/2108){:target="\_blank"}
 - SNMP
@@ -47,6 +48,8 @@ Release date: **xx.xx.2023**
 - Code cleanup [#2100](https://github.com/BornToBeRoot/NETworkManager/pull/2100){:target="\_blank"}
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="\_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="\_blank"}
+- Update documentation for:
+  - Application > WiFi [#2133](https://github.com/BornToBeRoot/NETworkManager/pull/2133){:target="\_blank"}
 - Add documentation for:
   - Application > Lookup [#2112](https://github.com/BornToBeRoot/NETworkManager/pull/2112){:target="\_blank"}
   - Application > Connections [#2109](https://github.com/BornToBeRoot/NETworkManager/pull/2109){:target="\_blank"}
