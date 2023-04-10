@@ -1753,6 +1753,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Connecting to {0}... ähnelt.
+        /// </summary>
+        public static string ConnectingToXXX {
+            get {
+                return ResourceManager.GetString("ConnectingToXXX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Connection ähnelt.
         /// </summary>
         public static string Connection {
@@ -1875,6 +1884,15 @@ namespace NETworkManager.Localization.Resources {
         public static string CouldNotConnectToXXXMessage {
             get {
                 return ResourceManager.GetString("CouldNotConnectToXXXMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Could not connect to {0} ({1})! ähnelt.
+        /// </summary>
+        public static string CouldNotConnectToXXXReasonXXX {
+            get {
+                return ResourceManager.GetString("CouldNotConnectToXXXReasonXXX", resourceCulture);
             }
         }
         
@@ -8734,6 +8752,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Successfully connected to {0}! ähnelt.
+        /// </summary>
+        public static string SuccessfullyConnectedToXXX {
+            get {
+                return ResourceManager.GetString("SuccessfullyConnectedToXXX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Synchronize all EC2 instances from AWS ähnelt.
         /// </summary>
         public static string SyncAllEC2InstancesFromAWS {
@@ -9897,11 +9924,65 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {0} ({1}) disconnected! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Access to the network has been revoked ähnelt.
         /// </summary>
-        public static string WiFiDisconnectMessage {
+        public static string WiFiConnectionStatus_AccessRevoked {
             get {
-                return ResourceManager.GetString("WiFiDisconnectMessage", resourceCulture);
+                return ResourceManager.GetString("WiFiConnectionStatus_AccessRevoked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Invalid credentials ähnelt.
+        /// </summary>
+        public static string WiFiConnectionStatus_InvalidCredential {
+            get {
+                return ResourceManager.GetString("WiFiConnectionStatus_InvalidCredential", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Network not available ähnelt.
+        /// </summary>
+        public static string WiFiConnectionStatus_NetworkNotAvailable {
+            get {
+                return ResourceManager.GetString("WiFiConnectionStatus_NetworkNotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Successful ähnelt.
+        /// </summary>
+        public static string WiFiConnectionStatus_Success {
+            get {
+                return ResourceManager.GetString("WiFiConnectionStatus_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Connection attempt timed out ähnelt.
+        /// </summary>
+        public static string WiFiConnectionStatus_Timeout {
+            get {
+                return ResourceManager.GetString("WiFiConnectionStatus_Timeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die -/- ähnelt.
+        /// </summary>
+        public static string WiFiConnectionStatus_UnspecifiedFailure {
+            get {
+                return ResourceManager.GetString("WiFiConnectionStatus_UnspecifiedFailure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Authentication protocol is not supported! ähnelt.
+        /// </summary>
+        public static string WiFiConnectionStatus_UnsupportedAuthenticationProtocol {
+            get {
+                return ResourceManager.GetString("WiFiConnectionStatus_UnsupportedAuthenticationProtocol", resourceCulture);
             }
         }
         
@@ -9992,6 +10073,15 @@ namespace NETworkManager.Localization.Resources {
         public static string XXXDetectedAsLocalIPAddressMessage {
             get {
                 return ResourceManager.GetString("XXXDetectedAsLocalIPAddressMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {0} disconnected! ähnelt.
+        /// </summary>
+        public static string XXXDisconnected {
+            get {
+                return ResourceManager.GetString("XXXDisconnected", resourceCulture);
             }
         }
         

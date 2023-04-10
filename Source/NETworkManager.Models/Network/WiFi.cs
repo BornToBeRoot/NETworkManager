@@ -6,6 +6,7 @@ using System.Management.Automation;
 using System.Threading.Tasks;
 using Windows.Devices.WiFi;
 using Windows.Networking.Connectivity;
+using Windows.Security.Credentials;
 
 //https://docs.microsoft.com/en-us/uwp/api/windows.devices.wifi.wifiadapter.requestaccessasync
 //var access = await WiFiAdapter.RequestAccessAsync() == WiFiAccessStatus.Allowed;
@@ -46,19 +47,19 @@ public static class WiFi
     /// <summary>
     /// Get all available WiFi networks for an adapter with additional informations.
     /// </summary>
-    /// <param name="wifiAdapter">WiFi adapter as <see cref="WiFiAdapter"/>.</param>
+    /// <param name="adapter">WiFi adapter as <see cref="WiFiAdapter"/>.</param>
     /// <returns>A report as <see cref="WiFiNetworkScanInfo"/> including a list of <see cref="WiFiNetworkInfo"/>.</returns>
-    public static async Task<WiFiNetworkScanInfo> GetNetworksAsync(WiFiAdapter wifiAdapter)
+    public static async Task<WiFiNetworkScanInfo> GetNetworksAsync(WiFiAdapter adapter)
     {
         // Scan network adapter async
-        await wifiAdapter.ScanAsync();
+        await adapter.ScanAsync();
 
         // Try to get the current connected wifi network of this network adapter
-        var (ssid, bssid) = TryGetConnectedNetworkFromWiFiAdapter(wifiAdapter.NetworkAdapter.NetworkAdapterId.ToString());
+        var (ssid, bssid) = TryGetConnectedNetworkFromWiFiAdapter(adapter.NetworkAdapter.NetworkAdapterId.ToString());
 
         List<WiFiNetworkInfo> wifiNetworkInfos = new();
 
-        foreach (var availableNetwork in wifiAdapter.NetworkReport.AvailableNetworks)
+        foreach (var availableNetwork in adapter.NetworkReport.AvailableNetworks)
         {
             wifiNetworkInfos.Add(new WiFiNetworkInfo()
             {
@@ -70,9 +71,9 @@ public static class WiFi
 
         return new WiFiNetworkScanInfo()
         {
-            NetworkAdapterId = wifiAdapter.NetworkAdapter.NetworkAdapterId,
+            NetworkAdapterId = adapter.NetworkAdapter.NetworkAdapterId,
             WiFiNetworkInfos = wifiNetworkInfos,
-            Timestamp = wifiAdapter.NetworkReport.Timestamp.LocalDateTime
+            Timestamp = adapter.NetworkReport.Timestamp.LocalDateTime
         };
     }
 
@@ -84,9 +85,9 @@ public static class WiFi
     /// the WLAN profile and the SSID of the connected network. The BSSID is needed to find a 
     /// specific access point among several.
     /// </summary>
-    /// <param name="wifiAdapterId">GUID of the network adapter.</param>
+    /// <param name="adapterId">GUID of the WiFi network adapter.</param>
     /// <returns>SSID and BSSID of the connected wifi network. Values are null if not detected.</returns>
-    private static (string SSID, string BSSID) TryGetConnectedNetworkFromWiFiAdapter(string wifiAdapterId)
+    private static (string SSID, string BSSID) TryGetConnectedNetworkFromWiFiAdapter(string adapterId)
     {
         string ssid = null;
         string bssid = null;
@@ -116,7 +117,7 @@ public static class WiFi
             foreach (PSObject outputItem in psOutputs)
             {
                 // Find line with the network adapter id...
-                if (outputItem.ToString().Contains(wifiAdapterId, StringComparison.OrdinalIgnoreCase))
+                if (outputItem.ToString().Contains(adapterId, StringComparison.OrdinalIgnoreCase))
                     foundAdapter = true;
 
                 if (foundAdapter)
@@ -140,13 +141,33 @@ public static class WiFi
         return (ssid, bssid);
     }
 
+
+    public static async Task<WiFiConnectionStatus> ConnectAsync(WiFiAdapter adapter, WiFiAvailableNetwork network, WiFiReconnectionKind reconnectionKind, PasswordCredential credential, string ssid = null)
+    {
+        Task<WiFiConnectionResult> connectionResultTask;
+
+        if (string.IsNullOrEmpty(ssid))
+            connectionResultTask = adapter.ConnectAsync(network, reconnectionKind, credential).AsTask();
+        else
+            connectionResultTask = adapter.ConnectAsync(network, reconnectionKind, credential, ssid).AsTask();
+
+        WiFiConnectionResult connectionResult = await connectionResultTask;
+
+        // Wrong password may cause connection to timeout.
+        // Disconnect any network from the adapter to return it to a non-busy state.
+        if (connectionResult.ConnectionStatus == WiFiConnectionStatus.Timeout)
+            Disconnect(adapter);
+
+        return connectionResult.ConnectionStatus;
+    }
+
     /// <summary>
     /// Disconnect the wifi adapter from the current wifi network.
     /// </summary>
-    /// <param name="wifiAdapter">WiFi adapter from which the wifi network should be disconnected.</param>
-    public static void Disconnect(WiFiAdapter wifiAdapter)
+    /// <param name="adapter">WiFi adapter from which the wifi network should be disconnected.</param>
+    public static void Disconnect(WiFiAdapter adapter)
     {
-        wifiAdapter.Disconnect();
+        adapter.Disconnect();
     }
 
     /// <summary>
@@ -246,7 +267,7 @@ public static class WiFi
     {
         return Convert.ToDouble(kilohertz) / 1000 / 1000;
     }
-        
+
     public static bool Is2dot4GHzNetwork(int kilohertz)
     {
         var x = ConvertChannelFrequencyToGigahertz(kilohertz);

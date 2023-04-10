@@ -1,6 +1,7 @@
 ﻿using LiveCharts;
 using LiveCharts.Wpf;
 using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Translators;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Lookup;
 using NETworkManager.Models.Network;
@@ -12,6 +13,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,6 +21,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Windows.Devices.WiFi;
+using Windows.Security.Credentials;
 
 namespace NETworkManager.ViewModels;
 
@@ -313,6 +316,20 @@ public class WiFiViewModel : ViewModelBase
         }
     }
 
+    private bool _isConnecting;
+    public bool IsConnecting
+    {
+        get => _isConnecting;
+        set
+        {
+            if (value == _isConnecting)
+                return;
+
+            _isConnecting = value;
+            OnPropertyChanged();
+        }
+    }
+
     private bool _isConnectionStatusMessageDisplayed;
     public bool IsConnectionStatusMessageDisplayed
     {
@@ -407,9 +424,7 @@ public class WiFiViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
-    public ICommand ReloadAdaptersCommand => new RelayCommand(p => ReloadAdapterAction(), ReloadAdapters_CanExecute);
-
-    private bool ReloadAdapters_CanExecute(object obj) => !IsAdaptersLoading;
+    public ICommand ReloadAdaptersCommand => new RelayCommand(p => ReloadAdapterAction());
 
     private void ReloadAdapterAction()
     {
@@ -418,7 +433,7 @@ public class WiFiViewModel : ViewModelBase
 
     public ICommand ScanNetworksCommand => new RelayCommand(p => ScanNetworksAction(), ScanNetworks_CanExecute);
 
-    private bool ScanNetworks_CanExecute(object obj) => !IsAdaptersLoading && !IsNetworksLoading && !IsBackgroundSearchRunning;
+    private bool ScanNetworks_CanExecute(object obj) => !IsAdaptersLoading && !IsNetworksLoading && !IsBackgroundSearchRunning && !IsConnecting;
 
     private async Task ScanNetworksAction()
     {
@@ -473,7 +488,7 @@ public class WiFiViewModel : ViewModelBase
         IsAdaptersLoading = false;
     }
 
-    private async Task Scan(WiFiAdapterInfo adapterInfo, bool refreshing = false)
+    private async Task Scan(WiFiAdapterInfo adapterInfo, bool refreshing = false, uint delayInMS = 0)
     {
         if (refreshing)
         {
@@ -485,6 +500,9 @@ public class WiFiViewModel : ViewModelBase
             IsStatusMessageDisplayed = false;
             IsNetworksLoading = true;
         }
+
+        if (delayInMS != 0)
+            await Task.Delay((int)delayInMS);
 
         string statusMessage = string.Empty;
 
@@ -582,9 +600,53 @@ public class WiFiViewModel : ViewModelBase
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            // Connect
-            
-            
+            string ssid = selectedNetwork.IsHidden ? instance.Ssid : selectedNetwork.AvailableNetwork.Ssid;
+
+            IsConnecting = true;
+            ConnectionStatusMessage = string.Format(Localization.Resources.Strings.ConnectingToXXX, ssid);
+            IsConnectionStatusMessageDisplayed = true;
+
+            WiFiReconnectionKind reconnectionKind = instance.ConnectAutomatically ? WiFiReconnectionKind.Automatic : WiFiReconnectionKind.Manual;
+
+            PasswordCredential credential = new();
+
+            switch (instance.ConnectMode)
+            {
+                case WiFiConnectMode.Psk:
+                    credential.Password = SecureStringHelper.ConvertToString(instance.PreSharedKey);
+                    break;
+                case WiFiConnectMode.Eap:
+                    credential.UserName = instance.Username;
+
+                    if (!string.IsNullOrEmpty(instance.Domain))
+                        credential.Resource = instance.Domain;
+
+                    credential.Password = SecureStringHelper.ConvertToString(instance.Password);
+                    break;
+            }
+
+            WiFiConnectionStatus connectionResult;
+
+            if (selectedNetwork.IsHidden)
+                connectionResult = await WiFi.ConnectAsync(selectedAdapter.WiFiAdapter, selectedNetwork.AvailableNetwork, reconnectionKind, credential, instance.Ssid);
+            else
+                connectionResult = await WiFi.ConnectAsync(selectedAdapter.WiFiAdapter, selectedNetwork.AvailableNetwork, reconnectionKind, credential);
+
+            // Done connecting
+            IsConnecting = false;
+
+            // Get result
+            if (connectionResult == WiFiConnectionStatus.Success)
+                ConnectionStatusMessage = string.Format(Localization.Resources.Strings.SuccessfullyConnectedToXXX, ssid);
+            else
+                ConnectionStatusMessage = string.Format(Localization.Resources.Strings.CouldNotConnectToXXXReasonXXX, ssid, WiFiConnectionStatusTranslator.GetInstance().Translate(connectionResult));
+
+            // Hide message automatically
+            _hideConnectionStatusMessageTimer.Start();
+
+            // Update the wifi networks.
+            // Wait because an error may occour if a refresh is done directly after connecting.            
+            await Scan(SelectedAdapter, true, 5000);
 
         }, async instance =>
         {
@@ -614,7 +676,7 @@ public class WiFiViewModel : ViewModelBase
 
         if (connectedNetwork != null)
         {
-            ConnectionStatusMessage = string.Format(Localization.Resources.Strings.WiFiDisconnectMessage, connectedNetwork.AvailableNetwork.Ssid, connectedNetwork.AvailableNetwork.Bssid);
+            ConnectionStatusMessage = string.Format(Localization.Resources.Strings.XXXDisconnected, connectedNetwork.AvailableNetwork.Ssid);
             IsConnectionStatusMessageDisplayed = true;
 
             // Hide message automatically
@@ -622,7 +684,7 @@ public class WiFiViewModel : ViewModelBase
         }
 
         // Refresh
-        await Scan(SelectedAdapter, true);
+        await Scan(SelectedAdapter, true, 2500);
     }
 
     private async Task Export()
@@ -681,6 +743,10 @@ public class WiFiViewModel : ViewModelBase
     #region Events
     private async void AutoRefreshTimer_Tick(object sender, EventArgs e)
     {
+        // Don't refresh if it's already loading or connecting
+        if (IsNetworksLoading || IsBackgroundSearchRunning || IsConnecting)
+            return;
+
         // Stop timer...
         _autoRefreshTimer.Stop();
 

@@ -115,7 +115,25 @@
                                         </Style>
                                     </ComboBox.ItemContainerStyle>
                                 </ComboBox>
-                                <Button Grid.Column="1" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Height="{Binding ElementName=ComboBoxAdapters, Path=ActualHeight}" Command="{Binding ReloadAdaptersCommand}" Style="{StaticResource CleanButton}" IsEnabled="{Binding IsAdaptersLoading, Converter={StaticResource BooleanReverseConverter}}" Margin="10,0,0,0">
+                                <Button Grid.Column="1" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Height="{Binding ElementName=ComboBoxAdapters, Path=ActualHeight}" Command="{Binding ReloadAdaptersCommand}" Margin="10,0,0,0">
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsNetworksLoading}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IsBackgroundSearchRunning}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding AutoRefreshEnabled}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IsConnecting}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
                                     <Rectangle Width="24" Height="24">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
@@ -356,16 +374,33 @@
                                     <ColumnDefinition Width="10" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <WrapPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,10,0" Visibility="{Binding IsConnectionStatusMessageDisplayed,Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                                        <TextBlock Style="{StaticResource AccentTextBlock}" Text="{Binding ConnectionStatusMessage}" VerticalAlignment="Center" Margin="0,0,10,0" />
-                                        <Rectangle Width="1" Stroke="{DynamicResource MahApps.Brushes.Accent}" VerticalAlignment="Stretch" />
-                                    </WrapPanel>
+                                <WrapPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">                                    
                                     <loadingIndicators:LoadingIndicator IsActive="True" Style="{DynamicResource LoadingIndicatorPulseStyle}" Visibility="{Binding IsBackgroundSearchRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Width="24" Height="24" VerticalAlignment="Center" SpeedRatio="1" Margin="0,0,10,0" />
                                     <TextBlock Style="{StaticResource AccentTextBlock}" Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Text="{Binding StatusMessage}" VerticalAlignment="Center" />
+                                    <WrapPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" Visibility="{Binding IsConnectionStatusMessageDisplayed,Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                        <Rectangle Width="1" Stroke="{DynamicResource MahApps.Brushes.Accent}" VerticalAlignment="Stretch" />
+                                        <loadingIndicators:LoadingIndicator IsActive="True" Style="{DynamicResource LoadingIndicatorPulseStyle}" Visibility="{Binding IsConnecting, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Width="24" Height="24" VerticalAlignment="Center" SpeedRatio="1" Margin="10,0,0,0" />
+                                        <TextBlock Style="{StaticResource AccentTextBlock}" Text="{Binding ConnectionStatusMessage}" VerticalAlignment="Center" Margin="10,0,0,0" />                                    
+                                    </WrapPanel>
                                 </WrapPanel>
                                 <WrapPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
-                                    <CheckBox IsChecked="{Binding AutoRefreshEnabled}" Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" Margin="0,0,10,0"/>
+                                    <CheckBox IsChecked="{Binding AutoRefreshEnabled}" Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" Margin="0,0,10,0">
+                                        <CheckBox.Style>
+                                            <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource DefaultCheckBox}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsNetworksLoading}" Value="True">
+                                                        <Setter Property="IsEnabled" Value="False" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding IsBackgroundSearchRunning}" Value="True">
+                                                        <Setter Property="IsEnabled" Value="False" />
+                                                    </DataTrigger>                                                    
+                                                    <DataTrigger Binding="{Binding IsConnecting}" Value="True">
+                                                        <Setter Property="IsEnabled" Value="False" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </CheckBox.Style>
+                                    </CheckBox>
                                     <ComboBox ItemsSource="{Binding AutoRefreshTimes}" SelectedItem="{Binding SelectedAutoRefreshTime}" MinWidth="150">
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate DataType="utilities:AutoRefreshTimeInfo">
@@ -394,6 +429,9 @@
                                                 <DataTrigger Binding="{Binding AutoRefreshEnabled}" Value="True">
                                                     <Setter Property="IsEnabled" Value="False" />
                                                 </DataTrigger>
+                                                <DataTrigger Binding="{Binding IsConnecting}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
                                     </Button.Style>
@@ -417,7 +455,7 @@
                     </Grid>
                     <!-- Reload Adapter -->
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding Adapters.Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}">
-                        <TextBlock Text="{x:Static localization:Strings.NoWiFiAdaptersFound}"  Visibility="{Binding IsAdaptersLoading, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
+                        <TextBlock Text="{x:Static localization:Strings.NoWiFiAdaptersFound}" Visibility="{Binding IsAdaptersLoading, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
                         <Button Command="{Binding ReloadAdaptersCommand}" IsEnabled="{Binding IsAdaptersLoading, Converter={StaticResource BooleanReverseConverter}}" Visibility="{Binding IsAdaptersLoading, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" HorizontalAlignment="Center" Style="{StaticResource ImageWithTextButton}">
                             <Button.Content>
                                 <Grid>
@@ -551,7 +589,23 @@
                                 <TextBlock Style="{StaticResource AccentTextBlock}" Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Text="{Binding StatusMessage}" VerticalAlignment="Center" />
                             </WrapPanel>
                             <WrapPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
-                                <CheckBox IsChecked="{Binding AutoRefreshEnabled}" Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" Margin="0,0,10,0"/>
+                                <CheckBox IsChecked="{Binding AutoRefreshEnabled}" Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" Margin="0,0,10,0">
+                                    <CheckBox.Style>
+                                        <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource DefaultCheckBox}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsNetworksLoading}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IsBackgroundSearchRunning}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IsConnecting}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>                                    
+                                    </CheckBox.Style>
+                                </CheckBox>
                                 <ComboBox ItemsSource="{Binding AutoRefreshTimes}" SelectedItem="{Binding SelectedAutoRefreshTime}" MinWidth="150">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate DataType="utilities:AutoRefreshTimeInfo">
@@ -574,7 +628,13 @@
                                             <DataTrigger Binding="{Binding IsNetworksLoading}" Value="True">
                                                 <Setter Property="IsEnabled" Value="False" />
                                             </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsBackgroundSearchRunning}" Value="True">
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </DataTrigger>
                                             <DataTrigger Binding="{Binding AutoRefreshEnabled}" Value="True">
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsConnecting}" Value="True">
                                                 <Setter Property="IsEnabled" Value="False" />
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -625,6 +685,8 @@
                 </Grid>
             </TabItem>
         </TabControl>
+        
+        
         <!-- SDK.Contracts not found -->
         <Grid Visibility="{Binding SDKContractsFailedToLoad, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
             <TextBlock HorizontalAlignment="Stretch" Text="{x:Static localization:Strings.MicrosoftWindowsSDKContractsIsNotAvailable}" Style="{StaticResource MessageTextBlock}" />
