@@ -65,7 +65,7 @@ public class CredentialsPasswordProfileFileViewModel : ViewModelBase
     private SecureString _password = new();
 
     /// <summary>
-    /// Password as secure string.
+    /// Password as <see cref="SecureString"/>.
     /// </summary>
     public SecureString Password
     {

@@ -23,7 +23,7 @@ public class CredentialsChangePasswordViewModel : ViewModelBase
     private SecureString _password = new();
 
     /// <summary>
-    /// Password as secure string.
+    /// Password as <see cref="SecureString"/>.
     /// </summary>
     public SecureString Password
     {
@@ -47,7 +47,7 @@ public class CredentialsChangePasswordViewModel : ViewModelBase
     private SecureString _newPassword = new();
 
     /// <summary>
-    /// New password as secure string.
+    /// New password as <see cref="SecureString"/>.
     /// </summary>
     public SecureString NewPassword
     {
@@ -68,10 +68,10 @@ public class CredentialsChangePasswordViewModel : ViewModelBase
     /// <summary>
     /// Private variable for <see cref="NewPasswordRepeat"/>.
     /// </summary>
-    private SecureString _newPasswordRepeat = new SecureString();
+    private SecureString _newPasswordRepeat = new();
 
     /// <summary>
-    /// Repeated new password as secure string.
+    /// Repeated new password as <see cref="SecureString"/>.
     /// </summary>
     public SecureString NewPasswordRepeat
     {

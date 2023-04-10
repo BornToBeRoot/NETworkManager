@@ -23,9 +23,19 @@ public class WiFiConnectViewModel : ViewModelBase
     /// </summary>
     public ICommand CancelCommand { get; }
 
+    /// <summary>
+    /// Current WiFi adapter info and network info.
+    /// </summary>
     public readonly (WiFiAdapterInfo AdapterInfo, WiFiNetworkInfo NetworkInfo) Options;
 
+    /// <summary>
+    /// Private variable for <see cref="ConnectMode"/>.
+    /// </summary>
     private WiFiConnectMode _connectMode;
+
+    /// <summary>
+    /// WiFi connect mode like <see cref="WiFiConnectMode.Open"/>, <see cref="WiFiConnectMode.Wps"/> or <see cref="WiFiConnectMode.Eap"/>.
+    /// </summary>
     public WiFiConnectMode ConnectMode
     {
         get => _connectMode;
@@ -39,7 +49,15 @@ public class WiFiConnectViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Private variable for <see cref="IsSsidRequired"/>.
+    /// </summary>
     private bool _isSsidRequired;
+
+    /// <summary>
+    /// Indicate if the SSID field is required. 
+    /// This is the case for hidden networks.
+    /// </summary>
     public bool IsSsidRequired
     {
         get => _isSsidRequired;
@@ -53,7 +71,14 @@ public class WiFiConnectViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Private variable for <see cref="Ssid"/>.
+    /// </summary>
     private string _ssid;
+
+    /// <summary>
+    /// SSID of the network.
+    /// </summary>
     public string Ssid
     {
         get => _ssid;
@@ -67,7 +92,14 @@ public class WiFiConnectViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Private variable for <see cref="ConnectAutomatically"/>.
+    /// </summary>
     private bool _connectAutomatically;
+
+    /// <summary>
+    /// Indicate if the network should be connected automatically.
+    /// </summary>
     public bool ConnectAutomatically
     {
         get => _connectAutomatically;
@@ -87,7 +119,7 @@ public class WiFiConnectViewModel : ViewModelBase
     private SecureString _preSharedKey = new();
 
     /// <summary>
-    /// Pre-shared key as secure string.
+    /// Pre-shared key as <see cref="SecureString"/>.
     /// </summary>
     public SecureString PreSharedKey
     {
@@ -126,7 +158,14 @@ public class WiFiConnectViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Private variable for <see cref="UseCredentials"/>.
+    /// </summary>
     private bool _useCredentials;
+
+    /// <summary>
+    /// Use credentials for EAP authentication.
+    /// </summary>
     public bool UseCredentials
     {
         get => _useCredentials;
@@ -140,7 +179,14 @@ public class WiFiConnectViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Private variable for <see cref="Username"/>.
+    /// </summary>
     private string _username;
+
+    /// <summary>
+    /// Username for EAP authentication.
+    /// </summary>
     public string Username
     {
         get => _username;
@@ -154,7 +200,14 @@ public class WiFiConnectViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Private variable for <see cref="Domain"/>.
+    /// </summary>
     private string _domain;
+
+    /// <summary>
+    /// Domain for EAP authentication.
+    /// </summary>
     public string Domain
     {
         get => _domain;
@@ -174,7 +227,7 @@ public class WiFiConnectViewModel : ViewModelBase
     private SecureString _password = new();
 
     /// <summary>
-    /// Password as secure string.
+    /// Password as <see cref="SecureString"/> for EAP authentication.
     /// </summary>
     public SecureString Password
     {
@@ -213,7 +266,14 @@ public class WiFiConnectViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Private variable for <see cref="IsWpsAvailable"/>.
+    /// </summary>
     private bool _isWpsAvailable;
+
+    /// <summary>
+    /// Indicate if WPS is available for the network.
+    /// </summary>
     public bool IsWpsAvailable
     {
         get => _isWpsAvailable;
