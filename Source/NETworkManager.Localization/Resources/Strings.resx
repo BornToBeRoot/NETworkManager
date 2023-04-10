@@ -3463,4 +3463,16 @@ Changes to this value will take effect after the application is restarted. Wheth
   <data name="WiFiDisconnectMessage" xml:space="preserve">
     <value>{0} ({1}) disconnected!</value>
   </data>
+  <data name="ConnectToXXX" xml:space="preserve">
+    <value>Connect to {0}</value>
+  </data>
+  <data name="WPS" xml:space="preserve">
+    <value>WPS</value>
+  </data>
+  <data name="ConnectAutomatically" xml:space="preserve">
+    <value>Connect automatically</value>
+  </data>
+  <data name="PreSharedKey" xml:space="preserve">
+    <value>Pre-shared key</value>
+  </data>
 </root>

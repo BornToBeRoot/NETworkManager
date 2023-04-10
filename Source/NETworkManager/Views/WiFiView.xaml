@@ -235,22 +235,22 @@
                                                         <Style TargetType="{x:Type Rectangle}">
                                                             <Setter Property="OpacityMask" Value="{StaticResource VisualBars0Lock}" />
                                                             <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Path=WiFiAvailableNetwork.SignalBars}" Value="1">
+                                                                <DataTrigger Binding="{Binding Path=AvailableNetwork.SignalBars}" Value="1">
                                                                     <Setter Property="OpacityMask" Value="{StaticResource VisualBars1Lock}" />
                                                                 </DataTrigger>
-                                                                <DataTrigger Binding="{Binding Path=WiFiAvailableNetwork.SignalBars}" Value="2">
+                                                                <DataTrigger Binding="{Binding Path=AvailableNetwork.SignalBars}" Value="2">
                                                                     <Setter Property="OpacityMask" Value="{StaticResource VisualBars2Lock}" />
                                                                 </DataTrigger>
-                                                                <DataTrigger Binding="{Binding Path=WiFiAvailableNetwork.SignalBars}" Value="3">
+                                                                <DataTrigger Binding="{Binding Path=AvailableNetwork.SignalBars}" Value="3">
                                                                     <Setter Property="OpacityMask" Value="{StaticResource VisualBars3Lock}" />
                                                                 </DataTrigger>
-                                                                <DataTrigger Binding="{Binding Path=WiFiAvailableNetwork.SignalBars}" Value="4">
+                                                                <DataTrigger Binding="{Binding Path=AvailableNetwork.SignalBars}" Value="4">
                                                                     <Setter Property="OpacityMask" Value="{StaticResource VisualBars4Lock}" />
                                                                 </DataTrigger>
                                                                 <MultiDataTrigger>
                                                                     <MultiDataTrigger.Conditions>
-                                                                        <Condition Binding="{Binding Path=WiFiAvailableNetwork.SignalBars}" Value="0" />
-                                                                        <Condition Binding="{Binding Path=WiFiAvailableNetwork.SecuritySettings.NetworkAuthenticationType}" Value="Open80211" />
+                                                                        <Condition Binding="{Binding Path=AvailableNetwork.SignalBars}" Value="0" />
+                                                                        <Condition Binding="{Binding Path=AvailableNetwork.SecuritySettings.NetworkAuthenticationType}" Value="Open80211" />
                                                                     </MultiDataTrigger.Conditions>
                                                                     <MultiDataTrigger.Setters>
                                                                         <Setter Property="OpacityMask" Value="{StaticResource VisualBars0}" />
@@ -258,8 +258,8 @@
                                                                 </MultiDataTrigger>
                                                                 <MultiDataTrigger>
                                                                     <MultiDataTrigger.Conditions>
-                                                                        <Condition Binding="{Binding Path=WiFiAvailableNetwork.SignalBars}" Value="1" />
-                                                                        <Condition Binding="{Binding Path=WiFiAvailableNetwork.SecuritySettings.NetworkAuthenticationType}" Value="Open80211" />
+                                                                        <Condition Binding="{Binding Path=AvailableNetwork.SignalBars}" Value="1" />
+                                                                        <Condition Binding="{Binding Path=AvailableNetwork.SecuritySettings.NetworkAuthenticationType}" Value="Open80211" />
                                                                     </MultiDataTrigger.Conditions>
                                                                     <MultiDataTrigger.Setters>
                                                                         <Setter Property="OpacityMask" Value="{StaticResource VisualBars1}" />
@@ -267,8 +267,8 @@
                                                                 </MultiDataTrigger>
                                                                 <MultiDataTrigger>
                                                                     <MultiDataTrigger.Conditions>
-                                                                        <Condition Binding="{Binding Path=WiFiAvailableNetwork.SignalBars}" Value="2" />
-                                                                        <Condition Binding="{Binding Path=WiFiAvailableNetwork.SecuritySettings.NetworkAuthenticationType}" Value="Open80211" />
+                                                                        <Condition Binding="{Binding Path=AvailableNetwork.SignalBars}" Value="2" />
+                                                                        <Condition Binding="{Binding Path=AvailableNetwork.SecuritySettings.NetworkAuthenticationType}" Value="Open80211" />
                                                                     </MultiDataTrigger.Conditions>
                                                                     <MultiDataTrigger.Setters>
                                                                         <Setter Property="OpacityMask" Value="{StaticResource VisualBars2}" />
@@ -276,8 +276,8 @@
                                                                 </MultiDataTrigger>
                                                                 <MultiDataTrigger>
                                                                     <MultiDataTrigger.Conditions>
-                                                                        <Condition Binding="{Binding Path=WiFiAvailableNetwork.SignalBars}" Value="3" />
-                                                                        <Condition Binding="{Binding Path=WiFiAvailableNetwork.SecuritySettings.NetworkAuthenticationType}" Value="Open80211" />
+                                                                        <Condition Binding="{Binding Path=AvailableNetwork.SignalBars}" Value="3" />
+                                                                        <Condition Binding="{Binding Path=AvailableNetwork.SecuritySettings.NetworkAuthenticationType}" Value="Open80211" />
                                                                     </MultiDataTrigger.Conditions>
                                                                     <MultiDataTrigger.Setters>
                                                                         <Setter Property="OpacityMask" Value="{StaticResource VisualBars3}" />
@@ -285,8 +285,8 @@
                                                                 </MultiDataTrigger>
                                                                 <MultiDataTrigger>
                                                                     <MultiDataTrigger.Conditions>
-                                                                        <Condition Binding="{Binding Path=WiFiAvailableNetwork.SignalBars}" Value="4" />
-                                                                        <Condition Binding="{Binding Path=WiFiAvailableNetwork.SecuritySettings.NetworkAuthenticationType}" Value="Open80211" />
+                                                                        <Condition Binding="{Binding Path=AvailableNetwork.SignalBars}" Value="4" />
+                                                                        <Condition Binding="{Binding Path=AvailableNetwork.SecuritySettings.NetworkAuthenticationType}" Value="Open80211" />
                                                                     </MultiDataTrigger.Conditions>
                                                                     <MultiDataTrigger.Setters>
                                                                         <Setter Property="OpacityMask" Value="{StaticResource VisualBars4}" />
@@ -299,10 +299,10 @@
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
-                                    <DataGridTextColumn Header="{x:Static localization:Strings.SSID}" SortMemberPath="WiFiAvailableNetwork.Ssid">
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.SSID}" SortMemberPath="AvailableNetwork.Ssid">
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="{x:Type TextBlock}" >
-                                                <Setter Property="Text" Value="{Binding WiFiAvailableNetwork.Ssid}" />
+                                                <Setter Property="Text" Value="{Binding AvailableNetwork.Ssid}" />
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding IsHidden}" Value="True">
                                                         <Setter Property="Text" Value="{x:Static localization:Strings.HiddenNetwork}" />
@@ -312,18 +312,18 @@
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
                                     <DataGridCheckBoxColumn Header="{x:Static localization:Strings.Connected}" Binding="{Binding IsConnected}" SortMemberPath="IsConnected" />
-                                    <DataGridTextColumn Header="{x:Static localization:Strings.Security}" Binding="{Binding WiFiAvailableNetwork.SecuritySettings.NetworkAuthenticationType, Converter={StaticResource WiFiAuthenticationTypeToHumanReadableStringConverter}}" SortMemberPath="WiFiAvailableNetwork.SecuritySettings.NetworkAuthenticationType" />
-                                    <DataGridTextColumn Header="{x:Static localization:Strings.Frequency}" Binding="{Binding WiFiAvailableNetwork.ChannelCenterFrequencyInKilohertz, Converter={StaticResource WiFiChannelCenterFrequencyToFrequencyStringConverter}}" SortMemberPath="WiFiAvailableNetwork.ChannelCenterFrequencyInKilohertz" />
-                                    <DataGridTextColumn Header="{x:Static localization:Strings.Channel}" Binding="{Binding WiFiAvailableNetwork.ChannelCenterFrequencyInKilohertz, Converter={StaticResource WiFiChannelCenterFrequencyToChannelStringConvertert}}" SortMemberPath="WiFiAvailableNetwork.ChannelCenterFrequencyInKilohertz" />
-                                    <DataGridTextColumn Header="{x:Static localization:Strings.SignalStrength}" Binding="{Binding WiFiAvailableNetwork.NetworkRssiInDecibelMilliwatts, Converter={StaticResource WiFiNetworkRssiInDecibelMilliwattsToSignalStrengthStringConverter}}" SortMemberPath="WiFiAvailableNetwork.NetworkRssiInDecibelMilliwatts" />
-                                    <DataGridTextColumn Header="{x:Static localization:Strings.Authentication}" Binding="{Binding WiFiAvailableNetwork.SecuritySettings.NetworkAuthenticationType}" SortMemberPath="WiFiAvailableNetwork.SecuritySettings.NetworkAuthenticationType" />
-                                    <DataGridTextColumn Header="{x:Static localization:Strings.Encryption}" Binding="{Binding WiFiAvailableNetwork.SecuritySettings.NetworkEncryptionType}" SortMemberPath="WiFiAvailableNetwork.NetworkEncryptionType" />
-                                    <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}" Binding="{Binding WiFiAvailableNetwork.Bssid}" SortMemberPath="WiFiAvailableNetwork.Bssid" />
-                                    <DataGridTextColumn Header="{x:Static localization:Strings.Vendor}" Binding="{Binding WiFiAvailableNetwork.Bssid, Converter={StaticResource MACAddressToVendorConverter}}" SortMemberPath="WiFiAvailableNetwork.Bssid" />
-                                    <DataGridTextColumn Header="{x:Static localization:Strings.PhyKind}" Binding="{Binding WiFiAvailableNetwork.PhyKind, Converter={StaticResource WiFiPhyKindToStringConverter}}" SortMemberPath="WiFiAvailableNetwork.PhyKind" />
-                                    <DataGridTextColumn Header="{x:Static localization:Strings.NetworkKind}" Binding="{Binding WiFiAvailableNetwork.NetworkKind}" SortMemberPath="WiFiAvailableNetwork.NetworkKind" />
-                                    <DataGridTextColumn Header="{x:Static localization:Strings.BeaconInterval}" Binding="{Binding WiFiAvailableNetwork.BeaconInterval, Converter={StaticResource TimeSpanToMillisecondConverter}}" SortMemberPath="WiFiAvailableNetwork.BeaconInterval" />
-                                    <DataGridTextColumn Header="{x:Static localization:Strings.Uptime}" Binding="{Binding WiFiAvailableNetwork.Uptime, Converter={StaticResource TimeSpanToStringConverter}}" SortMemberPath="WiFiAvailableNetwork.Uptime" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.Security}" Binding="{Binding AvailableNetwork.SecuritySettings.NetworkAuthenticationType, Converter={StaticResource WiFiAuthenticationTypeToHumanReadableStringConverter}}" SortMemberPath="AvailableNetwork.SecuritySettings.NetworkAuthenticationType" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.Frequency}" Binding="{Binding AvailableNetwork.ChannelCenterFrequencyInKilohertz, Converter={StaticResource WiFiChannelCenterFrequencyToFrequencyStringConverter}}" SortMemberPath="AvailableNetwork.ChannelCenterFrequencyInKilohertz" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.Channel}" Binding="{Binding AvailableNetwork.ChannelCenterFrequencyInKilohertz, Converter={StaticResource WiFiChannelCenterFrequencyToChannelStringConvertert}}" SortMemberPath="AvailableNetwork.ChannelCenterFrequencyInKilohertz" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.SignalStrength}" Binding="{Binding AvailableNetwork.NetworkRssiInDecibelMilliwatts, Converter={StaticResource WiFiNetworkRssiInDecibelMilliwattsToSignalStrengthStringConverter}}" SortMemberPath="AvailableNetwork.NetworkRssiInDecibelMilliwatts" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.Authentication}" Binding="{Binding AvailableNetwork.SecuritySettings.NetworkAuthenticationType}" SortMemberPath="AvailableNetwork.SecuritySettings.NetworkAuthenticationType" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.Encryption}" Binding="{Binding AvailableNetwork.SecuritySettings.NetworkEncryptionType}" SortMemberPath="AvailableNetwork.NetworkEncryptionType" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}" Binding="{Binding AvailableNetwork.Bssid}" SortMemberPath="AvailableNetwork.Bssid" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.Vendor}" Binding="{Binding AvailableNetwork.Bssid, Converter={StaticResource MACAddressToVendorConverter}}" SortMemberPath="AvailableNetwork.Bssid" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.PhyKind}" Binding="{Binding AvailableNetwork.PhyKind, Converter={StaticResource WiFiPhyKindToStringConverter}}" SortMemberPath="AvailableNetwork.PhyKind" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.NetworkKind}" Binding="{Binding AvailableNetwork.NetworkKind}" SortMemberPath="AvailableNetwork.NetworkKind" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.BeaconInterval}" Binding="{Binding AvailableNetwork.BeaconInterval, Converter={StaticResource TimeSpanToMillisecondConverter}}" SortMemberPath="AvailableNetwork.BeaconInterval" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.Uptime}" Binding="{Binding AvailableNetwork.Uptime, Converter={StaticResource TimeSpanToStringConverter}}" SortMemberPath="AvailableNetwork.Uptime" />
                                 </controls2:MultiSelectDataGrid.Columns>
                             </controls2:MultiSelectDataGrid>
                             <TextBlock Grid.Row="2" Text="{x:Static localization:Strings.NoWiFiNetworksFound}">

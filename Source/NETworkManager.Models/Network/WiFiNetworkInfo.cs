@@ -12,7 +12,7 @@ public class WiFiNetworkInfo
     /// <summary>
     /// Informations about an available WiFi network.
     /// </summary>
-    public WiFiAvailableNetwork WiFiAvailableNetwork { get; set; }
+    public WiFiAvailableNetwork AvailableNetwork { get; set; }
 
     /// <summary>
     /// Indicates if the WiFi network Ssid is hidden.

@@ -5,7 +5,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Management.Automation;
 using System.Threading.Tasks;
+using System.Windows.Media.Animation;
 using Windows.Devices.WiFi;
+using Windows.Foundation.Metadata;
 using Windows.Networking.Connectivity;
 
 //https://docs.microsoft.com/en-us/uwp/api/windows.devices.wifi.wifiadapter.requestaccessasync
@@ -63,7 +65,7 @@ public static class WiFi
         {
             wifiNetworkInfos.Add(new WiFiNetworkInfo()
             {
-                WiFiAvailableNetwork = availableNetwork,
+                AvailableNetwork = availableNetwork,
                 IsHidden = string.IsNullOrEmpty(availableNetwork.Ssid),
                 IsConnected = availableNetwork.Bssid.Equals(bssid, StringComparison.OrdinalIgnoreCase)
             });
@@ -144,6 +146,29 @@ public static class WiFi
     public static void Disconnect(WiFiAdapter wifiAdapter)
     {
         wifiAdapter.Disconnect();
+    }
+
+    public static WiFiConnectMode GetConnectMode(WiFiAvailableNetwork network)
+    {
+        // Enterprise
+        if (network.SecuritySettings.NetworkAuthenticationType == NetworkAuthenticationType.Rsna ||
+            network.SecuritySettings.NetworkAuthenticationType == NetworkAuthenticationType.Wpa)
+            return WiFiConnectMode.Eap;
+
+        // Open
+        if (network.SecuritySettings.NetworkAuthenticationType == NetworkAuthenticationType.Open80211 ||
+             network.SecuritySettings.NetworkEncryptionType == NetworkEncryptionType.None)
+            return WiFiConnectMode.Open;
+
+        // Pre-Shared-Key
+        return WiFiConnectMode.Psk;
+    }
+
+    public static async Task<bool> IsWpsAvailable(WiFiAdapter adapter, WiFiAvailableNetwork network)
+    {
+        var result = await adapter.GetWpsConfigurationAsync(network);
+
+        return result.SupportedWpsKinds.Contains(WiFiWpsKind.PushButton);
     }
 
     /// <summary>
@@ -251,7 +276,7 @@ public static class WiFi
             NetworkAuthenticationType.SharedKey80211 => "WEP",
             NetworkAuthenticationType.Ihv => "IHV",
             NetworkAuthenticationType.Unknown => "Unkown",
-            NetworkAuthenticationType.None => "-/-",
+            NetworkAuthenticationType.None => "-/-",            
             _ => "-/-",
         };
     }

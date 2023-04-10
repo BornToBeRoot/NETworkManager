@@ -86,7 +86,7 @@ public class CredentialsPasswordProfileFileViewModel : ViewModelBase
     /// <summary>
     /// Private variable for <see cref="IsPasswordEmpty"/>.
     /// </summary>
-    private bool _isPasswordEmpty;
+    private bool _isPasswordEmpty = true;
 
     /// <summary>
     /// Indicate if one of the password fields are empty.

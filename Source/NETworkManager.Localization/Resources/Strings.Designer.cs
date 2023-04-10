@@ -1708,6 +1708,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Connect automatically ähnelt.
+        /// </summary>
+        public static string ConnectAutomatically {
+            get {
+                return ResourceManager.GetString("ConnectAutomatically", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Connect... ähnelt.
         /// </summary>
         public static string ConnectDots {
@@ -1794,6 +1803,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ConnectTheNetworkCardToConfigureIt {
             get {
                 return ResourceManager.GetString("ConnectTheNetworkCardToConfigureIt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Connect to {0} ähnelt.
+        /// </summary>
+        public static string ConnectToXXX {
+            get {
+                return ResourceManager.GetString("ConnectToXXX", resourceCulture);
             }
         }
         
@@ -6097,6 +6115,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Pre-shared key ähnelt.
+        /// </summary>
+        public static string PreSharedKey {
+            get {
+                return ResourceManager.GetString("PreSharedKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Preview ähnelt.
         /// </summary>
         public static string Preview {
@@ -9893,6 +9920,15 @@ namespace NETworkManager.Localization.Resources {
         public static string WindowsDNSSettings {
             get {
                 return ResourceManager.GetString("WindowsDNSSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die WPS ähnelt.
+        /// </summary>
+        public static string WPS {
+            get {
+                return ResourceManager.GetString("WPS", resourceCulture);
             }
         }
         
