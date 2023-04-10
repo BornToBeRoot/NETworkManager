@@ -17,7 +17,7 @@ Release date: **xx.xx.2023**
 
 ## What's new?
 - WiFi
-  - Connect to or disconnect from a WiFi network has been added. To do this, right-click on a WiFi network and open the ContextMenu. [#2133](https://github.com/BornToBeRoot/NETworkManager/pull/2133){:target="\_blank"}  
+  - Connect to or disconnect from a WiFi network has been added. To do this, right-click on a WiFi network and open the ContextMenu. [#2133](https://github.com/BornToBeRoot/NETworkManager/pull/2133){:target="\_blank"}
 - Remote Desktop
   - Support for Remote Desktop Gateway server has been added [#2108](https://github.com/BornToBeRoot/NETworkManager/pull/2108){:target="\_blank"}
 - SNMP
@@ -38,8 +38,10 @@ Release date: **xx.xx.2023**
 - ARP Table
   - Automatically refresh is now enabled if it was enabled on the last exit [#2116](https://github.com/BornToBeRoot/NETworkManager/pull/2116){:target="\_blank"}
 - Status window is now automatically closed again if it was opened by a network change event [#2105](https://github.com/BornToBeRoot/NETworkManager/pull/2105){:target="\_blank"}
-## Bugfixes
 
+## Bugfixes
+- Profiles
+  - OK button not disabled initially on unlock profile & decrypt profile file [#2133](https://github.com/BornToBeRoot/NETworkManager/pull/2133){:target="\_blank"}  
 
 ## Other
 - Code cleanup [#2100](https://github.com/BornToBeRoot/NETworkManager/pull/2100){:target="\_blank"}
