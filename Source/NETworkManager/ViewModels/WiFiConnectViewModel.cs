@@ -161,7 +161,7 @@ public class WiFiConnectViewModel : ViewModelBase
     /// <summary>
     /// Private variable for <see cref="UseCredentials"/>.
     /// </summary>
-    private bool _useCredentials;
+    private bool _useCredentials = true;
 
     /// <summary>
     /// Use credentials for EAP authentication.
