@@ -1447,6 +1447,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Checking WPS... ähnelt.
+        /// </summary>
+        public static string CheckingWPSDots {
+            get {
+                return ResourceManager.GetString("CheckingWPSDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Check is disabled! ähnelt.
         /// </summary>
         public static string CheckIsDisabled {

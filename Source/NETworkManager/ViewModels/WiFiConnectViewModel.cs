@@ -3,6 +3,7 @@ using System;
 using System.Security;
 using System.Windows.Input;
 using NETworkManager.Models.Network;
+using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels;
 
@@ -269,6 +270,27 @@ public class WiFiConnectViewModel : ViewModelBase
     /// <summary>
     /// Private variable for <see cref="IsWpsAvailable"/>.
     /// </summary>
+    private bool _isWpsChecking;
+
+    /// <summary>
+    /// Checking if WPS is available for the network.
+    /// </summary>
+    public bool IsWpsChecking
+    {
+        get => _isWpsChecking;
+        set
+        {
+            if (value == _isWpsChecking)
+                return;
+
+            _isWpsChecking = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Private variable for <see cref="IsWpsAvailable"/>.
+    /// </summary>
     private bool _isWpsAvailable;
 
     /// <summary>
@@ -305,6 +327,21 @@ public class WiFiConnectViewModel : ViewModelBase
         IsSsidRequired = Options.NetworkInfo.IsHidden;
     }
 
+    public async Task CheckWpsAsync()
+    {
+        // Only check if WPS is available for networks secured by Pre-shared key who are not hidden
+        if (ConnectMode != WiFiConnectMode.Psk || Options.NetworkInfo.IsHidden)
+            return;
+
+        IsWpsChecking = true;
+        await Task.Delay(1000); // Show animation ;)
+
+        IsWpsAvailable = await WiFi.IsWpsAvailable(Options.AdapterInfo.WiFiAdapter, Options.NetworkInfo.AvailableNetwork);
+
+        await Task.Delay(1000); // Show animation ;)
+        IsWpsChecking = false;
+    }
+    
     /// <summary>
     /// Check if the Pre-shared key is valid.
     /// </summary>

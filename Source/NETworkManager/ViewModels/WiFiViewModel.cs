@@ -13,7 +13,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -598,14 +597,17 @@ public class WiFiViewModel : ViewModelBase
 
         var exportViewModel = new WiFiConnectViewModel(async instance =>
         {
+            // Connect Open/PSK/EAP
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
             string ssid = selectedNetwork.IsHidden ? instance.Ssid : selectedNetwork.AvailableNetwork.Ssid;
 
+            // Show status message
             IsConnecting = true;
             ConnectionStatusMessage = string.Format(Localization.Resources.Strings.ConnectingToXXX, ssid);
             IsConnectionStatusMessageDisplayed = true;
 
+            // Connect to the network
             WiFiReconnectionKind reconnectionKind = instance.ConnectAutomatically ? WiFiReconnectionKind.Automatic : WiFiReconnectionKind.Manual;
 
             PasswordCredential credential = new();
@@ -628,9 +630,9 @@ public class WiFiViewModel : ViewModelBase
             WiFiConnectionStatus connectionResult;
 
             if (selectedNetwork.IsHidden)
-                connectionResult = await WiFi.ConnectAsync(selectedAdapter.WiFiAdapter, selectedNetwork.AvailableNetwork, reconnectionKind, credential, instance.Ssid);
+                connectionResult = await WiFi.ConnectAsync(instance.Options.AdapterInfo.WiFiAdapter, instance.Options.NetworkInfo.AvailableNetwork, reconnectionKind, credential, instance.Ssid);
             else
-                connectionResult = await WiFi.ConnectAsync(selectedAdapter.WiFiAdapter, selectedNetwork.AvailableNetwork, reconnectionKind, credential);
+                connectionResult = await WiFi.ConnectAsync(instance.Options.AdapterInfo.WiFiAdapter, instance.Options.NetworkInfo.AvailableNetwork, reconnectionKind, credential);
 
             // Done connecting
             IsConnecting = false;
@@ -650,9 +652,36 @@ public class WiFiViewModel : ViewModelBase
 
         }, async instance =>
         {
+            // Connect WPS
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            // Connect WPS
+            string ssid = selectedNetwork.IsHidden ? instance.Ssid : selectedNetwork.AvailableNetwork.Ssid;
+
+            // Show status message
+            IsConnecting = true;
+            ConnectionStatusMessage = string.Format(Localization.Resources.Strings.ConnectingToXXX, ssid);
+            IsConnectionStatusMessageDisplayed = true;
+
+            // Connect to the network
+            WiFiReconnectionKind reconnectionKind = instance.ConnectAutomatically ? WiFiReconnectionKind.Automatic : WiFiReconnectionKind.Manual;
+
+            WiFiConnectionStatus connectionResult = await WiFi.ConnectWpsAsync(instance.Options.AdapterInfo.WiFiAdapter, instance.Options.NetworkInfo.AvailableNetwork, reconnectionKind);
+
+            // Done connecting
+            IsConnecting = false;
+
+            // Get result
+            if (connectionResult == WiFiConnectionStatus.Success)
+                ConnectionStatusMessage = string.Format(Localization.Resources.Strings.SuccessfullyConnectedToXXX, ssid);
+            else
+                ConnectionStatusMessage = string.Format(Localization.Resources.Strings.CouldNotConnectToXXXReasonXXX, ssid, WiFiConnectionStatusTranslator.GetInstance().Translate(connectionResult));
+
+            // Hide message automatically
+            _hideConnectionStatusMessageTimer.Start();
+
+            // Update the wifi networks.
+            // Wait because an error may occour if a refresh is done directly after connecting.            
+            await Scan(SelectedAdapter, true, 5000);
         },
 
         instance =>

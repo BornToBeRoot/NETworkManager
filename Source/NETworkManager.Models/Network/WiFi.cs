@@ -13,6 +13,9 @@ using Windows.Security.Credentials;
 
 namespace NETworkManager.Models.Network;
 
+/// <summary>
+/// Class with WiFi related methods.
+/// </summary>
 public static class WiFi
 {
     /// <summary>
@@ -141,17 +144,42 @@ public static class WiFi
         return (ssid, bssid);
     }
 
-
+    /// <summary>
+    /// Connect to a WiFi network with Pre-shared key, EAP or no security.
+    /// </summary>
+    /// <param name="adapter">WiFi adapter which should be used for the connection.</param>
+    /// <param name="network">WiFi network to connect to.</param>
+    /// <param name="reconnectionKind">Reconnection type to automatically or manuel reconnect.</param>
+    /// <param name="credential">Credentials for EAP or PSK. Empty for open networks.</param>
+    /// <param name="ssid">SSID for hidden networks.</param>
+    /// <returns></returns>
     public static async Task<WiFiConnectionStatus> ConnectAsync(WiFiAdapter adapter, WiFiAvailableNetwork network, WiFiReconnectionKind reconnectionKind, PasswordCredential credential, string ssid = null)
     {
-        Task<WiFiConnectionResult> connectionResultTask;
+        WiFiConnectionResult connectionResult;
 
         if (string.IsNullOrEmpty(ssid))
-            connectionResultTask = adapter.ConnectAsync(network, reconnectionKind, credential).AsTask();
+            connectionResult = await adapter.ConnectAsync(network, reconnectionKind, credential);
         else
-            connectionResultTask = adapter.ConnectAsync(network, reconnectionKind, credential, ssid).AsTask();
+            connectionResult = await adapter.ConnectAsync(network, reconnectionKind, credential, ssid);
 
-        WiFiConnectionResult connectionResult = await connectionResultTask;
+        // Wrong password may cause connection to timeout.
+        // Disconnect any network from the adapter to return it to a non-busy state.
+        if (connectionResult.ConnectionStatus == WiFiConnectionStatus.Timeout)
+            Disconnect(adapter);
+
+        return connectionResult.ConnectionStatus;
+    }
+
+    /// <summary>
+    /// Connect to a WiFi network with WPS push button.
+    /// </summary>
+    /// <param name="adapter">WiFi adapter which should be used for the connection.</param>
+    /// <param name="network">WiFi network to connect to.</param>
+    /// <param name="reconnectionKind">Reconnection type to automatically or manuel reconnect.</param>
+    /// <returns></returns>
+    public static async Task<WiFiConnectionStatus> ConnectWpsAsync(WiFiAdapter adapter, WiFiAvailableNetwork network, WiFiReconnectionKind reconnectionKind)
+    {
+        WiFiConnectionResult connectionResult = await adapter.ConnectAsync(network, reconnectionKind, null, string.Empty, WiFiConnectionMethod.WpsPushButton);
 
         // Wrong password may cause connection to timeout.
         // Disconnect any network from the adapter to return it to a non-busy state.
@@ -268,6 +296,11 @@ public static class WiFi
         return Convert.ToDouble(kilohertz) / 1000 / 1000;
     }
 
+    /// <summary>
+    /// Check if the WiFi network is a 2.4 GHz network.
+    /// </summary>
+    /// <param name="kilohertz">Frequency in kilohertz like 2422000 or 5240000.</param>
+    /// <returns>True if WiFi network is 2.4 GHz.</returns>
     public static bool Is2dot4GHzNetwork(int kilohertz)
     {
         var x = ConvertChannelFrequencyToGigahertz(kilohertz);
@@ -275,6 +308,11 @@ public static class WiFi
         return x >= 2.412 && x <= 2.472;
     }
 
+    /// <summary>
+    /// Check if the WiFi network is a 5 GHz network.
+    /// </summary>
+    /// <param name="kilohertz">Frequency in kilohertz like 2422000 or 5240000.</param>
+    /// <returns>True if WiFi network is 5 GHz.</returns>
     public static bool Is5GHzNetwork(int kilohertz)
     {
         var x = ConvertChannelFrequencyToGigahertz(kilohertz);
@@ -282,7 +320,11 @@ public static class WiFi
         return x >= 5.180 && x <= 5.825;
     }
 
-
+    /// <summary>
+    /// Get the human readable network authentication type.
+    /// </summary>
+    /// <param name="networkAuthenticationType">WiFi network authentication type as <see cref="NetworkAuthenticationType"/>.</param>
+    /// <returns>Human readable autentication type as string like "Open" or "WPA2 Enterprise".</returns>
     public static string GetHumanReadableNetworkAuthenticationType(NetworkAuthenticationType networkAuthenticationType)
     {
         return networkAuthenticationType switch
@@ -301,7 +343,11 @@ public static class WiFi
         };
     }
 
-
+    /// <summary>
+    /// Get the human readable network phy kind.
+    /// </summary>
+    /// <param name="phyKind">WiFi network phy kind as <see cref="WiFiPhyKind"/>.</param>
+    /// <returns>Human readable phy kind as string like "802.11g" or "802.11ax".</returns>
     public static string GetHumandReadablePhyKind(WiFiPhyKind phyKind)
     {
         return phyKind switch

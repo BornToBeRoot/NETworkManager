@@ -3505,4 +3505,7 @@ Changes to this value will take effect after the application is restarted. Wheth
   <data name="WiFiConnectionStatus_UnsupportedAuthenticationProtocol" xml:space="preserve">
     <value>Authentication protocol is not supported!</value>
   </data>
+  <data name="CheckingWPSDots" xml:space="preserve">
+    <value>Checking WPS...</value>
+  </data>
 </root>

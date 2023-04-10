@@ -13,7 +13,7 @@ public partial class WiFiConnectDialog
     {
         // Get datacontext from viewmodel
         var viewModel = (WiFiConnectViewModel)DataContext;
-               
+                
         // Pre-shared key
         if (viewModel.ConnectMode == Models.Network.WiFiConnectMode.Psk)
             PasswordBoxPreSharedKey.Focus();
@@ -21,5 +21,8 @@ public partial class WiFiConnectDialog
         // EAP
         if (viewModel.ConnectMode == Models.Network.WiFiConnectMode.Eap)
             TextBoxUsername.Focus();
+
+        // Check if WPS is availble for the network
+        _ = viewModel.CheckWpsAsync();
     }
 }
