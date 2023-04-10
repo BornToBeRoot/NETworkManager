@@ -333,4 +333,7 @@
   <data name="ExampleHostWithRDPPort" xml:space="preserve">
     <value>server-01.example.com:3389</value>
   </data>
+  <data name="ExampleSsid" xml:space="preserve">
+    <value>IoT-Devices</value>
+  </data>
 </root>

@@ -65,7 +65,7 @@ public class CredentialsPasswordProfileFileViewModel : ViewModelBase
     private SecureString _password = new();
 
     /// <summary>
-    /// Password as secure string.
+    /// Password as <see cref="SecureString"/>.
     /// </summary>
     public SecureString Password
     {
@@ -86,7 +86,7 @@ public class CredentialsPasswordProfileFileViewModel : ViewModelBase
     /// <summary>
     /// Private variable for <see cref="IsPasswordEmpty"/>.
     /// </summary>
-    private bool _isPasswordEmpty;
+    private bool _isPasswordEmpty = true;
 
     /// <summary>
     /// Indicate if one of the password fields are empty.

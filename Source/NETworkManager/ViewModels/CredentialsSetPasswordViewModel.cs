@@ -20,10 +20,10 @@ public class CredentialsSetPasswordViewModel : ViewModelBase
     /// <summary>
     /// Private variable for <see cref="Password"/>.
     /// </summary>
-    private SecureString _password = new SecureString();
+    private SecureString _password = new();
 
     /// <summary>
-    /// Password as secure string.
+    /// Password as <see cref="SecureString"/>.
     /// </summary>
     public SecureString Password
     {
@@ -44,10 +44,10 @@ public class CredentialsSetPasswordViewModel : ViewModelBase
     /// <summary>
     /// Private variable for <see cref="PasswordRepeat"/>.
     /// </summary>
-    private SecureString _passwordRepeat = new SecureString();
+    private SecureString _passwordRepeat = new();
 
     /// <summary>
-    /// Repeated password as secure string.
+    /// Repeated password as <see cref="SecureString"/>.
     /// </summary>
     public SecureString PasswordRepeat
     {

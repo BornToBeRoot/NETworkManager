@@ -1,39 +1,35 @@
-﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using Windows.Devices.WiFi;
-using Windows.Networking.Connectivity;
+﻿using Windows.Devices.WiFi;
 
 namespace NETworkManager.Models.Network;
 
-public class WiFiNetworkInfo : INotifyPropertyChanged
+
+/// <summary>
+/// Class contains information about a WiFi network.
+/// </summary>
+public class WiFiNetworkInfo
 {
-    #region PropertyChangedEventHandler
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-    #endregion
-
     #region Variables
-    public string BSSID { get; set; }
-    public string SSID { get; set; }
-    public int ChannelCenterFrequencyInKilohertz { get; set; }
-    public byte SignalBars { get; set; }
-    public bool IsWiFiDirect { get; set; }
-    public double NetworkRssiInDecibelMilliwatts { get; set; }
-    public WiFiPhyKind PhyKind { get; set; }
-    public WiFiNetworkKind NetworkKind { get; set; }
-    public NetworkAuthenticationType AuthenticationType { get; set; }
-    public NetworkEncryptionType EncryptionType { get; set; }
-    public TimeSpan BeaconInterval { get; set; }
-    public TimeSpan Uptime { get; set; }
+    /// <summary>
+    /// Informations about an available WiFi network.
+    /// </summary>
+    public WiFiAvailableNetwork AvailableNetwork { get; set; }
+
+    /// <summary>
+    /// Indicates if the WiFi network Ssid is hidden.
+    /// </summary>
+    public bool IsHidden { get; set; }
+
+    /// <summary>
+    /// Indicates if the WiFi network is connected to the current WiFi adapter.
+    /// </summary>
+    public bool IsConnected { get; set; }
     #endregion
 
+    /// <summary>
+    /// /// Create an instance of <see cref="WiFiNetworkInfo"/>.
+    /// </summary>
     public WiFiNetworkInfo()
     {
-
+        
     }
 }

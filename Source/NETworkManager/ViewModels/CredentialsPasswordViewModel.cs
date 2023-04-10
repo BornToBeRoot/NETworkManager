@@ -20,10 +20,10 @@ public class CredentialsPasswordViewModel : ViewModelBase
     /// <summary>
     /// Private variable for <see cref="Password"/>.
     /// </summary>
-    private SecureString _password = new SecureString();
+    private SecureString _password = new();
 
     /// <summary>
-    /// Password as secure string.
+    /// Password as <see cref="SecureString"/>.
     /// </summary>
     public SecureString Password
     {
@@ -44,7 +44,7 @@ public class CredentialsPasswordViewModel : ViewModelBase
     /// <summary>
     /// Private variable for <see cref="IsPasswordEmpty"/>.
     /// </summary>
-    private bool _isPasswordEmpty;
+    private bool _isPasswordEmpty = true;
 
     /// <summary>
     /// Indicate if one of the password fields are empty.
@@ -61,8 +61,7 @@ public class CredentialsPasswordViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-
-
+    
     /// <summary>
     /// Initalizes a new class <see cref="CredentialsPasswordViewModel"/> with <see cref="OKCommand" /> and <see cref="CancelCommand"/>.
     /// </summary>

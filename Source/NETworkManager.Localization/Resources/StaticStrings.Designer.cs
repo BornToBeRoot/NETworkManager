@@ -574,6 +574,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die IoT-Devices ähnelt.
+        /// </summary>
+        public static string ExampleSsid {
+            get {
+                return ResourceManager.GetString("ExampleSsid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die example.com ähnelt.
         /// </summary>
         public static string ExampleSuffix {

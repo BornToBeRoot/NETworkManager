@@ -3451,4 +3451,61 @@ Changes to this value will take effect after the application is restarted. Wheth
   <data name="RemoteDesktopDisconnectReason_50331713" xml:space="preserve">
     <value>The RD Gateway connection ended because periodic user authorization failed. Your computer or device didn't pass the Network Access Protection (NAP) requirements set by your network administrator. Contact your network administrator for assistance.</value>
   </data>
+  <data name="Connected" xml:space="preserve">
+    <value>Connected</value>
+  </data>
+  <data name="ErrorWhileScanningWiFiAdapterXXXWithErrorXXX" xml:space="preserve">
+    <value>Error while scanning WiFi adapter "{0}" with error: "{1}"</value>
+  </data>
+  <data name="ConnectDots" xml:space="preserve">
+    <value>Connect...</value>
+  </data>
+  <data name="XXXDisconnected" xml:space="preserve">
+    <value>{0} disconnected!</value>
+  </data>
+  <data name="ConnectToXXX" xml:space="preserve">
+    <value>Connect to {0}</value>
+  </data>
+  <data name="WPS" xml:space="preserve">
+    <value>WPS</value>
+  </data>
+  <data name="ConnectAutomatically" xml:space="preserve">
+    <value>Connect automatically</value>
+  </data>
+  <data name="PreSharedKey" xml:space="preserve">
+    <value>Pre-shared key</value>
+  </data>
+  <data name="ConnectingToXXX" xml:space="preserve">
+    <value>Connecting to {0}...</value>
+  </data>
+  <data name="CouldNotConnectToXXXReasonXXX" xml:space="preserve">
+    <value>Could not connect to {0} ({1})!</value>
+  </data>
+  <data name="SuccessfullyConnectedToXXX" xml:space="preserve">
+    <value>Successfully connected to {0}!</value>
+  </data>
+  <data name="WiFiConnectionStatus_AccessRevoked" xml:space="preserve">
+    <value>Access to the network has been revoked</value>
+  </data>
+  <data name="WiFiConnectionStatus_InvalidCredential" xml:space="preserve">
+    <value>Invalid credentials</value>
+  </data>
+  <data name="WiFiConnectionStatus_NetworkNotAvailable" xml:space="preserve">
+    <value>Network not available</value>
+  </data>
+  <data name="WiFiConnectionStatus_Success" xml:space="preserve">
+    <value>Successful</value>
+  </data>
+  <data name="WiFiConnectionStatus_Timeout" xml:space="preserve">
+    <value>Connection attempt timed out</value>
+  </data>
+  <data name="WiFiConnectionStatus_UnspecifiedFailure" xml:space="preserve">
+    <value>-/-</value>
+  </data>
+  <data name="WiFiConnectionStatus_UnsupportedAuthenticationProtocol" xml:space="preserve">
+    <value>Authentication protocol is not supported!</value>
+  </data>
+  <data name="CheckingWPSDots" xml:space="preserve">
+    <value>Checking WPS...</value>
+  </data>
 </root>
