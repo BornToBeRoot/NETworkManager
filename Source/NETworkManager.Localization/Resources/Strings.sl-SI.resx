@@ -2226,7 +2226,7 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>Prikaži statusno okno ob spremembi omrežja</value>
   </data>
   <data name="TimeInSecondsHowLongTheStatusWindowIsShown" xml:space="preserve">
-    <value>Čas prikaza statusnega okna  (sekund)</value>
+    <value>Čas prikaza statusnega okna v sekundah</value>
   </data>
   <data name="WiFi" xml:space="preserve">
     <value>Brezžično omrežje Wi-Fi</value>
@@ -3430,5 +3430,62 @@ V zgornjem desnem kotu kliknite na gumb za Pomoč/Dokumentacijo (levo od gumba z
   </data>
   <data name="RemoteDesktopDisconnectReason_50331713" xml:space="preserve">
     <value>Povezava s prehodom oddaljenega namizja je končana, ker ni uspelo periodično pooblastilo uporabnika. Vaš računalnik ali naprava nista prestala zahtev za zaščito dostopa do omrežja (NAP), ki jih je določil skrbnik omrežja. Za pomoč se obrnite na skrbnika omrežja.</value>
+  </data>
+  <data name="Connected" xml:space="preserve">
+    <value>Povezan</value>
+  </data>
+  <data name="ErrorWhileScanningWiFiAdapterXXXWithErrorXXX" xml:space="preserve">
+    <value>Napaka med pregledovanjem WiFi kartice "{0}" z napako: "{1}"</value>
+  </data>
+  <data name="ConnectDots" xml:space="preserve">
+    <value>Poveži...</value>
+  </data>
+  <data name="XXXDisconnected" xml:space="preserve">
+    <value>{0}prekinjena</value>
+  </data>
+  <data name="ConnectToXXX" xml:space="preserve">
+    <value>Poveži z {0}</value>
+  </data>
+  <data name="WPS" xml:space="preserve">
+    <value>WPS</value>
+  </data>
+  <data name="ConnectAutomatically" xml:space="preserve">
+    <value>Samodejno poveži</value>
+  </data>
+  <data name="PreSharedKey" xml:space="preserve">
+    <value>Vnaprej deljeni ključ</value>
+  </data>
+  <data name="ConnectingToXXX" xml:space="preserve">
+    <value>Povezovanje z {0}...</value>
+  </data>
+  <data name="CouldNotConnectToXXXReasonXXX" xml:space="preserve">
+    <value>Ni bilo mogoče vzpostaviti povezave z {0} ({1})!</value>
+  </data>
+  <data name="SuccessfullyConnectedToXXX" xml:space="preserve">
+    <value>Uspešno povezan z {0}!</value>
+  </data>
+  <data name="WiFiConnectionStatus_AccessRevoked" xml:space="preserve">
+    <value>Dostop do omrežja je bil preklican</value>
+  </data>
+  <data name="WiFiConnectionStatus_InvalidCredential" xml:space="preserve">
+    <value>Neveljavne poverilnice</value>
+  </data>
+  <data name="WiFiConnectionStatus_NetworkNotAvailable" xml:space="preserve">
+    <value>Omrežje ni na voljo</value>
+  </data>
+  <data name="WiFiConnectionStatus_Success" xml:space="preserve">
+    <value>Uspešno</value>
+  </data>
+  <data name="WiFiConnectionStatus_Timeout" xml:space="preserve">
+    <value>Časovna omejitev poskusa povezave je potekla</value>
+  </data>
+  <data name="WiFiConnectionStatus_UnspecifiedFailure" xml:space="preserve">
+    <value>-/-</value>
+  </data>
+  <data name="WiFiConnectionStatus_UnsupportedAuthenticationProtocol" xml:space="preserve">
+    <value>Protokol za preverjanje pristnosti ni podprt!</value>
+  </data>
+  <data name="CheckingWPSDots" xml:space="preserve">
+    <value>Preverjanje WPS...</value>
   </data>
 </root>
