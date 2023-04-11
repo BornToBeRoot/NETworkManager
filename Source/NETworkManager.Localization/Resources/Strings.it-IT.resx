@@ -3386,7 +3386,7 @@ L'ultima istanza da chiudere potrebbe sovrascrivere le modifiche apportate da al
     <value>Consenti di selezionarlo più tardi</value>
   </data>
   <data name="RemoteDesktopGatewayServerLogonMethod_Smartcard" xml:space="preserve">
-    <value>Smart card</value>
+    <value>Smart card o Windows Hello for Business</value>
   </data>
   <data name="RemoteDesktopGatewayServerLogonMethod_Userpass" xml:space="preserve">
     <value>Richiedi password (NTLM)</value>
@@ -3537,5 +3537,62 @@ Per assistenza contatta l'amministratore di rete.</value>
     <value>La connessione al gateway desktop remoto è terminata perché l'autorizzazione utente periodica non è riuscita. 
 Questo computer o dispositivo non ha superato i requisiti NAP (Network Access Protection) impostati dall'amministratore di rete. 
 Per assistenza contattare l'amministratore di rete.</value>
+  </data>
+  <data name="Connected" xml:space="preserve">
+    <value>Connesso</value>
+  </data>
+  <data name="ErrorWhileScanningWiFiAdapterXXXWithErrorXXX" xml:space="preserve">
+    <value>Errore durante la scansione della scheda WiFi "{0}" - errore: "{1}"</value>
+  </data>
+  <data name="ConnectDots" xml:space="preserve">
+    <value>Connessione...</value>
+  </data>
+  <data name="XXXDisconnected" xml:space="preserve">
+    <value>{0} disconnesso!</value>
+  </data>
+  <data name="ConnectToXXX" xml:space="preserve">
+    <value>Connesso a {0}</value>
+  </data>
+  <data name="WPS" xml:space="preserve">
+    <value>WPS</value>
+  </data>
+  <data name="ConnectAutomatically" xml:space="preserve">
+    <value>Connetti automaticamente</value>
+  </data>
+  <data name="PreSharedKey" xml:space="preserve">
+    <value>Chiave condivisa in precedenza</value>
+  </data>
+  <data name="ConnectingToXXX" xml:space="preserve">
+    <value>Connessione a {0}...</value>
+  </data>
+  <data name="CouldNotConnectToXXXReasonXXX" xml:space="preserve">
+    <value>Impossibile connettersi a {0} ({1})!</value>
+  </data>
+  <data name="SuccessfullyConnectedToXXX" xml:space="preserve">
+    <value>Completata connessione a {0}!</value>
+  </data>
+  <data name="WiFiConnectionStatus_AccessRevoked" xml:space="preserve">
+    <value>L'accesso alla rete è stato revocato</value>
+  </data>
+  <data name="WiFiConnectionStatus_InvalidCredential" xml:space="preserve">
+    <value>Credenziali non valide</value>
+  </data>
+  <data name="WiFiConnectionStatus_NetworkNotAvailable" xml:space="preserve">
+    <value>Rete non disponibile</value>
+  </data>
+  <data name="WiFiConnectionStatus_Success" xml:space="preserve">
+    <value>Completato</value>
+  </data>
+  <data name="WiFiConnectionStatus_Timeout" xml:space="preserve">
+    <value>Tentativo di connessione scaduto</value>
+  </data>
+  <data name="WiFiConnectionStatus_UnspecifiedFailure" xml:space="preserve">
+    <value>-/-</value>
+  </data>
+  <data name="WiFiConnectionStatus_UnsupportedAuthenticationProtocol" xml:space="preserve">
+    <value>Il protocollo di autenticazione non è supportato!</value>
+  </data>
+  <data name="CheckingWPSDots" xml:space="preserve">
+    <value>Controllo WPS...</value>
   </data>
 </root>
