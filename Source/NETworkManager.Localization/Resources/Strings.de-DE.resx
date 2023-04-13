@@ -3451,4 +3451,61 @@ Wenn der Wert zu hoch ist, können Leistungsprobleme auftreten.
   <data name="RemoteDesktopDisconnectReason_50331713" xml:space="preserve">
     <value>Die RD-Gateway-Verbindung wurde beendet, weil die periodische Benutzerautorisierung fehlgeschlagen ist. Ihr Computer oder Gerät hat die vom Netzwerkadministrator festgelegten NAP-Anforderungen (Network Access Protection) nicht erfüllt. Wenden Sie sich an Ihren Netzwerkadministrator, um Hilfe zu erhalten.</value>
   </data>
+  <data name="Connected" xml:space="preserve">
+    <value>Verbunden</value>
+  </data>
+  <data name="ErrorWhileScanningWiFiAdapterXXXWithErrorXXX" xml:space="preserve">
+    <value>Fehler beim Scannen des WiFi-Adapters "{0}" mit Fehler: "{1}"</value>
+  </data>
+  <data name="ConnectDots" xml:space="preserve">
+    <value>Verbinden...</value>
+  </data>
+  <data name="XXXDisconnected" xml:space="preserve">
+    <value>{0} getrennt!</value>
+  </data>
+  <data name="ConnectToXXX" xml:space="preserve">
+    <value>Verbinden mit {0}</value>
+  </data>
+  <data name="WPS" xml:space="preserve">
+    <value>WPS</value>
+  </data>
+  <data name="ConnectAutomatically" xml:space="preserve">
+    <value>Automatisch verbinden</value>
+  </data>
+  <data name="PreSharedKey" xml:space="preserve">
+    <value>Pre-shared Key</value>
+  </data>
+  <data name="ConnectingToXXX" xml:space="preserve">
+    <value>Verbinden mit {0}...</value>
+  </data>
+  <data name="CouldNotConnectToXXXReasonXXX" xml:space="preserve">
+    <value>Konnte keine Verbindung zu {0} ({1}) herstellen!</value>
+  </data>
+  <data name="SuccessfullyConnectedToXXX" xml:space="preserve">
+    <value>Erfolgreich verbunden mit {0}!</value>
+  </data>
+  <data name="WiFiConnectionStatus_AccessRevoked" xml:space="preserve">
+    <value>Der Zugang zum Netz wurde gesperrt</value>
+  </data>
+  <data name="WiFiConnectionStatus_InvalidCredential" xml:space="preserve">
+    <value>Ungültige Anmeldeinformationen</value>
+  </data>
+  <data name="WiFiConnectionStatus_NetworkNotAvailable" xml:space="preserve">
+    <value>Netzwerk nicht verfügbar</value>
+  </data>
+  <data name="WiFiConnectionStatus_Success" xml:space="preserve">
+    <value>Erfolgreich</value>
+  </data>
+  <data name="WiFiConnectionStatus_Timeout" xml:space="preserve">
+    <value>Zeitüberschreitung beim Verbindungsversuch</value>
+  </data>
+  <data name="WiFiConnectionStatus_UnspecifiedFailure" xml:space="preserve">
+    <value>-/-</value>
+  </data>
+  <data name="WiFiConnectionStatus_UnsupportedAuthenticationProtocol" xml:space="preserve">
+    <value>Das Authentifizierungsprotokoll wird nicht unterstützt!</value>
+  </data>
+  <data name="CheckingWPSDots" xml:space="preserve">
+    <value>Prüfe WPS...</value>
+  </data>
 </root>
