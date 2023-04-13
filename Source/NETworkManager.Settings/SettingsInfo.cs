@@ -3890,6 +3890,21 @@ public class SettingsInfo : PropertyChangedBase
             SettingsChanged = true;
         }
     }
+
+    private bool _whois_UseRipe = GlobalStaticConfiguration.Whois_UseRipe;
+    public bool Whois_UseRipe
+    {
+        get => _whois_UseRipe;
+        set
+        {
+            if (value == _whois_UseRipe)
+                return;
+
+            _whois_UseRipe = value;
+            OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
     #endregion
 
     #region Connections

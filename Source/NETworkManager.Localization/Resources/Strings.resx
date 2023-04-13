@@ -3508,4 +3508,10 @@ Changes to this value will take effect after the application is restarted. Wheth
   <data name="CheckingWPSDots" xml:space="preserve">
     <value>Checking WPS...</value>
   </data>
+  <data name="WhoisRipe" xml:space="preserve">
+    <value>Use Ripe database for whois lookup</value>
+  </data>
+  <data name="WhoisSettings" xml:space="preserve">
+    <value>Whois Settings</value>
+  </data>
 </root>

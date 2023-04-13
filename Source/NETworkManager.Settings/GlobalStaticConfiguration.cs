@@ -205,6 +205,7 @@ public static class GlobalStaticConfiguration
 
     // Application: Whois
     public static ExportFileType Whois_ExportFileType => ExportFileType.TXT;
+    public static bool Whois_UseRipe => true;
 
     // Application: Connections
     public static ExportFileType Connections_ExportFileType => ExportFileType.CSV;
@@ -217,5 +218,6 @@ public static class GlobalStaticConfiguration
     // Application: ARP Table
     public static ExportFileType ARPTable_ExportFileType => ExportFileType.CSV;
     public static AutoRefreshTimeInfo ARPTable_AutoRefreshTime => AutoRefreshTime.GetDefaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
+
     #endregion
 }

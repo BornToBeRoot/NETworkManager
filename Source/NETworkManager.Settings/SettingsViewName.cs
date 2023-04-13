@@ -28,5 +28,6 @@ public enum SettingsViewName
     SNMP,
     SNTPLookup,
     WakeOnLAN,
-    BitCalculator
+    BitCalculator,
+    Whois
 }

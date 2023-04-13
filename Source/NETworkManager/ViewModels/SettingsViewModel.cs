@@ -126,6 +126,7 @@ public class SettingsViewModel : ViewModelBase
     private SNTPLookupSettingsView _sntpLookupSettingsView;
     private WakeOnLANSettingsView _wakeOnLANSettingsView;   
     private BitCalculatorSettingsView _bitCalculatorSettingsView;
+    private WhoisSettingsView _whoisSettingsView;
     #endregion
 
     #region Contructor, load settings
@@ -317,6 +318,11 @@ public class SettingsViewModel : ViewModelBase
                 _bitCalculatorSettingsView ??= new BitCalculatorSettingsView();
 
                 SettingsContent = _bitCalculatorSettingsView;
+                break;
+            case SettingsViewName.Whois:
+                _whoisSettingsView ??= new WhoisSettingsView();
+
+                SettingsContent = _whoisSettingsView;
                 break;
         }
     }

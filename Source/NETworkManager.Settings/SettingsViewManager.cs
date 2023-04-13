@@ -38,7 +38,8 @@ public static class SettingsViewManager
         new SettingsViewInfo(SettingsViewName.SNMP, ApplicationManager.GetIcon(ApplicationName.SNMP), SettingsViewGroup.Applications),
         new SettingsViewInfo(SettingsViewName.SNTPLookup, ApplicationManager.GetIcon(ApplicationName.SNTPLookup), SettingsViewGroup.Applications),
         new SettingsViewInfo(SettingsViewName.WakeOnLAN, ApplicationManager.GetIcon(ApplicationName.WakeOnLAN), SettingsViewGroup.Applications),
-        new SettingsViewInfo(SettingsViewName.BitCalculator, ApplicationManager.GetIcon(ApplicationName.BitCalculator), SettingsViewGroup.Applications),           
+        new SettingsViewInfo(SettingsViewName.BitCalculator, ApplicationManager.GetIcon(ApplicationName.BitCalculator), SettingsViewGroup.Applications), 
+        new SettingsViewInfo(SettingsViewName.Whois, ApplicationManager.GetIcon(ApplicationName.Whois), SettingsViewGroup.Applications),
     };
 }
 
