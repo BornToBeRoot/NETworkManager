@@ -71,7 +71,7 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-          
+
     private string _username;
     public string Username
     {
@@ -86,7 +86,21 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
         }
     }
 
-    private SecureString _password = new SecureString();
+    private string _domain;
+    public string Domain
+    {
+        get => _domain;
+        set
+        {
+            if (value == _domain)
+                return;
+
+            _domain = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private SecureString _password = new();
     public SecureString Password
     {
         get => _password;
@@ -96,19 +110,49 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
                 return;
 
             _password = value;
+
+            ValidatePassword();
+
             OnPropertyChanged();
         }
     }
 
-  
-    public RemoteDesktopConnectViewModel(Action<RemoteDesktopConnectViewModel> connectCommand, Action<RemoteDesktopConnectViewModel> cancelHandler, bool connectAs = false)
+    private bool _isPasswordEmpty = true;
+    public bool IsPasswordEmpty
+    {
+        get => _isPasswordEmpty;
+        set
+        {
+            if (value == _isPasswordEmpty)
+                return;
+
+            _isPasswordEmpty = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public RemoteDesktopConnectViewModel(Action<RemoteDesktopConnectViewModel> connectCommand, Action<RemoteDesktopConnectViewModel> cancelHandler,(string Name, string Host)? connectAsOptions = null)
     {
         ConnectCommand = new RelayCommand(p => connectCommand(this));
         CancelCommand = new RelayCommand(p => cancelHandler(this));
 
-        ConnectAs = connectAs;
-
-        if (!ConnectAs)
+        if (connectAsOptions == null)
+        {
             HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.RemoteDesktop_HostHistory);
+        }
+        else
+        {
+            ConnectAs = true;
+
+            UseCredentials = true;
+            
+            Name = connectAsOptions.Value.Name;
+            Host = connectAsOptions.Value.Host;
+        }
     }
+
+    /// <summary>
+    /// Check if the passwords are valid.
+    /// </summary>
+    private void ValidatePassword() => IsPasswordEmpty = Password == null || Password.Length == 0;
 }
