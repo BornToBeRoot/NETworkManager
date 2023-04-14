@@ -382,6 +382,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
                 sessionInfo.UseCredentials = true;
 
                 sessionInfo.Username = instance.Username;
+                sessionInfo.Domain = instance.Domain;
                 sessionInfo.Password = instance.Password;
             }
 
@@ -439,7 +440,9 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
             if (instance.UseCredentials)
             {
                 sessionInfo.UseCredentials = true;
+
                 sessionInfo.Username = instance.Username;
+                sessionInfo.Domain = instance.Domain;
                 sessionInfo.Password = instance.Password;
             }
 
@@ -448,15 +451,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             ConfigurationManager.Current.IsDialogOpen = false;
-        }, true)
-        {
-            // Set name, hostname
-            Name = profileInfo.Name,
-            Host = profileInfo.RemoteDesktop_Host,
-
-            // Request credentials
-            UseCredentials = true
-        };
+        }, (profileInfo.Name, profileInfo.RemoteDesktop_Host));        
 
         customDialog.Content = new RemoteDesktopConnectDialog
         {

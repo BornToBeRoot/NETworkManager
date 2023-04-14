@@ -31,6 +31,7 @@ Release date: **xx.xx.2023**
   - Show error message if scan fails (e.g. wifi adapter is unplugged while scanning) [#2133](https://github.com/BornToBeRoot/NETworkManager/pull/2133){:target="\_blank"}
   - Automatically refresh is now enabled if it was enabled on the last exit [#2116](https://github.com/BornToBeRoot/NETworkManager/pull/2116){:target="\_blank"}
 - Remote Desktop
+  - Domain added to connect dialog [#2165](https://github.com/BornToBeRoot/NETworkManager/pull/2165){:target="\_blank"}
   - Domain added to credentials [#2108](https://github.com/BornToBeRoot/NETworkManager/pull/2108){:target="\_blank"}
 - Connections
   - Automatically refresh is now enabled if it was enabled on the last exit [#2116](https://github.com/BornToBeRoot/NETworkManager/pull/2116){:target="\_blank"}
@@ -42,7 +43,8 @@ Release date: **xx.xx.2023**
 
 ## Bugfixes
 - Profiles
-  - OK button not disabled initially on unlock profile & decrypt profile file [#2133](https://github.com/BornToBeRoot/NETworkManager/pull/2133){:target="\_blank"}  
+  - OK button not disabled initially if remote desktop domain is invalid [#2165](https://github.com/BornToBeRoot/NETworkManager/pull/2165){:target="\_blank"}
+  - OK button not disabled initially on unlock profile & decrypt profile file [#2133](https://github.com/BornToBeRoot/NETworkManager/pull/2133){:target="\_blank"}
 
 ## Other
 - Code cleanup [#2100](https://github.com/BornToBeRoot/NETworkManager/pull/2100){:target="\_blank"}

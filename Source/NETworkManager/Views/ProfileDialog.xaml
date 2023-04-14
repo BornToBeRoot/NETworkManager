@@ -1915,6 +1915,16 @@
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding RemoteDesktop_Enabled}" Value="True"/>
                                     <Condition Binding="{Binding RemoteDesktop_UseCredentials}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=TextBoxRemoteDesktopDomain, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding RemoteDesktop_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding RemoteDesktop_UseCredentials}" Value="True" />
                                     <Condition Binding="{Binding RemoteDesktop_IsPasswordEmpty}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
