@@ -33,6 +33,9 @@ Release date: **xx.xx.2023**
 - Remote Desktop
   - Domain added to connect dialog [#2165](https://github.com/BornToBeRoot/NETworkManager/pull/2165){:target="\_blank"}
   - Domain added to credentials [#2108](https://github.com/BornToBeRoot/NETworkManager/pull/2108){:target="\_blank"}
+- SNMP
+  - SHA256, SHA384 and SHA512 for SNMPv3 auth added [#2166](https://github.com/BornToBeRoot/NETworkManager/pull/2166){:target="\_blank"}
+  - AES192 and AES256 for SNMPv3 privacy added [#2166](https://github.com/BornToBeRoot/NETworkManager/pull/2166){:target="\_blank"}
 - Connections
   - Automatically refresh is now enabled if it was enabled on the last exit [#2116](https://github.com/BornToBeRoot/NETworkManager/pull/2116){:target="\_blank"}
 - Listeners
