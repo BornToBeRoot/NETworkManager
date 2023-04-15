@@ -411,7 +411,7 @@ public class SNMPViewModel : ViewModelBase
         QueryResultsView.SortDescriptions.Add(new SortDescription(nameof(SNMPReceivedInfo.OID), ListSortDirection.Ascending));
 
         // Versions (v1, v2c, v3)
-        Versions = System.Enum.GetValues(typeof(SNMPVersion)).Cast<SNMPVersion>().ToList();
+        Versions = Enum.GetValues(typeof(SNMPVersion)).Cast<SNMPVersion>().ToList();
 
         // Modes
         Modes = new List<SNMPMode> { SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set };
@@ -420,8 +420,8 @@ public class SNMPViewModel : ViewModelBase
         Securitys = new List<SNMPV3Security> { SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv };
 
         // Auth / Priv
-        AuthenticationProviders = new List<SNMPV3AuthenticationProvider> { SNMPV3AuthenticationProvider.MD5, SNMPV3AuthenticationProvider.SHA1 };
-        PrivacyProviders = new List<SNMPV3PrivacyProvider> { SNMPV3PrivacyProvider.DES, SNMPV3PrivacyProvider.AES };
+        AuthenticationProviders = Enum.GetValues(typeof(SNMPV3AuthenticationProvider)).Cast<SNMPV3AuthenticationProvider>().ToList();
+        PrivacyProviders = Enum.GetValues(typeof(SNMPV3PrivacyProvider)).Cast<SNMPV3PrivacyProvider>().ToList();
 
         LoadSettings();
 
