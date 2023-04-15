@@ -182,7 +182,7 @@ public partial class SNMPClient
                 IPrivacyProvider privacy = GetPrivacyProvider(options);
 
                 var results = new List<Variable>();
-                
+
                 await Messenger.BulkWalkAsync(VersionCode.V3, ipEndpoint, username, OctetString.Empty, table, results, 10, options.WalkMode, privacy, report, options.CancellationToken);
 
                 foreach (var result in results)
@@ -298,20 +298,27 @@ public partial class SNMPClient
     // authPriv
     private static IPrivacyProvider GetPrivacyProvider(SNMPV3AuthenticationProvider authProvider, string auth, SNMPV3PrivacyProvider privProvider, string priv)
     {
-        IAuthenticationProvider authenticationProvider;
-
-        if (privProvider == SNMPV3PrivacyProvider.DES)
-            return new DESPrivacyProvider(new OctetString(priv), GetAuthenticationProvider(authProvider, auth));
-
-        return new AESPrivacyProvider(new OctetString(priv), GetAuthenticationProvider(authProvider, auth));
+        return privProvider switch
+        {
+            SNMPV3PrivacyProvider.DES => new DESPrivacyProvider(new OctetString(priv), GetAuthenticationProvider(authProvider, auth)),
+            SNMPV3PrivacyProvider.AES => new AESPrivacyProvider(new OctetString(priv), GetAuthenticationProvider(authProvider, auth)),
+            SNMPV3PrivacyProvider.AES192 => new AES192PrivacyProvider(new OctetString(priv), GetAuthenticationProvider(authProvider, auth)),
+            SNMPV3PrivacyProvider.AES256 => new AES256PrivacyProvider(new OctetString(priv), GetAuthenticationProvider(authProvider, auth)),
+            _ => null,
+        };
     }
 
     private static IAuthenticationProvider GetAuthenticationProvider(SNMPV3AuthenticationProvider authProvider, string auth)
     {
-        if (authProvider == SNMPV3AuthenticationProvider.MD5)
-            return new MD5AuthenticationProvider(new OctetString(auth));
-
-        return new SHA1AuthenticationProvider(new OctetString(auth));
+        return authProvider switch
+        {
+            SNMPV3AuthenticationProvider.MD5 => new MD5AuthenticationProvider(new OctetString(auth)),
+            SNMPV3AuthenticationProvider.SHA1 => new SHA1AuthenticationProvider(new OctetString(auth)),
+            SNMPV3AuthenticationProvider.SHA256 => new SHA256AuthenticationProvider(new OctetString(auth)),
+            SNMPV3AuthenticationProvider.SHA384 => new SHA384AuthenticationProvider(new OctetString(auth)),
+            SNMPV3AuthenticationProvider.SHA512 => new SHA512AuthenticationProvider(new OctetString(auth)),
+            _ => null,
+        };
     }
     #endregion
 }
