@@ -90,11 +90,11 @@
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
-            <Button Grid.Column="6" Grid.Row="2" Command="{Binding OpenMIBelectionCommand}" ToolTip="{x:Static localization:Strings.OpenPortProfilesDots}">
+            <Button Grid.Column="6" Grid.Row="2" Command="{Binding OpenMIBProfilesCommand}" ToolTip="{x:Static localization:Strings.OpenMIBProfilesDots}">
                 <Button.Resources>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageButton}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsScanRunning}" Value="True">
+                            <DataTrigger Binding="{Binding IsRunning}" Value="True">
                                 <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
                         </Style.Triggers>
@@ -188,8 +188,6 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            
-            
             <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.Auth}" Margin="0,10,0,0">
                 <TextBlock.Style>
                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">

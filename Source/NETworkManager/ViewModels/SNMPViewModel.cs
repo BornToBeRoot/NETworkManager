@@ -451,6 +451,15 @@ public class SNMPViewModel : ViewModelBase
         Work();
     }
 
+    public ICommand OpenMIBProfilesCommand => new RelayCommand(p => OpenMIBProfilesAction());
+
+
+    private void OpenMIBProfilesAction()
+    { 
+       
+    }
+
+
     public ICommand CopySelectedOIDCommand => new RelayCommand(p => CopySelectedOIDAction());
 
     private void CopySelectedOIDAction()

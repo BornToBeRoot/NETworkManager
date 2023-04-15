@@ -3508,4 +3508,7 @@ Changes to this value will take effect after the application is restarted. Wheth
   <data name="CheckingWPSDots" xml:space="preserve">
     <value>Checking WPS...</value>
   </data>
+  <data name="OpenMIBProfilesDots" xml:space="preserve">
+    <value>Open MIB profiles...</value>
+  </data>
 </root>

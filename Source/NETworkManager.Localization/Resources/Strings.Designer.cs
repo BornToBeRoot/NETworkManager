@@ -5728,6 +5728,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Open MIB profiles... ähnelt.
+        /// </summary>
+        public static string OpenMIBProfilesDots {
+            get {
+                return ResourceManager.GetString("OpenMIBProfilesDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Open port profiles... ähnelt.
         /// </summary>
         public static string OpenPortProfilesDots {
