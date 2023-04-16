@@ -2731,7 +2731,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Port-Profil bearbeiten</value>
   </data>
   <data name="DeletePortProfileMessage" xml:space="preserve">
-    <value>Das ausgewählte Port-Profile wird unwiederbringlich gelöscht.</value>
+    <value>Das ausgewählte Port-Profil wird unwiederbringlich gelöscht.</value>
   </data>
   <data name="SelectPortProfile" xml:space="preserve">
     <value>Port-Profil anzeigen</value>
@@ -3507,5 +3507,29 @@ Wenn der Wert zu hoch ist, können Leistungsprobleme auftreten.
   </data>
   <data name="CheckingWPSDots" xml:space="preserve">
     <value>Prüfe WPS...</value>
+  </data>
+  <data name="OpenOIDProfilesDots" xml:space="preserve">
+    <value>OID-Profile öffnen...</value>
+  </data>
+  <data name="MIB" xml:space="preserve">
+    <value>MIB</value>
+  </data>
+  <data name="OIDProfiles" xml:space="preserve">
+    <value>OID-Profile</value>
+  </data>
+  <data name="SelectOIDProfile" xml:space="preserve">
+    <value>OID-Profil auswählen</value>
+  </data>
+  <data name="AddOIDProfile" xml:space="preserve">
+    <value>OID-Profil hinzufügen</value>
+  </data>
+  <data name="DeleteOIDProfile" xml:space="preserve">
+    <value>OID-Profil löschen</value>
+  </data>
+  <data name="DeleteOIDProfileMessage" xml:space="preserve">
+    <value>Das ausgewählte OID-Profil wird unwiederbringlich gelöscht.</value>
+  </data>
+  <data name="EditOIDProfile" xml:space="preserve">
+    <value>OID-Profil bearbeiten</value>
   </data>
 </root>
