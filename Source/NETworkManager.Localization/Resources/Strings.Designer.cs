@@ -5106,6 +5106,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die MIB ähnelt.
+        /// </summary>
+        public static string MIB {
+            get {
+                return ResourceManager.GetString("MIB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die MIB profiles ähnelt.
+        /// </summary>
+        public static string MIBProfiles {
+            get {
+                return ResourceManager.GetString("MIBProfiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Microsoft Edge WebView2 Runtime is not available! ähnelt.
         /// </summary>
         public static string MicrosoftEdgeWebView2RuntimeIsNotAvailable {
@@ -5728,11 +5746,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Open MIB profiles... ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Open OID profiles... ähnelt.
         /// </summary>
-        public static string OpenMIBProfilesDots {
+        public static string OpenOIDProfilesDots {
             get {
-                return ResourceManager.GetString("OpenMIBProfilesDots", resourceCulture);
+                return ResourceManager.GetString("OpenOIDProfilesDots", resourceCulture);
             }
         }
         
@@ -8060,6 +8078,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Selected {
             get {
                 return ResourceManager.GetString("Selected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Select OID profile ähnelt.
+        /// </summary>
+        public static string SelectOIDProfile {
+            get {
+                return ResourceManager.GetString("SelectOIDProfile", resourceCulture);
             }
         }
         

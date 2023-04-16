@@ -354,14 +354,14 @@ public class PortScannerViewModel : ViewModelBase
             Title = Localization.Resources.Strings.SelectPortProfile
         };
 
-        var viewModel = new PortProfilesViewModel(instance =>
+        var viewModel = new PortProfilesViewModel(async instance =>
         {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
             Ports = string.Join("; ", instance.GetSelectedPortProfiles().Select(x => x.Ports));
-        }, instance =>
+        }, async instance =>
         {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
         });
 
         customDialog.Content = new PortProfilesDialog

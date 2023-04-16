@@ -272,6 +272,9 @@ public static class SettingsManager
     private static void UpgradeToLatest(Version version)
     {
         _log.Info($"Apply upgrade to {version}...");
+
+        _log.Info($"Add SNMP OID profiles...");
+        Current.SNMP_OIDProfiles = new ObservableCollection<SNMPOIDProfileInfo>(SNMPOIDProfile.GetDefaultList());
     }
     #endregion
 }

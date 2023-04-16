@@ -20,6 +20,7 @@ using NETworkManager.Models.Export;
 using NETworkManager.Views;
 using System.Security;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels;
 
@@ -455,10 +456,9 @@ public class SNMPViewModel : ViewModelBase
 
 
     private void OpenMIBProfilesAction()
-    { 
-       
+    {
+        OpenMIBProfileSelection();
     }
-
 
     public ICommand CopySelectedOIDCommand => new RelayCommand(p => CopySelectedOIDAction());
 
@@ -634,6 +634,31 @@ public class SNMPViewModel : ViewModelBase
     public void OnClose()
     {
 
+    }
+
+    private async Task OpenMIBProfileSelection()
+    {
+        var customDialog = new CustomDialog
+        {
+            Title = Localization.Resources.Strings.SelectOIDProfile
+        };
+
+        var viewModel = new SNMPOIDProfilesViewModel(async instance =>
+        {
+            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+            OID = instance.SelectedOIDProfile.OID;
+        }, async instance =>
+        {
+            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+        });
+
+        customDialog.Content = new SNMPOIDProfilesDialog
+        {
+            DataContext = viewModel
+        };
+
+        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
     private void AddHostToHistory(string host)

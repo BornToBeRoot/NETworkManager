@@ -3178,51 +3178,6 @@ public class SettingsInfo : PropertyChangedBase
     #endregion
 
     #region SNMP
-    private WalkMode _snmp_WalkMode = GlobalStaticConfiguration.SNMP_WalkMode;
-    public WalkMode SNMP_WalkMode
-    {
-        get => _snmp_WalkMode;
-        set
-        {
-            if (value == _snmp_WalkMode)
-                return;
-
-            _snmp_WalkMode = value;
-            OnPropertyChanged();
-            SettingsChanged = true;
-        }
-    }
-
-    private int _snmp_Timeout = GlobalStaticConfiguration.SNMP_Timeout;
-    public int SNMP_Timeout
-    {
-        get => _snmp_Timeout;
-        set
-        {
-            if (value == _snmp_Timeout)
-                return;
-
-            _snmp_Timeout = value;
-            OnPropertyChanged();
-            SettingsChanged = true;
-        }
-    }
-
-    private int _snmp_port = 161;
-    public int SNMP_Port
-    {
-        get => _snmp_port;
-        set
-        {
-            if (value == _snmp_port)
-                return;
-
-            _snmp_port = value;
-            OnPropertyChanged();
-            SettingsChanged = true;
-        }
-    }
-
     private ObservableCollection<string> _snmp_HostHistory = new();
     public ObservableCollection<string> SNMP_HostHistory
     {
@@ -3252,7 +3207,67 @@ public class SettingsInfo : PropertyChangedBase
             SettingsChanged = true;
         }
     }
+    
+    private ObservableCollection<SNMPOIDProfileInfo> _snmp_OIDProfiles = new();
+    public ObservableCollection<SNMPOIDProfileInfo> SNMP_OIDProfiles
+    {
+        get => _snmp_OIDProfiles;
+        set
+        {
+            if (value == _snmp_OIDProfiles)
+                return;
 
+            _snmp_OIDProfiles = value;
+            OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
+    
+    private int _snmp_Timeout = GlobalStaticConfiguration.SNMP_Timeout;
+    public int SNMP_Timeout
+    {
+        get => _snmp_Timeout;
+        set
+        {
+            if (value == _snmp_Timeout)
+                return;
+
+            _snmp_Timeout = value;
+            OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
+
+    private WalkMode _snmp_WalkMode = GlobalStaticConfiguration.SNMP_WalkMode;
+    public WalkMode SNMP_WalkMode
+    {
+        get => _snmp_WalkMode;
+        set
+        {
+            if (value == _snmp_WalkMode)
+                return;
+
+            _snmp_WalkMode = value;
+            OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
+    
+    private int _snmp_port = 161;
+    public int SNMP_Port
+    {
+        get => _snmp_port;
+        set
+        {
+            if (value == _snmp_port)
+                return;
+
+            _snmp_port = value;
+            OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
+    
     private SNMPMode _snmp_Mode = GlobalStaticConfiguration.SNMP_Mode;
     public SNMPMode SNMP_Mode
     {
@@ -4134,6 +4149,7 @@ public class SettingsInfo : PropertyChangedBase
         // SNMP
         SNMP_HostHistory.CollectionChanged += CollectionChanged;
         SNMP_OIDHistory.CollectionChanged += CollectionChanged;
+        SNMP_OIDProfiles.CollectionChanged += CollectionChanged;
 
         // SNTP Lookup
         SNTPLookup_SNTPServers.CollectionChanged += CollectionChanged;
