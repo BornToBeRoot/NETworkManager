@@ -13,7 +13,7 @@ public static class SNMPOIDProfile
         return new List<SNMPOIDProfileInfo>
         {
             new SNMPOIDProfileInfo("SNMPv2-MIB (system)", "1.3.6.1.2.1.1", SNMPMode.Walk),
-            new SNMPOIDProfileInfo("HOST-RESOURCES-MIB", "1.3.6.1.2.1.25", SNMPMode.Walk)
+            new SNMPOIDProfileInfo("HOST-RESOURCES-MIB", "1.3.6.1.2.1.25", SNMPMode.Walk)            
         };
     }
 }
