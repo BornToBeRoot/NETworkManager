@@ -3595,4 +3595,28 @@ Per assistenza contattare l'amministratore di rete.</value>
   <data name="CheckingWPSDots" xml:space="preserve">
     <value>Controllo WPS...</value>
   </data>
+  <data name="OpenOIDProfilesDots" xml:space="preserve">
+    <value>Apri profili OID...</value>
+  </data>
+  <data name="MIB" xml:space="preserve">
+    <value>MIB</value>
+  </data>
+  <data name="OIDProfiles" xml:space="preserve">
+    <value>Profili OID</value>
+  </data>
+  <data name="SelectOIDProfile" xml:space="preserve">
+    <value>Seleziona profilo OID</value>
+  </data>
+  <data name="AddOIDProfile" xml:space="preserve">
+    <value>Aggiungi profilo OID</value>
+  </data>
+  <data name="DeleteOIDProfile" xml:space="preserve">
+    <value>Elimina profilo OID</value>
+  </data>
+  <data name="DeleteOIDProfileMessage" xml:space="preserve">
+    <value>Il profilo OID selezionato verrà eliminato definitivamente.</value>
+  </data>
+  <data name="EditOIDProfile" xml:space="preserve">
+    <value>Modifica profilo OID</value>
+  </data>
 </root>
