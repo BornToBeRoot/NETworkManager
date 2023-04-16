@@ -23,6 +23,7 @@ Release date: **xx.xx.2023**
   - Support for Remote Desktop Gateway server has been added [#2108](https://github.com/BornToBeRoot/NETworkManager/pull/2108){:target="\_blank"}
 - SNMP
   - SNMP query can now be canceled (It's supported by the library now) [#2124](https://github.com/BornToBeRoot/NETworkManager/pull/2124){:target="\_blank"}
+  - Common OID profiles have been added. You can now select a profile and the OID will be automatically filled in (similar to the port profiles). [#2167](https://github.com/BornToBeRoot/NETworkManager/pull/2167){:target="\_blank"}
   
 ## Improvements
 - WiFi
@@ -34,6 +35,7 @@ Release date: **xx.xx.2023**
   - Domain added to connect dialog [#2165](https://github.com/BornToBeRoot/NETworkManager/pull/2165){:target="\_blank"}
   - Domain added to credentials [#2108](https://github.com/BornToBeRoot/NETworkManager/pull/2108){:target="\_blank"}
 - SNMP
+  - Get request can query multiple OIDs at once now [#2167](https://github.com/BornToBeRoot/NETworkManager/pull/2167){:target="\_blank"}
   - SHA256, SHA384 and SHA512 for SNMPv3 auth added [#2166](https://github.com/BornToBeRoot/NETworkManager/pull/2166){:target="\_blank"}
   - AES192 and AES256 for SNMPv3 privacy added [#2166](https://github.com/BornToBeRoot/NETworkManager/pull/2166){:target="\_blank"}
 - Connections

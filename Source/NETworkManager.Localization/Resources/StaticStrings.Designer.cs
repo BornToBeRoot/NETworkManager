@@ -556,11 +556,29 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die system ähnelt.
+        /// </summary>
+        public static string ExampleSNMPMIB {
+            get {
+                return ResourceManager.GetString("ExampleSNMPMIB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die 1.3.6.1.2.1.1 ähnelt.
         /// </summary>
         public static string ExampleSNMPOID {
             get {
                 return ResourceManager.GetString("ExampleSNMPOID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1.3.6.1.2.1.1; 1.3.6.1.2.1.2 ähnelt.
+        /// </summary>
+        public static string ExampleSNMPOIDS {
+            get {
+                return ResourceManager.GetString("ExampleSNMPOIDS", resourceCulture);
             }
         }
         

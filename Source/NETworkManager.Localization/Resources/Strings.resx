@@ -3508,4 +3508,28 @@ Changes to this value will take effect after the application is restarted. Wheth
   <data name="CheckingWPSDots" xml:space="preserve">
     <value>Checking WPS...</value>
   </data>
+  <data name="OpenOIDProfilesDots" xml:space="preserve">
+    <value>Open OID profiles...</value>
+  </data>
+  <data name="MIB" xml:space="preserve">
+    <value>MIB</value>
+  </data>
+  <data name="OIDProfiles" xml:space="preserve">
+    <value>OID profiles</value>
+  </data>
+  <data name="SelectOIDProfile" xml:space="preserve">
+    <value>Select OID profile</value>
+  </data>
+  <data name="AddOIDProfile" xml:space="preserve">
+    <value>Add OID profile</value>
+  </data>
+  <data name="DeleteOIDProfile" xml:space="preserve">
+    <value>Delete OID profile</value>
+  </data>
+  <data name="DeleteOIDProfileMessage" xml:space="preserve">
+    <value>The selected OID profile will be deleted permanently.</value>
+  </data>
+  <data name="EditOIDProfile" xml:space="preserve">
+    <value>Edit OID profile</value>
+  </data>
 </root>

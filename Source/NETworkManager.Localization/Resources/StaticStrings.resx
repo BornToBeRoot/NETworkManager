@@ -336,4 +336,10 @@
   <data name="ExampleSsid" xml:space="preserve">
     <value>IoT-Devices</value>
   </data>
+  <data name="ExampleSNMPMIB" xml:space="preserve">
+    <value>system</value>
+  </data>
+  <data name="ExampleSNMPOIDS" xml:space="preserve">
+    <value>1.3.6.1.2.1.1; 1.3.6.1.2.1.2</value>
+  </data>
 </root>

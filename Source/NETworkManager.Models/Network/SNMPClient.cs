@@ -56,7 +56,7 @@ public partial class SNMPClient
     #endregion
 
     #region Methods
-    public void GetAsync(IPAddress ipAddress, string oid, SNMPOptions options)
+    public void GetAsync(IPAddress ipAddress, List<string> oids, SNMPOptions options)
     {
         Task.Run(async () =>
         {
@@ -65,7 +65,11 @@ public partial class SNMPClient
                 VersionCode version = options.Version == SNMPVersion.V1 ? VersionCode.V1 : VersionCode.V2;
                 IPEndPoint ipEndPoint = new(ipAddress, options.Port);
                 OctetString community = new(SecureStringHelper.ConvertToString(options.Community));
-                List<Variable> variables = new() { new(new ObjectIdentifier(oid)) };
+
+                List<Variable> variables = new();
+
+                foreach (var oid in oids)
+                    variables.Add(new Variable(new ObjectIdentifier(oid)));
 
                 var results = await Messenger.GetAsync(version, ipEndPoint, community, variables, options.CancellationToken);
 
@@ -87,7 +91,7 @@ public partial class SNMPClient
         }, options.CancellationToken);
     }
 
-    public void GetAsyncV3(IPAddress ipAddress, string oid, SNMPOptionsV3 options)
+    public void GetAsyncV3(IPAddress ipAddress, List<string> oids, SNMPOptionsV3 options)
     {
         Task.Run(async () =>
         {
@@ -95,8 +99,12 @@ public partial class SNMPClient
             {
                 IPEndPoint ipEndpoint = new(ipAddress, options.Port);
                 OctetString username = new(options.Username);
-                List<Variable> variables = new() { new Variable(new ObjectIdentifier(oid)) };
 
+                List<Variable> variables = new();
+                
+                foreach (var oid in oids)
+                    variables.Add(new Variable(new ObjectIdentifier(oid)));
+                
                 Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
                 ReportMessage report = await discovery.GetResponseAsync(ipEndpoint, options.CancellationToken);
 

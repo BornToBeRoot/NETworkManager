@@ -426,6 +426,7 @@ public partial class MainWindow : INotifyPropertyChanged
                 SettingsManager.Current.PortScanner_PortProfiles = new ObservableCollection<PortProfileInfo>(PortProfile.GetDefaultList());
                 SettingsManager.Current.DNSLookup_DNSServers_v2 = new ObservableCollection<DNSServerConnectionInfoProfile>(DNSServer.GetDefaultList());
                 SettingsManager.Current.AWSSessionManager_AWSProfiles = new ObservableCollection<AWSProfileInfo>(AWSProfile.GetDefaultList());
+                SettingsManager.Current.SNMP_OIDProfiles = new ObservableCollection<SNMPOIDProfileInfo>(SNMPOIDProfile.GetDefaultList());
                 SettingsManager.Current.SNTPLookup_SNTPServers = new ObservableCollection<ServerConnectionInfoProfile>(SNTPServer.GetDefaultList());
 
                 // Check if PowerShell is installed

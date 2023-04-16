@@ -20,6 +20,9 @@ using NETworkManager.Models.Export;
 using NETworkManager.Views;
 using System.Security;
 using System.Threading;
+using System.Threading.Tasks;
+using Lextm.SharpSnmpLib;
+using System.Security.Cryptography;
 
 namespace NETworkManager.ViewModels;
 
@@ -85,6 +88,9 @@ public class SNMPViewModel : ViewModelBase
 
             _mode = value;
             OnPropertyChanged();
+            
+            // Re-validate OID if mode changed
+            OnPropertyChanged(nameof(OID));
         }
     }
 
@@ -451,6 +457,14 @@ public class SNMPViewModel : ViewModelBase
         Work();
     }
 
+    public ICommand OpenMIBProfilesCommand => new RelayCommand(p => OpenMIBProfilesAction());
+
+
+    private void OpenMIBProfilesAction()
+    {
+        OpenMIBProfileSelection();
+    }
+
     public ICommand CopySelectedOIDCommand => new RelayCommand(p => CopySelectedOIDAction());
 
     private void CopySelectedOIDAction()
@@ -557,6 +571,22 @@ public class SNMPViewModel : ViewModelBase
         snmpClient.Canceled += Snmp_Canceled;
         snmpClient.Complete += Snmp_Complete;
 
+        string oidValue = OID.Replace(" ", "");
+
+        // Check if we have multiple OIDs for a Get request
+        List<string> oids = new();
+        
+        if(Mode == SNMPMode.Get && oidValue.Contains(';'))
+        {
+            foreach (var oid in oidValue.Split(';'))
+                oids.Add(oid);
+        }
+        else
+        {
+            oids.Add(oidValue);
+        }
+
+        // SNMPv1 or v2c
         if (Version != SNMPVersion.V3)
         {
             var snmpOptions = new SNMPOptions(
@@ -570,16 +600,17 @@ public class SNMPViewModel : ViewModelBase
             switch (Mode)
             {
                 case SNMPMode.Get:
-                    snmpClient.GetAsync(ipAddress, OID, snmpOptions);
+                    snmpClient.GetAsync(ipAddress, oids, snmpOptions);
                     break;
                 case SNMPMode.Walk:
-                    snmpClient.WalkAsync(ipAddress, OID, snmpOptions);
+                    snmpClient.WalkAsync(ipAddress, oids[0], snmpOptions);
                     break;
                 case SNMPMode.Set:
-                    snmpClient.SetAsync(ipAddress, OID, Data, snmpOptions);
+                    snmpClient.SetAsync(ipAddress, oids[0], Data, snmpOptions);
                     break;
             }
         }
+        // SNMPv3
         else
         {
             var snmpOptionsV3 = new SNMPOptionsV3(
@@ -597,13 +628,13 @@ public class SNMPViewModel : ViewModelBase
             switch (Mode)
             {
                 case SNMPMode.Get:
-                    snmpClient.GetAsyncV3(ipAddress, OID, snmpOptionsV3);
+                    snmpClient.GetAsyncV3(ipAddress, oids, snmpOptionsV3);
                     break;
                 case SNMPMode.Walk:
-                    snmpClient.WalkAsyncV3(ipAddress, OID, snmpOptionsV3);
+                    snmpClient.WalkAsyncV3(ipAddress, oids[0], snmpOptionsV3);
                     break;
                 case SNMPMode.Set:
-                    snmpClient.SetAsyncV3(ipAddress, OID, Data, snmpOptionsV3);
+                    snmpClient.SetAsyncV3(ipAddress, oids[0], Data, snmpOptionsV3);
                     break;
             }
         }
@@ -625,6 +656,32 @@ public class SNMPViewModel : ViewModelBase
     public void OnClose()
     {
 
+    }
+
+    private async Task OpenMIBProfileSelection()
+    {
+        var customDialog = new CustomDialog
+        {
+            Title = Localization.Resources.Strings.SelectOIDProfile
+        };
+
+        var viewModel = new SNMPOIDProfilesViewModel(async instance =>
+        {
+            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+            Mode = instance.SelectedOIDProfile.Mode;
+            OID = instance.SelectedOIDProfile.OID;
+        }, async instance =>
+        {
+            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+        });
+
+        customDialog.Content = new SNMPOIDProfilesDialog
+        {
+            DataContext = viewModel
+        };
+
+        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
     private void AddHostToHistory(string host)
