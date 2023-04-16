@@ -520,6 +520,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Add OID profile ähnelt.
+        /// </summary>
+        public static string AddOIDProfile {
+            get {
+                return ResourceManager.GetString("AddOIDProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Add port profile ähnelt.
         /// </summary>
         public static string AddPortProfile {
@@ -2376,6 +2385,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Delete OID profile ähnelt.
+        /// </summary>
+        public static string DeleteOIDProfile {
+            get {
+                return ResourceManager.GetString("DeleteOIDProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The selected OID profile will be deleted permanently. ähnelt.
+        /// </summary>
+        public static string DeleteOIDProfileMessage {
+            get {
+                return ResourceManager.GetString("DeleteOIDProfileMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Delete port profile ähnelt.
         /// </summary>
         public static string DeletePortProfile {
@@ -2903,6 +2930,15 @@ namespace NETworkManager.Localization.Resources {
         public static string EditGroupDots {
             get {
                 return ResourceManager.GetString("EditGroupDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Edit OID profile ähnelt.
+        /// </summary>
+        public static string EditOIDProfile {
+            get {
+                return ResourceManager.GetString("EditOIDProfile", resourceCulture);
             }
         }
         
@@ -5115,15 +5151,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die MIB profiles ähnelt.
-        /// </summary>
-        public static string MIBProfiles {
-            get {
-                return ResourceManager.GetString("MIBProfiles", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Microsoft Edge WebView2 Runtime is not available! ähnelt.
         /// </summary>
         public static string MicrosoftEdgeWebView2RuntimeIsNotAvailable {
@@ -5661,6 +5688,15 @@ namespace NETworkManager.Localization.Resources {
         public static string OID {
             get {
                 return ResourceManager.GetString("OID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die OID profiles ähnelt.
+        /// </summary>
+        public static string OIDProfiles {
+            get {
+                return ResourceManager.GetString("OIDProfiles", resourceCulture);
             }
         }
         

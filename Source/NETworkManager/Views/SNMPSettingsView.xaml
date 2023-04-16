@@ -9,15 +9,17 @@
         xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+        xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SNMPSettingsViewModel}">
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.SNMP}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBlock Text="{x:Static localization:Strings.MIBProfiles}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <DataGrid x:Name="DataGridMIBProfiles" ItemsSource="{Binding MIBProfiles}" SelectionMode="Single" SelectedItem="{Binding SelectedMIBProfile}" Height="200" Margin="0,0,0,10">
+        <TextBlock Text="{x:Static localization:Strings.OIDProfiles}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <DataGrid x:Name="DataGridOIDProfiles" ItemsSource="{Binding OIDProfiles}" SelectionMode="Single" SelectedItem="{Binding SelectedOIDProfile}" Height="200" Margin="0,0,0,10">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="RowContextMenu_OnOpened"  MinWidth="150">
-                    <MenuItem Header="{x:Static localization:Strings.EditDots}" Command="{Binding EditMIBProfileCommand}">
+                    <MenuItem Header="{x:Static localization:Strings.EditDots}" Command="{Binding EditOIDProfileCommand}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
@@ -26,7 +28,7 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.Delete}" Command="{Binding DeleteMIBProfileCommand}">
+                    <MenuItem Header="{x:Static localization:Strings.Delete}" Command="{Binding DeleteOIDProfileCommand}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
@@ -38,12 +40,12 @@
                 </ContextMenu>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (network:SNMPMIBProfileInfo.Name)}" MinWidth="200" Width="Auto" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.MIB}" Binding="{Binding (network:SNMPMIBProfileInfo.MIB)}" MinWidth="200" Width="*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (network:SNMPOIDProfileInfo.Name)}" MinWidth="200" Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.OID}" Binding="{Binding (network:SNMPOIDProfileInfo.OID)}" MinWidth="200" Width="*" />
             </DataGrid.Columns>
             <DataGrid.InputBindings>
-                <KeyBinding Command="{Binding EditMIBProfileCommand}" Key="F2" />
-                <KeyBinding Command="{Binding DeleteMIBProfileCommand}" Key="Delete" />
+                <KeyBinding Command="{Binding EditOIDProfileCommand}" Key="F2" />
+                <KeyBinding Command="{Binding DeleteOIDProfileCommand}" Key="Delete" />
             </DataGrid.InputBindings>
             <DataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
@@ -57,14 +59,14 @@
             </DataGrid.RowStyle>
         </DataGrid>
         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,0,0,10">
-            <Button Command="{Binding DeleteMIBProfileCommand}">
+            <Button Command="{Binding DeleteOIDProfileCommand}">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                         <Setter Property="IsEnabled" Value="False"/>
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding ElementName=DataGridMIBProfiles, Path=SelectedItems.Count}" Value="1" />
+                                    <Condition Binding="{Binding ElementName=DataGridOIDProfiles, Path=SelectedItems.Count}" Value="1" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="True"/>
@@ -88,14 +90,14 @@
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button Command="{Binding EditMIBProfileCommand}" Margin="10,0,0,0">
+            <Button Command="{Binding EditOIDProfileCommand}" Margin="10,0,0,0">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                         <Setter Property="IsEnabled" Value="False"/>
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding ElementName=DataGridMIBProfiles, Path=SelectedItems.Count}" Value="1" />
+                                    <Condition Binding="{Binding ElementName=DataGridOIDProfiles, Path=SelectedItems.Count}" Value="1" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="True"/>
@@ -119,7 +121,7 @@
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button Command="{Binding AddMIBProfileCommand}" Style="{StaticResource ImageWithTextButton}" Margin="10,0,0,0">
+            <Button Command="{Binding AddOIDProfileCommand}" Style="{StaticResource ImageWithTextButton}" Margin="10,0,0,0">
                 <Button.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>

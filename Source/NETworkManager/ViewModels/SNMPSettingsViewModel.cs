@@ -3,8 +3,10 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
+using NETworkManager.Views;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
@@ -21,16 +23,16 @@ public class SNMPSettingsViewModel : ViewModelBase
 
     public ICollectionView OIDProfiles { get; }
 
-    private SNMPOIDProfileInfo _selectedÓIDProfile = new();
+    private SNMPOIDProfileInfo _selectedOIDProfile = new();
     public SNMPOIDProfileInfo SelectedOIDProfile
     {
-        get => _selectedÓIDProfile;
+        get => _selectedOIDProfile;
         set
         {
-            if (value == _selectedÓIDProfile)
+            if (value == _selectedOIDProfile)
                 return;
 
-            _selectedÓIDProfile = value;
+            _selectedOIDProfile = value;
             OnPropertyChanged();
         }
     }
@@ -114,109 +116,103 @@ public class SNMPSettingsViewModel : ViewModelBase
     #endregion
 
     #region ICommand & Actions
-    public ICommand AddMIBProfileCommand => new RelayCommand(p => AddMIBProfileAction());
+    public ICommand AddOIDProfileCommand => new RelayCommand(p => AddOIDProfileAction());
 
-    private void AddMIBProfileAction()
+    private void AddOIDProfileAction()
     {
-        AddMIBProfile();
+        AddOIDProfile();
     }
 
-    public ICommand EditMIBProfileCommand => new RelayCommand(p => EditMIBProfileAction());
+    public ICommand EditOIDProfileCommand => new RelayCommand(p => EditOIDProfileAction());
 
-    private void EditMIBProfileAction()
+    private void EditOIDProfileAction()
     {
-        EditMIBProfile();
+        EditOIDProfile();
     }
 
-    public ICommand DeleteMIBProfileCommand => new RelayCommand(p => DeleteMIBProfileAction());
+    public ICommand DeleteOIDProfileCommand => new RelayCommand(p => DeleteOIDProfileAction());
 
-    private void DeleteMIBProfileAction()
+    private void DeleteOIDProfileAction()
     {
-        DeleteMIBProfile();
+        DeleteOIDProfile();
     }
     #endregion
 
     #region Methods       
-    public async Task AddMIBProfile()
+    public async Task AddOIDProfile()
     {
-        /*
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.AddPortProfile
+            Title = Localization.Resources.Strings.AddOIDProfile
         };
 
-        var viewModel = new PortProfileViewModel(instance =>
+        var viewModel = new SNMPOIDProfileViewModel(async instance =>
         {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            SettingsManager.Current.PortScanner_PortProfiles.Add(new PortProfileInfo(instance.Name, instance.Ports));
-        }, instance =>
+            SettingsManager.Current.SNMP_OIDProfiles.Add(new SNMPOIDProfileInfo(instance.Name, instance.OID));
+        }, async instance =>
         {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
         });
 
-        customDialog.Content = new PortProfileDialog
+        customDialog.Content = new SNMPOIDProfileDialog
         {
             DataContext = viewModel
         };
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        */
     }
 
-    public async Task EditMIBProfile()
+    public async Task EditOIDProfile()
     {
-        /*
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.EditPortProfile
+            Title = Localization.Resources.Strings.EditOIDProfile
         };
 
-        var viewModel = new PortProfileViewModel(instance =>
+        var viewModel = new SNMPOIDProfileViewModel(async instance =>
         {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            SettingsManager.Current.PortScanner_PortProfiles.Remove(SelectedPortProfile);
-            SettingsManager.Current.PortScanner_PortProfiles.Add(new PortProfileInfo(instance.Name, instance.Ports));
-        }, instance =>
+            SettingsManager.Current.SNMP_OIDProfiles.Remove(SelectedOIDProfile);
+            SettingsManager.Current.SNMP_OIDProfiles.Add(new SNMPOIDProfileInfo(instance.Name, instance.OID));
+        }, async instance =>
         {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, true, SelectedPortProfile);
+            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+        }, true, SelectedOIDProfile);
 
-        customDialog.Content = new PortProfileDialog
+        customDialog.Content = new SNMPOIDProfileDialog
         {
             DataContext = viewModel
         };
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        */
     }
 
-    public async Task DeleteMIBProfile()
-    {
-        /*
+    public async Task DeleteOIDProfile()
+    {        
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.DeletePortProfile
+            Title = Localization.Resources.Strings.DeleteOIDProfile
         };
 
         var confirmDeleteViewModel = new ConfirmDeleteViewModel(instance =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            SettingsManager.Current.PortScanner_PortProfiles.Remove(SelectedPortProfile);
+            SettingsManager.Current.SNMP_OIDProfiles.Remove(SelectedOIDProfile);
         }, instance =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, Localization.Resources.Strings.DeletePortProfileMessage);
+        }, Localization.Resources.Strings.DeleteOIDProfileMessage);
 
         customDialog.Content = new ConfirmDeleteDialog
         {
             DataContext = confirmDeleteViewModel
         };
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        */
+        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);        
     }
     #endregion
 }

@@ -23,6 +23,6 @@ public partial class SNMPSettingsView
 
     private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        _viewModel.EditMIBProfile();
+        _viewModel.EditOIDProfile();
     }
 }
