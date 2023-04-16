@@ -150,7 +150,7 @@ public class SNMPSettingsViewModel : ViewModelBase
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            SettingsManager.Current.SNMP_OIDProfiles.Add(new SNMPOIDProfileInfo(instance.Name, instance.OID));
+            SettingsManager.Current.SNMP_OIDProfiles.Add(new SNMPOIDProfileInfo(instance.Name, instance.OID, instance.Mode));
         }, async instance =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -176,7 +176,7 @@ public class SNMPSettingsViewModel : ViewModelBase
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
             SettingsManager.Current.SNMP_OIDProfiles.Remove(SelectedOIDProfile);
-            SettingsManager.Current.SNMP_OIDProfiles.Add(new SNMPOIDProfileInfo(instance.Name, instance.OID));
+            SettingsManager.Current.SNMP_OIDProfiles.Add(new SNMPOIDProfileInfo(instance.Name, instance.OID, instance.Mode));
         }, async instance =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);

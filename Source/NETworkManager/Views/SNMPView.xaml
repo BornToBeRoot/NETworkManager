@@ -45,11 +45,8 @@
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="1*" />
-
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="Auto" />
-
-
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="10" />
@@ -80,12 +77,29 @@
             <TextBlock Grid.Column="12" Grid.Row="0" Text="{x:Static localization:Strings.Mode}" Style="{StaticResource CenterTextBlock}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" />
             <ComboBox Grid.Column="14" Grid.Row="0" ItemsSource="{Binding Modes}" SelectedItem="{Binding Mode}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" />
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.OID}" Style="{StaticResource CenterTextBlock}" />
-            <ComboBox Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="3" x:Name="ComboBoxOID" Height="{Binding ElementName=ButtonQuery, Path=ActualHeight}" ItemsSource="{Binding OIDHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSNMPOID}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+            <ComboBox Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="3" x:Name="ComboBoxOID" Height="{Binding ElementName=ButtonQuery, Path=ActualHeight}" ItemsSource="{Binding OIDHistoryView}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}">
+                <ComboBox.Resources>
+                    <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
+                </ComboBox.Resources>
+                <ComboBox.Style>
+                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource HistoryComboBox}">
+                        <Setter Property="mah:TextBoxHelper.Watermark" Value="{x:Static localization:StaticStrings.ExampleSNMPOID}" />                     
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=Mode}" Value="Get">
+                                <Setter Property="mah:TextBoxHelper.Watermark" Value="{x:Static localization:StaticStrings.ExampleSNMPOIDS}" />                               
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ComboBox.Style>
                 <ComboBox.Text>
                     <Binding Path="OID" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            <validators:OIDValidator ValidatesOnTargetUpdated="True" />
+                            <validators:SNMPOIDValidator ValidatesOnTargetUpdated="True">
+                                <validators:SNMPOIDValidator.Wrapper>
+                                    <validators:SNMPOIDDependencyObjectWrapper Mode="{Binding Data.Mode, Source={StaticResource BindingProxy}}" />
+                                </validators:SNMPOIDValidator.Wrapper>
+                            </validators:SNMPOIDValidator>
                         </Binding.ValidationRules>
                     </Binding>
                 </ComboBox.Text>

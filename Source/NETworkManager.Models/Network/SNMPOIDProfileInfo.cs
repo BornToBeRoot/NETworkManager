@@ -1,4 +1,5 @@
-﻿namespace NETworkManager.Models.Network;
+﻿
+namespace NETworkManager.Models.Network;
 
 /// <summary>
 /// Class represents a SNMP MIB profile.
@@ -16,6 +17,11 @@ public class SNMPOIDProfileInfo
     public string OID { get; set; }
 
     /// <summary>
+    /// SNMP mode (Get, Walk, Set).
+    /// </summary>
+    public SNMPMode Mode { get; set; } = SNMPMode.Get;
+
+    /// <summary>
     /// Create new instance of the <see cref="SNMPOIDProfileInfo"/> class.
     /// </summary>
     public SNMPOIDProfileInfo()
@@ -28,9 +34,10 @@ public class SNMPOIDProfileInfo
     /// </summary>
     /// <param name="name">Name of the profile.</param>
     /// <param name="oid">Managed object identifier (MIB).</param>
-    public SNMPOIDProfileInfo(string name, string oid)
+    public SNMPOIDProfileInfo(string name, string oid, SNMPMode mode)
     {
         Name = name;
         OID = oid;
+        Mode = mode;
     }
 }

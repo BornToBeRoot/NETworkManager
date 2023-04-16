@@ -41,7 +41,8 @@
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (network:SNMPOIDProfileInfo.Name)}" MinWidth="200" Width="Auto" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.OID}" Binding="{Binding (network:SNMPOIDProfileInfo.OID)}" MinWidth="200" Width="*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.OID}" Binding="{Binding (network:SNMPOIDProfileInfo.OID)}" MinWidth="200" Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Mode}" Binding="{Binding (network:SNMPOIDProfileInfo.Mode)}" MinWidth="100" Width="*" />
             </DataGrid.Columns>
             <DataGrid.InputBindings>
                 <KeyBinding Command="{Binding EditOIDProfileCommand}" Key="F2" />

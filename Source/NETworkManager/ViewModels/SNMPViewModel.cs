@@ -86,6 +86,9 @@ public class SNMPViewModel : ViewModelBase
 
             _mode = value;
             OnPropertyChanged();
+            
+            // Re-validate OID if mode changed
+            OnPropertyChanged(nameof(OID));
         }
     }
 
@@ -647,6 +650,7 @@ public class SNMPViewModel : ViewModelBase
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
+            Mode = instance.SelectedOIDProfile.Mode;
             OID = instance.SelectedOIDProfile.OID;
         }, async instance =>
         {

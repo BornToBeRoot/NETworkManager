@@ -574,6 +574,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1.3.6.1.2.1.1; 1.3.6.1.2.1.2 ähnelt.
+        /// </summary>
+        public static string ExampleSNMPOIDS {
+            get {
+                return ResourceManager.GetString("ExampleSNMPOIDS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die snmp-user ähnelt.
         /// </summary>
         public static string ExampleSNMPUsername {

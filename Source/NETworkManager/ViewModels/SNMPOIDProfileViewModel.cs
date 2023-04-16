@@ -2,6 +2,8 @@
 using System;
 using System.Windows.Input;
 using NETworkManager.Models.Network;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NETworkManager.ViewModels;
 
@@ -49,6 +51,29 @@ public class SNMPOIDProfileViewModel : ViewModelBase
         }
     }
 
+    public List<SNMPMode> Modes { get; set; }
+
+    private SNMPMode _mode;
+    public SNMPMode Mode
+    {
+        get => _mode;
+        set
+        {
+            if (value == _mode)
+                return;
+
+            _mode = value;
+            
+            if (!_isLoading)
+                Validate();
+
+            OnPropertyChanged();
+            
+            // Re-validate OID if mode changed
+            OnPropertyChanged(nameof(OID));
+        }
+    }
+
     private readonly SNMPOIDProfileInfo _info;
 
     private bool _infoChanged;
@@ -86,18 +111,21 @@ public class SNMPOIDProfileViewModel : ViewModelBase
         SaveCommand = new RelayCommand(p => saveCommand(this));
         CancelCommand = new RelayCommand(p => cancelHandler(this));
 
+        Modes = new List<SNMPMode> { SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set };
+        
         IsEdited = isEdited;
 
         _info = info ?? new SNMPOIDProfileInfo();
 
         Name = _info.Name;
         OID = _info.OID;
+        Mode = Modes.FirstOrDefault(x => x == _info.Mode);
 
         _isLoading = false;
     }
 
     public void Validate()
     {
-        InfoChanged = _info.Name != Name || _info.OID != OID;
+        InfoChanged = _info.Name != Name || _info.OID != OID || _info.Mode != Mode;
     }
 }

@@ -21,6 +21,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (network:SNMPOIDProfileInfo.Name)}" Width="1*" />
                     <DataGridTextColumn Header="{x:Static localization:Strings.OID}" Binding="{Binding (network:SNMPOIDProfileInfo.OID)}" Width="2*" />
+                    <DataGridTextColumn Header="{x:Static localization:Strings.Mode}" Binding="{Binding (network:SNMPOIDProfileInfo.Mode)}" Width="1*" />
                 </DataGrid.Columns>
                 <DataGrid.InputBindings>
                     <KeyBinding Command="{Binding OKCommand}" Key="Return" />
