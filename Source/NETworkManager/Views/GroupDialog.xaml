@@ -93,23 +93,21 @@
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding (profiles:GroupViewInfo.Name)}" Value="{x:Static profiles:GroupViewName.RemoteDesktop}">
                                                         <Setter Property="Visibility" Value="Hidden" />
-                                                        <!--  <Setter Property="IsChecked" Value="{Binding DataContext.RemoteDesktop_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" /> -->
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding (profiles:GroupViewInfo.Name)}" Value="{x:Static profiles:GroupViewName.PowerShell}">
                                                         <Setter Property="Visibility" Value="Hidden" />
-                                                        <!--  <Setter Property="IsChecked" Value="{Binding DataContext.PowerShell_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" /> -->
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding (profiles:GroupViewInfo.Name)}" Value="{x:Static profiles:GroupViewName.PuTTY}">
                                                         <Setter Property="Visibility" Value="Hidden" />
-                                                        <!--  <Setter Property="IsChecked" Value="{Binding DataContext.PuTTY_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" /> -->
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding (profiles:GroupViewInfo.Name)}" Value="{x:Static profiles:GroupViewName.AWSSessionManager}">
                                                         <Setter Property="Visibility" Value="Hidden" />
-                                                        <!--  <Setter Property="IsChecked" Value="{Binding DataContext.PuTTY_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" /> -->
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding (profiles:GroupViewInfo.Name)}" Value="{x:Static profiles:GroupViewName.TigerVNC}">
                                                         <Setter Property="Visibility" Value="Hidden" />
-                                                        <!-- <Setter Property="IsChecked" Value="{Binding DataContext.TigerVNC_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" /> -->
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding (profiles:GroupViewInfo.Name)}" Value="{x:Static profiles:GroupViewName.SNMP}">
+                                                        <Setter Property="Visibility" Value="Hidden" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -702,7 +700,7 @@
                                     <ColumnDefinition Width="1*" />
                                     <ColumnDefinition Width="34" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Text="{x:Static localization:Strings.OverrideDefaultSettings}" Style="{StaticResource HeaderTextBlock}" Margin="0,10,0,0"/>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Text="{x:Static localization:Strings.OverrideDefaultSettings}" Style="{StaticResource HeaderTextBlock}" Margin="0"/>
                                 <Separator Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4" Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,0,0,10" />
                                 <CheckBox Grid.Column="0" Grid.Row="4" Content="{x:Static localization:Strings.Command}" IsChecked="{Binding PowerShell_OverrideCommand}" Style="{StaticResource DefaultCheckBox}" />
                                 <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding PowerShell_Command, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding PowerShell_OverrideCommand}" Style="{StaticResource DefaultTextBox}" />
@@ -749,7 +747,7 @@
                                     <ColumnDefinition Width="1*" />
                                     <ColumnDefinition Width="34" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Text="{x:Static localization:Strings.OverrideDefaultSettings}" Style="{StaticResource HeaderTextBlock}" Margin="0,10,0,0"/>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Text="{x:Static localization:Strings.OverrideDefaultSettings}" Style="{StaticResource HeaderTextBlock}" Margin="0"/>
                                 <Separator Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4" Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,0,0,10" />
                                 <CheckBox Grid.Column="0" Grid.Row="4" Content="{x:Static localization:Strings.Username}" IsChecked="{Binding PuTTY_OverrideUsername}" Style="{StaticResource DefaultCheckBox}" />
                                 <TextBox Grid.Column="2" Grid.Row="4" x:Name="TextBoxPuTTYUsername"  mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleUsername}" IsEnabled="{Binding PuTTY_OverrideUsername}">
@@ -836,7 +834,7 @@
                                     <ColumnDefinition Width="1*" />
                                     <ColumnDefinition Width="34" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Text="{x:Static localization:Strings.OverrideDefaultSettings}" Style="{StaticResource HeaderTextBlock}" Margin="0,10,0,0"/>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Text="{x:Static localization:Strings.OverrideDefaultSettings}" Style="{StaticResource HeaderTextBlock}" Margin="0"/>
                                 <Separator Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4" Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,0,0,10" />
                                 <CheckBox Grid.Column="0" Grid.Row="4" Content="{x:Static localization:Strings.Profile}" IsChecked="{Binding AWSSessionManager_OverrideProfile}" Style="{StaticResource DefaultCheckBox}" />
                                 <TextBox x:Name="TextBoxAWSSessionManagerProfile" Grid.Column="2" Grid.Row="4" IsEnabled="{Binding AWSSessionManager_OverrideProfile}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleAWSProfile}">
@@ -884,7 +882,7 @@
                                     <ColumnDefinition Width="1*" />
                                     <ColumnDefinition Width="34" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Text="{x:Static localization:Strings.OverrideDefaultSettings}" Style="{StaticResource HeaderTextBlock}" Margin="0,10,0,0"/>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Text="{x:Static localization:Strings.OverrideDefaultSettings}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
                                 <Separator Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4" Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,0,0,10" />
                                 <CheckBox Grid.Column="0" Grid.Row="4" Content="{x:Static localization:Strings.Port}" IsChecked="{Binding TigerVNC_OverridePort}" Style="{StaticResource DefaultCheckBox}" />
                                 <TextBox x:Name="TextBoxTigerVNCPort" Grid.Column="2" Grid.Row="4" IsEnabled="{Binding TigerVNC_OverridePort}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort5900}">
@@ -897,6 +895,46 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem Header="{x:Static localization:Strings.SNMP}">
+                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Disabled">
+                        <StackPanel Margin="0,0,0,20">
+                            <Grid>
+                                <Grid.Resources>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                                </Grid.Resources>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="34" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Text="{x:Static localization:Strings.OverrideDefaultSettings}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
+                                <Separator Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4" Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,0,0,10" />
+                                <!--
+                                <CheckBox Grid.Column="0" Grid.Row="4" Content="{x:Static localization:Strings.Port}" IsChecked="{Binding TigerVNC_OverridePort}" Style="{StaticResource DefaultCheckBox}" />
+                                <TextBox x:Name="TextBoxTigerVNCPort" Grid.Column="2" Grid.Row="4" IsEnabled="{Binding TigerVNC_OverridePort}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort5900}">
+                                    <TextBox.Text>
+                                        <Binding Path="TigerVNC_Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:PortValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                -->
                             </Grid>
                         </StackPanel>
                     </ScrollViewer>

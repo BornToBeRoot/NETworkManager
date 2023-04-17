@@ -148,7 +148,7 @@
                         </ToggleButton>
                         <TextBox x:Name="TextBoxSearch" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}">
                             <TextBox.InputBindings>
-                                <KeyBinding Command="{Binding TraceProfileCommand}" Key="Enter" />
+                                <KeyBinding Command="{Binding QueryProfileCommand}" Key="Enter" />
                             </TextBox.InputBindings>
                         </TextBox>
                         <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource CleanButton}" Command="{Binding AddProfileCommand}" ToolTip="{x:Static localization:Strings.AddProfileDots}">
@@ -183,7 +183,7 @@
                         </ListBox.ItemsPanel>
                         <ListBox.Resources>
                             <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                                <MenuItem Header="{x:Static localization:Strings.Trace}" Command="{Binding TraceProfileCommand}">
+                                <MenuItem Header="{x:Static localization:Strings.Query}" Command="{Binding QueryProfileCommand}">
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                             <Rectangle.OpacityMask>
@@ -224,7 +224,7 @@
                         <ListBox.InputBindings>
                             <KeyBinding Command="{Binding EditProfileCommand}" Key="F2" />
                             <KeyBinding Command="{Binding DeleteProfileCommand}" Key="Delete" />
-                            <KeyBinding Command="{Binding TraceProfileCommand}" Key="Enter" />
+                            <KeyBinding Command="{Binding QueryProfileCommand}" Key="Enter" />
                         </ListBox.InputBindings>
                         <ListBox.GroupStyle>
                             <GroupStyle>

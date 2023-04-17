@@ -4,8 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Net;
-using System.Net.Sockets;
 using System.Windows.Data;
 using System.Windows.Input;
 using NETworkManager.Models.PowerShell;
@@ -14,7 +12,6 @@ using NETworkManager.Profiles;
 using NETworkManager.Models.PuTTY;
 using System.Security;
 using NETworkManager.Models;
-using Microsoft.PowerShell.Commands;
 
 namespace NETworkManager.ViewModels;
 
@@ -2283,6 +2280,51 @@ public class ProfileViewModel : ViewModelBase
     }
     #endregion
 
+    #region SNMP
+    private bool _snmp_Enabled;
+    public bool SNMP_Enabled
+    {
+        get => _snmp_Enabled;
+        set
+        {
+            if (value == _snmp_Enabled)
+                return;
+
+            _snmp_Enabled = value;
+
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _snmp_InheritHost;
+    public bool SNMP_InheritHost
+    {
+        get => _snmp_InheritHost;
+        set
+        {
+            if (value == _snmp_InheritHost)
+                return;
+
+            _snmp_InheritHost = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _snmp_Host;
+    public string SNMP_Host
+    {
+        get => _snmp_Host;
+        set
+        {
+            if (value == _snmp_Host)
+                return;
+
+            _snmp_Host = value;
+            OnPropertyChanged();
+        }
+    }
+    #endregion
+
     #region Wake on LAN
     private bool _wakeOnLAN_Enabled;
     public bool WakeOnLAN_Enabled
@@ -2606,6 +2648,11 @@ public class ProfileViewModel : ViewModelBase
         // Web Console
         WebConsole_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.WebConsole : profileInfo.WebConsole_Enabled;
         WebConsole_Url = profileInfo.WebConsole_Url;
+
+        // SNMP
+        SNMP_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.SNMP : profileInfo.SNMP_Enabled;
+        SNMP_InheritHost = profileInfo.SNMP_InheritHost;
+        SNMP_Host = profileInfo.SNMP_Host;
 
         // Wake on LAN
         WakeOnLAN_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.WakeOnLAN : profileInfo.WakeOnLAN_Enabled;

@@ -1535,10 +1535,12 @@ public class GroupViewModel : ViewModelBase
         AWSSessionManager_OverrideRegion = groupInfo.AWSSessionManager_OverrideRegion;
         AWSSessionManager_Region = groupInfo.AWSSessionManager_Region;
 
-
         // TigerVNC
         TigerVNC_OverridePort = groupInfo.TigerVNC_OverridePort;
         TigerVNC_Port = groupInfo.TigerVNC_OverridePort ? groupInfo.TigerVNC_Port : SettingsManager.Current.TigerVNC_Port;
+
+        // SNMP
+
 
         _isLoading = false;
     }

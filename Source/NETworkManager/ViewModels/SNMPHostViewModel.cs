@@ -204,14 +204,14 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
 
     private void QueryProfileAction()
     {
-        AddTab(SelectedProfile.Traceroute_Host);
+        AddTab(SelectedProfile.SNMP_Host);
     }
 
     public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.Traceroute);
+        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.SNMP);
     }
 
     private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamic;
@@ -312,7 +312,7 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
 
     private void SetProfilesView(ProfileInfo profile = null)
     {
-        Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.Traceroute_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name) }.View;
+        Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.SNMP_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name) }.View;
 
         Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
 
@@ -332,8 +332,8 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
                 return !string.IsNullOrEmpty(info.Tags) && info.PingMonitor_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
             */
 
-            // Search by: Name, Traceroute_Host
-            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.Traceroute_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
+            // Search by: Name, SNMP_Host
+            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.SNMP_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
         // Set specific profile or first if null

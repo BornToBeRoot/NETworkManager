@@ -393,6 +393,11 @@ public static class ProfileDialogManager
             WebConsole_Enabled = instance.WebConsole_Enabled,
             WebConsole_Url = instance.WebConsole_Url,
 
+            // SNMP
+            SNMP_Enabled = instance.SNMP_Enabled,
+            SNMP_InheritHost = instance.SNMP_InheritHost,
+            SNMP_Host = instance.SNMP_InheritHost ? instance.Host?.Trim() : instance.SNMP_Host?.Trim(),
+
             // Wake on LAN
             WakeOnLAN_Enabled = instance.WakeOnLAN_Enabled,
             WakeOnLAN_MACAddress = instance.WakeOnLAN_MACAddress?.Trim(),

@@ -194,6 +194,10 @@ public class ProfileInfo
     public bool WebConsole_Enabled { get; set; }
     public string WebConsole_Url { get; set; }
 
+    public bool SNMP_Enabled { get; set; }
+    public bool SNMP_InheritHost { get; set; } = true;
+    public string SNMP_Host { get; set; }
+
     public bool WakeOnLAN_Enabled { get; set; }
     public string WakeOnLAN_MACAddress { get; set; }
     public string WakeOnLAN_Broadcast { get; set; }
@@ -388,6 +392,11 @@ public class ProfileInfo
         // WebConsole
         WebConsole_Enabled = profile.WebConsole_Enabled;
         WebConsole_Url = profile.WebConsole_Url;
+
+        // SNMP
+        SNMP_Enabled = profile.SNMP_Enabled;
+        SNMP_InheritHost = profile.SNMP_InheritHost;
+        SNMP_Host = profile.SNMP_Host;
 
         // Wake on LAN
         WakeOnLAN_Enabled = profile.WakeOnLAN_Enabled;
