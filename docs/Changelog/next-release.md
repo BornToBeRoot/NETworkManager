@@ -58,6 +58,7 @@ Release date: **xx.xx.2023**
 - Update documentation for:
   - Application > WiFi [#2133](https://github.com/BornToBeRoot/NETworkManager/pull/2133){:target="\_blank"}
 - Add documentation for:
+  - Application > Discovery Protocol [#2178](https://github.com/BornToBeRoot/NETworkManager/pull/2178){:target="\_blank"}
   - Application > Lookup [#2112](https://github.com/BornToBeRoot/NETworkManager/pull/2112){:target="\_blank"}
   - Application > Connections [#2109](https://github.com/BornToBeRoot/NETworkManager/pull/2109){:target="\_blank"}
   - Application > Listerers [#2109](https://github.com/BornToBeRoot/NETworkManager/pull/2109){:target="\_blank"}
