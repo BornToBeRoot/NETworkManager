@@ -12,6 +12,7 @@ List of all contributors.
 - Freeman2016
 - EBWeist
 - mdawsonuk
+- Sahnreis
 
 ## Translators / reviewers on Transifex
 
