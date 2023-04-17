@@ -56,7 +56,7 @@ public partial class SNMPClient
     #endregion
 
     #region Methods
-    public void GetAsync(IPAddress ipAddress, string oid, SNMPOptions options)
+    public void GetAsync(IPAddress ipAddress, List<string> oids, SNMPOptions options)
     {
         Task.Run(async () =>
         {
@@ -65,7 +65,11 @@ public partial class SNMPClient
                 VersionCode version = options.Version == SNMPVersion.V1 ? VersionCode.V1 : VersionCode.V2;
                 IPEndPoint ipEndPoint = new(ipAddress, options.Port);
                 OctetString community = new(SecureStringHelper.ConvertToString(options.Community));
-                List<Variable> variables = new() { new(new ObjectIdentifier(oid)) };
+
+                List<Variable> variables = new();
+
+                foreach (var oid in oids)
+                    variables.Add(new Variable(new ObjectIdentifier(oid)));
 
                 var results = await Messenger.GetAsync(version, ipEndPoint, community, variables, options.CancellationToken);
 
@@ -87,7 +91,7 @@ public partial class SNMPClient
         }, options.CancellationToken);
     }
 
-    public void GetAsyncV3(IPAddress ipAddress, string oid, SNMPOptionsV3 options)
+    public void GetAsyncV3(IPAddress ipAddress, List<string> oids, SNMPOptionsV3 options)
     {
         Task.Run(async () =>
         {
@@ -95,8 +99,12 @@ public partial class SNMPClient
             {
                 IPEndPoint ipEndpoint = new(ipAddress, options.Port);
                 OctetString username = new(options.Username);
-                List<Variable> variables = new() { new Variable(new ObjectIdentifier(oid)) };
 
+                List<Variable> variables = new();
+                
+                foreach (var oid in oids)
+                    variables.Add(new Variable(new ObjectIdentifier(oid)));
+                
                 Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
                 ReportMessage report = await discovery.GetResponseAsync(ipEndpoint, options.CancellationToken);
 
@@ -182,7 +190,7 @@ public partial class SNMPClient
                 IPrivacyProvider privacy = GetPrivacyProvider(options);
 
                 var results = new List<Variable>();
-                
+
                 await Messenger.BulkWalkAsync(VersionCode.V3, ipEndpoint, username, OctetString.Empty, table, results, 10, options.WalkMode, privacy, report, options.CancellationToken);
 
                 foreach (var result in results)
@@ -298,20 +306,27 @@ public partial class SNMPClient
     // authPriv
     private static IPrivacyProvider GetPrivacyProvider(SNMPV3AuthenticationProvider authProvider, string auth, SNMPV3PrivacyProvider privProvider, string priv)
     {
-        IAuthenticationProvider authenticationProvider;
-
-        if (privProvider == SNMPV3PrivacyProvider.DES)
-            return new DESPrivacyProvider(new OctetString(priv), GetAuthenticationProvider(authProvider, auth));
-
-        return new AESPrivacyProvider(new OctetString(priv), GetAuthenticationProvider(authProvider, auth));
+        return privProvider switch
+        {
+            SNMPV3PrivacyProvider.DES => new DESPrivacyProvider(new OctetString(priv), GetAuthenticationProvider(authProvider, auth)),
+            SNMPV3PrivacyProvider.AES => new AESPrivacyProvider(new OctetString(priv), GetAuthenticationProvider(authProvider, auth)),
+            SNMPV3PrivacyProvider.AES192 => new AES192PrivacyProvider(new OctetString(priv), GetAuthenticationProvider(authProvider, auth)),
+            SNMPV3PrivacyProvider.AES256 => new AES256PrivacyProvider(new OctetString(priv), GetAuthenticationProvider(authProvider, auth)),
+            _ => null,
+        };
     }
 
     private static IAuthenticationProvider GetAuthenticationProvider(SNMPV3AuthenticationProvider authProvider, string auth)
     {
-        if (authProvider == SNMPV3AuthenticationProvider.MD5)
-            return new MD5AuthenticationProvider(new OctetString(auth));
-
-        return new SHA1AuthenticationProvider(new OctetString(auth));
+        return authProvider switch
+        {
+            SNMPV3AuthenticationProvider.MD5 => new MD5AuthenticationProvider(new OctetString(auth)),
+            SNMPV3AuthenticationProvider.SHA1 => new SHA1AuthenticationProvider(new OctetString(auth)),
+            SNMPV3AuthenticationProvider.SHA256 => new SHA256AuthenticationProvider(new OctetString(auth)),
+            SNMPV3AuthenticationProvider.SHA384 => new SHA384AuthenticationProvider(new OctetString(auth)),
+            SNMPV3AuthenticationProvider.SHA512 => new SHA512AuthenticationProvider(new OctetString(auth)),
+            _ => null,
+        };
     }
     #endregion
 }

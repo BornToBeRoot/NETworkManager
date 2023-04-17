@@ -1,7 +1,16 @@
 ﻿using Lextm.SharpSnmpLib.Messaging;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Models.Network;
 using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Data;
+using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
@@ -9,7 +18,25 @@ public class SNMPSettingsViewModel : ViewModelBase
 {
     #region Variables
     private readonly bool _isLoading;
-            
+
+    private readonly IDialogCoordinator _dialogCoordinator;
+
+    public ICollectionView OIDProfiles { get; }
+
+    private SNMPOIDProfileInfo _selectedOIDProfile = new();
+    public SNMPOIDProfileInfo SelectedOIDProfile
+    {
+        get => _selectedOIDProfile;
+        set
+        {
+            if (value == _selectedOIDProfile)
+                return;
+
+            _selectedOIDProfile = value;
+            OnPropertyChanged();
+        }
+    }
+
     public List<WalkMode> WalkModes { get; set; }
 
     private WalkMode _walkMode;
@@ -65,9 +92,14 @@ public class SNMPSettingsViewModel : ViewModelBase
     #endregion
 
     #region Contructor, load settings
-    public SNMPSettingsViewModel()
+    public SNMPSettingsViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
+
+        _dialogCoordinator = instance;
+
+        OIDProfiles = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_OIDProfiles);
+        OIDProfiles.SortDescriptions.Add(new SortDescription(nameof(SNMPOIDProfileInfo.Name), ListSortDirection.Ascending));
 
         LoadSettings();
 
@@ -80,6 +112,107 @@ public class SNMPSettingsViewModel : ViewModelBase
         WalkMode = WalkModes.First(x => x == SettingsManager.Current.SNMP_WalkMode);
         Timeout = SettingsManager.Current.SNMP_Timeout;
         Port = SettingsManager.Current.SNMP_Port;
+    }
+    #endregion
+
+    #region ICommand & Actions
+    public ICommand AddOIDProfileCommand => new RelayCommand(p => AddOIDProfileAction());
+
+    private void AddOIDProfileAction()
+    {
+        AddOIDProfile();
+    }
+
+    public ICommand EditOIDProfileCommand => new RelayCommand(p => EditOIDProfileAction());
+
+    private void EditOIDProfileAction()
+    {
+        EditOIDProfile();
+    }
+
+    public ICommand DeleteOIDProfileCommand => new RelayCommand(p => DeleteOIDProfileAction());
+
+    private void DeleteOIDProfileAction()
+    {
+        DeleteOIDProfile();
+    }
+    #endregion
+
+    #region Methods       
+    public async Task AddOIDProfile()
+    {
+        var customDialog = new CustomDialog
+        {
+            Title = Localization.Resources.Strings.AddOIDProfile
+        };
+
+        var viewModel = new SNMPOIDProfileViewModel(async instance =>
+        {
+            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+            SettingsManager.Current.SNMP_OIDProfiles.Add(new SNMPOIDProfileInfo(instance.Name, instance.OID, instance.Mode));
+        }, async instance =>
+        {
+            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+        });
+
+        customDialog.Content = new SNMPOIDProfileDialog
+        {
+            DataContext = viewModel
+        };
+
+        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+    }
+
+    public async Task EditOIDProfile()
+    {
+        var customDialog = new CustomDialog
+        {
+            Title = Localization.Resources.Strings.EditOIDProfile
+        };
+
+        var viewModel = new SNMPOIDProfileViewModel(async instance =>
+        {
+            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+            SettingsManager.Current.SNMP_OIDProfiles.Remove(SelectedOIDProfile);
+            SettingsManager.Current.SNMP_OIDProfiles.Add(new SNMPOIDProfileInfo(instance.Name, instance.OID, instance.Mode));
+        }, async instance =>
+        {
+            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+        }, true, SelectedOIDProfile);
+
+        customDialog.Content = new SNMPOIDProfileDialog
+        {
+            DataContext = viewModel
+        };
+
+        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+    }
+
+    public async Task DeleteOIDProfile()
+    {        
+        var customDialog = new CustomDialog
+        {
+            Title = Localization.Resources.Strings.DeleteOIDProfile
+        };
+
+        var confirmDeleteViewModel = new ConfirmDeleteViewModel(instance =>
+        {
+            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+            SettingsManager.Current.SNMP_OIDProfiles.Remove(SelectedOIDProfile);
+        }, instance =>
+        {
+            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+        }, Localization.Resources.Strings.DeleteOIDProfileMessage);
+
+        customDialog.Content = new ConfirmDeleteDialog
+        {
+            DataContext = confirmDeleteViewModel
+        };
+
+        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);        
     }
     #endregion
 }
