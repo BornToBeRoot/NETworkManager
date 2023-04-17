@@ -99,6 +99,17 @@ public class WhoisViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
+    public string RequiredInput
+    {
+        get 
+        {
+            if (SettingsManager.Current.Whois_UseRipe)
+                return Strings.IPAddress;
+            else
+                return Strings.Domain;
+        }
+    }
     #endregion
 
     #region Contructor, load settings
@@ -210,17 +221,24 @@ public class WhoisViewModel : ViewModelBase
         {
             var whoisServer = Whois.GetWhoisServer(Domain);
 
-            if (string.IsNullOrEmpty(whoisServer))
+            if (SettingsManager.Current.Whois_UseRipe)
             {
-                StatusMessage = string.Format(Strings.WhoisServerNotFoundForTheDomain, Domain);
-                IsStatusMessageDisplayed = true;
+                var response = await RipeLookup.QueryAsync(Domain);
+                WhoisResult = response.ToString();
             }
             else
             {
-                WhoisResult = await Whois.QueryAsync(Domain, whoisServer);
-
-                AddDomainToHistory(Domain);
+                if (string.IsNullOrEmpty(whoisServer))
+                {
+                    StatusMessage = string.Format(Strings.WhoisServerNotFoundForTheDomain, Domain);
+                    IsStatusMessageDisplayed = true;
+                }
+                else
+                {
+                    WhoisResult = await Whois.QueryAsync(Domain, whoisServer);
+                }
             }
+            AddDomainToHistory(Domain);
         }
         catch (Exception ex)
         {
