@@ -2442,6 +2442,7 @@ public class ProfileViewModel : ViewModelBase
         }
     }
     #endregion
+    
     #endregion
     public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler, IReadOnlyCollection<string> groups, string group = null, ProfileEditMode editMode = ProfileEditMode.Add, ProfileInfo profile = null, ApplicationName applicationName = ApplicationName.None)
     {

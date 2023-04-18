@@ -537,7 +537,18 @@ public static class ProfileDialogManager
 
             // TigerVNC
             TigerVNC_OverridePort = instance.TigerVNC_OverridePort,
-            TigerVNC_Port = instance.TigerVNC_Port
+            TigerVNC_Port = instance.TigerVNC_Port,
+
+            // SNMP
+            SNMP_OverrideOIDAndMode = instance.SNMP_OverrideOIDAndMode,
+            SNMP_OID = instance.SNMP_OID,
+            SNMP_Mode = instance.SNMP_Mode,
+            SNMP_OverrideVersionAndAuth = instance.SNMP_OverrideVersionAndAuth,
+            SNMP_Version = instance.SNMP_Version,
+            SNMP_Security = instance.SNMP_Security,
+            SNMP_Username = instance.SNMP_Username,
+            SNMP_AuthenticationProvider = instance.SNMP_AuthenticationProvider,
+            SNMP_PrivacyProvider = instance.SNMP_PrivacyProvider,
         };
     }
     #endregion

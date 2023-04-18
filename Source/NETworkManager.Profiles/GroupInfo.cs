@@ -1,4 +1,5 @@
-﻿using NETworkManager.Models.PowerShell;
+﻿using NETworkManager.Models.Network;
+using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
@@ -100,7 +101,7 @@ public class GroupInfo
     public bool PowerShell_OverrideAdditionalCommandLine { get; set; }
     public string PowerShell_AdditionalCommandLine { get; set; }
     public bool PowerShell_OverrideExecutionPolicy { get; set; }
-    public PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy { get; set; }
+    public PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy { get; set; } = GlobalStaticConfiguration.PowerShell_ExecutionPolicy;
 
     public bool PuTTY_OverrideUsername { get; set; }
     public string PuTTY_Username { get; set; }
@@ -127,6 +128,15 @@ public class GroupInfo
     public bool TigerVNC_OverridePort { get; set; }
     public int TigerVNC_Port { get; set; }
 
+    public bool SNMP_OverrideOIDAndMode { get; set; }
+    public string SNMP_OID { get; set; }
+    public SNMPMode SNMP_Mode { get; set; } = GlobalStaticConfiguration.SNMP_Mode;
+    public bool SNMP_OverrideVersionAndAuth { get; set; }
+    public SNMPVersion SNMP_Version { get; set; } = GlobalStaticConfiguration.SNMP_Version;
+    public SNMPV3Security SNMP_Security { get; set; } = GlobalStaticConfiguration.SNMP_Security;
+    public string SNMP_Username { get; set; }
+    public SNMPV3AuthenticationProvider SNMP_AuthenticationProvider { get; set; } = GlobalStaticConfiguration.SNMP_AuthenticationProvider;
+    public SNMPV3PrivacyProvider SNMP_PrivacyProvider { get; set; } = GlobalStaticConfiguration.SNMP_PrivacyProvider;
 
     /// <summary>
     /// Initializes a new instance of the<see cref="GroupInfo"/> class.
@@ -255,5 +265,16 @@ public class GroupInfo
         // TigerVNC
         TigerVNC_OverridePort = group.TigerVNC_OverridePort;
         TigerVNC_Port = group.TigerVNC_Port;
+
+        // SNMP
+        SNMP_OverrideOIDAndMode = group.SNMP_OverrideOIDAndMode;
+        SNMP_OID = group.SNMP_OID;
+        SNMP_Mode = group.SNMP_Mode;
+        SNMP_OverrideVersionAndAuth = group.SNMP_OverrideVersionAndAuth;
+        SNMP_Version = group.SNMP_Version;
+        SNMP_Security = group.SNMP_Security;
+        SNMP_Username = group.SNMP_Username;
+        SNMP_AuthenticationProvider = group.SNMP_AuthenticationProvider;
+        SNMP_PrivacyProvider = group.SNMP_PrivacyProvider;
     }
 }

@@ -21,8 +21,6 @@ using NETworkManager.Views;
 using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
-using Lextm.SharpSnmpLib;
-using System.Security.Cryptography;
 
 namespace NETworkManager.ViewModels;
 
@@ -53,26 +51,7 @@ public class SNMPViewModel : ViewModelBase
 
     public ICollectionView HostHistoryView { get; }
 
-    public List<SNMPVersion> Versions { get; set; }
-
-    private SNMPVersion _version;
-    public SNMPVersion Version
-    {
-        get => _version;
-        set
-        {
-            if (value == _version)
-                return;
-
-            if (!_isLoading)
-                SettingsManager.Current.SNMP_Version = value;
-
-            _version = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public List<SNMPMode> Modes { get; set; }
+    public IEnumerable<SNMPMode> Modes { get; set; }
 
     private SNMPMode _mode;
     public SNMPMode Mode
@@ -88,9 +67,28 @@ public class SNMPViewModel : ViewModelBase
 
             _mode = value;
             OnPropertyChanged();
-            
+
             // Re-validate OID if mode changed
             OnPropertyChanged(nameof(OID));
+        }
+    }
+
+    public IEnumerable<SNMPVersion> Versions { get; }
+
+    private SNMPVersion _version;
+    public SNMPVersion Version
+    {
+        get => _version;
+        set
+        {
+            if (value == _version)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.SNMP_Version = value;
+
+            _version = value;
+            OnPropertyChanged();
         }
     }
 
@@ -110,7 +108,7 @@ public class SNMPViewModel : ViewModelBase
 
     public ICollectionView OIDHistoryView { get; }
 
-    public List<SNMPV3Security> Securitys { get; set; }
+    public IEnumerable<SNMPV3Security> Securities { get; }
 
     private SNMPV3Security _security;
     public SNMPV3Security Security
@@ -177,7 +175,7 @@ public class SNMPViewModel : ViewModelBase
         }
     }
 
-    public List<SNMPV3AuthenticationProvider> AuthenticationProviders { get; set; }
+    public IEnumerable<SNMPV3AuthenticationProvider> AuthenticationProviders { get; }
 
     private SNMPV3AuthenticationProvider _authenticationProvider;
     public SNMPV3AuthenticationProvider AuthenticationProvider
@@ -230,7 +228,7 @@ public class SNMPViewModel : ViewModelBase
         }
     }
 
-    public List<SNMPV3PrivacyProvider> PrivacyProviders { get; set; }
+    public IEnumerable<SNMPV3PrivacyProvider> PrivacyProviders { get; }
 
     private SNMPV3PrivacyProvider _privacyProvider;
     public SNMPV3PrivacyProvider PrivacyProvider
@@ -416,14 +414,14 @@ public class SNMPViewModel : ViewModelBase
         QueryResultsView = CollectionViewSource.GetDefaultView(QueryResults);
         QueryResultsView.SortDescriptions.Add(new SortDescription(nameof(SNMPReceivedInfo.OID), ListSortDirection.Ascending));
 
-        // Versions (v1, v2c, v3)
-        Versions = Enum.GetValues(typeof(SNMPVersion)).Cast<SNMPVersion>().ToList();
-
         // Modes
         Modes = new List<SNMPMode> { SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set };
 
+        // Versions (v1, v2c, v3)
+        Versions = Enum.GetValues(typeof(SNMPVersion)).Cast<SNMPVersion>().ToList();
+
         // Security
-        Securitys = new List<SNMPV3Security> { SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv };
+        Securities = new List<SNMPV3Security> { SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv };
 
         // Auth / Priv
         AuthenticationProviders = Enum.GetValues(typeof(SNMPV3AuthenticationProvider)).Cast<SNMPV3AuthenticationProvider>().ToList();
@@ -439,9 +437,9 @@ public class SNMPViewModel : ViewModelBase
 
     private void LoadSettings()
     {
-        Version = Versions.FirstOrDefault(x => x == SettingsManager.Current.SNMP_Version);
         Mode = Modes.FirstOrDefault(x => x == SettingsManager.Current.SNMP_Mode);
-        Security = Securitys.FirstOrDefault(x => x == SettingsManager.Current.SNMP_Security);
+        Version = Versions.FirstOrDefault(x => x == SettingsManager.Current.SNMP_Version);
+        Security = Securities.FirstOrDefault(x => x == SettingsManager.Current.SNMP_Security);
         AuthenticationProvider = AuthenticationProviders.FirstOrDefault(x => x == SettingsManager.Current.SNMP_AuthenticationProvider);
         PrivacyProvider = PrivacyProviders.FirstOrDefault(x => x == SettingsManager.Current.SNMP_PrivacyProvider);
     }
@@ -575,8 +573,8 @@ public class SNMPViewModel : ViewModelBase
 
         // Check if we have multiple OIDs for a Get request
         List<string> oids = new();
-        
-        if(Mode == SNMPMode.Get && oidValue.Contains(';'))
+
+        if (Mode == SNMPMode.Get && oidValue.Contains(';'))
         {
             foreach (var oid in oidValue.Split(';'))
                 oids.Add(oid);

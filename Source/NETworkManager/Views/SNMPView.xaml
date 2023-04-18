@@ -72,10 +72,10 @@
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
-            <TextBlock Grid.Column="8" Grid.Row="0" Text="{x:Static localization:Strings.Version}" Style="{StaticResource CenterTextBlock}" />
-            <ComboBox Grid.Column="10" Grid.Row="0" ItemsSource="{Binding Versions}" SelectedItem="{Binding Version}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" />
-            <TextBlock Grid.Column="12" Grid.Row="0" Text="{x:Static localization:Strings.Mode}" Style="{StaticResource CenterTextBlock}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" />
-            <ComboBox Grid.Column="14" Grid.Row="0" ItemsSource="{Binding Modes}" SelectedItem="{Binding Mode}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" />
+            <TextBlock Grid.Column="8" Grid.Row="0" Text="{x:Static localization:Strings.Mode}" Style="{StaticResource CenterTextBlock}" />
+            <ComboBox Grid.Column="10" Grid.Row="0" ItemsSource="{Binding Modes}" SelectedItem="{Binding Mode}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" />
+            <TextBlock Grid.Column="12" Grid.Row="0" Text="{x:Static localization:Strings.Version}" Style="{StaticResource CenterTextBlock}" />
+            <ComboBox Grid.Column="14" Grid.Row="0" ItemsSource="{Binding Versions}" SelectedItem="{Binding Version}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" />
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.OID}" Style="{StaticResource CenterTextBlock}" />
             <ComboBox Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="3" x:Name="ComboBoxOID" Height="{Binding ElementName=ButtonQuery, Path=ActualHeight}" ItemsSource="{Binding OIDHistoryView}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}">
                 <ComboBox.Resources>
@@ -159,7 +159,7 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <ComboBox Grid.Column="10" Grid.Row="2" ItemsSource="{Binding Securitys}" SelectedItem="{Binding Security}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}">
+            <ComboBox Grid.Column="10" Grid.Row="2" ItemsSource="{Binding Securities}" SelectedItem="{Binding Security}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}">
                 <ComboBox.Style>
                     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource DefaultComboBox}">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -236,7 +236,7 @@
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Version}" Value="v3" />
+                                    <Condition Binding="{Binding Version}" Value="V3" />
                                     <Condition Binding="{Binding Security}" Value="AuthNoPriv" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
@@ -245,7 +245,7 @@
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Version}" Value="v3" />
+                                    <Condition Binding="{Binding Version}" Value="V3" />
                                     <Condition Binding="{Binding Security}" Value="AuthPriv" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
@@ -263,7 +263,7 @@
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Version}" Value="v3" />
+                                    <Condition Binding="{Binding Version}" Value="V3" />
                                     <Condition Binding="{Binding Security}" Value="AuthNoPriv" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
@@ -272,7 +272,7 @@
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Version}" Value="v3" />
+                                    <Condition Binding="{Binding Version}" Value="V3" />
                                     <Condition Binding="{Binding Security}" Value="AuthPriv" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
@@ -293,7 +293,7 @@
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Version}" Value="v3" />
+                                    <Condition Binding="{Binding Version}" Value="V3" />
                                     <Condition Binding="{Binding Security}" Value="AuthPriv" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>

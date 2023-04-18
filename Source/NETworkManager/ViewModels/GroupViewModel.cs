@@ -1,4 +1,5 @@
 ﻿using Amazon.EC2.Model;
+using NETworkManager.Models.Network;
 using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
@@ -10,6 +11,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Security;
+using System.Security.Cryptography;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Xml.Serialization;
@@ -207,7 +209,7 @@ public class GroupViewModel : ViewModelBase
         }
     }
 
-    public List<string> RemoteDesktop_ScreenResolutions => RemoteDesktop.ScreenResolutions;
+    public IEnumerable<string> RemoteDesktop_ScreenResolutions => RemoteDesktop.ScreenResolutions;
 
     public int RemoteDesktop_ScreenWidth;
     public int RemoteDesktop_ScreenHeight;
@@ -637,7 +639,7 @@ public class GroupViewModel : ViewModelBase
         }
     }
 
-    public IEnumerable<KeyboardHookMode> RemoteDesktop_KeyboardHookModes => System.Enum.GetValues(typeof(KeyboardHookMode)).Cast<KeyboardHookMode>();
+    public IEnumerable<KeyboardHookMode> RemoteDesktop_KeyboardHookModes => Enum.GetValues(typeof(KeyboardHookMode)).Cast<KeyboardHookMode>();
 
     private KeyboardHookMode _remoteDesktop_KeyboardHookMode;
     public KeyboardHookMode RemoteDesktop_KeyboardHookMode
@@ -1052,20 +1054,6 @@ public class GroupViewModel : ViewModelBase
         }
     }
 
-    private List<PowerShell.ExecutionPolicy> _powerShell_ExecutionPolicies = new List<PowerShell.ExecutionPolicy>();
-    public List<PowerShell.ExecutionPolicy> PowerShell_ExecutionPolicies
-    {
-        get => _powerShell_ExecutionPolicies;
-        set
-        {
-            if (value == _powerShell_ExecutionPolicies)
-                return;
-
-            _powerShell_ExecutionPolicies = value;
-            OnPropertyChanged();
-        }
-    }
-
     private bool _powerShell_OverrideExecutionPolicy;
     public bool PowerShell_OverrideExecutionPolicy
     {
@@ -1079,6 +1067,8 @@ public class GroupViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
+    public IEnumerable<PowerShell.ExecutionPolicy> PowerShell_ExecutionPolicies { get; set; }
 
     private PowerShell.ExecutionPolicy _powerShell_ExecutionPolicy;
     public PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy
@@ -1424,6 +1414,147 @@ public class GroupViewModel : ViewModelBase
     }
     #endregion
 
+    #region SNMP
+    private bool _snmp_OverrideOIDAndMode;
+    public bool SNMP_OverrideOIDAndMode
+    {
+        get => _snmp_OverrideOIDAndMode;
+        set
+        {
+            if (value == _snmp_OverrideOIDAndMode)
+                return;
+
+            _snmp_OverrideOIDAndMode = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _snmp_OID;
+    public string SNMP_OID
+    {
+        get => _snmp_OID;
+        set
+        {
+            if (value == _snmp_OID)
+                return;
+
+            _snmp_OID = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public IEnumerable<SNMPMode> SNMP_Modes { get; set; }
+
+    private SNMPMode _snmp_Mode;
+    public SNMPMode SNMP_Mode
+    {
+        get => _snmp_Mode;
+        set
+        {
+            if (value == _snmp_Mode)
+                return;
+
+            _snmp_Mode = value;
+            OnPropertyChanged();
+
+            // Re-validate OID if mode changed
+            OnPropertyChanged(nameof(SNMP_OID));
+        }
+    }
+
+    private bool _snmp_OverrideVersionAndAuth;
+    public bool SNMP_OverrideVersionAndAuth
+    {
+        get => _snmp_OverrideVersionAndAuth;
+        set
+        {
+            if (value == _snmp_OverrideVersionAndAuth)
+                return;
+
+            _snmp_OverrideVersionAndAuth = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public IEnumerable<SNMPVersion> SNMP_Versions { get; }
+
+    private SNMPVersion _snmp_Version;
+    public SNMPVersion SNMP_Version
+    {
+        get => _snmp_Version;
+        set
+        {
+            if (value == _snmp_Version)
+                return;
+
+            _snmp_Version = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public IEnumerable<SNMPV3Security> SNMP_Securities { get; }
+
+    private SNMPV3Security _snmp_Security;
+    public SNMPV3Security SNMP_Security
+    {
+        get => _snmp_Security;
+        set
+        {
+            if (value == _snmp_Security)
+                return;
+
+            _snmp_Security = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _snmp_Username;
+    public string SNMP_Username
+    {
+        get => _snmp_Username;
+        set
+        {
+            if (value == _snmp_Username)
+                return;
+
+            _snmp_Username = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public IEnumerable<SNMPV3AuthenticationProvider> SNMP_AuthenticationProviders { get; }
+
+    private SNMPV3AuthenticationProvider _snmp_AuthenticationProvider;
+    public SNMPV3AuthenticationProvider SNMP_AuthenticationProvider
+    {
+        get => _snmp_AuthenticationProvider;
+        set
+        {
+            if (value == _snmp_AuthenticationProvider)
+                return;
+
+            _snmp_AuthenticationProvider = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public IEnumerable<SNMPV3PrivacyProvider> SNMP_PrivacyProviders { get; }
+
+    private SNMPV3PrivacyProvider _snmp_PrivacyProvider;
+    public SNMPV3PrivacyProvider SNMP_PrivacyProvider
+    {
+        get => _snmp_PrivacyProvider;
+        set
+        {
+            if (value == _snmp_PrivacyProvider)
+                return;
+
+            _snmp_PrivacyProvider = value;
+            OnPropertyChanged();
+        }
+    }
+    #endregion
+
     public GroupViewModel(Action<GroupViewModel> saveCommand, Action<GroupViewModel> cancelHandler, IReadOnlyCollection<string> groups, GroupEditMode editMode = GroupEditMode.Add, GroupInfo group = null)
     {
         // Load the view
@@ -1507,9 +1638,9 @@ public class GroupViewModel : ViewModelBase
         PowerShell_Command = groupInfo.PowerShell_Command;
         PowerShell_OverrideAdditionalCommandLine = groupInfo.PowerShell_OverrideAdditionalCommandLine;
         PowerShell_AdditionalCommandLine = groupInfo.PowerShell_AdditionalCommandLine;
-        PowerShell_ExecutionPolicies = Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();
         PowerShell_OverrideExecutionPolicy = groupInfo.PowerShell_OverrideExecutionPolicy;
-        PowerShell_ExecutionPolicy = editMode != GroupEditMode.Add ? groupInfo.PowerShell_ExecutionPolicy : PowerShell_ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_ExecutionPolicy); ;
+        PowerShell_ExecutionPolicies = Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();
+        PowerShell_ExecutionPolicy = PowerShell_ExecutionPolicies.FirstOrDefault(x => x == groupInfo.PowerShell_ExecutionPolicy);
 
         // PuTTY
         PuTTY_OverrideUsername = groupInfo.PuTTY_OverrideUsername;
@@ -1540,7 +1671,20 @@ public class GroupViewModel : ViewModelBase
         TigerVNC_Port = groupInfo.TigerVNC_OverridePort ? groupInfo.TigerVNC_Port : SettingsManager.Current.TigerVNC_Port;
 
         // SNMP
-
+        SNMP_OverrideOIDAndMode = groupInfo.SNMP_OverrideOIDAndMode;
+        SNMP_OID = groupInfo.SNMP_OID;
+        SNMP_Modes = new List<SNMPMode> { SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set };
+        SNMP_Mode = SNMP_Modes.FirstOrDefault(x => x == groupInfo.SNMP_Mode);
+        SNMP_OverrideVersionAndAuth = groupInfo.SNMP_OverrideVersionAndAuth;
+        SNMP_Versions = Enum.GetValues(typeof(SNMPVersion)).Cast<SNMPVersion>().ToList();
+        SNMP_Version = SNMP_Versions.FirstOrDefault(x => x == groupInfo.SNMP_Version);
+        SNMP_Securities = new List<SNMPV3Security> { SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv };
+        SNMP_Security = SNMP_Securities.FirstOrDefault(x => x == groupInfo.SNMP_Security);
+        SNMP_Username = groupInfo.SNMP_Username;
+        SNMP_AuthenticationProviders = Enum.GetValues(typeof(SNMPV3AuthenticationProvider)).Cast<SNMPV3AuthenticationProvider>().ToList();
+        SNMP_AuthenticationProvider = SNMP_AuthenticationProviders.FirstOrDefault(x => x == groupInfo.SNMP_AuthenticationProvider);
+        SNMP_PrivacyProviders = Enum.GetValues(typeof(SNMPV3PrivacyProvider)).Cast<SNMPV3PrivacyProvider>().ToList();
+        SNMP_PrivacyProvider = SNMP_PrivacyProviders.FirstOrDefault(x => x == groupInfo.SNMP_PrivacyProvider);
 
         _isLoading = false;
     }

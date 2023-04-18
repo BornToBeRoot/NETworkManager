@@ -1656,6 +1656,8 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*" />
@@ -1693,6 +1695,7 @@
                                         </Style>
                                     </TextBox.Style>
                                 </TextBox>
+                                <TextBlock Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="4" Text="{x:Static localization:Strings.OverrideDefaultSettings}" Style="{StaticResource HeaderTextBlock}" Margin="0,10,0,0"/>
                             </Grid>
                         </StackPanel>
                     </ScrollViewer>
