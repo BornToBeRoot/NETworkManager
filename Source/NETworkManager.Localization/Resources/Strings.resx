@@ -3532,4 +3532,7 @@ Changes to this value will take effect after the application is restarted. Wheth
   <data name="EditOIDProfile" xml:space="preserve">
     <value>Edit OID profile</value>
   </data>
+  <data name="EnterPasswordDots" xml:space="preserve">
+    <value>Enter password...</value>
+  </data>
 </root>

@@ -3132,6 +3132,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter password... ähnelt.
+        /// </summary>
+        public static string EnterPasswordDots {
+            get {
+                return ResourceManager.GetString("EnterPasswordDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Enter subnet and a new subnet mask to create subnets... ähnelt.
         /// </summary>
         public static string EnterSubnetAndANewSubnetmaskToCreateSubnets {

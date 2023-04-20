@@ -133,10 +133,16 @@ public class GroupInfo
     public SNMPMode SNMP_Mode { get; set; } = GlobalStaticConfiguration.SNMP_Mode;
     public bool SNMP_OverrideVersionAndAuth { get; set; }
     public SNMPVersion SNMP_Version { get; set; } = GlobalStaticConfiguration.SNMP_Version;
+    [XmlIgnore]
+    public SecureString SNMP_Community { get; set; }
     public SNMPV3Security SNMP_Security { get; set; } = GlobalStaticConfiguration.SNMP_Security;
     public string SNMP_Username { get; set; }
     public SNMPV3AuthenticationProvider SNMP_AuthenticationProvider { get; set; } = GlobalStaticConfiguration.SNMP_AuthenticationProvider;
+    [XmlIgnore]
+    public SecureString SNMP_Auth { get; set; }
     public SNMPV3PrivacyProvider SNMP_PrivacyProvider { get; set; } = GlobalStaticConfiguration.SNMP_PrivacyProvider;
+    [XmlIgnore]
+    public SecureString SNMP_Priv { get; set; }
 
     /// <summary>
     /// Initializes a new instance of the<see cref="GroupInfo"/> class.
@@ -272,9 +278,12 @@ public class GroupInfo
         SNMP_Mode = group.SNMP_Mode;
         SNMP_OverrideVersionAndAuth = group.SNMP_OverrideVersionAndAuth;
         SNMP_Version = group.SNMP_Version;
+        SNMP_Community = group.SNMP_Community;
         SNMP_Security = group.SNMP_Security;
         SNMP_Username = group.SNMP_Username;
         SNMP_AuthenticationProvider = group.SNMP_AuthenticationProvider;
+        SNMP_Auth = group.SNMP_Auth;
         SNMP_PrivacyProvider = group.SNMP_PrivacyProvider;
+        SNMP_Priv = group.SNMP_Priv;
     }
 }

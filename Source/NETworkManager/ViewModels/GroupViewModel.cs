@@ -11,10 +11,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Security;
-using System.Security.Cryptography;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Xml.Serialization;
 
 namespace NETworkManager.ViewModels;
 
@@ -135,20 +133,6 @@ public class GroupViewModel : ViewModelBase
             RemoteDesktop_IsPasswordEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
 
             _remoteDesktop_Password = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private bool _remoteDesktop_PasswordChanged;
-    public bool RemoteDesktop_PasswordChanged
-    {
-        get => _remoteDesktop_PasswordChanged;
-        set
-        {
-            if (value == _remoteDesktop_PasswordChanged)
-                return;
-
-            _remoteDesktop_PasswordChanged = value;
             OnPropertyChanged();
         }
     }
@@ -545,20 +529,6 @@ public class GroupViewModel : ViewModelBase
             RemoteDesktop_IsGatewayServerPasswordEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
 
             _remoteDesktop_GatewayServerPassword = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private bool _remoteDesktop_GatewayServerPasswordChanged;
-    public bool RemoteDesktop_GatewayServerPasswordChanged
-    {
-        get => _remoteDesktop_GatewayServerPasswordChanged;
-        set
-        {
-            if (value == _remoteDesktop_GatewayServerPasswordChanged)
-                return;
-
-            _remoteDesktop_GatewayServerPasswordChanged = value;
             OnPropertyChanged();
         }
     }
@@ -1492,6 +1462,37 @@ public class GroupViewModel : ViewModelBase
         }
     }
 
+    private bool _snmp_IsCommunityEmpty = true; // Initial it's empty
+    public bool SNMP_IsCommunityEmpty
+    {
+        get => _snmp_IsCommunityEmpty;
+        set
+        {
+            if (value == _snmp_IsCommunityEmpty)
+                return;
+
+            _snmp_IsCommunityEmpty = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private SecureString _snmp_Community;
+    public SecureString SNMP_Community
+    {
+        get => _snmp_Community;
+        set
+        {
+            if (value == _snmp_Community)
+                return;
+
+            // Validate the password string
+            SNMP_IsCommunityEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
+
+            _snmp_Community = value;
+            OnPropertyChanged();
+        }
+    }
+
     public IEnumerable<SNMPV3Security> SNMP_Securities { get; }
 
     private SNMPV3Security _snmp_Security;
@@ -1538,6 +1539,37 @@ public class GroupViewModel : ViewModelBase
         }
     }
 
+    private bool _snmp_IsAuthEmpty = true; // Initial it's empty
+    public bool SNMP_IsAuthEmpty
+    {
+        get => _snmp_IsAuthEmpty;
+        set
+        {
+            if (value == _snmp_IsAuthEmpty)
+                return;
+
+            _snmp_IsAuthEmpty = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private SecureString _snmp_Auth;
+    public SecureString SNMP_Auth
+    {
+        get => _snmp_Auth;
+        set
+        {
+            if (value == _snmp_Auth)
+                return;
+
+            // Validate the password string
+            SNMP_IsAuthEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
+
+            _snmp_Auth = value;
+            OnPropertyChanged();
+        }
+    }
+
     public IEnumerable<SNMPV3PrivacyProvider> SNMP_PrivacyProviders { get; }
 
     private SNMPV3PrivacyProvider _snmp_PrivacyProvider;
@@ -1550,6 +1582,37 @@ public class GroupViewModel : ViewModelBase
                 return;
 
             _snmp_PrivacyProvider = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _snmp_IsPrivEmpty = true; // Initial it's empty
+    public bool SNMP_IsPrivEmpty
+    {
+        get => _snmp_IsPrivEmpty;
+        set
+        {
+            if (value == _snmp_IsPrivEmpty)
+                return;
+
+            _snmp_IsPrivEmpty = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private SecureString _snmp_Priv;
+    public SecureString SNMP_Priv
+    {
+        get => _snmp_Priv;
+        set
+        {
+            if (value == _snmp_Priv)
+                return;
+
+            // Validate the password string
+            SNMP_IsPrivEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
+
+            _snmp_Priv = value;
             OnPropertyChanged();
         }
     }
@@ -1678,13 +1741,16 @@ public class GroupViewModel : ViewModelBase
         SNMP_OverrideVersionAndAuth = groupInfo.SNMP_OverrideVersionAndAuth;
         SNMP_Versions = Enum.GetValues(typeof(SNMPVersion)).Cast<SNMPVersion>().ToList();
         SNMP_Version = SNMP_Versions.FirstOrDefault(x => x == groupInfo.SNMP_Version);
+        SNMP_Community = groupInfo.SNMP_Community;
         SNMP_Securities = new List<SNMPV3Security> { SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv };
         SNMP_Security = SNMP_Securities.FirstOrDefault(x => x == groupInfo.SNMP_Security);
         SNMP_Username = groupInfo.SNMP_Username;
         SNMP_AuthenticationProviders = Enum.GetValues(typeof(SNMPV3AuthenticationProvider)).Cast<SNMPV3AuthenticationProvider>().ToList();
         SNMP_AuthenticationProvider = SNMP_AuthenticationProviders.FirstOrDefault(x => x == groupInfo.SNMP_AuthenticationProvider);
+        SNMP_Auth = groupInfo.SNMP_Auth;
         SNMP_PrivacyProviders = Enum.GetValues(typeof(SNMPV3PrivacyProvider)).Cast<SNMPV3PrivacyProvider>().ToList();
         SNMP_PrivacyProvider = SNMP_PrivacyProviders.FirstOrDefault(x => x == groupInfo.SNMP_PrivacyProvider);
+        SNMP_Priv = groupInfo.SNMP_Priv;
 
         _isLoading = false;
     }
@@ -1693,20 +1759,6 @@ public class GroupViewModel : ViewModelBase
     public ICommand SaveCommand { get; }
 
     public ICommand CancelCommand { get; }
-
-    public ICommand RemoteDesktopPasswordChangedCommand => new RelayCommand(p => RemoteDesktopPasswordChangedAction());
-
-    private void RemoteDesktopPasswordChangedAction()
-    {
-        RemoteDesktop_PasswordChanged = true;
-    }
-
-    public ICommand RemoteDesktopGatewayServerPasswordChangedCommand => new RelayCommand(p => RemoteDesktopGatewayServerPasswordChangedAction());
-
-    private void RemoteDesktopGatewayServerPasswordChangedAction()
-    {
-        RemoteDesktop_GatewayServerPasswordChanged = true;
-    }
     #endregion
 
     #region Methods      
