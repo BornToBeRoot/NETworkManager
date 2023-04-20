@@ -137,7 +137,7 @@
                     <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource DefaultPasswordBox}">
                         <Setter Property="Visibility" Value="Visible" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Version}" Value="v3">
+                            <DataTrigger Binding="{Binding Version}" Value="V3">
                                 <Setter Property="Visibility" Value="Collapsed" />
                             </DataTrigger>
                         </Style.Triggers>
@@ -256,7 +256,7 @@
                     </Style>
                 </ComboBox.Style>
             </ComboBox>
-            <PasswordBox Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="3" Name="PasswordBoxAuth" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" Margin="0,10,0,0">
+            <PasswordBox Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="3" Name="PasswordBoxAuth" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSNMPAuthSecret}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" Margin="0,10,0,0">
                 <PasswordBox.Style>
                     <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource DefaultPasswordBox}">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -322,14 +322,14 @@
                     </Style>
                 </ComboBox.Style>
             </ComboBox>
-            <PasswordBox Grid.Column="12" Grid.ColumnSpan="3" Grid.Row="3" Name="PasswordBoxPriv" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" Margin="0,10,0,0">
+            <PasswordBox Grid.Column="12" Grid.ColumnSpan="3" Grid.Row="3" Name="PasswordBoxPriv" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSNMPPrivSecret}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" Margin="0,10,0,0">
                 <PasswordBox.Style>
                     <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource DefaultPasswordBox}">
                         <Setter Property="Visibility" Value="Collapsed" />
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Version}" Value="v3" />
+                                    <Condition Binding="{Binding Version}" Value="V3" />
                                     <Condition Binding="{Binding Security}" Value="AuthPriv" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
