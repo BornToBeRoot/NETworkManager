@@ -283,11 +283,11 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
         _canProfileWidthChange = true;
     }
     
-    public void AddTab(SNMPSessionInfo sessionInfo)
+    public void AddTab(SNMPSessionInfo sessionInfo, string header = null)
     {
         _tabId++;
 
-        TabItems.Add(new DragablzTabItem(sessionInfo?.Host ?? Localization.Resources.Strings.NewTab, new SNMPView(_tabId, sessionInfo), _tabId));
+        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Host ?? Localization.Resources.Strings.NewTab, new SNMPView(_tabId, sessionInfo), _tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }
@@ -312,7 +312,7 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
     {
         SNMPSessionInfo sessionInfo = NETworkManager.Profiles.Application.SNMP.CreateSessionInfo(profile);
 
-        AddTab(sessionInfo);
+        AddTab(sessionInfo, profile.Name);
     }
 
     public void OnViewVisible()
