@@ -132,11 +132,14 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <PasswordBox Grid.Column="10" Grid.Row="2" Grid.ColumnSpan="5" Name="PasswordBoxCommunity" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSNMPCommunity}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}">
+            <PasswordBox Grid.Column="10" Grid.Row="2" Grid.ColumnSpan="5" Name="PasswordBoxCommunity" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}">
                 <PasswordBox.Style>
                     <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource DefaultPasswordBox}">
-                        <Setter Property="Visibility" Value="Visible" />
+                        <Setter Property="mah:TextBoxHelper.Watermark" Value="{x:Static localization:Strings.FromProfile}" />
                         <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsCommunityEmpty}" Value="True">
+                                <Setter Property="mah:TextBoxHelper.Watermark" Value="{x:Static localization:StaticStrings.ExampleSNMPCommunity}" />
+                            </DataTrigger>
                             <DataTrigger Binding="{Binding Version}" Value="V3">
                                 <Setter Property="Visibility" Value="Collapsed" />
                             </DataTrigger>
@@ -256,11 +259,15 @@
                     </Style>
                 </ComboBox.Style>
             </ComboBox>
-            <PasswordBox Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="3" Name="PasswordBoxAuth" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSNMPAuthSecret}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" Margin="0,10,0,0">
+            <PasswordBox Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="3" Name="PasswordBoxAuth" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" Margin="0,10,0,0">
                 <PasswordBox.Style>
                     <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource DefaultPasswordBox}">
                         <Setter Property="Visibility" Value="Collapsed" />
+                        <Setter Property="mah:TextBoxHelper.Watermark" Value="{x:Static localization:Strings.FromProfile}" />
                         <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsAuthEmpty}" Value="True">
+                                <Setter Property="mah:TextBoxHelper.Watermark" Value="{x:Static localization:StaticStrings.ExampleSNMPAuthSecret}" />
+                            </DataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding Version}" Value="V3" />
@@ -322,11 +329,15 @@
                     </Style>
                 </ComboBox.Style>
             </ComboBox>
-            <PasswordBox Grid.Column="12" Grid.ColumnSpan="3" Grid.Row="3" Name="PasswordBoxPriv" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSNMPPrivSecret}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" Margin="0,10,0,0">
+            <PasswordBox Grid.Column="12" Grid.ColumnSpan="3" Grid.Row="3" Name="PasswordBoxPriv" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" Margin="0,10,0,0">
                 <PasswordBox.Style>
                     <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource DefaultPasswordBox}">
                         <Setter Property="Visibility" Value="Collapsed" />
+                        <Setter Property="mah:TextBoxHelper.Watermark" Value="{x:Static localization:Strings.FromProfile}" />
                         <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsPrivEmpty}" Value="True">
+                                <Setter Property="mah:TextBoxHelper.Watermark" Value="{x:Static localization:StaticStrings.ExampleSNMPPrivSecret}" />
+                            </DataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding Version}" Value="V3" />

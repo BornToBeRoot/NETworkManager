@@ -15,6 +15,7 @@ using System;
 using System.Windows.Data;
 using System.Linq;
 using System.Collections.Generic;
+using NETworkManager.Models.Network;
 
 namespace NETworkManager.ViewModels;
 
@@ -162,10 +163,8 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
         
         InterTabClient = new DragablzInterTabClient(ApplicationName.SNMP);
 
-        TabItems = new ObservableCollection<DragablzTabItem>
-        {
-            new DragablzTabItem(Localization.Resources.Strings.NewTab, new SNMPView (_tabId), _tabId)
-        };
+        TabItems = new ObservableCollection<DragablzTabItem>();
+        AddTab();
 
         // Profiles
         SetProfilesView();
@@ -198,13 +197,13 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
         AddTab();
     }
 
-    public ICommand QueryProfileCommand => new RelayCommand(p => QueryProfileAction(), QueryProfile_CanExecute);
+    public ICommand AddTabProfileCommand => new RelayCommand(p => AddTabProfileAction(), AddTabProfile_CanExecute);
 
-    private bool QueryProfile_CanExecute(object obj) => !IsSearching && SelectedProfile != null;
+    private bool AddTabProfile_CanExecute(object obj) => !IsSearching && SelectedProfile != null;
 
-    private void QueryProfileAction()
+    private void AddTabProfileAction()
     {
-        AddTab(SelectedProfile.SNMP_Host);
+        AddTab(SelectedProfile);
     }
 
     public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
@@ -284,18 +283,36 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
         _canProfileWidthChange = true;
     }
     
-    public void AddTab(string host = null)
+    public void AddTab(SNMPSessionInfo sessionInfo)
     {
         _tabId++;
 
-        TabItems.Add(new DragablzTabItem(host ?? Localization.Resources.Strings.NewTab, new SNMPView(_tabId, host), _tabId));
+        TabItems.Add(new DragablzTabItem(sessionInfo?.Host ?? Localization.Resources.Strings.NewTab, new SNMPView(_tabId, sessionInfo), _tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }
 
+    public void AddTab()
+    {
+        SNMPSessionInfo sessionInfo = NETworkManager.Profiles.Application.SNMP.CreateSessionInfo();
+
+        AddTab(sessionInfo);
+    }
+
+    public void AddTab(string host)
+    {
+        SNMPSessionInfo sessionInfo = NETworkManager.Profiles.Application.SNMP.CreateSessionInfo();
+
+        sessionInfo.Host = host;
+
+        AddTab(sessionInfo);
+    }
+    
     public void AddTab(ProfileInfo profile)
     {
-        //AddTab(profile);
+        SNMPSessionInfo sessionInfo = NETworkManager.Profiles.Application.SNMP.CreateSessionInfo(profile);
+
+        AddTab(sessionInfo);
     }
 
     public void OnViewVisible()

@@ -151,10 +151,7 @@ public class SNMPViewModel : ViewModelBase
                 return;
 
             // Validate the community string
-            if (value == null)
-                IsCommunityEmpty = true;
-            else
-                IsCommunityEmpty = string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
+            IsCommunityEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
 
             _community = value;
             OnPropertyChanged();
@@ -218,10 +215,7 @@ public class SNMPViewModel : ViewModelBase
                 return;
 
             // Validate the auth string
-            if (value == null)
-                IsAuthEmpty = true;
-            else
-                IsAuthEmpty = string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
+            IsAuthEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
 
             _auth = value;
             OnPropertyChanged();
@@ -271,10 +265,7 @@ public class SNMPViewModel : ViewModelBase
                 return;
 
             // Validate the auth string
-            if (value == null)
-                IsPrivEmpty = true;
-            else
-                IsPrivEmpty = string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
+            IsPrivEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
 
             _priv = value;
             OnPropertyChanged();
@@ -397,14 +388,14 @@ public class SNMPViewModel : ViewModelBase
     #endregion
 
     #region Contructor, load settings
-    public SNMPViewModel(IDialogCoordinator instance, int tabId, string host)
+    public SNMPViewModel(IDialogCoordinator instance, int tabId, SNMPSessionInfo sessionInfo)
     {
         _isLoading = true;
 
         _dialogCoordinator = instance;
 
         TabId = tabId;
-        Host = host;
+        Host = sessionInfo?.Host;
 
         // Set collection view
         HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_HostHistory);
@@ -414,34 +405,47 @@ public class SNMPViewModel : ViewModelBase
         QueryResultsView = CollectionViewSource.GetDefaultView(QueryResults);
         QueryResultsView.SortDescriptions.Add(new SortDescription(nameof(SNMPReceivedInfo.OID), ListSortDirection.Ascending));
 
+        // OID
+        OID = sessionInfo?.OID;
+
         // Modes
         Modes = new List<SNMPMode> { SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set };
-
+        Mode = Modes.FirstOrDefault(x => x == sessionInfo.Mode);
+        
         // Versions (v1, v2c, v3)
         Versions = Enum.GetValues(typeof(SNMPVersion)).Cast<SNMPVersion>().ToList();
+        Version = Versions.FirstOrDefault(x => x == sessionInfo.Version);
+
+        // Community
+        if(Version != SNMPVersion.V3)
+            Community = sessionInfo?.Community;
 
         // Security
         Securities = new List<SNMPV3Security> { SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv };
+        Security = Securities.FirstOrDefault(x => x == sessionInfo.Security);
 
-        // Auth / Priv
+        // Username
+        if(Version == SNMPVersion.V3)
+            Username = sessionInfo?.Username;
+
+        // Auth
         AuthenticationProviders = Enum.GetValues(typeof(SNMPV3AuthenticationProvider)).Cast<SNMPV3AuthenticationProvider>().ToList();
-        PrivacyProviders = Enum.GetValues(typeof(SNMPV3PrivacyProvider)).Cast<SNMPV3PrivacyProvider>().ToList();
+        AuthenticationProvider = AuthenticationProviders.FirstOrDefault(x => x == sessionInfo.AuthenticationProvider);
+       
+        if(Version == SNMPVersion.V3 && Security != SNMPV3Security.NoAuthNoPriv)
+            Auth = sessionInfo?.Auth;
 
-        LoadSettings();
+        // Priv
+        PrivacyProviders = Enum.GetValues(typeof(SNMPV3PrivacyProvider)).Cast<SNMPV3PrivacyProvider>().ToList();
+        PrivacyProvider = PrivacyProviders.FirstOrDefault(x => x == sessionInfo.PrivacyProvider);
+
+        if (Version == SNMPVersion.V3 && Security == SNMPV3Security.AuthPriv)
+            Priv = sessionInfo?.Priv;
 
         // Detect if settings have changed...
         SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
 
         _isLoading = false;
-    }
-
-    private void LoadSettings()
-    {
-        Mode = Modes.FirstOrDefault(x => x == SettingsManager.Current.SNMP_Mode);
-        Version = Versions.FirstOrDefault(x => x == SettingsManager.Current.SNMP_Version);
-        Security = Securities.FirstOrDefault(x => x == SettingsManager.Current.SNMP_Security);
-        AuthenticationProvider = AuthenticationProviders.FirstOrDefault(x => x == SettingsManager.Current.SNMP_AuthenticationProvider);
-        PrivacyProvider = PrivacyProviders.FirstOrDefault(x => x == SettingsManager.Current.SNMP_PrivacyProvider);
     }
     #endregion
 

@@ -26,9 +26,9 @@ public partial class SNMPHostView
     private void ListBoxItem_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
         if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
-            _viewModel.QueryProfileCommand.Execute(null);
+            _viewModel.AddTabProfileCommand.Execute(null);
     }
-
+    
     public void AddTab(string host)
     {
         _viewModel.AddTab(host);

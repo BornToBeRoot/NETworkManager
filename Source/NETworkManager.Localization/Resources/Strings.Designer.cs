@@ -574,6 +574,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Add tab ähnelt.
+        /// </summary>
+        public static string AddTab {
+            get {
+                return ResourceManager.GetString("AddTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Add tab... ähnelt.
         /// </summary>
         public static string AddTabDots {
@@ -3643,6 +3652,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Frequency {
             get {
                 return ResourceManager.GetString("Frequency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die (from profile) ähnelt.
+        /// </summary>
+        public static string FromProfile {
+            get {
+                return ResourceManager.GetString("FromProfile", resourceCulture);
             }
         }
         
