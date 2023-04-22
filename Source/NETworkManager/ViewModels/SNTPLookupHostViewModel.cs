@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows;
-using System.Windows.Data;
+﻿using System.Collections.ObjectModel;
 using NETworkManager.Controls;
 using Dragablz;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Settings;
 using NETworkManager.Views;
 using NETworkManager.Utilities;
-using NETworkManager.Profiles;
-using System.Windows.Threading;
 using NETworkManager.Models;
-using System.Collections.Generic;
 
 namespace NETworkManager.ViewModels;
 
