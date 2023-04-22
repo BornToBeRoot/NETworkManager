@@ -1156,7 +1156,7 @@
                                         <wpfHelpers:PasswordBoxBindingBehavior Password="{Binding SNMP_Auth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </interactivity:Interaction.Behaviors>
                                 </PasswordBox>
-                                <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="16" ToolTip="{x:Static localization:Strings.WarningMessage_ProfileFileNotEncryptedStoringPasswords}" Visibility="{Binding IsProfileFileEncrypted, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Margin="10,0,0,0">
+                                <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="16" ToolTip="{x:Static localization:Strings.WarningMessage_ProfileFileNotEncryptedStoringPasswords}" Margin="10,0,0,0">
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource WarnImageRectangle}">
                                             <Setter Property="Visibility" Value="Collapsed" />
@@ -1165,6 +1165,7 @@
                                                     <MultiDataTrigger.Conditions>
                                                         <Condition Binding="{Binding SNMP_Version}" Value="V3" />
                                                         <Condition Binding="{Binding SNMP_Security}" Value="AuthNoPriv" />
+                                                        <Condition Binding="{Binding IsProfileFileEncrypted}" Value="False" />
                                                     </MultiDataTrigger.Conditions>
                                                     <MultiDataTrigger.Setters>
                                                         <Setter Property="Visibility" Value="Visible" />
@@ -1174,6 +1175,7 @@
                                                     <MultiDataTrigger.Conditions>
                                                         <Condition Binding="{Binding SNMP_Version}" Value="V3" />
                                                         <Condition Binding="{Binding SNMP_Security}" Value="AuthPriv" />
+                                                        <Condition Binding="{Binding IsProfileFileEncrypted}" Value="False" />
                                                     </MultiDataTrigger.Conditions>
                                                     <MultiDataTrigger.Setters>
                                                         <Setter Property="Visibility" Value="Visible" />
@@ -1247,7 +1249,7 @@
                                         <wpfHelpers:PasswordBoxBindingBehavior Password="{Binding SNMP_Priv, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </interactivity:Interaction.Behaviors>
                                 </PasswordBox>
-                                <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="20" ToolTip="{x:Static localization:Strings.WarningMessage_ProfileFileNotEncryptedStoringPasswords}" Visibility="{Binding IsProfileFileEncrypted, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Margin="10,0,0,0">
+                                <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="20" ToolTip="{x:Static localization:Strings.WarningMessage_ProfileFileNotEncryptedStoringPasswords}" Margin="10,0,0,0">
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource WarnImageRectangle}">
                                             <Setter Property="Visibility" Value="Collapsed" />
@@ -1256,6 +1258,7 @@
                                                     <MultiDataTrigger.Conditions>
                                                         <Condition Binding="{Binding SNMP_Version}" Value="V3" />
                                                         <Condition Binding="{Binding SNMP_Security}" Value="AuthPriv" />
+                                                        <Condition Binding="{Binding IsProfileFileEncrypted}" Value="False" />
                                                     </MultiDataTrigger.Conditions>
                                                     <MultiDataTrigger.Setters>
                                                         <Setter Property="Visibility" Value="Visible" />

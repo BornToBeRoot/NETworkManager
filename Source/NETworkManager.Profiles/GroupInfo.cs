@@ -19,6 +19,7 @@ public class GroupInfo
     /// </summary>
     public string Name { get; set; }
 
+    [XmlIgnore]
     public bool IsDynamic { get; set; }
 
     [XmlIgnore]
