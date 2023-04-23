@@ -1,5 +1,6 @@
-﻿using Lextm.SharpSnmpLib;
+﻿using NETworkManager.Utilities;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Windows.Controls;
 
 namespace NETworkManager.Validators;
@@ -10,26 +11,19 @@ public class SNMPOIDValidator : ValidationRule
 
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
-        // Use SharpSNMP new ObjectIdentifiert to validate oid
-        try
-        {
-            var oidValue = (value as string).Replace(" ", "");
+        var oidValue = (value as string).Replace(" ", "");
 
-            if (Wrapper.Mode == Models.Network.SNMPMode.Get && oidValue.Contains(';'))
+        if (Wrapper.Mode == Models.Network.SNMPMode.Get && oidValue.Contains(';'))
+        {
+            foreach (var oid in oidValue.Split(';'))
             {
-                foreach (var oid in oidValue.Split(';'))
-                    _ = new ObjectIdentifier(oid);
-
-                return ValidationResult.ValidResult;
+                if (!Regex.IsMatch(oid, RegexHelper.SNMOIODRegex))
+                    return new ValidationResult(false, Localization.Resources.Strings.EnterValidOID);
             }
-            
-            _ = new ObjectIdentifier(oidValue);                     
-        }
-        catch (System.ArgumentException)
-        {
-            return new ValidationResult(false, Localization.Resources.Strings.EnterValidOID);
+
+            return ValidationResult.ValidResult;
         }
 
-        return ValidationResult.ValidResult;
+        return Regex.IsMatch(oidValue, RegexHelper.SNMOIODRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Localization.Resources.Strings.EnterValidOID);
     }
 }
