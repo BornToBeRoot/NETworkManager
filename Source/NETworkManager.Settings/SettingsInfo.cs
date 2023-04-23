@@ -3343,6 +3343,37 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
+    private bool _snmp_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
+    public bool SNMP_ExpandProfileView
+    {
+        get => _snmp_ExpandProfileView;
+        set
+        {
+            if (value == _snmp_ExpandProfileView)
+                return;
+
+            _snmp_ExpandProfileView = value;
+            OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
+
+    private double _snmp_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
+    public double SNMP_ProfileWidth
+    {
+        get => _snmp_ProfileWidth;
+        set
+        {
+            if (Math.Abs(value - _snmp_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
+                return;
+
+            _snmp_ProfileWidth = value;
+            OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
+
+    
     private string _snmp_ExportFilePath;
     public string SNMP_ExportFilePath
     {

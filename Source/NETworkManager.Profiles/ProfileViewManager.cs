@@ -25,6 +25,7 @@ public static class ProfileViewManager
         new ProfileViewInfo(ProfileViewName.AWSSessionManager, ApplicationManager.GetIcon(ApplicationName.AWSSessionManager)),
         new ProfileViewInfo(ProfileViewName.TigerVNC, ApplicationManager.GetIcon(ApplicationName.TigerVNC)),
         new ProfileViewInfo(ProfileViewName.WebConsole, ApplicationManager.GetIcon(ApplicationName.WebConsole)),
+        new ProfileViewInfo(ProfileViewName.SNMP, ApplicationManager.GetIcon(ApplicationName.SNMP)),
         new ProfileViewInfo(ProfileViewName.WakeOnLAN, ApplicationManager.GetIcon(ApplicationName.WakeOnLAN)),            
         new ProfileViewInfo(ProfileViewName.Whois, ApplicationManager.GetIcon(ApplicationName.Whois))
     };              

@@ -1,6 +1,7 @@
 ﻿using NETworkManager.ViewModels;
 using System.Windows.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Models.Network;
 
 namespace NETworkManager.Views;
 
@@ -8,11 +9,11 @@ public partial class SNMPView
 {
     private readonly SNMPViewModel _viewModel;
 
-    public SNMPView(int tabId, string host = null)
+    public SNMPView(int tabId, SNMPSessionInfo sessionInfo)
     {
         InitializeComponent();
 
-        _viewModel = new SNMPViewModel(DialogCoordinator.Instance, tabId, host);
+        _viewModel = new SNMPViewModel(DialogCoordinator.Instance, tabId, sessionInfo);
 
         DataContext = _viewModel;
     }

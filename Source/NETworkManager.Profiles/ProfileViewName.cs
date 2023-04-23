@@ -15,6 +15,7 @@ public enum ProfileViewName
     AWSSessionManager,
     TigerVNC,
     WebConsole,
+    SNMP,
     WakeOnLAN,        
     Whois
 }

@@ -18,8 +18,8 @@
                     <Grid Background="{TemplateBinding Background}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="560" />
-                            <!-- Adjust MaxHeight if Window.xaml MinHeight has changed -> 80% -->
+                            <!-- Height should be maximum Window.xaml MinHeight, otherwise the dialog will be truncated -->
+                            <RowDefinition Height="600" />                            
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <ContentPresenter Grid.Row="0" AutomationProperties.Name="Dialog top" Content="{TemplateBinding DialogTop}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />

@@ -5,9 +5,11 @@ using System.IO;
 using System.Linq;
 using System.Security;
 using System.Text;
+using System.Text.Json;
 using System.Xml.Serialization;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
+using Newtonsoft.Json;
 
 namespace NETworkManager.Profiles;
 
@@ -560,6 +562,9 @@ public static class ProfileManager
                 {
                     RemoteDesktop_Password = profile.RemoteDesktop_Password != null ? SecureStringHelper.ConvertToString(profile.RemoteDesktop_Password) : string.Empty,
                     RemoteDesktop_GatewayServerPassword = profile.RemoteDesktop_GatewayServerPassword != null ? SecureStringHelper.ConvertToString(profile.RemoteDesktop_GatewayServerPassword) : string.Empty,
+                    SNMP_Community = profile.SNMP_Community != null ? SecureStringHelper.ConvertToString(profile.SNMP_Community) : string.Empty,
+                    SNMP_Auth = profile.SNMP_Auth != null ? SecureStringHelper.ConvertToString(profile.SNMP_Auth) : string.Empty,
+                    SNMP_Priv = profile.SNMP_Priv != null ? SecureStringHelper.ConvertToString(profile.SNMP_Priv) : string.Empty,
                 });
             }
 
@@ -568,7 +573,10 @@ public static class ProfileManager
                 Profiles = profilesSerializable,
                 RemoteDesktop_Password = group.RemoteDesktop_Password != null ? SecureStringHelper.ConvertToString(group.RemoteDesktop_Password) : string.Empty,
                 RemoteDesktop_GatewayServerPassword = group.RemoteDesktop_GatewayServerPassword != null ? SecureStringHelper.ConvertToString(group.RemoteDesktop_GatewayServerPassword) : string.Empty,
-            }) ;
+                SNMP_Community = group.SNMP_Community != null ? SecureStringHelper.ConvertToString(group.SNMP_Community) : string.Empty,
+                SNMP_Auth = group.SNMP_Auth != null ? SecureStringHelper.ConvertToString(group.SNMP_Auth) : string.Empty,
+                SNMP_Priv = group.SNMP_Priv != null ? SecureStringHelper.ConvertToString(group.SNMP_Priv) : string.Empty,
+            });
         }
 
         return groupsSerializable;
@@ -614,11 +622,14 @@ public static class ProfileManager
             List<ProfileInfo> profiles = new();
 
             foreach (ProfileInfoSerializable profileSerializable in groupSerializable.Profiles)
-            {
+            {               
                 ProfileInfo profile = new(profileSerializable)
                 {
                     RemoteDesktop_Password = !string.IsNullOrEmpty(profileSerializable.RemoteDesktop_Password) ? SecureStringHelper.ConvertToSecureString(profileSerializable.RemoteDesktop_Password) : null,
                     RemoteDesktop_GatewayServerPassword = !string.IsNullOrEmpty(profileSerializable.RemoteDesktop_GatewayServerPassword) ? SecureStringHelper.ConvertToSecureString(profileSerializable.RemoteDesktop_GatewayServerPassword) : null,
+                    SNMP_Community = !string.IsNullOrEmpty(profileSerializable.SNMP_Community) ? SecureStringHelper.ConvertToSecureString(profileSerializable.SNMP_Community) : null,
+                    SNMP_Auth = !string.IsNullOrEmpty(profileSerializable.SNMP_Auth) ? SecureStringHelper.ConvertToSecureString(profileSerializable.SNMP_Auth) : null,
+                    SNMP_Priv = !string.IsNullOrEmpty(profileSerializable.SNMP_Priv) ? SecureStringHelper.ConvertToSecureString(profileSerializable.SNMP_Priv) : null,
                 };
 
                 profiles.Add(profile);
@@ -630,7 +641,10 @@ public static class ProfileManager
 
                 // Convert passwort to secure string
                 RemoteDesktop_Password = !string.IsNullOrEmpty(groupSerializable.RemoteDesktop_Password) ? SecureStringHelper.ConvertToSecureString(groupSerializable.RemoteDesktop_Password) : null,
-                RemoteDesktop_GatewayServerPassword = !string.IsNullOrEmpty(groupSerializable.RemoteDesktop_GatewayServerPassword) ? SecureStringHelper.ConvertToSecureString(groupSerializable.RemoteDesktop_GatewayServerPassword) : null
+                RemoteDesktop_GatewayServerPassword = !string.IsNullOrEmpty(groupSerializable.RemoteDesktop_GatewayServerPassword) ? SecureStringHelper.ConvertToSecureString(groupSerializable.RemoteDesktop_GatewayServerPassword) : null,
+                SNMP_Community = !string.IsNullOrEmpty(groupSerializable.SNMP_Community) ? SecureStringHelper.ConvertToSecureString(groupSerializable.SNMP_Community) : null,
+                SNMP_Auth = !string.IsNullOrEmpty(groupSerializable.SNMP_Auth) ? SecureStringHelper.ConvertToSecureString(groupSerializable.SNMP_Auth) : null,
+                SNMP_Priv = !string.IsNullOrEmpty(groupSerializable.SNMP_Priv) ? SecureStringHelper.ConvertToSecureString(groupSerializable.SNMP_Priv) : null,
             });
         }
 

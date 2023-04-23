@@ -385,6 +385,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die S3cr3t_P4ssw0rd% ähnelt.
+        /// </summary>
+        public static string ExamplePassword {
+            get {
+                return ResourceManager.GetString("ExamplePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die 161 ähnelt.
         /// </summary>
         public static string ExamplePort161 {
@@ -547,6 +556,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 4uth_S3cr3t! ähnelt.
+        /// </summary>
+        public static string ExampleSNMPAuthSecret {
+            get {
+                return ResourceManager.GetString("ExampleSNMPAuthSecret", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die public ähnelt.
         /// </summary>
         public static string ExampleSNMPCommunity {
@@ -579,6 +597,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ExampleSNMPOIDS {
             get {
                 return ResourceManager.GetString("ExampleSNMPOIDS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Pr1v_S3cr3t% ähnelt.
+        /// </summary>
+        public static string ExampleSNMPPrivSecret {
+            get {
+                return ResourceManager.GetString("ExampleSNMPPrivSecret", resourceCulture);
             }
         }
         

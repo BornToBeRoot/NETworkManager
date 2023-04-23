@@ -200,10 +200,7 @@ public class TracerouteHostViewModel : ViewModelBase, IProfileManager
 
     public ICommand TraceProfileCommand => new RelayCommand(p => TraceProfileAction(), TraceProfile_CanExecute);
 
-    private bool TraceProfile_CanExecute(object obj)
-    {
-        return !IsSearching && SelectedProfile != null;
-    }
+    private bool TraceProfile_CanExecute(object obj) => !IsSearching && SelectedProfile != null;
 
     private void TraceProfileAction()
     {

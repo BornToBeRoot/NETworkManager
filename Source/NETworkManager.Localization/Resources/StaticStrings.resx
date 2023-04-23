@@ -342,4 +342,13 @@
   <data name="ExampleSNMPOIDS" xml:space="preserve">
     <value>1.3.6.1.2.1.1; 1.3.6.1.2.1.2</value>
   </data>
+  <data name="ExamplePassword" xml:space="preserve">
+    <value>S3cr3t_P4ssw0rd%</value>
+  </data>
+  <data name="ExampleSNMPAuthSecret" xml:space="preserve">
+    <value>4uth_S3cr3t!</value>
+  </data>
+  <data name="ExampleSNMPPrivSecret" xml:space="preserve">
+    <value>Pr1v_S3cr3t%</value>
+  </data>
 </root>
