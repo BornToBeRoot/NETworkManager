@@ -3532,4 +3532,13 @@ Wenn der Wert zu hoch ist, können Leistungsprobleme auftreten.
   <data name="EditOIDProfile" xml:space="preserve">
     <value>OID-Profil bearbeiten</value>
   </data>
+  <data name="EnterPasswordDots" xml:space="preserve">
+    <value>Passwort eingeben...</value>
+  </data>
+  <data name="AddTab" xml:space="preserve">
+    <value>Tab hinzufügen</value>
+  </data>
+  <data name="FromProfile" xml:space="preserve">
+    <value>(aus Profil)</value>
+  </data>
 </root>
