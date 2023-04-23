@@ -4,8 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Net;
-using System.Net.Sockets;
 using System.Windows.Data;
 using System.Windows.Input;
 using NETworkManager.Models.PowerShell;
@@ -14,6 +12,7 @@ using NETworkManager.Profiles;
 using NETworkManager.Models.PuTTY;
 using System.Security;
 using NETworkManager.Models;
+using NETworkManager.Models.Network;
 using Microsoft.PowerShell.Commands;
 
 namespace NETworkManager.ViewModels;
@@ -624,20 +623,6 @@ public class ProfileViewModel : ViewModelBase
         }
     }
 
-    private bool _remoteDesktop_PasswordChanged;
-    public bool RemoteDesktop_PasswordChanged
-    {
-        get => _remoteDesktop_PasswordChanged;
-        set
-        {
-            if (value == _remoteDesktop_PasswordChanged)
-                return;
-
-            _remoteDesktop_PasswordChanged = value;
-            OnPropertyChanged();
-        }
-    }
-
     private bool _remoteDesktop_OverrideDisplay;
     public bool RemoteDesktop_OverrideDisplay
     {
@@ -1030,20 +1015,6 @@ public class ProfileViewModel : ViewModelBase
             RemoteDesktop_IsGatewayServerPasswordEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
 
             _remoteDesktop_GatewayServerPassword = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private bool _remoteDesktop_GatewayServerPasswordChanged;
-    public bool RemoteDesktop_GatewayServerPasswordChanged
-    {
-        get => _remoteDesktop_GatewayServerPasswordChanged;
-        set
-        {
-            if (value == _remoteDesktop_GatewayServerPasswordChanged)
-                return;
-
-            _remoteDesktop_GatewayServerPasswordChanged = value;
             OnPropertyChanged();
         }
     }
@@ -2283,6 +2254,283 @@ public class ProfileViewModel : ViewModelBase
     }
     #endregion
 
+    #region SNMP
+    private bool _snmp_Enabled;
+    public bool SNMP_Enabled
+    {
+        get => _snmp_Enabled;
+        set
+        {
+            if (value == _snmp_Enabled)
+                return;
+
+            _snmp_Enabled = value;
+
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _snmp_InheritHost;
+    public bool SNMP_InheritHost
+    {
+        get => _snmp_InheritHost;
+        set
+        {
+            if (value == _snmp_InheritHost)
+                return;
+
+            _snmp_InheritHost = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _snmp_Host;
+    public string SNMP_Host
+    {
+        get => _snmp_Host;
+        set
+        {
+            if (value == _snmp_Host)
+                return;
+
+            _snmp_Host = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _snmp_OverrideOIDAndMode;
+    public bool SNMP_OverrideOIDAndMode
+    {
+        get => _snmp_OverrideOIDAndMode;
+        set
+        {
+            if (value == _snmp_OverrideOIDAndMode)
+                return;
+
+            _snmp_OverrideOIDAndMode = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _snmp_OID;
+    public string SNMP_OID
+    {
+        get => _snmp_OID;
+        set
+        {
+            if (value == _snmp_OID)
+                return;
+
+            _snmp_OID = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public IEnumerable<SNMPMode> SNMP_Modes { get; set; }
+
+    private SNMPMode _snmp_Mode;
+    public SNMPMode SNMP_Mode
+    {
+        get => _snmp_Mode;
+        set
+        {
+            if (value == _snmp_Mode)
+                return;
+
+            _snmp_Mode = value;
+            OnPropertyChanged();
+
+            // Re-validate OID if mode changed
+            OnPropertyChanged(nameof(SNMP_OID));
+        }
+    }
+
+    private bool _snmp_OverrideVersionAndAuth;
+    public bool SNMP_OverrideVersionAndAuth
+    {
+        get => _snmp_OverrideVersionAndAuth;
+        set
+        {
+            if (value == _snmp_OverrideVersionAndAuth)
+                return;
+
+            _snmp_OverrideVersionAndAuth = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public IEnumerable<SNMPVersion> SNMP_Versions { get; }
+
+    private SNMPVersion _snmp_Version;
+    public SNMPVersion SNMP_Version
+    {
+        get => _snmp_Version;
+        set
+        {
+            if (value == _snmp_Version)
+                return;
+
+            _snmp_Version = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _snmp_IsCommunityEmpty = true; // Initial it's empty
+    public bool SNMP_IsCommunityEmpty
+    {
+        get => _snmp_IsCommunityEmpty;
+        set
+        {
+            if (value == _snmp_IsCommunityEmpty)
+                return;
+
+            _snmp_IsCommunityEmpty = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private SecureString _snmp_Community;
+    public SecureString SNMP_Community
+    {
+        get => _snmp_Community;
+        set
+        {
+            if (value == _snmp_Community)
+                return;
+
+            // Validate the password string
+            SNMP_IsCommunityEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
+
+            _snmp_Community = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public IEnumerable<SNMPV3Security> SNMP_Securities { get; }
+
+    private SNMPV3Security _snmp_Security;
+    public SNMPV3Security SNMP_Security
+    {
+        get => _snmp_Security;
+        set
+        {
+            if (value == _snmp_Security)
+                return;
+
+            _snmp_Security = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _snmp_Username;
+    public string SNMP_Username
+    {
+        get => _snmp_Username;
+        set
+        {
+            if (value == _snmp_Username)
+                return;
+
+            _snmp_Username = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public IEnumerable<SNMPV3AuthenticationProvider> SNMP_AuthenticationProviders { get; }
+
+    private SNMPV3AuthenticationProvider _snmp_AuthenticationProvider;
+    public SNMPV3AuthenticationProvider SNMP_AuthenticationProvider
+    {
+        get => _snmp_AuthenticationProvider;
+        set
+        {
+            if (value == _snmp_AuthenticationProvider)
+                return;
+
+            _snmp_AuthenticationProvider = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _snmp_IsAuthEmpty = true; // Initial it's empty
+    public bool SNMP_IsAuthEmpty
+    {
+        get => _snmp_IsAuthEmpty;
+        set
+        {
+            if (value == _snmp_IsAuthEmpty)
+                return;
+
+            _snmp_IsAuthEmpty = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private SecureString _snmp_Auth;
+    public SecureString SNMP_Auth
+    {
+        get => _snmp_Auth;
+        set
+        {
+            if (value == _snmp_Auth)
+                return;
+
+            // Validate the password string
+            SNMP_IsAuthEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
+
+            _snmp_Auth = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public IEnumerable<SNMPV3PrivacyProvider> SNMP_PrivacyProviders { get; }
+
+    private SNMPV3PrivacyProvider _snmp_PrivacyProvider;
+    public SNMPV3PrivacyProvider SNMP_PrivacyProvider
+    {
+        get => _snmp_PrivacyProvider;
+        set
+        {
+            if (value == _snmp_PrivacyProvider)
+                return;
+
+            _snmp_PrivacyProvider = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _snmp_IsPrivEmpty = true; // Initial it's empty
+    public bool SNMP_IsPrivEmpty
+    {
+        get => _snmp_IsPrivEmpty;
+        set
+        {
+            if (value == _snmp_IsPrivEmpty)
+                return;
+
+            _snmp_IsPrivEmpty = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private SecureString _snmp_Priv;
+    public SecureString SNMP_Priv
+    {
+        get => _snmp_Priv;
+        set
+        {
+            if (value == _snmp_Priv)
+                return;
+
+            // Validate the password string
+            SNMP_IsPrivEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
+
+            _snmp_Priv = value;
+            OnPropertyChanged();
+        }
+    }
+    #endregion
+
     #region Wake on LAN
     private bool _wakeOnLAN_Enabled;
     public bool WakeOnLAN_Enabled
@@ -2400,6 +2648,7 @@ public class ProfileViewModel : ViewModelBase
         }
     }
     #endregion
+    
     #endregion
     public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler, IReadOnlyCollection<string> groups, string group = null, ProfileEditMode editMode = ProfileEditMode.Add, ProfileInfo profile = null, ApplicationName applicationName = ApplicationName.None)
     {
@@ -2607,6 +2856,28 @@ public class ProfileViewModel : ViewModelBase
         WebConsole_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.WebConsole : profileInfo.WebConsole_Enabled;
         WebConsole_Url = profileInfo.WebConsole_Url;
 
+        // SNMP
+        SNMP_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.SNMP : profileInfo.SNMP_Enabled;
+        SNMP_InheritHost = profileInfo.SNMP_InheritHost;
+        SNMP_Host = profileInfo.SNMP_Host;
+        SNMP_OverrideOIDAndMode = profileInfo.SNMP_OverrideOIDAndMode;
+        SNMP_OID = profileInfo.SNMP_OID;
+        SNMP_Modes = new List<SNMPMode> { SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set };
+        SNMP_Mode = SNMP_Modes.FirstOrDefault(x => x == profileInfo.SNMP_Mode);
+        SNMP_OverrideVersionAndAuth = profileInfo.SNMP_OverrideVersionAndAuth;
+        SNMP_Versions = Enum.GetValues(typeof(SNMPVersion)).Cast<SNMPVersion>().ToList();
+        SNMP_Version = SNMP_Versions.FirstOrDefault(x => x == profileInfo.SNMP_Version);
+        SNMP_Community = profileInfo.SNMP_Community;
+        SNMP_Securities = new List<SNMPV3Security> { SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv };
+        SNMP_Security = SNMP_Securities.FirstOrDefault(x => x == profileInfo.SNMP_Security);
+        SNMP_Username = profileInfo.SNMP_Username;
+        SNMP_AuthenticationProviders = Enum.GetValues(typeof(SNMPV3AuthenticationProvider)).Cast<SNMPV3AuthenticationProvider>().ToList();
+        SNMP_AuthenticationProvider = SNMP_AuthenticationProviders.FirstOrDefault(x => x == profileInfo.SNMP_AuthenticationProvider);
+        SNMP_Auth = profileInfo.SNMP_Auth;
+        SNMP_PrivacyProviders = Enum.GetValues(typeof(SNMPV3PrivacyProvider)).Cast<SNMPV3PrivacyProvider>().ToList();
+        SNMP_PrivacyProvider = SNMP_PrivacyProviders.FirstOrDefault(x => x == profileInfo.SNMP_PrivacyProvider);
+        SNMP_Priv = profileInfo.SNMP_Priv;
+
         // Wake on LAN
         WakeOnLAN_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.WakeOnLAN : profileInfo.WakeOnLAN_Enabled;
         WakeOnLAN_MACAddress = profileInfo.WakeOnLAN_MACAddress;
@@ -2641,20 +2912,6 @@ public class ProfileViewModel : ViewModelBase
             ShowCouldNotResolveHostnameWarning = true;
 
         IsResolveHostnameRunning = false;
-    }
-
-    public ICommand RemoteDesktopPasswordChangedCommand => new RelayCommand(p => RemoteDesktopPasswordChangedAction());
-
-    private void RemoteDesktopPasswordChangedAction()
-    {
-        RemoteDesktop_PasswordChanged = true;
-    }
-
-    public ICommand RemoteDesktopGatewayServerPasswordChangedCommand => new RelayCommand(p => RemoteDesktopGatewayServerPasswordChangedAction());
-
-    private void RemoteDesktopGatewayServerPasswordChangedAction()
-    {
-        RemoteDesktop_GatewayServerPasswordChanged = true;
     }
     #endregion
 

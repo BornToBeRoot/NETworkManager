@@ -1,4 +1,5 @@
-﻿using NETworkManager.Models.PowerShell;
+﻿using NETworkManager.Models.Network;
+using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
@@ -35,6 +36,7 @@ public class ProfileInfo
     /// <summary>
     /// Dynamic profiles (e.g. AWS) are not save to file.
     /// </summary>
+    [XmlIgnore]
     public bool IsDynamic { get; set; }
 
     public bool NetworkInterface_Enabled { get; set; }
@@ -193,6 +195,25 @@ public class ProfileInfo
 
     public bool WebConsole_Enabled { get; set; }
     public string WebConsole_Url { get; set; }
+
+    public bool SNMP_Enabled { get; set; }
+    public bool SNMP_InheritHost { get; set; } = true;
+    public string SNMP_Host { get; set; }
+    public bool SNMP_OverrideOIDAndMode { get; set; }
+    public string SNMP_OID { get; set; }
+    public SNMPMode SNMP_Mode { get; set; } = GlobalStaticConfiguration.SNMP_Mode;
+    public bool SNMP_OverrideVersionAndAuth { get; set; }
+    public SNMPVersion SNMP_Version { get; set; } = GlobalStaticConfiguration.SNMP_Version;
+    [XmlIgnore]
+    public SecureString SNMP_Community { get; set; }
+    public SNMPV3Security SNMP_Security { get; set; } = GlobalStaticConfiguration.SNMP_Security;
+    public string SNMP_Username { get; set; }
+    public SNMPV3AuthenticationProvider SNMP_AuthenticationProvider { get; set; } = GlobalStaticConfiguration.SNMP_AuthenticationProvider;
+    [XmlIgnore]
+    public SecureString SNMP_Auth { get; set; }
+    public SNMPV3PrivacyProvider SNMP_PrivacyProvider { get; set; } = GlobalStaticConfiguration.SNMP_PrivacyProvider;
+    [XmlIgnore]
+    public SecureString SNMP_Priv { get; set; }
 
     public bool WakeOnLAN_Enabled { get; set; }
     public string WakeOnLAN_MACAddress { get; set; }
@@ -388,6 +409,23 @@ public class ProfileInfo
         // WebConsole
         WebConsole_Enabled = profile.WebConsole_Enabled;
         WebConsole_Url = profile.WebConsole_Url;
+
+        // SNMP
+        SNMP_Enabled = profile.SNMP_Enabled;
+        SNMP_InheritHost = profile.SNMP_InheritHost;
+        SNMP_Host = profile.SNMP_Host;
+        SNMP_OverrideOIDAndMode = profile.SNMP_OverrideOIDAndMode;
+        SNMP_OID = profile.SNMP_OID;
+        SNMP_Mode = profile.SNMP_Mode;
+        SNMP_OverrideVersionAndAuth = profile.SNMP_OverrideVersionAndAuth;
+        SNMP_Version = profile.SNMP_Version;
+        SNMP_Community = profile.SNMP_Community;
+        SNMP_Security = profile.SNMP_Security;
+        SNMP_Username = profile.SNMP_Username;
+        SNMP_AuthenticationProvider = profile.SNMP_AuthenticationProvider;
+        SNMP_Auth = profile.SNMP_Auth;
+        SNMP_PrivacyProvider = profile.SNMP_PrivacyProvider;
+        SNMP_Priv = profile.SNMP_Priv;
 
         // Wake on LAN
         WakeOnLAN_Enabled = profile.WakeOnLAN_Enabled;

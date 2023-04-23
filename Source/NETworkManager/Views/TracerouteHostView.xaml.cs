@@ -10,7 +10,7 @@ namespace NETworkManager.Views;
 
 public partial class TracerouteHostView
 {
-    private readonly TracerouteHostViewModel _viewModel = new TracerouteHostViewModel(DialogCoordinator.Instance);
+    private readonly TracerouteHostViewModel _viewModel = new(DialogCoordinator.Instance);
 
     public TracerouteHostView()
     {

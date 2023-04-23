@@ -17,6 +17,7 @@ public static class GroupViewManager
         new GroupViewInfo(GroupViewName.PowerShell, ApplicationManager.GetIcon(ApplicationName.PowerShell)),
         new GroupViewInfo(GroupViewName.PuTTY, ApplicationManager.GetIcon(ApplicationName.PuTTY)),
         new GroupViewInfo(GroupViewName.AWSSessionManager, ApplicationManager.GetIcon(ApplicationName.AWSSessionManager)),
-        new GroupViewInfo(GroupViewName.TigerVNC, ApplicationManager.GetIcon(ApplicationName.TigerVNC))
+        new GroupViewInfo(GroupViewName.TigerVNC, ApplicationManager.GetIcon(ApplicationName.TigerVNC)),
+        new GroupViewInfo(GroupViewName.SNMP, ApplicationManager.GetIcon(ApplicationName.SNMP)),
     };              
 }

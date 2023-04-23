@@ -7,5 +7,6 @@ public enum GroupViewName
     PowerShell,
     PuTTY,
     AWSSessionManager,
-    TigerVNC
+    TigerVNC,
+    SNMP
 }

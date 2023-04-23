@@ -5,6 +5,7 @@ using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Security;
 using System.Threading.Tasks;
 
 namespace NETworkManager.Models.Network;
@@ -101,10 +102,10 @@ public partial class SNMPClient
                 OctetString username = new(options.Username);
 
                 List<Variable> variables = new();
-                
+
                 foreach (var oid in oids)
                     variables.Add(new Variable(new ObjectIdentifier(oid)));
-                
+
                 Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
                 ReportMessage report = await discovery.GetResponseAsync(ipEndpoint, options.CancellationToken);
 
@@ -137,7 +138,6 @@ public partial class SNMPClient
             {
                 OnComplete();
             }
-
         }, options.CancellationToken);
     }
 
@@ -282,10 +282,10 @@ public partial class SNMPClient
     private static IPrivacyProvider GetPrivacyProvider(SNMPOptionsV3 options)
     {
         if (options.Security == SNMPV3Security.AuthPriv)
-            return GetPrivacyProvider(options.AuthProvider, SecureStringHelper.ConvertToString(options.Auth), options.PrivProvider, SecureStringHelper.ConvertToString(options.Priv));
+            return GetPrivacyProvider(options.AuthProvider, options.Auth, options.PrivProvider, options.Priv);
 
         if (options.Security == SNMPV3Security.AuthNoPriv)
-            return GetPrivacyProvider(options.AuthProvider, SecureStringHelper.ConvertToString(options.Auth));
+            return GetPrivacyProvider(options.AuthProvider, options.Auth);
 
         // NoAuthNoPriv
         return GetPrivacyProvider();
@@ -298,33 +298,41 @@ public partial class SNMPClient
     }
 
     // authNoPriv
-    private static IPrivacyProvider GetPrivacyProvider(SNMPV3AuthenticationProvider authProvider, string auth)
+    private static IPrivacyProvider GetPrivacyProvider(SNMPV3AuthenticationProvider authProvider, SecureString auth)
     {
         return new DefaultPrivacyProvider(GetAuthenticationProvider(authProvider, auth));
     }
 
     // authPriv
-    private static IPrivacyProvider GetPrivacyProvider(SNMPV3AuthenticationProvider authProvider, string auth, SNMPV3PrivacyProvider privProvider, string priv)
+    private static IPrivacyProvider GetPrivacyProvider(SNMPV3AuthenticationProvider authProvider, SecureString auth, SNMPV3PrivacyProvider privProvider, SecureString priv)
     {
+        var privPlain = SecureStringHelper.ConvertToString(priv);
+        
         return privProvider switch
         {
-            SNMPV3PrivacyProvider.DES => new DESPrivacyProvider(new OctetString(priv), GetAuthenticationProvider(authProvider, auth)),
-            SNMPV3PrivacyProvider.AES => new AESPrivacyProvider(new OctetString(priv), GetAuthenticationProvider(authProvider, auth)),
-            SNMPV3PrivacyProvider.AES192 => new AES192PrivacyProvider(new OctetString(priv), GetAuthenticationProvider(authProvider, auth)),
-            SNMPV3PrivacyProvider.AES256 => new AES256PrivacyProvider(new OctetString(priv), GetAuthenticationProvider(authProvider, auth)),
+#pragma warning disable CS0618 // Allow outdated algorithms. We provide the function also for old devices. The user should use newer algorithms...
+            SNMPV3PrivacyProvider.DES => new DESPrivacyProvider(new OctetString(privPlain), GetAuthenticationProvider(authProvider, auth)),
+#pragma warning restore CS0618 // Allow outdated algorithms. We provide the function also for old devices. The user should use newer algorithms...
+            SNMPV3PrivacyProvider.AES => new AESPrivacyProvider(new OctetString(privPlain), GetAuthenticationProvider(authProvider, auth)),
+            SNMPV3PrivacyProvider.AES192 => new AES192PrivacyProvider(new OctetString(privPlain), GetAuthenticationProvider(authProvider, auth)),
+            SNMPV3PrivacyProvider.AES256 => new AES256PrivacyProvider(new OctetString(privPlain), GetAuthenticationProvider(authProvider, auth)),
             _ => null,
         };
     }
 
-    private static IAuthenticationProvider GetAuthenticationProvider(SNMPV3AuthenticationProvider authProvider, string auth)
+    private static IAuthenticationProvider GetAuthenticationProvider(SNMPV3AuthenticationProvider authProvider, SecureString auth)
     {
+        var authPlain = SecureStringHelper.ConvertToString(auth);
+        
         return authProvider switch
         {
-            SNMPV3AuthenticationProvider.MD5 => new MD5AuthenticationProvider(new OctetString(auth)),
-            SNMPV3AuthenticationProvider.SHA1 => new SHA1AuthenticationProvider(new OctetString(auth)),
-            SNMPV3AuthenticationProvider.SHA256 => new SHA256AuthenticationProvider(new OctetString(auth)),
-            SNMPV3AuthenticationProvider.SHA384 => new SHA384AuthenticationProvider(new OctetString(auth)),
-            SNMPV3AuthenticationProvider.SHA512 => new SHA512AuthenticationProvider(new OctetString(auth)),
+#pragma warning disable CS0618 // Allow outdated algorithms. We provide the function also for old devices. The user should use newer algorithms...
+            SNMPV3AuthenticationProvider.MD5 => new MD5AuthenticationProvider(new OctetString(authPlain)),
+            SNMPV3AuthenticationProvider.SHA1 => new SHA1AuthenticationProvider(new OctetString(authPlain)),
+#pragma warning restore CS0618 // Allow outdated algorithms. We provide the function also for old devices. The user should use newer algorithms...
+            SNMPV3AuthenticationProvider.SHA256 => new SHA256AuthenticationProvider(new OctetString(authPlain)),
+            SNMPV3AuthenticationProvider.SHA384 => new SHA384AuthenticationProvider(new OctetString(authPlain)),
+            SNMPV3AuthenticationProvider.SHA512 => new SHA512AuthenticationProvider(new OctetString(authPlain)),
             _ => null,
         };
     }

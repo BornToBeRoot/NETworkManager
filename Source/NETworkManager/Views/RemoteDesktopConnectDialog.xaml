@@ -103,7 +103,7 @@
                 </TextBox.Text>
             </TextBox>
             <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Password}" />
-            <PasswordBox x:Name="PasswordBoxPassword" Grid.Column="2" Grid.Row="4" Style="{StaticResource DefaultPasswordBox}" >
+            <PasswordBox x:Name="PasswordBoxPassword" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePassword}" Style="{StaticResource DefaultPasswordBox}" >
                 <interactivity:Interaction.Behaviors>
                     <wpfHelpers:PasswordBoxBindingBehavior Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </interactivity:Interaction.Behaviors>

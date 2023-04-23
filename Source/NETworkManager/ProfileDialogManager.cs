@@ -393,6 +393,23 @@ public static class ProfileDialogManager
             WebConsole_Enabled = instance.WebConsole_Enabled,
             WebConsole_Url = instance.WebConsole_Url,
 
+            // SNMP
+            SNMP_Enabled = instance.SNMP_Enabled,
+            SNMP_InheritHost = instance.SNMP_InheritHost,
+            SNMP_Host = instance.SNMP_InheritHost ? instance.Host?.Trim() : instance.SNMP_Host?.Trim(),
+            SNMP_OverrideOIDAndMode = instance.SNMP_OverrideOIDAndMode,
+            SNMP_OID = instance.SNMP_OID,
+            SNMP_Mode = instance.SNMP_Mode,
+            SNMP_OverrideVersionAndAuth = instance.SNMP_OverrideVersionAndAuth,
+            SNMP_Version = instance.SNMP_Version,
+            SNMP_Community = instance.SNMP_OverrideVersionAndAuth && instance.SNMP_Version != Models.Network.SNMPVersion.V3 ? instance.SNMP_Community : new SecureString(),
+            SNMP_Security = instance.SNMP_Security,
+            SNMP_Username = instance.SNMP_Username,
+            SNMP_AuthenticationProvider = instance.SNMP_AuthenticationProvider,
+            SNMP_Auth = instance.SNMP_OverrideVersionAndAuth && instance.SNMP_Version == Models.Network.SNMPVersion.V3 && instance.SNMP_Security != Models.Network.SNMPV3Security.NoAuthNoPriv ? instance.SNMP_Auth : new SecureString(),
+            SNMP_PrivacyProvider = instance.SNMP_PrivacyProvider,
+            SNMP_Priv = instance.SNMP_OverrideVersionAndAuth && instance.SNMP_Version == Models.Network.SNMPVersion.V3 && instance.SNMP_Security == Models.Network.SNMPV3Security.AuthPriv ? instance.SNMP_Priv : new SecureString(),
+
             // Wake on LAN
             WakeOnLAN_Enabled = instance.WakeOnLAN_Enabled,
             WakeOnLAN_MACAddress = instance.WakeOnLAN_MACAddress?.Trim(),
@@ -532,7 +549,21 @@ public static class ProfileDialogManager
 
             // TigerVNC
             TigerVNC_OverridePort = instance.TigerVNC_OverridePort,
-            TigerVNC_Port = instance.TigerVNC_Port
+            TigerVNC_Port = instance.TigerVNC_Port,
+
+            // SNMP
+            SNMP_OverrideOIDAndMode = instance.SNMP_OverrideOIDAndMode,
+            SNMP_OID = instance.SNMP_OID,
+            SNMP_Mode = instance.SNMP_Mode,
+            SNMP_OverrideVersionAndAuth = instance.SNMP_OverrideVersionAndAuth,
+            SNMP_Version = instance.SNMP_Version,
+            SNMP_Community = instance.SNMP_OverrideVersionAndAuth && instance.SNMP_Version != Models.Network.SNMPVersion.V3 ? instance.SNMP_Community : new SecureString(),
+            SNMP_Security = instance.SNMP_Security,
+            SNMP_Username = instance.SNMP_Username,
+            SNMP_AuthenticationProvider = instance.SNMP_AuthenticationProvider,
+            SNMP_Auth = instance.SNMP_OverrideVersionAndAuth && instance.SNMP_Version == Models.Network.SNMPVersion.V3 && instance.SNMP_Security != Models.Network.SNMPV3Security.NoAuthNoPriv ? instance.SNMP_Auth : new SecureString(),
+            SNMP_PrivacyProvider = instance.SNMP_PrivacyProvider,
+            SNMP_Priv = instance.SNMP_OverrideVersionAndAuth && instance.SNMP_Version == Models.Network.SNMPVersion.V3 && instance.SNMP_Security == Models.Network.SNMPV3Security.AuthPriv ? instance.SNMP_Priv : new SecureString(),
         };
     }
     #endregion
