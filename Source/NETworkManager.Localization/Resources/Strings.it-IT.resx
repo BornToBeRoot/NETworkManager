@@ -3619,4 +3619,13 @@ Per assistenza contattare l'amministratore di rete.</value>
   <data name="EditOIDProfile" xml:space="preserve">
     <value>Modifica profilo OID</value>
   </data>
+  <data name="EnterPasswordDots" xml:space="preserve">
+    <value>Inserisci password...</value>
+  </data>
+  <data name="AddTab" xml:space="preserve">
+    <value>Aggiungi scheda</value>
+  </data>
+  <data name="FromProfile" xml:space="preserve">
+    <value>(da profilo)</value>
+  </data>
 </root>
