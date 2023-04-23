@@ -40,6 +40,7 @@ Release date: **xx.xx.2023**
   - Get request can query multiple OIDs at once now [#2167](https://github.com/BornToBeRoot/NETworkManager/pull/2167){:target="\_blank"}
   - SHA256, SHA384 and SHA512 for SNMPv3 auth added [#2166](https://github.com/BornToBeRoot/NETworkManager/pull/2166){:target="\_blank"}
   - AES192 and AES256 for SNMPv3 privacy added [#2166](https://github.com/BornToBeRoot/NETworkManager/pull/2166){:target="\_blank"}
+  - Use Regex to validate OID [#2205](https://github.com/BornToBeRoot/NETworkManager/pull/2205){:target="\_blank"}
 - Connections
   - Automatically refresh is now enabled if it was enabled on the last exit [#2116](https://github.com/BornToBeRoot/NETworkManager/pull/2116){:target="\_blank"}
 - Listeners
