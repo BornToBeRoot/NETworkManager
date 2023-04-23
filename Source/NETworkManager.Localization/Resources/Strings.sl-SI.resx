@@ -3488,4 +3488,37 @@ V zgornjem desnem kotu kliknite na gumb za Pomoč/Dokumentacijo (levo od gumba z
   <data name="CheckingWPSDots" xml:space="preserve">
     <value>Preverjanje WPS...</value>
   </data>
+  <data name="OpenOIDProfilesDots" xml:space="preserve">
+    <value>Open OID profiles...</value>
+  </data>
+  <data name="MIB" xml:space="preserve">
+    <value>MIB</value>
+  </data>
+  <data name="OIDProfiles" xml:space="preserve">
+    <value>OID profiles</value>
+  </data>
+  <data name="SelectOIDProfile" xml:space="preserve">
+    <value>Select OID profile</value>
+  </data>
+  <data name="AddOIDProfile" xml:space="preserve">
+    <value>Add OID profile</value>
+  </data>
+  <data name="DeleteOIDProfile" xml:space="preserve">
+    <value>Delete OID profile</value>
+  </data>
+  <data name="DeleteOIDProfileMessage" xml:space="preserve">
+    <value>The selected OID profile will be deleted permanently.</value>
+  </data>
+  <data name="EditOIDProfile" xml:space="preserve">
+    <value>Edit OID profile</value>
+  </data>
+  <data name="EnterPasswordDots" xml:space="preserve">
+    <value>Enter password...</value>
+  </data>
+  <data name="AddTab" xml:space="preserve">
+    <value>Add tab</value>
+  </data>
+  <data name="FromProfile" xml:space="preserve">
+    <value>(from profile)</value>
+  </data>
 </root>
