@@ -16,7 +16,7 @@ New Feature
 2023.3.7.0
 {: .label .label-purple }
 
-With SNTP Lookup you can query one or more SNTP servers to get the current network time.
+With **SNTP Lookup** you can query one or more SNTP servers to get the current network time.
 SNTP server and get the network current time. It will also show the offset to the local time.
 
 ![SNTPLookup](16_SNTPLookup.png)
