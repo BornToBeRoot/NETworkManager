@@ -83,4 +83,7 @@ public static class RegexHelper
 
     // Match a number (like 12, 12.4, 12,3) 
     public const string NumberRegex = @"^\d+((\.|,)\d+)?$";
+
+    // Match an SNMP OID (like 1.3.6.1)
+    public const string SNMOIODRegex = @"^[012]\.(?:[0-9]|[1-3][0-9])(\.\d+)*$";
 }
