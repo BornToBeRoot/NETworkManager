@@ -1174,8 +1174,8 @@ Profile files are not affected!</value>
   <data name="UnkownError" xml:space="preserve">
     <value>Unkown error!</value>
   </data>
-  <data name="UntrayBringWindowToFront" xml:space="preserve">
-    <value>Untray / Bring window to front</value>
+  <data name="UntrayBringWindowToForeground" xml:space="preserve">
+    <value>Untray / Bring window to foreground</value>
   </data>
   <data name="URL" xml:space="preserve">
     <value>URL</value>
@@ -2229,8 +2229,8 @@ $$hostname$$	--&gt;	Állomásnév</value>
   <data name="ShowStatusWindowOnNetworkChange" xml:space="preserve">
     <value>Show status window on network change</value>
   </data>
-  <data name="TimeInSecondsHowLongTheWindowShouldBeDisplayed" xml:space="preserve">
-    <value>Time in seconds how long the window should be displayed</value>
+  <data name="TimeInSecondsHowLongTheStatusWindowIsShown" xml:space="preserve">
+    <value>Time in seconds how long the status window is shown</value>
   </data>
   <data name="WiFi" xml:space="preserve">
     <value>WiFi</value>
@@ -3324,5 +3324,221 @@ Changes to this value will take effect after the application is restarted. Wheth
   </data>
   <data name="ShowAddressBar" xml:space="preserve">
     <value>Show address bar</value>
+  </data>
+  <data name="WarnMessage_MultipleInstances" xml:space="preserve">
+    <value>Enabling this setting is not recommended. Multiple instances of the application share the same settings and profile files. The last instance to be closed may overwrite changes made by other instances.</value>
+  </data>
+  <data name="BypassForLocalAddresses" xml:space="preserve">
+    <value>Bypass for local addresses</value>
+  </data>
+  <data name="EnableGatewayServer" xml:space="preserve">
+    <value>Enable gateway server</value>
+  </data>
+  <data name="LogonMethod" xml:space="preserve">
+    <value>Logon method</value>
+  </data>
+  <data name="GatewayServer" xml:space="preserve">
+    <value>Gateway server</value>
+  </data>
+  <data name="ServerName" xml:space="preserve">
+    <value>Server name</value>
+  </data>
+  <data name="ShareGatewayCredentialsWithRemoteComputer" xml:space="preserve">
+    <value>Share Gateway credentials with remote computer</value>
+  </data>
+  <data name="RemoteDesktopGatewayServerLogonMethod_Any" xml:space="preserve">
+    <value>Allow me to select later</value>
+  </data>
+  <data name="RemoteDesktopGatewayServerLogonMethod_Smartcard" xml:space="preserve">
+    <value>Smart card or Windows Hello for Business</value>
+  </data>
+  <data name="RemoteDesktopGatewayServerLogonMethod_Userpass" xml:space="preserve">
+    <value>Ask for password (NTLM)</value>
+  </data>
+  <data name="UseGatewayCredentials" xml:space="preserve">
+    <value>Use gateway credentials</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331661" xml:space="preserve">
+    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server is temporarily unavailable. Try reconnecting later or contact your network administrator for assistance.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331651" xml:space="preserve">
+    <value>Your computer can't connect to the remote computer due to one of the following reasons:  1) The requested Remote Desktop Gateway server address and the server SSL certificate subject name do not match. 2) The certificate is expired or revoked. 3) The certificate root authority does not trust the certificate.  Contact your network administrator for assistance.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331653" xml:space="preserve">
+    <value>This computer can't verify the identity of the RD Gateway "". It's not safe to connect to servers that can't be identified. Contact your network administrator for assistance.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331654" xml:space="preserve">
+    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server address requested and the certificate subject name do not match. Contact your network administrator for assistance.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331655" xml:space="preserve">
+    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server's certificate has expired or has been revoked. Contact your network administrator for assistance.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331657" xml:space="preserve">
+    <value>An error occurred while sending data to the Remote Desktop Gateway server. The server is temporarily unavailable or a network connection is down. Try again later, or contact your network administrator for assistance.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331658" xml:space="preserve">
+    <value>An error occurred while receiving data from the Remote Desktop Gateway server. Either the server is temporarily unavailable or a network connection is down. Try again later, or contact your network administrator for assistance.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331660" xml:space="preserve">
+    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server address is unreachable or incorrect. Type a valid Remote Desktop Gateway server address.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331663" xml:space="preserve">
+    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server is running low on server resources and is temporarily unavailable. Try reconnecting later or contact your network administrator for assistance.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331672" xml:space="preserve">
+    <value>The Remote Desktop Gateway server has ended the connection. Try reconnecting later or contact your network administrator for assistance.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331673" xml:space="preserve">
+    <value>The Remote Desktop Gateway server administrator has ended the connection. Try reconnecting later or contact your network administrator for assistance.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331675" xml:space="preserve">
+    <value>Remote Desktop can't connect to the remote computer "" for one of these reasons:  1) Your user account is not listed in the RD Gateway's permission list 2) You might have specified the remote computer in NetBIOS format (for example, computer1), but the RD Gateway is expecting an FQDN or IP address format (for example, computer1.fabrikam.com or 157.60.0.1).  Contact your network administrator for assistance.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331676" xml:space="preserve">
+    <value>Remote Desktop can't connect to the remote computer "" for one of these reasons:  1) Your user account is not authorized to access the RD Gateway "" 2) Your computer is not authorized to access the RD Gateway "" 3) You are using an incompatible authentication method (for example, the RD Gateway might be expecting a smart card but you provided a password)  Contact your network administrator for assistance.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331679" xml:space="preserve">
+    <value>Your computer can't connect to the remote computer because your network administrator has restricted access to this RD Gateway server. Contact your network administrator for assistance.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331680" xml:space="preserve">
+    <value>Your computer can't connect to the remote computer because the web proxy server requires authentication. To allow unauthenticated traffic to an RD Gateway server through your web proxy server, contact your network administrator.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331682" xml:space="preserve">
+    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server reached its maximum allowed connections. Try reconnecting later or contact your network administrator for assistance.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331683" xml:space="preserve">
+    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server does not support the request. Contact your network administrator for assistance.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331684" xml:space="preserve">
+    <value>Your computer can't connect to the remote computer because the client does not support one of the Remote Desktop Gateway's capabilities. Contact your network administrator for assistance.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331685" xml:space="preserve">
+    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server and this computer are incompatible. Contact your network administrator for assistance.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331688" xml:space="preserve">
+    <value>Your computer can't connect to the remote computer because no certificate was configured to use at the Remote Desktop Gateway server. Contact your network administrator for assistance.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331689" xml:space="preserve">
+    <value>Your computer can't connect to the remote computer because the RD Gateway server that you are trying to connect to is not allowed by your computer administrator. If you are the administrator, add this Remote Desktop Gateway server name to the trusted Remote Desktop Gateway server list on your computer and then try connecting again.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331690" xml:space="preserve">
+    <value>Your computer can't connect to the remote computer because your computer or device did not meet the Network Access Protection requirements set by your network administrator, for one of the following reasons:  1) The Remote Desktop Gateway server name and the server's public key certificate subject name do not match. 2) The certificate has expired or has been revoked. 3) The certificate root authority does not trust the certificate. 4) The certificate key extension does not support encryption. 5) Your computer cannot verify the certificate revocation list.  Contact your network administrator for assistance.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331691" xml:space="preserve">
+    <value>Your computer can't connect to the remote computer because a user name and password are required to authenticate to the Remote Desktop Gateway server instead of smart card credentials.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331692" xml:space="preserve">
+    <value>Your computer can't connect to the remote computer because smart card credentials are required to authenticate to the Remote Desktop Gateway server instead of a user name and password.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331700" xml:space="preserve">
+    <value>Your computer can't connect to the remote computer because an invalid cookie was sent to the Remote Desktop Gateway server. Contact your network administrator for assistance.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331701" xml:space="preserve">
+    <value>Your computer can't connect to the remote computer because the cookie was rejected by the Remote Desktop Gateway server. Contact your network administrator for assistance.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331703" xml:space="preserve">
+    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server is expecting an authentication method different from the one attempted. Contact your network administrator for assistance.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331704" xml:space="preserve">
+    <value>The RD Gateway connection ended because periodic user authentication failed. Try reconnecting with a correct user name and password. If the reconnection fails, contact your network administrator for further assistance.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331705" xml:space="preserve">
+    <value>The RD Gateway connection ended because periodic user authorization failed. Try reconnecting with a correct user name and password. If the reconnection fails, contact your network administrator for further assistance.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331707" xml:space="preserve">
+    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway and the remote computer are unable to exchange policies. This could happen due to one of the following reasons:     1. The remote computer is not capable of exchanging policies with the Remote Desktop Gateway.     2. The remote computer's configuration does not permit a new connection.     3. The connection between the Remote Desktop Gateway and the remote computer ended.    Contact your network administrator for assistance.</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_50331713" xml:space="preserve">
+    <value>The RD Gateway connection ended because periodic user authorization failed. Your computer or device didn't pass the Network Access Protection (NAP) requirements set by your network administrator. Contact your network administrator for assistance.</value>
+  </data>
+  <data name="Connected" xml:space="preserve">
+    <value>Connected</value>
+  </data>
+  <data name="ErrorWhileScanningWiFiAdapterXXXWithErrorXXX" xml:space="preserve">
+    <value>Error while scanning WiFi adapter "{0}" with error: "{1}"</value>
+  </data>
+  <data name="ConnectDots" xml:space="preserve">
+    <value>Connect...</value>
+  </data>
+  <data name="XXXDisconnected" xml:space="preserve">
+    <value>{0} disconnected!</value>
+  </data>
+  <data name="ConnectToXXX" xml:space="preserve">
+    <value>Connect to {0}</value>
+  </data>
+  <data name="WPS" xml:space="preserve">
+    <value>WPS</value>
+  </data>
+  <data name="ConnectAutomatically" xml:space="preserve">
+    <value>Connect automatically</value>
+  </data>
+  <data name="PreSharedKey" xml:space="preserve">
+    <value>Pre-shared key</value>
+  </data>
+  <data name="ConnectingToXXX" xml:space="preserve">
+    <value>Connecting to {0}...</value>
+  </data>
+  <data name="CouldNotConnectToXXXReasonXXX" xml:space="preserve">
+    <value>Could not connect to {0} ({1})!</value>
+  </data>
+  <data name="SuccessfullyConnectedToXXX" xml:space="preserve">
+    <value>Successfully connected to {0}!</value>
+  </data>
+  <data name="WiFiConnectionStatus_AccessRevoked" xml:space="preserve">
+    <value>Access to the network has been revoked</value>
+  </data>
+  <data name="WiFiConnectionStatus_InvalidCredential" xml:space="preserve">
+    <value>Invalid credentials</value>
+  </data>
+  <data name="WiFiConnectionStatus_NetworkNotAvailable" xml:space="preserve">
+    <value>Network not available</value>
+  </data>
+  <data name="WiFiConnectionStatus_Success" xml:space="preserve">
+    <value>Successful</value>
+  </data>
+  <data name="WiFiConnectionStatus_Timeout" xml:space="preserve">
+    <value>Connection attempt timed out</value>
+  </data>
+  <data name="WiFiConnectionStatus_UnspecifiedFailure" xml:space="preserve">
+    <value>-/-</value>
+  </data>
+  <data name="WiFiConnectionStatus_UnsupportedAuthenticationProtocol" xml:space="preserve">
+    <value>Authentication protocol is not supported!</value>
+  </data>
+  <data name="CheckingWPSDots" xml:space="preserve">
+    <value>Checking WPS...</value>
+  </data>
+  <data name="OpenOIDProfilesDots" xml:space="preserve">
+    <value>Open OID profiles...</value>
+  </data>
+  <data name="MIB" xml:space="preserve">
+    <value>MIB</value>
+  </data>
+  <data name="OIDProfiles" xml:space="preserve">
+    <value>OID profiles</value>
+  </data>
+  <data name="SelectOIDProfile" xml:space="preserve">
+    <value>Select OID profile</value>
+  </data>
+  <data name="AddOIDProfile" xml:space="preserve">
+    <value>Add OID profile</value>
+  </data>
+  <data name="DeleteOIDProfile" xml:space="preserve">
+    <value>Delete OID profile</value>
+  </data>
+  <data name="DeleteOIDProfileMessage" xml:space="preserve">
+    <value>The selected OID profile will be deleted permanently.</value>
+  </data>
+  <data name="EditOIDProfile" xml:space="preserve">
+    <value>Edit OID profile</value>
+  </data>
+  <data name="EnterPasswordDots" xml:space="preserve">
+    <value>Enter password...</value>
+  </data>
+  <data name="AddTab" xml:space="preserve">
+    <value>Add tab</value>
+  </data>
+  <data name="FromProfile" xml:space="preserve">
+    <value>(from profile)</value>
   </data>
 </root>
