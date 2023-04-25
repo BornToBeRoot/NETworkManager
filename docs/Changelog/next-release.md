@@ -50,6 +50,10 @@ Release date: **xx.xx.2023**
 - Status window is now automatically closed again if it was opened by a network change event [#2105](https://github.com/BornToBeRoot/NETworkManager/pull/2105){:target="\_blank"}
 
 ## Bugfixes
+- Remote Desktop, PowerShell, PuTTY, TigerVNC, AWS Session Manager
+  - Fixed / mitigated an issue with the [AirSpace Fixer](https://www.nuget.org/packages/AirspaceFixer) if a dialog is displayed (e.g. to enter the password to unlock the profile file) directly after the application has been started [#2209](https://github.com/BornToBeRoot/NETworkManager/pull/2209){:target="\_blank"}
+- AWS Session Manager
+  - Fixed a possible issue if the EC2 instance sync is enabled and the profile file is not loaded (because the user hasn't entered the password yet) [#2209](https://github.com/BornToBeRoot/NETworkManager/pull/2209){:target="\_blank"}
 - Profiles
   - OK button not disabled initially if remote desktop domain is invalid [#2165](https://github.com/BornToBeRoot/NETworkManager/pull/2165){:target="\_blank"}
   - OK button not disabled initially on unlock profile & decrypt profile file [#2133](https://github.com/BornToBeRoot/NETworkManager/pull/2133){:target="\_blank"}
