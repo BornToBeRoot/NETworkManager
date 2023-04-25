@@ -57,8 +57,8 @@ public partial class MainWindow : INotifyPropertyChanged
     private StatusWindow _statusWindow;
 
     private readonly bool _isLoading;
-    private bool _isProfileLoading;
-    private bool _isProfileUpdating;
+    private bool _isProfileFilesLoading;
+    private bool _isProfileFileUpdating;
     private bool _isApplicationListLoading;
     private bool _isNetworkChanging;
 
@@ -303,7 +303,7 @@ public partial class MainWindow : INotifyPropertyChanged
         get => _selectedProfileFile;
         set
         {
-            if (_isProfileLoading)
+            if (_isProfileFilesLoading)
                 return;
 
             if (value != null && value.Equals(_selectedProfileFile))
@@ -313,11 +313,10 @@ public partial class MainWindow : INotifyPropertyChanged
 
             if (value != null)
             {
-                if (!_isProfileUpdating)
+                if (!_isProfileFileUpdating)
                     LoadProfile(value);
 
-                if (SettingsManager.Current.Profiles_LastSelected != value.Name)
-                    SettingsManager.Current.Profiles_LastSelected = value.Name;
+                SettingsManager.Current.Profiles_LastSelected = value.Name;
             }
 
             OnPropertyChanged();
@@ -373,33 +372,37 @@ public partial class MainWindow : INotifyPropertyChanged
         // Set window title
         Title = $"NETworkManager {AssemblyManager.Current.Version}";
 
-        // Load settings
-        ExpandApplicationView = SettingsManager.Current.ExpandApplicationView;
-
         // Register event system...
         SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
-        //EventSystem.RedirectProfileToApplicationEvent += EventSystem_RedirectProfileToApplicationEvent;
+
         EventSystem.OnRedirectDataToApplicationEvent += EventSystem_RedirectDataToApplicationEvent;
         EventSystem.OnRedirectToSettingsEvent += EventSystem_RedirectToSettingsEvent;
 
         _isLoading = false;
     }
 
-    protected override async void OnContentRendered(EventArgs e)
+    // Fired when the window is loaded
+    private void MetroMainWindow_ContentRendered(object sender, EventArgs e)
     {
-        base.OnContentRendered(e);
+        // Wait for the window to be rendered.
+        Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(async () =>
+        {
+            // Delay the loading a bit to prevent a UI bug when using the airspace fixer
+            await Task.Delay(500);
 
+            CheckFirstRunThenLoadAsync();
+        }));
+    }
+
+    private async void CheckFirstRunThenLoadAsync()
+    {
         // Show a note if settings have been reset
         if (ConfigurationManager.Current.ShowSettingsResetNoteOnStartup)
         {
             var settings = AppearanceManager.MetroDialog;
             settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-            ConfigurationManager.Current.IsDialogOpen = true;
-
             await this.ShowMessageAsync(Localization.Resources.Strings.SettingsHaveBeenReset, Localization.Resources.Strings.SettingsFileFoundWasCorruptOrNotCompatibleMessage, MessageDialogStyle.Affirmative, settings);
-
-            ConfigurationManager.Current.IsDialogOpen = false;
         }
 
         // Show a note on the first run
@@ -456,7 +459,7 @@ public partial class MainWindow : INotifyPropertyChanged
                 // Save it to create a settings file
                 SettingsManager.Save();
 
-                AfterContentRendered();
+                Load();
             });
 
             customDialog.Content = new FirstRunDialog
@@ -468,17 +471,17 @@ public partial class MainWindow : INotifyPropertyChanged
         }
         else
         {
-            AfterContentRendered();
+            Load();
         }
     }
 
-    private void AfterContentRendered()
+    private void Load()
     {
-        // Load the profiles before the applications are loaded so that we can use them (e.g. for synchronization)
-        LoadProfiles();
-
         // Load application list, filter, sort, etc.
         LoadApplicationList();
+
+        // Load the profiles
+        LoadProfiles();
 
         // Init notify icon
         if (SettingsManager.Current.TrayIcon_AlwaysShowIcon)
@@ -502,6 +505,7 @@ public partial class MainWindow : INotifyPropertyChanged
         if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
             CheckForUpdates();
     }
+
     private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)
     {
         // Force restart --> e.g. Import or reset settings
@@ -599,6 +603,9 @@ public partial class MainWindow : INotifyPropertyChanged
         // Scroll into view
         if (SelectedApplication != null)
             ListViewApplication.ScrollIntoView(SelectedApplication);
+
+        // Expand application view
+        ExpandApplicationView = SettingsManager.Current.ExpandApplicationView;
     }
 
     private DashboardView _dashboardView;
@@ -956,7 +963,7 @@ public partial class MainWindow : INotifyPropertyChanged
         }
 
         // Change view
-        SelectedApplication = application;               
+        SelectedApplication = application;
 
         // Crate a new tab / perform action
         switch (data.Application)
@@ -1031,7 +1038,7 @@ public partial class MainWindow : INotifyPropertyChanged
 
     #region Settings    
     private void OpenSettings()
-    {        
+    {
         OnApplicationViewHide(SelectedApplication.Name);
 
         if (_settingsView == null)
@@ -1078,19 +1085,18 @@ public partial class MainWindow : INotifyPropertyChanged
     #region Profiles
     private void LoadProfiles()
     {
-        _isProfileLoading = true;
+        _isProfileFilesLoading = true;
         ProfileFiles = new CollectionViewSource { Source = ProfileManager.ProfileFiles }.View;
         ProfileFiles.SortDescriptions.Add(new SortDescription(nameof(ProfileFileInfo.Name), ListSortDirection.Ascending));
-        _isProfileLoading = false;
+        _isProfileFilesLoading = false;
 
         ProfileManager.OnLoadedProfileFileChangedEvent += ProfileManager_OnLoadedProfileFileChangedEvent;
-        ProfileManager.OnSwitchProfileFileViaUIEvent += ProfileManager_OnSwitchProfileFileViaUIEvent;
 
         SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Profiles_LastSelected);
         SelectedProfileFile ??= ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault();
     }
 
-    private async Task LoadProfile(ProfileFileInfo info, bool showWrongPassword = false)
+    private async void LoadProfile(ProfileFileInfo info, bool showWrongPassword = false)
     {
         if (info.IsEncrypted && !info.IsPasswordValid)
         {
@@ -1131,7 +1137,7 @@ public partial class MainWindow : INotifyPropertyChanged
         }
     }
 
-    private async Task SwitchProfile(ProfileFileInfo info)
+    private async void SwitchProfile(ProfileFileInfo info)
     {
         try
         {
@@ -1140,8 +1146,8 @@ public partial class MainWindow : INotifyPropertyChanged
             IsProfileFileLocked = false;
 
             // Null if profile is loaded before application is loaded
-            if (SelectedApplication != null)
-                OnProfilesLoaded(SelectedApplication.Name);
+            ////if (SelectedApplication != null)
+            OnProfilesLoaded(SelectedApplication.Name);
         }
         catch (System.Security.Cryptography.CryptographicException)
         {
@@ -1187,21 +1193,11 @@ public partial class MainWindow : INotifyPropertyChanged
     /// <param name="e"></param>
     private void ProfileManager_OnLoadedProfileFileChangedEvent(object sender, ProfileFileInfoArgs e)
     {
-        _isProfileUpdating = true;
+        _isProfileFileUpdating = e.ProfileFileUpdating;
 
         SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Equals(e.ProfileFileInfo));
 
-        _isProfileUpdating = false;
-    }
-
-    /// <summary>
-    /// Switch the profile from code behind via UI to get the password for encrypted files.
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void ProfileManager_OnSwitchProfileFileViaUIEvent(object sender, ProfileFileInfoArgs e)
-    {
-        SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Equals(e.ProfileFileInfo));
+        _isProfileFileUpdating = false;
     }
     #endregion
 
@@ -1714,5 +1710,5 @@ public partial class MainWindow : INotifyPropertyChanged
                 break;
         }
     }
-    #endregion
+    #endregion       
 }

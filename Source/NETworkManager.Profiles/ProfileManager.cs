@@ -5,11 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Security;
 using System.Text;
-using System.Text.Json;
 using System.Xml.Serialization;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
-using Newtonsoft.Json;
 
 namespace NETworkManager.Profiles;
 
@@ -84,26 +82,10 @@ public static class ProfileManager
     /// Method to fire the <see cref="OnLoadedProfileFileChangedEvent"/>.
     /// </summary>
     /// <param name="profileFileInfo">Loaded <see cref="ProfileFileInfo"/>.</param>
-    private static void LoadedProfileFileChanged(ProfileFileInfo profileFileInfo)
+    private static void LoadedProfileFileChanged(ProfileFileInfo profileFileInfo, bool profileFileUpdating = false)
     {
-        OnLoadedProfileFileChangedEvent?.Invoke(null, new ProfileFileInfoArgs(profileFileInfo));
-    }
-
-    /// <summary>
-    /// Event is fired if the UI needs to update the displayed profile file (e.g. after a 
-    /// profile file was deleted). The /// <see cref="ProfileFileInfo"/> with the current
-    /// loaded profile file is passed as argument.
-    /// </summary>
-    public static event EventHandler<ProfileFileInfoArgs> OnSwitchProfileFileViaUIEvent;
-
-    /// <summary>
-    /// Method to fire the <see cref="OnSwitchProfileFileViaUIEvent"/>.
-    /// </summary>
-    /// <param name="info">Loaded <see cref="ProfileFileInfo"/>.</param>
-    private static void SwitchProfileFileViaUI(ProfileFileInfo info)
-    {
-        OnSwitchProfileFileViaUIEvent?.Invoke(null, new ProfileFileInfoArgs(info));
-    }
+        OnLoadedProfileFileChangedEvent?.Invoke(null, new ProfileFileInfoArgs(profileFileInfo, profileFileUpdating));
+    }    
 
     /// <summary>
     /// Event is fired if the profiles have changed.
@@ -240,7 +222,7 @@ public static class ProfileManager
         if (switchProfile)
         {
             Switch(newProfileFileInfo, false);
-            LoadedProfileFileChanged(LoadedProfileFile);
+            LoadedProfileFileChanged(LoadedProfileFile, true);
         }
 
         File.Delete(profileFileInfo.Path);
@@ -255,7 +237,7 @@ public static class ProfileManager
     {
         // Trigger switch via UI (to get the password if the file is encrypted), if the selected profile file is deleted
         if (LoadedProfileFile != null && LoadedProfileFile.Equals(profileFileInfo))
-            SwitchProfileFileViaUI(ProfileFiles.FirstOrDefault(x => !x.Equals(profileFileInfo)));
+            LoadedProfileFileChanged(ProfileFiles.FirstOrDefault(x => !x.Equals(profileFileInfo)));
 
         File.Delete(profileFileInfo.Path);
         ProfileFiles.Remove(profileFileInfo);
@@ -302,7 +284,7 @@ public static class ProfileManager
         if (switchProfile)
         {
             Switch(newProfileFileInfo, false);
-            LoadedProfileFileChanged(LoadedProfileFile);
+            LoadedProfileFileChanged(LoadedProfileFile, true);
         }
 
         // Remove the old profile file
@@ -353,7 +335,7 @@ public static class ProfileManager
         if (switchProfile)
         {
             Switch(newProfileFileInfo, false);
-            LoadedProfileFileChanged(LoadedProfileFile);
+            LoadedProfileFileChanged(LoadedProfileFile, true);
         }
 
         // Remove the old profile file
@@ -394,7 +376,7 @@ public static class ProfileManager
         if (switchProfile)
         {
             Switch(newProfileFileInfo, false);
-            LoadedProfileFileChanged(LoadedProfileFile);
+            LoadedProfileFileChanged(LoadedProfileFile, true);
         }
 
         // Remove the old profile file
@@ -443,7 +425,7 @@ public static class ProfileManager
         LoadedProfileFile = profileFileInfo;
 
         if (loadedProfileUpdated)
-            LoadedProfileFileChanged(LoadedProfileFile);
+            LoadedProfileFileChanged(LoadedProfileFile, true);
     }
 
     /// <summary>

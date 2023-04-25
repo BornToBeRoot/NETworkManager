@@ -39,7 +39,7 @@ public partial class TigerVNCHostView
             _viewModel.ConnectProfileCommand.Execute(null);
     }
 
-    public async Task AddTab(string host)
+    public async void AddTab(string host)
     {
         // Wait for the interface to load, before displaying the dialog to connect a new profile... 
         // MahApps will throw an exception... 

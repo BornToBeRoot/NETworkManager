@@ -313,7 +313,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
         SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
         SettingsManager.Current.AWSSessionManager_AWSProfiles.CollectionChanged += AWSSessionManager_AWSProfiles_CollectionChanged;
-
+                
         SyncAllInstanceIDsFromAWS();
 
         _isLoading = false;
@@ -551,18 +551,10 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
             return;
         }
 
-        // Check if profile file is unlocked
-        if (Application.Current.MainWindow != null)
+        // Check if profiles are available
+        if(ProfileManager.LoadedProfileFile == null)
         {
-            if (((MainWindow)Application.Current.MainWindow).IsProfileFileLocked)
-            {
-                _log.Warn("The profile file is locked! The profile file must first be unlocked to synchronize the instance IDs and add them as a profile.");
-                return;
-            }
-        }
-        else
-        {
-            _log.Warn("Cannot find MainWindow because it is null!");
+            _log.Warn("Profile file is not loaded (or decrypted)! Please select (or unlock) a profile file first.");
             return;
         }
 
