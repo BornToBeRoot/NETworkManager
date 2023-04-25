@@ -49,7 +49,7 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition MinWidth="{x:Static settings:GlobalStaticConfiguration.Profile_WidthCollapsed}" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="{x:Static settings:GlobalStaticConfiguration.Profile_MaxWidthExpanded}" />
             </Grid.ColumnDefinitions>
-            <dragablz:TabablzControl Grid.Column="0" Grid.Row="0" ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedItem="{Binding SelectedTabItem}" Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsDialogOpen, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+            <dragablz:TabablzControl Grid.Column="0" Grid.Row="0" ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedItem="{Binding SelectedTabItem}">
                 <dragablz:TabablzControl.Resources>
                     <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                 </dragablz:TabablzControl.Resources>
