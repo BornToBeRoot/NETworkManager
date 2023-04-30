@@ -21,6 +21,14 @@ Release date: **xx.xx.2023**
 
 ## Bugfixes
 
+## Deprecated
+
+Deprecated
+{: .label .label-red }
+
+- Profiles
+  - Wake on LAN port, because it was inconsistent (If you select the profile, the port from the settings was used. If you right-click on the profile, the port from the profile was used) [#2220](https://github.com/BornToBeRoot/NETworkManager/pull/2220){:target="\_blank"}
+
 ## Other
 - Code cleanup [#2100](https://github.com/BornToBeRoot/NETworkManager/pull/2100){:target="\_blank"} [#2172](https://github.com/BornToBeRoot/NETworkManager/pull/2172){:target="\_blank"}
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="\_blank"}

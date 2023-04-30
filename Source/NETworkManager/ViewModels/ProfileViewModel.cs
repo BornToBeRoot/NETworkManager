@@ -13,7 +13,6 @@ using NETworkManager.Models.PuTTY;
 using System.Security;
 using NETworkManager.Models;
 using NETworkManager.Models.Network;
-using Microsoft.PowerShell.Commands;
 
 namespace NETworkManager.ViewModels;
 
@@ -2574,34 +2573,6 @@ public class ProfileViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-
-    private bool _wakeOnLAN_OverridePort;
-    public bool WakeOnLAN_OverridePort
-    {
-        get => _wakeOnLAN_OverridePort;
-        set
-        {
-            if (value == _wakeOnLAN_OverridePort)
-                return;
-
-            _wakeOnLAN_OverridePort = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private int _wakeOnLAN_Port;
-    public int WakeOnLAN_Port
-    {
-        get => _wakeOnLAN_Port;
-        set
-        {
-            if (value == _wakeOnLAN_Port)
-                return;
-
-            _wakeOnLAN_Port = value;
-            OnPropertyChanged();
-        }
-    }
     #endregion
 
     #region Whois
@@ -2789,7 +2760,7 @@ public class ProfileViewModel : ViewModelBase
         PowerShell_AdditionalCommandLine = profileInfo.PowerShell_AdditionalCommandLine;
         PowerShell_ExecutionPolicies = Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();
         PowerShell_OverrideExecutionPolicy = profileInfo.PowerShell_OverrideExecutionPolicy;
-        PowerShell_ExecutionPolicy = editMode != ProfileEditMode.Add ? profileInfo.PowerShell_ExecutionPolicy : PowerShell_ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_ExecutionPolicy); ;
+        PowerShell_ExecutionPolicy = profileInfo.PowerShell_ExecutionPolicy;
 
         // PuTTY
         PuTTY_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.PuTTY : profileInfo.PuTTY_Enabled;
@@ -2850,7 +2821,7 @@ public class ProfileViewModel : ViewModelBase
         TigerVNC_InheritHost = profileInfo.TigerVNC_InheritHost;
         TigerVNC_Host = profileInfo.TigerVNC_Host;
         TigerVNC_OverridePort = profileInfo.TigerVNC_OverridePort;
-        TigerVNC_Port = profileInfo.TigerVNC_OverridePort ? profileInfo.TigerVNC_Port : SettingsManager.Current.TigerVNC_Port;
+        TigerVNC_Port = profileInfo.TigerVNC_Port;
 
         // Web Console
         WebConsole_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.WebConsole : profileInfo.WebConsole_Enabled;
@@ -2881,9 +2852,7 @@ public class ProfileViewModel : ViewModelBase
         // Wake on LAN
         WakeOnLAN_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.WakeOnLAN : profileInfo.WakeOnLAN_Enabled;
         WakeOnLAN_MACAddress = profileInfo.WakeOnLAN_MACAddress;
-        WakeOnLAN_Broadcast = profileInfo.WakeOnLAN_Broadcast;
-        WakeOnLAN_OverridePort = profileInfo.WakeOnLAN_OverridePort;
-        WakeOnLAN_Port = profileInfo.WakeOnLAN_OverridePort ? profileInfo.WakeOnLAN_Port : SettingsManager.Current.WakeOnLAN_Port;
+        WakeOnLAN_Broadcast = profileInfo.WakeOnLAN_Broadcast;        
 
         // Whois
         Whois_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.Whois : profileInfo.Whois_Enabled;

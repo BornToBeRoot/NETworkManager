@@ -12,7 +12,7 @@ public static class WakeOnLAN
         {
             MagicPacket = Models.Network.WakeOnLAN.CreateMagicPacket(profileInfo.WakeOnLAN_MACAddress),
             Broadcast = IPAddress.Parse(profileInfo.WakeOnLAN_Broadcast),
-            Port = profileInfo.WakeOnLAN_OverridePort ? profileInfo.WakeOnLAN_Port : SettingsManager.Current.WakeOnLAN_Port
+            Port = SettingsManager.Current.WakeOnLAN_Port
         };
 
         return info;

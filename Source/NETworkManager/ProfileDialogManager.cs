@@ -414,8 +414,6 @@ public static class ProfileDialogManager
             WakeOnLAN_Enabled = instance.WakeOnLAN_Enabled,
             WakeOnLAN_MACAddress = instance.WakeOnLAN_MACAddress?.Trim(),
             WakeOnLAN_Broadcast = instance.WakeOnLAN_Broadcast?.Trim(),
-            WakeOnLAN_OverridePort = instance.WakeOnLAN_OverridePort,
-            WakeOnLAN_Port = instance.WakeOnLAN_Port,
 
             // Whois
             Whois_Enabled = instance.Whois_Enabled,

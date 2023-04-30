@@ -153,7 +153,7 @@ public class ProfileInfo
     public bool PowerShell_OverrideAdditionalCommandLine { get; set; }
     public string PowerShell_AdditionalCommandLine { get; set; }
     public bool PowerShell_OverrideExecutionPolicy { get; set; }
-    public PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy { get; set; }
+    public PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy { get; set; } = GlobalStaticConfiguration.PowerShell_ExecutionPolicy;
 
     public bool PuTTY_Enabled { get; set; }
     public ConnectionMode PuTTY_ConnectionMode { get; set; }
@@ -191,7 +191,7 @@ public class ProfileInfo
     public bool TigerVNC_InheritHost { get; set; } = true;
     public string TigerVNC_Host { get; set; }
     public bool TigerVNC_OverridePort { get; set; }
-    public int TigerVNC_Port { get; set; }
+    public int TigerVNC_Port { get; set; } = GlobalStaticConfiguration.TigerVNC_DefaultVNCPort;
 
     public bool WebConsole_Enabled { get; set; }
     public string WebConsole_Url { get; set; }
@@ -218,8 +218,6 @@ public class ProfileInfo
     public bool WakeOnLAN_Enabled { get; set; }
     public string WakeOnLAN_MACAddress { get; set; }
     public string WakeOnLAN_Broadcast { get; set; }
-    public bool WakeOnLAN_OverridePort { get; set; }
-    public int WakeOnLAN_Port { get; set; }
 
     public bool Whois_Enabled { get; set; }
     public bool Whois_InheritHost { get; set; } = true;
@@ -431,8 +429,6 @@ public class ProfileInfo
         WakeOnLAN_Enabled = profile.WakeOnLAN_Enabled;
         WakeOnLAN_MACAddress = profile.WakeOnLAN_MACAddress;
         WakeOnLAN_Broadcast = profile.WakeOnLAN_Broadcast;
-        WakeOnLAN_OverridePort = profile.WakeOnLAN_OverridePort;
-        WakeOnLAN_Port = profile.WakeOnLAN_Port;
 
         // Whois
         Whois_Enabled = profile.Whois_Enabled;
