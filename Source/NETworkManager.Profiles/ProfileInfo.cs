@@ -153,7 +153,7 @@ public class ProfileInfo
     public bool PowerShell_OverrideAdditionalCommandLine { get; set; }
     public string PowerShell_AdditionalCommandLine { get; set; }
     public bool PowerShell_OverrideExecutionPolicy { get; set; }
-    public PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy { get; set; }
+    public PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy { get; set; } = GlobalStaticConfiguration.PowerShell_ExecutionPolicy;
 
     public bool PuTTY_Enabled { get; set; }
     public ConnectionMode PuTTY_ConnectionMode { get; set; }
@@ -191,7 +191,7 @@ public class ProfileInfo
     public bool TigerVNC_InheritHost { get; set; } = true;
     public string TigerVNC_Host { get; set; }
     public bool TigerVNC_OverridePort { get; set; }
-    public int TigerVNC_Port { get; set; }
+    public int TigerVNC_Port { get; set; } = GlobalStaticConfiguration.TigerVNC_DefaultVNCPort;
 
     public bool WebConsole_Enabled { get; set; }
     public string WebConsole_Url { get; set; }

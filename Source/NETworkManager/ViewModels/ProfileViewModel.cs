@@ -13,7 +13,6 @@ using NETworkManager.Models.PuTTY;
 using System.Security;
 using NETworkManager.Models;
 using NETworkManager.Models.Network;
-using Microsoft.PowerShell.Commands;
 
 namespace NETworkManager.ViewModels;
 
@@ -2761,7 +2760,7 @@ public class ProfileViewModel : ViewModelBase
         PowerShell_AdditionalCommandLine = profileInfo.PowerShell_AdditionalCommandLine;
         PowerShell_ExecutionPolicies = Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();
         PowerShell_OverrideExecutionPolicy = profileInfo.PowerShell_OverrideExecutionPolicy;
-        PowerShell_ExecutionPolicy = editMode != ProfileEditMode.Add ? profileInfo.PowerShell_ExecutionPolicy : PowerShell_ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_ExecutionPolicy); ;
+        PowerShell_ExecutionPolicy = profileInfo.PowerShell_ExecutionPolicy;
 
         // PuTTY
         PuTTY_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.PuTTY : profileInfo.PuTTY_Enabled;
@@ -2822,7 +2821,7 @@ public class ProfileViewModel : ViewModelBase
         TigerVNC_InheritHost = profileInfo.TigerVNC_InheritHost;
         TigerVNC_Host = profileInfo.TigerVNC_Host;
         TigerVNC_OverridePort = profileInfo.TigerVNC_OverridePort;
-        TigerVNC_Port = profileInfo.TigerVNC_OverridePort ? profileInfo.TigerVNC_Port : SettingsManager.Current.TigerVNC_Port;
+        TigerVNC_Port = profileInfo.TigerVNC_Port;
 
         // Web Console
         WebConsole_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.WebConsole : profileInfo.WebConsole_Enabled;
