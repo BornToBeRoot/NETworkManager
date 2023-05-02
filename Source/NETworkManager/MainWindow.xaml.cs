@@ -381,17 +381,9 @@ public partial class MainWindow : INotifyPropertyChanged
         _isLoading = false;
     }
 
-    // Fired when the window is loaded
     private void MetroMainWindow_ContentRendered(object sender, EventArgs e)
     {
-        // Wait for the window to be rendered.
-        Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(async () =>
-        {
-            // Delay the loading a bit to prevent a UI bug when using the airspace fixer
-            await Task.Delay(500);
-
-            CheckFirstRunThenLoadAsync();
-        }));
+        CheckFirstRunThenLoadAsync();
     }
 
     private async void CheckFirstRunThenLoadAsync()

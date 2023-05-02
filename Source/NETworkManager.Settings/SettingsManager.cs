@@ -178,6 +178,10 @@ public static class SettingsManager
         if (fromVersion < new Version(2023, 3, 7, 0))
             UpgradeTo_2023_3_7_0();
 
+        // 2023.4.26.0
+        if (fromVersion < new Version(2023, 4, 26, 0))
+            UpgradeTo_2023_4_26_0();
+
         // Latest
         if (fromVersion < toVersion)
             UpgradeToLatest(toVersion);
@@ -266,6 +270,18 @@ public static class SettingsManager
     }
 
     /// <summary>
+    /// Method to apply changes for version 2023.4.26.0.
+    /// </summary>
+    private static void UpgradeTo_2023_4_26_0()
+    {
+        _log.Info("Apply update to 2023.4.26.0...");
+
+        // Add SNMP OID profiles
+         _log.Info($"Add SNMP OID profiles...");
+        Current.SNMP_OIDProfiles = new ObservableCollection<SNMPOIDProfileInfo>(SNMPOIDProfile.GetDefaultList());
+    }
+
+    /// <summary>
     /// Method to apply changes for the latest version.
     /// </summary>
     /// <param name="version">Latest version.</param>
@@ -273,8 +289,7 @@ public static class SettingsManager
     {
         _log.Info($"Apply upgrade to {version}...");
 
-        _log.Info($"Add SNMP OID profiles...");
-        Current.SNMP_OIDProfiles = new ObservableCollection<SNMPOIDProfileInfo>(SNMPOIDProfile.GetDefaultList());
+       
     }
     #endregion
 }
