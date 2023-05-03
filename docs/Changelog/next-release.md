@@ -20,6 +20,8 @@ Release date: **xx.xx.2023**
 ## Improvements
 
 ## Bugfixes
+- Subnet Calculator
+  - Fixed a design issue with the calculate button in subnetting [#2230](https://github.com/BornToBeRoot/NETworkManager/pull/2230)
 
 ## Deprecated
 
