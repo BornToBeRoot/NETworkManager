@@ -97,23 +97,12 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Rectangle>
-                                <Rectangle.Resources>
-                                    <VisualBrush x:Key="VisualCalculator" Stretch="Uniform" Visual="{iconPacks:Material Kind=Calculator}"/>
-                                </Rectangle.Resources>
-                                <Rectangle.Style>
-                                    <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ButtonWithImageRectangle}">
-                                        <Setter Property="OpacityMask" Value="{StaticResource VisualCalculator}" />                                      
-                                    </Style>
-                                </Rectangle.Style>
+                            <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Calculator}" />
+                                </Rectangle.OpacityMask>
                             </Rectangle>
-                            <TextBlock>
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ButtonWithImageTextBlock}">
-                                        <Setter Property="Text" Value="{x:Static localization:Strings.Calculate}"/>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
+                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Calculate}" Style="{StaticResource ButtonWithImageTextBlock}" />
                         </Grid>
                     </Button.Content>
                 </Button>
