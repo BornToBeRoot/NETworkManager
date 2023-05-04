@@ -49,7 +49,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.Subnet}" />
-                <ComboBox Grid.Column="2" Grid.Row="0" x:Name="ComboBoxSubnet" Height="{Binding ElementName=ComboBoxNewSubnetmaskOrCIDR, Path=ActualHeight}" ItemsSource="{Binding SubnetHistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4IPv6Subnet}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox Grid.Column="2" Grid.Row="0" x:Name="ComboBoxSubnet" Height="{Binding ElementName=ComboBoxNewSubnetmask, Path=ActualHeight}" ItemsSource="{Binding SubnetHistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4IPv6Subnet}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Subnet" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                             <Binding.ValidationRules>
@@ -59,10 +59,10 @@
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
-                <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.NewSubnetmaskOrCIDR}" />
-                <ComboBox x:Name="ComboBoxNewSubnetmaskOrCIDR" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding NewSubnetmaskOrCIDRHistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4SubnetmaskIPv6CIDR}" Style="{StaticResource HistoryComboBox}">
+                <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.NewSubnetMask}" />
+                <ComboBox x:Name="ComboBoxNewSubnetmask" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding NewSubnetmaskHistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4SubnetmaskIPv6CIDR}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
-                        <Binding Path="NewSubnetmaskOrCIDR" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
+                        <Binding Path="NewSubnetmask" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                             <Binding.ValidationRules>
                                 <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                                 <validators:IPv4IPv6SubnetmaskOrCIDRValidator ValidatesOnTargetUpdated="True" />
@@ -78,9 +78,9 @@
                                     <DataTrigger.Binding>
                                         <MultiBinding Converter="{StaticResource ValidateSubnetCalculatorSubnettingConverter}">
                                             <Binding ElementName="ComboBoxSubnet" Path="(Validation.HasError)" />
-                                            <Binding ElementName="ComboBoxNewSubnetmaskOrCIDR" Path="(Validation.HasError)" />
+                                            <Binding ElementName="ComboBoxNewSubnetmask" Path="(Validation.HasError)" />
                                             <Binding Path="Subnet" />
-                                            <Binding Path="NewSubnetmaskOrCIDR" />
+                                            <Binding Path="NewSubnetmask" />
                                         </MultiBinding>
                                     </DataTrigger.Binding>
                                     <Setter Property="IsEnabled" Value="False" />
@@ -159,7 +159,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.Subnetmask}" Command="{Binding CopySelectedSubnetmaskCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.SubnetMask}" Command="{Binding CopySelectedSubnetmaskCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
@@ -241,7 +241,7 @@
                 <DataGridTextColumn Header="{x:Static localization:Strings.NetworkAddress}" Binding="{Binding (network:IPNetworkInfo.Network), Converter={StaticResource IPAddressToStringConverter}}" SortMemberPath="NetworkInt32" MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Broadcast}" Binding="{Binding (network:IPNetworkInfo.Broadcast), Converter={StaticResource IPAddressToStringConverter}}" SortMemberPath="BroadcastInt32" MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.IPAddresses}" Binding="{Binding (network:IPNetworkInfo.Total), Converter={StaticResource BigIntegerToStringConverter}}" SortMemberPath="Total" MinWidth="150" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Subnetmask}" Binding="{Binding (network:IPNetworkInfo.Netmask), Converter={StaticResource IPAddressToStringConverter}}" SortMemberPath="NetmaskInt32" MinWidth="150" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.SubnetMask}" Binding="{Binding (network:IPNetworkInfo.Netmask), Converter={StaticResource IPAddressToStringConverter}}" SortMemberPath="NetmaskInt32" MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.CIDR}" Binding="{Binding (network:IPNetworkInfo.Cidr)}" SortMemberPath="Cidr" MinWidth="80" Width="Auto" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.FirstUsableIPAddress}" Binding="{Binding (network:IPNetworkInfo.FirstUsable), Converter={StaticResource IPAddressToStringConverter}}" SortMemberPath="FirstUsableInt32" MinWidth="150"  />
                 <DataGridTextColumn Header="{x:Static localization:Strings.LastUsableIPAddress}" Binding="{Binding (network:IPNetworkInfo.LastUsable), Converter={StaticResource IPAddressToStringConverter}}" SortMemberPath="LastUsableInt32" MinWidth="150" />

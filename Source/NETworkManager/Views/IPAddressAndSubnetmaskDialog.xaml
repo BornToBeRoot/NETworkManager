@@ -40,10 +40,10 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.SubnetmaskOrCIDR}" />
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.SubnetMask}" />
             <TextBox x:Name="TextBoxSubnetmask" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4SubnetmaskIPv4CIDR}">
                 <TextBox.Text>
-                    <Binding Path="SubnetmaskOrCidr" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="Subnetmask" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                             <validators:IPv4SubnetmaskOrCIDRValidator ValidatesOnTargetUpdated="True" />

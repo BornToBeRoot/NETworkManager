@@ -3,6 +3,7 @@ using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
+using System;
 using System.Security;
 using System.Xml.Serialization;
 
@@ -42,7 +43,10 @@ public class ProfileInfo
     public bool NetworkInterface_Enabled { get; set; }
     public bool NetworkInterface_EnableStaticIPAddress { get; set; }
     public string NetworkInterface_IPAddress { get; set; }
+
+    //[Obsolete("Replaced by NetworkInterface_Subnetmask")]
     public string NetworkInterface_SubnetmaskOrCidr { get; set; }
+    public string NetworkInterface_Subnetmask { get; set; }
     public string NetworkInterface_Gateway { get; set; }
     public bool NetworkInterface_EnableStaticDNS { get; set; }
     public string NetworkInterface_PrimaryDNSServer { get; set; }
@@ -247,6 +251,7 @@ public class ProfileInfo
         NetworkInterface_Enabled = profile.NetworkInterface_Enabled;
         NetworkInterface_EnableStaticIPAddress = profile.NetworkInterface_EnableStaticIPAddress;
         NetworkInterface_IPAddress = profile.NetworkInterface_IPAddress;
+        NetworkInterface_Subnetmask = profile.NetworkInterface_Subnetmask;
         NetworkInterface_SubnetmaskOrCidr = profile.NetworkInterface_SubnetmaskOrCidr;
         NetworkInterface_Gateway = profile.NetworkInterface_Gateway;
         NetworkInterface_EnableStaticDNS = profile.NetworkInterface_EnableStaticDNS;

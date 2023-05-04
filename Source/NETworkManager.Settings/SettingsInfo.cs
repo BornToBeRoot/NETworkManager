@@ -3641,16 +3641,16 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private ObservableCollection<string> _subnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory = new();
-    public ObservableCollection<string> SubnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory
+    private ObservableCollection<string> _subnetCalculator_Subnetting_NewSubnetmaskHistory = new();
+    public ObservableCollection<string> SubnetCalculator_Subnetting_NewSubnetmaskHistory
     {
-        get => _subnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory;
+        get => _subnetCalculator_Subnetting_NewSubnetmaskHistory;
         set
         {
-            if (value == _subnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory)
+            if (value == _subnetCalculator_Subnetting_NewSubnetmaskHistory)
                 return;
 
-            _subnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory = value;
+            _subnetCalculator_Subnetting_NewSubnetmaskHistory = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
@@ -4194,7 +4194,7 @@ public class SettingsInfo : PropertyChangedBase
 
         // Subnet Calculator / Subnetting
         SubnetCalculator_Subnetting_SubnetHistory.CollectionChanged += CollectionChanged;
-        SubnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory.CollectionChanged += CollectionChanged;
+        SubnetCalculator_Subnetting_NewSubnetmaskHistory.CollectionChanged += CollectionChanged;
 
         // Subnet Calculator / Supernetting
         SubnetCalculator_WideSubnet_Subnet1.CollectionChanged += CollectionChanged;

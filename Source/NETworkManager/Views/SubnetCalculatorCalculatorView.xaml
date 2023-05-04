@@ -104,7 +104,7 @@
                     <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding Result.Broadcast, Converter={StaticResource IPAddressToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.IPAddresses}" />
                     <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding Result.Total, Converter={StaticResource BigIntegerToStringConverter}}" />
-                    <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.Subnetmask}" />
+                    <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.SubnetMask}" />
                     <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Result.Netmask, Converter={StaticResource IPAddressToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.CIDR}" />
                     <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding Result.Cidr, StringFormat='/{0}'}" />

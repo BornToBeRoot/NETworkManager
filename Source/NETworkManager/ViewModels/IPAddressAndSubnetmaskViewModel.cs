@@ -24,16 +24,16 @@ public class IPAddressAndSubnetmaskViewModel : ViewModelBase
         }
     }
 
-    private string _subnetmaskOrCidr;
-    public string SubnetmaskOrCidr
+    private string _subnetmask;
+    public string Subnetmask
     {
-        get => _subnetmaskOrCidr;
+        get => _subnetmask;
         set
         {
-            if (value == _subnetmaskOrCidr)
+            if (value == _subnetmask)
                 return;
 
-            _subnetmaskOrCidr = value;
+            _subnetmask = value;
             OnPropertyChanged();
         }
     }

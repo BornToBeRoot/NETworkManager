@@ -41,21 +41,21 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
 
     public ICollectionView SubnetHistoryView { get; }
 
-    private string _newSubnetmaskOrCIDR;
-    public string NewSubnetmaskOrCIDR
+    private string _newSubnetmask;
+    public string NewSubnetmask
     {
-        get => _newSubnetmaskOrCIDR;
+        get => _newSubnetmask;
         set
         {
-            if (value == _newSubnetmaskOrCIDR)
+            if (value == _newSubnetmask)
                 return;
 
-            _newSubnetmaskOrCIDR = value;
+            _newSubnetmask = value;
             OnPropertyChanged();
         }
     }
 
-    public ICollectionView NewSubnetmaskOrCIDRHistoryView { get; }
+    public ICollectionView NewSubnetmaskHistoryView { get; }
 
     private bool _isCalculationRunning;
     public bool IsCalculationRunning
@@ -139,7 +139,7 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
 
         // Set collection view
         SubnetHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Subnetting_SubnetHistory);
-        NewSubnetmaskOrCIDRHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory);
+        NewSubnetmaskHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskHistory);
 
         // Result view
         SubnetsResultsView = CollectionViewSource.GetDefaultView(SubnetsResult);
@@ -258,7 +258,7 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
         SubnetsResult.Clear();
 
         var subnet = Subnet.Trim();
-        var newSubnetmaskOrCidr = NewSubnetmaskOrCIDR.Trim();                
+        var newSubnetmaskOrCidr = NewSubnetmask.Trim();                
 
         var ipNetwork = IPNetwork.Parse(Subnet.Trim());
 
@@ -326,14 +326,14 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
     private void AddNewSubnetmaskOrCIDRToHistory(string newSubnetmaskOrCIDR)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory.ToList(), newSubnetmaskOrCIDR, SettingsManager.Current.General_HistoryListEntries);
+        var list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskHistory.ToList(), newSubnetmaskOrCIDR, SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items
-        SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory.Clear();
-        OnPropertyChanged(nameof(NewSubnetmaskOrCIDR)); // Raise property changed again, after the collection has been cleared
+        SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskHistory.Clear();
+        OnPropertyChanged(nameof(NewSubnetmask)); // Raise property changed again, after the collection has been cleared
 
         // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory.Add(x));
+        list.ForEach(x => SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskHistory.Add(x));
     }
 
     public void OnShutdown()

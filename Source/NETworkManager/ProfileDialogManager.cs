@@ -239,7 +239,7 @@ public static class ProfileDialogManager
             NetworkInterface_EnableStaticIPAddress = instance.NetworkInterface_EnableStaticIPAddress,
             NetworkInterface_IPAddress = instance.NetworkInterface_IPAddress?.Trim(),
             NetworkInterface_Gateway = instance.NetworkInterface_Gateway?.Trim(),
-            NetworkInterface_SubnetmaskOrCidr = instance.NetworkInterface_SubnetmaskOrCidr?.Trim(),
+            NetworkInterface_Subnetmask = instance.NetworkInterface_Subnetmask?.Trim(),
             NetworkInterface_EnableStaticDNS = instance.NetworkInterface_EnableStaticDNS,
             NetworkInterface_PrimaryDNSServer = instance.NetworkInterface_PrimaryDNSServer?.Trim(),
             NetworkInterface_SecondaryDNSServer = instance.NetworkInterface_SecondaryDNSServer?.Trim(),
