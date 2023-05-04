@@ -35,3 +35,5 @@ Deprecated
 - Code cleanup [#2100](https://github.com/BornToBeRoot/NETworkManager/pull/2100){:target="\_blank"} [#2172](https://github.com/BornToBeRoot/NETworkManager/pull/2172){:target="\_blank"}
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="\_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="\_blank"}
+- Add documentation for:
+  - Application > Subnet Calculator [#2233](https://github.com/BornToBeRoot/NETworkManager/pull/2233)
