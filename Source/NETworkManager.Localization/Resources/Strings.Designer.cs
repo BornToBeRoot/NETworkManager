@@ -5430,6 +5430,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die New subnet mask ähnelt.
+        /// </summary>
+        public static string NewSubnetMask {
+            get {
+                return ResourceManager.GetString("NewSubnetMask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die New subnetmask or CIDR ähnelt.
         /// </summary>
         public static string NewSubnetmaskOrCIDR {
@@ -8824,20 +8833,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Subnetmask ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Subnet mask ähnelt.
         /// </summary>
-        public static string Subnetmask {
+        public static string SubnetMask {
             get {
-                return ResourceManager.GetString("Subnetmask", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Subnetmask or CIDR ähnelt.
-        /// </summary>
-        public static string SubnetmaskOrCIDR {
-            get {
-                return ResourceManager.GetString("SubnetmaskOrCIDR", resourceCulture);
+                return ResourceManager.GetString("SubnetMask", resourceCulture);
             }
         }
         

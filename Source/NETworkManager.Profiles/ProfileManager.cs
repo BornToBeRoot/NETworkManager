@@ -604,9 +604,13 @@ public static class ProfileManager
             List<ProfileInfo> profiles = new();
 
             foreach (ProfileInfoSerializable profileSerializable in groupSerializable.Profiles)
-            {               
+            {
                 ProfileInfo profile = new(profileSerializable)
                 {
+                    // Migrate old data
+                    NetworkInterface_Subnetmask = string.IsNullOrEmpty(profileSerializable.NetworkInterface_Subnetmask) && !string.IsNullOrEmpty(profileSerializable.NetworkInterface_SubnetmaskOrCidr) ? profileSerializable.NetworkInterface_SubnetmaskOrCidr : profileSerializable.NetworkInterface_Subnetmask,
+
+                    // Convert passwords to secure strings
                     RemoteDesktop_Password = !string.IsNullOrEmpty(profileSerializable.RemoteDesktop_Password) ? SecureStringHelper.ConvertToSecureString(profileSerializable.RemoteDesktop_Password) : null,
                     RemoteDesktop_GatewayServerPassword = !string.IsNullOrEmpty(profileSerializable.RemoteDesktop_GatewayServerPassword) ? SecureStringHelper.ConvertToSecureString(profileSerializable.RemoteDesktop_GatewayServerPassword) : null,
                     SNMP_Community = !string.IsNullOrEmpty(profileSerializable.SNMP_Community) ? SecureStringHelper.ConvertToSecureString(profileSerializable.SNMP_Community) : null,
@@ -621,7 +625,7 @@ public static class ProfileManager
             {
                 Profiles = profiles,
 
-                // Convert passwort to secure string
+                // Convert passwords to secure strings
                 RemoteDesktop_Password = !string.IsNullOrEmpty(groupSerializable.RemoteDesktop_Password) ? SecureStringHelper.ConvertToSecureString(groupSerializable.RemoteDesktop_Password) : null,
                 RemoteDesktop_GatewayServerPassword = !string.IsNullOrEmpty(groupSerializable.RemoteDesktop_GatewayServerPassword) ? SecureStringHelper.ConvertToSecureString(groupSerializable.RemoteDesktop_GatewayServerPassword) : null,
                 SNMP_Community = !string.IsNullOrEmpty(groupSerializable.SNMP_Community) ? SecureStringHelper.ConvertToSecureString(groupSerializable.SNMP_Community) : null,

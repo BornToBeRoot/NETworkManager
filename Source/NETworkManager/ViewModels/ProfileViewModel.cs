@@ -178,16 +178,16 @@ public class ProfileViewModel : ViewModelBase
         }
     }
 
-    private string _networkInterface_SubnetmaskOrCidr;
-    public string NetworkInterface_SubnetmaskOrCidr
+    private string _networkInterface_Subnetmask;
+    public string NetworkInterface_Subnetmask
     {
-        get => _networkInterface_SubnetmaskOrCidr;
+        get => _networkInterface_Subnetmask;
         set
         {
-            if (value == _networkInterface_SubnetmaskOrCidr)
+            if (value == _networkInterface_Subnetmask)
                 return;
 
-            _networkInterface_SubnetmaskOrCidr = value;
+            _networkInterface_Subnetmask = value;
             OnPropertyChanged();
         }
     }
@@ -2653,7 +2653,7 @@ public class ProfileViewModel : ViewModelBase
         NetworkInterface_EnableStaticIPAddress = profileInfo.NetworkInterface_EnableStaticIPAddress;
         NetworkInterface_IPAddress = profileInfo.NetworkInterface_IPAddress;
         NetworkInterface_Gateway = profileInfo.NetworkInterface_Gateway;
-        NetworkInterface_SubnetmaskOrCidr = profileInfo.NetworkInterface_SubnetmaskOrCidr;
+        NetworkInterface_Subnetmask = profileInfo.NetworkInterface_Subnetmask;
         NetworkInterface_EnableDynamicDNS = !profileInfo.NetworkInterface_EnableStaticDNS;
         NetworkInterface_EnableStaticDNS = profileInfo.NetworkInterface_EnableStaticDNS;
         NetworkInterface_PrimaryDNSServer = profileInfo.NetworkInterface_PrimaryDNSServer;

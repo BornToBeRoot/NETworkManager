@@ -311,16 +311,16 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    private string _configSubnetmaskOrCidr;
-    public string ConfigSubnetmaskOrCidr
+    private string _configSubnetmask;
+    public string ConfigSubnetmask
     {
-        get => _configSubnetmaskOrCidr;
+        get => _configSubnetmask;
         set
         {
-            if (value == _configSubnetmaskOrCidr)
+            if (value == _configSubnetmask)
                 return;
 
-            _configSubnetmaskOrCidr = value;
+            _configSubnetmask = value;
             OnPropertyChanged();
         }
     }
@@ -426,7 +426,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
                 ConfigEnableStaticIPAddress = value.NetworkInterface_EnableStaticIPAddress;
                 ConfigIPAddress = value.NetworkInterface_IPAddress;
                 ConfigGateway = value.NetworkInterface_Gateway;
-                ConfigSubnetmaskOrCidr = value.NetworkInterface_SubnetmaskOrCidr;
+                ConfigSubnetmask = value.NetworkInterface_Subnetmask;
                 ConfigEnableDynamicDNS = !value.NetworkInterface_EnableStaticDNS;
                 ConfigEnableStaticDNS = value.NetworkInterface_EnableStaticDNS;
                 ConfigPrimaryDNSServer = value.NetworkInterface_PrimaryDNSServer;
@@ -758,7 +758,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            AddIPv4Address(instance.IPAddress, instance.SubnetmaskOrCidr);
+            AddIPv4Address(instance.IPAddress, instance.Subnetmask);
         }, instance =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -832,7 +832,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         {
             ConfigEnableStaticIPAddress = true;
             ConfigIPAddress = info.IPv4Address.FirstOrDefault()?.Item1.ToString();
-            ConfigSubnetmaskOrCidr = info.IPv4Address.FirstOrDefault()?.Item2.ToString();
+            ConfigSubnetmask = info.IPv4Address.FirstOrDefault()?.Item2.ToString();
             ConfigGateway = info.IPv4Gateway?.Any() == true ? info.IPv4Gateway.FirstOrDefault()?.ToString() : string.Empty;
         }
 
@@ -855,7 +855,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         IsConfigurationRunning = true;
         IsStatusMessageDisplayed = false;
 
-        var subnetmask = ConfigSubnetmaskOrCidr;
+        var subnetmask = ConfigSubnetmask;
 
         // CIDR to subnetmask
         if (ConfigEnableStaticIPAddress && subnetmask.StartsWith("/"))
@@ -910,7 +910,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         IsConfigurationRunning = true;
         IsStatusMessageDisplayed = false;
 
-        var subnetmask = SelectedProfile.NetworkInterface_SubnetmaskOrCidr;
+        var subnetmask = SelectedProfile.NetworkInterface_Subnetmask;
 
         // CIDR to subnetmask
         if (SelectedProfile.NetworkInterface_EnableStaticIPAddress && subnetmask.StartsWith("/"))

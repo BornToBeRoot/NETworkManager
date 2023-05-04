@@ -588,11 +588,8 @@
   <data name="StaticIPv4DNSServer" xml:space="preserve">
     <value>Static IPv4 DNS server</value>
   </data>
-  <data name="Subnetmask" xml:space="preserve">
-    <value>Subnetmask</value>
-  </data>
-  <data name="SubnetmaskOrCIDR" xml:space="preserve">
-    <value>Subnetmask or CIDR</value>
+  <data name="SubnetMask" xml:space="preserve">
+    <value>Subnet mask</value>
   </data>
   <data name="Threads" xml:space="preserve">
     <value>Threads</value>
@@ -3540,5 +3537,8 @@ Changes to this value will take effect after the application is restarted. Wheth
   </data>
   <data name="FromProfile" xml:space="preserve">
     <value>(from profile)</value>
+  </data>
+  <data name="NewSubnetMask" xml:space="preserve">
+    <value>New subnet mask</value>
   </data>
 </root>
