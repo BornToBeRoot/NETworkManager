@@ -73,7 +73,7 @@ public static class Whois
         var domainParts = domain.Split('.');
 
         // TLD to upper because the lookup is case sensitive
-        return WhoisServers[domainParts[domainParts.Length - 1].ToUpper()].FirstOrDefault()?.Server;
+        return WhoisServers[domainParts[^1].ToUpper()].FirstOrDefault()?.Server;
     }
     #endregion
 }
