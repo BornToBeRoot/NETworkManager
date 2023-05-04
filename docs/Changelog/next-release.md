@@ -36,4 +36,5 @@ Deprecated
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="\_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="\_blank"}
 - Add documentation for:
+  - Application > Whois [#2236](https://github.com/BornToBeRoot/NETworkManager/pull/2236)
   - Application > Subnet Calculator [#2233](https://github.com/BornToBeRoot/NETworkManager/pull/2233)
