@@ -42,7 +42,7 @@ Inherit the host from the general settings.
 
 **Type:** `Boolean`
 
-**Default:** `Disabled`
+**Default:** `Enabled`
 
 {: .note }
 If you enable this option, the [IP range](#ip-range) is overwritten by the host from the general settings and the [IP range](#ip-range) is disabled.
