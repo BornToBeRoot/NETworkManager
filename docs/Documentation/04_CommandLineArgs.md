@@ -67,7 +67,7 @@ NETworkManager.exe --application:PingMonitor
 Internally used command line arguments.
 
 ### `--autostart`
-Indicates whether the application was started by autostart.
+Indicates whether the application was started automatically (via autostart).
 
 **Example:**
 ```
@@ -75,7 +75,7 @@ NETworkManager.exe --autostart
 ```
 
 ### `--restart-pid:`
-Passed when the application is restarted to wait for the old process to end.
+Process ID of the old application process to wait for it to end if the application is restarted.
 
 **Example:**
 ```
