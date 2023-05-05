@@ -181,7 +181,7 @@ For the snychronization of the EC2 instances and to connect to them via AWS Syst
 <details markdown="block">
   <summary>Example sync policy</summary>
 
-{: .information }
+{: .warning }
 This is an example of an IAM user policy to synchronize instances of AWS EC2 for NETworkManager.
 
 Add an (inline) policy to the user with the following content:

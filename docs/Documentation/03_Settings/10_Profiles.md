@@ -37,7 +37,7 @@ List of profile files.
 
 **Default**: `[Default]`
 
-{: .information}
+{: .note}
 Profile files can be encrypted with a master password. Right click on a profile and select `Encryption... > Enable encryption...`. See [FAQ > Profile encryption](NETworkManager/FAQ#profile-encryption) for more details.
 
 {: .note}
