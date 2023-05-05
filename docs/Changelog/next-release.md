@@ -18,6 +18,8 @@ Release date: **xx.xx.2023**
 ## What's new?
   
 ## Improvements
+- Wake on LAN
+  - Change default port from 7 to 9 [#2242](https://github.com/BornToBeRoot/NETworkManager/pull/2242)
 
 ## Bugfixes
 - Subnet Calculator
@@ -36,5 +38,6 @@ Deprecated
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="\_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="\_blank"}
 - Add documentation for:
+  - Application > Wake on LAN [#2242](https://github.com/BornToBeRoot/NETworkManager/pull/2242)
   - Application > Whois [#2236](https://github.com/BornToBeRoot/NETworkManager/pull/2236)
   - Application > Subnet Calculator [#2233](https://github.com/BornToBeRoot/NETworkManager/pull/2233)
