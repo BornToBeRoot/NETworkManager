@@ -12,7 +12,7 @@ permalink: /Documentation/Application/Whois
 
 With **Whois** you can retrieve Whois information for a domain directly from the Whois server associated with the top-level domain.
 
-{: .information }
+{: .info }
 Whois data from a domain is publicly available. The data is provided by the domain registrar and can be queried via the whois protocol. The whois protocol is based on TCP and uses port 43. The whois protocol is not encrypted and the data is transmitted in plain text. Because the whois protocol is not standardized, the data may have a different format depending on the registrar.
 
 {: .note}

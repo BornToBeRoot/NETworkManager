@@ -289,7 +289,9 @@ public static class SettingsManager
     {
         _log.Info($"Apply upgrade to {version}...");
 
-       
+        // Update Wake on LAN settings
+        _log.Info($"Update WakeOnLAN_Port to {GlobalStaticConfiguration.WakeOnLAN_Port}");
+        Current.WakeOnLAN_Port = GlobalStaticConfiguration.WakeOnLAN_Port;
     }
     #endregion
 }

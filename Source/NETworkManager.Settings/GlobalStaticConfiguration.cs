@@ -186,7 +186,7 @@ public static class GlobalStaticConfiguration
     public static int DiscoveryProtocol_Duration => 60;
 
     // Application: Wake on LAN
-    public static int WakeOnLAN_Port => 7;
+    public static int WakeOnLAN_Port => 9;
 
     // Application: HTTP Header
     public static int HTTPHeaders_Timeout => 10000;
