@@ -588,11 +588,8 @@
   <data name="StaticIPv4DNSServer" xml:space="preserve">
     <value>Statischer IPv4-DNS-Server</value>
   </data>
-  <data name="Subnetmask" xml:space="preserve">
+  <data name="SubnetMask" xml:space="preserve">
     <value>Subnetzmaske</value>
-  </data>
-  <data name="SubnetmaskOrCIDR" xml:space="preserve">
-    <value>Subnetzmaske oder CIDR</value>
   </data>
   <data name="Threads" xml:space="preserve">
     <value>Threads</value>
@@ -3540,5 +3537,8 @@ Wenn der Wert zu hoch ist, können Leistungsprobleme auftreten.
   </data>
   <data name="FromProfile" xml:space="preserve">
     <value>(aus Profil)</value>
+  </data>
+  <data name="NewSubnetMask" xml:space="preserve">
+    <value>Neue Subnetzmaske</value>
   </data>
 </root>
