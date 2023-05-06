@@ -19,10 +19,10 @@ On the **OUI** tab, you can search the manufacturer of a network interface card 
 {: .info}
 The OUI (Organizationally Unique Identifier) is a 24-bit number that is assigned to a network interface card (NIC) by the IEEE Registration Authority. The OUI is used to identify the manufacturer of a network interface card. The OUI is the first 24 bits of the MAC address.
 
+![Lookup_OUI](22_Lookup_OUI.png)
+
 {: .note}
 Right-click on the result to copy or export the information.
-
-![Lookup_OUI](22_Lookup_OUI.png)
 
 ## Port
 
