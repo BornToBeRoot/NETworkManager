@@ -4,7 +4,7 @@ title: SNTP Lookup
 parent: Application
 grand_parent: Documentation
 nav_order: 16
-description: ""
+description: "Documentation of the SNTP Lookup"
 permalink: /Documentation/Application/SNTPLookup
 ---
 
