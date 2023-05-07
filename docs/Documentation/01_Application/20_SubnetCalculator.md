@@ -38,6 +38,9 @@ Possible inputs:
 
 ![SubnetCalculator_Subnetting](20_SubnetCalculator_Subnetting.png)
 
+{: .note}
+Right-click on the result to copy or export the information.
+
 ## Wide Subnet
 
 On the **Wide Subnet** tab, you can create a wide subnet that includes both given subnets. The subnet mask can be entered in CIDR notation.

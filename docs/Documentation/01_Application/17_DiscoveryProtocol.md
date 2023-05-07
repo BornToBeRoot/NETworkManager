@@ -8,7 +8,6 @@ description: "Documentation of the Discovery Protocol"
 permalink: /Documentation/Application/DiscoveryProtocol
 ---
 
-
 # Discovery Protocol
 
 In **Discovery Protocol** you can capture for LLDP (Link Layer Discovery Protocol) and/or CDP (Cisco Discovery Protocol) frames to see to which switch or router your device is connected. The information such as device name, port, VLAN, etc. are displayed in a table.

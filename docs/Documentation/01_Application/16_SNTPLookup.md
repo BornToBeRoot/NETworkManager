@@ -4,7 +4,7 @@ title: SNTP Lookup
 parent: Application
 grand_parent: Documentation
 nav_order: 16
-description: ""
+description: "Documentation of the SNTP Lookup"
 permalink: /Documentation/Application/SNTPLookup
 ---
 
@@ -19,7 +19,13 @@ New Feature
 With **SNTP Lookup** you can query one or more SNTP servers to get the current network time.
 SNTP server and get the network current time. It will also show the offset to the local time.
 
+{: .info}
+SNTP (Simple Network Time Protocol) is a protocol used for synchronizing time between computer systems on a network. It is a simplified version of the Network Time Protocol (NTP) that is widely used for time synchronization. SNTP is designed to provide a basic level of accuracy and is used when precise timing is not critical. SNTP servers typically obtain their time from other NTP or SNTP servers and distribute the time to client devices on the network. SNTP operates over the User Datagram Protocol (UDP) and typically uses port 123. It is widely supported by many operating systems and network devices and is an important component of network infrastructure.
+
 ![SNTPLookup](16_SNTPLookup.png)
+
+{: .note}
+Right-click on the result to copy or export the information.
 
 ## Settings
 

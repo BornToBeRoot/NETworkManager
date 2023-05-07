@@ -4,7 +4,7 @@ title: SNMP
 parent: Application
 grand_parent: Documentation
 nav_order: 15
-description: "Documentation of the SNMP"
+description: "Documentation of SNMP"
 permalink: /Documentation/Application/SNMP
 ---
 

@@ -27,6 +27,9 @@ Possible inputs:
 
 ![Whois](19_Whois.png)
 
+{: .note}
+Right-click on the result to copy or export the information.
+
 ## Profile
 
 ### Inherit host from general
