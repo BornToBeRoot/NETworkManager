@@ -8,3 +8,5 @@ updates:
   target-branch: main
   labels:
   - ":heavy_check_mark: dependencies"
+  milestone:
+  - "next-release"
