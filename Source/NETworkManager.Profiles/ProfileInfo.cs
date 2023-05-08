@@ -157,7 +157,7 @@ public class ProfileInfo
     public bool PowerShell_OverrideAdditionalCommandLine { get; set; }
     public string PowerShell_AdditionalCommandLine { get; set; }
     public bool PowerShell_OverrideExecutionPolicy { get; set; }
-    public PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy { get; set; } = GlobalStaticConfiguration.PowerShell_ExecutionPolicy;
+    public ExecutionPolicy PowerShell_ExecutionPolicy { get; set; } = GlobalStaticConfiguration.PowerShell_ExecutionPolicy;
 
     public bool PuTTY_Enabled { get; set; }
     public ConnectionMode PuTTY_ConnectionMode { get; set; }

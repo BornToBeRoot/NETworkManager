@@ -1566,8 +1566,8 @@ public class ProfileViewModel : ViewModelBase
         }
     }
 
-    private List<PowerShell.ExecutionPolicy> _powerShell_ExecutionPolicies = new List<PowerShell.ExecutionPolicy>();
-    public List<PowerShell.ExecutionPolicy> PowerShell_ExecutionPolicies
+    private List<ExecutionPolicy> _powerShell_ExecutionPolicies = new();
+    public List<ExecutionPolicy> PowerShell_ExecutionPolicies
     {
         get => _powerShell_ExecutionPolicies;
         set
@@ -1594,8 +1594,8 @@ public class ProfileViewModel : ViewModelBase
         }
     }
 
-    private PowerShell.ExecutionPolicy _powerShell_ExecutionPolicy;
-    public PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy
+    private ExecutionPolicy _powerShell_ExecutionPolicy;
+    public ExecutionPolicy PowerShell_ExecutionPolicy
     {
         get => _powerShell_ExecutionPolicy;
         set
@@ -2758,7 +2758,7 @@ public class ProfileViewModel : ViewModelBase
         PowerShell_Command = profileInfo.PowerShell_Command;
         PowerShell_OverrideAdditionalCommandLine = profileInfo.PowerShell_OverrideAdditionalCommandLine;
         PowerShell_AdditionalCommandLine = profileInfo.PowerShell_AdditionalCommandLine;
-        PowerShell_ExecutionPolicies = Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();
+        PowerShell_ExecutionPolicies = Enum.GetValues(typeof(ExecutionPolicy)).Cast<ExecutionPolicy>().ToList();
         PowerShell_OverrideExecutionPolicy = profileInfo.PowerShell_OverrideExecutionPolicy;
         PowerShell_ExecutionPolicy = profileInfo.PowerShell_ExecutionPolicy;
 

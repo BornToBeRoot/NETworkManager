@@ -141,7 +141,7 @@ public static class GlobalStaticConfiguration
 
     // Application: PowerShell
     public static string PowerShell_Command => "Set-Location ~";
-    public static PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy => PowerShell.ExecutionPolicy.RemoteSigned;
+    public static ExecutionPolicy PowerShell_ExecutionPolicy => ExecutionPolicy.RemoteSigned;
 
     // Application: PuTTY
     public static ConnectionMode PuTTY_DefaultConnectionMode => ConnectionMode.SSH;
