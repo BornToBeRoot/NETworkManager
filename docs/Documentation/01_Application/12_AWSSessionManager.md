@@ -269,11 +269,15 @@ ID of the AWS EC2 instance.
 
 **Type:** `String`
 
+**Example:** `i-0123456789abcdef0`
+
 ### Profile
 
 AWS CLI profile which will be used to connect.
 
 **Type:** `String`
+
+**Example:** `dev`
 
 {: .note }
 If not set, the AWS CLI default settings are used!
@@ -283,6 +287,8 @@ If not set, the AWS CLI default settings are used!
 AWS region where the instance is located.
 
 **Type:** `String`
+
+**Example:** `eu-central-1`
 
 {: .note }
 If not set, the AWS CLI default settings are used!
@@ -295,11 +301,15 @@ ID of the AWS EC2 instance.
 
 **Type:** `String`
 
+**Example:** `i-0123456789abcdef0`
+
 ### Profile
 
 AWS CLI profile which will be used to connect.
 
 **Type:** `String`
+
+**Example:** `dev`
 
 {: .note }
 If not set, the [`Default profile`](#default-profile) from the settings is used!
@@ -309,6 +319,8 @@ If not set, the [`Default profile`](#default-profile) from the settings is used!
 AWS region where the instance is located.
 
 **Type:** `String`
+
+**Example:** `eu-central-1`
 
 {: .note }
 If not set, the [`Default region`](#default-region) from the settings is used!
@@ -384,7 +396,7 @@ If not set, the AWS CLI default settings are used!
 
 ### File path
 
-Path to the PowerShell console where the AWS CLI is available and which should be embedded in the program.
+Path to the PowerShell console where the AWS CLI is available.
 
 **Type:** `String`
 
