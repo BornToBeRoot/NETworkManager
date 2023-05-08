@@ -52,7 +52,7 @@ Broadcast address of the network in which the device is located.
 
 ### Port
 
-The UDP port on which the magic packet is sent. The default port is `9`.
+UDP port on which the magic packet is sent.
 
 **Type:** `Integer` [Min `1`, Max `65535`]
 
