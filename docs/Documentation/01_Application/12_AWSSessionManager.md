@@ -16,9 +16,10 @@ New Feature
 2022.10.31.0
 {: .label .label-purple }
 
-With **AWS** (Systems Manager) **Session Manager**, you can connect to and manage an EC2 instance without opening inbound ports, running a bastion host, or managing SSH keys. The integration of AWS Session Manager with NETworkManger supports tabs and profiles for hosts. Here you can find more information about [AWS Systems Manager](https://aws.amazon.com/systems-manager/){:target="\_blank"} and the documentation for [AWS Systems Manager Session Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html){:target="\_blank"}.
+With **AWS** (Systems Manager) **Session Manager**, you can connect to and manage an EC2 instance without opening inbound ports, running a bastion host, or managing SSH keys. The integration of AWS Session Manager with NETworkManger supports tabs and profiles for hosts. You can also synchronize your EC2 instances from AWS. To connect to the instances a PowerShell console is used with the AWS CLI and the AWS Session Manager plugin. The connection to the instances is established via the following command: `aws ssm start-session --target <INSTANCE_ID>`
 
-This feature allows you to use the `aws ssm start-session --target <INSTANCE_ID>` command with tabs. You can create profiles for your instances or synchronize them from AWS EC2 to connect to them directly.
+{: .note}
+Here you can find more information about [AWS Systems Manager](https://aws.amazon.com/systems-manager/){:target="\_blank"} and the documentation for [AWS Systems Manager Session Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html){:target="\_blank"}. You need to setup you AWS account to use AWS Systems Manager Session Manager. See [Prerequisites](#prerequisites) for more details.
 
 ![AWSSessionManager](12_AWSSessionManager.png)
 
