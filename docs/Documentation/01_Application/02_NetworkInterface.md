@@ -103,7 +103,10 @@ Subnet mask or CIDR for the selected network adapter.
 
 **Default:** `Empty`
 
-**Example:** `/24` or `255.255.255.0`
+**Example:**
+
+- `/24`
+- `255.255.255.0`
 
 ### Default-Gateway
 

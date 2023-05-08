@@ -16,7 +16,7 @@ New Feature
 2022.10.31.0
 {: .label .label-purple }
 
-With AWS (Systems Manager) Session Manager, you can connect to and manage an EC2 instance without opening inbound ports, running a bastion host, or managing SSH keys. Here you can find more information about [AWS Systems Manager](https://aws.amazon.com/systems-manager/){:target="\_blank"} and the documentation for [AWS Systems Manager Session Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html){:target="\_blank"}.
+With **AWS** (Systems Manager) **Session Manager**, you can connect to and manage an EC2 instance without opening inbound ports, running a bastion host, or managing SSH keys. The integration of AWS Session Manager with NETworkManger supports tabs and profiles for hosts. Here you can find more information about [AWS Systems Manager](https://aws.amazon.com/systems-manager/){:target="\_blank"} and the documentation for [AWS Systems Manager Session Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html){:target="\_blank"}.
 
 This feature allows you to use the `aws ssm start-session --target <INSTANCE_ID>` command with tabs. You can create profiles for your instances or synchronize them from AWS EC2 to connect to them directly.
 
@@ -382,7 +382,7 @@ AWS region where the instance is located.
 {: .note }
 If not set, the AWS CLI default settings are used!
 
-### PowerShell
+### File path
 
 Path to the PowerShell console where the AWS CLI is available and which should be embedded in the program.
 
@@ -392,5 +392,8 @@ Path to the PowerShell console where the AWS CLI is available and which should b
 
 **Possible values:**
 
-- `path\to\PowerShell.exe`
-- `path\to\pwsh.exe`
+- `C:\path\to\PowerShell.exe`
+- `C:\path\to\pwsh.exe`
+
+{: .note }
+The `Configure` button opens the PowerShell console to configure it.
