@@ -276,7 +276,7 @@ public partial class App
 
                 var oldProfilesError = false;
 
-                if (oldProfileFilePaths != null && oldProfileFilePaths.Count() > 0)
+                if (oldProfileFilePaths != null && oldProfileFilePaths.Any())
                 {
                     _log.Info($"Migrate \"{oldProfileFilePaths.Count()}\" profile(s)...");
                     var newProfilesPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "NETworkManager", "Profiles");

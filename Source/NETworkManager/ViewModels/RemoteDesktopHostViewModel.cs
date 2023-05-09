@@ -164,6 +164,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
         InterTabClient = new DragablzInterTabClient(ApplicationName.RemoteDesktop);
 
         TabItems = new ObservableCollection<DragablzTabItem>();
+        TabItems.CollectionChanged += TabItems_CollectionChanged;
 
         // Profiles
         SetProfilesView();
@@ -177,7 +178,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
         _isLoading = false;
     }
-
+    
     private void LoadSettings()
     {
         ExpandProfileView = SettingsManager.Current.RemoteDesktop_ExpandProfileView;
@@ -262,11 +263,11 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
             }
             catch (Exception ex)
             {
-                ConfigurationManager.Current.IsDialogOpen = true;
+                ConfigurationManager.OnDialogOpen();
 
                 await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, string.Format("{0}\n\nMessage:\n{1}", Localization.Resources.Strings.CouldNotSendKeystroke, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog));
 
-                ConfigurationManager.Current.IsDialogOpen = false;
+                ConfigurationManager.OnDialogClose();
             }
         }
     }
@@ -361,7 +362,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
         var remoteDesktopConnectViewModel = new RemoteDesktopConnectViewModel(async instance =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            ConfigurationManager.Current.IsDialogOpen = false;
+            ConfigurationManager.OnDialogClose();
 
             // Create new session info with default settings
             var sessionInfo = NETworkManager.Profiles.Application.RemoteDesktop.CreateSessionInfo();
@@ -395,7 +396,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
         }, async instance =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            ConfigurationManager.Current.IsDialogOpen = false;
+            ConfigurationManager.OnDialogClose();
         })
         {
             Host = host
@@ -406,7 +407,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
             DataContext = remoteDesktopConnectViewModel
         };
 
-        ConfigurationManager.Current.IsDialogOpen = true;
+        ConfigurationManager.OnDialogOpen();
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
@@ -435,7 +436,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
         var remoteDesktopConnectViewModel = new RemoteDesktopConnectViewModel(async instance =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            ConfigurationManager.Current.IsDialogOpen = false;
+            ConfigurationManager.OnDialogClose();
 
             if (instance.UseCredentials)
             {
@@ -450,7 +451,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
         }, async instance =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            ConfigurationManager.Current.IsDialogOpen = false;
+            ConfigurationManager.OnDialogClose();
         }, (profileInfo.Name, profileInfo.RemoteDesktop_Host));        
 
         customDialog.Content = new RemoteDesktopConnectDialog
@@ -458,7 +459,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
             DataContext = remoteDesktopConnectViewModel
         };
 
-        ConfigurationManager.Current.IsDialogOpen = true;
+        ConfigurationManager.OnDialogOpen();
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
@@ -564,12 +565,12 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
     public void OnProfileManagerDialogOpen()
     {
-        ConfigurationManager.Current.IsDialogOpen = true;
+        ConfigurationManager.OnDialogOpen();
     }
 
     public void OnProfileManagerDialogClose()
     {
-        ConfigurationManager.Current.IsDialogOpen = false;
+        ConfigurationManager.OnDialogClose();
     }
     #endregion
 
@@ -586,6 +587,11 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
         RefreshProfiles();
 
         IsSearching = false;
+    }
+
+    private void TabItems_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        ConfigurationManager.Current.RemoteDesktopHasTabs = TabItems.Count > 0;
     }
     #endregion
 }

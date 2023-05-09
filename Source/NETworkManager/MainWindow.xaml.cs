@@ -168,6 +168,8 @@ public partial class MainWindow : INotifyPropertyChanged
             if (value != null)
                 OnApplicationViewVisible(value.Name);
 
+            ConfigurationManager.Current.CurrentApplication = value?.Name ?? ApplicationName.None;
+
             _selectedApplication = value;
             OnPropertyChanged();
         }
@@ -499,8 +501,7 @@ public partial class MainWindow : INotifyPropertyChanged
     }
 
     private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)
-    {
-        // Force restart --> e.g. Import or reset settings
+    {        
         // Restart --> e.g. change profile path
         if (!_closeApplication && ConfigurationManager.Current.Restart)
         {
@@ -536,12 +537,9 @@ public partial class MainWindow : INotifyPropertyChanged
             settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-            // Fix airspace issues
-            ConfigurationManager.Current.IsDialogOpen = true;
-
+            ConfigurationManager.OnDialogOpen();
             var result = await this.ShowMessageAsync(Localization.Resources.Strings.Confirm, Localization.Resources.Strings.ConfirmCloseMessage, MessageDialogStyle.AffirmativeAndNegative, settings);
-
-            ConfigurationManager.Current.IsDialogOpen = false;
+            ConfigurationManager.OnDialogClose();
 
             if (result != MessageDialogResult.Affirmative)
                 return;
@@ -1102,7 +1100,7 @@ public partial class MainWindow : INotifyPropertyChanged
             var viewModel = new CredentialsPasswordProfileFileViewModel(async instance =>
             {
                 await this.HideMetroDialogAsync(customDialog);
-                ConfigurationManager.Current.IsDialogOpen = false;
+                ConfigurationManager.OnDialogClose();
 
                 info.Password = instance.Password;
 
@@ -1110,7 +1108,7 @@ public partial class MainWindow : INotifyPropertyChanged
             }, async instance =>
             {
                 await this.HideMetroDialogAsync(customDialog);
-                ConfigurationManager.Current.IsDialogOpen = false;
+                ConfigurationManager.OnDialogClose();
 
                 ProfileManager.Unload();
             }, info.Name, showWrongPassword);
@@ -1120,7 +1118,7 @@ public partial class MainWindow : INotifyPropertyChanged
                 DataContext = viewModel
             };
 
-            ConfigurationManager.Current.IsDialogOpen = true;
+            ConfigurationManager.OnDialogOpen();
             await this.ShowMetroDialogAsync(customDialog);
         }
         else
@@ -1153,12 +1151,9 @@ public partial class MainWindow : INotifyPropertyChanged
             settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-            ConfigurationManager.Current.IsDialogOpen = true;
-
-            // ToDo: Improve Message
+            ConfigurationManager.OnDialogOpen();
             var result = await this.ShowMessageAsync(Localization.Resources.Strings.ProfileCouldNotBeLoaded, Localization.Resources.Strings.ProfileCouldNotBeLoadedMessage, MessageDialogStyle.AffirmativeAndNegative, settings);
-
-            ConfigurationManager.Current.IsDialogOpen = false;
+            ConfigurationManager.OnDialogClose();
 
             if (result == MessageDialogResult.Affirmative)
             {
@@ -1683,9 +1678,9 @@ public partial class MainWindow : INotifyPropertyChanged
            - Settings are opened
            - Profile file drop down is opened
            - Application search textbox is opened
-           - Dialog over an embedded window is opened           
+           - Dialog over an embedded window is opened (FixAirspace)
         */
-        if (SelectedApplication == null || ShowSettingsView || IsProfileFileDropDownOpened || IsTextBoxSearchFocused || ConfigurationManager.Current.IsDialogOpen)
+        if (SelectedApplication == null || ShowSettingsView || IsProfileFileDropDownOpened || IsTextBoxSearchFocused || ConfigurationManager.Current.FixAirspace)
             return;
 
         // Switch by name
