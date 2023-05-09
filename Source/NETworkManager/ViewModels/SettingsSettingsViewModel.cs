@@ -3,6 +3,7 @@ using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
 using System.Diagnostics;
+using System.Windows;
 using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
@@ -65,12 +66,11 @@ public class SettingsSettingsViewModel : ViewModelBase
         if (await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.ResetSettingsQuestion, Localization.Resources.Strings.SettingsAreResetAndApplicationWillBeRestartedMessage, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
             return;
 
+        // Init default settings
         SettingsManager.InitDefault();
-
+        
         // Restart the application
-        ConfigurationManager.Current.Restart = true;
-        ConfigurationManager.Current.DisableSaveSettings = true;
-        CloseAction();
+        (Application.Current.MainWindow as MainWindow).RestartApplication();
     }
     #endregion
 }

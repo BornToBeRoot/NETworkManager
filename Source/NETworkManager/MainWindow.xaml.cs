@@ -501,17 +501,7 @@ public partial class MainWindow : INotifyPropertyChanged
     }
 
     private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)
-    {        
-        // Restart --> e.g. change profile path
-        if (!_closeApplication && ConfigurationManager.Current.Restart)
-        {
-            e.Cancel = true;
-
-            RestartApplication();
-
-            return;
-        }
-
+    {
         // Hide the application to tray
         if (!_closeApplication && (SettingsManager.Current.Window_MinimizeInsteadOfTerminating && WindowState != WindowState.Minimized))
         {
@@ -538,7 +528,7 @@ public partial class MainWindow : INotifyPropertyChanged
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
             ConfigurationManager.OnDialogOpen();
-            var result = await this.ShowMessageAsync(Localization.Resources.Strings.Confirm, Localization.Resources.Strings.ConfirmCloseMessage, MessageDialogStyle.AffirmativeAndNegative, settings);
+            var result = await this.ShowMessageAsync(Localization.Resources.Strings.ConfirmClose, Localization.Resources.Strings.ConfirmCloseMessage, MessageDialogStyle.AffirmativeAndNegative, settings);
             ConfigurationManager.OnDialogClose();
 
             if (result != MessageDialogResult.Affirmative)
