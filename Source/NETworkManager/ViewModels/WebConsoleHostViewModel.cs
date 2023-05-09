@@ -196,6 +196,7 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         InterTabClient = new DragablzInterTabClient(ApplicationName.WebConsole);
 
         TabItems = new ObservableCollection<DragablzTabItem>();
+        TabItems.CollectionChanged += TabItems_CollectionChanged;
 
         // Profiles
         SetProfilesView();
@@ -211,11 +212,7 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
 
         _isLoading = false;
     }
-
-    private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-    }
-
+    
     private void LoadSettings()
     {
         ExpandProfileView = SettingsManager.Current.WebConsole_ExpandProfileView;
@@ -334,7 +331,7 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         var connectViewModel = new WebConsoleConnectViewModel(async instance =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            ConfigurationManager.Current.IsDialogOpen = false;
+            ConfigurationManager.OnDialogClose();
 
             // Create profile info
             var info = new WebConsoleSessionInfo
@@ -351,7 +348,7 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         }, async instance =>
          {
              await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-             ConfigurationManager.Current.IsDialogOpen = false;
+             ConfigurationManager.OnDialogClose();
          });
 
         customDialog.Content = new WebConsoleConnectDialog
@@ -359,7 +356,7 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
             DataContext = connectViewModel
         };
 
-        ConfigurationManager.Current.IsDialogOpen = true;
+        ConfigurationManager.OnDialogOpen();
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
@@ -466,12 +463,12 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
 
     public void OnProfileManagerDialogOpen()
     {
-        ConfigurationManager.Current.IsDialogOpen = true;
+        ConfigurationManager.OnDialogOpen();
     }
 
     public void OnProfileManagerDialogClose()
     {
-        ConfigurationManager.Current.IsDialogOpen = false;
+        ConfigurationManager.OnDialogClose();
     }
     #endregion
 
@@ -488,6 +485,16 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         RefreshProfiles();
 
         IsSearching = false;
+    }
+
+    private void TabItems_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        ConfigurationManager.Current.WebConsoleHasTabs = TabItems.Count > 0;
+    }
+
+    private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        
     }
     #endregion
 }

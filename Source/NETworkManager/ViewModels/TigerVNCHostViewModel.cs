@@ -182,6 +182,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
         InterTabClient = new DragablzInterTabClient(ApplicationName.TigerVNC);
 
         TabItems = new ObservableCollection<DragablzTabItem>();
+        TabItems.CollectionChanged += TabItems_CollectionChanged;
 
         // Profiles
         SetProfilesView();
@@ -196,12 +197,6 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
         SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
 
         _isLoading = false;
-    }
-
-    private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-        if (e.PropertyName == nameof(SettingsInfo.TigerVNC_ApplicationFilePath))
-            CheckSettings();
     }
 
     private void LoadSettings()
@@ -241,7 +236,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
                 control.ReconnectCommand.Execute(null);
         }
     }
-    
+
     public ICommand ConnectProfileCommand => new RelayCommand(p => ConnectProfileAction(), ConnectProfile_CanExecute);
 
     private bool ConnectProfile_CanExecute(object obj)
@@ -329,7 +324,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
         var connectViewModel = new TigerVNCConnectViewModel(async instance =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            ConfigurationManager.Current.IsDialogOpen = false;
+            ConfigurationManager.OnDialogClose();
 
             // Create profile info
             var info = new TigerVNCSessionInfo
@@ -349,7 +344,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
         }, async instance =>
          {
              await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-             ConfigurationManager.Current.IsDialogOpen = false;
+             ConfigurationManager.OnDialogClose();
          }, host);
 
         customDialog.Content = new TigerVNCConnectDialog
@@ -357,7 +352,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
             DataContext = connectViewModel
         };
 
-        ConfigurationManager.Current.IsDialogOpen = true;
+        ConfigurationManager.OnDialogOpen();
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
@@ -488,12 +483,12 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 
     public void OnProfileManagerDialogOpen()
     {
-        ConfigurationManager.Current.IsDialogOpen = true;
+        ConfigurationManager.OnDialogOpen();
     }
 
     public void OnProfileManagerDialogClose()
     {
-        ConfigurationManager.Current.IsDialogOpen = false;
+        ConfigurationManager.OnDialogClose();
     }
     #endregion
 
@@ -510,6 +505,17 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
         RefreshProfiles();
 
         IsSearching = false;
+    }
+
+    private void TabItems_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        ConfigurationManager.Current.TigerVNCHasTabs = TabItems.Count > 0;
+    }
+
+    private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(SettingsInfo.TigerVNC_ApplicationFilePath))
+            CheckSettings();
     }
     #endregion
 }

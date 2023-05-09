@@ -197,11 +197,11 @@ public partial class DragablzTabHostWindow : INotifyPropertyChanged
             }
             catch (Exception ex)
             {
-                ConfigurationManager.Current.IsDialogOpen = true;
+                ConfigurationManager.OnDialogOpen();
 
                 await this.ShowMessageAsync(Localization.Resources.Strings.Error, string.Format("{0}\n\nMessage:\n{1}", NETworkManager.Localization.Resources.Strings.CouldNotSendKeystroke, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog));
 
-                ConfigurationManager.Current.IsDialogOpen = false;
+                ConfigurationManager.OnDialogClose();
             }
         }
     }

@@ -19,11 +19,12 @@ Release date: **xx.xx.2023**
   
 ## Improvements
 - Wake on LAN
-  - Change default port from 7 to 9 [#2242](https://github.com/BornToBeRoot/NETworkManager/pull/2242)
+  - Change default port from 7 to 9 [#2242](https://github.com/BornToBeRoot/NETworkManager/pull/2242){:target="\_blank"}
 
 ## Bugfixes
 - Subnet Calculator
-  - Fixed a design issue with the calculate button in subnetting [#2230](https://github.com/BornToBeRoot/NETworkManager/pull/2230)
+  - Fixed a design issue with the calculate button in subnetting [#2230](https://github.com/BornToBeRoot/NETworkManager/pull/2230){:target="\_blank"}
+- [AirSpace Fixer](https://www.nuget.org/packages/AirspaceFixer){:target="\_blank"} code optimized (only called if needed). This will also prevent a screenshot bug when the application is loading and a dialog is shown. [#2253](https://github.com/BornToBeRoot/NETworkManager/pull/2253){:target="\_blank"}
 
 ## Deprecated
 
@@ -38,8 +39,8 @@ Deprecated
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="\_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="\_blank"}
 - Add documentation for:
-  - Application > TigerVNC [#2248](https://github.com/BornToBeRoot/NETworkManager/pull/2248)
-  - Application > Web Console [#2244](https://github.com/BornToBeRoot/NETworkManager/pull/2244)
-  - Application > Wake on LAN [#2242](https://github.com/BornToBeRoot/NETworkManager/pull/2242)
-  - Application > Whois [#2236](https://github.com/BornToBeRoot/NETworkManager/pull/2236)
-  - Application > Subnet Calculator [#2233](https://github.com/BornToBeRoot/NETworkManager/pull/2233)
+  - Application > TigerVNC [#2248](https://github.com/BornToBeRoot/NETworkManager/pull/2248){:target="\_blank"}
+  - Application > Web Console [#2244](https://github.com/BornToBeRoot/NETworkManager/pull/2244){:target="\_blank"}
+  - Application > Wake on LAN [#2242](https://github.com/BornToBeRoot/NETworkManager/pull/2242){:target="\_blank"}
+  - Application > Whois [#2236](https://github.com/BornToBeRoot/NETworkManager/pull/2236){:target="\_blank"}
+  - Application > Subnet Calculator [#2233](https://github.com/BornToBeRoot/NETworkManager/pull/2233){:target="\_blank"}
