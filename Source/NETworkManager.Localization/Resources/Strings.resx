@@ -732,7 +732,7 @@
   <data name="ConfirmClose" xml:space="preserve">
     <value>Confirm close</value>
   </data>
-  <data name="ConfirmCloseApplicationMessage" xml:space="preserve">
+  <data name="ConfirmCloseMessage" xml:space="preserve">
     <value>Are you sure you want to close the application?</value>
   </data>
   <data name="ConnectAsDots" xml:space="preserve">
@@ -3540,8 +3540,5 @@ Changes to this value will take effect after the application is restarted. Wheth
   </data>
   <data name="NewSubnetMask" xml:space="preserve">
     <value>New subnet mask</value>
-  </data>
-  <data name="CloseApplicationQuestionmark" xml:space="preserve">
-    <value>Close application?</value>
   </data>
 </root>

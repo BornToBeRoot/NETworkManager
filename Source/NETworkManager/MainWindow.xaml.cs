@@ -528,7 +528,7 @@ public partial class MainWindow : INotifyPropertyChanged
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
             ConfigurationManager.OnDialogOpen();
-            var result = await this.ShowMessageAsync(Localization.Resources.Strings.CloseApplicationQuestionmark, Localization.Resources.Strings.ConfirmCloseApplicationMessage, MessageDialogStyle.AffirmativeAndNegative, settings);
+            var result = await this.ShowMessageAsync(Localization.Resources.Strings.ConfirmClose, Localization.Resources.Strings.ConfirmCloseMessage, MessageDialogStyle.AffirmativeAndNegative, settings);
             ConfigurationManager.OnDialogClose();
 
             if (result != MessageDialogResult.Affirmative)

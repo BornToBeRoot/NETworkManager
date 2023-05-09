@@ -1555,15 +1555,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Close application? ähnelt.
-        /// </summary>
-        public static string CloseApplicationQuestionmark {
-            get {
-                return ResourceManager.GetString("CloseApplicationQuestionmark", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Closed ähnelt.
         /// </summary>
         public static string Closed {
@@ -1710,9 +1701,9 @@ namespace NETworkManager.Localization.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Are you sure you want to close the application? ähnelt.
         /// </summary>
-        public static string ConfirmCloseApplicationMessage {
+        public static string ConfirmCloseMessage {
             get {
-                return ResourceManager.GetString("ConfirmCloseApplicationMessage", resourceCulture);
+                return ResourceManager.GetString("ConfirmCloseMessage", resourceCulture);
             }
         }
         
