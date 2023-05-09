@@ -1731,7 +1731,7 @@ public class GroupViewModel : ViewModelBase
 
         // TigerVNC
         TigerVNC_OverridePort = groupInfo.TigerVNC_OverridePort;
-        TigerVNC_Port = groupInfo.TigerVNC_OverridePort ? groupInfo.TigerVNC_Port : SettingsManager.Current.TigerVNC_Port;
+        TigerVNC_Port = groupInfo.TigerVNC_Port;
 
         // SNMP
         SNMP_OverrideOIDAndMode = groupInfo.SNMP_OverrideOIDAndMode;

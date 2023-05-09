@@ -127,7 +127,7 @@ public class GroupInfo
     public string AWSSessionManager_Region { get; set; }
 
     public bool TigerVNC_OverridePort { get; set; }
-    public int TigerVNC_Port { get; set; }
+    public int TigerVNC_Port { get; set; } = GlobalStaticConfiguration.TigerVNC_DefaultVNCPort;
 
     public bool SNMP_OverrideOIDAndMode { get; set; }
     public string SNMP_OID { get; set; }
