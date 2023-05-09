@@ -177,12 +177,12 @@ public partial class PowerShellControl : UserControlBase
                 var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-                ConfigurationManager.Current.IsDialogOpen = true;
+                ConfigurationManager.OnDialogOpen();
 
                 await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error,
                     ex.Message, MessageDialogStyle.Affirmative, settings);
 
-                ConfigurationManager.Current.IsDialogOpen = false;
+                ConfigurationManager.OnDialogClose();
             }
         }
 

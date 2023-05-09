@@ -300,6 +300,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         InterTabClient = new DragablzInterTabClient(ApplicationName.AWSSessionManager);
 
         TabItems = new ObservableCollection<DragablzTabItem>();
+        TabItems.CollectionChanged += TabItems_CollectionChanged;
 
         // Profiles
         SetProfilesView();
@@ -313,12 +314,12 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
         SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
         SettingsManager.Current.AWSSessionManager_AWSProfiles.CollectionChanged += AWSSessionManager_AWSProfiles_CollectionChanged;
-                
+
         SyncAllInstanceIDsFromAWS();
 
         _isLoading = false;
     }
-
+    
     private void LoadSettings()
     {
         IsSyncEnabled = SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS;
@@ -381,7 +382,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         if (view is AWSSessionManagerControl control)
             control.ResizeEmbeddedWindow();
     }
-    
+
     public ICommand ConnectProfileCommand => new RelayCommand(p => ConnectProfileAction(), ConnectProfile_CanExecute);
 
     private bool ConnectProfile_CanExecute(object obj)
@@ -501,7 +502,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
     #region Methods        
     private void CheckInstallationStatus()
-    {            
+    {
         using (RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"))
         {
             foreach (string subkeyName in key.GetSubKeyNames())
@@ -516,7 +517,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
                 if (displayName.Equals("AWS Command Line Interface v2"))
                     IsAWSCLIInstalled = true;
 
-                if (displayName.Equals( "Session Manager Plugin"))
+                if (displayName.Equals("Session Manager Plugin"))
                     IsAWSSessionManagerPluginInstalled = true;
             }
         }
@@ -552,7 +553,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         }
 
         // Check if profiles are available
-        if(ProfileManager.LoadedProfileFile == null)
+        if (ProfileManager.LoadedProfileFile == null)
         {
             _log.Warn("Profile file is not loaded (or decrypted)! Please select (or unlock) a profile file first.");
             return;
@@ -731,7 +732,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         var connectViewModel = new AWSSessionManagerConnectViewModel(async instance =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            ConfigurationManager.Current.IsDialogOpen = false;
+            ConfigurationManager.OnDialogClose();
 
             // Create profile info
             var info = new AWSSessionManagerSessionInfo
@@ -753,7 +754,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         }, async instance =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            ConfigurationManager.Current.IsDialogOpen = false;
+            ConfigurationManager.OnDialogClose();
         });
 
         customDialog.Content = new AWSSessionManagerConnectDialog
@@ -761,7 +762,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
             DataContext = connectViewModel
         };
 
-        ConfigurationManager.Current.IsDialogOpen = true;
+        ConfigurationManager.OnDialogOpen();
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
@@ -815,7 +816,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
         SettingsManager.Current.AWSSessionManager_RegionHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.AWSSessionManager_RegionHistory.ToList(), region, SettingsManager.Current.General_HistoryListEntries));
     }
-    
+
     private void ResizeProfile(bool dueToChangedSize)
     {
         _canProfileWidthChange = false;
@@ -921,12 +922,12 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
     public void OnProfileManagerDialogOpen()
     {
-        ConfigurationManager.Current.IsDialogOpen = true;
+        ConfigurationManager.OnDialogOpen();
     }
 
     public void OnProfileManagerDialogClose()
     {
-        ConfigurationManager.Current.IsDialogOpen = false;
+        ConfigurationManager.OnDialogClose();
     }
     #endregion
 
@@ -984,6 +985,11 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         RefreshProfiles();
 
         IsSearching = false;
+    }
+
+    private void TabItems_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        ConfigurationManager.Current.AWSSessionManagerHasTabs = TabItems.Count > 0;
     }
     #endregion
 }

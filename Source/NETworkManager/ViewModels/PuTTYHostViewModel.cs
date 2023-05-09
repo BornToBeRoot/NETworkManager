@@ -232,6 +232,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         InterTabClient = new DragablzInterTabClient(ApplicationName.PuTTY);
 
         TabItems = new ObservableCollection<DragablzTabItem>();
+        TabItems.CollectionChanged += TabItems_CollectionChanged;
 
         // Profiles
         SetProfilesView();
@@ -247,7 +248,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
         _isLoading = false;
     }
-
+    
     private void LoadSettings()
     {
         ExpandProfileView = SettingsManager.Current.PuTTY_ExpandProfileView;
@@ -429,7 +430,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         var connectViewModel = new PuTTYConnectViewModel(async instance =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            ConfigurationManager.Current.IsDialogOpen = false;
+            ConfigurationManager.OnDialogClose();
 
             // Create profile info
             var info = new PuTTYSessionInfo
@@ -462,7 +463,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         }, async instance =>
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.IsDialogOpen = false;
+                ConfigurationManager.OnDialogClose();
             }, host);
 
         customDialog.Content = new PuTTYConnectDialog
@@ -470,7 +471,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
             DataContext = connectViewModel
         };
 
-        ConfigurationManager.Current.IsDialogOpen = true;
+        ConfigurationManager.OnDialogOpen();
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
@@ -665,12 +666,12 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
     public void OnProfileManagerDialogOpen()
     {
-        ConfigurationManager.Current.IsDialogOpen = true;
+        ConfigurationManager.OnDialogOpen();
     }
 
     public void OnProfileManagerDialogClose()
     {
-        ConfigurationManager.Current.IsDialogOpen = false;
+        ConfigurationManager.OnDialogClose();
     }
     #endregion
 
@@ -697,6 +698,11 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         RefreshProfiles();
 
         IsSearching = false;
+    }
+
+    private void TabItems_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        ConfigurationManager.Current.PuTTYHasTabs = TabItems.Count > 0;
     }
     #endregion
 }

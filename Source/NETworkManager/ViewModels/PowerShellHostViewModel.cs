@@ -20,6 +20,7 @@ using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 
 namespace NETworkManager.ViewModels;
 
@@ -232,6 +233,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         InterTabClient = new DragablzInterTabClient(ApplicationName.PowerShell);
 
         TabItems = new ObservableCollection<DragablzTabItem>();
+        TabItems.CollectionChanged += TabItems_CollectionChanged;
 
         // Profiles
         SetProfilesView();
@@ -247,13 +249,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
         _isLoading = false;
     }
-
-    private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-        if (e.PropertyName == nameof(SettingsInfo.PowerShell_ApplicationFilePath))
-            CheckSettings();
-    }
-
+    
     private void LoadSettings()
     {
         ExpandProfileView = SettingsManager.Current.PowerShell_ExpandProfileView;
@@ -415,7 +411,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         var connectViewModel = new PowerShellConnectViewModel(async instance =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            ConfigurationManager.Current.IsDialogOpen = false;
+            ConfigurationManager.OnDialogClose();
 
             // Create profile info
             var info = new PowerShellSessionInfo
@@ -437,7 +433,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         }, async instance =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            ConfigurationManager.Current.IsDialogOpen = false;
+            ConfigurationManager.OnDialogClose();
         }, host);
 
         customDialog.Content = new PowerShellConnectDialog
@@ -445,7 +441,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
             DataContext = connectViewModel
         };
 
-        ConfigurationManager.Current.IsDialogOpen = true;
+        ConfigurationManager.OnDialogOpen();
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
@@ -586,12 +582,12 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
     public void OnProfileManagerDialogOpen()
     {
-        ConfigurationManager.Current.IsDialogOpen = true;
+        ConfigurationManager.OnDialogOpen();
     }
 
     public void OnProfileManagerDialogClose()
     {
-        ConfigurationManager.Current.IsDialogOpen = false;
+        ConfigurationManager.OnDialogClose();
     }
     #endregion
 
@@ -608,6 +604,17 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         RefreshProfiles();
 
         IsSearching = false;
+    }
+
+    private void TabItems_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    {
+        ConfigurationManager.Current.PowerShellHasTabs = TabItems.Count > 0;
+    }
+
+    private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(SettingsInfo.PowerShell_ApplicationFilePath))
+            CheckSettings();
     }
     #endregion
 }
