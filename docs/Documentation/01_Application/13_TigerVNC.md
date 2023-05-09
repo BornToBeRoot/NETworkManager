@@ -23,18 +23,7 @@ TigerVNC must be installed on the local computer in order to use this feature. O
 
 ![TigerVNC](13_TigerVNC.png)
 
-## Profile
-
-### Inherit host from general
-
-Inherit the host from the general settings.
-
-**Type:** `Boolean`
-
-**Default:** `Enabled`
-
-{: .note }
-If you enable this option, the [Host](#host) is overwritten by the host from the general settings and the [Host](#host) is disabled.
+## Connect
 
 ### Host
 
@@ -55,6 +44,42 @@ TCP port to use for the VNC connection.
 
 **Type:** `Integer` [Min `1`, Max `65535`]
 
+**Default:** [`Settings > Port`](#port-3)
+
+## Profile
+
+### Inherit host from general
+
+Inherit the host from the general settings.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
+{: .note }
+If you enable this option, the [Host](#host-1) is overwritten by the host from the general settings and the [Host](#host-1) is disabled.
+
+### Host
+
+Host to connect to via VNC.
+
+**Type:** `String`
+
+**Default:** `Empty`
+
+**Example:**
+
+- `server-01.example.com`
+- `10.0.0.10`
+
+### Port
+
+TCP port to use for the VNC connection.
+
+**Type:** `Integer` [Min `1`, Max `65535`]
+
+**Default:** `5900`
+
 ## Group
 
 ### Port
@@ -62,6 +87,8 @@ TCP port to use for the VNC connection.
 TCP port to use for the VNC connection.
 
 **Type:** `Integer` [Min `1`, Max `65535`]
+
+**Default:** `5900`
 
 ## Settings
 
