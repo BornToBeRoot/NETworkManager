@@ -349,7 +349,7 @@ public partial class App
 
     private void Save()
     {
-        if (SettingsManager.Current.SettingsChanged && !ConfigurationManager.Current.DisableSaveSettings)
+        if (SettingsManager.Current.SettingsChanged)
         {
             _log.Info("Save application settings...");
             SettingsManager.Save();

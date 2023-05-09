@@ -8,10 +8,8 @@ using NETworkManager.Settings;
 using NETworkManager.Models.Network;
 using System.Threading.Tasks;
 using System.ComponentModel;
-using System.Diagnostics;
 using NETworkManager.Utilities;
 using System.Windows;
-using MahApps.Metro.Controls;
 using static NETworkManager.Models.Network.DiscoveryProtocol;
 using System.Windows.Threading;
 

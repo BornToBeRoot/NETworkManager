@@ -40,16 +40,6 @@ public class ConfigurationInfo : PropertyChangedBase
     public bool ShowSettingsResetNoteOnStartup { get; set; }
 
     /// <summary>
-    /// Disables application-wide saving of settings (e.g. when settings are reset in the settings view).
-    /// </summary>
-    public bool DisableSaveSettings { get; set; }
-
-    /// <summary>
-    /// Restart the application (e.g. when settings are reset in the settings view).
-    /// </summary>
-    public bool Restart { get; set; }
-
-    /// <summary>
     /// Currently selected application.
     /// </summary>
     public ApplicationName CurrentApplication { get; set; } = Models.ApplicationName.None;
