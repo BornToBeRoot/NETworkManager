@@ -2432,8 +2432,8 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private Models.PowerShell.PowerShell.ExecutionPolicy _powerShell_ExecutionPolicy = GlobalStaticConfiguration.PowerShell_ExecutionPolicy;
-    public Models.PowerShell.PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy
+    private Models.PowerShell.ExecutionPolicy _powerShell_ExecutionPolicy = GlobalStaticConfiguration.PowerShell_ExecutionPolicy;
+    public Models.PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy
     {
         get => _powerShell_ExecutionPolicy;
         set

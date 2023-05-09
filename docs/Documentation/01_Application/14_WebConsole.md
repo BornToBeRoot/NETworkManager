@@ -12,10 +12,15 @@ permalink: /Documentation/Application/WebConsole
 
 The **Web Console** is designed to browse the website of a host (e.g. server, switch, router, dashboard, etc.) to display informations or to configure it.
 
-Possible inputs:
-- `https://pihole.example.com/admin/`
-
 ![WebConsole](14_WebConsole.png)
+
+## Connect
+
+URL of the website to display in the web console.
+
+**Type:** `String`
+
+**Example:** `https://pihole.example.com/admin/`
 
 ## Profile
 

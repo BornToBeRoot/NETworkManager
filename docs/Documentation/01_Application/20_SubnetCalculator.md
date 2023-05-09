@@ -16,7 +16,7 @@ With the **Subnet Calculator** you can [calculate a subnet](#calculator), [split
 
 On the **Calculator** tab, you can calculate a subnet by entering the IP address and the subnet mask. The subnet mask can be entered in CIDR notation.
 
-Possible inputs:
+Example inputs:
 
 - `10.0.0.0/16`
 - `192.168.0.0/255.255.255.0`
@@ -28,7 +28,7 @@ Possible inputs:
 
 On the **Subnetting** tab, you can split a subnet into smaller subnets. The subnet mask can be entered in CIDR notation.
 
-Possible inputs:
+Example inputs:
 
 | Subnet                      | New subnet mask   |
 | --------------------------- | ----------------- |
@@ -45,7 +45,7 @@ Right-click on the result to copy or export the information.
 
 On the **Wide Subnet** tab, you can create a wide subnet that includes both given subnets. The subnet mask can be entered in CIDR notation.
 
-Possible inputs:
+Example inputs:
 
 | Subnet 1                    | Subnet 2         |
 | --------------------------- | ---------------- |

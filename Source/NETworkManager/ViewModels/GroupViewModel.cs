@@ -1038,10 +1038,10 @@ public class GroupViewModel : ViewModelBase
         }
     }
 
-    public IEnumerable<PowerShell.ExecutionPolicy> PowerShell_ExecutionPolicies { get; set; }
+    public IEnumerable<ExecutionPolicy> PowerShell_ExecutionPolicies { get; set; }
 
-    private PowerShell.ExecutionPolicy _powerShell_ExecutionPolicy;
-    public PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy
+    private ExecutionPolicy _powerShell_ExecutionPolicy;
+    public ExecutionPolicy PowerShell_ExecutionPolicy
     {
         get => _powerShell_ExecutionPolicy;
         set
@@ -1702,7 +1702,7 @@ public class GroupViewModel : ViewModelBase
         PowerShell_OverrideAdditionalCommandLine = groupInfo.PowerShell_OverrideAdditionalCommandLine;
         PowerShell_AdditionalCommandLine = groupInfo.PowerShell_AdditionalCommandLine;
         PowerShell_OverrideExecutionPolicy = groupInfo.PowerShell_OverrideExecutionPolicy;
-        PowerShell_ExecutionPolicies = Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();
+        PowerShell_ExecutionPolicies = Enum.GetValues(typeof(ExecutionPolicy)).Cast<ExecutionPolicy>().ToList();
         PowerShell_ExecutionPolicy = PowerShell_ExecutionPolicies.FirstOrDefault(x => x == groupInfo.PowerShell_ExecutionPolicy);
 
         // PuTTY
@@ -1731,7 +1731,7 @@ public class GroupViewModel : ViewModelBase
 
         // TigerVNC
         TigerVNC_OverridePort = groupInfo.TigerVNC_OverridePort;
-        TigerVNC_Port = groupInfo.TigerVNC_OverridePort ? groupInfo.TigerVNC_Port : SettingsManager.Current.TigerVNC_Port;
+        TigerVNC_Port = groupInfo.TigerVNC_Port;
 
         // SNMP
         SNMP_OverrideOIDAndMode = groupInfo.SNMP_OverrideOIDAndMode;

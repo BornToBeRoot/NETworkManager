@@ -16,9 +16,10 @@ New Feature
 2022.10.31.0
 {: .label .label-purple }
 
-With **AWS** (Systems Manager) **Session Manager**, you can connect to and manage an EC2 instance without opening inbound ports, running a bastion host, or managing SSH keys. The integration of AWS Session Manager with NETworkManger supports tabs and profiles for hosts. Here you can find more information about [AWS Systems Manager](https://aws.amazon.com/systems-manager/){:target="\_blank"} and the documentation for [AWS Systems Manager Session Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html){:target="\_blank"}.
+With **AWS** (Systems Manager) **Session Manager**, you can connect to and manage an EC2 instance without opening inbound ports, running a bastion host, or managing SSH keys. The integration of AWS Session Manager with NETworkManger supports tabs and profiles for hosts. You can also synchronize your EC2 instances from AWS. To connect to the instances a PowerShell console is used with the AWS CLI and the AWS Session Manager plugin. The connection to the instances is established via the following command: `aws ssm start-session --target <INSTANCE_ID>`
 
-This feature allows you to use the `aws ssm start-session --target <INSTANCE_ID>` command with tabs. You can create profiles for your instances or synchronize them from AWS EC2 to connect to them directly.
+{: .note}
+Here you can find more information about [AWS Systems Manager](https://aws.amazon.com/systems-manager/){:target="\_blank"} and the documentation for [AWS Systems Manager Session Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html){:target="\_blank"}. You need to setup you AWS account to use AWS Systems Manager Session Manager. See [Prerequisites](#prerequisites) for more details.
 
 ![AWSSessionManager](12_AWSSessionManager.png)
 
@@ -269,11 +270,15 @@ ID of the AWS EC2 instance.
 
 **Type:** `String`
 
+**Example:** `i-0123456789abcdef0`
+
 ### Profile
 
 AWS CLI profile which will be used to connect.
 
 **Type:** `String`
+
+**Example:** `dev`
 
 {: .note }
 If not set, the AWS CLI default settings are used!
@@ -283,6 +288,8 @@ If not set, the AWS CLI default settings are used!
 AWS region where the instance is located.
 
 **Type:** `String`
+
+**Example:** `eu-central-1`
 
 {: .note }
 If not set, the AWS CLI default settings are used!
@@ -295,11 +302,15 @@ ID of the AWS EC2 instance.
 
 **Type:** `String`
 
+**Example:** `i-0123456789abcdef0`
+
 ### Profile
 
 AWS CLI profile which will be used to connect.
 
 **Type:** `String`
+
+**Example:** `dev`
 
 {: .note }
 If not set, the [`Default profile`](#default-profile) from the settings is used!
@@ -309,6 +320,8 @@ If not set, the [`Default profile`](#default-profile) from the settings is used!
 AWS region where the instance is located.
 
 **Type:** `String`
+
+**Example:** `eu-central-1`
 
 {: .note }
 If not set, the [`Default region`](#default-region) from the settings is used!
@@ -384,13 +397,13 @@ If not set, the AWS CLI default settings are used!
 
 ### File path
 
-Path to the PowerShell console where the AWS CLI is available and which should be embedded in the program.
+Path to the PowerShell console where the AWS CLI is available.
 
 **Type:** `String`
 
 **Default:** `C:\Program Files\PowerShell\7\pwsh.exe`, `C:\Program Files (x86)\PowerShell\7\pwsh.exe` or `C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe`
 
-**Possible values:**
+**Example:**
 
 - `C:\path\to\PowerShell.exe`
 - `C:\path\to\pwsh.exe`

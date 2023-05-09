@@ -21,7 +21,7 @@ In order to use the whois protocol, the firewall must allow outgoing connections
 {: .note}
 For .de domains, DENIC no longer provides information via the whois protocol.
 
-Possible inputs:
+Example inputs:
 
 - `example.com`
 

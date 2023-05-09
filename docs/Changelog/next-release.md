@@ -18,6 +18,8 @@ Release date: **xx.xx.2023**
 ## What's new?
   
 ## Improvements
+- TigerVNC
+  - Use port from default config instead of settings if creating a new group [#2249](https://github.com/BornToBeRoot/NETworkManager/pull/2249){:target="\_blank"}
 - Wake on LAN
   - Change default port from 7 to 9 [#2242](https://github.com/BornToBeRoot/NETworkManager/pull/2242){:target="\_blank"}
 
@@ -39,6 +41,7 @@ Deprecated
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="\_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="\_blank"}
 - Add documentation for:
+  - Application > PowerShell [#2249](https://github.com/BornToBeRoot/NETworkManager/pull/2249){:target="\_blank"}
   - Application > TigerVNC [#2248](https://github.com/BornToBeRoot/NETworkManager/pull/2248){:target="\_blank"}
   - Application > Web Console [#2244](https://github.com/BornToBeRoot/NETworkManager/pull/2244){:target="\_blank"}
   - Application > Wake on LAN [#2242](https://github.com/BornToBeRoot/NETworkManager/pull/2242){:target="\_blank"}

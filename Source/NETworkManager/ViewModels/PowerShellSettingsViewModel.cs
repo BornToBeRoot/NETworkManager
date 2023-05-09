@@ -72,8 +72,8 @@ public class PowerShellSettingsViewModel : ViewModelBase
         }
     }
 
-    private List<PowerShell.ExecutionPolicy> _executionPolicies = new List<PowerShell.ExecutionPolicy>();
-    public List<PowerShell.ExecutionPolicy> ExecutionPolicies
+    private List<ExecutionPolicy> _executionPolicies = new List<ExecutionPolicy>();
+    public List<ExecutionPolicy> ExecutionPolicies
     {
         get => _executionPolicies;
         set
@@ -86,8 +86,8 @@ public class PowerShellSettingsViewModel : ViewModelBase
         }
     }
 
-    private PowerShell.ExecutionPolicy _executionPolicy;
-    public PowerShell.ExecutionPolicy ExecutionPolicy
+    private ExecutionPolicy _executionPolicy;
+    public ExecutionPolicy ExecutionPolicy
     {
         get => _executionPolicy;
         set
@@ -142,7 +142,7 @@ public class PowerShellSettingsViewModel : ViewModelBase
 
     private void LoadExecutionPolicies()
     {
-        ExecutionPolicies = System.Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();
+        ExecutionPolicies = Enum.GetValues(typeof(ExecutionPolicy)).Cast<ExecutionPolicy>().ToList();
         ExecutionPolicy = ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_ExecutionPolicy);
     }
     #endregion
