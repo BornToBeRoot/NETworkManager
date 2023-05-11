@@ -590,11 +590,8 @@
   <data name="StaticIPv4DNSServer" xml:space="preserve">
     <value>Statični strežnik DNS IPv4</value>
   </data>
-  <data name="Subnetmask" xml:space="preserve">
+  <data name="SubnetMask" xml:space="preserve">
     <value>Maska podomrežja</value>
-  </data>
-  <data name="SubnetmaskOrCIDR" xml:space="preserve">
-    <value>Maska podomrežja ali CIDR</value>
   </data>
   <data name="Threads" xml:space="preserve">
     <value>Niti</value>
@@ -3520,5 +3517,8 @@ V zgornjem desnem kotu kliknite na gumb za Pomoč/Dokumentacijo (levo od gumba z
   </data>
   <data name="FromProfile" xml:space="preserve">
     <value>(iz profila)</value>
+  </data>
+  <data name="NewSubnetMask" xml:space="preserve">
+    <value>Nova maska podomrežja</value>
   </data>
 </root>
