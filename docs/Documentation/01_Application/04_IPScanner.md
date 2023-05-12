@@ -10,20 +10,20 @@ permalink: /Documentation/Application/IPScanner
 
 # IP Scanner
 
-With the **IP Scanner** you can scan for active devices in subnets or IP ranges that are reachable via icmp or have a common tcp port open.
+With the **IP Scanner** you can scan for active devices based on the hostname or in IP ranges that are reachable via icmp or have a common tcp port open.
 
 Example inputs:
 
-| Input                       | Description                                                                               |
-| --------------------------- | ----------------------------------------------------------------------------------------- |
-| `10.0.0.1`                  | Single IP address (`10.0.0.1`)                                                            |
-| `10.0.0.100 - 10.0.0.199`   | All IP addresses in a given range (`10.0.0.100`, `10.0.0.101`, ..., `10.0.0.199`)         |
-| `10.0.0.0/23`               | All IP addresses in a subnet (`10.0.0.0`, ..., `10.0.1.255`)                              |
-| `10.0.0.0/255.255.254.0`    | All IP addresses in a subnet (`10.0.0.0`, ..., `10.0.1.255`)                              |
-| `10.0.[0-9,20].[1-2]`       | Multipe IP address like (`10.0.0.1`, `10.0.0.2`, `10.0.1.1`, ...,`10.0.9.2`, `10.0.20.1`) |
-| `example.com`               | Single IP address resolved from a host (`10.0.0.1`)                                       |
-| `example.com/24`            | All IP addresses in a subnet resolved from a host (`10.0.0.0`, ..., `10.0.0.255`)         |
-| `example.com/255.255.255.0` | All IP addresses in a subnet resolved from a host (`10.0.0.0`, ..., `10.0.0.255`)         |
+| Host                             | Description                                                                               |
+| -------------------------------- | ----------------------------------------------------------------------------------------- |
+| `10.0.0.1`                       | Single IP address (`10.0.0.1`)                                                            |
+| `10.0.0.100 - 10.0.0.199`        | All IP addresses in a given range (`10.0.0.100`, `10.0.0.101`, ..., `10.0.0.199`)         |
+| `10.0.0.0/23`                    | All IP addresses in a subnet (`10.0.0.0`, ..., `10.0.1.255`)                              |
+| `10.0.0.0/255.255.254.0`         | All IP addresses in a subnet (`10.0.0.0`, ..., `10.0.1.255`)                              |
+| `10.0.[0-9,20].[1-2]`            | Multipe IP address like (`10.0.0.1`, `10.0.0.2`, `10.0.1.1`, ...,`10.0.9.2`, `10.0.20.1`) |
+| `borntoberoot.net`               | Single IP address resolved from a host (`10.0.0.1`)                                       |
+| `borntoberoot.net/24`            | All IP addresses in a subnet resolved from a host (`10.0.0.0`, ..., `10.0.0.255`)         |
+| `borntoberoot.net/255.255.255.0` | All IP addresses in a subnet resolved from a host (`10.0.0.0`, ..., `10.0.0.255`)         |
 
 {: .note }
 Multiple inputs can be combined with a semicolon (`;`).<br />Example: `10.0.0.0/24; 10.0.[10-20]1`
@@ -45,17 +45,20 @@ Inherit the host from the general settings.
 **Default:** `Enabled`
 
 {: .note }
-If you enable this option, the [IP range](#ip-range) is overwritten by the host from the general settings and the [IP range](#ip-range) is disabled.
+If you enable this option, the [host](#host) is overwritten by the host from the general settings and the [host](#host) is disabled.
 
-### IP range
+### Host
 
-IP range to scan for active devices.
+Hostname or IP range to scan for active devices.
 
 **Type:** `String`
 
 **Default:** `Empty`
 
-**Example:** `10.0.0.0/24; 10.0.[10-20].1`
+**Example:**
+
+- `10.0.0.0/24; 10.0.[10-20].1`
+- `server-01.borntoberoot.net`
 
 ## Settings
 
@@ -168,7 +171,7 @@ In the arguments you can use the following placeholders:
 
 ### Max. concurrent host threads
 
-Maximal number of threads that are used to scan for active hosts (IP addresses).
+Maximal number of threads used to scan for active hosts (1 thread = 1 host/ip address).
 
 **Type:** `Integer` [Min `1`, Max `512`]
 

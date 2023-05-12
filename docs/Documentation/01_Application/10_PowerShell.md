@@ -37,7 +37,7 @@ Host name or IP address of the remote computer.
 
 **Example:**
 
-- `server-01.example.com`
+- `server-01.borntoberoot.net`
 - `10.0.0.10`
 
 {: .note }
@@ -109,7 +109,7 @@ Host name or IP address of the remote computer.
 
 **Example:**
 
-- `server-01.example.com`
+- `server-01.borntoberoot.net`
 - `10.0.0.10`
 
 {: .note }

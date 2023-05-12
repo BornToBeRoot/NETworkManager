@@ -20,7 +20,7 @@ URL of the website to display in the web console.
 
 **Type:** `String`
 
-**Example:** `https://pihole.example.com/admin/`
+**Example:** `https://pihole.borntoberoot.net/admin/`
 
 ## Profile
 
@@ -32,7 +32,7 @@ URL of the website to display in the web console.
 
 **Default:** `Empty`
 
-**Example:** `https://pihole.example.com/admin/`
+**Example:** `https://pihole.borntoberoot.net/admin/`
 
 ## Settings
 

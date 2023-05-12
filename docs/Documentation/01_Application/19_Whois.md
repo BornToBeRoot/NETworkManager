@@ -16,14 +16,14 @@ With **Whois** you can retrieve Whois information for a domain directly from the
 Whois data from a domain is publicly available. The data is provided by the domain registrar and can be queried via the whois protocol. The whois protocol is based on TCP and uses port 43. The whois protocol is not encrypted and the data is transmitted in plain text. Because the whois protocol is not standardized, the data may have a different format depending on the registrar.
 
 {: .note}
-In order to use the whois protocol, the firewall must allow outgoing connections on port 43 to the whois server associated with the top-level domain. For example, if you want to query the whois information for `example.com`, you must allow outgoing connections to `whois.verisign-grs.com` on port 43.
+In order to use the whois protocol, the firewall must allow outgoing connections on port 43 to the whois server associated with the top-level domain. For example, if you want to query the whois information for `borntoberoot.net`, you must allow outgoing connections to `whois.verisign-grs.com` on port 43.
 
 {: .note}
 For .de domains, DENIC no longer provides information via the whois protocol.
 
 Example inputs:
 
-- `example.com`
+- `borntoberoot.net`
 
 ![Whois](19_Whois.png)
 
@@ -51,4 +51,4 @@ Domain to query for whois information.
 
 **Default:** `Empty`
 
-**Example:** `example.com`
+**Example:** `borntoberoot.net`

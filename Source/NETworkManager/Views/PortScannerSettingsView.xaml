@@ -13,8 +13,7 @@
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PortScannerSettingsViewModel}">
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.PortScanner}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowClosedPorts}" IsOn="{Binding ShowAllResults}" Margin="0,0,0,10"/>
-        <TextBlock Text="{x:Static localization:Strings.PortProfiles}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />        
+        <TextBlock Text="{x:Static localization:Strings.PortProfiles}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <DataGrid x:Name="DataGridPortProfiles" ItemsSource="{Binding PortProfiles}" SelectionMode="Single" SelectedItem="{Binding SelectedPortProfile}" Height="200" Margin="0,0,0,10">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
@@ -138,6 +137,7 @@
                 </Button.Content>
             </Button>
         </StackPanel>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowClosedPorts}" IsOn="{Binding ShowAllResults}" Margin="0,0,0,10"/>
         <TextBlock  Text="{x:Static localization:Strings.TimeoutMS}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown  Value="{Binding Timeout}" Maximum="15000" Minimum="100" Interval="100" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.DNS}" Style="{StaticResource HeaderTextBlock}" />
