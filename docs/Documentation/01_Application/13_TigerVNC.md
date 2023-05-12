@@ -35,7 +35,7 @@ Host to connect to via VNC.
 
 **Example:**
 
-- `server-01.example.com`
+- `server-01.borntoberoot.net`
 - `10.0.0.10`
 
 ### Port
@@ -69,7 +69,7 @@ Host to connect to via VNC.
 
 **Example:**
 
-- `server-01.example.com`
+- `server-01.borntoberoot.net`
 - `10.0.0.10`
 
 ### Port
