@@ -504,8 +504,8 @@
   <data name="Maximum" xml:space="preserve">
     <value>Maximum</value>
   </data>
-  <data name="MaximumHopsRouter" xml:space="preserve">
-    <value>Maximale Hops/Router</value>
+  <data name="MaximumHops" xml:space="preserve">
+    <value>Maximale Hops</value>
   </data>
   <data name="MinimizeInsteadOfTerminating" xml:space="preserve">
     <value>Hauptfenster minimieren anstatt die Anwendung zu schließen</value>
@@ -612,8 +612,8 @@
   <data name="TimeoutMS" xml:space="preserve">
     <value>Timeout (ms)</value>
   </data>
-  <data name="TimeToWaitBetweenEachPing" xml:space="preserve">
-    <value>Zeit wie lange gewartet wird zwischen jedem Ping</value>
+  <data name="TimeMSToWaitBetweenEachPing" xml:space="preserve">
+    <value>Zeit (MS) wie lange gewartet wird zwischen jedem Ping</value>
   </data>
   <data name="TTL" xml:space="preserve">
     <value>TTL</value>
