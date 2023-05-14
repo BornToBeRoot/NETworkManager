@@ -5079,11 +5079,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Maximum hops/router ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Maximum hops ähnelt.
         /// </summary>
-        public static string MaximumHopsRouter {
+        public static string MaximumHops {
             get {
-                return ResourceManager.GetString("MaximumHopsRouter", resourceCulture);
+                return ResourceManager.GetString("MaximumHops", resourceCulture);
             }
         }
         

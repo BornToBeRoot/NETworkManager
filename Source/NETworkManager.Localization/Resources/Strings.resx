@@ -504,8 +504,8 @@
   <data name="Maximum" xml:space="preserve">
     <value>Maximum</value>
   </data>
-  <data name="MaximumHopsRouter" xml:space="preserve">
-    <value>Maximum hops/router</value>
+  <data name="MaximumHops" xml:space="preserve">
+    <value>Maximum hops</value>
   </data>
   <data name="MinimizeInsteadOfTerminating" xml:space="preserve">
     <value>Minimize main window instead of terminating the application</value>
