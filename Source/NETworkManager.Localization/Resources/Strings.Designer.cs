@@ -9292,6 +9292,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Time (ms) to wait between each ping ähnelt.
+        /// </summary>
+        public static string TimeMSToWaitBetweenEachPing {
+            get {
+                return ResourceManager.GetString("TimeMSToWaitBetweenEachPing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Timeout ähnelt.
         /// </summary>
         public static string Timeout {
@@ -9351,15 +9360,6 @@ namespace NETworkManager.Localization.Resources {
         public static string TimeToLive {
             get {
                 return ResourceManager.GetString("TimeToLive", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Time to wait between each ping ähnelt.
-        /// </summary>
-        public static string TimeToWaitBetweenEachPing {
-            get {
-                return ResourceManager.GetString("TimeToWaitBetweenEachPing", resourceCulture);
             }
         }
         
