@@ -612,8 +612,8 @@
   <data name="TimeoutMS" xml:space="preserve">
     <value>Timeout (ms)</value>
   </data>
-  <data name="TimeToWaitBetweenEachPing" xml:space="preserve">
-    <value>Time to wait between each ping</value>
+  <data name="TimeMSToWaitBetweenEachPing" xml:space="preserve">
+    <value>Time (ms) to wait between each ping</value>
   </data>
   <data name="TTL" xml:space="preserve">
     <value>TTL</value>
