@@ -504,8 +504,8 @@
   <data name="Maximum" xml:space="preserve">
     <value>Massimo</value>
   </data>
-  <data name="MaximumHopsRouter" xml:space="preserve">
-    <value>Hop max per router</value>
+  <data name="MaximumHops" xml:space="preserve">
+    <value>Hop masssimi</value>
   </data>
   <data name="MinimizeInsteadOfTerminating" xml:space="preserve">
     <value>Minimizza la finestra principale invece di chiudere l'applicazione</value>
@@ -588,11 +588,8 @@
   <data name="StaticIPv4DNSServer" xml:space="preserve">
     <value>Indirizzo statico server DNS IPv4</value>
   </data>
-  <data name="Subnetmask" xml:space="preserve">
-    <value>Maschera di sottorete</value>
-  </data>
-  <data name="SubnetmaskOrCIDR" xml:space="preserve">
-    <value>Maschera di sottorete o CIDR</value>
+  <data name="SubnetMask" xml:space="preserve">
+    <value>Maschera sottorete</value>
   </data>
   <data name="Threads" xml:space="preserve">
     <value>Thread</value>
@@ -615,8 +612,8 @@
   <data name="TimeoutMS" xml:space="preserve">
     <value>Time out (ms)</value>
   </data>
-  <data name="TimeToWaitBetweenEachPing" xml:space="preserve">
-    <value>Tempo di attesa tra ogni ping</value>
+  <data name="TimeMSToWaitBetweenEachPing" xml:space="preserve">
+    <value>Tempo (ms) di attesa tra ogni ping</value>
   </data>
   <data name="TTL" xml:space="preserve">
     <value>TTL</value>
@@ -3626,6 +3623,9 @@ Per assistenza contattare l'amministratore di rete.</value>
     <value>Aggiungi scheda</value>
   </data>
   <data name="FromProfile" xml:space="preserve">
-    <value>(da profilo)</value>
+    <value>(dal profilo)</value>
+  </data>
+  <data name="NewSubnetMask" xml:space="preserve">
+    <value>Nuova maschera sottorete</value>
   </data>
 </root>
