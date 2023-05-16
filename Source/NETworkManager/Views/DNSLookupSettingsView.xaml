@@ -18,7 +18,7 @@
     </UserControl.Resources>
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.DNSLookup}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBlock Text="{x:Static localization:Strings.DNSServers}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.DNSServer}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <DataGrid x:Name="DataGridDNSServers" ItemsSource="{Binding DNSServers}" SelectionMode="Single" SelectedItem="{Binding SelectedDNSServer}" Height="200" Margin="0,0,0,10">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
@@ -176,8 +176,8 @@
         <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowOnlyMostCommonQueryTypes}" IsOn="{Binding ShowOnlyMostCommonQueryTypes}" Margin="0,0,0,10"/>
         <mah:ToggleSwitch Header="{x:Static localization:Strings.UseOnlyTCP}" IsOn="{Binding UseTCPOnly}" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.Retries}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <mah:NumericUpDown Value="{Binding Retries}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,10" />
+        <mah:NumericUpDown Value="{Binding Retries}" Minimum="1" Maximum="10" Interval="1" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.TimeoutS}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <mah:NumericUpDown Value="{Binding Timeout}" Maximum="15" Minimum="1" Interval="1" />
+        <mah:NumericUpDown Value="{Binding Timeout}" Minimum="1" Maximum="15" Interval="1" />
     </StackPanel>
 </UserControl>
