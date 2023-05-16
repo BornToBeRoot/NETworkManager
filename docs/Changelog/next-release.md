@@ -47,6 +47,7 @@ Deprecated
   - Application > Port Scanner [#2265](https://github.com/BornToBeRoot/NETworkManager/pull/2265){:target="\_blank"}
   - Application > Ping Monitor [#2267](https://github.com/BornToBeRoot/NETworkManager/pull/2267){:target="\_blank"}
   - Application > Traceroute [#2268](https://github.com/BornToBeRoot/NETworkManager/pull/2268){:target="\_blank"}
+  - Application > DNS Lookup [#2273](https://github.com/BornToBeRoot/NETworkManager/pull/2273){:target="\_blank"}
   - Application > PowerShell [#2249](https://github.com/BornToBeRoot/NETworkManager/pull/2249){:target="\_blank"}
   - Application > TigerVNC [#2248](https://github.com/BornToBeRoot/NETworkManager/pull/2248){:target="\_blank"}
   - Application > Web Console [#2244](https://github.com/BornToBeRoot/NETworkManager/pull/2244){:target="\_blank"}
