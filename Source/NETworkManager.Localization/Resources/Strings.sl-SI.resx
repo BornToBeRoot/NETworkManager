@@ -504,8 +504,8 @@
   <data name="Maximum" xml:space="preserve">
     <value>Največ</value>
   </data>
-  <data name="MaximumHopsRouter" xml:space="preserve">
-    <value>Največ skokov/usmerjevalnikov</value>
+  <data name="MaximumHops" xml:space="preserve">
+    <value>Največ poskokov</value>
   </data>
   <data name="MinimizeInsteadOfTerminating" xml:space="preserve">
     <value>Zmanjšaj glavno okno, namesto da izhoda iz programa</value>
@@ -614,8 +614,8 @@
   <data name="TimeoutMS" xml:space="preserve">
     <value>Odmor (ms)</value>
   </data>
-  <data name="TimeToWaitBetweenEachPing" xml:space="preserve">
-    <value>Čakalni čas med vsakim pingom</value>
+  <data name="TimeMSToWaitBetweenEachPing" xml:space="preserve">
+    <value>Čas (ms) čakanja med posameznimi pingi</value>
   </data>
   <data name="TTL" xml:space="preserve">
     <value>TTL</value>
