@@ -3,10 +3,9 @@ using System;
 using System.Windows.Input;
 using NETworkManager.Models.Network;
 using System.Collections.Generic;
-using System.Windows.Controls;
-using System.Windows;
+using System.Collections.ObjectModel;
+using System.Collections;
 using System.Linq;
-using System.Diagnostics;
 
 namespace NETworkManager.ViewModels;
 
@@ -95,8 +94,8 @@ public class ServerConnectionInfoProfileViewModel : ViewModelBase
         }
     }
 
-    private List<ServerConnectionInfo> _servers;
-    public List<ServerConnectionInfo> Servers
+    private ObservableCollection<ServerConnectionInfo> _servers;
+    public ObservableCollection<ServerConnectionInfo> Servers
     {
         get => _servers;
         set
@@ -105,6 +104,20 @@ public class ServerConnectionInfoProfileViewModel : ViewModelBase
                 return;
 
             _servers = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private IList _selectedServers = new ArrayList();
+    public IList SelectedServers
+    {
+        get => _selectedServers;
+        set
+        {
+            if (Equals(value, _selectedServers))
+                return;
+
+            _selectedServers = value;
             OnPropertyChanged();
         }
     }
@@ -127,8 +140,19 @@ public class ServerConnectionInfoProfileViewModel : ViewModelBase
             UsedNames.Remove(CurrentProfile.Name);
 
         Name = _currentProfile.Name;
-        Servers = _currentProfile.Servers;
+        Servers = new ObservableCollection<ServerConnectionInfo>(_currentProfile.Servers);
 
         _isLoading = false;
+    }
+
+    public ICommand DeleteServerCommand => new RelayCommand(p => DeleteServerAction());
+
+    private void DeleteServerAction()
+    {
+        // Cast to list to avoid exception: Collection was modified; enumeration operation may not execute.
+        // This will create a copy of the list and allow us to remove items from the original list (SelectedServers
+        // is modified when Servers changes)
+        foreach (var item in SelectedServers.Cast<ServerConnectionInfo>().ToList())
+            Servers.Remove(item);
     }
 }

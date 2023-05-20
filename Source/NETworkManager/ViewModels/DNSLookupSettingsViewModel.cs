@@ -20,8 +20,6 @@ public class DNSLookupSettingsViewModel : ViewModelBase
 
     private readonly IDialogCoordinator _dialogCoordinator;
 
-    private (string Server, int Port, TransportProtocol TransportProtocol) _profileDialog_NewItemsOptions = ("1.1.1.1", 53, TransportProtocol.UDP);
-
     public ICollectionView DNSServers { get; }
 
     private DNSServerConnectionInfoProfile _selectedDNSServer = new();
@@ -287,13 +285,13 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            SettingsManager.Current.DNSLookup_DNSServers_v2.Add(new DNSServerConnectionInfoProfile(instance.Name, instance.Servers));
+            SettingsManager.Current.DNSLookup_DNSServers_v2.Add(new DNSServerConnectionInfoProfile(instance.Name, instance.Servers.ToList()));
         }, instance =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
         }, (ServerInfoProfileNames, false, true));
 
-        customDialog.Content = new ServerConnectionInfoProfileDialog(_profileDialog_NewItemsOptions)
+        customDialog.Content = new ServerConnectionInfoProfileDialog()
         {
             DataContext = viewModel
         };
@@ -313,13 +311,13 @@ public class DNSLookupSettingsViewModel : ViewModelBase
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
             SettingsManager.Current.DNSLookup_DNSServers_v2.Remove(SelectedDNSServer);
-            SettingsManager.Current.DNSLookup_DNSServers_v2.Add(new DNSServerConnectionInfoProfile(instance.Name, instance.Servers));
+            SettingsManager.Current.DNSLookup_DNSServers_v2.Add(new DNSServerConnectionInfoProfile(instance.Name, instance.Servers.ToList()));
         }, instance =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
         }, (ServerInfoProfileNames, true, true), SelectedDNSServer);
 
-        customDialog.Content = new ServerConnectionInfoProfileDialog(_profileDialog_NewItemsOptions)
+        customDialog.Content = new ServerConnectionInfoProfileDialog()
         {
             DataContext = viewModel
         };

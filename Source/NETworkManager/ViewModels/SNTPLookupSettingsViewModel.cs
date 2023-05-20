@@ -19,8 +19,6 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
 
     private readonly IDialogCoordinator _dialogCoordinator;
 
-    private (string Server, int Port, TransportProtocol TransportProtocol) _profileDialog_NewItemsOptions = ("time.example.com", 123, TransportProtocol.TCP);
-
     private ICollectionView _sntpServers;
     public ICollectionView SNTPServers
     {
@@ -130,13 +128,13 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            SettingsManager.Current.SNTPLookup_SNTPServers.Add(new ServerConnectionInfoProfile(instance.Name, instance.Servers));
+            SettingsManager.Current.SNTPLookup_SNTPServers.Add(new ServerConnectionInfoProfile(instance.Name, instance.Servers.ToList()));
         }, instance =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
         }, (ServerInfoProfileNames, false, false));
 
-        customDialog.Content = new ServerConnectionInfoProfileDialog(_profileDialog_NewItemsOptions)
+        customDialog.Content = new ServerConnectionInfoProfileDialog()
         {
             DataContext = viewModel
         };
@@ -156,13 +154,13 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
             SettingsManager.Current.SNTPLookup_SNTPServers.Remove(SelectedSNTPServer);
-            SettingsManager.Current.SNTPLookup_SNTPServers.Add(new ServerConnectionInfoProfile(instance.Name, instance.Servers));
+            SettingsManager.Current.SNTPLookup_SNTPServers.Add(new ServerConnectionInfoProfile(instance.Name, instance.Servers.ToList()));
         }, instance =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
         }, (ServerInfoProfileNames, true, false), SelectedSNTPServer);
 
-        customDialog.Content = new ServerConnectionInfoProfileDialog(_profileDialog_NewItemsOptions)
+        customDialog.Content = new ServerConnectionInfoProfileDialog()
         {
             DataContext = viewModel
         };
