@@ -17,10 +17,9 @@ public class DNSLookupSettingsViewModel : ViewModelBase
 {
     #region Variables
     private readonly bool _isLoading;
+    private readonly ServerConnectionInfo _profileDialog_DefaultValues = new("10.0.0.1", 53, TransportProtocol.UDP);
 
     private readonly IDialogCoordinator _dialogCoordinator;
-
-    private (string Server, int Port, TransportProtocol TransportProtocol) _profileDialog_NewItemsOptions = ("1.1.1.1", 53, TransportProtocol.UDP);
 
     public ICollectionView DNSServers { get; }
 
@@ -287,13 +286,13 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            SettingsManager.Current.DNSLookup_DNSServers_v2.Add(new DNSServerConnectionInfoProfile(instance.Name, instance.Servers));
+            SettingsManager.Current.DNSLookup_DNSServers_v2.Add(new DNSServerConnectionInfoProfile(instance.Name, instance.Servers.ToList()));
         }, instance =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, (ServerInfoProfileNames, false, true));
+        }, (ServerInfoProfileNames, false, true), _profileDialog_DefaultValues);
 
-        customDialog.Content = new ServerConnectionInfoProfileDialog(_profileDialog_NewItemsOptions)
+        customDialog.Content = new ServerConnectionInfoProfileDialog()
         {
             DataContext = viewModel
         };
@@ -313,13 +312,13 @@ public class DNSLookupSettingsViewModel : ViewModelBase
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
             SettingsManager.Current.DNSLookup_DNSServers_v2.Remove(SelectedDNSServer);
-            SettingsManager.Current.DNSLookup_DNSServers_v2.Add(new DNSServerConnectionInfoProfile(instance.Name, instance.Servers));
+            SettingsManager.Current.DNSLookup_DNSServers_v2.Add(new DNSServerConnectionInfoProfile(instance.Name, instance.Servers.ToList()));
         }, instance =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, (ServerInfoProfileNames, true, true), SelectedDNSServer);
+        }, (ServerInfoProfileNames, true, true), _profileDialog_DefaultValues, SelectedDNSServer);
 
-        customDialog.Content = new ServerConnectionInfoProfileDialog(_profileDialog_NewItemsOptions)
+        customDialog.Content = new ServerConnectionInfoProfileDialog()
         {
             DataContext = viewModel
         };

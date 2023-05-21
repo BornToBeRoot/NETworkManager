@@ -1,15 +1,13 @@
-﻿using NETworkManager.Models.Network;
+﻿using NETworkManager.ViewModels;
+using System.Windows.Controls;
 
 namespace NETworkManager.Views;
 
 public partial class ServerConnectionInfoProfileDialog
 {
-    private (string Server, int Port, TransportProtocol TransportProtocol) _newItemOptions;
-    public ServerConnectionInfoProfileDialog((string Server, int Port, TransportProtocol TransportProtocol) NewItemOptions)
+    public ServerConnectionInfoProfileDialog()
     {
         InitializeComponent();
-
-        _newItemOptions = NewItemOptions;
     }
 
     private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
@@ -18,13 +16,9 @@ public partial class ServerConnectionInfoProfileDialog
         TextBoxName.Focus();
     }
 
-    private void DataGridServers_AddingNewItem(object sender, System.Windows.Controls.AddingNewItemEventArgs e)
+    private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
     {
-        e.NewItem = new ServerConnectionInfo
-        {
-            Server = _newItemOptions.Server,
-            Port = _newItemOptions.Port,
-            TransportProtocol = _newItemOptions.TransportProtocol
-        };
+        if (sender is ContextMenu menu)
+            menu.DataContext = (ServerConnectionInfoProfileViewModel)DataContext;
     }
 }

@@ -17,7 +17,7 @@
     </UserControl.Resources>
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.SNTPLookup}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBlock Text="{x:Static localization:Strings.SNTPServers}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.SNTPServer}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <DataGrid x:Name="DataGridSNTPServers" ItemsSource="{Binding SNTPServers}" SelectionMode="Single" SelectedItem="{Binding SelectedSNTPServer}" Height="200" Margin="0,0,0,10">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />

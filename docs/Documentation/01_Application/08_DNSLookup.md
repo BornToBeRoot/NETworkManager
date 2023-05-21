@@ -52,7 +52,7 @@ Hostname or IP address (or any other resource record) to query.
 
 ### DNS server
 
-List of DNS servers to query.
+List of DNS server profiles. A profile can contain one or more DNS servers with IP address and port.
 
 **Type:** `List<NETworkManager.Models.Network.DNSServerConnectionInfoProfile>`
 
