@@ -3541,4 +3541,10 @@ Wenn der Wert zu hoch ist, können Leistungsprobleme auftreten.
   <data name="NewSubnetMask" xml:space="preserve">
     <value>Neue Subnetzmaske</value>
   </data>
+  <data name="AddServer" xml:space="preserve">
+    <value>Server hinzufügen</value>
+  </data>
+  <data name="SNTPServer" xml:space="preserve">
+    <value>SNTP-Server</value>
+  </data>
 </root>
