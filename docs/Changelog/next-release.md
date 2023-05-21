@@ -19,6 +19,10 @@ Release date: **xx.xx.2023**
 
 ## Improvements
 
+- DNS Lookup
+  - Improved validation when adding/changing DNS server profiles [#2282](https://github.com/BornToBeRoot/NETworkManager/pull/2282){:target="\_blank"}
+- SNTP Lookup
+  - Improved validation when adding/changing SNTP server profiles [#2282](https://github.com/BornToBeRoot/NETworkManager/pull/2282){:target="\_blank"}
 - TigerVNC
   - Use port from default config instead of settings if creating a new group [#2249](https://github.com/BornToBeRoot/NETworkManager/pull/2249){:target="\_blank"}
 - Wake on LAN
@@ -26,6 +30,10 @@ Release date: **xx.xx.2023**
 
 ## Bugfixes
 
+- DNS Lookup
+  - Fixed app crash when editing DNS server profile in some rare cases [#2282](https://github.com/BornToBeRoot/NETworkManager/pull/2282){:target="\_blank"}
+- SNTP Lookup
+  - Fixed app crash when editing SNTP server profile in some rare cases [#2282](https://github.com/BornToBeRoot/NETworkManager/pull/2282){:target="\_blank"}
 - Subnet Calculator
   - Fixed a design issue with the calculate button in subnetting [#2230](https://github.com/BornToBeRoot/NETworkManager/pull/2230){:target="\_blank"}
 - [AirSpace Fixer](https://www.nuget.org/packages/AirspaceFixer){:target="\_blank"} code optimized (only called if needed). This will also prevent a screenshot bug when the application is loading and a dialog is shown. [#2253](https://github.com/BornToBeRoot/NETworkManager/pull/2253){:target="\_blank"}

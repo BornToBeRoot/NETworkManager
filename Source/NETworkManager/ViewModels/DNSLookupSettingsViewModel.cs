@@ -17,6 +17,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
 {
     #region Variables
     private readonly bool _isLoading;
+    private readonly ServerConnectionInfo _profileDialog_DefaultValues = new("10.0.0.1", 53, TransportProtocol.UDP);
 
     private readonly IDialogCoordinator _dialogCoordinator;
 
@@ -289,7 +290,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         }, instance =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, (ServerInfoProfileNames, false, true));
+        }, (ServerInfoProfileNames, false, true), _profileDialog_DefaultValues);
 
         customDialog.Content = new ServerConnectionInfoProfileDialog()
         {
@@ -315,7 +316,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         }, instance =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, (ServerInfoProfileNames, true, true), SelectedDNSServer);
+        }, (ServerInfoProfileNames, true, true), _profileDialog_DefaultValues, SelectedDNSServer);
 
         customDialog.Content = new ServerConnectionInfoProfileDialog()
         {

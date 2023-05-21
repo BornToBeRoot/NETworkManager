@@ -70,8 +70,8 @@
                 </ContextMenu>
             </controls:MultiSelectDataGrid.Resources>
             <controls:MultiSelectDataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Server}" Binding="{Binding (network:ServerConnectionInfo.Server)}" Width="1*" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Port}" Binding="{Binding (network:ServerConnectionInfo.Port)}" Width="2*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Server}" Binding="{Binding (network:ServerConnectionInfo.Server)}" Width="250" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Port}" Binding="{Binding (network:ServerConnectionInfo.Port)}" Width="*" />
             </controls:MultiSelectDataGrid.Columns>
             <controls:MultiSelectDataGrid.InputBindings>
                 <KeyBinding Command="{Binding DeleteServerCommand}" Key="Delete" />
@@ -82,29 +82,89 @@
                 </Style>
             </controls:MultiSelectDataGrid.RowStyle>
         </controls:MultiSelectDataGrid>
-        <Grid>
+        <Grid Grid.Column="0" Grid.Row="4">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="240" />
                 <ColumnDefinition Width="10" />
-                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-
-
-        </Grid>
-        <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Right" MinWidth="80">
-            <Button Content="{x:Static localization:Strings.Save}" Command="{Binding SaveCommand}" IsDefault="True" Margin="0,0,10,0">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
-                        <Setter Property="IsEnabled" Value="False" />
+            <TextBox x:Name="TextBoxServer" Grid.Column="0" Grid.Row="0" mah:TextBoxHelper.Watermark="{Binding ServerWatermark}">
+                <TextBox.Resources>
+                    <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
+                </TextBox.Resources>
+                <TextBox.Text>
+                    <Binding Path="Server" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                            <validators:ServerValidator ValidatesOnTargetUpdated="True">
+                                <validators:ServerValidator.Wrapper>
+                                    <validators:ServerDependencyObjectWrapper AllowOnlyIPAddress="{Binding Data.AllowOnlyIPAddress, Source={StaticResource BindingProxy}}" />
+                                </validators:ServerValidator.Wrapper>
+                            </validators:ServerValidator>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <TextBox x:Name="TextBoxPort" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{Binding PortWatermark}">
+                <TextBox.Text>
+                    <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validators:PortValidator ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <Button Grid.Column="4" Grid.Row="0" Command="{Binding AddServerCommand}" ToolTip="{x:Static localization:Strings.AddServer}">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageButton}">
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxName}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxServer}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="True" />
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxPort}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Resources>
+                <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+        </Grid>
+        <StackPanel Grid.Column="0" Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Right" MinWidth="80">
+            <Button Content="{x:Static localization:Strings.Save}" Command="{Binding SaveCommand}" IsDefault="True" Margin="0,0,10,0">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxName}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=Servers.Count}" Value="0" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
                                 </MultiDataTrigger.Setters>
                             </MultiDataTrigger>
                         </Style.Triggers>

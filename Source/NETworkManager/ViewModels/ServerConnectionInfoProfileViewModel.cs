@@ -13,6 +13,8 @@ public class ServerConnectionInfoProfileViewModel : ViewModelBase
 {
     private readonly bool _isLoading;
 
+    private ServerConnectionInfo _defaultValues;
+
     #region Commands
     public ICommand SaveCommand { get; }
 
@@ -89,7 +91,6 @@ public class ServerConnectionInfoProfileViewModel : ViewModelBase
                 return;
 
             _name = value;
-
             OnPropertyChanged();
         }
     }
@@ -121,9 +122,41 @@ public class ServerConnectionInfoProfileViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
+    public string ServerWatermark { get; private set; }
+
+    private string _server;
+    public string Server
+    {
+        get => _server;
+        set
+        {
+            if (_server == value)
+                return;
+
+            _server = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public string PortWatermark { get; private set; }
+
+    private int _port;
+    public int Port
+    {
+        get => _port;
+        set
+        {
+            if (_port == value)
+                return;
+
+            _port = value;
+            OnPropertyChanged();
+        }
+    }
     #endregion
 
-    public ServerConnectionInfoProfileViewModel(Action<ServerConnectionInfoProfileViewModel> saveCommand, Action<ServerConnectionInfoProfileViewModel> cancelHandler, (List<string> UsedNames, bool IsEdited, bool allowOnlyIPAddress) options, ServerConnectionInfoProfile info = null)
+    public ServerConnectionInfoProfileViewModel(Action<ServerConnectionInfoProfileViewModel> saveCommand, Action<ServerConnectionInfoProfileViewModel> cancelHandler, (List<string> UsedNames, bool IsEdited, bool allowOnlyIPAddress) options, ServerConnectionInfo defaultValues, ServerConnectionInfoProfile info = null)
     {
         _isLoading = true;
 
@@ -133,6 +166,9 @@ public class ServerConnectionInfoProfileViewModel : ViewModelBase
         UsedNames = options.UsedNames;
         AllowOnlyIPAddress = options.allowOnlyIPAddress;
         IsEdited = options.IsEdited;
+
+        _defaultValues = defaultValues;
+
         CurrentProfile = info ?? new ServerConnectionInfoProfile();
 
         // Remove the current profile name from the list
@@ -142,7 +178,20 @@ public class ServerConnectionInfoProfileViewModel : ViewModelBase
         Name = _currentProfile.Name;
         Servers = new ObservableCollection<ServerConnectionInfo>(_currentProfile.Servers);
 
+        ServerWatermark = _defaultValues.Server;
+        PortWatermark = _defaultValues.Port.ToString();
+        Port = _defaultValues.Port;
+
         _isLoading = false;
+    }
+
+    public ICommand AddServerCommand => new RelayCommand(p => AddServerAction());
+
+    private void AddServerAction()
+    {
+        Servers.Add(new ServerConnectionInfo(Server, Port, _defaultValues.TransportProtocol));
+        
+        Server = string.Empty;
     }
 
     public ICommand DeleteServerCommand => new RelayCommand(p => DeleteServerAction());
@@ -151,7 +200,7 @@ public class ServerConnectionInfoProfileViewModel : ViewModelBase
     {
         // Cast to list to avoid exception: Collection was modified; enumeration operation may not execute.
         // This will create a copy of the list and allow us to remove items from the original list (SelectedServers
-        // is modified when Servers changes)
+        // is modified when Servers changes).
         foreach (var item in SelectedServers.Cast<ServerConnectionInfo>().ToList())
             Servers.Remove(item);
     }

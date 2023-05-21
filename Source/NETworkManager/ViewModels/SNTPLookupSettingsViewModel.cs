@@ -16,7 +16,8 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
 {
     #region Variables
     private readonly bool _isLoading;
-
+    private readonly ServerConnectionInfo _profileDialog_DefaultValues = new("time.example.com", 123, TransportProtocol.TCP);
+    
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private ICollectionView _sntpServers;
@@ -132,7 +133,7 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
         }, instance =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, (ServerInfoProfileNames, false, false));
+        }, (ServerInfoProfileNames, false, false), _profileDialog_DefaultValues);
 
         customDialog.Content = new ServerConnectionInfoProfileDialog()
         {
@@ -158,7 +159,7 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
         }, instance =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, (ServerInfoProfileNames, true, false), SelectedSNTPServer);
+        }, (ServerInfoProfileNames, true, false), _profileDialog_DefaultValues, SelectedSNTPServer);
 
         customDialog.Content = new ServerConnectionInfoProfileDialog()
         {

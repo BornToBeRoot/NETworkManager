@@ -29,11 +29,11 @@ Right-click on the result to copy or export the information.
 
 ## Settings
 
-### Servers
+### SNTP servers
 
 List of SNTP server profiles. A profile can contain one or more SNTP servers with host/IP address and port.
 
-**Type:** `List<NETworkManager.Models.Network.ServerInfoProfile>`
+**Type:** `List<NETworkManager.Models.Network.ServerConnectionInfoProfile>`
 
 **Default:**
 
