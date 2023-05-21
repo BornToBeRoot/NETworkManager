@@ -565,6 +565,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Add server ähnelt.
+        /// </summary>
+        public static string AddServer {
+            get {
+                return ResourceManager.GetString("AddServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Add SNTP server ähnelt.
         /// </summary>
         public static string AddSNTPServer {
@@ -8586,6 +8595,15 @@ namespace NETworkManager.Localization.Resources {
         public static string SNTPLookup {
             get {
                 return ResourceManager.GetString("SNTPLookup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die SNTP server ähnelt.
+        /// </summary>
+        public static string SNTPServer {
+            get {
+                return ResourceManager.GetString("SNTPServer", resourceCulture);
             }
         }
         

@@ -3541,4 +3541,10 @@ Changes to this value will take effect after the application is restarted. Wheth
   <data name="NewSubnetMask" xml:space="preserve">
     <value>New subnet mask</value>
   </data>
+  <data name="AddServer" xml:space="preserve">
+    <value>Add server</value>
+  </data>
+  <data name="SNTPServer" xml:space="preserve">
+    <value>SNTP server</value>
+  </data>
 </root>
