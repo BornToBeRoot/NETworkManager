@@ -3628,4 +3628,10 @@ Per assistenza contattare l'amministratore di rete.</value>
   <data name="NewSubnetMask" xml:space="preserve">
     <value>Nuova maschera sottorete</value>
   </data>
+  <data name="AddServer" xml:space="preserve">
+    <value>Aggiungi server</value>
+  </data>
+  <data name="SNTPServer" xml:space="preserve">
+    <value>Server SNTP</value>
+  </data>
 </root>
