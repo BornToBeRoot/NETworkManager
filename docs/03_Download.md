@@ -23,8 +23,8 @@ Release date: **26.04.2023**
   <tr>
     <td>
       <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2023.4.26.0/NETworkManager_2023.4.26.0_Setup.exe' style="text-decoration: none;" target="_blank">
-        <span class="fs-5" style="width: 120px;">
-          <button type="button" name="button" class="btn btn-primary">:package: Setup</button>
+        <span class="fs-5">
+          <button type="button" name="button" class="btn btn-primary" style="width: 150px;">:package: Setup</button>
         </span>
       </a>
     </td>
@@ -35,8 +35,8 @@ Release date: **26.04.2023**
   <tr>
     <td>
       <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2023.4.26.0/NETworkManager_2023.4.26.0_Portable.zip' style="text-decoration: none;" target="_blank">
-        <span class="fs-5" style="width: 120px;">
-          <button type="button" name="button" class="btn btn-primary">:package: Portable</button>
+        <span class="fs-5">
+          <button type="button" name="button" class="btn btn-primary" style="width: 150px;">:package: Portable</button>
         </span>
       </a>
     </td>
@@ -47,8 +47,8 @@ Release date: **26.04.2023**
   <tr>
     <td>
       <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2023.4.26.0/NETworkManager_2023.4.26.0_Archive.zip' style="text-decoration: none;" target="_blank">
-        <span class="fs-5" style="width: 120px;">
-          <button type="button" name="button" class="btn btn-primary">:package: Archive</button>
+        <span class="fs-5">
+          <button type="button" name="button" class="btn btn-primary" style="width: 150px;">:package: Archive</button>
         </span>
       </a> 
     </td>
