@@ -59,6 +59,7 @@ Deprecated
   - Application > PowerShell [#2249](https://github.com/BornToBeRoot/NETworkManager/pull/2249){:target="\_blank"}
   - Application > TigerVNC [#2248](https://github.com/BornToBeRoot/NETworkManager/pull/2248){:target="\_blank"}
   - Application > Web Console [#2244](https://github.com/BornToBeRoot/NETworkManager/pull/2244){:target="\_blank"}
+  - Application > SNMP [#2289](https://github.com/BornToBeRoot/NETworkManager/pull/2289){:target="\_blank"}
   - Application > Wake on LAN [#2242](https://github.com/BornToBeRoot/NETworkManager/pull/2242){:target="\_blank"}
   - Application > Whois [#2236](https://github.com/BornToBeRoot/NETworkManager/pull/2236){:target="\_blank"}
   - Application > Subnet Calculator [#2233](https://github.com/BornToBeRoot/NETworkManager/pull/2233){:target="\_blank"}
