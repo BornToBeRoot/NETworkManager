@@ -10,6 +10,7 @@ permalink: /Download
 
 Release date: **26.04.2023**
 
+<br />
 <div style="text-align: center">
   <div style="white-space: nowrap;">
     <p>
