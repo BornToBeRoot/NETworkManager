@@ -15,19 +15,19 @@ Release date: **26.04.2023**
     <p>
       <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2023.4.26.0/NETworkManager_2023.4.26.0_Setup.exe' style="text-decoration: none;" target="_blank">
         <span class="fs-5">
-          <button type="button" name="button" class="btn btn-primary">:package: Setup</button>
+          <button type="button" name="button" class="btn btn-primary" style="width: 150px;">:package: Setup</button>
         </span>
       </a>
       &nbsp;
       <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2023.4.26.0/NETworkManager_2023.4.26.0_Portable.zip' style="text-decoration: none;" target="_blank">
         <span class="fs-5">
-          <button type="button" name="button" class="btn btn-primary">:package: Portable</button>
+          <button type="button" name="button" class="btn btn-primary" style="width: 150px;">:package: Portable</button>
         </span>
       </a>
       &nbsp;
       <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2023.4.26.0/NETworkManager_2023.4.26.0_Archive.zip' style="text-decoration: none;" target="_blank">
         <span class="fs-5">
-          <button type="button" name="button" class="btn btn-primary">:package: Archive</button>
+          <button type="button" name="button" class="btn btn-primary" style="width: 150px;">:package: Archive</button>
         </span>
       </a>
     </p>
