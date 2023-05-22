@@ -99,7 +99,7 @@ Inherit the host from the general settings.
 **Default:** `Enabled`
 
 {: .note }
-If you enable this option, the [Host](#host-1) is overwritten by the host from the general settings and the [Host](#host-1) is disabled.
+If this option is enabled, the [Host](#host-1) is overwritten by the host from the general settings and the [Host](#host-1) is disabled.
 
 ### Host
 
