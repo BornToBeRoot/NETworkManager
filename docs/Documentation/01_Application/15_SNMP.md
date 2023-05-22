@@ -21,6 +21,9 @@ Example inputs:
 | `10.0.0.10` | `Walk` | `V3`    | `.1.3.6.1.2.1.1`     | `-/-`     | `AuthNoPriv`   | `Admin`  | `SHA  \| S3cr3t!` | `-/-`             |
 | `10.0.0.10` | `Walk` | `V3`    | `.1.3.6.1.2.1.1`     | `-/-`     | `AuthPriv`     | `Admin`  | `SHA1 \| S3cr3t!` | `AES  \| S3cr3t%` |
 
+{: .note }
+Multiple OIDs (`.1.3.6.1.2.1.1; .1.3.6.1.2.1.2`) can be specified when using the mode `get`.
+
 ![SNMP](15_SNMP.png)
 
 ## Profile
@@ -62,7 +65,7 @@ OID for the `get`, `walk` or `set` SNMP request.
 - `.1.3.6.1.2.1.1`
 
 {: .note }
-Multiple OIDs can (`.1.3.6.1.2.1.1; .1.3.6.1.2.1.2`) be specified when using the [mode `get`](#mode).
+Multiple OIDs (`.1.3.6.1.2.1.1; .1.3.6.1.2.1.2`) can be specified when using the [mode `get`](#mode).
 
 ### Mode
 
@@ -185,7 +188,7 @@ OID for the `get`, `walk` or `set` SNMP request.
 - `.1.3.6.1.2.1.1`
 
 {: .note }
-Multiple OIDs can (`.1.3.6.1.2.1.1; .1.3.6.1.2.1.2`) be specified when using the [mode `get`](#mode-1).
+Multiple OIDs (`.1.3.6.1.2.1.1; .1.3.6.1.2.1.2`) can be specified when using the [mode `get`](#mode-1).
 
 ### Mode
 
