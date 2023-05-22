@@ -34,7 +34,7 @@ Release date: **26.04.2023**
   </div>
   <a href='https://github.com/BornToBeRoot/NETworkManager/releases' target="_blank">>> Pre-release versions are available here <<</a>
 </div>
-
+<br />
 <details>
   <summary>Hashes</summary>
   <table>
