@@ -41,7 +41,7 @@ Inherit the host from the general settings.
 **Default:** `Enabled`
 
 {: .note }
-If you enable this option, the [domain](#domain) is overwritten by the host from the general settings and the [domain](#domain) is disabled.
+If this option is enabled, the [domain](#domain) is overwritten by the host from the general settings and the [domain](#domain) is disabled.
 
 ### Domain
 

@@ -30,7 +30,7 @@ Inherit the host from the general settings.
 **Default:** `Enabled`
 
 {: .note }
-If you enable this option, the [host](#host) is overwritten by the host from the general settings and the [host](#host) is disabled.
+If this option is enabled, the [Host](#host) is overwritten by the host from the general settings and the [Host](#host) is disabled.
 
 ### Host
 
