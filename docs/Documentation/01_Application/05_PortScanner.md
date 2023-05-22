@@ -31,7 +31,7 @@ Example inputs:
 | `80; 443; 8080; 8443` | Multiple ports like (`80`, `443`, `8080`, `8443`)  |
 
 {: .note }
-Multiple inputs can be combined with a semicolon (`;`).<br />Example: `10.0.0.0/24; 10.0.[10-20]1`
+Multiple inputs can be combined with a semicolon (`;`).<br />Example: `10.0.0.0/24; 10.0.[10-20]1` or `1-1024; 8080; 8443`
 
 ![PortScanner](05_PortScanner.png)
 
