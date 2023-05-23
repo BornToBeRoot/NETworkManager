@@ -3521,4 +3521,10 @@ V zgornjem desnem kotu kliknite na gumb za Pomoč/Dokumentacijo (levo od gumba z
   <data name="NewSubnetMask" xml:space="preserve">
     <value>Nova maska podomrežja</value>
   </data>
+  <data name="AddServer" xml:space="preserve">
+    <value>Dodaj strežnik</value>
+  </data>
+  <data name="SNTPServer" xml:space="preserve">
+    <value>Strežnik SNTP</value>
+  </data>
 </root>
