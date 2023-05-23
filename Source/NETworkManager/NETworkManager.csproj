@@ -76,7 +76,7 @@
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="Microsoft.PowerShell.SDK" Version="7.2.11" />
-		<PackageReference Include="nulastudio.NetBeauty" Version="2.1.3.3" />
+		<PackageReference Include="nulastudio.NetBeauty" Version="2.1.2.1" />
 		<Reference Include="AxMSTSCLib">
 			<HintPath>$(TargetDir)\AxMSTSCLib.dll</HintPath>
 		</Reference>
