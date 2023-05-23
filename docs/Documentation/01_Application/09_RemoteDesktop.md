@@ -81,6 +81,69 @@ Only available if [Use credentials](#use-credentials) is enabled.
 
 ## Profile
 
+### Inherit host from general
+
+Inherit the host from the general settings.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
+{: .note }
+If this option is enabled, the [Host](#host-1) is overwritten by the host from the general settings and the [Host](#host-1) is disabled.
+
+### Host
+
+Host to connect to via VNC.
+
+**Type:** `String`
+
+**Default:** `Empty`
+
+**Example:**
+
+- `server-01.borntoberoot.net`
+- `10.0.0.10`
+
+### Username
+
+Username to authenticate with the remote computer.
+
+**Type:** `String`
+
+**Default:** `Empty`
+
+**Example:** `Administrator`
+
+{: .note }
+Only available if [Use credentials](#use-credentials-1) is enabled.
+
+### Domain
+
+Domain to authenticate with the remote computer. This is optional.
+
+**Type:** `String`
+
+**Default:** `Empty`
+
+**Example:** `BORNTOBEROOT`
+
+{: .note }
+Only available if [Use credentials](#use-credentials-1) is enabled.
+
+### Password
+
+Password to authenticate with the remote computer.
+
+**Type:** `String`
+
+**Default:** `Empty`
+
+**Example:** `P@ssw0rd`
+
+{: .note }
+Only available if [Use credentials](#use-credentials-1) is enabled.
+
 ## Group
 
 ## Settings
