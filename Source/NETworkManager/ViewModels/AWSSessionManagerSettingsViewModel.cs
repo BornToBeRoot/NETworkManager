@@ -70,36 +70,36 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
         }
     }
 
-    private string _defaultProfile;
-    public string DefaultProfile
+    private string _profile;
+    public string Profile
     {
-        get => _defaultProfile;
+        get => _profile;
         set
         {
-            if (value == _defaultProfile)
+            if (value == _profile)
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.AWSSessionManager_DefaultProfile = value;
+                SettingsManager.Current.AWSSessionManager_Profile = value;
 
-            _defaultProfile = value;
+            _profile = value;
             OnPropertyChanged();
         }
     }
 
-    private string _defaultRegion;
-    public string DefaultRegion
+    private string _region;
+    public string Region
     {
-        get => _defaultRegion;
+        get => _region;
         set
         {
-            if (value == _defaultRegion)
+            if (value == _region)
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.AWSSessionManager_DefaultRegion = value;
+                SettingsManager.Current.AWSSessionManager_Region = value;
 
-            _defaultRegion = value;
+            _region = value;
             OnPropertyChanged();
         }
     }
@@ -158,8 +158,8 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
     {
         EnableSyncInstanceIDsFromAWS = SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS;
         SyncOnlyRunningInstancesFromAWS = SettingsManager.Current.AWSSessionManager_SyncOnlyRunningInstancesFromAWS;
-        DefaultProfile = SettingsManager.Current.AWSSessionManager_DefaultProfile;
-        DefaultRegion = SettingsManager.Current.AWSSessionManager_DefaultRegion;
+        Profile = SettingsManager.Current.AWSSessionManager_Profile;
+        Region = SettingsManager.Current.AWSSessionManager_Region;
         ApplicationFilePath = SettingsManager.Current.AWSSessionManager_ApplicationFilePath;
         IsConfigured = File.Exists(ApplicationFilePath);            
     }

@@ -74,7 +74,7 @@ public class AWSSessionManagerConnectViewModel : ViewModelBase
 
     private void LoadSettings()
     {
-        Profile = SettingsManager.Current.AWSSessionManager_DefaultProfile;
-        Region = SettingsManager.Current.AWSSessionManager_DefaultRegion;                
+        Profile = SettingsManager.Current.AWSSessionManager_Profile;
+        Region = SettingsManager.Current.AWSSessionManager_Region;                
     }
 }
