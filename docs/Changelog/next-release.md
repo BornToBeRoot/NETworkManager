@@ -15,6 +15,15 @@ Release date: **xx.xx.2023**
 - Windows 10 / Server x64 (1809 or later)
 - [.NET Desktop Runtime 6.x (LTS)](https://dotnet.microsoft.com/download/dotnet/6.0){:target="\_blank"}
 
+## Breaking changes
+
+Breaking changes
+{: .label .label-red }
+
+- AWS Session Manager
+  - Setting `Default profile` changed to `Profile`. You need to set the profile again [#2299](https://github.com/BornToBeRoot/NETworkManager/pull/2299){:target="\_blank"}
+  - Setting `Default region` changed to `Region`. You need to set the region again [#2299](https://github.com/BornToBeRoot/NETworkManager/pull/2299){:target="\_blank"}
+
 ## What's new?
 
 ## Improvements
@@ -39,6 +48,7 @@ Release date: **xx.xx.2023**
 - [AirSpace Fixer](https://www.nuget.org/packages/AirspaceFixer){:target="\_blank"} code optimized (only called if needed). This will also prevent a screenshot bug when the application is loading and a dialog is shown. [#2253](https://github.com/BornToBeRoot/NETworkManager/pull/2253){:target="\_blank"}
 - Profile / Group
   - Fix default value for Remote Desktop sreen size [#2293](https://github.com/BornToBeRoot/NETworkManager/pull/2293){:target="\_blank"}
+
 ## Deprecated
 
 Deprecated
@@ -65,3 +75,5 @@ Deprecated
   - Application > Wake on LAN [#2242](https://github.com/BornToBeRoot/NETworkManager/pull/2242){:target="\_blank"}
   - Application > Whois [#2236](https://github.com/BornToBeRoot/NETworkManager/pull/2236){:target="\_blank"}
   - Application > Subnet Calculator [#2233](https://github.com/BornToBeRoot/NETworkManager/pull/2233){:target="\_blank"}
+- Update documentation for:
+  - Application > AWS Session Manager [#2299](https://github.com/BornToBeRoot/NETworkManager/pull/2299){:target="\_blank"}

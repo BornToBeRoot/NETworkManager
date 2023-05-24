@@ -2901,31 +2901,31 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private string _awsSessionManager_DefaultProfile;
-    public string AWSSessionManager_DefaultProfile
+    private string _awsSessionManager_Profile;
+    public string AWSSessionManager_Profile
     {
-        get => _awsSessionManager_DefaultProfile;
+        get => _awsSessionManager_Profile;
         set
         {
-            if (value == _awsSessionManager_DefaultProfile)
+            if (value == _awsSessionManager_Profile)
                 return;
 
-            _awsSessionManager_DefaultProfile = value;
+            _awsSessionManager_Profile = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
     }
 
-    private string _awsSessionManager_DefaultRegion;
-    public string AWSSessionManager_DefaultRegion
+    private string _awsSessionManager_Region;
+    public string AWSSessionManager_Region
     {
-        get => _awsSessionManager_DefaultRegion;
+        get => _awsSessionManager_Region;
         set
         {
-            if (value == _awsSessionManager_DefaultRegion)
+            if (value == _awsSessionManager_Region)
                 return;
 
-            _awsSessionManager_DefaultRegion = value;
+            _awsSessionManager_Region = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }

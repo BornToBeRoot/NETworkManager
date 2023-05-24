@@ -270,6 +270,8 @@ ID of the AWS EC2 instance.
 
 **Type:** `String`
 
+**Default:** `Empty`
+
 **Example:** `i-0123456789abcdef0`
 
 ### Profile
@@ -277,6 +279,8 @@ ID of the AWS EC2 instance.
 AWS CLI profile which will be used to connect.
 
 **Type:** `String`
+
+**Default:** `Empty or from settings`
 
 **Example:** `dev`
 
@@ -288,6 +292,8 @@ If not set, the AWS CLI default settings are used!
 AWS region where the instance is located.
 
 **Type:** `String`
+
+**Default:** `Empty or from settings`
 
 **Example:** `eu-central-1`
 
@@ -302,6 +308,8 @@ ID of the AWS EC2 instance.
 
 **Type:** `String`
 
+**Default:** `Empty`
+
 **Example:** `i-0123456789abcdef0`
 
 ### Profile
@@ -310,10 +318,9 @@ AWS CLI profile which will be used to connect.
 
 **Type:** `String`
 
-**Example:** `dev`
+**Default:** `Empty`
 
-{: .note }
-If not set, the [`Default profile`](#default-profile) from the settings is used!
+**Example:** `dev`
 
 ### Region
 
@@ -321,10 +328,31 @@ AWS region where the instance is located.
 
 **Type:** `String`
 
+**Default:** `Empty`
+
 **Example:** `eu-central-1`
 
-{: .note }
-If not set, the [`Default region`](#default-region) from the settings is used!
+## Group
+
+### Profile
+
+AWS CLI profile which will be used to connect.
+
+**Type:** `String`
+
+**Default:** `Empty`
+
+**Example:** `dev`
+
+### Region
+
+AWS region where the instance is located.
+
+**Type:** `String`
+
+**Default:** `Empty`
+
+**Example:** `eu-central-1`
 
 ## Settings
 
@@ -375,22 +403,28 @@ If enabled, only EC2 instances are synchronized where the `instance state` is `r
 
 **Default:** `Enabled`
 
-### Default profile
+### Profile
+
+AWS CLI profile which will be used to connect for manually added profiles.
 
 **Type:** `String`
 
-AWS CLI profile which will be used to connect.
+**Default:** `Empty`
 
-**Type:** `String`
+**Example:** `dev`
 
 {: .note }
 If not set, the AWS CLI default settings are used!
 
-### Default region
+### Region
 
-AWS region where the instance is located.
+AWS region where the instance is located for manually added profiles.
 
 **Type:** `String`
+
+**Default:** `Empty`
+
+**Example:** `eu-central-1`
 
 {: .note }
 If not set, the AWS CLI default settings are used!

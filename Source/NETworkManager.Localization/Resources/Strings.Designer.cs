@@ -3849,24 +3849,13 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Default profile which is used by manually created profiles to connect to an EC2 instance via AWS CLI.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Profile which is used by manually created profiles to connect to an EC2 instance via AWS CLI.
         ///
         ///If not set, the default AWS CLI settings are used. ähnelt.
         /// </summary>
-        public static string HelpMessage_AWSSessionManagerDefaultProfile {
+        public static string HelpMessage_AWSSessionManagerProfile {
             get {
-                return ResourceManager.GetString("HelpMessage_AWSSessionManagerDefaultProfile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Default region which is used by manually created profiles to connect to an EC2 instance via AWS CLI .
-        ///
-        ///If not set, the default AWS CLI settings are used. ähnelt.
-        /// </summary>
-        public static string HelpMessage_AWSSessionManagerDefaultRegion {
-            get {
-                return ResourceManager.GetString("HelpMessage_AWSSessionManagerDefaultRegion", resourceCulture);
+                return ResourceManager.GetString("HelpMessage_AWSSessionManagerProfile", resourceCulture);
             }
         }
         
@@ -3876,6 +3865,17 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_AWSSessionManagerProfilesAndRegionsToSync {
             get {
                 return ResourceManager.GetString("HelpMessage_AWSSessionManagerProfilesAndRegionsToSync", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Region which is used by manually created profiles to connect to an EC2 instance via AWS CLI .
+        ///
+        ///If not set, the default AWS CLI settings are used. ähnelt.
+        /// </summary>
+        public static string HelpMessage_AWSSessionManagerRegion {
+            get {
+                return ResourceManager.GetString("HelpMessage_AWSSessionManagerRegion", resourceCulture);
             }
         }
         

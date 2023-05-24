@@ -148,8 +148,8 @@
         </StackPanel>
         <mah:ToggleSwitch Header="{x:Static localization:Strings.SyncOnlyRunningEC2InstancesFromAWS}" IsOn="{Binding SyncOnlyRunningInstancesFromAWS}" Margin="0,0,0,10" />
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-            <TextBlock Text="{x:Static localization:Strings.DefaultProfile}" Style="{DynamicResource DefaultTextBlock}" />
-            <Rectangle Width="24" Height="24" ToolTip="{x:Static localization:Strings.HelpMessage_AWSSessionManagerDefaultProfile}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+            <TextBlock Text="{x:Static localization:Strings.Profile}" Style="{DynamicResource DefaultTextBlock}" />
+            <Rectangle Width="24" Height="24" ToolTip="{x:Static localization:Strings.HelpMessage_AWSSessionManagerProfile}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
                 </Rectangle.Resources>
@@ -157,7 +157,7 @@
         </StackPanel>
         <TextBox Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleAWSProfile}" Style="{StaticResource DefaultTextBox}" >
             <TextBox.Text>
-                <Binding Path="DefaultProfile" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                <Binding Path="Profile" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
@@ -165,8 +165,8 @@
             </TextBox.Text>
         </TextBox>
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-            <TextBlock Text="{x:Static localization:Strings.DefaultRegion}" Style="{DynamicResource DefaultTextBlock}" />
-            <Rectangle Width="24" Height="24" ToolTip="{x:Static localization:Strings.HelpMessage_AWSSessionManagerDefaultRegion}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+            <TextBlock Text="{x:Static localization:Strings.Region}" Style="{DynamicResource DefaultTextBlock}" />
+            <Rectangle Width="24" Height="24" ToolTip="{x:Static localization:Strings.HelpMessage_AWSSessionManagerRegion}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
                 </Rectangle.Resources>
@@ -175,7 +175,7 @@
         <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
             <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleAWSRegion}" Style="{StaticResource DefaultTextBox}">
                 <TextBox.Text>
-                    <Binding Path="DefaultRegion" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="Region" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>                            
                             <validators:EmptyOrAWSRegionExistsValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
