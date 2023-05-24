@@ -84,8 +84,8 @@ public class ProfileInfo
     public SecureString RemoteDesktop_Password { get; set; }
     public bool RemoteDesktop_OverrideDisplay { get; set; }
     public bool RemoteDesktop_AdjustScreenAutomatically { get; set; }
-    public bool RemoteDesktop_UseCurrentViewSize { get; set; }
-    public bool RemoteDesktop_UseFixedScreenSize { get; set; } = true;
+    public bool RemoteDesktop_UseCurrentViewSize { get; set; } = GlobalStaticConfiguration.RemoteDesktop_UseCurrentViewSize;
+    public bool RemoteDesktop_UseFixedScreenSize { get; set; }
     public int RemoteDesktop_ScreenWidth { get; set; } = GlobalStaticConfiguration.RemoteDesktop_ScreenWidth;
     public int RemoteDesktop_ScreenHeight { get; set; } = GlobalStaticConfiguration.RemoteDesktop_ScreenHeight;
     public bool RemoteDesktop_UseCustomScreenSize { get; set; }
