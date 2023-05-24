@@ -108,6 +108,9 @@ Community for the SNMP `v1` or `v2c` request.
 {: .note}
 Only available when using [version `1` or `2c`](#version).
 
+{: .warning }
+The profile file should be encrypted when storing sensitive information like passwords. See [FAQ > Profile encryption](NETworkManager/FAQ#profile-encryption) for more details.
+
 ### Security
 
 Security for the SNMP `v3` request.
@@ -155,6 +158,9 @@ Authentication for the SNMP `v3` request.
 {: .note}
 Only available when using [version `3`](#version) and [security `AuthNoPriv` or `AuthPriv`](#security).
 
+{: .warning }
+The profile file should be encrypted when storing sensitive information like passwords. See [FAQ > Profile encryption](NETworkManager/FAQ#profile-encryption) for more details.
+
 ### Priv
 
 Privacy for the SNMP `v3` request.
@@ -172,6 +178,9 @@ Privacy for the SNMP `v3` request.
 
 {: .note}
 Only available when using [version `3`](#version) and [security `AuthPriv`](#security).
+
+{: .warning }
+The profile file should be encrypted when storing sensitive information like passwords. See [FAQ > Profile encryption](NETworkManager/FAQ#profile-encryption) for more details.
 
 ## Group
 
@@ -231,6 +240,9 @@ Community for the SNMP `v1` or `v2c` request.
 {: .note}
 Only available when using [version `1` or `2c`](#version-1).
 
+{: .warning }
+The profile file should be encrypted when storing sensitive information like passwords. See [FAQ > Profile encryption](NETworkManager/FAQ#profile-encryption) for more details.
+
 ### Security
 
 Security for the SNMP `v3` request.
@@ -278,6 +290,9 @@ Authentication for the SNMP `v3` request.
 {: .note}
 Only available when using [version `3`](#version-1) and [security `AuthNoPriv` or `AuthPriv`](#security-1).
 
+{: .warning }
+The profile file should be encrypted when storing sensitive information like passwords. See [FAQ > Profile encryption](NETworkManager/FAQ#profile-encryption) for more details.
+
 ### Priv
 
 Privacy for the SNMP `v3` request.
@@ -295,6 +310,9 @@ Privacy for the SNMP `v3` request.
 
 {: .note}
 Only available when using [version `3`](#version-1) and [security `AuthPriv`](#security-1).
+
+{: .warning }
+The profile file should be encrypted when storing sensitive information like passwords. See [FAQ > Profile encryption](NETworkManager/FAQ#profile-encryption) for more details.
 
 ## Settings
 

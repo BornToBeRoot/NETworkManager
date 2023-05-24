@@ -37,7 +37,8 @@ Release date: **xx.xx.2023**
 - Subnet Calculator
   - Fixed a design issue with the calculate button in subnetting [#2230](https://github.com/BornToBeRoot/NETworkManager/pull/2230){:target="\_blank"}
 - [AirSpace Fixer](https://www.nuget.org/packages/AirspaceFixer){:target="\_blank"} code optimized (only called if needed). This will also prevent a screenshot bug when the application is loading and a dialog is shown. [#2253](https://github.com/BornToBeRoot/NETworkManager/pull/2253){:target="\_blank"}
-
+- Profile / Group
+  - Fix default value for Remote Desktop sreen size [#2293](https://github.com/BornToBeRoot/NETworkManager/pull/2293){:target="\_blank"}
 ## Deprecated
 
 Deprecated
@@ -56,10 +57,11 @@ Deprecated
   - Application > Ping Monitor [#2267](https://github.com/BornToBeRoot/NETworkManager/pull/2267){:target="\_blank"}
   - Application > Traceroute [#2268](https://github.com/BornToBeRoot/NETworkManager/pull/2268){:target="\_blank"}
   - Application > DNS Lookup [#2273](https://github.com/BornToBeRoot/NETworkManager/pull/2273){:target="\_blank"}
+  - Application > Remote Desktop [#2293](https://github.com/BornToBeRoot/NETworkManager/pull/2293){:target="\_blank"}
   - Application > PowerShell [#2249](https://github.com/BornToBeRoot/NETworkManager/pull/2249){:target="\_blank"}
   - Application > TigerVNC [#2248](https://github.com/BornToBeRoot/NETworkManager/pull/2248){:target="\_blank"}
   - Application > Web Console [#2244](https://github.com/BornToBeRoot/NETworkManager/pull/2244){:target="\_blank"}
-  - Application > SNMP [#2289](https://github.com/BornToBeRoot/NETworkManager/pull/2289){:target="\_blank"}
+  - Application > SNMP [#2289](https://github.com/BornToBeRoot/NETworkManager/pull/2289){:target="\_blank"} [#2293](https://github.com/BornToBeRoot/NETworkManager/pull/2293){:target="\_blank"}
   - Application > Wake on LAN [#2242](https://github.com/BornToBeRoot/NETworkManager/pull/2242){:target="\_blank"}
   - Application > Whois [#2236](https://github.com/BornToBeRoot/NETworkManager/pull/2236){:target="\_blank"}
   - Application > Subnet Calculator [#2233](https://github.com/BornToBeRoot/NETworkManager/pull/2233){:target="\_blank"}

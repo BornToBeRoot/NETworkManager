@@ -306,7 +306,7 @@
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.IPv4Address}" />
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.IPv4Address}" Margin="24,0,0,0" VerticalAlignment="Center" Style="{StaticResource DisabledTextBlock}" />
                                 <TextBox x:Name="TextBoxNetworkInterfaceIPAddress" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Address}" >
                                     <TextBox.Text>
                                         <Binding Path="NetworkInterface_IPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -317,7 +317,7 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.SubnetMask}" />
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.SubnetMask}" Margin="24,0,0,0" VerticalAlignment="Center" Style="{StaticResource DisabledTextBlock}" />
                                 <ComboBox x:Name="ComboBoxNetworkInterfaceSubnetmask" Grid.Column="2" Grid.Row="2" Style="{StaticResource EditableComboBox}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4SubnetmaskIPv4CIDR}" ItemsSource="{x:Static network:Subnetmask.List}">
                                     <ComboBox.Text>
                                         <Binding Path="NetworkInterface_Subnetmask" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -328,7 +328,7 @@
                                         </Binding>
                                     </ComboBox.Text>
                                 </ComboBox>
-                                <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.DefaultGateway}" />
+                                <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.DefaultGateway}" Margin="24,0,0,0" VerticalAlignment="Center" Style="{StaticResource DisabledTextBlock}" />
                                 <TextBox x:Name="TextBoxNetworkInterfaceGateway" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Gateway}" >
                                     <TextBox.Text>
                                         <Binding Path="NetworkInterface_Gateway" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -357,7 +357,7 @@
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.PrimaryDNSServer}" />
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.PrimaryDNSServer}" Margin="24,0,0,0" VerticalAlignment="Center" Style="{StaticResource DisabledTextBlock}" />
                                 <TextBox x:Name="TextBoxNetworkInterfacePrimaryDNSServer" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Gateway}" >
                                     <TextBox.Text>
                                         <Binding Path="NetworkInterface_PrimaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -367,7 +367,7 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.SecondaryDNSServer}" />
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.SecondaryDNSServer}" Margin="24,0,0,0" VerticalAlignment="Center" Style="{StaticResource DisabledTextBlock}" />
                                 <TextBox x:Name="TextBoxNetworkInterfaceSecondaryDNSServer" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4DNSServer}" >
                                     <TextBox.Text>
                                         <Binding Path="NetworkInterface_SecondaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -489,7 +489,7 @@
                                 <TextBox x:Name="TextBoxPortScannerPorts" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortScanRange}">
                                     <TextBox.Text>
                                         <Binding Path="PortScanner_Ports" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                            <Binding.ValidationRules>                                                
+                                            <Binding.ValidationRules>
                                                 <validators:EmptyOrPortRangeValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
@@ -821,7 +821,7 @@
                                     </PasswordBox.Style>
                                     <interactivity:Interaction.Behaviors>
                                         <wpfHelpers:PasswordBoxBindingBehavior Password="{Binding RemoteDesktop_Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                    </interactivity:Interaction.Behaviors>                                
+                                    </interactivity:Interaction.Behaviors>
                                 </PasswordBox>
                                 <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="10" ToolTip="{x:Static localization:Strings.WarningMessage_ProfileFileNotEncryptedStoringPasswords}" Visibility="{Binding IsProfileFileEncrypted, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource WarnImageRectangle}" Margin="10,0,0,0">
                                     <Rectangle.Resources>
@@ -1091,7 +1091,7 @@
                                     </PasswordBox.Style>
                                     <interactivity:Interaction.Behaviors>
                                         <wpfHelpers:PasswordBoxBindingBehavior Password="{Binding RemoteDesktop_GatewayServerPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                    </interactivity:Interaction.Behaviors>                                    
+                                    </interactivity:Interaction.Behaviors>
                                 </PasswordBox>
                                 <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="42" ToolTip="{x:Static localization:Strings.WarningMessage_ProfileFileNotEncryptedStoringPasswords}" Visibility="{Binding IsProfileFileEncrypted, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource WarnImageRectangle}" Margin="10,0,0,0">
                                     <Rectangle.Resources>
@@ -1239,7 +1239,7 @@
                                 <CheckBox Grid.Column="0" Grid.Row="10" Content="{x:Static localization:Strings.Command}" IsChecked="{Binding PowerShell_OverrideCommand}" IsEnabled="{Binding PowerShell_EnableRemoteConsole, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource DefaultCheckBox}" />
                                 <TextBox Grid.Column="2" Grid.Row="10" Text="{Binding PowerShell_Command, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                     <TextBox.Style>
-                                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">      
+                                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding PowerShell_EnableRemoteConsole}" Value="True">
                                                     <Setter Property="IsEnabled" Value="False" />
@@ -1731,13 +1731,13 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="10" Text="{x:Static localization:Strings.Mode}" Margin="24,0,0,0" />
+                                <TextBlock Grid.Column="0" Grid.Row="10" Text="{x:Static localization:Strings.Mode}" Margin="24,0,0,0" VerticalAlignment="Center" Style="{StaticResource DisabledTextBlock}" />
                                 <ComboBox Grid.Column="2" Grid.Row="10" ItemsSource="{Binding SNMP_Modes}" SelectedItem="{Binding SNMP_Mode}" IsEnabled="{Binding SNMP_OverrideOIDAndMode}" />
                                 <CheckBox Grid.Column="0" Grid.Row="12" Content="{x:Static localization:Strings.Version}" IsChecked="{Binding SNMP_OverrideVersionAndAuth}" Style="{StaticResource DefaultCheckBox}" />
                                 <ComboBox Grid.Column="2" Grid.Row="12" ItemsSource="{Binding SNMP_Versions}" SelectedItem="{Binding SNMP_Version}" IsEnabled="{Binding SNMP_OverrideVersionAndAuth}" />
-                                <TextBlock Grid.Column="0" Grid.Row="14" Text="{x:Static localization:Strings.Community}" Margin="24,0,0,0">
+                                <TextBlock Grid.Column="0" Grid.Row="14" Text="{x:Static localization:Strings.Community}" Margin="24,0,0,0" VerticalAlignment="Center">
                                     <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
+                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DisabledTextBlock}">
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding SNMP_Version}" Value="V3">
                                                     <Setter Property="Visibility" Value="Collapsed" />
@@ -1794,9 +1794,9 @@
                                         <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
                                     </Rectangle.Resources>
                                 </Rectangle>
-                                <TextBlock Grid.Column="0" Grid.Row="16" Text="{x:Static localization:Strings.Security}" Margin="24,0,0,0">
+                                <TextBlock Grid.Column="0" Grid.Row="16" Text="{x:Static localization:Strings.Security}" Margin="24,0,0,0" VerticalAlignment="Center">
                                     <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
+                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DisabledTextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed" />
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding SNMP_Version}" Value="V3">
@@ -1818,9 +1818,9 @@
                                         </Style>
                                     </ComboBox.Style>
                                 </ComboBox>
-                                <TextBlock Grid.Column="0" Grid.Row="18" Text="{x:Static localization:Strings.Username}" Margin="24,0,0,0">
+                                <TextBlock Grid.Column="0" Grid.Row="18" Text="{x:Static localization:Strings.Username}" Margin="24,0,0,0" VerticalAlignment="Center">
                                     <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
+                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DisabledTextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed" />
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding SNMP_Version}" Value="V3">
@@ -1849,9 +1849,9 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="20" Text="{x:Static localization:Strings.Auth}" Margin="24,0,0,0">
+                                <TextBlock Grid.Column="0" Grid.Row="20" Text="{x:Static localization:Strings.Auth}" Margin="24,0,0,0" VerticalAlignment="Center">
                                     <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
+                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DisabledTextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed" />
                                             <Style.Triggers>
                                                 <MultiDataTrigger>
@@ -1969,9 +1969,9 @@
                                         <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
                                     </Rectangle.Resources>
                                 </Rectangle>
-                                <TextBlock Grid.Column="0" Grid.Row="24" Text="{x:Static localization:Strings.Priv}" Margin="24,0,0,0">
+                                <TextBlock Grid.Column="0" Grid.Row="24" Text="{x:Static localization:Strings.Priv}" Margin="24,0,0,0" VerticalAlignment="Center">
                                     <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
+                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DisabledTextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed" />
                                             <Style.Triggers>
                                                 <MultiDataTrigger>
@@ -2055,7 +2055,7 @@
                             </Grid>
                         </StackPanel>
                     </ScrollViewer>
-                </TabItem>               
+                </TabItem>
                 <TabItem Header="{x:Static localization:Strings.WakeOnLAN}">
                     <ScrollViewer Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel IsEnabled="{Binding WakeOnLAN_Enabled}" Margin="0,0,0,20">
@@ -2067,7 +2067,7 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="10" />
-                                    <RowDefinition Height="Auto" />                                    
+                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*" />
@@ -2572,7 +2572,7 @@
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />
                                 </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>                        
+                            </MultiDataTrigger>
                             <!-- Whois -->
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
