@@ -3069,13 +3069,13 @@ Das Profil wird nicht aus der Datei ~\.aws\credentials entfernt.</value>
   <data name="DefaultRegion" xml:space="preserve">
     <value>Standard-Region</value>
   </data>
-  <data name="HelpMessage_AWSSessionManagerDefaultProfile" xml:space="preserve">
-    <value>Standardprofil, das von manuell erstellten Profilen für die Verbindung mit einer EC2-Instanz über AWS CLI verwendet wird.
+  <data name="HelpMessage_AWSSessionManagerProfile" xml:space="preserve">
+    <value>Profil, das von manuell erstellten Profilen für die Verbindung mit einer EC2-Instanz über AWS CLI verwendet wird.
 
 Wenn nicht festgelegt, werden die Standardeinstellungen für AWS CLI verwendet.</value>
   </data>
-  <data name="HelpMessage_AWSSessionManagerDefaultRegion" xml:space="preserve">
-    <value>Standardregion, die von manuell erstellten Profilen für die Verbindung mit einer EC2-Instanz über AWS CLI verwendet wird.
+  <data name="HelpMessage_AWSSessionManagerRegion" xml:space="preserve">
+    <value>Region, die von manuell erstellten Profilen für die Verbindung mit einer EC2-Instanz über AWS CLI verwendet wird.
 
 Wenn nicht festgelegt, werden die Standardeinstellungen für AWS CLI verwendet.</value>
   </data>
