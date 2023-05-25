@@ -10,9 +10,15 @@ public class EmptyOrWindowsDomainValidator : ValidationRule
 {
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
-        if (string.IsNullOrEmpty(value as string))
+        string domain = value as string;
+
+        if (string.IsNullOrEmpty(domain))
             return ValidationResult.ValidResult;
 
-        return Regex.IsMatch((string)value, RegexHelper.HostnameRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Strings.EnterValidDomain);        
+        // For local authentication "." is a valid domain
+        if (domain.Equals("."))
+            return ValidationResult.ValidResult;
+        
+        return Regex.IsMatch(domain, RegexHelper.HostnameRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Strings.EnterValidDomain);        
     }
 }

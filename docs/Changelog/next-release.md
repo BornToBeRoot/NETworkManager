@@ -30,10 +30,12 @@ Breaking changes
 
 - DNS Lookup
   - Improved validation when adding/changing DNS server profiles [#2282](https://github.com/BornToBeRoot/NETworkManager/pull/2282){:target="\_blank"}
-- SNTP Lookup
-  - Improved validation when adding/changing SNTP server profiles [#2282](https://github.com/BornToBeRoot/NETworkManager/pull/2282){:target="\_blank"}
+- Remote Desktop
+  - Allow `.` as domain to authenticate with local accounts [#2305](https://github.com/BornToBeRoot/NETworkManager/pull/2305){:target="\_blank"}
 - TigerVNC
   - Use port from default config instead of settings if creating a new group [#2249](https://github.com/BornToBeRoot/NETworkManager/pull/2249){:target="\_blank"}
+- SNTP Lookup
+  - Improved validation when adding/changing SNTP server profiles [#2282](https://github.com/BornToBeRoot/NETworkManager/pull/2282){:target="\_blank"}
 - Wake on LAN
   - Change default port from 7 to 9 [#2242](https://github.com/BornToBeRoot/NETworkManager/pull/2242){:target="\_blank"}
 
