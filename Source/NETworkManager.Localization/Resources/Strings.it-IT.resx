@@ -3096,15 +3096,15 @@ Per fare ciò, il profilo memorizzato nel file "~/.aws/credentials" deve essere 
   <data name="DefaultRegion" xml:space="preserve">
     <value>Regione predefinita</value>
   </data>
-  <data name="HelpMessage_AWSSessionManagerDefaultProfile" xml:space="preserve">
-    <value>Profilo predefinito usato dai profili creati manualmente per connettersi a un'istanza EC2 tramite CLI AWS.
+  <data name="HelpMessage_AWSSessionManagerProfile" xml:space="preserve">
+    <value>Profilo che verrà usato dai profili creati manualmente per connettersi a un'istanza EC2 tramite CLI AWS..
 
-Se non viene impostato, verranno usate le impostazioni predefinite della CLI AWS.</value>
+Se non impostato, verranno usate le impostazioni predefinite della CLI AWS.</value>
   </data>
-  <data name="HelpMessage_AWSSessionManagerDefaultRegion" xml:space="preserve">
-    <value>Regione predefinita usata dai profili creati manualmente per connettersi a un'istanza EC2 tramite CLI AWS .
+  <data name="HelpMessage_AWSSessionManagerRegion" xml:space="preserve">
+    <value>Regione usata dai profili creati manualmente per connettersi a un'istanza EC2 tramite CLI AWS .
 
-Se non viene impostata, verranno usate le impostazioni predefinite della CLI AWS.</value>
+Se non impostata, verranno usate le impostazioni predefinite della CLI AWS.</value>
   </data>
   <data name="HelpMessage_AWSCLIDefaultsAreUsedIfNotSet" xml:space="preserve">
     <value>Se non viene impostata, verranno usate le impostazioni CLI AWS predefinite.</value>
