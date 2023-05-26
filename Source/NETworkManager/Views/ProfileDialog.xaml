@@ -1,4 +1,9 @@
-﻿<UserControl x:Class="NETworkManager.Views.ProfileDialog"
+﻿<!--
+    Note: The validation is performed several times. In the "Save" button 
+    to enable/disable it AND in the list view (rectangle) to indicate that 
+    a page has an error.
+-->
+<UserControl x:Class="NETworkManager.Views.ProfileDialog"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -2162,15 +2167,30 @@
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
                         <Style.Triggers>
                             <!-- General -->
-                            <DataTrigger Binding="{Binding ElementName=TextBoxName,Path=(Validation.HasError)}" Value="True">
-                                <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ElementName=TextBoxHost,Path=(Validation.HasError)}" Value="True">
-                                <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ElementName=ComboBoxGroup,Path=(Validation.HasError)}" Value="True">
-                                <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=TextBoxName,Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=TextBoxHost,Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=ComboBoxGroup,Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
                             <!-- Network Interface -->
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>

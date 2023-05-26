@@ -3411,6 +3411,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The settings on this page contain errors. Correct them to be able to save. ähnelt.
+        /// </summary>
+        public static string ErrorMessage_TabPageHasError {
+            get {
+                return ResourceManager.GetString("ErrorMessage_TabPageHasError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Error while scanning WiFi adapter &quot;{0}&quot; with error: &quot;{1}&quot; ähnelt.
         /// </summary>
         public static string ErrorWhileScanningWiFiAdapterXXXWithErrorXXX {
