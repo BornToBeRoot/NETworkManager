@@ -3059,11 +3059,15 @@ $$hostname$$--&gt;Ime gostitelja</value>
   <data name="DefaultRegion" xml:space="preserve">
     <value>Privzeta regija</value>
   </data>
-  <data name="HelpMessage_AWSSessionManagerDefaultProfile" xml:space="preserve">
-    <value>Privzeti profil, ki ga uporabljajo ročno ustvarjeni profili za povezavo s primerkom EC2 prek AWS CLI. Če ni nastavljeno, se uporabijo privzete nastavitve CLI AWS.</value>
+  <data name="HelpMessage_AWSSessionManagerProfile" xml:space="preserve">
+    <value>Profil, ki ga uporabljajo ročno ustvarjeni profili za povezavo s primerkom EC2 prek AWS CLI.
+
+Če ni nastavljeno, se uporabijo privzete nastavitve CLI AWS.</value>
   </data>
-  <data name="HelpMessage_AWSSessionManagerDefaultRegion" xml:space="preserve">
-    <value>Privzeta regija, ki jo uporabljajo ročno ustvarjeni profili za povezavo s primerkom EC2 prek AWS CLI. Če ni nastavljeno, se uporabijo privzete nastavitve CLI AWS.</value>
+  <data name="HelpMessage_AWSSessionManagerRegion" xml:space="preserve">
+    <value>Regija, ki jo uporabljajo ročno ustvarjeni profili za povezavo s primerkom EC2 prek AWS CLI.
+
+Če ni nastavljeno, se uporabijo privzete nastavitve CLI AWS.</value>
   </data>
   <data name="HelpMessage_AWSCLIDefaultsAreUsedIfNotSet" xml:space="preserve">
     <value>Če ni nastavljeno, se uporabijo privzete nastavitve CLI AWS.</value>
