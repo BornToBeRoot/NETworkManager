@@ -38,6 +38,8 @@ Breaking changes
   - Improved validation when adding/changing SNTP server profiles [#2282](https://github.com/BornToBeRoot/NETworkManager/pull/2282){:target="\_blank"}
 - Wake on LAN
   - Change default port from 7 to 9 [#2242](https://github.com/BornToBeRoot/NETworkManager/pull/2242){:target="\_blank"}
+- Profile / Group
+  - Show an error next to the tab if the settings on the page contain errors [#2309](https://github.com/BornToBeRoot/NETworkManager/pull/2309){:target="\_blank"}
 
 ## Bugfixes
 
