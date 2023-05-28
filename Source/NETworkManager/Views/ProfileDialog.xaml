@@ -522,6 +522,7 @@
                                                         <MultiDataTrigger.Conditions>
                                                             <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.TigerVNC}" />
                                                             <Condition Binding="{Binding Data.TigerVNC_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.TigerVNC_OverridePort, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding ElementName=TextBoxTigerVNCPort, Path=(Validation.HasError)}" Value="True" />
                                                         </MultiDataTrigger.Conditions>
                                                         <MultiDataTrigger.Setters>
@@ -3044,6 +3045,7 @@
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding TigerVNC_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding TigerVNC_OverridePort}" Value="True"/>
                                     <Condition Binding="{Binding ElementName=TextBoxTigerVNCPort, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
