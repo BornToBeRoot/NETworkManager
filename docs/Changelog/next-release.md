@@ -28,35 +28,43 @@ Breaking changes
 
 ## Improvements
 
-- DNS Lookup
+- **DNS Lookup**
   - Improved validation when adding/changing DNS server profiles [#2282](https://github.com/BornToBeRoot/NETworkManager/pull/2282){:target="\_blank"}
-- Remote Desktop
+- **Remote Desktop**
   - Allow `.` as domain to authenticate with local accounts [#2305](https://github.com/BornToBeRoot/NETworkManager/pull/2305){:target="\_blank"}
-- TigerVNC
+- **TigerVNC**
   - Use port from default config instead of settings if creating a new group [#2249](https://github.com/BornToBeRoot/NETworkManager/pull/2249){:target="\_blank"}
-- SNTP Lookup
+- **SNTP Lookup**
   - Improved validation when adding/changing SNTP server profiles [#2282](https://github.com/BornToBeRoot/NETworkManager/pull/2282){:target="\_blank"}
-- Wake on LAN
+- **Wake on LAN**
   - Change default port from 7 to 9 [#2242](https://github.com/BornToBeRoot/NETworkManager/pull/2242){:target="\_blank"}
+- Group dialog
+  - Show an error next to the tab if the settings on the page contain errors [#2309](https://github.com/BornToBeRoot/NETworkManager/pull/2309){:target="\_blank"}
+- Profile dialog
+  - Show an error next to the tab if the settings on the page contain errors [#2309](https://github.com/BornToBeRoot/NETworkManager/pull/2309){:target="\_blank"}
+  - SNMP options are now validates (same as group) [#2309](https://github.com/BornToBeRoot/NETworkManager/pull/2309){:target="\_blank"}
 
 ## Bugfixes
 
-- DNS Lookup
+- **DNS Lookup**
   - Fixed app crash when editing DNS server profile in some rare cases [#2282](https://github.com/BornToBeRoot/NETworkManager/pull/2282){:target="\_blank"}
-- SNTP Lookup
+- **SNTP Lookup**
   - Fixed app crash when editing SNTP server profile in some rare cases [#2282](https://github.com/BornToBeRoot/NETworkManager/pull/2282){:target="\_blank"}
-- Subnet Calculator
+- **Subnet Calculator**
   - Fixed a design issue with the calculate button in subnetting [#2230](https://github.com/BornToBeRoot/NETworkManager/pull/2230){:target="\_blank"}
 - [AirSpace Fixer](https://www.nuget.org/packages/AirspaceFixer){:target="\_blank"} code optimized (only called if needed). This will also prevent a screenshot bug when the application is loading and a dialog is shown. [#2253](https://github.com/BornToBeRoot/NETworkManager/pull/2253){:target="\_blank"}
-- Profile / Group
+- Group dialog
   - Fix default value for Remote Desktop sreen size [#2293](https://github.com/BornToBeRoot/NETworkManager/pull/2293){:target="\_blank"}
+- Profile dialog
+  - Fix default value for Remote Desktop sreen size [#2293](https://github.com/BornToBeRoot/NETworkManager/pull/2293){:target="\_blank"}
+  - Fix validation rule for TigerVNC port [#2309](https://github.com/BornToBeRoot/NETworkManager/pull/2309){:target="\_blank"}
 
 ## Deprecated
 
 Deprecated
 {: .label .label-red }
 
-- Profiles
+- Profile
   - Wake on LAN port, because it was inconsistent (If you select the profile, the port from the settings was used. If you right-click on the profile, the port from the profile was used) [#2220](https://github.com/BornToBeRoot/NETworkManager/pull/2220){:target="\_blank"}
 
 ## Other

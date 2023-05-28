@@ -3547,4 +3547,7 @@ Changes to this value will take effect after the application is restarted. Wheth
   <data name="SNTPServer" xml:space="preserve">
     <value>SNTP server</value>
   </data>
+  <data name="ErrorMessage_TabPageHasError" xml:space="preserve">
+    <value>The settings on this page contain errors. Correct them to be able to save.</value>
+  </data>
 </root>

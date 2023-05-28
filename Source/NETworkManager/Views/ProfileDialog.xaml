@@ -1,4 +1,9 @@
-﻿<UserControl x:Class="NETworkManager.Views.ProfileDialog"
+﻿<!--
+    Note: The validation is performed several times. In the "Save" button 
+    to enable/disable it AND in the list view (rectangle) to indicate that 
+    a page has an error.
+-->
+<UserControl x:Class="NETworkManager.Views.ProfileDialog"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -41,12 +46,17 @@
             <Border BorderThickness="0,0,1,0" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
                 <ScrollViewer ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback" Style="{StaticResource FadeOutScrollViewer}">
                     <ListBox x:Name="ListBoxViews" ItemsSource="{Binding ProfileViews}" Margin="0,0,10,0">
+                        <ListBox.Resources>
+                            <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
+                        </ListBox.Resources>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="10" />
+                                        <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="10" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
@@ -86,7 +96,586 @@
                                             </Style>
                                         </TextBlock.Style>
                                     </TextBlock>
-                                    <CheckBox Grid.Column="3">
+                                    <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="0" ToolTip="{x:Static localization:Strings.ErrorMessage_TabPageHasError}">
+                                        <Rectangle.Resources>
+                                            <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource ErrorToolTip}" />
+                                        </Rectangle.Resources>
+                                        <Rectangle.Style>
+                                            <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ErrorImageRectangle}">
+                                                <Setter Property="Visibility" Value="Hidden" />
+                                                <Style.Triggers>
+                                                    <!-- General -->
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.General}" />
+                                                            <Condition Binding="{Binding ElementName=TextBoxName, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.General}" />
+                                                            <Condition Binding="{Binding ElementName=TextBoxHost, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.General}" />
+                                                            <Condition Binding="{Binding ElementName=ComboBoxGroup, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <!-- Network Interface -->
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.NetworkInterface}" />
+                                                            <Condition Binding="{Binding Data.NetworkInterface_Enabled, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding Data.NetworkInterface_EnableStaticIPAddress, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding ElementName=TextBoxNetworkInterfaceIPAddress, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.NetworkInterface}" />
+                                                            <Condition Binding="{Binding Data.NetworkInterface_Enabled, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding Data.NetworkInterface_EnableStaticIPAddress, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding ElementName=ComboBoxNetworkInterfaceSubnetmask, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.NetworkInterface}" />
+                                                            <Condition Binding="{Binding Data.NetworkInterface_Enabled, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding Data.NetworkInterface_EnableStaticIPAddress, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding ElementName=TextBoxNetworkInterfaceGateway, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.NetworkInterface}" />
+                                                            <Condition Binding="{Binding Data.NetworkInterface_Enabled, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding Data.NetworkInterface_EnableStaticDNS, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding ElementName=TextBoxNetworkInterfacePrimaryDNSServer, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.NetworkInterface}" />
+                                                            <Condition Binding="{Binding Data.NetworkInterface_Enabled, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding Data.NetworkInterface_EnableStaticDNS, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding ElementName=TextBoxNetworkInterfaceSecondaryDNSServer, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <!-- IP Scanner -->
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.IPScanner}" />
+                                                            <Condition Binding="{Binding Data.IPScanner_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.IPScanner_InheritHost, Source={StaticResource BindingProxy}}" Value="False"/>
+                                                            <Condition Binding="{Binding ElementName=TextBoxIPScannerIPRange, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <!-- Port Scanner -->
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PortScanner}" />
+                                                            <Condition Binding="{Binding Data.PortScanner_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.PortScanner_InheritHost, Source={StaticResource BindingProxy}}" Value="False"/>
+                                                            <Condition Binding="{Binding ElementName=TextBoxPortScannerHost, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PortScanner}" />
+                                                            <Condition Binding="{Binding Data.PortScanner_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding ElementName=TextBoxPortScannerPorts, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <!-- Ping Monitor -->
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PingMonitor}" />
+                                                            <Condition Binding="{Binding Data.PingMonitor_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.PingMonitor_InheritHost, Source={StaticResource BindingProxy}}" Value="False"/>
+                                                            <Condition Binding="{Binding ElementName=TextBoxPingMonitorHost, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <!-- Traceroute -->
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.Traceroute}" />
+                                                            <Condition Binding="{Binding Data.Traceroute_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.Traceroute_InheritHost, Source={StaticResource BindingProxy}}" Value="False"/>
+                                                            <Condition Binding="{Binding ElementName=TextBoxTracerouteHost, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <!-- DNS Lookup -->
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.DNSLookup}" />
+                                                            <Condition Binding="{Binding Data.DNSLookup_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.DNSLookup_InheritHost, Source={StaticResource BindingProxy}}" Value="False"/>
+                                                            <Condition Binding="{Binding ElementName=TextBoxDNSLookupHost, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <!-- Remote Desktop -->
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.RemoteDesktop}" />
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_InheritHost, Source={StaticResource BindingProxy}}" Value="False"/>
+                                                            <Condition Binding="{Binding ElementName=TextBoxRemoteDesktopHost, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.RemoteDesktop}" />
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_UseCredentials, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding ElementName=TextBoxRemoteDesktopUsername, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.RemoteDesktop}" />
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_UseCredentials, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding ElementName=TextBoxRemoteDesktopDomain, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.RemoteDesktop}" />
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_UseCredentials, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_IsPasswordEmpty, Source={StaticResource BindingProxy}}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.RemoteDesktop}" />
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_OverridePort, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding ElementName=TextBoxRemoteDesktopPort, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.RemoteDesktop}" />
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_OverrideGatewayServer, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_EnableGatewayServer, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding ElementName=TextBoxRemoteDesktopGatewayServerHostname, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.RemoteDesktop}" />
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_OverrideGatewayServer, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_EnableGatewayServer, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_GatewayServerLogonMethod, Source={StaticResource BindingProxy}}" Value="Userpass" />
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_UseGatewayServerCredentials, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding ElementName=TextBoxRemoteDesktopGatewayServerUsername, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.RemoteDesktop}" />
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_OverrideGatewayServer, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_EnableGatewayServer, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_GatewayServerLogonMethod, Source={StaticResource BindingProxy}}" Value="Userpass" />
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_UseGatewayServerCredentials, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding ElementName=TextBoxRemoteDesktopGatewayServerDomain, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.RemoteDesktop}" />
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_OverrideGatewayServer, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_EnableGatewayServer, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_GatewayServerLogonMethod, Source={StaticResource BindingProxy}}" Value="Userpass" />
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_UseGatewayServerCredentials, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding Data.RemoteDesktop_IsGatewayServerPasswordEmpty, Source={StaticResource BindingProxy}}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <!-- PowerShell -->
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PowerShell}" />
+                                                            <Condition Binding="{Binding Data.PowerShell_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.PowerShell_EnableRemoteConsole, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.PowerShell_InheritHost, Source={StaticResource BindingProxy}}" Value="False"/>
+                                                            <Condition Binding="{Binding ElementName=TextBoxPowerShellHost, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <!-- PuTTY -->
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PuTTY}" />
+                                                            <Condition Binding="{Binding Data.PuTTY_Enabled, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding Data.PuTTY_InheritHost, Source={StaticResource BindingProxy}}" Value="False" />
+                                                            <Condition Binding="{Binding Data.PuTTY_UseSerial, Source={StaticResource BindingProxy}}" Value="False" />
+                                                            <Condition Binding="{Binding ElementName=TextBoxPuTTYHostOrSerialLine, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PuTTY}" />
+                                                            <Condition Binding="{Binding Data.PuTTY_Enabled, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding Data.PuTTY_UseSerial, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding ElementName=TextBoxPuTTYHostOrSerialLine, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PuTTY}" />
+                                                            <Condition Binding="{Binding Data.PuTTY_Enabled, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding Data.PuTTY_OverridePortOrBaud, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding Data.PuTTY_UseSerial, Source={StaticResource BindingProxy}}" Value="False" />
+                                                            <Condition Binding="{Binding ElementName=TextBoxPuTTYPort, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PuTTY}" />
+                                                            <Condition Binding="{Binding Data.PuTTY_Enabled, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding Data.PuTTY_OverridePortOrBaud, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding Data.PuTTY_UseSerial, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding ElementName=TextBoxPuTTYBaud, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PuTTY}" />
+                                                            <Condition Binding="{Binding Data.PuTTY_Enabled, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding Data.PuTTY_OverrideUsername, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding ElementName=TextBoxPuTTYUsername, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PuTTY}" />
+                                                            <Condition Binding="{Binding Data.PuTTY_Enabled, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding Data.PuTTY_OverridePrivateKeyFile, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding ElementName=TextBoxPuTTYPrivateKeyFile, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PuTTY}" />
+                                                            <Condition Binding="{Binding Data.PuTTY_Enabled, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding Data.PuTTY_OverrideLogPath, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding ElementName=TextBoxPuTTYLogPath, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PuTTY}" />
+                                                            <Condition Binding="{Binding Data.PuTTY_Enabled, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding Data.PuTTY_OverrideLogFileName, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding ElementName=TextBoxPuTTYLogFileName, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <!-- AWS Session Manager -->
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.AWSSessionManager}" />
+                                                            <Condition Binding="{Binding Data.AWSSessionManager_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding ElementName=TextBoxAWSSessionManagerInstanceID, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.AWSSessionManager}" />
+                                                            <Condition Binding="{Binding Data.AWSSessionManager_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.AWSSessionManager_OverrideProfile, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding ElementName=TextBoxAWSSessionManagerProfile, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.AWSSessionManager}" />
+                                                            <Condition Binding="{Binding Data.AWSSessionManager_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.AWSSessionManager_OverrideRegion, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding ElementName=TextBoxAWSSessionManagerRegion, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <!-- TigerVNC -->
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.TigerVNC}" />
+                                                            <Condition Binding="{Binding Data.TigerVNC_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.TigerVNC_InheritHost, Source={StaticResource BindingProxy}}" Value="False"/>
+                                                            <Condition Binding="{Binding ElementName=TextBoxTigerVNCHost, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.TigerVNC}" />
+                                                            <Condition Binding="{Binding Data.TigerVNC_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.TigerVNC_OverridePort, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding ElementName=TextBoxTigerVNCPort, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <!-- WebConsole -->
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.WebConsole}" />
+                                                            <Condition Binding="{Binding Data.WebConsole_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding ElementName=TextBoxWebConsoleUrl, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <!-- SNMP -->
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.SNMP}" />
+                                                            <Condition Binding="{Binding Data.SNMP_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.SNMP_InheritHost, Source={StaticResource BindingProxy}}" Value="False"/>
+                                                            <Condition Binding="{Binding ElementName=TextBoxSNMPHost, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.SNMP}" />
+                                                            <Condition Binding="{Binding Data.SNMP_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.SNMP_OverrideOIDAndMode, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding ElementName=TextBoxSNMPOID, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.SNMP}" />
+                                                            <Condition Binding="{Binding Data.SNMP_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.SNMP_OverrideVersionAndAuth, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding Data.SNMP_Version, Source={StaticResource BindingProxy}}" Value="V1" />
+                                                            <Condition Binding="{Binding Data.SNMP_IsCommunityEmpty, Source={StaticResource BindingProxy}}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.SNMP}" />
+                                                            <Condition Binding="{Binding Data.SNMP_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.SNMP_OverrideVersionAndAuth, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding Data.SNMP_Version, Source={StaticResource BindingProxy}}" Value="V2C" />
+                                                            <Condition Binding="{Binding Data.SNMP_IsCommunityEmpty, Source={StaticResource BindingProxy}}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.SNMP}" />
+                                                            <Condition Binding="{Binding Data.SNMP_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.SNMP_OverrideVersionAndAuth, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.SNMP_Version, Source={StaticResource BindingProxy}}" Value="V3" />
+                                                            <Condition Binding="{Binding ElementName=TextBoxSNMPUsername, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.SNMP}" />
+                                                            <Condition Binding="{Binding Data.SNMP_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.SNMP_OverrideVersionAndAuth, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding Data.SNMP_Version, Source={StaticResource BindingProxy}}" Value="V3" />
+                                                            <Condition Binding="{Binding Data.SNMP_Security, Source={StaticResource BindingProxy}}" Value="AuthNoPriv" />
+                                                            <Condition Binding="{Binding Data.SNMP_IsAuthEmpty, Source={StaticResource BindingProxy}}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.SNMP}" />
+                                                            <Condition Binding="{Binding Data.SNMP_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.SNMP_OverrideVersionAndAuth, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding Data.SNMP_Version, Source={StaticResource BindingProxy}}" Value="V3" />
+                                                            <Condition Binding="{Binding Data.SNMP_Security, Source={StaticResource BindingProxy}}" Value="AuthPriv" />
+                                                            <Condition Binding="{Binding Data.SNMP_IsAuthEmpty, Source={StaticResource BindingProxy}}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.SNMP}" />
+                                                            <Condition Binding="{Binding Data.SNMP_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.SNMP_OverrideVersionAndAuth, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding Data.SNMP_Version, Source={StaticResource BindingProxy}}" Value="V3" />
+                                                            <Condition Binding="{Binding Data.SNMP_Security, Source={StaticResource BindingProxy}}" Value="AuthPriv" />
+                                                            <Condition Binding="{Binding Data.SNMP_IsPrivEmpty, Source={StaticResource BindingProxy}}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <!-- Wake on LAN -->
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.WakeOnLAN}" />
+                                                            <Condition Binding="{Binding Data.WakeOnLAN_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding ElementName=TextBoxWakeOnLANMACAddress, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding Data.WakeOnLAN_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.WakeOnLAN}" />
+                                                            <Condition Binding="{Binding ElementName=TextBoxWakeOnLANBroadcast, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <!-- Whois -->
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.Whois}" />
+                                                            <Condition Binding="{Binding Data.Whois_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.Whois_InheritHost, Source={StaticResource BindingProxy}}" Value="False"/>
+                                                            <Condition Binding="{Binding ElementName=TextBoxWhoisDomain, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Rectangle.Style>
+                                    </Rectangle>
+                                    <CheckBox Grid.Column="5">
                                         <CheckBox.Style>
                                             <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource DefaultCheckBox}">
                                                 <Style.Triggers>
@@ -141,7 +730,7 @@
                                                 </Style.Triggers>
                                             </Style>
                                         </CheckBox.Style>
-                                    </CheckBox>
+                                    </CheckBox>                                   
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -2162,15 +2751,30 @@
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
                         <Style.Triggers>
                             <!-- General -->
-                            <DataTrigger Binding="{Binding ElementName=TextBoxName,Path=(Validation.HasError)}" Value="True">
-                                <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ElementName=TextBoxHost,Path=(Validation.HasError)}" Value="True">
-                                <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ElementName=ComboBoxGroup,Path=(Validation.HasError)}" Value="True">
-                                <Setter Property="IsEnabled" Value="False" />
-                            </DataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=TextBoxName,Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=TextBoxHost,Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=ComboBoxGroup,Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
                             <!-- Network Interface -->
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
@@ -2527,6 +3131,7 @@
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding TigerVNC_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding TigerVNC_OverridePort}" Value="True"/>
                                     <Condition Binding="{Binding ElementName=TextBoxTigerVNCPort, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
@@ -2549,6 +3154,85 @@
                                     <Condition Binding="{Binding SNMP_Enabled}" Value="True"/>
                                     <Condition Binding="{Binding SNMP_InheritHost}" Value="False"/>
                                     <Condition Binding="{Binding ElementName=TextBoxSNMPHost, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding SNMP_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding SNMP_OverrideOIDAndMode}" Value="True"/>
+                                    <Condition Binding="{Binding ElementName=TextBoxSNMPOID, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding SNMP_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding SNMP_OverrideVersionAndAuth}" Value="True" />
+                                    <Condition Binding="{Binding SNMP_Version}" Value="V1" />
+                                    <Condition Binding="{Binding SNMP_IsCommunityEmpty}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding SNMP_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding SNMP_OverrideVersionAndAuth}" Value="True" />
+                                    <Condition Binding="{Binding SNMP_Version}" Value="V2C" />
+                                    <Condition Binding="{Binding SNMP_IsCommunityEmpty}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding SNMP_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding SNMP_OverrideVersionAndAuth}" Value="True"/>
+                                    <Condition Binding="{Binding SNMP_Version}" Value="V3" />
+                                    <Condition Binding="{Binding ElementName=TextBoxSNMPUsername, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding SNMP_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding SNMP_OverrideVersionAndAuth}" Value="True" />
+                                    <Condition Binding="{Binding SNMP_Version}" Value="V3" />
+                                    <Condition Binding="{Binding SNMP_Security}" Value="AuthNoPriv" />
+                                    <Condition Binding="{Binding SNMP_IsAuthEmpty}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding SNMP_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding SNMP_OverrideVersionAndAuth}" Value="True" />
+                                    <Condition Binding="{Binding SNMP_Version}" Value="V3" />
+                                    <Condition Binding="{Binding SNMP_Security}" Value="AuthPriv" />
+                                    <Condition Binding="{Binding SNMP_IsAuthEmpty}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding SNMP_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding SNMP_OverrideVersionAndAuth}" Value="True" />
+                                    <Condition Binding="{Binding SNMP_Version}" Value="V3" />
+                                    <Condition Binding="{Binding SNMP_Security}" Value="AuthPriv" />
+                                    <Condition Binding="{Binding SNMP_IsPrivEmpty}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />
