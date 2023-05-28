@@ -552,6 +552,92 @@
                                                             <Setter Property="Visibility" Value="Visible" />
                                                         </MultiDataTrigger.Setters>
                                                     </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.SNMP}" />
+                                                            <Condition Binding="{Binding Data.SNMP_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.SNMP_OverrideOIDAndMode, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding ElementName=TextBoxSNMPOID, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.SNMP}" />
+                                                            <Condition Binding="{Binding Data.SNMP_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.SNMP_OverrideVersionAndAuth, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding Data.SNMP_Version, Source={StaticResource BindingProxy}}" Value="V1" />
+                                                            <Condition Binding="{Binding Data.SNMP_IsCommunityEmpty, Source={StaticResource BindingProxy}}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.SNMP}" />
+                                                            <Condition Binding="{Binding Data.SNMP_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.SNMP_OverrideVersionAndAuth, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding Data.SNMP_Version, Source={StaticResource BindingProxy}}" Value="V2C" />
+                                                            <Condition Binding="{Binding Data.SNMP_IsCommunityEmpty, Source={StaticResource BindingProxy}}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.SNMP}" />
+                                                            <Condition Binding="{Binding Data.SNMP_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.SNMP_OverrideVersionAndAuth, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.SNMP_Version, Source={StaticResource BindingProxy}}" Value="V3" />
+                                                            <Condition Binding="{Binding ElementName=TextBoxSNMPUsername, Path=(Validation.HasError)}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.SNMP}" />
+                                                            <Condition Binding="{Binding Data.SNMP_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.SNMP_OverrideVersionAndAuth, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding Data.SNMP_Version, Source={StaticResource BindingProxy}}" Value="V3" />
+                                                            <Condition Binding="{Binding Data.SNMP_Security, Source={StaticResource BindingProxy}}" Value="AuthNoPriv" />
+                                                            <Condition Binding="{Binding Data.SNMP_IsAuthEmpty, Source={StaticResource BindingProxy}}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.SNMP}" />
+                                                            <Condition Binding="{Binding Data.SNMP_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.SNMP_OverrideVersionAndAuth, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding Data.SNMP_Version, Source={StaticResource BindingProxy}}" Value="V3" />
+                                                            <Condition Binding="{Binding Data.SNMP_Security, Source={StaticResource BindingProxy}}" Value="AuthPriv" />
+                                                            <Condition Binding="{Binding Data.SNMP_IsAuthEmpty, Source={StaticResource BindingProxy}}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.SNMP}" />
+                                                            <Condition Binding="{Binding Data.SNMP_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
+                                                            <Condition Binding="{Binding Data.SNMP_OverrideVersionAndAuth, Source={StaticResource BindingProxy}}" Value="True" />
+                                                            <Condition Binding="{Binding Data.SNMP_Version, Source={StaticResource BindingProxy}}" Value="V3" />
+                                                            <Condition Binding="{Binding Data.SNMP_Security, Source={StaticResource BindingProxy}}" Value="AuthPriv" />
+                                                            <Condition Binding="{Binding Data.SNMP_IsPrivEmpty, Source={StaticResource BindingProxy}}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
                                                     <!-- Wake on LAN -->
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
@@ -3068,6 +3154,85 @@
                                     <Condition Binding="{Binding SNMP_Enabled}" Value="True"/>
                                     <Condition Binding="{Binding SNMP_InheritHost}" Value="False"/>
                                     <Condition Binding="{Binding ElementName=TextBoxSNMPHost, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding SNMP_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding SNMP_OverrideOIDAndMode}" Value="True"/>
+                                    <Condition Binding="{Binding ElementName=TextBoxSNMPOID, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding SNMP_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding SNMP_OverrideVersionAndAuth}" Value="True" />
+                                    <Condition Binding="{Binding SNMP_Version}" Value="V1" />
+                                    <Condition Binding="{Binding SNMP_IsCommunityEmpty}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding SNMP_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding SNMP_OverrideVersionAndAuth}" Value="True" />
+                                    <Condition Binding="{Binding SNMP_Version}" Value="V2C" />
+                                    <Condition Binding="{Binding SNMP_IsCommunityEmpty}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding SNMP_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding SNMP_OverrideVersionAndAuth}" Value="True"/>
+                                    <Condition Binding="{Binding SNMP_Version}" Value="V3" />
+                                    <Condition Binding="{Binding ElementName=TextBoxSNMPUsername, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding SNMP_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding SNMP_OverrideVersionAndAuth}" Value="True" />
+                                    <Condition Binding="{Binding SNMP_Version}" Value="V3" />
+                                    <Condition Binding="{Binding SNMP_Security}" Value="AuthNoPriv" />
+                                    <Condition Binding="{Binding SNMP_IsAuthEmpty}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding SNMP_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding SNMP_OverrideVersionAndAuth}" Value="True" />
+                                    <Condition Binding="{Binding SNMP_Version}" Value="V3" />
+                                    <Condition Binding="{Binding SNMP_Security}" Value="AuthPriv" />
+                                    <Condition Binding="{Binding SNMP_IsAuthEmpty}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding SNMP_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding SNMP_OverrideVersionAndAuth}" Value="True" />
+                                    <Condition Binding="{Binding SNMP_Version}" Value="V3" />
+                                    <Condition Binding="{Binding SNMP_Security}" Value="AuthPriv" />
+                                    <Condition Binding="{Binding SNMP_IsPrivEmpty}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />

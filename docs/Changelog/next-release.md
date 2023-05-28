@@ -42,6 +42,7 @@ Breaking changes
   - Show an error next to the tab if the settings on the page contain errors [#2309](https://github.com/BornToBeRoot/NETworkManager/pull/2309){:target="\_blank"}
 - Profile dialog
   - Show an error next to the tab if the settings on the page contain errors [#2309](https://github.com/BornToBeRoot/NETworkManager/pull/2309){:target="\_blank"}
+  - SNMP options are now validates (same as group) [#2309](https://github.com/BornToBeRoot/NETworkManager/pull/2309){:target="\_blank"}
 
 ## Bugfixes
 
@@ -56,7 +57,7 @@ Breaking changes
   - Fix default value for Remote Desktop sreen size [#2293](https://github.com/BornToBeRoot/NETworkManager/pull/2293){:target="\_blank"}
 - Profile dialog
   - Fix default value for Remote Desktop sreen size [#2293](https://github.com/BornToBeRoot/NETworkManager/pull/2293){:target="\_blank"}
-  - Validate TigerVNC port [#2309](https://github.com/BornToBeRoot/NETworkManager/pull/2309){:target="\_blank"}
+  - Fix validation rule for TigerVNC port [#2309](https://github.com/BornToBeRoot/NETworkManager/pull/2309){:target="\_blank"}
 
 ## Deprecated
 
