@@ -3547,4 +3547,7 @@ Wenn der Wert zu hoch ist, können Leistungsprobleme auftreten.
   <data name="SNTPServer" xml:space="preserve">
     <value>SNTP-Server</value>
   </data>
+  <data name="ErrorMessage_TabPageHasError" xml:space="preserve">
+    <value>Die Einstellungen auf dieser Seite enthalten Fehler. Korrigieren Sie diese, um speichern zu können.</value>
+  </data>
 </root>
