@@ -3634,4 +3634,7 @@ Per assistenza contattare l'amministratore di rete.</value>
   <data name="SNTPServer" xml:space="preserve">
     <value>Server SNTP</value>
   </data>
+  <data name="ErrorMessage_TabPageHasError" xml:space="preserve">
+    <value>Le impostazioni in questa pagina contengono errori. Correggili per poter salvare.</value>
+  </data>
 </root>
