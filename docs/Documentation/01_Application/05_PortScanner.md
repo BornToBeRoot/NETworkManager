@@ -35,6 +35,9 @@ Multiple inputs can be combined with a semicolon (`;`).<br />Example: `10.0.0.0/
 
 ![PortScanner](05_PortScanner.png)
 
+{: .note}
+Right-click on the result to copy or export the information.
+
 ## Profile
 
 ### Inherit host from general

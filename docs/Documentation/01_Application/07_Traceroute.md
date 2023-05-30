@@ -19,6 +19,9 @@ Example inputs:
 
 ![Traceroute](07_Traceroute.png)
 
+{: .note}
+Right-click on the result to copy or export the information.
+
 ## Profile
 
 ### Inherit host from general

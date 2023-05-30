@@ -22,6 +22,9 @@ Multiple inputs can be combined with a semicolon (`;`).<br />Example: `server-01
 
 ![DNSLookup](08_DNSLookup.png)
 
+{: .note}
+Right-click on the result to copy or export the information.
+
 ## Profile
 
 ### Inherit host from general

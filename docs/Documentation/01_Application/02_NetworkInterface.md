@@ -33,6 +33,9 @@ In addition, further actions can be performed using the buttons at the bottom le
 
 ![NetworkInterface_Information](02_NetworkInterface_Information.png)
 
+{: .note}
+Right-click on the result to copy or export the information.
+
 ## Bandwidth
 
 On the **Bandwidth** tab, you can monitor the currently used bandwidth of the selected network adapter.
