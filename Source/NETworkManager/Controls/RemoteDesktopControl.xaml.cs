@@ -189,7 +189,7 @@ public partial class RemoteDesktopControl : UserControlBase
             RdpClient.DesktopWidth = _rdpSessionInfo.DesktopWidth;
             RdpClient.DesktopHeight = _rdpSessionInfo.DesktopHeight;
         }
-
+        
         // Authentication
         RdpClient.AdvancedSettings9.AuthenticationLevel = _rdpSessionInfo.AuthenticationLevel;
         RdpClient.AdvancedSettings9.EnableCredSspSupport = _rdpSessionInfo.EnableCredSspSupport;
@@ -262,9 +262,7 @@ public partial class RemoteDesktopControl : UserControlBase
             if (!_rdpSessionInfo.VisualStyles)
                 RdpClient.AdvancedSettings9.PerformanceFlags |= RemoteDesktopPerformanceConstants.TS_PERF_DISABLE_THEMING;
         }
-
-        FixWindowsFormsHostSize();
-
+        
         // Events
         RdpClient.OnConnected += RdpClient_OnConnected;
         RdpClient.OnDisconnected += RdpClient_OnDisconnected;
@@ -275,6 +273,8 @@ public partial class RemoteDesktopControl : UserControlBase
 
         // Connect
         RdpClient.Connect();
+
+        FixWindowsFormsHostSize();
     }
 
     private void Reconnect()
@@ -283,16 +283,17 @@ public partial class RemoteDesktopControl : UserControlBase
             return;
 
         IsConnecting = true;
-
+        
+        // Update screen size
         if (_rdpSessionInfo.AdjustScreenAutomatically || _rdpSessionInfo.UseCurrentViewSize)
         {
             RdpClient.DesktopWidth = (int)RdpGrid.ActualWidth;
             RdpClient.DesktopHeight = (int)RdpGrid.ActualHeight;
         }
 
-        FixWindowsFormsHostSize();
-        
         RdpClient.Connect();
+        
+        FixWindowsFormsHostSize();       
     }
 
     public void FullScreen()
@@ -308,7 +309,11 @@ public partial class RemoteDesktopControl : UserControlBase
         if (!IsConnected)
             return;
 
-        RdpClient.Reconnect((uint)RdpGrid.ActualWidth, (uint)RdpGrid.ActualHeight);
+        // Adjust screen size 
+        if (_rdpSessionInfo.AdjustScreenAutomatically || _rdpSessionInfo.UseCurrentViewSize)
+        {
+            RdpClient.Reconnect((uint)RdpGrid.ActualWidth, (uint)RdpGrid.ActualHeight);
+        }
 
         FixWindowsFormsHostSize();
     }
@@ -458,6 +463,7 @@ public partial class RemoteDesktopControl : UserControlBase
 
     private void RdpGrid_SizeChanged(object sender, SizeChangedEventArgs e)
     {
+        // Resize the RDP screen size when the window size changes
         if (IsConnected && _rdpSessionInfo.AdjustScreenAutomatically && !IsReconnecting)
             ReconnectOnSizeChanged();
     }
@@ -472,7 +478,10 @@ public partial class RemoteDesktopControl : UserControlBase
 
         } while (Mouse.LeftButton == MouseButtonState.Pressed);
 
-        AdjustScreen();
+        // Reconnect with the new screen size
+        RdpClient.Reconnect((uint)RdpGrid.ActualWidth, (uint)RdpGrid.ActualHeight);
+        
+        FixWindowsFormsHostSize();
 
         IsReconnecting = false;
     }
