@@ -55,8 +55,10 @@ Breaking changes
 - [AirSpace Fixer](https://www.nuget.org/packages/AirspaceFixer){:target="\_blank"} code optimized (only called if needed). This will also prevent a screenshot bug when the application is loading and a dialog is shown. [#2253](https://github.com/BornToBeRoot/NETworkManager/pull/2253){:target="\_blank"}
 - Group dialog
   - Fix default value for Remote Desktop sreen size [#2293](https://github.com/BornToBeRoot/NETworkManager/pull/2293){:target="\_blank"}
+  - Enable Remote Desktop `Use gateway credentials` only if logon method is set to `Userpass` [#2316](https://github.com/BornToBeRoot/NETworkManager/pull/2316){:target="\_blank"}
 - Profile dialog
   - Fix default value for Remote Desktop sreen size [#2293](https://github.com/BornToBeRoot/NETworkManager/pull/2293){:target="\_blank"}
+  - Enable Remote Desktop `Use gateway credentials` only if logon method is set to `Userpass` [#2316](https://github.com/BornToBeRoot/NETworkManager/pull/2316){:target="\_blank"}
   - Fix validation rule for TigerVNC port [#2309](https://github.com/BornToBeRoot/NETworkManager/pull/2309){:target="\_blank"}
 
 ## Deprecated

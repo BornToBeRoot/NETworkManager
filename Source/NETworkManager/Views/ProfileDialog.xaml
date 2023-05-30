@@ -1591,6 +1591,7 @@
                                                     <MultiDataTrigger.Conditions>
                                                         <Condition Binding="{Binding RemoteDesktop_OverrideGatewayServer}" Value="True" />
                                                         <Condition Binding="{Binding RemoteDesktop_EnableGatewayServer}" Value="True" />
+                                                        <Condition Binding="{Binding RemoteDesktop_GatewayServerLogonMethod}" Value="Userpass" />
                                                     </MultiDataTrigger.Conditions>
                                                     <MultiDataTrigger.Setters>
                                                         <Setter Property="IsEnabled" Value="True" />
