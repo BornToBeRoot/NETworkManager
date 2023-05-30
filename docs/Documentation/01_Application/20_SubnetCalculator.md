@@ -24,6 +24,9 @@ Example inputs:
 
 ![SubnetCalculator_Calculator](20_SubnetCalculator_Calculator.png)
 
+{: .note}
+Right-click on the result to copy the information.
+
 ## Subnetting
 
 On the **Subnetting** tab, you can split a subnet into smaller subnets. The subnet mask can be entered in CIDR notation.
@@ -56,3 +59,6 @@ Example inputs:
 IPv6 is not supported.
 
 ![SubnetCalculator_WideSubnet](20_SubnetCalculator_WideSubnet.png)
+
+{: .note}
+Right-click on the result to copy the information.

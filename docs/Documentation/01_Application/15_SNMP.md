@@ -26,6 +26,9 @@ Multiple OIDs (`.1.3.6.1.2.1.1; .1.3.6.1.2.1.2`) can be specified when using the
 
 ![SNMP](15_SNMP.png)
 
+{: .note}
+Right-click on the result to copy or export the information.
+
 ## Profile
 
 ### Inherit host from general

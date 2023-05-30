@@ -34,6 +34,9 @@ If you right-click on a selected result, you can forward the device information 
 
 ![IPScanner](04_IPScanner.png)
 
+{: .note}
+Right-click on the result to copy or export the information.
+
 ## Profile
 
 ### Inherit host from general

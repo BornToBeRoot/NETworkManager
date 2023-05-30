@@ -30,6 +30,9 @@ Due to limitations of the `Windows.Devices.WiFi` API the channel bandwidth canno
 
 ![WiFi](03_WiFi.png)
 
+{: .note}
+Right-click on the result to copy or export the information.
+
 ## Channels
 
 On the **Channels** tab, all wireless networks of the selected wireless network adapter are displayed in a graphical view with the channel and signal strength. This can be useful to identify overlapping wireless networks that do not originate from the same access point.
