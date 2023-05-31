@@ -10,7 +10,11 @@ permalink: /Documentation/Application/TigerVNC
 
 # TigerVNC
 
-With **TigerVNC** you can connect to a remote computer via VNC. The integration of TigerVNC with NETworkManger supports tabs and profiles for hosts. 
+With **TigerVNC** you can connect to a remote computer via VNC. The integration of TigerVNC with NETworkManger supports tabs and profiles for hosts.
+
+Right-click on the tab will open the context menu with the following options:
+
+- **Reconnect** - Restart TigerVNC and reconnect to the remote computer.
 
 {: .info}
 Virtual Network Computing (VNC) is a remote display protocol that allows you to control the desktop environment of a computer remotely. VNC uses the Remote Frame Buffer (RFB) protocol to transmit keyboard and mouse events from the client to the server and screen updates from the server to the client. VNC is platform-independent and supports Windows, Linux and macOS.

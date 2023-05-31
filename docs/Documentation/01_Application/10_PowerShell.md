@@ -12,6 +12,11 @@ permalink: /Documentation/Application/PowerShell
 
 With **PowerShell** you can start PowerShell consoles on the local computer or connect to remote computers via [PowerShell Remoting](https://learn.microsoft.com/en-us/powershell/scripting/learn/ps101/08-powershell-remoting){:target="\_blank"}. The integration of PowerShell with NETworkManger supports tabs and profiles for hosts.
 
+Right-click on the tab will open the context menu with the following options:
+
+- **Reconnect** - Restart the PowerShell console (and reconnect to the remote computer).
+- **Resize** - Resize the PowerShell console to the current view size (if connected).
+
 {: .note}
 Windows PowerShell and PowerShell Core are supported. Indructions for installing PowerShell Core can be found on the [official website](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?){:target="\_blank"}.
 
@@ -51,10 +56,13 @@ Command to execute when the PowerShell console is started locally.
 
 **Default:** [`Settings > Command`](#command-3)
 
-**Example:** `Set-Location ~`
+**Example:** `Set-Location ~; Get-ChildItem`
 
 {: .note }
 Only available if [Remote console](#remote-console) is disabled.
+
+{: .note }
+Use `wsl -d <DISTRIBUTION>` to connect to Windows Subsystem for Linux.
 
 ### Additional command line
 
@@ -123,10 +131,13 @@ Command to execute when the PowerShell console is started locally.
 
 **Default:** `Empty`
 
-**Example:** `Set-Location ~`
+**Example:** `Set-Location ~; Get-ChildItem`
 
 {: .note }
 Only available if [Remote console](#remote-console-1) is disabled.
+
+{: .note }
+Use `wsl -d <DISTRIBUTION>` to connect to Windows Subsystem for Linux.
 
 ### Additional command line
 
@@ -162,7 +173,10 @@ Command to execute when the PowerShell console is started locally.
 
 **Default:** `Empty`
 
-**Example:** `Set-Location ~`
+**Example:** `Set-Location ~; Get-ChildItem`
+
+{: .note }
+Use `wsl -d <DISTRIBUTION>` to connect to Windows Subsystem for Linux.
 
 ### Additional command line
 
@@ -213,6 +227,11 @@ Default command to execute when the PowerShell console is started locally.
 **Type:** `String`
 
 **Default:** `Set-Location ~`
+
+**Example:** `Set-Location ~; Get-ChildItem`
+
+{: .note }
+Use `wsl -d <DISTRIBUTION>` to connect to Windows Subsystem for Linux.
 
 ### Additional command line
 
