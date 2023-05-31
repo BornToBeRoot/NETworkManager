@@ -12,6 +12,10 @@ permalink: /Documentation/Application/WebConsole
 
 The **Web Console** is designed to browse the website of a host (e.g. server, switch, router, dashboard, etc.) to display informations or to configure it.
 
+Right-click on the tab will open the context menu with the following options:
+
+- **Reload** - Reload the website.
+
 ![WebConsole](14_WebConsole.png)
 
 ## Connect

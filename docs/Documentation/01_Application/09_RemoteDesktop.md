@@ -12,6 +12,15 @@ permalink: /Documentation/Application/RemoteDesktop
 
 With **Remote Desktop** you can connect to a remote computer using the Remote Desktop Protocol (RDP).
 
+Right-click on the tab will open the context menu with the following options:
+
+- **Reconnect** - Reconnect to the remote computer (if disconnected).
+- **Disconnect** - Disconnect from the remote computer (if connected).
+- **Fullscreen** - Toggle fullscreen mode (if connected).
+- **Adjust screen** - Adjust the screen size to the current view size (only if [Display](#display) is set to `Adjust screen automatically` or `Use the current view size as screen size`) (if connected).
+- **Keyboard shortcuts**
+  - **Ctrl+Alt+Del** - Send Ctrl+Alt+Del to the remote computer (if connected).
+
 {: .info}
 Remote Desktop Protocol (RDP) is a proprietary protocol developed by Microsoft that allows users to remotely access and control a computer or virtual machine (VM) over a network connection. It provides a secure communication channel by encrypting the data transmitted between the client and the remote computer, protecting it from unauthorized access.
 
