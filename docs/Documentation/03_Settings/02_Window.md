@@ -42,7 +42,7 @@ Allow multiple instances of the application to be opened.
 
 **Default:** `Disabled`
 
-{. .warning}
+{: .warning}
 Enabling this setting is not recommended. Multiple instances of the application share the same settings and profile files. The last instance to be closed may overwrite changes made by other instances.
 
 ### Always show tray icon
