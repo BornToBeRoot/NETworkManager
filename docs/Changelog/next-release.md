@@ -62,6 +62,9 @@ Breaking changes
   - Fix default value for Remote Desktop sreen size [#2293](https://github.com/BornToBeRoot/NETworkManager/pull/2293){:target="\_blank"}
   - Enable Remote Desktop `Use gateway credentials` only if logon method is set to `Userpass` [#2316](https://github.com/BornToBeRoot/NETworkManager/pull/2316){:target="\_blank"}
   - Fix validation rule for TigerVNC port [#2309](https://github.com/BornToBeRoot/NETworkManager/pull/2309){:target="\_blank"}
+- Settings
+  - Settings view is now re-selected if the filter (search) is removed [#2325](https://github.com/BornToBeRoot/NETworkManager/pull/2325){:target="\_blank"}
+  - If settings are opened again, the last selected settings view is now selected (except an application was selected that has a settings view, then the settings view of the application is selected) [#2325](https://github.com/BornToBeRoot/NETworkManager/pull/2325){:target="\_blank"}
 
 ## Deprecated
 
@@ -73,7 +76,7 @@ Deprecated
 
 ## Other
 
-- Code cleanup [#2100](https://github.com/BornToBeRoot/NETworkManager/pull/2100){:target="\_blank"} [#2172](https://github.com/BornToBeRoot/NETworkManager/pull/2172){:target="\_blank"} [#2254](https://github.com/BornToBeRoot/NETworkManager/pull/2254){:target="\_blank"}
+- Code cleanup [#2100](https://github.com/BornToBeRoot/NETworkManager/pull/2100){:target="\_blank"} [#2172](https://github.com/BornToBeRoot/NETworkManager/pull/2172){:target="\_blank"} [#2254](https://github.com/BornToBeRoot/NETworkManager/pull/2254){:target="\_blank"} [#2325](https://github.com/BornToBeRoot/NETworkManager/pull/2325){:target="\_blank"}
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="\_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="\_blank"}
 - Add documentation for:
@@ -83,7 +86,7 @@ Deprecated
   - Application > DNS Lookup [#2273](https://github.com/BornToBeRoot/NETworkManager/pull/2273){:target="\_blank"}
   - Application > Remote Desktop [#2293](https://github.com/BornToBeRoot/NETworkManager/pull/2293){:target="\_blank"} [#2324](https://github.com/BornToBeRoot/NETworkManager/pull/2324){:target="\_blank"}
   - Application > PowerShell [#2249](https://github.com/BornToBeRoot/NETworkManager/pull/2249){:target="\_blank"} [#2324](https://github.com/BornToBeRoot/NETworkManager/pull/2324){:target="\_blank"}
-  - Application > PuTTY [#2324](https://github.com/BornToBeRoot/NETworkManager/pull/2324){:target="\_blank"}  
+  - Application > PuTTY [#2324](https://github.com/BornToBeRoot/NETworkManager/pull/2324){:target="\_blank"}
   - Application > TigerVNC [#2248](https://github.com/BornToBeRoot/NETworkManager/pull/2248){:target="\_blank"} [#2324](https://github.com/BornToBeRoot/NETworkManager/pull/2324){:target="\_blank"}
   - Application > Web Console [#2244](https://github.com/BornToBeRoot/NETworkManager/pull/2244){:target="\_blank"} [#2324](https://github.com/BornToBeRoot/NETworkManager/pull/2324){:target="\_blank"}
   - Application > SNMP [#2289](https://github.com/BornToBeRoot/NETworkManager/pull/2289){:target="\_blank"} [#2293](https://github.com/BornToBeRoot/NETworkManager/pull/2293){:target="\_blank"}

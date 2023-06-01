@@ -175,8 +175,7 @@ public partial class MainWindow : INotifyPropertyChanged
         }
     }
 
-    private ApplicationName _filterLastViewName;
-    private int? _filterLastCount;
+    private ApplicationName _searchLastSelectedApplicationName;
 
     private string _search = string.Empty;
     public string Search
@@ -189,25 +188,19 @@ public partial class MainWindow : INotifyPropertyChanged
 
             _search = value;
 
+            // Store the current selected application name
             if (SelectedApplication != null)
-                _filterLastViewName = SelectedApplication.Name;
+                _searchLastSelectedApplicationName = SelectedApplication.Name;
 
+            // Refresh (apply filter)
             Applications.Refresh();
 
-            var sourceCollection = Applications.SourceCollection.Cast<ApplicationInfo>();
-            var filteredCollection = Applications.Cast<ApplicationInfo>();
+            // Try to select the last selected application
+            if (!Applications.IsEmpty && SelectedApplication == null)
+                SelectedApplication = Applications.Cast<ApplicationInfo>().FirstOrDefault(x => x.Name == _searchLastSelectedApplicationName) ?? Applications.Cast<ApplicationInfo>().FirstOrDefault();
 
-            var sourceInfos = sourceCollection as ApplicationInfo[] ?? sourceCollection.ToArray();
-            var filteredInfos = filteredCollection as ApplicationInfo[] ?? filteredCollection.ToArray();
-
-            _filterLastCount ??= sourceInfos.Length;
-
-            SelectedApplication = _filterLastCount > filteredInfos.Length ? filteredInfos.FirstOrDefault() : sourceInfos.FirstOrDefault(x => x.Name == _filterLastViewName);
-
-            _filterLastCount = filteredInfos.Length;
-
-            // Show note when there was nothing found
-            SearchNothingFound = filteredInfos.Length == 0;
+            // Show note if nothing was found
+            SearchNothingFound = Applications.IsEmpty;
 
             OnPropertyChanged();
         }
@@ -577,8 +570,8 @@ public partial class MainWindow : INotifyPropertyChanged
 
         _isApplicationListLoading = false;
 
-        // Select the application
-        SelectedApplication = Applications.SourceCollection.Cast<ApplicationInfo>().FirstOrDefault(x => x.Name == (CommandLineManager.Current.Application != ApplicationName.None ? CommandLineManager.Current.Application : SettingsManager.Current.General_DefaultApplicationViewName));
+        // Select the application        
+        SelectedApplication = Applications.Cast<ApplicationInfo>().FirstOrDefault(x => x.Name == (CommandLineManager.Current.Application != ApplicationName.None ? CommandLineManager.Current.Application : SettingsManager.Current.General_DefaultApplicationViewName));
 
         // Scroll into view
         if (SelectedApplication != null)
