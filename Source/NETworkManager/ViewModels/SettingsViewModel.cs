@@ -34,6 +34,8 @@ public class SettingsViewModel : ViewModelBase
 
     public ICollectionView SettingsViews { get; private set; }
 
+    private SettingsViewName _searchLastSelectedSettingsViewName;
+
     private string _search;
     public string Search
     {
@@ -45,10 +47,19 @@ public class SettingsViewModel : ViewModelBase
 
             _search = value;
 
+            // Store the current selected settings view name
+            if (SelectedSettingsView != null)
+                _searchLastSelectedSettingsViewName = SelectedSettingsView.Name;
+
+            // Refresh (apply filter)
             SettingsViews.Refresh();
 
-            // Show note when there was nothing found
-            SearchNothingFound = !SettingsViews.Cast<SettingsViewInfo>().Any();
+            // Try to select the last selected application
+            if (!SettingsViews.IsEmpty && SelectedSettingsView == null)
+                SelectedSettingsView = SettingsViews.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name == _searchLastSelectedSettingsViewName) ?? SettingsViews.Cast<SettingsViewInfo>().FirstOrDefault();
+
+            // Show note if nothing was found
+            SearchNothingFound = SettingsViews.IsEmpty;            
 
             OnPropertyChanged();
         }
@@ -110,7 +121,7 @@ public class SettingsViewModel : ViewModelBase
     private SettingsUpdateView _settingsUpdateView;
     private SettingsSettingsView _settingsSettingsView;
     private SettingsProfilesView _settingsProfilesView;
-    private DashboardSettingsView _dashboardSettingsView;        
+    private DashboardSettingsView _dashboardSettingsView;
     private IPScannerSettingsView _ipScannerSettingsView;
     private PortScannerSettingsView _portScannerSettingsView;
     private PingMonitorSettingsView _pingMonitorSettingsView;
@@ -124,7 +135,7 @@ public class SettingsViewModel : ViewModelBase
     private WebConsoleSettingsView _webConsoleSettingsView;
     private SNMPSettingsView _snmpSettingsView;
     private SNTPLookupSettingsView _sntpLookupSettingsView;
-    private WakeOnLANSettingsView _wakeOnLANSettingsView;   
+    private WakeOnLANSettingsView _wakeOnLANSettingsView;
     private BitCalculatorSettingsView _bitCalculatorSettingsView;
     #endregion
 
@@ -169,14 +180,18 @@ public class SettingsViewModel : ViewModelBase
     #region Methods
     public void ChangeSettingsView(ApplicationName applicationName)
     {
-        // Don't change the view, if the user has filtered the settings...
-        if (!string.IsNullOrEmpty(Search))
+        if (SettingsViews.IsEmpty)
             return;
 
-        if (Enum.GetNames(typeof(SettingsViewName)).Contains(applicationName.ToString()) && ApplicationName.None.ToString() != applicationName.ToString())
-            SelectedSettingsView = SettingsViews.SourceCollection.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name.ToString() == applicationName.ToString());
-        else
-            SelectedSettingsView = SettingsViews.SourceCollection.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name == SettingsViewName.General);
+        // Try to find application in (filtered) settings views
+        var selectedApplicationSettingsView = SettingsViews.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name.ToString() == applicationName.ToString());
+
+        // Update selected settings view if application is found in (filtered) settings views
+        if (selectedApplicationSettingsView != null)
+            SelectedSettingsView = selectedApplicationSettingsView;
+
+        // Set default settings view
+        SelectedSettingsView ??= SettingsViews.Cast<SettingsViewInfo>().FirstOrDefault();
     }
 
     private void ChangeSettingsContent(SettingsViewInfo settingsViewInfo)
@@ -222,7 +237,7 @@ public class SettingsViewModel : ViewModelBase
                 _settingsAutostartView ??= new SettingsAutostartView();
 
                 SettingsContent = _settingsAutostartView;
-                break;              
+                break;
             case SettingsViewName.Update:
                 _settingsUpdateView ??= new SettingsUpdateView();
 
@@ -295,7 +310,7 @@ public class SettingsViewModel : ViewModelBase
                 break;
             case SettingsViewName.WebConsole:
                 _webConsoleSettingsView ??= new WebConsoleSettingsView();
-                
+
                 SettingsContent = _webConsoleSettingsView;
                 break;
             case SettingsViewName.SNMP:
@@ -312,7 +327,7 @@ public class SettingsViewModel : ViewModelBase
                 _wakeOnLANSettingsView ??= new WakeOnLANSettingsView();
 
                 SettingsContent = _wakeOnLANSettingsView;
-                break;            
+                break;
             case SettingsViewName.BitCalculator:
                 _bitCalculatorSettingsView ??= new BitCalculatorSettingsView();
 
