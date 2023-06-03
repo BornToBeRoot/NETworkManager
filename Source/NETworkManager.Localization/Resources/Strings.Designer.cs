@@ -637,7 +637,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die All settings can be changed later in the settings ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die All settings can be changed later in the settings! ähnelt.
         /// </summary>
         public static string AllSettingsCanBeChangedLaterInTheSettings {
             get {
