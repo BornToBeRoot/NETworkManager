@@ -24,7 +24,7 @@ public class ApplicationInfo
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ApplicationInfo"/> class and passes the <see cref="Name"/> as paramteter.
+    /// Initializes a new instance of the <see cref="ApplicationInfo"/> class with paramteters.
     /// </summary>
     /// <param name="name"><see cref="Name"/></param>
     public ApplicationInfo(ApplicationName name)
