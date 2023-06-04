@@ -21,7 +21,7 @@ public sealed class RemoteDesktopNetworkConnectionTypeToStringConverter : IValue
     /// <returns>Translated <see cref="NetworkConnectionType"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (!(value is NetworkConnectionType networkConnectionType))
+        if (value is not NetworkConnectionType networkConnectionType)
             return "-/-";
 
         return RemoteDesktopNetworkConnectionTypeTranslator.GetInstance().Translate(networkConnectionType);

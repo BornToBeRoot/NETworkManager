@@ -21,7 +21,7 @@ public sealed class RemoteDesktopAudioRedirectionModeToStringConverter : IValueC
     /// <returns>Translated <see cref="AudioRedirectionMode"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (!(value is AudioRedirectionMode audioRedirectionMode))
+        if (value is not AudioRedirectionMode audioRedirectionMode)
             return "-/-";
 
         return RemoteDesktopAudioRedirectionModeTranslator.GetInstance().Translate(audioRedirectionMode);
