@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using log4net;
 using Octokit;
 
 namespace NETworkManager.Update;
@@ -9,6 +10,8 @@ namespace NETworkManager.Update;
 /// </summary>
 public class Updater
 {
+    private static readonly ILog _log = LogManager.GetLogger(typeof(Updater));
+
     #region Events
     /// <summary>
     /// Is triggered when update check is complete and an update is available.
@@ -45,6 +48,7 @@ public class Updater
     /// <summary>
     /// Triggers the <see cref="Error"/> event.
     /// </summary>
+    /// <param name="e">Passes <see cref="UpdateErrorArgs"/> to the event.</param>
     protected virtual void OnError()
     {
         Error?.Invoke(this, EventArgs.Empty);
@@ -64,6 +68,8 @@ public class Updater
         {
             try
             {
+                _log.Info("Checking for new program version on GitHub...");
+
                 var client = new GitHubClient(new ProductHeaderValue(userName + "_" + projectName));
 
                 Release release = null;
@@ -75,12 +81,19 @@ public class Updater
 
                 // Compare versions (tag=2021.2.15.0, version=2021.2.15.0)
                 if (new Version(release.TagName) > currentVersion)
+                {
+                    _log.Info($"New version \"{release.TagName}\" is available on GitHub!");
                     OnUpdateAvailable(new UpdateAvailableArgs(release));
+                }
                 else
+                {
+                    _log.Info("No new program version available on GitHub!");
                     OnNoUpdateAvailable();
+                }
             }
-            catch
+            catch (Exception ex)
             {
+                _log.Error("Error while checking for new program version on GitHub!", ex);
                 OnError();
             }
         });

@@ -14,14 +14,13 @@
 	</PropertyGroup>
 	<!-- Target 6.0.0 for compatibility https://github.com/dotnet/core/issues/7176 -->
 	<ItemGroup>
-		<FrameworkReference
-		Update="Microsoft.WindowsDesktop.App;Microsoft.WindowsDesktop.App.WPF;Microsoft.WindowsDesktop.App.WindowsForms"
-		TargetingPackVersion="6.0.0" />
+		<FrameworkReference Update="Microsoft.WindowsDesktop.App;Microsoft.WindowsDesktop.App.WPF;Microsoft.WindowsDesktop.App.WindowsForms" TargetingPackVersion="6.0.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
 	</ItemGroup>
 	<ItemGroup>
+		<PackageReference Include="log4net" Version="2.0.15" />
 		<PackageReference Include="Octokit" Version="6.0.0" />
 	</ItemGroup>
 </Project>
