@@ -54,7 +54,7 @@ public class SettingsInfo : PropertyChangedBase
     }
 
     #region General 
-    // General        
+    // General
     private ApplicationName _general_DefaultApplicationViewName = GlobalStaticConfiguration.General_DefaultApplicationViewName;
     public ApplicationName General_DefaultApplicationViewName
     {
@@ -3207,7 +3207,7 @@ public class SettingsInfo : PropertyChangedBase
             SettingsChanged = true;
         }
     }
-    
+
     private ObservableCollection<SNMPOIDProfileInfo> _snmp_OIDProfiles = new();
     public ObservableCollection<SNMPOIDProfileInfo> SNMP_OIDProfiles
     {
@@ -3222,7 +3222,7 @@ public class SettingsInfo : PropertyChangedBase
             SettingsChanged = true;
         }
     }
-    
+
     private int _snmp_Timeout = GlobalStaticConfiguration.SNMP_Timeout;
     public int SNMP_Timeout
     {
@@ -3252,7 +3252,7 @@ public class SettingsInfo : PropertyChangedBase
             SettingsChanged = true;
         }
     }
-    
+
     private int _snmp_port = 161;
     public int SNMP_Port
     {
@@ -3267,7 +3267,7 @@ public class SettingsInfo : PropertyChangedBase
             SettingsChanged = true;
         }
     }
-    
+
     private SNMPMode _snmp_Mode = GlobalStaticConfiguration.SNMP_Mode;
     public SNMPMode SNMP_Mode
     {
@@ -3373,7 +3373,7 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    
+
     private string _snmp_ExportFilePath;
     public string SNMP_ExportFilePath
     {

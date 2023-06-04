@@ -205,7 +205,7 @@ public class SettingsGeneralViewModel : ViewModelBase
 
     private void VisibleToHideApplicationAction()
     {        
-        var newDefaultApplication = DefaultApplicationSelectedItem.Name == VisibleApplicationSelectedItem.Name;
+        var selectNewDefaultApplication = DefaultApplicationSelectedItem.Name == VisibleApplicationSelectedItem.Name;
 
         // Remove and add will fire a collection changed event --> detected in MainWindow
         var info = SettingsManager.Current.General_ApplicationList.First(x => VisibleApplicationSelectedItem.Name.Equals(x.Name));
@@ -215,7 +215,7 @@ public class SettingsGeneralViewModel : ViewModelBase
         SettingsManager.Current.General_ApplicationList.Remove(info);
         SettingsManager.Current.General_ApplicationList.Add(info);
 
-        if (newDefaultApplication)
+        if (selectNewDefaultApplication)
             DefaultApplicationSelectedItem = ApplicationsVisible.Cast<ApplicationInfo>().FirstOrDefault();
 
         ValidateHideVisibleApplications();

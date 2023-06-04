@@ -21,7 +21,7 @@ public sealed class RemoteDesktopKeyboardHookModeToStringConverter : IValueConve
     /// <returns>Translated <see cref="KeyboardHookMode"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (!(value is KeyboardHookMode keyboardHookMode))
+        if (value is not KeyboardHookMode keyboardHookMode)
             return "-/-";
 
         return RemoteDesktopKeyboardHookModeTranslator.GetInstance().Translate(keyboardHookMode);                        
