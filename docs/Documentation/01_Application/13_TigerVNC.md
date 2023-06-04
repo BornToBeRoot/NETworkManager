@@ -22,8 +22,8 @@ Virtual Network Computing (VNC) is a remote display protocol that allows you to 
 {: .info}
 TigerVNC is a high-speed version of VNC based on the RealVNC 4 and X.org code bases. TigerVNC started as a next-generation development effort for TightVNC on Unix and Linux platforms, but it split from its parent project in early 2009 so that TightVNC could focus on Windows platforms. TigerVNC supports a variant of Tight encoding that is greatly accelerated by the use of the libjpeg-turbo JPEG codec. See [TigerVNC repository](https://github.com/TigerVNC/tigervnc/){:target="\_blank"} for more details.
 
-{: .note }
-TigerVNC must be installed on the local computer in order to use this feature. On the [official website](https://tigervnc.org/){:target="\_blank"} you can find more information about TigerVNC and download it.
+{: .note}
+TigerVNC must be installed on the local computer in order to use this feature. You can download the latest version of TigerVNC from the [official website](https://tigervnc.org/){:target="\_blank"}.
 
 ![TigerVNC](13_TigerVNC.png)
 

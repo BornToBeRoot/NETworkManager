@@ -14,6 +14,9 @@ The **Web Console** is designed to browse the website of a host (e.g. server, sw
 
 Right-click on the tab will open the context menu with the following options:
 
+{: .note}
+WebView2 must be installed on the local computer in order to use this feature. You can download the latest version of WebView2 from the [official website](https://developer.microsoft.com/de-de/microsoft-edge/webview2/){:target="\_blank"}.
+
 - **Reload** - Reload the website.
 
 ![WebConsole](14_WebConsole.png)
