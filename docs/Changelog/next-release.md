@@ -43,6 +43,7 @@ Breaking changes
 - Profile dialog
   - Show an error next to the tab if the settings on the page contain errors [#2309](https://github.com/BornToBeRoot/NETworkManager/pull/2309){:target="\_blank"}
   - SNMP options are now validates (same as group) [#2309](https://github.com/BornToBeRoot/NETworkManager/pull/2309){:target="\_blank"}
+- Log program update check & errors to the log file [#2329](https://github.com/BornToBeRoot/NETworkManager/pull/2329){:target="\_blank"}
 
 ## Bugfixes
 
