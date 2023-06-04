@@ -1175,15 +1175,8 @@ public partial class MainWindow : INotifyPropertyChanged
     private void CheckForUpdates()
     {
         var updater = new Updater();
-
         updater.UpdateAvailable += Updater_UpdateAvailable;
-        updater.Error += Updater_Error;
         updater.CheckOnGitHub(Properties.Resources.NETworkManager_GitHub_User, Properties.Resources.NETworkManager_GitHub_Repo, AssemblyManager.Current.Version, SettingsManager.Current.Update_CheckForPreReleases);
-    }
-
-    private static void Updater_Error(object sender, EventArgs e)
-    {
-        //  Log
     }
 
     private void Updater_UpdateAvailable(object sender, UpdateAvailableArgs e)

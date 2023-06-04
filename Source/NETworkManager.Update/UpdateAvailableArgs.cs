@@ -14,7 +14,7 @@ public class UpdateAvailableArgs : EventArgs
     public Release Release { get; private set; }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="UpdateAvailableArgs"/> class and passes the <see cref="Release"/> as paramter.
+    /// Initializes a new instance of the <see cref="UpdateAvailableArgs"/> class with parameters.
     /// </summary>
     /// <param name="release">Release of the program update.</param>
     public UpdateAvailableArgs(Release release)
