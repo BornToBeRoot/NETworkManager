@@ -1950,7 +1950,7 @@ Le modifiche a questo valore avranno effetto dopo il riavvio dell'applicazione.<
     <value>Pannello di controllo</value>
   </data>
   <data name="AllSettingsCanBeChangedLaterInTheSettings" xml:space="preserve">
-    <value>Tutte le impostazioni possono essere modificate successivamente nelle impostazioni</value>
+    <value>Tutte le impostazioni possono essere modificate successivamente nelle impostazioni!</value>
   </data>
   <data name="CheckPublicIPAddress" xml:space="preserve">
     <value>Controlla l'indirizzo IP pubblico</value>
