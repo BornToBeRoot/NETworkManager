@@ -10,7 +10,7 @@ permalink: /Documentation/Application/TigerVNC
 
 # TigerVNC
 
-With **TigerVNC** you can connect to a remote computer via VNC. The integration of TigerVNC with NETworkManger supports tabs and profiles for hosts.
+With **TigerVNC** you can connect to a remote computer via VNC. The integration of TigerVNC with NETworkManger supports tabs and profiles for hosts. The connection can be established via a profile (double-click, Enter key or right-click `Connect`) or directly via the [connection](#connect) dialog.
 
 Right-click on the tab will open the context menu with the following options:
 
