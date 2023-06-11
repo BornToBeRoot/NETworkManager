@@ -319,7 +319,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
         _isLoading = false;
     }
-    
+
     private void LoadSettings()
     {
         IsSyncEnabled = SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS;
@@ -735,7 +735,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
             ConfigurationManager.OnDialogClose();
 
             // Create profile info
-            var info = new AWSSessionManagerSessionInfo
+            var sessionInfo = new AWSSessionManagerSessionInfo
             {
                 InstanceID = instance.InstanceID,
                 Profile = instance.Profile,
@@ -750,7 +750,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
             AddRegionToHistory(instance.Region);
 
             // Connect
-            Connect(info);
+            Connect(sessionInfo);
         }, async instance =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -768,7 +768,9 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
     private void ConnectProfile()
     {
-        Connect(NETworkManager.Profiles.Application.AWSSessionManager.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
+        var sessionInfo = NETworkManager.Profiles.Application.AWSSessionManager.CreateSessionInfo(SelectedProfile);
+
+        Connect(sessionInfo, SelectedProfile.Name);
     }
 
     private void ConnectProfileExternal()

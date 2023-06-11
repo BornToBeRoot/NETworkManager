@@ -63,12 +63,12 @@ public partial class WebConsoleControl : UserControlBase
     #endregion
 
     #region Constructor, load
-    public WebConsoleControl(WebConsoleSessionInfo info)
+    public WebConsoleControl(WebConsoleSessionInfo sessionInfo)
     {
         InitializeComponent();
         DataContext = this;
 
-        _sessionInfo = info;
+        _sessionInfo = sessionInfo;
 
         Browser2.NavigationStarting += Browser2_NavigationStarting;
         Browser2.NavigationCompleted += Browser2_NavigationCompleted;        

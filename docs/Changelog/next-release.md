@@ -51,6 +51,8 @@ Breaking changes
   - Fixed app crash when editing DNS server profile in some rare cases [#2282](https://github.com/BornToBeRoot/NETworkManager/pull/2282){:target="\_blank"}
 - **Remote Desktop**
   - `Adjust screen` via Context Menu now only adjusts the screen size if `Adjust screen automatically` or `Use the current view size as the screen size` is enabled [#2318](https://github.com/BornToBeRoot/NETworkManager/pull/2318){:target="\_blank"}
+- **PuTTY**
+  - Add missing baud rates for serial connection [#2337](https://github.com/BornToBeRoot/NETworkManager/pull/2337){:target="\_blank"}
 - **SNTP Lookup**
   - Fixed app crash when editing SNTP server profile in some rare cases [#2282](https://github.com/BornToBeRoot/NETworkManager/pull/2282){:target="\_blank"}
 - **Subnet Calculator**

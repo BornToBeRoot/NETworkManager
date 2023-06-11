@@ -56,14 +56,14 @@ public partial class TigerVNCControl : UserControlBase
     #endregion
 
     #region Constructor, load
-    public TigerVNCControl(TigerVNCSessionInfo info)
+    public TigerVNCControl(TigerVNCSessionInfo sessionInfo)
     {
         InitializeComponent();
         DataContext = this;
 
         _dialogCoordinator = DialogCoordinator.Instance;
 
-        _sessionInfo = info;
+        _sessionInfo = sessionInfo;
 
         Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
     }

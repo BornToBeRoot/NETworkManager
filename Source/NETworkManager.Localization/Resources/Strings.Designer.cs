@@ -8208,7 +8208,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die SerialLine ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Serial line ähnelt.
         /// </summary>
         public static string SerialLine {
             get {

@@ -485,10 +485,12 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         // Create log path
         DirectoryHelper.CreateWithEnvironmentVariables(Settings.Application.PuTTY.LogPath);
 
+        var sessionInfo = NETworkManager.Profiles.Application.PuTTY.CreateSessionInfo(SelectedProfile);
+
         ProcessStartInfo info = new()
         {
             FileName = SettingsManager.Current.PuTTY_ApplicationFilePath,
-            Arguments = PuTTY.BuildCommandLine(NETworkManager.Profiles.Application.PuTTY.CreateSessionInfo(SelectedProfile))
+            Arguments = PuTTY.BuildCommandLine(sessionInfo)
         };
 
         Process.Start(info);

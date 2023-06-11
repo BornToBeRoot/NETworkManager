@@ -58,14 +58,14 @@ public partial class AWSSessionManagerControl : UserControlBase
     #endregion
 
     #region Constructor, load
-    public AWSSessionManagerControl(AWSSessionManagerSessionInfo info)
+    public AWSSessionManagerControl(AWSSessionManagerSessionInfo sessionInfo)
     {
         InitializeComponent();
         DataContext = this;
 
         _dialogCoordinator = DialogCoordinator.Instance;
 
-        _sessionInfo = info;
+        _sessionInfo = sessionInfo;
 
         Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
     }

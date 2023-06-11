@@ -1090,7 +1090,7 @@ Create one...</value>
     <value>Serial</value>
   </data>
   <data name="SerialLine" xml:space="preserve">
-    <value>SerialLine</value>
+    <value>Serial line</value>
   </data>
   <data name="Service" xml:space="preserve">
     <value>Service</value>
