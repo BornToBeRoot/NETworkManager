@@ -57,14 +57,14 @@ public partial class PuTTYControl : UserControlBase
     #endregion
 
     #region Constructor, load
-    public PuTTYControl(PuTTYSessionInfo info)
+    public PuTTYControl(PuTTYSessionInfo sessionInfo)
     {
         InitializeComponent();
         DataContext = this;
 
         _dialogCoordinator = DialogCoordinator.Instance;
 
-        _sessionInfo = info;
+        _sessionInfo = sessionInfo;
 
         Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
     }

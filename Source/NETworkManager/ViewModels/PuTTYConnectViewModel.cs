@@ -19,7 +19,7 @@ public class PuTTYConnectViewModel : ViewModelBase
     public int DefaultTelnetPort => SettingsManager.Current.PuTTY_TelnetPort;
     public int DefaultBaudRate => SettingsManager.Current.PuTTY_BaudRate;
     public int DefaultRloginPort => SettingsManager.Current.PuTTY_RloginPort;
-    public int DefaultRaw => SettingsManager.Current.PuTTY_DefaultRaw;
+    public int DefaultRaw => SettingsManager.Current.PuTTY_RawPort;
 
     public ConnectionMode ConnectionMode { get; set; }
 

@@ -9,7 +9,7 @@ public class BaudValidator : ValidationRule
     /// <summary>
     /// Possible baud rates.
     /// </summary>
-    private readonly int[] _bauds = { 75, 300, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200 };
+    private readonly int[] _bauds = { 300, 600, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200, 128000, 256000, 512000, 921600 };
 
     /// <summary>
     /// Check if the int is a valid baud rate.

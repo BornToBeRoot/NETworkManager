@@ -6507,7 +6507,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die SSH and Raw Log ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die SSH and Raw log ähnelt.
         /// </summary>
         public static string PuTTYLogMode_SSHRawLog {
             get {
@@ -6521,15 +6521,6 @@ namespace NETworkManager.Localization.Resources {
         public static string PuTTYProcessHasEnded {
             get {
                 return ResourceManager.GetString("PuTTYProcessHasEnded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die PuTTY profile ähnelt.
-        /// </summary>
-        public static string PuTTYProfile {
-            get {
-                return ResourceManager.GetString("PuTTYProfile", resourceCulture);
             }
         }
         
@@ -8208,7 +8199,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die SerialLine ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Serial line ähnelt.
         /// </summary>
         public static string SerialLine {
             get {

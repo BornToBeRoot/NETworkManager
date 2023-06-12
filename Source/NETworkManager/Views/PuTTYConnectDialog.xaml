@@ -95,7 +95,7 @@
                         <Setter Property="Text" Value="{x:Static localization:Strings.Port}" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding UseSerial}" Value="True">
-                                <Setter Property="Text" Value="{x:Static localization:Strings.Baud}" />
+                                <Setter Property="Text" Value="{x:Static localization:Strings.BaudRate}" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>

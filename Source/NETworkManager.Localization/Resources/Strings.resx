@@ -1014,9 +1014,6 @@ Create one...</value>
   <data name="PuTTYProcessHasEnded" xml:space="preserve">
     <value>PuTTY process has ended!</value>
   </data>
-  <data name="PuTTYProfile" xml:space="preserve">
-    <value>PuTTY profile</value>
-  </data>
   <data name="Questions" xml:space="preserve">
     <value>Questions</value>
   </data>
@@ -1090,7 +1087,7 @@ Create one...</value>
     <value>Serial</value>
   </data>
   <data name="SerialLine" xml:space="preserve">
-    <value>SerialLine</value>
+    <value>Serial line</value>
   </data>
   <data name="Service" xml:space="preserve">
     <value>Service</value>
@@ -2692,7 +2689,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>SSH log</value>
   </data>
   <data name="PuTTYLogMode_SSHRawLog" xml:space="preserve">
-    <value>SSH and Raw Log</value>
+    <value>SSH and Raw log</value>
   </data>
   <data name="EnterValidFileName" xml:space="preserve">
     <value>Enter a valid file name!</value>

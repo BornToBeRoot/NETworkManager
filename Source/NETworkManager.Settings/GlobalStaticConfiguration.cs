@@ -29,7 +29,7 @@ public static class GlobalStaticConfiguration
     public static double Profile_MaxWidthExpanded => 500;
     public static double Profile_FloatPointFix => 1.0;
     public static int Profile_EncryptionKeySize => 256;
-    public static int Profile_EncryptionIterations => 1000000;    
+    public static int Profile_EncryptionIterations => 1000000;
 
     // Filter for file dialog
     public static string ApplicationFileExtensionFilter => "Application (*.exe)|*.exe";
@@ -152,9 +152,9 @@ public static class GlobalStaticConfiguration
     public static int PuTTY_SSHPort => 22;
     public static string PuTTY_SerialLine => "COM1";
     public static int PuTTY_TelnetPort => 23;
-    public static int PuTTY_RloginPort => 513;
     public static int PuTTY_BaudRate => 9600;
-    public static int PuTTY_Raw => 0;
+    public static int PuTTY_RloginPort => 513;
+    public static int PuTTY_RawPort => 23;
 
     // Application: AWSSessionManager
     public static bool AWSSessionManager_EnableSyncInstanceIDsFromAWS => false;

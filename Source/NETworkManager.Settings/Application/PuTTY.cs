@@ -25,7 +25,7 @@ public static class PuTTY
                 portOrBaud = SettingsManager.Current.PuTTY_RloginPort;
                 break;
             case ConnectionMode.RAW:
-                portOrBaud = SettingsManager.Current.PuTTY_DefaultRaw;
+                portOrBaud = SettingsManager.Current.PuTTY_RawPort;
                 break;
             case ConnectionMode.Serial:
                 portOrBaud = SettingsManager.Current.PuTTY_BaudRate;

@@ -10,12 +10,15 @@ permalink: /Documentation/Application/PowerShell
 
 # PowerShell
 
-With **PowerShell** you can start PowerShell consoles on the local computer or connect to remote computers via [PowerShell Remoting](https://learn.microsoft.com/en-us/powershell/scripting/learn/ps101/08-powershell-remoting){:target="\_blank"}. The integration of PowerShell with NETworkManger supports tabs and profiles for hosts.
+With **PowerShell** you can start PowerShell consoles on the local computer or connect to remote computers via [PowerShell Remoting](https://learn.microsoft.com/en-us/powershell/scripting/learn/ps101/08-powershell-remoting){:target="\_blank"}. The integration of PowerShell with NETworkManger supports tabs and profiles for hosts. The connection can be established via a profile (double-click, Enter key or right-click `Connect`) or directly via the [connection](#connect) dialog.  
 
 Right-click on the tab will open the context menu with the following options:
 
 - **Reconnect** - Restart the PowerShell console (and reconnect to the remote computer).
 - **Resize** - Resize the PowerShell console to the current view size (if connected).
+
+{: .info}
+PowerShell is a command-line shell and scripting language developed by Microsoft for automating administrative tasks and managing system configurations. It provides a robust set of built-in commands and access to .NET Framework objects, allowing for efficient system administration and automation. PowerShell uses a verb-noun syntax, allowing users to perform a wide range of operations by executing simple and powerful commands.
 
 {: .note}
 Windows PowerShell and PowerShell Core are supported. Indructions for installing PowerShell Core can be found on the [official website](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?){:target="\_blank"}.
@@ -210,12 +213,10 @@ Path to the PowerShell console.
 
 **Type:** `String`
 
-**Default:** `C:\Program Files\PowerShell\7\pwsh.exe`, `C:\Program Files (x86)\PowerShell\7\pwsh.exe` or `C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe`
+**Default:** `%ProgramFiles%\PowerShell\7\pwsh.exe`, `%ProgramFiles(x86)%\PowerShell\7\pwsh.exe` or `%windir%\System32\WindowsPowerShell\v1.0\powershell.exe`
 
 **Example:**
-
-- `C:\path\to\PowerShell.exe`
-- `C:\path\to\pwsh.exe`
+- `C:\Program Files\PowerShell\7\pwsh.exe`
 
 {: .note }
 The `Configure` button opens the PowerShell console to configure it.

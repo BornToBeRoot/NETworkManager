@@ -1961,7 +1961,7 @@
                                             <Setter Property="Content" Value="{x:Static localization:Strings.Port}" />
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding PuTTY_UseSerial}" Value="True">
-                                                    <Setter Property="Content" Value="{x:Static localization:Strings.Baud}" />
+                                                    <Setter Property="Content" Value="{x:Static localization:Strings.BaudRate}" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>

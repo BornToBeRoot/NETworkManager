@@ -56,14 +56,14 @@ public partial class PowerShellControl : UserControlBase
     #endregion
 
     #region Constructor, load
-    public PowerShellControl(PowerShellSessionInfo info)
+    public PowerShellControl(PowerShellSessionInfo sessionInfo)
     {
         InitializeComponent();
         DataContext = this;
 
         _dialogCoordinator = DialogCoordinator.Instance;
 
-        _sessionInfo = info;
+        _sessionInfo = sessionInfo;
 
         Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
     }

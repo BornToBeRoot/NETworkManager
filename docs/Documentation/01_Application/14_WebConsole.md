@@ -10,7 +10,7 @@ permalink: /Documentation/Application/WebConsole
 
 # Web Console
 
-The **Web Console** is designed to browse the website of a host (e.g. server, switch, router, dashboard, etc.) to display informations or to configure it.
+The **Web Console** is designed to browse the website of a host (e.g. server, switch, router, dashboard, etc.) to display informations or to configure it. The connection can be established via a profile (double-click, Enter key or right-click `Connect`) or directly via the [connection](#connect) dialog.  
 
 Right-click on the tab will open the context menu with the following options:
 

@@ -259,11 +259,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     }
     #endregion
 
-    private void WriteDefaultProfileToRegistry()
-    {
-        if (IsConfigured)
-            PuTTY.WriteDefaultProfileToRegistry(SettingsManager.Current.Appearance_Theme);
-    }
+   
 
     #region ICommand & Actions
     public ItemActionCallback CloseItemCommand => CloseItemAction;
@@ -485,10 +481,12 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         // Create log path
         DirectoryHelper.CreateWithEnvironmentVariables(Settings.Application.PuTTY.LogPath);
 
+        var sessionInfo = NETworkManager.Profiles.Application.PuTTY.CreateSessionInfo(SelectedProfile);
+
         ProcessStartInfo info = new()
         {
             FileName = SettingsManager.Current.PuTTY_ApplicationFilePath,
-            Arguments = PuTTY.BuildCommandLine(NETworkManager.Profiles.Application.PuTTY.CreateSessionInfo(SelectedProfile))
+            Arguments = PuTTY.BuildCommandLine(sessionInfo)
         };
 
         Process.Start(info);
@@ -672,6 +670,12 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     public void OnProfileManagerDialogClose()
     {
         ConfigurationManager.OnDialogClose();
+    }
+
+    private void WriteDefaultProfileToRegistry()
+    {
+        if (IsConfigured)
+            PuTTY.WriteDefaultProfileToRegistry(SettingsManager.Current.Appearance_Theme);
     }
     #endregion
 
