@@ -98,7 +98,7 @@ TCP port to use for the VNC connection.
 
 ### File path
 
-The path to the TigerVNC executable file.
+Path to the TigerVNC executable.
 
 **Type:** `String`
 

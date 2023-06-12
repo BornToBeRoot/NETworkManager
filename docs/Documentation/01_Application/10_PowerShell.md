@@ -213,12 +213,10 @@ Path to the PowerShell console.
 
 **Type:** `String`
 
-**Default:** `C:\Program Files\PowerShell\7\pwsh.exe`, `C:\Program Files (x86)\PowerShell\7\pwsh.exe` or `C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe`
+**Default:** `%ProgramFiles%\PowerShell\7\pwsh.exe`, `%ProgramFiles(x86)%\PowerShell\7\pwsh.exe` or `%windir%\System32\WindowsPowerShell\v1.0\powershell.exe`
 
 **Example:**
-
-- `C:\path\to\PowerShell.exe`
-- `C:\path\to\pwsh.exe`
+- `C:\Program Files\PowerShell\7\pwsh.exe`
 
 {: .note }
 The `Configure` button opens the PowerShell console to configure it.
