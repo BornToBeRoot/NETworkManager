@@ -89,7 +89,7 @@ Deprecated
   - Application > DNS Lookup [#2273](https://github.com/BornToBeRoot/NETworkManager/pull/2273){:target="\_blank"}
   - Application > Remote Desktop [#2293](https://github.com/BornToBeRoot/NETworkManager/pull/2293){:target="\_blank"} [#2324](https://github.com/BornToBeRoot/NETworkManager/pull/2324){:target="\_blank"}
   - Application > PowerShell [#2249](https://github.com/BornToBeRoot/NETworkManager/pull/2249){:target="\_blank"} [#2324](https://github.com/BornToBeRoot/NETworkManager/pull/2324){:target="\_blank"}
-  - Application > PuTTY [#2324](https://github.com/BornToBeRoot/NETworkManager/pull/2324){:target="\_blank"}
+  - Application > PuTTY [#2324](https://github.com/BornToBeRoot/NETworkManager/pull/2324){:target="\_blank"} [#2337](https://github.com/BornToBeRoot/NETworkManager/pull/2337){:target="\_blank"}
   - Application > TigerVNC [#2248](https://github.com/BornToBeRoot/NETworkManager/pull/2248){:target="\_blank"} [#2324](https://github.com/BornToBeRoot/NETworkManager/pull/2324){:target="\_blank"}
   - Application > Web Console [#2244](https://github.com/BornToBeRoot/NETworkManager/pull/2244){:target="\_blank"} [#2324](https://github.com/BornToBeRoot/NETworkManager/pull/2324){:target="\_blank"}
   - Application > SNMP [#2289](https://github.com/BornToBeRoot/NETworkManager/pull/2289){:target="\_blank"} [#2293](https://github.com/BornToBeRoot/NETworkManager/pull/2293){:target="\_blank"}
