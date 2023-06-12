@@ -1609,7 +1609,7 @@ public class ProfileViewModel : ViewModelBase
     }
     #endregion
 
-    #region PuTTY 
+    #region PuTTY
     private bool _puTTY_Enabled;
     public bool PuTTY_Enabled
     {
@@ -1741,11 +1741,11 @@ public class ProfileViewModel : ViewModelBase
                 return;
 
             if (value)
-            {
+            {                
                 if (PuTTY_ConnectionMode == ConnectionMode.Serial)
                     PuTTY_HostOrSerialLine = Host;
 
-                PuTTY_PortOrBaud = 0;
+                PuTTY_PortOrBaud = SettingsManager.Current.PuTTY_RawPort;
                 PuTTY_ConnectionMode = ConnectionMode.RAW;
             }
 
@@ -2788,7 +2788,7 @@ public class ProfileViewModel : ViewModelBase
         PuTTY_InheritHost = profileInfo.PuTTY_InheritHost;
         PuTTY_HostOrSerialLine = profileInfo.PuTTY_HostOrSerialLine;
         PuTTY_OverridePortOrBaud = profileInfo.PuTTY_OverridePortOrBaud;
-        PuTTY_PortOrBaud = profileInfo.PuTTY_OverridePortOrBaud ? profileInfo.PuTTY_PortOrBaud : Settings.Application.PuTTY.GetPortOrBaudByConnectionMode(PuTTY_ConnectionMode);
+        PuTTY_PortOrBaud = profileInfo.PuTTY_PortOrBaud;
         PuTTY_OverrideUsername = profileInfo.PuTTY_OverrideUsername;
         PuTTY_Username = profileInfo.PuTTY_Username;
         PuTTY_OverridePrivateKeyFile = profileInfo.PuTTY_OverridePrivateKeyFile;

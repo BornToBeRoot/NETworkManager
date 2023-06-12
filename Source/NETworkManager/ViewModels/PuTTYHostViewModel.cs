@@ -259,11 +259,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     }
     #endregion
 
-    private void WriteDefaultProfileToRegistry()
-    {
-        if (IsConfigured)
-            PuTTY.WriteDefaultProfileToRegistry(SettingsManager.Current.Appearance_Theme);
-    }
+   
 
     #region ICommand & Actions
     public ItemActionCallback CloseItemCommand => CloseItemAction;
@@ -674,6 +670,12 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     public void OnProfileManagerDialogClose()
     {
         ConfigurationManager.OnDialogClose();
+    }
+
+    private void WriteDefaultProfileToRegistry()
+    {
+        if (IsConfigured)
+            PuTTY.WriteDefaultProfileToRegistry(SettingsManager.Current.Appearance_Theme);
     }
     #endregion
 

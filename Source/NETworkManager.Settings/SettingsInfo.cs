@@ -2809,20 +2809,7 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private int _puTTY_RloginPort = GlobalStaticConfiguration.PuTTY_RloginPort;
-    public int PuTTY_RloginPort
-    {
-        get => _puTTY_RloginPort;
-        set
-        {
-            if (value == _puTTY_RloginPort)
-                return;
 
-            _puTTY_RloginPort = value;
-            OnPropertyChanged();
-            SettingsChanged = true;
-        }
-    }
 
     private int _puTTY_BaudRate = GlobalStaticConfiguration.PuTTY_BaudRate;
     public int PuTTY_BaudRate
@@ -2839,16 +2826,31 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private int _puTTY_DefaultRaw = GlobalStaticConfiguration.PuTTY_Raw;
-    public int PuTTY_DefaultRaw
+    private int _puTTY_RloginPort = GlobalStaticConfiguration.PuTTY_RloginPort;
+    public int PuTTY_RloginPort
     {
-        get => _puTTY_DefaultRaw;
+        get => _puTTY_RloginPort;
         set
         {
-            if (value == _puTTY_DefaultRaw)
+            if (value == _puTTY_RloginPort)
                 return;
 
-            _puTTY_DefaultRaw = value;
+            _puTTY_RloginPort = value;
+            OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
+
+    private int _puTTY_RawPort = GlobalStaticConfiguration.PuTTY_RawPort;
+    public int PuTTY_RawPort
+    {
+        get => _puTTY_RawPort;
+        set
+        {
+            if (value == _puTTY_RawPort)
+                return;
+
+            _puTTY_RawPort = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
