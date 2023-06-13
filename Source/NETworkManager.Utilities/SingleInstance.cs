@@ -1,4 +1,4 @@
-﻿// Source: http://sanity-free.org/143/csharp_dotnet_single_instance_application.html
+﻿// Source: https://sanity-free.org/143/csharp_dotnet_single_instance_application.html
 
 using System;
 using System.Runtime.InteropServices;

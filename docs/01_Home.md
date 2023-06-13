@@ -75,4 +75,4 @@ And the best part... it's open source!
   </p> 
 </div>
 
-The code is open source and available on [GitHub](https://github.com/BornToBeRoot/NETworkManager){:target="\_blank"} published under the [GNU General Public License v3](https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE){:target="\_blank"}. This project has adopted the [code of conduct](https://github.com/BornToBeRoot/NETworkManager/blob/main/CODE_OF_CONDUCT.md){:target="\_blank"} defined by the [Contributor Covenant](http://contributor-covenant.org/){:target="\_blank"}.
+The code is open source and available on [GitHub](https://github.com/BornToBeRoot/NETworkManager){:target="\_blank"} published under the [GNU General Public License v3](https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE){:target="\_blank"}. This project has adopted the [code of conduct](https://github.com/BornToBeRoot/NETworkManager/blob/main/CODE_OF_CONDUCT.md){:target="\_blank"} defined by the [Contributor Covenant](https://contributor-covenant.org/){:target="\_blank"}.

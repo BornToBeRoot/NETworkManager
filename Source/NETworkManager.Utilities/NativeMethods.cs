@@ -52,7 +52,7 @@ public class NativeMethods
     [DllImport("user32.dll", EntryPoint = "GetWindowLongA", SetLastError = true)]
     public static extern long GetWindowLong(IntPtr hWnd, int nIndex);
 
-    // http://msdn.microsoft.com/en-us/library/windows/desktop/ms644898%28v=vs.85%29.aspx
+    // https://msdn.microsoft.com/en-us/library/windows/desktop/ms644898%28v=vs.85%29.aspx
     public static IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
     {
         return IntPtr.Size == 8 ? SetWindowLongPtr64(hWnd, nIndex, dwNewLong) : new IntPtr(SetWindowLong32(hWnd, nIndex, dwNewLong));

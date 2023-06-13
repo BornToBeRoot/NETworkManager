@@ -8,7 +8,7 @@ git:
       # path expression to translation files, must contain <lang> placeholder
       translation_files_expression: 'Source/NETworkManager.Localization/Resources/Strings.<lang>.resx'
   settings:
-      # http://www.codedigest.com/CodeDigest/207-Get-All-Language-Country-Code-List-for-all-Culture-in-C---ASP-Net.aspx
+      # https://www.codedigest.com/CodeDigest/207-Get-All-Language-Country-Code-List-for-all-Culture-in-C---ASP-Net.aspx
       language_mapping:        
           de_DE: de-DE
           zh_CN: zh-CN
