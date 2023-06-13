@@ -1014,9 +1014,6 @@ Ustvarite enega...</value>
   <data name="PuTTYProcessHasEnded" xml:space="preserve">
     <value>Proces PuTTY se je končal!</value>
   </data>
-  <data name="PuTTYProfile" xml:space="preserve">
-    <value>Profil PuTTY</value>
-  </data>
   <data name="Questions" xml:space="preserve">
     <value>Vprašanja</value>
   </data>
@@ -1090,7 +1087,7 @@ Ustvarite enega...</value>
     <value>Serijsko</value>
   </data>
   <data name="SerialLine" xml:space="preserve">
-    <value>Serijska vrstica</value>
+    <value>Zaporedna vrsta</value>
   </data>
   <data name="Service" xml:space="preserve">
     <value>Storitev</value>
@@ -2688,7 +2685,7 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>Dnevnik SSH</value>
   </data>
   <data name="PuTTYLogMode_SSHRawLog" xml:space="preserve">
-    <value>SSH in surovi dnevnik</value>
+    <value>SSH in surov dnevnik</value>
   </data>
   <data name="EnterValidFileName" xml:space="preserve">
     <value>Vnesite veljavno ime!</value>
@@ -3530,5 +3527,8 @@ V zgornjem desnem kotu kliknite na gumb za Pomoč/Dokumentacijo (levo od gumba z
   </data>
   <data name="SNTPServer" xml:space="preserve">
     <value>Strežnik SNTP</value>
+  </data>
+  <data name="ErrorMessage_TabPageHasError" xml:space="preserve">
+    <value>Nastavitve na tej strani vsebujejo napake. Popravite jih, da jih lahko shranite.</value>
   </data>
 </root>
