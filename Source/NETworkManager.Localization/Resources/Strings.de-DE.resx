@@ -1014,9 +1014,6 @@ Erstelle eins...</value>
   <data name="PuTTYProcessHasEnded" xml:space="preserve">
     <value>PuTTY-Prozess wurde beendet!</value>
   </data>
-  <data name="PuTTYProfile" xml:space="preserve">
-    <value>PuTTY-Profil</value>
-  </data>
   <data name="Questions" xml:space="preserve">
     <value>Anfragen</value>
   </data>
@@ -1090,7 +1087,7 @@ Erstelle eins...</value>
     <value>Seriell</value>
   </data>
   <data name="SerialLine" xml:space="preserve">
-    <value>Serielle Schnittstelle</value>
+    <value>Serial line</value>
   </data>
   <data name="Service" xml:space="preserve">
     <value>Dienst</value>
@@ -1935,7 +1932,7 @@ Der Wert 0 deaktiviert diese Funktion.
     <value>Dashboard</value>
   </data>
   <data name="AllSettingsCanBeChangedLaterInTheSettings" xml:space="preserve">
-    <value>Alle Einstellungen können später in den Einstellungen geändert werden</value>
+    <value>Alle Einstellungen können später in den Einstellungen geändert werden!</value>
   </data>
   <data name="CheckPublicIPAddress" xml:space="preserve">
     <value>Überprüfen der öffentlichen IP-Adresse</value>
@@ -2692,7 +2689,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>SSH-Log</value>
   </data>
   <data name="PuTTYLogMode_SSHRawLog" xml:space="preserve">
-    <value>SSH und RAW-Log</value>
+    <value>SSH und Raw-Log</value>
   </data>
   <data name="EnterValidFileName" xml:space="preserve">
     <value>Geben Sie einen gültigen Dateinamen ein!</value>
