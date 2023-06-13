@@ -1024,9 +1024,6 @@ Controlla i parametri!</value>
   <data name="PuTTYProcessHasEnded" xml:space="preserve">
     <value>Il processo PuTTY è terminato!</value>
   </data>
-  <data name="PuTTYProfile" xml:space="preserve">
-    <value>Profilo PuTTY</value>
-  </data>
   <data name="Questions" xml:space="preserve">
     <value>Domande</value>
   </data>
@@ -1100,7 +1097,7 @@ Controlla i parametri!</value>
     <value>Seriale</value>
   </data>
   <data name="SerialLine" xml:space="preserve">
-    <value>Liena seriale</value>
+    <value>Linea seriale</value>
   </data>
   <data name="Service" xml:space="preserve">
     <value>Servizio</value>
@@ -2713,7 +2710,7 @@ Vedi messaggio errore: "{0}"</value>
     <value>Registro eventi SSH</value>
   </data>
   <data name="PuTTYLogMode_SSHRawLog" xml:space="preserve">
-    <value>Registro eventi SSH e RAW</value>
+    <value>Registro SSH e RAW</value>
   </data>
   <data name="EnterValidFileName" xml:space="preserve">
     <value>Inserisci un nome di file valido!</value>
