@@ -26,6 +26,8 @@ Remote Desktop Protocol (RDP) is a proprietary protocol developed by Microsoft t
 
 ![RemoteDesktop](09_RemoteDesktop.png)
 
+<hr>
+
 ## Connect
 
 ### Host
@@ -87,6 +89,8 @@ Password to authenticate with the remote computer.
 
 {: .note }
 Only available if [Use credentials](#use-credentials) is enabled.
+
+<hr>
 
 ## Profile
 
@@ -473,6 +477,8 @@ Configure the network connection type for the remote desktop connection.
 - `WAN (10 Mbps or higher with high latency)`
 - `LAN (10 Mbps or higher)`
 
+<hr>
+
 ## Group
 
 ### Use credentials
@@ -833,6 +839,8 @@ Configure the network connection type for the remote desktop connection.
 - `High-speed broadband (2 Mbps - 10 Mbps)`
 - `WAN (10 Mbps or higher with high latency)`
 - `LAN (10 Mbps or higher)`
+
+<hr>
 
 ## Settings
 

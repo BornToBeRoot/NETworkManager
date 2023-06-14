@@ -38,6 +38,8 @@ Multiple inputs can be combined with a semicolon (`;`).<br />Example: `10.0.0.0/
 {: .note}
 Right-click on the result to copy or export the information.
 
+<hr>
+
 ## Profile
 
 ### Inherit host from general
@@ -83,6 +85,8 @@ TCP ports to scan each host for.
 
 {: .note }
 See also the [Port Scanner](/NETworkManager/Documentation/Application/PortScanner) example inputs for more information about the supported host formats.
+
+<hr>
 
 ## Settings
 

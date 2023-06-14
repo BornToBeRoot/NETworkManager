@@ -64,6 +64,8 @@ You may need to confirm a Windows UAC dialog to make changes to the network inte
 
 ![NetworkInterface_Configure](02_NetworkInterface_Configure.png)
 
+<hr>
+
 ## Profile
 
 ### Obtain an IP address automatically

@@ -26,6 +26,8 @@ PuTTY must be installed on the local computer in order to use this feature. You 
 
 ![PuTTY](11_PuTTY.png)
 
+<hr>
+
 ## Connect
 
 ### Mode
@@ -168,6 +170,8 @@ Additional command line parameters to use for the connection which are appended.
 
 {: .note }
 Additional command line parameters to use for the connection. For more information about the available parameters, see the [PuTTY documentation](https://the.earth.li/~sgtatham/putty/latest/htmldoc/Chapter3.html){:target="\_blank"}.
+
+<hr>
 
 ## Profile
 
@@ -393,6 +397,8 @@ Additional command line parameters to use for the connection which are appended.
 {: .note }
 Additional command line parameters to use for the connection. For more information about the available parameters, see the [PuTTY documentation](https://the.earth.li/~sgtatham/putty/latest/htmldoc/Chapter3.html){:target="\_blank"}.
 
+<hr>
+
 ## Group
 
 ### Username
@@ -500,6 +506,8 @@ Additional command line parameters to use for the connection which are appended.
 
 {: .note }
 Additional command line parameters to use for the connection. For more information about the available parameters, see the [PuTTY documentation](https://the.earth.li/~sgtatham/putty/latest/htmldoc/Chapter3.html){:target="\_blank"}.
+
+<hr>
 
 ## Settings
 

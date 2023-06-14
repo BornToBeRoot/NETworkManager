@@ -25,6 +25,8 @@ Multiple inputs can be combined with a semicolon (`;`).<br />Example: `server-01
 {: .note}
 Right-click on the result to copy or export the information.
 
+<hr>
+
 ## Profile
 
 ### Inherit host from general
@@ -50,6 +52,7 @@ Hostname or IP address (or any other resource record) to query.
 
 - `server-01.borntoberoot.net` (`A` record)
 - `1.1.1.1` (`PTR` record)
+<hr>
 
 ## Settings
 

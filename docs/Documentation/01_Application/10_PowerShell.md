@@ -25,6 +25,8 @@ Windows PowerShell and PowerShell Core are supported. Indructions for installing
 
 ![PowerShell](10_PowerShell.png)
 
+<hr>
+
 ## Connect
 
 ### Remote console
@@ -90,6 +92,8 @@ Execution policy of the PowerShell console when it is started.
 - `RemoteSigned`
 - `Unrestricted`
 - `Bypass`
+
+<hr>
 
 ## Profile
 
@@ -166,6 +170,8 @@ Execution policy of the PowerShell console when it is started.
 - `Unrestricted`
 - `Bypass`
 
+<hr>
+
 ## Group
 
 ### Command
@@ -204,6 +210,8 @@ Execution policy of the PowerShell console when it is started.
 - `RemoteSigned`
 - `Unrestricted`
 - `Bypass`
+
+<hr>
 
 ## Settings
 

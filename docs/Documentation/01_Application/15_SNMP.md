@@ -29,6 +29,8 @@ Multiple OIDs (`.1.3.6.1.2.1.1; .1.3.6.1.2.1.2`) can be specified when using the
 {: .note}
 Right-click on the result to copy or export the information.
 
+<hr>
+
 ## Profile
 
 ### Inherit host from general
@@ -185,6 +187,8 @@ Only available when using [version `3`](#version) and [security `AuthPriv`](#sec
 {: .warning }
 The profile file should be encrypted when storing sensitive information like passwords. See [FAQ > Profile encryption](https://borntoberoot.net/NETworkManager/FAQ#profile-encryption) for more details.
 
+<hr>
+
 ## Group
 
 ### OID
@@ -316,6 +320,8 @@ Only available when using [version `3`](#version-1) and [security `AuthPriv`](#s
 
 {: .warning }
 The profile file should be encrypted when storing sensitive information like passwords. See [FAQ > Profile encryption](https://borntoberoot.net/NETworkManager/FAQ#profile-encryption) for more details.
+
+<hr>
 
 ## Settings
 

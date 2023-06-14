@@ -30,6 +30,8 @@ Example inputs:
 {: .note}
 Right-click on the result to copy or export the information.
 
+<hr>
+
 ## Profile
 
 ### Inherit host from general

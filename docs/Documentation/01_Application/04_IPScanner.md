@@ -37,6 +37,8 @@ If you right-click on a selected result, you can forward the device information 
 {: .note}
 Right-click on the result to copy or export the information.
 
+<hr>
+
 ## Profile
 
 ### Inherit host from general
@@ -62,6 +64,8 @@ Hostname or IP range to scan for active devices.
 
 - `10.0.0.0/24; 10.0.[10-20].1`
 - `server-01.borntoberoot.net`
+
+<hr>
 
 ## Settings
 

@@ -26,6 +26,8 @@ Possible inputs:
 
 ![WakeOnLAN](18_WakeOnLAN.png)
 
+<hr>
+
 ## Profile
 
 ### MAC address
@@ -47,6 +49,8 @@ Broadcast address of the network in which the device is located.
 **Default:** `Empty`
 
 **Example:** `192.168.0.255`
+
+<hr>
 
 ## Settings
 

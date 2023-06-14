@@ -28,6 +28,8 @@ Here you can find more information about [AWS Systems Manager](https://aws.amazo
 
 ![AWSSessionManager](12_AWSSessionManager.png)
 
+<hr>
+
 ## Prerequisites
 
 The following prerequisites must be met to use AWS Systems Manager Session Manager.
@@ -267,6 +269,8 @@ You can verify the connection to the EC2 instance through AWS Systems Manager Se
 aws ssm start-session --target instance-id <INSTANCE_ID>
 ```
 
+<hr>
+
 ## Connect
 
 ### Instance ID
@@ -305,6 +309,8 @@ AWS region where the instance is located.
 {: .note }
 If not set, the AWS CLI default settings are used!
 
+<hr>
+
 ## Profile
 
 ### Instance ID
@@ -337,6 +343,8 @@ AWS region where the instance is located.
 
 **Example:** `eu-central-1`
 
+<hr>
+
 ## Group
 
 ### Profile
@@ -358,6 +366,8 @@ AWS region where the instance is located.
 **Default:** `Empty`
 
 **Example:** `eu-central-1`
+
+<hr>
 
 ## Settings
 

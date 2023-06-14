@@ -10,7 +10,7 @@ permalink: /Documentation/Application/WebConsole
 
 # Web Console
 
-The **Web Console** is designed to browse the website of a host (e.g. server, switch, router, dashboard, etc.) to display informations or to configure it. The connection can be established via a profile (double-click, Enter key or right-click `Connect`) or directly via the [connection](#connect) dialog.  
+The **Web Console** is designed to browse the website of a host (e.g. server, switch, router, dashboard, etc.) to display informations or to configure it. The connection can be established via a profile (double-click, Enter key or right-click `Connect`) or directly via the [connection](#connect) dialog.
 
 Right-click on the tab will open the context menu with the following options:
 
@@ -21,6 +21,8 @@ WebView2 must be installed on the local computer in order to use this feature. Y
 
 ![WebConsole](14_WebConsole.png)
 
+<hr>
+
 ## Connect
 
 URL of the website to display in the web console.
@@ -28,6 +30,8 @@ URL of the website to display in the web console.
 **Type:** `String`
 
 **Example:** `https://pihole.borntoberoot.net/admin/`
+
+<hr>
 
 ## Profile
 
@@ -40,6 +44,8 @@ URL of the website to display in the web console.
 **Default:** `Empty`
 
 **Example:** `https://pihole.borntoberoot.net/admin/`
+
+<hr>
 
 ## Settings
 

@@ -23,6 +23,8 @@ With the **Bit Calculator** different data units can be converted. Based on the 
 {: .note}
 Right-click on the result to copy the information.
 
+<hr>
+
 ## Settings
 
 ### Notation

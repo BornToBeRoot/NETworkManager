@@ -14,6 +14,9 @@ The **Dashboard** shows the status of your computer's current network connection
 
 As soon as the status of the local network adapter changes (e.g. Ethernet cable is plugged in, WLAN or VPN is connected, etc.), the connection to the router and Internet is checked.
 
+{: .note}
+With `F5` you can refresh the dashboard at any time. You may need to click into a widget first.
+
 ![Dashboard](01_Dashboard.png)
 
 <hr>

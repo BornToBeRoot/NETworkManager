@@ -22,6 +22,8 @@ Example inputs:
 {: .note}
 Right-click on the result to copy or export the information.
 
+<hr>
+
 ## Profile
 
 ### Inherit host from general
@@ -47,6 +49,7 @@ Hostname or IP address to ping.
 
 - `server-01.borntoberoot.net`
 - `1.1.1.1`
+<hr>
 
 ## Settings
 

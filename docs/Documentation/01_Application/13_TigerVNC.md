@@ -27,6 +27,8 @@ TigerVNC must be installed on the local computer in order to use this feature. Y
 
 ![TigerVNC](13_TigerVNC.png)
 
+<hr>
+
 ## Connect
 
 ### Host
@@ -49,6 +51,8 @@ TCP port to use for the VNC connection.
 **Type:** `Integer` [Min `1`, Max `65535`]
 
 **Default:** [`Settings > Port`](#port-3)
+
+<hr>
 
 ## Profile
 
@@ -84,6 +88,8 @@ TCP port to use for the VNC connection.
 
 **Default:** `5900`
 
+<hr>
+
 ## Group
 
 ### Port
@@ -93,6 +99,8 @@ TCP port to use for the VNC connection.
 **Type:** `Integer` [Min `1`, Max `65535`]
 
 **Default:** `5900`
+
+<hr>
 
 ## Settings
 

@@ -27,6 +27,8 @@ SNTP (Simple Network Time Protocol) is a protocol used for synchronizing time be
 {: .note}
 Right-click on the result to copy or export the information.
 
+<hr>
+
 ## Settings
 
 ### SNTP servers
