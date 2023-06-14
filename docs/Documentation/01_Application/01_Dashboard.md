@@ -16,8 +16,9 @@ As soon as the status of the local network adapter changes (e.g. Ethernet cable 
 
 ![Dashboard](01_Dashboard.png)
 
-<details>
-<summary>## Settings</summary>
+<hr>
+
+## Settings
 
 ### Public IPv4 address
 
@@ -68,5 +69,3 @@ Override the default IPv6 address API to resolve the public IP address. The API 
 **Example:**
 
 - [`api6.ipify.org`](https://api6.ipify.org/){:target="\_blank"}
-
-</details>
