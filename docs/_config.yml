@@ -26,7 +26,7 @@ plugins:
 callouts:
   info:
     title: Info
-    color: purple
+    color: blue
   note:
     title: Note
     color: yellow
