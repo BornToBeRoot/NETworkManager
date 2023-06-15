@@ -69,7 +69,10 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <ComboBox x:Name="ComboBoxHost" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameOrIPAddress}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource EditableComboBox}">
+            <ComboBox x:Name="ComboBoxHost" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding HostHistoryView}" 
+                      mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameOrIPAddress}"
+                      Visibility="{Binding UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
+                      Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -79,7 +82,10 @@
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
-            <ComboBox x:Name="ComboBoxSerialLine" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding SerialLineHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSerialLine}" Visibility="{Binding UseSerial, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource EditableComboBox}">
+            <ComboBox x:Name="ComboBoxSerialLine" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding SerialLineHistoryView}" 
+                      mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSerialLine}" 
+                      Visibility="{Binding UseSerial, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" 
+                      Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
                     <Binding Path="SerialLine" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>

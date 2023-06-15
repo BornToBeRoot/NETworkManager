@@ -21,6 +21,7 @@ using NETworkManager.Models.EventSystem;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.ComponentModel.DataAnnotations;
 
 namespace NETworkManager.ViewModels;
 
@@ -414,7 +415,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
             ConfigurationManager.OnDialogClose();
 
             // Create profile info
-            var info = new PowerShellSessionInfo
+            var sessionInfo = new PowerShellSessionInfo
             {
                 EnableRemoteConsole = instance.EnableRemoteConsole,
                 Host = instance.Host,
@@ -429,7 +430,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
             AddHostToHistory(instance.Host);
 
             // Connect
-            Connect(info);
+            Connect(sessionInfo);
         }, async instance =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -452,10 +453,12 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
     private void ConnectProfileExternal()
     {
+        PowerShellSessionInfo sessionInfo = NETworkManager.Profiles.Application.PowerShell.CreateSessionInfo(SelectedProfile);
+
         Process.Start(new ProcessStartInfo()
         {
             FileName = SettingsManager.Current.PowerShell_ApplicationFilePath,
-            Arguments = PowerShell.BuildCommandLine(NETworkManager.Profiles.Application.PowerShell.CreateSessionInfo(SelectedProfile))
+            Arguments = PowerShell.BuildCommandLine(sessionInfo)
         });
     }
 

@@ -133,6 +133,10 @@ public partial class PuTTY
     {
         var command = string.Empty;
 
+        // PuTTY Profile
+        if (!string.IsNullOrEmpty(sessionInfo.Profile))
+            command += $" -load \"{sessionInfo.Profile}\"";
+
         // Protocol
         switch (sessionInfo.Mode)
         {
@@ -154,24 +158,24 @@ public partial class PuTTY
         }
 
         // Username
-        if (!string.IsNullOrEmpty(sessionInfo.Username))
+        if (new []{ ConnectionMode.SSH, ConnectionMode.Telnet, ConnectionMode.Rlogin}.Contains(sessionInfo.Mode) && !string.IsNullOrEmpty(sessionInfo.Username))
             command += $" -l {sessionInfo.Username}";
 
-        // Private key
-        if (!string.IsNullOrEmpty(sessionInfo.PrivateKey))
-            command += $" -i \"{sessionInfo.PrivateKey}\"";
-
-        // Profile
-        if (!string.IsNullOrEmpty(sessionInfo.Profile))
-            command += $" -load \"{sessionInfo.Profile}\"";
-
-        // Hostkey(s)
-        if (!string.IsNullOrEmpty(sessionInfo.Hostkey))
+        // SSH specific settings
+        if (sessionInfo.Mode == ConnectionMode.SSH)
         {
-            var hostkeys = StringHelper.RemoveWhitespace(sessionInfo.Hostkey).Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            // Private key
+            if (!string.IsNullOrEmpty(sessionInfo.PrivateKey))
+                command += $" -i \"{sessionInfo.PrivateKey}\"";
 
-            foreach (var hostkey in hostkeys)
-                command += $" -hostkey \"{hostkey}\"";
+            // Hostkey(s)
+            if (sessionInfo.Mode == ConnectionMode.SSH && !string.IsNullOrEmpty(sessionInfo.Hostkey))
+            {                
+                var hostkeys = StringHelper.RemoveWhitespace(sessionInfo.Hostkey).Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (var hostkey in hostkeys)
+                    command += $" -hostkey \"{hostkey}\"";
+            }
         }
 
         // Log
@@ -190,10 +194,10 @@ public partial class PuTTY
                     break;
             }
 
-            command += $" {'"'}{Environment.ExpandEnvironmentVariables(Path.Combine(sessionInfo.LogPath, sessionInfo.LogFileName))}{'"'}";
+            command += $" \"{Environment.ExpandEnvironmentVariables(Path.Combine(sessionInfo.LogPath, sessionInfo.LogFileName))}\"";
         }
 
-        // Additional commands
+        // Additional command line
         if (!string.IsNullOrEmpty(sessionInfo.AdditionalCommandLine))
             command += $" {sessionInfo.AdditionalCommandLine}";
 

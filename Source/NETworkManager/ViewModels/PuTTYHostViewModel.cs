@@ -429,7 +429,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
             ConfigurationManager.OnDialogClose();
 
             // Create profile info
-            var info = new PuTTYSessionInfo
+            var sessionInfo = new PuTTYSessionInfo
             {
                 HostOrSerialLine = instance.ConnectionMode == ConnectionMode.Serial ? instance.SerialLine : instance.Host,
                 Mode = instance.ConnectionMode,
@@ -455,7 +455,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
             AddPrivateKeyToHistory(instance.PrivateKeyFile);
             AddProfileToHistory(instance.Profile);
 
-            Connect(info);
+            Connect(sessionInfo);
         }, async instance =>
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -481,7 +481,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         // Create log path
         DirectoryHelper.CreateWithEnvironmentVariables(Settings.Application.PuTTY.LogPath);
 
-        var sessionInfo = NETworkManager.Profiles.Application.PuTTY.CreateSessionInfo(SelectedProfile);
+        PuTTYSessionInfo sessionInfo = NETworkManager.Profiles.Application.PuTTY.CreateSessionInfo(SelectedProfile);
 
         ProcessStartInfo info = new()
         {
@@ -492,12 +492,12 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         Process.Start(info);
     }
 
-    private void Connect(PuTTYSessionInfo profileInfo, string header = null)
+    private void Connect(PuTTYSessionInfo sessionInfo, string header = null)
     {
         // Must be added here. So that it works with profiles and the connect dialog.
-        profileInfo.ApplicationFilePath = SettingsManager.Current.PuTTY_ApplicationFilePath;
+        sessionInfo.ApplicationFilePath = SettingsManager.Current.PuTTY_ApplicationFilePath;
 
-        TabItems.Add(new DragablzTabItem(header ?? profileInfo.HostOrSerialLine, new PuTTYControl(profileInfo)));
+        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.HostOrSerialLine, new PuTTYControl(sessionInfo)));
 
         // Select the added tab
         _disableFocusEmbeddedWindow = true;
