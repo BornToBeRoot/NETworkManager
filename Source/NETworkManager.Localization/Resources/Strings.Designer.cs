@@ -4017,6 +4017,33 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die SSH hostkey to use for the connection (like &quot;71:b8:f2:6e...&quot;). Only available if the mode is &quot;SSH&quot;. ähnelt.
+        /// </summary>
+        public static string HelpMessage_PuTTYHostkey {
+            get {
+                return ResourceManager.GetString("HelpMessage_PuTTYHostkey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Full path to the private key file (like &quot;C:\Users\BornToBeRoot\SSH\private_key.ppk&quot;). Only available if the mode is &quot;SSH&quot;. ähnelt.
+        /// </summary>
+        public static string HelpMessage_PuTTYPrivateKeyFile {
+            get {
+                return ResourceManager.GetString("HelpMessage_PuTTYPrivateKeyFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Username that will be passed into the PuTTY session. Only available if the mode is &quot;SSH&quot;, &quot;Telnet&quot; or &quot;Rlogin&quot;. ähnelt.
+        /// </summary>
+        public static string HelpMessage_PuTTYUsername {
+            get {
+                return ResourceManager.GetString("HelpMessage_PuTTYUsername", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die [0] If server authentication fails, connect to the computer without warning.
         ///[1] If server authentication fails, do not establish a connection.
         ///[2] If server authentication fails, show a warning and allow me to connect or refuse the connection.

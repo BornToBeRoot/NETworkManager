@@ -2015,7 +2015,12 @@
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
-                                </TextBox>
+                                </TextBox>                                
+                                <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="12" ToolTip="{x:Static localization:Strings.HelpMessage_PuTTYUsername}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                                    <Rectangle.Resources>
+                                        <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                                    </Rectangle.Resources>
+                                </Rectangle>
                                 <CheckBox Grid.Column="0" Grid.Row="14" Content="{x:Static localization:Strings.PrivateKeyFile}" IsChecked="{Binding PuTTY_OverridePrivateKeyFile}" Style="{StaticResource DefaultCheckBox}" />
                                 <TextBox Grid.Column="2" Grid.Row="14" x:Name="TextBoxPuTTYPrivateKeyFile" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.PrivateKeyFileLocationDots}" IsEnabled="{Binding PuTTY_OverridePrivateKeyFile}">
                                     <TextBox.Text>
@@ -2026,9 +2031,19 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
+                                <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="14" ToolTip="{x:Static localization:Strings.HelpMessage_PuTTYPrivateKeyFile}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                                    <Rectangle.Resources>
+                                        <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                                    </Rectangle.Resources>
+                                </Rectangle>
                                 <CheckBox Grid.Column="0" Grid.Row="16" Content="{x:Static localization:Strings.Profile}" IsChecked="{Binding PuTTY_OverrideProfile}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePuTTYProfile}" Style="{StaticResource DefaultCheckBox}" />
                                 <TextBox Grid.Column="2" Grid.Row="16" Text="{Binding PuTTY_Profile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding PuTTY_OverrideProfile}" />
                                 <CheckBox Grid.Column="0" Grid.Row="18" Content="{x:Static localization:Strings.Hostkey}" IsChecked="{Binding PuTTY_OverrideHostkey}" Style="{StaticResource DefaultCheckBox}" />
+                                <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="18" ToolTip="{x:Static localization:Strings.HelpMessage_PuTTYHostkey}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                                    <Rectangle.Resources>
+                                        <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                                    </Rectangle.Resources>
+                                </Rectangle>
                                 <TextBox Grid.Column="2" Grid.Row="18" Text="{Binding PuTTY_Hostkey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostkey}" IsEnabled="{Binding PuTTY_OverrideHostkey}" />
                                 <CheckBox Grid.Column="0" Grid.Row="20" Content="{x:Static localization:Strings.EnableLog}" IsChecked="{Binding PuTTY_OverrideEnableLog}" Style="{StaticResource DefaultCheckBox}" />
                                 <mah:ToggleSwitch Grid.Column="2" Grid.Row="20" OnContent="" OffContent="" IsOn="{Binding PuTTY_EnableLog}" IsEnabled="{Binding PuTTY_OverrideEnableLog}" />

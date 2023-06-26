@@ -32,6 +32,8 @@ Breaking changes
   - Improved validation when adding/changing DNS server profiles [#2282](https://github.com/BornToBeRoot/NETworkManager/pull/2282){:target="\_blank"}
 - **Remote Desktop**
   - Allow `.` as domain to authenticate with local accounts [#2305](https://github.com/BornToBeRoot/NETworkManager/pull/2305){:target="\_blank"}
+- **PuTTY**
+  - Improve validation in connect, profile and group dialog [#2352](https://github.com/BornToBeRoot/NETworkManager/pull/2352){:target="\_blank"}
 - **TigerVNC**
   - Use port from default config instead of settings if creating a new group [#2249](https://github.com/BornToBeRoot/NETworkManager/pull/2249){:target="\_blank"}
 - **SNTP Lookup**
@@ -54,7 +56,6 @@ Breaking changes
 - **PuTTY**
   - Add missing baud rates for serial connection [#2337](https://github.com/BornToBeRoot/NETworkManager/pull/2337){:target="\_blank"}
   - Fix wrong cli parameters passed when mode does not match (e.g. SSH key for telnet) [#2352](https://github.com/BornToBeRoot/NETworkManager/pull/2352){:target="\_blank"}
-  - 
   - Fix wrong icon in profile context menu [#2352](https://github.com/BornToBeRoot/NETworkManager/pull/2352){:target="\_blank"}
 - **SNTP Lookup**
   - Fix app crash when editing SNTP server profile in some rare cases [#2282](https://github.com/BornToBeRoot/NETworkManager/pull/2282){:target="\_blank"}

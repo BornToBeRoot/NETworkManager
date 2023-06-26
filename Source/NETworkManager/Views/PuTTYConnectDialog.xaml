@@ -28,6 +28,7 @@
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="34" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -160,6 +161,11 @@
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
+            <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="6" ToolTip="{x:Static localization:Strings.HelpMessage_PuTTYUsername}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
             <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static localization:Strings.PrivateKeyFile}" />
             <ComboBox x:Name="ComboBoxPrivateKeyFile" Grid.Column="2" Grid.Row="8" ItemsSource="{Binding PrivateKeyFileHistoryView}"
                       mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.PrivateKeyFileLocationDots}">
@@ -181,6 +187,11 @@
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
+            <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="8" ToolTip="{x:Static localization:Strings.HelpMessage_PuTTYPrivateKeyFile}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
             <TextBlock Grid.Column="0" Grid.Row="10" Text="{x:Static localization:Strings.Profile}" />
             <ComboBox x:Name="ComboBoxProfile" Text="{Binding Profile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                       Grid.Column="2" Grid.Row="10" 
