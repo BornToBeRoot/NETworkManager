@@ -504,8 +504,8 @@
   <data name="Maximum" xml:space="preserve">
     <value>最大值</value>
   </data>
-  <data name="MaximumHopsRouter" xml:space="preserve">
-    <value>最大跳数/路由</value>
+  <data name="MaximumHops" xml:space="preserve">
+    <value>Maximum hops</value>
   </data>
   <data name="MinimizeInsteadOfTerminating" xml:space="preserve">
     <value>最小化窗口不退出</value>
@@ -588,11 +588,8 @@
   <data name="StaticIPv4DNSServer" xml:space="preserve">
     <value>静态IPv4 DNS服务器</value>
   </data>
-  <data name="Subnetmask" xml:space="preserve">
-    <value>子网掩码</value>
-  </data>
-  <data name="SubnetmaskOrCIDR" xml:space="preserve">
-    <value>子网掩码或CIDR</value>
+  <data name="SubnetMask" xml:space="preserve">
+    <value>Subnet mask</value>
   </data>
   <data name="Threads" xml:space="preserve">
     <value>线程</value>
@@ -615,8 +612,8 @@
   <data name="TimeoutMS" xml:space="preserve">
     <value>超时（毫秒）</value>
   </data>
-  <data name="TimeToWaitBetweenEachPing" xml:space="preserve">
-    <value>每次 Ping 之间等待的时间</value>
+  <data name="TimeMSToWaitBetweenEachPing" xml:space="preserve">
+    <value>Time (ms) to wait between each ping</value>
   </data>
   <data name="TTL" xml:space="preserve">
     <value>生存周期</value>
@@ -1017,9 +1014,6 @@ First make a backup copy of your profile files before enabling encryption!</valu
   <data name="PuTTYProcessHasEnded" xml:space="preserve">
     <value>PuTTY  进程已终止！</value>
   </data>
-  <data name="PuTTYProfile" xml:space="preserve">
-    <value>PuTTY 配置</value>
-  </data>
   <data name="Questions" xml:space="preserve">
     <value>问题</value>
   </data>
@@ -1093,7 +1087,7 @@ First make a backup copy of your profile files before enabling encryption!</valu
     <value>串口</value>
   </data>
   <data name="SerialLine" xml:space="preserve">
-    <value>串行</value>
+    <value>Serial line</value>
   </data>
   <data name="Service" xml:space="preserve">
     <value>服务</value>
@@ -1944,7 +1938,7 @@ Changes to this value will take effect after restarting the application.</value>
     <value>仪表盘</value>
   </data>
   <data name="AllSettingsCanBeChangedLaterInTheSettings" xml:space="preserve">
-    <value>以后可以在程序设置中更改所有设置值</value>
+    <value>All settings can be changed later in the settings!</value>
   </data>
   <data name="CheckPublicIPAddress" xml:space="preserve">
     <value>检查公网IP地址</value>
@@ -2700,7 +2694,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>SSH 日志</value>
   </data>
   <data name="PuTTYLogMode_SSHRawLog" xml:space="preserve">
-    <value>SSH和原始日志</value>
+    <value>SSH and Raw log</value>
   </data>
   <data name="EnterValidFileName" xml:space="preserve">
     <value>输入一个有效的文件名!</value>
@@ -3077,13 +3071,13 @@ The profile is not removed from the ~\.aws\credentials file.</value>
   <data name="DefaultRegion" xml:space="preserve">
     <value>Default region</value>
   </data>
-  <data name="HelpMessage_AWSSessionManagerDefaultProfile" xml:space="preserve">
-    <value>Default profile which is used by manually created profiles to connect to an EC2 instance via AWS CLI.
+  <data name="HelpMessage_AWSSessionManagerProfile" xml:space="preserve">
+    <value>Profile which is used by manually created profiles to connect to an EC2 instance via AWS CLI.
 
 If not set, the default AWS CLI settings are used.</value>
   </data>
-  <data name="HelpMessage_AWSSessionManagerDefaultRegion" xml:space="preserve">
-    <value>Default region which is used by manually created profiles to connect to an EC2 instance via AWS CLI .
+  <data name="HelpMessage_AWSSessionManagerRegion" xml:space="preserve">
+    <value>Region which is used by manually created profiles to connect to an EC2 instance via AWS CLI .
 
 If not set, the default AWS CLI settings are used.</value>
   </data>
@@ -3545,5 +3539,26 @@ Changes to this value will take effect after the application is restarted. Wheth
   </data>
   <data name="FromProfile" xml:space="preserve">
     <value>(from profile)</value>
+  </data>
+  <data name="NewSubnetMask" xml:space="preserve">
+    <value>New subnet mask</value>
+  </data>
+  <data name="AddServer" xml:space="preserve">
+    <value>Add server</value>
+  </data>
+  <data name="SNTPServer" xml:space="preserve">
+    <value>SNTP server</value>
+  </data>
+  <data name="ErrorMessage_TabPageHasError" xml:space="preserve">
+    <value>The settings on this page contain errors. Correct them to be able to save.</value>
+  </data>
+  <data name="HelpMessage_PuTTYHostkey" xml:space="preserve">
+    <value>SSH hostkey to use for the connection (like "71:b8:f2:6e..."). Only available if the mode is "SSH".</value>
+  </data>
+  <data name="HelpMessage_PuTTYPrivateKeyFile" xml:space="preserve">
+    <value>Full path to the private key file (like "C:\Users\BornToBeRoot\SSH\private_key.ppk"). Only available if the mode is "SSH".</value>
+  </data>
+  <data name="HelpMessage_PuTTYUsername" xml:space="preserve">
+    <value>Username that will be passed into the PuTTY session. Only available if the mode is "SSH", "Telnet" or "Rlogin".</value>
   </data>
 </root>
