@@ -15,7 +15,19 @@ public class PuTTYConnectViewModel : ViewModelBase
 
     public ICommand CancelCommand { get; }
 
-    public ConnectionMode ConnectionMode { get; set; }
+    private ConnectionMode _connectionMode;
+    public ConnectionMode ConnectionMode
+    {
+        get => _connectionMode;
+        set
+        {
+            if(value == _connectionMode) 
+                return;
+
+            _connectionMode = value;
+            OnPropertyChanged();
+        }
+    }
 
     private bool _useSSH;
     public bool UseSSH

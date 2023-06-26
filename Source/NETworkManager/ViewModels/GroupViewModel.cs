@@ -1292,6 +1292,7 @@ public class GroupViewModel : ViewModelBase
                 return;
 
             _puTTY_ConnectionMode = value;
+            OnPropertyChanged();
         }
     }
     #endregion

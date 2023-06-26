@@ -2073,6 +2073,7 @@ public class ProfileViewModel : ViewModelBase
                 return;
 
             _puTTY_ConnectionMode = value;
+            OnPropertyChanged();
         }
     }
     #endregion
