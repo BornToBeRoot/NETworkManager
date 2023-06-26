@@ -3547,4 +3547,13 @@ Wenn der Wert zu hoch ist, können Leistungsprobleme auftreten.
   <data name="ErrorMessage_TabPageHasError" xml:space="preserve">
     <value>Die Einstellungen auf dieser Seite enthalten Fehler. Korrigieren Sie diese, um speichern zu können.</value>
   </data>
+  <data name="HelpMessage_PuTTYHostkey" xml:space="preserve">
+    <value>SSH-Hostkey, der für die Verbindung verwendet werden soll (wie "71:b8:f2:6e..."). Nur verfügbar, wenn der Modus "SSH" ist.</value>
+  </data>
+  <data name="HelpMessage_PuTTYPrivateKeyFile" xml:space="preserve">
+    <value>Vollständiger Pfad zur privaten Schlüsseldatei (z. B. "C:\Users\BornToBeRoot\SSH\private_key.ppk"). Nur verfügbar, wenn der Modus "SSH" ist.</value>
+  </data>
+  <data name="HelpMessage_PuTTYUsername" xml:space="preserve">
+    <value>Benutzername, der an die PuTTY-Sitzung übergeben wird. Nur verfügbar, wenn der Modus "SSH", "Telnet" oder "Rlogin" ist.</value>
+  </data>
 </root>
