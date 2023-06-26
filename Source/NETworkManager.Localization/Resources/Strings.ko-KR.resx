@@ -504,8 +504,8 @@
   <data name="Maximum" xml:space="preserve">
     <value>최대화</value>
   </data>
-  <data name="MaximumHopsRouter" xml:space="preserve">
-    <value>최대 홉/라우터</value>
+  <data name="MaximumHops" xml:space="preserve">
+    <value>Maximum hops</value>
   </data>
   <data name="MinimizeInsteadOfTerminating" xml:space="preserve">
     <value>응용 프로그램을 종료하는 대신 기본 창 최소화</value>
@@ -588,11 +588,8 @@
   <data name="StaticIPv4DNSServer" xml:space="preserve">
     <value>정적 IPv4 DNS 서버</value>
   </data>
-  <data name="Subnetmask" xml:space="preserve">
-    <value>서브넷 마스크</value>
-  </data>
-  <data name="SubnetmaskOrCIDR" xml:space="preserve">
-    <value>서브넷 마스크 또는 CIDR</value>
+  <data name="SubnetMask" xml:space="preserve">
+    <value>Subnet mask</value>
   </data>
   <data name="Threads" xml:space="preserve">
     <value>스레드</value>
@@ -615,8 +612,8 @@
   <data name="TimeoutMS" xml:space="preserve">
     <value>시간 초과 (ms)</value>
   </data>
-  <data name="TimeToWaitBetweenEachPing" xml:space="preserve">
-    <value>각 핑 간 대기 시간</value>
+  <data name="TimeMSToWaitBetweenEachPing" xml:space="preserve">
+    <value>Time (ms) to wait between each ping</value>
   </data>
   <data name="TTL" xml:space="preserve">
     <value>TTL</value>
@@ -1017,9 +1014,6 @@
   <data name="PuTTYProcessHasEnded" xml:space="preserve">
     <value>PuTTY 프로세스가 종료되었습니다!</value>
   </data>
-  <data name="PuTTYProfile" xml:space="preserve">
-    <value>PuTTY 프로필</value>
-  </data>
   <data name="Questions" xml:space="preserve">
     <value>질문</value>
   </data>
@@ -1093,7 +1087,7 @@
     <value>직렬</value>
   </data>
   <data name="SerialLine" xml:space="preserve">
-    <value>직렬 라인</value>
+    <value>Serial line</value>
   </data>
   <data name="Service" xml:space="preserve">
     <value>서비스</value>
@@ -1935,7 +1929,7 @@ Changes to this value will take effect after restarting the application.</value>
     <value>대시보드</value>
   </data>
   <data name="AllSettingsCanBeChangedLaterInTheSettings" xml:space="preserve">
-    <value>모든 설정은 나중에 변경할 수 있습니다</value>
+    <value>All settings can be changed later in the settings!</value>
   </data>
   <data name="CheckPublicIPAddress" xml:space="preserve">
     <value>공용 IP 주소 확인</value>
@@ -2692,7 +2686,7 @@ $$hostname$$	--&gt;	호스트이름</value>
     <value>SSH 로그</value>
   </data>
   <data name="PuTTYLogMode_SSHRawLog" xml:space="preserve">
-    <value>SSH 및 Raw 로그</value>
+    <value>SSH and Raw log</value>
   </data>
   <data name="EnterValidFileName" xml:space="preserve">
     <value>유효한 파일 이름을 입력하십시오!</value>
@@ -3069,13 +3063,13 @@ The profile is not removed from the ~\.aws\credentials file.</value>
   <data name="DefaultRegion" xml:space="preserve">
     <value>Default region</value>
   </data>
-  <data name="HelpMessage_AWSSessionManagerDefaultProfile" xml:space="preserve">
-    <value>Default profile which is used by manually created profiles to connect to an EC2 instance via AWS CLI.
+  <data name="HelpMessage_AWSSessionManagerProfile" xml:space="preserve">
+    <value>Profile which is used by manually created profiles to connect to an EC2 instance via AWS CLI.
 
 If not set, the default AWS CLI settings are used.</value>
   </data>
-  <data name="HelpMessage_AWSSessionManagerDefaultRegion" xml:space="preserve">
-    <value>Default region which is used by manually created profiles to connect to an EC2 instance via AWS CLI .
+  <data name="HelpMessage_AWSSessionManagerRegion" xml:space="preserve">
+    <value>Region which is used by manually created profiles to connect to an EC2 instance via AWS CLI .
 
 If not set, the default AWS CLI settings are used.</value>
   </data>
@@ -3537,5 +3531,26 @@ Changes to this value will take effect after the application is restarted. Wheth
   </data>
   <data name="FromProfile" xml:space="preserve">
     <value>(from profile)</value>
+  </data>
+  <data name="NewSubnetMask" xml:space="preserve">
+    <value>New subnet mask</value>
+  </data>
+  <data name="AddServer" xml:space="preserve">
+    <value>Add server</value>
+  </data>
+  <data name="SNTPServer" xml:space="preserve">
+    <value>SNTP server</value>
+  </data>
+  <data name="ErrorMessage_TabPageHasError" xml:space="preserve">
+    <value>The settings on this page contain errors. Correct them to be able to save.</value>
+  </data>
+  <data name="HelpMessage_PuTTYHostkey" xml:space="preserve">
+    <value>SSH hostkey to use for the connection (like "71:b8:f2:6e..."). Only available if the mode is "SSH".</value>
+  </data>
+  <data name="HelpMessage_PuTTYPrivateKeyFile" xml:space="preserve">
+    <value>Full path to the private key file (like "C:\Users\BornToBeRoot\SSH\private_key.ppk"). Only available if the mode is "SSH".</value>
+  </data>
+  <data name="HelpMessage_PuTTYUsername" xml:space="preserve">
+    <value>Username that will be passed into the PuTTY session. Only available if the mode is "SSH", "Telnet" or "Rlogin".</value>
   </data>
 </root>
