@@ -504,8 +504,8 @@
   <data name="Maximum" xml:space="preserve">
     <value>Максимум</value>
   </data>
-  <data name="MaximumHopsRouter" xml:space="preserve">
-    <value>Макс. прыжки/маршрутизатор</value>
+  <data name="MaximumHops" xml:space="preserve">
+    <value>Maximum hops</value>
   </data>
   <data name="MinimizeInsteadOfTerminating" xml:space="preserve">
     <value>Свернуть главное окно вместо завершения работы приложения</value>
@@ -588,11 +588,8 @@
   <data name="StaticIPv4DNSServer" xml:space="preserve">
     <value>Статический DNS-сервер IPv4</value>
   </data>
-  <data name="Subnetmask" xml:space="preserve">
-    <value>Маска подсети</value>
-  </data>
-  <data name="SubnetmaskOrCIDR" xml:space="preserve">
-    <value>Маска подсети или CIDR</value>
+  <data name="SubnetMask" xml:space="preserve">
+    <value>Subnet mask</value>
   </data>
   <data name="Threads" xml:space="preserve">
     <value>Threads</value>
@@ -615,8 +612,8 @@
   <data name="TimeoutMS" xml:space="preserve">
     <value>Время ожидания (мс)</value>
   </data>
-  <data name="TimeToWaitBetweenEachPing" xml:space="preserve">
-    <value>Время ожидания между каждым ping</value>
+  <data name="TimeMSToWaitBetweenEachPing" xml:space="preserve">
+    <value>Time (ms) to wait between each ping</value>
   </data>
   <data name="TTL" xml:space="preserve">
     <value>TTL</value>
@@ -1017,9 +1014,6 @@ First make a backup copy of your profile files before enabling encryption!</valu
   <data name="PuTTYProcessHasEnded" xml:space="preserve">
     <value>PuTTY процесс завершился!</value>
   </data>
-  <data name="PuTTYProfile" xml:space="preserve">
-    <value>PuTTY профиль</value>
-  </data>
   <data name="Questions" xml:space="preserve">
     <value>Вопросы</value>
   </data>
@@ -1093,7 +1087,7 @@ First make a backup copy of your profile files before enabling encryption!</valu
     <value>Serial</value>
   </data>
   <data name="SerialLine" xml:space="preserve">
-    <value>Serial линия</value>
+    <value>Serial line</value>
   </data>
   <data name="Service" xml:space="preserve">
     <value>Служба</value>
@@ -1938,7 +1932,7 @@ Changes to this value will take effect after restarting the application.</value>
     <value>Dashboard</value>
   </data>
   <data name="AllSettingsCanBeChangedLaterInTheSettings" xml:space="preserve">
-    <value>Все настройки можно изменить позже в настройках</value>
+    <value>All settings can be changed later in the settings!</value>
   </data>
   <data name="CheckPublicIPAddress" xml:space="preserve">
     <value>Проверьте общедоступный IP-адрес</value>
@@ -2695,7 +2689,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>SSH log</value>
   </data>
   <data name="PuTTYLogMode_SSHRawLog" xml:space="preserve">
-    <value>SSH and Raw Log</value>
+    <value>SSH and Raw log</value>
   </data>
   <data name="EnterValidFileName" xml:space="preserve">
     <value>Enter a valid file name!</value>
@@ -3072,13 +3066,13 @@ The profile is not removed from the ~\.aws\credentials file.</value>
   <data name="DefaultRegion" xml:space="preserve">
     <value>Default region</value>
   </data>
-  <data name="HelpMessage_AWSSessionManagerDefaultProfile" xml:space="preserve">
-    <value>Default profile which is used by manually created profiles to connect to an EC2 instance via AWS CLI.
+  <data name="HelpMessage_AWSSessionManagerProfile" xml:space="preserve">
+    <value>Profile which is used by manually created profiles to connect to an EC2 instance via AWS CLI.
 
 If not set, the default AWS CLI settings are used.</value>
   </data>
-  <data name="HelpMessage_AWSSessionManagerDefaultRegion" xml:space="preserve">
-    <value>Default region which is used by manually created profiles to connect to an EC2 instance via AWS CLI .
+  <data name="HelpMessage_AWSSessionManagerRegion" xml:space="preserve">
+    <value>Region which is used by manually created profiles to connect to an EC2 instance via AWS CLI .
 
 If not set, the default AWS CLI settings are used.</value>
   </data>
@@ -3540,5 +3534,26 @@ Changes to this value will take effect after the application is restarted. Wheth
   </data>
   <data name="FromProfile" xml:space="preserve">
     <value>(from profile)</value>
+  </data>
+  <data name="NewSubnetMask" xml:space="preserve">
+    <value>New subnet mask</value>
+  </data>
+  <data name="AddServer" xml:space="preserve">
+    <value>Add server</value>
+  </data>
+  <data name="SNTPServer" xml:space="preserve">
+    <value>SNTP server</value>
+  </data>
+  <data name="ErrorMessage_TabPageHasError" xml:space="preserve">
+    <value>The settings on this page contain errors. Correct them to be able to save.</value>
+  </data>
+  <data name="HelpMessage_PuTTYHostkey" xml:space="preserve">
+    <value>SSH hostkey to use for the connection (like "71:b8:f2:6e..."). Only available if the mode is "SSH".</value>
+  </data>
+  <data name="HelpMessage_PuTTYPrivateKeyFile" xml:space="preserve">
+    <value>Full path to the private key file (like "C:\Users\BornToBeRoot\SSH\private_key.ppk"). Only available if the mode is "SSH".</value>
+  </data>
+  <data name="HelpMessage_PuTTYUsername" xml:space="preserve">
+    <value>Username that will be passed into the PuTTY session. Only available if the mode is "SSH", "Telnet" or "Rlogin".</value>
   </data>
 </root>
