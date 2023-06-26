@@ -504,8 +504,8 @@
   <data name="Maximum" xml:space="preserve">
     <value>Máximo</value>
   </data>
-  <data name="MaximumHopsRouter" xml:space="preserve">
-    <value>Máximo de saltos/router</value>
+  <data name="MaximumHops" xml:space="preserve">
+    <value>Maximum hops</value>
   </data>
   <data name="MinimizeInsteadOfTerminating" xml:space="preserve">
     <value>Minimizar la ventana principal en lugar de terminar la aplicación</value>
@@ -588,11 +588,8 @@
   <data name="StaticIPv4DNSServer" xml:space="preserve">
     <value>Servidor DNS estático IPv4</value>
   </data>
-  <data name="Subnetmask" xml:space="preserve">
-    <value>Máscara de subred</value>
-  </data>
-  <data name="SubnetmaskOrCIDR" xml:space="preserve">
-    <value>Máscara de subred o CIDR</value>
+  <data name="SubnetMask" xml:space="preserve">
+    <value>Subnet mask</value>
   </data>
   <data name="Threads" xml:space="preserve">
     <value>Hilos</value>
@@ -615,8 +612,8 @@
   <data name="TimeoutMS" xml:space="preserve">
     <value>Tiempo de espera (ms)</value>
   </data>
-  <data name="TimeToWaitBetweenEachPing" xml:space="preserve">
-    <value>Tiempo de espera entre cada ping</value>
+  <data name="TimeMSToWaitBetweenEachPing" xml:space="preserve">
+    <value>Time (ms) to wait between each ping</value>
   </data>
   <data name="TTL" xml:space="preserve">
     <value>TTL</value>
@@ -1017,9 +1014,6 @@ Crear uno...</value>
   <data name="PuTTYProcessHasEnded" xml:space="preserve">
     <value>¡El proceso de PuTTY ha finalizado!</value>
   </data>
-  <data name="PuTTYProfile" xml:space="preserve">
-    <value>Perfil PuTTY</value>
-  </data>
   <data name="Questions" xml:space="preserve">
     <value>Consultas</value>
   </data>
@@ -1093,7 +1087,7 @@ Crear uno...</value>
     <value>Serial</value>
   </data>
   <data name="SerialLine" xml:space="preserve">
-    <value>Línea serial</value>
+    <value>Serial line</value>
   </data>
   <data name="Service" xml:space="preserve">
     <value>Servicio</value>
@@ -1935,7 +1929,7 @@ Changes to this value will take effect after restarting the application.</value>
     <value>Panel de control</value>
   </data>
   <data name="AllSettingsCanBeChangedLaterInTheSettings" xml:space="preserve">
-    <value>Todas las configuraciones se pueden cambiar más adelante en configuración</value>
+    <value>All settings can be changed later in the settings!</value>
   </data>
   <data name="CheckPublicIPAddress" xml:space="preserve">
     <value>Comprobar dirección IP pública</value>
@@ -2692,7 +2686,7 @@ $$hostname$$	--&gt;	Nombre del host</value>
     <value>Registro SSH</value>
   </data>
   <data name="PuTTYLogMode_SSHRawLog" xml:space="preserve">
-    <value>SSH y registro sin procesar</value>
+    <value>SSH and Raw log</value>
   </data>
   <data name="EnterValidFileName" xml:space="preserve">
     <value>¡Ingresa un nombre de archivo válido!</value>
@@ -3069,13 +3063,13 @@ El perfil no se eliminará del archivo ~\.aws\credentials.</value>
   <data name="DefaultRegion" xml:space="preserve">
     <value>Región predeterminada</value>
   </data>
-  <data name="HelpMessage_AWSSessionManagerDefaultProfile" xml:space="preserve">
-    <value>Default profile which is used by manually created profiles to connect to an EC2 instance via AWS CLI.
+  <data name="HelpMessage_AWSSessionManagerProfile" xml:space="preserve">
+    <value>Profile which is used by manually created profiles to connect to an EC2 instance via AWS CLI.
 
 If not set, the default AWS CLI settings are used.</value>
   </data>
-  <data name="HelpMessage_AWSSessionManagerDefaultRegion" xml:space="preserve">
-    <value>Default region which is used by manually created profiles to connect to an EC2 instance via AWS CLI .
+  <data name="HelpMessage_AWSSessionManagerRegion" xml:space="preserve">
+    <value>Region which is used by manually created profiles to connect to an EC2 instance via AWS CLI .
 
 If not set, the default AWS CLI settings are used.</value>
   </data>
@@ -3537,5 +3531,26 @@ Changes to this value will take effect after the application is restarted. Wheth
   </data>
   <data name="FromProfile" xml:space="preserve">
     <value>(from profile)</value>
+  </data>
+  <data name="NewSubnetMask" xml:space="preserve">
+    <value>New subnet mask</value>
+  </data>
+  <data name="AddServer" xml:space="preserve">
+    <value>Add server</value>
+  </data>
+  <data name="SNTPServer" xml:space="preserve">
+    <value>SNTP server</value>
+  </data>
+  <data name="ErrorMessage_TabPageHasError" xml:space="preserve">
+    <value>The settings on this page contain errors. Correct them to be able to save.</value>
+  </data>
+  <data name="HelpMessage_PuTTYHostkey" xml:space="preserve">
+    <value>SSH hostkey to use for the connection (like "71:b8:f2:6e..."). Only available if the mode is "SSH".</value>
+  </data>
+  <data name="HelpMessage_PuTTYPrivateKeyFile" xml:space="preserve">
+    <value>Full path to the private key file (like "C:\Users\BornToBeRoot\SSH\private_key.ppk"). Only available if the mode is "SSH".</value>
+  </data>
+  <data name="HelpMessage_PuTTYUsername" xml:space="preserve">
+    <value>Username that will be passed into the PuTTY session. Only available if the mode is "SSH", "Telnet" or "Rlogin".</value>
   </data>
 </root>
