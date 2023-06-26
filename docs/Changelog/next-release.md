@@ -32,6 +32,8 @@ Breaking changes
   - Improved validation when adding/changing DNS server profiles [#2282](https://github.com/BornToBeRoot/NETworkManager/pull/2282){:target="\_blank"}
 - **Remote Desktop**
   - Allow `.` as domain to authenticate with local accounts [#2305](https://github.com/BornToBeRoot/NETworkManager/pull/2305){:target="\_blank"}
+- **PuTTY**
+  - Improve validation in connect, profile and group dialog [#2352](https://github.com/BornToBeRoot/NETworkManager/pull/2352){:target="\_blank"}
 - **TigerVNC**
   - Use port from default config instead of settings if creating a new group [#2249](https://github.com/BornToBeRoot/NETworkManager/pull/2249){:target="\_blank"}
 - **SNTP Lookup**
@@ -53,10 +55,12 @@ Breaking changes
   - `Adjust screen` via Context Menu now only adjusts the screen size if `Adjust screen automatically` or `Use the current view size as the screen size` is enabled [#2318](https://github.com/BornToBeRoot/NETworkManager/pull/2318){:target="\_blank"}
 - **PuTTY**
   - Add missing baud rates for serial connection [#2337](https://github.com/BornToBeRoot/NETworkManager/pull/2337){:target="\_blank"}
+  - Fix wrong cli parameters passed when mode does not match (e.g. SSH key for telnet) [#2352](https://github.com/BornToBeRoot/NETworkManager/pull/2352){:target="\_blank"}
+  - Fix wrong icon in profile context menu [#2352](https://github.com/BornToBeRoot/NETworkManager/pull/2352){:target="\_blank"}
 - **SNTP Lookup**
-  - Fixed app crash when editing SNTP server profile in some rare cases [#2282](https://github.com/BornToBeRoot/NETworkManager/pull/2282){:target="\_blank"}
+  - Fix app crash when editing SNTP server profile in some rare cases [#2282](https://github.com/BornToBeRoot/NETworkManager/pull/2282){:target="\_blank"}
 - **Subnet Calculator**
-  - Fixed a design issue with the calculate button in subnetting [#2230](https://github.com/BornToBeRoot/NETworkManager/pull/2230){:target="\_blank"}
+  - Fix a design issue with the calculate button in subnetting [#2230](https://github.com/BornToBeRoot/NETworkManager/pull/2230){:target="\_blank"}
 - [AirSpace Fixer](https://www.nuget.org/packages/AirspaceFixer){:target="\_blank"} code optimized (only called if needed). This will also prevent a screenshot bug when the application is loading and a dialog is shown. [#2253](https://github.com/BornToBeRoot/NETworkManager/pull/2253){:target="\_blank"}
 - Group dialog
   - Fix default value for Remote Desktop sreen size [#2293](https://github.com/BornToBeRoot/NETworkManager/pull/2293){:target="\_blank"}

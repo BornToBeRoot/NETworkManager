@@ -775,10 +775,12 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
     private void ConnectProfileExternal()
     {
+        var sessionInfo = NETworkManager.Profiles.Application.AWSSessionManager.CreateSessionInfo(SelectedProfile);
+
         Process.Start(new ProcessStartInfo()
         {
             FileName = SettingsManager.Current.AWSSessionManager_ApplicationFilePath,
-            Arguments = AWSSessionManager.BuildCommandLine(NETworkManager.Profiles.Application.AWSSessionManager.CreateSessionInfo(SelectedProfile))
+            Arguments = AWSSessionManager.BuildCommandLine(sessionInfo)
         });
     }
 

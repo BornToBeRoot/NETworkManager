@@ -1650,10 +1650,7 @@ public class ProfileViewModel : ViewModelBase
 
             if (value)
             {
-                if (PuTTY_ConnectionMode == ConnectionMode.Serial)
-                    PuTTY_HostOrSerialLine = Host;
-
-                PuTTY_PortOrBaud = SettingsManager.Current.PuTTY_SSHPort;
+                PuTTY_Port = SettingsManager.Current.PuTTY_SSHPort;
                 PuTTY_ConnectionMode = ConnectionMode.SSH;
             }
 
@@ -1673,10 +1670,7 @@ public class ProfileViewModel : ViewModelBase
 
             if (value)
             {
-                if (PuTTY_ConnectionMode == ConnectionMode.Serial)
-                    PuTTY_HostOrSerialLine = Host;
-
-                PuTTY_PortOrBaud = SettingsManager.Current.PuTTY_TelnetPort;
+                PuTTY_Port = SettingsManager.Current.PuTTY_TelnetPort;
                 PuTTY_ConnectionMode = ConnectionMode.Telnet;
             }
 
@@ -1696,10 +1690,7 @@ public class ProfileViewModel : ViewModelBase
 
             if (value)
             {
-                if (PuTTY_ConnectionMode != ConnectionMode.Serial)
-                    PuTTY_HostOrSerialLine = SettingsManager.Current.PuTTY_SerialLine;
-
-                PuTTY_PortOrBaud = SettingsManager.Current.PuTTY_BaudRate;
+                PuTTY_Baud = SettingsManager.Current.PuTTY_BaudRate;
                 PuTTY_ConnectionMode = ConnectionMode.Serial;
             }
 
@@ -1719,10 +1710,7 @@ public class ProfileViewModel : ViewModelBase
 
             if (value)
             {
-                if (PuTTY_ConnectionMode == ConnectionMode.Serial)
-                    PuTTY_HostOrSerialLine = Host;
-
-                PuTTY_PortOrBaud = SettingsManager.Current.PuTTY_RloginPort;
+                PuTTY_Port = SettingsManager.Current.PuTTY_RloginPort;
                 PuTTY_ConnectionMode = ConnectionMode.Rlogin;
             }
 
@@ -1741,11 +1729,8 @@ public class ProfileViewModel : ViewModelBase
                 return;
 
             if (value)
-            {                
-                if (PuTTY_ConnectionMode == ConnectionMode.Serial)
-                    PuTTY_HostOrSerialLine = Host;
-
-                PuTTY_PortOrBaud = SettingsManager.Current.PuTTY_RawPort;
+            {
+                PuTTY_Port = SettingsManager.Current.PuTTY_RawPort;
                 PuTTY_ConnectionMode = ConnectionMode.RAW;
             }
 
@@ -1754,16 +1739,30 @@ public class ProfileViewModel : ViewModelBase
         }
     }
 
-    private string _puTTY_HostOrSerialLine;
-    public string PuTTY_HostOrSerialLine
+    private string _puTTY_Host;
+    public string PuTTY_Host
     {
-        get => _puTTY_HostOrSerialLine;
+        get => _puTTY_Host;
         set
         {
-            if (value == _puTTY_HostOrSerialLine)
+            if (value == _puTTY_Host)
                 return;
 
-            _puTTY_HostOrSerialLine = value;
+            _puTTY_Host = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _puTTY_SerialLine;
+    public string PuTTY_SerialLine
+    {
+        get => _puTTY_SerialLine;
+        set
+        {
+            if (value == _puTTY_SerialLine)
+                return;
+
+            _puTTY_SerialLine = value;
             OnPropertyChanged();
         }
     }
@@ -1782,16 +1781,30 @@ public class ProfileViewModel : ViewModelBase
         }
     }
 
-    private int _puTTY_PortOrBaud;
-    public int PuTTY_PortOrBaud
+    private int _puTTY_Port;
+    public int PuTTY_Port
     {
-        get => _puTTY_PortOrBaud;
+        get => _puTTY_Port;
         set
         {
-            if (value == _puTTY_PortOrBaud)
+            if (value == _puTTY_Port)
                 return;
 
-            _puTTY_PortOrBaud = value;
+            _puTTY_Port = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private int _puTTY_Baud;
+    public int PuTTY_Baud
+    {
+        get => _puTTY_Baud;
+        set
+        {
+            if (value == _puTTY_Baud)
+                return;
+
+            _puTTY_Baud = value;
             OnPropertyChanged();
         }
     }
@@ -2060,6 +2073,7 @@ public class ProfileViewModel : ViewModelBase
                 return;
 
             _puTTY_ConnectionMode = value;
+            OnPropertyChanged();
         }
     }
     #endregion
@@ -2619,7 +2633,7 @@ public class ProfileViewModel : ViewModelBase
         }
     }
     #endregion
-    
+
     #endregion
     public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler, IReadOnlyCollection<string> groups, string group = null, ProfileEditMode editMode = ProfileEditMode.Add, ProfileInfo profile = null, ApplicationName applicationName = ApplicationName.None)
     {
@@ -2786,9 +2800,19 @@ public class ProfileViewModel : ViewModelBase
         }
 
         PuTTY_InheritHost = profileInfo.PuTTY_InheritHost;
-        PuTTY_HostOrSerialLine = profileInfo.PuTTY_HostOrSerialLine;
+
+        if (profileInfo.PuTTY_ConnectionMode != ConnectionMode.Serial)
+            PuTTY_Host = profileInfo.PuTTY_HostOrSerialLine;
+        else
+            PuTTY_SerialLine = profileInfo.PuTTY_HostOrSerialLine;
+
         PuTTY_OverridePortOrBaud = profileInfo.PuTTY_OverridePortOrBaud;
-        PuTTY_PortOrBaud = profileInfo.PuTTY_PortOrBaud;
+
+        if (profileInfo.PuTTY_ConnectionMode != ConnectionMode.Serial)
+            PuTTY_Port = profileInfo.PuTTY_PortOrBaud;
+        else
+            PuTTY_Baud = profileInfo.PuTTY_PortOrBaud;
+        
         PuTTY_OverrideUsername = profileInfo.PuTTY_OverrideUsername;
         PuTTY_Username = profileInfo.PuTTY_Username;
         PuTTY_OverridePrivateKeyFile = profileInfo.PuTTY_OverridePrivateKeyFile;
@@ -2852,7 +2876,7 @@ public class ProfileViewModel : ViewModelBase
         // Wake on LAN
         WakeOnLAN_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.WakeOnLAN : profileInfo.WakeOnLAN_Enabled;
         WakeOnLAN_MACAddress = profileInfo.WakeOnLAN_MACAddress;
-        WakeOnLAN_Broadcast = profileInfo.WakeOnLAN_Broadcast;        
+        WakeOnLAN_Broadcast = profileInfo.WakeOnLAN_Broadcast;
 
         // Whois
         Whois_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.Whois : profileInfo.Whois_Enabled;

@@ -327,7 +327,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
             ConfigurationManager.OnDialogClose();
 
             // Create profile info
-            var info = new TigerVNCSessionInfo
+            var sessionInfo = new TigerVNCSessionInfo
             {
                 Host = instance.Host,
                 Port = instance.Port
@@ -340,7 +340,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
             AddPortToHistory(instance.Port);
 
             // Connect
-            Connect(info);
+            Connect(sessionInfo);
         }, async instance =>
          {
              await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -363,10 +363,12 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 
     private void ConnectProfileExternal()
     {
+        var sessionInfo = NETworkManager.Profiles.Application.TigerVNC.CreateSessionInfo(SelectedProfile);
+
         Process.Start(new ProcessStartInfo()
         {
             FileName = SettingsManager.Current.TigerVNC_ApplicationFilePath,
-            Arguments = TigerVNC.BuildCommandLine(NETworkManager.Profiles.Application.TigerVNC.CreateSessionInfo(SelectedProfile))
+            Arguments = TigerVNC.BuildCommandLine(sessionInfo)
         });
     }
 

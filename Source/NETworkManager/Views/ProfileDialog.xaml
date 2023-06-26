@@ -388,7 +388,7 @@
                                                             <Condition Binding="{Binding Data.PuTTY_Enabled, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding Data.PuTTY_InheritHost, Source={StaticResource BindingProxy}}" Value="False" />
                                                             <Condition Binding="{Binding Data.PuTTY_UseSerial, Source={StaticResource BindingProxy}}" Value="False" />
-                                                            <Condition Binding="{Binding ElementName=TextBoxPuTTYHostOrSerialLine, Path=(Validation.HasError)}" Value="True" />
+                                                            <Condition Binding="{Binding ElementName=TextBoxPuTTYHost, Path=(Validation.HasError)}" Value="True" />
                                                         </MultiDataTrigger.Conditions>
                                                         <MultiDataTrigger.Setters>
                                                             <Setter Property="Visibility" Value="Visible" />
@@ -399,7 +399,7 @@
                                                             <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PuTTY}" />
                                                             <Condition Binding="{Binding Data.PuTTY_Enabled, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding Data.PuTTY_UseSerial, Source={StaticResource BindingProxy}}" Value="True" />
-                                                            <Condition Binding="{Binding ElementName=TextBoxPuTTYHostOrSerialLine, Path=(Validation.HasError)}" Value="True" />
+                                                            <Condition Binding="{Binding ElementName=TextBoxPuTTYSerialLine, Path=(Validation.HasError)}" Value="True" />
                                                         </MultiDataTrigger.Conditions>
                                                         <MultiDataTrigger.Setters>
                                                             <Setter Property="Visibility" Value="Visible" />
@@ -730,7 +730,7 @@
                                                 </Style.Triggers>
                                             </Style>
                                         </CheckBox.Style>
-                                    </CheckBox>                                   
+                                    </CheckBox>
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -1921,12 +1921,13 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
-                                <TextBox x:Name="TextBoxPuTTYHostOrSerialLine" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameOrIPAddress}">
+                                <TextBox x:Name="TextBoxPuTTYHost" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameOrIPAddress}"
+                                         Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                                     <TextBox.Style>
                                         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                                             <Setter Property="Text">
                                                 <Setter.Value>
-                                                    <Binding Path="PuTTY_HostOrSerialLine" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                                    <Binding Path="PuTTY_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                         <Binding.ValidationRules>
                                                             <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                                                             <validators:IPAddressOrHostnameValidator ValidatesOnTargetUpdated="True" />
@@ -1953,8 +1954,25 @@
                                         </Style>
                                     </TextBox.Style>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="4" Text="{x:Static localization:Strings.OverrideDefaultSettings}" Style="{StaticResource HeaderTextBlock}" Margin="0,10,0,0"/>
-                                <Separator Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="4" Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,0,0,10" />
+                                <TextBox x:Name="TextBoxPuTTYSerialLine" Grid.Column="2" Grid.Row="4"
+                                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameOrIPAddress}"
+                                         Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
+                                         Style="{StaticResource DefaultTextBox}">
+                                    <TextBox.Text>
+                                        <Binding Path="PuTTY_SerialLine" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <TextBlock Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="4" 
+                                           Text="{x:Static localization:Strings.OverrideDefaultSettings}" 
+                                           Style="{StaticResource HeaderTextBlock}" Margin="0,10,0,0"/>
+                                <Separator Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="4" 
+                                           Background="{DynamicResource MahApps.Brushes.Gray8}" 
+                                           Margin="0,0,0,10" />
                                 <CheckBox Grid.Column="0" Grid.Row="10" IsChecked="{Binding PuTTY_OverridePortOrBaud}">
                                     <CheckBox.Style>
                                         <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource DefaultCheckBox}">
@@ -1969,7 +1987,7 @@
                                 </CheckBox>
                                 <TextBox Grid.Column="2" x:Name="TextBoxPuTTYPort" Grid.Row="10" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort22}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" IsEnabled="{Binding PuTTY_OverridePortOrBaud}">
                                     <TextBox.Text>
-                                        <Binding Path="PuTTY_PortOrBaud" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding Path="PuTTY_Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
                                                 <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                                                 <validators:PortValidator ValidatesOnTargetUpdated="True" />
@@ -1977,9 +1995,9 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBox Grid.Column="2" Grid.Row="10" x:Name="TextBoxPuTTYBaud" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort22}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" IsEnabled="{Binding PuTTY_OverridePortOrBaud}">
+                                <TextBox Grid.Column="2" Grid.Row="10" x:Name="TextBoxPuTTYBaud" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSerialLine}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" IsEnabled="{Binding PuTTY_OverridePortOrBaud}">
                                     <TextBox.Text>
-                                        <Binding Path="PuTTY_PortOrBaud" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding Path="PuTTY_Baud" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
                                                 <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                                                 <validators:BaudValidator ValidatesOnTargetUpdated="True" />
@@ -1997,7 +2015,12 @@
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
-                                </TextBox>
+                                </TextBox>                                
+                                <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="12" ToolTip="{x:Static localization:Strings.HelpMessage_PuTTYUsername}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                                    <Rectangle.Resources>
+                                        <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                                    </Rectangle.Resources>
+                                </Rectangle>
                                 <CheckBox Grid.Column="0" Grid.Row="14" Content="{x:Static localization:Strings.PrivateKeyFile}" IsChecked="{Binding PuTTY_OverridePrivateKeyFile}" Style="{StaticResource DefaultCheckBox}" />
                                 <TextBox Grid.Column="2" Grid.Row="14" x:Name="TextBoxPuTTYPrivateKeyFile" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.PrivateKeyFileLocationDots}" IsEnabled="{Binding PuTTY_OverridePrivateKeyFile}">
                                     <TextBox.Text>
@@ -2008,9 +2031,19 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
+                                <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="14" ToolTip="{x:Static localization:Strings.HelpMessage_PuTTYPrivateKeyFile}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                                    <Rectangle.Resources>
+                                        <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                                    </Rectangle.Resources>
+                                </Rectangle>
                                 <CheckBox Grid.Column="0" Grid.Row="16" Content="{x:Static localization:Strings.Profile}" IsChecked="{Binding PuTTY_OverrideProfile}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePuTTYProfile}" Style="{StaticResource DefaultCheckBox}" />
                                 <TextBox Grid.Column="2" Grid.Row="16" Text="{Binding PuTTY_Profile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding PuTTY_OverrideProfile}" />
                                 <CheckBox Grid.Column="0" Grid.Row="18" Content="{x:Static localization:Strings.Hostkey}" IsChecked="{Binding PuTTY_OverrideHostkey}" Style="{StaticResource DefaultCheckBox}" />
+                                <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="18" ToolTip="{x:Static localization:Strings.HelpMessage_PuTTYHostkey}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                                    <Rectangle.Resources>
+                                        <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                                    </Rectangle.Resources>
+                                </Rectangle>
                                 <TextBox Grid.Column="2" Grid.Row="18" Text="{Binding PuTTY_Hostkey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostkey}" IsEnabled="{Binding PuTTY_OverrideHostkey}" />
                                 <CheckBox Grid.Column="0" Grid.Row="20" Content="{x:Static localization:Strings.EnableLog}" IsChecked="{Binding PuTTY_OverrideEnableLog}" Style="{StaticResource DefaultCheckBox}" />
                                 <mah:ToggleSwitch Grid.Column="2" Grid.Row="20" OnContent="" OffContent="" IsOn="{Binding PuTTY_EnableLog}" IsEnabled="{Binding PuTTY_OverrideEnableLog}" />
@@ -3010,7 +3043,7 @@
                                     <Condition Binding="{Binding PuTTY_Enabled}" Value="True" />
                                     <Condition Binding="{Binding PuTTY_InheritHost}" Value="False" />
                                     <Condition Binding="{Binding PuTTY_UseSerial}" Value="False" />
-                                    <Condition Binding="{Binding ElementName=TextBoxPuTTYHostOrSerialLine, Path=(Validation.HasError)}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=TextBoxPuTTYHost, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />
@@ -3020,7 +3053,7 @@
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding PuTTY_Enabled}" Value="True" />
                                     <Condition Binding="{Binding PuTTY_UseSerial}" Value="True" />
-                                    <Condition Binding="{Binding ElementName=TextBoxPuTTYHostOrSerialLine, Path=(Validation.HasError)}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=TextBoxPuTTYSerialLine, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />

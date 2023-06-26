@@ -15,13 +15,19 @@ public class PuTTYConnectViewModel : ViewModelBase
 
     public ICommand CancelCommand { get; }
 
-    public int DefaultSSHPort => SettingsManager.Current.PuTTY_SSHPort;
-    public int DefaultTelnetPort => SettingsManager.Current.PuTTY_TelnetPort;
-    public int DefaultBaudRate => SettingsManager.Current.PuTTY_BaudRate;
-    public int DefaultRloginPort => SettingsManager.Current.PuTTY_RloginPort;
-    public int DefaultRaw => SettingsManager.Current.PuTTY_RawPort;
+    private ConnectionMode _connectionMode;
+    public ConnectionMode ConnectionMode
+    {
+        get => _connectionMode;
+        set
+        {
+            if(value == _connectionMode) 
+                return;
 
-    public ConnectionMode ConnectionMode { get; set; }
+            _connectionMode = value;
+            OnPropertyChanged();
+        }
+    }
 
     private bool _useSSH;
     public bool UseSSH
@@ -34,7 +40,7 @@ public class PuTTYConnectViewModel : ViewModelBase
 
             if (value)
             {
-                Port = DefaultSSHPort;
+                Port = SettingsManager.Current.PuTTY_SSHPort;
                 ConnectionMode = ConnectionMode.SSH;
             }
 
@@ -54,7 +60,7 @@ public class PuTTYConnectViewModel : ViewModelBase
 
             if (value)
             {
-                Port = DefaultTelnetPort;
+                Port = SettingsManager.Current.PuTTY_TelnetPort;
                 ConnectionMode = ConnectionMode.Telnet;
             }
 
@@ -74,7 +80,7 @@ public class PuTTYConnectViewModel : ViewModelBase
 
             if (value)
             {
-                Baud = DefaultBaudRate;
+                Baud = SettingsManager.Current.PuTTY_BaudRate;
                 ConnectionMode = ConnectionMode.Serial;
             }
 
@@ -94,7 +100,7 @@ public class PuTTYConnectViewModel : ViewModelBase
 
             if (value)
             {
-                Port = DefaultRloginPort;
+                Port = SettingsManager.Current.PuTTY_RloginPort;
                 ConnectionMode = ConnectionMode.Rlogin;
             }
 
@@ -114,7 +120,7 @@ public class PuTTYConnectViewModel : ViewModelBase
 
             if (value)
             {
-                Port = DefaultRaw;
+                Port = SettingsManager.Current.PuTTY_RawPort;
                 ConnectionMode = ConnectionMode.RAW;
             }
 
