@@ -504,8 +504,8 @@
   <data name="Maximum" xml:space="preserve">
     <value>Máximo</value>
   </data>
-  <data name="MaximumHopsRouter" xml:space="preserve">
-    <value>Saltos máximos/roteador</value>
+  <data name="MaximumHops" xml:space="preserve">
+    <value>Maximum hops</value>
   </data>
   <data name="MinimizeInsteadOfTerminating" xml:space="preserve">
     <value>Minimizar janela principal em vez de finalizar o aplicativo</value>
@@ -588,11 +588,8 @@
   <data name="StaticIPv4DNSServer" xml:space="preserve">
     <value>Servidor DNS IPv4 estático</value>
   </data>
-  <data name="Subnetmask" xml:space="preserve">
-    <value>Máscara de sub-rede</value>
-  </data>
-  <data name="SubnetmaskOrCIDR" xml:space="preserve">
-    <value>Máscara de sub-rede ou CIDR</value>
+  <data name="SubnetMask" xml:space="preserve">
+    <value>Subnet mask</value>
   </data>
   <data name="Threads" xml:space="preserve">
     <value>Segmentos</value>
@@ -615,8 +612,8 @@
   <data name="TimeoutMS" xml:space="preserve">
     <value>Tempo limite (ms)</value>
   </data>
-  <data name="TimeToWaitBetweenEachPing" xml:space="preserve">
-    <value>Tempo para esperar entre cada ping</value>
+  <data name="TimeMSToWaitBetweenEachPing" xml:space="preserve">
+    <value>Time (ms) to wait between each ping</value>
   </data>
   <data name="TTL" xml:space="preserve">
     <value>TTL</value>
@@ -1017,9 +1014,6 @@ Crie um...</value>
   <data name="PuTTYProcessHasEnded" xml:space="preserve">
     <value>Processo PuTTY foi finalizado!</value>
   </data>
-  <data name="PuTTYProfile" xml:space="preserve">
-    <value>Perfil PuTTY</value>
-  </data>
   <data name="Questions" xml:space="preserve">
     <value>Perguntas</value>
   </data>
@@ -1093,7 +1087,7 @@ Crie um...</value>
     <value>Serial</value>
   </data>
   <data name="SerialLine" xml:space="preserve">
-    <value>SerialLine</value>
+    <value>Serial line</value>
   </data>
   <data name="Service" xml:space="preserve">
     <value>Serviço</value>
@@ -1938,7 +1932,7 @@ Alterar esse valor requer uma reinicialização do aplicativo para entrar em vig
     <value>Painel de Controle</value>
   </data>
   <data name="AllSettingsCanBeChangedLaterInTheSettings" xml:space="preserve">
-    <value>Todas as configurações podem ser alteradas mais tarde nas Configurações</value>
+    <value>All settings can be changed later in the settings!</value>
   </data>
   <data name="CheckPublicIPAddress" xml:space="preserve">
     <value>Verificar endereço de IP público</value>
@@ -2695,7 +2689,7 @@ $$hostname$$--&gt;Nome do host</value>
     <value>Registro SSH</value>
   </data>
   <data name="PuTTYLogMode_SSHRawLog" xml:space="preserve">
-    <value>Registro SSH e Raw</value>
+    <value>SSH and Raw log</value>
   </data>
   <data name="EnterValidFileName" xml:space="preserve">
     <value>Entre o nome válido de arquivo!</value>
@@ -3072,15 +3066,15 @@ O perfil não foi removido do arquivo ~\.aws\credentials.</value>
   <data name="DefaultRegion" xml:space="preserve">
     <value>Região padrão</value>
   </data>
-  <data name="HelpMessage_AWSSessionManagerDefaultProfile" xml:space="preserve">
-    <value>O perfil padrão que é usado para criar perfis para conectar a uma instância EC2 pelo CLI do AWS.
+  <data name="HelpMessage_AWSSessionManagerProfile" xml:space="preserve">
+    <value>Profile which is used by manually created profiles to connect to an EC2 instance via AWS CLI.
 
-Se não definidas, as configurações CLI padrão do AWS serão usadas.</value>
+If not set, the default AWS CLI settings are used.</value>
   </data>
-  <data name="HelpMessage_AWSSessionManagerDefaultRegion" xml:space="preserve">
-    <value>A região padrão que é usada para criar perfis manualmente para conectar a uma instância EC2 pelo CLI do AWS.
+  <data name="HelpMessage_AWSSessionManagerRegion" xml:space="preserve">
+    <value>Region which is used by manually created profiles to connect to an EC2 instance via AWS CLI .
 
-Se não definidas, as configurações CLI padrão do AWS serão usadas.</value>
+If not set, the default AWS CLI settings are used.</value>
   </data>
   <data name="HelpMessage_AWSCLIDefaultsAreUsedIfNotSet" xml:space="preserve">
     <value>Se não definidas, as configurações CLI padrão do AWS serão usadas.</value>
@@ -3540,5 +3534,26 @@ As alterações nesse valor entrarão em vigor depois que o aplicativo for reini
   </data>
   <data name="FromProfile" xml:space="preserve">
     <value>(from profile)</value>
+  </data>
+  <data name="NewSubnetMask" xml:space="preserve">
+    <value>New subnet mask</value>
+  </data>
+  <data name="AddServer" xml:space="preserve">
+    <value>Add server</value>
+  </data>
+  <data name="SNTPServer" xml:space="preserve">
+    <value>SNTP server</value>
+  </data>
+  <data name="ErrorMessage_TabPageHasError" xml:space="preserve">
+    <value>The settings on this page contain errors. Correct them to be able to save.</value>
+  </data>
+  <data name="HelpMessage_PuTTYHostkey" xml:space="preserve">
+    <value>SSH hostkey to use for the connection (like "71:b8:f2:6e..."). Only available if the mode is "SSH".</value>
+  </data>
+  <data name="HelpMessage_PuTTYPrivateKeyFile" xml:space="preserve">
+    <value>Full path to the private key file (like "C:\Users\BornToBeRoot\SSH\private_key.ppk"). Only available if the mode is "SSH".</value>
+  </data>
+  <data name="HelpMessage_PuTTYUsername" xml:space="preserve">
+    <value>Username that will be passed into the PuTTY session. Only available if the mode is "SSH", "Telnet" or "Rlogin".</value>
   </data>
 </root>
