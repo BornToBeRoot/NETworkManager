@@ -3531,4 +3531,13 @@ V zgornjem desnem kotu kliknite na gumb za Pomoč/Dokumentacijo (levo od gumba z
   <data name="ErrorMessage_TabPageHasError" xml:space="preserve">
     <value>Nastavitve na tej strani vsebujejo napake. Popravite jih, da jih lahko shranite.</value>
   </data>
+  <data name="HelpMessage_PuTTYHostkey" xml:space="preserve">
+    <value>SSH hostkey to use for the connection (like "71:b8:f2:6e..."). Only available if the mode is "SSH".</value>
+  </data>
+  <data name="HelpMessage_PuTTYPrivateKeyFile" xml:space="preserve">
+    <value>Full path to the private key file (like "C:\Users\BornToBeRoot\SSH\private_key.ppk"). Only available if the mode is "SSH".</value>
+  </data>
+  <data name="HelpMessage_PuTTYUsername" xml:space="preserve">
+    <value>Username that will be passed into the PuTTY session. Only available if the mode is "SSH", "Telnet" or "Rlogin".</value>
+  </data>
 </root>
