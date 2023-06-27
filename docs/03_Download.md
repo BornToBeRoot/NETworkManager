@@ -6,22 +6,22 @@ description: "Download the latest available version"
 permalink: /Download
 ---
 
-# 2023.6.27.0
+# 2023.6.27.1
 
 Release date: **27.06.2023**
 
 <br />
 <div style="text-align: center">  
   <p>
-    <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2023.6.27.0/NETworkManager_2023.6.27.0_Setup.exe' style="text-decoration: none;" target="_blank">
+    <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2023.6.27.1/NETworkManager_2023.6.27.1_Setup.exe' style="text-decoration: none;" target="_blank">
       <span class="fs-5"><button type="button" name="button" class="btn btn-primary" style="width: 9.375rem;">:package: Setup</button></span>
     </a>
     &nbsp;
-    <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2023.6.27.0/NETworkManager_2023.6.27.0_Portable.zip' style="text-decoration: none;" target="_blank">
+    <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2023.6.27.1/NETworkManager_2023.6.27.1_Portable.zip' style="text-decoration: none;" target="_blank">
       <span class="fs-5"><button type="button" name="button" class="btn btn-primary" style="width: 9.375rem;">:package: Portable</button></span>
     </a>
     &nbsp;
-    <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2023.6.27.0/NETworkManager_2023.6.27.0_Archive.zip' style="text-decoration: none;" target="_blank">
+    <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2023.6.27.1/NETworkManager_2023.6.27.1_Archive.zip' style="text-decoration: none;" target="_blank">
       <span class="fs-5"><button type="button" name="button" class="btn btn-primary" style="width: 9.375rem;">:package: Archive</button></span>
     </a>
   </p>  
@@ -37,15 +37,15 @@ Release date: **27.06.2023**
     </tr>
     <tr>
       <td>Setup</td>
-      <td><code>664A6BA437C27415E1ED69A57CA4D4435C8EF077C1556ABC9267517A93D48C08</code></td>
+      <td><code>8126ED2D73CCF7E6F1C5EA5FD13A25C99DE1493F05A71C1435A956DA4409C836</code></td>
     </tr>
     <tr>
       <td>Portable</td>
-      <td><code>D356874DD353864C164B2136B893A8B798A8C236990E44F3F222EF1260FDF040</code></td>
+      <td><code>49AFB59B249F760E58B20AB779D47E7FE9E39A082EB6F10601A5EF1A0D40A6B8</code></td>
     </tr>
     <tr>
       <td>Archive</td>
-      <td><code>2FC80F329A5B8C9B2EA79A0C11619EB32383802F180C7CF0FA720B4064B6E0B3</code></td>
+      <td><code>A9789E3BC8417875565385A4D93A8D20BD0A793EA1BAE390232B85B4BF51123D</code></td>
     </tr>
   </table>
 </details>
