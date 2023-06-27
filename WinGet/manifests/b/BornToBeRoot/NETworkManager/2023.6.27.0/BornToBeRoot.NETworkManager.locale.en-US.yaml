@@ -2,7 +2,7 @@
 # yaml-language-server: $schema=https://aka.ms/winget-manifest.defaultLocale.1.2.0.schema.json
 
 PackageIdentifier: BornToBeRoot.NETworkManager
-PackageVersion: 2023.4.26.0
+PackageVersion: 2023.6.27.0
 PackageLocale: en-US
 Publisher: BornToBeRoot
 PublisherUrl: https://github.com/BornToBeRoot/NETworkManager
@@ -30,7 +30,7 @@ Tags:
 - wifi
 # Agreements:
 # ReleaseNotes:
-ReleaseNotesUrl: https://github.com/BornToBeRoot/NETworkManager/releases/tag/2023.4.26.0
+ReleaseNotesUrl: https://github.com/BornToBeRoot/NETworkManager/releases/tag/2023.6.27.0
 # PurchaseUrl:
 # InstallationNotes:
 Documentations:
