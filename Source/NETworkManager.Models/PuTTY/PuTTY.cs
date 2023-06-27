@@ -135,25 +135,25 @@ public partial class PuTTY
 
         // PuTTY Profile
         if (!string.IsNullOrEmpty(sessionInfo.Profile))
-            command += $" -load \"{sessionInfo.Profile}\"";
+            command += $"-load \"{sessionInfo.Profile}\"";
 
         // Protocol
         switch (sessionInfo.Mode)
         {
             case ConnectionMode.SSH:
-                command += "-ssh";
+                command += " -ssh";
                 break;
             case ConnectionMode.Telnet:
-                command += "-telnet";
+                command += " -telnet";
                 break;
             case ConnectionMode.Serial:
-                command += "-serial";
+                command += " -serial";
                 break;
             case ConnectionMode.Rlogin:
-                command += "-rlogin";
+                command += " -rlogin";
                 break;
             case ConnectionMode.RAW:
-                command += "-raw";
+                command += " -raw";
                 break;
         }
 
