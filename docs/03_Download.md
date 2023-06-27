@@ -6,22 +6,22 @@ description: "Download the latest available version"
 permalink: /Download
 ---
 
-# 2023.4.26.0
+# 2023.6.27.0
 
-Release date: **26.04.2023**
+Release date: **27.06.2023**
 
 <br />
 <div style="text-align: center">  
   <p>
-    <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2023.4.26.0/NETworkManager_2023.4.26.0_Setup.exe' style="text-decoration: none;" target="_blank">
+    <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2023.6.27.0/NETworkManager_2023.6.27.0_Setup.exe' style="text-decoration: none;" target="_blank">
       <span class="fs-5"><button type="button" name="button" class="btn btn-primary" style="width: 150px;">:package: Setup</button></span>
     </a>
     &nbsp;
-    <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2023.4.26.0/NETworkManager_2023.4.26.0_Portable.zip' style="text-decoration: none;" target="_blank">
+    <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2023.6.27.0/NETworkManager_2023.6.27.0_Portable.zip' style="text-decoration: none;" target="_blank">
       <span class="fs-5"><button type="button" name="button" class="btn btn-primary" style="width: 150px;">:package: Portable</button></span>
     </a>
     &nbsp;
-    <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2023.4.26.0/NETworkManager_2023.4.26.0_Archive.zip' style="text-decoration: none;" target="_blank">
+    <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2023.6.27.0/NETworkManager_2023.6.27.0_Archive.zip' style="text-decoration: none;" target="_blank">
       <span class="fs-5"><button type="button" name="button" class="btn btn-primary" style="width: 150px;">:package: Archive</button></span>
     </a>
   </p>  
@@ -37,15 +37,15 @@ Release date: **26.04.2023**
     </tr>
     <tr>
       <td>Setup</td>
-      <td><code>5276974F44D1B32E759E1AAECF60B8440164B34B501B0587DEACB367AA1FF304</code></td>
+      <td><code>664A6BA437C27415E1ED69A57CA4D4435C8EF077C1556ABC9267517A93D48C08</code></td>
     </tr>
     <tr>
       <td>Portable</td>
-      <td><code>D24AE09AA2179CA23EE5F49E0B2CC0477DB9583B3474241051693E243D512668</code></td>
+      <td><code>D356874DD353864C164B2136B893A8B798A8C236990E44F3F222EF1260FDF040</code></td>
     </tr>
     <tr>
       <td>Archive</td>
-      <td><code>7D5D613F9E759D169747B2B89AC20D9D9ABE2874B5CF620620F471963D52247D</code></td>
+      <td><code>2FC80F329A5B8C9B2EA79A0C11619EB32383802F180C7CF0FA720B4064B6E0B3</code></td>
     </tr>
   </table>
 </details>
