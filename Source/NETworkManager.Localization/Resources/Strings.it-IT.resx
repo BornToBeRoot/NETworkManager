@@ -3635,12 +3635,15 @@ Per assistenza contattare l'amministratore di rete.</value>
     <value>Le impostazioni in questa pagina contengono errori. Correggili per poter salvare.</value>
   </data>
   <data name="HelpMessage_PuTTYHostkey" xml:space="preserve">
-    <value>SSH hostkey to use for the connection (like "71:b8:f2:6e..."). Only available if the mode is "SSH".</value>
+    <value>Chiave host SSH da usare per la connessione (come "71:b8:f2:6e..."). 
+Disponibile solo se la modalità è "SSH".</value>
   </data>
   <data name="HelpMessage_PuTTYPrivateKeyFile" xml:space="preserve">
-    <value>Full path to the private key file (like "C:\Users\BornToBeRoot\SSH\private_key.ppk"). Only available if the mode is "SSH".</value>
+    <value>Percorso completo file chiave privata (come "C:\Users\BornToBeRoot\SSH\private_key.ppk"). 
+Disponibile solo se la modalità è "SSH".</value>
   </data>
   <data name="HelpMessage_PuTTYUsername" xml:space="preserve">
-    <value>Username that will be passed into the PuTTY session. Only available if the mode is "SSH", "Telnet" or "Rlogin".</value>
+    <value>Nome utente che verrà passato alla sessione PuTTY. 
+Disponibile solo se la modalità è "SSH", "Telnet" o "Rlogin".</value>
   </data>
 </root>
