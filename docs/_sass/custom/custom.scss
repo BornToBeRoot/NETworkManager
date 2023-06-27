@@ -17,14 +17,14 @@ pre.highlight {
     Code block font size. Default is 0.75em.
 */
 code {
-    font-size: 12px;
+    font-size: inherit;
 }
 
 /*
     Upper right corner link font size.
 */
 .aux-nav-list-item {
-    font-size: 14px;
+    font-size: 0.875rem;
 }
 
 /*
@@ -32,5 +32,5 @@ code {
 */
 img.emoji {
     vertical-align: middle;
-    margin-bottom: 3px;
+    margin-bottom: 0.188rem;
 }
