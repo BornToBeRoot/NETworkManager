@@ -80,8 +80,6 @@ public partial class App
             _log.Info($"NETworkManager process with Pid {CommandLineManager.Current.RestartPid} has been exited.");
         }
 
-        MigrateAppDataToDocuments();
-
         // Load settings
         try
         {
@@ -220,102 +218,7 @@ public partial class App
             Shutdown();
         }
     }
-
-    [Obsolete("Temp method to migrate settings and profiles... should be removed after in 2-3 updates.")]
-    private void MigrateAppDataToDocuments()
-    {
-        // Migrate settings and profiles from old paths to new paths
-        if (!ConfigurationManager.Current.IsPortable)
-        {
-            string oldSettingsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "NETworkManager", "Settings");
-
-            if (Directory.Exists(oldSettingsPath))
-            {
-                string oldSettingsFile = Path.Combine(oldSettingsPath, "Settings.xml");
-
-                var oldSettingsError = false;
-
-                if (File.Exists(oldSettingsFile))
-                {
-                    _log.Info($"Migrate settings file from \"{oldSettingsFile}\" to \"{SettingsManager.GetSettingsFilePath()}\"...");
-                    Directory.CreateDirectory(SettingsManager.GetSettingsFolderLocation());
-
-                    try
-                    {
-                        File.Move(oldSettingsFile, SettingsManager.GetSettingsFilePath());
-                    }
-                    catch (Exception ex)
-                    {
-                        oldSettingsError = true;
-                        _log.Error("Could not migrate settings file!", ex);
-                    }
-                }
-
-                try
-                {
-                    if (!oldSettingsError)
-                    {
-                        _log.Info($"Delete folder \"{oldSettingsPath}\"...");
-                        Directory.Delete(oldSettingsPath, true);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    _log.Error($"Could not delete folder!", ex);
-                }
-            }
-
-            string oldProfilesPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "NETworkManager", "Profiles");
-
-            if (Directory.Exists(oldProfilesPath))
-            {
-                var profileExtensions = new[] { ".xml", ".encrypted" };
-
-                var oldProfileFilePaths = Directory.EnumerateFiles(oldProfilesPath, "*.*", SearchOption.TopDirectoryOnly)
-                    .Where(f => profileExtensions.Contains(Path.GetExtension(f).ToLowerInvariant()));
-
-                var oldProfilesError = false;
-
-                if (oldProfileFilePaths != null && oldProfileFilePaths.Any())
-                {
-                    _log.Info($"Migrate \"{oldProfileFilePaths.Count()}\" profile(s)...");
-                    var newProfilesPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "NETworkManager", "Profiles");
-                    Directory.CreateDirectory(newProfilesPath);
-
-                    foreach (var oldProfileFilePath in oldProfileFilePaths)
-                    {
-                        var newProfileFilePath = Path.Combine(newProfilesPath, Path.GetFileName(oldProfileFilePath));
-
-                        _log.Info($"Migrate profile file from \"{oldProfileFilePath}\" to \"{newProfileFilePath}\"");
-
-                        try
-                        {
-                            File.Move(oldProfileFilePath, newProfileFilePath);
-                        }
-                        catch (Exception ex)
-                        {
-                            oldProfilesError = true;
-                            _log.Error("Could not migrate profile file!", ex);
-                        }
-                    }
-                }
-
-                try
-                {
-                    if (!oldProfilesError)
-                    {
-                        _log.Info($"Delete folder \"{oldProfilesPath}\"...");
-                        Directory.Delete(oldProfilesPath, true);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    _log.Error($"Could not delete folder!", ex);
-                }
-            }
-        }
-    }
-
+        
     private void DispatcherTimer_Tick(object sender, EventArgs e)
     {
         _log.Info("Run background job...");
@@ -344,6 +247,7 @@ public partial class App
         _dispatcherTimer?.Stop();
 
         Save();
+        
         _log.Info("Bye!");
     }
 
