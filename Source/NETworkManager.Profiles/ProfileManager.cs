@@ -469,7 +469,9 @@ public static class ProfileManager
 
         LoadedProfileFile = null;
 
-        Reset();
+        Groups.Clear();
+
+        ProfilesUpdated();
     }
 
     /// <summary>
@@ -775,7 +777,6 @@ public static class ProfileManager
 
         Groups.First(x => x.Name.Equals(newProfile.Group)).Profiles.Add(newProfile);
 
-        // Notify
         ProfilesUpdated();
     }
 
@@ -798,18 +799,6 @@ public static class ProfileManager
     {
         foreach (ProfileInfo profile in profiles)
             Groups.First(x => x.Name.Equals(profile.Group)).Profiles.Remove(profile);
-
-        ProfilesUpdated();
-    }
-    #endregion
-
-    #region Helper       
-    /// <summary>
-    /// Method to reset the profiles.
-    /// </summary>
-    public static void Reset()
-    {
-        Groups.Clear();
 
         ProfilesUpdated();
     }

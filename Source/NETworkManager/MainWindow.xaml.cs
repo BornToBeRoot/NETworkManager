@@ -1117,9 +1117,7 @@ public partial class MainWindow : INotifyPropertyChanged
             ProfileManager.Switch(info);
 
             IsProfileFileLocked = false;
-
-            // Null if profile is loaded before application is loaded
-            ////if (SelectedApplication != null)
+            
             OnProfilesLoaded(SelectedApplication.Name);
         }
         catch (System.Security.Cryptography.CryptographicException)
@@ -1127,22 +1125,16 @@ public partial class MainWindow : INotifyPropertyChanged
             // Wrong password, try again...
             LoadProfile(info, true);
         }
-        catch
+        catch (Exception ex)
         {
             var settings = AppearanceManager.MetroDialog;
-            settings.AffirmativeButtonText = Localization.Resources.Strings.Migrate;
-            settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
+            settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+            
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
             ConfigurationManager.OnDialogOpen();
-            var result = await this.ShowMessageAsync(Localization.Resources.Strings.ProfileCouldNotBeLoaded, Localization.Resources.Strings.ProfileCouldNotBeLoadedMessage, MessageDialogStyle.AffirmativeAndNegative, settings);
+            await this.ShowMessageAsync(Localization.Resources.Strings.ProfileCouldNotBeLoaded, string.Format(Localization.Resources.Strings.ProfileCouldNotBeLoadedMessage, ex.Message), MessageDialogStyle.Affirmative, settings);
             ConfigurationManager.OnDialogClose();
-
-            if (result == MessageDialogResult.Affirmative)
-            {
-                ExternalProcessStarter.RunProcess("powershell.exe", $"-NoLogo -NoProfile -ExecutionPolicy ByPass -File \"{Path.Combine(ConfigurationManager.Current.ExecutionPath, "Resources", "Migrate-Profiles.ps1")}\" -Path \"{ProfileManager.GetProfilesFolderLocation()}\" -NETworkManagerPath \"{ConfigurationManager.Current.ApplicationFullName}\" -NETworkManagerVersion \"{AssemblyManager.Current.Version}\"");
-                CloseApplication();
-            }
         }
     }
 
