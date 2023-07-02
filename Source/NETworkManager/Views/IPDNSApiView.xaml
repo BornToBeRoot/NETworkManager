@@ -17,6 +17,7 @@
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:StringNullOrEmptyToStringConverter x:Key="StringNullOrEmptyToStringConverter" />
     </UserControl.Resources>
     <Border Grid.Column="0" BorderThickness="1" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
         <Grid Margin="10">
@@ -57,14 +58,14 @@
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.DNS}" Margin="0,0,0,10" Foreground="{DynamicResource MahApps.Brushes.Gray3}" />
                     <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.IPAddress}" />
-                    <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding IPDNSApiInfo.Dns.Ip}" />
+                    <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding IPDNSApiInfo.DnsIp, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Geolocation}" />
-                    <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding IPDNSApiInfo.Dns.Geo}" />
+                    <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding IPDNSApiInfo.DnsGeo, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.EDNS}" Margin="0,20,0,10" Foreground="{DynamicResource MahApps.Brushes.Gray3}" />
                     <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.IPAddress}" />
-                    <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding IPDNSApiInfo.Edns.Ip}" />
+                    <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding IPDNSApiInfo.EdnsIp, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="5" Text="{x:Static localization:Strings.Geolocation}" />
-                    <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding IPDNSApiInfo.Edns.Geo}" />
+                    <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding IPDNSApiInfo.EdnsGeo, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
                 </Grid>
             </Grid>
         </Grid>

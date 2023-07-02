@@ -13,13 +13,17 @@ namespace NETworkManager.Models.Network
     /// </summary>
     public class IPDNSApiService : SingletonBase<IPDNSApiService>
     {
-        HttpClient client = new();
+        private readonly HttpClient client = new();
 
         /// <summary>
         /// Base URL fo the ip-api free endpoint.
         /// </summary>
         private const string _baseURL = "http://edns.ip-api.com/json";
-       
+
+        /// <summary>
+        /// Gets the IP DNS details from the API asynchronously.
+        /// </summary>
+        /// <returns>IP DNS informations as <see cref="IPDNSApiResult"/>.</returns>
         public async Task<IPDNSApiResult> GetIPDNSDetailsAsync()
         {
             try
@@ -29,10 +33,10 @@ namespace NETworkManager.Models.Network
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var info = JsonConvert.DeserializeObject<IPDNSApiInfo>(json);
+                    var info = JsonConvert.DeserializeObject<IPDNSApiDeserializationInfo>(json);
 
-                    return new IPDNSApiResult(info);
-                }               
+                    return new IPDNSApiResult(IPDNSApiInfo.Parse(info));
+                }
                 else
                 {
                     Debug.WriteLine($"Error code: {(int)response.StatusCode}");

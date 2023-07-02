@@ -1,5 +1,8 @@
 ﻿namespace NETworkManager.Models.Network
 {
+    /// <summary>
+    /// Class contains the IP information from the IP Geolocation API.
+    /// </summary>
     public class IPGeoApiInfo
     {
         /// <summary>

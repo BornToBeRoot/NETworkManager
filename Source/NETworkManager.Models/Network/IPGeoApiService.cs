@@ -1,11 +1,8 @@
 ﻿using NETworkManager.Utilities;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NETworkManager.Models.Network
@@ -16,7 +13,7 @@ namespace NETworkManager.Models.Network
     /// </summary>
     public class IPGeoApiService : SingletonBase<IPGeoApiService>
     {
-        HttpClient client = new();
+        private readonly HttpClient client = new();
 
         /// <summary>
         /// Base URL fo the ip-api free endpoint.
@@ -37,7 +34,10 @@ namespace NETworkManager.Models.Network
         /// </summary>
         private int _rateLimit_RemainingRequests = 45;
 
-       
+        /// <summary>
+        /// Gets the IP geolocation details from the API asynchronously.
+        /// </summary>
+        /// <returns>IP geolocation informations as <see cref="IPGeoApiResult"/>.</returns>
         public async Task<IPGeoApiResult> GetIPGeoDetailsAsync(string ipAddress = "")
         {
             // ToDo: Implement rate limiting check

@@ -1,6 +1,5 @@
 ﻿namespace NETworkManager.Models.Network
-{
-   
+{   
     public class IPDNSApiResult
     {
         public IPDNSApiInfo Info { get; set; }
@@ -15,7 +14,7 @@
         /// </summary>
         public string ErrorMessage { get; set; }
 
- 
+        
         public IPDNSApiResult(IPDNSApiInfo info)
         {
             Info = info;         
