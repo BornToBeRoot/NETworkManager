@@ -7,6 +7,13 @@ namespace NETworkManager.Settings;
 /// </summary>
 public abstract class BaseColorInfo
 {
+    /// <summary>
+    /// Gets or sets the name of the theme/accent.
+    /// </summary>
     public string Name { get; set; }
+
+    /// <summary>
+    /// Gets or sets the color of the theme/accent.
+    /// </summary>
     public Brush Color { get; set; }
 }
