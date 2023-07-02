@@ -98,11 +98,15 @@ public class ConfigurationInfo : PropertyChangedBase
 
     #region Constructor
     /// <summary>
-    /// Create a new instance of <see cref="ConfigurationInfo"/>.
+    /// Create a new instance of <see cref="ConfigurationInfo"/> with static configuration.
     /// </summary>
-    public ConfigurationInfo()
+    public ConfigurationInfo(bool isAdmin, string executionPath, string applicationFullName, string applicationName, bool isPortable)
     {
-
+        IsAdmin = isAdmin;
+        ExecutionPath = executionPath;
+        ApplicationFullName = applicationFullName;
+        ApplicationName = applicationName;
+        IsPortable = isPortable;
     }
     #endregion
 }

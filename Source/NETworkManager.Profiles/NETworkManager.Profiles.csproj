@@ -16,15 +16,7 @@
 		<FrameworkReference Update="Microsoft.WindowsDesktop.App;Microsoft.WindowsDesktop.App.WPF;Microsoft.WindowsDesktop.App.WindowsForms" TargetingPackVersion="6.0.0" />
 	</ItemGroup>
 	<ItemGroup>
-		<None Remove="Resources\Migrate-Profiles.ps1" />
-	</ItemGroup>
-	<ItemGroup>
 		<Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
-	</ItemGroup>
-	<ItemGroup>
-		<Content Include="Resources\Migrate-Profiles.ps1">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="MahApps.Metro" Version="2.4.9" />

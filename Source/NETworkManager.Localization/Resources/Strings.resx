@@ -2755,9 +2755,13 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Profile could not be loaded!</value>
   </data>
   <data name="ProfileCouldNotBeLoadedMessage" xml:space="preserve">
-    <value>If this happened after an update, you may need to migrate the profiles to a newer version. When you click "Migrate", a PowerShell window opens with the migration script. Check the path and press Enter.
+    <value>The profile file could not be loaded and may be corrupted. You can try to restore the file from a backup or delete it.
 
-Otherwise, the profile may be corrupted and you want to report the issue on GitHub.</value>
+If this happens unexpectedly or after an update, please report the error on GitHub.
+
+
+Error message:
+"{0}"</value>
   </data>
   <data name="EditGroupDots" xml:space="preserve">
     <value>Edit group...</value>

@@ -6358,9 +6358,13 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die If this happened after an update, you may need to migrate the profiles to a newer version. When you click &quot;Migrate&quot;, a PowerShell window opens with the migration script. Check the path and press Enter.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The profile file could not be loaded and may be corrupted. You can try to restore the file from a backup or delete it.
         ///
-        ///Otherwise, the profile may be corrupted and you want to report the issue on GitHub. ähnelt.
+        ///If this happens unexpectedly or after an update, please report the error on GitHub.
+        ///
+        ///
+        ///Error message:
+        ///&quot;{0}&quot; ähnelt.
         /// </summary>
         public static string ProfileCouldNotBeLoadedMessage {
             get {
