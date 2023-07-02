@@ -2776,10 +2776,10 @@ Vedi messaggio errore: "{0}"</value>
     <value>Il profilo non può essere caricato!</value>
   </data>
   <data name="ProfileCouldNotBeLoadedMessage" xml:space="preserve">
-    <value>Se ciò si è verificato dopo un aggiornamento, potrebbe essere necessario migrare i profili ad una versione più recente. 
-Quando selezioni "Migra", si apre una finestra di PowerShell con lo script di migrazione. 
-Controlla il percorso e premi 'Invio'.
-In caso contrario, il profilo potrebbe essere danneggiato e se vuoi puoi  segnalare il problema su GitHub.</value>
+    <value>Il file del profilo non può essere caricato e potrebbe essere danneggiato.
+Puoi provare a ripristinare il file da un backup o eliminarlo.
+Se ciò accade inaspettatamente o dopo un aggiornamento, segnala l'errore su GitHub.
+Messaggio di errore:"{0}"</value>
   </data>
   <data name="EditGroupDots" xml:space="preserve">
     <value>Modifica gruppo...</value>
