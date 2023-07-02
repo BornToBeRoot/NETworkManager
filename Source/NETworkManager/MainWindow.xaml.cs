@@ -491,6 +491,11 @@ public partial class MainWindow : INotifyPropertyChanged
         // Search for updates... 
         if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
             CheckForUpdates();
+
+
+
+        // TESTING
+        IPGeoApiService.GetInstance().GetIPDetailsAsync();
     }
 
     private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)

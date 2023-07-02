@@ -815,7 +815,7 @@ public class NetworkConnectionViewModel : ViewModelBase
                     }
                 }
 
-                // Try to resolve router DNS based on IPv6 if IPv4 failed
+                // Try to resolve public DNS based on IPv6 if IPv4 failed
                 if (string.IsNullOrEmpty(InternetDNS) && InternetIPv6State == ConnectionState.OK)
                 {
                     var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(IPAddress.Parse(InternetIPv6));
@@ -850,4 +850,3 @@ public class NetworkConnectionViewModel : ViewModelBase
     }
     #endregion
 }
-

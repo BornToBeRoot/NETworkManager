@@ -626,6 +626,36 @@ public class SettingsInfo : PropertyChangedBase
             SettingsChanged = true;
         }
     }
+
+    private bool _dashboard_CheckIPGeoApi = GlobalStaticConfiguration.Dashboard_CheckIPGeoApi;
+    public bool Dashboard_CheckIPGeoApi
+    {
+        get => _dashboard_CheckIPGeoApi;
+        set
+        {
+            if (value == _dashboard_CheckIPGeoApi)
+                return;
+
+            _dashboard_CheckIPGeoApi = value;
+            OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
+
+    private bool _dashboard_CheckIPDNSApi = GlobalStaticConfiguration.Dashboard_CheckIPDNSApi;
+    public bool Dashboard_CheckIPDNSApi
+    {
+        get => _dashboard_CheckIPDNSApi;
+        set
+        {
+            if (value == _dashboard_CheckIPDNSApi)
+                return;
+
+            _dashboard_CheckIPDNSApi = value;
+            OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
     #endregion
 
     #region Network Interface       

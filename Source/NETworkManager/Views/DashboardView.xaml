@@ -19,12 +19,20 @@
     <TabControl Style="{StaticResource DefaultTabControl}">
         <TabItem Header="{x:Static localization:Strings.Dashboard }">
             <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="10" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <ContentControl x:Name="ContentControlNetworkConnection" Grid.Column="0" />            
+                <ContentControl x:Name="ContentControlNetworkConnection" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" />
+                <ContentControl x:Name="ContentControlIPGeoApi" Grid.Column="0" Grid.Row="2" />
             </Grid>                
         </TabItem>
     </TabControl>

@@ -3560,4 +3560,55 @@ Changes to this value will take effect after the application is restarted. Wheth
   <data name="HelpMessage_PuTTYUsername" xml:space="preserve">
     <value>Username that will be passed into the PuTTY session. Only available if the mode is "SSH", "Telnet" or "Rlogin".</value>
   </data>
+  <data name="ASN" xml:space="preserve">
+    <value>ASN</value>
+  </data>
+  <data name="ASName" xml:space="preserve">
+    <value>AS Name</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="Continent" xml:space="preserve">
+    <value>Continent</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="District" xml:space="preserve">
+    <value>District</value>
+  </data>
+  <data name="Hosting" xml:space="preserve">
+    <value>Hosting</value>
+  </data>
+  <data name="IPGeolocation" xml:space="preserve">
+    <value>IP geolocation</value>
+  </data>
+  <data name="ISP" xml:space="preserve">
+    <value>ISP</value>
+  </data>
+  <data name="Latitude" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="Mobile" xml:space="preserve">
+    <value>Mobile</value>
+  </data>
+  <data name="Organization" xml:space="preserve">
+    <value>Organization</value>
+  </data>
+  <data name="PTRRecord" xml:space="preserve">
+    <value>PTR record</value>
+  </data>
+  <data name="Timezone" xml:space="preserve">
+    <value>Timezone</value>
+  </data>
+  <data name="ZipCode" xml:space="preserve">
+    <value>Zip</value>
+  </data>
 </root>
