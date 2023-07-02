@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
-public class IPGeoApiViewModel : ViewModelBase
+public class IPDNSApiViewModel : ViewModelBase
 {
     #region  Variables 
     private bool _isChecking;
@@ -28,26 +28,26 @@ public class IPGeoApiViewModel : ViewModelBase
         }
     }
 
-    private IPGeoApiInfo _ipGeoApiInfo;
-    public IPGeoApiInfo IPGeoApiInfo
+    private IPDNSApiInfo _ipDNSApiInfo;
+    public IPDNSApiInfo IPDNSApiInfo
     {
-        get => _ipGeoApiInfo;
+        get => _ipDNSApiInfo;
         set
         {
-            if (value == _ipGeoApiInfo)
+            if (value == _ipDNSApiInfo)
                 return;
 
-            _ipGeoApiInfo = value;
+            _ipDNSApiInfo = value;
             OnPropertyChanged();
         }
     }
 
-    public bool CheckIPGeoApi => SettingsManager.Current.Dashboard_CheckIPGeoApi;
+    public bool CheckIPDNSApi => SettingsManager.Current.Dashboard_CheckIPDNSApi;
     #endregion
 
     #region Constructor, load settings
 
-    public IPGeoApiViewModel()
+    public IPDNSApiViewModel()
     {
         // Detect if network address or status changed...
         NetworkChange.NetworkAvailabilityChanged += (sender, args) => Check();
@@ -83,12 +83,12 @@ public class IPGeoApiViewModel : ViewModelBase
     private async Task CheckAsync()
     {
         IsChecking = true;
-        IPGeoApiInfo = null;
+        IPDNSApiInfo = null;
 
-        var result = await IPGeoApiService.GetInstance().GetIPGeoDetailsAsync();
+        var result = await IPDNSApiService.GetInstance().GetIPDNSDetailsAsync();
 
         if (!result.HasError)
-            IPGeoApiInfo = result.Info;
+            IPDNSApiInfo = result.Info;
 
         // Show error & is disabled
 
@@ -101,8 +101,8 @@ public class IPGeoApiViewModel : ViewModelBase
     {
         switch (e.PropertyName)
         {
-            case nameof(SettingsInfo.Dashboard_CheckIPGeoApi):
-                OnPropertyChanged(nameof(CheckIPGeoApi));
+            case nameof(SettingsInfo.Dashboard_CheckIPDNSApi):
+                OnPropertyChanged(nameof(CheckIPDNSApi));
                 break;
         }
     }

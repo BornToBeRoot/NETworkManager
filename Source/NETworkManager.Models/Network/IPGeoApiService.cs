@@ -38,7 +38,7 @@ namespace NETworkManager.Models.Network
         private int _rateLimit_RemainingRequests = 45;
 
        
-        public async Task<IPGeoApiResult> GetIPDetailsAsync(string ipAddress = "")
+        public async Task<IPGeoApiResult> GetIPGeoDetailsAsync(string ipAddress = "")
         {
             // ToDo: Implement rate limiting check
 

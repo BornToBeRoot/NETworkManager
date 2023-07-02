@@ -25,6 +25,10 @@ Breaking Changes
 
 ## What's new?
 
+- Dashboard
+  - IP Geolocation information / check added [#2392](https://github.com/BornToBeRoot/NETworkManager/pull/2392){:target="\_blank"}
+  - IP DNS information / check added [#2392](https://github.com/BornToBeRoot/NETworkManager/pull/2392){:target="\_blank"}
+
 ## Improvements
 
 ## Bugfixes

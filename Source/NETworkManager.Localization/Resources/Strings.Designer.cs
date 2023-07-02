@@ -2835,6 +2835,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die DNS resolver ähnelt.
+        /// </summary>
+        public static string DNSResolver {
+            get {
+                return ResourceManager.GetString("DNSResolver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die DNS server ähnelt.
         /// </summary>
         public static string DNSServer {
@@ -3056,6 +3065,15 @@ namespace NETworkManager.Localization.Resources {
         public static string EditSNTPServer {
             get {
                 return ResourceManager.GetString("EditSNTPServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die EDNS ähnelt.
+        /// </summary>
+        public static string EDNS {
+            get {
+                return ResourceManager.GetString("EDNS", resourceCulture);
             }
         }
         
@@ -3787,6 +3805,15 @@ namespace NETworkManager.Localization.Resources {
         public static string General {
             get {
                 return ResourceManager.GetString("General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Geolocation ähnelt.
+        /// </summary>
+        public static string Geolocation {
+            get {
+                return ResourceManager.GetString("Geolocation", resourceCulture);
             }
         }
         

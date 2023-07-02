@@ -495,7 +495,7 @@ public partial class MainWindow : INotifyPropertyChanged
 
 
         // TESTING
-        IPGeoApiService.GetInstance().GetIPDetailsAsync();
+        IPGeoApiService.GetInstance().GetIPGeoDetailsAsync();
     }
 
     private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)

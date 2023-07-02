@@ -8,6 +8,7 @@ public partial class DashboardView
 
     private NetworkConnectionView _networkConnectiondView;
     private IPGeoApiView _ipGeoApiView;
+    private IPDNSApiView _ipDNSApiView;
 
     public DashboardView()
     {
@@ -21,6 +22,10 @@ public partial class DashboardView
         // IP Geolocation Api
         _ipGeoApiView = new IPGeoApiView();
         ContentControlIPGeoApi.Content = _ipGeoApiView;
+
+        // IP DNS Api
+        _ipDNSApiView = new IPDNSApiView();
+        ContentControlIPDNSApi.Content = _ipDNSApiView;
     }
 
     public void OnViewHide()

@@ -68,11 +68,14 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.IPAddress}" />
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.IPAddress}" />                    
                     <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding IPGeoApiInfo.Query}" />
-                    <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Continent}" />
-                    <TextBox Grid.Column="2" Grid.Row="1">
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Location}" Margin="0,20,0,10" Foreground="{DynamicResource MahApps.Brushes.Gray3}" />
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Continent}" />
+                    <TextBox Grid.Column="2" Grid.Row="2">
                         <TextBox.Text>
                             <MultiBinding StringFormat="{}{0} ({1})">
                                 <Binding Path="IPGeoApiInfo.Continent"/>
@@ -80,8 +83,8 @@
                             </MultiBinding>
                         </TextBox.Text>
                     </TextBox>
-                    <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Country}" />
-                    <TextBox Grid.Column="2" Grid.Row="2">
+                    <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.Country}" />
+                    <TextBox Grid.Column="2" Grid.Row="3">
                         <TextBox.Text>
                             <MultiBinding StringFormat="{}{0} ({1})">
                                 <Binding Path="IPGeoApiInfo.Country"/>
@@ -89,8 +92,8 @@
                             </MultiBinding>
                         </TextBox.Text>
                     </TextBox>
-                    <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.Region}" />
-                    <TextBox Grid.Column="2" Grid.Row="3">
+                    <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Region}" />
+                    <TextBox Grid.Column="2" Grid.Row="4">
                         <TextBox.Text>
                             <MultiBinding StringFormat="{}{0} ({1})">
                                 <Binding Path="IPGeoApiInfo.RegionName"/>
@@ -98,40 +101,43 @@
                             </MultiBinding>
                         </TextBox.Text>
                     </TextBox>
-                    <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.City}" />
-                    <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding IPGeoApiInfo.City}" />
-                    <TextBlock Grid.Column="0" Grid.Row="5" Text="{x:Static localization:Strings.District}" />
-                    <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding IPGeoApiInfo.District}" />                    
-                    <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.ZipCode}" />
-                    <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding IPGeoApiInfo.Zip}" />
-                    <TextBlock Grid.Column="0" Grid.Row="7" Text="{x:Static localization:Strings.Latitude}" />
-                    <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding IPGeoApiInfo.Lat}" />
-                    <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static localization:Strings.Longitude}" />
-                    <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding IPGeoApiInfo.Lon}" />
-                    <TextBlock Grid.Column="0" Grid.Row="9" Text="{x:Static localization:Strings.Timezone}" />
-                    <TextBox Grid.Column="2" Grid.Row="9" Text="{Binding IPGeoApiInfo.Timezone}" />
-                    <TextBlock Grid.Column="0" Grid.Row="10" Text="{x:Static localization:Strings.Offset}" />
-                    <TextBox Grid.Column="2" Grid.Row="10" Text="{Binding IPGeoApiInfo.Offset}" />
-                    <TextBlock Grid.Column="0" Grid.Row="11" Text="{x:Static localization:Strings.Currency}" />
-                    <TextBox Grid.Column="2" Grid.Row="11" Text="{Binding IPGeoApiInfo.Currency}" />
-                    <TextBlock Grid.Column="0" Grid.Row="12" Text="{x:Static localization:Strings.ISP}" />
-                    <TextBox Grid.Column="2" Grid.Row="12" Text="{Binding IPGeoApiInfo.Isp}" />
-                    <TextBlock Grid.Column="0" Grid.Row="13" Text="{x:Static localization:Strings.Organization}" />
-                    <TextBox Grid.Column="2" Grid.Row="13" Text="{Binding IPGeoApiInfo.Org}" />
-                    <TextBlock Grid.Column="0" Grid.Row="14" Text="{x:Static localization:Strings.ASN}" />
-                    <TextBox Grid.Column="2" Grid.Row="14" Text="{Binding IPGeoApiInfo.As}" />
-                    <TextBlock Grid.Column="0" Grid.Row="15" Text="{x:Static localization:Strings.ASName}" />
-                    <TextBox Grid.Column="2" Grid.Row="15" Text="{Binding IPGeoApiInfo.Asname}" />
-                    <TextBlock Grid.Column="0" Grid.Row="16" Text="{x:Static localization:Strings.PTRRecord}" />
-                    <TextBox Grid.Column="2" Grid.Row="16" Text="{Binding IPGeoApiInfo.Reverse}" />
-                    <TextBlock Grid.Column="0" Grid.Row="17" Text="{x:Static localization:Strings.Proxy}" />
-                    <TextBox Grid.Column="2" Grid.Row="17" Text="{Binding IPGeoApiInfo.Proxy}" />
-                    <TextBlock Grid.Column="0" Grid.Row="18" Text="{x:Static localization:Strings.Mobile}" />
-                    <TextBox Grid.Column="2" Grid.Row="18" Text="{Binding IPGeoApiInfo.Mobile}" />
-                    <TextBlock Grid.Column="0" Grid.Row="19" Text="{x:Static localization:Strings.Hosting}" />
-                    <TextBox Grid.Column="2" Grid.Row="19" Text="{Binding IPGeoApiInfo.Hosting}" />
+                    <TextBlock Grid.Column="0" Grid.Row="5" Text="{x:Static localization:Strings.City}" />
+                    <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding IPGeoApiInfo.City}" />
+                    <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.District}" />
+                    <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding IPGeoApiInfo.District}" />                    
+                    <TextBlock Grid.Column="0" Grid.Row="7" Text="{x:Static localization:Strings.ZipCode}" />
+                    <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding IPGeoApiInfo.Zip}" />
+                    <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static localization:Strings.Latitude}" />
+                    <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding IPGeoApiInfo.Lat}" />
+                    <TextBlock Grid.Column="0" Grid.Row="9" Text="{x:Static localization:Strings.Longitude}" />
+                    <TextBox Grid.Column="2" Grid.Row="9" Text="{Binding IPGeoApiInfo.Lon}" />
+                    <TextBlock Grid.Column="0" Grid.Row="10" Text="{x:Static localization:Strings.Timezone}" />
+                    <TextBox Grid.Column="2" Grid.Row="10" Text="{Binding IPGeoApiInfo.Timezone}" />
+                    <TextBlock Grid.Column="0" Grid.Row="11" Text="{x:Static localization:Strings.Offset}" />
+                    <TextBox Grid.Column="2" Grid.Row="11" Text="{Binding IPGeoApiInfo.Offset}" />
+                    <TextBlock Grid.Column="0" Grid.Row="12" Text="{x:Static localization:Strings.Currency}" />
+                    <TextBox Grid.Column="2" Grid.Row="12" Text="{Binding IPGeoApiInfo.Currency}" />
+                    <TextBlock Grid.Column="0" Grid.Row="13" Text="{x:Static localization:Strings.Network}" Margin="0,20,0,10" Foreground="{DynamicResource MahApps.Brushes.Gray3}" />
+                    <TextBlock Grid.Column="0" Grid.Row="14" Text="{x:Static localization:Strings.ISP}" />
+                    <TextBox Grid.Column="2" Grid.Row="14" Text="{Binding IPGeoApiInfo.Isp}" />
+                    <TextBlock Grid.Column="0" Grid.Row="15" Text="{x:Static localization:Strings.Organization}" />
+                    <TextBox Grid.Column="2" Grid.Row="15" Text="{Binding IPGeoApiInfo.Org}" />
+                    <TextBlock Grid.Column="0" Grid.Row="16" Text="{x:Static localization:Strings.ASN}" />
+                    <TextBox Grid.Column="2" Grid.Row="16" Text="{Binding IPGeoApiInfo.As}" />
+                    <TextBlock Grid.Column="0" Grid.Row="17" Text="{x:Static localization:Strings.ASName}" />
+                    <TextBox Grid.Column="2" Grid.Row="17" Text="{Binding IPGeoApiInfo.Asname}" />
+                    <TextBlock Grid.Column="0" Grid.Row="18" Text="{x:Static localization:Strings.PTRRecord}" />
+                    <TextBox Grid.Column="2" Grid.Row="18" Text="{Binding IPGeoApiInfo.Reverse}" />
+                    <TextBlock Grid.Column="0" Grid.Row="19" Text="{x:Static localization:Strings.Proxy}" />
+                    <TextBox Grid.Column="2" Grid.Row="19" Text="{Binding IPGeoApiInfo.Proxy}" />
+                    <TextBlock Grid.Column="0" Grid.Row="20" Text="{x:Static localization:Strings.Mobile}" />
+                    <TextBox Grid.Column="2" Grid.Row="20" Text="{Binding IPGeoApiInfo.Mobile}" />
+                    <TextBlock Grid.Column="0" Grid.Row="21" Text="{x:Static localization:Strings.Hosting}" />
+                    <TextBox Grid.Column="2" Grid.Row="21" Text="{Binding IPGeoApiInfo.Hosting}" />
                 </Grid>
             </Grid>
         </Grid>
     </Border>
 </UserControl>
+
+    

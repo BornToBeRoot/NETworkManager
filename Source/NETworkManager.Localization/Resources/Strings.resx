@@ -3581,6 +3581,15 @@ Changes to this value will take effect after the application is restarted. Wheth
   <data name="District" xml:space="preserve">
     <value>District</value>
   </data>
+  <data name="DNSResolver" xml:space="preserve">
+    <value>DNS resolver</value>
+  </data>
+  <data name="EDNS" xml:space="preserve">
+    <value>EDNS</value>
+  </data>
+  <data name="Geolocation" xml:space="preserve">
+    <value>Geolocation</value>
+  </data>
   <data name="Hosting" xml:space="preserve">
     <value>Hosting</value>
   </data>

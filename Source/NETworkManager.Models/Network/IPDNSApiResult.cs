@@ -1,9 +1,9 @@
 ﻿namespace NETworkManager.Models.Network
 {
    
-    public class IPGeoApiResult
+    public class IPDNSApiResult
     {
-        public IPGeoApiInfo Info { get; set; }
+        public IPDNSApiInfo Info { get; set; }
 
         /// <summary>
         /// Indicates if the IP information retrieval has failed.
@@ -15,13 +15,13 @@
         /// </summary>
         public string ErrorMessage { get; set; }
 
-        
-        public IPGeoApiResult(IPGeoApiInfo info)
+ 
+        public IPDNSApiResult(IPDNSApiInfo info)
         {
             Info = info;         
         }
 
-        public IPGeoApiResult(bool hasError, string errorMessage)
+        public IPDNSApiResult(bool hasError, string errorMessage)
         {
             HasError = hasError;
             ErrorMessage = errorMessage;
