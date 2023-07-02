@@ -20,7 +20,8 @@ Breaking Changes
 
 ## Breaking Changes
 
-- Profiles and settings migration (indroduced in `2023.3.7.0`) from `%AppData%\NETworkManager` to `%UserProfile%\Documents\NETworkManager` removed. If you use a version before `2023.3.7.0` you have to install and start version `2023.6.27.1` before you install this version.  
+- Profiles and settings migration (indroduced in `2023.3.7.0`) from `%AppData%\NETworkManager` to `%UserProfile%\Documents\NETworkManager` removed. If you use a version before `2023.3.7.0` you have to install and start version `2023.6.27.1` before you install this version. [#2380](https://github.com/BornToBeRoot/NETworkManager/pull/2380){:target="\_blank"}
+- Remove profile migration script to migrate from `2021.11.30.0` and before to a later version [#2388](https://github.com/BornToBeRoot/NETworkManager/pull/2388){:target="\_blank"}
 
 ## What's new?
 
@@ -30,6 +31,6 @@ Breaking Changes
 
 
 ## Other
-
+- Code cleanup [#2388](https://github.com/BornToBeRoot/NETworkManager/pull/2388){:target="\_blank"}
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="\_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="\_blank"}
