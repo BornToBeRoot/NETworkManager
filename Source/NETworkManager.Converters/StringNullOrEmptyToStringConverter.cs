@@ -4,11 +4,13 @@ using System.Windows.Data;
 
 namespace NETworkManager.Converters;
 
-public sealed class NullOrEmptyToBoolConverter : IValueConverter
+public sealed class StringNullOrEmptyToStringConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return string.IsNullOrEmpty(value as string);
+        var str = value as string;
+
+        return string.IsNullOrEmpty(str) ? "-/-" : str;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

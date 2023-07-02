@@ -18,7 +18,7 @@
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
-        <converters:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
+        <converters:StringNullOrEmptyToBoolConverter x:Key="StringNullOrEmptyToBoolConverter" />
     </UserControl.Resources>
     <UserControl.InputBindings>
         <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding ConnectCommand}" />
@@ -378,7 +378,7 @@
                                         <Setter Property="Command" Value="{Binding AddProfileCommand}" />
 
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
+                                            <DataTrigger Binding="{Binding Search, Converter={StaticResource StringNullOrEmptyToBoolConverter}}" Value="False">
                                                 <Setter Property="Command" Value="{Binding ClearSearchCommand}" />
                                                 <Setter Property="ToolTip" Value="{x:Static localization:Strings.ClearFilter}" />
                                             </DataTrigger>
@@ -403,7 +403,7 @@
                                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
                                                         <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
+                                                    <DataTrigger Binding="{Binding Search, Converter={StaticResource StringNullOrEmptyToBoolConverter}}" Value="False">
                                                         <Setter Property="OpacityMask" Value="{StaticResource VisualClear}" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -418,7 +418,7 @@
                                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
                                                         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
+                                                    <DataTrigger Binding="{Binding Search, Converter={StaticResource StringNullOrEmptyToBoolConverter}}" Value="False">
                                                         <Setter Property="Text" Value="{x:Static localization:Strings.NothingFound}" />
                                                     </DataTrigger>
                                                 </Style.Triggers>

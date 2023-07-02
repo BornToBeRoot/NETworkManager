@@ -25,8 +25,7 @@
         <converters:IntToStringConverter x:Key="IntToStringConverter" />
         <converters:IntZeroReverseToVisibilityCollapsedConverter x:Key="IntZeroReverseToVisibilityCollapsedConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
-        <converters:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
-        <converters:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
+        <converters:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />        
         <converters:PingTimeToStringConverter x:Key="PingTimeToStringConverter" />
         <converters:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
         <converters:PortOpenToStringConverter x:Key="PortOpenToStringConverter" />

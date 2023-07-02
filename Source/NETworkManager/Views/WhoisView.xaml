@@ -16,8 +16,7 @@
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:WhoisViewModel}" Loaded="UserControl_OnLoaded">
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter"/>
-        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <converters:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />        
     </UserControl.Resources>
     <Grid>
         <Grid Grid.Column="0" Grid.Row="0" Margin="10">

@@ -18,7 +18,7 @@
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <converters:NullOrEmptyToStringConverter x:Key="NullOrEmptyToStringConverter" />
+        <converters:StringNullOrEmptyToStringConverter x:Key="StringNullOrEmptyToStringConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -144,7 +144,7 @@
             </controls:MultiSelectDataGrid.RowStyle>
             <controls:MultiSelectDataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}" Binding="{Binding (lookup:OUIInfo.MACAddress)}" SortMemberPath="MACAddressString" MinWidth="150" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Vendor}" Binding="{Binding (lookup:OUIInfo.Vendor), Converter={StaticResource NullOrEmptyToStringConverter}}" SortMemberPath="Vendor" MinWidth="200" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Vendor}" Binding="{Binding (lookup:OUIInfo.Vendor), Converter={StaticResource StringNullOrEmptyToStringConverter}}" SortMemberPath="Vendor" MinWidth="200" />
             </controls:MultiSelectDataGrid.Columns>
         </controls:MultiSelectDataGrid>
     </Grid>
