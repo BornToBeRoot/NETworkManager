@@ -19,21 +19,22 @@ public static class ConfigurationManager
     /// </summary>
     private const string IsPortableExtension = "settings";
 
+    /// <summary>
+    /// Current <see cref="ConfigurationInfo"/> that is used in the application.
+    /// </summary>
     public static ConfigurationInfo Current { get; set; }
 
     /// <summary>
-    /// Load static configuration at startup.
+    /// Create a new instance of the <see cref="ConfigurationManager"/> class and load static configuration.
     /// </summary>
     static ConfigurationManager()
     {
-        Current = new ConfigurationInfo
-        {
-            IsAdmin = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator),
-            ExecutionPath = AssemblyManager.Current.Location,
-            ApplicationFullName = Path.Combine(AssemblyManager.Current.Location, AssemblyManager.Current.Name + ".exe"),
-            ApplicationName = AssemblyManager.Current.Name,
-            IsPortable = File.Exists(Path.Combine(AssemblyManager.Current.Location, $"{IsPortableFileName}.{IsPortableExtension}"))
-        };
+        Current = new ConfigurationInfo(
+            new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator),
+            AssemblyManager.Current.Location,
+            Path.Combine(AssemblyManager.Current.Location, AssemblyManager.Current.Name + ".exe"),
+            AssemblyManager.Current.Name,
+            File.Exists(Path.Combine(AssemblyManager.Current.Location, $"{IsPortableFileName}.{IsPortableExtension}")));
     }
 
     /// <summary>
@@ -44,7 +45,7 @@ public static class ConfigurationManager
     {
         if (Current.CurrentApplication == Models.ApplicationName.RemoteDesktop && Current.RemoteDesktopHasTabs)
             Current.FixAirspace = true;
-        
+
         if (Current.CurrentApplication == Models.ApplicationName.PowerShell && Current.PowerShellHasTabs)
             Current.FixAirspace = true;
 
