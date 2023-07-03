@@ -70,15 +70,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Steel ähnelt.
-        /// </summary>
-        public static string Accen_Steel {
-            get {
-                return ResourceManager.GetString("Accen_Steel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Accent ähnelt.
         /// </summary>
         public static string Accent {
@@ -246,6 +237,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Accent_Sienna {
             get {
                 return ResourceManager.GetString("Accent_Sienna", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Steel ähnelt.
+        /// </summary>
+        public static string Accent_Steel {
+            get {
+                return ResourceManager.GetString("Accent_Steel", resourceCulture);
             }
         }
         
