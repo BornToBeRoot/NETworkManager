@@ -2751,7 +2751,12 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>Profila ni bilo mogoče naložiti! </value>
   </data>
   <data name="ProfileCouldNotBeLoadedMessage" xml:space="preserve">
-    <value>Če se je to zgodilo po posodobitvi, boste morda morali preseliti profile na novejšo različico. Ko kliknete 'Preseli', se odpre okno PowerShell s skriptom za selitev. Preverite pot in pritisnite Enter. V nasprotnem primeru je profil morda poškodovan in, če želite, prijaviti težavo na GitHub.</value>
+    <value>Datoteke profila ni bilo mogoče naložiti in je morda poškodovana. Datoteko lahko poskusite obnoviti iz varnostne kopije ali jo izbrišete.
+
+Če se to zgodi nepričakovano ali po posodobitvi, prijavite napako na GitHub.
+
+Sporočilo o napaki:
+"{0}"</value>
   </data>
   <data name="EditGroupDots" xml:space="preserve">
     <value>Uredi skupino...</value>
@@ -3532,12 +3537,12 @@ V zgornjem desnem kotu kliknite na gumb za Pomoč/Dokumentacijo (levo od gumba z
     <value>Nastavitve na tej strani vsebujejo napake. Popravite jih, da jih lahko shranite.</value>
   </data>
   <data name="HelpMessage_PuTTYHostkey" xml:space="preserve">
-    <value>SSH hostkey to use for the connection (like "71:b8:f2:6e..."). Only available if the mode is "SSH".</value>
+    <value>Ključ gostitelja SSH za povezavo (na primer "71:b8:f2:6e ..."). Na voljo samo, če je način "SSH".</value>
   </data>
   <data name="HelpMessage_PuTTYPrivateKeyFile" xml:space="preserve">
-    <value>Full path to the private key file (like "C:\Users\BornToBeRoot\SSH\private_key.ppk"). Only available if the mode is "SSH".</value>
+    <value>Celotna pot do datoteke zasebnega ključa (na primer »C:\Users\BornToBeRoot\SSH\private_key.ppk«). Na voljo samo, če je način "SSH".</value>
   </data>
   <data name="HelpMessage_PuTTYUsername" xml:space="preserve">
-    <value>Username that will be passed into the PuTTY session. Only available if the mode is "SSH", "Telnet" or "Rlogin".</value>
+    <value>Uporabniško ime, ki bo posredovano v sejo PuTTY. Na voljo samo, če je način "SSH", "Telnet" ali "Rlogin".</value>
   </data>
 </root>
