@@ -1,11 +1,9 @@
 ﻿using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Net.NetworkInformation;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -42,7 +40,7 @@ public class IPDNSApiViewModel : ViewModelBase
         }
     }
 
-    public bool CheckIPDNSApi => SettingsManager.Current.Dashboard_CheckIPDNSApi;
+    public bool CheckIPDNSApiEnabled => SettingsManager.Current.Dashboard_CheckIPDNSApiEnabled;
     #endregion
 
     #region Constructor, load settings
@@ -77,6 +75,8 @@ public class IPDNSApiViewModel : ViewModelBase
     #region Methods
     public void Check()
     {
+        Debug.WriteLine("Check dns api....");
+
         CheckAsync().ConfigureAwait(false);
     }
 
@@ -101,8 +101,13 @@ public class IPDNSApiViewModel : ViewModelBase
     {
         switch (e.PropertyName)
         {
-            case nameof(SettingsInfo.Dashboard_CheckIPDNSApi):
-                OnPropertyChanged(nameof(CheckIPDNSApi));
+            case nameof(SettingsInfo.Dashboard_CheckIPDNSApiEnabled):
+                OnPropertyChanged(nameof(CheckIPDNSApiEnabled));
+
+                // Check if enabled via settings
+                if (CheckIPDNSApiEnabled)
+                    Check();
+
                 break;
         }
     }

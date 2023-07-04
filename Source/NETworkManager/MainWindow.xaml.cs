@@ -407,7 +407,7 @@ public partial class MainWindow : INotifyPropertyChanged
 
                 // Set settings based on user choice
                 SettingsManager.Current.Update_CheckForUpdatesAtStartup = instance.CheckForUpdatesAtStartup;
-                SettingsManager.Current.Dashboard_CheckPublicIPAddress = instance.CheckPublicIPAddress;
+                SettingsManager.Current.Dashboard_CheckPublicIPAddressEnabled = instance.CheckPublicIPAddress;
                 SettingsManager.Current.Appearance_PowerShellModifyGlobalProfile = instance.PowerShellModifyGlobalProfile;
 
                 // Generate lists at runtime
@@ -491,11 +491,6 @@ public partial class MainWindow : INotifyPropertyChanged
         // Search for updates... 
         if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
             CheckForUpdates();
-
-
-
-        // TESTING
-        IPGeoApiService.GetInstance().GetIPGeoDetailsAsync();
     }
 
     private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)

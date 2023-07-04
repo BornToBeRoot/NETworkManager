@@ -41,19 +41,19 @@ public class DashboardSettingsViewModel : ViewModelBase
         }
     }
 
-    private bool _checkPublicIPAddress;
-    public bool CheckPublicIPAddress
+    private bool _checkPublicIPAddressEnabled;
+    public bool CheckPublicIPAddressEnabled
     {
-        get => _checkPublicIPAddress;
+        get => _checkPublicIPAddressEnabled;
         set
         {
-            if (value == _checkPublicIPAddress)
+            if (value == _checkPublicIPAddressEnabled)
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.Dashboard_CheckPublicIPAddress = value;
+                SettingsManager.Current.Dashboard_CheckPublicIPAddressEnabled = value;
 
-            _checkPublicIPAddress = value;
+            _checkPublicIPAddressEnabled = value;
             OnPropertyChanged();
         }
     }
@@ -125,6 +125,40 @@ public class DashboardSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
+    private bool _checkIPGeoApiEnabled;
+    public bool CheckIPGeoApiEnabled
+    {
+        get => _checkIPGeoApiEnabled;
+        set
+        {
+            if (value == _checkIPGeoApiEnabled)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Dashboard_CheckIPGeoApiEnabled = value;
+
+            _checkIPGeoApiEnabled = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _checkIPDNSApiEnabled;
+    public bool CheckIPDNSApiEnabled
+    {
+        get => _checkIPDNSApiEnabled;
+        set
+        {
+            if (value == _checkIPDNSApiEnabled)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Dashboard_CheckIPDNSApiEnabled = value;
+
+            _checkIPDNSApiEnabled = value;
+            OnPropertyChanged();
+        }
+    }
     #endregion
 
     #region Contructor, load settings
@@ -141,11 +175,13 @@ public class DashboardSettingsViewModel : ViewModelBase
     {
         PublicIPv4Address = SettingsManager.Current.Dashboard_PublicIPv4Address;
         PublicIPv6Address = SettingsManager.Current.Dashboard_PublicIPv6Address;
-        CheckPublicIPAddress = SettingsManager.Current.Dashboard_CheckPublicIPAddress;
+        CheckPublicIPAddressEnabled = SettingsManager.Current.Dashboard_CheckPublicIPAddressEnabled;
         UsePublicIPv4AddressCustomAPI = SettingsManager.Current.Dashboard_UseCustomPublicIPv4AddressAPI;
         CustomPublicIPv4AddressAPI = SettingsManager.Current.Dashboard_CustomPublicIPv4AddressAPI;
         UsePublicIPv6AddressCustomAPI = SettingsManager.Current.Dashboard_UseCustomPublicIPv6AddressAPI;
         CustomPublicIPv6AddressAPI = SettingsManager.Current.Dashboard_CustomPublicIPv6AddressAPI;
+        CheckIPGeoApiEnabled = SettingsManager.Current.Dashboard_CheckIPGeoApiEnabled;
+        CheckIPDNSApiEnabled = SettingsManager.Current.Dashboard_CheckIPDNSApiEnabled;
     }
     #endregion
 }

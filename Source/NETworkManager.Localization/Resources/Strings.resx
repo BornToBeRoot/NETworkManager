@@ -3620,4 +3620,23 @@ Changes to this value will take effect after the application is restarted. Wheth
   <data name="ZipCode" xml:space="preserve">
     <value>Zip</value>
   </data>
+  <data name="ExternalService_ip_api_Description" xml:space="preserve">
+    <value>IP Geolocation API - Fast, accurate, reliable</value>
+  </data>
+  <data name="CheckDNSResolver" xml:space="preserve">
+    <value>Check DNS resolver</value>
+  </data>
+  <data name="CheckIPGeolocation" xml:space="preserve">
+    <value>Check IP geolocation</value>
+  </data>
+  <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
+    <value>The DNS resolver is determined via ip-api.com.
+
+URL: http://edns.ip-api.com/</value>
+  </data>
+  <data name="HelpMessage_CheckIPGeolocation" xml:space="preserve">
+    <value>The IP geolocation is determined via ip-api.com.
+
+URL: http://ip-api.com/</value>
+  </data>
 </root>

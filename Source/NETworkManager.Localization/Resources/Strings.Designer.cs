@@ -1465,6 +1465,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Check DNS resolver ähnelt.
+        /// </summary>
+        public static string CheckDNSResolver {
+            get {
+                return ResourceManager.GetString("CheckDNSResolver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Check for pre-releases ähnelt.
         /// </summary>
         public static string CheckForPreReleases {
@@ -1497,6 +1506,15 @@ namespace NETworkManager.Localization.Resources {
         public static string CheckingWPSDots {
             get {
                 return ResourceManager.GetString("CheckingWPSDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Check IP geolocation ähnelt.
+        /// </summary>
+        public static string CheckIPGeolocation {
+            get {
+                return ResourceManager.GetString("CheckIPGeolocation", resourceCulture);
             }
         }
         
@@ -3591,6 +3609,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die IP Geolocation API - Fast, accurate, reliable ähnelt.
+        /// </summary>
+        public static string ExternalService_ip_api_Description {
+            get {
+                return ResourceManager.GetString("ExternalService_ip_api_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die A Simple Public IP Address API ähnelt.
         /// </summary>
         public static string ExternalService_ipify_Description {
@@ -3992,6 +4019,17 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The DNS resolver is determined via ip-api.com.
+        ///
+        ///URL: http://edns.ip-api.com/ ähnelt.
+        /// </summary>
+        public static string HelpMessage_CheckDNSResolver {
+            get {
+                return ResourceManager.GetString("HelpMessage_CheckDNSResolver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die When starting the program, it checks in the background whether a new program version is available on GitHub.
         ///
         ///URL: https://api.github.com/ ähnelt.
@@ -3999,6 +4037,17 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_CheckForUpdatesAtStartup {
             get {
                 return ResourceManager.GetString("HelpMessage_CheckForUpdatesAtStartup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The IP geolocation is determined via ip-api.com.
+        ///
+        ///URL: http://ip-api.com/ ähnelt.
+        /// </summary>
+        public static string HelpMessage_CheckIPGeolocation {
+            get {
+                return ResourceManager.GetString("HelpMessage_CheckIPGeolocation", resourceCulture);
             }
         }
         

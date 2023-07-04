@@ -1,11 +1,9 @@
 ﻿using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Net.NetworkInformation;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -42,11 +40,10 @@ public class IPGeoApiViewModel : ViewModelBase
         }
     }
 
-    public bool CheckIPGeoApi => SettingsManager.Current.Dashboard_CheckIPGeoApi;
+    public bool CheckIPGeoApiEnabled => SettingsManager.Current.Dashboard_CheckIPGeoApiEnabled;
     #endregion
 
     #region Constructor, load settings
-
     public IPGeoApiViewModel()
     {
         // Detect if network address or status changed...
@@ -77,6 +74,8 @@ public class IPGeoApiViewModel : ViewModelBase
     #region Methods
     public void Check()
     {
+        Debug.WriteLine("Check geo api....");
+
         CheckAsync().ConfigureAwait(false);
     }
 
@@ -101,8 +100,13 @@ public class IPGeoApiViewModel : ViewModelBase
     {
         switch (e.PropertyName)
         {
-            case nameof(SettingsInfo.Dashboard_CheckIPGeoApi):
-                OnPropertyChanged(nameof(CheckIPGeoApi));
+            case nameof(SettingsInfo.Dashboard_CheckIPGeoApiEnabled):
+                OnPropertyChanged(nameof(CheckIPGeoApiEnabled));
+                               
+                // Check if enabled via settings
+                if (CheckIPGeoApiEnabled)
+                    Check();
+
                 break;
         }
     }

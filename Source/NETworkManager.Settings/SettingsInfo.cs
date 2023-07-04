@@ -552,16 +552,16 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _dashboard_CheckPublicIPAddress = GlobalStaticConfiguration.Dashboard_CheckPublicIPAddress;
-    public bool Dashboard_CheckPublicIPAddress
+    private bool _dashboard_CheckPublicIPAddressEnabled = GlobalStaticConfiguration.Dashboard_CheckPublicIPAddressEnabled;
+    public bool Dashboard_CheckPublicIPAddressEnabled
     {
-        get => _dashboard_CheckPublicIPAddress;
+        get => _dashboard_CheckPublicIPAddressEnabled;
         set
         {
-            if (value == _dashboard_CheckPublicIPAddress)
+            if (value == _dashboard_CheckPublicIPAddressEnabled)
                 return;
 
-            _dashboard_CheckPublicIPAddress = value;
+            _dashboard_CheckPublicIPAddressEnabled = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
@@ -627,31 +627,31 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _dashboard_CheckIPGeoApi = GlobalStaticConfiguration.Dashboard_CheckIPGeoApi;
-    public bool Dashboard_CheckIPGeoApi
+    private bool _dashboard_CheckIPGeoApiEnabled = GlobalStaticConfiguration.Dashboard_CheckIPGeoApiEnabled;
+    public bool Dashboard_CheckIPGeoApiEnabled
     {
-        get => _dashboard_CheckIPGeoApi;
+        get => _dashboard_CheckIPGeoApiEnabled;
         set
         {
-            if (value == _dashboard_CheckIPGeoApi)
+            if (value == _dashboard_CheckIPGeoApiEnabled)
                 return;
 
-            _dashboard_CheckIPGeoApi = value;
+            _dashboard_CheckIPGeoApiEnabled = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
     }
 
-    private bool _dashboard_CheckIPDNSApi = GlobalStaticConfiguration.Dashboard_CheckIPDNSApi;
-    public bool Dashboard_CheckIPDNSApi
+    private bool _dashboard_CheckIPDNSApiEnabled = GlobalStaticConfiguration.Dashboard_CheckIPDNSApiEnabled;
+    public bool Dashboard_CheckIPDNSApiEnabled
     {
-        get => _dashboard_CheckIPDNSApi;
+        get => _dashboard_CheckIPDNSApiEnabled;
         set
         {
-            if (value == _dashboard_CheckIPDNSApi)
+            if (value == _dashboard_CheckIPDNSApiEnabled)
                 return;
 
-            _dashboard_CheckIPDNSApi = value;
+            _dashboard_CheckIPDNSApiEnabled = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }

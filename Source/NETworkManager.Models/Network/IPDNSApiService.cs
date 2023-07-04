@@ -26,6 +26,8 @@ namespace NETworkManager.Models.Network
         /// <returns>IP DNS informations as <see cref="IPDNSApiResult"/>.</returns>
         public async Task<IPDNSApiResult> GetIPDNSDetailsAsync()
         {
+            Debug.WriteLine("Check DNS...");
+
             try
             {
                 var response = await client.GetAsync(_baseURL);

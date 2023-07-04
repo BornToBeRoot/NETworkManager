@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -20,19 +21,28 @@ namespace NETworkManager.Models.Network
         /// </summary>
         private const string _baseURL = "http://ip-api.com/json/";
 
+        /// <summary>
+        /// Fields to be returned by the API. See documentation for more details.
+        /// </summary>
         private const string _fields = "status,message,continent,continentCode,country,countryCode,region,regionName,city,district,zip,lat,lon,timezone,offset,currency,isp,org,as,asname,reverse,mobile,proxy,hosting,query";
+
+        /// <summary>
+        /// Indicates whether the current request can be executed or not.
+        /// </summary>
+        private bool _rateLimit_AllowExecution = true;
 
         /// <summary>
         /// Remaining time in seconds until the rate limit window resets.
         /// This value is updated by Header "X-Ttl". Default is 60 seconds.
         /// </summary>
-        private int _rateLimit_RemainingTime = 60;
+        private int _rateLimit_RemainingTime = -1;
 
         /// <summary>
         /// Remaining requests that can be executed until the rate limit window is reset.
         /// This value is updated by Header "X-Rl". Default is 45 requests.
         /// </summary>
-        private int _rateLimit_RemainingRequests = 45;
+        private int _rateLimit_RemainingRequests = -1;
+
 
         /// <summary>
         /// Gets the IP geolocation details from the API asynchronously.
@@ -48,6 +58,16 @@ namespace NETworkManager.Models.Network
             try
             {
                 var response = await client.GetAsync(url);
+                                
+                if(response.Headers.TryGetValues("X-Rl", out var remainingRequests))
+                {
+                    Debug.WriteLine($"Remaining request: {remainingRequests.ToArray()[0]}");                    
+                }
+
+                if (response.Headers.TryGetValues("X-Ttl", out var remainingTime))
+                {
+                    Debug.WriteLine($"Remaining time: {remainingTime.ToArray()[0]}");
+                }
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -66,7 +86,6 @@ namespace NETworkManager.Models.Network
                     Debug.WriteLine($"Error code: {(int)response.StatusCode}");
                     return new IPGeoApiResult(true, $"Error code: {(int)response.StatusCode}");
                 }
-
             }
             catch (Exception ex)
             {
