@@ -35,6 +35,6 @@ Breaking Changes
 
 
 ## Other
-- Code cleanup [#2388](https://github.com/BornToBeRoot/NETworkManager/pull/2388){:target="\_blank"}
+- Code cleanup [#2388](https://github.com/BornToBeRoot/NETworkManager/pull/2388){:target="\_blank"} [#2392](https://github.com/BornToBeRoot/NETworkManager/pull/2392){:target="\_blank"}
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="\_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="\_blank"}
