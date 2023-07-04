@@ -1940,7 +1940,7 @@ Changes to this value will take effect after restarting the application.</value>
   <data name="FirstRunMessage" xml:space="preserve">
     <value>Thank you for using NETworkManager!
 
-In order to provide additional features, services on the Internet are used that are not operated by me. You can deselect them below in the privacy section. No data is transmitted to me at any time.</value>
+If you like this tool, please leave a star on GitHub and recommend it to others.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>When starting the program, it checks in the background whether a new program version is available on GitHub.
@@ -3638,5 +3638,8 @@ URL: https://edns.ip-api.com/</value>
     <value>The IP geolocation is determined via ip-api.com.
 
 URL: http://ip-api.com/</value>
+  </data>
+  <data name="FirstRunPrivacyMessage" xml:space="preserve">
+    <value>To provide additional features, third party services are used that are not operated by me. You can deselect them below. No data is transferred to me at any time.</value>
   </data>
 </root>

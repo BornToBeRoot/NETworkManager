@@ -1,7 +1,6 @@
 ﻿using NETworkManager.Utilities;
 using Newtonsoft.Json;
 using System;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -26,8 +25,6 @@ namespace NETworkManager.Models.Network
         /// <returns>IP DNS informations as <see cref="IPDNSApiResult"/>.</returns>
         public async Task<IPDNSApiResult> GetIPDNSDetailsAsync()
         {
-            Debug.WriteLine("Check DNS...");
-
             try
             {
                 var response = await client.GetAsync(_baseURL);
@@ -40,15 +37,13 @@ namespace NETworkManager.Models.Network
                     return new IPDNSApiResult(IPDNSApiInfo.Parse(info));
                 }
                 else
-                {
-                    Debug.WriteLine($"Error code: {(int)response.StatusCode}");
+                {                    
                     return new IPDNSApiResult(true, $"Error code: {(int)response.StatusCode}");
                 }
 
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
                 return new IPDNSApiResult(true, ex.Message);
             }
         }

@@ -75,7 +75,20 @@ public static class SettingsManager
     }
     #endregion
 
-    #region Load, Save
+    #region Initialize, load and save
+    /// <summary>
+    /// Initialize new settings (<see cref="SettingsInfo"/>) and save them (to a file).
+    /// </summary>
+    public static void Initialize()
+    {
+        Current = new SettingsInfo
+        {
+            Version = AssemblyManager.Current.Version.ToString(),
+        };
+
+        Save();
+    }
+
     /// <summary>
     /// Method to load the settings (from a file).
     /// </summary>
@@ -93,7 +106,7 @@ public static class SettingsManager
         }
 
         // Initialize the default settings if there is no settings file.
-        InitDefault();
+        Initialize();
     }
 
     /// <summary>
@@ -143,22 +156,7 @@ public static class SettingsManager
         xmlSerializer.Serialize(fileStream, Current);
     }
     #endregion
-
-    #region Init (and reset)
-    /// <summary>
-    /// Initialize new settings (<see cref="SettingsInfo"/>) and save them (to a file).
-    /// </summary>
-    public static void InitDefault()
-    {
-        // Init new Settings with default data
-        Current = new SettingsInfo
-        {
-            SettingsChanged = true
-        };
-
-        Save();
-    }
-    #endregion
+    
 
     #region Upgrade
     /// <summary>
@@ -181,6 +179,10 @@ public static class SettingsManager
         // 2023.4.26.0
         if (fromVersion < new Version(2023, 4, 26, 0))
             UpgradeTo_2023_4_26_0();
+
+        // 2023.6.27.0
+        if (fromVersion < new Version(2023, 6, 27, 0))
+            UpgradeTo_2023_6_27_0();
 
         // Latest
         if (fromVersion < toVersion)
@@ -228,12 +230,12 @@ public static class SettingsManager
     private static void UpgradeTo_2023_3_7_0()
     {
         _log.Info("Apply update to 2023.3.7.0...");
-        
+
         // Add NTP Lookup application
         _log.Info($"Add new app \"SNTPLookup\"...");
         Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.SNTPLookup));
         Current.SNTPLookup_SNTPServers = new ObservableCollection<ServerConnectionInfoProfile>(SNTPServer.GetDefaultList());
-        
+
         // Add IP Scanner custom commands
         foreach (var customCommand in IPScannerCustomCommand.GetDefaultList())
         {
@@ -277,8 +279,20 @@ public static class SettingsManager
         _log.Info("Apply update to 2023.4.26.0...");
 
         // Add SNMP OID profiles
-         _log.Info($"Add SNMP OID profiles...");
+        _log.Info($"Add SNMP OID profiles...");
         Current.SNMP_OIDProfiles = new ObservableCollection<SNMPOIDProfileInfo>(SNMPOIDProfile.GetDefaultList());
+    }
+
+    /// <summary>
+    /// Method to apply changes for version 2023.6.27.0.
+    /// </summary>
+    private static void UpgradeTo_2023_6_27_0()
+    {
+        _log.Info("Apply update to 2023.6.27.0...");
+
+        // Update Wake on LAN settings
+        _log.Info($"Update \"WakeOnLAN_Port\" to {GlobalStaticConfiguration.WakeOnLAN_Port}");
+        Current.WakeOnLAN_Port = GlobalStaticConfiguration.WakeOnLAN_Port;
     }
 
     /// <summary>
@@ -289,9 +303,9 @@ public static class SettingsManager
     {
         _log.Info($"Apply upgrade to {version}...");
 
-        // Update Wake on LAN settings
-        _log.Info($"Update WakeOnLAN_Port to {GlobalStaticConfiguration.WakeOnLAN_Port}");
-        Current.WakeOnLAN_Port = GlobalStaticConfiguration.WakeOnLAN_Port;
+        // First run is required due to the new settings
+        _log.Info("Set \"FirstRun\" to true...");
+        Current.FirstRun = true;
     }
     #endregion
 }

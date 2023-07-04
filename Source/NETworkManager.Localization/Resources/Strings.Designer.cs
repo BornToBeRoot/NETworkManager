@@ -3701,11 +3701,20 @@ namespace NETworkManager.Localization.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Thank you for using NETworkManager!
         ///
-        ///In order to provide additional features, services on the Internet are used that are not operated by me. You can deselect them below in the privacy section. No data is transmitted to me at any time. ähnelt.
+        ///If you like this tool, please leave a star on GitHub and recommend it to others. ähnelt.
         /// </summary>
         public static string FirstRunMessage {
             get {
                 return ResourceManager.GetString("FirstRunMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die To provide additional features, third party services are used that are not operated by me. You can deselect them below. No data is transferred to me at any time. ähnelt.
+        /// </summary>
+        public static string FirstRunPrivacyMessage {
+            get {
+                return ResourceManager.GetString("FirstRunPrivacyMessage", resourceCulture);
             }
         }
         
