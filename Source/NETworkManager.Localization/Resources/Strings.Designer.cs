@@ -4021,7 +4021,7 @@ namespace NETworkManager.Localization.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die The DNS resolver is determined via ip-api.com.
         ///
-        ///URL: http://edns.ip-api.com/ ähnelt.
+        ///URL: https://edns.ip-api.com/ ähnelt.
         /// </summary>
         public static string HelpMessage_CheckDNSResolver {
             get {

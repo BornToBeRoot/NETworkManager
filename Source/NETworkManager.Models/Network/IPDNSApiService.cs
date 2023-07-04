@@ -18,7 +18,7 @@ namespace NETworkManager.Models.Network
         /// <summary>
         /// Base URL fo the ip-api free endpoint.
         /// </summary>
-        private const string _baseURL = "http://edns.ip-api.com/json";
+        private const string _baseURL = "https://edns.ip-api.com/json";
 
         /// <summary>
         /// Gets the IP DNS details from the API asynchronously.
