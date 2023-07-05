@@ -1501,6 +1501,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Checking DNS resolver... ähnelt.
+        /// </summary>
+        public static string CheckingDNSResolverDots {
+            get {
+                return ResourceManager.GetString("CheckingDNSResolverDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Checking IP geolocation... ähnelt.
+        /// </summary>
+        public static string CheckingIPGeolocationDots {
+            get {
+                return ResourceManager.GetString("CheckingIPGeolocationDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Checking WPS... ähnelt.
         /// </summary>
         public static string CheckingWPSDots {

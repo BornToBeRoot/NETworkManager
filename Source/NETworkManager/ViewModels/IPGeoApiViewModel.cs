@@ -81,8 +81,15 @@ public class IPGeoApiViewModel : ViewModelBase
 
     private async Task CheckAsync()
     {
+        // Don't check multiple times if already running
+        if (IsChecking)
+            return;
+        
         IsChecking = true;
         IPGeoApiInfo = null;
+
+        // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
+        await Task.Delay(2000);
 
         var result = await IPGeoApiService.GetInstance().GetIPGeoDetailsAsync();
 

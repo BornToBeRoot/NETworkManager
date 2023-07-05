@@ -3642,4 +3642,10 @@ URL: http://ip-api.com/</value>
   <data name="FirstRunPrivacyMessage" xml:space="preserve">
     <value>To provide additional features, third party services are used that are not operated by me. You can deselect them below. No data is transferred to me at any time.</value>
   </data>
+  <data name="CheckingDNSResolverDots" xml:space="preserve">
+    <value>Checking DNS resolver...</value>
+  </data>
+  <data name="CheckingIPGeolocationDots" xml:space="preserve">
+    <value>Checking IP geolocation...</value>
+  </data>
 </root>
