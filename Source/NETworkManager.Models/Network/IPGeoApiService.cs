@@ -1,10 +1,8 @@
-﻿using Microsoft.PowerShell.Commands;
-using NETworkManager.Utilities;
+﻿using NETworkManager.Utilities;
 using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -47,7 +45,7 @@ namespace NETworkManager.Models.Network
         private int _rateLimit_RemainingTime = 60;
 
         /// <summary>
-        /// Last time a request was made.
+        /// Last time the rate limit was reached.
         /// </summary>
         private DateTime _rateLimit_LastReached = DateTime.MinValue;
 
