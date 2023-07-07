@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<ProjectGuid>{D3B37F13-E8E6-4218-9E8E-96D52432A9CF}</ProjectGuid>
 		<OutputType>Library</OutputType>
@@ -19,7 +19,7 @@
 		<Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="MahApps.Metro" Version="2.4.9" />
+		<PackageReference Include="MahApps.Metro" Version="2.4.10" />
 		<PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="4.11.0" />
 		<PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
 		<PackageReference Include="MahApps.Metro.IconPacks.MaterialLight" Version="4.11.0" />

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<ProjectGuid>{FF225C2E-AA67-4B10-939A-6C046CEF8697}</ProjectGuid>
 		<OutputType>Library</OutputType>
@@ -57,7 +57,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="MahApps.Metro" Version="2.4.9" />
+		<PackageReference Include="MahApps.Metro" Version="2.4.10" />
 	</ItemGroup>
 
 	<ItemGroup>
