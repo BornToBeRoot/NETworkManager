@@ -4,11 +4,11 @@ using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
-public partial class IPDNSApiView
+public partial class IPApiDNSResolverView
 {
-    private readonly IPDNSApiViewModel _viewModel = new();
+    private readonly IPApiDNSResolverViewModel _viewModel = new();
 
-    public IPDNSApiView()
+    public IPApiDNSResolverView()
     {
         InitializeComponent();
         DataContext = _viewModel;

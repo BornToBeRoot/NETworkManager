@@ -37,7 +37,7 @@ public class FirstRunViewModel : ViewModelBase
         }
     }
 
-    private bool _checkIPGeoApiEnabled = GlobalStaticConfiguration.Dashboard_CheckIPGeoApiEnabled;
+    private bool _checkIPGeoApiEnabled = GlobalStaticConfiguration.Dashboard_CheckIPApiIPGeolocationEnabled;
     public bool CheckIPGeoApiEnabled
     {
         get => _checkIPGeoApiEnabled;
@@ -51,7 +51,7 @@ public class FirstRunViewModel : ViewModelBase
         }
     }
 
-    private bool _checkIPDNSApiEnabled = GlobalStaticConfiguration.Dashboard_CheckIPDNSApiEnabled;
+    private bool _checkIPDNSApiEnabled = GlobalStaticConfiguration.Dashboard_CheckIPApiDNSResolverEnabled;
     public bool CheckIPDNSApiEnabled
     {
         get => _checkIPDNSApiEnabled;

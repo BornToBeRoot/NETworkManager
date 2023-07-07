@@ -74,8 +74,8 @@ public static class GlobalStaticConfiguration
     public static bool Dashboard_CheckPublicIPAddressEnabled => true;
     public static string Dashboard_PublicIPv4AddressAPI => "https://api.ipify.org";
     public static string Dashboard_PublicIPv6AddressAPI => "https://api6.ipify.org";
-    public static bool Dashboard_CheckIPGeoApiEnabled => false;
-    public static bool Dashboard_CheckIPDNSApiEnabled => false;
+    public static bool Dashboard_CheckIPApiIPGeolocationEnabled => false;
+    public static bool Dashboard_CheckIPApiDNSResolverEnabled => false;
     
     // Application: WiFi
     public static bool WiFi_Show2dot4GHzNetworks => true;

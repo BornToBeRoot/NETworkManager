@@ -627,31 +627,31 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _dashboard_CheckIPGeoApiEnabled = GlobalStaticConfiguration.Dashboard_CheckIPGeoApiEnabled;
-    public bool Dashboard_CheckIPGeoApiEnabled
+    private bool _dashboard_CheckIPApiIPGeolocationEnabled = GlobalStaticConfiguration.Dashboard_CheckIPApiIPGeolocationEnabled;
+    public bool Dashboard_CheckIPApiIPGeolocationEnabled
     {
-        get => _dashboard_CheckIPGeoApiEnabled;
+        get => _dashboard_CheckIPApiIPGeolocationEnabled;
         set
         {
-            if (value == _dashboard_CheckIPGeoApiEnabled)
+            if (value == _dashboard_CheckIPApiIPGeolocationEnabled)
                 return;
 
-            _dashboard_CheckIPGeoApiEnabled = value;
+            _dashboard_CheckIPApiIPGeolocationEnabled = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
     }
 
-    private bool _dashboard_CheckIPDNSApiEnabled = GlobalStaticConfiguration.Dashboard_CheckIPDNSApiEnabled;
-    public bool Dashboard_CheckIPDNSApiEnabled
+    private bool _dashboard_CheckIPApiDNSResolverEnabled = GlobalStaticConfiguration.Dashboard_CheckIPApiDNSResolverEnabled;
+    public bool Dashboard_CheckIPApiDNSResolverEnabled
     {
-        get => _dashboard_CheckIPDNSApiEnabled;
+        get => _dashboard_CheckIPApiDNSResolverEnabled;
         set
         {
-            if (value == _dashboard_CheckIPDNSApiEnabled)
+            if (value == _dashboard_CheckIPApiDNSResolverEnabled)
                 return;
 
-            _dashboard_CheckIPDNSApiEnabled = value;
+            _dashboard_CheckIPApiDNSResolverEnabled = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }

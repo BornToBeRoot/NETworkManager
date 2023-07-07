@@ -35,8 +35,8 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <ContentControl x:Name="ContentControlNetworkConnection" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" />
-                    <ContentControl x:Name="ContentControlIPGeoApi" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" />
-                    <ContentControl x:Name="ContentControlIPDNSApi" Grid.Column="4" Grid.Row="2" />
+                    <ContentControl x:Name="ContentControlIPApiIPGeolocation" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" />
+                    <ContentControl x:Name="ContentControlIPApiDNSResolver" Grid.Column="4" Grid.Row="2" />
                 </Grid>
             </ScrollViewer>
         </TabItem>

@@ -126,36 +126,36 @@ public class DashboardSettingsViewModel : ViewModelBase
         }
     }
 
-    private bool _checkIPGeoApiEnabled;
-    public bool CheckIPGeoApiEnabled
+    private bool _checkIPApiIPGeolocationEnabled;
+    public bool CheckIPApiIPGeolocationEnabled
     {
-        get => _checkIPGeoApiEnabled;
+        get => _checkIPApiIPGeolocationEnabled;
         set
         {
-            if (value == _checkIPGeoApiEnabled)
+            if (value == _checkIPApiIPGeolocationEnabled)
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.Dashboard_CheckIPGeoApiEnabled = value;
+                SettingsManager.Current.Dashboard_CheckIPApiIPGeolocationEnabled = value;
 
-            _checkIPGeoApiEnabled = value;
+            _checkIPApiIPGeolocationEnabled = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _checkIPDNSApiEnabled;
-    public bool CheckIPDNSApiEnabled
+    private bool _checkIPApiDNSResolverEnabled;
+    public bool CheckIPApiDNSResolverEnabled
     {
-        get => _checkIPDNSApiEnabled;
+        get => _checkIPApiDNSResolverEnabled;
         set
         {
-            if (value == _checkIPDNSApiEnabled)
+            if (value == _checkIPApiDNSResolverEnabled)
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.Dashboard_CheckIPDNSApiEnabled = value;
+                SettingsManager.Current.Dashboard_CheckIPApiDNSResolverEnabled = value;
 
-            _checkIPDNSApiEnabled = value;
+            _checkIPApiDNSResolverEnabled = value;
             OnPropertyChanged();
         }
     }
@@ -180,8 +180,8 @@ public class DashboardSettingsViewModel : ViewModelBase
         CustomPublicIPv4AddressAPI = SettingsManager.Current.Dashboard_CustomPublicIPv4AddressAPI;
         UsePublicIPv6AddressCustomAPI = SettingsManager.Current.Dashboard_UseCustomPublicIPv6AddressAPI;
         CustomPublicIPv6AddressAPI = SettingsManager.Current.Dashboard_CustomPublicIPv6AddressAPI;
-        CheckIPGeoApiEnabled = SettingsManager.Current.Dashboard_CheckIPGeoApiEnabled;
-        CheckIPDNSApiEnabled = SettingsManager.Current.Dashboard_CheckIPDNSApiEnabled;
+        CheckIPApiIPGeolocationEnabled = SettingsManager.Current.Dashboard_CheckIPApiIPGeolocationEnabled;
+        CheckIPApiDNSResolverEnabled = SettingsManager.Current.Dashboard_CheckIPApiDNSResolverEnabled;
     }
     #endregion
 }

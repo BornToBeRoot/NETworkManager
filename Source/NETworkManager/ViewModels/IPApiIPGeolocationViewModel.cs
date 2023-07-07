@@ -1,4 +1,4 @@
-﻿using NETworkManager.Models.Network;
+﻿using NETworkManager.Models.IPApi;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System.ComponentModel;
@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
-public class IPDNSApiViewModel : ViewModelBase
+public class IPApiIPGeolocationViewModel : ViewModelBase
 {
     #region  Variables 
     private bool _isChecking;
@@ -26,26 +26,25 @@ public class IPDNSApiViewModel : ViewModelBase
         }
     }
 
-    private IPDNSApiInfo _ipDNSApiInfo;
-    public IPDNSApiInfo IPDNSApiInfo
+    private IPGeolocationResult _result;
+    public IPGeolocationResult Result
     {
-        get => _ipDNSApiInfo;
+        get => _result;
         set
         {
-            if (value == _ipDNSApiInfo)
+            if (value == _result)
                 return;
 
-            _ipDNSApiInfo = value;
+            _result = value;
             OnPropertyChanged();
         }
     }
 
-    public bool CheckIPDNSApiEnabled => SettingsManager.Current.Dashboard_CheckIPDNSApiEnabled;
+    public bool CheckIPGeoApiEnabled => SettingsManager.Current.Dashboard_CheckIPApiIPGeolocationEnabled;
     #endregion
 
     #region Constructor, load settings
-
-    public IPDNSApiViewModel()
+    public IPApiIPGeolocationViewModel()
     {
         // Detect if network address or status changed...
         NetworkChange.NetworkAvailabilityChanged += (sender, args) => Check();
@@ -75,8 +74,6 @@ public class IPDNSApiViewModel : ViewModelBase
     #region Methods
     public void Check()
     {
-        Debug.WriteLine("Check dns api....");
-
         CheckAsync().ConfigureAwait(false);
     }
 
@@ -87,17 +84,12 @@ public class IPDNSApiViewModel : ViewModelBase
             return;
 
         IsChecking = true;
-        IPDNSApiInfo = null;
+        Result = null;
 
         // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
         await Task.Delay(2000);
 
-        var result = await IPDNSApiService.GetInstance().GetIPDNSDetailsAsync();
-
-        if (!result.HasError)
-            IPDNSApiInfo = result.Info;
-
-        // Show error & is disabled
+        Result = await IPGeolocationService.GetInstance().GetIPGeolocationAsync();
 
         IsChecking = false;
     }
@@ -108,11 +100,11 @@ public class IPDNSApiViewModel : ViewModelBase
     {
         switch (e.PropertyName)
         {
-            case nameof(SettingsInfo.Dashboard_CheckIPDNSApiEnabled):
-                OnPropertyChanged(nameof(CheckIPDNSApiEnabled));
+            case nameof(SettingsInfo.Dashboard_CheckIPApiIPGeolocationEnabled):
+                OnPropertyChanged(nameof(CheckIPGeoApiEnabled));
 
                 // Check if enabled via settings
-                if (CheckIPDNSApiEnabled)
+                if (CheckIPGeoApiEnabled)
                     Check();
 
                 break;

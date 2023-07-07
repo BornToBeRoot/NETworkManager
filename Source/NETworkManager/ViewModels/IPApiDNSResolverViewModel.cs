@@ -1,4 +1,4 @@
-﻿using NETworkManager.Models.Network;
+﻿using NETworkManager.Models.IPApi;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System.ComponentModel;
@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
-public class IPGeoApiViewModel : ViewModelBase
+public class IPApiDNSResolverViewModel : ViewModelBase
 {
     #region  Variables 
     private bool _isChecking;
@@ -26,25 +26,26 @@ public class IPGeoApiViewModel : ViewModelBase
         }
     }
 
-    private IPGeoApiInfo _ipGeoApiInfo;
-    public IPGeoApiInfo IPGeoApiInfo
+    private DNSResolverResult _result;
+    public DNSResolverResult Result
     {
-        get => _ipGeoApiInfo;
+        get => _result;
         set
         {
-            if (value == _ipGeoApiInfo)
+            if (value == _result)
                 return;
 
-            _ipGeoApiInfo = value;
+            _result = value;
             OnPropertyChanged();
         }
     }
 
-    public bool CheckIPGeoApiEnabled => SettingsManager.Current.Dashboard_CheckIPGeoApiEnabled;
+    public bool CheckIPDNSApiEnabled => SettingsManager.Current.Dashboard_CheckIPApiDNSResolverEnabled;
     #endregion
 
     #region Constructor, load settings
-    public IPGeoApiViewModel()
+
+    public IPApiDNSResolverViewModel()
     {
         // Detect if network address or status changed...
         NetworkChange.NetworkAvailabilityChanged += (sender, args) => Check();
@@ -74,7 +75,7 @@ public class IPGeoApiViewModel : ViewModelBase
     #region Methods
     public void Check()
     {
-        Debug.WriteLine("Check geo api....");
+        Debug.WriteLine("Check dns api....");
 
         CheckAsync().ConfigureAwait(false);
     }
@@ -84,19 +85,14 @@ public class IPGeoApiViewModel : ViewModelBase
         // Don't check multiple times if already running
         if (IsChecking)
             return;
-        
+
         IsChecking = true;
-        IPGeoApiInfo = null;
+        Result = null;
 
         // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
         await Task.Delay(2000);
 
-        var result = await IPGeoApiService.GetInstance().GetIPGeoDetailsAsync();
-
-        if (!result.HasError)
-            IPGeoApiInfo = result.Info;
-
-        // Show error & is disabled
+        Result = await DNSResolverService.GetInstance().GetDNSResolverAsync();
 
         IsChecking = false;
     }
@@ -107,11 +103,11 @@ public class IPGeoApiViewModel : ViewModelBase
     {
         switch (e.PropertyName)
         {
-            case nameof(SettingsInfo.Dashboard_CheckIPGeoApiEnabled):
-                OnPropertyChanged(nameof(CheckIPGeoApiEnabled));
-                               
+            case nameof(SettingsInfo.Dashboard_CheckIPApiDNSResolverEnabled):
+                OnPropertyChanged(nameof(CheckIPDNSApiEnabled));
+
                 // Check if enabled via settings
-                if (CheckIPGeoApiEnabled)
+                if (CheckIPDNSApiEnabled)
                     Check();
 
                 break;

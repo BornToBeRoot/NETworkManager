@@ -123,7 +123,7 @@
             </TextBox.Text>
         </TextBox>        
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-            <mah:ToggleSwitch IsOn="{Binding CheckIPGeoApiEnabled}" Header="{x:Static localization:Strings.CheckIPGeolocation}" />
+            <mah:ToggleSwitch IsOn="{Binding CheckIPApiIPGeolocationEnabled}" Header="{x:Static localization:Strings.CheckIPGeolocation}" />
             <Rectangle Width="24" Height="24" VerticalAlignment="Top" ToolTip="{x:Static localization:Strings.HelpMessage_CheckIPGeolocation}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
@@ -131,7 +131,7 @@
             </Rectangle>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
-            <mah:ToggleSwitch IsOn="{Binding CheckIPDNSApiEnabled}" Header="{x:Static localization:Strings.CheckDNSResolver}" />
+            <mah:ToggleSwitch IsOn="{Binding CheckIPApiDNSResolverEnabled}" Header="{x:Static localization:Strings.CheckDNSResolver}" />
             <Rectangle Width="24" Height="24" VerticalAlignment="Top" ToolTip="{x:Static localization:Strings.HelpMessage_CheckDNSResolver}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
