@@ -33,7 +33,7 @@
 		<PackageReference Include="DnsClient" Version="1.7.0" />
 		<PackageReference Include="IPNetwork2" Version="2.6.593" />
 		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.2" />
-		<PackageReference Include="MahApps.Metro" Version="2.4.9" />
+		<PackageReference Include="MahApps.Metro" Version="2.4.10" />
 		<PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="4.11.0" />
 		<PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
 		<PackageReference Include="MahApps.Metro.IconPacks.MaterialLight" Version="4.11.0" />

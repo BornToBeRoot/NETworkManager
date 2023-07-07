@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<ProjectGuid>{BD4DDC21-7B64-41B2-BAC7-8173E0FE84BE}</ProjectGuid>
 		<OutputType>Library</OutputType>
@@ -33,6 +33,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
-		<PackageReference Include="MahApps.Metro" Version="2.4.9" />
+		<PackageReference Include="MahApps.Metro" Version="2.4.10" />
 	</ItemGroup>
 </Project>
