@@ -18,6 +18,9 @@ Release date: **xx.xx.2023**
 Breaking Changes
 {: .label .label-red }
 
+New Feature
+{: .label .label-green }
+
 ## Breaking Changes
 
 - Profiles and settings migration (indroduced in `2023.3.7.0`) from `%AppData%\NETworkManager` to `%UserProfile%\Documents\NETworkManager` removed. If you use a version before `2023.3.7.0` you have to install and start version `2023.6.27.1` before you install this version. [#2380](https://github.com/BornToBeRoot/NETworkManager/pull/2380){:target="\_blank"}
@@ -26,8 +29,8 @@ Breaking Changes
 ## What's new?
 
 - Dashboard
-  - IP Geolocation information / check added [#2392](https://github.com/BornToBeRoot/NETworkManager/pull/2392){:target="\_blank"}
-  - IP DNS information / check added [#2392](https://github.com/BornToBeRoot/NETworkManager/pull/2392){:target="\_blank"}
+  - Check IP geolocation added [#2392](https://github.com/BornToBeRoot/NETworkManager/pull/2392){:target="\_blank"}
+  - Check DNS resolver added [#2392](https://github.com/BornToBeRoot/NETworkManager/pull/2392){:target="\_blank"}
 
 ## Improvements
 
