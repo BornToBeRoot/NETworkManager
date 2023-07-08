@@ -407,7 +407,7 @@ public partial class MainWindow : INotifyPropertyChanged
 
                 // Set settings based on user choice
                 SettingsManager.Current.Update_CheckForUpdatesAtStartup = instance.CheckForUpdatesAtStartup;
-                SettingsManager.Current.Dashboard_CheckPublicIPAddress = instance.CheckPublicIPAddress;
+                SettingsManager.Current.Dashboard_CheckPublicIPAddressEnabled = instance.CheckPublicIPAddress;
                 SettingsManager.Current.Appearance_PowerShellModifyGlobalProfile = instance.PowerShellModifyGlobalProfile;
 
                 // Generate lists at runtime

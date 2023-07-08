@@ -67,7 +67,7 @@ public class SettingsSettingsViewModel : ViewModelBase
             return;
 
         // Init default settings
-        SettingsManager.InitDefault();
+        SettingsManager.Initialize();
         
         // Restart the application
         (Application.Current.MainWindow as MainWindow).RestartApplication();

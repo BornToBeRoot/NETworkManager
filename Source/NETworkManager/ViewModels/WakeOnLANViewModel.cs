@@ -329,7 +329,8 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
         {
             WakeOnLAN.Send(info);
 
-            await Task.Delay(2000); // Make the user happy, let him see a reload animation (and he cannot spam the send command)
+            // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
+            await Task.Delay(2000);
 
             StatusMessage = Localization.Resources.Strings.MagicPacketSentMessage;
             IsStatusMessageDisplayed = true;

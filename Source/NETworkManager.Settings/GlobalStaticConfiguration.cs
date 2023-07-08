@@ -71,10 +71,12 @@ public static class GlobalStaticConfiguration
     // Application: Dashboard
     public static string Dashboard_PublicIPv4Address => "1.1.1.1";
     public static string Dashboard_PublicIPv6Address => "2606:4700:4700::1111";
-    public static bool Dashboard_CheckPublicIPAddress => true;
+    public static bool Dashboard_CheckPublicIPAddressEnabled => true;
     public static string Dashboard_PublicIPv4AddressAPI => "https://api.ipify.org";
     public static string Dashboard_PublicIPv6AddressAPI => "https://api6.ipify.org";
-
+    public static bool Dashboard_CheckIPApiIPGeolocationEnabled => false;
+    public static bool Dashboard_CheckIPApiDNSResolverEnabled => false;
+    
     // Application: WiFi
     public static bool WiFi_Show2dot4GHzNetworks => true;
     public static bool WiFi_Show5GHzNetworks => true;

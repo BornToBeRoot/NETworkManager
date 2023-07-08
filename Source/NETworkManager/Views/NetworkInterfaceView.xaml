@@ -31,15 +31,15 @@
         <converters:BandwidthBytesWithSizeConverter x:Key="BandwidthBytesWithSizeConverter" />
         <converters:IPAddressArrayToStringConverter x:Key="IPAddressArrayToStringConverter" />
         <converters:IPAddressSubnetmaskTupleArrayToStringConverter x:Key="IPAddressSubnetmaskTupleArrayToStringConverter" />
-        <converters:IntZeroReverseToVisibilityCollapsedConverter x:Key="IntZeroReverseToVisibilityCollapsedConverter" />
+        <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
-        <converters:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
+        <converters:StringNullOrEmptyToBoolConverter x:Key="StringNullOrEmptyToBoolConverter" />
         <converters:OperationalStatusToStringConverter x:Key="OperationalStatusToStringConverter" />
         <converters:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
         <converters:ValidateNetworkInterfaceConfigConverter x:Key="ValidateNetworkInterfaceConfigConverter" />
     </UserControl.Resources>
     <Grid>
-        <Grid Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroReverseToVisibilityCollapsedConverter}}">
+        <Grid Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -1039,7 +1039,7 @@
                                         <Setter Property="Command" Value="{Binding AddProfileCommand}" />
 
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
+                                            <DataTrigger Binding="{Binding Search, Converter={StaticResource StringNullOrEmptyToBoolConverter}}" Value="False">
                                                 <Setter Property="Command" Value="{Binding ClearSearchCommand}" />
                                                 <Setter Property="ToolTip" Value="{x:Static localization:Strings.ClearFilter}" />
                                             </DataTrigger>
@@ -1064,7 +1064,7 @@
                                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
                                                         <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
+                                                    <DataTrigger Binding="{Binding Search, Converter={StaticResource StringNullOrEmptyToBoolConverter}}" Value="False">
                                                         <Setter Property="OpacityMask" Value="{StaticResource VisualClear}" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -1079,7 +1079,7 @@
                                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
                                                         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
+                                                    <DataTrigger Binding="{Binding Search, Converter={StaticResource StringNullOrEmptyToBoolConverter}}" Value="False">
                                                         <Setter Property="Text" Value="{x:Static localization:Strings.NothingFound}" />
                                                     </DataTrigger>
                                                 </Style.Triggers>

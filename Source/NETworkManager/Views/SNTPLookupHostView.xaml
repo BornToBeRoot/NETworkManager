@@ -16,7 +16,7 @@
     <UserControl.Resources>
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <converters:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
+        <converters:StringNullOrEmptyToBoolConverter x:Key="StringNullOrEmptyToBoolConverter" />
     </UserControl.Resources>
     <UserControl.InputBindings>
         <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding AddTabCommand}" />

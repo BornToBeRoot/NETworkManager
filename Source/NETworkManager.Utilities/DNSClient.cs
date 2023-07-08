@@ -11,7 +11,7 @@ public class DNSClient : SingletonBase<DNSClient>
     /// <summary>
     /// Error message which is returned when the DNS client is not configured.
     /// </summary>
-    private static string _notConfiguredMessage = "DNS client is not configured. Call Configure() first.";
+    private static readonly string _notConfiguredMessage = "DNS client is not configured. Call Configure() first.";
 
     /// <summary>
     /// Store the current DNS settings.

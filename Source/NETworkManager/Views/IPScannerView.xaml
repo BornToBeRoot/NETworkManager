@@ -23,10 +23,9 @@
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:HostUpStyleConverter x:Key="HostUpStyleConverter" />
         <converters:IntToStringConverter x:Key="IntToStringConverter" />
-        <converters:IntZeroReverseToVisibilityCollapsedConverter x:Key="IntZeroReverseToVisibilityCollapsedConverter" />
+        <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
-        <converters:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
-        <converters:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
+        <converters:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />        
         <converters:PingTimeToStringConverter x:Key="PingTimeToStringConverter" />
         <converters:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
         <converters:PortOpenToStringConverter x:Key="PortOpenToStringConverter" />
@@ -517,7 +516,7 @@
                                     <TextBlock Text="{x:Static localization:Strings.PortScanIsDisabled}" Style="{StaticResource InfoTextBlock}" Margin="10,0,0,0" />
                                 </StackPanel>
                                 <Grid Grid.Row="2" Visibility="{Binding Data.PortScanEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                                    <ListView Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemsSource="{Binding (network:IPScannerHostInfo.Ports)}" Visibility="{Binding Path=Ports.Count, Converter={StaticResource IntZeroReverseToVisibilityCollapsedConverter}}">
+                                    <ListView Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemsSource="{Binding (network:IPScannerHostInfo.Ports)}" Visibility="{Binding Path=Ports.Count, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}">
                                         <ListView.ItemContainerStyle>
                                             <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
                                                 <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />

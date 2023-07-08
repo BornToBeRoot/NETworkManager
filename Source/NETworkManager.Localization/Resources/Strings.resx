@@ -1940,7 +1940,7 @@ Changes to this value will take effect after restarting the application.</value>
   <data name="FirstRunMessage" xml:space="preserve">
     <value>Thank you for using NETworkManager!
 
-In order to provide additional features, services on the Internet are used that are not operated by me. You can deselect them below in the privacy section. No data is transmitted to me at any time.</value>
+If you like this tool, please leave a star on GitHub and recommend it to others.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>When starting the program, it checks in the background whether a new program version is available on GitHub.
@@ -2619,7 +2619,7 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="Accent_Yellow" xml:space="preserve">
     <value>Yellow</value>
   </data>
-  <data name="Accen_Steel" xml:space="preserve">
+  <data name="Accent_Steel" xml:space="preserve">
     <value>Steel</value>
   </data>
   <data name="ProfileViewName_General" xml:space="preserve">
@@ -3559,5 +3559,103 @@ Changes to this value will take effect after the application is restarted. Wheth
   </data>
   <data name="HelpMessage_PuTTYUsername" xml:space="preserve">
     <value>Username that will be passed into the PuTTY session. Only available if the mode is "SSH", "Telnet" or "Rlogin".</value>
+  </data>
+  <data name="ASN" xml:space="preserve">
+    <value>ASN</value>
+  </data>
+  <data name="ASName" xml:space="preserve">
+    <value>AS Name</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="Continent" xml:space="preserve">
+    <value>Continent</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="District" xml:space="preserve">
+    <value>District</value>
+  </data>
+  <data name="DNSResolver" xml:space="preserve">
+    <value>DNS resolver</value>
+  </data>
+  <data name="EDNS" xml:space="preserve">
+    <value>EDNS</value>
+  </data>
+  <data name="Geolocation" xml:space="preserve">
+    <value>Geolocation</value>
+  </data>
+  <data name="Hosting" xml:space="preserve">
+    <value>Hosting</value>
+  </data>
+  <data name="IPGeolocation" xml:space="preserve">
+    <value>IP geolocation</value>
+  </data>
+  <data name="ISP" xml:space="preserve">
+    <value>ISP</value>
+  </data>
+  <data name="Latitude" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="Mobile" xml:space="preserve">
+    <value>Mobile</value>
+  </data>
+  <data name="Organization" xml:space="preserve">
+    <value>Organization</value>
+  </data>
+  <data name="PTRRecord" xml:space="preserve">
+    <value>PTR record</value>
+  </data>
+  <data name="Timezone" xml:space="preserve">
+    <value>Timezone</value>
+  </data>
+  <data name="ZipCode" xml:space="preserve">
+    <value>Zip</value>
+  </data>
+  <data name="ExternalService_ip_api_Description" xml:space="preserve">
+    <value>IP Geolocation API - Fast, accurate, reliable</value>
+  </data>
+  <data name="CheckDNSResolver" xml:space="preserve">
+    <value>Check DNS resolver</value>
+  </data>
+  <data name="CheckIPGeolocation" xml:space="preserve">
+    <value>Check IP geolocation</value>
+  </data>
+  <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
+    <value>The DNS resolver is determined via ip-api.com.
+
+URL: https://edns.ip-api.com/</value>
+  </data>
+  <data name="HelpMessage_CheckIPGeolocation" xml:space="preserve">
+    <value>The IP geolocation is determined via ip-api.com.
+
+URL: http://ip-api.com/</value>
+  </data>
+  <data name="FirstRunPrivacyMessage" xml:space="preserve">
+    <value>To provide additional features, third party services are used that are not operated by me. You can deselect them below. No data is transferred to me at any time.</value>
+  </data>
+  <data name="CheckingDNSResolverDots" xml:space="preserve">
+    <value>Checking DNS resolver...</value>
+  </data>
+  <data name="CheckingIPGeolocationDots" xml:space="preserve">
+    <value>Checking IP geolocation...</value>
+  </data>
+  <data name="CheckNetworkConnectionTryAgainMessage" xml:space="preserve">
+    <value>Check your network connection and try again in a few seconds.</value>
+  </data>
+  <data name="IPApiRateLimitMessage" xml:space="preserve">
+    <value>ip-api.com rate limit reached (too many requests from your network)!
+Try again in a few seconds.</value>
+  </data>
+  <data name="HTTPStatusCode" xml:space="preserve">
+    <value>HTTP status code</value>
   </data>
 </root>

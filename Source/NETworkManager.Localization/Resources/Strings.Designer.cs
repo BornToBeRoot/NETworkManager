@@ -70,15 +70,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Steel ähnelt.
-        /// </summary>
-        public static string Accen_Steel {
-            get {
-                return ResourceManager.GetString("Accen_Steel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Accent ähnelt.
         /// </summary>
         public static string Accent {
@@ -246,6 +237,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Accent_Sienna {
             get {
                 return ResourceManager.GetString("Accent_Sienna", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Steel ähnelt.
+        /// </summary>
+        public static string Accent_Steel {
+            get {
+                return ResourceManager.GetString("Accent_Steel", resourceCulture);
             }
         }
         
@@ -1033,6 +1033,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ASN ähnelt.
+        /// </summary>
+        public static string ASN {
+            get {
+                return ResourceManager.GetString("ASN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die AS Name ähnelt.
+        /// </summary>
+        public static string ASName {
+            get {
+                return ResourceManager.GetString("ASName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die At least one application must be visible! ähnelt.
         /// </summary>
         public static string AtLeastOneApplicationMustBeVisible {
@@ -1447,6 +1465,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Check DNS resolver ähnelt.
+        /// </summary>
+        public static string CheckDNSResolver {
+            get {
+                return ResourceManager.GetString("CheckDNSResolver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Check for pre-releases ähnelt.
         /// </summary>
         public static string CheckForPreReleases {
@@ -1474,11 +1501,38 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Checking DNS resolver... ähnelt.
+        /// </summary>
+        public static string CheckingDNSResolverDots {
+            get {
+                return ResourceManager.GetString("CheckingDNSResolverDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Checking IP geolocation... ähnelt.
+        /// </summary>
+        public static string CheckingIPGeolocationDots {
+            get {
+                return ResourceManager.GetString("CheckingIPGeolocationDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Checking WPS... ähnelt.
         /// </summary>
         public static string CheckingWPSDots {
             get {
                 return ResourceManager.GetString("CheckingWPSDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Check IP geolocation ähnelt.
+        /// </summary>
+        public static string CheckIPGeolocation {
+            get {
+                return ResourceManager.GetString("CheckIPGeolocation", resourceCulture);
             }
         }
         
@@ -1510,6 +1564,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Check your network connection and try again in a few seconds. ähnelt.
+        /// </summary>
+        public static string CheckNetworkConnectionTryAgainMessage {
+            get {
+                return ResourceManager.GetString("CheckNetworkConnectionTryAgainMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Check public IP address ähnelt.
         /// </summary>
         public static string CheckPublicIPAddress {
@@ -1524,6 +1587,15 @@ namespace NETworkManager.Localization.Resources {
         public static string CIDR {
             get {
                 return ResourceManager.GetString("CIDR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die City ähnelt.
+        /// </summary>
+        public static string City {
+            get {
+                return ResourceManager.GetString("City", resourceCulture);
             }
         }
         
@@ -1861,6 +1933,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Continent ähnelt.
+        /// </summary>
+        public static string Continent {
+            get {
+                return ResourceManager.GetString("Continent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Continue ähnelt.
         /// </summary>
         public static string Continue {
@@ -2014,6 +2095,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Country ähnelt.
+        /// </summary>
+        public static string Country {
+            get {
+                return ResourceManager.GetString("Country", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Credential ähnelt.
         /// </summary>
         public static string Credential {
@@ -2055,6 +2145,15 @@ namespace NETworkManager.Localization.Resources {
         public static string CtrlAltDel {
             get {
                 return ResourceManager.GetString("CtrlAltDel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Currency ähnelt.
+        /// </summary>
+        public static string Currency {
+            get {
+                return ResourceManager.GetString("Currency", resourceCulture);
             }
         }
         
@@ -2736,6 +2835,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die District ähnelt.
+        /// </summary>
+        public static string District {
+            get {
+                return ResourceManager.GetString("District", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die DNS ähnelt.
         /// </summary>
         public static string DNS {
@@ -2768,6 +2876,15 @@ namespace NETworkManager.Localization.Resources {
         public static string DNSLookupDots {
             get {
                 return ResourceManager.GetString("DNSLookupDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die DNS resolver ähnelt.
+        /// </summary>
+        public static string DNSResolver {
+            get {
+                return ResourceManager.GetString("DNSResolver", resourceCulture);
             }
         }
         
@@ -2993,6 +3110,15 @@ namespace NETworkManager.Localization.Resources {
         public static string EditSNTPServer {
             get {
                 return ResourceManager.GetString("EditSNTPServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die EDNS ähnelt.
+        /// </summary>
+        public static string EDNS {
+            get {
+                return ResourceManager.GetString("EDNS", resourceCulture);
             }
         }
         
@@ -3510,6 +3636,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die IP Geolocation API - Fast, accurate, reliable ähnelt.
+        /// </summary>
+        public static string ExternalService_ip_api_Description {
+            get {
+                return ResourceManager.GetString("ExternalService_ip_api_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die A Simple Public IP Address API ähnelt.
         /// </summary>
         public static string ExternalService_ipify_Description {
@@ -3593,11 +3728,20 @@ namespace NETworkManager.Localization.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Thank you for using NETworkManager!
         ///
-        ///In order to provide additional features, services on the Internet are used that are not operated by me. You can deselect them below in the privacy section. No data is transmitted to me at any time. ähnelt.
+        ///If you like this tool, please leave a star on GitHub and recommend it to others. ähnelt.
         /// </summary>
         public static string FirstRunMessage {
             get {
                 return ResourceManager.GetString("FirstRunMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die To provide additional features, third party services are used that are not operated by me. You can deselect them below. No data is transferred to me at any time. ähnelt.
+        /// </summary>
+        public static string FirstRunPrivacyMessage {
+            get {
+                return ResourceManager.GetString("FirstRunPrivacyMessage", resourceCulture);
             }
         }
         
@@ -3724,6 +3868,15 @@ namespace NETworkManager.Localization.Resources {
         public static string General {
             get {
                 return ResourceManager.GetString("General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Geolocation ähnelt.
+        /// </summary>
+        public static string Geolocation {
+            get {
+                return ResourceManager.GetString("Geolocation", resourceCulture);
             }
         }
         
@@ -3902,6 +4055,17 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The DNS resolver is determined via ip-api.com.
+        ///
+        ///URL: https://edns.ip-api.com/ ähnelt.
+        /// </summary>
+        public static string HelpMessage_CheckDNSResolver {
+            get {
+                return ResourceManager.GetString("HelpMessage_CheckDNSResolver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die When starting the program, it checks in the background whether a new program version is available on GitHub.
         ///
         ///URL: https://api.github.com/ ähnelt.
@@ -3909,6 +4073,17 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_CheckForUpdatesAtStartup {
             get {
                 return ResourceManager.GetString("HelpMessage_CheckForUpdatesAtStartup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The IP geolocation is determined via ip-api.com.
+        ///
+        ///URL: http://ip-api.com/ ähnelt.
+        /// </summary>
+        public static string HelpMessage_CheckIPGeolocation {
+            get {
+                return ResourceManager.GetString("HelpMessage_CheckIPGeolocation", resourceCulture);
             }
         }
         
@@ -4152,6 +4327,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hosting ähnelt.
+        /// </summary>
+        public static string Hosting {
+            get {
+                return ResourceManager.GetString("Hosting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Hostkey ähnelt.
         /// </summary>
         public static string Hostkey {
@@ -4202,6 +4386,15 @@ namespace NETworkManager.Localization.Resources {
         public static string HTTPHeaders {
             get {
                 return ResourceManager.GetString("HTTPHeaders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die HTTP status code ähnelt.
+        /// </summary>
+        public static string HTTPStatusCode {
+            get {
+                return ResourceManager.GetString("HTTPStatusCode", resourceCulture);
             }
         }
         
@@ -4368,11 +4561,30 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ip-api.com rate limit reached (too many requests from your network)!
+        ///Try again in a few seconds. ähnelt.
+        /// </summary>
+        public static string IPApiRateLimitMessage {
+            get {
+                return ResourceManager.GetString("IPApiRateLimitMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die IP endpoint ähnelt.
         /// </summary>
         public static string IPEndPoint {
             get {
                 return ResourceManager.GetString("IPEndPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die IP geolocation ähnelt.
+        /// </summary>
+        public static string IPGeolocation {
+            get {
+                return ResourceManager.GetString("IPGeolocation", resourceCulture);
             }
         }
         
@@ -4539,6 +4751,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ISP ähnelt.
+        /// </summary>
+        public static string ISP {
+            get {
+                return ResourceManager.GetString("ISP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Keyboard ähnelt.
         /// </summary>
         public static string Keyboard {
@@ -4607,6 +4828,15 @@ namespace NETworkManager.Localization.Resources {
         public static string LastUsableIPAddress {
             get {
                 return ResourceManager.GetString("LastUsableIPAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Latitude ähnelt.
+        /// </summary>
+        public static string Latitude {
+            get {
+                return ResourceManager.GetString("Latitude", resourceCulture);
             }
         }
         
@@ -5025,6 +5255,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Longitude ähnelt.
+        /// </summary>
+        public static string Longitude {
+            get {
+                return ResourceManager.GetString("Longitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Lookup ähnelt.
         /// </summary>
         public static string Lookup {
@@ -5273,6 +5512,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Minimum {
             get {
                 return ResourceManager.GetString("Minimum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Mobile ähnelt.
+        /// </summary>
+        public static string Mobile {
+            get {
+                return ResourceManager.GetString("Mobile", resourceCulture);
             }
         }
         
@@ -5917,6 +6165,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Organization ähnelt.
+        /// </summary>
+        public static string Organization {
+            get {
+                return ResourceManager.GetString("Organization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die OUI ähnelt.
         /// </summary>
         public static string OUI {
@@ -6470,6 +6727,15 @@ namespace NETworkManager.Localization.Resources {
         public static string PTRDNSRecordResolvedForXXXMessage {
             get {
                 return ResourceManager.GetString("PTRDNSRecordResolvedForXXXMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die PTR record ähnelt.
+        /// </summary>
+        public static string PTRRecord {
+            get {
+                return ResourceManager.GetString("PTRRecord", resourceCulture);
             }
         }
         
@@ -9440,6 +9706,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Timezone ähnelt.
+        /// </summary>
+        public static string Timezone {
+            get {
+                return ResourceManager.GetString("Timezone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Open documentation on GitHub. ähnelt.
         /// </summary>
         public static string ToolTip_GithubDocumentationUrl {
@@ -10284,6 +10559,15 @@ namespace NETworkManager.Localization.Resources {
         public static string YourSystemOSIsIncompatibleWithTheLatestRelease {
             get {
                 return ResourceManager.GetString("YourSystemOSIsIncompatibleWithTheLatestRelease", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Zip ähnelt.
+        /// </summary>
+        public static string ZipCode {
+            get {
+                return ResourceManager.GetString("ZipCode", resourceCulture);
             }
         }
     }

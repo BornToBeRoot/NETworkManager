@@ -1,4 +1,5 @@
-﻿using NETworkManager.Utilities;
+﻿using NETworkManager.Settings;
+using NETworkManager.Utilities;
 using System;
 using System.Windows.Input;
 
@@ -8,7 +9,7 @@ public class FirstRunViewModel : ViewModelBase
 {
     public ICommand ContinueCommand { get; }
 
-    private bool _checkForUpdatesAtStartup = true;
+    private bool _checkForUpdatesAtStartup = GlobalStaticConfiguration.Update_CheckForUpdatesAtStartup;
     public bool CheckForUpdatesAtStartup
     {
         get => _checkForUpdatesAtStartup;
@@ -22,7 +23,7 @@ public class FirstRunViewModel : ViewModelBase
         }
     }
 
-    private bool _checkPublicIPAddress = true;
+    private bool _checkPublicIPAddress = GlobalStaticConfiguration.Dashboard_CheckPublicIPAddressEnabled;
     public bool CheckPublicIPAddress
     {
         get => _checkPublicIPAddress;
@@ -32,6 +33,34 @@ public class FirstRunViewModel : ViewModelBase
                 return;
 
             _checkPublicIPAddress = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _checkIPGeoApiEnabled = GlobalStaticConfiguration.Dashboard_CheckIPApiIPGeolocationEnabled;
+    public bool CheckIPGeoApiEnabled
+    {
+        get => _checkIPGeoApiEnabled;
+        set
+        {
+            if (value == _checkIPGeoApiEnabled)
+                return;
+
+            _checkIPGeoApiEnabled = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _checkIPDNSApiEnabled = GlobalStaticConfiguration.Dashboard_CheckIPApiDNSResolverEnabled;
+    public bool CheckIPDNSApiEnabled
+    {
+        get => _checkIPDNSApiEnabled;
+        set
+        {
+            if (value == _checkIPDNSApiEnabled)
+                return;
+
+            _checkIPDNSApiEnabled = value;
             OnPropertyChanged();
         }
     }

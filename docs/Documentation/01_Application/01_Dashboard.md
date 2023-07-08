@@ -72,3 +72,24 @@ Override the default IPv6 address API to resolve the public IP address. The API 
 **Example:**
 
 - [`api6.ipify.org`](https://api6.ipify.org/){:target="\_blank"}
+
+### Check IP geolocation
+
+Enables or disables the resolution of the IP geolocation via [`ip-api.com`](https://ip-api.com/){:target="\_blank"}.
+
+{: .note}
+The free API endpoint is limited to 45 requests per minute, supports only the `http` protocol and is available for non-commercial use only.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
+### Check DNS resolver
+
+Enables or disables the resolution of the used DNS resolver via [`ip-api.com`](https://ip-api.com/){:target="\_blank"}.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
+

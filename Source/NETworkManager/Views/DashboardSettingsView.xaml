@@ -47,15 +47,15 @@
             </TextBox.Text>
         </TextBox>       
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-            <mah:ToggleSwitch IsOn="{Binding CheckPublicIPAddress}" Header="{x:Static localization:Strings.CheckPublicIPAddress}" />
+            <mah:ToggleSwitch IsOn="{Binding CheckPublicIPAddressEnabled}" Header="{x:Static localization:Strings.CheckPublicIPAddress}" />
             <Rectangle Width="24" Height="24" VerticalAlignment="Top" ToolTip="{x:Static localization:Strings.HelpMessage_CheckPublicIPAddress}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
                 </Rectangle.Resources>
             </Rectangle>
-        </StackPanel>
+        </StackPanel>        
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-            <mah:ToggleSwitch IsOn="{Binding UsePublicIPv4AddressCustomAPI}" Header="{x:Static localization:Strings.UseCustomIPv4AddressAPI}" IsEnabled="{Binding CheckPublicIPAddress}" Margin="0,0,0,10" />
+            <mah:ToggleSwitch IsOn="{Binding UsePublicIPv4AddressCustomAPI}" Header="{x:Static localization:Strings.UseCustomIPv4AddressAPI}" IsEnabled="{Binding CheckPublicIPAddressEnabled}" />
             <Rectangle Width="24" Height="24" VerticalAlignment="Top" ToolTip="{x:Static localization:Strings.HelpMessage_CustomPublicIPv4AddressAPI}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
@@ -69,7 +69,7 @@
                     <Style.Triggers>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding CheckPublicIPAddress}" Value="True" />
+                                <Condition Binding="{Binding CheckPublicIPAddressEnabled}" Value="True" />
                                 <Condition Binding="{Binding UsePublicIPv4AddressCustomAPI}" Value="True" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.Setters>
@@ -89,7 +89,7 @@
             </TextBox.Text>
         </TextBox>
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-            <mah:ToggleSwitch IsOn="{Binding UsePublicIPv6AddressCustomAPI}" Header="{x:Static localization:Strings.UseCustomIPv6AddressAPI}" IsEnabled="{Binding CheckPublicIPAddress}" Margin="0,0,0,10" />
+            <mah:ToggleSwitch IsOn="{Binding UsePublicIPv6AddressCustomAPI}" Header="{x:Static localization:Strings.UseCustomIPv6AddressAPI}" IsEnabled="{Binding CheckPublicIPAddressEnabled}" />
             <Rectangle Width="24" Height="24" VerticalAlignment="Top" ToolTip="{x:Static localization:Strings.HelpMessage_CustomPublicIPv6AddressAPI}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
@@ -103,7 +103,7 @@
                     <Style.Triggers>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding CheckPublicIPAddress}" Value="True" />
+                                <Condition Binding="{Binding CheckPublicIPAddressEnabled}" Value="True" />
                                 <Condition Binding="{Binding UsePublicIPv6AddressCustomAPI}" Value="True" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.Setters>
@@ -121,6 +121,22 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
-        </TextBox>
+        </TextBox>        
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <mah:ToggleSwitch IsOn="{Binding CheckIPApiIPGeolocationEnabled}" Header="{x:Static localization:Strings.CheckIPGeolocation}" />
+            <Rectangle Width="24" Height="24" VerticalAlignment="Top" ToolTip="{x:Static localization:Strings.HelpMessage_CheckIPGeolocation}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <mah:ToggleSwitch IsOn="{Binding CheckIPApiDNSResolverEnabled}" Header="{x:Static localization:Strings.CheckDNSResolver}" />
+            <Rectangle Width="24" Height="24" VerticalAlignment="Top" ToolTip="{x:Static localization:Strings.HelpMessage_CheckDNSResolver}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
+        </StackPanel>
     </StackPanel>
 </UserControl>

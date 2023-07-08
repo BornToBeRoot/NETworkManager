@@ -5,6 +5,7 @@ using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Net.NetworkInformation;
@@ -417,7 +418,7 @@ public class NetworkConnectionViewModel : ViewModelBase
     }
     #endregion
 
-    public bool CheckPublicIPAddress => SettingsManager.Current.Dashboard_CheckPublicIPAddress;
+    public bool CheckPublicIPAddressEnabled => SettingsManager.Current.Dashboard_CheckPublicIPAddressEnabled;
     #endregion
 
     #region Constructor, load settings
@@ -445,13 +446,15 @@ public class NetworkConnectionViewModel : ViewModelBase
 
     private void CheckConnectionViaHotkeyAction()
     {
-        CheckConnection();    
+        CheckConnection();
     }
     #endregion
 
     #region Methods
     public void CheckConnection()
     {
+        Debug.WriteLine("Check network connection....");
+
         CheckConnectionAsync().ConfigureAwait(false);
     }
 
@@ -462,14 +465,14 @@ public class NetworkConnectionViewModel : ViewModelBase
     {
         // Already in queue
         if (tokenSource != null && tokenSource.IsCancellationRequested)
-        {                
+        {
             return;
         }
 
         // Cancel if running
         if (IsChecking)
         {
-            tokenSource.Cancel();                
+            tokenSource.Cancel();
 
             while (IsChecking)
             {
@@ -499,7 +502,7 @@ public class NetworkConnectionViewModel : ViewModelBase
         }
         catch (OperationCanceledException)
         {
-            
+
         }
         finally
         {
@@ -566,7 +569,7 @@ public class NetworkConnectionViewModel : ViewModelBase
             {
                 var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(IPAddress.Parse(ComputerIPv4));
 
-                if(!dnsResult.HasError)
+                if (!dnsResult.HasError)
                 {
                     ComputerDNS = dnsResult.Value;
                     ComputerDNSState = ConnectionState.OK;
@@ -574,7 +577,7 @@ public class NetworkConnectionViewModel : ViewModelBase
             }
 
             // Try to resolve local DNS based on IPv6 if IPv4 failed
-            if(string.IsNullOrEmpty(ComputerDNS) && ComputerIPv6State == ConnectionState.OK)
+            if (string.IsNullOrEmpty(ComputerDNS) && ComputerIPv6State == ConnectionState.OK)
             {
                 var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(IPAddress.Parse(ComputerIPv6));
 
@@ -667,7 +670,7 @@ public class NetworkConnectionViewModel : ViewModelBase
 
             if (ct.IsCancellationRequested)
                 ct.ThrowIfCancellationRequested();
-                            
+
             // Try to resolve router DNS based on IPv4
             if (RouterIPv4State == ConnectionState.OK)
             {
@@ -706,6 +709,10 @@ public class NetworkConnectionViewModel : ViewModelBase
     {
         return Task.Run(async () =>
             {
+                // If public IP address check is disabled
+                if (!CheckPublicIPAddressEnabled)
+                    return;
+
                 // Init variables
                 IsInternetIPv4Checking = true;
                 InternetIPv4 = "";
@@ -716,24 +723,6 @@ public class NetworkConnectionViewModel : ViewModelBase
                 IsInternetDNSChecking = true;
                 InternetDNS = "";
                 InternetDNSState = ConnectionState.None;
-
-                // If public IP address check is disabled
-                if (!SettingsManager.Current.Dashboard_CheckPublicIPAddress)
-                {
-                    InternetIPv4 = Strings.CheckIsDisabled;
-                    InternetIPv4State = ConnectionState.Info;
-                    IsInternetIPv4Checking = false;
-
-                    InternetIPv6 = Strings.CheckIsDisabled;
-                    InternetIPv6State = ConnectionState.Info;
-                    IsInternetIPv6Checking = false;
-
-                    InternetDNS = Strings.CheckIsDisabled;
-                    InternetDNSState = ConnectionState.Info;
-                    IsInternetDNSChecking = false;
-
-                    return;
-                }
 
                 // Detect public IPv4 and if it is reachable
                 var publicIPv4AddressAPI = SettingsManager.Current.Dashboard_UseCustomPublicIPv4AddressAPI ? SettingsManager.Current.Dashboard_CustomPublicIPv4AddressAPI : GlobalStaticConfiguration.Dashboard_PublicIPv4AddressAPI;
@@ -802,7 +791,7 @@ public class NetworkConnectionViewModel : ViewModelBase
 
                 if (ct.IsCancellationRequested)
                     ct.ThrowIfCancellationRequested();
-                                    
+
                 // Try to resolve public DNS based on IPv4
                 if (InternetIPv4State == ConnectionState.OK)
                 {
@@ -815,7 +804,7 @@ public class NetworkConnectionViewModel : ViewModelBase
                     }
                 }
 
-                // Try to resolve router DNS based on IPv6 if IPv4 failed
+                // Try to resolve public DNS based on IPv6 if IPv4 failed
                 if (string.IsNullOrEmpty(InternetDNS) && InternetIPv6State == ConnectionState.OK)
                 {
                     var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(IPAddress.Parse(InternetIPv6));
@@ -832,7 +821,7 @@ public class NetworkConnectionViewModel : ViewModelBase
                     InternetDNS = "-/-";
                     InternetDNSState = ConnectionState.Critical;
                 }
-                
+
                 IsInternetDNSChecking = false;
             }, ct);
     }
@@ -843,11 +832,15 @@ public class NetworkConnectionViewModel : ViewModelBase
     {
         switch (e.PropertyName)
         {
-            case nameof(SettingsInfo.Dashboard_CheckPublicIPAddress):
-                OnPropertyChanged(nameof(CheckPublicIPAddress));
+            case nameof(SettingsInfo.Dashboard_CheckPublicIPAddressEnabled):
+                OnPropertyChanged(nameof(CheckPublicIPAddressEnabled));
+
+                // Check connection if enabled via settings
+                if (CheckPublicIPAddressEnabled)
+                    CheckConnection();
+
                 break;
         }
     }
     #endregion
 }
-

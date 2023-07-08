@@ -333,12 +333,14 @@ public class WiFiConnectViewModel : ViewModelBase
         if (ConnectMode != WiFiConnectMode.Psk || Options.NetworkInfo.IsHidden)
             return;
 
-        IsWpsChecking = true;
-        await Task.Delay(1000); // Show animation ;)
+        IsWpsChecking = true;        
+        // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
+        await Task.Delay(1000);
 
         IsWpsAvailable = await WiFi.IsWpsAvailable(Options.AdapterInfo.WiFiAdapter, Options.NetworkInfo.AvailableNetwork);
 
-        await Task.Delay(1000); // Show animation ;)
+        // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
+        await Task.Delay(1000);
         IsWpsChecking = false;
     }
     

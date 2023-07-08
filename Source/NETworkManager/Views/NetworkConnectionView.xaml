@@ -51,7 +51,7 @@
                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Monitor}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
-                        <TextBlock Text="Computer" Style="{StaticResource MessageTextBlock}" Margin="10,0,0,0" />
+                        <TextBlock Text="{x:Static localization:Strings.Computer}" Style="{StaticResource MessageTextBlock}" Margin="10,0,0,0" />
                     </StackPanel>
                     <Grid Grid.Row="2" HorizontalAlignment="Left" Margin="10">
                         <Grid.ColumnDefinitions>
@@ -105,7 +105,7 @@
                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=RouterWireless}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
-                        <TextBlock Text="Router / Gateway" Style="{StaticResource MessageTextBlock}" Margin="10,0,0,0" />
+                        <TextBlock Text="{x:Static localization:Strings.GatewayRouter}" Style="{StaticResource MessageTextBlock}" Margin="10,0,0,0" />
                     </StackPanel>
                     <Grid Grid.Row="2" HorizontalAlignment="Left" Margin="10">
                         <Grid.ColumnDefinitions>
@@ -156,12 +156,12 @@
                     <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10">
                         <Rectangle Width="32" Height="32" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Earth}" />
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Globe}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
-                        <TextBlock Text="Internet" Style="{StaticResource MessageTextBlock}" Margin="10,0,0,0" />
+                        <TextBlock Text="{x:Static localization:Strings.Internet}" Style="{StaticResource MessageTextBlock}" Margin="10,0,0,0" />
                     </StackPanel>
-                    <Grid Grid.Row="2" HorizontalAlignment="Left" Margin="10">
+                    <Grid Grid.Row="2" HorizontalAlignment="Left" Margin="10" Visibility="{Binding CheckPublicIPAddressEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="10" />
@@ -189,6 +189,7 @@
                         <TextBlock Grid.Column="2" Grid.Row="4" Text="{x:Static localization:Strings.DNS}" />
                         <TextBox Grid.Column="4" Grid.Row="4" Text="{Binding InternetDNS}" />
                     </Grid>
+                    <TextBlock Grid.Row="2" Foreground="{DynamicResource MahApps.Brushes.Gray3}" Text="{x:Static localization:Strings.CheckIsDisabled}" Visibility="{Binding CheckPublicIPAddressEnabled, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" />
                 </Grid>
             </Grid>
         </Border>

@@ -807,7 +807,8 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     {
         IsNetworkInterfaceLoading = true;
 
-        await Task.Delay(2000); // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
+        // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
+        await Task.Delay(2000); 
 
         var id = string.Empty;
 

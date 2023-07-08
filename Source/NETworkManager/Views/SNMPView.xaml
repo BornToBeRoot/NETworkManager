@@ -19,8 +19,7 @@
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter"/>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <converters:IntToStringConverter x:Key="IntToStringConverter" />
-        <converters:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
+        <converters:IntToStringConverter x:Key="IntToStringConverter" />        
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.ColumnDefinitions>

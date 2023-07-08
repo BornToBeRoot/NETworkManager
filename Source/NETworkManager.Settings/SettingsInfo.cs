@@ -552,16 +552,16 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _dashboard_CheckPublicIPAddress = GlobalStaticConfiguration.Dashboard_CheckPublicIPAddress;
-    public bool Dashboard_CheckPublicIPAddress
+    private bool _dashboard_CheckPublicIPAddressEnabled = GlobalStaticConfiguration.Dashboard_CheckPublicIPAddressEnabled;
+    public bool Dashboard_CheckPublicIPAddressEnabled
     {
-        get => _dashboard_CheckPublicIPAddress;
+        get => _dashboard_CheckPublicIPAddressEnabled;
         set
         {
-            if (value == _dashboard_CheckPublicIPAddress)
+            if (value == _dashboard_CheckPublicIPAddressEnabled)
                 return;
 
-            _dashboard_CheckPublicIPAddress = value;
+            _dashboard_CheckPublicIPAddressEnabled = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
@@ -622,6 +622,36 @@ public class SettingsInfo : PropertyChangedBase
                 return;
 
             _dashboard_CustomPublicIPv6AddressAPI = value;
+            OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
+
+    private bool _dashboard_CheckIPApiIPGeolocationEnabled = GlobalStaticConfiguration.Dashboard_CheckIPApiIPGeolocationEnabled;
+    public bool Dashboard_CheckIPApiIPGeolocationEnabled
+    {
+        get => _dashboard_CheckIPApiIPGeolocationEnabled;
+        set
+        {
+            if (value == _dashboard_CheckIPApiIPGeolocationEnabled)
+                return;
+
+            _dashboard_CheckIPApiIPGeolocationEnabled = value;
+            OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
+
+    private bool _dashboard_CheckIPApiDNSResolverEnabled = GlobalStaticConfiguration.Dashboard_CheckIPApiDNSResolverEnabled;
+    public bool Dashboard_CheckIPApiDNSResolverEnabled
+    {
+        get => _dashboard_CheckIPApiDNSResolverEnabled;
+        set
+        {
+            if (value == _dashboard_CheckIPApiDNSResolverEnabled)
+                return;
+
+            _dashboard_CheckIPApiDNSResolverEnabled = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }

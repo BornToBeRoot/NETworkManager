@@ -23,16 +23,13 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:DiscoveryProtocolToStringConverter x:Key="DiscoveryProtocolToStringConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
-        <converters:IntZeroReverseToVisibilityCollapsedConverter x:Key="IntZeroReverseToVisibilityCollapsedConverter" />
-        <converters:NullOrEmptyToStringConverter x:Key="NullOrEmptyToStringConverter" />        
+        <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
+        <converters:StringNullOrEmptyToStringConverter x:Key="StringNullOrEmptyToStringConverter" />        
     </UserControl.Resources>
     <TabControl Style="{StaticResource DefaultTabControl}">
         <TabItem Header="{x:Static localization:Strings.DiscoveryProtocol}">
             <Grid Margin="10" >
-                <Grid Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                    <!--
-                    <Grid Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroReverseToVisibilityCollapsedConverter}}">
-                    -->
+                <Grid Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">                 
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -42,94 +39,7 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <!--
-                        <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Interface}" />
-                        <Grid Grid.Row="1" Margin="0,0,0,20">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <ComboBox Grid.Column="0" x:Name="ComboBoxNetworkInterfaceProfiles" ItemsSource="{Binding NetworkInterfaces}" SelectedItem="{Binding SelectedNetworkInterface}">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Rectangle Width="24" Height="24">
-                                                <Rectangle.Resources>
-                                                    <VisualBrush x:Key="VisualUp" Stretch="Uniform" Visual="{iconPacks:Modern Kind=Network}"/>
-                                                    <VisualBrush x:Key="VisualDown" Stretch="Uniform" Visual="{iconPacks:Modern Kind=NetworkDisconnect}" />
-                                                </Rectangle.Resources>
-                                                <Rectangle.Style>
-                                                    <Style TargetType="{x:Type Rectangle}">
-                                                        <Setter Property="OpacityMask" Value="{StaticResource VisualDown}" />
-                                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding IsOperational}" Value="True">
-                                                                <Setter Property="OpacityMask" Value="{StaticResource VisualUp}" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Rectangle.Style>
-                                            </Rectangle>
-                                            <StackPanel Margin="10,0,0,0">
-                                                <TextBlock Text="{Binding Path=Name}" />
-                                                <TextBlock Text="{Binding Path=Description}" Foreground="{DynamicResource MahApps.Brushes.Gray3}"/>
-                                            </StackPanel>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                                <ComboBox.ItemContainerStyle>
-                                    <Style TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource MahApps.Styles.ComboBoxItem}">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="ComboBoxItem">
-                                                    <Grid Background="{TemplateBinding Background}" RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}">
-                                                        <Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                                        <Grid Margin="{TemplateBinding BorderThickness}">
-                                                            <ContentPresenter x:Name="contentPresenter" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                                        </Grid>
-                                                    </Grid>
-                                                    <ControlTemplate.Triggers>
-                                                        <Trigger Property="IsSelected" Value="True">
-                                                            <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
-                                                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray9}" />
-                                                        </Trigger>
-                                                        <MultiTrigger>
-                                                            <MultiTrigger.Conditions>
-                                                                <Condition Property="IsSelected" Value="False" />
-                                                                <Condition Property="IsMouseOver" Value="True" />
-                                                            </MultiTrigger.Conditions>
-                                                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
-                                                        </MultiTrigger>
-                                                        <Trigger Property="IsEnabled" Value="False">
-                                                            <Setter TargetName="contentPresenter" Property="Opacity" Value=".55" />
-                                                        </Trigger>
-                                                    </ControlTemplate.Triggers>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </ComboBox.ItemContainerStyle>
-                            </ComboBox>
-                            <Button Grid.Column="1" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Height="{Binding ElementName=ComboBoxNetworkInterfaceProfiles, Path=ActualHeight}" Command="{Binding ReloadNetworkInterfacesCommand}" Style="{StaticResource CleanButton}" IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}" Margin="10,0,0,0">
-                                <Rectangle Width="24" Height="24">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
-                                    </Rectangle.OpacityMask>
-                                    <Rectangle.Style>
-                                        <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ReloadAnimation}">
-                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Rectangle.Style>
-                                </Rectangle>
-                            </Button>
-                        </Grid>
-                        -->
+                        </Grid.RowDefinitions>                      
                         <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Capture}" />
                         <Grid Grid.Row="3">
                             <Grid.ColumnDefinitions>
@@ -226,34 +136,34 @@
                                 </Grid.RowDefinitions>
                                 <GridSplitter Grid.Column="1" Grid.RowSpan="13" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Device}" />
-                                <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding DiscoveryPackage.Device, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding DiscoveryPackage.Device, Mode=OneWay, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
                                 <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.DeviceDescription}" />
-                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding DiscoveryPackage.DeviceDescription, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding DiscoveryPackage.DeviceDescription, Mode=OneWay, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
                                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Port}" />
-                                <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding DiscoveryPackage.Port, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding DiscoveryPackage.Port, Mode=OneWay, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
                                 <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.PortDescription}" />
-                                <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding DiscoveryPackage.PortDescription, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding DiscoveryPackage.PortDescription, Mode=OneWay, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
                                 <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Model}" />
-                                <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding DiscoveryPackage.Model, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding DiscoveryPackage.Model, Mode=OneWay, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
                                 <TextBlock Grid.Column="0" Grid.Row="5" Text="{x:Static localization:Strings.VLAN}" />
-                                <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding DiscoveryPackage.VLAN, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding DiscoveryPackage.VLAN, Mode=OneWay, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
                                 <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.IPAddress}" />
-                                <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding DiscoveryPackage.IPAddress, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding DiscoveryPackage.IPAddress, Mode=OneWay, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
                                 <TextBlock Grid.Column="0" Grid.Row="7" Text="{x:Static localization:Strings.Management}" />
-                                <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding DiscoveryPackage.Management, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding DiscoveryPackage.Management, Mode=OneWay, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
                                 <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static localization:Strings.ChassisId}" />
-                                <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding DiscoveryPackage.ChassisId, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding DiscoveryPackage.ChassisId, Mode=OneWay, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
                                 <TextBlock Grid.Column="0" Grid.Row="9" Text="{x:Static localization:Strings.Protocol}" />
-                                <TextBox Grid.Column="2" Grid.Row="9" Text="{Binding DiscoveryPackage.Protocol, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBox Grid.Column="2" Grid.Row="9" Text="{Binding DiscoveryPackage.Protocol, Mode=OneWay, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
                                 <TextBlock Grid.Column="0" Grid.Row="10" Text="{x:Static localization:Strings.TimeToLive}" />
-                                <TextBox Grid.Column="2" Grid.Row="10" Text="{Binding DiscoveryPackage.TimeToLive, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBox Grid.Column="2" Grid.Row="10" Text="{Binding DiscoveryPackage.TimeToLive, Mode=OneWay, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
                                 <TextBlock Grid.Column="0" Grid.Row="11" Text="{x:Static localization:Strings.LocalConnection}" />
-                                <TextBox Grid.Column="2" Grid.Row="11" Text="{Binding DiscoveryPackage.LocalConnection, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBox Grid.Column="2" Grid.Row="11" Text="{Binding DiscoveryPackage.LocalConnection, Mode=OneWay, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
                                 <TextBlock Grid.Column="0" Grid.Row="12" Text="{x:Static localization:Strings.LocalInterface}" />
-                                <TextBox Grid.Column="2" Grid.Row="12" Text="{Binding DiscoveryPackage.LocalInterface, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBox Grid.Column="2" Grid.Row="12" Text="{Binding DiscoveryPackage.LocalInterface, Mode=OneWay, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
                             </Grid>
                         </ScrollViewer>
-                        <TextBlock Grid.Row="6" Text="{x:Static localization:Strings.CaptureNetworkPacketsToViewLLDPorCDPInformation}" >
+                        <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.CaptureNetworkPacketsToViewLLDPorCDPInformation}" >
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
                                     <Setter Property="Visibility" Value="Visible" />
@@ -265,7 +175,7 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        <TextBlock Grid.Row="6" Text="{x:Static localization:Strings.NoDiscoveryProtocolPackagesReceived}" >
+                        <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.NoDiscoveryProtocolPackagesReceived}" >
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed" />
@@ -284,7 +194,7 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        <StackPanel VerticalAlignment="Center" Grid.Row="6" Visibility="{Binding IsCapturing, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <StackPanel Grid.Column="0" Grid.Row="6" VerticalAlignment="Center" Visibility="{Binding IsCapturing, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                             <loadingIndicators:LoadingIndicator IsActive="True" Style="{DynamicResource LoadingIndicatorArcsStyle}" SpeedRatio="1" Margin="0,0,0,10"/>
                             <TextBlock Text="{x:Static localization:Strings.CapturingNetworkPackagesDots}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
                             <TextBlock Text="{Binding TimeRemainingMessage}" Style="{StaticResource DefaultTextBlock}" Foreground="{DynamicResource MahApps.Brushes.Gray3}" HorizontalAlignment="Center" />                            

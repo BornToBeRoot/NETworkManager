@@ -4,13 +4,16 @@ using System.Windows.Data;
 
 namespace NETworkManager.Converters;
 
-public sealed class NullOrEmptyToStringConverter : IValueConverter
+public sealed class DoubleToStringConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        var str = value as string;
+        if (value == null)
+            return "-/-";
 
-        return string.IsNullOrEmpty(str) ? "-/-" : str;
+        double.TryParse(value.ToString(), out var doubleValue);
+
+        return doubleValue == 0 ? "-/-" : doubleValue.ToString();
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

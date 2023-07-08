@@ -41,19 +41,19 @@ public class DashboardSettingsViewModel : ViewModelBase
         }
     }
 
-    private bool _checkPublicIPAddress;
-    public bool CheckPublicIPAddress
+    private bool _checkPublicIPAddressEnabled;
+    public bool CheckPublicIPAddressEnabled
     {
-        get => _checkPublicIPAddress;
+        get => _checkPublicIPAddressEnabled;
         set
         {
-            if (value == _checkPublicIPAddress)
+            if (value == _checkPublicIPAddressEnabled)
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.Dashboard_CheckPublicIPAddress = value;
+                SettingsManager.Current.Dashboard_CheckPublicIPAddressEnabled = value;
 
-            _checkPublicIPAddress = value;
+            _checkPublicIPAddressEnabled = value;
             OnPropertyChanged();
         }
     }
@@ -125,6 +125,40 @@ public class DashboardSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
+    private bool _checkIPApiIPGeolocationEnabled;
+    public bool CheckIPApiIPGeolocationEnabled
+    {
+        get => _checkIPApiIPGeolocationEnabled;
+        set
+        {
+            if (value == _checkIPApiIPGeolocationEnabled)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Dashboard_CheckIPApiIPGeolocationEnabled = value;
+
+            _checkIPApiIPGeolocationEnabled = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _checkIPApiDNSResolverEnabled;
+    public bool CheckIPApiDNSResolverEnabled
+    {
+        get => _checkIPApiDNSResolverEnabled;
+        set
+        {
+            if (value == _checkIPApiDNSResolverEnabled)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Dashboard_CheckIPApiDNSResolverEnabled = value;
+
+            _checkIPApiDNSResolverEnabled = value;
+            OnPropertyChanged();
+        }
+    }
     #endregion
 
     #region Contructor, load settings
@@ -141,11 +175,13 @@ public class DashboardSettingsViewModel : ViewModelBase
     {
         PublicIPv4Address = SettingsManager.Current.Dashboard_PublicIPv4Address;
         PublicIPv6Address = SettingsManager.Current.Dashboard_PublicIPv6Address;
-        CheckPublicIPAddress = SettingsManager.Current.Dashboard_CheckPublicIPAddress;
+        CheckPublicIPAddressEnabled = SettingsManager.Current.Dashboard_CheckPublicIPAddressEnabled;
         UsePublicIPv4AddressCustomAPI = SettingsManager.Current.Dashboard_UseCustomPublicIPv4AddressAPI;
         CustomPublicIPv4AddressAPI = SettingsManager.Current.Dashboard_CustomPublicIPv4AddressAPI;
         UsePublicIPv6AddressCustomAPI = SettingsManager.Current.Dashboard_UseCustomPublicIPv6AddressAPI;
         CustomPublicIPv6AddressAPI = SettingsManager.Current.Dashboard_CustomPublicIPv6AddressAPI;
+        CheckIPApiIPGeolocationEnabled = SettingsManager.Current.Dashboard_CheckIPApiIPGeolocationEnabled;
+        CheckIPApiDNSResolverEnabled = SettingsManager.Current.Dashboard_CheckIPApiDNSResolverEnabled;
     }
     #endregion
 }

@@ -94,7 +94,7 @@ public class SettingsAutostartViewModel : ViewModelBase
             else
                 await AutostartManager.DisableAsync();
 
-            // Show the user some awesome animation to indicate we are working on it :)
+            // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
             await Task.Delay(2000);
         }
         catch (Exception ex)

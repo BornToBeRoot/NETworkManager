@@ -68,7 +68,7 @@ public partial class App
                 _log.Fatal($"Exception raised by: {e.ExceptionObject}");
         };
 
-        // If we have restart our application... wait until it has finished
+        // Wait until the previous instance has been closed (restart from ui)
         if (CommandLineManager.Current.RestartPid != -1)
         {
             _log.Info($"Waiting for another NETworkManager process with Pid {CommandLineManager.Current.RestartPid} to exit...");
@@ -80,13 +80,13 @@ public partial class App
             _log.Info($"NETworkManager process with Pid {CommandLineManager.Current.RestartPid} has been exited.");
         }
 
-        // Load settings
+        // Load (or initialize) settings
         try
         {
             _log.Info("Application settings are being loaded...");
 
             if (CommandLineManager.Current.ResetSettings)
-                SettingsManager.InitDefault();
+                SettingsManager.Initialize();
             else
                 SettingsManager.Load();
         }
@@ -103,42 +103,33 @@ public partial class App
             // Initialize default application settings
             _log.Info("Initialize default application settings...");
 
-            SettingsManager.InitDefault();
+            SettingsManager.Initialize();
             ConfigurationManager.Current.ShowSettingsResetNoteOnStartup = true;
         }
 
-        // Perform settings update if settings version is lower than application version            
-        if (SettingsManager.Current.FirstRun || string.IsNullOrEmpty(SettingsManager.Current.Version))
-        {
-            _log.Info($"Application settings version is empty and will be set to {AssemblyManager.Current.Version}.");
+        // Upgrade settings if necessary
+        Version settingsVersion = Version.Parse(SettingsManager.Current.Version);
 
-            SettingsManager.Current.Version = AssemblyManager.Current.Version.ToString();
+        if (settingsVersion < AssemblyManager.Current.Version)
+        {
+            _log.Info($"Application settings are on version {settingsVersion} and will be upgraded to {AssemblyManager.Current.Version}");
+
+            SettingsManager.Upgrade(settingsVersion, AssemblyManager.Current.Version);
+
+            _log.Info($"Application settings upgraded to version {AssemblyManager.Current.Version}");
         }
         else
         {
-            Version settingsVersion = Version.Parse(SettingsManager.Current.Version);
-
-            if (settingsVersion < AssemblyManager.Current.Version)
-            {
-                _log.Info($"Application settings are on version {settingsVersion} and will be upgraded to {AssemblyManager.Current.Version}");
-
-                SettingsManager.Upgrade(settingsVersion, AssemblyManager.Current.Version);
-
-                _log.Info($"Application settings upgraded to version {AssemblyManager.Current.Version}");
-            }
-            else
-            {
-                _log.Info($"Application settings are already on version {AssemblyManager.Current.Version}.");
-            }
+            _log.Info($"Application settings are already on version {AssemblyManager.Current.Version}.");
         }
 
-        // Init the location with the culture code...
+        // Initialize localization
         var localizationManager = LocalizationManager.GetInstance(SettingsManager.Current.Localization_CultureCode);
         Localization.Resources.Strings.Culture = localizationManager.Culture;
 
         _log.Info($"Application localization culture has been set to {localizationManager.Current.Code} (Settings value is \"{SettingsManager.Current.Localization_CultureCode}\").");
 
-        // Show help window
+        // Show (localized) help window
         if (CommandLineManager.Current.Help)
         {
             _log.Info("Set StartupUri to CommandLineWindow.xaml...");
@@ -147,7 +138,7 @@ public partial class App
             return;
         }
 
-        // Create mutex
+        // Create mutex (to detect single instance)
         _log.Info($"Try to acquire mutex with GUID {GUID} for single instance detection...");
 
         _mutex = new Mutex(true, "{" + GUID + "}");
@@ -190,7 +181,7 @@ public partial class App
 
             if (completionPortThreadsMinNew > completionPortThreadsMax)
                 completionPortThreadsMinNew = completionPortThreadsMax;
-                        
+
             if (ThreadPool.SetMinThreads(workerThreadsMinNew, completionPortThreadsMinNew))
                 _log.Info($"ThreadPool min threads set to: workerThreads: {workerThreadsMinNew}, completionPortThreads: {completionPortThreadsMinNew}");
             else
@@ -218,7 +209,7 @@ public partial class App
             Shutdown();
         }
     }
-        
+
     private void DispatcherTimer_Tick(object sender, EventArgs e)
     {
         _log.Info("Run background job...");
@@ -247,7 +238,7 @@ public partial class App
         _dispatcherTimer?.Stop();
 
         Save();
-        
+
         _log.Info("Bye!");
     }
 

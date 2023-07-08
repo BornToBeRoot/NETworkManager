@@ -4,14 +4,11 @@ using System.Windows.Data;
 
 namespace NETworkManager.Converters;
 
-public sealed class NullableDateTimeToStringConverter : IValueConverter
+public sealed class StringNullOrEmptyToBoolConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is DateTime time)
-            return time;
-
-        return "-/-";
+        return string.IsNullOrEmpty(value as string);
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

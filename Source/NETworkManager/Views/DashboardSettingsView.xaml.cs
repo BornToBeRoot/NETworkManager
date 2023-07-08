@@ -4,7 +4,7 @@ namespace NETworkManager.Views;
 
 public partial class DashboardSettingsView
 {
-    private readonly DashboardSettingsViewModel _viewModel = new DashboardSettingsViewModel();
+    private readonly DashboardSettingsViewModel _viewModel = new();
 
     public DashboardSettingsView()
     {

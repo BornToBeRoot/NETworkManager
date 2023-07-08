@@ -572,6 +572,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
             await SyncInstanceIDsFromAWS(profile.Profile, profile.Region);
         }
 
+        // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
         await Task.Delay(2000);
 
         _log.Info("All Instance IDs synced from AWS!");
@@ -600,6 +601,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
             _log.Error($"Could not extract AWS profile and AWS region from \"{group}\"!");
         }
 
+        // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
         await Task.Delay(2000);
 
         _log.Info($"Group synced!");

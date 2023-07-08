@@ -18,14 +18,27 @@
     </UserControl.Resources>
     <TabControl Style="{StaticResource DefaultTabControl}">
         <TabItem Header="{x:Static localization:Strings.Dashboard }">
-            <Grid Margin="10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="10" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <ContentControl x:Name="ContentControlNetworkConnection" Grid.Column="0" />            
-            </Grid>                
+            <ScrollViewer Grid.Row="0" Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Disabled" Margin="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <ContentControl x:Name="ContentControlNetworkConnection" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" />
+                    <ContentControl x:Name="ContentControlIPApiIPGeolocation" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" />
+                    <ContentControl x:Name="ContentControlIPApiDNSResolver" Grid.Column="4" Grid.Row="2" />
+                </Grid>
+            </ScrollViewer>
         </TabItem>
     </TabControl>
 </UserControl>
