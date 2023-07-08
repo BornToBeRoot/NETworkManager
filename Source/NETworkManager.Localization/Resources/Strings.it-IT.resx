@@ -1953,10 +1953,9 @@ Le modifiche a questo valore avranno effetto dopo il riavvio dell'applicazione.<
     <value>Controlla l'indirizzo IP pubblico</value>
   </data>
   <data name="FirstRunMessage" xml:space="preserve">
-    <value>Grazie per aver utilizzato NETworkManager!
-Per fornire funzionalità aggiuntive, vengono utilizzati servizi su Internet che non sono gestiti da me. 
-Puoi deselezionarli di seguito nella sezione privacy. 
-Nessun dato verrà mai trasmesso a me.</value>
+    <value>Grazie per l'uso di NETworkManager!
+
+Se ti piace questo programma, valutalo  su GitHub e consiglialo ad altri.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Quando parte, il programma verifica in background se sono disponibili nuove versioni su GitHub.
@@ -2640,8 +2639,8 @@ Vedi messaggio errore: "{0}"</value>
   <data name="Accent_Yellow" xml:space="preserve">
     <value>Giallo</value>
   </data>
-  <data name="Accen_Steel" xml:space="preserve">
-    <value>Acciaio</value>
+  <data name="Accent_Steel" xml:space="preserve">
+    <value>Acciao</value>
   </data>
   <data name="ProfileViewName_General" xml:space="preserve">
     <value>Generale</value>
@@ -3645,5 +3644,105 @@ Disponibile solo se la modalità è "SSH".</value>
   <data name="HelpMessage_PuTTYUsername" xml:space="preserve">
     <value>Nome utente che verrà passato alla sessione PuTTY. 
 Disponibile solo se la modalità è "SSH", "Telnet" o "Rlogin".</value>
+  </data>
+  <data name="ASN" xml:space="preserve">
+    <value>ASN</value>
+  </data>
+  <data name="ASName" xml:space="preserve">
+    <value>Nome AS</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>Città</value>
+  </data>
+  <data name="Continent" xml:space="preserve">
+    <value>Continente</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Nazione</value>
+  </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Valuta</value>
+  </data>
+  <data name="District" xml:space="preserve">
+    <value>Dsitretto</value>
+  </data>
+  <data name="DNSResolver" xml:space="preserve">
+    <value>Risoolutore DNS</value>
+  </data>
+  <data name="EDNS" xml:space="preserve">
+    <value>EDNS</value>
+  </data>
+  <data name="Geolocation" xml:space="preserve">
+    <value>Geolocalizzazione</value>
+  </data>
+  <data name="Hosting" xml:space="preserve">
+    <value>Hosting</value>
+  </data>
+  <data name="IPGeolocation" xml:space="preserve">
+    <value>Geolocalizzazione IP</value>
+  </data>
+  <data name="ISP" xml:space="preserve">
+    <value>ISP</value>
+  </data>
+  <data name="Latitude" xml:space="preserve">
+    <value>Latitudine</value>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>Longitudine</value>
+  </data>
+  <data name="Mobile" xml:space="preserve">
+    <value>Cellulare</value>
+  </data>
+  <data name="Organization" xml:space="preserve">
+    <value>Organizzazione</value>
+  </data>
+  <data name="PTRRecord" xml:space="preserve">
+    <value>Record PTR</value>
+  </data>
+  <data name="Timezone" xml:space="preserve">
+    <value>Fuso orario</value>
+  </data>
+  <data name="ZipCode" xml:space="preserve">
+    <value>CAP</value>
+  </data>
+  <data name="ExternalService_ip_api_Description" xml:space="preserve">
+    <value>API geolocalizzazione IP: veloce, precisa, affidabile</value>
+  </data>
+  <data name="CheckDNSResolver" xml:space="preserve">
+    <value>Verifica risolutore DNS</value>
+  </data>
+  <data name="CheckIPGeolocation" xml:space="preserve">
+    <value>Verifica geolocalizzazione IP</value>
+  </data>
+  <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
+    <value>Il risoutore DNS viene determinato tramite ip-api.com.
+
+URL: https://edns.ip-api.com/</value>
+  </data>
+  <data name="HelpMessage_CheckIPGeolocation" xml:space="preserve">
+    <value>La geolocalizzazione IP viene determinata tramite ip-api.com.
+
+URL: http://ip-api.com/</value>
+  </data>
+  <data name="FirstRunPrivacyMessage" xml:space="preserve">
+    <value>Per fornire funzionalità aggiuntive, vengono usati servizi di terze parti che non sono gestiti dall'autore del programma.
+Puoi deselezionarli di seguito. 
+In qualsiasi momento nessun dato vierrà trasferito all'autore del programma.</value>
+  </data>
+  <data name="CheckingDNSResolverDots" xml:space="preserve">
+    <value>Verifica risolutore DNS...</value>
+  </data>
+  <data name="CheckingIPGeolocationDots" xml:space="preserve">
+    <value>Verifica geolocalizzazione IP...</value>
+  </data>
+  <data name="CheckNetworkConnectionTryAgainMessage" xml:space="preserve">
+    <value>Controlla la connessione di rete e riprova tra qualche secondo.</value>
+  </data>
+  <data name="IPApiRateLimitMessage" xml:space="preserve">
+    <value>Raggiunto limite ip-api.com (troppe richieste dal questa rete)!
+Riprova tra qualche secondo.</value>
+  </data>
+  <data name="HTTPStatusCode" xml:space="preserve">
+    <value>Codice stato HTTP</value>
   </data>
 </root>
