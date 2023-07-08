@@ -25,7 +25,7 @@
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:ConnectionStateToRectangleStyleConverter x:Key="ConnectionStateToRectangleStyleConverter" />
-        <converters:IntZeroReverseToVisibilityCollapsedConverter x:Key="IntZeroReverseToVisibilityCollapsedConverter" />
+        <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
         <converters:MACAddressToVendorConverter x:Key="MACAddressToVendorConverter" />
         <converters:TimeSpanToMillisecondConverter x:Key="TimeSpanToMillisecondConverter" />
@@ -46,7 +46,7 @@
                 <TabItem Header="{x:Static localization:Strings.WiFi}">
                     <Grid Margin="10">
                         <!-- Adapter / WiFi networks -->
-                        <Grid Visibility="{Binding Adapters.Count, Converter={StaticResource IntZeroReverseToVisibilityCollapsedConverter}}">
+                        <Grid Visibility="{Binding Adapters.Count, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="20" />
@@ -400,7 +400,7 @@
                 <TabItem Header="{x:Static localization:Strings.Channels}" >
                     <Grid Margin="10">
                         <!-- Channels -->
-                        <Grid Visibility="{Binding Adapters.Count, Converter={StaticResource IntZeroReverseToVisibilityCollapsedConverter}}">
+                        <Grid Visibility="{Binding Adapters.Count, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />

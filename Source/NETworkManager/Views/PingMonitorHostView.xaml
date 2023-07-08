@@ -15,7 +15,7 @@
              dialogs:DialogParticipation.Register="{Binding}"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PingMonitorHostViewModel}">
     <UserControl.Resources>
-        <converters:IntZeroReverseToVisibilityCollapsedConverter x:Key="IntZeroReverseToVisibilityCollapsedConverter" />
+        <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
@@ -118,7 +118,7 @@
                     </Grid>
                     <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Hosts}" />
                     <ScrollViewer Grid.Row="3" Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Auto">
-                        <ListView ItemsSource="{Binding Hosts}" SelectedItem="{Binding SelectedHost}" Visibility="{Binding Hosts.Count, Converter={StaticResource IntZeroReverseToVisibilityCollapsedConverter}}" Background="Transparent" BorderThickness="0" SelectionMode="Single">
+                        <ListView ItemsSource="{Binding Hosts}" SelectedItem="{Binding SelectedHost}" Visibility="{Binding Hosts.Count, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}" Background="Transparent" BorderThickness="0" SelectionMode="Single">
                             <ListView.ContextMenu>
                                 <ContextMenu Opened="ContextMenu_Opened" MinWidth="150">
                                     <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">

@@ -68,7 +68,7 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
             {
                 // Update rate limit values.
                 if (!UpdateRateLimit(response.Headers))
-                    return new IPGeolocationResult(hasError: true, "Could not extract rate limit value from http header. Try again in a few seconds...");
+                    return new IPGeolocationResult(hasError: true, "The rate limit value could not be extracted from the http header. The request was probably corrupted. Try again in a few seconds.");
 
                 var json = await response.Content.ReadAsStringAsync();
                 var info = JsonConvert.DeserializeObject<IPGeolocationInfo>(json);

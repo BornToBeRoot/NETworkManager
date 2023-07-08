@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace NETworkManager.Converters;
 
-public sealed class IntZeroReverseToVisibilityCollapsedConverter : IValueConverter
+public sealed class IntNotZeroToVisibilityCollapsedConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {

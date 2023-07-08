@@ -23,7 +23,7 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:DiscoveryProtocolToStringConverter x:Key="DiscoveryProtocolToStringConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
-        <converters:IntZeroReverseToVisibilityCollapsedConverter x:Key="IntZeroReverseToVisibilityCollapsedConverter" />
+        <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:StringNullOrEmptyToStringConverter x:Key="StringNullOrEmptyToStringConverter" />        
     </UserControl.Resources>
     <TabControl Style="{StaticResource DefaultTabControl}">

@@ -1564,6 +1564,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Check your network connection and try again in a few seconds. ähnelt.
+        /// </summary>
+        public static string CheckNetworkConnectionTryAgainMessage {
+            get {
+                return ResourceManager.GetString("CheckNetworkConnectionTryAgainMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Check public IP address ähnelt.
         /// </summary>
         public static string CheckPublicIPAddress {
@@ -4381,6 +4390,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die HTTP status code ähnelt.
+        /// </summary>
+        public static string HTTPStatusCode {
+            get {
+                return ResourceManager.GetString("HTTPStatusCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die ICMPv4 ähnelt.
         /// </summary>
         public static string ICMPv4 {
@@ -4539,6 +4557,16 @@ namespace NETworkManager.Localization.Resources {
         public static string IPAddressToDetectLocalIPAddressBasedOnRouting {
             get {
                 return ResourceManager.GetString("IPAddressToDetectLocalIPAddressBasedOnRouting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ip-api.com rate limit reached (too many requests from your network)!
+        ///Try again in a few seconds. ähnelt.
+        /// </summary>
+        public static string IPApiRateLimitMessage {
+            get {
+                return ResourceManager.GetString("IPApiRateLimitMessage", resourceCulture);
             }
         }
         

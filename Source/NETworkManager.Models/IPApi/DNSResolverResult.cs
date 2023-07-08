@@ -23,7 +23,7 @@ public class DNSResolverResult
     /// <summary>
     /// Error code if the DNS resolver information retrieval has failed.
     /// </summary>
-    public int ErrorCode { get; set; } = -1;
+    public int ErrorCode { get; set; } = 0;
 
     /// <summary>
     /// Creates a new instance of <see cref="DNSResolverResult"/> with the DNS resolver information.

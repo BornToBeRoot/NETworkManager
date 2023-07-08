@@ -75,13 +75,15 @@ public class IPApiDNSResolverViewModel : ViewModelBase
     #region Methods
     public void Check()
     {
-        Debug.WriteLine("Check dns api....");
-
         CheckAsync().ConfigureAwait(false);
     }
 
     private async Task CheckAsync()
     {
+        // Check is disabled via settings
+        if (!CheckIPDNSApiEnabled)
+            return;
+
         // Don't check multiple times if already running
         if (IsChecking)
             return;
@@ -93,6 +95,8 @@ public class IPApiDNSResolverViewModel : ViewModelBase
         await Task.Delay(2000);
 
         Result = await DNSResolverService.GetInstance().GetDNSResolverAsync();
+
+        Debug.WriteLine(Result);
 
         IsChecking = false;
     }

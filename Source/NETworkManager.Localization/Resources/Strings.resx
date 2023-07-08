@@ -3648,4 +3648,14 @@ URL: http://ip-api.com/</value>
   <data name="CheckingIPGeolocationDots" xml:space="preserve">
     <value>Checking IP geolocation...</value>
   </data>
+  <data name="CheckNetworkConnectionTryAgainMessage" xml:space="preserve">
+    <value>Check your network connection and try again in a few seconds.</value>
+  </data>
+  <data name="IPApiRateLimitMessage" xml:space="preserve">
+    <value>ip-api.com rate limit reached (too many requests from your network)!
+Try again in a few seconds.</value>
+  </data>
+  <data name="HTTPStatusCode" xml:space="preserve">
+    <value>HTTP status code</value>
+  </data>
 </root>

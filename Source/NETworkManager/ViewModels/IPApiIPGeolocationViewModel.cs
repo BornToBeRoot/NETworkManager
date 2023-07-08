@@ -79,6 +79,10 @@ public class IPApiIPGeolocationViewModel : ViewModelBase
 
     private async Task CheckAsync()
     {
+        // Check is disabled via settings
+        if (!CheckIPGeoApiEnabled)
+            return;
+
         // Don't check multiple times if already running
         if (IsChecking)
             return;

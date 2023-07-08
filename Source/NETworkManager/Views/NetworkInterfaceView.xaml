@@ -31,7 +31,7 @@
         <converters:BandwidthBytesWithSizeConverter x:Key="BandwidthBytesWithSizeConverter" />
         <converters:IPAddressArrayToStringConverter x:Key="IPAddressArrayToStringConverter" />
         <converters:IPAddressSubnetmaskTupleArrayToStringConverter x:Key="IPAddressSubnetmaskTupleArrayToStringConverter" />
-        <converters:IntZeroReverseToVisibilityCollapsedConverter x:Key="IntZeroReverseToVisibilityCollapsedConverter" />
+        <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
         <converters:StringNullOrEmptyToBoolConverter x:Key="StringNullOrEmptyToBoolConverter" />
         <converters:OperationalStatusToStringConverter x:Key="OperationalStatusToStringConverter" />
@@ -39,7 +39,7 @@
         <converters:ValidateNetworkInterfaceConfigConverter x:Key="ValidateNetworkInterfaceConfigConverter" />
     </UserControl.Resources>
     <Grid>
-        <Grid Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroReverseToVisibilityCollapsedConverter}}">
+        <Grid Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
