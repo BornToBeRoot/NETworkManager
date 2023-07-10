@@ -17,7 +17,7 @@ public class DNSResolverService : SingletonBase<DNSResolverService>
     /// <summary>
     /// Base URL fo the edns.ip-api.
     /// </summary>
-    private const string _baseURL = "https://edns.ip-api.com/json";
+    private const string _baseURL = "http://edns.ip-api.com/json";
 
     /// <summary>
     /// Gets the IP DNS details from the API asynchronously.
