@@ -1940,7 +1940,7 @@ Der Wert 0 deaktiviert diese Funktion.
   <data name="FirstRunMessage" xml:space="preserve">
     <value>Vielen Dank, dass Sie NETworkManager verwenden!
 
-Um zusätzliche Features anbieten zu können, werden Dienste im Internet verwendet, die nicht von mir betrieben werden. Diese können im Bereich Datenschutz abgewählt werden. Es werden zu keinem Zeitpunkt Daten an mich übermittelt.</value>
+Wenn Sie dieses Tool mögen, hinterlassen Sie bitte einen Star auf GitHub und empfehlen Sie es weiter.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Beim Programmstart wird im Hintergrund geprüft, ob eine neue Programmversion auf GitHub verfügbar ist.
@@ -2619,7 +2619,7 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="Accent_Yellow" xml:space="preserve">
     <value>Gelb</value>
   </data>
-  <data name="Accen_Steel" xml:space="preserve">
+  <data name="Accent_Steel" xml:space="preserve">
     <value>Stahl</value>
   </data>
   <data name="ProfileViewName_General" xml:space="preserve">
@@ -2755,9 +2755,13 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Profil konnte nicht geladen werden!</value>
   </data>
   <data name="ProfileCouldNotBeLoadedMessage" xml:space="preserve">
-    <value>Wenn dies nach einem Update passiert ist, müssen Sie die Profile möglicherweise auf eine neuere Version migrieren. Wenn Sie auf "Migrieren" klicken, öffnet sich ein PowerShell-Fenster mit dem Migrationsskript. Überprüfen Sie den Pfad und drücken Sie die Eingabetaste.
+    <value>Die Profildatei konnte nicht geladen werden und ist möglicherweise beschädigt. Sie können versuchen, die Datei aus einer Sicherungskopie wiederherzustellen oder sie zu löschen.
 
-Ansonsten kann das Profil beschädigt sein und Sie können das Problem auf GitHub melden.</value>
+Wenn dies unerwartet oder nach einem Update auftritt, melden Sie den Fehler bitte auf GitHub.
+
+
+Fehlermeldung:
+"{0}"</value>
   </data>
   <data name="EditGroupDots" xml:space="preserve">
     <value>Gruppe bearbeiten...</value>
@@ -3555,5 +3559,103 @@ Wenn der Wert zu hoch ist, können Leistungsprobleme auftreten.
   </data>
   <data name="HelpMessage_PuTTYUsername" xml:space="preserve">
     <value>Benutzername, der an die PuTTY-Sitzung übergeben wird. Nur verfügbar, wenn der Modus "SSH", "Telnet" oder "Rlogin" ist.</value>
+  </data>
+  <data name="ASN" xml:space="preserve">
+    <value>ASN</value>
+  </data>
+  <data name="ASName" xml:space="preserve">
+    <value>AS-Name</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>Stadt</value>
+  </data>
+  <data name="Continent" xml:space="preserve">
+    <value>Kontinent</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Land</value>
+  </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Währung</value>
+  </data>
+  <data name="District" xml:space="preserve">
+    <value>Landkreis</value>
+  </data>
+  <data name="DNSResolver" xml:space="preserve">
+    <value>DNS-Resolver</value>
+  </data>
+  <data name="EDNS" xml:space="preserve">
+    <value>EDNS</value>
+  </data>
+  <data name="Geolocation" xml:space="preserve">
+    <value>Geolokation</value>
+  </data>
+  <data name="Hosting" xml:space="preserve">
+    <value>Hosting</value>
+  </data>
+  <data name="IPGeolocation" xml:space="preserve">
+    <value>IP-Geolokation</value>
+  </data>
+  <data name="ISP" xml:space="preserve">
+    <value>ISP</value>
+  </data>
+  <data name="Latitude" xml:space="preserve">
+    <value>Breitengrad</value>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>Längengrad</value>
+  </data>
+  <data name="Mobile" xml:space="preserve">
+    <value>Mobil</value>
+  </data>
+  <data name="Organization" xml:space="preserve">
+    <value>Organisation</value>
+  </data>
+  <data name="PTRRecord" xml:space="preserve">
+    <value>PTR-Record</value>
+  </data>
+  <data name="Timezone" xml:space="preserve">
+    <value>Zeitzone</value>
+  </data>
+  <data name="ZipCode" xml:space="preserve">
+    <value>Postleitzahl</value>
+  </data>
+  <data name="ExternalService_ip_api_Description" xml:space="preserve">
+    <value>IP Geolocation API - Fast, accurate, reliable</value>
+  </data>
+  <data name="CheckDNSResolver" xml:space="preserve">
+    <value>Prüfe DNS-Resolver</value>
+  </data>
+  <data name="CheckIPGeolocation" xml:space="preserve">
+    <value>Prüfe IP-Geolokation</value>
+  </data>
+  <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
+    <value>Der DNS-Resolver wird über ip-api.com ermittelt.
+
+URL: http://edns.ip-api.com/</value>
+  </data>
+  <data name="HelpMessage_CheckIPGeolocation" xml:space="preserve">
+    <value>Die IP-Geolokation wird über ip-api.com ermittelt.
+
+URL: http://ip-api.com/</value>
+  </data>
+  <data name="FirstRunPrivacyMessage" xml:space="preserve">
+    <value>Um zusätzliche Features bereitzustellen, werden Dienste von Drittanbietern genutzt, die nicht von mir betrieben werden. Sie können diese unten abwählen. Es werden zu keinem Zeitpunkt Daten an mich übermittelt.</value>
+  </data>
+  <data name="CheckingDNSResolverDots" xml:space="preserve">
+    <value>Prüfe DNS-Resolver...</value>
+  </data>
+  <data name="CheckingIPGeolocationDots" xml:space="preserve">
+    <value>Prüfe IP-Geolokation...</value>
+  </data>
+  <data name="CheckNetworkConnectionTryAgainMessage" xml:space="preserve">
+    <value>Überprüfen Sie Ihre Netzwerkverbindung und versuchen Sie es in einigen Sekunden erneut.</value>
+  </data>
+  <data name="IPApiRateLimitMessage" xml:space="preserve">
+    <value>ip-api.com Ratelimit erreicht (zu viele Anfragen aus Ihrem Netzwerk)!
+Versuchen Sie es in einigen Sekunden erneut.</value>
+  </data>
+  <data name="HTTPStatusCode" xml:space="preserve">
+    <value>HTTP-Statuscode</value>
   </data>
 </root>
