@@ -3717,7 +3717,7 @@ Disponibile solo se la modalità è "SSH", "Telnet" o "Rlogin".</value>
   <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
     <value>Il risoutore DNS viene determinato tramite ip-api.com.
 
-URL: https://edns.ip-api.com/</value>
+URL: http://edns.ip-api.com/</value>
   </data>
   <data name="HelpMessage_CheckIPGeolocation" xml:space="preserve">
     <value>La geolocalizzazione IP viene determinata tramite ip-api.com.
