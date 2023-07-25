@@ -1934,9 +1934,7 @@ Spremembe te vrednosti bodo uveljavljene po ponovnem zagonu aplikacije.</value>
     <value>Preveri javni naslov IP</value>
   </data>
   <data name="FirstRunMessage" xml:space="preserve">
-    <value>Hvala, ker uporabljate NETworkManager! 
-
-Za zagotavljanje dodatnih funkcij se uporabljajo storitve na internetu, ki jih ne upravljam jaz. Izbiro lahko prekličete spodaj v razdelku o zasebnosti. V nobenem trenutku se mi ne posredujejo nobeni podatki.</value>
+    <value>Hvala, ker uporabljate NETworkManager! Če vam je to orodje všeč, pustite zvezdico na GitHubu in ga priporočite drugim.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Ob zagonu programa ta v ozadju preveri, če je na GitHubu na voljo nova različica programa.
@@ -2615,7 +2613,7 @@ $$hostname$$--&gt;Ime gostitelja</value>
   <data name="Accent_Yellow" xml:space="preserve">
     <value>Rumena</value>
   </data>
-  <data name="Accen_Steel" xml:space="preserve">
+  <data name="Accent_Steel" xml:space="preserve">
     <value>Jeklo</value>
   </data>
   <data name="ProfileViewName_General" xml:space="preserve">
@@ -3544,5 +3542,98 @@ V zgornjem desnem kotu kliknite na gumb za Pomoč/Dokumentacijo (levo od gumba z
   </data>
   <data name="HelpMessage_PuTTYUsername" xml:space="preserve">
     <value>Uporabniško ime, ki bo posredovano v sejo PuTTY. Na voljo samo, če je način "SSH", "Telnet" ali "Rlogin".</value>
+  </data>
+  <data name="ASN" xml:space="preserve">
+    <value>ASN</value>
+  </data>
+  <data name="ASName" xml:space="preserve">
+    <value>Ime AS</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>Mesto</value>
+  </data>
+  <data name="Continent" xml:space="preserve">
+    <value>Celina</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Država</value>
+  </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Valuta</value>
+  </data>
+  <data name="District" xml:space="preserve">
+    <value>Okraj</value>
+  </data>
+  <data name="DNSResolver" xml:space="preserve">
+    <value>Razreševalec DNS</value>
+  </data>
+  <data name="EDNS" xml:space="preserve">
+    <value>EDNS</value>
+  </data>
+  <data name="Geolocation" xml:space="preserve">
+    <value>Geolokacija</value>
+  </data>
+  <data name="Hosting" xml:space="preserve">
+    <value>Gostovanje</value>
+  </data>
+  <data name="IPGeolocation" xml:space="preserve">
+    <value>Geolokacija IP</value>
+  </data>
+  <data name="ISP" xml:space="preserve">
+    <value>Ponudnik internetnih storitev</value>
+  </data>
+  <data name="Latitude" xml:space="preserve">
+    <value>Zemljepisna širina</value>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>Zemljepisna dolžina</value>
+  </data>
+  <data name="Mobile" xml:space="preserve">
+    <value>Mobilna</value>
+  </data>
+  <data name="Organization" xml:space="preserve">
+    <value>Organizacija</value>
+  </data>
+  <data name="PTRRecord" xml:space="preserve">
+    <value>Zapis PTR</value>
+  </data>
+  <data name="Timezone" xml:space="preserve">
+    <value>Časovni pas</value>
+  </data>
+  <data name="ZipCode" xml:space="preserve">
+    <value>ZIP</value>
+  </data>
+  <data name="ExternalService_ip_api_Description" xml:space="preserve">
+    <value>API Geolokacija IP - Hitro, natančno, zanesljivo</value>
+  </data>
+  <data name="CheckDNSResolver" xml:space="preserve">
+    <value>Preveri razreševalnik DNS</value>
+  </data>
+  <data name="CheckIPGeolocation" xml:space="preserve">
+    <value>Preveri geolokacijo IP</value>
+  </data>
+  <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
+    <value>Reševalec DNS se določi prek ip-api.com. URL: http://edns.ip-api.com/</value>
+  </data>
+  <data name="HelpMessage_CheckIPGeolocation" xml:space="preserve">
+    <value>Geolokacija IP se določi preko ip-api.com. URL: http://ip-api.com/</value>
+  </data>
+  <data name="FirstRunPrivacyMessage" xml:space="preserve">
+    <value>Za zagotavljanje dodatnih funkcij se uporabljajo storitve tretjih oseb, ki jih ne upravljam jaz. Spodaj jih lahko prekličete. V nobenem trenutku se mi ne prenesejo nobeni podatki.</value>
+  </data>
+  <data name="CheckingDNSResolverDots" xml:space="preserve">
+    <value>Preverjanje razreševalnika DNS...</value>
+  </data>
+  <data name="CheckingIPGeolocationDots" xml:space="preserve">
+    <value>Preverjanje geolokacije IP</value>
+  </data>
+  <data name="CheckNetworkConnectionTryAgainMessage" xml:space="preserve">
+    <value>Preverite omrežno povezavo in poskusite znova čez nekaj sekund.</value>
+  </data>
+  <data name="IPApiRateLimitMessage" xml:space="preserve">
+    <value>Dosežena je omejitev hitrosti ip-api.com (preveč zahtev iz vašega omrežja)! Poskusite ponovno čez nekaj sekund.</value>
+  </data>
+  <data name="HTTPStatusCode" xml:space="preserve">
+    <value>Koda stanja HTTP</value>
   </data>
 </root>
