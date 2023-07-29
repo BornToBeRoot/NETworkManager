@@ -48,8 +48,7 @@
 		<None Remove="SplashScreen.png" />
 		<None Include="..\.editorconfig" Link=".editorconfig" />
 		<None Include="NETworkManager.ico">
-			<Pack>True</Pack>
-			<PackagePath></PackagePath>
+			<Pack>True</Pack>			
 		</None>
 	</ItemGroup>
 	<!-- Target 6.0.0 for compatibility https://github.com/dotnet/core/issues/7176 -->
@@ -78,10 +77,10 @@
 		<PackageReference Include="Microsoft.PowerShell.SDK" Version="7.2.13" />
 		<PackageReference Include="nulastudio.NetBeauty" Version="2.1.4-beta.1" />
 		<Reference Include="AxMSTSCLib">
-			<HintPath>$(TargetDir)\AxMSTSCLib.dll</HintPath>
+			<HintPath>$(TargetDir)\lib\AxMSTSCLib.dll</HintPath>
 		</Reference>
 		<Reference Include="MSTSCLib">
-			<HintPath>$(TargetDir)\MSTSCLib.dll</HintPath>
+			<HintPath>$(TargetDir)\lib\MSTSCLib.dll</HintPath>
 		</Reference>
 		<Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
 	</ItemGroup>

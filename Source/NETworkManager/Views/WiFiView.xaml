@@ -13,6 +13,7 @@
              xmlns:controls2="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:loadingIndicators="clr-namespace:LoadingIndicators.WPF;assembly=LoadingIndicators.WPF"
              xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             xmlns:utilities="clr-namespace:NETworkManager.Utilities;assembly=NETworkManager.Utilities"
              dialogs:DialogParticipation.Register="{Binding}"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:WiFiViewModel}">
@@ -558,7 +559,7 @@
                     </CheckBox>
                     <ComboBox ItemsSource="{Binding AutoRefreshTimes}" SelectedItem="{Binding SelectedAutoRefreshTime}" MinWidth="150">
                         <ComboBox.ItemTemplate>
-                            <DataTemplate DataType="utilities:AutoRefreshTimeInfo">
+                            <DataTemplate DataType="{x:Type utilities:AutoRefreshTimeInfo}">
                                 <TextBlock>
                                     <TextBlock.Text>
                                         <MultiBinding StringFormat="{}{0} {1}">

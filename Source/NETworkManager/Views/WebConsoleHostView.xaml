@@ -12,7 +12,8 @@
         xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
         xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
         xmlns:resources="clr-namespace:NETworkManager.Properties"
-        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"             
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:controls="clr-namespace:NETworkManager.Controls"
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:WebConsoleHostViewModel}">
     <UserControl.Resources>
@@ -68,7 +69,7 @@
                     </Grid>
                 </dragablz:TabablzControl.HeaderSuffixContent>
                 <dragablz:TabablzControl.HeaderItemTemplate>
-                    <DataTemplate DataType="controls:DragablzTabItem">
+                    <DataTemplate DataType="{x:Type controls:DragablzTabItem}">
                         <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0,0,1,0">
                             <Grid Height="32">
                                 <Grid.ContextMenu>
