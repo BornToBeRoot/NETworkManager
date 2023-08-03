@@ -5,14 +5,17 @@ param(
     [String]$OutPath
 )
 
-# VS prebuild event call: PowerShell.exe -ExecutionPolicy Bypass -NoProfile -File "$(ProjectDir)..\..\Scripts\PreBuildEventCommandLine.ps1" "$(TargetDir)"
+# Visual Studio pre build event:
+# PowerShell.exe -ExecutionPolicy Bypass -NoProfile -File "$(ProjectDir)..\..\Scripts\PreBuildEventCommandLine.ps1" "$(TargetDir)"
 
-# Fix wrong path
-# Quotation marks are required if a blank is in the path... If there is no blank space in the path, a quote will be add to the end...
+# Fix wrong path (if there is no blank in the path, a quote will be added to the end...)
 if(-not($OutPath.StartsWith('"')))
 {
     $OutPath = $OutPath.TrimEnd('"')
 }
+
+# NetBeauty will move all dlls to the lib folder
+$OutPath = $OutPath + "\lib"
 
 ################################################
 ### Generate MSTSCLib.dll and AxMSTSCLib.dll ###
@@ -26,12 +29,12 @@ if((Test-Path -Path "$OutPath\MSTSCLib.dll") -and (Test-Path -Path "$OutPath\AxM
 }
 
 # Test if files are in the lib folder (NetBeauty) and copy them from there because this is faster than re-creating them...
-if((Test-Path -Path "$OutPath\lib\MSTSCLib.dll") -and (Test-Path -Path "$OutPath\lib\AxMSTSCLib.dll")) {
-    Write-Host "MSTSCLib.dll and AxMSTSCLib.dll exist in lib folder! Copy them..."
-    Copy-Item -Path "$OutPath\lib\MSTSCLib.dll" -Destination "$OutPath\MSTSCLib.dll" -Force
-    Copy-Item -Path "$OutPath\lib\AxMSTSCLib.dll" -Destination "$OutPath\AxMSTSCLib.dll" -Force
-    return
-}
+#if((Test-Path -Path "$OutPath\lib\MSTSCLib.dll") -and (Test-Path -Path "$OutPath\lib\AxMSTSCLib.dll")) {
+#    Write-Host "MSTSCLib.dll and AxMSTSCLib.dll exist in lib folder! Copy them..."
+#    Copy-Item -Path "$OutPath\lib\MSTSCLib.dll" -Destination "$OutPath\MSTSCLib.dll" -Force
+#    Copy-Item -Path "$OutPath\lib\AxMSTSCLib.dll" -Destination "$OutPath\AxMSTSCLib.dll" -Force
+#    return
+#}
 
 # Detect x86 or x64
 $ProgramFiles_Path = ${Env:ProgramFiles(x86)}
