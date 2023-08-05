@@ -1,3 +1,6 @@
+# Visual Studio pre build event:
+# PowerShell.exe -ExecutionPolicy Bypass -NoProfile -File "$(ProjectDir)..\..\Scripts\PreBuildEventCommandLine.ps1" "$(TargetDir)"
+
 param(
     [Parameter(
         Position=0,
@@ -5,17 +8,17 @@ param(
     [String]$OutPath
 )
 
-# Visual Studio pre build event:
-# PowerShell.exe -ExecutionPolicy Bypass -NoProfile -File "$(ProjectDir)..\..\Scripts\PreBuildEventCommandLine.ps1" "$(TargetDir)"
-
 # Fix wrong path (if there is no blank in the path, a quote will be added to the end...)
 if(-not($OutPath.StartsWith('"')))
 {
     $OutPath = $OutPath.TrimEnd('"')
 }
 
-# NetBeauty will move all dlls to the lib folder
+# NetBeauty will move all dependencies to the lib folder
 $OutPath = $OutPath + "\lib"
+
+# Create folder
+New-Item -ItemType Directory -Path $OutPath
 
 ################################################
 ### Generate MSTSCLib.dll and AxMSTSCLib.dll ###
@@ -27,14 +30,6 @@ if((Test-Path -Path "$OutPath\MSTSCLib.dll") -and (Test-Path -Path "$OutPath\AxM
     Write-Host "MSTSCLib.dll and AxMSTSCLib.dll exist! Continue..."
     return
 }
-
-# Test if files are in the lib folder (NetBeauty) and copy them from there because this is faster than re-creating them...
-#if((Test-Path -Path "$OutPath\lib\MSTSCLib.dll") -and (Test-Path -Path "$OutPath\lib\AxMSTSCLib.dll")) {
-#    Write-Host "MSTSCLib.dll and AxMSTSCLib.dll exist in lib folder! Copy them..."
-#    Copy-Item -Path "$OutPath\lib\MSTSCLib.dll" -Destination "$OutPath\MSTSCLib.dll" -Force
-#    Copy-Item -Path "$OutPath\lib\AxMSTSCLib.dll" -Destination "$OutPath\AxMSTSCLib.dll" -Force
-#    return
-#}
 
 # Detect x86 or x64
 $ProgramFiles_Path = ${Env:ProgramFiles(x86)}
@@ -51,7 +46,7 @@ $IlasmPath = ((Get-ChildItem -Path "$($Env:windir)\Microsoft.NET\Framework\" -Re
 
 if([String]::IsNullOrEmpty($AximpPath) -or [String]::IsNullOrEmpty($IldasmPath) -or [String]::IsNullOrEmpty($IlasmPath))
 {
-    Write-Host "Could not find sdk tools:`naximp.exe`t$AximpPath`nildasm.exe`t$IldasmPath`nilasm.exe`t$IlasmPath"
+    Write-Host "Could not find sdk tools:`naximp.exe`t=>`t$AximpPath`nildasm.exe`t=>`t$IldasmPath`nilasm.exe`t=>`t$IlasmPath"
     return
 }
 
@@ -81,5 +76,6 @@ Write-Host "Replace ""[in] int32& plKeyData"" with ""[in] int32[] marshal([+0]) 
 
 Start-Process -FilePath $IlasmPath -ArgumentList "/dll ""$MSTSCLibILPath"" /output:""$MSTSCLibDllPath""" -Wait -NoNewWindow
 
+Write-Host "Remove temporary files..."
 Remove-Item -Path "$MSTSCLibILPath"
 Remove-Item -Path "$OutPath\MSTSCLib.res"
