@@ -54,6 +54,5 @@
             <mah:ProgressRing Grid.Row="0" Grid.RowSpan="2" Height="50" Width="50" />
             <TextBlock Grid.Row="3" Text="{x:Static localization:Strings.ConnectingDots}" Style="{StaticResource MessageTextBlock}" />
         </Grid>
-
     </Grid>
 </local:UserControlBase>

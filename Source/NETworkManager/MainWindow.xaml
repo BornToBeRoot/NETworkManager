@@ -12,6 +12,7 @@
         xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"                     
         xmlns:resources="clr-namespace:NETworkManager.Properties"
         xmlns:networkManager="clr-namespace:NETworkManager"
+        xmlns:models="clr-namespace:NETworkManager.Models;assembly=NETworkManager.Models"
         mc:Ignorable="d"
         Style="{DynamicResource DefaultWindow}" 
         MinWidth="800" Width="1024" Height="768" MinHeight="600" 
@@ -409,7 +410,7 @@
                     <ScrollViewer Grid.Row="1" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback" Style="{StaticResource FadeOutScrollViewer}">
                         <ListView x:Name="ListViewApplication" ItemsSource="{Binding Applications}" SelectedItem="{Binding SelectedApplication, Mode=TwoWay}" SelectionMode="Single" BorderThickness="0">
                             <ListView.ItemTemplate>
-                                <DataTemplate DataType="networkManager:ApplicationViewInfo">
+                                <DataTemplate DataType="{x:Type models:ApplicationInfo}">
                                     <Grid Height="48">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="48" />
