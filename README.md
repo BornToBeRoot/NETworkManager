@@ -114,19 +114,43 @@ You can build the application like any other .NET Core / WPF application on Wind
 
    - Download the additional languages from the [Inno Setup repository](https://github.com/jrsoftware/issrc/blob/main/Files/Languages/Unofficial/) and copy the following files to `%ProgramFiles%\Inno Setup 6\Languages`: `ChineseSimplified.isl`, `ChineseTraditional.isl`, `Hungarian.isl`, `Korean.isl`
 
-3. Clone or download the repository:
+   > **NOTE**: The languages files must be downloaded or cloned so that the encoding of the file is not changed
+   > (e.g. Chinese should be `UTF-8-BOM`).
 
-```
+3. Clone the repository and all submodules:
+
+```PowerShell
+# Clone the repository
 git clone https://github.com/BornToBeRoot/NETworkManager
+
+# Change directory
+cd NETworkManager
+
+# Clone the submodules
+git submodule update --init --recursive
 ```
 
 4. Open the `Source\NETworkManager.sln` with Visual Studio to debug or build the solution.
 
-Alternatively the `build.ps1` script can be used to create the binaries.
-
-```PowerShell
-git clone https://github.com/BornToBeRoot/NETworkManager; Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; .\NETworkManager\build.ps1
-```
+> **NOTE** If you have installed the requirements from step 1 (and optionally step 2), you can also directly build the
+> binaries with PowerShell 7 or later:
+>
+> ```PowerShell
+> # Clone the repository
+> git clone https://github.com/BornToBeRoot/NETworkManager
+>
+> # Change directory
+> cd NETworkManager
+>
+> # Clone the submodules
+> git submodule update --init --recursive
+>
+> # Allow the execution of the build script
+> Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+>
+> # Build the binaries
+> & .\build.ps1
+> ```
 
 ## 📝 License
 
