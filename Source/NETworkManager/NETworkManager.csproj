@@ -59,7 +59,7 @@
 		<PackageReference Include="AirspaceFixer" Version="1.0.6" />
 		<PackageReference Include="AWSSDK.EC2" Version="3.7.207" />
 		<PackageReference Include="DnsClient" Version="1.7.0" />
-		<PackageReference Include="IPNetwork2" Version="2.6.601" />
+		<PackageReference Include="IPNetwork2" Version="2.6.605" />
 		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.2" />
 		<PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
 		<PackageReference Include="LoadingIndicators.WPF" Version="0.0.1" />
