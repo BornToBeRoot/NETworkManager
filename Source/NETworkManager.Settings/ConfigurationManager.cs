@@ -43,23 +43,17 @@ public static class ConfigurationManager
     /// </summary>
     public static void OnDialogOpen()
     {
-        if (Current.CurrentApplication == Models.ApplicationName.RemoteDesktop && Current.RemoteDesktopHasTabs)
-            Current.FixAirspace = true;
-
-        if (Current.CurrentApplication == Models.ApplicationName.PowerShell && Current.PowerShellHasTabs)
-            Current.FixAirspace = true;
-
-        if (Current.CurrentApplication == Models.ApplicationName.PuTTY && Current.PuTTYHasTabs)
-            Current.FixAirspace = true;
-
-        if (Current.CurrentApplication == Models.ApplicationName.AWSSessionManager && Current.AWSSessionManagerHasTabs)
-            Current.FixAirspace = true;
-
-        if (Current.CurrentApplication == Models.ApplicationName.TigerVNC && Current.TigerVNCHasTabs)
-            Current.FixAirspace = true;
-
-        if (Current.CurrentApplication == Models.ApplicationName.WebConsole && Current.WebConsoleHasTabs)
-            Current.FixAirspace = true;
+        switch (Current.CurrentApplication)
+        {
+            case Models.ApplicationName.RemoteDesktop when Current.RemoteDesktopHasTabs:
+            case Models.ApplicationName.PowerShell when Current.PowerShellHasTabs:
+            case Models.ApplicationName.PuTTY when Current.PuTTYHasTabs:
+            case Models.ApplicationName.AWSSessionManager when Current.AWSSessionManagerHasTabs:
+            case Models.ApplicationName.TigerVNC when Current.TigerVNCHasTabs:
+            case Models.ApplicationName.WebConsole when Current.WebConsoleHasTabs:
+                Current.FixAirspace = true;
+                break;
+        }
     }
 
     /// <summary>

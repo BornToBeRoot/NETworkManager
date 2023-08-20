@@ -5,8 +5,8 @@ namespace NETworkManager.Settings;
 
 public static class CommandLineManager
 {
-    public const string ParameterIdentifier = "--";
-    public const char ValueSplitIdentifier = ':';
+    private const string ParameterIdentifier = "--";
+    private const char ValueSplitIdentifier = ':';
 
     // Public 
     public static string ParameterHelp => $"{ParameterIdentifier}help";
@@ -46,7 +46,7 @@ public static class CommandLineManager
                 } // Restart
                 else if (param[0].Equals(ParameterRestartPid, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    if (int.TryParse(param[1], out int restartPid))
+                    if (int.TryParse(param[1], out var restartPid))
                     {
                         Current.RestartPid = restartPid;
                     }

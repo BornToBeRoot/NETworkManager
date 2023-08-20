@@ -47,7 +47,7 @@ public class IPScannerHostViewModel : ViewModelBase, IProfileManager
     }
 
     #region Profiles
-    public ICollectionView _profiles;
+    private ICollectionView _profiles;
     public ICollectionView Profiles
     {
         get => _profiles;
