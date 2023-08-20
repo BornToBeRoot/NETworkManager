@@ -29,7 +29,7 @@ public class IPGeolocationResult
     /// <summary>
     /// Error code if the IP geolocation information retrieval has failed.
     /// </summary>
-    public int ErrorCode { get; set; } = 0;
+    public int ErrorCode { get; set; }
 
     /// <summary>
     /// Creates a new instance of <see cref="IPGeolocationResult"/> with the IP geolocation information.

@@ -8,7 +8,7 @@ public class DNSResolverResult
     /// <summary>
     /// DNS resolver information retrieved from the API.
     /// </summary>
-    public DNSResolverInfo Info { get; set; }
+    public DNSResolverInfo Info { get; }
 
     /// <summary>
     /// Indicates if the DNS resolver information retrieval has failed.
@@ -23,7 +23,7 @@ public class DNSResolverResult
     /// <summary>
     /// Error code if the DNS resolver information retrieval has failed.
     /// </summary>
-    public int ErrorCode { get; set; } = 0;
+    public int ErrorCode { get; set; }
 
     /// <summary>
     /// Creates a new instance of <see cref="DNSResolverResult"/> with the DNS resolver information.
