@@ -14,55 +14,55 @@ namespace NETworkManager.Models.IPApi;
 /// </summary>
 public class IPGeolocationService : SingletonBase<IPGeolocationService>
 {
-    private readonly HttpClient client = new();
+    private readonly HttpClient _client = new();
 
     /// <summary>
     /// Base URL fo the ip-api free endpoint.
     /// </summary>
-    private const string _baseURL = "http://ip-api.com/json/";
+    private const string BaseUrl = "http://ip-api.com/json/";
 
     /// <summary>
     /// Fields to be returned by the API. See documentation for more details.
     /// </summary>
-    private const string _fields = "status,message,continent,continentCode,country,countryCode,region,regionName,city,district,zip,lat,lon,timezone,offset,currency,isp,org,as,asname,reverse,mobile,proxy,hosting,query";
+    private const string Fields = "status,message,continent,continentCode,country,countryCode,region,regionName,city,district,zip,lat,lon,timezone,offset,currency,isp,org,as,asname,reverse,mobile,proxy,hosting,query";
 
     /// <summary>
     /// Indicates whether we have reached the rate limit.
     /// </summary>
-    private bool _rateLimit_IsReached = false;
+    private bool _rateLimitIsReached;
 
     /// <summary>
     /// Remaining requests that can be processed until the rate limit window is reset.
     /// This value is updated by Header "X-Rl". Default is 45 requests.
     /// </summary>        
-    private int _rateLimit_RemainingRequests = 45;
+    private int _rateLimitRemainingRequests = 45;
 
     /// <summary>
     /// Remaining time in seconds until the rate limit window resets.
     /// This value is updated by Header "X-Ttl". Default is 60 seconds.
     /// </summary>
-    private int _rateLimit_RemainingTime = 60;
+    private int _rateLimitRemainingTime = 60;
 
     /// <summary>
     /// Last time the rate limit was reached.
     /// </summary>
-    private DateTime _rateLimit_LastReached = DateTime.MinValue;
+    private DateTime _rateLimitLastReached = DateTime.MinValue;
 
     /// <summary>
     /// Gets the IP geolocation details from the API asynchronously.
     /// </summary>
-    /// <returns>IP geolocation informations as <see cref="IPGeolocationResult"/>.</returns>
+    /// <returns>IP geolocation information's as <see cref="IPGeolocationResult"/>.</returns>
     public async Task<IPGeolocationResult> GetIPGeolocationAsync(string ipAddress = "")
     {
         if (IsInRateLimit())
             return new IPGeolocationResult(isRateLimitReached: true);
 
         // If the url is empty, the current IP address from which the request is made is used.
-        string url = $"{_baseURL}/{ipAddress}?fields={_fields}";
+        string url = $"{BaseUrl}/{ipAddress}?fields={Fields}";
 
         try
         {
-            var response = await client.GetAsync(url);
+            var response = await _client.GetAsync(url);
 
             if (response.IsSuccessStatusCode)
             {
@@ -78,10 +78,10 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
             else if ((int)response.StatusCode == 429)
             {
                 // We have already reached the rate limit (on the network)
-                _rateLimit_IsReached = true;
-                _rateLimit_RemainingTime = 60;
-                _rateLimit_RemainingRequests = 0;
-                _rateLimit_LastReached = DateTime.Now;
+                _rateLimitIsReached = true;
+                _rateLimitRemainingTime = 60;
+                _rateLimitRemainingRequests = 0;
+                _rateLimitLastReached = DateTime.Now;
 
                 return new IPGeolocationResult(isRateLimitReached: true);
             }
@@ -104,15 +104,15 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
     private bool IsInRateLimit()
     {
         // If the rate limit is not reached, return false.
-        if (!_rateLimit_IsReached)
+        if (!_rateLimitIsReached)
             return false;
 
         // The rate limit time window is reset when the remaining time is over.
-        DateTime lastReached = _rateLimit_LastReached;
+        var lastReached = _rateLimitLastReached;
 
-        if (lastReached.AddSeconds(_rateLimit_RemainingTime + 1) < DateTime.Now)
+        if (lastReached.AddSeconds(_rateLimitRemainingTime + 1) < DateTime.Now)
         {
-            _rateLimit_IsReached = false;
+            _rateLimitIsReached = false;
 
             return false;
         }
@@ -126,31 +126,31 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
     /// </summary>
     /// <param name="headers">Headers from the response.</param>
     /// <returns>True if the update was successful, false otherwise.</returns>
-    private bool UpdateRateLimit(HttpResponseHeaders headers)
+    private bool UpdateRateLimit(HttpHeaders headers)
     {
         // Parse header data
-        if (!headers.TryGetValues("X-Rl", out var x_rl))
+        if (!headers.TryGetValues("X-Rl", out var xRl))
             return false;
 
-        if (!int.TryParse(x_rl.ToArray()[0], out int remainingRequests))
+        if (!int.TryParse(xRl.ToArray()[0], out var remainingRequests))
             return false;
 
-        if (!headers.TryGetValues("X-Ttl", out var x_ttl))
+        if (!headers.TryGetValues("X-Ttl", values: out var xTtl))
             return false;
 
-        if (!int.TryParse(x_ttl.ToArray()[0], out var remainingTime))
+        if (!int.TryParse(xTtl.ToArray()[0], out var remainingTime))
             return false;
 
-        _rateLimit_RemainingTime = remainingTime;
-        _rateLimit_RemainingRequests = remainingRequests;
+        _rateLimitRemainingTime = remainingTime;
+        _rateLimitRemainingRequests = remainingRequests;
 
         // Only allow 40 requests... to prevent a 429 error if other
         // devices or tools on the network (e.g. another NETworkManager
-        // instance) doing requests agains ip-api.com.
-        if (_rateLimit_RemainingRequests < 5)
+        // instance) doing requests against ip-api.com.
+        if (_rateLimitRemainingRequests < 5)
         {
-            _rateLimit_IsReached = true;
-            _rateLimit_LastReached = DateTime.Now;
+            _rateLimitIsReached = true;
+            _rateLimitLastReached = DateTime.Now;
         }
 
         return true;

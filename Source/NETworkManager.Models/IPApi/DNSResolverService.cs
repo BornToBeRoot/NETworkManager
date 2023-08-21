@@ -12,22 +12,22 @@ namespace NETworkManager.Models.IPApi;
 /// </summary>
 public class DNSResolverService : SingletonBase<DNSResolverService>
 {
-    private readonly HttpClient client = new();
+    private readonly HttpClient _client = new();
 
     /// <summary>
     /// Base URL fo the edns.ip-api.
     /// </summary>
-    private const string _baseURL = "http://edns.ip-api.com/json";
+    private const string BaseUrl = "https://edns.ip-api.com/json";
 
     /// <summary>
     /// Gets the IP DNS details from the API asynchronously.
     /// </summary>
-    /// <returns>IP DNS informations as <see cref="DNSResolverResult"/>.</returns>
+    /// <returns>IP DNS information's as <see cref="DNSResolverResult"/>.</returns>
     public async Task<DNSResolverResult> GetDNSResolverAsync()
     {
         try
         {
-            var response = await client.GetAsync(_baseURL);
+            var response = await _client.GetAsync(BaseUrl);
 
             if (response.IsSuccessStatusCode)
             {
