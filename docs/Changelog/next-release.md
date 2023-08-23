@@ -38,6 +38,8 @@ New Feature
 
 - Network Interface
   - Add missing scrollviewer in configure tab [#2410](https://github.com/BornToBeRoot/NETworkManager/pull/2410){:target="\_blank"}
+- Profiles
+  - Prevent the application from crashing if a profile file cannot be loaded (profile management is then blocked) [#2464](https://github.com/BornToBeRoot/NETworkManager/pull/2464){:target="\_blank"}
 
 ## Other
 
