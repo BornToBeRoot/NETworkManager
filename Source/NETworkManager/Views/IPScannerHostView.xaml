@@ -364,7 +364,7 @@
                         <RowDefinition Height="10" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <ToggleButton Grid.Row="0" IsChecked="{Binding ExpandProfileView}" HorizontalAlignment="Left">
+                    <ToggleButton Grid.Column="0" Grid.Row="0" IsChecked="{Binding ExpandProfileView}" HorizontalAlignment="Left">
                         <ToggleButton.Style>
                             <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource MahApps.Styles.Button.Circle}">
                                 <Setter Property="Template">
@@ -392,7 +392,10 @@
                             </Rectangle.Style>
                         </Rectangle>
                     </ToggleButton>
-                    <TextBlock Grid.Row="2" Text="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=ProfileManagerErrorMessage}" Style="{StaticResource MessageTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,10" />
+                    <TextBlock Grid.Column="0" Grid.Row="2" 
+                               Text="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=ProfileManagerErrorMessage}" 
+                               Style="{StaticResource MessageTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                               Margin="0,0,0,10" />
                 </Grid>
             </Grid>
         </Expander>

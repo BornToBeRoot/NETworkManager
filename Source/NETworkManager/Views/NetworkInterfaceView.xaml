@@ -849,7 +849,7 @@
             <GridSplitter Grid.Column="1" Style="{StaticResource ProfileGridSplitter}" />
             <Expander Grid.Column="2" x:Name="ExpanderProfiles" Header="{x:Static localization:Strings.Profiles}" Style="{StaticResource ProfileExpander}" IsExpanded="{Binding ExpandProfileView}">
                 <Grid>
-                    <Grid Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType= {x:Type mah:MetroWindow}}, Path=DataContext.IsProfileFileLocked, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+                    <Grid Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsProfileManagerEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="10" />
@@ -981,7 +981,7 @@
                                                                         <ColumnDefinition Width="10" />
                                                                         <ColumnDefinition Width="Auto" />
                                                                     </Grid.ColumnDefinitions>
-                                                                    <Rectangle Grid.Column="0" Grid.ColumnSpan="4" Fill="Transparent" />
+                                                                    <Rectangle Grid.Column="0" Grid.ColumnSpan="3" Fill="Transparent" />
                                                                     <TextBlock Grid.Column="0" Text="{Binding (CollectionViewGroup.Name)}" Style="{DynamicResource ProfileGroupTextBlock}" />
                                                                     <Button Grid.Column="2" ToolTip="{x:Static localization:Strings.EditGroupDots}" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" CommandParameter="{Binding (CollectionViewGroup.Name)}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource CleanButton}">
                                                                         <Rectangle Width="16" Height="16">
@@ -1092,9 +1092,9 @@
                             </Button>
                         </Grid>
                     </Grid>
-                    <Grid Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType= {x:Type mah:MetroWindow}}, Path=DataContext.IsProfileFileLocked, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                    <Grid Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsProfileManagerEnabled, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                         <Grid.RowDefinitions>
-                            <!-- Adjust the Height without Textbox -->
+                            <!-- Adjust the Height without TextBox -->
                             <RowDefinition Height="27" />
                             <RowDefinition Height="10" />
                             <RowDefinition Height="*" />
@@ -1127,7 +1127,10 @@
                                 </Rectangle.Style>
                             </Rectangle>
                         </ToggleButton>
-                        <TextBlock Grid.Row="2" Text="{x:Static localization:Strings.UnlockTheProfileFileMessage}" Style="{StaticResource MessageTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,10" />
+                        <TextBlock Grid.Column="0" Grid.Row="2" 
+                                   Text="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=ProfileManagerErrorMessage}" 
+                                   Style="{StaticResource MessageTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                   Margin="0,0,0,10" />
                     </Grid>
                 </Grid>
             </Expander>
