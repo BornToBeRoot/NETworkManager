@@ -37,7 +37,7 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private string _version { get; set; }
+    private string _version;
 
     public string Version
     {

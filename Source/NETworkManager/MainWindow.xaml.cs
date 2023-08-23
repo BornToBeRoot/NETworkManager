@@ -39,19 +39,19 @@ using log4net;
 
 namespace NETworkManager;
 
-public partial class MainWindow : INotifyPropertyChanged
+public sealed partial class MainWindow : INotifyPropertyChanged
 {
     #region PropertyChangedEventHandler
     public event PropertyChangedEventHandler PropertyChanged;
 
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    private void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
     #endregion
 
     #region Variables
-    private static readonly ILog _log = LogManager.GetLogger(typeof(MainWindow));
+    private static readonly ILog Log = LogManager.GetLogger(typeof(MainWindow));
 
     private NotifyIcon _notifyIcon;
     private StatusWindow _statusWindow;
@@ -140,7 +140,7 @@ public partial class MainWindow : INotifyPropertyChanged
     public ICollectionView Applications
     {
         get => _applications;
-        set
+        private set
         {
             if (value == _applications)
                 return;
@@ -268,7 +268,7 @@ public partial class MainWindow : INotifyPropertyChanged
     public string UpdateReleaseUrl
     {
         get => _updateReleaseUrl;
-        set
+        private set
         {
             if (value == _updateReleaseUrl)
                 return;
@@ -282,7 +282,7 @@ public partial class MainWindow : INotifyPropertyChanged
     public ICollectionView ProfileFiles
     {
         get => _profileFiles;
-        set
+        private set
         {
             if (value == _profileFiles)
                 return;
@@ -292,7 +292,7 @@ public partial class MainWindow : INotifyPropertyChanged
         }
     }
 
-    private ProfileFileInfo _selectedProfileFile = null;
+    private ProfileFileInfo _selectedProfileFile;
     public ProfileFileInfo SelectedProfileFile
     {
         get => _selectedProfileFile;
@@ -328,20 +328,6 @@ public partial class MainWindow : INotifyPropertyChanged
                 return;
 
             _isProfileFileDropDownOpened = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private bool _isProfileFileLocked;
-    public bool IsProfileFileLocked
-    {
-        get => _isProfileFileLocked;
-        set
-        {
-            if (value == _isProfileFileLocked)
-                return;
-
-            _isProfileFileLocked = value;
             OnPropertyChanged();
         }
     }
@@ -482,8 +468,8 @@ public partial class MainWindow : INotifyPropertyChanged
         _statusWindow = new StatusWindow(this);
 
         // Detect network changes...
-        NetworkChange.NetworkAvailabilityChanged += (sender, args) => OnNetworkHasChanged();
-        NetworkChange.NetworkAddressChanged += (sender, args) => OnNetworkHasChanged();
+        NetworkChange.NetworkAvailabilityChanged += (_, _) => OnNetworkHasChanged();
+        NetworkChange.NetworkAddressChanged += (_, _) => OnNetworkHasChanged();
 
         // Set PowerShell global profile
         WriteDefaultPowerShellProfileToRegistry();
@@ -563,10 +549,10 @@ public partial class MainWindow : INotifyPropertyChanged
             var search = regex.Replace(Search, "");
 
             // Search by TranslatedName and Name
-            return info.IsVisible && (regex.Replace(ApplicationNameTranslator.GetInstance().Translate(info.Name), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0);
+            return info.IsVisible && (regex.Replace(ApplicationNameTranslator.GetInstance().Translate(info.Name), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || regex.Replace(info.Name.ToString(), "").Contains(search, StringComparison.OrdinalIgnoreCase));
         };
 
-        SettingsManager.Current.General_ApplicationList.CollectionChanged += (sender, args) => Applications.Refresh();
+        SettingsManager.Current.General_ApplicationList.CollectionChanged += (_, _) => Applications.Refresh();
 
         _isApplicationListLoading = false;
 
@@ -1070,11 +1056,13 @@ public partial class MainWindow : INotifyPropertyChanged
     }
 
     private async void LoadProfile(ProfileFileInfo info, bool showWrongPassword = false)
-    {
+    {   
+        // Disable profile management while switching profiles
+        ConfigurationManager.Current.IsProfileManagerEnabled = false;
+        ConfigurationManager.Current.ProfileManagerErrorMessage = string.Empty;
+        
         if (info.IsEncrypted && !info.IsPasswordValid)
         {
-            IsProfileFileLocked = true;
-
             var customDialog = new CustomDialog
             {
                 Title = Localization.Resources.Strings.UnlockProfileFile
@@ -1090,6 +1078,10 @@ public partial class MainWindow : INotifyPropertyChanged
                 SwitchProfile(info);
             }, async instance =>
             {
+                // Show error message is canceled / escape is pressed (dialog is opened again if the password is wrong)
+                ConfigurationManager.Current.ProfileManagerErrorMessage = 
+                    Localization.Resources.Strings.UnlockTheProfileFileMessage;
+                
                 await this.HideMetroDialogAsync(customDialog);
                 ConfigurationManager.OnDialogClose();
 
@@ -1116,7 +1108,8 @@ public partial class MainWindow : INotifyPropertyChanged
         {
             ProfileManager.Switch(info);
 
-            IsProfileFileLocked = false;
+            // Enable profile management after successfully loading the profiles
+            ConfigurationManager.Current.IsProfileManagerEnabled = true;
             
             OnProfilesLoaded(SelectedApplication.Name);
         }
@@ -1127,13 +1120,18 @@ public partial class MainWindow : INotifyPropertyChanged
         }
         catch (Exception ex)
         {
+            ConfigurationManager.Current.ProfileManagerErrorMessage =
+                Localization.Resources.Strings.ProfileCouldNotBeLoaded;
+            
             var settings = AppearanceManager.MetroDialog;
             settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
             
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
             ConfigurationManager.OnDialogOpen();
-            await this.ShowMessageAsync(Localization.Resources.Strings.ProfileCouldNotBeLoaded, string.Format(Localization.Resources.Strings.ProfileCouldNotBeLoadedMessage, ex.Message), MessageDialogStyle.Affirmative, settings);
+            await this.ShowMessageAsync(Localization.Resources.Strings.ProfileCouldNotBeLoaded,
+                string.Format(Localization.Resources.Strings.ProfileCouldNotBeLoadedMessage, ex.Message), 
+                MessageDialogStyle.Affirmative, settings);
             ConfigurationManager.OnDialogClose();
         }
     }
@@ -1179,15 +1177,15 @@ public partial class MainWindow : INotifyPropertyChanged
     #endregion
 
     #region Handle WndProc messages (Single instance, handle HotKeys)
-    private HwndSource _hwndSoure;
+    private HwndSource _hwndSource;
 
     // This is called after MainWindow() and before OnContentRendered() --> to register hotkeys...
     protected override void OnSourceInitialized(EventArgs e)
     {
         base.OnSourceInitialized(e);
 
-        _hwndSoure = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
-        _hwndSoure?.AddHook(HwndHook);
+        _hwndSource = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
+        _hwndSource?.AddHook(HwndHook);
 
         RegisterHotKeys();
     }
@@ -1233,7 +1231,7 @@ public partial class MainWindow : INotifyPropertyChanged
 
     private void UnregisterHotKeys()
     {
-        // Unregister all registred keys
+        // Unregister all registered keys
         foreach (var i in _registeredHotKeys)
             UnregisterHotKey(new WindowInteropHelper(this).Handle, i);
 
@@ -1298,14 +1296,14 @@ public partial class MainWindow : INotifyPropertyChanged
     #endregion
 
     #region ICommands & Actions
-    public ICommand OpenStatusWindowCommand => new RelayCommand(p => OpenStatusWindowAction());
+    public ICommand OpenStatusWindowCommand => new RelayCommand(_ => OpenStatusWindowAction());
 
     private void OpenStatusWindowAction()
     {
         OpenStatusWindow(true);
     }
 
-    public ICommand RestartApplicationCommand => new RelayCommand(p => RestartApplicationAction());
+    public ICommand RestartApplicationCommand => new RelayCommand(_ => RestartApplicationAction());
 
     private void RestartApplicationAction()
     {
@@ -1319,14 +1317,14 @@ public partial class MainWindow : INotifyPropertyChanged
         ExternalProcessStarter.OpenUrl((string)url);
     }
 
-    public ICommand OpenDocumentationCommand => new RelayCommand(p => OpenDocumentationAction());
+    public ICommand OpenDocumentationCommand => new RelayCommand(_ => OpenDocumentationAction());
 
     private void OpenDocumentationAction()
     {
         DocumentationManager.OpenDocumentation(ShowSettingsView ? _settingsView.GetDocumentationIdentifier() : DocumentationManager.GetIdentifierByAppliactionName(SelectedApplication.Name));
     }
 
-    public ICommand OpenApplicationListCommand => new RelayCommand(p => OpenApplicationListAction());
+    public ICommand OpenApplicationListCommand => new RelayCommand(_ => OpenApplicationListAction());
 
     private void OpenApplicationListAction()
     {
@@ -1334,21 +1332,21 @@ public partial class MainWindow : INotifyPropertyChanged
         TextBoxSearch.Focus();
     }
 
-    public ICommand UnlockProfileCommand => new RelayCommand(p => UnlockProfileAction());
+    public ICommand UnlockProfileCommand => new RelayCommand(_ => UnlockProfileAction());
 
     private void UnlockProfileAction()
     {
         LoadProfile(SelectedProfileFile);
     }
 
-    public ICommand OpenSettingsCommand => new RelayCommand(p => OpenSettingsAction());
+    public ICommand OpenSettingsCommand => new RelayCommand(_ => OpenSettingsAction());
 
     private void OpenSettingsAction()
     {
         OpenSettings();
     }
 
-    public ICommand OpenSettingsFromTrayCommand => new RelayCommand(p => OpenSettingsFromTrayAction());
+    public ICommand OpenSettingsFromTrayCommand => new RelayCommand(_ => OpenSettingsFromTrayAction());
 
     private void OpenSettingsFromTrayAction()
     {
@@ -1358,71 +1356,68 @@ public partial class MainWindow : INotifyPropertyChanged
         OpenSettings();
     }
 
-    public ICommand CloseSettingsCommand => new RelayCommand(p => CloseSettingsAction());
+    public ICommand CloseSettingsCommand => new RelayCommand(_ => CloseSettingsAction());
 
     private void CloseSettingsAction()
     {
         CloseSettings();
     }
 
-    public ICommand ShowWindowCommand => new RelayCommand(p => ShowWindowAction());
+    public ICommand ShowWindowCommand => new RelayCommand(_ => ShowWindowAction());
 
     private void ShowWindowAction()
     {
         ShowWindow();
     }
 
-    public ICommand CloseApplicationCommand => new RelayCommand(p => CloseApplicationAction());
+    public ICommand CloseApplicationCommand => new RelayCommand(_ => CloseApplicationAction());
 
     private void CloseApplicationAction()
     {
         CloseApplication();
     }
 
-    public void CloseApplication()
+    private void CloseApplication()
     {
         _closeApplication = true;
 
         // Make it thread safe when it's called inside a dialog
-        System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-        {
-            Close();
-        }));
+        System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(Close));
     }
 
     public void RestartApplication(bool asAdmin = false)
     {
-        ExternalProcessStarter.RunProcess(ConfigurationManager.Current.ApplicationFullName, $"{CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterRestartPid)}{Process.GetCurrentProcess().Id} {CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterApplication)}{SelectedApplication.Name}", asAdmin);
+        ExternalProcessStarter.RunProcess(ConfigurationManager.Current.ApplicationFullName, $"{CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterRestartPid)}{Environment.ProcessId} {CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterApplication)}{SelectedApplication.Name}", asAdmin);
 
         CloseApplication();
     }
 
-    public ICommand ApplicationListMouseEnterCommand => new RelayCommand(p => ApplicationListMouseEnterAction());
+    public ICommand ApplicationListMouseEnterCommand => new RelayCommand(_ => ApplicationListMouseEnterAction());
 
     private void ApplicationListMouseEnterAction()
     {
         IsMouseOverApplicationList = true;
     }
 
-    public ICommand ApplicationListMouseLeaveCommand => new RelayCommand(p => ApplicationListMouseLeaveAction());
+    public ICommand ApplicationListMouseLeaveCommand => new RelayCommand(_ => ApplicationListMouseLeaveAction());
 
     private void ApplicationListMouseLeaveAction()
     {
-        // Don't minmize the list, if the user has accidently moved the mouse while searching
+        // Don't minimize the list, if the user has accidentally moved the mouse while searching
         if (!IsTextBoxSearchFocused)
             IsApplicationListOpen = false;
 
         IsMouseOverApplicationList = false;
     }
 
-    public ICommand TextBoxSearchGotFocusCommand => new RelayCommand(p => TextBoxSearchGotFocusAction());
+    public ICommand TextBoxSearchGotFocusCommand => new RelayCommand(_ => TextBoxSearchGotFocusAction());
 
     private void TextBoxSearchGotFocusAction()
     {
         IsTextBoxSearchFocused = true;
     }
 
-    public ICommand TextBoxSearchLostFocusCommand => new RelayCommand(p => TextBoxSearchLostFocusAction());
+    public ICommand TextBoxSearchLostFocusCommand => new RelayCommand(_ => TextBoxSearchLostFocusAction());
 
     private void TextBoxSearchLostFocusAction()
     {
@@ -1432,7 +1427,7 @@ public partial class MainWindow : INotifyPropertyChanged
         IsTextBoxSearchFocused = false;
     }
 
-    public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
+    public ICommand ClearSearchCommand => new RelayCommand(_ => ClearSearchAction());
 
     private void ClearSearchAction()
     {
@@ -1457,7 +1452,8 @@ public partial class MainWindow : INotifyPropertyChanged
 
         _isInTray = true;
 
-        _notifyIcon.Visible = true;
+        if (_notifyIcon != null) 
+            _notifyIcon.Visible = true;
 
         Hide();
     }
@@ -1481,7 +1477,7 @@ public partial class MainWindow : INotifyPropertyChanged
 
     private void ConfigureDNS()
     {
-        _log.Info("Configure application DNS...");
+        Log.Info("Configure application DNS...");
 
         DNSClientSettings dnsSettings = new();
 
@@ -1489,7 +1485,7 @@ public partial class MainWindow : INotifyPropertyChanged
         {
             if (!string.IsNullOrEmpty(SettingsManager.Current.Network_CustomDNSServer))
             {
-                _log.Info($"Use custom DNS servers ({SettingsManager.Current.Network_CustomDNSServer})...");
+                Log.Info($"Use custom DNS servers ({SettingsManager.Current.Network_CustomDNSServer})...");
 
                 List<(string Server, int Port)> dnsServers = new();
 
@@ -1503,12 +1499,12 @@ public partial class MainWindow : INotifyPropertyChanged
             }
             else
             {
-                _log.Info($"Custom DNS servers could not be set (Setting \"{nameof(SettingsManager.Current.Network_CustomDNSServer)}\" has value \"{SettingsManager.Current.Network_CustomDNSServer}\")! Fallback to Windows DNS servers...");
+                Log.Info($"Custom DNS servers could not be set (Setting \"{nameof(SettingsManager.Current.Network_CustomDNSServer)}\" has value \"{SettingsManager.Current.Network_CustomDNSServer}\")! Fallback to Windows DNS servers...");
             }
         }
         else
         {
-            _log.Info("Use Windows DNS servers...");
+            Log.Info("Use Windows DNS servers...");
         }
 
         DNSClient.GetInstance().Configure(dnsSettings);
@@ -1516,7 +1512,7 @@ public partial class MainWindow : INotifyPropertyChanged
 
     private void UpdateDNS()
     {
-        _log.Info("Update Windows DNS servers...");
+        Log.Info("Update Windows DNS servers...");
 
         DNSClient.GetInstance().UpdateFromWindows();
     }
@@ -1557,7 +1553,7 @@ public partial class MainWindow : INotifyPropertyChanged
         // Wait, because the event may be triggered several times.
         await Task.Delay(GlobalStaticConfiguration.StatusWindowDelayBeforeOpen);
 
-        _log.Info("Network availability or address has changed!");
+        Log.Info("Network availability or address has changed!");
 
         // Update DNS server if network changed
         if (!SettingsManager.Current.Network_UseCustomDNSServer)
@@ -1644,8 +1640,8 @@ public partial class MainWindow : INotifyPropertyChanged
         /* Don't continue if
            - Application is not set
            - Settings are opened
-           - Profile file drop down is opened
-           - Application search textbox is opened
+           - Profile file DropDown is opened
+           - Application search TextBox is opened
            - Dialog over an embedded window is opened (FixAirspace)
         */
         if (SelectedApplication == null || ShowSettingsView || IsProfileFileDropDownOpened || IsTextBoxSearchFocused || ConfigurationManager.Current.FixAirspace)

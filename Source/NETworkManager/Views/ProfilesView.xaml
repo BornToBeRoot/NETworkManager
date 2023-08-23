@@ -11,6 +11,7 @@
         xmlns:profiles="clr-namespace:NETworkManager.Profiles;assembly=NETworkManager.Profiles"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+        xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ProfilesViewModel}">
     <UserControl.Resources>
@@ -18,7 +19,7 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
     <Grid>
-        <Grid Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType= {x:Type mah:MetroWindow}}, Path=DataContext.IsProfileFileLocked, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+        <Grid Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsProfileManagerEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250" />
                 <ColumnDefinition Width="*" />
@@ -32,7 +33,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Groups}" />
-                    <DataGrid x:Name="DataGridGroups" Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Groups}" SelectionMode="Single" SelectedItem="{Binding SelectedGroup}">
+                    <DataGrid Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Groups}" SelectionMode="Single" SelectedItem="{Binding SelectedGroup}">
                         <DataGrid.Resources>
                             <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                             <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"  MinWidth="150">
@@ -57,8 +58,8 @@
                             </ContextMenu>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding Name}" Width="*" />
-                            <DataGridTextColumn Header="{x:Static localization:Strings.Profiles}" Binding="{Binding Profiles.Count}" Width="Auto" />
+                            <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding Path=(profiles:GroupInfo.Name)}" Width="*" />
+                            <DataGridTextColumn Header="{x:Static localization:Strings.Profiles}" Binding="{Binding Path=(profiles:GroupInfo.Profiles).Count}" Width="Auto" />
                         </DataGrid.Columns>
                         <DataGrid.InputBindings>
                             <KeyBinding Command="{Binding EditGroupCommand}" Key="F2" />
@@ -101,8 +102,8 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Profiles}" />
-                <TextBox x:Name="TextBoxSearch" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
-                <controls:MultiSelectDataGrid x:Name="DataGridProfiles" Grid.Column="4" Grid.Row="1" Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" ItemsSource="{Binding Profiles}" SelectedItem="{Binding SelectedProfile}" SelectedItemsList="{Binding SelectedProfiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="false"                                      
+                <TextBox x:Name="TextBoxSearch" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
+                <controls:MultiSelectDataGrid x:Name="DataGridProfiles" Grid.Column="0" Grid.Row="1" Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" ItemsSource="{Binding Profiles}" SelectedItem="{Binding SelectedProfile}" SelectedItemsList="{Binding SelectedProfiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="false"                                      
                                       EnableRowVirtualization="True"
                                       ScrollViewer.CanContentScroll="True"
                                       VirtualizingPanel.IsVirtualizing="True"
@@ -187,8 +188,8 @@
                         <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.Whois}" Binding="{Binding (profiles:ProfileInfo.Whois_Enabled)}" SortMemberPath="Whois_Enabled" MinWidth="80" Width="Auto" />
                     </DataGrid.Columns>
                 </controls:MultiSelectDataGrid>
-                <mah:ProgressRing Grid.Column="4" Grid.Row="1" Height="50" Width="50" IsActive="{Binding IsSearching}"/>
-                <StackPanel Grid.Column="4" Grid.Row="3" HorizontalAlignment="Right" Orientation="Horizontal">
+                <mah:ProgressRing Grid.Column="0" Grid.Row="1" Height="50" Width="50" IsActive="{Binding IsSearching}"/>
+                <StackPanel Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right" Orientation="Horizontal">
                     <Button Command="{Binding DeleteProfileCommand}">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
@@ -300,8 +301,10 @@
                 </StackPanel>
             </Grid>
         </Grid>
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType= {x:Type mah:MetroWindow}}, Path=DataContext.IsProfileFileLocked, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-            <TextBlock Text="{x:Static localization:Strings.UnlockTheProfileFileMessage2}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
+        <StackPanel Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsProfileManagerEnabled, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
+                    VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=ProfileManagerErrorMessage}" 
+            Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
         </StackPanel>
     </Grid>
 </UserControl>

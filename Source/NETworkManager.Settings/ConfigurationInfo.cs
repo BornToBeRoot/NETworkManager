@@ -4,6 +4,10 @@ using System.Diagnostics;
 
 namespace NETworkManager.Settings;
 
+/*
+ * This class is used to store static and dynamic configuration used in the application
+ * across multiple windows, views, dialogs, etc.
+ */
 public class ConfigurationInfo : PropertyChangedBase
 {
     #region Static properties set at startup
@@ -73,6 +77,48 @@ public class ConfigurationInfo : PropertyChangedBase
     /// Indicates if WebConsole has tabs.
     /// </summary>
     public bool WebConsoleHasTabs { get; set; }
+    
+    /// <summary>
+    /// Private variable for <see cref="IsProfileManagerEnabled"/>.
+    /// </summary>
+    private bool _isProfileManagerEnabled;
+    
+    /// <summary>
+    /// Indicates if the profile manager is enabled.
+    /// </summary>
+    public bool IsProfileManagerEnabled
+    {
+        get => _isProfileManagerEnabled;
+        set
+        {
+            if (value == _isProfileManagerEnabled)
+                return;
+
+            _isProfileManagerEnabled = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    /// <summary>
+    /// Private variable for <see cref="ProfileManagerErrorMessage"/>.
+    /// </summary>
+    private string _profileManagerErrorMessage = string.Empty;
+    
+    /// <summary>
+    /// Error message if the profile manager is not enabled.
+    /// </summary>
+    public string ProfileManagerErrorMessage 
+    {
+        get => _profileManagerErrorMessage;
+        set
+        {
+            if (value == _profileManagerErrorMessage)
+                return;
+
+            _profileManagerErrorMessage = value;
+            OnPropertyChanged();
+        }
+    }
 
     /// <summary>
     /// Private variable for <see cref="FixAirspace"/>.

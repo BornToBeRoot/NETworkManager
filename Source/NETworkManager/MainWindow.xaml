@@ -9,7 +9,7 @@
         xmlns:interactivity="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:asf="clr-namespace:AirspaceFixer;assembly=AirspaceFixer"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-        xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"                     
+        xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
         xmlns:resources="clr-namespace:NETworkManager.Properties"
         xmlns:networkManager="clr-namespace:NETworkManager"
         xmlns:models="clr-namespace:NETworkManager.Models;assembly=NETworkManager.Models"
@@ -100,7 +100,23 @@
                         <TextBlock Text="{x:Static localization:Strings.UpdateAvailable}" Style="{StaticResource LinkTextBlock}"  VerticalAlignment="Center" Margin="5,0,0,0" />
                     </StackPanel>
                 </Button>
-                <Button Command="{Binding UnlockProfileCommand}" Opacity="1" Visibility="{Binding IsProfileFileLocked, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Cursor="Hand">
+                <Button Command="{Binding UnlockProfileCommand}" Opacity="1" Cursor="Hand">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MahApps.Styles.Button.WindowCommands}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                              <MultiDataTrigger>
+                                  <MultiDataTrigger.Conditions>
+                                      <Condition Binding="{Binding SelectedProfileFile.IsEncrypted}" Value="True" />
+                                      <Condition Binding="{Binding SelectedProfileFile.IsPasswordValid}" Value="False" />
+                                  </MultiDataTrigger.Conditions>
+                                  <MultiDataTrigger.Setters>
+                                      <Setter Property="Visibility" Value="Visible" />
+                                  </MultiDataTrigger.Setters>
+                              </MultiDataTrigger>
+                          </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                     <StackPanel Orientation="Horizontal">
                         <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Accent}">
                             <Rectangle.Style>

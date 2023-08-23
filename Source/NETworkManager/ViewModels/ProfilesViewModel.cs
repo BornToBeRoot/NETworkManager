@@ -21,11 +21,11 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
     private bool _isViewActive = true;
 
-    public ICollectionView _groups;
+    private ICollectionView _groups;
     public ICollectionView Groups
     {
         get => _groups;
-        set
+        private set
         {
             if (value == _groups)
                 return;
@@ -35,7 +35,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    private ProfileInfo _lastSelectedProfileOnRefresh = null;
+    private ProfileInfo _lastSelectedProfileOnRefresh;
 
     private GroupInfo _selectedGroup = new();
     public GroupInfo SelectedGroup
@@ -58,11 +58,11 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    public ICollectionView _profiles;
+    private ICollectionView _profiles;
     public ICollectionView Profiles
     {
         get => _profiles;
-        set
+        private set
         {
             if (value == _profiles)
                 return;
@@ -225,14 +225,14 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
         if (group != null)
             SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().FirstOrDefault(x => x.Equals(group)) ??
-                Groups.SourceCollection.Cast<GroupInfo>().OrderBy(x => x.Name).FirstOrDefault();
+                Groups.SourceCollection.Cast<GroupInfo>().MinBy(x => x.Name);
         else
-            SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().OrderBy(x => x.Name).FirstOrDefault();
+            SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().MinBy(x => x.Name);
     }
 
     private void SetProfilesView(GroupInfo group, ProfileInfo profile = null)
     {
-        Profiles = new CollectionViewSource { Source = ProfileManager.Groups.FirstOrDefault(x => x.Equals(group)).Profiles.Where(x => !x.IsDynamic).OrderBy(x => x.Name) }.View;
+        Profiles = new CollectionViewSource { Source = ProfileManager.Groups.FirstOrDefault(x => x.Equals(group))?.Profiles.Where(x => !x.IsDynamic).OrderBy(x => x.Name) }.View;
 
         Profiles.Filter = o =>
         {
