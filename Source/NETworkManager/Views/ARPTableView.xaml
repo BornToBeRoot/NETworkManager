@@ -36,7 +36,7 @@
                     <RowDefinition Height="10" />
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <TextBox x:Name="TextBoxSearch" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
+                <TextBox Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
                 <controls:MultiSelectDataGrid x:Name="DataGridArpTable" Grid.Row="2" ItemsSource="{Binding ARPInfoResultsView}" SelectedItem="{Binding SelectedARPInfo}" SelectedItemsList="{Binding SelectedARPInfos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <controls:MultiSelectDataGrid.Resources>
                         <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
