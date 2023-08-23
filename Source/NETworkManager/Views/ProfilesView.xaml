@@ -11,6 +11,7 @@
         xmlns:profiles="clr-namespace:NETworkManager.Profiles;assembly=NETworkManager.Profiles"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+        xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ProfilesViewModel}">
     <UserControl.Resources>
@@ -18,7 +19,7 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
     <Grid>
-        <Grid Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType= {x:Type mah:MetroWindow}}, Path=DataContext.IsProfileFileLocked, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+        <Grid Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsProfileManagerEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250" />
                 <ColumnDefinition Width="*" />
@@ -300,8 +301,10 @@
                 </StackPanel>
             </Grid>
         </Grid>
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType= {x:Type mah:MetroWindow}}, Path=DataContext.IsProfileFileLocked, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-            <TextBlock Text="{x:Static localization:Strings.UnlockTheProfileFileMessage2}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
+        <StackPanel Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsProfileManagerEnabled, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
+                    VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=ProfileManagerErrorMessage}" 
+            Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
         </StackPanel>
     </Grid>
 </UserControl>

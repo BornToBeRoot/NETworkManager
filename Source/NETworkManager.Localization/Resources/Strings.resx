@@ -2993,9 +2993,6 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   <data name="DeleteProfilesMessage" xml:space="preserve">
     <value>Selected profiles will be deleted permanently.</value>
   </data>
-  <data name="UnlockTheProfileFileMessage2" xml:space="preserve">
-    <value>Unlock the profile file to add, change or delete a profile!</value>
-  </data>
   <data name="UseCustomThemes" xml:space="preserve">
     <value>Use custom themes</value>
   </data>
@@ -3657,5 +3654,8 @@ Try again in a few seconds.</value>
   </data>
   <data name="HTTPStatusCode" xml:space="preserve">
     <value>HTTP status code</value>
+  </data>
+  <data name="Accen_Steel" xml:space="preserve">
+    <value>Steel</value>
   </data>
 </root>

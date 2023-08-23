@@ -16,7 +16,7 @@ public static class SettingsManager
     /// <summary>
     /// Logger for logging.
     /// </summary>
-    private static readonly ILog _log = LogManager.GetLogger(typeof(SettingsManager));
+    private static readonly ILog Log = LogManager.GetLogger(typeof(SettingsManager));
 
     /// <summary>
     /// Settings directory name.
@@ -116,14 +116,11 @@ public static class SettingsManager
     /// <returns>Settings as <see cref="SettingsInfo"/>.</returns>
     private static SettingsInfo DeserializeFromFile(string filePath)
     {
-        SettingsInfo settingsInfo;
-
         var xmlSerializer = new XmlSerializer(typeof(SettingsInfo));
 
-        using (var fileStream = new FileStream(filePath, FileMode.Open))
-        {
-            settingsInfo = (SettingsInfo)xmlSerializer.Deserialize(fileStream);
-        }
+        using var fileStream = new FileStream(filePath, FileMode.Open);
+        
+        var settingsInfo = (SettingsInfo)xmlSerializer.Deserialize(fileStream);
 
         return settingsInfo;
     }
@@ -166,7 +163,7 @@ public static class SettingsManager
     /// <param name="toVersion">Target version.</param>
     public static void Upgrade(Version fromVersion, Version toVersion)
     {
-        _log.Info($"Start settings upgrade from {fromVersion} to {toVersion}...");
+        Log.Info($"Start settings upgrade from {fromVersion} to {toVersion}...");
 
         // 2022.12.20.0
         if (fromVersion < new Version(2022, 12, 20, 0))
@@ -192,7 +189,7 @@ public static class SettingsManager
         Current.Version = toVersion.ToString();
         Save();
 
-        _log.Info("Settings upgrade finished!");
+        Log.Info("Settings upgrade finished!");
     }
 
     /// <summary>
@@ -200,10 +197,10 @@ public static class SettingsManager
     /// </summary>
     private static void UpgradeTo_2022_12_20_0()
     {
-        _log.Info("Apply update to 2022.12.20.0...");
+        Log.Info("Apply update to 2022.12.20.0...");
 
         // Add AWS Session Manager application
-        _log.Info("Add new app \"AWSSessionManager\"...");
+        Log.Info("Add new app \"AWSSessionManager\"...");
         Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.AWSSessionManager));
 
         var powerShellPath = "";
@@ -216,11 +213,11 @@ public static class SettingsManager
             }
         }
 
-        _log.Info($"Set \"AWSSessionManager_ApplicationFilePath\" to \"{powerShellPath}\"...");
+        Log.Info($"Set \"AWSSessionManager_ApplicationFilePath\" to \"{powerShellPath}\"...");
         Current.AWSSessionManager_ApplicationFilePath = powerShellPath;
 
         // Add Bit Calculator application
-        _log.Info("Add new app \"BitCalculator\"...");
+        Log.Info("Add new app \"BitCalculator\"...");
         Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.BitCalculator));
     }
 
@@ -229,10 +226,10 @@ public static class SettingsManager
     /// </summary>
     private static void UpgradeTo_2023_3_7_0()
     {
-        _log.Info("Apply update to 2023.3.7.0...");
+        Log.Info("Apply update to 2023.3.7.0...");
 
         // Add NTP Lookup application
-        _log.Info($"Add new app \"SNTPLookup\"...");
+        Log.Info($"Add new app \"SNTPLookup\"...");
         Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.SNTPLookup));
         Current.SNTPLookup_SNTPServers = new ObservableCollection<ServerConnectionInfoProfile>(SNTPServer.GetDefaultList());
 
@@ -243,7 +240,7 @@ public static class SettingsManager
 
             if (customCommandFound == null)
             {
-                _log.Info($"Add \"{customCommand.Name}\" to \"IPScanner_CustomCommands\"...");
+                Log.Info($"Add \"{customCommand.Name}\" to \"IPScanner_CustomCommands\"...");
                 Current.IPScanner_CustomCommands.Add(customCommand);
             }
         }
@@ -255,19 +252,19 @@ public static class SettingsManager
 
             if (portProfileFound == null)
             {
-                _log.Info($"Add \"{portProfile.Name}\" to \"PortScanner_PortProfiles\"...");
+                Log.Info($"Add \"{portProfile.Name}\" to \"PortScanner_PortProfiles\"...");
                 Current.PortScanner_PortProfiles.Add(portProfile);
             }
             else if (!portProfile.Ports.Equals(portProfileFound.Ports))
             {
-                _log.Info($"Update \"{portProfile.Name}\" in \"PortScanner_PortProfiles\"...");
+                Log.Info($"Update \"{portProfile.Name}\" in \"PortScanner_PortProfiles\"...");
                 Current.PortScanner_PortProfiles.Remove(portProfileFound);
                 Current.PortScanner_PortProfiles.Add(portProfile);
             }
         }
 
         // Add new DNS lookup profiles
-        _log.Info("Init \"DNSLookup_DNSServers_v2\" with default DNS servers...");
+        Log.Info("Init \"DNSLookup_DNSServers_v2\" with default DNS servers...");
         Current.DNSLookup_DNSServers_v2 = new ObservableCollection<DNSServerConnectionInfoProfile>(DNSServer.GetDefaultList());
     }
 
@@ -276,10 +273,10 @@ public static class SettingsManager
     /// </summary>
     private static void UpgradeTo_2023_4_26_0()
     {
-        _log.Info("Apply update to 2023.4.26.0...");
+        Log.Info("Apply update to 2023.4.26.0...");
 
         // Add SNMP OID profiles
-        _log.Info($"Add SNMP OID profiles...");
+        Log.Info($"Add SNMP OID profiles...");
         Current.SNMP_OIDProfiles = new ObservableCollection<SNMPOIDProfileInfo>(SNMPOIDProfile.GetDefaultList());
     }
 
@@ -288,10 +285,10 @@ public static class SettingsManager
     /// </summary>
     private static void UpgradeTo_2023_6_27_0()
     {
-        _log.Info("Apply update to 2023.6.27.0...");
+        Log.Info("Apply update to 2023.6.27.0...");
 
         // Update Wake on LAN settings
-        _log.Info($"Update \"WakeOnLAN_Port\" to {GlobalStaticConfiguration.WakeOnLAN_Port}");
+        Log.Info($"Update \"WakeOnLAN_Port\" to {GlobalStaticConfiguration.WakeOnLAN_Port}");
         Current.WakeOnLAN_Port = GlobalStaticConfiguration.WakeOnLAN_Port;
     }
 
@@ -301,10 +298,10 @@ public static class SettingsManager
     /// <param name="version">Latest version.</param>
     private static void UpgradeToLatest(Version version)
     {
-        _log.Info($"Apply upgrade to {version}...");
+        Log.Info($"Apply upgrade to {version}...");
 
         // First run is required due to the new settings
-        _log.Info("Set \"FirstRun\" to true...");
+        Log.Info("Set \"FirstRun\" to true...");
         Current.FirstRun = true;
     }
     #endregion
