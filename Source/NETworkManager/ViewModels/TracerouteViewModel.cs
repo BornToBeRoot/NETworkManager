@@ -424,12 +424,10 @@ public class TracerouteViewModel : ViewModelBase
     #region Events
     private void Traceroute_HopReceived(object sender, TracerouteHopReceivedArgs e)
     {
-        var tracerouteInfo = TracerouteHopInfo.Parse(e);
-
         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
         {
             //lock (TraceResults)
-            TraceResults.Add(tracerouteInfo);
+            TraceResults.Add(e.Args);
         }));
     }
 

@@ -7,55 +7,68 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading;
 using System.Threading.Tasks;
+using NETworkManager.Models.IPApi;
 
 namespace NETworkManager.Models.Network;
 
 public class Traceroute
 {
     #region Variables
+
     private readonly TracerouteOptions _options;
+
     #endregion
 
     #region Events
+
     public event EventHandler<TracerouteHopReceivedArgs> HopReceived;
+
     protected virtual void OnHopReceived(TracerouteHopReceivedArgs e)
     {
         HopReceived?.Invoke(this, e);
     }
 
     public event EventHandler TraceComplete;
+
     protected virtual void OnTraceComplete()
     {
         TraceComplete?.Invoke(this, EventArgs.Empty);
     }
 
     public event EventHandler<MaximumHopsReachedArgs> MaximumHopsReached;
+
     protected virtual void OnMaximumHopsReached(MaximumHopsReachedArgs e)
     {
         MaximumHopsReached?.Invoke(this, e);
     }
 
     public event EventHandler<TracerouteErrorArgs> TraceError;
+
     protected virtual void OnTraceError(TracerouteErrorArgs e)
     {
         TraceError?.Invoke(this, e);
     }
 
     public event EventHandler UserHasCanceled;
+
     protected virtual void OnUserHasCanceled()
     {
         UserHasCanceled?.Invoke(this, EventArgs.Empty);
     }
+
     #endregion
 
     #region Constructor
+
     public Traceroute(TracerouteOptions options)
     {
         _options = options;
     }
+
     #endregion
 
     #region Methods
+
     public void TraceAsync(IPAddress ipAddress, CancellationToken cancellationToken)
     {
         Task.Run(async () =>
@@ -81,7 +94,8 @@ public class Traceroute
                             {
                                 stopwatch.Start();
 
-                                pingReply = ping.Send(ipAddress, _options.Timeout, _options.Buffer, new PingOptions { Ttl = i1, DontFragment = _options.DontFragment });
+                                pingReply = ping.Send(ipAddress, _options.Timeout, _options.Buffer,
+                                    new PingOptions { Ttl = i1, DontFragment = _options.DontFragment });
 
                                 stopwatch.Stop();
                             }
@@ -97,7 +111,8 @@ public class Traceroute
                     catch (AggregateException ex)
                     {
                         // Remove duplicate messages
-                        OnTraceError(new TracerouteErrorArgs(string.Join(", ", ex.Flatten().InnerExceptions.Select(s => s.Message).Distinct())));
+                        OnTraceError(new TracerouteErrorArgs(string.Join(", ",
+                            ex.Flatten().InnerExceptions.Select(s => s.Message).Distinct())));
                         return;
                     }
 
@@ -109,7 +124,8 @@ public class Traceroute
                         if (task.Result.Item1.Status == IPStatus.TimedOut)
                             continue;
 
-                        if (task.Result.Item1.Status == IPStatus.TtlExpired || task.Result.Item1.Status == IPStatus.Success)
+                        if (task.Result.Item1.Status == IPStatus.TtlExpired ||
+                            task.Result.Item1.Status == IPStatus.Success)
                         {
                             ipAddressHop = task.Result.Item1.Address;
                             break;
@@ -127,7 +143,18 @@ public class Traceroute
                             hostname = dnsResult.Value;
                     }
 
-                    OnHopReceived(new TracerouteHopReceivedArgs(i, tasks[0].Result.Item2, tasks[1].Result.Item2, tasks[2].Result.Item2, ipAddressHop, hostname, tasks[0].Result.Item1.Status, tasks[1].Result.Item1.Status, tasks[2].Result.Item1.Status));
+                    IPGeolocationResult ipGeolocationResult = null;
+
+                    // Get IP Geolocation info
+                    if (ipAddressHop != null && !IPAddressHelper.IsPrivateIPAddress(ipAddressHop))
+                        ipGeolocationResult =
+                            await IPGeolocationService.GetInstance().GetIPGeolocationAsync($"{ipAddressHop}");
+
+                    OnHopReceived(new TracerouteHopReceivedArgs(new TracerouteHopInfo(i,
+                        tasks[0].Result.Item1.Status, tasks[0].Result.Item2,
+                        tasks[1].Result.Item1.Status, tasks[1].Result.Item2,
+                        tasks[2].Result.Item1.Status, tasks[2].Result.Item2,
+                        ipAddressHop, hostname, ipGeolocationResult)));
 
                     // Check if finished
                     if (ipAddressHop != null && ipAddress.ToString() == ipAddressHop.ToString())
@@ -153,5 +180,6 @@ public class Traceroute
             }
         }, cancellationToken);
     }
+
     #endregion
 }

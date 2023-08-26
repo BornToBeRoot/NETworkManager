@@ -2,7 +2,6 @@
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -47,8 +46,8 @@ public class IPApiIPGeolocationViewModel : ViewModelBase
     public IPApiIPGeolocationViewModel()
     {
         // Detect if network address or status changed...
-        NetworkChange.NetworkAvailabilityChanged += (sender, args) => Check();
-        NetworkChange.NetworkAddressChanged += (sender, args) => Check();
+        NetworkChange.NetworkAvailabilityChanged += (_, _) => Check();
+        NetworkChange.NetworkAddressChanged += (_, _) => Check();
 
         LoadSettings();
 
@@ -63,7 +62,7 @@ public class IPApiIPGeolocationViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
-    public ICommand CheckViaHotkeyCommand => new RelayCommand(p => CheckViaHotkeyAction());
+    public ICommand CheckViaHotkeyCommand => new RelayCommand(_ => CheckViaHotkeyAction());
 
     private void CheckViaHotkeyAction()
     {
