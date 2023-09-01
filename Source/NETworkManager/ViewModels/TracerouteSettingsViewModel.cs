@@ -74,6 +74,24 @@ public class TracerouteSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+    
+    private bool _ipApiIPGeolocationEnabled;
+
+    public bool IPApiIPGeolocationEnabled
+    {
+        get => _ipApiIPGeolocationEnabled;
+        set
+        {
+          if(value == _ipApiIPGeolocationEnabled)
+              return;
+          
+            if(!_isLoading)
+                SettingsManager.Current.Traceroute_IPApiIPGeolocationEnabled = value;
+            
+            _ipApiIPGeolocationEnabled = value;
+            OnPropertyChanged();
+        }
+    }
     #endregion
 
     #region Constructor, load settings
@@ -92,6 +110,7 @@ public class TracerouteSettingsViewModel : ViewModelBase
         Timeout = SettingsManager.Current.Traceroute_Timeout;
         Buffer = SettingsManager.Current.Traceroute_Buffer;
         ResolveHostname = SettingsManager.Current.Traceroute_ResolveHostname;
+        IPApiIPGeolocationEnabled = SettingsManager.Current.Traceroute_IPApiIPGeolocationEnabled;
     }
     #endregion
 }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 using DnsClient;
 using Lextm.SharpSnmpLib.Messaging;
@@ -14,6 +12,7 @@ using NETworkManager.Models.Network;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Utilities;
+// ReSharper disable InconsistentNaming
 
 namespace NETworkManager.Settings;
 
@@ -1299,16 +1298,16 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _pingMonitor_DontFragement = true;
+    private bool _pingMonitor_DontFragment = GlobalStaticConfiguration.PingMonitor_DontFragment;
     public bool PingMonitor_DontFragment
     {
-        get => _pingMonitor_DontFragement;
+        get => _pingMonitor_DontFragment;
         set
         {
-            if (value == _pingMonitor_DontFragement)
+            if (value == _pingMonitor_DontFragment)
                 return;
 
-            _pingMonitor_DontFragement = value;
+            _pingMonitor_DontFragment = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
@@ -1481,7 +1480,7 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _traceroute_ResolveHostname = true;
+    private bool _traceroute_ResolveHostname = GlobalStaticConfiguration.Traceroute_ResolveHostname;
     public bool Traceroute_ResolveHostname
     {
         get => _traceroute_ResolveHostname;
@@ -1491,6 +1490,22 @@ public class SettingsInfo : PropertyChangedBase
                 return;
 
             _traceroute_ResolveHostname = value;
+            OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
+    
+    private bool _traceroute_IPApiIPGeolocationEnabled = GlobalStaticConfiguration.Traceroute_IPApiIPGeolocationEnabled;
+    
+    public bool Traceroute_IPApiIPGeolocationEnabled
+    {
+        get => _traceroute_IPApiIPGeolocationEnabled;
+        set
+        {
+            if (value == _traceroute_IPApiIPGeolocationEnabled)
+                return;
+
+            _traceroute_IPApiIPGeolocationEnabled = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }

@@ -81,6 +81,6 @@ public class FirstRunViewModel : ViewModelBase
 
     public FirstRunViewModel(Action<FirstRunViewModel> continueCommand)
     {
-        ContinueCommand = new RelayCommand(p => continueCommand(this));
+        ContinueCommand = new RelayCommand(_ => continueCommand(this));
     }
 }

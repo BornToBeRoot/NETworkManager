@@ -117,25 +117,15 @@ public class Traceroute
                     }
 
                     // Check results -> Get IP on success or TTL expired
-                    IPAddress ipAddressHop = null;
-
-                    foreach (var task in tasks)
-                    {
-                        if (task.Result.Item1.Status == IPStatus.TimedOut)
-                            continue;
-
-                        if (task.Result.Item1.Status == IPStatus.TtlExpired ||
-                            task.Result.Item1.Status == IPStatus.Success)
-                        {
-                            ipAddressHop = task.Result.Item1.Address;
-                            break;
-                        }
-                    }
+                    var ipAddressHop = (from task in tasks
+                        where task.Result.Item1.Status != IPStatus.TimedOut
+                        where task.Result.Item1.Status is IPStatus.TtlExpired or IPStatus.Success
+                        select task.Result.Item1.Address).FirstOrDefault();
 
                     // Resolve Hostname
                     var hostname = string.Empty;
 
-                    if (ipAddressHop != null && _options.ResolveHostname)
+                    if (_options.ResolveHostname && ipAddressHop != null)
                     {
                         var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(ipAddressHop);
 
@@ -145,8 +135,8 @@ public class Traceroute
 
                     IPGeolocationResult ipGeolocationResult = null;
 
-                    // Get IP Geolocation info
-                    if (ipAddressHop != null && !IPAddressHelper.IsPrivateIPAddress(ipAddressHop))
+                    // Get IP geolocation info
+                    if (_options.IPApiIPGeolocationEnabled && ipAddressHop != null && !IPAddressHelper.IsPrivateIPAddress(ipAddressHop))
                         ipGeolocationResult =
                             await IPGeolocationService.GetInstance().GetIPGeolocationAsync($"{ipAddressHop}");
 
@@ -154,7 +144,7 @@ public class Traceroute
                         tasks[0].Result.Item1.Status, tasks[0].Result.Item2,
                         tasks[1].Result.Item1.Status, tasks[1].Result.Item2,
                         tasks[2].Result.Item1.Status, tasks[2].Result.Item2,
-                        ipAddressHop, hostname, ipGeolocationResult)));
+                        ipAddressHop, hostname, ipGeolocationResult ?? new IPGeolocationResult())));
 
                     // Check if finished
                     if (ipAddressHop != null && ipAddress.ToString() == ipAddressHop.ToString())

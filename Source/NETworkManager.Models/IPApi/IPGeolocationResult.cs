@@ -32,6 +32,14 @@ public class IPGeolocationResult
     public int ErrorCode { get; set; }
 
     /// <summary>
+    /// Creates a new instance of <see cref="IPGeolocationResult"/>.
+    /// </summary>
+    public IPGeolocationResult()
+    {
+        
+    }
+    
+    /// <summary>
     /// Creates a new instance of <see cref="IPGeolocationResult"/> with the IP geolocation information.
     /// </summary>
     /// <param name="info">IP geolocation information retrieved from the API.</param>
