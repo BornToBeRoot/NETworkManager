@@ -91,5 +91,3 @@ Enables or disables the resolution of the used DNS resolver via [`ip-api.com`](h
 **Type:** `Boolean`
 
 **Default:** `Enabled`
-
-

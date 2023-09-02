@@ -39,7 +39,7 @@ public class IPApiIPGeolocationViewModel : ViewModelBase
         }
     }
 
-    public bool CheckIPGeoApiEnabled => SettingsManager.Current.Dashboard_CheckIPApiIPGeolocationEnabled;
+    public bool CheckIPGeoApiEnabled => SettingsManager.Current.Dashboard_CheckIPApiIPGeolocation;
     #endregion
 
     #region Constructor, load settings
@@ -103,7 +103,7 @@ public class IPApiIPGeolocationViewModel : ViewModelBase
     {
         switch (e.PropertyName)
         {
-            case nameof(SettingsInfo.Dashboard_CheckIPApiIPGeolocationEnabled):
+            case nameof(SettingsInfo.Dashboard_CheckIPApiIPGeolocation):
                 OnPropertyChanged(nameof(CheckIPGeoApiEnabled));
 
                 // Check if enabled via settings

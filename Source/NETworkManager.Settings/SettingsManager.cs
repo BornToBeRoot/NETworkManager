@@ -302,7 +302,7 @@ public static class SettingsManager
 
         // First run is required due to the new settings
         Log.Info("Set \"FirstRun\" to true...");
-        Current.FirstRun = true;
+        Current.WelcomeDialog_Show = true;
     }
     #endregion
 }

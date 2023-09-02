@@ -418,7 +418,7 @@ public class NetworkConnectionViewModel : ViewModelBase
     }
     #endregion
 
-    public bool CheckPublicIPAddressEnabled => SettingsManager.Current.Dashboard_CheckPublicIPAddressEnabled;
+    public bool CheckPublicIPAddressEnabled => SettingsManager.Current.Dashboard_CheckPublicIPAddress;
     #endregion
 
     #region Constructor, load settings
@@ -832,7 +832,7 @@ public class NetworkConnectionViewModel : ViewModelBase
     {
         switch (e.PropertyName)
         {
-            case nameof(SettingsInfo.Dashboard_CheckPublicIPAddressEnabled):
+            case nameof(SettingsInfo.Dashboard_CheckPublicIPAddress):
                 OnPropertyChanged(nameof(CheckPublicIPAddressEnabled));
 
                 // Check connection if enabled via settings

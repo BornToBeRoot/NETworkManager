@@ -360,7 +360,7 @@ public class TracerouteViewModel : ViewModelBase
                     SettingsManager.Current.Traceroute_MaximumHops,
                     true,
                     SettingsManager.Current.Traceroute_ResolveHostname,
-                    SettingsManager.Current.Traceroute_IPApiIPGeolocationEnabled
+                    SettingsManager.Current.Traceroute_CheckIPApiIPGeolocation
                 ));
 
             traceroute.HopReceived += Traceroute_HopReceived;

@@ -1933,7 +1933,7 @@ Spremembe te vrednosti bodo uveljavljene po ponovnem zagonu aplikacije.</value>
   <data name="CheckPublicIPAddress" xml:space="preserve">
     <value>Preveri javni naslov IP</value>
   </data>
-  <data name="FirstRunMessage" xml:space="preserve">
+  <data name="WelcomeMessage" xml:space="preserve">
     <value>Hvala, ker uporabljate NETworkManager! Če vam je to orodje všeč, pustite zvezdico na GitHubu in ga priporočite drugim.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
@@ -3618,7 +3618,7 @@ V zgornjem desnem kotu kliknite na gumb za Pomoč/Dokumentacijo (levo od gumba z
   <data name="HelpMessage_CheckIPGeolocation" xml:space="preserve">
     <value>Geolokacija IP se določi preko ip-api.com. URL: http://ip-api.com/</value>
   </data>
-  <data name="FirstRunPrivacyMessage" xml:space="preserve">
+  <data name="WelcomePrivacyMessage" xml:space="preserve">
     <value>Za zagotavljanje dodatnih funkcij se uporabljajo storitve tretjih oseb, ki jih ne upravljam jaz. Spodaj jih lahko prekličete. V nobenem trenutku se mi ne prenesejo nobeni podatki.</value>
   </data>
   <data name="CheckingDNSResolverDots" xml:space="preserve">

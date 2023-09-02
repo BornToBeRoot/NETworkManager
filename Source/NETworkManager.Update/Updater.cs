@@ -8,9 +8,9 @@ namespace NETworkManager.Update;
 /// <summary>
 /// Updater to check if a new program version is available.
 /// </summary>
-public class Updater
+public sealed class Updater
 {
-    private static readonly ILog _log = LogManager.GetLogger(typeof(Updater));
+    private static readonly ILog Log = LogManager.GetLogger(typeof(Updater));
 
     #region Events
     /// <summary>
@@ -22,7 +22,7 @@ public class Updater
     /// Triggers the <see cref="UpdateAvailable"/> event.
     /// </summary>
     /// <param name="e">Passes <see cref="UpdateAvailableArgs"/> to the event.</param>
-    protected virtual void OnUpdateAvailable(UpdateAvailableArgs e)
+    private void OnUpdateAvailable(UpdateAvailableArgs e)
     {
         UpdateAvailable?.Invoke(this, e);
     }
@@ -35,7 +35,7 @@ public class Updater
     /// <summary>
     /// Triggers the <see cref="NoUpdateAvailable"/> event.
     /// </summary>
-    protected virtual void OnNoUpdateAvailable()
+    private void OnNoUpdateAvailable()
     {
         NoUpdateAvailable?.Invoke(this, EventArgs.Empty);
     }
@@ -48,52 +48,50 @@ public class Updater
     /// <summary>
     /// Triggers the <see cref="Error"/> event.
     /// </summary>
-    /// <param name="e">Passes <see cref="UpdateErrorArgs"/> to the event.</param>
-    protected virtual void OnError()
+    private void OnError()
     {
         Error?.Invoke(this, EventArgs.Empty);
     }
     #endregion
 
     #region Methods
+
     /// <summary>
     /// Checks on GitHub whether a new version of the program is available
     /// </summary>
     /// <param name="userName">GitHub username like "BornToBeRoot".</param>
     /// <param name="projectName">GitHub repository like "NETworkManager".</param>
     /// <param name="currentVersion">Version like 1.2.0.0.</param>
+    /// <param name="includePreRelease">Include pre-release versions</param>
     public void CheckOnGitHub(string userName, string projectName, Version currentVersion, bool includePreRelease)
     {
         Task.Run(() =>
         {
             try
             {
-                _log.Info("Checking for new program version on GitHub...");
-
+                Log.Info("Checking for new program version on GitHub...");
+                
+                // Create GitHub client
                 var client = new GitHubClient(new ProductHeaderValue(userName + "_" + projectName));
 
-                Release release = null;
-
-                if (includePreRelease)
-                    release = client.Repository.Release.GetAll(userName, projectName).Result[0];
-                else
-                    release = client.Repository.Release.GetLatest(userName, projectName).Result;
+                // Get latest or pre-release version
+                var release = includePreRelease ? client.Repository.Release.GetAll(userName, projectName).Result[0] : client.Repository.Release.GetLatest(userName, projectName).Result;
 
                 // Compare versions (tag=2021.2.15.0, version=2021.2.15.0)
                 if (new Version(release.TagName) > currentVersion)
                 {
-                    _log.Info($"New version \"{release.TagName}\" is available on GitHub!");
+                    Log.Info($"New version \"{release.TagName}\" is available on GitHub!");
                     OnUpdateAvailable(new UpdateAvailableArgs(release));
                 }
                 else
                 {
-                    _log.Info("No new program version available on GitHub!");
+                    Log.Info("No new program version available on GitHub!");
                     OnNoUpdateAvailable();
                 }
             }
             catch (Exception ex)
             {
-                _log.Error("Error while checking for new program version on GitHub!", ex);
+                Log.Error("Error while checking for new program version on GitHub!", ex);
                 OnError();
             }
         });

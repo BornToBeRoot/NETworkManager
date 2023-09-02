@@ -19,6 +19,6 @@
         <TextBlock Text="{x:Static Member=localization:Strings.DNS}" Style="{StaticResource ResourceKey=HeaderTextBlock}" />
         <mah:ToggleSwitch Header="{x:Static Member=localization:Strings.ResolveHostname}" IsOn="{Binding ResolveHostname}" Margin="0,0,0,20"/>
         <TextBlock Text="{x:Static Member=localization:Strings.IPGeolocation}" Style="{StaticResource ResourceKey=HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{x:Static Member=localization:Strings.CheckIPGeolocation}" IsOn="{Binding IPApiIPGeolocationEnabled}" />
+        <mah:ToggleSwitch Header="{x:Static Member=localization:Strings.CheckIPGeolocation}" IsOn="{Binding CheckIPApiIPGeolocation}" />
     </StackPanel>
 </UserControl>

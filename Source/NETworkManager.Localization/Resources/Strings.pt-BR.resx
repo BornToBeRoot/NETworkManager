@@ -1937,7 +1937,7 @@ Alterar esse valor requer uma reinicialização do aplicativo para entrar em vig
   <data name="CheckPublicIPAddress" xml:space="preserve">
     <value>Verificar endereço de IP público</value>
   </data>
-  <data name="FirstRunMessage" xml:space="preserve">
+  <data name="WelcomeMessage" xml:space="preserve">
     <value>Obrigado por usar o NETworkManager!
 
 Para fornecer recursos adicionais, são usados serviços na Internet que não são operados por mim. Você pode desmarcá-los abaixo na seção de privacidade. Nenhum dado é transmitido para mim a qualquer momento.</value>

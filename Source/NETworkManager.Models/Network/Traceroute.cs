@@ -136,7 +136,7 @@ public class Traceroute
                     IPGeolocationResult ipGeolocationResult = null;
 
                     // Get IP geolocation info
-                    if (_options.IPApiIPGeolocationEnabled && ipAddressHop != null && !IPAddressHelper.IsPrivateIPAddress(ipAddressHop))
+                    if (_options.CheckIPApiIPGeolocation && ipAddressHop != null && !IPAddressHelper.IsPrivateIPAddress(ipAddressHop))
                         ipGeolocationResult =
                             await IPGeolocationService.GetInstance().GetIPGeolocationAsync($"{ipAddressHop}");
 

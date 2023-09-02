@@ -75,20 +75,20 @@ public class TracerouteSettingsViewModel : ViewModelBase
         }
     }
     
-    private bool _ipApiIPGeolocationEnabled;
+    private bool _checkIPApiIPGeolocation;
 
-    public bool IPApiIPGeolocationEnabled
+    public bool CheckIPApiIPGeolocation
     {
-        get => _ipApiIPGeolocationEnabled;
+        get => _checkIPApiIPGeolocation;
         set
         {
-          if(value == _ipApiIPGeolocationEnabled)
+          if(value == _checkIPApiIPGeolocation)
               return;
           
             if(!_isLoading)
-                SettingsManager.Current.Traceroute_IPApiIPGeolocationEnabled = value;
+                SettingsManager.Current.Traceroute_CheckIPApiIPGeolocation = value;
             
-            _ipApiIPGeolocationEnabled = value;
+            _checkIPApiIPGeolocation = value;
             OnPropertyChanged();
         }
     }
@@ -110,7 +110,7 @@ public class TracerouteSettingsViewModel : ViewModelBase
         Timeout = SettingsManager.Current.Traceroute_Timeout;
         Buffer = SettingsManager.Current.Traceroute_Buffer;
         ResolveHostname = SettingsManager.Current.Traceroute_ResolveHostname;
-        IPApiIPGeolocationEnabled = SettingsManager.Current.Traceroute_IPApiIPGeolocationEnabled;
+        CheckIPApiIPGeolocation = SettingsManager.Current.Traceroute_CheckIPApiIPGeolocation;
     }
     #endregion
 }

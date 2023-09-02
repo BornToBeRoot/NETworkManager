@@ -58,7 +58,7 @@ public static class CommandLineManager
                 } // Application
                 else if (param[0].Equals(ParameterApplication, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    if (System.Enum.TryParse(param[1], out ApplicationName application))
+                    if (Enum.TryParse(param[1], out ApplicationName application))
                     {
                         Current.Application = application;
                     }

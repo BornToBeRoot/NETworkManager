@@ -84,3 +84,14 @@ Resolve the hostname of the IP address (PTR lookup) for each hop.
 **Type:** `Boolean`
 
 **Default:** `True`
+
+### Check IP geolocation
+
+Enables or disables the resolution of the IP geolocation for each hop via [`ip-api.com`](https://ip-api.com/){:target="\_blank"}.
+
+{: .note}
+The free API endpoint is limited to 45 requests per minute, supports only the `http` protocol and is available for non-commercial use only.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`

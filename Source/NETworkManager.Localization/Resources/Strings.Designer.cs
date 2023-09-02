@@ -3734,26 +3734,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thank you for using NETworkManager!
-        ///
-        ///If you like this tool, please leave a star on GitHub and recommend it to others..
-        /// </summary>
-        public static string FirstRunMessage {
-            get {
-                return ResourceManager.GetString("FirstRunMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to To provide additional features, third party services are used that are not operated by me. You can deselect them below. No data is transferred to me at any time..
-        /// </summary>
-        public static string FirstRunPrivacyMessage {
-            get {
-                return ResourceManager.GetString("FirstRunPrivacyMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to First usable IP address.
         /// </summary>
         public static string FirstUsableIPAddress {
@@ -4065,7 +4045,7 @@ namespace NETworkManager.Localization.Resources {
         /// <summary>
         ///   Looks up a localized string similar to The DNS resolver is determined via ip-api.com.
         ///
-        ///URL: http://edns.ip-api.com/.
+        ///URL: https://edns.ip-api.com/.
         /// </summary>
         public static string HelpMessage_CheckDNSResolver {
             get {
@@ -10306,6 +10286,26 @@ namespace NETworkManager.Localization.Resources {
         public static string Welcome {
             get {
                 return ResourceManager.GetString("Welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thank you for using NETworkManager!
+        ///
+        ///If you like this tool, please leave a star on GitHub and recommend it to others..
+        /// </summary>
+        public static string WelcomeMessage {
+            get {
+                return ResourceManager.GetString("WelcomeMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To provide additional features, third party services are used that are not operated by me. You can deselect them below. No data is transferred to me at any time..
+        /// </summary>
+        public static string WelcomePrivacyMessage {
+            get {
+                return ResourceManager.GetString("WelcomePrivacyMessage", resourceCulture);
             }
         }
         

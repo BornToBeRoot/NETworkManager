@@ -1937,7 +1937,7 @@ Der Wert 0 deaktiviert diese Funktion.
   <data name="CheckPublicIPAddress" xml:space="preserve">
     <value>Überprüfen der öffentlichen IP-Adresse</value>
   </data>
-  <data name="FirstRunMessage" xml:space="preserve">
+  <data name="WelcomeMessage" xml:space="preserve">
     <value>Vielen Dank, dass Sie NETworkManager verwenden!
 
 Wenn Sie dieses Tool mögen, hinterlassen Sie bitte einen Star auf GitHub und empfehlen Sie es weiter.</value>
@@ -3639,7 +3639,7 @@ URL: http://edns.ip-api.com/</value>
 
 URL: http://ip-api.com/</value>
   </data>
-  <data name="FirstRunPrivacyMessage" xml:space="preserve">
+  <data name="WelcomePrivacyMessage" xml:space="preserve">
     <value>Um zusätzliche Features bereitzustellen, werden Dienste von Drittanbietern genutzt, die nicht von mir betrieben werden. Sie können diese unten abwählen. Es werden zu keinem Zeitpunkt Daten an mich übermittelt.</value>
   </data>
   <data name="CheckingDNSResolverDots" xml:space="preserve">
