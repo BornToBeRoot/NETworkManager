@@ -17,7 +17,7 @@ namespace NETworkManager.ViewModels;
 public class BitCalculatorViewModel : ViewModelBase
 {
     #region  Variables 
-    private static readonly ILog _log = LogManager.GetLogger(typeof(BitCalculatorViewModel));
+    private static readonly ILog Log = LogManager.GetLogger(typeof(BitCalculatorViewModel));
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly bool _isLoading = true;
@@ -159,7 +159,7 @@ public class BitCalculatorViewModel : ViewModelBase
         }
         else
         {
-            _log.Error($"Could not parse input \"{Input}\" into double!");
+            Log.Error($"Could not parse input \"{Input}\" into double!");
         }
 
         IsResultVisible = true;
