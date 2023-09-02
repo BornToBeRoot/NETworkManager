@@ -101,8 +101,8 @@
                 </ContextMenu>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (profiles:ProfileFileInfo.Name)}" MinWidth="150" Width="Auto" />
-                <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.IsEncrypted}" Binding="{Binding (profiles:ProfileFileInfo.IsEncrypted)}" Width="Auto"  />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding Path=(profiles:ProfileFileInfo.Name)}" MinWidth="150" Width="Auto" />
+                <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.IsEncrypted}" Binding="{Binding Path=(profiles:ProfileFileInfo.IsEncrypted)}" Width="Auto"  />
             </DataGrid.Columns>
             <DataGrid.InputBindings>
                 <KeyBinding Command="{Binding EditProfileFileCommand}" Key="F2" />

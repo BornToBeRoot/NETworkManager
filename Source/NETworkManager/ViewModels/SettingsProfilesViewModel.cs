@@ -81,14 +81,14 @@ public class SettingsProfilesViewModel : ViewModelBase
 
     #region ICommands & Actions
 
-    public ICommand OpenLocationCommand => new RelayCommand(p => OpenLocationAction());
+    public ICommand OpenLocationCommand => new RelayCommand(_ => OpenLocationAction());
 
     private static void OpenLocationAction()
     {
         Process.Start("explorer.exe", ProfileManager.GetProfilesFolderLocation());
     }
     
-    public ICommand AddProfileFileCommand => new RelayCommand(p => AddProfileFileAction());
+    public ICommand AddProfileFileCommand => new RelayCommand(_ => AddProfileFileAction());
 
     private async void AddProfileFileAction()
     {
