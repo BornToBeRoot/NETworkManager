@@ -1,8 +1,8 @@
-﻿using NETworkManager.Localization.Translators;
-using NETworkManager.Profiles;
+﻿using NETworkManager.Profiles;
 using System;
 using System.Globalization;
 using System.Windows.Data;
+using NETworkManager.Localization;
 
 namespace NETworkManager.Converters;
 
@@ -21,10 +21,9 @@ public sealed class ProfileViewNameToTranslatedStringConverter : IValueConverter
     /// <returns>Translated <see cref="ProfileViewName"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (!(value is ProfileViewName name))
-            return "-/-";
-
-        return ProfileViewNameTranslator.GetInstance().Translate(name);
+        return value is not ProfileViewName name
+            ? "-/-"
+            : ResourceTranslator.Translate(ResourceIdentifier.ProfileViewName, name);
     }
     
     /// <summary>

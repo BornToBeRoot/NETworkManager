@@ -1,8 +1,8 @@
-﻿using NETworkManager.Localization.Translators;
-using NETworkManager.Models.RemoteDesktop;
+﻿using NETworkManager.Models.RemoteDesktop;
 using System;
 using System.Globalization;
 using System.Windows.Data;
+using NETworkManager.Localization;
 
 namespace NETworkManager.Converters;
 
@@ -21,10 +21,10 @@ public sealed class RemoteDesktopAudioCaptureRedirectionModeToStringConverter : 
     /// <returns>Translated <see cref="AudioCaptureRedirectionMode"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is not AudioCaptureRedirectionMode audioCaptureRedirectionMode)
-            return "-/-";
-
-        return RemoteDesktopAudioCaptureRedirectionModeTranslator.GetInstance().Translate(audioCaptureRedirectionMode);
+        return value is not AudioCaptureRedirectionMode audioCaptureRedirectionMode
+            ? "-/-"
+            : ResourceTranslator.Translate(ResourceIdentifier.RemoteDesktopAudioCaptureRedirectionMode,
+                audioCaptureRedirectionMode);
     }
 
     /// <summary>

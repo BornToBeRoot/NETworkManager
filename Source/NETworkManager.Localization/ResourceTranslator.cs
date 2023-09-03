@@ -1,0 +1,15 @@
+﻿namespace NETworkManager.Localization;
+
+public static class ResourceTranslator
+{
+    /// <summary>
+    /// Translate the resource name to the localized value. Returns the value if no translation is found.
+    /// </summary>
+    /// <param name="identifier">Identifier of the resource to translate.</param>
+    /// <param name="value">Value of the resource to translate.</param>
+    /// <returns>Localized value of the resource. Returns the value if no translation is found.</returns>
+    public static string Translate(ResourceIdentifier identifier, object value)
+    {
+        return Resources.Strings.ResourceManager.GetString($"{identifier}_{value}", LocalizationManager.GetInstance().Culture) ?? value.ToString();
+    }
+}

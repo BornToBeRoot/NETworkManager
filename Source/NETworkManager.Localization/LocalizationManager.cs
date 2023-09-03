@@ -13,17 +13,17 @@ public class LocalizationManager
     /// <summary>
     /// Constant for the default culture code.
     /// </summary>
-    private const string _defaultCultureCode = "en-US";
+    private const string DefaultCultureCode = "en-US";
 
     /// <summary>
     /// Constant with the path to the flag images.
     /// </summary>
-    private const string _baseFlagImageUri = @"pack://application:,,,/NETworkManager.Localization;component/Resources/Flags/";
+    private const string BaseFlagImageUri = @"pack://application:,,,/NETworkManager.Localization;component/Resources/Flags/";
 
     /// <summary>
     /// Variable for the instance of the class.
     /// </summary>
-    private static LocalizationManager _instance = null;
+    private static LocalizationManager _instance;
 
     /// <summary>
     /// Returns the current instance of the class.
@@ -32,7 +32,7 @@ public class LocalizationManager
     /// </summary>
     /// <param name="cultureCode">Culture code (default is "en-US"). See also <see cref="LocalizationInfo.Code"/>.</param>
     /// <returns>Instance of the class.</returns>
-    public static LocalizationManager GetInstance(string cultureCode = _defaultCultureCode)
+    public static LocalizationManager GetInstance(string cultureCode = DefaultCultureCode)
     {
         _instance ??= new LocalizationManager(cultureCode);
 
@@ -44,17 +44,17 @@ public class LocalizationManager
     /// </summary>
     /// <param name="cultureCode">Culture code like "en-US".</param>
     /// <returns>Uri of the flag image.</returns>
-    public static Uri GetImageUri(string cultureCode)
+    private static Uri GetImageUri(string cultureCode)
     {
-        return new Uri(_baseFlagImageUri + cultureCode + ".png");
+        return new Uri($"{BaseFlagImageUri}{cultureCode}.png");
     }
 
     /// <summary>
     /// List with all <see cref="LocalizationInfo"/>s.
     /// </summary>
-    public static List<LocalizationInfo> List => new List<LocalizationInfo>
+    public static List<LocalizationInfo> List => new()
     {
-        // Offical
+        // Official
         new LocalizationInfo("English", "English", GetImageUri("en-US"), "en-US", true),
         new LocalizationInfo("German (Germany)", "Deutsch",  GetImageUri("de-DE"), "de-DE", true),
 
@@ -72,13 +72,12 @@ public class LocalizationManager
         new LocalizationInfo("Russian (Russia)", "Русский", GetImageUri("ru-RU"), "ru-RU"),
         new LocalizationInfo("Slovenian (Slovenia)", "slovenski jezik", GetImageUri("sl-SI"), "sl-SI"),
         new LocalizationInfo("Spanish (Spain)", "Español", GetImageUri("es-ES"), "es-ES")
-        
     };
 
     /// <summary>
     /// Variable with the currently used <see cref="LocalizationInfo"/>.
     /// </summary>
-    public LocalizationInfo Current { get; private set; } = new LocalizationInfo();
+    public LocalizationInfo Current { get; private set; } = new();
 
     /// <summary>
     /// Variable with the currently used <see cref="CultureInfo"/>.
@@ -89,7 +88,7 @@ public class LocalizationManager
     /// Create an instance and load the language based on the culture code.
     /// </summary>
     /// <param name="cultureCode">Culture code (default is "en-US"). See also <see cref="LocalizationInfo.Code"/>.</param>
-    private LocalizationManager(string cultureCode = _defaultCultureCode)
+    private LocalizationManager(string cultureCode = DefaultCultureCode)
     {
         if (string.IsNullOrEmpty(cultureCode))
             cultureCode = CultureInfo.CurrentCulture.Name;
@@ -111,14 +110,14 @@ public class LocalizationManager
     /// Method to get the <see cref="LocalizationInfo"/> based on the culture code.
     /// </summary>
     /// <param name="cultureCode"></param>
-    /// <returns>Return the <see cref="LocalizationInfo"/> or <see cref="null"/> if not found.</returns>
-    public static LocalizationInfo GetLocalizationInfoBasedOnCode(string cultureCode)
+    /// <returns>Return the <see cref="LocalizationInfo"/> or null if not found.</returns>
+    private static LocalizationInfo GetLocalizationInfoBasedOnCode(string cultureCode)
     {
-        return List.FirstOrDefault(x => x.Code == cultureCode) ?? null;
+        return List.FirstOrDefault(x => x.Code == cultureCode);
     }
 
     /// <summary>
-    /// Method to change the langauge.
+    /// Method to change the language.
     /// </summary>
     /// <param name="info"><see cref="LocalizationInfo"/></param>
     public void Change(LocalizationInfo info)
@@ -127,4 +126,6 @@ public class LocalizationManager
 
         Culture = new CultureInfo(info.Code);
     }
+    
+
 }

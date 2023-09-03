@@ -25,7 +25,7 @@ public sealed class IPAddressSubnetmaskTupleArrayToStringConverter : IValueConve
             if (!string.IsNullOrEmpty(result))
                 result += Environment.NewLine;
 
-            result += ipAddr.Item1.ToString() + "/" + Subnetmask.ConvertSubnetmaskToCidr(ipAddr.Item2);
+            result += ipAddr.Item1 + "/" + Subnetmask.ConvertSubnetmaskToCidr(ipAddr.Item2);
         }
 
         return result;

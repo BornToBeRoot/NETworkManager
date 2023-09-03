@@ -23,7 +23,6 @@ using NETworkManager.ViewModels;
 using ContextMenu = System.Windows.Controls.ContextMenu;
 using NETworkManager.Profiles;
 using NETworkManager.Localization;
-using NETworkManager.Localization.Translators;
 using NETworkManager.Update;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
@@ -591,7 +590,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
             // Search by TranslatedName and Name
             return info.IsVisible &&
-                   (regex.Replace(ApplicationNameTranslator.GetInstance().Translate(info.Name), "")
+                   (regex.Replace( ResourceTranslator.Translate(ResourceIdentifier.ApplicationName, info.Name), "")
                        .IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || regex
                        .Replace(info.Name.ToString(), "").Contains(search, StringComparison.OrdinalIgnoreCase));
         };

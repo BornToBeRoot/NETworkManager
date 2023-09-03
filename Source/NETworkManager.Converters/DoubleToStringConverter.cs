@@ -11,9 +11,10 @@ public sealed class DoubleToStringConverter : IValueConverter
         if (value == null)
             return "-/-";
 
-        double.TryParse(value.ToString(), out var doubleValue);
+        if (!double.TryParse(value.ToString(), out var doubleValue))
+            return "-/-";
 
-        return doubleValue == 0 ? "-/-" : doubleValue.ToString();
+        return doubleValue == 0 ? "-/-" : doubleValue.ToString(culture);
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

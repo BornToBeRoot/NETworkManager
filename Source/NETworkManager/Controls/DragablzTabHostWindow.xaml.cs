@@ -8,19 +8,19 @@ using System.Windows.Input;
 using NETworkManager.Utilities;
 using NETworkManager.Models.RemoteDesktop;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Localization.Translators;
 using NETworkManager.Models;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NETworkManager.Localization;
 
 namespace NETworkManager.Controls;
 
-public partial class DragablzTabHostWindow : INotifyPropertyChanged
+public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
 {
     #region PropertyChangedEventHandler
     public event PropertyChangedEventHandler PropertyChanged;
 
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    private void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
@@ -70,7 +70,7 @@ public partial class DragablzTabHostWindow : INotifyPropertyChanged
 
         InterTabController.Partition = applicationName.ToString();
 
-        Title = $"NETworkManager {AssemblyManager.Current.Version} - {ApplicationNameTranslator.GetInstance().Translate(applicationName)}";
+        Title = $"NETworkManager {AssemblyManager.Current.Version} - {ResourceTranslator.Translate(ResourceIdentifier.ApplicationName, applicationName)}";
 
         SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
     }
@@ -81,7 +81,7 @@ public partial class DragablzTabHostWindow : INotifyPropertyChanged
 
     private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
     {
-        // Switch between application identifiert...
+        // Switch between application identifiers...
         switch (_applicationName)
         {
             case ApplicationName.None:
@@ -125,8 +125,20 @@ public partial class DragablzTabHostWindow : INotifyPropertyChanged
             case ApplicationName.Whois:
                 ((WhoisView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                 break;
+            case ApplicationName.Dashboard:
+            case ApplicationName.NetworkInterface:
+            case ApplicationName.WiFi:
+            case ApplicationName.PingMonitor:
+            case ApplicationName.DiscoveryProtocol:
+            case ApplicationName.WakeOnLAN:
+            case ApplicationName.SubnetCalculator:
+            case ApplicationName.BitCalculator:
+            case ApplicationName.Lookup:
+            case ApplicationName.Connections:
+            case ApplicationName.Listeners:
+            case ApplicationName.ARPTable:
             default:
-                throw new ArgumentOutOfRangeException();
+                break;
         }
     }
 

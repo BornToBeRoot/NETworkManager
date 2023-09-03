@@ -237,6 +237,13 @@ public class TracerouteViewModel : ViewModelBase
 
         EventSystem.RedirectToApplication(app, host);
     }
+    
+    public ICommand CopyDataToClipboardCommand => new RelayCommand(CopyDataToClipboardAction);
+
+    private void CopyDataToClipboardAction(object data)
+    {
+        ClipboardHelper.SetClipboard(data.ToString());
+    }
 
     public ICommand PerformDNSLookupIPAddressCommand => new RelayCommand(_ => PerformDNSLookupIPAddressAction());
 
@@ -250,48 +257,6 @@ public class TracerouteViewModel : ViewModelBase
     private void PerformDNSLookupHostnameAction()
     {
         EventSystem.RedirectToApplication(ApplicationName.DNSLookup, SelectedTraceResult.Hostname);
-    }
-
-    public ICommand CopySelectedHopCommand => new RelayCommand(_ => CopySelectedHopAction());
-
-    private void CopySelectedHopAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedTraceResult.Hop.ToString());
-    }
-
-    public ICommand CopySelectedTime1Command => new RelayCommand(_ => CopySelectedTime1Action());
-
-    private void CopySelectedTime1Action()
-    {
-        ClipboardHelper.SetClipboard(SelectedTraceResult.Time1.ToString(CultureInfo.CurrentCulture));
-    }
-
-    public ICommand CopySelectedTime2Command => new RelayCommand(_ => CopySelectedTime2Action());
-
-    private void CopySelectedTime2Action()
-    {
-        ClipboardHelper.SetClipboard(SelectedTraceResult.Time2.ToString(CultureInfo.CurrentCulture));
-    }
-
-    public ICommand CopySelectedTime3Command => new RelayCommand(_ => CopySelectedTime3Action());
-
-    private void CopySelectedTime3Action()
-    {
-        ClipboardHelper.SetClipboard(SelectedTraceResult.Time3.ToString(CultureInfo.CurrentCulture));
-    }
-
-    public ICommand CopySelectedIPAddressCommand => new RelayCommand(_ => CopySelectedIPAddressAction());
-
-    private void CopySelectedIPAddressAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedTraceResult.IPAddress.ToString());
-    }
-
-    public ICommand CopySelectedHostnameCommand => new RelayCommand(_ => CopySelectedHostnameAction());
-
-    private void CopySelectedHostnameAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedTraceResult.Hostname);
     }
 
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());

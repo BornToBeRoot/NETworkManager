@@ -1,8 +1,8 @@
-﻿using NETworkManager.Localization.Translators;
-using NETworkManager.Models;
+﻿using NETworkManager.Models;
 using System;
 using System.Globalization;
 using System.Windows.Data;
+using NETworkManager.Localization;
 
 namespace NETworkManager.Converters;
 
@@ -21,10 +21,9 @@ public sealed class ApplicationNameToTranslatedStringConverter : IValueConverter
     /// <returns>Translated <see cref="ApplicationName"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (!(value is ApplicationName name))
-            return "-/-";
-
-        return ApplicationNameTranslator.GetInstance().Translate(name);
+        return value is not ApplicationName name
+            ? "-/-"
+            : ResourceTranslator.Translate(ResourceIdentifier.ApplicationName, name);
     }
     
     /// <summary>

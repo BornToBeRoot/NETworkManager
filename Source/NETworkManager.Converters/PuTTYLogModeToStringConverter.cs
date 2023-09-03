@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using NETworkManager.Localization.Translators;
+using NETworkManager.Localization;
 using NETworkManager.Models.PuTTY;
 
 namespace NETworkManager.Converters;
@@ -21,10 +21,9 @@ public sealed class PuTTYLogModeToStringConverter : IValueConverter
     /// <returns>Translated <see cref="LogMode"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (!(value is LogMode audioRedirectionMode))
-            return "-/-";
-
-        return PuTTYLogModeTranslator.GetInstance().Translate(audioRedirectionMode);
+        return value is not LogMode logMode
+            ? "-/-"
+            : ResourceTranslator.Translate(ResourceIdentifier.PuTTYLogMode, logMode);
     }
 
     /// <summary>

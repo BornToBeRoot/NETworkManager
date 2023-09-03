@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using NETworkManager.Documentation;
-using NETworkManager.Localization.Translators;
+using NETworkManager.Localization;
 using NETworkManager.Models;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
@@ -163,7 +163,7 @@ public class SettingsViewModel : ViewModelBase
             var search = regex.Replace(Search, "");
 
             // Search by TranslatedName and Name
-            return regex.Replace(SettingsViewNameTranslator.GetInstance().Translate(info.Name), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || (regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
+            return regex.Replace(ResourceTranslator.Translate(ResourceIdentifier.SettingsViewName, info.Name), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || (regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
         };
     }
     #endregion

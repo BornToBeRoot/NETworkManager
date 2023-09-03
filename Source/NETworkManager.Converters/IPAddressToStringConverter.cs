@@ -9,7 +9,7 @@ public sealed class IPAddressToStringConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return !(value is IPAddress) ? "-/-" : ((IPAddress)value).ToString();
+        return value is IPAddress address ? address.ToString() : "-/-";
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

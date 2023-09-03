@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using NETworkManager.Localization.Translators;
+using NETworkManager.Localization;
 using NETworkManager.Models.RemoteDesktop;
 
 namespace NETworkManager.Converters;
@@ -21,10 +21,7 @@ public sealed class RemoteDesktopNetworkConnectionTypeToStringConverter : IValue
     /// <returns>Translated <see cref="NetworkConnectionType"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is not NetworkConnectionType networkConnectionType)
-            return "-/-";
-
-        return RemoteDesktopNetworkConnectionTypeTranslator.GetInstance().Translate(networkConnectionType);
+        return value is not NetworkConnectionType networkConnectionType ? "-/-" : ResourceTranslator.Translate(ResourceIdentifier.RemoteDesktopNetworkConnectionType, networkConnectionType);
     }
 
     /// <summary>

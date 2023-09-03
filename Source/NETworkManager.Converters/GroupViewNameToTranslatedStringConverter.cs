@@ -1,8 +1,8 @@
-﻿using NETworkManager.Localization.Translators;
-using NETworkManager.Profiles;
+﻿using NETworkManager.Profiles;
 using System;
 using System.Globalization;
 using System.Windows.Data;
+using NETworkManager.Localization;
 
 namespace NETworkManager.Converters;
 
@@ -21,10 +21,9 @@ public sealed class GroupViewNameToTranslatedStringConverter : IValueConverter
     /// <returns>Translated <see cref="GroupViewName"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is not GroupViewName name)
-            return "-/-";
-
-        return GroupViewNameTranslator.GetInstance().Translate(name);
+        return value is not GroupViewName name
+            ? "-/-"
+            : ResourceTranslator.Translate(ResourceIdentifier.GroupViewName, name);
     }
     
     /// <summary>

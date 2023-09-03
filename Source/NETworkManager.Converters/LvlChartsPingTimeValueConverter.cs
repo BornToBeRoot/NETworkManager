@@ -18,7 +18,7 @@ public sealed class LvlChartsPingTimeValueConverter : IValueConverter
     /// <returns></returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value != null && value is LvlChartsDefaultInfo info)
+        if (value is LvlChartsDefaultInfo info)
             return $"{info.Value} ms";
 
         return "-/-";

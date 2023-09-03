@@ -16,7 +16,6 @@ using NETworkManager.Models.Export;
 using NETworkManager.Views;
 using System.Threading.Tasks;
 using NETworkManager.Localization;
-using NETworkManager.Localization.Translators;
 
 namespace NETworkManager.ViewModels;
 
@@ -206,7 +205,7 @@ public class ConnectionsViewModel : ViewModelBase
                 return true;
 
             // Search by local/remote IP Address, local/remote Port, Protocol and State
-            return info.LocalIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.LocalPort.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.RemoteIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.RemotePort.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.Protocol.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || TcpStateTranslator.GetInstance().Translate(info.TcpState).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
+            return info.LocalIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.LocalPort.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.RemoteIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.RemotePort.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.Protocol.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || ResourceTranslator.Translate(ResourceIdentifier.TcpState, info.TcpState).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
         // Get connections
@@ -277,7 +276,7 @@ public class ConnectionsViewModel : ViewModelBase
 
     private void CopySelectedStateAction()
     {
-        ClipboardHelper.SetClipboard(TcpStateTranslator.GetInstance().Translate(SelectedConnectionInfo.TcpState));
+        ClipboardHelper.SetClipboard(ResourceTranslator.Translate(ResourceIdentifier.TcpState, SelectedConnectionInfo.TcpState));
     }
 
     public ICommand ExportCommand => new RelayCommand(p => ExportAction());

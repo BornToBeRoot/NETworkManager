@@ -8,10 +8,7 @@ public sealed class WiFiNetworkRssiInDecibelMilliwattsToSignalStrengthStringConv
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is not double networkRssiInDecibelMilliwatts)
-            return "-/-";
-
-        return $"{networkRssiInDecibelMilliwatts} dBm";
+        return value is not double networkRssiInDecibelMilliwatts ? "-/-" : $"{networkRssiInDecibelMilliwatts} dBm";
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

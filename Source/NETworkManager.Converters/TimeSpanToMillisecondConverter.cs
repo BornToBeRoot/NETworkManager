@@ -8,11 +8,7 @@ public sealed class TimeSpanToMillisecondConverter : IValueConverter
 {        
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is not TimeSpan timeSpan)
-            return "-/-";
-
-
-        return $"{timeSpan.TotalMilliseconds} ms";
+        return value is not TimeSpan timeSpan ? "-/-" : $"{timeSpan.TotalMilliseconds} ms";
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

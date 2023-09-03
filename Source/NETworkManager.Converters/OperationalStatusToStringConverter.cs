@@ -9,10 +9,7 @@ public sealed class OperationalStatusToStringConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (!(value is OperationalStatus operationalStatus))
-            return "-/-";
-        
-        return operationalStatus.ToString();
+        return value is not OperationalStatus operationalStatus ? "-/-" : operationalStatus.ToString();
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

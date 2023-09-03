@@ -1,8 +1,8 @@
-﻿using NETworkManager.Localization.Translators;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Net.NetworkInformation;
 using System.Windows.Data;
+using NETworkManager.Localization;
 
 namespace NETworkManager.Converters;
 
@@ -20,11 +20,10 @@ public sealed class IPStatusToStringConverter : IValueConverter
     /// <param name="culture"></param>
     /// <returns>Translated <see cref="IPStatus"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    { 
-        if (value is not IPStatus ipStatus)
-            return "-/-";
-                    
-        return IPStatusTranslator.GetInstance().Translate(ipStatus);
+    {
+        return value is not IPStatus ipStatus
+            ? "-/-"
+            : ResourceTranslator.Translate(ResourceIdentifier.IPStatus, ipStatus);
     }
 
     /// <summary>

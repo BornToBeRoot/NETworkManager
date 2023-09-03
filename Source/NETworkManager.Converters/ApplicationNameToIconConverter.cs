@@ -21,10 +21,7 @@ public sealed class ApplicationNameToIconConverter : IValueConverter
     /// <returns>Icon (cref="Canvas"/>).</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is not ApplicationName name)
-            return null;
-
-        return ApplicationManager.GetIcon(name);
+        return value is not ApplicationName name ? null : ApplicationManager.GetIcon(name);
     }
     
     /// <summary>

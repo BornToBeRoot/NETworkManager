@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using NETworkManager.Localization.Translators;
+using NETworkManager.Localization;
 using NETworkManager.Models.RemoteDesktop;
 
 namespace NETworkManager.Converters;
@@ -21,10 +21,7 @@ public sealed class RemoteDesktopAudioRedirectionModeToStringConverter : IValueC
     /// <returns>Translated <see cref="AudioRedirectionMode"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is not AudioRedirectionMode audioRedirectionMode)
-            return "-/-";
-
-        return RemoteDesktopAudioRedirectionModeTranslator.GetInstance().Translate(audioRedirectionMode);
+        return value is not AudioRedirectionMode audioRedirectionMode ? "-/-" : ResourceTranslator.Translate(ResourceIdentifier.RemoteDesktopAudioRedirectionMode, audioRedirectionMode);
     }
 
     /// <summary>

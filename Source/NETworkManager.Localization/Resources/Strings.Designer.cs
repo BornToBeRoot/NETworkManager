@@ -3950,6 +3950,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string GroupViewName_General {
+            get {
+                return ResourceManager.GetString("GroupViewName_General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Headers.
         /// </summary>
         public static string Headers {

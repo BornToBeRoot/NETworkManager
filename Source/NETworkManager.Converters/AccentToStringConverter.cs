@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using NETworkManager.Localization.Translators;
+using NETworkManager.Localization;
 using NETworkManager.Models.Appearance;
 
 namespace NETworkManager.Converters;
@@ -11,7 +11,6 @@ namespace NETworkManager.Converters;
 /// </summary>
 public sealed class AccentToStringConverter : IValueConverter
 {
-
     /// <summary>
     /// Convert <see cref="AccentColorInfo"/> to translated <see cref="string"/>. 
     /// </summary>
@@ -22,10 +21,7 @@ public sealed class AccentToStringConverter : IValueConverter
     /// <returns>Translated <see cref="AccentColorInfo"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (!(value is string accent))
-            return "-/-";
-
-        return AccentTranslator.GetInstance().Translate(accent);
+        return value is not string accent ? "-/-" : ResourceTranslator.Translate(ResourceIdentifier.Accent, accent);
     }
 
     /// <summary>
