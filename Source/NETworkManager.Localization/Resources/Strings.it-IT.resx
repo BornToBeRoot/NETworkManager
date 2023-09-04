@@ -1953,9 +1953,9 @@ Le modifiche a questo valore avranno effetto dopo il riavvio dell'applicazione.<
     <value>Controlla l'indirizzo IP pubblico</value>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
-    <value>Grazie per l'uso di NETworkManager!
+    <value>Grazie per aver utilizzato NETworkManager!
 
-Se ti piace questo programma, valutalo  su GitHub e consiglialo ad altri.</value>
+Se ti piace questo strumento, lascia una stella su GitHub e consiglialo ad altri.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Quando parte, il programma verifica in background se sono disponibili nuove versioni su GitHub.
@@ -3013,9 +3013,6 @@ Questo limite è impostato dall'amministratore del server o dai criteri di rete.
   <data name="DeleteProfilesMessage" xml:space="preserve">
     <value>I profili selezionati verranno eliminati definitivamente.</value>
   </data>
-  <data name="UnlockTheProfileFileMessage2" xml:space="preserve">
-    <value>Per aggiungere, modificare o eliminare un profilo sblocca il file del profilo!</value>
-  </data>
   <data name="UseCustomThemes" xml:space="preserve">
     <value>Usa temi personalizzati</value>
   </data>
@@ -3715,9 +3712,9 @@ Disponibile solo se la modalità è "SSH", "Telnet" o "Rlogin".</value>
     <value>Verifica geolocalizzazione IP</value>
   </data>
   <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
-    <value>Il risoutore DNS viene determinato tramite ip-api.com.
+    <value>Il risolutore DNS viene determinato tramite ip-api.com.
 
-URL: http://edns.ip-api.com/</value>
+URL: https://edns.ip-api.com/</value>
   </data>
   <data name="HelpMessage_CheckIPGeolocation" xml:space="preserve">
     <value>La geolocalizzazione IP viene determinata tramite ip-api.com.
@@ -3725,9 +3722,9 @@ URL: http://edns.ip-api.com/</value>
 URL: http://ip-api.com/</value>
   </data>
   <data name="WelcomePrivacyMessage" xml:space="preserve">
-    <value>Per fornire funzionalità aggiuntive, vengono usati servizi di terze parti che non sono gestiti dall'autore del programma.
+    <value>Per fornire funzionalità aggiuntive, vengono utilizzati servizi di terze parti che non sono gestiti da me. 
 Puoi deselezionarli di seguito. 
-In qualsiasi momento nessun dato vierrà trasferito all'autore del programma.</value>
+Nessun dato viene inviato ll'autore in nessun momento.</value>
   </data>
   <data name="CheckingDNSResolverDots" xml:space="preserve">
     <value>Verifica risolutore DNS...</value>
@@ -3744,5 +3741,15 @@ Riprova tra qualche secondo.</value>
   </data>
   <data name="HTTPStatusCode" xml:space="preserve">
     <value>Codice stato HTTP</value>
+  </data>
+  <data name="Accen_Steel" xml:space="preserve">
+    <value>Acciaio</value>
+  </data>
+  <data name="RateLimitReachedMessage" xml:space="preserve">
+    <value>Raggiunto limite rapporto! 
+Riprova tra qualche secondo...</value>
+  </data>
+  <data name="GroupViewName_General" xml:space="preserve">
+    <value>Generale</value>
   </data>
 </root>
