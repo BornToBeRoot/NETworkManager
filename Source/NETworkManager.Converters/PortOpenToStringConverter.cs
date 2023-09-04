@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using NETworkManager.Localization.Translators;
+using NETworkManager.Localization;
 using NETworkManager.Models.Network;
 
 namespace NETworkManager.Converters;
@@ -21,10 +21,7 @@ public sealed class PortOpenToStringConverter : IValueConverter
     /// <returns>Translated <see cref="PortState"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is not bool portState)
-            return "-/-";
-
-        return portState ? PortStateTranslator.GetInstance().Translate(PortState.Open) : PortStateTranslator.GetInstance().Translate(PortState.Closed);
+        return value is not bool portState ? "-/-" : ResourceTranslator.Translate(ResourceIdentifier.PortState, portState ? PortState.Open : PortState.Closed);
     }
     
     /// <summary>

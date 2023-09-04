@@ -40,7 +40,7 @@ public class IPApiDNSResolverViewModel : ViewModelBase
         }
     }
 
-    public bool CheckIPDNSApiEnabled => SettingsManager.Current.Dashboard_CheckIPApiDNSResolverEnabled;
+    public bool CheckIPDNSApiEnabled => SettingsManager.Current.Dashboard_CheckIPApiDNSResolver;
     #endregion
 
     #region Constructor, load settings
@@ -107,7 +107,7 @@ public class IPApiDNSResolverViewModel : ViewModelBase
     {
         switch (e.PropertyName)
         {
-            case nameof(SettingsInfo.Dashboard_CheckIPApiDNSResolverEnabled):
+            case nameof(SettingsInfo.Dashboard_CheckIPApiDNSResolver):
                 OnPropertyChanged(nameof(CheckIPDNSApiEnabled));
 
                 // Check if enabled via settings

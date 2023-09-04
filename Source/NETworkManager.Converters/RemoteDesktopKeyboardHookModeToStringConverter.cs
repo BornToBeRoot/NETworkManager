@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using NETworkManager.Localization.Translators;
+using NETworkManager.Localization;
 using NETworkManager.Models.RemoteDesktop;
 
 namespace NETworkManager.Converters;
@@ -21,10 +21,7 @@ public sealed class RemoteDesktopKeyboardHookModeToStringConverter : IValueConve
     /// <returns>Translated <see cref="KeyboardHookMode"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is not KeyboardHookMode keyboardHookMode)
-            return "-/-";
-
-        return RemoteDesktopKeyboardHookModeTranslator.GetInstance().Translate(keyboardHookMode);                        
+        return value is not KeyboardHookMode keyboardHookMode ? "-/-" : ResourceTranslator.Translate(ResourceIdentifier.RemoteDesktopKeyboardHookMode, keyboardHookMode);
     }
 
     /// <summary>

@@ -9,10 +9,7 @@ public sealed class WiFiChannelCenterFrequencyToChannelStringConvertert : IValue
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is not int channelCenterFrequencyInKilohertz)
-            return "-/-";
-
-        return $"{WiFi.GetChannelFromChannelFrequency(channelCenterFrequencyInKilohertz)}";
+        return value is not int channelCenterFrequencyInKilohertz ? "-/-" : $"{WiFi.GetChannelFromChannelFrequency(channelCenterFrequencyInKilohertz)}";
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

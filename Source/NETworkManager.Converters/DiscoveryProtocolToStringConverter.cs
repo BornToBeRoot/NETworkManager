@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using NETworkManager.Localization.Translators;
+using NETworkManager.Localization;
 using NETworkManager.Models.Network;
 
 namespace NETworkManager.Converters;
@@ -21,10 +21,10 @@ public sealed class DiscoveryProtocolToStringConverter : IValueConverter
     /// <returns>Translated <see cref="DiscoveryProtocol.Protocol"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (!(value is DiscoveryProtocol.Protocol discoveryProtocol))
-            return "-/-";
-
-        return DiscoveryProtocolTranslator.GetInstance().Translate(discoveryProtocol);
+        return value is not DiscoveryProtocol.Protocol discoveryProtocol
+            ? "-/-"
+            : ResourceTranslator.Translate(ResourceIdentifier.DiscoveryProtocolIdentifier,
+                discoveryProtocol);
     }
 
     /// <summary>

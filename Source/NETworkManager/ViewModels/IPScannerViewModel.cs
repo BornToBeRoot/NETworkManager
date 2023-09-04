@@ -22,7 +22,6 @@ using NETworkManager.Views;
 using System.Text.RegularExpressions;
 using NETworkManager.Profiles;
 using NETworkManager.Localization;
-using NETworkManager.Localization.Translators;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
 using System.Threading.Tasks;
@@ -290,13 +289,12 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private void RedirectDataToApplicationAction(object name)
     {
-        if (name is not string appName)
+        if(name is not ApplicationName applicationName)
             return;
 
-        if (!Enum.TryParse(appName, out ApplicationName applicationName))
-            return;
-
-        var host = !string.IsNullOrEmpty(SelectedResult.Hostname) ? SelectedResult.Hostname : SelectedResult.PingInfo.IPAddress.ToString();
+        var host = !string.IsNullOrEmpty(SelectedResult.Hostname) 
+            ? SelectedResult.Hostname 
+            : SelectedResult.PingInfo.IPAddress.ToString();
 
         EventSystem.RedirectToApplication(applicationName, host);
     }
@@ -363,14 +361,14 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private void CopySelectedPortStatusAction()
     {
-        ClipboardHelper.SetClipboard(PortStateTranslator.GetInstance().Translate(SelectedResult.IsAnyPortOpen ? PortState.Open : PortState.Closed));
+        ClipboardHelper.SetClipboard(ResourceTranslator.Translate(ResourceIdentifier.PortState, SelectedResult.IsAnyPortOpen ? PortState.Open : PortState.Closed));
     }
     
     public ICommand CopySelectedPingStatusCommand => new RelayCommand(p => CopySelectedPingStatusAction());
 
     private void CopySelectedPingStatusAction()
     {
-        ClipboardHelper.SetClipboard(IPStatusTranslator.GetInstance().Translate(SelectedResult.PingInfo.Status));
+        ClipboardHelper.SetClipboard(ResourceTranslator.Translate(ResourceIdentifier.PortState, SelectedResult.PingInfo.Status));
     }
 
     public ICommand CopySelectedMACAddressCommand => new RelayCommand(p => CopySelectedMACAddressAction());
@@ -395,7 +393,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         foreach(var port in SelectedResult.Ports)
         {
-            stringBuilder.AppendLine($"{port.Port}/{port.LookupInfo.Protocol},{PortStateTranslator.GetInstance().Translate(port.State)},{port.LookupInfo.Service},{port.LookupInfo.Description}");
+            stringBuilder.AppendLine($"{port.Port}/{port.LookupInfo.Protocol},{ResourceTranslator.Translate(ResourceIdentifier.PortState, port.State)},{port.LookupInfo.Service},{port.LookupInfo.Description}");
         }
 
         ClipboardHelper.SetClipboard(stringBuilder.ToString());

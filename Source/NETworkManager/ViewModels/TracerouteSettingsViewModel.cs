@@ -74,6 +74,24 @@ public class TracerouteSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+    
+    private bool _checkIPApiIPGeolocation;
+
+    public bool CheckIPApiIPGeolocation
+    {
+        get => _checkIPApiIPGeolocation;
+        set
+        {
+          if(value == _checkIPApiIPGeolocation)
+              return;
+          
+            if(!_isLoading)
+                SettingsManager.Current.Traceroute_CheckIPApiIPGeolocation = value;
+            
+            _checkIPApiIPGeolocation = value;
+            OnPropertyChanged();
+        }
+    }
     #endregion
 
     #region Constructor, load settings
@@ -92,6 +110,7 @@ public class TracerouteSettingsViewModel : ViewModelBase
         Timeout = SettingsManager.Current.Traceroute_Timeout;
         Buffer = SettingsManager.Current.Traceroute_Buffer;
         ResolveHostname = SettingsManager.Current.Traceroute_ResolveHostname;
+        CheckIPApiIPGeolocation = SettingsManager.Current.Traceroute_CheckIPApiIPGeolocation;
     }
     #endregion
 }

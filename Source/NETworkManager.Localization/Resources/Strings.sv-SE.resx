@@ -1934,7 +1934,7 @@ Changes to this value will take effect after restarting the application.</value>
   <data name="CheckPublicIPAddress" xml:space="preserve">
     <value>Check public IP address</value>
   </data>
-  <data name="FirstRunMessage" xml:space="preserve">
+  <data name="WelcomeMessage" xml:space="preserve">
     <value>Thanks for using NETworkManager!
 
 To provide additional features the application uses services on the Internet that are not operated by me. No data will be sent to me at any time.</value>

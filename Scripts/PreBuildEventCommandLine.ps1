@@ -3,14 +3,13 @@
 
 param(
     [Parameter(
-        Position=0,
-        Mandatory=$true)]
+        Position = 0,
+        Mandatory = $true)]
     [String]$OutPath
 )
 
 # Fix wrong path (if there is no blank in the path, a quote will be added to the end...)
-if(-not($OutPath.StartsWith('"')))
-{
+if (-not($OutPath.StartsWith('"'))) {
     $OutPath = $OutPath.TrimEnd('"')
 }
 
@@ -18,15 +17,16 @@ if(-not($OutPath.StartsWith('"')))
 $OutPath = $OutPath + "\lib"
 
 # Create folder
-New-Item -ItemType Directory -Path $OutPath
+if (-not(Test-Path -Path $OutPath -PathType Container)) {
+    New-Item -ItemType Directory -Path $OutPath
+}
 
 ################################################
 ### Generate MSTSCLib.dll and AxMSTSCLib.dll ###
 ################################################
 
 # Test if files are already there...
-if((Test-Path -Path "$OutPath\MSTSCLib.dll") -and (Test-Path -Path "$OutPath\AxMSTSCLib.dll"))
-{
+if ((Test-Path -Path "$OutPath\MSTSCLib.dll") -and (Test-Path -Path "$OutPath\AxMSTSCLib.dll")) {
     Write-Host "MSTSCLib.dll and AxMSTSCLib.dll exist! Continue..."
     return
 }
@@ -34,8 +34,7 @@ if((Test-Path -Path "$OutPath\MSTSCLib.dll") -and (Test-Path -Path "$OutPath\AxM
 # Detect x86 or x64
 $ProgramFiles_Path = ${Env:ProgramFiles(x86)}
 
-if([String]::IsNullOrEmpty($ProgramFiles_Path))
-{
+if ([String]::IsNullOrEmpty($ProgramFiles_Path)) {
     $ProgramFiles_Path = $Env:ProgramFiles    
 }
 
@@ -44,8 +43,7 @@ $AximpPath = ((Get-ChildItem -Path "$ProgramFiles_Path\Microsoft SDKs\Windows" -
 $IldasmPath = ((Get-ChildItem -Path "$ProgramFiles_Path\Microsoft SDKs\Windows" -Recurse -Filter "ildasm.exe" -File) | Sort-Object CreationTime | Select-Object -First 1).FullName
 $IlasmPath = ((Get-ChildItem -Path "$($Env:windir)\Microsoft.NET\Framework\" -Recurse -Filter "ilasm.exe" -File) | Sort-Object CreationTime | Select-Object -First 1).FullName
 
-if([String]::IsNullOrEmpty($AximpPath) -or [String]::IsNullOrEmpty($IldasmPath) -or [String]::IsNullOrEmpty($IlasmPath))
-{
+if ([String]::IsNullOrEmpty($AximpPath) -or [String]::IsNullOrEmpty($IldasmPath) -or [String]::IsNullOrEmpty($IlasmPath)) {
     Write-Host "Could not find sdk tools:`naximp.exe`t=>`t$AximpPath`nildasm.exe`t=>`t$IldasmPath`nilasm.exe`t=>`t$IlasmPath"
     return
 }

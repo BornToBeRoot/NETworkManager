@@ -10,10 +10,10 @@ public sealed class PhysicalAddressToStringConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (!(value is PhysicalAddress physicalAddress))
+        if (value is not PhysicalAddress physicalAddress)
             return string.Empty;
 
-        string macAddress = physicalAddress.ToString();
+        var macAddress = physicalAddress.ToString();
 
         return string.IsNullOrEmpty(macAddress) ? string.Empty : MACAddressHelper.GetDefaultFormat(macAddress);
     }

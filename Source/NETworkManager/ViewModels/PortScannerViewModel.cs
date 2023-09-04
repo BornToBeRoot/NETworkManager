@@ -19,7 +19,7 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
-using NETworkManager.Localization.Translators;
+using NETworkManager.Localization;
 using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels;
@@ -314,7 +314,7 @@ public class PortScannerViewModel : ViewModelBase
 
     private void CopySelectedStatusAction()
     {
-        ClipboardHelper.SetClipboard(PortStateTranslator.GetInstance().Translate(SelectedResult.State));
+        ClipboardHelper.SetClipboard(ResourceTranslator.Translate(ResourceIdentifier.PortState, SelectedResult.State));
     }
 
     public ICommand CopySelectedProtocolCommand => new RelayCommand(p => CopySelectedProtocolAction());

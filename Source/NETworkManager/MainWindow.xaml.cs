@@ -23,7 +23,6 @@ using NETworkManager.ViewModels;
 using ContextMenu = System.Windows.Controls.ContextMenu;
 using NETworkManager.Profiles;
 using NETworkManager.Localization;
-using NETworkManager.Localization.Translators;
 using NETworkManager.Update;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
@@ -42,15 +41,18 @@ namespace NETworkManager;
 public sealed partial class MainWindow : INotifyPropertyChanged
 {
     #region PropertyChangedEventHandler
+
     public event PropertyChangedEventHandler PropertyChanged;
 
     private void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
+
     #endregion
 
     #region Variables
+
     private static readonly ILog Log = LogManager.GetLogger(typeof(MainWindow));
 
     private NotifyIcon _notifyIcon;
@@ -66,6 +68,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     private bool _closeApplication;
 
     private bool _expandApplicationView;
+
     public bool ExpandApplicationView
     {
         get => _expandApplicationView;
@@ -86,6 +89,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     }
 
     private bool _isTextBoxSearchFocused;
+
     public bool IsTextBoxSearchFocused
     {
         get => _isTextBoxSearchFocused;
@@ -103,6 +107,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     }
 
     private bool _isApplicationListOpen;
+
     public bool IsApplicationListOpen
     {
         get => _isApplicationListOpen;
@@ -120,6 +125,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     }
 
     private bool _isMouseOverApplicationList;
+
     public bool IsMouseOverApplicationList
     {
         get => _isMouseOverApplicationList;
@@ -137,6 +143,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     }
 
     private ICollectionView _applications;
+
     public ICollectionView Applications
     {
         get => _applications;
@@ -151,6 +158,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     }
 
     private ApplicationInfo _selectedApplication;
+
     public ApplicationInfo SelectedApplication
     {
         get => _selectedApplication;
@@ -178,6 +186,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     private ApplicationName _searchLastSelectedApplicationName;
 
     private string _search = string.Empty;
+
     public string Search
     {
         get => _search;
@@ -197,7 +206,10 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
             // Try to select the last selected application
             if (!Applications.IsEmpty && SelectedApplication == null)
-                SelectedApplication = Applications.Cast<ApplicationInfo>().FirstOrDefault(x => x.Name == _searchLastSelectedApplicationName) ?? Applications.Cast<ApplicationInfo>().FirstOrDefault();
+                SelectedApplication =
+                    Applications.Cast<ApplicationInfo>()
+                        .FirstOrDefault(x => x.Name == _searchLastSelectedApplicationName) ??
+                    Applications.Cast<ApplicationInfo>().FirstOrDefault();
 
             // Show note if nothing was found
             SearchNothingFound = Applications.IsEmpty;
@@ -207,6 +219,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     }
 
     private bool _searchNothingFound;
+
     public bool SearchNothingFound
     {
         get => _searchNothingFound;
@@ -223,6 +236,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     private SettingsView _settingsView;
 
     private bool _showSettingsView;
+
     public bool ShowSettingsView
     {
         get => _showSettingsView;
@@ -237,6 +251,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     }
 
     private bool _isRestartRequired;
+
     public bool IsRestartRequired
     {
         get => _isRestartRequired;
@@ -251,6 +266,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     }
 
     private bool _isUpdateAvailable;
+
     public bool IsUpdateAvailable
     {
         get => _isUpdateAvailable;
@@ -265,6 +281,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     }
 
     private string _updateReleaseUrl;
+
     public string UpdateReleaseUrl
     {
         get => _updateReleaseUrl;
@@ -279,6 +296,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     }
 
     private ICollectionView _profileFiles;
+
     public ICollectionView ProfileFiles
     {
         get => _profileFiles;
@@ -293,6 +311,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     }
 
     private ProfileFileInfo _selectedProfileFile;
+
     public ProfileFileInfo SelectedProfileFile
     {
         get => _selectedProfileFile;
@@ -319,6 +338,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     }
 
     private bool _isProfileFileDropDownOpened;
+
     public bool IsProfileFileDropDownOpened
     {
         get => _isProfileFileDropDownOpened;
@@ -331,9 +351,11 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, window load and close events
+
     public MainWindow()
     {
         _isLoading = true;
@@ -341,8 +363,10 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         InitializeComponent();
         DataContext = this;
 
-        // Language Meta
-        LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(LocalizationManager.GetInstance().Culture.IetfLanguageTag)));
+        // Language metadata
+        LanguageProperty.OverrideMetadata(typeof(FrameworkElement),
+            new FrameworkPropertyMetadata(
+                XmlLanguage.GetLanguage(LocalizationManager.GetInstance().Culture.IetfLanguageTag)));
 
         // Load and change appearance
         AppearanceManager.Load();
@@ -364,10 +388,10 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private void MetroMainWindow_ContentRendered(object sender, EventArgs e)
     {
-        CheckFirstRunThenLoadAsync();
+        WelcomeThenLoadAsync();
     }
 
-    private async void CheckFirstRunThenLoadAsync()
+    private async void WelcomeThenLoadAsync()
     {
         // Show a note if settings have been reset
         if (ConfigurationManager.Current.ShowSettingsResetNoteOnStartup)
@@ -375,59 +399,66 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             var settings = AppearanceManager.MetroDialog;
             settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-            await this.ShowMessageAsync(Localization.Resources.Strings.SettingsHaveBeenReset, Localization.Resources.Strings.SettingsFileFoundWasCorruptOrNotCompatibleMessage, MessageDialogStyle.Affirmative, settings);
+            await this.ShowMessageAsync(Localization.Resources.Strings.SettingsHaveBeenReset,
+                Localization.Resources.Strings.SettingsFileFoundWasCorruptOrNotCompatibleMessage,
+                MessageDialogStyle.Affirmative, settings);
         }
 
-        // Show a note on the first run
-        if (SettingsManager.Current.FirstRun)
+        // Show welcome dialog
+        if (SettingsManager.Current.WelcomeDialog_Show)
         {
-            // Show first run dialog...
             var customDialog = new CustomDialog
             {
                 Title = Localization.Resources.Strings.Welcome
             };
 
-            var firstRunViewModel = new FirstRunViewModel(async instance =>
+            var welcomeViewModel = new WelcomeViewModel(async instance =>
             {
                 await this.HideMetroDialogAsync(customDialog);
 
                 // Set settings based on user choice
                 SettingsManager.Current.Update_CheckForUpdatesAtStartup = instance.CheckForUpdatesAtStartup;
-                SettingsManager.Current.Dashboard_CheckPublicIPAddressEnabled = instance.CheckPublicIPAddress;
-                SettingsManager.Current.Appearance_PowerShellModifyGlobalProfile = instance.PowerShellModifyGlobalProfile;
+                SettingsManager.Current.Dashboard_CheckPublicIPAddress = instance.CheckPublicIPAddress;
+                SettingsManager.Current.Dashboard_CheckIPApiIPGeolocation =
+                    instance.CheckIPApiIPGeolocation;
+                SettingsManager.Current.Dashboard_CheckIPApiDNSResolver = instance.CheckIPApiDNSResolver;
+                SettingsManager.Current.Traceroute_CheckIPApiIPGeolocation = instance.CheckIPApiIPGeolocation;
+                SettingsManager.Current.Appearance_PowerShellModifyGlobalProfile =
+                    instance.PowerShellModifyGlobalProfile;
 
                 // Generate lists at runtime
-                SettingsManager.Current.General_ApplicationList = new ObservableSetCollection<ApplicationInfo>(ApplicationManager.GetList());
-                SettingsManager.Current.IPScanner_CustomCommands = new ObservableCollection<CustomCommandInfo>(IPScannerCustomCommand.GetDefaultList());
-                SettingsManager.Current.PortScanner_PortProfiles = new ObservableCollection<PortProfileInfo>(PortProfile.GetDefaultList());
-                SettingsManager.Current.DNSLookup_DNSServers_v2 = new ObservableCollection<DNSServerConnectionInfoProfile>(DNSServer.GetDefaultList());
-                SettingsManager.Current.AWSSessionManager_AWSProfiles = new ObservableCollection<AWSProfileInfo>(AWSProfile.GetDefaultList());
-                SettingsManager.Current.SNMP_OIDProfiles = new ObservableCollection<SNMPOIDProfileInfo>(SNMPOIDProfile.GetDefaultList());
-                SettingsManager.Current.SNTPLookup_SNTPServers = new ObservableCollection<ServerConnectionInfoProfile>(SNTPServer.GetDefaultList());
+                SettingsManager.Current.General_ApplicationList =
+                    new ObservableSetCollection<ApplicationInfo>(ApplicationManager.GetList());
+                SettingsManager.Current.IPScanner_CustomCommands =
+                    new ObservableCollection<CustomCommandInfo>(IPScannerCustomCommand.GetDefaultList());
+                SettingsManager.Current.PortScanner_PortProfiles =
+                    new ObservableCollection<PortProfileInfo>(PortProfile.GetDefaultList());
+                SettingsManager.Current.DNSLookup_DNSServers_v2 =
+                    new ObservableCollection<DNSServerConnectionInfoProfile>(DNSServer.GetDefaultList());
+                SettingsManager.Current.AWSSessionManager_AWSProfiles =
+                    new ObservableCollection<AWSProfileInfo>(AWSProfile.GetDefaultList());
+                SettingsManager.Current.SNMP_OIDProfiles =
+                    new ObservableCollection<SNMPOIDProfileInfo>(SNMPOIDProfile.GetDefaultList());
+                SettingsManager.Current.SNTPLookup_SNTPServers =
+                    new ObservableCollection<ServerConnectionInfoProfile>(SNTPServer.GetDefaultList());
 
                 // Check if PowerShell is installed
-                foreach (var file in PowerShell.GetDefaultIntallationPaths)
+                foreach (var file in PowerShell.GetDefaultIntallationPaths.Where(File.Exists))
                 {
-                    if (File.Exists(file))
-                    {
-                        SettingsManager.Current.PowerShell_ApplicationFilePath = file;
-                        SettingsManager.Current.AWSSessionManager_ApplicationFilePath = file;
+                    SettingsManager.Current.PowerShell_ApplicationFilePath = file;
+                    SettingsManager.Current.AWSSessionManager_ApplicationFilePath = file;
 
-                        break;
-                    }
+                    break;
                 }
 
                 // Check if PuTTY is installed
-                foreach (var file in Models.PuTTY.PuTTY.GetDefaultInstallationPaths)
+                foreach (var file in Models.PuTTY.PuTTY.GetDefaultInstallationPaths.Where(File.Exists))
                 {
-                    if (File.Exists(file))
-                    {
-                        SettingsManager.Current.PuTTY_ApplicationFilePath = file;
-                        break;
-                    }
+                    SettingsManager.Current.PuTTY_ApplicationFilePath = file;
+                    break;
                 }
 
-                SettingsManager.Current.FirstRun = false;
+                SettingsManager.Current.WelcomeDialog_Show = false;
 
                 // Save it to create a settings file
                 SettingsManager.Save();
@@ -435,9 +466,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 Load();
             });
 
-            customDialog.Content = new FirstRunDialog
+            customDialog.Content = new WelcomeDialog
             {
-                DataContext = firstRunViewModel
+                DataContext = welcomeViewModel
             };
 
             await this.ShowMetroDialogAsync(customDialog).ConfigureAwait(true);
@@ -481,43 +512,49 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)
     {
-        // Hide the application to tray
-        if (!_closeApplication && (SettingsManager.Current.Window_MinimizeInsteadOfTerminating && WindowState != WindowState.Minimized))
+        if (!_closeApplication)
         {
-            e.Cancel = true;
+            // Hide the application to tray
+            if (SettingsManager.Current.Window_MinimizeInsteadOfTerminating && WindowState != WindowState.Minimized)
+            {
+                e.Cancel = true;
 
-            WindowState = WindowState.Minimized;
+                WindowState = WindowState.Minimized;
 
-            return;
-        }
-
-        // Confirm close
-        if (!_closeApplication && SettingsManager.Current.Window_ConfirmClose)
-        {
-            e.Cancel = true;
-
-            // If the window is minimized, bring it to front
-            if (WindowState == WindowState.Minimized)
-                BringWindowToFront();
-
-            var settings = AppearanceManager.MetroDialog;
-
-            settings.AffirmativeButtonText = Localization.Resources.Strings.Close;
-            settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
-            settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
-
-            ConfigurationManager.OnDialogOpen();
-            var result = await this.ShowMessageAsync(Localization.Resources.Strings.ConfirmClose, Localization.Resources.Strings.ConfirmCloseMessage, MessageDialogStyle.AffirmativeAndNegative, settings);
-            ConfigurationManager.OnDialogClose();
-
-            if (result != MessageDialogResult.Affirmative)
                 return;
+            }
 
-            _closeApplication = true;
-            Close();
+            // Confirm close
+            if (SettingsManager.Current.Window_ConfirmClose)
+            {
+                e.Cancel = true;
 
-            return;
+                // If the window is minimized, bring it to front
+                if (WindowState == WindowState.Minimized)
+                    BringWindowToFront();
+
+                var settings = AppearanceManager.MetroDialog;
+
+                settings.AffirmativeButtonText = Localization.Resources.Strings.Close;
+                settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
+                settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
+
+                ConfigurationManager.OnDialogOpen();
+                var result = await this.ShowMessageAsync(Localization.Resources.Strings.ConfirmClose,
+                    Localization.Resources.Strings.ConfirmCloseMessage, MessageDialogStyle.AffirmativeAndNegative,
+                    settings);
+                ConfigurationManager.OnDialogClose();
+
+                if (result != MessageDialogResult.Affirmative)
+                    return;
+
+                _closeApplication = true;
+                Close();
+
+                return;
+            }
         }
+
 
         // Unregister HotKeys
         if (_registeredHotKeys.Count > 0)
@@ -526,15 +563,18 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         // Dispose the notify icon to prevent errors
         _notifyIcon?.Dispose();
     }
+
     #endregion
 
     #region Application
+
     private void LoadApplicationList()
     {
         _isApplicationListLoading = true;
 
         Applications = new CollectionViewSource { Source = SettingsManager.Current.General_ApplicationList }.View;
-        Applications.SortDescriptions.Add(new SortDescription(nameof(ApplicationInfo.Name), ListSortDirection.Ascending));
+        Applications.SortDescriptions.Add(
+            new SortDescription(nameof(ApplicationInfo.Name), ListSortDirection.Ascending));
 
         Applications.Filter = o =>
         {
@@ -549,7 +589,10 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             var search = regex.Replace(Search, "");
 
             // Search by TranslatedName and Name
-            return info.IsVisible && (regex.Replace(ApplicationNameTranslator.GetInstance().Translate(info.Name), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || regex.Replace(info.Name.ToString(), "").Contains(search, StringComparison.OrdinalIgnoreCase));
+            return info.IsVisible &&
+                   (regex.Replace( ResourceTranslator.Translate(ResourceIdentifier.ApplicationName, info.Name), "")
+                       .IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || regex
+                       .Replace(info.Name.ToString(), "").Contains(search, StringComparison.OrdinalIgnoreCase));
         };
 
         SettingsManager.Current.General_ApplicationList.CollectionChanged += (_, _) => Applications.Refresh();
@@ -557,7 +600,10 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         _isApplicationListLoading = false;
 
         // Select the application        
-        SelectedApplication = Applications.Cast<ApplicationInfo>().FirstOrDefault(x => x.Name == (CommandLineManager.Current.Application != ApplicationName.None ? CommandLineManager.Current.Application : SettingsManager.Current.General_DefaultApplicationViewName));
+        SelectedApplication = Applications.Cast<ApplicationInfo>().FirstOrDefault(x =>
+            x.Name == (CommandLineManager.Current.Application != ApplicationName.None
+                ? CommandLineManager.Current.Application
+                : SettingsManager.Current.General_DefaultApplicationViewName));
 
         // Scroll into view
         if (SelectedApplication != null)
@@ -916,7 +962,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             var settings = AppearanceManager.MetroDialog;
             settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-            await this.ShowMessageAsync(Localization.Resources.Strings.Error, string.Format(Localization.Resources.Strings.CouldNotFindApplicationXXXMessage, data.Application.ToString()));
+            await this.ShowMessageAsync(Localization.Resources.Strings.Error,
+                string.Format(Localization.Resources.Strings.CouldNotFindApplicationXXXMessage,
+                    data.Application.ToString()));
 
             return;
         }
@@ -993,9 +1041,11 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 throw new ArgumentOutOfRangeException();
         }
     }
+
     #endregion
 
-    #region Settings    
+    #region Settings
+
     private void OpenSettings()
     {
         OnApplicationViewHide(SelectedApplication.Name);
@@ -1039,28 +1089,32 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         // Refresh the application view
         OnApplicationViewVisible(SelectedApplication.Name, true);
     }
+
     #endregion
 
     #region Profiles
+
     private void LoadProfiles()
     {
         _isProfileFilesLoading = true;
         ProfileFiles = new CollectionViewSource { Source = ProfileManager.ProfileFiles }.View;
-        ProfileFiles.SortDescriptions.Add(new SortDescription(nameof(ProfileFileInfo.Name), ListSortDirection.Ascending));
+        ProfileFiles.SortDescriptions.Add(
+            new SortDescription(nameof(ProfileFileInfo.Name), ListSortDirection.Ascending));
         _isProfileFilesLoading = false;
 
         ProfileManager.OnLoadedProfileFileChangedEvent += ProfileManager_OnLoadedProfileFileChangedEvent;
 
-        SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Profiles_LastSelected);
+        SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>()
+            .FirstOrDefault(x => x.Name == SettingsManager.Current.Profiles_LastSelected);
         SelectedProfileFile ??= ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault();
     }
 
     private async void LoadProfile(ProfileFileInfo info, bool showWrongPassword = false)
-    {   
+    {
         // Disable profile management while switching profiles
         ConfigurationManager.Current.IsProfileManagerEnabled = false;
         ConfigurationManager.Current.ProfileManagerErrorMessage = string.Empty;
-        
+
         if (info.IsEncrypted && !info.IsPasswordValid)
         {
             var customDialog = new CustomDialog
@@ -1079,9 +1133,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             }, async instance =>
             {
                 // Show error message is canceled / escape is pressed (dialog is opened again if the password is wrong)
-                ConfigurationManager.Current.ProfileManagerErrorMessage = 
+                ConfigurationManager.Current.ProfileManagerErrorMessage =
                     Localization.Resources.Strings.UnlockTheProfileFileMessage;
-                
+
                 await this.HideMetroDialogAsync(customDialog);
                 ConfigurationManager.OnDialogClose();
 
@@ -1110,7 +1164,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
             // Enable profile management after successfully loading the profiles
             ConfigurationManager.Current.IsProfileManagerEnabled = true;
-            
+
             OnProfilesLoaded(SelectedApplication.Name);
         }
         catch (System.Security.Cryptography.CryptographicException)
@@ -1122,15 +1176,15 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         {
             ConfigurationManager.Current.ProfileManagerErrorMessage =
                 Localization.Resources.Strings.ProfileCouldNotBeLoaded;
-            
+
             var settings = AppearanceManager.MetroDialog;
             settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
-            
+
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
             ConfigurationManager.OnDialogOpen();
             await this.ShowMessageAsync(Localization.Resources.Strings.ProfileCouldNotBeLoaded,
-                string.Format(Localization.Resources.Strings.ProfileCouldNotBeLoadedMessage, ex.Message), 
+                string.Format(Localization.Resources.Strings.ProfileCouldNotBeLoadedMessage, ex.Message),
                 MessageDialogStyle.Affirmative, settings);
             ConfigurationManager.OnDialogClose();
         }
@@ -1155,28 +1209,37 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     {
         _isProfileFileUpdating = e.ProfileFileUpdating;
 
-        SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Equals(e.ProfileFileInfo));
+        SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>()
+            .FirstOrDefault(x => x.Equals(e.ProfileFileInfo));
 
         _isProfileFileUpdating = false;
     }
+
     #endregion
 
     #region Update check
+
     private void CheckForUpdates()
     {
         var updater = new Updater();
         updater.UpdateAvailable += Updater_UpdateAvailable;
-        updater.CheckOnGitHub(Properties.Resources.NETworkManager_GitHub_User, Properties.Resources.NETworkManager_GitHub_Repo, AssemblyManager.Current.Version, SettingsManager.Current.Update_CheckForPreReleases);
+        updater.CheckOnGitHub(Properties.Resources.NETworkManager_GitHub_User,
+            Properties.Resources.NETworkManager_GitHub_Repo, AssemblyManager.Current.Version,
+            SettingsManager.Current.Update_CheckForPreReleases);
     }
 
     private void Updater_UpdateAvailable(object sender, UpdateAvailableArgs e)
     {
-        UpdateReleaseUrl = e.Release.Prerelease ? e.Release.HtmlUrl : Properties.Resources.NETworkManager_LatestReleaseUrl;
+        UpdateReleaseUrl = e.Release.Prerelease
+            ? e.Release.HtmlUrl
+            : Properties.Resources.NETworkManager_LatestReleaseUrl;
         IsUpdateAvailable = true;
     }
+
     #endregion
 
     #region Handle WndProc messages (Single instance, handle HotKeys)
+
     private HwndSource _hwndSource;
 
     // This is called after MainWindow() and before OnContentRendered() --> to register hotkeys...
@@ -1202,11 +1265,14 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         return IntPtr.Zero;
     }
+
     #endregion
 
     #region Global HotKeys
+
     [DllImport("user32.dll")]
     private static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vk);
+
     [DllImport("user32.dll")]
     private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
@@ -1224,7 +1290,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     {
         if (SettingsManager.Current.HotKey_ShowWindowEnabled)
         {
-            RegisterHotKey(new WindowInteropHelper(this).Handle, 1, SettingsManager.Current.HotKey_ShowWindowModifier, SettingsManager.Current.HotKey_ShowWindowKey);
+            RegisterHotKey(new WindowInteropHelper(this).Handle, 1, SettingsManager.Current.HotKey_ShowWindowModifier,
+                SettingsManager.Current.HotKey_ShowWindowKey);
             _registeredHotKeys.Add(1);
         }
     }
@@ -1238,15 +1305,18 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         // Clear list
         _registeredHotKeys.Clear();
     }
+
     #endregion
 
     #region NotifyIcon
+
     private void InitNotifyIcon()
     {
         _notifyIcon = new NotifyIcon();
 
         // Get the application icon for the tray
-        using (var iconStream = System.Windows.Application.GetResourceStream(new Uri("pack://application:,,,/NETworkManager.ico"))?.Stream)
+        using (var iconStream = System.Windows.Application
+                   .GetResourceStream(new Uri("pack://application:,,,/NETworkManager.ico"))?.Stream)
         {
             if (iconStream != null)
                 _notifyIcon.Icon = new Icon(iconStream);
@@ -1293,9 +1363,11 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         if (sender is ContextMenu menu)
             menu.DataContext = this;
     }
+
     #endregion
 
     #region ICommands & Actions
+
     public ICommand OpenStatusWindowCommand => new RelayCommand(_ => OpenStatusWindowAction());
 
     private void OpenStatusWindowAction()
@@ -1321,7 +1393,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private void OpenDocumentationAction()
     {
-        DocumentationManager.OpenDocumentation(ShowSettingsView ? _settingsView.GetDocumentationIdentifier() : DocumentationManager.GetIdentifierByAppliactionName(SelectedApplication.Name));
+        DocumentationManager.OpenDocumentation(ShowSettingsView
+            ? _settingsView.GetDocumentationIdentifier()
+            : DocumentationManager.GetIdentifierByAppliactionName(SelectedApplication.Name));
     }
 
     public ICommand OpenApplicationListCommand => new RelayCommand(_ => OpenApplicationListAction());
@@ -1387,7 +1461,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     public void RestartApplication(bool asAdmin = false)
     {
-        ExternalProcessStarter.RunProcess(ConfigurationManager.Current.ApplicationFullName, $"{CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterRestartPid)}{Environment.ProcessId} {CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterApplication)}{SelectedApplication.Name}", asAdmin);
+        ExternalProcessStarter.RunProcess(ConfigurationManager.Current.ApplicationFullName,
+            $"{CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterRestartPid)}{Environment.ProcessId} {CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterApplication)}{SelectedApplication.Name}",
+            asAdmin);
 
         CloseApplication();
     }
@@ -1433,9 +1509,11 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     {
         Search = string.Empty;
     }
+
     #endregion
 
     #region Methods
+
     private void ShowWindow()
     {
         if (_isInTray)
@@ -1452,7 +1530,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         _isInTray = true;
 
-        if (_notifyIcon != null) 
+        if (_notifyIcon != null)
             _notifyIcon.Visible = true;
 
         Hide();
@@ -1499,7 +1577,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             }
             else
             {
-                Log.Info($"Custom DNS servers could not be set (Setting \"{nameof(SettingsManager.Current.Network_CustomDNSServer)}\" has value \"{SettingsManager.Current.Network_CustomDNSServer}\")! Fallback to Windows DNS servers...");
+                Log.Info(
+                    $"Custom DNS servers could not be set (Setting \"{nameof(SettingsManager.Current.Network_CustomDNSServer)}\" has value \"{SettingsManager.Current.Network_CustomDNSServer}\")! Fallback to Windows DNS servers...");
             }
         }
         else
@@ -1525,19 +1604,23 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         HashSet<string> paths = new();
 
         // PowerShell
-        if (!string.IsNullOrEmpty(SettingsManager.Current.PowerShell_ApplicationFilePath) && File.Exists(SettingsManager.Current.PowerShell_ApplicationFilePath))
+        if (!string.IsNullOrEmpty(SettingsManager.Current.PowerShell_ApplicationFilePath) &&
+            File.Exists(SettingsManager.Current.PowerShell_ApplicationFilePath))
             paths.Add(SettingsManager.Current.PowerShell_ApplicationFilePath);
 
         // AWS Session Manager
-        if (!string.IsNullOrEmpty(SettingsManager.Current.AWSSessionManager_ApplicationFilePath) && File.Exists(SettingsManager.Current.AWSSessionManager_ApplicationFilePath))
+        if (!string.IsNullOrEmpty(SettingsManager.Current.AWSSessionManager_ApplicationFilePath) &&
+            File.Exists(SettingsManager.Current.AWSSessionManager_ApplicationFilePath))
             paths.Add(SettingsManager.Current.AWSSessionManager_ApplicationFilePath);
 
         foreach (var path in paths)
             PowerShell.WriteDefaultProfileToRegistry(SettingsManager.Current.Appearance_Theme, path);
     }
+
     #endregion
 
     #region Status window
+
     private void OpenStatusWindow(bool fromNetworkChangeEvent)
     {
         _statusWindow.ShowWindow(fromNetworkChangeEvent);
@@ -1562,17 +1645,16 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         // Show status window on network change
         if (SettingsManager.Current.Status_ShowWindowOnNetworkChange)
         {
-            await Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-            {
-                OpenStatusWindow(false);
-            }));
+            await Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate { OpenStatusWindow(false); }));
         }
 
         _isNetworkChanging = false;
     }
+
     #endregion
 
     #region Events
+
     private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
         switch (e.PropertyName)
@@ -1605,7 +1687,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             case nameof(SettingsInfo.Appearance_Theme):
             case nameof(SettingsInfo.PowerShell_ApplicationFilePath):
             case nameof(SettingsInfo.AWSSessionManager_ApplicationFilePath):
-                if (SettingsManager.Current.FirstRun)
+                // Skip on welcome dialog
+                if (SettingsManager.Current.WelcomeDialog_Show)
                     return;
 
                 WriteDefaultPowerShellProfileToRegistry();
@@ -1613,16 +1696,20 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 break;
         }
     }
+
     #endregion
 
     #region Bugfixes
+
     private void ScrollViewer_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
     {
         e.Handled = true;
     }
+
     #endregion
 
     #region Focus embedded window
+
     private void MetroMainWindow_Activated(object sender, EventArgs e)
     {
         FocusEmbeddedWindow();
@@ -1644,7 +1731,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
            - Application search TextBox is opened
            - Dialog over an embedded window is opened (FixAirspace)
         */
-        if (SelectedApplication == null || ShowSettingsView || IsProfileFileDropDownOpened || IsTextBoxSearchFocused || ConfigurationManager.Current.FixAirspace)
+        if (SelectedApplication == null || ShowSettingsView || IsProfileFileDropDownOpened || IsTextBoxSearchFocused ||
+            ConfigurationManager.Current.FixAirspace)
             return;
 
         // Switch by name
@@ -1661,5 +1749,6 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 break;
         }
     }
-    #endregion       
+
+    #endregion
 }

@@ -9,7 +9,7 @@ public sealed class BooleanToVisibilityHiddenConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value is bool visible && visible ? Visibility.Visible : Visibility.Hidden;
+        return value is true ? Visibility.Visible : Visibility.Hidden;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

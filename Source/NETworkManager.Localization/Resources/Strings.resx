@@ -1937,7 +1937,7 @@ Changes to this value will take effect after restarting the application.</value>
   <data name="CheckPublicIPAddress" xml:space="preserve">
     <value>Check public IP address</value>
   </data>
-  <data name="FirstRunMessage" xml:space="preserve">
+  <data name="WelcomeMessage" xml:space="preserve">
     <value>Thank you for using NETworkManager!
 
 If you like this tool, please leave a star on GitHub and recommend it to others.</value>
@@ -3629,14 +3629,14 @@ Changes to this value will take effect after the application is restarted. Wheth
   <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
     <value>The DNS resolver is determined via ip-api.com.
 
-URL: http://edns.ip-api.com/</value>
+URL: https://edns.ip-api.com/</value>
   </data>
   <data name="HelpMessage_CheckIPGeolocation" xml:space="preserve">
     <value>The IP geolocation is determined via ip-api.com.
 
 URL: http://ip-api.com/</value>
   </data>
-  <data name="FirstRunPrivacyMessage" xml:space="preserve">
+  <data name="WelcomePrivacyMessage" xml:space="preserve">
     <value>To provide additional features, third party services are used that are not operated by me. You can deselect them below. No data is transferred to me at any time.</value>
   </data>
   <data name="CheckingDNSResolverDots" xml:space="preserve">
@@ -3657,5 +3657,11 @@ Try again in a few seconds.</value>
   </data>
   <data name="Accen_Steel" xml:space="preserve">
     <value>Steel</value>
+  </data>
+  <data name="RateLimitReachedMessage" xml:space="preserve">
+    <value>Rate limit reached! Try again in a few seconds...</value>
+  </data>
+  <data name="GroupViewName_General" xml:space="preserve">
+    <value>General</value>
   </data>
 </root>

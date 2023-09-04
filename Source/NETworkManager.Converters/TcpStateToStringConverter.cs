@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Net.NetworkInformation;
 using System.Windows.Data;
-using NETworkManager.Localization.Translators;
+using NETworkManager.Localization;
 
 namespace NETworkManager.Converters;
 
@@ -22,10 +22,7 @@ public sealed class TcpStateToStringConverter : IValueConverter
     /// <returns>Translated <see cref="TcpState"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (!(value is TcpState tcpState))
-            return "-/-";
-
-        return TcpStateTranslator.GetInstance().Translate(tcpState);
+        return value is not TcpState tcpState ? "-/-" : ResourceTranslator.Translate(ResourceIdentifier.TcpState, tcpState);
     }
 
     /// <summary>

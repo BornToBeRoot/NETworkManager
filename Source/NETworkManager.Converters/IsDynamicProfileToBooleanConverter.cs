@@ -8,7 +8,7 @@ public sealed class IsDynamicProfileToBooleanConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value != null && value is string name)
+        if (value is string name)
             return name.StartsWith("~");
 
         return false;

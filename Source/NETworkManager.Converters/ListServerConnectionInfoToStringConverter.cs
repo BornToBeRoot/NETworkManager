@@ -21,7 +21,7 @@ public sealed class ListServerConnectionInfoToStringConverter : IValueConverter
             if (stringBuilder.Length > 0)
                 stringBuilder.Append("; ");
             
-            stringBuilder.Append(server.ToString());
+            stringBuilder.Append(server);
         }
 
         return stringBuilder.ToString();

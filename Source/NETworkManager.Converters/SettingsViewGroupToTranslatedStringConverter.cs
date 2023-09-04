@@ -1,8 +1,8 @@
-﻿using NETworkManager.Localization.Translators;
-using NETworkManager.Settings;
+﻿using NETworkManager.Settings;
 using System;
 using System.Globalization;
 using System.Windows.Data;
+using NETworkManager.Localization;
 
 namespace NETworkManager.Converters;
 
@@ -21,10 +21,7 @@ public sealed class SettingsViewGroupToTranslatedStringConverter : IValueConvert
     /// <returns>Translated <see cref="SettingsViewGroup"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (!(value is SettingsViewGroup group))
-            return "-/-";
-
-        return SettingsViewGroupTranslator.GetInstance().Translate(group);
+        return value is not SettingsViewGroup group ? "-/-" : ResourceTranslator.Translate(ResourceIdentifier.SettingsViewGroup, group);
     }
     
     /// <summary>

@@ -153,7 +153,7 @@ public static class ProfileManager
     /// <returns>List of profile files.</returns>
     private static IEnumerable<string> GetProfileFiles(string location)
     {
-        return Directory.GetFiles(location).Where(x => (Path.GetExtension(x) == ProfileFileExtension || Path.GetExtension(x) == ProfileFileExtensionEncrypted));
+        return Directory.GetFiles(location).Where(x => Path.GetExtension(x) == ProfileFileExtension || Path.GetExtension(x) == ProfileFileExtensionEncrypted);
     }
 
     /// <summary>

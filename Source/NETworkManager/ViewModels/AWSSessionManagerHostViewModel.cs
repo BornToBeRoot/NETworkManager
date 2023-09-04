@@ -35,7 +35,7 @@ namespace NETworkManager.ViewModels;
 public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
-    private static readonly ILog _log = LogManager.GetLogger(typeof(AWSSessionManagerHostViewModel));
+    private static readonly ILog Log = LogManager.GetLogger(typeof(AWSSessionManagerHostViewModel));
     private readonly IDialogCoordinator _dialogCoordinator;
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
@@ -534,28 +534,28 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     {
         if (!IsSyncEnabled)
         {
-            _log.Info("Sync all EC2 instances from AWS is disabled in the settings.");
+            Log.Info("Sync all EC2 instances from AWS is disabled in the settings.");
             return;
         }
 
-        _log.Info("Sync all EC2 instance(s) from AWS...");
+        Log.Info("Sync all EC2 instance(s) from AWS...");
 
         if (!IsConfigured)
         {
-            _log.Warn($"Preconditions not met! AWS CLI installed {IsAWSCLIInstalled}. AWS Session Manager plugin installed {IsAWSSessionManagerPluginInstalled}. PowerShell configured {IsPowerShellConfigured}.");
+            Log.Warn($"Preconditions not met! AWS CLI installed {IsAWSCLIInstalled}. AWS Session Manager plugin installed {IsAWSSessionManagerPluginInstalled}. PowerShell configured {IsPowerShellConfigured}.");
             return;
         }
 
         if (IsSyncing)
         {
-            _log.Info("Skip... Sync is already running!");
+            Log.Info("Skip... Sync is already running!");
             return;
         }
 
         // Check if profiles are available
         if (ProfileManager.LoadedProfileFile == null)
         {
-            _log.Warn("Profile file is not loaded (or decrypted)! Please select (or unlock) a profile file first.");
+            Log.Warn("Profile file is not loaded (or decrypted)! Please select (or unlock) a profile file first.");
             return;
         }
 
@@ -565,7 +565,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         {
             if (!profile.IsEnabled)
             {
-                _log.Info($"Skip AWS profile \"[{profile.Profile}\\{profile.Region}]\" because it is disabled!");
+                Log.Info($"Skip AWS profile \"[{profile.Profile}\\{profile.Region}]\" because it is disabled!");
                 continue;
             }
 
@@ -575,14 +575,14 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
         await Task.Delay(2000);
 
-        _log.Info("All Instance IDs synced from AWS!");
+        Log.Info("All Instance IDs synced from AWS!");
 
         IsSyncing = false;
     }
 
     private async Task SyncGroupInstanceIDsFromAWS(string group)
     {
-        _log.Info($"Sync group \"{group}\"...");
+        Log.Info($"Sync group \"{group}\"...");
 
         IsSyncing = true;
 
@@ -598,27 +598,27 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         }
         else
         {
-            _log.Error($"Could not extract AWS profile and AWS region from \"{group}\"!");
+            Log.Error($"Could not extract AWS profile and AWS region from \"{group}\"!");
         }
 
         // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
         await Task.Delay(2000);
 
-        _log.Info($"Group synced!");
+        Log.Info($"Group synced!");
 
         IsSyncing = false;
     }
 
     private async Task SyncInstanceIDsFromAWS(string profile, string region)
     {
-        _log.Info($"Sync EC2 Instance(s) for AWS profile \"[{profile}\\{region}]\"...");
+        Log.Info($"Sync EC2 Instance(s) for AWS profile \"[{profile}\\{region}]\"...");
 
         CredentialProfileStoreChain credentialProfileStoreChain = new();
         credentialProfileStoreChain.TryGetAWSCredentials(profile, out AWSCredentials credentials);
 
         if (credentials == null)
         {
-            _log.Error($"Could not detect AWS credentials for AWS profile \"{profile}\"! You can configure them in the file \"%USERPROFILE%\\.aws\\config\" or via aws cli with the command \"aws configure --profile <NAME>\" ");
+            Log.Error($"Could not detect AWS credentials for AWS profile \"{profile}\"! You can configure them in the file \"%USERPROFILE%\\.aws\\config\" or via aws cli with the command \"aws configure --profile <NAME>\" ");
             return;
         }
 
@@ -632,7 +632,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         }
         catch (AmazonEC2Exception ex)
         {
-            _log.Error($"Could not get EC2 Instance(s) from AWS! Error message: \"{ex.Message}\"");
+            Log.Error($"Could not get EC2 Instance(s) from AWS! Error message: \"{ex.Message}\"");
             return;
         }
 
@@ -682,7 +682,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
             if (ProfileManager.GroupExists(groupName))
                 ProfileManager.RemoveGroup(ProfileManager.GetGroup(groupName));
 
-            _log.Info("No EC2 Instance(s) found!");
+            Log.Info("No EC2 Instance(s) found!");
         }
         else
         {
@@ -692,7 +692,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
             else
                 ProfileManager.AddGroup(groupInfo);
 
-            _log.Info($"Found {groupInfo.Profiles.Count} EC2 Instance(s) and added them to the group \"{groupName}\"!");
+            Log.Info($"Found {groupInfo.Profiles.Count} EC2 Instance(s) and added them to the group \"{groupName}\"!");
         }
 
         ProfileManager.ProfilesChanged = profilesChangedCurrentState;

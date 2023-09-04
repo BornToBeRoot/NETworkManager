@@ -18,7 +18,6 @@
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
-        <converters:BooleanReverseToVisibilityHiddenConverter x:Key="BooleanReverseToVisibilityHiddenConverter" />
         <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityHiddenConverter x:Key="BooleanToVisibilityHiddenConverter" />
@@ -170,12 +169,12 @@
                             <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding Result.Info.As, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
                             <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.ASName}" />
                             <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding Result.Info.Asname, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="7" Text="{x:Static localization:Strings.Proxy}" />
-                            <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding Result.Info.Proxy, Converter={StaticResource BooleanToStringConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static localization:Strings.Mobile}" />
-                            <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding Result.Info.Mobile, Converter={StaticResource BooleanToStringConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="9" Text="{x:Static localization:Strings.Hosting}" />
-                            <TextBox Grid.Column="2" Grid.Row="9" Text="{Binding Result.Info.Hosting, Converter={StaticResource BooleanToStringConverter}}" />
+                            <TextBlock Grid.Column="0" Grid.Row="7" Text="{x:Static localization:Strings.Hosting}" />
+                            <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding Result.Info.Hosting, Converter={StaticResource BooleanToStringConverter}}" />
+                            <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static localization:Strings.Proxy}" />
+                            <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding Result.Info.Proxy, Converter={StaticResource BooleanToStringConverter}}" />
+                            <TextBlock Grid.Column="0" Grid.Row="9" Text="{x:Static localization:Strings.Mobile}" />
+                            <TextBox Grid.Column="2" Grid.Row="9" Text="{Binding Result.Info.Mobile, Converter={StaticResource BooleanToStringConverter}}" />
                         </Grid>
                     </Grid>
                     <!-- Rate limit -->

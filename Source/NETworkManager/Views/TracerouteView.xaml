@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
-        xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
         xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"             
@@ -14,15 +13,19 @@
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
+        xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
+        xmlns:models="clr-namespace:NETworkManager.Models;assembly=NETworkManager.Models"
         dialogs:DialogParticipation.Register="{Binding}"
         Loaded="UserControl_Loaded"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:TracerouteViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:IPAddressToStringConverter x:Key="IPAddressToStringConverter" />        
         <converters:PingTimeToStringConverter x:Key="PingTimeToStringConverter" />
         <converters:StringIsNotNullOrEmptyToBooleanConverter x:Key="StringIsNotNullOrEmptyToBooleanConverter" />
+        <converters:StringNullOrEmptyToStringConverter x:Key="StringNullOrEmptyToStringConverter"/>
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -31,7 +34,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Destination}" />
+        <TextBlock Grid.Row="0" Style="{StaticResource ResourceKey=HeaderTextBlock}" Text="{x:Static Member=localization:Strings.Destination}" />
         <Grid Grid.Row="1" Margin="0,0,0,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -47,8 +50,8 @@
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.Host}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox Grid.Column="2" x:Name="TextBoxHost" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameOrIPAddress}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <TextBlock Grid.Column="0" Text="{x:Static Member=localization:Strings.Host}" Style="{DynamicResource ResourceKey=DefaultTextBlock}" VerticalAlignment="Center" />
+                <ComboBox Grid.Column="2" x:Name="TextBoxHost" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static Member=localization:StaticStrings.ExampleHostnameOrIPAddress}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -58,9 +61,9 @@
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
-                <Button Grid.Column="4" Command="{Binding TraceCommand}" IsDefault="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsRunning}" HorizontalAlignment="Right">
+                <Button Grid.Column="4" Command="{Binding TraceCommand}" IsDefault="{Binding IsRunning, Converter={StaticResource ResourceKey=BooleanReverseConverter}}" IsCancel="{Binding IsRunning}" HorizontalAlignment="Right">
                     <Button.Resources>
-                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ResourceKey=ImageWithTextButton}">
                             <Setter Property="IsEnabled" Value="True" />
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxHost}" Value="True" >
@@ -78,17 +81,17 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Rectangle>
+                            <Rectangle Grid.Column="0" Grid.Row="0">
                                 <Rectangle.Resources>
                                     <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{iconPacks:Material Kind=Play}" />
                                     <VisualBrush x:Key="VisualClose" Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
                                 </Rectangle.Resources>
                                 <Rectangle.Style>
-                                    <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ButtonWithImageRectangle}">
-                                        <Setter Property="OpacityMask" Value="{StaticResource VisualControlPlay}" />                                        
+                                    <Style TargetType="{x:Type TypeName=Rectangle}" BasedOn="{StaticResource ResourceKey=ButtonWithImageRectangle}">
+                                        <Setter Property="OpacityMask" Value="{StaticResource ResourceKey=VisualControlPlay}" />                                        
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsRunning}" Value="True">
-                                                <Setter Property="OpacityMask" Value="{StaticResource VisualClose}" />
+                                                <Setter Property="OpacityMask" Value="{StaticResource ResourceKey=VisualClose}" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -96,11 +99,11 @@
                             </Rectangle>
                             <TextBlock Grid.Column="1">
                                 <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ButtonWithImageTextBlock}">
+                                    <Style TargetType="{x:Type TypeName=TextBlock}" BasedOn="{StaticResource ResourceKey=ButtonWithImageTextBlock}">
                                         <Setter Property="Text" Value="{x:Static localization:Strings.Trace}"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsRunning}" Value="True" >
-                                                <Setter Property="Text" Value="{x:Static localization:Strings.Cancel}"/>
+                                                <Setter Property="Text" Value="{x:Static Member=localization:Strings.Cancel}"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -110,62 +113,61 @@
                     </Button.Content>
                 </Button>
             </Grid>
-            <mahAppsControls:MetroProgressBar Grid.Row="1" Margin="0,10,0,0" Foreground="{DynamicResource MahApps.Brushes.Accent}" Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" IsIndeterminate="True" />
-            <TextBlock Grid.Row="2" Foreground="{DynamicResource MahApps.Brushes.Accent}" Text="{Binding StatusMessage}" Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource StatusMessageTextBlock}" Margin="0,10,0,0" />
+            <mahAppsControls:MetroProgressBar Grid.Row="1" Margin="0,10,0,0" Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Accent}" Visibility="{Binding IsRunning, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" IsIndeterminate="True" />
+            <TextBlock Grid.Row="2" Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Accent}" Text="{Binding StatusMessage}" Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource ResourceKey=StatusMessageTextBlock}" Margin="0,10,0,0" />
         </Grid>
-        <TextBlock Grid.Row="2" Text="{x:Static localization:Strings.Route}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Grid.Row="2" Text="{x:Static Member=localization:Strings.Route}" Style="{StaticResource ResourceKey=HeaderTextBlock}" />
         <controls:MultiSelectDataGrid Grid.Row="3" CanUserSortColumns="False" ItemsSource="{Binding TraceResultsView}" SelectedItem="{Binding SelectedTraceResult}" SelectedItemsList="{Binding SelectedTraceResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <controls:MultiSelectDataGrid.Resources>
-                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
-                <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
+                <Style TargetType="{x:Type TypeName=ScrollBar}" BasedOn="{StaticResource ResourceKey=DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                    <MenuItem Header="{x:Static localization:Strings.IPScanner}" Command="{Binding RedirectDataToApplicationCommand}"  CommandParameter="IPScanner">
+                    <MenuItem Header="{x:Static Member=localization:Strings.IPScanner}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="{x:Static Member=models:ApplicationName.IPScanner}">
                         <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Sitemap}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.PortScanner}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="PortScanner">
+                    <MenuItem Header="{x:Static Member=localization:Strings.PortScanner}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="{x:Static Member=models:ApplicationName.PortScanner}">
                         <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=NetworkPort}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.PingMonitor}" Command="{Binding RedirectDataToApplicationCommand}"  CommandParameter="PingMonitor">
+                    <MenuItem Header="{x:Static Member=localization:Strings.PingMonitor}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="{x:Static Member=models:ApplicationName.PingMonitor}">
                         <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=RadarScreen}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.DNSLookupDots}">
+                    <MenuItem Header="{x:Static Member=localization:Strings.DNSLookupDots}">
                         <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=SearchWeb}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
-                        <MenuItem Header="{x:Static localization:Strings.IPAddress}" Command="{Binding PerformDNSLookupIPAddressCommand}">
+                        <MenuItem Header="{x:Static Member=localization:Strings.IPAddress}" Command="{Binding PerformDNSLookupCommand}" CommandParameter="{Binding SelectedTraceResult.IPAddress}">
                             <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=SearchWeb}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.Hostname}" Command="{Binding PerformDNSLookupHostnameCommand}" IsEnabled="{Binding SelectedTraceResult.Hostname, Converter={StaticResource StringIsNotNullOrEmptyToBooleanConverter}}">
+                        <MenuItem Header="{x:Static Member=localization:Strings.Hostname}" Command="{Binding PerformDNSLookupCommand}" CommandParameter="{Binding SelectedTraceResult.Hostname}" IsEnabled="{Binding SelectedTraceResult.Hostname, Converter={StaticResource ResourceKey=StringIsNotNullOrEmptyToBooleanConverter}}">
                             <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=SearchWeb}" />
                                     </Rectangle.OpacityMask>
@@ -173,45 +175,45 @@
                             </MenuItem.Icon>
                         </MenuItem>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.RemoteDesktop}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="RemoteDesktop">
+                    <MenuItem Header="{x:Static Member=localization:Strings.RemoteDesktop}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="{x:Static Member=models:ApplicationName.RemoteDesktop}">
                         <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=RemoteDesktop}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.PowerShell}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="PowerShell">
+                    <MenuItem Header="{x:Static Member=localization:Strings.PowerShell}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="{x:Static Member=models:ApplicationName.PowerShell}">
                         <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Powershell}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.PuTTY}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="PuTTY">
+                    <MenuItem Header="{x:Static Member=localization:Strings.PuTTY}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="{x:Static Member=models:ApplicationName.PuTTY}">
                         <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:FontAwesome Kind=TerminalSolid}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.TigerVNC}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="TigerVNC">
+                    <MenuItem Header="{x:Static Member=localization:Strings.TigerVNC}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="{x:Static Member=models:ApplicationName.TigerVNC}">
                         <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=EyeOutline}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.SNMP}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="SNMP">
+                    <MenuItem Header="{x:Static Member=localization:Strings.SNMP}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="{x:Static Member=models:ApplicationName.SNMP}">
                         <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Switch}" />
                                 </Rectangle.OpacityMask>
@@ -219,72 +221,42 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="{x:Static localization:Strings.CopyDots}">
-                        <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                        </MenuItem.Icon>
-                        <MenuItem Header="{x:Static localization:Strings.Hop}" Command="{Binding CopySelectedHopCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.Time1}" Command="{Binding CopySelectedTime1Command}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.Time2}" Command="{Binding CopySelectedTime2Command}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.Time3}" Command="{Binding CopySelectedTime3Command}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.IPAddress}" Command="{Binding CopySelectedIPAddressCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.Hostname}" Command="{Binding CopySelectedHostnameCommand}" Visibility="{Binding ValidatesOnDataErrors.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
+                    <MenuItem Header="{x:Static Member=localization:Strings.CopyDots}" Style="{StaticResource ResourceKey=CopyMenuItem}">
+                        <MenuItem Header="{x:Static Member=localization:Strings.Hop}" Command="{Binding CopyDataToClipboardCommand}" CommandParameter="{Binding SelectedTraceResult.Hop}" Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.Time1}" Command="{Binding CopyTimeToClipboardCommand}" CommandParameter="1" Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.Time2}" Command="{Binding CopyTimeToClipboardCommand}" CommandParameter="2" Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.Time3}" Command="{Binding CopyTimeToClipboardCommand}" CommandParameter="3" Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.IPAddress}" Command="{Binding CopyDataToClipboardCommand}" CommandParameter="{Binding SelectedTraceResult.IPAddress}" Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.Hostname}" Command="{Binding CopyDataToClipboardCommand}" CommandParameter="{Binding SelectedTraceResult.Hostname}"
+                                  Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_ResolveHostname, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.Continent}" Command="{Binding CopyDataToClipboardCommand}" CommandParameter="{Binding SelectedTraceResult.IPGeolocationResult.Info.Continent}"
+                                  Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_CheckIPApiIPGeolocation, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.Country}" Command="{Binding CopyDataToClipboardCommand}" CommandParameter="{Binding SelectedTraceResult.IPGeolocationResult.Info.Country}"
+                                  Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_CheckIPApiIPGeolocation, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.Region}" Command="{Binding CopyDataToClipboardCommand}" CommandParameter="{Binding SelectedTraceResult.IPGeolocationResult.Info.Region}"
+                                  Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_CheckIPApiIPGeolocation, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.City}" Command="{Binding CopyDataToClipboardCommand}" CommandParameter="{Binding SelectedTraceResult.IPGeolocationResult.Info.City}"
+                                  Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_CheckIPApiIPGeolocation, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.District}" Command="{Binding CopyDataToClipboardCommand}" CommandParameter="{Binding SelectedTraceResult.IPGeolocationResult.Info.District}"
+                                  Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_CheckIPApiIPGeolocation, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.ISP}" Command="{Binding CopyDataToClipboardCommand}" CommandParameter="{Binding SelectedTraceResult.IPGeolocationResult.Info.Isp}"
+                                  Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_CheckIPApiIPGeolocation, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.Organization}" Command="{Binding CopyDataToClipboardCommand}" CommandParameter="{Binding SelectedTraceResult.IPGeolocationResult.Info.Org}"
+                                  Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_CheckIPApiIPGeolocation, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.ASN}" Command="{Binding CopyDataToClipboardCommand}" CommandParameter="{Binding SelectedTraceResult.IPGeolocationResult.Info.As}"
+                                  Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_CheckIPApiIPGeolocation, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.ASName}" Command="{Binding CopyDataToClipboardCommand}" CommandParameter="{Binding SelectedTraceResult.IPGeolocationResult.Info.Asname}"
+                                  Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_CheckIPApiIPGeolocation, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.Host}" Command="{Binding CopyDataToClipboardCommand}" CommandParameter="{Binding SelectedTraceResult.IPGeolocationResult.Info.Hosting}"
+                                  Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_CheckIPApiIPGeolocation, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.Proxy}" Command="{Binding CopyDataToClipboardCommand}" CommandParameter="{Binding SelectedTraceResult.IPGeolocationResult.Info.Proxy}"
+                                  Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_CheckIPApiIPGeolocation, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.Mobile}" Command="{Binding CopyDataToClipboardCommand}" CommandParameter="{Binding SelectedTraceResult.IPGeolocationResult.Info.Mobile}"
+                                  Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_CheckIPApiIPGeolocation, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource ResourceKey=CopyMenuItem}" />
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
+                    <MenuItem Header="{x:Static Member=localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
                         <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
                                 </Rectangle.OpacityMask>
@@ -295,7 +267,7 @@
                 <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
                         <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
                                 </Rectangle.OpacityMask>
@@ -305,43 +277,55 @@
                 </ContextMenu>
             </controls:MultiSelectDataGrid.Resources>
             <controls:MultiSelectDataGrid.RowStyle>
-                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
-                    <Setter Property="ContextMenu" Value="{StaticResource MultiRowContextMenu}"/>
+                <Style TargetType="{x:Type TypeName=DataGridRow}" BasedOn="{StaticResource ResourceKey=MahApps.Styles.DataGridRow}">
+                    <Setter Property="ContextMenu" Value="{StaticResource ResourceKey=MultiRowContextMenu}"/>
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}" Value="1" >
-                            <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>
+                        <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type TypeName=DataGrid}}}" Value="1" >
+                            <Setter Property="ContextMenu" Value="{StaticResource ResourceKey=RowContextMenu}"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </controls:MultiSelectDataGrid.RowStyle>
             <controls:MultiSelectDataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Hop}" Binding="{Binding (network:TracerouteHopInfo.Hop)}" MinWidth="80" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Time1}" MinWidth="100">
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.Hop}" Binding="{Binding (network:TracerouteHopInfo.Hop)}" MinWidth="80" />
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.Time1}" MinWidth="100">
                     <DataGridTextColumn.Binding>
-                        <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
+                        <MultiBinding Converter="{StaticResource ResourceKey=PingTimeToStringConverter}">
                             <Binding Path="(network:TracerouteHopInfo.Status1)" />
                             <Binding Path="(network:TracerouteHopInfo.Time1)" />
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Time2}" MinWidth="100">
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.Time2}" MinWidth="100">
                     <DataGridTextColumn.Binding>
-                        <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
+                        <MultiBinding Converter="{StaticResource ResourceKey=PingTimeToStringConverter}">
                             <Binding Path="(network:TracerouteHopInfo.Status2)" />
                             <Binding Path="(network:TracerouteHopInfo.Time2)" />
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Time3}" MinWidth="100">
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.Time3}" MinWidth="100">
                     <DataGridTextColumn.Binding>
-                        <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
+                        <MultiBinding Converter="{StaticResource ResourceKey=PingTimeToStringConverter}">
                             <Binding Path="(network:TracerouteHopInfo.Status3)" />
                             <Binding Path="(network:TracerouteHopInfo.Time3)" />
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}" Binding="{Binding (network:TracerouteHopInfo.IPAddress), Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}" Binding="{Binding (network:TracerouteHopInfo.Hostname)}" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="150" />
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.IPAddress}" Binding="{Binding (network:TracerouteHopInfo.IPAddress), Converter={StaticResource ResourceKey=IPAddressToStringConverter}}" MinWidth="150" />
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.Hostname}" Binding="{Binding (network:TracerouteHopInfo.Hostname), Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_ResolveHostname, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" MinWidth="150" />
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.Continent}" Binding="{Binding (network:TracerouteHopInfo.IPGeolocationResult).Info.Continent, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_CheckIPApiIPGeolocation, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" MinWidth="100" />
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.Country}" Binding="{Binding (network:TracerouteHopInfo.IPGeolocationResult).Info.Country, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_CheckIPApiIPGeolocation, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" MinWidth="100" />
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.Region}" Binding="{Binding (network:TracerouteHopInfo.IPGeolocationResult).Info.RegionName, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_CheckIPApiIPGeolocation, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" MinWidth="100" />
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.City}" Binding="{Binding (network:TracerouteHopInfo.IPGeolocationResult).Info.City, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_CheckIPApiIPGeolocation, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" MinWidth="100" />
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.District}" Binding="{Binding (network:TracerouteHopInfo.IPGeolocationResult).Info.District, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_CheckIPApiIPGeolocation, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" MinWidth="100" />
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.ISP}" Binding="{Binding (network:TracerouteHopInfo.IPGeolocationResult).Info.Isp, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_CheckIPApiIPGeolocation, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" MinWidth="100" />
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.Organization}" Binding="{Binding (network:TracerouteHopInfo.IPGeolocationResult).Info.Org, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_CheckIPApiIPGeolocation, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" MinWidth="100" />
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.ASN}" Binding="{Binding (network:TracerouteHopInfo.IPGeolocationResult).Info.As, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_CheckIPApiIPGeolocation, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" MinWidth="100" />
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.ASName}" Binding="{Binding (network:TracerouteHopInfo.IPGeolocationResult).Info.Asname, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_CheckIPApiIPGeolocation, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" MinWidth="100" />
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.Hosting}" Binding="{Binding (network:TracerouteHopInfo.IPGeolocationResult).Info.Hosting, Converter={StaticResource ResourceKey=BooleanToStringConverter}}" Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_CheckIPApiIPGeolocation, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" MinWidth="100" />
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.Proxy}" Binding="{Binding (network:TracerouteHopInfo.IPGeolocationResult).Info.Proxy, Converter={StaticResource ResourceKey=BooleanToStringConverter}}" Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_CheckIPApiIPGeolocation, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" MinWidth="100" />
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.Mobile}" Binding="{Binding (network:TracerouteHopInfo.IPGeolocationResult).Info.Mobile, Converter={StaticResource ResourceKey=BooleanToStringConverter}}" Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_CheckIPApiIPGeolocation, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" MinWidth="100" />
             </controls:MultiSelectDataGrid.Columns>
         </controls:MultiSelectDataGrid>
     </Grid>

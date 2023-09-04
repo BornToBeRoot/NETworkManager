@@ -1,8 +1,8 @@
-﻿using NETworkManager.Localization.Translators;
-using NETworkManager.Settings;
+﻿using NETworkManager.Settings;
 using System;
 using System.Globalization;
 using System.Windows.Data;
+using NETworkManager.Localization;
 
 namespace NETworkManager.Converters;
 
@@ -21,10 +21,7 @@ public sealed class SettingsViewNameToTranslatedStringConverter : IValueConverte
     /// <returns>Translated <see cref="SettingsViewName"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (!(value is SettingsViewName name))
-            return "-/-";
-
-        return SettingsViewNameTranslator.GetInstance().Translate(name);
+        return value is not SettingsViewName name ? "-/-" : ResourceTranslator.Translate(ResourceIdentifier.SettingsViewName, name);
     }
     
     /// <summary>

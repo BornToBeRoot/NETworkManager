@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using NETworkManager.Localization.Translators;
+using NETworkManager.Localization;
 using NETworkManager.Models.Appearance;
 
 namespace NETworkManager.Converters;
@@ -22,10 +22,7 @@ public sealed class ThemeToStringConverter : IValueConverter
     /// <returns>Translated <see cref="ThemeColorInfo"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (!(value is string theme))
-            return "-/-";
-
-        return ThemeTranslator.GetInstance().Translate(theme);
+        return value is not string theme ? "-/-" : ResourceTranslator.Translate(ResourceIdentifier.Theme, theme);
     }
 
     /// <summary>

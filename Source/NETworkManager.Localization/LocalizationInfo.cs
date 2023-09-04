@@ -3,7 +3,7 @@
 namespace NETworkManager.Localization;
 
 /// <summary>
-/// Class to hold all informations about a localization.
+/// Class to hold all information's about a localization.
 /// </summary>
 public class LocalizationInfo
 {
@@ -39,16 +39,7 @@ public class LocalizationInfo
     {
 
     }
-
-    /// <summary>
-    /// Create an instance of <see cref="LocalizationInfo"/> with a culture code.
-    /// </summary>
-    /// <param name="code">Culture code (like "en-US")</param>
-    public LocalizationInfo(string code)
-    {
-        Code = code;
-    }
-
+    
     /// <summary>
     /// Create an instance of <see cref="LocalizationInfo"/> with all parameters.
     /// </summary>

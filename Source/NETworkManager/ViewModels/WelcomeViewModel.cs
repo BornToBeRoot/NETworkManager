@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
-public class FirstRunViewModel : ViewModelBase
+public class WelcomeViewModel : ViewModelBase
 {
     public ICommand ContinueCommand { get; }
 
@@ -23,7 +23,7 @@ public class FirstRunViewModel : ViewModelBase
         }
     }
 
-    private bool _checkPublicIPAddress = GlobalStaticConfiguration.Dashboard_CheckPublicIPAddressEnabled;
+    private bool _checkPublicIPAddress = GlobalStaticConfiguration.Dashboard_CheckPublicIPAddress;
     public bool CheckPublicIPAddress
     {
         get => _checkPublicIPAddress;
@@ -37,30 +37,30 @@ public class FirstRunViewModel : ViewModelBase
         }
     }
 
-    private bool _checkIPGeoApiEnabled = GlobalStaticConfiguration.Dashboard_CheckIPApiIPGeolocationEnabled;
-    public bool CheckIPGeoApiEnabled
+    private bool _checkIPApiIPGeolocation = GlobalStaticConfiguration.Dashboard_CheckIPApiIPGeolocation;
+    public bool CheckIPApiIPGeolocation
     {
-        get => _checkIPGeoApiEnabled;
+        get => _checkIPApiIPGeolocation;
         set
         {
-            if (value == _checkIPGeoApiEnabled)
+            if (value == _checkIPApiIPGeolocation)
                 return;
 
-            _checkIPGeoApiEnabled = value;
+            _checkIPApiIPGeolocation = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _checkIPDNSApiEnabled = GlobalStaticConfiguration.Dashboard_CheckIPApiDNSResolverEnabled;
-    public bool CheckIPDNSApiEnabled
+    private bool _checkIPApiDNSResolver = GlobalStaticConfiguration.Dashboard_CheckIPApiDNSResolver;
+    public bool CheckIPApiDNSResolver
     {
-        get => _checkIPDNSApiEnabled;
+        get => _checkIPApiDNSResolver;
         set
         {
-            if (value == _checkIPDNSApiEnabled)
+            if (value == _checkIPApiDNSResolver)
                 return;
 
-            _checkIPDNSApiEnabled = value;
+            _checkIPApiDNSResolver = value;
             OnPropertyChanged();
         }
     }
@@ -79,8 +79,8 @@ public class FirstRunViewModel : ViewModelBase
         }
     }
 
-    public FirstRunViewModel(Action<FirstRunViewModel> continueCommand)
+    public WelcomeViewModel(Action<WelcomeViewModel> continueCommand)
     {
-        ContinueCommand = new RelayCommand(p => continueCommand(this));
+        ContinueCommand = new RelayCommand(_ => continueCommand(this));
     }
 }

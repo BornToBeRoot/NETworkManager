@@ -13,6 +13,7 @@
         xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
+        xmlns:models="clr-namespace:NETworkManager.Models;assembly=NETworkManager.Models"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         dialogs:DialogParticipation.Register="{Binding}"
         Loaded="UserControl_Loaded"
@@ -200,7 +201,7 @@
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                    <MenuItem Header="{x:Static localization:Strings.PortScanner}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="PortScanner">
+                    <MenuItem Header="{x:Static localization:Strings.PortScanner}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="{x:Static models:ApplicationName.PortScanner}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
@@ -209,7 +210,7 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.PingMonitor}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="PingMonitor">
+                    <MenuItem Header="{x:Static localization:Strings.PingMonitor}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="{x:Static models:ApplicationName.PingMonitor}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
@@ -218,7 +219,7 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.Traceroute}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="Traceroute">
+                    <MenuItem Header="{x:Static localization:Strings.Traceroute}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="{x:Static models:ApplicationName.Traceroute}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
@@ -254,7 +255,7 @@
                             </MenuItem.Icon>
                         </MenuItem>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.RemoteDesktop}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="RemoteDesktop">
+                    <MenuItem Header="{x:Static localization:Strings.RemoteDesktop}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="{x:Static models:ApplicationName.RemoteDesktop}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
@@ -263,7 +264,7 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.PowerShell}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="PowerShell">
+                    <MenuItem Header="{x:Static localization:Strings.PowerShell}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="{x:Static models:ApplicationName.PowerShell}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
@@ -272,7 +273,7 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.PuTTY}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="PuTTY">
+                    <MenuItem Header="{x:Static localization:Strings.PuTTY}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="{x:Static models:ApplicationName.PuTTY}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
@@ -281,7 +282,7 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.TigerVNC}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="TigerVNC">
+                    <MenuItem Header="{x:Static localization:Strings.TigerVNC}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="{x:Static models:ApplicationName.TigerVNC}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
@@ -290,7 +291,7 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.SNMP}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="SNMP">
+                    <MenuItem Header="{x:Static localization:Strings.SNMP}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="{x:Static models:ApplicationName.SNMP}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>

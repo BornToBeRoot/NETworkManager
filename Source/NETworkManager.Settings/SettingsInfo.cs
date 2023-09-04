@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 using DnsClient;
 using Lextm.SharpSnmpLib.Messaging;
@@ -14,6 +12,7 @@ using NETworkManager.Models.Network;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Utilities;
+// ReSharper disable InconsistentNaming
 
 namespace NETworkManager.Settings;
 
@@ -22,16 +21,16 @@ public class SettingsInfo : PropertyChangedBase
     #region Variables
     [XmlIgnore] public bool SettingsChanged { get; set; }
 
-    private bool _firstRun = true;
-    public bool FirstRun
+    private bool _welcomeDialog_Show = true;
+    public bool WelcomeDialog_Show
     {
-        get => _firstRun;
+        get => _welcomeDialog_Show;
         set
         {
-            if (value == _firstRun)
+            if (value == _welcomeDialog_Show)
                 return;
 
-            _firstRun = value;
+            _welcomeDialog_Show = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
@@ -552,16 +551,16 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _dashboard_CheckPublicIPAddressEnabled = GlobalStaticConfiguration.Dashboard_CheckPublicIPAddressEnabled;
-    public bool Dashboard_CheckPublicIPAddressEnabled
+    private bool _dashboard_CheckPublicIPAddress = GlobalStaticConfiguration.Dashboard_CheckPublicIPAddress;
+    public bool Dashboard_CheckPublicIPAddress
     {
-        get => _dashboard_CheckPublicIPAddressEnabled;
+        get => _dashboard_CheckPublicIPAddress;
         set
         {
-            if (value == _dashboard_CheckPublicIPAddressEnabled)
+            if (value == _dashboard_CheckPublicIPAddress)
                 return;
 
-            _dashboard_CheckPublicIPAddressEnabled = value;
+            _dashboard_CheckPublicIPAddress = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
@@ -627,31 +626,31 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _dashboard_CheckIPApiIPGeolocationEnabled = GlobalStaticConfiguration.Dashboard_CheckIPApiIPGeolocationEnabled;
-    public bool Dashboard_CheckIPApiIPGeolocationEnabled
+    private bool _dashboard_CheckIPApiIPGeolocation = GlobalStaticConfiguration.Dashboard_CheckIPApiIPGeolocation;
+    public bool Dashboard_CheckIPApiIPGeolocation
     {
-        get => _dashboard_CheckIPApiIPGeolocationEnabled;
+        get => _dashboard_CheckIPApiIPGeolocation;
         set
         {
-            if (value == _dashboard_CheckIPApiIPGeolocationEnabled)
+            if (value == _dashboard_CheckIPApiIPGeolocation)
                 return;
 
-            _dashboard_CheckIPApiIPGeolocationEnabled = value;
+            _dashboard_CheckIPApiIPGeolocation = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
     }
 
-    private bool _dashboard_CheckIPApiDNSResolverEnabled = GlobalStaticConfiguration.Dashboard_CheckIPApiDNSResolverEnabled;
-    public bool Dashboard_CheckIPApiDNSResolverEnabled
+    private bool _dashboard_CheckIPApiDNSResolver = GlobalStaticConfiguration.Dashboard_CheckIPApiDNSResolver;
+    public bool Dashboard_CheckIPApiDNSResolver
     {
-        get => _dashboard_CheckIPApiDNSResolverEnabled;
+        get => _dashboard_CheckIPApiDNSResolver;
         set
         {
-            if (value == _dashboard_CheckIPApiDNSResolverEnabled)
+            if (value == _dashboard_CheckIPApiDNSResolver)
                 return;
 
-            _dashboard_CheckIPApiDNSResolverEnabled = value;
+            _dashboard_CheckIPApiDNSResolver = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
@@ -1299,16 +1298,16 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _pingMonitor_DontFragement = true;
+    private bool _pingMonitor_DontFragment = GlobalStaticConfiguration.PingMonitor_DontFragment;
     public bool PingMonitor_DontFragment
     {
-        get => _pingMonitor_DontFragement;
+        get => _pingMonitor_DontFragment;
         set
         {
-            if (value == _pingMonitor_DontFragement)
+            if (value == _pingMonitor_DontFragment)
                 return;
 
-            _pingMonitor_DontFragement = value;
+            _pingMonitor_DontFragment = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
@@ -1481,7 +1480,7 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private bool _traceroute_ResolveHostname = true;
+    private bool _traceroute_ResolveHostname = GlobalStaticConfiguration.Traceroute_ResolveHostname;
     public bool Traceroute_ResolveHostname
     {
         get => _traceroute_ResolveHostname;
@@ -1491,6 +1490,22 @@ public class SettingsInfo : PropertyChangedBase
                 return;
 
             _traceroute_ResolveHostname = value;
+            OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
+    
+    private bool _traceroute_CheckIPApiIPGeolocation = GlobalStaticConfiguration.Traceroute_CheckIPApiIPGeolocation;
+    
+    public bool Traceroute_CheckIPApiIPGeolocation
+    {
+        get => _traceroute_CheckIPApiIPGeolocation;
+        set
+        {
+            if (value == _traceroute_CheckIPApiIPGeolocation)
+                return;
+
+            _traceroute_CheckIPApiIPGeolocation = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }

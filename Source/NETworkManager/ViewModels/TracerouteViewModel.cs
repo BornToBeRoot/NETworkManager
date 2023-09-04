@@ -10,7 +10,7 @@ using System.Threading;
 using NETworkManager.Utilities;
 using System.Windows.Threading;
 using System.ComponentModel;
-using System.Globalization;
+using System.Diagnostics;
 using System.Windows.Data;
 using System.Linq;
 using Dragablz;
@@ -28,16 +28,18 @@ namespace NETworkManager.ViewModels;
 public class TracerouteViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private CancellationTokenSource _cancellationTokenSource;
 
-    public readonly int TabId;
+    private readonly int _tabId;
     private bool _firstLoad = true;
 
     private readonly bool _isLoading;
 
     private string _host;
+
     public string Host
     {
         get => _host;
@@ -54,6 +56,7 @@ public class TracerouteViewModel : ViewModelBase
     public ICollectionView HostHistoryView { get; }
 
     private bool _isRunning;
+
     public bool IsRunning
     {
         get => _isRunning;
@@ -68,6 +71,7 @@ public class TracerouteViewModel : ViewModelBase
     }
 
     private bool _cancelTrace;
+
     public bool CancelTrace
     {
         get => _cancelTrace;
@@ -81,7 +85,8 @@ public class TracerouteViewModel : ViewModelBase
         }
     }
 
-    private ObservableCollection<TracerouteHopInfo> _traceResults = new ObservableCollection<TracerouteHopInfo>();
+    private ObservableCollection<TracerouteHopInfo> _traceResults = new();
+
     public ObservableCollection<TracerouteHopInfo> TraceResults
     {
         get => _traceResults;
@@ -97,6 +102,7 @@ public class TracerouteViewModel : ViewModelBase
     public ICollectionView TraceResultsView { get; }
 
     private TracerouteHopInfo _selectedTraceResult;
+
     public TracerouteHopInfo SelectedTraceResult
     {
         get => _selectedTraceResult;
@@ -111,6 +117,7 @@ public class TracerouteViewModel : ViewModelBase
     }
 
     private IList _selectedTraceResults = new ArrayList();
+
     public IList SelectedTraceResults
     {
         get => _selectedTraceResults;
@@ -124,9 +131,10 @@ public class TracerouteViewModel : ViewModelBase
         }
     }
 
-    public bool ResolveHostname => SettingsManager.Current.Traceroute_ResolveHostname;
+    private bool _ipGeolocationIsRateLimitReached;
 
     private bool _isStatusMessageDisplayed;
+
     public bool IsStatusMessageDisplayed
     {
         get => _isStatusMessageDisplayed;
@@ -141,6 +149,7 @@ public class TracerouteViewModel : ViewModelBase
     }
 
     private string _statusMessage;
+
     public string StatusMessage
     {
         get => _statusMessage;
@@ -153,16 +162,18 @@ public class TracerouteViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, load settings
+
     public TracerouteViewModel(IDialogCoordinator instance, int tabId, string host)
     {
         _isLoading = true;
 
         _dialogCoordinator = instance;
 
-        TabId = tabId;
+        _tabId = tabId;
         Host = host;
 
         // Set collection view
@@ -170,11 +181,10 @@ public class TracerouteViewModel : ViewModelBase
 
         // Result view
         TraceResultsView = CollectionViewSource.GetDefaultView(TraceResults);
-        TraceResultsView.SortDescriptions.Add(new SortDescription(nameof(TracerouteHopInfo.Hop), ListSortDirection.Ascending));
+        TraceResultsView.SortDescriptions.Add(new SortDescription(nameof(TracerouteHopInfo.Hop),
+            ListSortDirection.Ascending));
 
         LoadSettings();
-
-        SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
 
         _isLoading = false;
     }
@@ -192,14 +202,16 @@ public class TracerouteViewModel : ViewModelBase
 
     private void LoadSettings()
     {
-
     }
+
     #endregion
 
     #region ICommands & Actions
-    public ICommand TraceCommand => new RelayCommand(p => TraceAction(), Trace_CanExecute);
 
-    private bool Trace_CanExecute(object paramter) => System.Windows.Application.Current.MainWindow != null && !((MetroWindow)System.Windows.Application.Current.MainWindow).IsAnyDialogOpen;
+    public ICommand TraceCommand => new RelayCommand(_ => TraceAction(), Trace_CanExecute);
+
+    private bool Trace_CanExecute(object parameter) => Application.Current.MainWindow != null &&
+                                                       !((MetroWindow)Application.Current.MainWindow)!.IsAnyDialogOpen;
 
     private void TraceAction()
     {
@@ -213,82 +225,56 @@ public class TracerouteViewModel : ViewModelBase
 
     private void RedirectDataToApplicationAction(object name)
     {
-        if (name is not string appName)
+        if (name is not ApplicationName applicationName)
             return;
 
-        if (!Enum.TryParse(appName, out ApplicationName app))
-            return;
+        var host = !string.IsNullOrEmpty(SelectedTraceResult.Hostname)
+            ? SelectedTraceResult.Hostname
+            : SelectedTraceResult.IPAddress.ToString();
 
-        var host = !string.IsNullOrEmpty(SelectedTraceResult.Hostname) ? SelectedTraceResult.Hostname : SelectedTraceResult.IPAddress.ToString();
-
-        EventSystem.RedirectToApplication(app, host);
+        EventSystem.RedirectToApplication(applicationName, host);
     }
 
-    public ICommand PerformDNSLookupIPAddressCommand => new RelayCommand(p => PerformDNSLookupIPAddressAction());
+    public ICommand PerformDNSLookupCommand => new RelayCommand(PerformDNSLookupAction);
 
-    private void PerformDNSLookupIPAddressAction()
+    private void PerformDNSLookupAction(object data)
     {
-        EventSystem.RedirectToApplication(ApplicationName.DNSLookup, SelectedTraceResult.IPAddress.ToString());
+        EventSystem.RedirectToApplication(ApplicationName.DNSLookup, data.ToString());
     }
 
-    public ICommand PerformDNSLookupHostnameCommand => new RelayCommand(p => PerformDNSLookupHostnameAction());
+    public ICommand CopyDataToClipboardCommand => new RelayCommand(CopyDataToClipboardAction);
 
-    private void PerformDNSLookupHostnameAction()
+    private static void CopyDataToClipboardAction(object data)
     {
-        EventSystem.RedirectToApplication(ApplicationName.DNSLookup, SelectedTraceResult.Hostname);
+        ClipboardHelper.SetClipboard(data.ToString());
     }
 
-    public ICommand CopySelectedHopCommand => new RelayCommand(p => CopySelectedHopAction());
+    public ICommand CopyTimeToClipboardCommand => new RelayCommand(CopyTimeToClipboardAction);
 
-    private void CopySelectedHopAction()
+    private void CopyTimeToClipboardAction(object timeIdentifier)
     {
-        ClipboardHelper.SetClipboard(SelectedTraceResult.Hop.ToString());
+        var time = timeIdentifier switch
+        {
+            "1" => Ping.TimeToString(SelectedTraceResult.Status1, SelectedTraceResult.Time1),
+            "2" => Ping.TimeToString(SelectedTraceResult.Status2, SelectedTraceResult.Time2),
+            "3" => Ping.TimeToString(SelectedTraceResult.Status3, SelectedTraceResult.Time3),
+            _ => "-/-"
+        };
+
+        ClipboardHelper.SetClipboard(time);
     }
 
-    public ICommand CopySelectedTime1Command => new RelayCommand(p => CopySelectedTime1Action());
-
-    private void CopySelectedTime1Action()
-    {
-        ClipboardHelper.SetClipboard(SelectedTraceResult.Time1.ToString(CultureInfo.CurrentCulture));
-    }
-
-    public ICommand CopySelectedTime2Command => new RelayCommand(p => CopySelectedTime2Action());
-
-    private void CopySelectedTime2Action()
-    {
-        ClipboardHelper.SetClipboard(SelectedTraceResult.Time2.ToString(CultureInfo.CurrentCulture));
-    }
-
-    public ICommand CopySelectedTime3Command => new RelayCommand(p => CopySelectedTime3Action());
-
-    private void CopySelectedTime3Action()
-    {
-        ClipboardHelper.SetClipboard(SelectedTraceResult.Time3.ToString(CultureInfo.CurrentCulture));
-    }
-
-    public ICommand CopySelectedIPAddressCommand => new RelayCommand(p => CopySelectedIPAddressAction());
-
-    private void CopySelectedIPAddressAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedTraceResult.IPAddress.ToString());
-    }
-
-    public ICommand CopySelectedHostnameCommand => new RelayCommand(p => CopySelectedHostnameAction());
-
-    private void CopySelectedHostnameAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedTraceResult.Hostname);
-    }
-
-    public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+    public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
 
     private void ExportAction()
     {
         Export();
     }
+
     #endregion
 
     #region Methods
+
     private void StopTrace()
     {
         CancelTrace = true;
@@ -297,6 +283,8 @@ public class TracerouteViewModel : ViewModelBase
 
     private async Task StartTrace()
     {
+        _ipGeolocationIsRateLimitReached = false;
+        StatusMessage = string.Empty;
         IsStatusMessageDisplayed = false;
         IsRunning = true;
 
@@ -309,7 +297,7 @@ public class TracerouteViewModel : ViewModelBase
         {
             foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
             {
-                tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == TabId).Header = Host;
+                tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Host;
             }
         }
 
@@ -318,13 +306,16 @@ public class TracerouteViewModel : ViewModelBase
         // Try to parse the string into an IP-Address
         if (!IPAddress.TryParse(Host, out var ipAddress))
         {
-            var dnsResult = await DNSClientHelper.ResolveAorAaaaAsync(Host, SettingsManager.Current.Network_ResolveHostnamePreferIPv4);
+            var dnsResult =
+                await DNSClientHelper.ResolveAorAaaaAsync(Host,
+                    SettingsManager.Current.Network_ResolveHostnamePreferIPv4);
 
             if (dnsResult.HasError)
             {
-                StatusMessage = DNSClientHelper.FormatDNSClientResultError(Host, dnsResult);
-                IsStatusMessageDisplayed = true;
+                DisplayStatusMessage(DNSClientHelper.FormatDNSClientResultError(Host, dnsResult));
+
                 IsRunning = false;
+
                 return;
             }
 
@@ -338,7 +329,8 @@ public class TracerouteViewModel : ViewModelBase
                 new byte[SettingsManager.Current.Traceroute_Buffer],
                 SettingsManager.Current.Traceroute_MaximumHops,
                 true,
-                SettingsManager.Current.Traceroute_ResolveHostname
+                SettingsManager.Current.Traceroute_ResolveHostname,
+                SettingsManager.Current.Traceroute_CheckIPApiIPGeolocation
             ));
 
             traceroute.HopReceived += Traceroute_HopReceived;
@@ -354,16 +346,10 @@ public class TracerouteViewModel : ViewModelBase
         }
         catch (Exception ex) // This will catch any exception
         {
-            StatusMessage = ex.Message;
-            IsStatusMessageDisplayed = true;
             IsRunning = false;
-        }
-    }
 
-    private void UserHasCanceled()
-    {
-        CancelTrace = false;
-        IsRunning = false;
+            DisplayStatusMessage(ex.Message);
+        }
     }
 
     private async Task Export()
@@ -374,24 +360,32 @@ public class TracerouteViewModel : ViewModelBase
         };
 
         var exportViewModel = new ExportViewModel(async instance =>
-        {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-            try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? TraceResults : new ObservableCollection<TracerouteHopInfo>(SelectedTraceResults.Cast<TracerouteHopInfo>().ToArray()));
-            }
-            catch (Exception ex)
-            {
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
-            }
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType,
+                        instance.ExportAll
+                            ? TraceResults
+                            : SelectedTraceResults.Cast<TracerouteHopInfo>().ToArray());
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-            SettingsManager.Current.Traceroute_ExportFileType = instance.FileType;
-            SettingsManager.Current.Traceroute_ExportFilePath = instance.FilePath;
-        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportFileType[] { ExportFileType.CSV, ExportFileType.XML, ExportFileType.JSON }, true, SettingsManager.Current.Traceroute_ExportFileType, SettingsManager.Current.Traceroute_ExportFilePath);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error,
+                        Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                        Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.Traceroute_ExportFileType = instance.FileType;
+                SettingsManager.Current.Traceroute_ExportFilePath = instance.FilePath;
+            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
+            new[] { ExportFileType.CSV, ExportFileType.XML, ExportFileType.JSON }, true,
+            SettingsManager.Current.Traceroute_ExportFileType, SettingsManager.Current.Traceroute_ExportFilePath
+        );
 
         customDialog.Content = new ExportDialog
         {
@@ -404,7 +398,8 @@ public class TracerouteViewModel : ViewModelBase
     private void AddHostToHistory(string host)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.Traceroute_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+        var list = ListHelper.Modify(SettingsManager.Current.Traceroute_HostHistory.ToList(), host,
+            SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items
         SettingsManager.Current.Traceroute_HostHistory.Clear();
@@ -419,42 +414,45 @@ public class TracerouteViewModel : ViewModelBase
         if (IsRunning)
             StopTrace();
     }
+
     #endregion
 
     #region Events
+
     private void Traceroute_HopReceived(object sender, TracerouteHopReceivedArgs e)
     {
-        var tracerouteInfo = TracerouteHopInfo.Parse(e);
-
         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
         {
-            //lock (TraceResults)
-            TraceResults.Add(tracerouteInfo);
+            if (e.Args.IPGeolocationResult.HasError)
+                DisplayStatusMessage($"ip-api.com: {e.Args.IPGeolocationResult.ErrorMessage}");
+
+            if (!_ipGeolocationIsRateLimitReached && e.Args.IPGeolocationResult.IsRateLimitReached)
+            {
+                _ipGeolocationIsRateLimitReached = true;
+                DisplayStatusMessage($"ip-api: {Localization.Resources.Strings.RateLimitReachedMessage}");
+            }
+
+            TraceResults.Add(e.Args);
         }));
     }
 
     private void Traceroute_MaximumHopsReached(object sender, MaximumHopsReachedArgs e)
     {
-        StatusMessage = string.Format(Localization.Resources.Strings.MaximumNumberOfHopsReached, e.Hops);
-        IsStatusMessageDisplayed = true;
+        DisplayStatusMessage(string.Format(Localization.Resources.Strings.MaximumNumberOfHopsReached, e.Hops));
         IsRunning = false;
     }
 
     private void Traceroute_UserHasCanceled(object sender, EventArgs e)
     {
+        DisplayStatusMessage(Localization.Resources.Strings.CanceledByUserMessage);
         CancelTrace = false;
         IsRunning = false;
-
-        StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
-        IsStatusMessageDisplayed = true;
     }
 
     private void Traceroute_TraceError(object sender, TracerouteErrorArgs e)
     {
+        DisplayStatusMessage(e.ErrorMessage);
         IsRunning = false;
-
-        StatusMessage = e.ErrorMessage;
-        IsStatusMessageDisplayed = true;
     }
 
     private void Traceroute_TraceComplete(object sender, EventArgs e)
@@ -462,14 +460,14 @@ public class TracerouteViewModel : ViewModelBase
         IsRunning = false;
     }
 
-    private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    private void DisplayStatusMessage(string message)
     {
-        switch (e.PropertyName)
-        {
-            case nameof(SettingsInfo.Traceroute_ResolveHostname):
-                OnPropertyChanged(nameof(ResolveHostname));
-                break;
-        }
+        if (!string.IsNullOrEmpty(StatusMessage))
+            StatusMessage += Environment.NewLine;
+
+        StatusMessage += message;
+        IsStatusMessageDisplayed = true;
     }
-    #endregion               
+
+    #endregion
 }

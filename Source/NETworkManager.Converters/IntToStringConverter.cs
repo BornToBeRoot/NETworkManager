@@ -11,7 +11,8 @@ public sealed class IntToStringConverter : IValueConverter
         if (value == null)
             return "-/-";
 
-        long.TryParse(value.ToString(), out var intValue);
+        if (!long.TryParse(value.ToString(), out var intValue))
+            return "-/-";
 
         return intValue == 0 ? "-/-" : intValue.ToString();
     }

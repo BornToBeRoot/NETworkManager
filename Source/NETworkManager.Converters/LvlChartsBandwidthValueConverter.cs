@@ -18,7 +18,7 @@ public sealed class LvlChartsBandwidthValueConverter : IValueConverter
     /// <returns></returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value != null && value is LvlChartsDefaultInfo info)
+        if (value is LvlChartsDefaultInfo info)
             return $"{FileSizeConverter.GetBytesReadable((long)info.Value * 8)}it/s";
 
         return "-/-";

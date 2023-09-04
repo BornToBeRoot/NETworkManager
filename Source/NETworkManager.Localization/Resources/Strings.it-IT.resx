@@ -1952,7 +1952,7 @@ Le modifiche a questo valore avranno effetto dopo il riavvio dell'applicazione.<
   <data name="CheckPublicIPAddress" xml:space="preserve">
     <value>Controlla l'indirizzo IP pubblico</value>
   </data>
-  <data name="FirstRunMessage" xml:space="preserve">
+  <data name="WelcomeMessage" xml:space="preserve">
     <value>Grazie per l'uso di NETworkManager!
 
 Se ti piace questo programma, valutalo  su GitHub e consiglialo ad altri.</value>
@@ -3724,7 +3724,7 @@ URL: http://edns.ip-api.com/</value>
 
 URL: http://ip-api.com/</value>
   </data>
-  <data name="FirstRunPrivacyMessage" xml:space="preserve">
+  <data name="WelcomePrivacyMessage" xml:space="preserve">
     <value>Per fornire funzionalità aggiuntive, vengono usati servizi di terze parti che non sono gestiti dall'autore del programma.
 Puoi deselezionarli di seguito. 
 In qualsiasi momento nessun dato vierrà trasferito all'autore del programma.</value>

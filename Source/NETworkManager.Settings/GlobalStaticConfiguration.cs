@@ -10,6 +10,7 @@ using NETworkManager.Utilities;
 using NETworkManager.Models.RemoteDesktop;
 using DnsClient;
 using NETworkManager.Models;
+// ReSharper disable InconsistentNaming
 
 namespace NETworkManager.Settings;
 
@@ -71,11 +72,11 @@ public static class GlobalStaticConfiguration
     // Application: Dashboard
     public static string Dashboard_PublicIPv4Address => "1.1.1.1";
     public static string Dashboard_PublicIPv6Address => "2606:4700:4700::1111";
-    public static bool Dashboard_CheckPublicIPAddressEnabled => true;
+    public static bool Dashboard_CheckPublicIPAddress => true;
     public static string Dashboard_PublicIPv4AddressAPI => "https://api.ipify.org";
     public static string Dashboard_PublicIPv6AddressAPI => "https://api6.ipify.org";
-    public static bool Dashboard_CheckIPApiIPGeolocationEnabled => false;
-    public static bool Dashboard_CheckIPApiDNSResolverEnabled => false;
+    public static bool Dashboard_CheckIPApiIPGeolocation => false;
+    public static bool Dashboard_CheckIPApiDNSResolver => false;
     
     // Application: WiFi
     public static bool WiFi_Show2dot4GHzNetworks => true;
@@ -103,6 +104,7 @@ public static class GlobalStaticConfiguration
 
     // Application: Ping Monitor
     public static int PingMonitor_Buffer => 32;
+    public static bool PingMonitor_DontFragment => true;
     public static int PingMonitor_Timeout => 4000;
     public static int PingMonitor_TTL => 64;
     public static int PingMonitor_WaitTime => 1000;
@@ -112,6 +114,8 @@ public static class GlobalStaticConfiguration
     public static int Traceroute_MaximumHops => 30;
     public static int Traceroute_Timeout => 4000;
     public static int Traceroute_Buffer => 32;
+    public static bool Traceroute_ResolveHostname => true;
+    public static bool Traceroute_CheckIPApiIPGeolocation => false;
     public static ExportFileType Traceroute_ExportFileType => ExportFileType.CSV;
 
     // Application: DNS Lookup
@@ -127,7 +131,7 @@ public static class GlobalStaticConfiguration
     public static int RemoteDesktop_ScreenWidth => 1280;
     public static int RemoteDesktop_ScreenHeight => 768;
 
-    public static int RemoteDesktop_ColorDepth = 32;
+    public static int RemoteDesktop_ColorDepth => 32;
     public static int RemoteDesktop_Port => 3389;
     public static bool RemoteDesktop_GatewayServerBypassLocalAddresses => true;
     public static GatewayUserSelectedCredsSource RemoteDesktop_GatewayServerLogonMethod => GatewayUserSelectedCredsSource.Any;
@@ -189,10 +193,6 @@ public static class GlobalStaticConfiguration
 
     // Application: Wake on LAN
     public static int WakeOnLAN_Port => 9;
-
-    // Application: HTTP Header
-    public static int HTTPHeaders_Timeout => 10000;
-    public static ExportFileType HTTPHeaders_ExportFileType => ExportFileType.CSV;
 
     // Application: Subnet Calculator
     public static ExportFileType SubnetCalculator_Subnetting_ExportFileType => ExportFileType.CSV;

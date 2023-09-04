@@ -6,15 +6,16 @@ namespace NETworkManager.Converters;
 
 public sealed class Bytes1000ToSpeedConverter : IValueConverter
 {
-    private readonly string[] _sizes = { "Bit/s", "KBit/s", "MBit/s", "GBit/s", "Tbit/s" };
+    private readonly string[] _sizes = { "Bit/s", "KBit/s", "MBit/s", "GBit/s", "TBit/s" };
 
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value == null)
             return "-/-";
 
-        double.TryParse(value.ToString(), out var bits);
-
+        if (!double.TryParse(value.ToString(), out var bits)) 
+            return "-/-";
+        
         var sizeCount = 0;
 
         while (bits >= 1000 && ++sizeCount < _sizes.Length)

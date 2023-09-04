@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using NETworkManager.Localization.Translators;
+using NETworkManager.Localization;
 using NETworkManager.Utilities;
 
 namespace NETworkManager.Converters;
@@ -21,10 +21,9 @@ public sealed class AutoRefreshTimeToStringConverter : IValueConverter
     /// <returns>Translated <see cref="TimeUnit"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (!(value is TimeUnit timeUnit))
-            return "-/-";
-        
-        return TimeUnitTranslator.GetInstance().Translate(timeUnit);
+        return value is not TimeUnit timeUnit
+            ? "-/-"
+            : ResourceTranslator.Translate(ResourceIdentifier.TimeUnit, timeUnit);
     }
 
     /// <summary>

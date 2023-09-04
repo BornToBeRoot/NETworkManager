@@ -1,7 +1,7 @@
 ﻿using LiveCharts;
 using LiveCharts.Wpf;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Localization.Translators;
+using NETworkManager.Localization;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Lookup;
 using NETworkManager.Models.Network;
@@ -528,7 +528,7 @@ public class WiFiViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            // Clear the existing old values if an error occours
+            // Clear the existing old values if an error occurs
             Networks.Clear();
             Radio1Series.Clear();
             Radio2Series.Clear();
@@ -641,7 +641,7 @@ public class WiFiViewModel : ViewModelBase
             if (connectionResult == WiFiConnectionStatus.Success)
                 ConnectionStatusMessage = string.Format(Localization.Resources.Strings.SuccessfullyConnectedToXXX, ssid);
             else
-                ConnectionStatusMessage = string.Format(Localization.Resources.Strings.CouldNotConnectToXXXReasonXXX, ssid, WiFiConnectionStatusTranslator.GetInstance().Translate(connectionResult));
+                ConnectionStatusMessage = string.Format(Localization.Resources.Strings.CouldNotConnectToXXXReasonXXX, ssid, ResourceTranslator.Translate(ResourceIdentifier.WiFiConnectionStatus, connectionResult));
 
             // Hide message automatically
             _hideConnectionStatusMessageTimer.Start();
@@ -674,13 +674,13 @@ public class WiFiViewModel : ViewModelBase
             if (connectionResult == WiFiConnectionStatus.Success)
                 ConnectionStatusMessage = string.Format(Localization.Resources.Strings.SuccessfullyConnectedToXXX, ssid);
             else
-                ConnectionStatusMessage = string.Format(Localization.Resources.Strings.CouldNotConnectToXXXReasonXXX, ssid, WiFiConnectionStatusTranslator.GetInstance().Translate(connectionResult));
+                ConnectionStatusMessage = string.Format(Localization.Resources.Strings.CouldNotConnectToXXXReasonXXX, ssid, ResourceTranslator.Translate(ResourceIdentifier.WiFiConnectionStatus, connectionResult));
 
             // Hide message automatically
             _hideConnectionStatusMessageTimer.Start();
 
             // Update the wifi networks.
-            // Wait because an error may occour if a refresh is done directly after connecting.            
+            // Wait because an error may occur if a refresh is done directly after connecting.            
             await Scan(SelectedAdapter, true, 5000);
         },
 

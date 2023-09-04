@@ -51,7 +51,7 @@ public class DashboardSettingsViewModel : ViewModelBase
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.Dashboard_CheckPublicIPAddressEnabled = value;
+                SettingsManager.Current.Dashboard_CheckPublicIPAddress = value;
 
             _checkPublicIPAddressEnabled = value;
             OnPropertyChanged();
@@ -136,7 +136,7 @@ public class DashboardSettingsViewModel : ViewModelBase
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.Dashboard_CheckIPApiIPGeolocationEnabled = value;
+                SettingsManager.Current.Dashboard_CheckIPApiIPGeolocation = value;
 
             _checkIPApiIPGeolocationEnabled = value;
             OnPropertyChanged();
@@ -153,7 +153,7 @@ public class DashboardSettingsViewModel : ViewModelBase
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.Dashboard_CheckIPApiDNSResolverEnabled = value;
+                SettingsManager.Current.Dashboard_CheckIPApiDNSResolver = value;
 
             _checkIPApiDNSResolverEnabled = value;
             OnPropertyChanged();
@@ -175,13 +175,13 @@ public class DashboardSettingsViewModel : ViewModelBase
     {
         PublicIPv4Address = SettingsManager.Current.Dashboard_PublicIPv4Address;
         PublicIPv6Address = SettingsManager.Current.Dashboard_PublicIPv6Address;
-        CheckPublicIPAddressEnabled = SettingsManager.Current.Dashboard_CheckPublicIPAddressEnabled;
+        CheckPublicIPAddressEnabled = SettingsManager.Current.Dashboard_CheckPublicIPAddress;
         UsePublicIPv4AddressCustomAPI = SettingsManager.Current.Dashboard_UseCustomPublicIPv4AddressAPI;
         CustomPublicIPv4AddressAPI = SettingsManager.Current.Dashboard_CustomPublicIPv4AddressAPI;
         UsePublicIPv6AddressCustomAPI = SettingsManager.Current.Dashboard_UseCustomPublicIPv6AddressAPI;
         CustomPublicIPv6AddressAPI = SettingsManager.Current.Dashboard_CustomPublicIPv6AddressAPI;
-        CheckIPApiIPGeolocationEnabled = SettingsManager.Current.Dashboard_CheckIPApiIPGeolocationEnabled;
-        CheckIPApiDNSResolverEnabled = SettingsManager.Current.Dashboard_CheckIPApiDNSResolverEnabled;
+        CheckIPApiIPGeolocationEnabled = SettingsManager.Current.Dashboard_CheckIPApiIPGeolocation;
+        CheckIPApiDNSResolverEnabled = SettingsManager.Current.Dashboard_CheckIPApiDNSResolver;
     }
     #endregion
 }

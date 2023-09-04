@@ -10,10 +10,7 @@ public sealed class WiFiPhyKindToStringConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (!(value is WiFiPhyKind phyKind))
-            return "-/-";
-
-        return $"{WiFi.GetHumandReadablePhyKind(phyKind)}";
+        return value is not WiFiPhyKind phyKind ? "-/-" : $"{WiFi.GetHumandReadablePhyKind(phyKind)}";
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
