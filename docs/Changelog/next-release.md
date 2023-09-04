@@ -40,6 +40,9 @@ New Feature
 
 - Network Interface
   - Add missing scrollviewer in configure tab [#2410](https://github.com/BornToBeRoot/NETworkManager/pull/2410){:target="\_blank"}
+- Traceroute
+  - Copy time to clipboard for non reachable hops fixed [#2477](https://github.com/BornToBeRoot/NETworkManager/pull/2477){:target="\_blank"}
+  - Export to Json fixed (if ip address of a hop cannot be resolved) [#2477](https://github.com/BornToBeRoot/NETworkManager/pull/2477){:target="\_blank"}
 - Profiles
   - Prevent the application from crashing if a profile file cannot be loaded (profile management is then blocked) [#2464](https://github.com/BornToBeRoot/NETworkManager/pull/2464){:target="\_blank"}
 

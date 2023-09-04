@@ -9,7 +9,7 @@ public class IPGeolocationResult
     /// <summary>
     /// IP geolocation information retrieved from the API.
     /// </summary>
-    public IPGeolocationInfo Info { get; set; }
+    public IPGeolocationInfo Info { get; set; } = new();
 
     /// <summary>
     /// Indicates if the rate limit of the API is reached.

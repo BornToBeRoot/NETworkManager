@@ -10,7 +10,7 @@ using System.Threading;
 using NETworkManager.Utilities;
 using System.Windows.Threading;
 using System.ComponentModel;
-using System.Globalization;
+using System.Diagnostics;
 using System.Windows.Data;
 using System.Linq;
 using Dragablz;
@@ -225,28 +225,43 @@ public class TracerouteViewModel : ViewModelBase
 
     private void RedirectDataToApplicationAction(object name)
     {
-        if(name is not ApplicationName applicationName)
+        if (name is not ApplicationName applicationName)
             return;
-        
+
         var host = !string.IsNullOrEmpty(SelectedTraceResult.Hostname)
             ? SelectedTraceResult.Hostname
             : SelectedTraceResult.IPAddress.ToString();
 
         EventSystem.RedirectToApplication(applicationName, host);
     }
-    
-    public ICommand CopyDataToClipboardCommand => new RelayCommand(CopyDataToClipboardAction);
 
-    private void CopyDataToClipboardAction(object data)
-    {
-        ClipboardHelper.SetClipboard(data.ToString());
-    }
-
-    public ICommand PerformDNSLookupCommand => new RelayCommand( PerformDNSLookupAction);
+    public ICommand PerformDNSLookupCommand => new RelayCommand(PerformDNSLookupAction);
 
     private void PerformDNSLookupAction(object data)
     {
         EventSystem.RedirectToApplication(ApplicationName.DNSLookup, data.ToString());
+    }
+
+    public ICommand CopyDataToClipboardCommand => new RelayCommand(CopyDataToClipboardAction);
+
+    private static void CopyDataToClipboardAction(object data)
+    {
+        ClipboardHelper.SetClipboard(data.ToString());
+    }
+
+    public ICommand CopyTimeToClipboardCommand => new RelayCommand(CopyTimeToClipboardAction);
+
+    private void CopyTimeToClipboardAction(object timeIdentifier)
+    {
+        var time = timeIdentifier switch
+        {
+            "1" => Ping.TimeToString(SelectedTraceResult.Status1, SelectedTraceResult.Time1),
+            "2" => Ping.TimeToString(SelectedTraceResult.Status2, SelectedTraceResult.Time2),
+            "3" => Ping.TimeToString(SelectedTraceResult.Status3, SelectedTraceResult.Time3),
+            _ => "-/-"
+        };
+
+        ClipboardHelper.SetClipboard(time);
     }
 
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
@@ -310,13 +325,13 @@ public class TracerouteViewModel : ViewModelBase
         try
         {
             var traceroute = new Traceroute(new TracerouteOptions(
-                    SettingsManager.Current.Traceroute_Timeout,
-                    new byte[SettingsManager.Current.Traceroute_Buffer],
-                    SettingsManager.Current.Traceroute_MaximumHops,
-                    true,
-                    SettingsManager.Current.Traceroute_ResolveHostname,
-                    SettingsManager.Current.Traceroute_CheckIPApiIPGeolocation
-                ));
+                SettingsManager.Current.Traceroute_Timeout,
+                new byte[SettingsManager.Current.Traceroute_Buffer],
+                SettingsManager.Current.Traceroute_MaximumHops,
+                true,
+                SettingsManager.Current.Traceroute_ResolveHostname,
+                SettingsManager.Current.Traceroute_CheckIPApiIPGeolocation
+            ));
 
             traceroute.HopReceived += Traceroute_HopReceived;
             traceroute.TraceComplete += Traceroute_TraceComplete;
@@ -353,8 +368,7 @@ public class TracerouteViewModel : ViewModelBase
                     ExportManager.Export(instance.FilePath, instance.FileType,
                         instance.ExportAll
                             ? TraceResults
-                            : new ObservableCollection<TracerouteHopInfo>(SelectedTraceResults.Cast<TracerouteHopInfo>()
-                                .ToArray()));
+                            : SelectedTraceResults.Cast<TracerouteHopInfo>().ToArray());
                 }
                 catch (Exception ex)
                 {

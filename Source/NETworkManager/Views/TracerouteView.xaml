@@ -223,9 +223,9 @@
                     <Separator />
                     <MenuItem Header="{x:Static Member=localization:Strings.CopyDots}" Style="{StaticResource ResourceKey=CopyMenuItem}">
                         <MenuItem Header="{x:Static Member=localization:Strings.Hop}" Command="{Binding CopyDataToClipboardCommand}" CommandParameter="{Binding SelectedTraceResult.Hop}" Style="{StaticResource ResourceKey=CopyMenuItem}" />
-                        <MenuItem Header="{x:Static Member=localization:Strings.Time1}" Command="{Binding CopyDataToClipboardCommand}" CommandParameter="{Binding SelectedTraceResult.Time1}" Style="{StaticResource ResourceKey=CopyMenuItem}" />
-                        <MenuItem Header="{x:Static Member=localization:Strings.Time2}" Command="{Binding CopyDataToClipboardCommand}" CommandParameter="{Binding SelectedTraceResult.Time2}" Style="{StaticResource ResourceKey=CopyMenuItem}" />
-                        <MenuItem Header="{x:Static Member=localization:Strings.Time3}" Command="{Binding CopyDataToClipboardCommand}" CommandParameter="{Binding SelectedTraceResult.Time3}" Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.Time1}" Command="{Binding CopyTimeToClipboardCommand}" CommandParameter="1" Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.Time2}" Command="{Binding CopyTimeToClipboardCommand}" CommandParameter="2" Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.Time3}" Command="{Binding CopyTimeToClipboardCommand}" CommandParameter="3" Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         <MenuItem Header="{x:Static Member=localization:Strings.IPAddress}" Command="{Binding CopyDataToClipboardCommand}" CommandParameter="{Binding SelectedTraceResult.IPAddress}" Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         <MenuItem Header="{x:Static Member=localization:Strings.Hostname}" Command="{Binding CopyDataToClipboardCommand}" CommandParameter="{Binding SelectedTraceResult.Hostname}"
                                   Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_ResolveHostname, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource ResourceKey=CopyMenuItem}" />
