@@ -15,4 +15,4 @@
 ## Translation
 - Translation is hosted on [Transifex](https://www.transifex.com/BornToBeRoot/NETworkManager/).
 - If you want to join the language team as translator or reviewer, you need to have a Transifex account and join the team on Transifex.
-- You can request a new language via Transifex (or with a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new/choose)).
+- You can request a new language via Transifex (or create a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new/choose)).
