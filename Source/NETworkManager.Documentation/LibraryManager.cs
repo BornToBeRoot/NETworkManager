@@ -5,7 +5,7 @@ using System.Reflection;
 namespace NETworkManager.Documentation;
 
 /// <summary>
-/// This class provides information about libraries used within the program.
+/// This class provides information's about libraries used within the program.
 /// </summary>
 public static class LibraryManager
 {
@@ -20,7 +20,7 @@ public static class LibraryManager
     /// <returns>Location of the license folder.</returns>
     public static string GetLicenseLocation()
     {            
-        return Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) ?? throw new DirectoryNotFoundException("Program execution directory not found, while trying to build path to license directory!"), LicenseFolderName);
+        return Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location) ?? throw new DirectoryNotFoundException("Program execution directory not found, while trying to build path to license directory!"), LicenseFolderName);
     }
 
     /// <summary>
@@ -32,7 +32,7 @@ public static class LibraryManager
         new LibraryInfo("MahApps.Metro.IconPacks", "https://github.com/MahApps/MahApps.Metro.IconPacks", Localization.Resources.Strings.Library_MahAppsMetroIconPacks_Description, Localization.Resources.Strings.License_MITLicense, "https://github.com/MahApps/MahApps.Metro.IconPacks/blob/master/LICENSE"),
         new LibraryInfo("ControlzEx", "https://github.com/ControlzEx/ControlzEx", Localization.Resources.Strings.Library_ControlzEx_Description, Localization.Resources.Strings.License_MITLicense, "https://github.com/ButchersBoy/Dragablz/blob/master/LICENSE"),
         new LibraryInfo("Octokit", "https://github.com/octokit/octokit.net", Localization.Resources.Strings.Library_Octokit_Description, Localization.Resources.Strings.License_MITLicense, "https://github.com/octokit/octokit.net/blob/master/LICENSE.txt"),
-        new LibraryInfo("#SNMP Libary", "https://github.com/lextudio/sharpsnmplib", Localization.Resources.Strings.Library_SharpSNMP_Description, Localization.Resources.Strings.License_MITLicense, "https://github.com/lextudio/sharpsnmplib/blob/master/LICENSE"),
+        new LibraryInfo("#SNMP Library", "https://github.com/lextudio/sharpsnmplib", Localization.Resources.Strings.Library_SharpSNMP_Description, Localization.Resources.Strings.License_MITLicense, "https://github.com/lextudio/sharpsnmplib/blob/master/LICENSE"),
         new LibraryInfo("Dragablz", "https://github.com/ButchersBoy/Dragablz", Localization.Resources.Strings.Library_Dragablz_Description, Localization.Resources.Strings.License_MITLicense,"https://github.com/ButchersBoy/Dragablz/blob/master/LICENSE"),
         new LibraryInfo("IPNetwork", "https://github.com/lduchosal/ipnetwork", Localization.Resources.Strings.Library_IPNetwork_Description, Localization.Resources.Strings.License_BDS2Clause, "https://github.com/lduchosal/ipnetwork/blob/master/LICENSE"),
         new LibraryInfo("AirspaceFixer" ,"https://github.com/chris84948/AirspaceFixer", Localization.Resources.Strings.Library_AirspaceFixer_Description, Localization.Resources.Strings.License_MITLicense, "https://github.com/chris84948/AirspaceFixer/blob/master/LICENSE"),

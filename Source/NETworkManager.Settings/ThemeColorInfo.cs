@@ -1,7 +1,7 @@
 ﻿namespace NETworkManager.Settings;
 
 /// <summary>
-/// Class contains informations about MahApps.Metro themes.
+/// Class contains information's about MahApps.Metro themes.
 /// </summary>
 public class ThemeColorInfo : BaseColorInfo
 {

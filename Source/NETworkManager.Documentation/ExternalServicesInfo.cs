@@ -1,7 +1,7 @@
 ﻿namespace NETworkManager.Documentation;
 
 /// <summary>
-/// Class to hold all informations about an external service.
+/// Class to hold information's about an external service.
 /// </summary>
 public class ExternalServicesInfo : BaseInfo
 {

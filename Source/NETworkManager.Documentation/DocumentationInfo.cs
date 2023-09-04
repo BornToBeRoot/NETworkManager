@@ -1,7 +1,7 @@
 ﻿namespace NETworkManager.Documentation;
 
 /// <summary>
-/// Class to hold all informations about a localization.
+/// Class to hold information's about a documentation entry.
 /// </summary>
 public class DocumentationInfo
 {

@@ -3,7 +3,7 @@
 namespace NETworkManager.Documentation;
 
 /// <summary>
-/// This class provides information about external services used within the program.
+/// This class provides information's about external services used within the program.
 /// </summary>
 public static class ExternalServicesManager
 {

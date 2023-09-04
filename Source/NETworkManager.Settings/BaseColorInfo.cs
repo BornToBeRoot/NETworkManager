@@ -3,7 +3,7 @@
 namespace NETworkManager.Settings;
 
 /// <summary>
-/// Base class for MahApps.Metro theme/accent informations.
+/// Base class for MahApps.Metro theme/accent information's.
 /// </summary>
 public abstract class BaseColorInfo
 {

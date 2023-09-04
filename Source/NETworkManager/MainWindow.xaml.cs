@@ -1395,7 +1395,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     {
         DocumentationManager.OpenDocumentation(ShowSettingsView
             ? _settingsView.GetDocumentationIdentifier()
-            : DocumentationManager.GetIdentifierByAppliactionName(SelectedApplication.Name));
+            : DocumentationManager.GetIdentifierByApplicationName(SelectedApplication.Name));
     }
 
     public ICommand OpenApplicationListCommand => new RelayCommand(_ => OpenApplicationListAction());
