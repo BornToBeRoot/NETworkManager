@@ -1,5 +1,5 @@
 ﻿
-namespace NETworkManager.Settings;
+namespace NETworkManager.Models.Appearance;
 
 /// <summary>
 /// Class contains information's about MahApps.Metro accents.

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Linq;
+using NETworkManager.Models.Appearance;
 
 namespace NETworkManager.ViewModels;
 
