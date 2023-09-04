@@ -1,6 +1,17 @@
-﻿namespace NETworkManager.Localization;
+﻿using System;
+using System.Net;
 
-public class ClipboardTranslator
+namespace NETworkManager.Localization;
+
+public static class ClipboardTranslator
 {
-    
+    public static string Translate(object data)
+    {
+        return data switch
+        {
+            IPAddress ip => ip.ToString(),
+            null => "-/-",
+            _ => data.ToString()
+        };
+    }
 }

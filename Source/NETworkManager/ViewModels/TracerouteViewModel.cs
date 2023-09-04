@@ -225,17 +225,14 @@ public class TracerouteViewModel : ViewModelBase
 
     private void RedirectDataToApplicationAction(object name)
     {
-        if (name is not string appName)
+        if(name is not ApplicationName applicationName)
             return;
-
-        if (!Enum.TryParse(appName, out ApplicationName app))
-            return;
-
+        
         var host = !string.IsNullOrEmpty(SelectedTraceResult.Hostname)
             ? SelectedTraceResult.Hostname
             : SelectedTraceResult.IPAddress.ToString();
 
-        EventSystem.RedirectToApplication(app, host);
+        EventSystem.RedirectToApplication(applicationName, host);
     }
     
     public ICommand CopyDataToClipboardCommand => new RelayCommand(CopyDataToClipboardAction);
@@ -245,18 +242,11 @@ public class TracerouteViewModel : ViewModelBase
         ClipboardHelper.SetClipboard(data.ToString());
     }
 
-    public ICommand PerformDNSLookupIPAddressCommand => new RelayCommand(_ => PerformDNSLookupIPAddressAction());
+    public ICommand PerformDNSLookupCommand => new RelayCommand( PerformDNSLookupAction);
 
-    private void PerformDNSLookupIPAddressAction()
+    private void PerformDNSLookupAction(object data)
     {
-        EventSystem.RedirectToApplication(ApplicationName.DNSLookup, SelectedTraceResult.IPAddress.ToString());
-    }
-
-    public ICommand PerformDNSLookupHostnameCommand => new RelayCommand(_ => PerformDNSLookupHostnameAction());
-
-    private void PerformDNSLookupHostnameAction()
-    {
-        EventSystem.RedirectToApplication(ApplicationName.DNSLookup, SelectedTraceResult.Hostname);
+        EventSystem.RedirectToApplication(ApplicationName.DNSLookup, data.ToString());
     }
 
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
@@ -378,7 +368,7 @@ public class TracerouteViewModel : ViewModelBase
 
                 SettingsManager.Current.Traceroute_ExportFileType = instance.FileType;
                 SettingsManager.Current.Traceroute_ExportFilePath = instance.FilePath;
-            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
+            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
             new[] { ExportFileType.CSV, ExportFileType.XML, ExportFileType.JSON }, true,
             SettingsManager.Current.Traceroute_ExportFileType, SettingsManager.Current.Traceroute_ExportFilePath
         );

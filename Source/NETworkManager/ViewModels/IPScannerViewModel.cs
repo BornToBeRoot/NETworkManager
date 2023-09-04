@@ -289,13 +289,12 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private void RedirectDataToApplicationAction(object name)
     {
-        if (name is not string appName)
+        if(name is not ApplicationName applicationName)
             return;
 
-        if (!Enum.TryParse(appName, out ApplicationName applicationName))
-            return;
-
-        var host = !string.IsNullOrEmpty(SelectedResult.Hostname) ? SelectedResult.Hostname : SelectedResult.PingInfo.IPAddress.ToString();
+        var host = !string.IsNullOrEmpty(SelectedResult.Hostname) 
+            ? SelectedResult.Hostname 
+            : SelectedResult.PingInfo.IPAddress.ToString();
 
         EventSystem.RedirectToApplication(applicationName, host);
     }
