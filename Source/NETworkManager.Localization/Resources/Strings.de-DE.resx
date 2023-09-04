@@ -1940,7 +1940,7 @@ Der Wert 0 deaktiviert diese Funktion.
   <data name="WelcomeMessage" xml:space="preserve">
     <value>Vielen Dank, dass Sie NETworkManager verwenden!
 
-Wenn Sie dieses Tool mögen, hinterlassen Sie bitte einen Star auf GitHub und empfehlen Sie es weiter.</value>
+Wenn Sie dieses Tool mögen, hinterlassen Sie bitte einen Stern auf GitHub und empfehlen Sie es weiter.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Beim Programmstart wird im Hintergrund geprüft, ob eine neue Programmversion auf GitHub verfügbar ist.
@@ -2993,9 +2993,6 @@ Aktivieren Sie die Verschlüsselung der Profildatei in Einstellungen&gt;Profile,
   <data name="DeleteProfilesMessage" xml:space="preserve">
     <value>Die ausgewählten Profile werden unwiederbringlich gelöscht.</value>
   </data>
-  <data name="UnlockTheProfileFileMessage2" xml:space="preserve">
-    <value>Entsperren Sie die Profildatei, um ein Profil hinzuzufügen, zu ändern oder zu löschen!</value>
-  </data>
   <data name="UseCustomThemes" xml:space="preserve">
     <value>Verwende benutzerdefinierte Themes</value>
   </data>
@@ -3632,7 +3629,7 @@ Wenn der Wert zu hoch ist, können Leistungsprobleme auftreten.
   <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
     <value>Der DNS-Resolver wird über ip-api.com ermittelt.
 
-URL: http://edns.ip-api.com/</value>
+URL: https://edns.ip-api.com/</value>
   </data>
   <data name="HelpMessage_CheckIPGeolocation" xml:space="preserve">
     <value>Die IP-Geolokation wird über ip-api.com ermittelt.
@@ -3640,7 +3637,7 @@ URL: http://edns.ip-api.com/</value>
 URL: http://ip-api.com/</value>
   </data>
   <data name="WelcomePrivacyMessage" xml:space="preserve">
-    <value>Um zusätzliche Features bereitzustellen, werden Dienste von Drittanbietern genutzt, die nicht von mir betrieben werden. Sie können diese unten abwählen. Es werden zu keinem Zeitpunkt Daten an mich übermittelt.</value>
+    <value>Zur Bereitstellung zusätzlicher Funktionen werden Dienste von Drittanbietern genutzt, die nicht von mir betrieben werden. Sie können diese unten abwählen. Es werden zu keinem Zeitpunkt Daten an mich übermittelt.</value>
   </data>
   <data name="CheckingDNSResolverDots" xml:space="preserve">
     <value>Prüfe DNS-Resolver...</value>
@@ -3657,5 +3654,14 @@ Versuchen Sie es in einigen Sekunden erneut.</value>
   </data>
   <data name="HTTPStatusCode" xml:space="preserve">
     <value>HTTP-Statuscode</value>
+  </data>
+  <data name="Accen_Steel" xml:space="preserve">
+    <value>Stahl</value>
+  </data>
+  <data name="RateLimitReachedMessage" xml:space="preserve">
+    <value>Rate Limit erreicht! Versuchen Sie es in ein paar Sekunden erneut...</value>
+  </data>
+  <data name="GroupViewName_General" xml:space="preserve">
+    <value>Allgemein</value>
   </data>
 </root>
