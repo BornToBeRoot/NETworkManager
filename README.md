@@ -130,7 +130,7 @@ cd NETworkManager
 git submodule update --init --recursive
 ```
 
-4. Open the `Source\NETworkManager.sln` with Visual Studio to debug or build the solution.
+4. Open the `Source\NETworkManager.sln` with Visual Studio or JetBrains Rider to build (or debug) the solution.
 
 > **NOTE** If you have installed the requirements from step 1 (and optionally step 2), you can also directly build the
 > binaries with PowerShell 7 or later:
