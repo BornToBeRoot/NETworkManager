@@ -443,7 +443,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                     new ObservableCollection<ServerConnectionInfoProfile>(SNTPServer.GetDefaultList());
 
                 // Check if PowerShell is installed
-                foreach (var file in PowerShell.GetDefaultIntallationPaths.Where(File.Exists))
+                foreach (var file in PowerShell.GetDefaultInstallationPaths.Where(File.Exists))
                 {
                     SettingsManager.Current.PowerShell_ApplicationFilePath = file;
                     SettingsManager.Current.AWSSessionManager_ApplicationFilePath = file;

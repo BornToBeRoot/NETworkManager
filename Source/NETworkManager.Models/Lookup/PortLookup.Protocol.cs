@@ -1,12 +1,27 @@
 ﻿namespace NETworkManager.Models.Lookup;
 
-public static partial class PortLookup
+/// <summary>
+/// Represents the protocol used by the port.
+/// </summary>
+public enum PortLookupProtocol
 {
-    public enum Protocol
-    {
-        Tcp,
-        Udp,
-        Sctp,
-        Dccp
-    }
+    /// <summary>
+    /// Transmission Control Protocol (TCP).
+    /// </summary>
+    Tcp,
+    
+    /// <summary>
+    /// User Datagram Protocol (UDP).
+    /// </summary>
+    Udp,
+    
+    /// <summary>
+    /// Stream Control Transmission Protocol (SCTP).
+    /// </summary>
+    Sctp,
+    
+    /// <summary>
+    /// Datagram Congestion Control Protocol (DCCP).
+    /// </summary>
+    Dccp
 }

@@ -204,7 +204,7 @@ public static class SettingsManager
         Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.AWSSessionManager));
 
         var powerShellPath = "";
-        foreach (var file in PowerShell.GetDefaultIntallationPaths)
+        foreach (var file in PowerShell.GetDefaultInstallationPaths)
         {
             if (File.Exists(file))
             {
