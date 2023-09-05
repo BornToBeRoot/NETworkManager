@@ -1896,33 +1896,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error.
-        /// </summary>
-        public static string ConnectionState_Error {
-            get {
-                return ResourceManager.GetString("ConnectionState_Error", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to OK.
-        /// </summary>
-        public static string ConnectionState_OK {
-            get {
-                return ResourceManager.GetString("ConnectionState_OK", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Warning.
-        /// </summary>
-        public static string ConnectionState_Warning {
-            get {
-                return ResourceManager.GetString("ConnectionState_Warning", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Connect the network card to a network to configure it!.
         /// </summary>
         public static string ConnectTheNetworkCardToConfigureIt {
@@ -2809,27 +2782,27 @@ namespace NETworkManager.Localization.Resources {
         /// <summary>
         ///   Looks up a localized string similar to CDP.
         /// </summary>
-        public static string DiscoveryProtocolIdentifier_CDP {
+        public static string DiscoveryProtocol_Cdp {
             get {
-                return ResourceManager.GetString("DiscoveryProtocolIdentifier_CDP", resourceCulture);
+                return ResourceManager.GetString("DiscoveryProtocol_Cdp", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to LLDP.
         /// </summary>
-        public static string DiscoveryProtocolIdentifier_LLDP {
+        public static string DiscoveryProtocol_Lldp {
             get {
-                return ResourceManager.GetString("DiscoveryProtocolIdentifier_LLDP", resourceCulture);
+                return ResourceManager.GetString("DiscoveryProtocol_Lldp", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to LLDP / CDP.
         /// </summary>
-        public static string DiscoveryProtocolIdentifier_LLDP_CDP {
+        public static string DiscoveryProtocol_LldpCdp {
             get {
-                return ResourceManager.GetString("DiscoveryProtocolIdentifier_LLDP_CDP", resourceCulture);
+                return ResourceManager.GetString("DiscoveryProtocol_LldpCdp", resourceCulture);
             }
         }
         

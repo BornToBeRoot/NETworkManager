@@ -3545,8 +3545,8 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private DiscoveryProtocol.Protocol _discoveryProtocol_Protocol = GlobalStaticConfiguration.DiscoveryProtocol_Protocol;
-    public DiscoveryProtocol.Protocol DiscoveryProtocol_Protocol
+    private DiscoveryProtocol _discoveryProtocol_Protocol = GlobalStaticConfiguration.DiscoveryProtocol_Protocol;
+    public DiscoveryProtocol DiscoveryProtocol_Protocol
     {
         get => _discoveryProtocol_Protocol;
         set

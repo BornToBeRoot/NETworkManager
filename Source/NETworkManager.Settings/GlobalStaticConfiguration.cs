@@ -188,7 +188,7 @@ public static class GlobalStaticConfiguration
     public static ExportFileType SNTPLookup_ExportFileType => ExportFileType.CSV;
 
     // Application: Discovery Protocol
-    public static DiscoveryProtocol.Protocol DiscoveryProtocol_Protocol => DiscoveryProtocol.Protocol.LLDP_CDP;
+    public static DiscoveryProtocol DiscoveryProtocol_Protocol => DiscoveryProtocol.LldpCdp;
     public static int DiscoveryProtocol_Duration => 60;
 
     // Application: Wake on LAN

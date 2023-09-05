@@ -1,6 +1,4 @@
 ﻿using System.Threading.Tasks;
-using System.Management.Automation;
-using System.Collections.ObjectModel;
 using System.Reflection;
 using System.IO;
 using System;
@@ -12,15 +10,15 @@ namespace NETworkManager.Models.Network;
 /// <summary>
 /// Class to capture network discovery protocol packages.
 /// </summary>
-public partial class DiscoveryProtocol
+public class DiscoveryProtocolCapture
 {
     /// <summary>
     /// Holds the PowerShell script which is loaded when the class is initialized.
     /// </summary>
-    private readonly string PSDiscoveryProtocolModule = string.Empty;
+    private readonly string _psDiscoveryProtocolModule;
 
     /// <summary>
-    /// Is triggerd when a network package with a discovery protocol is received.
+    /// Is triggered when a network package with a discovery protocol is received.
     /// </summary>
     public event EventHandler<DiscoveryProtocolPackageArgs> PackageReceived;
 
@@ -78,13 +76,13 @@ public partial class DiscoveryProtocol
     /// <summary>
     /// Initializes a new instance of the <see cref="DiscoveryProtocol"/> class.
     /// </summary>
-    public DiscoveryProtocol()
+    public DiscoveryProtocolCapture()
     {
         using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("NETworkManager.Models.Resources.PSDiscoveryProtocol.psm1");
 
-        using StreamReader reader = new(stream);
+        using StreamReader reader = new(stream ?? throw new InvalidOperationException("Could not load PSDiscoveryProtocol.psm1"));
 
-        PSDiscoveryProtocolModule = reader.ReadToEnd();
+        _psDiscoveryProtocolModule = reader.ReadToEnd();
     }
 
     #region Methods
@@ -92,20 +90,20 @@ public partial class DiscoveryProtocol
     /// Captures the network packets on the network adapter asynchronously for a certain period of time and filters the packets according to the protocol.
     /// </summary>
     /// <param name="duration">Duration in seconds.</param>
-    /// <param name="protocol"><see cref="Protocol"/> to filter on.</param>
-    public void CaptureAsync(int duration, Protocol protocol)
+    /// <param name="protocol"><see cref="DiscoveryProtocol"/> to filter on.</param>
+    public void CaptureAsync(int duration, DiscoveryProtocol protocol)
     {
         Task.Run(() =>
         {
-            using (System.Management.Automation.PowerShell powerShell = System.Management.Automation.PowerShell.Create())
+            using (var powerShell = System.Management.Automation.PowerShell.Create())
             {
 
                 powerShell.AddScript("Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process");
                 powerShell.AddScript("Import-Module NetAdapter");
-                powerShell.AddScript(PSDiscoveryProtocolModule);
-                powerShell.AddScript($"Invoke-DiscoveryProtocolCapture -Duration {duration}" + (protocol != Protocol.LLDP_CDP ? $" -Type {protocol}" : "") + " -Force | Get-DiscoveryProtocolData");
+                powerShell.AddScript(_psDiscoveryProtocolModule);
+                powerShell.AddScript($"Invoke-DiscoveryProtocolCapture -Duration {duration}" + (protocol != DiscoveryProtocol.LldpCdp ? $" -Type {protocol.ToString().ToUpper()}" : "") + " -Force | Get-DiscoveryProtocolData");
 
-                Collection<PSObject> psOutputs = powerShell.Invoke();
+                var psOutputs = powerShell.Invoke();
 
                 if (powerShell.Streams.Error.Count > 0)
                 {
@@ -136,7 +134,7 @@ public partial class DiscoveryProtocol
                     OnWarningReceived(new DiscoveryProtocolWarningArgs(stringBuilder.ToString()));
                 }
 
-                foreach (PSObject outputItem in psOutputs)
+                foreach (var outputItem in psOutputs)
                 {
                     if (outputItem == null)
                         continue;
@@ -144,22 +142,12 @@ public partial class DiscoveryProtocol
                     List<string> ipAddresses = new();
 
                     if (outputItem.Properties["IPAddress"] != null)
-                    {
-                        foreach (var ipAddress in outputItem.Properties["IPAddress"].Value as List<string>)
-                        {
-                            ipAddresses.Add(ipAddress);
-                        }
-                    }
+                        ipAddresses.AddRange(outputItem.Properties["IPAddress"].Value as List<string>);
 
                     List<string> managements = new();
 
                     if (outputItem.Properties["Management"] != null)
-                    {
-                        foreach (var management in outputItem.Properties["Management"].Value as List<string>)
-                        {
-                            managements.Add(management);
-                        }
-                    }
+                        managements.AddRange(outputItem.Properties["Management"].Value as List<string>);
 
                     var packageInfo = new DiscoveryProtocolPackageInfo
                     {

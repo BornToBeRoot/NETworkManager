@@ -18,7 +18,8 @@
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=TTL/@EntryIndexedValue">TTL</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=TTY/@EntryIndexedValue">TTY</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=VLAN/@EntryIndexedValue">VLAN</s:String>
-	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=VNC/@EntryIndexedValue">VNC</s:String>	
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=VNC/@EntryIndexedValue">VNC</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/XamlNaming/Abbreviations/=DNS/@EntryIndexedValue">DNS</s:String>	
 	<s:String x:Key="/Default/CodeStyle/Naming/XamlNaming/Abbreviations/=IP/@EntryIndexedValue">IP</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/XamlNaming/Abbreviations/=MAC/@EntryIndexedValue">MAC</s:String>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Asname/@EntryIndexedValue">True</s:Boolean>
