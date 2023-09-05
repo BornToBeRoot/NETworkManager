@@ -1,29 +1,21 @@
 ﻿namespace NETworkManager.Models.Network;
 
 /// <summary>
-/// Event arguments when an Error message is returned.
+/// Contains the error message of a <see cref="DiscoveryProtocol"/> error.
 /// </summary>
 public class DiscoveryProtocolErrorArgs : System.EventArgs
 {
     /// <summary>
-    /// Error message.
+    /// Error message of the <see cref="DiscoveryProtocol"/> error.
     /// </summary>
     public string Message { get; private set; }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="DiscoveryProtocolErrorArgs"/> class.
+    ///Creates a new instance of <see cref="DiscoveryProtocolErrorArgs"/> with the given error message.
     /// </summary>
-    public DiscoveryProtocolErrorArgs()
+    /// <param name="errorMessage">Error message of the <see cref="DiscoveryProtocol"/> error.</param>
+    public DiscoveryProtocolErrorArgs(string errorMessage)
     {
-
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="DiscoveryProtocolWarningArgs"/> class with an error <paramref name="message"/>.
-    /// </summary>
-    /// <param name="message">Error message.</param>
-    public DiscoveryProtocolErrorArgs(string message)
-    {
-        Message = message;
+        Message = errorMessage;
     }
 }

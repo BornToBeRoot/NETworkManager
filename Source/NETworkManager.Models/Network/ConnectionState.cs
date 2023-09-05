@@ -26,7 +26,7 @@ public enum ConnectionState
     Critical,
 
     /// <summary>
-    /// Informations.
+    /// Information's.
     /// </summary>
     Info
 }

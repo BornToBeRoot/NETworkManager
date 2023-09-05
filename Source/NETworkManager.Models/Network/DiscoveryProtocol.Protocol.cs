@@ -1,4 +1,6 @@
-﻿namespace NETworkManager.Models.Network;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace NETworkManager.Models.Network;
 
 /// <summary>
 /// Class to capture network discovery protocol packages.
@@ -13,6 +15,7 @@ public partial class DiscoveryProtocol
         /// <summary>
         /// Link layer and Cisco discovery protocol.
         /// </summary>
+        [SuppressMessage("ReSharper", "InconsistentNaming")] 
         LLDP_CDP,
 
         /// <summary>
