@@ -6,10 +6,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 using System.IO;
 using System.Reflection;
+using NETworkManager.Models.Network;
 
 namespace NETworkManager.Models.Lookup;
 
-public static partial class PortLookup
+public static class PortLookup
 {
     #region Variables
     /// <summary>
@@ -44,7 +45,7 @@ public static partial class PortLookup
             if (node == null)
                 continue;
 
-            if (int.TryParse(node.SelectSingleNode("Number")?.InnerText, out var port) && Enum.TryParse<PortLookupProtocol>(node.SelectSingleNode("Protocol")?.InnerText, true, out var protocol))
+            if (int.TryParse(node.SelectSingleNode("Number")?.InnerText, out var port) && Enum.TryParse<TransportProtocol>(node.SelectSingleNode("Protocol")?.InnerText, true, out var protocol))
             {
                 PortList.Add(new PortLookupInfo(port, protocol, node.SelectSingleNode("Name")?.InnerText,
                     node.SelectSingleNode("Description")?.InnerText));
@@ -96,6 +97,7 @@ public static partial class PortLookup
     /// </summary>
     /// <param name="search">Service or description to search.</param>
     /// <returns>List of ports, protocols and services as <see cref="PortLookupInfo"/>. Empty if nothing was found.</returns>
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public static List<PortLookupInfo> SearchByServiceOrDescription(string search)
     {
         return PortList.Where(info => info.Service.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.Description.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1).ToList();
@@ -105,9 +107,9 @@ public static partial class PortLookup
     /// Method to get a <see cref="PortLookupInfo"/> by port and protocol async.
     /// </summary>
     /// <param name="port">Port number.</param>
-    /// <param name="protocol">Port protocol. Default is <see cref="PortLookupProtocol.Tcp"/>.</param>
+    /// <param name="protocol">Port protocol. Default is <see cref="TransportProtocol.Tcp"/>.</param>
     /// <returns>Port, protocol and service as <see cref="PortLookupInfo"/>. Service and description is empty if not found.</returns>
-    public static Task<PortLookupInfo> GetByPortAndProtocolAsync(int port, PortLookupProtocol protocol = PortLookupProtocol.Tcp)
+    public static Task<PortLookupInfo> GetByPortAndProtocolAsync(int port, TransportProtocol protocol = TransportProtocol.Tcp)
     {
         return Task.Run(() => GetByPortAndProtocol(port, protocol));
     }
@@ -118,7 +120,7 @@ public static partial class PortLookup
     /// <param name="port">Port number.</param>
     /// <param name="protocol">Port protocol.</param>
     /// <returns>Port, protocol and service as <see cref="PortLookupInfo"/>. Service and description is empty if not found.</returns>
-    public static PortLookupInfo GetByPortAndProtocol(int port, PortLookupProtocol protocol = PortLookupProtocol.Tcp)
+    public static PortLookupInfo GetByPortAndProtocol(int port, TransportProtocol protocol = TransportProtocol.Tcp)
     {
         return Ports[port].ToList().FirstOrDefault(x => x.Protocol.Equals(protocol)) ?? 
                new PortLookupInfo(port, protocol, "-/-", "-/-");

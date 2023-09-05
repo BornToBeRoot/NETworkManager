@@ -34,7 +34,7 @@ public partial class Listener
         List<ListenerInfo> list = new List<ListenerInfo>();
 
         foreach (IPEndPoint ipEndPoint in IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpListeners())
-            list.Add(new ListenerInfo(Protocol.TCP, ipEndPoint.Address, ipEndPoint.Port));
+            list.Add(new ListenerInfo(TransportProtocol.Tcp, ipEndPoint.Address, ipEndPoint.Port));
 
         return list;
     }
@@ -49,7 +49,7 @@ public partial class Listener
         List<ListenerInfo> list = new List<ListenerInfo>();
 
         foreach (IPEndPoint ipEndPoint in IPGlobalProperties.GetIPGlobalProperties().GetActiveUdpListeners())
-            list.Add(new ListenerInfo(Protocol.UDP, ipEndPoint.Address, ipEndPoint.Port));
+            list.Add(new ListenerInfo(TransportProtocol.Udp, ipEndPoint.Address, ipEndPoint.Port));
 
         return list;
     }

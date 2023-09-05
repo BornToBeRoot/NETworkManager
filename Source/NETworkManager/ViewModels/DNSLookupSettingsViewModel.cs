@@ -17,7 +17,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
 {
     #region Variables
     private readonly bool _isLoading;
-    private readonly ServerConnectionInfo _profileDialog_DefaultValues = new("10.0.0.1", 53, TransportProtocol.UDP);
+    private readonly ServerConnectionInfo _profileDialog_DefaultValues = new("10.0.0.1", 53, TransportProtocol.Udp);
 
     private readonly IDialogCoordinator _dialogCoordinator;
 
