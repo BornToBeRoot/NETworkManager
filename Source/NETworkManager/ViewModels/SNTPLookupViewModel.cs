@@ -25,7 +25,7 @@ public class SNTPLookupViewModel : ViewModelBase
     #region Variables
     private readonly IDialogCoordinator _dialogCoordinator;
 
-    public readonly int TabId;
+    private readonly int _tabId;
 
     private readonly bool _isLoading;
 
@@ -141,7 +141,7 @@ public class SNTPLookupViewModel : ViewModelBase
 
         _dialogCoordinator = instance;
 
-        TabId = tabId;
+        _tabId = tabId;
 
         SNTPServers = new CollectionViewSource { Source = SettingsManager.Current.SNTPLookup_SNTPServers }.View;
         SNTPServers.SortDescriptions.Add(new SortDescription(nameof(ServerConnectionInfoProfile.Name), ListSortDirection.Ascending));
@@ -279,7 +279,7 @@ public class SNTPLookupViewModel : ViewModelBase
         {
             foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
             {
-                tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == TabId).Header = SNTPServer.Name;
+                tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = SNTPServer.Name;
             }
         }
 

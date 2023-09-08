@@ -31,7 +31,7 @@ public class SNMPViewModel : ViewModelBase
 
     private CancellationTokenSource _cancellationTokenSource;
 
-    public readonly int TabId;
+    private readonly int _tabId;
 
     private readonly bool _isLoading;
 
@@ -394,7 +394,7 @@ public class SNMPViewModel : ViewModelBase
 
         _dialogCoordinator = instance;
 
-        TabId = tabId;
+        _tabId = tabId;
         Host = sessionInfo?.Host;
 
         // Set collection view
@@ -542,7 +542,7 @@ public class SNMPViewModel : ViewModelBase
         {
             foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
             {
-                tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == TabId).Header = Host;
+                tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Host;
             }
         }
 

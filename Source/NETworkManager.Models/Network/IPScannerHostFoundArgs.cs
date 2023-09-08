@@ -1,32 +1,21 @@
-﻿using System.Collections.Generic;
-using System.Net.NetworkInformation;
+﻿namespace NETworkManager.Models.Network;
 
-namespace NETworkManager.Models.Network;
-
+/// <summary>
+/// Contains the information of a host found in a <see cref="IPScanner"/>.
+/// </summary>
 public class IPScannerHostFoundArgs : System.EventArgs
 {
-    public bool IsReachable { get; set; }
+    /// <summary>
+    /// IP Scanner host information.
+    /// </summary>
+    public IPScannerHostInfo Args { get; } 
 
-    public PingInfo PingInfo { get; set; }
-
-    public bool IsAnyPortOpen { get; set; }
-
-    public List<PortInfo> Ports { get; set; }
-
-    public string Hostname { get; set; }
-
-    public PhysicalAddress MACAddress { get; set; }
-
-    public string Vendor { get; set; }
-
-    public IPScannerHostFoundArgs(bool isReachable, PingInfo pingInfo, bool isAnyPortOpen, List<PortInfo> ports, string hostname, PhysicalAddress macAddress, string vendor)
+    /// <summary>
+    /// Creates a new instance of <see cref="IPScannerHostFoundArgs"/> with the given <see cref="IPScannerHostInfo"/>.
+    /// </summary>
+    /// <param name="args">IP Scanner host information.</param>
+    public IPScannerHostFoundArgs(IPScannerHostInfo args)
     {
-        IsReachable = isReachable;
-        PingInfo = pingInfo;
-        IsAnyPortOpen = isAnyPortOpen;
-        Ports = ports;
-        Hostname = hostname;
-        MACAddress = macAddress;
-        Vendor = vendor;
+        Args = args;
     }
 }

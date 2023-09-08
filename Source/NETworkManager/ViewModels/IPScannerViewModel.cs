@@ -36,7 +36,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private CancellationTokenSource _cancellationTokenSource;
 
-    public readonly int TabId;
+    private readonly int _tabId;
     private bool _firstLoad = true;
 
     private readonly bool _isLoading;
@@ -229,7 +229,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         _dialogCoordinator = instance;
 
-        TabId = tabId;
+        _tabId = tabId;
         Hosts = hostOrIPRange;
 
         // Host history
@@ -452,7 +452,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         {
             foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
             {
-                tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == TabId).Header = Hosts;
+                tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Hosts;
             }
         }
 

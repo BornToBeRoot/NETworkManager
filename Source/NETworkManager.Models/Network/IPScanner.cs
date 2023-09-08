@@ -12,61 +12,70 @@ using System.Threading.Tasks;
 
 namespace NETworkManager.Models.Network;
 
-public class IPScanner
+public sealed class IPScanner
 {
     #region Variables
+
     private int _progressValue;
 
     private readonly IPScannerOptions _options;
+
     #endregion
 
     #region Events
+
     public event EventHandler<IPScannerHostFoundArgs> HostFound;
 
-    protected virtual void OnHostFound(IPScannerHostFoundArgs e)
+    private void OnHostFound(IPScannerHostFoundArgs e)
     {
         HostFound?.Invoke(this, e);
     }
 
     public event EventHandler ScanComplete;
 
-    protected virtual void OnScanComplete()
+    private void OnScanComplete()
     {
         ScanComplete?.Invoke(this, EventArgs.Empty);
     }
 
     public event EventHandler<ProgressChangedArgs> ProgressChanged;
 
-    protected virtual void OnProgressChanged()
+    private void OnProgressChanged()
     {
         ProgressChanged?.Invoke(this, new ProgressChangedArgs(_progressValue));
     }
 
     public event EventHandler UserHasCanceled;
 
-    protected virtual void OnUserHasCanceled()
+    private void OnUserHasCanceled()
     {
         UserHasCanceled?.Invoke(this, EventArgs.Empty);
     }
+
     #endregion
 
     #region Constructor
+
     public IPScanner(IPScannerOptions options)
     {
         _options = options;
     }
+
     #endregion
 
     #region Methods
+
     public void ScanAsync(IPAddress[] ipAddresses, CancellationToken cancellationToken)
     {
-        // Start the scan in a separat task
+        // Start the scan in a separate task
         Task.Run(() =>
         {
             _progressValue = 0;
 
             // Get all network interfaces
-            var networkInterfaces = _options.ResolveMACAddress ? NetworkInterface.GetNetworkInterfaces() : new List<NetworkInterfaceInfo>();
+            var networkInterfaces = _options.ResolveMACAddress
+                ? NetworkInterface.GetNetworkInterfaces()
+                : new List<NetworkInterfaceInfo>();
 
             try
             {
@@ -118,7 +127,8 @@ public class IPScanner
                                 tcpClient?.Close();
 
                                 if (portState == PortState.Open || _options.ShowAllResults)
-                                    portResults.Add(new PortInfo(port, PortLookup.GetByPortAndProtocol(port), portState));
+                                    portResults.Add(
+                                        new PortInfo(port, PortLookup.GetByPortAndProtocol(port), portState));
                             }
                         });
                     }
@@ -150,7 +160,9 @@ public class IPScanner
                             if (!dnsResolverTask.Result.HasError)
                                 hostname = dnsResolverTask.Result.Value;
                             else
-                                hostname = _options.DNSShowErrorMessage ? dnsResolverTask.Result.ErrorMessage : string.Empty;
+                                hostname = _options.DNSShowErrorMessage
+                                    ? dnsResolverTask.Result.ErrorMessage
+                                    : string.Empty;
                         }
 
                         // ARP
@@ -160,7 +172,8 @@ public class IPScanner
                         if (_options.ResolveMACAddress)
                         {
                             // Get info from arp table
-                            var arpTableInfo = ARP.GetTable().FirstOrDefault(p => p.IPAddress.ToString() == ipAddress.ToString());
+                            var arpTableInfo = ARP.GetTable()
+                                .FirstOrDefault(p => p.IPAddress.ToString() == ipAddress.ToString());
 
                             if (arpTableInfo != null)
                                 macAddress = arpTableInfo.MACAddress;
@@ -168,7 +181,8 @@ public class IPScanner
                             // Check if it is the local mac
                             if (macAddress == null)
                             {
-                                var networkInterfaceInfo = networkInterfaces.FirstOrDefault(p => p.IPv4Address.Any(x => x.Item1.Equals(ipAddress)));
+                                var networkInterfaceInfo = networkInterfaces.FirstOrDefault(p =>
+                                    p.IPv4Address.Any(x => x.Item1.Equals(ipAddress)));
 
                                 if (networkInterfaceInfo != null)
                                     macAddress = networkInterfaceInfo.PhysicalAddress;
@@ -184,10 +198,13 @@ public class IPScanner
                             }
                         }
 
-                        OnHostFound(new IPScannerHostFoundArgs(isReachable, pingInfo, isAnyPortOpen, portResults.OrderBy(x => x.Port).ToList(), hostname, macAddress, vendor));
+                        OnHostFound(new IPScannerHostFoundArgs(
+                            new IPScannerHostInfo(
+                                isReachable, pingInfo, isAnyPortOpen, portResults.OrderBy(x => x.Port).ToList(),
+                                hostname, macAddress, vendor)));
                     }
 
-                    IncreaseProgess();
+                    IncreaseProgress();
                 });
             }
             catch (OperationCanceledException)
@@ -218,9 +235,11 @@ public class IPScanner
                     if (pingReply != null && IPStatus.Success == pingReply.Status)
                     {
                         if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
-                            pingInfo = new PingInfo(pingReply.Address, pingReply.Buffer.Length, pingReply.RoundtripTime, pingReply.Options.Ttl, pingReply.Status);
+                            pingInfo = new PingInfo(pingReply.Address, pingReply.Buffer.Length, pingReply.RoundtripTime,
+                                pingReply.Options.Ttl, pingReply.Status);
                         else
-                            pingInfo = new PingInfo(pingReply.Address, pingReply.Buffer.Length, pingReply.RoundtripTime, pingReply.Status);
+                            pingInfo = new PingInfo(pingReply.Address, pingReply.Buffer.Length, pingReply.RoundtripTime,
+                                pingReply.Status);
 
                         break; // Continue with the next checks...
                     }
@@ -229,7 +248,8 @@ public class IPScanner
                         pingInfo = new PingInfo(ipAddress, pingReply.Status);
                 }
                 catch (PingException)
-                { }
+                {
+                }
 
                 // Don't scan again, if the user has canceled (when more than 1 attempt)
                 if (cancellationToken.IsCancellationRequested)
@@ -240,11 +260,12 @@ public class IPScanner
         });
     }
 
-    private void IncreaseProgess()
+    private void IncreaseProgress()
     {
         // Increase the progress                        
         Interlocked.Increment(ref _progressValue);
         OnProgressChanged();
     }
+
     #endregion
 }

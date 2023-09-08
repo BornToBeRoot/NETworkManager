@@ -31,7 +31,7 @@ public class PortScannerViewModel : ViewModelBase
 
     private CancellationTokenSource _cancellationTokenSource;
 
-    public readonly int TabId;
+    private readonly int _tabId;
     private bool _firstLoad = true;
 
     private string _lastSortDescriptionAscending = string.Empty;
@@ -222,7 +222,7 @@ public class PortScannerViewModel : ViewModelBase
 
         _dialogCoordinator = instance;
 
-        TabId = tabId;
+        _tabId = tabId;
         Hosts = host;
         Ports = port;
 
@@ -391,7 +391,7 @@ public class PortScannerViewModel : ViewModelBase
         {
             foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
             {
-                tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == TabId).Header = Hosts;
+                tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Hosts;
             }
         }
 

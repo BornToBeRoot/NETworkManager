@@ -22,8 +22,8 @@ public class WhoisViewModel : ViewModelBase
 {
     #region Variables
     private readonly IDialogCoordinator _dialogCoordinator;
-    
-    public readonly int TabId;
+
+    private readonly int _tabId;
     private bool _firstLoad = true;
 
     private readonly bool _isLoading;
@@ -108,7 +108,7 @@ public class WhoisViewModel : ViewModelBase
 
         _dialogCoordinator = instance;
 
-        TabId = tabId;
+        _tabId = tabId;
         Domain = domain;
 
         // Set collection view
@@ -202,7 +202,7 @@ public class WhoisViewModel : ViewModelBase
         {
             foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
             {
-                tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == TabId).Header = Domain;
+                tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Domain;
             }
         }
 
