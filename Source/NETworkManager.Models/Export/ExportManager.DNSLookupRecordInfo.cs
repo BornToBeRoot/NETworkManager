@@ -41,11 +41,11 @@ public static partial class ExportManager
         var stringBuilder = new StringBuilder();
 
         stringBuilder.AppendLine(
-            $"{nameof(DNSLookupRecordInfo.DomainName)},{nameof(DNSLookupRecordInfo.TTL)},{nameof(DNSLookupRecordInfo.Class)},{nameof(DNSLookupRecordInfo.Type)},{nameof(DNSLookupRecordInfo.Result)},{nameof(DNSLookupRecordInfo.Server)},{nameof(DNSLookupRecordInfo.IPEndPoint)}");
+            $"{nameof(DNSLookupRecordInfo.DomainName)},{nameof(DNSLookupRecordInfo.TTL)},{nameof(DNSLookupRecordInfo.RecordClass)},{nameof(DNSLookupRecordInfo.RecordType)},{nameof(DNSLookupRecordInfo.Result)},{nameof(DNSLookupRecordInfo.Server)},{nameof(DNSLookupRecordInfo.IPEndPoint)}");
 
         foreach (var info in collection)
             stringBuilder.AppendLine(
-                $"{info.DomainName},{info.TTL},{info.Class},{info.Type},{info.Result},{info.Server},{info.IPEndPoint}");
+                $"{info.DomainName},{info.TTL},{info.RecordClass},{info.RecordType},{info.Result},{info.Server},{info.IPEndPoint}");
 
         System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
     }
@@ -60,8 +60,8 @@ public static partial class ExportManager
                         new XElement(nameof(DNSLookupRecordInfo),
                             new XElement(nameof(DNSLookupRecordInfo.DomainName), info.DomainName),
                             new XElement(nameof(DNSLookupRecordInfo.TTL), info.TTL),
-                            new XElement(nameof(DNSLookupRecordInfo.Class), info.Class),
-                            new XElement(nameof(DNSLookupRecordInfo.Type), info.Type),
+                            new XElement(nameof(DNSLookupRecordInfo.RecordClass), info.RecordClass),
+                            new XElement(nameof(DNSLookupRecordInfo.RecordType), info.RecordType),
                             new XElement(nameof(DNSLookupRecordInfo.Result), info.Result),
                             new XElement(nameof(DNSLookupRecordInfo.Server), info.Server),
                             new XElement(nameof(DNSLookupRecordInfo.IPEndPoint), info.IPEndPoint)))));
@@ -79,8 +79,8 @@ public static partial class ExportManager
             {
                 collection[i].DomainName,
                 collection[i].TTL,
-                collection[i].Class,
-                collection[i].Type,
+                collection[i].RecordClass,
+                collection[i].RecordType,
                 collection[i].Result,
                 collection[i].Server,
                 collection[i].IPEndPoint

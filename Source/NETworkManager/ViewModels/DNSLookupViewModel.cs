@@ -25,9 +25,10 @@ namespace NETworkManager.ViewModels;
 public class DNSLookupViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
-    public readonly int TabId;
+    private readonly int _tabId;
     private bool _firstLoad = true;
 
     private string _lastSortDescriptionAscending = string.Empty;
@@ -35,6 +36,7 @@ public class DNSLookupViewModel : ViewModelBase
     private readonly bool _isLoading;
 
     private string _host;
+
     public string Host
     {
         get => _host;
@@ -53,6 +55,7 @@ public class DNSLookupViewModel : ViewModelBase
     public ICollectionView DNSServers { get; }
 
     private DNSServerConnectionInfoProfile _dnsServer = new();
+
     public DNSServerConnectionInfoProfile DNSServer
     {
         get => _dnsServer;
@@ -70,6 +73,7 @@ public class DNSLookupViewModel : ViewModelBase
     }
 
     private List<QueryType> _queryTypes = new();
+
     public List<QueryType> QueryTypes
     {
         get => _queryTypes;
@@ -84,6 +88,7 @@ public class DNSLookupViewModel : ViewModelBase
     }
 
     private QueryType _queryType;
+
     public QueryType QueryType
     {
         get => _queryType;
@@ -101,6 +106,7 @@ public class DNSLookupViewModel : ViewModelBase
     }
 
     private bool _isLookupRunning;
+
     public bool IsLookupRunning
     {
         get => _isLookupRunning;
@@ -115,6 +121,7 @@ public class DNSLookupViewModel : ViewModelBase
     }
 
     private ObservableCollection<DNSLookupRecordInfo> _lookupResults = new ObservableCollection<DNSLookupRecordInfo>();
+
     public ObservableCollection<DNSLookupRecordInfo> LookupResults
     {
         get => _lookupResults;
@@ -130,6 +137,7 @@ public class DNSLookupViewModel : ViewModelBase
     public ICollectionView LookupResultsView { get; }
 
     private DNSLookupRecordInfo _selectedLookupResult;
+
     public DNSLookupRecordInfo SelectedLookupResult
     {
         get => _selectedLookupResult;
@@ -144,6 +152,7 @@ public class DNSLookupViewModel : ViewModelBase
     }
 
     private IList _selectedLookupResults = new ArrayList();
+
     public IList SelectedLookupResults
     {
         get => _selectedLookupResults;
@@ -158,6 +167,7 @@ public class DNSLookupViewModel : ViewModelBase
     }
 
     private bool _isStatusMessageDisplayed;
+
     public bool IsStatusMessageDisplayed
     {
         get => _isStatusMessageDisplayed;
@@ -172,6 +182,7 @@ public class DNSLookupViewModel : ViewModelBase
     }
 
     private string _statusMessage;
+
     public string StatusMessage
     {
         get => _statusMessage;
@@ -184,28 +195,35 @@ public class DNSLookupViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Contructor, load settings
+
     public DNSLookupViewModel(IDialogCoordinator instance, int tabId, string host)
     {
         _isLoading = true;
 
         _dialogCoordinator = instance;
 
-        TabId = tabId;
+        _tabId = tabId;
         Host = host;
 
         HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.DNSLookup_HostHistory);
 
         DNSServers = new CollectionViewSource { Source = SettingsManager.Current.DNSLookup_DNSServers_v2 }.View;
-        DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerConnectionInfoProfile.UseWindowsDNSServer), ListSortDirection.Descending));
-        DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerConnectionInfoProfile.Name), ListSortDirection.Ascending));
-        DNSServer = DNSServers.SourceCollection.Cast<DNSServerConnectionInfoProfile>().FirstOrDefault(x => x.Name == SettingsManager.Current.DNSLookup_SelectedDNSServer_v2.Name) ?? DNSServers.SourceCollection.Cast<DNSServerConnectionInfoProfile>().First();
+        DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerConnectionInfoProfile.UseWindowsDNSServer),
+            ListSortDirection.Descending));
+        DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerConnectionInfoProfile.Name),
+            ListSortDirection.Ascending));
+        DNSServer = DNSServers.SourceCollection.Cast<DNSServerConnectionInfoProfile>()
+                        .FirstOrDefault(x => x.Name == SettingsManager.Current.DNSLookup_SelectedDNSServer_v2.Name) ??
+                    DNSServers.SourceCollection.Cast<DNSServerConnectionInfoProfile>().First();
 
         LookupResultsView = CollectionViewSource.GetDefaultView(LookupResults);
         LookupResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(DNSLookupRecordInfo.Server)));
-        LookupResultsView.SortDescriptions.Add(new SortDescription(nameof(DNSLookupRecordInfo.Server), ListSortDirection.Descending));
+        LookupResultsView.SortDescriptions.Add(new SortDescription(nameof(DNSLookupRecordInfo.Server),
+            ListSortDirection.Descending));
 
         LoadSettings();
 
@@ -234,19 +252,26 @@ public class DNSLookupViewModel : ViewModelBase
     private void LoadTypes()
     {
         // Filter by common types...
-        QueryTypes = SettingsManager.Current.DNSLookup_ShowOnlyMostCommonQueryTypes ? Enum.GetValues(typeof(QueryType)).Cast<QueryType>().Where(x => (x == QueryType.A || x == QueryType.AAAA || x == QueryType.ANY || x == QueryType.CNAME || x == QueryType.MX || x == QueryType.NS || x == QueryType.PTR || x == QueryType.SOA || x == QueryType.TXT)).OrderBy(x => x.ToString()).ToList() : System.Enum.GetValues(typeof(QueryType)).Cast<QueryType>().OrderBy(x => x.ToString()).ToList();
+        QueryTypes = SettingsManager.Current.DNSLookup_ShowOnlyMostCommonQueryTypes
+            ? Enum.GetValues(typeof(QueryType)).Cast<QueryType>().Where(x =>
+                x is QueryType.A or QueryType.AAAA or QueryType.ANY or QueryType.CNAME or QueryType.MX or QueryType.NS
+                    or QueryType.PTR or QueryType.SOA or QueryType.TXT).OrderBy(x => x.ToString()).ToList()
+            : Enum.GetValues(typeof(QueryType)).Cast<QueryType>().OrderBy(x => x.ToString()).ToList();
         QueryType = QueryTypes.FirstOrDefault(x => x == SettingsManager.Current.DNSLookup_QueryType);
 
         // Fallback
         if (QueryType == 0)
             QueryType = QueryType.ANY;
     }
+
     #endregion
 
     #region ICommands & Actions
+
     public ICommand LookupCommand => new RelayCommand(p => LookupAction(), Lookup_CanExecute);
 
-    private bool Lookup_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool Lookup_CanExecute(object parameter) => Application.Current.MainWindow != null &&
+                                                       !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
     private void LookupAction()
     {
@@ -254,42 +279,42 @@ public class DNSLookupViewModel : ViewModelBase
             StartLookup();
     }
 
-    public ICommand CopySelectedDomainNameCommand => new RelayCommand(p => CopySelectedDomainNameAction());
+    public ICommand CopySelectedDomainNameCommand => new RelayCommand(_ => CopySelectedDomainNameAction());
 
     private void CopySelectedDomainNameAction()
     {
         ClipboardHelper.SetClipboard(SelectedLookupResult.DomainName);
     }
 
-    public ICommand CopySelectedTTLCommand => new RelayCommand(p => CopySelectedTTLAction());
+    public ICommand CopySelectedTTLCommand => new RelayCommand(_ => CopySelectedTTLAction());
 
     private void CopySelectedTTLAction()
     {
         ClipboardHelper.SetClipboard(SelectedLookupResult.TTL.ToString());
     }
 
-    public ICommand CopySelectedClassCommand => new RelayCommand(p => CopySelectedClassAction());
+    public ICommand CopySelectedClassCommand => new RelayCommand(_ => CopySelectedClassAction());
 
     private void CopySelectedClassAction()
     {
-        ClipboardHelper.SetClipboard(SelectedLookupResult.Class);
+        ClipboardHelper.SetClipboard(SelectedLookupResult.RecordClass);
     }
 
-    public ICommand CopySelectedTypeCommand => new RelayCommand(p => CopySelectedTypeAction());
+    public ICommand CopySelectedTypeCommand => new RelayCommand(_ => CopySelectedTypeAction());
 
     private void CopySelectedTypeAction()
     {
-        ClipboardHelper.SetClipboard(SelectedLookupResult.Type);
+        ClipboardHelper.SetClipboard(SelectedLookupResult.RecordType);
     }
 
-    public ICommand CopySelectedResultCommand => new RelayCommand(p => CopySelectedResultAction());
+    public ICommand CopySelectedResultCommand => new RelayCommand(_ => CopySelectedResultAction());
 
     private void CopySelectedResultAction()
     {
         ClipboardHelper.SetClipboard(SelectedLookupResult.Result);
     }
 
-    public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+    public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
 
     private async Task ExportAction()
     {
@@ -299,24 +324,32 @@ public class DNSLookupViewModel : ViewModelBase
         };
 
         var exportViewModel = new ExportViewModel(async instance =>
-        {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-            try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? LookupResults : new ObservableCollection<DNSLookupRecordInfo>(SelectedLookupResults.Cast<DNSLookupRecordInfo>().ToArray()));
-            }
-            catch (Exception ex)
-            {
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
-            }
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType,
+                        instance.ExportAll
+                            ? LookupResults
+                            : new ObservableCollection<DNSLookupRecordInfo>(SelectedLookupResults
+                                .Cast<DNSLookupRecordInfo>().ToArray()));
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-            SettingsManager.Current.DNSLookup_ExportFileType = instance.FileType;
-            SettingsManager.Current.DNSLookup_ExportFilePath = instance.FilePath;
-        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportFileType[] { ExportFileType.CSV, ExportFileType.XML, ExportFileType.JSON }, true, SettingsManager.Current.DNSLookup_ExportFileType, SettingsManager.Current.DNSLookup_ExportFilePath);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error,
+                        Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                        Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.DNSLookup_ExportFileType = instance.FileType;
+                SettingsManager.Current.DNSLookup_ExportFilePath = instance.FilePath;
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
+            new ExportFileType[] { ExportFileType.CSV, ExportFileType.XML, ExportFileType.JSON }, true,
+            SettingsManager.Current.DNSLookup_ExportFileType, SettingsManager.Current.DNSLookup_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {
@@ -325,9 +358,11 @@ public class DNSLookupViewModel : ViewModelBase
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
+
     #endregion
 
-    #region Methods      
+    #region Methods
+
     private void StartLookup()
     {
         IsStatusMessageDisplayed = false;
@@ -345,7 +380,7 @@ public class DNSLookupViewModel : ViewModelBase
         {
             foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
             {
-                tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == TabId).Header = Host;
+                tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Host;
             }
         }
 
@@ -385,14 +420,14 @@ public class DNSLookupViewModel : ViewModelBase
 
     public void OnClose()
     {
-
     }
 
     // Modify history list
     private void AddHostToHistory(string host)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.DNSLookup_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+        var list = ListHelper.Modify(SettingsManager.Current.DNSLookup_HostHistory.ToList(), host,
+            SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items
         SettingsManager.Current.DNSLookup_HostHistory.Clear();
@@ -405,7 +440,8 @@ public class DNSLookupViewModel : ViewModelBase
     public void SortResultByPropertyName(string sortDescription)
     {
         LookupResultsView.SortDescriptions.Clear();
-        LookupResultsView.SortDescriptions.Add(new SortDescription(nameof(DNSLookupRecordInfo.Server), ListSortDirection.Descending));
+        LookupResultsView.SortDescriptions.Add(new SortDescription(nameof(DNSLookupRecordInfo.Server),
+            ListSortDirection.Descending));
 
         if (_lastSortDescriptionAscending.Equals(sortDescription))
         {
@@ -418,17 +454,15 @@ public class DNSLookupViewModel : ViewModelBase
             _lastSortDescriptionAscending = sortDescription;
         }
     }
+
     #endregion
 
     #region Events
-    private void DNSLookup_RecordReceived(object sender, DNSLookupRecordArgs e)
-    {
-        var dnsLookupRecordInfo = DNSLookupRecordInfo.Parse(e);
 
-        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-        {
-            LookupResults.Add(dnsLookupRecordInfo);
-        }));
+    private void DNSLookup_RecordReceived(object sender, DNSLookupRecordReceivedArgs e)
+    {
+        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
+            new Action(delegate { LookupResults.Add(e.Args); }));
     }
 
     private void DNSLookup_LookupError(object sender, DNSLookupErrorArgs e)

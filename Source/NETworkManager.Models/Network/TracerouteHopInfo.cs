@@ -60,7 +60,7 @@ public class TracerouteHopInfo
     public IPGeolocationResult IPGeolocationResult { get; set; }
 
     /// <summary>
-    /// Creates a new instance of the <see cref="TracerouteHopInfo"/> class with the specified parameters.
+    /// Creates a new instance of <see cref="TracerouteHopInfo"/> with the specified parameters.
     /// </summary>
     /// <param name="hop">Hop (router).</param>
     /// <param name="status1">Status of the first ping.</param>
