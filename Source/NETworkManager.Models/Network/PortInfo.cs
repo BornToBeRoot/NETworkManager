@@ -5,7 +5,7 @@ namespace NETworkManager.Models.Network;
 /// <summary>
 /// Class representing a port info.
 /// </summary>
-public partial class PortInfo
+public class PortInfo
 {
     /// <summary>
     /// Port number.
@@ -18,7 +18,7 @@ public partial class PortInfo
     public PortLookupInfo LookupInfo { get; set; }
 
     /// <summary>
-    /// State if the port.
+    /// State of the port.
     /// </summary>
     public PortState State { get; set; }
 

@@ -656,13 +656,11 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     #endregion
 
     #region Events
-    private void HostFound(object sender, IPScannerHostFoundArgs e)
+    private void HostFound(object sender, IPScannerHostScannedArgs e)
     {
-        var ipScannerHostInfo = IPScannerHostInfo.Parse(e);
-
         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
         {
-            Results.Add(ipScannerHostInfo);
+            Results.Add(e.Args);
         }));
     }
 

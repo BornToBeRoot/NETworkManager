@@ -1,28 +1,23 @@
-﻿using NETworkManager.Models.Lookup;
-using System;
-using System.Net;
+﻿using System;
 
 namespace NETworkManager.Models.Network;
 
+/// <summary>
+/// Contains the information of a scanned port in a <see cref="PortScanner"/>.
+/// </summary>
 public class PortScannerPortScannedArgs : EventArgs
 {
-    public IPAddress IPAddress { get; set; }
-    public string Hostname { get; set; }
-    public int Port { get; set; }
-    public PortLookupInfo LookupInfo { get; set; }
-    public PortState State { get; set; }
+    /// <summary>
+    /// Port scanner port information.
+    /// </summary>
+    public PortScannerPortInfo Args { get; }
 
-    public PortScannerPortScannedArgs()
+    /// <summary>
+    /// Creates a new instance of <see cref="PortScannerPortScannedArgs"/> with the given <see cref="PortScannerPortInfo"/>.
+    /// </summary>
+    /// <param name="args">Port scanner port information.</param>
+    public PortScannerPortScannedArgs(PortScannerPortInfo args)
     {
-
-    }
-
-    public PortScannerPortScannedArgs(IPAddress ipAddres, string hostname, int port, PortLookupInfo lookupInfo, PortState state)
-    {
-        IPAddress = ipAddres;
-        Hostname = hostname;
-        Port = port;
-        LookupInfo = lookupInfo;
-        State = state;
+        Args = args;
     }
 }

@@ -277,9 +277,9 @@ public class PortScannerViewModel : ViewModelBase
         OpenPortProfileSelection();
     }
 
-    public ICommand ScanCommand => new RelayCommand(p => ScanAction(), Scan_CanExecute);
+    public ICommand ScanCommand => new RelayCommand(_ => ScanAction(), Scan_CanExecute);
 
-    private bool Scan_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool Scan_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
     private void ScanAction()
     {
@@ -289,56 +289,56 @@ public class PortScannerViewModel : ViewModelBase
             StartScan();
     }
 
-    public ICommand CopySelectedIPAddressCommand => new RelayCommand(p => CopySelectedIPAddressAction());
+    public ICommand CopySelectedIPAddressCommand => new RelayCommand(_ => CopySelectedIPAddressAction());
 
     private void CopySelectedIPAddressAction()
     {
         ClipboardHelper.SetClipboard(SelectedResult.IPAddress.ToString());
     }
 
-    public ICommand CopySelectedHostnameCommand => new RelayCommand(p => CopySelectedHostnameAction());
+    public ICommand CopySelectedHostnameCommand => new RelayCommand(_ => CopySelectedHostnameAction());
 
     private void CopySelectedHostnameAction()
     {
         ClipboardHelper.SetClipboard(SelectedResult.Hostname);
     }
 
-    public ICommand CopySelectedPortCommand => new RelayCommand(p => CopySelectedPortAction());
+    public ICommand CopySelectedPortCommand => new RelayCommand(_ => CopySelectedPortAction());
 
     private void CopySelectedPortAction()
     {
         ClipboardHelper.SetClipboard(SelectedResult.Port.ToString());
     }
 
-    public ICommand CopySelectedStatusCommand => new RelayCommand(p => CopySelectedStatusAction());
+    public ICommand CopySelectedStatusCommand => new RelayCommand(_ => CopySelectedStatusAction());
 
     private void CopySelectedStatusAction()
     {
         ClipboardHelper.SetClipboard(ResourceTranslator.Translate(ResourceIdentifier.PortState, SelectedResult.State));
     }
 
-    public ICommand CopySelectedProtocolCommand => new RelayCommand(p => CopySelectedProtocolAction());
+    public ICommand CopySelectedProtocolCommand => new RelayCommand(_ => CopySelectedProtocolAction());
 
     private void CopySelectedProtocolAction()
     {
         ClipboardHelper.SetClipboard(SelectedResult.LookupInfo.Protocol.ToString());
     }
 
-    public ICommand CopySelectedServiceCommand => new RelayCommand(p => CopySelectedServiceAction());
+    public ICommand CopySelectedServiceCommand => new RelayCommand(_ => CopySelectedServiceAction());
 
     private void CopySelectedServiceAction()
     {
         ClipboardHelper.SetClipboard(SelectedResult.LookupInfo.Service);
     }
 
-    public ICommand CopySelectedDescriptionCommand => new RelayCommand(p => CopySelectedDescriptionAction());
+    public ICommand CopySelectedDescriptionCommand => new RelayCommand(_ => CopySelectedDescriptionAction());
 
     private void CopySelectedDescriptionAction()
     {
         ClipboardHelper.SetClipboard(SelectedResult.LookupInfo.Description);
     }
 
-    public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+    public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
 
     private void ExportAction()
     {
@@ -576,18 +576,10 @@ public class PortScannerViewModel : ViewModelBase
 
     private void PortScanned(object sender, PortScannerPortScannedArgs e)
     {
-        var portInfo = PortScannerPortInfo.Parse(e);
-
-        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate ()
+        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
         {
-            //lock (PortScanResult)
-            Results.Add(portInfo);
+            Results.Add(e.Args);
         }));
-    }
-
-    private void DispatcherTimer_Tick(object sender, EventArgs e)
-    {
-
     }
 
     private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)

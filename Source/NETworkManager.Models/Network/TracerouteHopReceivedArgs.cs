@@ -1,7 +1,7 @@
 ﻿namespace NETworkManager.Models.Network;
 
 /// <summary>
-/// Contains the information of a hop in a <see cref="Traceroute"/>.
+/// Contains the information of a received hop in a <see cref="Traceroute"/>.
 /// </summary>
 public class TracerouteHopReceivedArgs : System.EventArgs
 {

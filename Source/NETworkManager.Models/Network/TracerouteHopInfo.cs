@@ -5,7 +5,7 @@ using NETworkManager.Models.IPApi;
 namespace NETworkManager.Models.Network;
 
 /// <summary>
-/// Class containing information about a hop in a traceroute.
+/// Class containing information about a hop in a <see cref="Traceroute"/>.
 /// </summary>
 public class TracerouteHopInfo
 {

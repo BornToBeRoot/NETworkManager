@@ -24,9 +24,9 @@ public sealed class IPScanner
 
     #region Events
 
-    public event EventHandler<IPScannerHostFoundArgs> HostFound;
+    public event EventHandler<IPScannerHostScannedArgs> HostFound;
 
-    private void OnHostFound(IPScannerHostFoundArgs e)
+    private void OnHostFound(IPScannerHostScannedArgs e)
     {
         HostFound?.Invoke(this, e);
     }
@@ -198,7 +198,7 @@ public sealed class IPScanner
                             }
                         }
 
-                        OnHostFound(new IPScannerHostFoundArgs(
+                        OnHostFound(new IPScannerHostScannedArgs(
                             new IPScannerHostInfo(
                                 isReachable, pingInfo, isAnyPortOpen, portResults.OrderBy(x => x.Port).ToList(),
                                 hostname, macAddress, vendor)));

@@ -15,13 +15,9 @@ public class RelayCommand : ICommand
     private readonly Predicate<object> _canExecute;
     #endregion
 
-    #region Constructors 
-    public RelayCommand(Action<object> execute) : this(execute, null)
-    {
+    #region Constructors
 
-    }
-
-    public RelayCommand(Action<object> execute, Predicate<object> canExecute)
+    public RelayCommand(Action<object> execute, Predicate<object> canExecute = null)
     {
         _execute = execute ?? throw new ArgumentNullException(nameof(execute)); _canExecute = canExecute;
     }
