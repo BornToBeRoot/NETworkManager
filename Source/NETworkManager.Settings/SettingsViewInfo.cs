@@ -9,10 +9,6 @@ public class SettingsViewInfo
     public Canvas Icon { get; set; }
     public SettingsViewGroup Group { get; set; }
 
-    public SettingsViewInfo()
-    {
-    }
-
     public SettingsViewInfo(SettingsViewName name, Canvas icon, SettingsViewGroup group)
     {
         Name = name;

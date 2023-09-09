@@ -437,7 +437,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                     new ObservableCollection<DNSServerConnectionInfoProfile>(DNSServer.GetDefaultList());
                 SettingsManager.Current.AWSSessionManager_AWSProfiles =
                     new ObservableCollection<AWSProfileInfo>(AWSProfile.GetDefaultList());
-                SettingsManager.Current.SNMP_OIDProfiles =
+                SettingsManager.Current.SNMP_OidProfiles =
                     new ObservableCollection<SNMPOIDProfileInfo>(SNMPOIDProfile.GetDefaultList());
                 SettingsManager.Current.SNTPLookup_SNTPServers =
                     new ObservableCollection<ServerConnectionInfoProfile>(SNTPServer.GetDefaultList());

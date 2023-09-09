@@ -10,49 +10,42 @@ using System.Threading.Tasks;
 
 namespace NETworkManager.Models.Network;
 
-public partial class SNMPClient
+public sealed class SNMPClient
 {
     #region Events
     public event EventHandler<SNMPReceivedArgs> Received;
 
-    protected virtual void OnReceived(SNMPReceivedArgs e)
+    private void OnReceived(SNMPReceivedArgs e)
     {
         Received?.Invoke(this, e);
     }
 
     public event EventHandler DataUpdated;
 
-    protected virtual void OnDataUpdated()
+    private void OnDataUpdated()
     {
         DataUpdated?.Invoke(this, EventArgs.Empty);
     }
 
     public event EventHandler Error;
 
-    protected virtual void OnError()
+    private void OnError()
     {
         Error?.Invoke(this, EventArgs.Empty);
     }
 
     public event EventHandler Complete;
 
-    protected virtual void OnComplete()
+    private void OnComplete()
     {
         Complete?.Invoke(this, EventArgs.Empty);
     }
 
     public event EventHandler Canceled;
 
-    protected virtual void OnCanceled()
+    private void OnCanceled()
     {
         Canceled?.Invoke(this, EventArgs.Empty);
-    }
-    #endregion
-
-    #region Constructor
-    public SNMPClient()
-    {
-
     }
     #endregion
 
@@ -75,7 +68,8 @@ public partial class SNMPClient
                 var results = await Messenger.GetAsync(version, ipEndPoint, community, variables, options.CancellationToken);
 
                 foreach (var result in results)
-                    OnReceived(new SNMPReceivedArgs(result.Id, result.Data));
+                    OnReceived(new SNMPReceivedArgs(
+                        new SNMPInfo(result.Id, result.Data)));
             }
             catch (OperationCanceledException)
             {
@@ -118,7 +112,8 @@ public partial class SNMPClient
                 {
                     var result = reply.Pdu().Variables[0];
 
-                    OnReceived(new SNMPReceivedArgs(result.Id, result.Data));
+                    OnReceived(new SNMPReceivedArgs(
+                        new SNMPInfo(result.Id, result.Data)));
                 }
                 else
                 {
@@ -157,7 +152,8 @@ public partial class SNMPClient
                 await Messenger.WalkAsync(version, ipEndPoint, community, table, results, options.WalkMode, options.CancellationToken);
 
                 foreach (var result in results)
-                    OnReceived(new SNMPReceivedArgs(result.Id, result.Data));
+                    OnReceived(new SNMPReceivedArgs(
+                        new SNMPInfo(result.Id, result.Data)));
             }
             catch (OperationCanceledException)
             {
@@ -194,7 +190,8 @@ public partial class SNMPClient
                 await Messenger.BulkWalkAsync(VersionCode.V3, ipEndpoint, username, OctetString.Empty, table, results, 10, options.WalkMode, privacy, report, options.CancellationToken);
 
                 foreach (var result in results)
-                    OnReceived(new SNMPReceivedArgs(result.Id, result.Data));
+                    OnReceived(new SNMPReceivedArgs(
+                        new SNMPInfo(result.Id, result.Data)));
             }
             catch (OperationCanceledException)
             {
@@ -281,14 +278,18 @@ public partial class SNMPClient
 
     private static IPrivacyProvider GetPrivacyProvider(SNMPOptionsV3 options)
     {
-        if (options.Security == SNMPV3Security.AuthPriv)
-            return GetPrivacyProvider(options.AuthProvider, options.Auth, options.PrivProvider, options.Priv);
-
-        if (options.Security == SNMPV3Security.AuthNoPriv)
-            return GetPrivacyProvider(options.AuthProvider, options.Auth);
-
-        // NoAuthNoPriv
-        return GetPrivacyProvider();
+        return options.Security switch
+        {
+            // AuthPriv
+            SNMPV3Security.AuthPriv => GetPrivacyProvider(options.AuthProvider, options.Auth, options.PrivProvider,
+                options.Priv),
+            
+            // AuthNoPriv
+            SNMPV3Security.AuthNoPriv => GetPrivacyProvider(options.AuthProvider, options.Auth),
+            
+            // NoAuthNoPriv
+            _ => GetPrivacyProvider()
+        };
     }
 
     // noAuthNoPriv
@@ -311,11 +312,11 @@ public partial class SNMPClient
         return privProvider switch
         {
 #pragma warning disable CS0618 // Allow outdated algorithms. We provide the function also for old devices. The user should use newer algorithms...
-            SNMPV3PrivacyProvider.DES => new DESPrivacyProvider(new OctetString(privPlain), GetAuthenticationProvider(authProvider, auth)),
+            SNMPV3PrivacyProvider.Des => new DESPrivacyProvider(new OctetString(privPlain), GetAuthenticationProvider(authProvider, auth)),
 #pragma warning restore CS0618 // Allow outdated algorithms. We provide the function also for old devices. The user should use newer algorithms...
-            SNMPV3PrivacyProvider.AES => new AESPrivacyProvider(new OctetString(privPlain), GetAuthenticationProvider(authProvider, auth)),
-            SNMPV3PrivacyProvider.AES192 => new AES192PrivacyProvider(new OctetString(privPlain), GetAuthenticationProvider(authProvider, auth)),
-            SNMPV3PrivacyProvider.AES256 => new AES256PrivacyProvider(new OctetString(privPlain), GetAuthenticationProvider(authProvider, auth)),
+            SNMPV3PrivacyProvider.Aes => new AESPrivacyProvider(new OctetString(privPlain), GetAuthenticationProvider(authProvider, auth)),
+            SNMPV3PrivacyProvider.Aes192 => new AES192PrivacyProvider(new OctetString(privPlain), GetAuthenticationProvider(authProvider, auth)),
+            SNMPV3PrivacyProvider.Aes256 => new AES256PrivacyProvider(new OctetString(privPlain), GetAuthenticationProvider(authProvider, auth)),
             _ => null,
         };
     }
@@ -327,12 +328,12 @@ public partial class SNMPClient
         return authProvider switch
         {
 #pragma warning disable CS0618 // Allow outdated algorithms. We provide the function also for old devices. The user should use newer algorithms...
-            SNMPV3AuthenticationProvider.MD5 => new MD5AuthenticationProvider(new OctetString(authPlain)),
-            SNMPV3AuthenticationProvider.SHA1 => new SHA1AuthenticationProvider(new OctetString(authPlain)),
+            SNMPV3AuthenticationProvider.Md5 => new MD5AuthenticationProvider(new OctetString(authPlain)),
+            SNMPV3AuthenticationProvider.Sha1 => new SHA1AuthenticationProvider(new OctetString(authPlain)),
 #pragma warning restore CS0618 // Allow outdated algorithms. We provide the function also for old devices. The user should use newer algorithms...
-            SNMPV3AuthenticationProvider.SHA256 => new SHA256AuthenticationProvider(new OctetString(authPlain)),
-            SNMPV3AuthenticationProvider.SHA384 => new SHA384AuthenticationProvider(new OctetString(authPlain)),
-            SNMPV3AuthenticationProvider.SHA512 => new SHA512AuthenticationProvider(new OctetString(authPlain)),
+            SNMPV3AuthenticationProvider.Sha256 => new SHA256AuthenticationProvider(new OctetString(authPlain)),
+            SNMPV3AuthenticationProvider.Sha384 => new SHA384AuthenticationProvider(new OctetString(authPlain)),
+            SNMPV3AuthenticationProvider.Sha512 => new SHA512AuthenticationProvider(new OctetString(authPlain)),
             _ => null,
         };
     }

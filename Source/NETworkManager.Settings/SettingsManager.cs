@@ -277,7 +277,7 @@ public static class SettingsManager
 
         // Add SNMP OID profiles
         Log.Info($"Add SNMP OID profiles...");
-        Current.SNMP_OIDProfiles = new ObservableCollection<SNMPOIDProfileInfo>(SNMPOIDProfile.GetDefaultList());
+        Current.SNMP_OidProfiles = new ObservableCollection<SNMPOIDProfileInfo>(SNMPOIDProfile.GetDefaultList());
     }
 
     /// <summary>

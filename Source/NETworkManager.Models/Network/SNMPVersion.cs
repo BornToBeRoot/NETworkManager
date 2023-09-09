@@ -13,7 +13,7 @@ public enum SNMPVersion
     /// <summary>
     /// Version 2c.
     /// </summary>
-    V2C,
+    V2c,
 
     /// <summary>
     /// Version 3.

@@ -98,7 +98,7 @@ public class SNMPSettingsViewModel : ViewModelBase
 
         _dialogCoordinator = instance;
 
-        OIDProfiles = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_OIDProfiles);
+        OIDProfiles = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_OidProfiles);
         OIDProfiles.SortDescriptions.Add(new SortDescription(nameof(SNMPOIDProfileInfo.Name), ListSortDirection.Ascending));
 
         LoadSettings();
@@ -150,7 +150,7 @@ public class SNMPSettingsViewModel : ViewModelBase
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            SettingsManager.Current.SNMP_OIDProfiles.Add(new SNMPOIDProfileInfo(instance.Name, instance.OID, instance.Mode));
+            SettingsManager.Current.SNMP_OidProfiles.Add(new SNMPOIDProfileInfo(instance.Name, instance.OID, instance.Mode));
         }, async instance =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -175,8 +175,8 @@ public class SNMPSettingsViewModel : ViewModelBase
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            SettingsManager.Current.SNMP_OIDProfiles.Remove(SelectedOIDProfile);
-            SettingsManager.Current.SNMP_OIDProfiles.Add(new SNMPOIDProfileInfo(instance.Name, instance.OID, instance.Mode));
+            SettingsManager.Current.SNMP_OidProfiles.Remove(SelectedOIDProfile);
+            SettingsManager.Current.SNMP_OidProfiles.Add(new SNMPOIDProfileInfo(instance.Name, instance.OID, instance.Mode));
         }, async instance =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -201,7 +201,7 @@ public class SNMPSettingsViewModel : ViewModelBase
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            SettingsManager.Current.SNMP_OIDProfiles.Remove(SelectedOIDProfile);
+            SettingsManager.Current.SNMP_OidProfiles.Remove(SelectedOIDProfile);
         }, instance =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);

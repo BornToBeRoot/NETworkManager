@@ -3240,31 +3240,31 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private ObservableCollection<string> _snmp_OIDHistory = new();
-    public ObservableCollection<string> SNMP_OIDHistory
+    private ObservableCollection<string> _snmp_OidHistory = new();
+    public ObservableCollection<string> SNMP_OidHistory
     {
-        get => _snmp_OIDHistory;
+        get => _snmp_OidHistory;
         set
         {
-            if (value == _snmp_OIDHistory)
+            if (value == _snmp_OidHistory)
                 return;
 
-            _snmp_OIDHistory = value;
+            _snmp_OidHistory = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
     }
 
-    private ObservableCollection<SNMPOIDProfileInfo> _snmp_OIDProfiles = new();
-    public ObservableCollection<SNMPOIDProfileInfo> SNMP_OIDProfiles
+    private ObservableCollection<SNMPOIDProfileInfo> _snmp_OidProfiles = new();
+    public ObservableCollection<SNMPOIDProfileInfo> SNMP_OidProfiles
     {
-        get => _snmp_OIDProfiles;
+        get => _snmp_OidProfiles;
         set
         {
-            if (value == _snmp_OIDProfiles)
+            if (value == _snmp_OidProfiles)
                 return;
 
-            _snmp_OIDProfiles = value;
+            _snmp_OidProfiles = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
@@ -4226,8 +4226,8 @@ public class SettingsInfo : PropertyChangedBase
 
         // SNMP
         SNMP_HostHistory.CollectionChanged += CollectionChanged;
-        SNMP_OIDHistory.CollectionChanged += CollectionChanged;
-        SNMP_OIDProfiles.CollectionChanged += CollectionChanged;
+        SNMP_OidHistory.CollectionChanged += CollectionChanged;
+        SNMP_OidProfiles.CollectionChanged += CollectionChanged;
 
         // SNTP Lookup
         SNTPLookup_SNTPServers.CollectionChanged += CollectionChanged;

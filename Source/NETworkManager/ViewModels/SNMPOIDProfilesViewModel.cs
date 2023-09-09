@@ -57,7 +57,7 @@ public class SNMPOIDProfilesViewModel : ViewModelBase
         OKCommand = new RelayCommand(p => okCommand(this));
         CancelCommand = new RelayCommand(p => cancelHandler(this));
 
-        OIDProfiles = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_OIDProfiles);
+        OIDProfiles = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_OidProfiles);
         OIDProfiles.SortDescriptions.Add(new SortDescription(nameof(SNMPOIDProfileInfo.Name), ListSortDirection.Ascending));
         OIDProfiles.Filter = o =>
         {

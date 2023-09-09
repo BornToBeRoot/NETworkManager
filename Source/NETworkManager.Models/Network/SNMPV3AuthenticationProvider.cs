@@ -8,25 +8,25 @@ public enum SNMPV3AuthenticationProvider
     /// <summary>
     /// MD5.
     /// </summary>
-    MD5,
+    Md5,
 
     /// <summary>
     /// SHA 1.
     /// </summary>
-    SHA1,
+    Sha1,
     
     /// <summary>
     /// SHA 256.
     /// </summary>
-    SHA256,
+    Sha256,
 
     /// <summary>
     /// SHA 384.
     /// </summary>
-    SHA384,
+    Sha384,
 
     /// <summary>
     /// SHA 512.
     /// </summary>
-    SHA512
+    Sha512
 }
