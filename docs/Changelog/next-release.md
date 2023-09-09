@@ -47,7 +47,9 @@ New Feature
   - Copy time to clipboard for non reachable hops fixed [#2477](https://github.com/BornToBeRoot/NETworkManager/pull/2477){:target="\_blank"}
   - Export to Json fixed (if ip address of a hop cannot be resolved) [#2477](https://github.com/BornToBeRoot/NETworkManager/pull/2477){:target="\_blank"}
 - Ping
-  - Export time fixed (format is now `yyyy-MM-dd HH:mm:ss.fff`) [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
+  - Copy & Export time fixed (format is now `yyyy-MM-dd HH:mm:ss.fff`) [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
+- SNTP Lookup
+  - Copy & Export time fixed (format is now `yyyy-MM-dd HH:mm:ss.fff`) [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
 - Profiles
   - Prevent the application from crashing if a profile file cannot be loaded (profile management is then blocked) [#2464](https://github.com/BornToBeRoot/NETworkManager/pull/2464){:target="\_blank"}
 

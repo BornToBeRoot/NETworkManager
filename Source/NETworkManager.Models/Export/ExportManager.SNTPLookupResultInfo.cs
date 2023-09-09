@@ -11,13 +11,13 @@ namespace NETworkManager.Models.Export;
 public static partial class ExportManager
 {
     /// <summary>
-    /// Method to export objects from type <see cref="SNTPLookupResultInfo"/> to a file.
+    /// Method to export objects from type <see cref="SNTPLookupInfo"/> to a file.
     /// </summary>
     /// <param name="filePath">Path to the export file.</param>
     /// <param name="fileType">Allowed <see cref="ExportFileType"/> are CSV, XML or JSON.</param>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{SNTPLookupResultInfo}"/> to export.</param>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{SNTPLookupInfo}"/> to export.</param>
     public static void Export(string filePath, ExportFileType fileType,
-        IReadOnlyList<SNTPLookupResultInfo> collection)
+        IReadOnlyList<SNTPLookupInfo> collection)
     {
         switch (fileType)
         {
@@ -37,58 +37,58 @@ public static partial class ExportManager
     }
 
     /// <summary>
-    /// Creates a CSV file from the given <see cref="SNTPLookupResultInfo"/> collection.
+    /// Creates a CSV file from the given <see cref="SNTPLookupInfo"/> collection.
     /// </summary>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{SNTPLookupResultInfo}"/> to export.</param>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{SNTPLookupInfo}"/> to export.</param>
     /// <param name="filePath">Path to the export file.</param>
-    private static void CreateCsv(IEnumerable<SNTPLookupResultInfo> collection, string filePath)
+    private static void CreateCsv(IEnumerable<SNTPLookupInfo> collection, string filePath)
     {
         var stringBuilder = new StringBuilder();
 
         stringBuilder.AppendLine(
-            $"{nameof(SNTPLookupResultInfo.Server)},{nameof(SNTPLookupResultInfo.IPEndPoint)},{nameof(SNTPLookupResultInfo.DateTime.NetworkTime)},{nameof(SNTPLookupResultInfo.DateTime.LocalStartTime)},{nameof(SNTPLookupResultInfo.DateTime.LocalEndTime)},{nameof(SNTPLookupResultInfo.DateTime.Offset)},{nameof(SNTPLookupResultInfo.DateTime.RoundTripDelay)}");
+            $"{nameof(SNTPLookupInfo.Server)},{nameof(SNTPLookupInfo.IPEndPoint)},{nameof(SNTPLookupInfo.DateTime.NetworkTime)},{nameof(SNTPLookupInfo.DateTime.LocalStartTime)},{nameof(SNTPLookupInfo.DateTime.LocalEndTime)},{nameof(SNTPLookupInfo.DateTime.Offset)},{nameof(SNTPLookupInfo.DateTime.RoundTripDelay)}");
 
         foreach (var info in collection)
             stringBuilder.AppendLine(
-                $"{info.Server},{info.IPEndPoint},{info.DateTime.NetworkTime.ToString("yyyy.MM.dd HH:mm:ss.fff")},{info.DateTime.LocalStartTime.ToString("yyyy.MM.dd HH:mm:ss.fff")},{info.DateTime.LocalEndTime.ToString("yyyy.MM.dd HH:mm:ss.fff")},{info.DateTime.Offset} s,{info.DateTime.RoundTripDelay} ms");
+                $"{info.Server},{info.IPEndPoint},{info.DateTime.NetworkTime.ToString("yyyy-MM-dd HH:mm:ss.fff")},{info.DateTime.LocalStartTime.ToString("yyyy-MM-dd HH:mm:ss.fff")},{info.DateTime.LocalEndTime.ToString("yyyy-MM-dd HH:mm:ss.fff")},{info.DateTime.Offset} s,{info.DateTime.RoundTripDelay} ms");
 
         System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
     }
 
     /// <summary>
-    /// Creates a XML file from the given <see cref="SNTPLookupResultInfo"/> collection.
+    /// Creates a XML file from the given <see cref="SNTPLookupInfo"/> collection.
     /// </summary>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{SNTPLookupResultInfo}"/> to export.</param>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{SNTPLookupInfo}"/> to export.</param>
     /// <param name="filePath">Path to the export file.</param>
-    private static void CreateXml(IEnumerable<SNTPLookupResultInfo> collection, string filePath)
+    private static void CreateXml(IEnumerable<SNTPLookupInfo> collection, string filePath)
     {
         var document = new XDocument(DefaultXDeclaration,
             new XElement(ApplicationName.SNMP.ToString(),
-                new XElement(nameof(SNTPLookupResultInfo) + "s",
+                new XElement(nameof(SNTPLookupInfo) + "s",
                     from info in collection
                     select
-                        new XElement(nameof(SNTPLookupResultInfo),
-                            new XElement(nameof(SNTPLookupResultInfo.Server), info.Server),
-                            new XElement(nameof(SNTPLookupResultInfo.IPEndPoint), info.IPEndPoint),
-                            new XElement(nameof(SNTPLookupResultInfo.DateTime.NetworkTime),
-                                info.DateTime.NetworkTime.ToString("yyyy.MM.dd HH:mm:ss.fff")),
-                            new XElement(nameof(SNTPLookupResultInfo.DateTime.LocalStartTime),
-                                info.DateTime.LocalStartTime.ToString("yyyy.MM.dd HH:mm:ss.fff")),
-                            new XElement(nameof(SNTPLookupResultInfo.DateTime.LocalEndTime),
-                                info.DateTime.LocalEndTime.ToString("yyyy.MM.dd HH:mm:ss.fff")),
-                            new XElement(nameof(SNTPLookupResultInfo.DateTime.Offset), $"{info.DateTime.Offset} s"),
-                            new XElement(nameof(SNTPLookupResultInfo.DateTime.RoundTripDelay),
+                        new XElement(nameof(SNTPLookupInfo),
+                            new XElement(nameof(SNTPLookupInfo.Server), info.Server),
+                            new XElement(nameof(SNTPLookupInfo.IPEndPoint), info.IPEndPoint),
+                            new XElement(nameof(SNTPLookupInfo.DateTime.NetworkTime),
+                                info.DateTime.NetworkTime.ToString("yyyy-MM-dd HH:mm:ss.fff")),
+                            new XElement(nameof(SNTPLookupInfo.DateTime.LocalStartTime),
+                                info.DateTime.LocalStartTime.ToString("yyyy-MM-dd HH:mm:ss.fff")),
+                            new XElement(nameof(SNTPLookupInfo.DateTime.LocalEndTime),
+                                info.DateTime.LocalEndTime.ToString("yyyy-MM-dd HH:mm:ss.fff")),
+                            new XElement(nameof(SNTPLookupInfo.DateTime.Offset), $"{info.DateTime.Offset} s"),
+                            new XElement(nameof(SNTPLookupInfo.DateTime.RoundTripDelay),
                                 $"{info.DateTime.RoundTripDelay} ms")))));
 
         document.Save(filePath);
     }
 
     /// <summary>
-    /// Creates a JSON file from the given <see cref="SNTPLookupResultInfo"/> collection.
+    /// Creates a JSON file from the given <see cref="SNTPLookupInfo"/> collection.
     /// </summary>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{SNTPLookupResultInfo}"/> to export.</param>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{SNTPLookupInfo}"/> to export.</param>
     /// <param name="filePath">Path to the export file.</param>
-    private static void CreateJson(IReadOnlyList<SNTPLookupResultInfo> collection, string filePath)
+    private static void CreateJson(IReadOnlyList<SNTPLookupInfo> collection, string filePath)
     {
         var jsonData = new object[collection.Count];
 
@@ -98,9 +98,9 @@ public static partial class ExportManager
             {
                 collection[i].Server,
                 collection[i].IPEndPoint,
-                NetworkTime = collection[i].DateTime.NetworkTime.ToString("yyyy.MM.dd HH:mm:ss.fff"),
-                LocalStartTime = collection[i].DateTime.LocalStartTime.ToString("yyyy.MM.dd HH:mm:ss.fff"),
-                LocalEndTime = collection[i].DateTime.LocalEndTime.ToString("yyyy.MM.dd HH:mm:ss.fff"),
+                NetworkTime = collection[i].DateTime.NetworkTime.ToString("yyyy-MM-dd HH:mm:ss.fff"),
+                LocalStartTime = collection[i].DateTime.LocalStartTime.ToString("yyyy-MM-dd HH:mm:ss.fff"),
+                LocalEndTime = collection[i].DateTime.LocalEndTime.ToString("yyyy-MM-dd HH:mm:ss.fff"),
                 Offset = $"{collection[i].DateTime.Offset} s",
                 RoundTripDelay = $"{collection[i].DateTime.RoundTripDelay} ms",
             };

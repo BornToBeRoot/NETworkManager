@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace NETworkManager.Models.Network;
 
-public class SNTPLookup
+public sealed class SNTPLookup
 {
     #region Variables
-    private SNTPLookupSettings _settings;
+    private readonly SNTPLookupSettings _settings;
     #endregion
 
     #region Constructor
@@ -24,28 +24,29 @@ public class SNTPLookup
     #region Events
     public event EventHandler<SNTPLookupResultArgs> ResultReceived;
 
-    protected virtual void OnResultReceived(SNTPLookupResultArgs e)
+    private void OnResultReceived(SNTPLookupResultArgs e)
     {
         ResultReceived?.Invoke(this, e);
     }
 
     public event EventHandler<SNTPLookupErrorArgs> LookupError;
 
-    protected virtual void OnLookupError(SNTPLookupErrorArgs e)
+    private void OnLookupError(SNTPLookupErrorArgs e)
     {
         LookupError?.Invoke(this, e);
     }
 
     public event EventHandler LookupComplete;
 
-    protected virtual void OnLookupComplete()
+    private void OnLookupComplete()
     {
         LookupComplete?.Invoke(this, EventArgs.Empty);
     }
     #endregion
 
-    #region Methods        
-    public static SNTPDateTime GetNetworkTimeRfc2030(IPEndPoint server, int timeout = 4000)
+    #region Methods
+
+    private static SNTPDateTime GetNetworkTimeRfc2030(IPEndPoint server, int timeout = 4000)
     {
         var ntpData = new byte[48]; // RFC 2030
         ntpData[0] = 0x1B; // LI = 0 (no warning), VN = 3 (IPv4 only), Mode = 3 (Client Mode)
@@ -64,17 +65,17 @@ public class SNTPLookup
 
         udpClient.Close();
 
-        ulong intPart = (ulong)ntpData[40] << 24 | (ulong)ntpData[41] << 16 | (ulong)ntpData[42] << 8 | (ulong)ntpData[43];
-        ulong fractPart = (ulong)ntpData[44] << 24 | (ulong)ntpData[45] << 16 | (ulong)ntpData[46] << 8 | (ulong)ntpData[47];
+        var intPart = (ulong)ntpData[40] << 24 | (ulong)ntpData[41] << 16 | (ulong)ntpData[42] << 8 | ntpData[43];
+        var fractionPart = (ulong)ntpData[44] << 24 | (ulong)ntpData[45] << 16 | (ulong)ntpData[46] << 8 | ntpData[47];
 
-        var milliseconds = (intPart * 1000) + (fractPart * 1000 / 0x100000000L);
+        var milliseconds = (intPart * 1000) + (fractionPart * 1000 / 0x100000000L);
         var networkTime = new DateTime(1900, 1, 1).AddMilliseconds((long)milliseconds);
 
         // Calculate local offset with local start/end time and network time in seconds            
         var roundTripDelayTicks = localEndTime.Ticks - localStartTime.Ticks;
         var offsetInSeconds = (localStartTime.Ticks + (roundTripDelayTicks / 2) - networkTime.Ticks) / TimeSpan.TicksPerSecond;
 
-        return new SNTPDateTime()
+        return new SNTPDateTime
         {
             LocalStartTime = localStartTime,
             LocalEndTime = localEndTime,
@@ -115,9 +116,10 @@ public class SNTPLookup
 
                 try
                 {
-                    SNTPDateTime dateTime = GetNetworkTimeRfc2030(new(serverIP, server.Port), _settings.Timeout);
+                    var dateTime = GetNetworkTimeRfc2030(new IPEndPoint(serverIP, server.Port), _settings.Timeout);
 
-                    OnResultReceived(new SNTPLookupResultArgs(server.Server, $"{serverIP}:{server.Port}", dateTime));
+                    OnResultReceived(new SNTPLookupResultArgs(
+                        new SNTPLookupInfo(server.Server, $"{serverIP}:{server.Port}", dateTime)));
                 }
                 catch (Exception ex)
                 {

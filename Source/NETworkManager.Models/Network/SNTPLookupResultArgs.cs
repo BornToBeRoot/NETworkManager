@@ -1,22 +1,21 @@
-﻿using System.Net;
+﻿namespace NETworkManager.Models.Network;
 
-namespace NETworkManager.Models.Network;
-
+/// <summary>
+/// Contains the information of an SNTP lookup result in a <see cref="SNTPLookup"/>.
+/// </summary>
 public class SNTPLookupResultArgs : System.EventArgs
 {        
-    public string Server { get; set; }
-    public string IPEndPoint { get; set; }
-    public SNTPDateTime DateTime { get; set; }        
-
-    public SNTPLookupResultArgs()
+    /// <summary>
+    /// SNTP lookup information.
+    /// </summary>
+    public SNTPLookupInfo Args { get; }
+    
+    /// <summary>
+    /// Creates a new instance of <see cref="SNTPLookupResultArgs"/> with the given <see cref="SNTPLookupInfo"/>.
+    /// </summary>
+    /// <param name="args">SNTP lookup information.</param>
+    public SNTPLookupResultArgs(SNTPLookupInfo args)
     {
-
-    }
-
-    public SNTPLookupResultArgs(string server, string ipEndPoint, SNTPDateTime dateTime)
-    {
-        Server = server;
-        IPEndPoint = ipEndPoint;
-        DateTime = dateTime;
+        Args = args;
     }
 }
