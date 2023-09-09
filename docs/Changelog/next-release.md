@@ -36,6 +36,9 @@ New Feature
 
 ## Improvements
 
+- IP Scanner
+  - Timestamp added to view and export (export format has changed for `csv`, `json` and `xml`) [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
+
 ## Bugfixes
 
 - Network Interface
@@ -43,11 +46,13 @@ New Feature
 - Traceroute
   - Copy time to clipboard for non reachable hops fixed [#2477](https://github.com/BornToBeRoot/NETworkManager/pull/2477){:target="\_blank"}
   - Export to Json fixed (if ip address of a hop cannot be resolved) [#2477](https://github.com/BornToBeRoot/NETworkManager/pull/2477){:target="\_blank"}
+- Ping
+  - Export time fixed (format is now `yyyy-MM-dd HH:mm:ss.fff`) [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
 - Profiles
   - Prevent the application from crashing if a profile file cannot be loaded (profile management is then blocked) [#2464](https://github.com/BornToBeRoot/NETworkManager/pull/2464){:target="\_blank"}
 
 ## Other
 
-- Code cleanup [#2388](https://github.com/BornToBeRoot/NETworkManager/pull/2388){:target="\_blank"} [#2392](https://github.com/BornToBeRoot/NETworkManager/pull/2392){:target="\_blank"} [#2477](https://github.com/BornToBeRoot/NETworkManager/pull/2477){:target="\_blank"}
+- Code cleanup & Refactoring [#2388](https://github.com/BornToBeRoot/NETworkManager/pull/2388){:target="\_blank"} [#2392](https://github.com/BornToBeRoot/NETworkManager/pull/2392){:target="\_blank"} [#2477](https://github.com/BornToBeRoot/NETworkManager/pull/2477){:target="\_blank"} [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="\_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="\_blank"}

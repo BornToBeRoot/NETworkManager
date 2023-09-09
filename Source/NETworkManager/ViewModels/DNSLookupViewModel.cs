@@ -348,7 +348,7 @@ public class DNSLookupViewModel : ViewModelBase
                 SettingsManager.Current.DNSLookup_ExportFileType = instance.FileType;
                 SettingsManager.Current.DNSLookup_ExportFilePath = instance.FilePath;
             }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-            new ExportFileType[] { ExportFileType.CSV, ExportFileType.XML, ExportFileType.JSON }, true,
+            new ExportFileType[] { ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json }, true,
             SettingsManager.Current.DNSLookup_ExportFileType, SettingsManager.Current.DNSLookup_ExportFilePath);
 
         customDialog.Content = new ExportDialog

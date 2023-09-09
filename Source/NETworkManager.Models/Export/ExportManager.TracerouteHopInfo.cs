@@ -21,21 +21,26 @@ public static partial class ExportManager
     {
         switch (fileType)
         {
-            case ExportFileType.CSV:
+            case ExportFileType.Csv:
                 CreateCsv(collection, filePath);
                 break;
-            case ExportFileType.XML:
+            case ExportFileType.Xml:
                 CreateXml(collection, filePath);
                 break;
-            case ExportFileType.JSON:
+            case ExportFileType.Json:
                 CreateJson(collection, filePath);
                 break;
-            case ExportFileType.TXT:
+            case ExportFileType.Txt:
             default:
                 throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
         }
     }
 
+    /// <summary>
+    /// Creates a CSV file from the given <see cref="TracerouteHopInfo"/> collection.
+    /// </summary>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{TracerouteHopInfo}"/> to export.</param>
+    /// <param name="filePath">Path to the export file.</param>
     private static void CreateCsv(IEnumerable<TracerouteHopInfo> collection, string filePath)
     {
         var stringBuilder = new StringBuilder();
@@ -50,6 +55,11 @@ public static partial class ExportManager
         System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
     }
 
+    /// <summary>
+    /// Creates a XML file from the given <see cref="TracerouteHopInfo"/> collection.
+    /// </summary>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{TracerouteHopInfo}"/> to export.</param>
+    /// <param name="filePath">Path to the export file.</param>
     private static void CreateXml(IEnumerable<TracerouteHopInfo> collection, string filePath)
     {
         var document = new XDocument(DefaultXDeclaration,
@@ -86,6 +96,11 @@ public static partial class ExportManager
         document.Save(filePath);
     }
 
+    /// <summary>
+    /// Creates a JSON file from the given <see cref="TracerouteHopInfo"/> collection.
+    /// </summary>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{TracerouteHopInfo}"/> to export.</param>
+    /// <param name="filePath">Path to the export file.</param>
     private static void CreateJson(IReadOnlyList<TracerouteHopInfo> collection, string filePath)
     {
         var jsonData = new object[collection.Count];

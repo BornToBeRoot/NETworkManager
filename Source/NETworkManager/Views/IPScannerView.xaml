@@ -590,6 +590,17 @@
                                                 <ColumnDefinition Width="10" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{x:Static Member=localization:Strings.Timestamp}" />
+                                            <TextBlock Grid.Column="2" Text="{Binding Path=(network:IPScannerHostInfo.PingInfo).Timestamp}" />
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
                                             <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.Time}" />
                                             <TextBlock Grid.Column="2">
                                                 <TextBlock.Text>

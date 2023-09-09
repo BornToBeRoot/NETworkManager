@@ -94,10 +94,10 @@ public sealed class IPScanner
                 // Start scan
                 Parallel.ForEach(ipAddresses, hostParallelOptions, ipAddress =>
                 {
-                    // PING
+                    // Start ping async
                     var pingTask = PingAsync(ipAddress, cancellationToken);
 
-                    // PORT SCAN
+                    // Start port scan async
                     ConcurrentBag<PortInfo> portResults = new();
 
                     if (_options.PortScanEnabled)
@@ -107,7 +107,7 @@ public sealed class IPScanner
                             // Test if port is open
                             using var tcpClient = new TcpClient(ipAddress.AddressFamily);
 
-                            PortState portState = PortState.None;
+                            var portState = PortState.None;
 
                             try
                             {
@@ -135,6 +135,7 @@ public sealed class IPScanner
 
                     // Get ping result
                     pingTask.Wait();
+                    
                     cancellationToken.ThrowIfCancellationRequested();
 
                     var pingInfo = pingTask.Result;
@@ -151,7 +152,7 @@ public sealed class IPScanner
 
                         if (_options.ResolveHostname)
                         {
-                            // Don't use await in Paralle.ForEach, this will break
+                            // Don't use await in Parallel.ForEach, this will break
                             var dnsResolverTask = DNSClient.GetInstance().ResolvePtrAsync(ipAddress);
 
                             // Wait for task inside a Parallel.Foreach
@@ -222,33 +223,37 @@ public sealed class IPScanner
     {
         return Task.Run(() =>
         {
-            var pingInfo = new PingInfo();
-
             using var ping = new System.Net.NetworkInformation.Ping();
 
             for (var i = 0; i < _options.ICMPAttempts; i++)
             {
                 try
                 {
+                    // Get timestamp 
+                    var timestamp = DateTime.Now;
+                    
                     var pingReply = ping.Send(ipAddress, _options.ICMPTimeout, _options.ICMPBuffer);
 
-                    if (pingReply != null && IPStatus.Success == pingReply.Status)
+                    // Success
+                    if (pingReply is { Status: IPStatus.Success })
                     {
+                        // IPv4
                         if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
-                            pingInfo = new PingInfo(pingReply.Address, pingReply.Buffer.Length, pingReply.RoundtripTime,
-                                pingReply.Options.Ttl, pingReply.Status);
-                        else
-                            pingInfo = new PingInfo(pingReply.Address, pingReply.Buffer.Length, pingReply.RoundtripTime,
-                                pingReply.Status);
-
-                        break; // Continue with the next checks...
+                            return new PingInfo(timestamp, pingReply.Address, pingReply.Buffer.Length, pingReply.RoundtripTime,
+                                pingReply.Options!.Ttl, pingReply.Status);
+                        
+                        // IPv6
+                        return new PingInfo(timestamp, pingReply.Address, pingReply.Buffer.Length, pingReply.RoundtripTime,
+                            pingReply.Status);
                     }
 
+                    // Failed
                     if (pingReply != null)
-                        pingInfo = new PingInfo(ipAddress, pingReply.Status);
+                        return new PingInfo(timestamp, ipAddress, pingReply.Status);
                 }
                 catch (PingException)
                 {
+                    
                 }
 
                 // Don't scan again, if the user has canceled (when more than 1 attempt)
@@ -256,7 +261,7 @@ public sealed class IPScanner
                     break;
             }
 
-            return pingInfo;
+            return new PingInfo();
         });
     }
 

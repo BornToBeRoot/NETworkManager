@@ -383,7 +383,7 @@ public class TracerouteViewModel : ViewModelBase
                 SettingsManager.Current.Traceroute_ExportFileType = instance.FileType;
                 SettingsManager.Current.Traceroute_ExportFilePath = instance.FilePath;
             }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-            new[] { ExportFileType.CSV, ExportFileType.XML, ExportFileType.JSON }, true,
+            new[] { ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json }, true,
             SettingsManager.Current.Traceroute_ExportFileType, SettingsManager.Current.Traceroute_ExportFilePath
         );
 

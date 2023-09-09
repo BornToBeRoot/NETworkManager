@@ -21,21 +21,26 @@ public static partial class ExportManager
     {
         switch (fileType)
         {
-            case ExportFileType.CSV:
+            case ExportFileType.Csv:
                 CreateCsv(collection, filePath);
                 break;
-            case ExportFileType.XML:
+            case ExportFileType.Xml:
                 CreateXml(collection, filePath);
                 break;
-            case ExportFileType.JSON:
+            case ExportFileType.Json:
                 CreateJson(collection, filePath);
                 break;
-            case ExportFileType.TXT:
+            case ExportFileType.Txt:
             default:
                 throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
         }
     }
 
+    /// <summary>
+    /// Creates a CSV file from the given <see cref="PingInfo"/> collection.
+    /// </summary>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{PingInfo}"/> to export.</param>
+    /// <param name="filePath">Path to the export file.</param>
     private static void CreateCsv(IEnumerable<PingInfo> collection, string filePath)
     {
         var stringBuilder = new StringBuilder();
@@ -45,11 +50,16 @@ public static partial class ExportManager
 
         foreach (var info in collection)
             stringBuilder.AppendLine(
-                $"{info.Timestamp},{info.IPAddress},{info.Hostname},{info.Bytes},{Ping.TimeToString(info.Status, info.Time, true)},{info.TTL},{info.Status}");
+                $"{info.Timestamp.ToString("yyyy-MM-dd HH:mm:ss.fff")},{info.IPAddress},{info.Hostname},{info.Bytes},{Ping.TimeToString(info.Status, info.Time, true)},{info.TTL},{info.Status}");
 
         System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
     }
 
+    /// <summary>
+    /// Creates a XML file from the given <see cref="PingInfo"/> collection.
+    /// </summary>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{PingInfo}"/> to export.</param>
+    /// <param name="filePath">Path to the export file.</param>
     private static void CreateXml(IEnumerable<PingInfo> collection, string filePath)
     {
         var document = new XDocument(DefaultXDeclaration,
@@ -58,7 +68,7 @@ public static partial class ExportManager
                     from info in collection
                     select
                         new XElement(nameof(PingInfo),
-                            new XElement(nameof(PingInfo.Timestamp), info.Timestamp),
+                            new XElement(nameof(PingInfo.Timestamp), info.Timestamp.ToString("yyyy-MM-dd HH:mm:ss.fff")),
                             new XElement(nameof(PingInfo.IPAddress), info.IPAddress),
                             new XElement(nameof(PingInfo.Hostname), info.Hostname),
                             new XElement(nameof(PingInfo.Bytes), info.Bytes),
@@ -69,6 +79,11 @@ public static partial class ExportManager
         document.Save(filePath);
     }
 
+    /// <summary>
+    /// Creates a JSON file from the given <see cref="PingInfo"/> collection.
+    /// </summary>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{PingInfo}"/> to export.</param>
+    /// <param name="filePath">Path to the export file.</param>
     private static void CreateJson(IReadOnlyList<PingInfo> collection, string filePath)
     {
         var jsonData = new object[collection.Count];
@@ -77,7 +92,7 @@ public static partial class ExportManager
         {
             jsonData[i] = new
             {
-                collection[i].Timestamp,
+                Timestamp = collection[i].Timestamp.ToString("yyyy-MM-dd HH:mm:ss.fff"),
                 IPAddress = collection[i].IPAddress.ToString(),
                 collection[i].Hostname,
                 collection[i].Bytes,

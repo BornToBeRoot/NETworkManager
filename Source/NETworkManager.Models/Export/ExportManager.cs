@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Xml.Linq;
-using Newtonsoft.Json;
-using NETworkManager.Models.Lookup;
-using NETworkManager.Models.Network;
+﻿using System.Xml.Linq;
 
 namespace NETworkManager.Models.Export;
 
@@ -30,20 +22,29 @@ public static partial class ExportManager
         CreateTxt(content, filePath);
     }
 
-
+    /// <summary>
+    /// Create a text file from the given content. 
+    /// </summary>
+    /// <param name="content">Content of the text file.</param>
+    /// <param name="filePath">Path to the export file.</param>
     private static void CreateTxt(string content, string filePath)
     {
         System.IO.File.WriteAllText(filePath, content);
     }
    
+    /// <summary>
+    /// Get the file extension as string from the given <see cref="ExportFileType"/>.
+    /// </summary>
+    /// <param name="fileExtension">File extension as <see cref="ExportFileType"/>.</param>
+    /// <returns>File extension as string.</returns>
     public static string GetFileExtensionAsString(ExportFileType fileExtension)
     {
         return fileExtension switch
         {
-            ExportFileType.CSV => "CSV",
-            ExportFileType.XML => "XML",
-            ExportFileType.JSON => "JSON",
-            ExportFileType.TXT => "TXT",
+            ExportFileType.Csv => "CSV",
+            ExportFileType.Xml => "XML",
+            ExportFileType.Json => "JSON",
+            ExportFileType.Txt => "TXT",
             _ => string.Empty,
         };
     }
