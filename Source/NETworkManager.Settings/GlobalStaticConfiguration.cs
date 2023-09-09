@@ -177,10 +177,10 @@ public static class GlobalStaticConfiguration
     public static WalkMode SNMP_WalkMode => WalkMode.WithinSubtree;
     public static int SNMP_Timeout => 60000;
     public static SNMPMode SNMP_Mode => SNMPMode.Walk;
-    public static SNMPVersion SNMP_Version => SNMPVersion.V2c;
+    public static SNMPVersion SNMP_Version => SNMPVersion.V2C;
     public static SNMPV3Security SNMP_Security => SNMPV3Security.AuthPriv;
-    public static SNMPV3AuthenticationProvider SNMP_AuthenticationProvider => SNMPV3AuthenticationProvider.Sha1;
-    public static SNMPV3PrivacyProvider SNMP_PrivacyProvider => SNMPV3PrivacyProvider.Aes;
+    public static SNMPV3AuthenticationProvider SNMP_AuthenticationProvider => SNMPV3AuthenticationProvider.SHA1;
+    public static SNMPV3PrivacyProvider SNMP_PrivacyProvider => SNMPV3PrivacyProvider.AES;
     public static ExportFileType SNMP_ExportFileType => ExportFileType.Csv;
 
     // Application: SNTP Lookup

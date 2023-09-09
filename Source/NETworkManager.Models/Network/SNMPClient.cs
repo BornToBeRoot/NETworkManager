@@ -312,11 +312,11 @@ public sealed class SNMPClient
         return privProvider switch
         {
 #pragma warning disable CS0618 // Allow outdated algorithms. We provide the function also for old devices. The user should use newer algorithms...
-            SNMPV3PrivacyProvider.Des => new DESPrivacyProvider(new OctetString(privPlain), GetAuthenticationProvider(authProvider, auth)),
+            SNMPV3PrivacyProvider.DES => new DESPrivacyProvider(new OctetString(privPlain), GetAuthenticationProvider(authProvider, auth)),
 #pragma warning restore CS0618 // Allow outdated algorithms. We provide the function also for old devices. The user should use newer algorithms...
-            SNMPV3PrivacyProvider.Aes => new AESPrivacyProvider(new OctetString(privPlain), GetAuthenticationProvider(authProvider, auth)),
-            SNMPV3PrivacyProvider.Aes192 => new AES192PrivacyProvider(new OctetString(privPlain), GetAuthenticationProvider(authProvider, auth)),
-            SNMPV3PrivacyProvider.Aes256 => new AES256PrivacyProvider(new OctetString(privPlain), GetAuthenticationProvider(authProvider, auth)),
+            SNMPV3PrivacyProvider.AES => new AESPrivacyProvider(new OctetString(privPlain), GetAuthenticationProvider(authProvider, auth)),
+            SNMPV3PrivacyProvider.AES192 => new AES192PrivacyProvider(new OctetString(privPlain), GetAuthenticationProvider(authProvider, auth)),
+            SNMPV3PrivacyProvider.AES256 => new AES256PrivacyProvider(new OctetString(privPlain), GetAuthenticationProvider(authProvider, auth)),
             _ => null,
         };
     }
@@ -328,12 +328,12 @@ public sealed class SNMPClient
         return authProvider switch
         {
 #pragma warning disable CS0618 // Allow outdated algorithms. We provide the function also for old devices. The user should use newer algorithms...
-            SNMPV3AuthenticationProvider.Md5 => new MD5AuthenticationProvider(new OctetString(authPlain)),
-            SNMPV3AuthenticationProvider.Sha1 => new SHA1AuthenticationProvider(new OctetString(authPlain)),
+            SNMPV3AuthenticationProvider.MD5 => new MD5AuthenticationProvider(new OctetString(authPlain)),
+            SNMPV3AuthenticationProvider.SHA1 => new SHA1AuthenticationProvider(new OctetString(authPlain)),
 #pragma warning restore CS0618 // Allow outdated algorithms. We provide the function also for old devices. The user should use newer algorithms...
-            SNMPV3AuthenticationProvider.Sha256 => new SHA256AuthenticationProvider(new OctetString(authPlain)),
-            SNMPV3AuthenticationProvider.Sha384 => new SHA384AuthenticationProvider(new OctetString(authPlain)),
-            SNMPV3AuthenticationProvider.Sha512 => new SHA512AuthenticationProvider(new OctetString(authPlain)),
+            SNMPV3AuthenticationProvider.SHA256 => new SHA256AuthenticationProvider(new OctetString(authPlain)),
+            SNMPV3AuthenticationProvider.SHA384 => new SHA384AuthenticationProvider(new OctetString(authPlain)),
+            SNMPV3AuthenticationProvider.SHA512 => new SHA512AuthenticationProvider(new OctetString(authPlain)),
             _ => null,
         };
     }

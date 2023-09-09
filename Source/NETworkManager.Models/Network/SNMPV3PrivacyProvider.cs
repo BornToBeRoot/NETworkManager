@@ -8,20 +8,20 @@ public enum SNMPV3PrivacyProvider
     /// <summary>
     /// DES.
     /// </summary>
-    Des,
+    DES,
     
     /// <summary>
     /// AES with 128 bit.
     /// </summary>
-    Aes,
+    AES,
 
     /// <summary>
     /// AES with 192 bit.
     /// </summary>
-    Aes192,
+    AES192,
 
     /// <summary>
     /// AES with 256 bit.
     /// </summary>
-    Aes256
+    AES256
 }
