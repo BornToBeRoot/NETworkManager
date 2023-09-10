@@ -18,21 +18,43 @@
     </local:UserControlBase.Resources>
     <Grid SizeChanged="WindowGrid_SizeChanged">
         <!-- Background color will prevent flickering when app inside the panel is closed -->
-        <WindowsFormsHost Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Background="{DynamicResource MahApps.Brushes.Window.Background}" Margin="10">
+        <WindowsFormsHost Visibility="{Binding Path=IsConnected, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" 
+                          Background="{DynamicResource ResourceKey=MahApps.Brushes.Window.Background}"
+                          Margin="10">
             <windowsForms:Panel x:Name="WindowHost" />
         </WindowsFormsHost>
-        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center" Visibility="{Binding IsConnected, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center"
+              Visibility="{Binding Path=IsConnected, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="20" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Text="{x:Static localization:Strings.Disconnected}" Style="{StaticResource HeaderTextBlock}" Visibility="{Binding IsConnecting, Converter={StaticResource BooleanReverseToVisibilityHiddenConverter}}" />
-            <TextBlock Grid.Row="1" Foreground="{DynamicResource MahApps.Brushes.Accent}" Text="{x:Static localization:Strings.PowerShellProcessHasEnded}" Style="{DynamicResource DefaultTextBlock}" Visibility="{Binding IsConnecting, Converter={StaticResource BooleanReverseToVisibilityHiddenConverter}}" />
-            <mah:ProgressRing Grid.Row="0" Grid.RowSpan="2" Height="50" Width="50" IsActive="{Binding IsConnecting}" Visibility="{Binding IsConnecting, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"/>
-            <Button Grid.Row="3" Content="{x:Static localization:Strings.Reconnect}" Command="{Binding ReconnectCommand}" Visibility="{Binding IsConnecting, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" IsDefault="True" IsEnabled="{Binding IsConnecting, Converter={StaticResource BooleanReverseConverter}}" HorizontalAlignment="Center" Style="{StaticResource DefaultButton}"/>
-            <TextBlock Grid.Row="3" Text="{x:Static localization:Strings.ConnectingDots}" Style="{StaticResource MessageTextBlock}" Visibility="{Binding IsConnecting, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+            <TextBlock Grid.Column="0" Grid.Row="0" 
+                       Text="{x:Static Member=localization:Strings.Disconnected}" 
+                       Style="{StaticResource ResourceKey=HeaderTextBlock}" 
+                       Visibility="{Binding Path=IsConnecting, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityHiddenConverter}}" />
+            <TextBlock Grid.Column="0" Grid.Row="1" 
+                       Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Accent}" 
+                       Text="{x:Static Member=localization:Strings.PowerShellProcessHasEnded}" 
+                       Style="{DynamicResource ResourceKey=DefaultTextBlock}" 
+                       Visibility="{Binding Path=IsConnecting, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityHiddenConverter}}" />
+            <mah:ProgressRing Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" 
+                              Height="50" Width="50" 
+                              IsActive="{Binding Path=IsConnecting}" 
+                              Visibility="{Binding Path=IsConnecting, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"/>
+            <Button Grid.Column="0" Grid.Row="3" 
+                    Content="{x:Static Member=localization:Strings.Reconnect}" 
+                    Command="{Binding Path=ReconnectCommand}" 
+                    Visibility="{Binding Path=IsConnecting, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}" 
+                    IsDefault="True" 
+                    IsEnabled="{Binding Path=IsConnecting, Converter={StaticResource ResourceKey=BooleanReverseConverter}}" 
+                    HorizontalAlignment="Center" Style="{StaticResource ResourceKey=DefaultButton}"/>
+            <TextBlock Grid.Column="0" Grid.Row="3"
+                       Text="{x:Static Member=localization:Strings.ConnectingDots}" 
+                       Style="{StaticResource ResourceKey=MessageTextBlock}" 
+                       Visibility="{Binding Path=IsConnecting, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" />
         </Grid>
     </Grid>
 </local:UserControlBase>
