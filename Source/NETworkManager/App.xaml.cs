@@ -60,12 +60,11 @@ public partial class App
         Log.Info(startLog);
 
         // Catch unhandled exception globally
-        AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
+        AppDomain.CurrentDomain.UnhandledException += (_, args) =>
         {
             Log.Fatal("Unhandled exception occured!");
 
-            if (e.ExceptionObject != null)
-                Log.Fatal($"Exception raised by: {e.ExceptionObject}");
+            Log.Fatal($"Exception raised by: {args.ExceptionObject}");
         };
 
         // Wait until the previous instance has been closed (restart from ui)
@@ -108,7 +107,7 @@ public partial class App
         }
 
         // Upgrade settings if necessary
-        Version settingsVersion = Version.Parse(SettingsManager.Current.Version);
+        var settingsVersion = Version.Parse(SettingsManager.Current.Version);
 
         if (settingsVersion < AssemblyManager.Current.Version)
         {
