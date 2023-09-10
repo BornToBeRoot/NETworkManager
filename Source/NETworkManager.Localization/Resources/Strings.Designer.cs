@@ -1311,6 +1311,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to BSSID.
+        /// </summary>
+        public static string BSSID {
+            get {
+                return ResourceManager.GetString("BSSID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Buffer.
         /// </summary>
         public static string Buffer {

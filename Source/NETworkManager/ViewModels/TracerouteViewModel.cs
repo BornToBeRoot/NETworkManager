@@ -10,7 +10,6 @@ using System.Threading;
 using NETworkManager.Utilities;
 using System.Windows.Threading;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows.Data;
 using System.Linq;
 using Dragablz;
@@ -25,7 +24,7 @@ using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels;
 
-public class TracerouteViewModel : ViewModelBase
+public class TracerouteViewModel : ViewModelApplicationBase
 {
     #region Variables
 
@@ -35,8 +34,6 @@ public class TracerouteViewModel : ViewModelBase
 
     private readonly int _tabId;
     private bool _firstLoad = true;
-
-    private readonly bool _isLoading;
 
     private string _host;
 
@@ -153,7 +150,7 @@ public class TracerouteViewModel : ViewModelBase
     public string StatusMessage
     {
         get => _statusMessage;
-        set
+        private set
         {
             if (value == _statusMessage)
                 return;
@@ -169,8 +166,6 @@ public class TracerouteViewModel : ViewModelBase
 
     public TracerouteViewModel(IDialogCoordinator instance, int tabId, string host)
     {
-        _isLoading = true;
-
         _dialogCoordinator = instance;
 
         _tabId = tabId;
@@ -185,8 +180,6 @@ public class TracerouteViewModel : ViewModelBase
             ListSortDirection.Ascending));
 
         LoadSettings();
-
-        _isLoading = false;
     }
 
     public void OnLoaded()
@@ -195,13 +188,14 @@ public class TracerouteViewModel : ViewModelBase
             return;
 
         if (!string.IsNullOrEmpty(Host))
-            StartTrace();
+            StartTrace().ConfigureAwait(false);
 
         _firstLoad = false;
     }
 
     private void LoadSettings()
     {
+        
     }
 
     #endregion
@@ -218,7 +212,7 @@ public class TracerouteViewModel : ViewModelBase
         if (IsRunning)
             StopTrace();
         else
-            StartTrace();
+            StartTrace().ConfigureAwait(false);
     }
 
     public ICommand RedirectDataToApplicationCommand => new RelayCommand(RedirectDataToApplicationAction);
@@ -242,13 +236,6 @@ public class TracerouteViewModel : ViewModelBase
         EventSystem.RedirectToApplication(ApplicationName.DNSLookup, data.ToString());
     }
 
-    public ICommand CopyDataToClipboardCommand => new RelayCommand(CopyDataToClipboardAction);
-
-    private static void CopyDataToClipboardAction(object data)
-    {
-        ClipboardHelper.SetClipboard(data.ToString());
-    }
-
     public ICommand CopyTimeToClipboardCommand => new RelayCommand(CopyTimeToClipboardAction);
 
     private void CopyTimeToClipboardAction(object timeIdentifier)
@@ -268,7 +255,7 @@ public class TracerouteViewModel : ViewModelBase
 
     private void ExportAction()
     {
-        Export();
+        Export().ConfigureAwait(false);
     }
 
     #endregion

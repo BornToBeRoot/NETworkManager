@@ -36,6 +36,9 @@ New Feature
 
 ## Improvements
 
+- WiFi
+  - MAC address renamed to BSSID [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
+  - Values of a WiFi network can now be copied to clipboard via right click context menu [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
 - IP Scanner
   - Row can now be expanded / collapsed via button on the left side. Row is no longer expanded when selecting a row [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
   - Timestamp added to view and export (export format has changed for `csv`, `json` and `xml`) [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
@@ -44,6 +47,8 @@ New Feature
 
 - Network Interface
   - Add missing scrollviewer in configure tab [#2410](https://github.com/BornToBeRoot/NETworkManager/pull/2410){:target="\_blank"}
+- WiFi
+  - Fix an issue where the UI was broken if a WiFi adapter was found that has no assiciated network interface (e.g. if the WiFi adapter is associated with a network bridge). The WiFi adapter is now ignored [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
 - Traceroute
   - Copy time to clipboard for non reachable hops fixed [#2477](https://github.com/BornToBeRoot/NETworkManager/pull/2477){:target="\_blank"}
   - Export to Json fixed (if ip address of a hop cannot be resolved) [#2477](https://github.com/BornToBeRoot/NETworkManager/pull/2477){:target="\_blank"}

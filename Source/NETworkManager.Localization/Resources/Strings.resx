@@ -3655,4 +3655,7 @@ Try again in a few seconds.</value>
   <data name="GroupViewName_General" xml:space="preserve">
     <value>General</value>
   </data>
+  <data name="BSSID" xml:space="preserve">
+    <value>BSSID</value>
+  </data>
 </root>
