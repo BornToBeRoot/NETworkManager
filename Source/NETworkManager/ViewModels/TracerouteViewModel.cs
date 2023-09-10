@@ -82,48 +82,48 @@ public class TracerouteViewModel : ViewModelApplicationBase
         }
     }
 
-    private ObservableCollection<TracerouteHopInfo> _traceResults = new();
+    private ObservableCollection<TracerouteHopInfo> _results = new();
 
-    public ObservableCollection<TracerouteHopInfo> TraceResults
+    public ObservableCollection<TracerouteHopInfo> Results
     {
-        get => _traceResults;
+        get => _results;
         set
         {
-            if (Equals(value, _traceResults))
+            if (Equals(value, _results))
                 return;
 
-            _traceResults = value;
+            _results = value;
         }
     }
 
-    public ICollectionView TraceResultsView { get; }
+    public ICollectionView ResultsView { get; }
 
-    private TracerouteHopInfo _selectedTraceResult;
+    private TracerouteHopInfo _selectedResult;
 
-    public TracerouteHopInfo SelectedTraceResult
+    public TracerouteHopInfo SelectedResult
     {
-        get => _selectedTraceResult;
+        get => _selectedResult;
         set
         {
-            if (value == _selectedTraceResult)
+            if (value == _selectedResult)
                 return;
 
-            _selectedTraceResult = value;
+            _selectedResult = value;
             OnPropertyChanged();
         }
     }
 
-    private IList _selectedTraceResults = new ArrayList();
+    private IList _selectedResults = new ArrayList();
 
-    public IList SelectedTraceResults
+    public IList SelectedResults
     {
-        get => _selectedTraceResults;
+        get => _selectedResults;
         set
         {
-            if (Equals(value, _selectedTraceResults))
+            if (Equals(value, _selectedResults))
                 return;
 
-            _selectedTraceResults = value;
+            _selectedResults = value;
             OnPropertyChanged();
         }
     }
@@ -175,8 +175,8 @@ public class TracerouteViewModel : ViewModelApplicationBase
         HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Traceroute_HostHistory);
 
         // Result view
-        TraceResultsView = CollectionViewSource.GetDefaultView(TraceResults);
-        TraceResultsView.SortDescriptions.Add(new SortDescription(nameof(TracerouteHopInfo.Hop),
+        ResultsView = CollectionViewSource.GetDefaultView(Results);
+        ResultsView.SortDescriptions.Add(new SortDescription(nameof(TracerouteHopInfo.Hop),
             ListSortDirection.Ascending));
 
         LoadSettings();
@@ -222,9 +222,9 @@ public class TracerouteViewModel : ViewModelApplicationBase
         if (name is not ApplicationName applicationName)
             return;
 
-        var host = !string.IsNullOrEmpty(SelectedTraceResult.Hostname)
-            ? SelectedTraceResult.Hostname
-            : SelectedTraceResult.IPAddress.ToString();
+        var host = !string.IsNullOrEmpty(SelectedResult.Hostname)
+            ? SelectedResult.Hostname
+            : SelectedResult.IPAddress.ToString();
 
         EventSystem.RedirectToApplication(applicationName, host);
     }
@@ -242,9 +242,9 @@ public class TracerouteViewModel : ViewModelApplicationBase
     {
         var time = timeIdentifier switch
         {
-            "1" => Ping.TimeToString(SelectedTraceResult.Status1, SelectedTraceResult.Time1),
-            "2" => Ping.TimeToString(SelectedTraceResult.Status2, SelectedTraceResult.Time2),
-            "3" => Ping.TimeToString(SelectedTraceResult.Status3, SelectedTraceResult.Time3),
+            "1" => Ping.TimeToString(SelectedResult.Status1, SelectedResult.Time1),
+            "2" => Ping.TimeToString(SelectedResult.Status2, SelectedResult.Time2),
+            "3" => Ping.TimeToString(SelectedResult.Status3, SelectedResult.Time3),
             _ => "-/-"
         };
 
@@ -275,7 +275,7 @@ public class TracerouteViewModel : ViewModelApplicationBase
         IsStatusMessageDisplayed = false;
         IsRunning = true;
 
-        TraceResults.Clear();
+        Results.Clear();
 
         // Change the tab title (not nice, but it works)
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
@@ -354,8 +354,8 @@ public class TracerouteViewModel : ViewModelApplicationBase
                 {
                     ExportManager.Export(instance.FilePath, instance.FileType,
                         instance.ExportAll
-                            ? TraceResults
-                            : SelectedTraceResults.Cast<TracerouteHopInfo>().ToArray());
+                            ? Results
+                            : SelectedResults.Cast<TracerouteHopInfo>().ToArray());
                 }
                 catch (Exception ex)
                 {
@@ -419,7 +419,7 @@ public class TracerouteViewModel : ViewModelApplicationBase
                 DisplayStatusMessage($"ip-api: {Localization.Resources.Strings.RateLimitReachedMessage}");
             }
 
-            TraceResults.Add(e.Args);
+            Results.Add(e.Args);
         }));
     }
 

@@ -29,7 +29,7 @@ using System.Text;
 
 namespace NETworkManager.ViewModels;
 
-public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
+public class IPScannerViewModel : ViewModelApplicationBase, IProfileManagerMinimal
 {
     #region Variables
     private readonly IDialogCoordinator _dialogCoordinator;
@@ -38,8 +38,6 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private readonly int _tabId;
     private bool _firstLoad = true;
-
-    private readonly bool _isLoading;
 
     private string _hosts;
     public string Hosts
@@ -72,16 +70,16 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
 
-    private bool _isScanRunning;
-    public bool IsScanRunning
+    private bool _isRunning;
+    public bool IsRunning
     {
-        get => _isScanRunning;
+        get => _isRunning;
         set
         {
-            if (value == _isScanRunning)
+            if (value == _isRunning)
                 return;
 
-            _isScanRunning = value;
+            _isRunning = value;
             OnPropertyChanged();
         }
     }
@@ -106,7 +104,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         get => _results;
         set
         {
-            if (value != null && value == _results)
+            if (Equals(value, _results))
                 return;
 
             _results = value;
@@ -142,12 +140,6 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             OnPropertyChanged();
         }
     }
-
-    public bool ResolveHostname => SettingsManager.Current.IPScanner_ResolveHostname;
-
-    public bool PortScanEnabled => SettingsManager.Current.IPScanner_PortScanEnabled;
-
-    public bool ResolveMACAddress => SettingsManager.Current.IPScanner_ResolveMACAddress;
 
     private int _hostsToScan;
     public int HostsToScan
@@ -209,7 +201,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     public string StatusMessage
     {
         get => _statusMessage;
-        set
+        private set
         {
             if (value == _statusMessage)
                 return;
@@ -219,14 +211,12 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         }
     }
 
-    public IEnumerable<CustomCommandInfo> CustomCommands => SettingsManager.Current.IPScanner_CustomCommands;
+    public static IEnumerable<CustomCommandInfo> CustomCommands => SettingsManager.Current.IPScanner_CustomCommands;
     #endregion
 
     #region Constructor, load settings, shutdown
     public IPScannerViewModel(IDialogCoordinator instance, int tabId, string hostOrIPRange)
     {
-        _isLoading = true;
-
         _dialogCoordinator = instance;
 
         _tabId = tabId;
@@ -240,11 +230,6 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         ResultsView.SortDescriptions.Add(new SortDescription(nameof(IPScannerHostInfo.PingInfo) + "." + nameof(PingInfo.IPAddressInt32), ListSortDirection.Ascending));
 
         LoadSettings();
-
-        // Detect if settings have changed...
-        SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
-
-        _isLoading = false;
     }
 
     public void OnLoaded()
@@ -253,7 +238,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             return;
 
         if (!string.IsNullOrEmpty(Hosts))
-            StartScan();
+            StartScan().ConfigureAwait(false);
 
         _firstLoad = false;
     }
@@ -282,7 +267,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private void DetectSubnetAction()
     {
-        DetectIPRange();
+        DetectIPRange().ConfigureAwait(false);
     }
 
     public ICommand RedirectDataToApplicationCommand => new RelayCommand(RedirectDataToApplicationAction);
@@ -317,7 +302,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private void CustomCommandAction(object guid)
     {
-        CustomCommand(guid);
+        CustomCommand(guid).ConfigureAwait(false);
     }
 
     public ICommand AddProfileSelectedHostCommand => new RelayCommand(_ => AddProfileSelectedHostAction());
@@ -336,55 +321,6 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         await ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, profileInfo);
     }
 
-    public ICommand CopySelectedStatusCommand => new RelayCommand(_ => CopySelectedStatusAction());
-
-    private void CopySelectedStatusAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedResult.IsReachable.ToString());
-    }
-
-    public ICommand CopySelectedIPAddressCommand => new RelayCommand(_ => CopySelectedIPAddressAction());
-
-    private void CopySelectedIPAddressAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedResult.PingInfo.IPAddress.ToString());
-    }
-
-    public ICommand CopySelectedHostnameCommand => new RelayCommand(_ => CopySelectedHostnameAction());
-
-    private void CopySelectedHostnameAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedResult.Hostname);
-    }
-
-    public ICommand CopySelectedPortStatusCommand => new RelayCommand(_ => CopySelectedPortStatusAction());
-
-    private void CopySelectedPortStatusAction()
-    {
-        ClipboardHelper.SetClipboard(ResourceTranslator.Translate(ResourceIdentifier.PortState, SelectedResult.IsAnyPortOpen ? PortState.Open : PortState.Closed));
-    }
-    
-    public ICommand CopySelectedPingStatusCommand => new RelayCommand(_ => CopySelectedPingStatusAction());
-
-    private void CopySelectedPingStatusAction()
-    {
-        ClipboardHelper.SetClipboard(ResourceTranslator.Translate(ResourceIdentifier.PortState, SelectedResult.PingInfo.Status));
-    }
-
-    public ICommand CopySelectedMACAddressCommand => new RelayCommand(_ => CopySelectedMACAddressAction());
-
-    private void CopySelectedMACAddressAction()
-    {
-        ClipboardHelper.SetClipboard(MACAddressHelper.GetDefaultFormat(SelectedResult.MACAddress.ToString()));
-    }
-
-    public ICommand CopySelectedVendorCommand => new RelayCommand(_ => CopySelectedVendorAction());
-
-    private void CopySelectedVendorAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedResult.Vendor);
-    }
-
     public ICommand CopySelectedPortsCommand => new RelayCommand(_ => CopySelectedPortsAction());
 
     private void CopySelectedPortsAction()
@@ -399,48 +335,27 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         ClipboardHelper.SetClipboard(stringBuilder.ToString());
     }
 
-    public ICommand CopySelectedBytesCommand => new RelayCommand(_ => CopySelectedBytesAction());
-
-    private void CopySelectedBytesAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedResult.PingInfo.Bytes.ToString());
-    }
-
-    public ICommand CopySelectedTimeCommand => new RelayCommand(_ => CopySelectedTimeAction());
-
-    private void CopySelectedTimeAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedResult.PingInfo.Time.ToString());
-    }
-
-    public ICommand CopySelectedTTLCommand => new RelayCommand(_ => CopySelectedTTLAction());
-
-    private void CopySelectedTTLAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedResult.PingInfo.TTL.ToString());
-    }
-       
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
 
     private void ExportAction()
     {
-        Export();
+        Export().ConfigureAwait(false);
     }
     #endregion
 
     #region Methods
     private void Scan()
     {
-        if (IsScanRunning)
+        if (IsRunning)
             StopScan();
         else
-            StartScan();
+            StartScan().ConfigureAwait(false);
     }
 
     private async Task StartScan()
     {
         IsStatusMessageDisplayed = false;
-        IsScanRunning = true;
+        IsRunning = true;
         PreparingScan = true;
 
         Results.Clear();
@@ -545,7 +460,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
                 Hosts = $"{localIP}/{Subnetmask.ConvertSubnetmaskToCidr(networkInterface.IPv4Address.First().Item2)}";
 
-                // Fix: If the user clears the textbox and then clicks again on the button, the textbox remains empty...
+                // Fix: If the user clears the TextBox and then clicks again on the button, the TextBox remains empty...
                 OnPropertyChanged(nameof(Hosts));
 
                 break;
@@ -633,7 +548,13 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             SettingsManager.Current.IPScanner_ExportFileType = instance.FileType;
             SettingsManager.Current.IPScanner_ExportFilePath = instance.FilePath;
-        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new[] { ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json }, true, SettingsManager.Current.IPScanner_ExportFileType, SettingsManager.Current.IPScanner_ExportFilePath);
+        }, _ =>
+        {
+            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+        }, new[]
+        {
+            ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
+        }, true, SettingsManager.Current.IPScanner_ExportFileType, SettingsManager.Current.IPScanner_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {
@@ -646,7 +567,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     public void OnClose()
     {
         // Stop scan
-        if (IsScanRunning)
+        if (IsRunning)
             StopScan();
     }
 
@@ -664,7 +585,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private void ScanComplete(object sender, EventArgs e)
     {
         CancelScan = false;
-        IsScanRunning = false;
+        IsRunning = false;
     }
 
     private void ProgressChanged(object sender, ProgressChangedArgs e)
@@ -678,29 +599,13 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         IsStatusMessageDisplayed = true;
 
         CancelScan = false;
-        IsScanRunning = false;
+        IsRunning = false;
     }
 
     private void UserHasCanceled(object sender, EventArgs e)
     {
         StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
         IsStatusMessageDisplayed = true;
-    }
-
-    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-        switch (e.PropertyName)
-        {
-            case nameof(SettingsInfo.IPScanner_ResolveHostname):
-                OnPropertyChanged(nameof(ResolveHostname));
-                break;
-            case nameof(SettingsInfo.IPScanner_PortScanEnabled):
-                OnPropertyChanged(nameof(PortScanEnabled));
-                break;
-            case nameof(SettingsInfo.IPScanner_ResolveMACAddress):
-                OnPropertyChanged(nameof(ResolveMACAddress));
-                break;            
-        }
     }
     #endregion
 }

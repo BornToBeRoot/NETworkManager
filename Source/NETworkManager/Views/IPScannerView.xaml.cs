@@ -71,7 +71,7 @@ public partial class IPScannerView
         ((MenuItem)menu.Items[index]).Items.Clear();
 
         // Add items to custom commands
-        foreach (var info in _viewModel.CustomCommands)
+        foreach (var info in IPScannerViewModel.CustomCommands)
         {
             ((MenuItem)menu.Items[index]).Items.Add(new MenuItem
             {
