@@ -37,6 +37,7 @@ New Feature
 ## Improvements
 
 - IP Scanner
+  - Row can now be expanded / collapsed via button on the left side. Row is no longer expanded when selecting a row [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
   - Timestamp added to view and export (export format has changed for `csv`, `json` and `xml`) [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
 
 ## Bugfixes

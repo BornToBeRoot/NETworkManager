@@ -266,9 +266,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     #region ICommands & Actions
 
-    public ICommand ScanCommand => new RelayCommand(p => ScanAction(), Scan_CanExecute);
+    public ICommand ScanCommand => new RelayCommand(_ => ScanAction(), Scan_CanExecute);
 
-    private bool Scan_CanExecute(object paramter)
+    private bool Scan_CanExecute(object parameter)
     {
         return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
     }
@@ -278,7 +278,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         Scan();
     }
 
-    public ICommand DetectSubnetCommand => new RelayCommand(p => DetectSubnetAction());
+    public ICommand DetectSubnetCommand => new RelayCommand(_ => DetectSubnetAction());
 
     private void DetectSubnetAction()
     {
@@ -299,14 +299,14 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         EventSystem.RedirectToApplication(applicationName, host);
     }
 
-    public ICommand PerformDNSLookupIPAddressCommand => new RelayCommand(p => PerformDNSLookupIPAddressAction());
+    public ICommand PerformDNSLookupIPAddressCommand => new RelayCommand(_ => PerformDNSLookupIPAddressAction());
 
     private void PerformDNSLookupIPAddressAction()
     {
         EventSystem.RedirectToApplication(ApplicationName.DNSLookup, SelectedResult.PingInfo.IPAddress.ToString());
     }
 
-    public ICommand PerformDNSLookupHostnameCommand => new RelayCommand(p => PerformDNSLookupHostnameAction());
+    public ICommand PerformDNSLookupHostnameCommand => new RelayCommand(_ => PerformDNSLookupHostnameAction());
 
     private void PerformDNSLookupHostnameAction()
     {
@@ -320,7 +320,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         CustomCommand(guid);
     }
 
-    public ICommand AddProfileSelectedHostCommand => new RelayCommand(p => AddProfileSelectedHostAction());
+    public ICommand AddProfileSelectedHostCommand => new RelayCommand(_ => AddProfileSelectedHostAction());
 
     private async void AddProfileSelectedHostAction()
     {
@@ -336,56 +336,56 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         await ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, profileInfo);
     }
 
-    public ICommand CopySelectedStatusCommand => new RelayCommand(p => CopySelectedStatusAction());
+    public ICommand CopySelectedStatusCommand => new RelayCommand(_ => CopySelectedStatusAction());
 
     private void CopySelectedStatusAction()
     {
         ClipboardHelper.SetClipboard(SelectedResult.IsReachable.ToString());
     }
 
-    public ICommand CopySelectedIPAddressCommand => new RelayCommand(p => CopySelectedIPAddressAction());
+    public ICommand CopySelectedIPAddressCommand => new RelayCommand(_ => CopySelectedIPAddressAction());
 
     private void CopySelectedIPAddressAction()
     {
         ClipboardHelper.SetClipboard(SelectedResult.PingInfo.IPAddress.ToString());
     }
 
-    public ICommand CopySelectedHostnameCommand => new RelayCommand(p => CopySelectedHostnameAction());
+    public ICommand CopySelectedHostnameCommand => new RelayCommand(_ => CopySelectedHostnameAction());
 
     private void CopySelectedHostnameAction()
     {
         ClipboardHelper.SetClipboard(SelectedResult.Hostname);
     }
 
-    public ICommand CopySelectedPortStatusCommand => new RelayCommand(p => CopySelectedPortStatusAction());
+    public ICommand CopySelectedPortStatusCommand => new RelayCommand(_ => CopySelectedPortStatusAction());
 
     private void CopySelectedPortStatusAction()
     {
         ClipboardHelper.SetClipboard(ResourceTranslator.Translate(ResourceIdentifier.PortState, SelectedResult.IsAnyPortOpen ? PortState.Open : PortState.Closed));
     }
     
-    public ICommand CopySelectedPingStatusCommand => new RelayCommand(p => CopySelectedPingStatusAction());
+    public ICommand CopySelectedPingStatusCommand => new RelayCommand(_ => CopySelectedPingStatusAction());
 
     private void CopySelectedPingStatusAction()
     {
         ClipboardHelper.SetClipboard(ResourceTranslator.Translate(ResourceIdentifier.PortState, SelectedResult.PingInfo.Status));
     }
 
-    public ICommand CopySelectedMACAddressCommand => new RelayCommand(p => CopySelectedMACAddressAction());
+    public ICommand CopySelectedMACAddressCommand => new RelayCommand(_ => CopySelectedMACAddressAction());
 
     private void CopySelectedMACAddressAction()
     {
         ClipboardHelper.SetClipboard(MACAddressHelper.GetDefaultFormat(SelectedResult.MACAddress.ToString()));
     }
 
-    public ICommand CopySelectedVendorCommand => new RelayCommand(p => CopySelectedVendorAction());
+    public ICommand CopySelectedVendorCommand => new RelayCommand(_ => CopySelectedVendorAction());
 
     private void CopySelectedVendorAction()
     {
         ClipboardHelper.SetClipboard(SelectedResult.Vendor);
     }
 
-    public ICommand CopySelectedPortsCommand => new RelayCommand(p => CopySelectedPortsAction());
+    public ICommand CopySelectedPortsCommand => new RelayCommand(_ => CopySelectedPortsAction());
 
     private void CopySelectedPortsAction()
     {
@@ -399,28 +399,28 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         ClipboardHelper.SetClipboard(stringBuilder.ToString());
     }
 
-    public ICommand CopySelectedBytesCommand => new RelayCommand(p => CopySelectedBytesAction());
+    public ICommand CopySelectedBytesCommand => new RelayCommand(_ => CopySelectedBytesAction());
 
     private void CopySelectedBytesAction()
     {
         ClipboardHelper.SetClipboard(SelectedResult.PingInfo.Bytes.ToString());
     }
 
-    public ICommand CopySelectedTimeCommand => new RelayCommand(p => CopySelectedTimeAction());
+    public ICommand CopySelectedTimeCommand => new RelayCommand(_ => CopySelectedTimeAction());
 
     private void CopySelectedTimeAction()
     {
         ClipboardHelper.SetClipboard(SelectedResult.PingInfo.Time.ToString());
     }
 
-    public ICommand CopySelectedTTLCommand => new RelayCommand(p => CopySelectedTTLAction());
+    public ICommand CopySelectedTTLCommand => new RelayCommand(_ => CopySelectedTTLAction());
 
     private void CopySelectedTTLAction()
     {
         ClipboardHelper.SetClipboard(SelectedResult.PingInfo.TTL.ToString());
     }
        
-    public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+    public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
 
     private void ExportAction()
     {
@@ -539,19 +539,16 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             var subnetmaskDetected = false;
 
             // Get subnetmask, based on ip address
-            foreach (var networkInterface in await NetworkInterface.GetNetworkInterfacesAsync())
+            foreach (var networkInterface in (await NetworkInterface.GetNetworkInterfacesAsync()).Where(networkInterface => networkInterface.IPv4Address.Any(x => x.Item1.Equals(localIP))))
             {
-                if (networkInterface.IPv4Address.Any(x => x.Item1.Equals(localIP)))
-                {
-                    subnetmaskDetected = true;
+                subnetmaskDetected = true;
 
-                    Hosts = $"{localIP}/{Subnetmask.ConvertSubnetmaskToCidr(networkInterface.IPv4Address.First().Item2)}";
+                Hosts = $"{localIP}/{Subnetmask.ConvertSubnetmaskToCidr(networkInterface.IPv4Address.First().Item2)}";
 
-                    // Fix: If the user clears the textbox and then clicks again on the button, the textbox remains empty...
-                    OnPropertyChanged(nameof(Hosts));
+                // Fix: If the user clears the textbox and then clicks again on the button, the textbox remains empty...
+                OnPropertyChanged(nameof(Hosts));
 
-                    break;
-                }
+                break;
             }
 
             if (!subnetmaskDetected)
@@ -569,14 +566,14 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         if (guid is Guid id)
         {
-            CustomCommandInfo info = (CustomCommandInfo)CustomCommands.FirstOrDefault(x => x.ID == id).Clone();
+            var info = (CustomCommandInfo)CustomCommands.FirstOrDefault(x => x.ID == id)?.Clone();
 
             if (info == null)
                 return; // ToDo: Log and error message
 
             // Replace vars
-            string hostname = !string.IsNullOrEmpty(SelectedResult.Hostname) ? SelectedResult.Hostname.TrimEnd('.') : "";
-            string ipAddress = SelectedResult.PingInfo.IPAddress.ToString();
+            var hostname = !string.IsNullOrEmpty(SelectedResult.Hostname) ? SelectedResult.Hostname.TrimEnd('.') : "";
+            var ipAddress = SelectedResult.PingInfo.IPAddress.ToString();
 
             info.FilePath = Regex.Replace(info.FilePath, "\\$\\$hostname\\$\\$", hostname, RegexOptions.IgnoreCase);
             info.FilePath = Regex.Replace(info.FilePath, "\\$\\$ipaddress\\$\\$", ipAddress, RegexOptions.IgnoreCase);
@@ -636,7 +633,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             SettingsManager.Current.IPScanner_ExportFileType = instance.FileType;
             SettingsManager.Current.IPScanner_ExportFilePath = instance.FilePath;
-        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportFileType[] { ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json }, true, SettingsManager.Current.IPScanner_ExportFileType, SettingsManager.Current.IPScanner_ExportFilePath);
+        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new[] { ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json }, true, SettingsManager.Current.IPScanner_ExportFileType, SettingsManager.Current.IPScanner_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {
