@@ -23,6 +23,7 @@ New Feature
 
 ## Breaking Changes
 
+- Settings will be reset to default values due to refactoring [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
 - Profiles and settings migration (indroduced in `2023.3.7.0`) from `%AppData%\NETworkManager` to `%UserProfile%\Documents\NETworkManager` removed. If you use a version before `2023.3.7.0` you have to install and start version `2023.6.27.1` before you install this version. [#2380](https://github.com/BornToBeRoot/NETworkManager/pull/2380){:target="\_blank"}
 - Remove profile migration script to migrate from `2021.11.30.0` and before to a later version [#2388](https://github.com/BornToBeRoot/NETworkManager/pull/2388){:target="\_blank"}
 
@@ -58,6 +59,7 @@ New Feature
   - Copy & Export time fixed (format is now `yyyy-MM-dd HH:mm:ss.fff`) [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
 - Profiles
   - Prevent the application from crashing if a profile file cannot be loaded (profile management is then blocked) [#2464](https://github.com/BornToBeRoot/NETworkManager/pull/2464){:target="\_blank"}
+- Fix some focus issues when the enter key is pressed [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
 
 ## Other
 
