@@ -36,8 +36,6 @@ public class PortScannerViewModel : ViewModelBase
 
     private string _lastSortDescriptionAscending = string.Empty;
 
-    private bool _isLoading;
-
     private string _hosts;
     public string Hosts
     {
@@ -70,16 +68,16 @@ public class PortScannerViewModel : ViewModelBase
 
     public ICollectionView PortsHistoryView { get; }
 
-    private bool _isScanRunning;
-    public bool IsScanRunning
+    private bool _isRunning;
+    public bool IsRunning
     {
-        get => _isScanRunning;
+        get => _isRunning;
         set
         {
-            if (value == _isScanRunning)
+            if (value == _isRunning)
                 return;
 
-            _isScanRunning = value;
+            _isRunning = value;
 
             OnPropertyChanged();
         }
@@ -141,9 +139,7 @@ public class PortScannerViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-
-    public bool ResolveHostname => SettingsManager.Current.PortScanner_ResolveHostname;
-
+    
     private int _portsToScan;
     public int PortsToScan
     {
@@ -204,7 +200,7 @@ public class PortScannerViewModel : ViewModelBase
     public string StatusMessage
     {
         get => _statusMessage;
-        set
+        private set
         {
             if (value == _statusMessage)
                 return;
@@ -218,8 +214,6 @@ public class PortScannerViewModel : ViewModelBase
     #region Constructor, load settings, shutdown
     public PortScannerViewModel(IDialogCoordinator instance, int tabId, string host, string port)
     {
-        _isLoading = true;
-
         _dialogCoordinator = instance;
 
         _tabId = tabId;
@@ -236,11 +230,6 @@ public class PortScannerViewModel : ViewModelBase
         ResultsView.SortDescriptions.Add(new SortDescription(nameof(PortScannerPortInfo.IPAddressInt32), ListSortDirection.Descending));
 
         LoadSettings();
-
-        // Detect if settings have changed...
-        SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
-
-        _isLoading = false;
     }
 
     private void LoadSettings()
@@ -254,7 +243,7 @@ public class PortScannerViewModel : ViewModelBase
             return;
 
         if (!string.IsNullOrEmpty(Hosts) && !string.IsNullOrEmpty(Ports))
-            StartScan();
+            StartScan().ConfigureAwait(false);
 
         _firstLoad = false;
     }
@@ -262,19 +251,19 @@ public class PortScannerViewModel : ViewModelBase
     public void OnClose()
     {
         // Stop scan
-        if (IsScanRunning)
+        if (IsRunning)
             StopScan();
     }
     #endregion
 
     #region ICommands & Actions
-    public ICommand OpenPortProfileSelectionCommand => new RelayCommand(p => OpenPortProfileSelectionAction(), OpenPortProfileSelection_CanExecute);
+    public ICommand OpenPortProfileSelectionCommand => new RelayCommand(_ => OpenPortProfileSelectionAction(), OpenPortProfileSelection_CanExecute);
 
     private bool OpenPortProfileSelection_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
     private void OpenPortProfileSelectionAction()
     {
-        OpenPortProfileSelection();
+        OpenPortProfileSelection().ConfigureAwait(false);
     }
 
     public ICommand ScanCommand => new RelayCommand(_ => ScanAction(), Scan_CanExecute);
@@ -283,10 +272,10 @@ public class PortScannerViewModel : ViewModelBase
 
     private void ScanAction()
     {
-        if (IsScanRunning)
+        if (IsRunning)
             StopScan();
         else
-            StartScan();
+            StartScan().ConfigureAwait(false);
     }
 
     public ICommand CopySelectedIPAddressCommand => new RelayCommand(_ => CopySelectedIPAddressAction());
@@ -342,7 +331,7 @@ public class PortScannerViewModel : ViewModelBase
 
     private void ExportAction()
     {
-        Export();
+        Export().ConfigureAwait(false);
     }
     #endregion
 
@@ -359,7 +348,7 @@ public class PortScannerViewModel : ViewModelBase
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
             Ports = string.Join("; ", instance.GetSelectedPortProfiles().Select(x => x.Ports));
-        }, async instance =>
+        }, async _ =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
         });
@@ -374,12 +363,10 @@ public class PortScannerViewModel : ViewModelBase
 
     private async Task StartScan()
     {
-        _isLoading = true;
-
         IsStatusMessageDisplayed = false;
         StatusMessage = string.Empty;
 
-        IsScanRunning = true;
+        IsRunning = true;
         PreparingScan = true;
 
         Results.Clear();
@@ -465,7 +452,7 @@ public class PortScannerViewModel : ViewModelBase
     private void ScanFinished()
     {
         CancelScan = false;
-        IsScanRunning = false;
+        IsRunning = false;
     }
 
     private async Task Export()
@@ -493,7 +480,7 @@ public class PortScannerViewModel : ViewModelBase
 
             SettingsManager.Current.PortScanner_ExportFileType = instance.FileType;
             SettingsManager.Current.PortScanner_ExportFilePath = instance.FilePath;
-        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportFileType[] { ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json }, true, SettingsManager.Current.PortScanner_ExportFileType, SettingsManager.Current.PortScanner_ExportFilePath);
+        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new[] { ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json }, true, SettingsManager.Current.PortScanner_ExportFileType, SettingsManager.Current.PortScanner_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {
@@ -581,15 +568,6 @@ public class PortScannerViewModel : ViewModelBase
             Results.Add(e.Args);
         }));
     }
-
-    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-        switch (e.PropertyName)
-        {
-            case nameof(SettingsInfo.PortScanner_ResolveHostname):
-                OnPropertyChanged(nameof(ResolveHostname));
-                break;
-        }
-    }
+  
     #endregion
 }

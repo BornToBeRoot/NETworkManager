@@ -208,8 +208,6 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
 
         LoadSettings();
 
-        SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
-
         _isLoading = false;
     }
     
@@ -490,11 +488,6 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
     private void TabItems_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
         ConfigurationManager.Current.WebConsoleHasTabs = TabItems.Count > 0;
-    }
-
-    private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-        
     }
     #endregion
 }

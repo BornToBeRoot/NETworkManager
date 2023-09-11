@@ -116,9 +116,6 @@ public class WhoisViewModel : ViewModelBase
 
         LoadSettings();
 
-        // Detect if settings have changed...
-        SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
-
         _isLoading = false;
     }
 
@@ -250,10 +247,4 @@ public class WhoisViewModel : ViewModelBase
     }
     #endregion
 
-    #region Events    
-    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-       
-    }
-    #endregion
 }

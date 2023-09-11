@@ -442,9 +442,6 @@ public class SNMPViewModel : ViewModelBase
         if (Version == SNMPVersion.V3 && Security == SNMPV3Security.AuthPriv)
             Priv = sessionInfo?.Priv;
 
-        // Detect if settings have changed...
-        SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
-
         _isLoading = false;
     }
     #endregion
@@ -744,11 +741,6 @@ public class SNMPViewModel : ViewModelBase
     {
         CancelScan = false;
         IsRunning = false;
-    }
-
-    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-
     }
     #endregion
 }

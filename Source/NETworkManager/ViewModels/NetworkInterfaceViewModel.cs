@@ -540,9 +540,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         NetworkChange.NetworkAddressChanged += (sender, args) => ReloadNetworkInterfaces();
 
         LoadSettings();
-
-        SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
-
+        
         _isLoading = false;
     }
 
@@ -1261,11 +1259,6 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     {
         StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
         IsStatusMessageDisplayed = true;
-    }
-
-    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-        
     }
     #endregion
 }

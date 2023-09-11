@@ -71,8 +71,6 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
         InterTabController.Partition = applicationName.ToString();
 
         Title = $"NETworkManager {AssemblyManager.Current.Version} - {ResourceTranslator.Translate(ResourceIdentifier.ApplicationName, applicationName)}";
-
-        SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
     }
     #endregion
 
@@ -374,11 +372,7 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
     #endregion
 
     #region Events
-    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-
-    }
-
+    
     private void MetroWindow_Activated(object sender, EventArgs e)
     {
         FocusEmbeddedWindow();

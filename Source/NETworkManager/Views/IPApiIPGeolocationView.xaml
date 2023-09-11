@@ -5,10 +5,10 @@
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:loadingIndicators="clr-namespace:LoadingIndicators.WPF;assembly=LoadingIndicators.WPF"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" MinHeight="200"
              d:DataContext="{d:DesignInstance viewModels:IPApiIPGeolocationViewModel}" Loaded="UserControl_Loaded">
@@ -16,7 +16,6 @@
         <KeyBinding Key="F5" Command="{Binding CheckViaHotkeyCommand}" />
     </UserControl.InputBindings>
     <UserControl.Resources>
-        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
@@ -27,7 +26,7 @@
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
         <converters:StringNullOrEmptyToStringConverter x:Key="StringNullOrEmptyToStringConverter" />
     </UserControl.Resources>
-    <Border Grid.Column="0" BorderThickness="1" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
+    <Border BorderThickness="1" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
         <Grid Margin="10">
             <Grid.Resources>
                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
@@ -50,7 +49,7 @@
                     </Rectangle>
                     <TextBlock Text="{x:Static localization:Strings.IPGeolocation}" Style="{StaticResource MessageTextBlock}" Margin="10,0,0,0" />
                 </StackPanel>                
-                <Grid Grid.Column="0" Grid.Row="2" Margin="10" Visibility="{Binding CheckIPGeoApiEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                <Grid Grid.Column="0" Grid.Row="2" Margin="10" Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Dashboard_CheckIPApiIPGeolocation, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                     <!-- Result -->
                     <Grid Grid.Column="0" Grid.Row="0">
                         <Grid.Style>
@@ -226,7 +225,7 @@
                         <TextBlock Text="{x:Static localization:Strings.CheckingIPGeolocationDots}" Style="{StaticResource MessageTextBlock}" />
                     </StackPanel>
                 </Grid>
-                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.CheckIsDisabled}" Visibility="{Binding CheckIPGeoApiEnabled, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource MessageTextBlock}" />
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.CheckIsDisabled}" Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Dashboard_CheckIPApiIPGeolocation, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource MessageTextBlock}" />
             </Grid>
         </Grid>
     </Border>

@@ -246,7 +246,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
         LoadSettings();
 
-        SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
+        SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
 
         _isLoading = false;
     }
@@ -614,7 +614,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         ConfigurationManager.Current.PowerShellHasTabs = TabItems.Count > 0;
     }
 
-    private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(SettingsInfo.PowerShell_ApplicationFilePath))
             CheckSettings();

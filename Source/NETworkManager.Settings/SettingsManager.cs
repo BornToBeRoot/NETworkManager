@@ -36,7 +36,7 @@ public static class SettingsManager
     /// <summary>
     /// Settings that are currently loaded.
     /// </summary>
-    public static SettingsInfo Current { get; set; }
+    public static SettingsInfo Current { get; private set; }
 
     /// <summary>
     /// Indicates if the HotKeys have changed. May need to be reworked if we add more HotKeys.
@@ -154,7 +154,6 @@ public static class SettingsManager
     }
     #endregion
     
-
     #region Upgrade
     /// <summary>
     /// Method to upgrade the settings.
