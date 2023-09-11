@@ -59,7 +59,6 @@ public partial class WebConsoleControl : UserControlBase
         }
     }
 
-    public bool ShowAddressBar => SettingsManager.Current.WebConsole_ShowAddressBar;
     #endregion
 
     #region Constructor, load
@@ -73,8 +72,6 @@ public partial class WebConsoleControl : UserControlBase
         Browser2.NavigationStarting += Browser2_NavigationStarting;
         Browser2.NavigationCompleted += Browser2_NavigationCompleted;        
         Browser2.SourceChanged += Browser2_SourceChanged;
-
-        SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
 
         Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
     }
@@ -177,16 +174,6 @@ public partial class WebConsoleControl : UserControlBase
             FirstLoad = false;
 
         IsLoading = false;
-    }
-
-    private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-        switch (e.PropertyName)
-        {
-            case nameof(SettingsInfo.WebConsole_ShowAddressBar):
-                OnPropertyChanged(nameof(ShowAddressBar));
-                break;
-        }
     }
 
     private void Dispatcher_ShutdownStarted(object sender, EventArgs e)

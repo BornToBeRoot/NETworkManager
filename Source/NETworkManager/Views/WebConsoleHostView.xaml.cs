@@ -8,7 +8,7 @@ namespace NETworkManager.Views;
 
 public partial class WebConsoleHostView
 {
-    private readonly WebConsoleHostViewModel _viewModel = new WebConsoleHostViewModel(DialogCoordinator.Instance);
+    private readonly WebConsoleHostViewModel _viewModel = new(DialogCoordinator.Instance);
 
     public WebConsoleHostView()
     {
