@@ -28,7 +28,7 @@
             </dragablz:TabablzControl.InterTabController>
             <dragablz:TabablzControl.HeaderSuffixContent>
                 <Grid HorizontalAlignment="Right" Width="32" Height="32">
-                    <Button Style="{StaticResource CleanButton}" Command="{Binding AddTabCommand}" ToolTip="{x:Static localization:Strings.NewTab}" Focusable="False">
+                    <Button Style="{StaticResource CleanButton}" Command="{Binding AddTabCommand}" ToolTip="{x:Static localization:Strings.NewTab}">
                         <Rectangle Width="16" Height="16">
                             <Rectangle.OpacityMask>
                                 <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=Plus}" />

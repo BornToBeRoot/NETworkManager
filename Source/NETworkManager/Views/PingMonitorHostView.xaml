@@ -345,7 +345,7 @@
                                 </Style.Triggers>
                             </Style>
                         </Grid.Style>
-                        <Button HorizontalAlignment="Center" Focusable="False" Margin="0,0,0,10">
+                        <Button HorizontalAlignment="Center" Margin="0,0,0,10">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
                                     <Setter Property="Command" Value="{Binding AddProfileCommand}" />

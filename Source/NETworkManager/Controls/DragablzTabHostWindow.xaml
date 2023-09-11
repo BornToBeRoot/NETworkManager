@@ -17,7 +17,7 @@
         <mah:WindowButtonCommands Template="{DynamicResource MahApps.Templates.WindowButtonCommands.Win10}" />
     </mah:MetroWindow.WindowButtonCommands>
     <Grid>
-        <dragablz:TabablzControl Focusable="False" Name="TabsContainer" ClosingItemCallback="{Binding CloseItemCommand}">
+        <dragablz:TabablzControl Name="TabsContainer" ClosingItemCallback="{Binding CloseItemCommand}">
             <dragablz:TabablzControl.Resources>
                 <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
             </dragablz:TabablzControl.Resources>

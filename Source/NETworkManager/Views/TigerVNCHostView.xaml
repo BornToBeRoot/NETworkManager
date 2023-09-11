@@ -49,7 +49,7 @@
                 </dragablz:TabablzControl.InterTabController>
                 <dragablz:TabablzControl.HeaderSuffixContent>
                     <Grid HorizontalAlignment="Right" Width="32" Height="32">
-                        <Button Style="{StaticResource CleanButton}" Command="{Binding ConnectCommand}" ToolTip="{x:Static localization:Strings.NewConnectionDots}" Focusable="False">
+                        <Button Style="{StaticResource CleanButton}" Command="{Binding ConnectCommand}" ToolTip="{x:Static localization:Strings.NewConnectionDots}">
                             <Rectangle Width="16" Height="16">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=Plus}" />
@@ -382,7 +382,7 @@
                                     </Style.Triggers>
                                 </Style>
                             </Grid.Style>
-                            <Button HorizontalAlignment="Center" Focusable="False" Margin="0,0,0,10">
+                            <Button HorizontalAlignment="Center" Margin="0,0,0,10">
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
                                         <Setter Property="Command" Value="{Binding AddProfileCommand}" />

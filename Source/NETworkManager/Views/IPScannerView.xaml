@@ -536,7 +536,6 @@
                                             <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
                                                 <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
                                                 <Setter Property="Background" Value="Transparent" />
-                                                <Setter Property="Focusable" Value="False" />
                                             </Style>
                                         </ListView.ItemContainerStyle>
                                         <ListView.Template>
@@ -597,7 +596,6 @@
                                                BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
                                             <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
                                             <Setter Property="Background" Value="Transparent" />
-                                            <Setter Property="Focusable" Value="False" />
                                         </Style>
                                     </ListView.ItemContainerStyle>
                                     <ListView.Template>

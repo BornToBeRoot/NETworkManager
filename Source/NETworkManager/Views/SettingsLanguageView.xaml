@@ -103,7 +103,7 @@
                 </Style>
             </Grid.Style>
             <StackPanel>
-                <Button HorizontalAlignment="Center" Focusable="False" ToolTip="{x:Static localization:Strings.ClearFilter}" Command="{Binding ClearSearchCommand}" Margin="0,0,0,10" Style="{StaticResource CleanButton}">
+                <Button HorizontalAlignment="Center" ToolTip="{x:Static localization:Strings.ClearFilter}" Command="{Binding ClearSearchCommand}" Margin="0,0,0,10" Style="{StaticResource CleanButton}">
                     <Rectangle Width="24" Height="24">
                         <Rectangle.Resources>
                             <VisualBrush x:Key="VisualClear" Stretch="Uniform" Visual="{iconPacks:Material Kind=FilterRemoveOutline}" />
