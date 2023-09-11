@@ -52,21 +52,21 @@ public class LookupPortLookupViewModel : ViewModelBase
 
     public ICollectionView PortsOrServicesHistoryView { get; }
 
-    private bool _isLookupRunning;
-    public bool IsLookupRunning
+    private bool _isRunning;
+    public bool IsRunning
     {
-        get => _isLookupRunning;
+        get => _isRunning;
         set
         {
-            if (value == _isLookupRunning)
+            if (value == _isRunning)
                 return;
 
-            _isLookupRunning = value;
+            _isRunning = value;
             OnPropertyChanged();
         }
     }
 
-    private ObservableCollection<PortLookupInfo> _portLookupResults = new ObservableCollection<PortLookupInfo>();
+    private ObservableCollection<PortLookupInfo> _portLookupResults = new();
     public ObservableCollection<PortLookupInfo> PortLookupResults
     {
         get => _portLookupResults;
@@ -136,13 +136,13 @@ public class LookupPortLookupViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
-    public ICommand PortLookupCommand => new RelayCommand(p => PortLookupAction(), PortLookup_CanExecute);
+    public ICommand PortLookupCommand => new RelayCommand(_ => PortLookupAction(), PortLookup_CanExecute);
 
     private bool PortLookup_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen && !PortOrServiceHasError;
 
     private async Task PortLookupAction()
     {
-        IsLookupRunning = true;
+        IsRunning = true;
 
         PortLookupResults.Clear();
 
@@ -220,38 +220,38 @@ public class LookupPortLookupViewModel : ViewModelBase
             NoPortsFound = false;
         }
 
-        IsLookupRunning = false;
+        IsRunning = false;
     }
 
-    public ICommand CopySelectedPortCommand => new RelayCommand(p => CopySelectedPortAction());
+    public ICommand CopySelectedPortCommand => new RelayCommand(_ => CopySelectedPortAction());
 
     private void CopySelectedPortAction()
     {
         ClipboardHelper.SetClipboard(SelectedPortLookupResult.Number.ToString());
     }
 
-    public ICommand CopySelectedProtocolCommand => new RelayCommand(p => CopySelectedProtocolAction());
+    public ICommand CopySelectedProtocolCommand => new RelayCommand(_ => CopySelectedProtocolAction());
 
     private void CopySelectedProtocolAction()
     {
         ClipboardHelper.SetClipboard(SelectedPortLookupResult.Protocol.ToString());
     }
 
-    public ICommand CopySelectedServiceCommand => new RelayCommand(p => CopySelectedServiceAction());
+    public ICommand CopySelectedServiceCommand => new RelayCommand(_ => CopySelectedServiceAction());
 
     private void CopySelectedServiceAction()
     {
         ClipboardHelper.SetClipboard(SelectedPortLookupResult.Service);
     }
 
-    public ICommand CopySelectedDescriptionCommand => new RelayCommand(p => CopySelectedDescriptionAction());
+    public ICommand CopySelectedDescriptionCommand => new RelayCommand(_ => CopySelectedDescriptionAction());
 
     private void CopySelectedDescriptionAction()
     {
         ClipboardHelper.SetClipboard(SelectedPortLookupResult.Description);
     }
 
-    public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+    public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
 
     private async Task ExportAction()
     {
@@ -278,7 +278,13 @@ public class LookupPortLookupViewModel : ViewModelBase
 
             SettingsManager.Current.Lookup_Port_ExportFileType = instance.FileType;
             SettingsManager.Current.Lookup_Port_ExportFilePath = instance.FilePath;
-        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportFileType[] { ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json }, true, SettingsManager.Current.Lookup_Port_ExportFileType, SettingsManager.Current.Lookup_Port_ExportFilePath);
+        }, _ =>
+        {
+            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+        }, new[]
+        {
+            ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
+        }, true, SettingsManager.Current.Lookup_Port_ExportFileType, SettingsManager.Current.Lookup_Port_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {

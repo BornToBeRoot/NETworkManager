@@ -51,8 +51,16 @@
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Host}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox x:Name="ComboBoxHost" Grid.Column="2" Grid.Row="0" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameAndOrIPAddress}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <TextBlock Grid.Column="0" Grid.Row="0" 
+                           Text="{x:Static localization:Strings.Host}"
+                           Style="{DynamicResource DefaultTextBlock}" 
+                           VerticalAlignment="Center" />
+                <ComboBox Grid.Column="2" Grid.Row="0"
+                          x:Name="ComboBoxHost"  
+                          ItemsSource="{Binding HostHistoryView}" 
+                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameAndOrIPAddress}"
+                          IsReadOnly="{Binding IsRunning}"
+                          Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -71,7 +79,7 @@
                 </ComboBox>
                 <TextBlock Grid.Column="8" Grid.Row="0" Text="{x:Static localization:Strings.Type}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
                 <ComboBox x:Name="ComboBoxTypes" Grid.Column="10" Grid.Row="0" ItemsSource="{Binding QueryTypes}" SelectedItem="{Binding QueryType}" Width="80" HorizontalAlignment="Left" />
-                <Button Grid.Column="12" Grid.Row="0" Command="{Binding LookupCommand}" IsDefault="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" HorizontalAlignment="Right">
+                <Button Grid.Column="12" Grid.Row="0" Command="{Binding LookupCommand}" IsDefault="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" HorizontalAlignment="Right">
                     <Button.Resources>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Setter Property="IsEnabled" Value="True" />
@@ -82,7 +90,7 @@
                                 <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxTypes}" Value="True" >
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding IsLookupRunning}" Value="True">
+                                <DataTrigger Binding="{Binding IsRunning}" Value="True">
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
                             </Style.Triggers>
@@ -113,7 +121,7 @@
                 <mahAppsControls:MetroProgressBar.Style>
                     <Style TargetType="{x:Type  mahAppsControls:MetroProgressBar}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsLookupRunning}" Value="False">
+                            <DataTrigger Binding="{Binding IsRunning}" Value="False">
                                 <Setter Property="Visibility" Value="Collapsed" />
                             </DataTrigger>
                         </Style.Triggers>
@@ -127,7 +135,7 @@
         The sort function is in the code behind -> when you click on the header of the column, the SortMemberPath is passed to the viewmodel
         CanUserSortColumns="False" -> Default sort won't work with grouped
         -->
-        <controls:MultiSelectDataGrid Grid.Row="3" CanUserSortColumns="False" ItemsSource="{Binding LookupResultsView}" SelectedItem="{Binding SelectedLookupResult}" SelectedItemsList="{Binding SelectedLookupResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+        <controls:MultiSelectDataGrid Grid.Row="3" CanUserSortColumns="False" ItemsSource="{Binding ResultsView}" SelectedItem="{Binding SelectedLookupResult}" SelectedItemsList="{Binding SelectedLookupResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <controls:MultiSelectDataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
@@ -230,7 +238,7 @@
                                         <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}" d:DataContext="{d:DesignInstance network:DNSLookupRecordInfo}">
                                             <Expander.Header>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="{Binding Name}" Margin="0" />
+                                                    <TextBlock Text="{Binding  Path=(CollectionViewGroup.Name)}" Margin="0" />
                                                 </StackPanel>
                                             </Expander.Header>
                                             <ItemsPresenter />

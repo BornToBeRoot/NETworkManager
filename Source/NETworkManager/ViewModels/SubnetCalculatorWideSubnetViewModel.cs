@@ -15,8 +15,6 @@ namespace NETworkManager.ViewModels;
 public class SubnetCalculatorWideSubnetViewModel : ViewModelBase
 {
     #region Variables
-    private readonly IDialogCoordinator _dialogCoordinator;
-
     private string _subnet1;
     public string Subnet1
     {
@@ -49,16 +47,16 @@ public class SubnetCalculatorWideSubnetViewModel : ViewModelBase
 
     public ICollectionView Subnet2HistoryView { get; }
 
-    private bool _isCalculationRunning;
-    public bool IsCalculationRunning
+    private bool _isRunning;
+    public bool IsRunning
     {
-        get => _isCalculationRunning;
+        get => _isRunning;
         set
         {
-            if (value == _isCalculationRunning)
+            if (value == _isRunning)
                 return;
 
-            _isCalculationRunning = value;
+            _isRunning = value;
             OnPropertyChanged();
         }
     }
@@ -82,7 +80,7 @@ public class SubnetCalculatorWideSubnetViewModel : ViewModelBase
     public IPNetworkInfo Result
     {
         get => _result;
-        set
+        private set
         {
             if (value == _result)
                 return;
@@ -94,10 +92,8 @@ public class SubnetCalculatorWideSubnetViewModel : ViewModelBase
     #endregion
 
     #region Constructor, load settings
-    public SubnetCalculatorWideSubnetViewModel(IDialogCoordinator instance)
+    public SubnetCalculatorWideSubnetViewModel()
     {
-        _dialogCoordinator = instance;
-
         // Set collection view
         Subnet1HistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet1);
         Subnet2HistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet2);
@@ -105,9 +101,9 @@ public class SubnetCalculatorWideSubnetViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
-    public ICommand CalculateCommand => new RelayCommand(p => CalculateAction(), Calculate_CanExecute);
+    public ICommand CalculateCommand => new RelayCommand(_ => CalculateAction(), Calculate_CanExecute);
 
-    private bool Calculate_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool Calculate_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
     private void CalculateAction()
     {
@@ -118,7 +114,7 @@ public class SubnetCalculatorWideSubnetViewModel : ViewModelBase
     #region Methods
     private void Calculate()
     {
-        IsCalculationRunning = true;
+        IsRunning = true;
 
         var subnet1 = Subnet1.Trim();
         var subnet2 = Subnet2.Trim();
@@ -133,7 +129,7 @@ public class SubnetCalculatorWideSubnetViewModel : ViewModelBase
         AddSubnet1ToHistory(subnet1);
         AddSubnet2ToHistory(subnet2);
 
-        IsCalculationRunning = false;
+        IsRunning = false;
     }
 
     private void AddSubnet1ToHistory(string subnet)

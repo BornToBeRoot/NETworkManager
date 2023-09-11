@@ -50,8 +50,16 @@
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="{x:Static Member=localization:Strings.Host}" Style="{DynamicResource ResourceKey=DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox Grid.Column="2" x:Name="TextBoxHost" ItemsSource="{Binding Path=HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static Member=localization:StaticStrings.ExampleHostnameOrIPAddress}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <TextBlock Grid.Column="0" Grid.Row="0" 
+                           Text="{x:Static Member=localization:Strings.Host}"
+                           Style="{DynamicResource ResourceKey=DefaultTextBlock}" 
+                           VerticalAlignment="Center" />
+                <ComboBox Grid.Column="2" Grid.Row="0"
+                          x:Name="TextBoxHost"
+                          ItemsSource="{Binding Path=HostHistoryView}"
+                          mah:TextBoxHelper.Watermark="{x:Static Member=localization:StaticStrings.ExampleHostnameOrIPAddress}"
+                          IsReadOnly="{Binding IsRunning}"
+                          Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>

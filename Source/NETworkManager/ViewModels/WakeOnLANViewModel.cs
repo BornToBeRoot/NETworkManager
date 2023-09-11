@@ -25,19 +25,19 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
     private readonly IDialogCoordinator _dialogCoordinator;
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
-    private readonly bool _isLoading = true;
+    private readonly bool _isLoading;
     private bool _isViewActive = true;
 
-    private bool _isSending;
-    public bool IsSending
+    private bool _isRunning;
+    public bool IsRunning
     {
-        get => _isSending;
+        get => _isRunning;
         set
         {
-            if (value == _isSending)
+            if (value == _isRunning)
                 return;
 
-            _isSending = value;
+            _isRunning = value;
             OnPropertyChanged();
         }
     }
@@ -91,7 +91,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
     public string StatusMessage
     {
         get => _statusMessage;
-        set
+        private set
         {
             if (value == _statusMessage)
                 return;
@@ -102,11 +102,12 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
     }
 
     #region Profiles
-    public ICollectionView _profiles;
+
+    private ICollectionView _profiles;
     public ICollectionView Profiles
     {
         get => _profiles;
-        set
+        private set
         {
             if (value == _profiles)
                 return;
@@ -125,7 +126,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
             if (value == _selectedProfile)
                 return;
 
-            if (value != null && !IsSending)
+            if (value != null && !IsRunning)
             {
                 MACAddress = value.WakeOnLAN_MACAddress;
                 Broadcast = value.WakeOnLAN_Broadcast;
@@ -219,6 +220,8 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
     #region Constructor, load settings
     public WakeOnLANViewModel(IDialogCoordinator instance)
     {
+        _isLoading = true;
+        
         _dialogCoordinator = instance;
 
         MACAddressHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.WakeOnLan_MACAddressHistory);
@@ -248,7 +251,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #region ICommands & Actions
-    public ICommand WakeUpCommand => new RelayCommand(p => WakeUpAction(), WakeUpAction_CanExecute);
+    public ICommand WakeUpCommand => new RelayCommand(_ => WakeUpAction(), WakeUpAction_CanExecute);
 
     private bool WakeUpAction_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
@@ -264,54 +267,54 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
         AddMACAddressToHistory(MACAddress);
         AddBroadcastToHistory(Broadcast);
 
-        WakeUp(info);
+        WakeUp(info).ConfigureAwait(false);
     }
 
-    public ICommand WakeUpProfileCommand => new RelayCommand(p => WakeUpProfileAction());
+    public ICommand WakeUpProfileCommand => new RelayCommand(_ => WakeUpProfileAction());
 
     private void WakeUpProfileAction()
     {
-        WakeUp(NETworkManager.Profiles.Application.WakeOnLAN.CreateInfo(SelectedProfile));
+        WakeUp(NETworkManager.Profiles.Application.WakeOnLAN.CreateInfo(SelectedProfile)).ConfigureAwait(false);
     }
 
-    public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
+    public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.WakeOnLAN);
+        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.WakeOnLAN).ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamic;
+    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
 
-    public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction(), ModifyProfile_CanExecute);
+    public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
     private void EditProfileAction()
     {
-        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
     }
 
-    public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction(), ModifyProfile_CanExecute);
+    public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
     }
 
-    public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction(), ModifyProfile_CanExecute);
+    public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
 
     private void DeleteProfileAction()
     {
-        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile });
+        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile }).ConfigureAwait(false);
     }
 
     public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()));
+        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString())).ConfigureAwait(false);
     }
 
-    public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
+    public ICommand ClearSearchCommand => new RelayCommand(_ => ClearSearchAction());
 
     private void ClearSearchAction()
     {
@@ -323,7 +326,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
     private async Task WakeUp(WakeOnLANInfo info)
     {
         IsStatusMessageDisplayed = false;
-        IsSending = true;
+        IsRunning = true;
 
         try
         {
@@ -341,9 +344,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
             IsStatusMessageDisplayed = true;
         }
 
-
-
-        IsSending = false;
+        IsRunning = false;
     }
 
     private void AddMACAddressToHistory(string macAddress)
@@ -444,7 +445,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
     }
 
-    public void RefreshProfiles()
+    private void RefreshProfiles()
     {
         if (!_isViewActive)
             return;

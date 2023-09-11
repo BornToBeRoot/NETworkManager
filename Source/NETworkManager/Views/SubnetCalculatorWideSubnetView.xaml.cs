@@ -1,11 +1,10 @@
-﻿using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.ViewModels;
+﻿using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
 public partial class SubnetCalculatorWideSubnetView
 {
-    private readonly SubnetCalculatorWideSubnetViewModel _viewModel = new(DialogCoordinator.Instance);
+    private readonly SubnetCalculatorWideSubnetViewModel _viewModel = new();
 
     public SubnetCalculatorWideSubnetView()
     {

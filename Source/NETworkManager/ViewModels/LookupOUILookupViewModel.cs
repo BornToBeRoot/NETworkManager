@@ -54,21 +54,21 @@ public class LookupOUILookupViewModel : ViewModelBase
 
     public ICollectionView MACAddressOrVendorHistoryView { get; }
 
-    private bool _isLookupRunning;
-    public bool IsLookupRunning
+    private bool _isRunning;
+    public bool IsRunning
     {
-        get => _isLookupRunning;
+        get => _isRunning;
         set
         {
-            if (value == _isLookupRunning)
+            if (value == _isRunning)
                 return;
 
-            _isLookupRunning = value;
+            _isRunning = value;
             OnPropertyChanged();
         }
     }
 
-    private ObservableCollection<OUIInfo> _ouiLookupResults = new ObservableCollection<OUIInfo>();
+    private ObservableCollection<OUIInfo> _ouiLookupResults = new();
     public ObservableCollection<OUIInfo> OUILookupResults
     {
         get => _ouiLookupResults;
@@ -138,13 +138,13 @@ public class LookupOUILookupViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
-    public ICommand OUILookupCommand => new RelayCommand(p => OUILookupAction(), OUILookup_CanExecute);
+    public ICommand OUILookupCommand => new RelayCommand(_ => OUILookupAction(), OUILookup_CanExecute);
 
     private bool OUILookup_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen && !MACAddressOrVendorHasError;
 
     private async void OUILookupAction()
     {
-        IsLookupRunning = true;
+        IsRunning = true;
 
         OUILookupResults.Clear();
 
@@ -182,24 +182,24 @@ public class LookupOUILookupViewModel : ViewModelBase
             NoVendorFound = false;
         }
 
-        IsLookupRunning = false;
+        IsRunning = false;
     }
 
-    public ICommand CopySelectedMACAddressCommand => new RelayCommand(p => CopySelectedMACAddressAction());
+    public ICommand CopySelectedMACAddressCommand => new RelayCommand(_ => CopySelectedMACAddressAction());
 
     private void CopySelectedMACAddressAction()
     {
         ClipboardHelper.SetClipboard(SelectedOUILookupResult.MACAddress);
     }
 
-    public ICommand CopySelectedVendorCommand => new RelayCommand(p => CopySelectedVendorAction());
+    public ICommand CopySelectedVendorCommand => new RelayCommand(_ => CopySelectedVendorAction());
 
     private void CopySelectedVendorAction()
     {
         ClipboardHelper.SetClipboard(SelectedOUILookupResult.Vendor);
     }
 
-    public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+    public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
 
     private async Task ExportAction()
     {
@@ -226,7 +226,13 @@ public class LookupOUILookupViewModel : ViewModelBase
 
             SettingsManager.Current.Lookup_OUI_ExportFileType = instance.FileType;
             SettingsManager.Current.Lookup_OUI_ExportFilePath = instance.FilePath;
-        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportFileType[] { ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json }, true, SettingsManager.Current.Lookup_OUI_ExportFileType, SettingsManager.Current.Lookup_OUI_ExportFilePath);
+        }, _ =>
+        {
+            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+        }, new[]
+        {
+            ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
+        }, true, SettingsManager.Current.Lookup_OUI_ExportFileType, SettingsManager.Current.Lookup_OUI_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {

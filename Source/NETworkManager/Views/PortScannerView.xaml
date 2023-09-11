@@ -51,8 +51,16 @@
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.Host}" Style="{StaticResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox Grid.Column="2" x:Name="ComboBoxHosts" ItemsSource="{Binding HostsHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostRange}" IsReadOnly="{Binding Path=IsRunning}" Style="{StaticResource HistoryComboBox}">
+                <TextBlock Grid.Column="0" Grid.Row="0"
+                           Text="{x:Static localization:Strings.Host}" 
+                           Style="{StaticResource DefaultTextBlock}" 
+                           VerticalAlignment="Center" />
+                <ComboBox Grid.Column="2" Grid.Row="0"
+                          x:Name="ComboBoxHosts" 
+                          ItemsSource="{Binding HostsHistoryView}"
+                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostRange}"
+                          IsReadOnly="{Binding Path=IsRunning}"
+                          Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Hosts" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -62,8 +70,16 @@
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
-                <TextBlock Grid.Column="4" Text="{x:Static localization:Strings.Ports}" Style="{StaticResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox Grid.Column="6" x:Name="ComboBoxPorts" ItemsSource="{Binding PortsHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortScanRange}" IsReadOnly="{Binding Path=IsRunning}" Style="{StaticResource HistoryComboBox}">
+                <TextBlock Grid.Column="4" Grid.Row="0"
+                           Text="{x:Static localization:Strings.Ports}" 
+                           Style="{StaticResource DefaultTextBlock}" 
+                           VerticalAlignment="Center" />
+                <ComboBox Grid.Column="6" Grid.Row="0"
+                          x:Name="ComboBoxPorts" 
+                          ItemsSource="{Binding PortsHistoryView}" 
+                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortScanRange}"
+                          IsReadOnly="{Binding Path=IsRunning}" 
+                          Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Ports" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>

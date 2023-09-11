@@ -16,7 +16,6 @@
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SubnetCalculatorSubnettingViewModel}">
     <UserControl.Resources>
         <converters:BigIntegerToStringConverter x:Key="BigIntegerToStringConverter" />
-        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:IPAddressToStringConverter x:Key="IPAddressToStringConverter" />
@@ -39,17 +38,24 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="10" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.Subnet}" />
-                <ComboBox Grid.Column="2" Grid.Row="0" x:Name="ComboBoxSubnet" Height="{Binding ElementName=ComboBoxNewSubnetmask, Path=ActualHeight}" ItemsSource="{Binding SubnetHistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4IPv6Subnet}" Style="{StaticResource HistoryComboBox}">
+                <TextBlock Grid.Column="0" Grid.Row="0" 
+                           Style="{StaticResource CenterTextBlock}" 
+                           Text="{x:Static localization:Strings.Subnet}" />
+                <ComboBox Grid.Column="2" Grid.Row="0" 
+                          x:Name="ComboBoxSubnet" 
+                          Height="{Binding ElementName=ComboBoxNewSubnetmask, Path=ActualHeight}" 
+                          ItemsSource="{Binding SubnetHistoryView}" 
+                          IsReadOnly="{Binding IsRunning}" 
+                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4IPv6Subnet}" 
+                          Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Subnet" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                             <Binding.ValidationRules>
@@ -59,8 +65,15 @@
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
-                <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.NewSubnetMask}" />
-                <ComboBox x:Name="ComboBoxNewSubnetmask" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding NewSubnetmaskHistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4SubnetmaskIPv6CIDR}" Style="{StaticResource HistoryComboBox}">
+                <TextBlock Grid.Column="4" Grid.Row="0" 
+                           Style="{StaticResource CenterTextBlock}"
+                           Text="{x:Static localization:Strings.NewSubnetMask}" />
+                <ComboBox  Grid.Column="6" Grid.Row="0" 
+                           x:Name="ComboBoxNewSubnetmask"
+                           ItemsSource="{Binding NewSubnetmaskHistoryView}"
+                           IsReadOnly="{Binding IsRunning}" 
+                           mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4SubnetmaskIPv6CIDR}" 
+                           Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="NewSubnetmask" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                             <Binding.ValidationRules>
@@ -70,7 +83,10 @@
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
-                <Button Grid.Column="4" Grid.Row="2" Command="{Binding CalculateCommand}" IsDefault="True" HorizontalAlignment="Right">
+                <Button Grid.Column="8" Grid.Row="0" 
+                        Command="{Binding CalculateCommand}" 
+                        IsDefault="True" 
+                        HorizontalAlignment="Right">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Style.Triggers>
@@ -85,7 +101,7 @@
                                     </DataTrigger.Binding>
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding IsCalculationRunning}" Value="True">
+                                <DataTrigger Binding="{Binding IsRunning}" Value="True">
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
                             </Style.Triggers>
@@ -111,7 +127,7 @@
                 <mah:MetroProgressBar.Style>
                     <Style TargetType="{x:Type mah:MetroProgressBar}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsCalculationRunning}" Value="False">
+                            <DataTrigger Binding="{Binding IsRunning}" Value="False">
                                 <Setter Property="Visibility" Value="Collapsed" />
                             </DataTrigger>
                         </Style.Triggers>
@@ -168,7 +184,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.CIDR}" Command="{Binding CopySelectedCIDRCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.CIDR}" Command="{Binding CopySelectedCidrCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
