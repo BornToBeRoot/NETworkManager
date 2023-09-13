@@ -410,12 +410,7 @@ public class DNSLookupViewModel : ViewModelBase
             dnsSettings.CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix?.TrimStart('.');
         }
 
-        DNSLookup dnsLookup;
-
-        if (DNSServer.UseWindowsDNSServer)
-            dnsLookup = new(dnsSettings);
-        else
-            dnsLookup = new(dnsSettings, DNSServer.Servers);
+        var dnsLookup = DNSServer.UseWindowsDNSServer ? new DNSLookup(dnsSettings) : new DNSLookup(dnsSettings, DNSServer.Servers);
 
         dnsLookup.RecordReceived += DNSLookup_RecordReceived;
         dnsLookup.LookupError += DNSLookup_LookupError;
