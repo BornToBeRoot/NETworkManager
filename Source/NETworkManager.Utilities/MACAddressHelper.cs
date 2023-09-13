@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
-using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
 
 namespace NETworkManager.Utilities;
@@ -10,8 +10,8 @@ public static class MACAddressHelper
     /// <summary>
     /// Convert a MAC-Address to a byte array
     /// </summary>
-    /// <param name="macAddress"></param>
-    /// <returns></returns>
+    /// <param name="macAddress">MAC-Address to convert</param>
+    /// <returns>Byte array of the MAC-Address</returns>
     public static byte[] ConvertStringToByteArray(string macAddress)
     {
         // Regex to replace "-" and ":" in MAC-Address
@@ -28,25 +28,40 @@ public static class MACAddressHelper
         return bytes;
     }
 
+
+    /// <summary>
+    /// Format a MAC-Address to the default format (00:00:00:00:00:00).
+    /// </summary>
+    /// <param name="macAddress">MAC-Address to format</param>
+    /// <returns>MAC-Address in default format</returns>
     public static string GetDefaultFormat(string macAddress)
     {
-        macAddress = macAddress.ToUpper();
-
-        if (macAddress.Contains("-"))
-            return macAddress.Replace("-", ":");
-
-        return !macAddress.Contains(":") ? string.Join(":", Enumerable.Range(0, 6).Select(i => macAddress.Substring(i * 2, 2))) : macAddress;
+        Debug.WriteLine(Format(macAddress, ":"));
+        return Format(macAddress, ":");
     }
 
-    public static string GetDefaultFormat(PhysicalAddress macAddress)
+    /// <summary>
+    /// Format a MAC-Address to a specific format (e.g. 00:00:00:00:00:00, 00-00-00-00-00-00, 0000.0000.0000 or 000000000000)
+    /// </summary>
+    /// <param name="macAddress">MAC-Address to format</param>
+    /// <param name="separator">Separator to use (e.g. -, :, . or empty)</param>
+    /// <param name="toUpper">Convert the MAC-Address to upper case</param>
+    /// <returns></returns>
+    public static string Format(string macAddress, string separator = "", bool toUpper = true)
     {
-        return GetDefaultFormat(macAddress.ToString());
-    }
+        macAddress = macAddress.Replace("-", "")
+            .Replace(":", "")
+            .Replace(".", "");
 
-    public static string Format(string macAddress, string separator = "")
-    {
-        macAddress = macAddress.ToUpper().Replace("-", "").Replace(":", "");
+        if(toUpper)
+            macAddress = macAddress.ToUpper();
 
-        return string.Join(separator, Enumerable.Range(0, 6).Select(i => macAddress.Substring(i * 2, 2)));
+        return separator switch
+        {
+            "-" => string.Join(separator, Enumerable.Range(0, 6).Select(i => macAddress.Substring(i * 2, 2))),
+            ":" => string.Join(separator, Enumerable.Range(0, 6).Select(i => macAddress.Substring(i * 2, 2))),
+            "." => string.Join(separator, Enumerable.Range(0, 3).Select(i => macAddress.Substring(i * 4, 4))),
+            _ => macAddress
+        };
     }
 }

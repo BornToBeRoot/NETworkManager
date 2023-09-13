@@ -156,7 +156,7 @@ public class ARP
         }
     }
 
-    private void RunPSCommand(string command)
+    private void RunPowerShellCommand(string command)
     {
         try
         {
@@ -185,7 +185,7 @@ public class ARP
     {
         var command = $"arp -s {ipAddress} {macAddress}";
 
-        RunPSCommand(command);
+        RunPowerShellCommand(command);
     }
 
     public Task DeleteEntryAsync(string ipAddress)
@@ -197,7 +197,7 @@ public class ARP
     {
         var command = $"arp -d {ipAddress}";
 
-        RunPSCommand(command);
+        RunPowerShellCommand(command);
     }
 
     public Task DeleteTableAsync()
@@ -209,7 +209,7 @@ public class ARP
     {
         const string command = "netsh interface ip delete arpcache";
 
-        RunPSCommand(command);
+        RunPowerShellCommand(command);
     }
     #endregion
 }

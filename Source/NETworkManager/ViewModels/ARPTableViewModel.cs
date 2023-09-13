@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels;
 
-public class ARPTableViewModel : ViewModelBase
+public class ARPTableViewModel : ViewModelApplicationBase
 {
     #region Variables
     private readonly IDialogCoordinator _dialogCoordinator;
@@ -174,7 +174,7 @@ public class ARPTableViewModel : ViewModelBase
     public string StatusMessage
     {
         get => _statusMessage;
-        set
+        private set
         {
             if (value == _statusMessage)
                 return;
@@ -203,11 +203,13 @@ public class ARPTableViewModel : ViewModelBase
                 return true;
 
             // Search by IPAddress and MACAddress
-            return info.IPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.MACAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || (info.IsMulticast ? Localization.Resources.Strings.Yes : Localization.Resources.Strings.No).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
+            return info.IPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || 
+                   info.MACAddress.ToString().IndexOf(Search.Replace("-","").Replace(":",""), StringComparison.OrdinalIgnoreCase) > -1 || 
+                   (info.IsMulticast ? Localization.Resources.Strings.Yes : Localization.Resources.Strings.No).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
         // Get ARP table
-        Refresh();
+        Refresh().ConfigureAwait(false);
 
         // Auto refresh
         _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
@@ -221,9 +223,9 @@ public class ARPTableViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
-    public ICommand RefreshCommand => new RelayCommand(p => RefreshAction(), Refresh_CanExecute);
+    public ICommand RefreshCommand => new RelayCommand(_ => RefreshAction().ConfigureAwait(false), Refresh_CanExecute);
 
-    private bool Refresh_CanExecute(object paramter)
+    private bool Refresh_CanExecute(object parameter)
     {
         return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
     }
@@ -235,9 +237,9 @@ public class ARPTableViewModel : ViewModelBase
         await Refresh();
     }
 
-    public ICommand DeleteTableCommand => new RelayCommand(p => DeleteTableAction(), DeleteTable_CanExecute);
+    public ICommand DeleteTableCommand => new RelayCommand(_ => DeleteTableAction().ConfigureAwait(false), DeleteTable_CanExecute);
 
-    private bool DeleteTable_CanExecute(object paramter)
+    private bool DeleteTable_CanExecute(object parameter)
     {
         return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
     }
@@ -263,9 +265,9 @@ public class ARPTableViewModel : ViewModelBase
         }
     }
 
-    public ICommand DeleteEntryCommand => new RelayCommand(p => DeleteEntryAction(), DeleteEntry_CanExecute);
+    public ICommand DeleteEntryCommand => new RelayCommand(_ => DeleteEntryAction().ConfigureAwait(false), DeleteEntry_CanExecute);
 
-    private bool DeleteEntry_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool DeleteEntry_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
     private async Task DeleteEntryAction()
     {
@@ -288,9 +290,9 @@ public class ARPTableViewModel : ViewModelBase
         }
     }
 
-    public ICommand AddEntryCommand => new RelayCommand(p => AddEntryAction(), AddEntry_CanExecute);
+    public ICommand AddEntryCommand => new RelayCommand(_ => AddEntryAction().ConfigureAwait(false), AddEntry_CanExecute);
 
-    private bool AddEntry_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool AddEntry_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
     private async Task AddEntryAction()
     {
@@ -320,7 +322,7 @@ public class ARPTableViewModel : ViewModelBase
                 StatusMessage = ex.Message;
                 IsStatusMessageDisplayed = true;
             }
-        }, instance =>
+        }, _ =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
         });
@@ -333,28 +335,7 @@ public class ARPTableViewModel : ViewModelBase
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
-    public ICommand CopySelectedIPAddressCommand => new RelayCommand(p => CopySelectedIPAddressAction());
-
-    private void CopySelectedIPAddressAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedARPInfo.IPAddress.ToString());
-    }
-
-    public ICommand CopySelectedMACAddressCommand => new RelayCommand(p => CopySelectedMACAddressAction());
-
-    private void CopySelectedMACAddressAction()
-    {
-        ClipboardHelper.SetClipboard(MACAddressHelper.GetDefaultFormat(SelectedARPInfo.MACAddress.ToString()));
-    }
-
-    public ICommand CopySelectedMulticastCommand => new RelayCommand(p => CopySelectedMulticastAction());
-
-    private void CopySelectedMulticastAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedARPInfo.IsMulticast ? Localization.Resources.Strings.Yes : Localization.Resources.Strings.No);
-    }
-
-    public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+    public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
 
     private async Task ExportAction()
     {
@@ -381,7 +362,13 @@ public class ARPTableViewModel : ViewModelBase
 
             SettingsManager.Current.ARPTable_ExportFileType = instance.FileType;
             SettingsManager.Current.ARPTable_ExportFilePath = instance.FilePath;
-        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportFileType[] { ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json }, true, SettingsManager.Current.ARPTable_ExportFileType, SettingsManager.Current.ARPTable_ExportFilePath);
+        }, _ =>
+        {
+            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+        }, new[]
+        {
+            ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
+        }, true, SettingsManager.Current.ARPTable_ExportFileType, SettingsManager.Current.ARPTable_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {

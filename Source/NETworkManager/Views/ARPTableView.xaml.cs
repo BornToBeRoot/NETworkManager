@@ -6,7 +6,7 @@ namespace NETworkManager.Views;
 
 public partial class ARPTableView
 {
-    private readonly ARPTableViewModel _viewModel = new ARPTableViewModel(DialogCoordinator.Instance);
+    private readonly ARPTableViewModel _viewModel = new(DialogCoordinator.Instance);
 
     public ARPTableView()
     {

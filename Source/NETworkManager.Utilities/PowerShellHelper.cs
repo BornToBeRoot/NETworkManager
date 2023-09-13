@@ -12,12 +12,12 @@ public static class PowerShellHelper
     /// <param name="windowStyle">Window style of the PowerShell console (Default: Hidden)</param>
     public static void ExecuteCommand(string command, bool asAdmin = false, ProcessWindowStyle windowStyle = ProcessWindowStyle.Hidden)
     {
-        var info = new ProcessStartInfo()
+        var info = new ProcessStartInfo
         {
             FileName = "powershell.exe",
             Arguments = $"-NoProfile -NoLogo -Command {command}",
             UseShellExecute = true,
-            WindowStyle = ProcessWindowStyle.Normal //windowStyle
+            WindowStyle = windowStyle
         };
 
         if (asAdmin)

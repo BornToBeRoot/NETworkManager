@@ -49,33 +49,18 @@
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </MenuItem.Icon>
-                                <MenuItem Header="{x:Static localization:Strings.IPAddress}" Command="{Binding CopySelectedIPAddressCommand}">
-                                    <MenuItem.Icon>
-                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="{x:Static localization:Strings.MACAddress}" Command="{Binding CopySelectedMACAddressCommand}">
-                                    <MenuItem.Icon>
-                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="{x:Static localization:Strings.Multicast}" Command="{Binding CopySelectedMulticastCommand}">
-                                    <MenuItem.Icon>
-                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                    </MenuItem.Icon>
-                                </MenuItem>
+                                <MenuItem Header="{x:Static Member=localization:Strings.IPAddress}"
+                                          Command="{Binding Path=CopyDataToClipboardCommand}"
+                                          CommandParameter="{Binding Path=SelectedARPInfo.IPAddress}"
+                                          Style="{StaticResource ResourceKey=CopyMenuItem}"/>
+                                <MenuItem Header="{x:Static Member=localization:Strings.MACAddress}" 
+                                          Command="{Binding Path=CopyDataToClipboardCommand}"
+                                          CommandParameter="{Binding Path=SelectedARPInfo.MACAddress, Converter={StaticResource PhysicalAddressToStringConverter}}"
+                                          Style="{StaticResource ResourceKey=CopyMenuItem}"/>
+                                <MenuItem Header="{x:Static Member=localization:Strings.Multicast}"
+                                          Command="{Binding Path=CopyDataToClipboardCommand}"
+                                          CommandParameter="{Binding SelectedARPInfo.IsMulticast, Converter={StaticResource ResourceKey=BooleanToStringConverter}}"
+                                          Style="{StaticResource ResourceKey=CopyMenuItem}"/>
                             </MenuItem>
                             <MenuItem Header="{x:Static localization:Strings.DeleteEntry}" Command="{Binding DeleteEntryCommand}">
                                 <MenuItem.Icon>

@@ -11,11 +11,11 @@ public sealed class PhysicalAddressToStringConverter : IValueConverter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value is not PhysicalAddress physicalAddress)
-            return string.Empty;
-
+            return "-/-";
+        
         var macAddress = physicalAddress.ToString();
 
-        return string.IsNullOrEmpty(macAddress) ? string.Empty : MACAddressHelper.GetDefaultFormat(macAddress);
+       return string.IsNullOrEmpty(macAddress) ? "-/-" : MACAddressHelper.GetDefaultFormat(macAddress);
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
