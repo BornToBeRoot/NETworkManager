@@ -264,9 +264,12 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     #region ICommands & Actions
     public ICommand AddHostCommand => new RelayCommand(_ => AddHostAction());
 
-    private void AddHostAction()
+    private async void AddHostAction()
     {
-        AddHost(Host).ConfigureAwait(false);
+        await AddHost(Host).ConfigureAwait(true);
+
+        AddHostToHistory(Host);
+        Host = string.Empty;
     }
 
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
@@ -386,12 +389,8 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
                 }));
             });
   
-            Host = string.Empty;
             IsRunning = false;
         }).ConfigureAwait(true);
-        
-        // Add the hostname or ip address to the history
-        AddHostToHistory(Host);
     }
 
     private void RemoveHost(Guid hostId)
