@@ -465,7 +465,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 22; 80; https; ldaps; 777 - 999; 8080.
+        ///   Looks up a localized string similar to 22/tcp; 80; 161-162/udp; 1-1024; https; ldaps; Domain Name Server.
         /// </summary>
         public static string ExamplePortPortRangeOrService {
             get {

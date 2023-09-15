@@ -47,7 +47,7 @@
                            Style="{DynamicResource DefaultTextBlock}"
                            VerticalAlignment="Center" />
                 <ComboBox Grid.Column="2" Grid.Row="0"
-                          x:Name="TextBoxMACAddressOrVendor" ItemsSource="{Binding SearchHistoryView}"
+                          x:Name="TextBoxSearch" ItemsSource="{Binding SearchHistoryView}"
                           mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleMACAddressesOrVendor}"
                           IsReadOnly="{Binding IsRunning}"
                           Style="{StaticResource HistoryComboBox}">
@@ -68,7 +68,7 @@
                             <Setter Property="IsEnabled" Value="True" />
                             <Style.Triggers>
                                 <DataTrigger
-                                    Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxMACAddressOrVendor}"
+                                    Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxSearch}"
                                     Value="True">
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>

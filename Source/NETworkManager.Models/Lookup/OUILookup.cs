@@ -62,21 +62,21 @@ public static class OUILookup
     #region Methods
 
     /// <summary>
-    /// Looks up the OUI information for the given MAC address async.
+    /// Get the <see cref="OUIInfo"/> for the given MAC address async.
     /// </summary>
-    /// <param name="macAddress">MAC address to look up.</param>
-    /// <returns>List of OUI information.</returns>
-    public static Task<List<OUIInfo>> LookupAsync(string macAddress)
+    /// <param name="macAddress">MAC address to get the OUI information's for.</param>
+    /// <returns>List of <see cref="OUIInfo"/>. Empty if nothing was found.</returns>
+    public static Task<List<OUIInfo>> LookupByMacAddressAsync(string macAddress)
     {
-        return Task.Run(() => Lookup(macAddress));
+        return Task.Run(() => LookupByMacAddress(macAddress));
     }
 
     /// <summary>
-    /// Looks up the OUI information for the given MAC address.
+    /// Get the <see cref="OUIInfo"/> for the given MAC address.
     /// </summary>
-    /// <param name="macAddress">MAC address to look up.</param>
-    /// <returns>List of OUI information.</returns>
-    public static List<OUIInfo> Lookup(string macAddress)
+    /// <param name="macAddress">MAC address to get the OUI information's for.</param>
+    /// <returns>List of <see cref="OUIInfo"/>. Empty if nothing was found.</returns>
+    public static List<OUIInfo> LookupByMacAddress(string macAddress)
     {
         var ouiKey = Regex.Replace(macAddress, "[-|:|.]", "")[..6].ToUpper();
 
@@ -84,22 +84,22 @@ public static class OUILookup
     }
 
     /// <summary>
-    /// Looks up the OUI information's by the given vendor async.
+    /// Search <see cref="OUIInfo"/> by the given vendor async.
     /// </summary>
     /// <param name="vendor">Vendor to look up.</param>
-    /// <returns>OUI information's or null if not found.</returns>
-    public static Task<List<OUIInfo>> LookupByVendorAsync(string vendor)
+    /// <returns><see cref="OUIInfo"/> or null if not found.</returns>
+    public static Task<List<OUIInfo>> SearchByVendorAsync(string vendor)
     {
-        return Task.Run(() => LookupByVendor(vendor));
+        return Task.Run(() => SearchByVendor(vendor));
     }
 
     /// <summary>
-    /// Looks up the OUI information's by the given vendor.
+    /// Search <see cref="OUIInfo"/> by the given vendor.
     /// </summary>
     /// <param name="vendor">Vendor to look up.</param>
-    /// <returns>OUI information's or null if not found.</returns>
+    /// <returns><see cref="OUIInfo"/> or null if not found.</returns>
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-    public static List<OUIInfo> LookupByVendor(string vendor)
+    public static List<OUIInfo> SearchByVendor(string vendor)
     {
         return (from info in OUIInfoList
                 where info.Vendor.IndexOf(vendor, StringComparison.OrdinalIgnoreCase) > -1
@@ -108,22 +108,22 @@ public static class OUILookup
     }
     
     /// <summary>
-    /// Looks up the OUI information's by the given vendors async.
+    /// Search <see cref="OUIInfo"/> by the given vendors async.
     /// </summary>
     /// <param name="vendors">Vendors to look up.</param>
-    /// <returns>List of OUI information.</returns>
-    public static Task<List<OUIInfo>> LookupByVendorsAsync(IReadOnlyCollection<string> vendors)
+    /// <returns>List of <see cref="OUIInfo"/>. Empty if nothing was found.</returns>
+    public static Task<List<OUIInfo>> SearchByVendorsAsync(IReadOnlyCollection<string> vendors)
     {
-        return Task.Run(() => LookupByVendors(vendors));
+        return Task.Run(() => SearchByVendors(vendors));
     }
 
     /// <summary>
-    /// Looks up the OUI information's by the given vendors.
+    /// Search <see cref="OUIInfo"/> by the given vendors.
     /// </summary>
     /// <param name="vendors">Vendors to look up.</param>
-    /// <returns>List of OUI information.</returns>
+    /// <returns>List of <see cref="OUIInfo"/>. Empty if nothing was found.</returns>
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-    public static List<OUIInfo> LookupByVendors(IReadOnlyCollection<string> vendors)
+    public static List<OUIInfo> SearchByVendors(IReadOnlyCollection<string> vendors)
     {
         return (from info in OUIInfoList
                 from vendor in vendors

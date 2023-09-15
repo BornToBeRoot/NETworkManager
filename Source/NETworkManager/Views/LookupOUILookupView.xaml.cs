@@ -6,7 +6,7 @@ namespace NETworkManager.Views;
 
 public partial class LookupOUILookupView
 {
-    private readonly LookupOUILookupViewModel _viewModel = new LookupOUILookupViewModel(DialogCoordinator.Instance);
+    private readonly LookupOUILookupViewModel _viewModel = new(DialogCoordinator.Instance);
 
     public LookupOUILookupView()
     {

@@ -118,7 +118,7 @@ public sealed class PortScanner
 
                                 if (_options.ShowAllResults || portState == PortState.Open)
                                     OnPortScanned(new PortScannerPortScannedArgs(
-                                        new PortScannerPortInfo(ipAddress, hostname, port, PortLookup.GetByPortAndProtocol(port), portState)));
+                                        new PortScannerPortInfo(ipAddress, hostname, port, PortLookup.LookupByPortAndProtocol(port), portState)));
                             }
                         }
 

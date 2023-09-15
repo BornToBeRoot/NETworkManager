@@ -143,7 +143,7 @@ public class LookupOUILookupViewModel : ViewModelBase
 
         // Set collection view
         SearchHistoryView =
-            CollectionViewSource.GetDefaultView(SettingsManager.Current.Lookup_OUI_MACAddressOrVendorHistory);
+            CollectionViewSource.GetDefaultView(SettingsManager.Current.Lookup_OUI_SearchHistory);
         ResultsView = CollectionViewSource.GetDefaultView(Results);
     }
 
@@ -163,8 +163,8 @@ public class LookupOUILookupViewModel : ViewModelBase
 
         Results.Clear();
 
-        var macAddresses = new List<string>();
-        var vendors = new List<string>();
+        var macAddresses = new HashSet<string>();
+        var vendors = new HashSet<string>();
 
         // Parse the input
         foreach (var search in Search.Split(';'))
@@ -178,25 +178,32 @@ public class LookupOUILookupViewModel : ViewModelBase
                 vendors.Add(searchTrim);
         }
 
+        // Temporary collection to avoid duplicate entries
+        var results = new HashSet<OUIInfo>();
+        
         // Get OUI information's by MAC-Address
         // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator (Doesn't work with async/await)
         foreach (var macAddress in macAddresses)
         {
-            foreach (var info in await OUILookup.LookupAsync(macAddress))
-                Results.Add(info);
+            foreach (var info in await OUILookup.LookupByMacAddressAsync(macAddress))
+                results.Add(info);
         }
 
         // Get OUI information's by Vendor
-        foreach (var info in await OUILookup.LookupByVendorsAsync(vendors))
+        foreach (var info in await OUILookup.SearchByVendorsAsync(vendors))
         {
-            Results.Add(info);
+            results.Add(info);
         }
 
+        // Add the results to the collection
+        foreach (var result in results)
+            Results.Add(result);
+        
         // Show a message if no vendor was found
         NothingFound = Results.Count == 0;
 
         // Add the MAC-Address or Vendor to the history
-        AddMACAddressOrVendorToHistory(Search);
+        AddSearchToHistory(Search);
 
         IsRunning = false;
     }
@@ -250,19 +257,19 @@ public class LookupOUILookupViewModel : ViewModelBase
 
     #region Methods
 
-    private void AddMACAddressOrVendorToHistory(string macAddressOrVendor)
+    private void AddSearchToHistory(string macAddressOrVendor)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.Lookup_OUI_MACAddressOrVendorHistory.ToList(),
+        var list = ListHelper.Modify(SettingsManager.Current.Lookup_OUI_SearchHistory.ToList(),
             macAddressOrVendor, SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items
-        SettingsManager.Current.Lookup_OUI_MACAddressOrVendorHistory.Clear();
+        SettingsManager.Current.Lookup_OUI_SearchHistory.Clear();
         OnPropertyChanged(
             nameof(Search)); // Raise property changed again, after the collection has been cleared
 
         // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.Lookup_OUI_MACAddressOrVendorHistory.Add(x));
+        list.ForEach(x => SettingsManager.Current.Lookup_OUI_SearchHistory.Add(x));
     }
 
     #endregion

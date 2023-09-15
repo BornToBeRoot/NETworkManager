@@ -43,6 +43,8 @@ New Feature
 - IP Scanner
   - Row can now be expanded / collapsed via button on the left side. Row is no longer expanded when selecting a row [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
   - Timestamp added to view and export (export format has changed for `csv`, `json` and `xml`) [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
+- Lookup - Ports
+  - Search by port number and protocol (e.g. `22/tcp` or `161-162/udp`) added [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
 
 ## Bugfixes
 
@@ -59,6 +61,10 @@ New Feature
   - Allow `.` as first character in OID (e.g. `1.3.6.1.2.1.1.1.0`) [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
 - SNTP Lookup
   - Copy & Export time fixed (format is now `yyyy-MM-dd HH:mm:ss.fff`) [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
+- Lookup - OUI
+  - Don't show duplicate entries [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
+- Lookup - Ports  
+  - Don't show duplicate entries [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
 - Profiles
   - Prevent the application from crashing if a profile file cannot be loaded (profile management is then blocked) [#2464](https://github.com/BornToBeRoot/NETworkManager/pull/2464){:target="\_blank"}
 - Fix some focus issues when the enter key is pressed [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}

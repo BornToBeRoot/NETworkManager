@@ -128,7 +128,7 @@ public sealed class IPScanner
 
                                 if (portState == PortState.Open || _options.ShowAllResults)
                                     portResults.Add(
-                                        new PortInfo(port, PortLookup.GetByPortAndProtocol(port), portState));
+                                        new PortInfo(port, PortLookup.LookupByPortAndProtocol(port), portState));
                             }
                         });
                     }
@@ -192,7 +192,7 @@ public sealed class IPScanner
                             // Vendor lookup
                             if (macAddress != null)
                             {
-                                var info = OUILookup.Lookup(macAddress.ToString()).FirstOrDefault();
+                                var info = OUILookup.LookupByMacAddress(macAddress.ToString()).FirstOrDefault();
 
                                 if (info != null)
                                     vendor = info.Vendor;

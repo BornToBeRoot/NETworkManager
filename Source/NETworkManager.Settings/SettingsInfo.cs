@@ -3817,16 +3817,16 @@ public class SettingsInfo : PropertyChangedBase
     #endregion
 
     #region Lookup
-    private ObservableCollection<string> _lookup_OUI_MACAddressOrVendorHistory = new();
-    public ObservableCollection<string> Lookup_OUI_MACAddressOrVendorHistory
+    private ObservableCollection<string> _lookup_OUI_SearchHistory = new();
+    public ObservableCollection<string> Lookup_OUI_SearchHistory
     {
-        get => _lookup_OUI_MACAddressOrVendorHistory;
+        get => _lookup_OUI_SearchHistory;
         set
         {
-            if (value == _lookup_OUI_MACAddressOrVendorHistory)
+            if (value == _lookup_OUI_SearchHistory)
                 return;
 
-            _lookup_OUI_MACAddressOrVendorHistory = value;
+            _lookup_OUI_SearchHistory = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
@@ -3862,16 +3862,16 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private ObservableCollection<string> _lookup_Port_PortsHistory = new();
-    public ObservableCollection<string> Lookup_Port_PortsHistory
+    private ObservableCollection<string> _lookup_Port_SearchHistory = new();
+    public ObservableCollection<string> Lookup_Port_SearchHistory
     {
-        get => _lookup_Port_PortsHistory;
+        get => _lookup_Port_SearchHistory;
         set
         {
-            if (value == _lookup_Port_PortsHistory)
+            if (value == _lookup_Port_SearchHistory)
                 return;
 
-            _lookup_Port_PortsHistory = value;
+            _lookup_Port_SearchHistory = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
@@ -4248,10 +4248,10 @@ public class SettingsInfo : PropertyChangedBase
         SubnetCalculator_WideSubnet_Subnet2.CollectionChanged += CollectionChanged;
 
         // Lookup / OUI
-        Lookup_OUI_MACAddressOrVendorHistory.CollectionChanged += CollectionChanged;
+        Lookup_OUI_SearchHistory.CollectionChanged += CollectionChanged;
 
         // Lookup / Port
-        Lookup_Port_PortsHistory.CollectionChanged += CollectionChanged;
+        Lookup_Port_SearchHistory.CollectionChanged += CollectionChanged;
 
         // Whois
         Whois_DomainHistory.CollectionChanged += CollectionChanged;
