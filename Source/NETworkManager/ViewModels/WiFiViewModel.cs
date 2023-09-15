@@ -24,7 +24,7 @@ using Windows.Security.Credentials;
 
 namespace NETworkManager.ViewModels;
 
-public class WiFiViewModel : ViewModelApplicationBase
+public class WiFiViewModel : ViewModelBase
 {
     #region  Variables 
     private readonly IDialogCoordinator _dialogCoordinator;

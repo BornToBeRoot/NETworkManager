@@ -38,14 +38,8 @@
                     <controls:MultiSelectDataGrid.Resources>
                         <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                         <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"  MinWidth="150">
-                            <MenuItem Header="{x:Static localization:Strings.CopyDots}">
-                                <MenuItem.Icon>
-                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                        <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                        </Rectangle.OpacityMask>
-                                    </Rectangle>
-                                </MenuItem.Icon>
+                            <MenuItem Header="{x:Static localization:Strings.CopyDots}" 
+                                      Style="{StaticResource ResourceKey=CopyMenuItem}">
                                 <MenuItem Header="{x:Static Member=localization:Strings.Protocol}" 
                                           Command="{Binding Path=CopyDataToClipboardCommand}"
                                           CommandParameter="{Binding Path=SelectedResult.Protocol}" 

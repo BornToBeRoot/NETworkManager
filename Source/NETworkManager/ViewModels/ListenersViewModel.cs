@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels;
 
-public class ListenersViewModel : ViewModelApplicationBase
+public class ListenersViewModel : ViewModelBase
 {
     #region Variables
     private readonly IDialogCoordinator _dialogCoordinator;

@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels;
 
-public class ARPTableViewModel : ViewModelApplicationBase
+public class ARPTableViewModel : ViewModelBase
 {
     #region Variables
     private readonly IDialogCoordinator _dialogCoordinator;

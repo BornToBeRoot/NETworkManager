@@ -24,7 +24,7 @@ using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels;
 
-public class TracerouteViewModel : ViewModelApplicationBase
+public class TracerouteViewModel : ViewModelBase
 {
     #region Variables
 

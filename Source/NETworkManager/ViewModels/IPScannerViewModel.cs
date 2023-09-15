@@ -29,7 +29,7 @@ using System.Text;
 
 namespace NETworkManager.ViewModels;
 
-public class IPScannerViewModel : ViewModelApplicationBase, IProfileManagerMinimal
+public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 {
     #region Variables
     private readonly IDialogCoordinator _dialogCoordinator;
