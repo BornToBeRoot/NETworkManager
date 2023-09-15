@@ -84,22 +84,46 @@ public static class OUILookup
     }
 
     /// <summary>
-    /// Looks up the OUI information by the given vendor async.
+    /// Looks up the OUI information's by the given vendor async.
     /// </summary>
-    /// <param name="vendors">Vendors to look up.</param>
-    /// <returns>List of OUI information.</returns>
-    public static Task<List<OUIInfo>> LookupByVendorAsync(IReadOnlyCollection<string> vendors)
+    /// <param name="vendor">Vendor to look up.</param>
+    /// <returns>OUI information's or null if not found.</returns>
+    public static Task<List<OUIInfo>> LookupByVendorAsync(string vendor)
     {
-        return Task.Run(() => LookupByVendor(vendors));
+        return Task.Run(() => LookupByVendor(vendor));
     }
 
     /// <summary>
-    /// Looks up the OUI information by the given vendor.
+    /// Looks up the OUI information's by the given vendor.
+    /// </summary>
+    /// <param name="vendor">Vendor to look up.</param>
+    /// <returns>OUI information's or null if not found.</returns>
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+    public static List<OUIInfo> LookupByVendor(string vendor)
+    {
+        return (from info in OUIInfoList
+                where info.Vendor.IndexOf(vendor, StringComparison.OrdinalIgnoreCase) > -1
+                select info
+            ).ToList();
+    }
+    
+    /// <summary>
+    /// Looks up the OUI information's by the given vendors async.
+    /// </summary>
+    /// <param name="vendors">Vendors to look up.</param>
+    /// <returns>List of OUI information.</returns>
+    public static Task<List<OUIInfo>> LookupByVendorsAsync(IReadOnlyCollection<string> vendors)
+    {
+        return Task.Run(() => LookupByVendors(vendors));
+    }
+
+    /// <summary>
+    /// Looks up the OUI information's by the given vendors.
     /// </summary>
     /// <param name="vendors">Vendors to look up.</param>
     /// <returns>List of OUI information.</returns>
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-    public static List<OUIInfo> LookupByVendor(IReadOnlyCollection<string> vendors)
+    public static List<OUIInfo> LookupByVendors(IReadOnlyCollection<string> vendors)
     {
         return (from info in OUIInfoList
                 from vendor in vendors

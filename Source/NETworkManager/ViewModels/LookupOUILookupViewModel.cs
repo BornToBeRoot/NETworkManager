@@ -22,39 +22,43 @@ namespace NETworkManager.ViewModels;
 public class LookupOUILookupViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
-    
-    private string _macOrVendorAddress;
-    public string MACAddressOrVendor
+
+    private string _search;
+
+    public string Search
     {
-        get => _macOrVendorAddress;
+        get => _search;
         set
         {
-            if (value == _macOrVendorAddress)
+            if (value == _search)
                 return;
 
-            _macOrVendorAddress = value;
+            _search = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _macAddressOrVendorHasError;
-    public bool MACAddressOrVendorHasError
+    private bool _hasError;
+
+    public bool HasError
     {
-        get => _macAddressOrVendorHasError;
+        get => _hasError;
         set
         {
-            if (value == _macAddressOrVendorHasError)
+            if (value == _hasError)
                 return;
 
-            _macAddressOrVendorHasError = value;
+            _hasError = value;
             OnPropertyChanged();
         }
     }
 
-    public ICollectionView MACAddressOrVendorHistoryView { get; }
+    public ICollectionView SearchHistoryView { get; }
 
     private bool _isRunning;
+
     public bool IsRunning
     {
         get => _isRunning;
@@ -68,135 +72,133 @@ public class LookupOUILookupViewModel : ViewModelBase
         }
     }
 
-    private ObservableCollection<OUIInfo> _ouiLookupResults = new();
-    public ObservableCollection<OUIInfo> OUILookupResults
+    private ObservableCollection<OUIInfo> _results = new();
+
+    public ObservableCollection<OUIInfo> Results
     {
-        get => _ouiLookupResults;
+        get => _results;
         set
         {
-            if (value != null && value == _ouiLookupResults)
+            if (value != null && value == _results)
                 return;
 
-            _ouiLookupResults = value;
+            _results = value;
         }
     }
 
-    public ICollectionView OUILookupResultsView { get; }
+    public ICollectionView ResultsView { get; }
 
-    private OUIInfo _selectedOUILookupResult;
-    public OUIInfo SelectedOUILookupResult
+    private OUIInfo _selectedResult;
+
+    public OUIInfo SelectedResult
     {
-        get => _selectedOUILookupResult;
+        get => _selectedResult;
         set
         {
-            if (value == _selectedOUILookupResult)
+            if (value == _selectedResult)
                 return;
 
-            _selectedOUILookupResult = value;
+            _selectedResult = value;
             OnPropertyChanged();
         }
     }
 
-    private IList _selectedOUILookupResults = new ArrayList();
-    public IList SelectedOUILookupResults
+    private IList _selectedResults = new ArrayList();
+
+    public IList SelectedResults
     {
-        get => _selectedOUILookupResults;
+        get => _selectedResults;
         set
         {
-            if (Equals(value, _selectedOUILookupResults))
+            if (Equals(value, _selectedResults))
                 return;
 
-            _selectedOUILookupResults = value;
+            _selectedResults = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _noVendorFound;
-    public bool NoVendorFound
+    private bool _nothingFound;
+
+    public bool NothingFound
     {
-        get => _noVendorFound;
+        get => _nothingFound;
         set
         {
-            if (value == _noVendorFound)
+            if (value == _nothingFound)
                 return;
 
-            _noVendorFound = value;
+            _nothingFound = value;
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, Load settings
+
     public LookupOUILookupViewModel(IDialogCoordinator instance)
     {
         _dialogCoordinator = instance;
 
         // Set collection view
-        MACAddressOrVendorHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Lookup_OUI_MACAddressOrVendorHistory);
-        OUILookupResultsView = CollectionViewSource.GetDefaultView(OUILookupResults);
+        SearchHistoryView =
+            CollectionViewSource.GetDefaultView(SettingsManager.Current.Lookup_OUI_MACAddressOrVendorHistory);
+        ResultsView = CollectionViewSource.GetDefaultView(Results);
     }
+
     #endregion
 
     #region ICommands & Actions
+
     public ICommand OUILookupCommand => new RelayCommand(_ => OUILookupAction(), OUILookup_CanExecute);
 
-    private bool OUILookup_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen && !MACAddressOrVendorHasError;
+    private bool OUILookup_CanExecute(object parameter) => Application.Current.MainWindow != null &&
+                                                           !((MetroWindow)Application.Current.MainWindow)
+                                                               .IsAnyDialogOpen && !HasError;
 
     private async void OUILookupAction()
     {
         IsRunning = true;
 
-        OUILookupResults.Clear();
+        Results.Clear();
 
+        var macAddresses = new List<string>();
         var vendors = new List<string>();
 
-        foreach (var macAddressOrVendor in MACAddressOrVendor.Split(';'))
+        // Parse the input
+        foreach (var search in Search.Split(';'))
         {
-            var macAddressOrVendor1 = macAddressOrVendor.Trim();
-
-            if (Regex.IsMatch(macAddressOrVendor1, RegexHelper.MACAddressRegex) || Regex.IsMatch(macAddressOrVendor1, RegexHelper.MACAddressFirst3BytesRegex))
-            {
-                foreach (var info in await OUILookup.LookupAsync(macAddressOrVendor1))
-                {
-                    OUILookupResults.Add(info);
-                }
-            }
+            var searchTrim  = search.Trim();
+            
+            if (Regex.IsMatch(searchTrim, RegexHelper.MACAddressRegex) ||
+                Regex.IsMatch(searchTrim, RegexHelper.MACAddressFirst3BytesRegex))
+                macAddresses.Add(searchTrim);
             else
-            {
-                vendors.Add(macAddressOrVendor1);
-            }
+                vendors.Add(searchTrim);
         }
 
-        foreach (var info in await OUILookup.LookupByVendorAsync(vendors))
+        // Get OUI information's by MAC-Address
+        // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator (Doesn't work with async/await)
+        foreach (var macAddress in macAddresses)
         {
-            OUILookupResults.Add(info);
+            foreach (var info in await OUILookup.LookupAsync(macAddress))
+                Results.Add(info);
         }
 
-        if (OUILookupResults.Count == 0)
+        // Get OUI information's by Vendor
+        foreach (var info in await OUILookup.LookupByVendorsAsync(vendors))
         {
-            NoVendorFound = true;
+            Results.Add(info);
         }
-        else
-        {
-            AddMACAddressOrVendorToHistory(MACAddressOrVendor);
-            NoVendorFound = false;
-        }
+
+        // Show a message if no vendor was found
+        NothingFound = Results.Count == 0;
+
+        // Add the MAC-Address or Vendor to the history
+        AddMACAddressOrVendorToHistory(Search);
 
         IsRunning = false;
-    }
-
-    public ICommand CopySelectedMACAddressCommand => new RelayCommand(_ => CopySelectedMACAddressAction());
-
-    private void CopySelectedMACAddressAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedOUILookupResult.MACAddress);
-    }
-
-    public ICommand CopySelectedVendorCommand => new RelayCommand(_ => CopySelectedVendorAction());
-
-    private void CopySelectedVendorAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedOUILookupResult.Vendor);
     }
 
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
@@ -214,22 +216,24 @@ public class LookupOUILookupViewModel : ViewModelBase
 
             try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? OUILookupResults : new ObservableCollection<OUIInfo>(SelectedOUILookupResults.Cast<OUIInfo>().ToArray()));
+                ExportManager.Export(instance.FilePath, instance.FileType,
+                    instance.ExportAll
+                        ? Results
+                        : new ObservableCollection<OUIInfo>(SelectedResults.Cast<OUIInfo>().ToArray()));
             }
             catch (Exception ex)
             {
                 var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error,
+                    Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
             }
 
             SettingsManager.Current.Lookup_OUI_ExportFileType = instance.FileType;
             SettingsManager.Current.Lookup_OUI_ExportFilePath = instance.FilePath;
-        }, _ =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, new[]
+        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new[]
         {
             ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
         }, true, SettingsManager.Current.Lookup_OUI_ExportFileType, SettingsManager.Current.Lookup_OUI_ExportFilePath);
@@ -241,20 +245,25 @@ public class LookupOUILookupViewModel : ViewModelBase
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
+
     #endregion
 
     #region Methods
+
     private void AddMACAddressOrVendorToHistory(string macAddressOrVendor)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.Lookup_OUI_MACAddressOrVendorHistory.ToList(), macAddressOrVendor, SettingsManager.Current.General_HistoryListEntries);
+        var list = ListHelper.Modify(SettingsManager.Current.Lookup_OUI_MACAddressOrVendorHistory.ToList(),
+            macAddressOrVendor, SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items
         SettingsManager.Current.Lookup_OUI_MACAddressOrVendorHistory.Clear();
-        OnPropertyChanged(nameof(MACAddressOrVendor)); // Raise property changed again, after the collection has been cleared
+        OnPropertyChanged(
+            nameof(Search)); // Raise property changed again, after the collection has been cleared
 
         // Fill with the new items
         list.ForEach(x => SettingsManager.Current.Lookup_OUI_MACAddressOrVendorHistory.Add(x));
     }
+
     #endregion
 }
