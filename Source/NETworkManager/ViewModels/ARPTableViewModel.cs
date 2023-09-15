@@ -37,52 +37,52 @@ public class ARPTableViewModel : ViewModelApplicationBase
 
             _search = value;
 
-            ARPInfoResultsView.Refresh();
+            ResultsView.Refresh();
 
             OnPropertyChanged();
         }
     }
 
-    private ObservableCollection<ARPInfo> _arpInfoResults = new();
-    public ObservableCollection<ARPInfo> ARPInfoResults
+    private ObservableCollection<ARPInfo> _results = new();
+    public ObservableCollection<ARPInfo> Results
     {
-        get => _arpInfoResults;
+        get => _results;
         set
         {
-            if (value == _arpInfoResults)
+            if (value == _results)
                 return;
 
-            _arpInfoResults = value;
+            _results = value;
             OnPropertyChanged();
         }
     }
 
-    public ICollectionView ARPInfoResultsView { get; }
+    public ICollectionView ResultsView { get; }
 
-    private ARPInfo _selectedARPInfo;
-    public ARPInfo SelectedARPInfo
+    private ARPInfo _selectedResult;
+    public ARPInfo SelectedResult
     {
-        get => _selectedARPInfo;
+        get => _selectedResult;
         set
         {
-            if (value == _selectedARPInfo)
+            if (value == _selectedResult)
                 return;
 
-            _selectedARPInfo = value;
+            _selectedResult = value;
             OnPropertyChanged();
         }
     }
 
-    private IList _selectedARPInfos = new ArrayList();
-    public IList SelectedARPInfos
+    private IList _selectedResults = new ArrayList();
+    public IList SelectedResults
     {
-        get => _selectedARPInfos;
+        get => _selectedResults;
         set
         {
-            if (Equals(value, _selectedARPInfos))
+            if (Equals(value, _selectedResults))
                 return;
 
-            _selectedARPInfos = value;
+            _selectedResults = value;
             OnPropertyChanged();
         }
     }
@@ -192,9 +192,9 @@ public class ARPTableViewModel : ViewModelApplicationBase
         _dialogCoordinator = instance;
 
         // Result view + search
-        ARPInfoResultsView = CollectionViewSource.GetDefaultView(ARPInfoResults);
-        ARPInfoResultsView.SortDescriptions.Add(new SortDescription(nameof(ARPInfo.IPAddressInt32), ListSortDirection.Ascending));
-        ARPInfoResultsView.Filter = o =>
+        ResultsView = CollectionViewSource.GetDefaultView(Results);
+        ResultsView.SortDescriptions.Add(new SortDescription(nameof(ARPInfo.IPAddressInt32), ListSortDirection.Ascending));
+        ResultsView.Filter = o =>
         {
             if (o is not ARPInfo info)
                 return false;
@@ -279,7 +279,7 @@ public class ARPTableViewModel : ViewModelApplicationBase
 
             arpTable.UserHasCanceled += ArpTable_UserHasCanceled;
 
-            await arpTable.DeleteEntryAsync(SelectedARPInfo.IPAddress.ToString());
+            await arpTable.DeleteEntryAsync(SelectedResult.IPAddress.ToString());
 
             await Refresh();
         }
@@ -350,7 +350,7 @@ public class ARPTableViewModel : ViewModelApplicationBase
 
             try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? ARPInfoResults : new ObservableCollection<ARPInfo>(SelectedARPInfos.Cast<ARPInfo>().ToArray()));
+                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? Results : new ObservableCollection<ARPInfo>(SelectedResults.Cast<ARPInfo>().ToArray()));
             }
             catch (Exception ex)
             {
@@ -384,9 +384,9 @@ public class ARPTableViewModel : ViewModelApplicationBase
     {
         IsRefreshing = true;
 
-        ARPInfoResults.Clear();
+        Results.Clear();
 
-        (await ARP.GetTableAsync()).ForEach(x => ARPInfoResults.Add(x));
+        (await ARP.GetTableAsync()).ForEach(x => Results.Add(x));
 
         IsRefreshing = false;
     }
