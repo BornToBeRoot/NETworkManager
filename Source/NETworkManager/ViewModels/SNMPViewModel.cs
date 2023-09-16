@@ -327,32 +327,32 @@ public class SNMPViewModel : ViewModelBase
         }
     }
 
-    public ICollectionView QueryResultsView { get; }
+    public ICollectionView ResultsView { get; }
 
-    private SNMPInfo _selectedQueryResult;
-    public SNMPInfo SelectedQueryResult
+    private SNMPInfo _selectedResult;
+    public SNMPInfo SelectedResult
     {
-        get => _selectedQueryResult;
+        get => _selectedResult;
         set
         {
-            if (value == _selectedQueryResult)
+            if (value == _selectedResult)
                 return;
 
-            _selectedQueryResult = value;
+            _selectedResult = value;
             OnPropertyChanged();
         }
     }
 
-    private IList _selectedQueryResults = new ArrayList();
-    public IList SelectedQueryResults
+    private IList _selectedResults = new ArrayList();
+    public IList SelectedResults
     {
-        get => _selectedQueryResults;
+        get => _selectedResults;
         set
         {
-            if (Equals(value, _selectedQueryResults))
+            if (Equals(value, _selectedResults))
                 return;
 
-            _selectedQueryResults = value;
+            _selectedResults = value;
             OnPropertyChanged();
         }
     }
@@ -376,7 +376,7 @@ public class SNMPViewModel : ViewModelBase
     public string StatusMessage
     {
         get => _statusMessage;
-        set
+        private set
         {
             if (value == _statusMessage)
                 return;
@@ -402,8 +402,8 @@ public class SNMPViewModel : ViewModelBase
         OidHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_OidHistory);
 
         // Result view
-        QueryResultsView = CollectionViewSource.GetDefaultView(QueryResults);
-        QueryResultsView.SortDescriptions.Add(new SortDescription(nameof(SNMPInfo.Oid), ListSortDirection.Ascending));
+        ResultsView = CollectionViewSource.GetDefaultView(QueryResults);
+        ResultsView.SortDescriptions.Add(new SortDescription(nameof(SNMPInfo.Oid), ListSortDirection.Ascending));
 
         // OID
         Oid = sessionInfo?.OID;
@@ -456,29 +456,15 @@ public class SNMPViewModel : ViewModelBase
         Work();
     }
 
-    public ICommand OpenMibProfilesCommand => new RelayCommand(p => OpenMibProfilesAction());
+    public ICommand OpenMibProfilesCommand => new RelayCommand(_ => OpenMibProfilesAction());
 
 
     private void OpenMibProfilesAction()
     {
-        OpenMibProfileSelection();
+        OpenMibProfileSelection().ConfigureAwait(false);
     }
 
-    public ICommand CopySelectedOidCommand => new RelayCommand(p => CopySelectedOidAction());
-
-    private void CopySelectedOidAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedQueryResult.Oid);
-    }
-
-    public ICommand CopySelectedDataCommand => new RelayCommand(p => CopySelectedDataAction());
-
-    private void CopySelectedDataAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedQueryResult.Data);
-    }
-
-    public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+    public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
 
     private async void ExportAction()
     {
@@ -493,7 +479,7 @@ public class SNMPViewModel : ViewModelBase
 
             try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? QueryResults : new ObservableCollection<SNMPInfo>(SelectedQueryResults.Cast<SNMPInfo>().ToArray()));
+                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? QueryResults : new ObservableCollection<SNMPInfo>(SelectedResults.Cast<SNMPInfo>().ToArray()));
             }
             catch (Exception ex)
             {
@@ -505,7 +491,13 @@ public class SNMPViewModel : ViewModelBase
 
             SettingsManager.Current.SNMP_ExportFileType = instance.FileType;
             SettingsManager.Current.SNMP_ExportFilePath = instance.FilePath;
-        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportFileType[] { ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json }, true, SettingsManager.Current.SNMP_ExportFileType, SettingsManager.Current.SNMP_ExportFilePath);
+        }, _ =>
+        {
+            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+        }, new[]
+        {
+            ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
+        }, true, SettingsManager.Current.SNMP_ExportFileType, SettingsManager.Current.SNMP_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {
@@ -570,20 +562,15 @@ public class SNMPViewModel : ViewModelBase
         snmpClient.Canceled += Snmp_Canceled;
         snmpClient.Complete += Snmp_Complete;
 
-        string oidValue = Oid.Replace(" ", "");
+        var oidValue = Oid.Replace(" ", "");
 
         // Check if we have multiple OIDs for a Get request
         List<string> oids = new();
 
         if (Mode == SNMPMode.Get && oidValue.Contains(';'))
-        {
-            foreach (var oid in oidValue.Split(';'))
-                oids.Add(oid);
-        }
+            oids.AddRange(oidValue.Split(';'));
         else
-        {
             oids.Add(oidValue);
-        }
 
         // SNMPv1 or v2c
         if (Version != SNMPVersion.V3)
@@ -670,7 +657,7 @@ public class SNMPViewModel : ViewModelBase
 
             Mode = instance.SelectedOIDProfile.Mode;
             Oid = instance.SelectedOIDProfile.OID;
-        }, async instance =>
+        }, async _ =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
         });
