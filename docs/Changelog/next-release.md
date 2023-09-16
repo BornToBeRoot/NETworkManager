@@ -43,6 +43,9 @@ New Feature
 - IP Scanner
   - Row can now be expanded / collapsed via button on the left side. Row is no longer expanded when selecting a row [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
   - Timestamp added to view and export (export format has changed for `csv`, `json` and `xml`) [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
+  - Show status message if no reachable host was found [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
+- Port Scanner
+  - Show status message if no open port was found [#2483](
 - Lookup - Ports
   - Search by port number and protocol (e.g. `22/tcp` or `161-162/udp`) added [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
 
@@ -57,6 +60,8 @@ New Feature
   - Export to Json fixed (if ip address of a hop cannot be resolved) [#2477](https://github.com/BornToBeRoot/NETworkManager/pull/2477){:target="\_blank"}
 - Ping
   - Copy & Export time fixed (format is now `yyyy-MM-dd HH:mm:ss.fff`) [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
+- DNS Lookup
+  - Fix a bug where the suffix is not appended [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
 - SNMP
   - Allow `.` as first character in OID (e.g. `1.3.6.1.2.1.1.1.0`) [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
 - SNTP Lookup

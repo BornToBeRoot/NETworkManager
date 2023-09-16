@@ -19,7 +19,6 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
-using NETworkManager.Localization;
 using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels;
@@ -278,55 +277,6 @@ public class PortScannerViewModel : ViewModelBase
             StartScan().ConfigureAwait(false);
     }
 
-    public ICommand CopySelectedIPAddressCommand => new RelayCommand(_ => CopySelectedIPAddressAction());
-
-    private void CopySelectedIPAddressAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedResult.IPAddress.ToString());
-    }
-
-    public ICommand CopySelectedHostnameCommand => new RelayCommand(_ => CopySelectedHostnameAction());
-
-    private void CopySelectedHostnameAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedResult.Hostname);
-    }
-
-    public ICommand CopySelectedPortCommand => new RelayCommand(_ => CopySelectedPortAction());
-
-    private void CopySelectedPortAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedResult.Port.ToString());
-    }
-
-    public ICommand CopySelectedStatusCommand => new RelayCommand(_ => CopySelectedStatusAction());
-
-    private void CopySelectedStatusAction()
-    {
-        ClipboardHelper.SetClipboard(ResourceTranslator.Translate(ResourceIdentifier.PortState, SelectedResult.State));
-    }
-
-    public ICommand CopySelectedProtocolCommand => new RelayCommand(_ => CopySelectedProtocolAction());
-
-    private void CopySelectedProtocolAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedResult.LookupInfo.Protocol.ToString());
-    }
-
-    public ICommand CopySelectedServiceCommand => new RelayCommand(_ => CopySelectedServiceAction());
-
-    private void CopySelectedServiceAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedResult.LookupInfo.Service);
-    }
-
-    public ICommand CopySelectedDescriptionCommand => new RelayCommand(_ => CopySelectedDescriptionAction());
-
-    private void CopySelectedDescriptionAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedResult.LookupInfo.Description);
-    }
-
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
 
     private void ExportAction()
@@ -448,13 +398,7 @@ public class PortScannerViewModel : ViewModelBase
         CancelScan = true;
         _cancellationTokenSource.Cancel();
     }
-
-    private void ScanFinished()
-    {
-        CancelScan = false;
-        IsRunning = false;
-    }
-
+    
     private async Task Export()
     {
         var customDialog = new CustomDialog
@@ -540,7 +484,8 @@ public class PortScannerViewModel : ViewModelBase
         StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
         IsStatusMessageDisplayed = true;
 
-        ScanFinished();
+        CancelScan = false;
+        IsRunning = false;
     }
 
     private void ProgressChanged(object sender, ProgressChangedArgs e)
@@ -553,12 +498,20 @@ public class PortScannerViewModel : ViewModelBase
         StatusMessage = $"{Localization.Resources.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", e.Flatten().InnerExceptions.Select(x => x.Message))}";
         IsStatusMessageDisplayed = true;
 
-        ScanFinished();
+        CancelScan = false;
+        IsRunning = false;
     }
 
     private void ScanComplete(object sender, EventArgs e)
     {
-        ScanFinished();
+        if (Results.Count == 0)
+        {
+            StatusMessage = Localization.Resources.Strings.NoOpenPortsFound;
+            IsStatusMessageDisplayed = true;
+        }
+        
+        CancelScan = false;
+        IsRunning = false;
     }
 
     private void PortScanned(object sender, PortScannerPortScannedArgs e)

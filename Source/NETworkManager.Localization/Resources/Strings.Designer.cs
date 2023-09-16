@@ -5811,6 +5811,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No reachable hosts found!.
+        /// </summary>
+        public static string NoReachableHostsFound {
+            get {
+                return ResourceManager.GetString("NoReachableHostsFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Notation.
         /// </summary>
         public static string Notation {

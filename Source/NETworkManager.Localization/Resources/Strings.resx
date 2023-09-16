@@ -3658,4 +3658,7 @@ Try again in a few seconds.</value>
   <data name="BSSID" xml:space="preserve">
     <value>BSSID</value>
   </data>
+  <data name="NoReachableHostsFound" xml:space="preserve">
+    <value>No reachable hosts found!</value>
+  </data>
 </root>

@@ -584,6 +584,12 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private void ScanComplete(object sender, EventArgs e)
     {
+        if (Results.Count == 0)
+        {
+            StatusMessage = Localization.Resources.Strings.NoReachableHostsFound;
+            IsStatusMessageDisplayed = true;
+        }
+
         CancelScan = false;
         IsRunning = false;
     }
