@@ -101,7 +101,7 @@ public sealed class DNSLookup
     /// <returns>List of host with DNS suffix</returns>
     private IEnumerable<string> GetHostWithSuffix(IEnumerable<string> hosts)
     {
-        return (from host in hosts where _settings.QueryType != QueryType.PTR && !host.Contains('.', StringComparison.OrdinalIgnoreCase) select $"{host}.{_suffix}").ToList();
+        return hosts.Select(host => host.Contains('.') ? host : $"{host}.{_suffix}").ToList();
     }
 
     /// <summary>
@@ -113,8 +113,8 @@ public sealed class DNSLookup
         Task.Run(() =>
         {
             // Append dns suffix to hostname, if option is set, otherwise just copy the list
-            var queries = _addSuffix ? GetHostWithSuffix(hosts) : hosts;
-
+            var queries = _addSuffix && _settings.QueryType != QueryType.PTR ? GetHostWithSuffix(hosts) : hosts;
+            
             // Foreach dns server
             Parallel.ForEach(_servers, dnsServer =>
             {

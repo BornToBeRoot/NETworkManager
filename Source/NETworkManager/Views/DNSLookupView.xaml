@@ -135,63 +135,32 @@
         The sort function is in the code behind -> when you click on the header of the column, the SortMemberPath is passed to the viewmodel
         CanUserSortColumns="False" -> Default sort won't work with grouped
         -->
-        <controls:MultiSelectDataGrid Grid.Row="3" CanUserSortColumns="False" ItemsSource="{Binding ResultsView}" SelectedItem="{Binding SelectedLookupResult}" SelectedItemsList="{Binding SelectedLookupResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+        <controls:MultiSelectDataGrid Grid.Row="3" CanUserSortColumns="False" ItemsSource="{Binding ResultsView}" SelectedItem="{Binding SelectedResult}" SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <controls:MultiSelectDataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                    <MenuItem Header="{x:Static localization:Strings.CopyDots}">
-                        <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                        </MenuItem.Icon>
-                        <MenuItem Header="{x:Static localization:Strings.DomainName}" Command="{Binding CopySelectedDomainNameCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.TTL}" Command="{Binding CopySelectedTTLCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.Class}" Command="{Binding CopySelectedClassCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.Type}" Command="{Binding CopySelectedTypeCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.Result}" Command="{Binding CopySelectedResultCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
+                    <MenuItem Header="{x:Static Member=localization:Strings.CopyDots}" 
+                              Style="{StaticResource ResourceKey=CopyMenuItem}">
+                        <MenuItem Header="{x:Static Member=localization:Strings.DomainName}" 
+                                  Command="{Binding Path=CopyDataToClipboardCommand}"
+                                  CommandParameter="{Binding Path=SelectedResult.DomainName}" 
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.TTL}" 
+                                  Command="{Binding Path=CopyDataToClipboardCommand}"
+                                  CommandParameter="{Binding Path=SelectedResult.TTL}" 
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.Class}" 
+                                  Command="{Binding Path=CopyDataToClipboardCommand}"
+                                  CommandParameter="{Binding Path=SelectedResult.RecordClass}" 
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.Type}" 
+                                  Command="{Binding Path=CopyDataToClipboardCommand}"
+                                  CommandParameter="{Binding Path=SelectedResult.RecordType}" 
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.Result}" 
+                                  Command="{Binding Path=CopyDataToClipboardCommand}"
+                                  CommandParameter="{Binding Path=SelectedResult.Result}" 
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
                     </MenuItem>
                     <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
                         <MenuItem.Icon>
@@ -251,11 +220,26 @@
                 </GroupStyle>
             </controls:MultiSelectDataGrid.GroupStyle>
             <controls:MultiSelectDataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.DomainName}" Binding="{Binding (network:DNSLookupRecordInfo.DomainName)}" SortMemberPath="DomainName" MinWidth="200" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.TTL}" Binding="{Binding (network:DNSLookupRecordInfo.TTL)}" SortMemberPath="TTL" MinWidth="80" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Class}" Binding="{Binding (network:DNSLookupRecordInfo.RecordClass)}" SortMemberPath="Class" MinWidth="80" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Type}" Binding="{Binding (network:DNSLookupRecordInfo.RecordType)}" SortMemberPath="Type" MinWidth="80" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Result}" Binding="{Binding (network:DNSLookupRecordInfo.Result)}" SortMemberPath="Result" MinWidth="200" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.DomainName}" 
+                                    Binding="{Binding (network:DNSLookupRecordInfo.DomainName)}"
+                                    SortMemberPath="DomainName" 
+                                    MinWidth="200" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.TTL}"
+                                    Binding="{Binding (network:DNSLookupRecordInfo.TTL)}" 
+                                    SortMemberPath="TTL" 
+                                    MinWidth="80" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Class}" 
+                                    Binding="{Binding (network:DNSLookupRecordInfo.RecordClass)}"
+                                    SortMemberPath="Class" 
+                                    MinWidth="80" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Type}" 
+                                    Binding="{Binding (network:DNSLookupRecordInfo.RecordType)}" 
+                                    SortMemberPath="Type"
+                                    MinWidth="80" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Result}" 
+                                    Binding="{Binding (network:DNSLookupRecordInfo.Result)}" 
+                                    SortMemberPath="Result" 
+                                    MinWidth="200" />
             </controls:MultiSelectDataGrid.Columns>
         </controls:MultiSelectDataGrid>
     </Grid>

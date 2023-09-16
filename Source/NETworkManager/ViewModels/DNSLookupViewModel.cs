@@ -136,32 +136,32 @@ public class DNSLookupViewModel : ViewModelBase
 
     public ICollectionView ResultsView { get; }
 
-    private DNSLookupRecordInfo _selectedLookupResult;
+    private DNSLookupRecordInfo _selectedResult;
 
-    public DNSLookupRecordInfo SelectedLookupResult
+    public DNSLookupRecordInfo SelectedResult
     {
-        get => _selectedLookupResult;
+        get => _selectedResult;
         set
         {
-            if (value == _selectedLookupResult)
+            if (value == _selectedResult)
                 return;
 
-            _selectedLookupResult = value;
+            _selectedResult = value;
             OnPropertyChanged();
         }
     }
 
-    private IList _selectedLookupResults = new ArrayList();
+    private IList _selectedResults = new ArrayList();
 
-    public IList SelectedLookupResults
+    public IList SelectedResults
     {
-        get => _selectedLookupResults;
+        get => _selectedResults;
         set
         {
-            if (Equals(value, _selectedLookupResults))
+            if (Equals(value, _selectedResults))
                 return;
 
-            _selectedLookupResults = value;
+            _selectedResults = value;
             OnPropertyChanged();
         }
     }
@@ -221,8 +221,8 @@ public class DNSLookupViewModel : ViewModelBase
                     DNSServers.SourceCollection.Cast<DNSServerConnectionInfoProfile>().First();
 
         ResultsView = CollectionViewSource.GetDefaultView(Results);
-        ResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(DNSLookupRecordInfo.Server)));
-        ResultsView.SortDescriptions.Add(new SortDescription(nameof(DNSLookupRecordInfo.Server),
+        ResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(DNSLookupRecordInfo.IPEndPoint)));
+        ResultsView.SortDescriptions.Add(new SortDescription(nameof(DNSLookupRecordInfo.IPEndPoint),
             ListSortDirection.Descending));
 
         LoadSettings();
@@ -279,41 +279,6 @@ public class DNSLookupViewModel : ViewModelBase
             StartLookup();
     }
 
-    public ICommand CopySelectedDomainNameCommand => new RelayCommand(_ => CopySelectedDomainNameAction());
-
-    private void CopySelectedDomainNameAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedLookupResult.DomainName);
-    }
-
-    public ICommand CopySelectedTTLCommand => new RelayCommand(_ => CopySelectedTTLAction());
-
-    private void CopySelectedTTLAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedLookupResult.TTL.ToString());
-    }
-
-    public ICommand CopySelectedClassCommand => new RelayCommand(_ => CopySelectedClassAction());
-
-    private void CopySelectedClassAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedLookupResult.RecordClass);
-    }
-
-    public ICommand CopySelectedTypeCommand => new RelayCommand(_ => CopySelectedTypeAction());
-
-    private void CopySelectedTypeAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedLookupResult.RecordType);
-    }
-
-    public ICommand CopySelectedResultCommand => new RelayCommand(_ => CopySelectedResultAction());
-
-    private void CopySelectedResultAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedLookupResult.Result);
-    }
-
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
 
     private async Task ExportAction()
@@ -332,7 +297,7 @@ public class DNSLookupViewModel : ViewModelBase
                     ExportManager.Export(instance.FilePath, instance.FileType,
                         instance.ExportAll
                             ? Results
-                            : new ObservableCollection<DNSLookupRecordInfo>(SelectedLookupResults
+                            : new ObservableCollection<DNSLookupRecordInfo>(SelectedResults
                                 .Cast<DNSLookupRecordInfo>().ToArray()));
                 }
                 catch (Exception ex)
