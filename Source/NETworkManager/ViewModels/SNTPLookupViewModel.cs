@@ -48,59 +48,59 @@ public class SNTPLookupViewModel : ViewModelBase
         }
     }
 
-    private bool _isLookupRunning;
-    public bool IsLookupRunning
+    private bool _isRunning;
+    public bool IsRunning
     {
-        get => _isLookupRunning;
+        get => _isRunning;
         set
         {
-            if (value == _isLookupRunning)
+            if (value == _isRunning)
                 return;
 
-            _isLookupRunning = value;
+            _isRunning = value;
             OnPropertyChanged();
         }
     }
 
-    private ObservableCollection<SNTPLookupInfo> _lookupResults = new();
-    public ObservableCollection<SNTPLookupInfo> LookupResults
+    private ObservableCollection<SNTPLookupInfo> _results = new();
+    public ObservableCollection<SNTPLookupInfo> Results
     {
-        get => _lookupResults;
+        get => _results;
         set
         {
-            if (Equals(value, _lookupResults))
+            if (Equals(value, _results))
                 return;
 
-            _lookupResults = value;
+            _results = value;
         }
     }
 
-    public ICollectionView LookupResultsView { get; }
+    public ICollectionView ResultsView { get; }
 
-    private SNTPLookupInfo _selectedLookup;
-    public SNTPLookupInfo SelectedLookup
+    private SNTPLookupInfo _selectedResult;
+    public SNTPLookupInfo SelectedResult
     {
-        get => _selectedLookup;
+        get => _selectedResult;
         set
         {
-            if (value == _selectedLookup)
+            if (value == _selectedResult)
                 return;
 
-            _selectedLookup = value;
+            _selectedResult = value;
             OnPropertyChanged();
         }
     }
 
-    private IList _selectedLookupResults = new ArrayList();
-    public IList SelectedLookupResults
+    private IList _selectedResults = new ArrayList();
+    public IList SelectedResults
     {
-        get => _selectedLookupResults;
+        get => _selectedResults;
         set
         {
-            if (Equals(value, _selectedLookupResults))
+            if (Equals(value, _selectedResults))
                 return;
 
-            _selectedLookupResults = value;
+            _selectedResults = value;
             OnPropertyChanged();
         }
     }
@@ -123,7 +123,7 @@ public class SNTPLookupViewModel : ViewModelBase
     public string StatusMessage
     {
         get => _statusMessage;
-        set
+        private set
         {
             if (value == _statusMessage)
                 return;
@@ -147,8 +147,8 @@ public class SNTPLookupViewModel : ViewModelBase
         SNTPServers.SortDescriptions.Add(new SortDescription(nameof(ServerConnectionInfoProfile.Name), ListSortDirection.Ascending));
         SNTPServer = SNTPServers.SourceCollection.Cast<ServerConnectionInfoProfile>().FirstOrDefault(x => x.Name == SettingsManager.Current.SNTPLookup_SelectedSNTPServer.Name) ?? SNTPServers.SourceCollection.Cast<ServerConnectionInfoProfile>().First();
 
-        LookupResultsView = CollectionViewSource.GetDefaultView(LookupResults);
-        LookupResultsView.SortDescriptions.Add(new SortDescription(nameof(SNTPLookupInfo.Server), ListSortDirection.Ascending));
+        ResultsView = CollectionViewSource.GetDefaultView(Results);
+        ResultsView.SortDescriptions.Add(new SortDescription(nameof(SNTPLookupInfo.Server), ListSortDirection.Ascending));
 
         LoadSettings();
 
@@ -163,67 +163,17 @@ public class SNTPLookupViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
-    public ICommand LookupCommand => new RelayCommand(p => LookupAction(), Lookup_CanExecute);
+    public ICommand LookupCommand => new RelayCommand(_ => LookupAction(), Lookup_CanExecute);
 
     private bool Lookup_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
     private void LookupAction()
     {
-        if (!IsLookupRunning)
+        if (!IsRunning)
             StartLookup();
     }
 
-    public ICommand CopySelectedServerCommand => new RelayCommand(_ => CopySelectedServerAction());
-
-
-    private void CopySelectedServerAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedLookup.Server);
-    }
-
-    public ICommand CopySelectedIPEndPointCommand => new RelayCommand(_ => CopySelectedIPEndPointAction());
-
-    private void CopySelectedIPEndPointAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedLookup.IPEndPoint);
-    }
-
-    public ICommand CopySelectedNetworkTimeCommand => new RelayCommand(_ => CopySelectedNetworkTimeAction());
-
-    private void CopySelectedNetworkTimeAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedLookup.DateTime.NetworkTime.ToString("yyyy-MM-dd HH:mm:ss.fff"));
-    }
-
-    public ICommand CopySelectedLocalStartTimeCommand => new RelayCommand(_ => CopySelectedLocalStartTimeAction());
-
-    private void CopySelectedLocalStartTimeAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedLookup.DateTime.LocalStartTime.ToString("yyyy-MM-dd HH:mm:ss.fff"));
-    }
-
-    public ICommand CopySelectedLocalEndTimeCommand => new RelayCommand(_ => CopySelectedLocalEndTimeAction());
-
-    private void CopySelectedLocalEndTimeAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedLookup.DateTime.LocalEndTime.ToString("yyyy-MM-dd HH:mm:ss.fff"));
-    }
-
-    public ICommand CopySelectedOffsetCommand => new RelayCommand(_ => CopySelectedOffsetAction());
-
-    private void CopySelectedOffsetAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedLookup.DateTime.Offset.ToString() + " s");
-    }
-
-    public ICommand CopySelectedRoundTripDelayCommand => new RelayCommand(_ => CopySelectedRoundTripDelayAction());
-
-    private void CopySelectedRoundTripDelayAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedLookup.DateTime.RoundTripDelay.ToString() + " ms");
-    }
-
-    public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
+    public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
 
     private async Task ExportAction()
     {
@@ -238,7 +188,7 @@ public class SNTPLookupViewModel : ViewModelBase
 
             try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? LookupResults : new ObservableCollection<SNTPLookupInfo>(SelectedLookupResults.Cast<SNTPLookupInfo>().ToArray()));
+                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? Results : new ObservableCollection<SNTPLookupInfo>(SelectedResults.Cast<SNTPLookupInfo>().ToArray()));
             }
             catch (Exception ex)
             {
@@ -250,7 +200,13 @@ public class SNTPLookupViewModel : ViewModelBase
 
             SettingsManager.Current.SNTPLookup_ExportFileType = instance.FileType;
             SettingsManager.Current.SNTPLookup_ExportFilePath = instance.FilePath;
-        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportFileType[] { ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json }, true, SettingsManager.Current.SNTPLookup_ExportFileType, SettingsManager.Current.SNTPLookup_ExportFilePath);
+        }, _ =>
+        {
+            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+        }, new[]
+        {
+            ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
+        }, true, SettingsManager.Current.SNTPLookup_ExportFileType, SettingsManager.Current.SNTPLookup_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {
@@ -267,10 +223,10 @@ public class SNTPLookupViewModel : ViewModelBase
         IsStatusMessageDisplayed = false;
         StatusMessage = string.Empty;
 
-        IsLookupRunning = true;
+        IsRunning = true;
 
         // Reset the latest results
-        LookupResults.Clear();
+        Results.Clear();
 
         // Change the tab title (not nice, but it works)
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
@@ -307,7 +263,7 @@ public class SNTPLookupViewModel : ViewModelBase
     {
         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
         {
-            LookupResults.Add(e.Args);
+            Results.Add(e.Args);
         }));
     }
 
@@ -322,7 +278,7 @@ public class SNTPLookupViewModel : ViewModelBase
 
     private void Lookup_LookupComplete(object sender, EventArgs e)
     {
-        IsLookupRunning = false;
+        IsRunning = false;
     }
     #endregion
 }

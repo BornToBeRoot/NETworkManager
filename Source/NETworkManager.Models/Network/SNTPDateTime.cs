@@ -3,7 +3,7 @@
 namespace NETworkManager.Models.Network;
 
 /// <summary>
-/// Class is used to store informations about SNTP date time.    
+/// Class is used to store information's about SNTP date time.    
 /// </summary>
 public class SNTPDateTime
 {

@@ -86,47 +86,47 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
         }
     }
 
-    private ObservableCollection<IPNetworkInfo> _subnetsResult = new();
-    public ObservableCollection<IPNetworkInfo> SubnetsResult
+    private ObservableCollection<IPNetworkInfo> _results = new();
+    public ObservableCollection<IPNetworkInfo> Results
     {
-        get => _subnetsResult;
+        get => _results;
         set
         {
-            if (value == _subnetsResult)
+            if (value == _results)
                 return;
 
-            _subnetsResult = value;
+            _results = value;
             OnPropertyChanged();
         }
     }
 
-    public ICollectionView SubnetsResultsView { get; }
+    public ICollectionView ResultsView { get; }
 
-    private IPNetworkInfo _selectedSubnetResult;
-    public IPNetworkInfo SelectedSubnetResult
+    private IPNetworkInfo _selectedResult;
+    public IPNetworkInfo SelectedResult
     {
-        get => _selectedSubnetResult;
+        get => _selectedResult;
         set
         {
-            if (value == _selectedSubnetResult)
+            if (value == _selectedResult)
                 return;
 
-            _selectedSubnetResult = value;
+            _selectedResult = value;
             OnPropertyChanged();
         }
     }
 
 
-    private IList _selectedSubnetResults = new ArrayList();
-    public IList SelectedSubnetResults
+    private IList _selectedResults = new ArrayList();
+    public IList SelectedResults
     {
-        get => _selectedSubnetResults;
+        get => _selectedResults;
         set
         {
-            if (Equals(value, _selectedSubnetResults))
+            if (Equals(value, _selectedResults))
                 return;
 
-            _selectedSubnetResults = value;
+            _selectedResults = value;
             OnPropertyChanged();
         }
     }
@@ -142,7 +142,7 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
         NewSubnetmaskHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskHistory);
 
         // Result view
-        SubnetsResultsView = CollectionViewSource.GetDefaultView(SubnetsResult);
+        ResultsView = CollectionViewSource.GetDefaultView(Results);
     }
     #endregion
 
@@ -154,62 +154,6 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
     private void CalculateAction()
     {
         Calculate().ConfigureAwait(false);
-    }
-
-    public ICommand CopySelectedNetworkAddressCommand => new RelayCommand(_ => CopySelectedNetworkAddressAction());
-
-    private void CopySelectedNetworkAddressAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedSubnetResult.Network.ToString());
-    }
-
-    public ICommand CopySelectedBroadcastCommand => new RelayCommand(_ => CopySelectedBroadcastAction());
-
-    private void CopySelectedBroadcastAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedSubnetResult.Broadcast.ToString());
-    }
-
-    public ICommand CopySelectedIPAddressesCommand => new RelayCommand(_ => CopySelectedIPAddressesAction());
-
-    private void CopySelectedIPAddressesAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedSubnetResult.Total.ToString());
-    }
-
-    public ICommand CopySelectedSubnetmaskCommand => new RelayCommand(_ => CopySelectedSubnetmaskAction());
-
-    private void CopySelectedSubnetmaskAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedSubnetResult.Netmask.ToString());
-    }
-
-    public ICommand CopySelectedCidrCommand => new RelayCommand(_ => CopySelectedCidrAction());
-
-    private void CopySelectedCidrAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedSubnetResult.Cidr.ToString());
-    }
-
-    public ICommand CopySelectedFirstIPAddressCommand => new RelayCommand(_ => CopySelectedFirstIPAddressAction());
-
-    private void CopySelectedFirstIPAddressAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedSubnetResult.FirstUsable.ToString());
-    }
-
-    public ICommand CopySelectedLastIPAddressCommand => new RelayCommand(_ => CopySelectedLastIPAddressAction());
-
-    private void CopySelectedLastIPAddressAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedSubnetResult.LastUsable.ToString());
-    }
-
-    public ICommand CopySelectedHostCommand => new RelayCommand(_ => CopySelectedHostAction());
-
-    private void CopySelectedHostAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedSubnetResult.Usable.ToString());
     }
 
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
@@ -227,7 +171,7 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
 
             try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? SubnetsResult : new ObservableCollection<IPNetworkInfo>(SelectedSubnetResults.Cast<IPNetworkInfo>().ToArray()));
+                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? Results : new ObservableCollection<IPNetworkInfo>(SelectedResults.Cast<IPNetworkInfo>().ToArray()));
             }
             catch (Exception ex)
             {
@@ -261,7 +205,7 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
     {            
         IsRunning = true;
 
-        SubnetsResult.Clear();
+        Results.Clear();
 
         var subnet = Subnet.Trim();
         var newSubnetmaskOrCidr = NewSubnetmask.Trim();                
@@ -301,7 +245,7 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
             {
                 Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
                 {                        
-                    SubnetsResult.Add(new IPNetworkInfo(network));
+                    Results.Add(new IPNetworkInfo(network));
                 }));
             }
         });

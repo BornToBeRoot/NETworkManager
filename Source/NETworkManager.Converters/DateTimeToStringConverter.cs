@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Globalization;
+using System.Net;
 using System.Windows.Data;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Converters;
 
-public sealed class IntToStringConverter : IValueConverter
+public sealed class DateTimeToStringConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value is int intValue ?
-            intValue == 0 ? "-/-" : intValue.ToString() :
-             "-/-";
+        return value is DateTime dateTime ? DateTimeHelper.DateTimeToString(dateTime) : "-/-";
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
