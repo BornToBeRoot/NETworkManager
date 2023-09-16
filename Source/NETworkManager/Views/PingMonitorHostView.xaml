@@ -51,8 +51,15 @@
                                 <ColumnDefinition Width="10" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.Host}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                            <ComboBox Grid.Column="2" x:Name="ComboBoxHost" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameAndOrIPAddress}" Style="{StaticResource HistoryComboBox}">
+                            <TextBlock Grid.Column="0" 
+                                       Text="{x:Static localization:Strings.Host}" 
+                                       Style="{DynamicResource DefaultTextBlock}" 
+                                       VerticalAlignment="Center" />
+                            <ComboBox Grid.Column="2" 
+                                      x:Name="ComboBoxHost" ItemsSource="{Binding HostHistoryView}" 
+                                      mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameAndOrIPAddress}" 
+                                      IsReadOnly="{Binding IsRunning}"
+                                      Style="{StaticResource HistoryComboBox}">
                                 <ComboBox.Text>
                                     <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
@@ -118,7 +125,7 @@
                     </Grid>
                     <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Hosts}" />
                     <ScrollViewer Grid.Row="3" Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Auto">
-                        <ListView ItemsSource="{Binding Hosts}" SelectedItem="{Binding SelectedHost}" Visibility="{Binding Hosts.Count, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}" Background="Transparent" BorderThickness="0" SelectionMode="Single">
+                        <ListView ItemsSource="{Binding HostsView}" SelectedItem="{Binding SelectedHost}" Visibility="{Binding Hosts.Count, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}" Background="Transparent" BorderThickness="0" SelectionMode="Single">
                             <ListView.ContextMenu>
                                 <ContextMenu Opened="ContextMenu_Opened" MinWidth="150">
                                     <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
@@ -345,7 +352,7 @@
                                 </Style.Triggers>
                             </Style>
                         </Grid.Style>
-                        <Button HorizontalAlignment="Center" Focusable="False" Margin="0,0,0,10">
+                        <Button HorizontalAlignment="Center" Margin="0,0,0,10">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
                                     <Setter Property="Command" Value="{Binding AddProfileCommand}" />

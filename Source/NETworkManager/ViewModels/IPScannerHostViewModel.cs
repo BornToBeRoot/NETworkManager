@@ -164,7 +164,7 @@ public class IPScannerHostViewModel : ViewModelBase, IProfileManager
 
         TabItems = new ObservableCollection<DragablzTabItem>
         {
-            new DragablzTabItem(Localization.Resources.Strings.NewTab, new IPScannerView(_tabId), _tabId)
+            new(Localization.Resources.Strings.NewTab, new IPScannerView(_tabId), _tabId)
         };
 
         // Profiles
@@ -191,14 +191,14 @@ public class IPScannerHostViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #region ICommand & Actions
-    public ICommand AddTabCommand => new RelayCommand(p => AddTabAction());
+    public ICommand AddTabCommand => new RelayCommand(_ => AddTabAction());
 
     private void AddTabAction()
     {
         AddTab();
     }
 
-    public ICommand ScanProfileCommand => new RelayCommand(p => ScanProfileAction(), ScanProfile_CanExecute);
+    public ICommand ScanProfileCommand => new RelayCommand(_ => ScanProfileAction(), ScanProfile_CanExecute);
 
     private bool ScanProfile_CanExecute(object obj)
     {
@@ -210,44 +210,44 @@ public class IPScannerHostViewModel : ViewModelBase, IProfileManager
         AddTab(SelectedProfile);
     }
 
-    public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
+    public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.IPScanner);
+        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.IPScanner).ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamic;
+    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
 
-    public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction(), ModifyProfile_CanExecute);
+    public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
     private void EditProfileAction()
     {
-        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
     }
 
-    public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction(), ModifyProfile_CanExecute);
+    public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
     }
 
-    public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction(), ModifyProfile_CanExecute);
+    public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
 
     private void DeleteProfileAction()
     {
-        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile });
+        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile }).ConfigureAwait(false);
     }
 
     public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()));
+        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString())).ConfigureAwait(false);
     }
 
-    public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
+    public ICommand ClearSearchCommand => new RelayCommand(_ => ClearSearchAction());
 
     private void ClearSearchAction()
     {
@@ -348,8 +348,8 @@ public class IPScannerHostViewModel : ViewModelBase, IProfileManager
         else
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
     }
-        
-    public void RefreshProfiles()
+
+    private void RefreshProfiles()
     {
         if (!_isViewActive)
             return;

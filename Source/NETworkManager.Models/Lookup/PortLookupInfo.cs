@@ -1,4 +1,7 @@
-﻿namespace NETworkManager.Models.Lookup;
+﻿using System.Diagnostics.CodeAnalysis;
+using NETworkManager.Models.Network;
+
+namespace NETworkManager.Models.Lookup;
 
 /// <summary>
 /// Class with information about a port, protocol and service.
@@ -13,7 +16,7 @@ public class PortLookupInfo
     /// <summary>
     /// Port protocol.
     /// </summary>
-    public PortLookup.Protocol Protocol { get; set; }
+    public TransportProtocol Protocol { get; set; }
 
     /// <summary>
     /// Service associated with the port number and protocol.
@@ -30,7 +33,8 @@ public class PortLookupInfo
     /// </summary>
     /// <param name="number">Port number.</param>
     /// <param name="protocol">Port protocol.</param>
-    public PortLookupInfo(int number, PortLookup.Protocol protocol)
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+    public PortLookupInfo(int number, TransportProtocol protocol)
     {
         Number = number;
         Protocol = protocol;
@@ -43,7 +47,7 @@ public class PortLookupInfo
     /// <param name="protocol">Port protocol.</param>
     /// <param name="service">Service associated with the port number and protocol.</param>
     /// <param name="description">Description of the service associated with the port number and protocol.</param>
-    public PortLookupInfo(int number, PortLookup.Protocol protocol, string service, string description) : this(number, protocol)
+    public PortLookupInfo(int number, TransportProtocol protocol, string service, string description) : this(number, protocol)
     {
         Service = service;
         Description = description;

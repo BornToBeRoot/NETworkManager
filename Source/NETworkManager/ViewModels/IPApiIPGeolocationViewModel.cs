@@ -38,9 +38,7 @@ public class IPApiIPGeolocationViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-
-    public bool CheckIPGeoApiEnabled => SettingsManager.Current.Dashboard_CheckIPApiIPGeolocation;
-    #endregion
+#endregion
 
     #region Constructor, load settings
     public IPApiIPGeolocationViewModel()
@@ -79,7 +77,7 @@ public class IPApiIPGeolocationViewModel : ViewModelBase
     private async Task CheckAsync()
     {
         // Check is disabled via settings
-        if (!CheckIPGeoApiEnabled)
+        if (!SettingsManager.Current.Dashboard_CheckIPApiIPGeolocation)
             return;
 
         // Don't check multiple times if already running
@@ -104,10 +102,8 @@ public class IPApiIPGeolocationViewModel : ViewModelBase
         switch (e.PropertyName)
         {
             case nameof(SettingsInfo.Dashboard_CheckIPApiIPGeolocation):
-                OnPropertyChanged(nameof(CheckIPGeoApiEnabled));
-
                 // Check if enabled via settings
-                if (CheckIPGeoApiEnabled)
+                if (SettingsManager.Current.Dashboard_CheckIPApiIPGeolocation)
                     Check();
 
                 break;

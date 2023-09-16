@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
-using System.Management.Automation;
 using System.Threading.Tasks;
 using Windows.Devices.WiFi;
 using Windows.Networking.Connectivity;
 using Windows.Security.Credentials;
+using log4net;
 
 //https://docs.microsoft.com/en-us/uwp/api/windows.devices.wifi.wifiadapter.requestaccessasync
 //var access = await WiFiAdapter.RequestAccessAsync() == WiFiAccessStatus.Allowed;
@@ -18,6 +18,8 @@ namespace NETworkManager.Models.Network;
 /// </summary>
 public static class WiFi
 {
+    private static readonly ILog Log = LogManager.GetLogger(typeof(WiFi));
+    
     /// <summary>
     /// Get all WiFi adapters async with additional information from <see cref="NetworkInterface"/>.
     /// </summary>
@@ -26,21 +28,31 @@ public static class WiFi
     {
         List<WiFiAdapterInfo> wifiAdapterInfos = new();
 
-        IReadOnlyList<WiFiAdapter> wifiAdapters = await WiFiAdapter.FindAllAdaptersAsync();
+        var wifiAdapters = await WiFiAdapter.FindAllAdaptersAsync();
 
-        if (wifiAdapters.Count > 0)
+        if (wifiAdapters.Count <= 0) 
+            return wifiAdapterInfos;
+        
+        var networkInterfaces = await NetworkInterface.GetNetworkInterfacesAsync();
+
+        foreach (var wiFiAdapter in wifiAdapters)
         {
-            List<NetworkInterfaceInfo> networkInterfaces = await NetworkInterface.GetNetworkInterfacesAsync();
+            var wiFiAdapterId = wiFiAdapter.NetworkAdapter.NetworkAdapterId.ToString();
+                
+            var networkInterface = networkInterfaces.FirstOrDefault(x => x.Id.TrimStart('{').TrimEnd('}')
+                .Equals(wiFiAdapterId, StringComparison.OrdinalIgnoreCase));
 
-            foreach (var wifiAdapter in wifiAdapters)
+            if (networkInterface != null)
             {
-                var networkInteraceInfo = networkInterfaces.FirstOrDefault(x => x.Id.TrimStart('{').TrimEnd('}').Equals(wifiAdapter.NetworkAdapter.NetworkAdapterId.ToString(), StringComparison.OrdinalIgnoreCase));
-
                 wifiAdapterInfos.Add(new WiFiAdapterInfo
                 {
-                    NetworkInterfaceInfo = networkInteraceInfo,
-                    WiFiAdapter = wifiAdapter
+                    NetworkInterfaceInfo = networkInterface,
+                    WiFiAdapter = wiFiAdapter
                 });
+            }
+            else
+            {
+                Log.Warn($"Could not find network interface for WiFi adapter with id: {wiFiAdapterId}");
             }
         }
 
@@ -48,7 +60,7 @@ public static class WiFi
     }
 
     /// <summary>
-    /// Get all available WiFi networks for an adapter with additional informations.
+    /// Get all available WiFi networks for an adapter with additional information's.
     /// </summary>
     /// <param name="adapter">WiFi adapter as <see cref="WiFiAdapter"/>.</param>
     /// <returns>A report as <see cref="WiFiNetworkScanInfo"/> including a list of <see cref="WiFiNetworkInfo"/>.</returns>
@@ -58,21 +70,16 @@ public static class WiFi
         await adapter.ScanAsync();
 
         // Try to get the current connected wifi network of this network adapter
-        var (ssid, bssid) = TryGetConnectedNetworkFromWiFiAdapter(adapter.NetworkAdapter.NetworkAdapterId.ToString());
+        var (_, bssid) = TryGetConnectedNetworkFromWiFiAdapter(adapter.NetworkAdapter.NetworkAdapterId.ToString());
 
-        List<WiFiNetworkInfo> wifiNetworkInfos = new();
-
-        foreach (var availableNetwork in adapter.NetworkReport.AvailableNetworks)
+        var wifiNetworkInfos = adapter.NetworkReport.AvailableNetworks.Select(availableNetwork => new WiFiNetworkInfo
         {
-            wifiNetworkInfos.Add(new WiFiNetworkInfo()
-            {
-                AvailableNetwork = availableNetwork,
-                IsHidden = string.IsNullOrEmpty(availableNetwork.Ssid),
-                IsConnected = availableNetwork.Bssid.Equals(bssid, StringComparison.OrdinalIgnoreCase)
-            });
-        }
+            AvailableNetwork = availableNetwork, 
+            IsHidden = string.IsNullOrEmpty(availableNetwork.Ssid), 
+            IsConnected = availableNetwork.Bssid.Equals(bssid, StringComparison.OrdinalIgnoreCase)
+        }).ToList();
 
-        return new WiFiNetworkScanInfo()
+        return new WiFiNetworkScanInfo
         {
             NetworkAdapterId = adapter.NetworkAdapter.NetworkAdapterId,
             WiFiNetworkInfos = wifiNetworkInfos,
@@ -90,16 +97,17 @@ public static class WiFi
     /// </summary>
     /// <param name="adapterId">GUID of the WiFi network adapter.</param>
     /// <returns>SSID and BSSID of the connected wifi network. Values are null if not detected.</returns>
+    // ReSharper disable once UnusedTupleComponentInReturnValue
     private static (string SSID, string BSSID) TryGetConnectedNetworkFromWiFiAdapter(string adapterId)
     {
         string ssid = null;
         string bssid = null;
 
-        using (System.Management.Automation.PowerShell powerShell = System.Management.Automation.PowerShell.Create())
+        using (var powerShell = System.Management.Automation.PowerShell.Create())
         {
             powerShell.AddScript("netsh wlan show interfaces");
 
-            Collection<PSObject> psOutputs = powerShell.Invoke();
+            var psOutputs = powerShell.Invoke();
 
             /*
             if (powerShell.Streams.Error.Count > 0) { // Handle error? }
@@ -115,29 +123,30 @@ public static class WiFi
             * BSSID : 6a:d7:...
             */
 
-            bool foundAdapter = false;
+            var foundAdapter = false;
 
-            foreach (PSObject outputItem in psOutputs)
+            foreach (var outputItem in psOutputs)
             {
                 // Find line with the network adapter id...
                 if (outputItem.ToString().Contains(adapterId, StringComparison.OrdinalIgnoreCase))
                     foundAdapter = true;
 
-                if (foundAdapter)
-                {
-                    // Extract SSID from the line
-                    if (outputItem.ToString().Contains(" SSID ", StringComparison.OrdinalIgnoreCase))
-                        ssid = outputItem.ToString().Split(':')[1].Trim();
+                // ...and skip all lines until we found it.
+                if (!foundAdapter) 
+                    continue;
+                
+                // Extract SSID from the line
+                if (outputItem.ToString().Contains(" SSID ", StringComparison.OrdinalIgnoreCase))
+                    ssid = outputItem.ToString().Split(':')[1].Trim();
 
-                    // Extract BSSID from the line
-                    if (outputItem.ToString().Contains(" BSSID ", StringComparison.OrdinalIgnoreCase))
-                        bssid = outputItem.ToString().Split(':', 2)[1].Trim();
+                // Extract BSSID from the line
+                if (outputItem.ToString().Contains(" BSSID ", StringComparison.OrdinalIgnoreCase))
+                    bssid = outputItem.ToString().Split(':', 2)[1].Trim();
 
-                    // Break if we got the values, otherwise we might overwrite them
-                    // with values from another adapter.
-                    if (!string.IsNullOrEmpty(ssid) && !string.IsNullOrEmpty(bssid))
-                        break;
-                }
+                // Break if we got the values, otherwise we might overwrite them
+                // with values from another adapter.
+                if (!string.IsNullOrEmpty(ssid) && !string.IsNullOrEmpty(bssid))
+                    break;
             }
         }
 
@@ -240,7 +249,7 @@ public static class WiFi
     /// <returns>WiFi channel like 3 or 48.</returns>
     public static int GetChannelFromChannelFrequency(int kilohertz)
     {
-        return (double)ConvertChannelFrequencyToGigahertz(kilohertz) switch
+        return ConvertChannelFrequencyToGigahertz(kilohertz) switch
         {
             // 2.4 GHz
             2.412 => 1,
@@ -305,7 +314,7 @@ public static class WiFi
     {
         var x = ConvertChannelFrequencyToGigahertz(kilohertz);
 
-        return x >= 2.412 && x <= 2.472;
+        return x is >= 2.412 and <= 2.472;
     }
 
     /// <summary>
@@ -317,14 +326,14 @@ public static class WiFi
     {
         var x = ConvertChannelFrequencyToGigahertz(kilohertz);
 
-        return x >= 5.180 && x <= 5.825;
+        return x is >= 5.180 and <= 5.825;
     }
 
     /// <summary>
     /// Get the human readable network authentication type.
     /// </summary>
     /// <param name="networkAuthenticationType">WiFi network authentication type as <see cref="NetworkAuthenticationType"/>.</param>
-    /// <returns>Human readable autentication type as string like "Open" or "WPA2 Enterprise".</returns>
+    /// <returns>Human readable authentication type as string like "Open" or "WPA2 Enterprise".</returns>
     public static string GetHumanReadableNetworkAuthenticationType(NetworkAuthenticationType networkAuthenticationType)
     {
         return networkAuthenticationType switch
@@ -337,7 +346,7 @@ public static class WiFi
             NetworkAuthenticationType.WpaPsk => "WPA PSK",
             NetworkAuthenticationType.SharedKey80211 => "WEP",
             NetworkAuthenticationType.Ihv => "IHV",
-            NetworkAuthenticationType.Unknown => "Unkown",
+            NetworkAuthenticationType.Unknown => "Unknown",
             NetworkAuthenticationType.None => "-/-",
             _ => "-/-",
         };
@@ -348,7 +357,7 @@ public static class WiFi
     /// </summary>
     /// <param name="phyKind">WiFi network phy kind as <see cref="WiFiPhyKind"/>.</param>
     /// <returns>Human readable phy kind as string like "802.11g" or "802.11ax".</returns>
-    public static string GetHumandReadablePhyKind(WiFiPhyKind phyKind)
+    public static string GetHumanReadablePhyKind(WiFiPhyKind phyKind)
     {
         return phyKind switch
         {

@@ -31,19 +31,19 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     private readonly DispatcherTimer _searchDispatcherTimer = new();
     private BandwidthMeter _bandwidthMeter;
 
-    private readonly bool _isLoading = true;
+    private readonly bool _isLoading;
     private bool _isViewActive = true;
 
-    private bool _isNetworkInteraceLoading;
+    private bool _isNetworkInterfaceLoading;
     public bool IsNetworkInterfaceLoading
     {
-        get => _isNetworkInteraceLoading;
+        get => _isNetworkInterfaceLoading;
         set
         {
-            if (value == _isNetworkInteraceLoading)
+            if (value == _isNetworkInterfaceLoading)
                 return;
 
-            _isNetworkInteraceLoading = value;
+            _isNetworkInterfaceLoading = value;
             OnPropertyChanged();
         }
     }
@@ -94,7 +94,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     public string StatusMessage
     {
         get => _statusMessage;
-        set
+        private set
         {
             if (value == _statusMessage)
                 return;
@@ -109,7 +109,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     public List<NetworkInterfaceInfo> NetworkInterfaces
     {
         get => _networkInterfaces;
-        set
+        private set
         {
             if (value == _networkInterfaces)
                 return;
@@ -209,16 +209,16 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    private long _bandwithBytesReceivedSpeed;
+    private long _bandwidthBytesReceivedSpeed;
     public long BandwidthBytesReceivedSpeed
     {
-        get => _bandwithBytesReceivedSpeed;
+        get => _bandwidthBytesReceivedSpeed;
         set
         {
-            if (value == _bandwithBytesReceivedSpeed)
+            if (value == _bandwidthBytesReceivedSpeed)
                 return;
 
-            _bandwithBytesReceivedSpeed = value;
+            _bandwidthBytesReceivedSpeed = value;
             OnPropertyChanged();
         }
     }
@@ -397,11 +397,12 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #region Profiles
-    public ICollectionView _profiles;
+
+    private ICollectionView _profiles;
     public ICollectionView Profiles
     {
         get => _profiles;
-        set
+        private set
         {
             if (value == _profiles)
                 return;
@@ -521,9 +522,11 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     #region Constructor, LoadSettings, OnShutdown
     public NetworkInterfaceViewModel(IDialogCoordinator instance)
     {
+        _isLoading = true;
+        
         _dialogCoordinator = instance;
 
-        LoadNetworkInterfaces();
+        LoadNetworkInterfaces().ConfigureAwait(false);
 
         InitialBandwidthChart();
 
@@ -536,13 +539,11 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
 
         // Detect if network address or status changed...
-        NetworkChange.NetworkAvailabilityChanged += (sender, args) => ReloadNetworkInterfaces();
-        NetworkChange.NetworkAddressChanged += (sender, args) => ReloadNetworkInterfaces();
+        NetworkChange.NetworkAvailabilityChanged += (_, _) => ReloadNetworkInterfaces();
+        NetworkChange.NetworkAddressChanged += (_, _) => ReloadNetworkInterfaces();
 
         LoadSettings();
-
-        SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
-
+        
         _isLoading = false;
     }
 
@@ -568,7 +569,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
             }
         };
 
-        FormatterDate = value => new DateTime((long)(value * TimeSpan.FromHours(1).Ticks)).ToString("hh:mm:ss");
+        FormatterDate = value => DateTimeHelper.DateTimeToTimeString(new DateTime((long)(value * TimeSpan.FromHours(1).Ticks)));
         FormatterSpeed = value => $"{FileSizeConverter.GetBytesReadable((long)value * 8)}it/s";
     }
 
@@ -604,7 +605,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #region ICommands & Actions
-    public ICommand ReloadNetworkInterfacesCommand => new RelayCommand(p => ReloadNetworkInterfacesAction(), ReloadNetworkInterfaces_CanExecute);
+    public ICommand ReloadNetworkInterfacesCommand => new RelayCommand(_ => ReloadNetworkInterfacesAction(), ReloadNetworkInterfaces_CanExecute);
 
     private bool ReloadNetworkInterfaces_CanExecute(object obj) => !IsNetworkInterfaceLoading && Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
@@ -613,60 +614,60 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         ReloadNetworkInterfaces();
     }
     
-    public ICommand ApplyConfigurationCommand => new RelayCommand(p => ApplyConfigurationAction(), ApplyConfiguration_CanExecute);
+    public ICommand ApplyConfigurationCommand => new RelayCommand(_ => ApplyConfigurationAction(), ApplyConfiguration_CanExecute);
 
-    private bool ApplyConfiguration_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool ApplyConfiguration_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
-    public void ApplyConfigurationAction()
+    private void ApplyConfigurationAction()
     {
-        ApplyConfiguration();
+        ApplyConfiguration().ConfigureAwait(false);
     }
 
-    public ICommand ApplyProfileConfigCommand => new RelayCommand(p => ApplyProfileProfileAction());
+    public ICommand ApplyProfileConfigCommand => new RelayCommand(_ => ApplyProfileProfileAction());
 
     private void ApplyProfileProfileAction()
     {
-        ApplyConfigurationFromProfile();
+        ApplyConfigurationFromProfile().ConfigureAwait(false);
     }
 
-    public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
+    public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.NetworkInterface);
+        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.NetworkInterface).ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamic;
+    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
 
-    public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction(), ModifyProfile_CanExecute);
+    public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
     private void EditProfileAction()
     {
-        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
     }
 
-    public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction(), ModifyProfile_CanExecute);
+    public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
     }
 
-    public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction(), ModifyProfile_CanExecute);
+    public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
 
     private void DeleteProfileAction()
     {
-        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile });
+        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile }).ConfigureAwait(false);
     }
 
     public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()));
+        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString())).ConfigureAwait(false);
     }
     
-    public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
+    public ICommand ClearSearchCommand => new RelayCommand(_ => ClearSearchAction());
 
     private void ClearSearchAction()
     {
@@ -674,16 +675,16 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     }
 
     #region Additional commands
-    private bool AdditionalCommands_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool AdditionalCommands_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
     
-    public ICommand OpenNetworkConnectionsCommand => new RelayCommand(p => OpenNetworkConnectionsAction(), AdditionalCommands_CanExecute);
+    public ICommand OpenNetworkConnectionsCommand => new RelayCommand(_ => OpenNetworkConnectionsAction(), AdditionalCommands_CanExecute);
 
-    public void OpenNetworkConnectionsAction()
+    private void OpenNetworkConnectionsAction()
     {
-        OpenNetworkConnectionsAsync();
+        OpenNetworkConnectionsAsync().ConfigureAwait(false);
     }
 
-    public ICommand IPScannerCommand => new RelayCommand(p => IPScannerAction(), AdditionalCommands_CanExecute);
+    public ICommand IPScannerCommand => new RelayCommand(_ => IPScannerAction(), AdditionalCommands_CanExecute);
 
     private void IPScannerAction()
     {
@@ -696,56 +697,56 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         EventSystem.RedirectToApplication(ApplicationName.IPScanner, $"{ipTuple.Item1}/{Subnetmask.ConvertSubnetmaskToCidr(ipTuple.Item2)}");
     }
 
-    public ICommand FlushDNSCommand => new RelayCommand(p => FlushDNSAction(), AdditionalCommands_CanExecute);
+    public ICommand FlushDNSCommand => new RelayCommand(_ => FlushDNSAction(), AdditionalCommands_CanExecute);
 
     private void FlushDNSAction()
     {
-        FlushDNSAsync();
+        FlushDNSAsync().ConfigureAwait(false);
     }
     
-    public ICommand ReleaseRenewCommand => new RelayCommand(p => ReleaseRenewAction(), AdditionalCommands_CanExecute);
+    public ICommand ReleaseRenewCommand => new RelayCommand(_ => ReleaseRenewAction(), AdditionalCommands_CanExecute);
 
     private void ReleaseRenewAction()
     {
-        ReleaseRenewAsync(IPConfigReleaseRenewMode.ReleaseRenew);
+        ReleaseRenewAsync(IPConfigReleaseRenewMode.ReleaseRenew).ConfigureAwait(false);
     }
     
-    public ICommand ReleaseCommand => new RelayCommand(p => ReleaseAction(), AdditionalCommands_CanExecute);
+    public ICommand ReleaseCommand => new RelayCommand(_ => ReleaseAction(), AdditionalCommands_CanExecute);
 
     private void ReleaseAction()
     {
-        ReleaseRenewAsync(IPConfigReleaseRenewMode.Release);
+        ReleaseRenewAsync(IPConfigReleaseRenewMode.Release).ConfigureAwait(false);
     }       
 
-    public ICommand RenewCommand => new RelayCommand(p => RenewAction(), AdditionalCommands_CanExecute);
+    public ICommand RenewCommand => new RelayCommand(_ => RenewAction(), AdditionalCommands_CanExecute);
 
     private void RenewAction()
     {
-        ReleaseRenewAsync(IPConfigReleaseRenewMode.Renew);
+        ReleaseRenewAsync(IPConfigReleaseRenewMode.Renew).ConfigureAwait(false);
     }
 
-    public ICommand ReleaseRenew6Command => new RelayCommand(p => ReleaseRenew6Action(), AdditionalCommands_CanExecute);
+    public ICommand ReleaseRenew6Command => new RelayCommand(_ => ReleaseRenew6Action(), AdditionalCommands_CanExecute);
 
     private void ReleaseRenew6Action()
     {
-        ReleaseRenewAsync(IPConfigReleaseRenewMode.ReleaseRenew6);
+        ReleaseRenewAsync(IPConfigReleaseRenewMode.ReleaseRenew6).ConfigureAwait(false);
     }
 
-    public ICommand Release6Command => new RelayCommand(p => Release6Action(), AdditionalCommands_CanExecute);
+    public ICommand Release6Command => new RelayCommand(_ => Release6Action(), AdditionalCommands_CanExecute);
 
     private void Release6Action()
     {
-        ReleaseRenewAsync(IPConfigReleaseRenewMode.Release6);
+        ReleaseRenewAsync(IPConfigReleaseRenewMode.Release6).ConfigureAwait(false);
     }
 
-    public ICommand Renew6Command => new RelayCommand(p => Renew6Action(), AdditionalCommands_CanExecute);
+    public ICommand Renew6Command => new RelayCommand(_ => Renew6Action(), AdditionalCommands_CanExecute);
 
     private void Renew6Action()
     {
-        ReleaseRenewAsync(IPConfigReleaseRenewMode.Renew);
+        ReleaseRenewAsync(IPConfigReleaseRenewMode.Renew).ConfigureAwait(false);
     }
 
-    public ICommand AddIPv4AddressCommand => new RelayCommand(p => AddIPv4AddressAction(), AdditionalCommands_CanExecute);
+    public ICommand AddIPv4AddressCommand => new RelayCommand(_ => AddIPv4AddressAction().ConfigureAwait(false), AdditionalCommands_CanExecute);
 
     private async Task AddIPv4AddressAction()
     {
@@ -754,26 +755,25 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
             Title = Localization.Resources.Strings.AddIPv4Address
         };
 
-        var IPAddressAndSubnetmaskViewModel = new IPAddressAndSubnetmaskViewModel(async instance =>
+        var ipAddressAndSubnetmaskViewModel = new IPAddressAndSubnetmaskViewModel(async instance =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            AddIPv4Address(instance.IPAddress, instance.Subnetmask);
-        }, instance =>
+            await AddIPv4Address(instance.IPAddress, instance.Subnetmask);
+        }, _ =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
         });
 
         customDialog.Content = new IPAddressAndSubnetmaskDialog
         {
-            DataContext = IPAddressAndSubnetmaskViewModel                
+            DataContext = ipAddressAndSubnetmaskViewModel                
         };
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
-
-    public ICommand RemoveIPv4AddressCommand => new RelayCommand(p => RemoveIPv4AddressAction(), AdditionalCommands_CanExecute);
+    public ICommand RemoveIPv4AddressCommand => new RelayCommand(_ => RemoveIPv4AddressAction().ConfigureAwait(false), AdditionalCommands_CanExecute);
 
     private async Task RemoveIPv4AddressAction()
     {
@@ -786,8 +786,8 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            RemoveIPv4Address(instance.SelectedValue.Split("/")[0]);
-        }, instance =>
+           await RemoveIPv4Address(instance.SelectedValue.Split("/")[0]);
+        }, _ =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
         }, SelectedNetworkInterface.IPv4Address.Select(x => $"{x.Item1}/{Subnetmask.ConvertSubnetmaskToCidr(x.Item2)}").ToList(), Localization.Resources.Strings.IPv4Address);
@@ -850,8 +850,8 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
             ConfigSecondaryDNSServer = dnsServers.Count > 1 ? dnsServers[1].ToString() : string.Empty;
         }
     }
-    
-    public async Task ApplyConfiguration()
+
+    private async Task ApplyConfiguration()
     {
         IsConfigurationRunning = true;
         IsStatusMessageDisplayed = false;
@@ -906,7 +906,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    public async Task ApplyConfigurationFromProfile()
+    private async Task ApplyConfigurationFromProfile()
     {
         IsConfigurationRunning = true;
         IsStatusMessageDisplayed = false;
@@ -1004,8 +1004,8 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
         IsConfigurationRunning = false;
     }
-    
-    public async Task AddIPv4Address(string ipAddress, string subnetmaskOrCidr)
+
+    private async Task AddIPv4Address(string ipAddress, string subnetmaskOrCidr)
     {
         IsConfigurationRunning = true;
         IsStatusMessageDisplayed = false;
@@ -1040,7 +1040,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    public async Task RemoveIPv4Address(string ipAddress)
+    private async Task RemoveIPv4Address(string ipAddress)
     {
         IsConfigurationRunning = true;
         IsStatusMessageDisplayed = false;
@@ -1092,7 +1092,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         _canProfileWidthChange = true;
     }
 
-    public void ResetBandwidthChart()
+    private void ResetBandwidthChart()
     {
         if (Series == null)
             return;
@@ -1128,20 +1128,22 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void ResumeBandwidthMeter()
     {
-        if (_bandwidthMeter != null && !_bandwidthMeter.IsRunning)
-        {
-            ResetBandwidthChart();
+        if (_bandwidthMeter is not { IsRunning: false }) 
+            return;
+        
+        ResetBandwidthChart();
 
-            _resetBandwidthStatisticOnNextUpdate = true;
+        _resetBandwidthStatisticOnNextUpdate = true;
 
-            _bandwidthMeter.Start();
-        }
+        _bandwidthMeter.Start();
     }
 
     private void StopBandwidthMeter()
     {
-        if (_bandwidthMeter != null && _bandwidthMeter.IsRunning)
-            _bandwidthMeter.Stop();
+        if (_bandwidthMeter is not { IsRunning: true }) 
+            return;
+        
+        _bandwidthMeter.Stop();
     }
 
     public void OnViewVisible()
@@ -1195,8 +1197,8 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         else
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
     }
-        
-    public void RefreshProfiles()
+
+    private void RefreshProfiles()
     {
         if (!_isViewActive)
             return;
@@ -1261,11 +1263,6 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     {
         StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
         IsStatusMessageDisplayed = true;
-    }
-
-    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-        
     }
     #endregion
 }

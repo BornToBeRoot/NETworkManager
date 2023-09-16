@@ -36,7 +36,7 @@ public static class SettingsManager
     /// <summary>
     /// Settings that are currently loaded.
     /// </summary>
-    public static SettingsInfo Current { get; set; }
+    public static SettingsInfo Current { get; private set; }
 
     /// <summary>
     /// Indicates if the HotKeys have changed. May need to be reworked if we add more HotKeys.
@@ -154,7 +154,6 @@ public static class SettingsManager
     }
     #endregion
     
-
     #region Upgrade
     /// <summary>
     /// Method to upgrade the settings.
@@ -204,7 +203,7 @@ public static class SettingsManager
         Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.AWSSessionManager));
 
         var powerShellPath = "";
-        foreach (var file in PowerShell.GetDefaultIntallationPaths)
+        foreach (var file in PowerShell.GetDefaultInstallationPaths)
         {
             if (File.Exists(file))
             {
@@ -277,7 +276,7 @@ public static class SettingsManager
 
         // Add SNMP OID profiles
         Log.Info($"Add SNMP OID profiles...");
-        Current.SNMP_OIDProfiles = new ObservableCollection<SNMPOIDProfileInfo>(SNMPOIDProfile.GetDefaultList());
+        Current.SNMP_OidProfiles = new ObservableCollection<SNMPOIDProfileInfo>(SNMPOIDProfile.GetDefaultList());
     }
 
     /// <summary>

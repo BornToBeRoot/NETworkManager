@@ -15,7 +15,7 @@ public partial class Connection
 
     public static List<ConnectionInfo> GetActiveTcpConnections()
     {
-        return IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpConnections().Select(tcpInfo => new ConnectionInfo(Protocol.TCP, tcpInfo.LocalEndPoint.Address, tcpInfo.LocalEndPoint.Port, tcpInfo.RemoteEndPoint.Address, tcpInfo.RemoteEndPoint.Port, tcpInfo.State)).ToList();
+        return IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpConnections().Select(tcpInfo => new ConnectionInfo(TransportProtocol.Tcp, tcpInfo.LocalEndPoint.Address, tcpInfo.LocalEndPoint.Port, tcpInfo.RemoteEndPoint.Address, tcpInfo.RemoteEndPoint.Port, tcpInfo.State)).ToList();
     }
     #endregion
 }

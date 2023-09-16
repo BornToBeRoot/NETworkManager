@@ -160,7 +160,7 @@ public class PingMonitorViewModel : ViewModelBase
             }
         };
 
-        FormatterDate = value => new DateTime((long)(value * TimeSpan.FromHours(1).Ticks)).ToString("hh:mm:ss");
+        FormatterDate = value => DateTimeHelper.DateTimeToTimeString(new DateTime((long)(value * TimeSpan.FromHours(1).Ticks)));
         FormatterPingTime = value => $"{value} ms";
     }
 
@@ -331,7 +331,7 @@ public class PingMonitorViewModel : ViewModelBase
 
             SettingsManager.Current.PingMonitor_ExportFileType = instance.FileType;
             SettingsManager.Current.PingMonitor_ExportFilePath = instance.FilePath;
-        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportFileType[] { ExportFileType.CSV, ExportFileType.XML, ExportFileType.JSON }, false, SettingsManager.Current.PingMonitor_ExportFileType, SettingsManager.Current.PingMonitor_ExportFilePath);
+        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportFileType[] { ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json }, false, SettingsManager.Current.PingMonitor_ExportFileType, SettingsManager.Current.PingMonitor_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {
@@ -352,14 +352,12 @@ public class PingMonitorViewModel : ViewModelBase
     #region Events
     private void Ping_PingReceived(object sender, PingReceivedArgs e)
     {
-        var pingInfo = PingInfo.Parse(e);
-
         // Calculate statistics
         Transmitted++;
 
         LvlChartsDefaultInfo timeInfo;
 
-        if (pingInfo.Status == System.Net.NetworkInformation.IPStatus.Success)
+        if (e.Args.Status == System.Net.NetworkInformation.IPStatus.Success)
         {
             if (!IsReachable)
             {
@@ -369,7 +367,7 @@ public class PingMonitorViewModel : ViewModelBase
 
             Received++;
 
-            timeInfo = new LvlChartsDefaultInfo(pingInfo.Timestamp, pingInfo.Time);
+            timeInfo = new LvlChartsDefaultInfo(e.Args.Timestamp, e.Args.Time);
         }
         else
         {
@@ -381,7 +379,7 @@ public class PingMonitorViewModel : ViewModelBase
 
             Lost++;
 
-            timeInfo = new LvlChartsDefaultInfo(pingInfo.Timestamp, double.NaN);
+            timeInfo = new LvlChartsDefaultInfo(e.Args.Timestamp, double.NaN);
         }
 
         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
@@ -393,7 +391,7 @@ public class PingMonitorViewModel : ViewModelBase
         }));
 
         // Add to history
-        _pingInfoList.Add(pingInfo);
+        _pingInfoList.Add(e.Args);
     }
 
     private void Ping_UserHasCanceled(object sender, EventArgs e)

@@ -6,22 +6,22 @@
 public enum ExportFileType
 {
     /// <summary>
-    /// CSV file.
+    /// Csv file.
     /// </summary>
-    CSV,
+    Csv,
 
     /// <summary>
-    /// XML file.
+    /// Xml file.
     /// </summary>
-    XML,
+    Xml,
 
     /// <summary>
-    /// JSON file.
+    /// Json file.
     /// </summary>
-    JSON,
+    Json,
 
     /// <summary>
-    /// TXT file.
+    /// Text file.
     /// </summary>
-    TXT
+    Txt
 }

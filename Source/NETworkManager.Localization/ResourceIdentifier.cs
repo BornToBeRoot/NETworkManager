@@ -4,8 +4,7 @@ public enum ResourceIdentifier
 {
     Accent,
     ApplicationName,
-    ConnectionState,
-    DiscoveryProtocolIdentifier,
+    DiscoveryProtocol,
     IPStatus,
     PortState,
     ProfileViewName,

@@ -1,7 +1,6 @@
 ﻿using NETworkManager.Models.Lookup;
 using NETworkManager.Utilities;
 using System;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -9,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NETworkManager.Models.Network;
 
-public class PortScanner
+public sealed class PortScanner
 {
     #region Variables
     private int _progressValue;
@@ -20,28 +19,28 @@ public class PortScanner
     #region Events
     public event EventHandler<PortScannerPortScannedArgs> PortScanned;
 
-    protected virtual void OnPortScanned(PortScannerPortScannedArgs e)
+    private void OnPortScanned(PortScannerPortScannedArgs e)
     {
         PortScanned?.Invoke(this, e);
     }
 
     public event EventHandler ScanComplete;
 
-    protected virtual void OnScanComplete()
+    private void OnScanComplete()
     {
         ScanComplete?.Invoke(this, EventArgs.Empty);
     }
 
     public event EventHandler<ProgressChangedArgs> ProgressChanged;
 
-    public virtual void OnProgressChanged()
+    private void OnProgressChanged()
     {
         ProgressChanged?.Invoke(this, new ProgressChangedArgs(_progressValue));
     }
 
     public event EventHandler UserHasCanceled;
 
-    protected virtual void OnUserHasCanceled()
+    private void OnUserHasCanceled()
     {
         UserHasCanceled?.Invoke(this, EventArgs.Empty);
     }
@@ -86,7 +85,7 @@ public class PortScanner
                         var dnsResolverTask = DNSClient.GetInstance().ResolvePtrAsync(ipAddress);
 
                         // Wait for task inside a Parallel.Foreach
-                        dnsResolverTask.Wait();
+                        dnsResolverTask.Wait(cancellationToken);
 
                         if (!dnsResolverTask.Result.HasError)
                             hostname = dnsResolverTask.Result.Value;
@@ -98,7 +97,7 @@ public class PortScanner
                         // Test if port is open
                         using (var tcpClient = new TcpClient(ipAddress.AddressFamily))
                         {
-                            PortState portState = PortState.None;
+                            var portState = PortState.None;
 
                             try
                             {
@@ -115,14 +114,15 @@ public class PortScanner
                             }
                             finally
                             {
-                                tcpClient?.Close();
+                                tcpClient.Close();
 
                                 if (_options.ShowAllResults || portState == PortState.Open)
-                                    OnPortScanned(new PortScannerPortScannedArgs(ipAddress, hostname, port, PortLookup.GetByPortAndProtocol(port), portState));
+                                    OnPortScanned(new PortScannerPortScannedArgs(
+                                        new PortScannerPortInfo(ipAddress, hostname, port, PortLookup.LookupByPortAndProtocol(port), portState)));
                             }
                         }
 
-                        IncreaseProgess();
+                        IncreaseProgress();
                     });
                 });
             }
@@ -137,7 +137,7 @@ public class PortScanner
         }, cancellationToken);
     }
 
-    private void IncreaseProgess()
+    private void IncreaseProgress()
     {
         // Increase the progress                        
         Interlocked.Increment(ref _progressValue);

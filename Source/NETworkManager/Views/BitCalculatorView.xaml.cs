@@ -7,7 +7,7 @@ namespace NETworkManager.Views;
 
 public partial class BitCalculatorView
 {
-    private readonly BitCalculatorViewModel _viewModel = new(DialogCoordinator.Instance);
+    private readonly BitCalculatorViewModel _viewModel = new();
 
     public BitCalculatorView()
     {

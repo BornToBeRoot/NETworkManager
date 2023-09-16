@@ -41,8 +41,15 @@
                         <ColumnDefinition Width="10" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.Domain}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                    <ComboBox Grid.Column="2" x:Name="ComboBoxWebsiteUri" ItemsSource="{Binding WebsiteUriHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleDomain}" IsEnabled="{Binding IsWhoisRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                    <TextBlock Grid.Column="0" 
+                               Text="{x:Static localization:Strings.Domain}" 
+                               Style="{DynamicResource DefaultTextBlock}" 
+                               VerticalAlignment="Center" />
+                    <ComboBox Grid.Column="2" 
+                              x:Name="ComboBoxWebsiteUri" ItemsSource="{Binding WebsiteUriHistoryView}" 
+                              mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleDomain}" 
+                              IsReadOnly="{Binding IsRunning}" 
+                              Style="{StaticResource HistoryComboBox}">
                         <ComboBox.Text>
                             <Binding Path="Domain" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
@@ -52,7 +59,7 @@
                             </Binding>
                         </ComboBox.Text>
                     </ComboBox>
-                    <Button Grid.Column="4" Command="{Binding QueryCommand}" IsDefault="{Binding IsWhoisRunning, Converter={StaticResource BooleanReverseConverter}}">
+                    <Button Grid.Column="4" Command="{Binding QueryCommand}" IsDefault="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}">
                         <Button.Resources>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                                 <Setter Property="IsEnabled" Value="True" />
@@ -60,7 +67,7 @@
                                     <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxWebsiteUri}" Value="True" >
                                         <Setter Property="IsEnabled" Value="False" />
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding IsWhoisRunning}" Value="True">
+                                    <DataTrigger Binding="{Binding IsRunning}" Value="True">
                                         <Setter Property="IsEnabled" Value="False" />
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -92,7 +99,7 @@
                     <mahAppsControls:MetroProgressBar.Style>
                         <Style TargetType="{x:Type  mahAppsControls:MetroProgressBar}">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsWhoisRunning}" Value="False">
+                                <DataTrigger Binding="{Binding IsRunning}" Value="False">
                                     <Setter Property="Visibility" Value="Collapsed" />
                                 </DataTrigger>
                             </Style.Triggers>

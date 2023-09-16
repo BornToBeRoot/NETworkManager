@@ -30,16 +30,16 @@ public class SubnetCalculatorCalculatorViewModel : ViewModelBase
 
     public ICollectionView SubnetHistoryView { get; }
 
-    private bool _isCalculationRunning;
-    public bool IsCalculationRunning
+    private bool _isRunning;
+    public bool IsRunning
     {
-        get => _isCalculationRunning;
+        get => _isRunning;
         set
         {
-            if (value == _isCalculationRunning)
+            if (value == _isRunning)
                 return;
 
-            _isCalculationRunning = value;
+            _isRunning = value;
             OnPropertyChanged();
         }
     }
@@ -62,8 +62,8 @@ public class SubnetCalculatorCalculatorViewModel : ViewModelBase
     private IPNetworkInfo _result;
     public IPNetworkInfo Result
     {
-        get => _result; 
-        set
+        get => _result;
+        private set
         {
             if(value== _result) 
                 return;
@@ -82,11 +82,11 @@ public class SubnetCalculatorCalculatorViewModel : ViewModelBase
     #endregion
 
     #region ICommands
-    public ICommand CalculateCommand => new RelayCommand(p => CalcualateAction(), Calculate_CanExecute);
+    public ICommand CalculateCommand => new RelayCommand(_ => CalculateAction(), Calculate_CanExecute);
 
-    private bool Calculate_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool Calculate_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
-    private void CalcualateAction()
+    private void CalculateAction()
     {
         Calculate();
     }
@@ -95,7 +95,7 @@ public class SubnetCalculatorCalculatorViewModel : ViewModelBase
     #region Methods
     private void Calculate()
     {
-        IsCalculationRunning = true;
+        IsRunning = true;
 
         var subnet = Subnet.Trim();
 
@@ -105,7 +105,7 @@ public class SubnetCalculatorCalculatorViewModel : ViewModelBase
 
         AddSubnetToHistory(subnet);
 
-        IsCalculationRunning = false;
+        IsRunning = false;
     }
 
     private void AddSubnetToHistory(string subnet)

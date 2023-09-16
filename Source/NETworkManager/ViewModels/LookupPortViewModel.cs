@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Windows.Data;
 using NETworkManager.Models.Lookup;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
@@ -15,243 +16,274 @@ using NETworkManager.Models.Export;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
 using System.Threading.Tasks;
+using NETworkManager.Models.Network;
 
 namespace NETworkManager.ViewModels;
 
 public class LookupPortLookupViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
-    private string _portOrService;
-    public string PortOrService
+    private string _search;
+
+    public string Search
     {
-        get => _portOrService;
+        get => _search;
         set
         {
-            if (value == _portOrService)
+            if (value == _search)
                 return;
 
-            _portOrService = value;
+            _search = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _portOrServiceHasError;
-    public bool PortOrServiceHasError
+    private bool _hasError;
+
+    public bool HasError
     {
-        get => _portOrServiceHasError;
+        get => _hasError;
         set
         {
-            if (value == _portOrServiceHasError)
+            if (value == _hasError)
                 return;
-            _portOrServiceHasError = value;
+            _hasError = value;
             OnPropertyChanged();
         }
     }
 
-    public ICollectionView PortsOrServicesHistoryView { get; }
+    public ICollectionView SearchHistoryView { get; }
 
-    private bool _isLookupRunning;
-    public bool IsLookupRunning
+    private bool _isRunning;
+
+    public bool IsRunning
     {
-        get => _isLookupRunning;
+        get => _isRunning;
         set
         {
-            if (value == _isLookupRunning)
+            if (value == _isRunning)
                 return;
 
-            _isLookupRunning = value;
+            _isRunning = value;
             OnPropertyChanged();
         }
     }
 
-    private ObservableCollection<PortLookupInfo> _portLookupResults = new ObservableCollection<PortLookupInfo>();
-    public ObservableCollection<PortLookupInfo> PortLookupResults
+    private ObservableCollection<PortLookupInfo> _results = new();
+
+    public ObservableCollection<PortLookupInfo> Results
     {
-        get => _portLookupResults;
+        get => _results;
         set
         {
-            if (value != null && value == _portLookupResults)
+            if (value != null && value == _results)
                 return;
 
-            _portLookupResults = value;
-        }
-    }
-
-    public ICollectionView PortLookupResultsView { get; }
-
-    private PortLookupInfo _selectedPortLookupResult;
-    public PortLookupInfo SelectedPortLookupResult
-    {
-        get => _selectedPortLookupResult;
-        set
-        {
-            if (value == _selectedPortLookupResult)
-                return;
-
-            _selectedPortLookupResult = value;
+            _results = value;
             OnPropertyChanged();
         }
     }
 
-    private IList _selectedPortLookupResults = new ArrayList();
-    public IList SelectedPortLookupResults
+    public ICollectionView ResultsView { get; }
+
+    private PortLookupInfo _selectedResult;
+
+    public PortLookupInfo SelectedResult
     {
-        get => _selectedPortLookupResults;
+        get => _selectedResult;
         set
         {
-            if (Equals(value, _selectedPortLookupResults))
+            if (value == _selectedResult)
                 return;
 
-            _selectedPortLookupResults = value;
+            _selectedResult = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private IList _selectedResults = new ArrayList();
+
+    public IList SelectedResults
+    {
+        get => _selectedResults;
+        set
+        {
+            if (Equals(value, _selectedResults))
+                return;
+
+            _selectedResults = value;
             OnPropertyChanged();
         }
     }
 
 
-    private bool _noPortsFound;
-    public bool NoPortsFound
+    private bool _nothingFound;
+
+    public bool NothingFound
     {
-        get => _noPortsFound;
+        get => _nothingFound;
         set
         {
-            if (value == _noPortsFound)
+            if (value == _nothingFound)
                 return;
 
-            _noPortsFound = value;
+            _nothingFound = value;
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, Load settings
+
     public LookupPortLookupViewModel(IDialogCoordinator instance)
     {
         _dialogCoordinator = instance;
 
-        PortsOrServicesHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Lookup_Port_PortsHistory);
-        PortLookupResultsView = CollectionViewSource.GetDefaultView(PortLookupResults);
+        SearchHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Lookup_Port_SearchHistory);
+        ResultsView = CollectionViewSource.GetDefaultView(Results);
     }
+
     #endregion
 
     #region ICommands & Actions
-    public ICommand PortLookupCommand => new RelayCommand(p => PortLookupAction(), PortLookup_CanExecute);
 
-    private bool PortLookup_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen && !PortOrServiceHasError;
+    public ICommand PortLookupCommand =>
+        new RelayCommand(_ => PortLookupAction().ConfigureAwait(false), PortLookup_CanExecute);
+
+    private bool PortLookup_CanExecute(object parameter) => Application.Current.MainWindow != null &&
+                                                            !((MetroWindow)Application.Current.MainWindow)
+                                                                .IsAnyDialogOpen && !HasError;
 
     private async Task PortLookupAction()
     {
-        IsLookupRunning = true;
+        IsRunning = true;
 
-        PortLookupResults.Clear();
+        Results.Clear();
 
-        var portsByService = new List<string>();
+        var ports = new HashSet<int>();
+        var portsAndProtocols = new HashSet<Tuple<int,string>>();
+        var services = new HashSet<string>();
 
-        foreach (var portOrService in PortOrService.Split(';'))
+        foreach (var search in Search.Split(';'))
         {
-            var portOrService1 = portOrService.Trim();
+            var searchTrim = search.Trim();
 
-            if (portOrService1.Contains('-'))
+            // Check if the search is a port number like 22
+            if (Regex.IsMatch( searchTrim, "^[0-9]{1,5}$"))
             {
-                var portRange = portOrService1.Split('-');
+                if (int.TryParse(searchTrim, out var port))
+                {
+                    if (port is > 0 and < 65536)
+                    {
+                        ports.Add(port);
+                        continue;
+                    }
+                }
+            }
+            
+            // Check if the search is a port number with protocol like 22/tcp
+            if (Regex.IsMatch(searchTrim, "^[0-9]{1,5}/(tcp|udp|sctp)$"))
+            {
+                var portAndProtocol = searchTrim.Split('/');
+
+                if (int.TryParse(portAndProtocol[0], out var port))
+                {
+                    if (port is > 0 and < 65536)
+                    {
+                        portsAndProtocols.Add(new Tuple<int, string>(port, portAndProtocol[1]));
+                        continue;
+                    }
+                }
+            }
+
+            // Check if the search is a port range like 1-100
+            if (Regex.IsMatch(searchTrim,"^[0-9]{1,5}-[0-9]{1,5}$"))
+            {
+                var portRange = searchTrim.Split('-');
 
                 if (int.TryParse(portRange[0], out var startPort) && int.TryParse(portRange[1], out var endPort))
                 {
-                    if ((startPort > 0) && (startPort < 65536) && (endPort > 0) && (endPort < 65536) && (startPort < endPort))
+                    if (startPort is > 0 and < 65536 && endPort is > 0 and < 65536 && startPort < endPort)
                     {
                         for (var i = startPort; i < endPort + 1; i++)
-                        {
-                            foreach (var info in await PortLookup.SearchByPortAsync(i))
-                            {
-                                PortLookupResults.Add(info);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        portsByService.Add(portOrService1);
-                    }
+                            ports.Add(i);
 
-                }
-                else
-                {
-                    portsByService.Add(portOrService1);
+                        continue;
+                    }
                 }
             }
-            else
+            
+            // Check if the search is a port range with protocol like 1-100/tcp
+            if (Regex.IsMatch(searchTrim,"^[0-9]{1,5}-[0-9]{1,5}/(tcp|udp|sctp)$"))
             {
-                if (int.TryParse(portOrService1, out int port))
+                var portRangeAndProtocol = searchTrim.Split('/');
+
+                var portRange = portRangeAndProtocol[0].Split('-');
+
+                if (int.TryParse(portRange[0], out var startPort) && int.TryParse(portRange[1], out var endPort))
                 {
-                    if (port > 0 && port < 65536)
+                    if (startPort is > 0 and < 65536 && endPort is > 0 and < 65536 && startPort < endPort)
                     {
-                        foreach (var info in await PortLookup.SearchByPortAsync(port))
-                        {
-                            PortLookupResults.Add(info);
-                        }
-                    }
-                    else
-                    {
-                        portsByService.Add(portOrService1);
+                        for (var i = startPort; i < endPort + 1; i++)
+                            portsAndProtocols.Add(new Tuple<int, string>(i, portRangeAndProtocol[1]));
+
+                        continue;
                     }
                 }
-                else
-                {
-                    portsByService.Add(portOrService1);
-                }
             }
+
+            // Assume that everything else is a service like ssh
+            services.Add(searchTrim);
         }
 
-        foreach (var search in portsByService)
+        // Temporary collection to avoid duplicate entries
+        var results = new HashSet<PortLookupInfo>();
+        
+        // Get Port information's by port number
+        // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator (Doesn't work with async/await)
+        foreach (var port in ports)
         {
-            foreach (var info in await PortLookup.SearchByServiceOrDescriptionAsync(search))
-            {
-                PortLookupResults.Add(info);
-            }
+            foreach (var info in await PortLookup.LookupByPortAsync(port))
+                results.Add(info);
         }
-
-        if (PortLookupResults.Count == 0)
+        
+        // Get Port information's by port number and protocol
+        // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator (Doesn't work with async/await)
+        foreach(var portAndProtocol in portsAndProtocols)
         {
-            NoPortsFound = true;
+            results.Add(
+                await PortLookup.LookupByPortAndProtocolAsync(
+                    portAndProtocol.Item1,
+                    (TransportProtocol)Enum.Parse(typeof(TransportProtocol), portAndProtocol.Item2, true))
+            );
         }
-        else
+
+        // Get Port information's by service
+        // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator (Doesn't work with async/await)
+        foreach (var service in services)
         {
-            AddPortOrServiceToHistory(PortOrService);
-            NoPortsFound = false;
+            foreach (var info in await PortLookup.SearchByServiceAsync(service))
+                results.Add(info);
         }
 
-        IsLookupRunning = false;
+        // Add the results to the collection
+        foreach(var result in results)
+            Results.Add(result);
+        
+        // Show a message if no vendor was found
+        NothingFound = Results.Count == 0;
+
+        // Add the MAC-Address or Vendor to the history
+        AddSearchToHistory(Search);
+
+        IsRunning = false;
     }
 
-    public ICommand CopySelectedPortCommand => new RelayCommand(p => CopySelectedPortAction());
-
-    private void CopySelectedPortAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedPortLookupResult.Number.ToString());
-    }
-
-    public ICommand CopySelectedProtocolCommand => new RelayCommand(p => CopySelectedProtocolAction());
-
-    private void CopySelectedProtocolAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedPortLookupResult.Protocol.ToString());
-    }
-
-    public ICommand CopySelectedServiceCommand => new RelayCommand(p => CopySelectedServiceAction());
-
-    private void CopySelectedServiceAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedPortLookupResult.Service);
-    }
-
-    public ICommand CopySelectedDescriptionCommand => new RelayCommand(p => CopySelectedDescriptionAction());
-
-    private void CopySelectedDescriptionAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedPortLookupResult.Description);
-    }
-
-    public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+    public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
 
     private async Task ExportAction()
     {
@@ -261,24 +293,34 @@ public class LookupPortLookupViewModel : ViewModelBase
         };
 
         var exportViewModel = new ExportViewModel(async instance =>
-        {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-            try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? PortLookupResults : new ObservableCollection<PortLookupInfo>(SelectedPortLookupResults.Cast<PortLookupInfo>().ToArray()));
-            }
-            catch (Exception ex)
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType,
+                        instance.ExportAll
+                            ? Results
+                            : new ObservableCollection<PortLookupInfo>(SelectedResults.Cast<PortLookupInfo>()
+                                .ToArray()));
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error,
+                        Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                        Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.Lookup_Port_ExportFileType = instance.FileType;
+                SettingsManager.Current.Lookup_Port_ExportFilePath = instance.FilePath;
+            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new[]
             {
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
-
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
-            }
-
-            SettingsManager.Current.Lookup_Port_ExportFileType = instance.FileType;
-            SettingsManager.Current.Lookup_Port_ExportFilePath = instance.FilePath;
-        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportFileType[] { ExportFileType.CSV, ExportFileType.XML, ExportFileType.JSON }, true, SettingsManager.Current.Lookup_Port_ExportFileType, SettingsManager.Current.Lookup_Port_ExportFilePath);
+                ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
+            }, true, SettingsManager.Current.Lookup_Port_ExportFileType,
+            SettingsManager.Current.Lookup_Port_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {
@@ -287,20 +329,24 @@ public class LookupPortLookupViewModel : ViewModelBase
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
+
     #endregion
 
-    #region  Methods
-    private void AddPortOrServiceToHistory(string portOrService)
+    #region Methods
+
+    private void AddSearchToHistory(string portOrService)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.Lookup_Port_PortsHistory.ToList(), portOrService, SettingsManager.Current.General_HistoryListEntries);
+        var list = ListHelper.Modify(SettingsManager.Current.Lookup_Port_SearchHistory.ToList(), portOrService,
+            SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items
-        SettingsManager.Current.Lookup_Port_PortsHistory.Clear();
-        OnPropertyChanged(nameof(PortOrService)); // Raise property changed again, after the collection has been cleared
+        SettingsManager.Current.Lookup_Port_SearchHistory.Clear();
+        OnPropertyChanged(nameof(Search)); // Raise property changed again, after the collection has been cleared
 
         // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.Lookup_Port_PortsHistory.Add(x));
+        list.ForEach(x => SettingsManager.Current.Lookup_Port_SearchHistory.Add(x));
     }
+
     #endregion
 }

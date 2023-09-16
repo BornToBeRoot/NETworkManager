@@ -15,7 +15,7 @@ public static class DocumentationManager
     /// <summary>
     /// Base path of the documentation.
     /// </summary>
-    public const string DocumentationBaseUrl = @"https://borntoberoot.net/NETworkManager/";
+    private const string DocumentationBaseUrl = @"https://borntoberoot.net/NETworkManager/";
 
     /// <summary>
     /// List with all known documentation entries.
@@ -80,7 +80,7 @@ public static class DocumentationManager
     }
 
     /// <summary>
-    /// Method for opening a documentation page with the default webbrowser based on the <see cref="DocumentationIdentifier"/> .
+    /// Method for opening a documentation page with the default web browser based on the <see cref="DocumentationIdentifier"/> .
     /// </summary>
     /// <param name="documentationIdentifier"><see cref="DocumentationIdentifier"/> of the documentation page you want to open.</param>
     public static void OpenDocumentation(DocumentationIdentifier documentationIdentifier)
@@ -108,7 +108,7 @@ public static class DocumentationManager
     /// </summary>
     /// <param name="name"><see cref="ApplicationName"/> from which you want to get the <see cref="DocumentationIdentifier"/>.</param>
     /// <returns><see cref="DocumentationIdentifier"/> of the application.</returns>
-    public static DocumentationIdentifier GetIdentifierByAppliactionName(ApplicationName name)
+    public static DocumentationIdentifier GetIdentifierByApplicationName(ApplicationName name)
     {
         return name switch
         {
@@ -162,22 +162,22 @@ public static class DocumentationManager
             SettingsViewName.Update => DocumentationIdentifier.SettingsUpdate,
             SettingsViewName.Profiles => DocumentationIdentifier.SettingsProfiles,
             SettingsViewName.Settings => DocumentationIdentifier.SettingsSettings,
-            SettingsViewName.Dashboard => GetIdentifierByAppliactionName(ApplicationName.Dashboard),
-            SettingsViewName.IPScanner => GetIdentifierByAppliactionName(ApplicationName.IPScanner),
-            SettingsViewName.PortScanner => GetIdentifierByAppliactionName(ApplicationName.PortScanner),
-            SettingsViewName.PingMonitor => GetIdentifierByAppliactionName(ApplicationName.PingMonitor),
-            SettingsViewName.Traceroute => GetIdentifierByAppliactionName(ApplicationName.Traceroute),
-            SettingsViewName.DNSLookup => GetIdentifierByAppliactionName(ApplicationName.DNSLookup),
-            SettingsViewName.RemoteDesktop => GetIdentifierByAppliactionName(ApplicationName.RemoteDesktop),
-            SettingsViewName.PowerShell => GetIdentifierByAppliactionName(ApplicationName.PowerShell),
-            SettingsViewName.PuTTY => GetIdentifierByAppliactionName(ApplicationName.PuTTY),
-            SettingsViewName.AWSSessionManager => GetIdentifierByAppliactionName(ApplicationName.AWSSessionManager),
-            SettingsViewName.TigerVNC => GetIdentifierByAppliactionName(ApplicationName.TigerVNC),
-            SettingsViewName.SNMP => GetIdentifierByAppliactionName(ApplicationName.SNMP),
-            SettingsViewName.SNTPLookup => GetIdentifierByAppliactionName(ApplicationName.SNTPLookup),
-            SettingsViewName.WakeOnLAN => GetIdentifierByAppliactionName(ApplicationName.WakeOnLAN),
-            //SettingsViewName.Whois => GetIdentifierByAppliactionName(ApplicationName.Whois),
-            SettingsViewName.BitCalculator => GetIdentifierByAppliactionName(ApplicationName.BitCalculator),
+            SettingsViewName.Dashboard => GetIdentifierByApplicationName(ApplicationName.Dashboard),
+            SettingsViewName.IPScanner => GetIdentifierByApplicationName(ApplicationName.IPScanner),
+            SettingsViewName.PortScanner => GetIdentifierByApplicationName(ApplicationName.PortScanner),
+            SettingsViewName.PingMonitor => GetIdentifierByApplicationName(ApplicationName.PingMonitor),
+            SettingsViewName.Traceroute => GetIdentifierByApplicationName(ApplicationName.Traceroute),
+            SettingsViewName.DNSLookup => GetIdentifierByApplicationName(ApplicationName.DNSLookup),
+            SettingsViewName.RemoteDesktop => GetIdentifierByApplicationName(ApplicationName.RemoteDesktop),
+            SettingsViewName.PowerShell => GetIdentifierByApplicationName(ApplicationName.PowerShell),
+            SettingsViewName.PuTTY => GetIdentifierByApplicationName(ApplicationName.PuTTY),
+            SettingsViewName.AWSSessionManager => GetIdentifierByApplicationName(ApplicationName.AWSSessionManager),
+            SettingsViewName.TigerVNC => GetIdentifierByApplicationName(ApplicationName.TigerVNC),
+            SettingsViewName.SNMP => GetIdentifierByApplicationName(ApplicationName.SNMP),
+            SettingsViewName.SNTPLookup => GetIdentifierByApplicationName(ApplicationName.SNTPLookup),
+            SettingsViewName.WakeOnLAN => GetIdentifierByApplicationName(ApplicationName.WakeOnLAN),
+            //SettingsViewName.Whois => GetIdentifierByApplicationName(ApplicationName.Whois),
+            SettingsViewName.BitCalculator => GetIdentifierByApplicationName(ApplicationName.BitCalculator),
             _ => DocumentationIdentifier.Default,
         };
     }

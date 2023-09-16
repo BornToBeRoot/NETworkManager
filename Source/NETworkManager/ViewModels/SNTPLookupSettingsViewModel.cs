@@ -16,7 +16,7 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
 {
     #region Variables
     private readonly bool _isLoading;
-    private readonly ServerConnectionInfo _profileDialog_DefaultValues = new("time.example.com", 123, TransportProtocol.TCP);
+    private readonly ServerConnectionInfo _profileDialog_DefaultValues = new("time.example.com", 123, TransportProtocol.Tcp);
     
     private readonly IDialogCoordinator _dialogCoordinator;
 

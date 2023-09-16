@@ -1,27 +1,19 @@
 ﻿namespace NETworkManager.Models.Network;
 
 /// <summary>
-/// Event arguments when a Warning message is returned.
+/// Contains the warning message of a <see cref="DiscoveryProtocol"/> warning.
 /// </summary>
 public class DiscoveryProtocolWarningArgs : System.EventArgs
 {
     /// <summary>
-    /// Warning message.
+    /// Warning message of the <see cref="DiscoveryProtocol"/> warning.
     /// </summary>
     public string Message { get; private set; }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="DiscoveryProtocolWarningArgs"/> class.
+    /// Creates a new instance of <see cref="DiscoveryProtocolWarningArgs"/> with the given warning message.
     /// </summary>
-    public DiscoveryProtocolWarningArgs()
-    {
-
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="DiscoveryProtocolWarningArgs"/> class with a warning <paramref name="message"/>.
-    /// </summary>
-    /// <param name="message">Warning message.</param>
+    /// <param name="message">Warning message of the <see cref="DiscoveryProtocol"/> warning.</param>
     public DiscoveryProtocolWarningArgs(string message)
     {
         Message = message;

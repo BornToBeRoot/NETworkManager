@@ -39,7 +39,7 @@ public class ServerConnectionInfo
     {
         Server = server;
         Port = port;
-        TransportProtocol = TransportProtocol.TCP;
+        TransportProtocol = TransportProtocol.Tcp;
     }
 
     /// <summary>

@@ -3240,31 +3240,31 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private ObservableCollection<string> _snmp_OIDHistory = new();
-    public ObservableCollection<string> SNMP_OIDHistory
+    private ObservableCollection<string> _snmp_OidHistory = new();
+    public ObservableCollection<string> SNMP_OidHistory
     {
-        get => _snmp_OIDHistory;
+        get => _snmp_OidHistory;
         set
         {
-            if (value == _snmp_OIDHistory)
+            if (value == _snmp_OidHistory)
                 return;
 
-            _snmp_OIDHistory = value;
+            _snmp_OidHistory = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
     }
 
-    private ObservableCollection<SNMPOIDProfileInfo> _snmp_OIDProfiles = new();
-    public ObservableCollection<SNMPOIDProfileInfo> SNMP_OIDProfiles
+    private ObservableCollection<SNMPOIDProfileInfo> _snmp_OidProfiles = new();
+    public ObservableCollection<SNMPOIDProfileInfo> SNMP_OidProfiles
     {
-        get => _snmp_OIDProfiles;
+        get => _snmp_OidProfiles;
         set
         {
-            if (value == _snmp_OIDProfiles)
+            if (value == _snmp_OidProfiles)
                 return;
 
-            _snmp_OIDProfiles = value;
+            _snmp_OidProfiles = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
@@ -3545,8 +3545,8 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private DiscoveryProtocol.Protocol _discoveryProtocol_Protocol = GlobalStaticConfiguration.DiscoveryProtocol_Protocol;
-    public DiscoveryProtocol.Protocol DiscoveryProtocol_Protocol
+    private DiscoveryProtocol _discoveryProtocol_Protocol = GlobalStaticConfiguration.DiscoveryProtocol_Protocol;
+    public DiscoveryProtocol DiscoveryProtocol_Protocol
     {
         get => _discoveryProtocol_Protocol;
         set
@@ -3817,16 +3817,16 @@ public class SettingsInfo : PropertyChangedBase
     #endregion
 
     #region Lookup
-    private ObservableCollection<string> _lookup_OUI_MACAddressOrVendorHistory = new();
-    public ObservableCollection<string> Lookup_OUI_MACAddressOrVendorHistory
+    private ObservableCollection<string> _lookup_OUI_SearchHistory = new();
+    public ObservableCollection<string> Lookup_OUI_SearchHistory
     {
-        get => _lookup_OUI_MACAddressOrVendorHistory;
+        get => _lookup_OUI_SearchHistory;
         set
         {
-            if (value == _lookup_OUI_MACAddressOrVendorHistory)
+            if (value == _lookup_OUI_SearchHistory)
                 return;
 
-            _lookup_OUI_MACAddressOrVendorHistory = value;
+            _lookup_OUI_SearchHistory = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
@@ -3862,16 +3862,16 @@ public class SettingsInfo : PropertyChangedBase
         }
     }
 
-    private ObservableCollection<string> _lookup_Port_PortsHistory = new();
-    public ObservableCollection<string> Lookup_Port_PortsHistory
+    private ObservableCollection<string> _lookup_Port_SearchHistory = new();
+    public ObservableCollection<string> Lookup_Port_SearchHistory
     {
-        get => _lookup_Port_PortsHistory;
+        get => _lookup_Port_SearchHistory;
         set
         {
-            if (value == _lookup_Port_PortsHistory)
+            if (value == _lookup_Port_SearchHistory)
                 return;
 
-            _lookup_Port_PortsHistory = value;
+            _lookup_Port_SearchHistory = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
@@ -4226,8 +4226,8 @@ public class SettingsInfo : PropertyChangedBase
 
         // SNMP
         SNMP_HostHistory.CollectionChanged += CollectionChanged;
-        SNMP_OIDHistory.CollectionChanged += CollectionChanged;
-        SNMP_OIDProfiles.CollectionChanged += CollectionChanged;
+        SNMP_OidHistory.CollectionChanged += CollectionChanged;
+        SNMP_OidProfiles.CollectionChanged += CollectionChanged;
 
         // SNTP Lookup
         SNTPLookup_SNTPServers.CollectionChanged += CollectionChanged;
@@ -4248,10 +4248,10 @@ public class SettingsInfo : PropertyChangedBase
         SubnetCalculator_WideSubnet_Subnet2.CollectionChanged += CollectionChanged;
 
         // Lookup / OUI
-        Lookup_OUI_MACAddressOrVendorHistory.CollectionChanged += CollectionChanged;
+        Lookup_OUI_SearchHistory.CollectionChanged += CollectionChanged;
 
         // Lookup / Port
-        Lookup_Port_PortsHistory.CollectionChanged += CollectionChanged;
+        Lookup_Port_SearchHistory.CollectionChanged += CollectionChanged;
 
         // Whois
         Whois_DomainHistory.CollectionChanged += CollectionChanged;

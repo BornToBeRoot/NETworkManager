@@ -8,13 +8,9 @@ public sealed class IntToStringConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value == null)
-            return "-/-";
-
-        if (!long.TryParse(value.ToString(), out var intValue))
-            return "-/-";
-
-        return intValue == 0 ? "-/-" : intValue.ToString();
+        return value is int intValue ?
+            intValue == 0 ? "-/-" : intValue.ToString() :
+             "-/-";
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

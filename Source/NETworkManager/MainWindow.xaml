@@ -135,7 +135,14 @@
                         <TextBlock Text="{x:Static localization:Strings.UnlockProfile}" Style="{StaticResource LinkTextBlock}" Margin="5,0" />
                     </StackPanel>
                 </Button>
-                <ComboBox ItemsSource="{Binding ProfileFiles}" SelectedItem="{Binding SelectedProfileFile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="{DynamicResource MahApps.Brushes.Gray8}" IsDropDownOpen="{Binding IsProfileFileDropDownOpened}" BorderThickness="0" MinWidth="100" HorizontalAlignment="Left" Margin="0,0,10,0">
+                <ComboBox ItemsSource="{Binding ProfileFiles}" 
+                          SelectedItem="{Binding SelectedProfileFile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          Background="{DynamicResource MahApps.Brushes.Gray8}" 
+                          IsDropDownOpen="{Binding IsProfileFileDropDownOpened}"
+                          BorderThickness="0" 
+                          MinWidth="100" 
+                          HorizontalAlignment="Left" 
+                          Margin="0,0,10,0">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <Grid>

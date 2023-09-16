@@ -1,7 +1,7 @@
 ﻿namespace NETworkManager.Documentation;
 
 /// <summary>
-/// Class to hold all informations about a library.
+/// Class to hold information's about a library.
 /// </summary>
 public class LibraryInfo : BaseInfo
 {

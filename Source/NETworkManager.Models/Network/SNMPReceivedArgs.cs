@@ -1,20 +1,21 @@
-﻿using Lextm.SharpSnmpLib;
+﻿namespace NETworkManager.Models.Network;
 
-namespace NETworkManager.Models.Network;
-
+/// <summary>
+/// Contains the information of a received SNMP message in a <see cref="SNMPClient"/>.
+/// </summary>
 public class SNMPReceivedArgs : System.EventArgs
 {
-    public string OID { get; set; }
-    public string Data { get; set; }
+    /// <summary>
+    /// SNMP information.
+    /// </summary>
+    public SNMPInfo Args { get; }
 
-    public SNMPReceivedArgs()
+    /// <summary>
+    /// Creates a new instance of <see cref="SNMPReceivedArgs"/> with the given <see cref="SNMPInfo"/>.
+    /// </summary>
+    /// <param name="args">SNMP information.</param>
+    public SNMPReceivedArgs(SNMPInfo args)
     {
-
-    }
-
-    public SNMPReceivedArgs(ObjectIdentifier oid, ISnmpData data)
-    {
-        OID = oid.ToString();
-        Data = data.ToString();
+        Args = args;
     }
 }

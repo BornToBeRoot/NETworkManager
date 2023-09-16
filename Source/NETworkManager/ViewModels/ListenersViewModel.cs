@@ -37,52 +37,52 @@ public class ListenersViewModel : ViewModelBase
 
             _search = value;
 
-            ListenerResultsView.Refresh();
+            ResultsView.Refresh();
 
             OnPropertyChanged();
         }
     }
 
-    private ObservableCollection<ListenerInfo> _listenerResults = new();
-    public ObservableCollection<ListenerInfo> ListenerResults
+    private ObservableCollection<ListenerInfo> _results = new();
+    public ObservableCollection<ListenerInfo> Results
     {
-        get => _listenerResults;
+        get => _results;
         set
         {
-            if (value == _listenerResults)
+            if (value == _results)
                 return;
 
-            _listenerResults = value;
+            _results = value;
             OnPropertyChanged();
         }
     }
 
-    public ICollectionView ListenerResultsView { get; }
+    public ICollectionView ResultsView { get; }
 
-    private ListenerInfo _selectedListenerInfo;
-    public ListenerInfo SelectedListenerInfo
+    private ListenerInfo _selectedResult;
+    public ListenerInfo SelectedResult
     {
-        get => _selectedListenerInfo;
+        get => _selectedResult;
         set
         {
-            if (value == _selectedListenerInfo)
+            if (value == _selectedResult)
                 return;
 
-            _selectedListenerInfo = value;
+            _selectedResult = value;
             OnPropertyChanged();
         }
     }
 
-    private IList _selectedListenerInfos = new ArrayList();
-    public IList SelectedListenerInfos
+    private IList _selectedResults = new ArrayList();
+    public IList SelectedResults
     {
-        get => _selectedListenerInfos;
+        get => _selectedResults;
         set
         {
-            if (Equals(value, _selectedListenerInfos))
+            if (Equals(value, _selectedResults))
                 return;
 
-            _selectedListenerInfos = value;
+            _selectedResults = value;
             OnPropertyChanged();
         }
     }
@@ -193,10 +193,10 @@ public class ListenersViewModel : ViewModelBase
         _dialogCoordinator = instance;
 
         // Result view + search
-        ListenerResultsView = CollectionViewSource.GetDefaultView(ListenerResults);
-        ListenerResultsView.SortDescriptions.Add(new SortDescription(nameof(ListenerInfo.Protocol), ListSortDirection.Ascending));
-        ListenerResultsView.SortDescriptions.Add(new SortDescription(nameof(ListenerInfo.IPAddressInt32), ListSortDirection.Ascending));
-        ListenerResultsView.Filter = o =>
+        ResultsView = CollectionViewSource.GetDefaultView(Results);
+        ResultsView.SortDescriptions.Add(new SortDescription(nameof(ListenerInfo.Protocol), ListSortDirection.Ascending));
+        ResultsView.SortDescriptions.Add(new SortDescription(nameof(ListenerInfo.IPAddressInt32), ListSortDirection.Ascending));
+        ResultsView.Filter = o =>
         {
 
             if (o is not ListenerInfo info)
@@ -210,13 +210,13 @@ public class ListenersViewModel : ViewModelBase
         };
 
         // Get listeners
-        Refresh();
+        Refresh().ConfigureAwait(false);
 
         // Auto refresh
         _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
 
         AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
-        SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => (x.Value == SettingsManager.Current.Listeners_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.Listeners_AutoRefreshTime.TimeUnit));
+        SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => x.Value == SettingsManager.Current.Listeners_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.Listeners_AutoRefreshTime.TimeUnit);
         AutoRefreshEnabled = SettingsManager.Current.Listeners_AutoRefreshEnabled;
 
         _isLoading = false;
@@ -224,9 +224,9 @@ public class ListenersViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
-    public ICommand RefreshCommand => new RelayCommand(p => RefreshAction(), Refresh_CanExecute);
+    public ICommand RefreshCommand => new RelayCommand(_ => RefreshAction().ConfigureAwait(false), Refresh_CanExecute);
 
-    private bool Refresh_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool Refresh_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
     private async Task RefreshAction()
     {
@@ -235,28 +235,7 @@ public class ListenersViewModel : ViewModelBase
         await Refresh();
     }
 
-    public ICommand CopySelectedProtocolCommand => new RelayCommand(p => CopySelectedProtocolAction());
-
-    private void CopySelectedProtocolAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedListenerInfo.Protocol.ToString());
-    }
-
-    public ICommand CopySelectedIPAddressCommand => new RelayCommand(p => CopySelectedIPAddressAction());
-
-    private void CopySelectedIPAddressAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedListenerInfo.IPAddress.ToString());
-    }
-
-    public ICommand CopySelectedPortCommand => new RelayCommand(p => CopySelectedPortAction());
-
-    private void CopySelectedPortAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedListenerInfo.Port.ToString());
-    }
-
-    public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+    public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
 
     private async Task ExportAction()
     {
@@ -271,7 +250,7 @@ public class ListenersViewModel : ViewModelBase
 
             try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? ListenerResults : new ObservableCollection<ListenerInfo>(SelectedListenerInfos.Cast<ListenerInfo>().ToArray()));
+                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? Results : new ObservableCollection<ListenerInfo>(SelectedResults.Cast<ListenerInfo>().ToArray()));
             }
             catch (Exception ex)
             {
@@ -283,7 +262,13 @@ public class ListenersViewModel : ViewModelBase
 
             SettingsManager.Current.Listeners_ExportFileType = instance.FileType;
             SettingsManager.Current.Listeners_ExportFilePath = instance.FilePath;
-        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportFileType[] { ExportFileType.CSV, ExportFileType.XML, ExportFileType.JSON }, true, SettingsManager.Current.Listeners_ExportFileType, SettingsManager.Current.Listeners_ExportFilePath);
+        }, _ =>
+        {
+            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+        }, new[]
+        {
+            ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
+        }, true, SettingsManager.Current.Listeners_ExportFileType, SettingsManager.Current.Listeners_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {
@@ -299,9 +284,9 @@ public class ListenersViewModel : ViewModelBase
     {
         IsRefreshing = true;
 
-        ListenerResults.Clear();
+        Results.Clear();
 
-        (await Listener.GetAllActiveListenersAsync()).ForEach(x => ListenerResults.Add(x));
+        (await Listener.GetAllActiveListenersAsync()).ForEach(x => Results.Add(x));
 
         IsRefreshing = false;
     }

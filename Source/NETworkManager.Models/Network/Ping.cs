@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NETworkManager.Models.Network;
 
-public class Ping
+public sealed class Ping
 {
     #region Varaibles        
     public int WaitTime = 1000;
@@ -16,35 +16,36 @@ public class Ping
     public byte[] Buffer = new byte[32];
     public int TTL = 64;
     public bool DontFragment = true;
-    public int ExceptionCancelCount = 3;
     public string Hostname = string.Empty;
+    
+    private const int ExceptionCancelCount = 3;
     #endregion
 
     #region Events
     public event EventHandler<PingReceivedArgs> PingReceived;
 
-    protected virtual void OnPingReceived(PingReceivedArgs e)
+    private void OnPingReceived(PingReceivedArgs e)
     {
         PingReceived?.Invoke(this, e);
     }
 
     public event EventHandler PingCompleted;
 
-    protected virtual void OnPingCompleted()
+    private void OnPingCompleted()
     {
         PingCompleted?.Invoke(this, EventArgs.Empty);
     }
 
     public event EventHandler<PingExceptionArgs> PingException;
 
-    protected virtual void OnPingException(PingExceptionArgs e)
+    private void OnPingException(PingExceptionArgs e)
     {
         PingException?.Invoke(this, e);
     }
 
     public event EventHandler UserHasCanceled;
 
-    protected virtual void OnUserHasCanceled()
+    private void OnUserHasCanceled()
     {
         UserHasCanceled?.Invoke(this, EventArgs.Empty);
     }
@@ -66,7 +67,6 @@ public class Ping
                     hostname = dnsResult.Value;
             }
 
-            var pingTotal = 0;
             var errorCount = 0;
 
             var options = new PingOptions
@@ -90,21 +90,22 @@ public class Ping
                         // Reset the error count (if no exception was thrown)
                         errorCount = 0;
 
-                        if (pingReply == null || pingReply.Status != IPStatus.Success)
+                        if (pingReply is not { Status: IPStatus.Success })
                         {
-                            if (pingReply != null && pingReply.Address == null)
-                                OnPingReceived(new PingReceivedArgs(timestamp, ipAddress, hostname, pingReply.Status));
-                            else if (pingReply != null)
-                                OnPingReceived(new PingReceivedArgs(timestamp, pingReply.Address, hostname, pingReply.Status));
+                            if (pingReply != null)
+                                OnPingReceived(new PingReceivedArgs(
+                                    new PingInfo(timestamp, pingReply.Address, hostname, pingReply.Status)));
                         }
                         else
                         {
                             if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
-                                OnPingReceived(new PingReceivedArgs(timestamp, pingReply.Address, hostname,
-                                    pingReply.Buffer.Length, pingReply.RoundtripTime, pingReply.Options.Ttl, pingReply.Status));
+                                OnPingReceived(new PingReceivedArgs(
+                                    new PingInfo(timestamp, pingReply.Address, hostname,
+                                    pingReply.Buffer.Length, pingReply.RoundtripTime, pingReply.Options!.Ttl, pingReply.Status)));
                             else
-                                OnPingReceived(new PingReceivedArgs(timestamp, pingReply.Address, hostname,
-                                    pingReply.Buffer.Length, pingReply.RoundtripTime, pingReply.Status));
+                                OnPingReceived(new PingReceivedArgs(
+                                    new PingInfo(timestamp, pingReply.Address, hostname,
+                                    pingReply.Buffer.Length, pingReply.RoundtripTime, pingReply.Status)));
                         }
                     }
                     catch (PingException ex)
@@ -119,8 +120,6 @@ public class Ping
                         }
                     }
 
-                    pingTotal++;
-
                     // If ping is canceled... dont wait for example 5 seconds
                     for (var i = 0; i < WaitTime; i += 100)
                     {
@@ -134,6 +133,7 @@ public class Ping
 
             if (cancellationToken.IsCancellationRequested)
                 OnUserHasCanceled();
+            // Currently not used (ping will run until the user cancels it)
             else
                 OnPingCompleted();
         }, cancellationToken);

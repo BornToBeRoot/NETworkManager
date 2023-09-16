@@ -22,11 +22,9 @@ public class WhoisViewModel : ViewModelBase
 {
     #region Variables
     private readonly IDialogCoordinator _dialogCoordinator;
-    
-    public readonly int TabId;
-    private bool _firstLoad = true;
 
-    private readonly bool _isLoading;
+    private readonly int _tabId;
+    private bool _firstLoad = true;
 
     private string _domain;
     public string Domain
@@ -44,16 +42,16 @@ public class WhoisViewModel : ViewModelBase
 
     public ICollectionView WebsiteUriHistoryView { get; }
 
-    private bool _isWhoisRunning;
-    public bool IsWhoisRunning
+    private bool _isRunning;
+    public bool IsRunning
     {
-        get => _isWhoisRunning;
+        get => _isRunning;
         set
         {
-            if (value == _isWhoisRunning)
+            if (value == _isRunning)
                 return;
 
-            _isWhoisRunning = value;
+            _isRunning = value;
             OnPropertyChanged();
         }
     }
@@ -90,7 +88,7 @@ public class WhoisViewModel : ViewModelBase
     public string StatusMessage
     {
         get => _statusMessage;
-        set
+        private set
         {
             if (value == _statusMessage)
                 return;
@@ -104,22 +102,15 @@ public class WhoisViewModel : ViewModelBase
     #region Contructor, load settings
     public WhoisViewModel(IDialogCoordinator instance ,int tabId, string domain)
     {
-        _isLoading = true;
-
         _dialogCoordinator = instance;
 
-        TabId = tabId;
+        _tabId = tabId;
         Domain = domain;
 
         // Set collection view
         WebsiteUriHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Whois_DomainHistory);
 
         LoadSettings();
-
-        // Detect if settings have changed...
-        SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
-
-        _isLoading = false;
     }
 
     public void OnLoaded()
@@ -128,7 +119,7 @@ public class WhoisViewModel : ViewModelBase
             return;
 
         if (!string.IsNullOrEmpty(Domain))
-            Query();
+            Query().ConfigureAwait(false);
 
         _firstLoad = false;
     }
@@ -140,16 +131,16 @@ public class WhoisViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
-    public ICommand QueryCommand => new RelayCommand(p => QueryAction(), Query_CanExecute);
+    public ICommand QueryCommand => new RelayCommand(_ => QueryAction(), Query_CanExecute);
 
-    private bool Query_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool Query_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
     private void QueryAction()
     {
-        Query();
+        Query().ConfigureAwait(false);
     }
 
-    public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+    public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
 
     private async Task ExportAction()
     {
@@ -176,7 +167,13 @@ public class WhoisViewModel : ViewModelBase
 
             SettingsManager.Current.Whois_ExportFileType = instance.FileType;
             SettingsManager.Current.Whois_ExportFilePath = instance.FilePath;
-        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportFileType[] { ExportFileType.TXT}, false, SettingsManager.Current.Whois_ExportFileType, SettingsManager.Current.Whois_ExportFilePath);
+        }, _ =>
+        {
+            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+        }, new[]
+        {
+            ExportFileType.Txt
+        }, false, SettingsManager.Current.Whois_ExportFileType, SettingsManager.Current.Whois_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {
@@ -191,7 +188,7 @@ public class WhoisViewModel : ViewModelBase
     private async Task Query()
     {
         IsStatusMessageDisplayed = false;
-        IsWhoisRunning = true;
+        IsRunning = true;
 
         WhoisResult = null;
 
@@ -202,7 +199,7 @@ public class WhoisViewModel : ViewModelBase
         {
             foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
             {
-                tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == TabId).Header = Domain;
+                tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Domain;
             }
         }
 
@@ -228,7 +225,7 @@ public class WhoisViewModel : ViewModelBase
             IsStatusMessageDisplayed = true;
         }
 
-        IsWhoisRunning = false;
+        IsRunning = false;
     }
 
     public void OnClose()
@@ -250,10 +247,4 @@ public class WhoisViewModel : ViewModelBase
     }
     #endregion
 
-    #region Events    
-    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-       
-    }
-    #endregion
 }

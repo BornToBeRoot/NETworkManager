@@ -19,7 +19,6 @@
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter"/>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <converters:IntToStringConverter x:Key="IntToStringConverter" />        
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
@@ -61,8 +60,17 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Host}" Style="{StaticResource CenterTextBlock}" />
-            <ComboBox Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="5" x:Name="ComboBoxHost" Height="{Binding ElementName=ComboBoxOID, Path=ActualHeight}" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameOrIPAddress}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+            <TextBlock Grid.Column="0" Grid.Row="0" 
+                       Text="{x:Static localization:Strings.Host}" 
+                       Style="{StaticResource CenterTextBlock}" />
+            <ComboBox Grid.Column="2" Grid.Row="0" 
+                      Grid.ColumnSpan="5" 
+                      x:Name="ComboBoxHost" 
+                      Height="{Binding ElementName=ComboBoxOid, Path=ActualHeight}" 
+                      ItemsSource="{Binding HostHistoryView}" 
+                      mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameOrIPAddress}"
+                      IsReadOnly="{Binding IsRunning}" 
+                      Style="{StaticResource HistoryComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -71,39 +79,56 @@
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
-            <TextBlock Grid.Column="8" Grid.Row="0" Text="{x:Static localization:Strings.Mode}" Style="{StaticResource CenterTextBlock}" />
-            <ComboBox Grid.Column="10" Grid.Row="0" ItemsSource="{Binding Modes}" SelectedItem="{Binding Mode}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" />
-            <TextBlock Grid.Column="12" Grid.Row="0" Text="{x:Static localization:Strings.Version}" Style="{StaticResource CenterTextBlock}" />
-            <ComboBox Grid.Column="14" Grid.Row="0" ItemsSource="{Binding Versions}" SelectedItem="{Binding Version}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" />
-            <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.OID}" Style="{StaticResource CenterTextBlock}" />
-            <ComboBox Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="3" x:Name="ComboBoxOID" Height="{Binding ElementName=ButtonQuery, Path=ActualHeight}" ItemsSource="{Binding OIDHistoryView}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}">
+            <TextBlock Grid.Column="8" Grid.Row="0" 
+                       Text="{x:Static localization:Strings.Mode}"
+                       Style="{StaticResource CenterTextBlock}" />
+            <ComboBox Grid.Column="10" Grid.Row="0" 
+                      ItemsSource="{Binding Modes}" 
+                      SelectedItem="{Binding Mode}" 
+                      IsReadOnly="{Binding IsRunning}" />
+            <TextBlock Grid.Column="12" Grid.Row="0" 
+                       Text="{x:Static localization:Strings.Version}"
+                       Style="{StaticResource CenterTextBlock}" />
+            <ComboBox Grid.Column="14" Grid.Row="0"
+                      ItemsSource="{Binding Versions}" 
+                      SelectedItem="{Binding Version}" 
+                      IsReadOnly="{Binding IsRunning}" />
+            <TextBlock Grid.Column="0" Grid.Row="2" 
+                       Text="{x:Static localization:Strings.OID}"
+                       Style="{StaticResource CenterTextBlock}" />
+            <ComboBox Grid.Column="2" Grid.Row="2" 
+                      Grid.ColumnSpan="3"
+                      x:Name="ComboBoxOid" 
+                      Height="{Binding ElementName=ButtonQuery, Path=ActualHeight}" 
+                      ItemsSource="{Binding OidHistoryView}" 
+                      IsReadOnly="{Binding IsRunning}">
                 <ComboBox.Resources>
                     <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                 </ComboBox.Resources>
                 <ComboBox.Style>
                     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource HistoryComboBox}">
-                        <Setter Property="mah:TextBoxHelper.Watermark" Value="{x:Static localization:StaticStrings.ExampleSNMPOID}" />                     
+                        <Setter Property="mah:TextBoxHelper.Watermark" Value="{x:Static localization:StaticStrings.ExampleSnmpOid}" />                     
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Path=Mode}" Value="Get">
-                                <Setter Property="mah:TextBoxHelper.Watermark" Value="{x:Static localization:StaticStrings.ExampleSNMPOIDS}" />                               
+                                <Setter Property="mah:TextBoxHelper.Watermark" Value="{x:Static localization:StaticStrings.ExampleSnmpOids}" />                               
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </ComboBox.Style>
                 <ComboBox.Text>
-                    <Binding Path="OID" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="Oid" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            <validators:SNMPOIDValidator ValidatesOnTargetUpdated="True">
-                                <validators:SNMPOIDValidator.Wrapper>
-                                    <validators:SNMPOIDDependencyObjectWrapper Mode="{Binding Data.Mode, Source={StaticResource BindingProxy}}" />
-                                </validators:SNMPOIDValidator.Wrapper>
-                            </validators:SNMPOIDValidator>
+                            <validators:SnmpOidValidator ValidatesOnTargetUpdated="True">
+                                <validators:SnmpOidValidator.Wrapper>
+                                    <validators:SNMPOIDDependencyObjectWrapper Mode="{Binding Path=Data.(viewModels:SNMPViewModel.Mode), Source={StaticResource BindingProxy}}" />
+                                </validators:SnmpOidValidator.Wrapper>
+                            </validators:SnmpOidValidator>
                         </Binding.ValidationRules>
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
-            <Button Grid.Column="6" Grid.Row="2" Command="{Binding OpenMIBProfilesCommand}" ToolTip="{x:Static localization:Strings.OpenOIDProfilesDots}">
+            <Button Grid.Column="6" Grid.Row="2" Command="{Binding OpenMibProfilesCommand}" ToolTip="{x:Static localization:Strings.OpenOIDProfilesDots}">
                 <Button.Resources>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageButton}">
                         <Style.Triggers>
@@ -131,7 +156,8 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <PasswordBox Grid.Column="10" Grid.Row="2" Grid.ColumnSpan="5" Name="PasswordBoxCommunity" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}">
+            <PasswordBox Grid.Column="10" Grid.Row="2" 
+                         Grid.ColumnSpan="5">
                 <PasswordBox.Style>
                     <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource DefaultPasswordBox}">
                         <Setter Property="mah:TextBoxHelper.Watermark" Value="{x:Static localization:Strings.FromProfile}" />
@@ -161,7 +187,8 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <ComboBox Grid.Column="10" Grid.Row="2" ItemsSource="{Binding Securities}" SelectedItem="{Binding Security}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}">
+            <ComboBox Grid.Column="10" Grid.Row="2"
+                      ItemsSource="{Binding Securities}" SelectedItem="{Binding Security}">
                 <ComboBox.Style>
                     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource DefaultComboBox}">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -185,7 +212,10 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <TextBox Grid.Column="14" Grid.Row="2" x:Name="TextBoxUsername" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleUsername}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}">
+            <TextBox Grid.Column="14" Grid.Row="2" 
+                     x:Name="TextBoxUsername" 
+                     mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleUsername}" 
+                     IsReadOnly="{Binding IsRunning}">
                 <TextBox.Style>
                     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -231,7 +261,10 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <ComboBox Grid.Column="2" Grid.Row="3" Height="{Binding ElementName=ButtonQuery, Path=ActualHeight}" ItemsSource="{Binding AuthenticationProviders}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" SelectedItem="{Binding AuthenticationProvider}" Margin="0,10,0,0">
+            <ComboBox Grid.Column="2" Grid.Row="3"
+                      Height="{Binding ElementName=ButtonQuery, Path=ActualHeight}"
+                      ItemsSource="{Binding AuthenticationProviders}"
+                      SelectedItem="{Binding AuthenticationProvider}" Margin="0,10,0,0">
                 <ComboBox.Style>
                     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource DefaultComboBox}">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -258,7 +291,8 @@
                     </Style>
                 </ComboBox.Style>
             </ComboBox>
-            <PasswordBox Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="3" Name="PasswordBoxAuth" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" Margin="0,10,0,0">
+            <PasswordBox Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="3"
+                         Margin="0,10,0,0">
                 <PasswordBox.Style>
                     <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource DefaultPasswordBox}">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -310,7 +344,7 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <ComboBox Grid.Column="10" Grid.Row="3" ItemsSource="{Binding PrivacyProviders}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" SelectedItem="{Binding PrivacyProvider}" Margin="0,10,0,0">
+            <ComboBox Grid.Column="10" Grid.Row="3" ItemsSource="{Binding PrivacyProviders}" SelectedItem="{Binding PrivacyProvider}" Margin="0,10,0,0">
                 <ComboBox.Style>
                     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource DefaultComboBox}">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -328,7 +362,9 @@
                     </Style>
                 </ComboBox.Style>
             </ComboBox>
-            <PasswordBox Grid.Column="12" Grid.ColumnSpan="3" Grid.Row="3" Name="PasswordBoxPriv" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" Margin="0,10,0,0">
+            <PasswordBox Grid.Column="12" Grid.Row="3"
+                         Grid.ColumnSpan="3"
+                         Margin="0,10,0,0">
                 <PasswordBox.Style>
                     <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource DefaultPasswordBox}">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -354,7 +390,8 @@
                 </interactivity:Interaction.Behaviors>
             </PasswordBox>
         </Grid>
-        <Button x:Name="ButtonQuery" Grid.Column="2" Command="{Binding WorkCommand}" IsDefault="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsRunning}" VerticalAlignment="Bottom">
+        <!-- ReSharper disable once Xaml.MissingGridIndex -->
+        <Button Grid.Column="2" Command="{Binding WorkCommand}" IsDefault="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsRunning}" VerticalAlignment="Bottom">
             <Button.Resources>
                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                     <Setter Property="IsDefault" Value="False" />
@@ -369,7 +406,7 @@
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Version}" Value="v1" />
                                 <Condition Binding="{Binding ElementName=ComboBoxHost, Path=(Validation.HasError)}" Value="False" />
-                                <Condition Binding="{Binding ElementName=ComboBoxOID, Path=(Validation.HasError)}" Value="False" />
+                                <Condition Binding="{Binding ElementName=ComboBoxOid, Path=(Validation.HasError)}" Value="False" />
                                 <Condition Binding="{Binding IsCommunityEmpty}" Value="False" />
                                 <Condition Binding="{Binding IsRunning}" Value="False" />
                             </MultiDataTrigger.Conditions>
@@ -381,7 +418,7 @@
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Version}" Value="v2c" />
                                 <Condition Binding="{Binding ElementName=ComboBoxHost, Path=(Validation.HasError)}" Value="False" />
-                                <Condition Binding="{Binding ElementName=ComboBoxOID, Path=(Validation.HasError)}" Value="False" />
+                                <Condition Binding="{Binding ElementName=ComboBoxOid, Path=(Validation.HasError)}" Value="False" />
                                 <Condition Binding="{Binding IsCommunityEmpty}" Value="False" />
                                 <Condition Binding="{Binding IsRunning}" Value="False" />
                             </MultiDataTrigger.Conditions>
@@ -394,7 +431,7 @@
                                 <Condition Binding="{Binding Version}" Value="v3" />
                                 <Condition Binding="{Binding Security}" Value="noAuthNoPriv" />
                                 <Condition Binding="{Binding ElementName=ComboBoxHost, Path=(Validation.HasError)}" Value="False" />
-                                <Condition Binding="{Binding ElementName=ComboBoxOID, Path=(Validation.HasError)}" Value="False" />
+                                <Condition Binding="{Binding ElementName=ComboBoxOid, Path=(Validation.HasError)}" Value="False" />
                                 <Condition Binding="{Binding ElementName=TextBoxUsername, Path=(Validation.HasError)}" Value="False" />
                                 <Condition Binding="{Binding IsRunning}" Value="False" />
                             </MultiDataTrigger.Conditions>
@@ -407,7 +444,7 @@
                                 <Condition Binding="{Binding Version}" Value="v3" />
                                 <Condition Binding="{Binding Security}" Value="AuthNoPriv" />
                                 <Condition Binding="{Binding ElementName=ComboBoxHost, Path=(Validation.HasError)}" Value="False" />
-                                <Condition Binding="{Binding ElementName=ComboBoxOID, Path=(Validation.HasError)}" Value="False" />
+                                <Condition Binding="{Binding ElementName=ComboBoxOid, Path=(Validation.HasError)}" Value="False" />
                                 <Condition Binding="{Binding ElementName=TextBoxUsername, Path=(Validation.HasError)}" Value="False" />
                                 <Condition Binding="{Binding IsAuthEmpty}" Value="False" />
                                 <Condition Binding="{Binding IsRunning}" Value="False" />
@@ -421,7 +458,7 @@
                                 <Condition Binding="{Binding Version}" Value="v3" />
                                 <Condition Binding="{Binding Security}" Value="AuthPriv" />
                                 <Condition Binding="{Binding ElementName=ComboBoxHost, Path=(Validation.HasError)}" Value="False" />
-                                <Condition Binding="{Binding ElementName=ComboBoxOID, Path=(Validation.HasError)}" Value="False" />
+                                <Condition Binding="{Binding ElementName=ComboBoxOid, Path=(Validation.HasError)}" Value="False" />
                                 <Condition Binding="{Binding ElementName=TextBoxUsername, Path=(Validation.HasError)}" Value="False" />
                                 <Condition Binding="{Binding IsAuthEmpty}" Value="False" />
                                 <Condition Binding="{Binding IsPrivEmpty}" Value="False" />
@@ -489,11 +526,12 @@
                 </Grid>
             </Button.Content>
         </Button>
-        <Grid Grid.ColumnSpan="3" Grid.Column="0" Margin="0,10,0,0">
+        <!-- ReSharper disable once Xaml.MissingGridIndex -->
+        <Grid Grid.Column="0" Grid.ColumnSpan="3" Margin="0,10,0,0">
             <Grid.Style>
                 <Style TargetType="{x:Type Grid}">
                     <Setter Property="Visibility" Value="Collapsed" />
-                    <Setter Property="Grid.Row" Value="2" />
+                    <Setter Property="Row" Value="2" />
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsRunning}" Value="True">
                             <Setter Property="Visibility" Value="Visible" />
@@ -510,8 +548,13 @@
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
-            <mah:MetroProgressBar  Foreground="{DynamicResource MahApps.Brushes.Accent}" IsIndeterminate="True" Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-            <TextBlock Foreground="{DynamicResource MahApps.Brushes.Accent}" Text="{Binding StatusMessage}" Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource StatusMessageTextBlock}" />
+            <mah:MetroProgressBar Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                                  IsIndeterminate="True" 
+                                  Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+            <TextBlock Foreground="{DynamicResource MahApps.Brushes.Accent}" 
+                       Text="{Binding StatusMessage}" 
+                       Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" 
+                       Style="{StaticResource StatusMessageTextBlock}" />
         </Grid>
         <TextBlock Grid.Row="4" Grid.ColumnSpan="3" Grid.Column="0">
             <TextBlock.Style>
@@ -530,36 +573,20 @@
                 </Style>
             </TextBlock.Style>
         </TextBlock>
-        <controls:MultiSelectDataGrid Grid.Row="5" Grid.ColumnSpan="3" Grid.Column="0" ItemsSource="{Binding QueryResultsView}" SelectedItem="{Binding SelectedQueryResult}" SelectedItemsList="{Binding SelectedQueryResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+        <controls:MultiSelectDataGrid Grid.Row="5" Grid.ColumnSpan="3" Grid.Column="0" ItemsSource="{Binding ResultsView}" SelectedItem="{Binding SelectedResult}" SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <controls:MultiSelectDataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                    <MenuItem Header="{x:Static localization:Strings.CopyDots}">
-                        <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                        </MenuItem.Icon>
-                        <MenuItem Header="{x:Static localization:Strings.OID}" Command="{Binding CopySelectedOIDCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.Data}" Command="{Binding CopySelectedDataCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
+                    <MenuItem Header="{x:Static Member=localization:Strings.CopyDots}" 
+                              Style="{StaticResource ResourceKey=CopyMenuItem}">
+                        <MenuItem Header="{x:Static Member=localization:Strings.OID}" 
+                                  Command="{Binding Path=CopyDataToClipboardCommand}"
+                                  CommandParameter="{Binding Path=SelectedResult.Oid}" 
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.Data}" 
+                                  Command="{Binding Path=CopyDataToClipboardCommand}"
+                                  CommandParameter="{Binding Path=SelectedResult.Data}" 
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
                     </MenuItem>
                     <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
                         <MenuItem.Icon>
@@ -607,8 +634,8 @@
                 </Style>
             </controls:MultiSelectDataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.OID}" Binding="{Binding (network:SNMPReceivedInfo.OID)}" SortMemberPath="OID" MinWidth="200" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Data}" Binding="{Binding (network:SNMPReceivedInfo.Data)}" SortMemberPath="Data" MinWidth="300" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.OID}" Binding="{Binding (network:SNMPInfo.Oid)}" SortMemberPath="OID" MinWidth="200" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Data}" Binding="{Binding (network:SNMPInfo.Data)}" SortMemberPath="Data" MinWidth="300" />
             </DataGrid.Columns>
         </controls:MultiSelectDataGrid>
         <TextBox Grid.Row="5" Grid.Column="0" Text="{Binding Data}">

@@ -38,52 +38,52 @@ public class ConnectionsViewModel : ViewModelBase
 
             _search = value;
 
-            ConnectionResultsView.Refresh();
+            ResultsView.Refresh();
 
             OnPropertyChanged();
         }
     }
 
-    private ObservableCollection<ConnectionInfo> _connectionResults = new();
-    public ObservableCollection<ConnectionInfo> ConnectionResults
+    private ObservableCollection<ConnectionInfo> _results = new();
+    public ObservableCollection<ConnectionInfo> Results
     {
-        get => _connectionResults;
+        get => _results;
         set
         {
-            if (value == _connectionResults)
+            if (value == _results)
                 return;
 
-            _connectionResults = value;
+            _results = value;
             OnPropertyChanged();
         }
     }
 
-    public ICollectionView ConnectionResultsView { get; }
+    public ICollectionView ResultsView { get; }
 
-    private ConnectionInfo _selectedConnectionInfo;
-    public ConnectionInfo SelectedConnectionInfo
+    private ConnectionInfo _selectedResult;
+    public ConnectionInfo SelectedResult
     {
-        get => _selectedConnectionInfo;
+        get => _selectedResult;
         set
         {
-            if (value == _selectedConnectionInfo)
+            if (value == _selectedResult)
                 return;
 
-            _selectedConnectionInfo = value;
+            _selectedResult = value;
             OnPropertyChanged();
         }
     }
 
-    private IList _selectedConnectionInfos = new ArrayList();
-    public IList SelectedConnectionInfos
+    private IList _selectedResults = new ArrayList();
+    public IList SelectedResults
     {
-        get => _selectedConnectionInfos;
+        get => _selectedResults;
         set
         {
-            if (Equals(value, _selectedConnectionInfos))
+            if (Equals(value, _selectedResults))
                 return;
 
-            _selectedConnectionInfos = value;
+            _selectedResults = value;
             OnPropertyChanged();
         }
     }
@@ -194,9 +194,9 @@ public class ConnectionsViewModel : ViewModelBase
         _dialogCoordinator = instance;
 
         // Result view + search
-        ConnectionResultsView = CollectionViewSource.GetDefaultView(ConnectionResults);
-        ConnectionResultsView.SortDescriptions.Add(new SortDescription(nameof(ConnectionInfo.LocalIPAddressInt32), ListSortDirection.Ascending));
-        ConnectionResultsView.Filter = o =>
+        ResultsView = CollectionViewSource.GetDefaultView(Results);
+        ResultsView.SortDescriptions.Add(new SortDescription(nameof(ConnectionInfo.LocalIPAddressInt32), ListSortDirection.Ascending));
+        ResultsView.Filter = o =>
         {
             if (o is not ConnectionInfo info)
                 return false;
@@ -209,13 +209,13 @@ public class ConnectionsViewModel : ViewModelBase
         };
 
         // Get connections
-        Refresh();
+        Refresh().ConfigureAwait(false);
 
         // Auto refresh
         _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
 
         AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
-        SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => (x.Value == SettingsManager.Current.Connections_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.Connections_AutoRefreshTime.TimeUnit));
+        SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => x.Value == SettingsManager.Current.Connections_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.Connections_AutoRefreshTime.TimeUnit);
         AutoRefreshEnabled = SettingsManager.Current.Connections_AutoRefreshEnabled;
         
         _isLoading = false;
@@ -223,9 +223,9 @@ public class ConnectionsViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
-    public ICommand RefreshCommand => new RelayCommand(p => RefreshAction(), Refresh_CanExecute);
+    public ICommand RefreshCommand => new RelayCommand(_ => RefreshAction().ConfigureAwait(false), Refresh_CanExecute);
 
-    private bool Refresh_CanExecute(object paramter)
+    private bool Refresh_CanExecute(object parameter)
     {
         return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
     }
@@ -237,49 +237,7 @@ public class ConnectionsViewModel : ViewModelBase
         await Refresh();
     }
 
-    public ICommand CopySelectedLocalIpAddressCommand => new RelayCommand(p => CopySelectedLocalIpAddressAction());
-
-    private void CopySelectedLocalIpAddressAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedConnectionInfo.LocalIPAddress.ToString());
-    }
-
-    public ICommand CopySelectedLocalPortCommand => new RelayCommand(p => CopySelectedLocalPortAction());
-
-    private void CopySelectedLocalPortAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedConnectionInfo.LocalPort.ToString());
-    }
-
-    public ICommand CopySelectedRemoteIpAddressCommand => new RelayCommand(p => CopySelectedRemoteIpAddressAction());
-
-    private void CopySelectedRemoteIpAddressAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedConnectionInfo.RemoteIPAddress.ToString());
-    }
-
-    public ICommand CopySelectedRemotePortCommand => new RelayCommand(p => CopySelectedRemotePortAction());
-
-    private void CopySelectedRemotePortAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedConnectionInfo.RemotePort.ToString());
-    }
-
-    public ICommand CopySelectedProtocolCommand => new RelayCommand(p => CopySelectedProtocolAction());
-
-    private void CopySelectedProtocolAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedConnectionInfo.Protocol.ToString());
-    }
-
-    public ICommand CopySelectedStateCommand => new RelayCommand(p => CopySelectedStateAction());
-
-    private void CopySelectedStateAction()
-    {
-        ClipboardHelper.SetClipboard(ResourceTranslator.Translate(ResourceIdentifier.TcpState, SelectedConnectionInfo.TcpState));
-    }
-
-    public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+    public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
 
     private async Task ExportAction()
     {
@@ -294,7 +252,7 @@ public class ConnectionsViewModel : ViewModelBase
 
             try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? ConnectionResults : new ObservableCollection<ConnectionInfo>(SelectedConnectionInfos.Cast<ConnectionInfo>().ToArray()));
+                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? Results : new ObservableCollection<ConnectionInfo>(SelectedResults.Cast<ConnectionInfo>().ToArray()));
             }
             catch (Exception ex)
             {
@@ -306,7 +264,13 @@ public class ConnectionsViewModel : ViewModelBase
 
             SettingsManager.Current.Connections_ExportFileType = instance.FileType;
             SettingsManager.Current.Connections_ExportFilePath = instance.FilePath;
-        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportFileType[] { ExportFileType.CSV, ExportFileType.XML, ExportFileType.JSON }, true, SettingsManager.Current.Connections_ExportFileType, SettingsManager.Current.Connections_ExportFilePath);
+        }, _ =>
+        {
+            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+        }, new[]
+        {
+            ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
+        }, true, SettingsManager.Current.Connections_ExportFileType, SettingsManager.Current.Connections_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {
@@ -322,9 +286,9 @@ public class ConnectionsViewModel : ViewModelBase
     {
         IsRefreshing = true;
 
-        ConnectionResults.Clear();
+        Results.Clear();
 
-        (await Connection.GetActiveTcpConnectionsAsync()).ForEach(x => ConnectionResults.Add(x));
+        (await Connection.GetActiveTcpConnectionsAsync()).ForEach(x => Results.Add(x));
 
         IsRefreshing = false;
     }

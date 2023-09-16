@@ -34,7 +34,7 @@ public class WiFiViewModel : ViewModelBase
     private readonly DispatcherTimer _hideConnectionStatusMessageTimer = new();
 
     private bool _sdkContractsFailedToLoad;
-    public bool SDKContractsFailedToLoad
+    public bool SdkContractsFailedToLoad
     {
         get => _sdkContractsFailedToLoad;
         set
@@ -65,7 +65,7 @@ public class WiFiViewModel : ViewModelBase
     public List<WiFiAdapterInfo> Adapters
     {
         get => _adapters;
-        set
+        private set
         {
             if (value == _adapters)
                 return;
@@ -89,7 +89,7 @@ public class WiFiViewModel : ViewModelBase
                 if (!_isLoading)
                     SettingsManager.Current.WiFi_InterfaceId = value.NetworkInterfaceInfo.Id;
 
-                Scan(value);
+                Scan(value).ConfigureAwait(false);
             }
 
             _selectedAdapters = value;
@@ -267,11 +267,11 @@ public class WiFiViewModel : ViewModelBase
         }
     }
 
-    public SeriesCollection Radio1Series { get; set; } = new SeriesCollection();
-    public string[] Radio1Labels { get; set; } = new string[] { " ", " ", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", " ", " " };
-    public SeriesCollection Radio2Series { get; set; } = new SeriesCollection();
-    public string[] Radio2Labels { get; set; } = new string[] { " ", " ", "36", "40", "44", "48", "52", "56", "60", "64", "", "", "", "", "100", "104", "108", "112", "116", "120", "124", "128", "132", "136", "140", "144", "149", "153", "157", "161", "165", " ", " " };
-    public Func<double, string> FormatterdBm { get; set; } = value => $"- {100 - value} dBm"; // Reverse y-axis 0 to -100
+    public SeriesCollection Radio1Series { get; set; } = new();
+    public string[] Radio1Labels { get; set; } = { " ", " ", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", " ", " " };
+    public SeriesCollection Radio2Series { get; set; } = new();
+    public string[] Radio2Labels { get; set; } = { " ", " ", "36", "40", "44", "48", "52", "56", "60", "64", "", "", "", "", "100", "104", "108", "112", "116", "120", "124", "128", "132", "136", "140", "144", "149", "153", "157", "161", "165", " ", " " };
+    public Func<double, string> FormattedDbm { get; set; } = value => $"- {100 - value} dBm"; // Reverse y-axis 0 to -100
 
     private bool _isStatusMessageDisplayed;
     public bool IsStatusMessageDisplayed
@@ -305,7 +305,7 @@ public class WiFiViewModel : ViewModelBase
     public string StatusMessage
     {
         get => _statusMessage;
-        set
+        private set
         {
             if (value == _statusMessage)
                 return;
@@ -347,7 +347,7 @@ public class WiFiViewModel : ViewModelBase
     public string ConnectionStatusMessage
     {
         get => _connectionStatusMessage;
-        set
+        private set
         {
             if (value == _connectionStatusMessage)
                 return;
@@ -370,33 +370,30 @@ public class WiFiViewModel : ViewModelBase
         NetworksView.SortDescriptions.Add(new SortDescription($"{nameof(WiFiNetworkInfo.AvailableNetwork)}.{nameof(WiFiNetworkInfo.AvailableNetwork.Ssid)}", ListSortDirection.Ascending));
         NetworksView.Filter = o =>
         {
-            if (o is WiFiNetworkInfo info)
-            {
-                if (WiFi.Is2dot4GHzNetwork(info.AvailableNetwork.ChannelCenterFrequencyInKilohertz) && !Show2dot4GHzNetworks)
-                    return false;
-
-                if (WiFi.Is5GHzNetwork(info.AvailableNetwork.ChannelCenterFrequencyInKilohertz) && !Show5GHzNetworks)
-                    return false;
-
-                if (string.IsNullOrEmpty(Search))
-                    return true;
-
-                // Search by: SSID, Security, Channel, BSSID (MAC address), Vendor, Phy kind
-                return info.AvailableNetwork.Ssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                WiFi.GetHumanReadableNetworkAuthenticationType(info.AvailableNetwork.SecuritySettings.NetworkAuthenticationType).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                $"{WiFi.GetChannelFromChannelFrequency(info.AvailableNetwork.ChannelCenterFrequencyInKilohertz)}".IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                info.AvailableNetwork.Bssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                OUILookup.Lookup(info.AvailableNetwork.Bssid).FirstOrDefault()?.Vendor.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                WiFi.GetHumandReadablePhyKind(info.AvailableNetwork.PhyKind).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
-            }
-            else
-            {
+            if (o is not WiFiNetworkInfo info) 
                 return false;
-            }
+            
+            if (WiFi.Is2dot4GHzNetwork(info.AvailableNetwork.ChannelCenterFrequencyInKilohertz) && !Show2dot4GHzNetworks)
+                return false;
+
+            if (WiFi.Is5GHzNetwork(info.AvailableNetwork.ChannelCenterFrequencyInKilohertz) && !Show5GHzNetworks)
+                return false;
+
+            if (string.IsNullOrEmpty(Search))
+                return true;
+
+            // Search by: SSID, Security, Channel, BSSID (MAC address), Vendor, Phy kind
+            return info.AvailableNetwork.Ssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   WiFi.GetHumanReadableNetworkAuthenticationType(info.AvailableNetwork.SecuritySettings.NetworkAuthenticationType).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   $"{WiFi.GetChannelFromChannelFrequency(info.AvailableNetwork.ChannelCenterFrequencyInKilohertz)}".IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.AvailableNetwork.Bssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   OUILookup.LookupByMacAddress(info.AvailableNetwork.Bssid).FirstOrDefault()?.Vendor.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   WiFi.GetHumanReadablePhyKind(info.AvailableNetwork.PhyKind).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
+
         };
 
         // Load network adapters
-        LoadAdapters(SettingsManager.Current.WiFi_InterfaceId);
+        LoadAdapters(SettingsManager.Current.WiFi_InterfaceId).ConfigureAwait(false);
 
         // Auto refresh
         _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
@@ -423,14 +420,14 @@ public class WiFiViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
-    public ICommand ReloadAdaptersCommand => new RelayCommand(p => ReloadAdapterAction());
+    public ICommand ReloadAdaptersCommand => new RelayCommand(_ => ReloadAdapterAction());
 
     private void ReloadAdapterAction()
     {
-        LoadAdapters(SelectedAdapter?.NetworkInterfaceInfo.Id);
+        LoadAdapters(SelectedAdapter?.NetworkInterfaceInfo.Id).ConfigureAwait(false);
     }
 
-    public ICommand ScanNetworksCommand => new RelayCommand(p => ScanNetworksAction(), ScanNetworks_CanExecute);
+    public ICommand ScanNetworksCommand => new RelayCommand(_ => ScanNetworksAction().ConfigureAwait(false), ScanNetworks_CanExecute);
 
     private bool ScanNetworks_CanExecute(object obj) => !IsAdaptersLoading && !IsNetworksLoading && !IsBackgroundSearchRunning && !IsConnecting;
 
@@ -439,24 +436,24 @@ public class WiFiViewModel : ViewModelBase
         await Scan(SelectedAdapter, true);
     }
 
-    public ICommand ConnectCommand => new RelayCommand(p => ConnectAction());
+    public ICommand ConnectCommand => new RelayCommand(_ => ConnectAction());
 
     private void ConnectAction()
     {
         Connect();
     }
-    public ICommand DisconnectCommand => new RelayCommand(p => DisconnectAction());
+    public ICommand DisconnectCommand => new RelayCommand(_ => DisconnectAction());
 
     private void DisconnectAction()
     {
         Disconnect();
     }
 
-    public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+    public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
 
     private void ExportAction()
     {
-        Export();
+        Export().ConfigureAwait(false);
     }
     #endregion
 
@@ -481,13 +478,13 @@ public class WiFiViewModel : ViewModelBase
         }
         catch (FileNotFoundException) // This exception is thrown, when the Microsoft.Windows.SDK.Contracts is not available...
         {
-            SDKContractsFailedToLoad = true;
+            SdkContractsFailedToLoad = true;
         }
 
         IsAdaptersLoading = false;
     }
 
-    private async Task Scan(WiFiAdapterInfo adapterInfo, bool refreshing = false, uint delayInMS = 0)
+    private async Task Scan(WiFiAdapterInfo adapterInfo, bool refreshing = false, uint delayInMs = 0)
     {
         if (refreshing)
         {
@@ -500,14 +497,14 @@ public class WiFiViewModel : ViewModelBase
             IsNetworksLoading = true;
         }
 
-        if (delayInMS != 0)
-            await Task.Delay((int)delayInMS);
+        if (delayInMs != 0)
+            await Task.Delay((int)delayInMs);
 
-        string statusMessage = string.Empty;
+        var statusMessage = string.Empty;
 
         try
         {
-            WiFiNetworkScanInfo wiFiNetworkScanInfo = await WiFi.GetNetworksAsync(adapterInfo.WiFiAdapter);
+            var wiFiNetworkScanInfo = await WiFi.GetNetworksAsync(adapterInfo.WiFiAdapter);
 
             // Clear the values after the scan to make the UI smoother
             Networks.Clear();
@@ -549,7 +546,7 @@ public class WiFiViewModel : ViewModelBase
     {
         ChartValues<double> values = new();
 
-        for (int i = 0; i < (radio == WiFiRadio.One ? Radio1Labels.Length : Radio2Labels.Length); i++)
+        for (var i = 0; i < (radio == WiFiRadio.One ? Radio1Labels.Length : Radio2Labels.Length); i++)
             values.Add(-1);
 
         return values;
@@ -557,9 +554,9 @@ public class WiFiViewModel : ViewModelBase
 
     private ChartValues<double> GetChartValues(WiFiNetworkInfo network, WiFiRadio radio, int index)
     {
-        ChartValues<double> values = GetDefaultChartValues(radio);
+        var values = GetDefaultChartValues(radio);
 
-        double reverseMilliwatts = 100 - (network.AvailableNetwork.NetworkRssiInDecibelMilliwatts * -1);
+        var reverseMilliwatts = 100 - (network.AvailableNetwork.NetworkRssiInDecibelMilliwatts * -1);
 
         values[index - 2] = -1;
         values[index - 1] = reverseMilliwatts;
@@ -638,16 +635,13 @@ public class WiFiViewModel : ViewModelBase
             IsConnecting = false;
 
             // Get result
-            if (connectionResult == WiFiConnectionStatus.Success)
-                ConnectionStatusMessage = string.Format(Localization.Resources.Strings.SuccessfullyConnectedToXXX, ssid);
-            else
-                ConnectionStatusMessage = string.Format(Localization.Resources.Strings.CouldNotConnectToXXXReasonXXX, ssid, ResourceTranslator.Translate(ResourceIdentifier.WiFiConnectionStatus, connectionResult));
+            ConnectionStatusMessage = connectionResult == WiFiConnectionStatus.Success ? string.Format(Localization.Resources.Strings.SuccessfullyConnectedToXXX, ssid) : string.Format(Localization.Resources.Strings.CouldNotConnectToXXXReasonXXX, ssid, ResourceTranslator.Translate(ResourceIdentifier.WiFiConnectionStatus, connectionResult));
 
             // Hide message automatically
             _hideConnectionStatusMessageTimer.Start();
 
             // Update the wifi networks.
-            // Wait because an error may occour if a refresh is done directly after connecting.            
+            // Wait because an error may occur if a refresh is done directly after connecting.            
             await Scan(SelectedAdapter, true, 5000);
 
         }, async instance =>
@@ -655,7 +649,7 @@ public class WiFiViewModel : ViewModelBase
             // Connect WPS
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            string ssid = selectedNetwork.IsHidden ? instance.Ssid : selectedNetwork.AvailableNetwork.Ssid;
+            var ssid = selectedNetwork.IsHidden ? instance.Ssid : selectedNetwork.AvailableNetwork.Ssid;
 
             // Show status message
             IsConnecting = true;
@@ -671,10 +665,7 @@ public class WiFiViewModel : ViewModelBase
             IsConnecting = false;
 
             // Get result
-            if (connectionResult == WiFiConnectionStatus.Success)
-                ConnectionStatusMessage = string.Format(Localization.Resources.Strings.SuccessfullyConnectedToXXX, ssid);
-            else
-                ConnectionStatusMessage = string.Format(Localization.Resources.Strings.CouldNotConnectToXXXReasonXXX, ssid, ResourceTranslator.Translate(ResourceIdentifier.WiFiConnectionStatus, connectionResult));
+            ConnectionStatusMessage = connectionResult == WiFiConnectionStatus.Success ? string.Format(Localization.Resources.Strings.SuccessfullyConnectedToXXX, ssid) : string.Format(Localization.Resources.Strings.CouldNotConnectToXXXReasonXXX, ssid, ResourceTranslator.Translate(ResourceIdentifier.WiFiConnectionStatus, connectionResult));
 
             // Hide message automatically
             _hideConnectionStatusMessageTimer.Start();
@@ -683,8 +674,7 @@ public class WiFiViewModel : ViewModelBase
             // Wait because an error may occur if a refresh is done directly after connecting.            
             await Scan(SelectedAdapter, true, 5000);
         },
-
-        instance =>
+        _ =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
         }, (selectedAdapter, selectedNetwork), connectMode);
@@ -741,10 +731,10 @@ public class WiFiViewModel : ViewModelBase
 
             SettingsManager.Current.WiFi_ExportFileType = instance.FileType;
             SettingsManager.Current.WiFi_ExportFilePath = instance.FilePath;
-        }, instance =>
+        }, _ =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, new ExportFileType[] { ExportFileType.CSV, ExportFileType.XML, ExportFileType.JSON }, true, SettingsManager.Current.WiFi_ExportFileType, SettingsManager.Current.WiFi_ExportFilePath);
+        }, new[] { ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json }, true, SettingsManager.Current.WiFi_ExportFileType, SettingsManager.Current.WiFi_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {

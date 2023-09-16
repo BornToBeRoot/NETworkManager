@@ -244,7 +244,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
         LoadSettings();
 
-        SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
+        SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
 
         _isLoading = false;
     }
@@ -680,7 +680,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #region Event
-    private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(SettingsInfo.PuTTY_ApplicationFilePath))
             CheckSettings();

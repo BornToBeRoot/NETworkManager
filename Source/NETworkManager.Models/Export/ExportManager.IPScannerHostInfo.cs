@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using NETworkManager.Models.Network;
+using NETworkManager.Utilities;
 using Newtonsoft.Json;
 
 namespace NETworkManager.Models.Export;
@@ -21,27 +22,32 @@ public static partial class ExportManager
     {
         switch (fileType)
         {
-            case ExportFileType.CSV:
+            case ExportFileType.Csv:
                 CreateCsv(collection, filePath);
                 break;
-            case ExportFileType.XML:
+            case ExportFileType.Xml:
                 CreateXml(collection, filePath);
                 break;
-            case ExportFileType.JSON:
+            case ExportFileType.Json:
                 CreateJson(collection, filePath);
                 break;
-            case ExportFileType.TXT:
+            case ExportFileType.Txt:
             default:
                 throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
         }
     }
 
+    /// <summary>
+    /// Creates a CSV file from the given <see cref="IPScannerHostInfo"/> collection.
+    /// </summary>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{HostInfo}"/> to export.</param>
+    /// <param name="filePath">Path to the export file.</param>
     private static void CreateCsv(IEnumerable<IPScannerHostInfo> collection, string filePath)
     {
         var stringBuilder = new StringBuilder();
 
         stringBuilder.AppendLine(
-            $"Status,{nameof(PingInfo.IPAddress)},{nameof(IPScannerHostInfo.Hostname)},PortStatus,PingStatus,{nameof(IPScannerHostInfo.MACAddress)},{nameof(IPScannerHostInfo.Vendor)},{nameof(IPScannerHostInfo.Ports)},{nameof(PingInfo.Bytes)},{nameof(PingInfo.Time)},{nameof(PingInfo.TTL)}");
+            $"{nameof(IPScannerHostInfo.IsReachable)},{nameof(PingInfo.IPAddress)},{nameof(IPScannerHostInfo.Hostname)},PortStatus,PingStatus,{nameof(IPScannerHostInfo.MACAddress)},{nameof(IPScannerHostInfo.Vendor)},{nameof(IPScannerHostInfo.Ports)},{nameof(PingInfo.Timestamp)},{nameof(PingInfo.Time)},{nameof(PingInfo.TTL)},{nameof(PingInfo.Bytes)}");
 
         foreach (var info in collection)
         {
@@ -52,12 +58,17 @@ public static partial class ExportManager
                     $"{port.Port}/{port.LookupInfo.Protocol}/{port.LookupInfo.Service}/{port.LookupInfo.Description}/{port.State};");
 
             stringBuilder.AppendLine(
-                $"{info.IsReachable},{info.PingInfo.IPAddress},{info.Hostname},{(info.IsAnyPortOpen ? PortState.Open : PortState.Closed)},{info.PingInfo.Status},{info.MACAddress},\"{info.Vendor}\",\"{stringBuilderPorts.ToString().TrimEnd(';')}\",{info.PingInfo.Bytes},{Ping.TimeToString(info.PingInfo.Status, info.PingInfo.Time, true)},{info.PingInfo.TTL}");
+                $"{info.IsReachable},{info.PingInfo.IPAddress},{info.Hostname},{(info.IsAnyPortOpen ? PortState.Open : PortState.Closed)},{info.PingInfo.Status},{info.MACAddress},\"{info.Vendor}\",\"{stringBuilderPorts.ToString().TrimEnd(';')}\",{DateTimeHelper.DateTimeToFullDateTimeString(info.PingInfo.Timestamp)},{Ping.TimeToString(info.PingInfo.Status, info.PingInfo.Time, true)},{info.PingInfo.TTL},{info.PingInfo.Bytes}");
         }
 
         System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
     }
 
+    /// <summary>
+    /// Creates a XML file from the given <see cref="IPScannerHostInfo"/> collection.
+    /// </summary>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{HostInfo}"/> to export.</param>
+    /// <param name="filePath">Path to the export file.</param>
     private static void CreateXml(IEnumerable<IPScannerHostInfo> collection, string filePath)
     {
         var document = new XDocument(DefaultXDeclaration,
@@ -66,7 +77,7 @@ public static partial class ExportManager
                     from info in collection
                     select
                         new XElement(nameof(IPScannerHostInfo),
-                            new XElement("Status", info.IsReachable),
+                            new XElement(nameof(IPScannerHostInfo.IsReachable), info.IsReachable),
                             new XElement(nameof(PingInfo.IPAddress), info.PingInfo.IPAddress),
                             new XElement(nameof(IPScannerHostInfo.Hostname), info.Hostname),
                             new XElement("PortStatus", info.IsAnyPortOpen ? PortState.Open : PortState.Closed),
@@ -80,14 +91,20 @@ public static partial class ExportManager
                                 new XElement(nameof(PortInfo.LookupInfo.Service), port.LookupInfo.Service),
                                 new XElement(nameof(PortInfo.LookupInfo.Description), port.LookupInfo.Description),
                                 new XElement(nameof(PortInfo.State), port.State)),
-                            new XElement(nameof(PingInfo.Bytes), info.PingInfo.Bytes),
+                            new XElement(nameof(PingInfo.Timestamp), DateTimeHelper.DateTimeToFullDateTimeString(info.PingInfo.Timestamp)),
                             new XElement(nameof(PingInfo.Time),
                                 Ping.TimeToString(info.PingInfo.Status, info.PingInfo.Time, true)),
-                            new XElement(nameof(PingInfo.TTL), info.PingInfo.TTL)))));
+                            new XElement(nameof(PingInfo.TTL), info.PingInfo.TTL),
+                            new XElement(nameof(PingInfo.Bytes), info.PingInfo.Bytes)))));
 
         document.Save(filePath);
     }
 
+    /// <summary>
+    /// Creates a JSON file from the given <see cref="IPScannerHostInfo"/> collection.
+    /// </summary>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{HostInfo}"/> to export.</param>
+    /// <param name="filePath">Path to the export file.</param>
     private static void CreateJson(IReadOnlyList<IPScannerHostInfo> collection, string filePath)
     {
         var jsonData = new object[collection.Count];
@@ -110,7 +127,7 @@ public static partial class ExportManager
 
             jsonData[i] = new
             {
-                Status = collection[i].IsReachable.ToString(),
+                collection[i].IsReachable,
                 IPAddress = collection[i].PingInfo.IPAddress.ToString(),
                 collection[i].Hostname,
                 PortStatus = collection[i].IsAnyPortOpen ? PortState.Open.ToString() : PortState.Closed.ToString(),
@@ -118,9 +135,10 @@ public static partial class ExportManager
                 MACAddress = collection[i].MACAddress?.ToString(),
                 collection[i].Vendor,
                 Ports = jsonDataPorts,
-                collection[i].PingInfo.Bytes,
+                Timestamp = DateTimeHelper.DateTimeToFullDateTimeString(collection[i].PingInfo.Timestamp),
                 Time = Ping.TimeToString(collection[i].PingInfo.Status, collection[i].PingInfo.Time, true),
-                collection[i].PingInfo.TTL
+                collection[i].PingInfo.TTL,
+                collection[i].PingInfo.Bytes
             };
         }
 

@@ -82,7 +82,7 @@ public static class GlobalStaticConfiguration
     public static bool WiFi_Show2dot4GHzNetworks => true;
     public static bool WiFi_Show5GHzNetworks => true;
     public static AutoRefreshTimeInfo WiFi_AutoRefreshTime => AutoRefreshTime.GetDefaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
-    public static ExportFileType WiFi_ExportFileType => ExportFileType.CSV;
+    public static ExportFileType WiFi_ExportFileType => ExportFileType.Csv;
 
     // Application: IP Scanner    
     public static int IPScanner_ICMPAttempts => 2;
@@ -94,13 +94,13 @@ public static class GlobalStaticConfiguration
     public static int IPScanner_PortScanTimeout => 4000;
     public static int IPScanner_MaxHostThreads => 256;
     public static int IPScanner_MaxPortThreads => 5;
-    public static ExportFileType IPScanner_ExportFileType => ExportFileType.CSV;
+    public static ExportFileType IPScanner_ExportFileType => ExportFileType.Csv;
 
     // Application: Port Scanner 
     public static int PortScanner_MaxHostThreads => 5;
     public static int PortScanner_MaxPortThreads => 256;
     public static int PortScanner_Timeout => 4000;
-    public static ExportFileType PortScanner_ExportFileType => ExportFileType.CSV;
+    public static ExportFileType PortScanner_ExportFileType => ExportFileType.Csv;
 
     // Application: Ping Monitor
     public static int PingMonitor_Buffer => 32;
@@ -108,7 +108,7 @@ public static class GlobalStaticConfiguration
     public static int PingMonitor_Timeout => 4000;
     public static int PingMonitor_TTL => 64;
     public static int PingMonitor_WaitTime => 1000;
-    public static ExportFileType PingMonitor_ExportFileType => ExportFileType.CSV;
+    public static ExportFileType PingMonitor_ExportFileType => ExportFileType.Csv;
 
     // Application: Traceroute
     public static int Traceroute_MaximumHops => 30;
@@ -116,7 +116,7 @@ public static class GlobalStaticConfiguration
     public static int Traceroute_Buffer => 32;
     public static bool Traceroute_ResolveHostname => true;
     public static bool Traceroute_CheckIPApiIPGeolocation => false;
-    public static ExportFileType Traceroute_ExportFileType => ExportFileType.CSV;
+    public static ExportFileType Traceroute_ExportFileType => ExportFileType.Csv;
 
     // Application: DNS Lookup
     public static QueryClass DNSLookup_QueryClass => QueryClass.IN;
@@ -124,7 +124,7 @@ public static class GlobalStaticConfiguration
     public static bool DNSLookup_UseTCPOnly => false;
     public static int DNSLookup_Retries => 3;
     public static int DNSLookup_Timeout => 2;
-    public static ExportFileType DNSLookup_ExportFileType => ExportFileType.CSV;
+    public static ExportFileType DNSLookup_ExportFileType => ExportFileType.Csv;
 
     // Application: RemoteDesktop
     public static bool RemoteDesktop_UseCurrentViewSize => true;
@@ -181,43 +181,43 @@ public static class GlobalStaticConfiguration
     public static SNMPV3Security SNMP_Security => SNMPV3Security.AuthPriv;
     public static SNMPV3AuthenticationProvider SNMP_AuthenticationProvider => SNMPV3AuthenticationProvider.SHA1;
     public static SNMPV3PrivacyProvider SNMP_PrivacyProvider => SNMPV3PrivacyProvider.AES;
-    public static ExportFileType SNMP_ExportFileType => ExportFileType.CSV;
+    public static ExportFileType SNMP_ExportFileType => ExportFileType.Csv;
 
     // Application: SNTP Lookup
     public static int SNTPLookup_Timeout => 4000;
-    public static ExportFileType SNTPLookup_ExportFileType => ExportFileType.CSV;
+    public static ExportFileType SNTPLookup_ExportFileType => ExportFileType.Csv;
 
     // Application: Discovery Protocol
-    public static DiscoveryProtocol.Protocol DiscoveryProtocol_Protocol => DiscoveryProtocol.Protocol.LLDP_CDP;
+    public static DiscoveryProtocol DiscoveryProtocol_Protocol => DiscoveryProtocol.LldpCdp;
     public static int DiscoveryProtocol_Duration => 60;
 
     // Application: Wake on LAN
     public static int WakeOnLAN_Port => 9;
 
     // Application: Subnet Calculator
-    public static ExportFileType SubnetCalculator_Subnetting_ExportFileType => ExportFileType.CSV;
+    public static ExportFileType SubnetCalculator_Subnetting_ExportFileType => ExportFileType.Csv;
 
     // Application: Bit Calculator
     public static BitCaluclatorUnit BitCalculator_Unit => BitCaluclatorUnit.Bytes;
     public static BitCaluclatorNotation BitCalculator_Notation => BitCaluclatorNotation.Binary;
 
     // Application: Lookup
-    public static ExportFileType Lookup_OUI_ExportFileType => ExportFileType.CSV;
-    public static ExportFileType Lookup_Port_ExportFileType => ExportFileType.CSV;
+    public static ExportFileType Lookup_OUI_ExportFileType => ExportFileType.Csv;
+    public static ExportFileType Lookup_Port_ExportFileType => ExportFileType.Csv;
 
     // Application: Whois
-    public static ExportFileType Whois_ExportFileType => ExportFileType.TXT;
+    public static ExportFileType Whois_ExportFileType => ExportFileType.Txt;
 
     // Application: Connections
-    public static ExportFileType Connections_ExportFileType => ExportFileType.CSV;
+    public static ExportFileType Connections_ExportFileType => ExportFileType.Csv;
     public static AutoRefreshTimeInfo Connections_AutoRefreshTime => AutoRefreshTime.GetDefaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
 
     // Application: Listeners
-    public static ExportFileType Listeners_ExportFileType => ExportFileType.CSV;
+    public static ExportFileType Listeners_ExportFileType => ExportFileType.Csv;
     public static AutoRefreshTimeInfo Listeners_AutoRefreshTime => AutoRefreshTime.GetDefaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
 
     // Application: ARP Table
-    public static ExportFileType ARPTable_ExportFileType => ExportFileType.CSV;
+    public static ExportFileType ARPTable_ExportFileType => ExportFileType.Csv;
     public static AutoRefreshTimeInfo ARPTable_AutoRefreshTime => AutoRefreshTime.GetDefaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
     #endregion
 }

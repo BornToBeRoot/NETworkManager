@@ -107,7 +107,7 @@ public class ExportViewModel : ViewModelBase
 
             if (value)
             {
-                FileType = ExportFileType.CSV;
+                FileType = ExportFileType.Csv;
                 ChangeFilePathExtension(FileType);
             }
 
@@ -141,7 +141,7 @@ public class ExportViewModel : ViewModelBase
 
             if (value)
             {
-                FileType = ExportFileType.XML;
+                FileType = ExportFileType.Xml;
                 ChangeFilePathExtension(FileType);
             }
 
@@ -176,7 +176,7 @@ public class ExportViewModel : ViewModelBase
 
             if (value)
             {
-                FileType = ExportFileType.JSON;
+                FileType = ExportFileType.Json;
                 ChangeFilePathExtension(FileType);
             }
 
@@ -210,7 +210,7 @@ public class ExportViewModel : ViewModelBase
 
             if (value)
             {
-                FileType = ExportFileType.TXT;
+                FileType = ExportFileType.Txt;
                 ChangeFilePathExtension(FileType);
             }
 
@@ -238,10 +238,10 @@ public class ExportViewModel : ViewModelBase
         ExportCommand = new RelayCommand(p => deleteCommand(this));
         CancelCommand = new RelayCommand(p => cancelHandler(this));
 
-        ShowCSV = showFilesTypes.Contains(ExportFileType.CSV);
-        ShowXML = showFilesTypes.Contains(ExportFileType.XML);
-        ShowJSON = showFilesTypes.Contains(ExportFileType.JSON);
-        ShowTXT = showFilesTypes.Contains(ExportFileType.TXT);
+        ShowCSV = showFilesTypes.Contains(ExportFileType.Csv);
+        ShowXML = showFilesTypes.Contains(ExportFileType.Xml);
+        ShowJSON = showFilesTypes.Contains(ExportFileType.Json);
+        ShowTXT = showFilesTypes.Contains(ExportFileType.Txt);
 
         ShowExportSelected = showExportSelected;
     }
@@ -253,16 +253,16 @@ public class ExportViewModel : ViewModelBase
 
         switch (fileType)
         {
-            case ExportFileType.CSV:
+            case ExportFileType.Csv:
                 UseCSV = true;
                 break;
-            case ExportFileType.XML:
+            case ExportFileType.Xml:
                 UseXML = true;
                 break;
-            case ExportFileType.JSON:
+            case ExportFileType.Json:
                 UseJSON = true;
                 break;
-            case ExportFileType.TXT:
+            case ExportFileType.Txt:
                 UseTXT = true;                    
                 break;
             default:

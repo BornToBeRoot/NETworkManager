@@ -1,12 +1,10 @@
-﻿using NETworkManager.Utilities;
-using System.Net;
-using static NETworkManager.Models.Network.Listener;
+﻿using System.Net;
 
 namespace NETworkManager.Models.Network;
 
 public class ListenerInfo
 {
-    public Listener.Protocol Protocol { get; set; }
+    public TransportProtocol Protocol { get; set; }
     public IPAddress IPAddress { get; set; }
     public int Port { get; set; }
 
@@ -17,10 +15,10 @@ public class ListenerInfo
 
     }
 
-    public ListenerInfo(Listener.Protocol protocol, IPAddress ipddress, int port)
+    public ListenerInfo(TransportProtocol protocol, IPAddress ipAddress, int port)
     {
         Protocol = protocol;
-        IPAddress = ipddress;
+        IPAddress = ipAddress;
         Port = port;
     }
 }

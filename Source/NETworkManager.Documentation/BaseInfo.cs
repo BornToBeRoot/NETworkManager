@@ -1,7 +1,7 @@
 ﻿namespace NETworkManager.Documentation;
 
 /// <summary>
-/// Base class to hold informations about a library, service or resource.
+/// Base class to hold information's about a library, service or resource.
 /// </summary>
 public abstract class BaseInfo
 {

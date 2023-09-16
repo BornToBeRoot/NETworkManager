@@ -1,7 +1,7 @@
 ﻿namespace NETworkManager.Documentation;
 
 /// <summary>
-/// Class to hold all informations about a resource.
+/// Class to hold all information's about a resource.
 /// </summary>
 public class ResourceInfo : BaseInfo
 {

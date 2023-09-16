@@ -48,8 +48,15 @@
                             <ColumnDefinition Width="10" />
                             <ColumnDefinition Width="Auto" />                            
                         </Grid.ColumnDefinitions>                        
-                        <TextBlock Grid.Column="0" Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.MACAddress}" />
-                        <ComboBox Grid.Column="2" x:Name="ComboBoxMACAddress" ItemsSource="{Binding MACAddressHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleMACAddress}" Style="{StaticResource HistoryComboBox}">
+                        <TextBlock Grid.Column="0" Grid.Row="0" 
+                                   Style="{StaticResource CenterTextBlock}"
+                                   Text="{x:Static localization:Strings.MACAddress}" />
+                        <ComboBox Grid.Column="2" Grid.Row="0" 
+                                  x:Name="ComboBoxMACAddress" 
+                                  ItemsSource="{Binding MACAddressHistoryView}" 
+                                  mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleMACAddress}"
+                                  IsReadOnly="{Binding IsRunning}"
+                                  Style="{StaticResource HistoryComboBox}">
                             <ComboBox.InputBindings>
                                 <KeyBinding Key="Enter" Command="{Binding WakeUpCommand}" />
                             </ComboBox.InputBindings>
@@ -62,8 +69,15 @@
                                 </Binding>
                             </ComboBox.Text>
                         </ComboBox>
-                        <TextBlock Grid.Column="4" Text="{x:Static localization:Strings.Broadcast}" Style="{StaticResource CenterTextBlock}" />
-                        <ComboBox x:Name="ComboBoxBroadcast" Grid.Column="6" ItemsSource="{Binding BroadcastHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Broadcast}" Style="{StaticResource HistoryComboBox}">
+                        <TextBlock Grid.Column="4" Grid.Row="0"
+                                   Text="{x:Static localization:Strings.Broadcast}"
+                                   Style="{StaticResource CenterTextBlock}" />
+                        <ComboBox Grid.Column="6" Grid.Row="0"
+                                  x:Name="ComboBoxBroadcast"
+                                  ItemsSource="{Binding BroadcastHistoryView}" 
+                                  mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Broadcast}" 
+                                  IsReadOnly="{Binding IsRunning}"
+                                  Style="{StaticResource HistoryComboBox}">
                             <ComboBox.InputBindings>
                                 <KeyBinding Key="Enter" Command="{Binding WakeUpCommand}" />
                             </ComboBox.InputBindings>
@@ -76,7 +90,7 @@
                                 </Binding>
                             </ComboBox.Text>
                         </ComboBox>
-                        <Button Grid.Column="8" HorizontalAlignment="Right" Command="{Binding WakeUpCommand}" IsDefault="{Binding IsSending, Converter={StaticResource BooleanReverseConverter}}">
+                        <Button Grid.Column="8" HorizontalAlignment="Right" Command="{Binding WakeUpCommand}" IsDefault="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}">
                             <Button.Content>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -102,7 +116,7 @@
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="IsEnabled" Value="True" />
                                         </MultiDataTrigger>
-                                        <DataTrigger Binding="{Binding IsSending}" Value="True" >
+                                        <DataTrigger Binding="{Binding IsRunning}" Value="True" >
                                             <Setter Property="IsEnabled" Value="False" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -110,7 +124,7 @@
                             </Button.Style>
                         </Button>
                     </Grid>
-                    <mahAppsControls:MetroProgressBar Grid.Row="2" Margin="0,10,0,0" Visibility="{Binding IsSending, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Foreground="{DynamicResource MahApps.Brushes.Accent}" IsIndeterminate="True" />
+                    <mahAppsControls:MetroProgressBar Grid.Row="2" Margin="0,10,0,0" Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Foreground="{DynamicResource MahApps.Brushes.Accent}" IsIndeterminate="True" />
                     <TextBlock Grid.Row="3" Foreground="{DynamicResource MahApps.Brushes.Accent}" Text="{Binding StatusMessage}" Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource StatusMessageTextBlock}" Margin="0,10,0,0" />
                 </Grid>
             </TabItem>
@@ -291,11 +305,10 @@
                                 </Style.Triggers>
                             </Style>
                         </Grid.Style>
-                        <Button HorizontalAlignment="Center" Focusable="False" Margin="0,0,0,10">
+                        <Button HorizontalAlignment="Center" Margin="0,0,0,10">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
                                     <Setter Property="Command" Value="{Binding AddProfileCommand}" />
-
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Search, Converter={StaticResource StringNullOrEmptyToBoolConverter}}" Value="False">
                                             <Setter Property="Command" Value="{Binding ClearSearchCommand}" />

@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
+using NETworkManager.Models.Appearance;
 
 namespace NETworkManager.Settings;
 
@@ -36,9 +37,9 @@ public static class AppearanceManager
     public static List<AccentColorInfo> Accents { get; set; }
 
     /// <summary>
-    /// Containes the default settings for a new <see cref="BaseMetroDialog"/> 
+    /// Contains the default settings for a new <see cref="BaseMetroDialog"/> 
     /// </summary>
-    public static MetroDialogSettings MetroDialog = new();
+    public static readonly MetroDialogSettings MetroDialog = new();
 
     /// <summary>
     /// Load the MahApps.Metro themes and accents when needed.

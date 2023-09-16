@@ -7,14 +7,11 @@
         xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-        dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SubnetCalculatorWideSubnetViewModel}">
     <UserControl.Resources>
         <converters:BigIntegerToStringConverter x:Key="BigIntegerToStringConverter" />
-        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:IPAddressToStringConverter x:Key="IPAddressToStringConverter" />
@@ -39,14 +36,21 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="10" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.Subnet1}" />
-                <ComboBox Grid.Column="2" Grid.Row="0" x:Name="ComboBoxSubnet1" ItemsSource="{Binding Subnet1HistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Subnet}" Style="{StaticResource HistoryComboBox}" Height="{Binding ElementName=ComboBoxSubnet2, Path=ActualHeight}">
+                <TextBlock Grid.Column="0" Grid.Row="0" 
+                           Style="{StaticResource CenterTextBlock}" 
+                           Text="{x:Static localization:Strings.Subnet1}" />
+                <ComboBox Grid.Column="2" Grid.Row="0" 
+                          x:Name="ComboBoxSubnet1"
+                          ItemsSource="{Binding Subnet1HistoryView}"
+                          IsReadOnly="{Binding IsRunning}"
+                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Subnet}"
+                          Style="{StaticResource HistoryComboBox}" 
+                          Height="{Binding ElementName=ComboBoxSubnet2, Path=ActualHeight}">
                     <ComboBox.Text>
                         <Binding Path="Subnet1" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                             <Binding.ValidationRules>
@@ -56,8 +60,15 @@
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
-                <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.Subnet2}" />
-                <ComboBox Grid.Column="2" Grid.Row="2" x:Name="ComboBoxSubnet2" ItemsSource="{Binding Subnet2HistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Subnet2}" Style="{StaticResource HistoryComboBox}">
+                <TextBlock Grid.Column="4" Grid.Row="0"
+                           Style="{StaticResource CenterTextBlock}" 
+                           Text="{x:Static localization:Strings.Subnet2}" />
+                <ComboBox Grid.Column="6" Grid.Row="0" 
+                          x:Name="ComboBoxSubnet2"
+                          ItemsSource="{Binding Subnet2HistoryView}" 
+                          IsReadOnly="{Binding IsRunning}" 
+                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Subnet2}" 
+                          Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Subnet2" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                             <Binding.ValidationRules>
@@ -67,7 +78,9 @@
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
-                <Button Grid.Column="4" Grid.Row="2" IsDefault="True" Command="{Binding CalculateCommand}" HorizontalAlignment="Right">
+                <Button Grid.Column="8" Grid.Row="0" IsDefault="True" 
+                        Command="{Binding CalculateCommand}" 
+                        HorizontalAlignment="Right">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Style.Triggers>
@@ -77,7 +90,7 @@
                                 <DataTrigger Binding="{Binding ElementName=ComboBoxSubnet2, Path=(Validation.HasError)}" Value="True">
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding IsCalculationRunning}" Value="True">
+                                <DataTrigger Binding="{Binding IsRunning}" Value="True">
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
                             </Style.Triggers>
@@ -136,7 +149,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <GridSplitter Grid.Column="1" Grid.RowSpan="14" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False"/>
+                    <GridSplitter Grid.Column="1" Grid.RowSpan="14" Background="Transparent" HorizontalAlignment="Stretch" />
                     <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.NetworkAddress}" />
                     <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding Result.Network, Converter={StaticResource IPAddressToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Broadcast}" />

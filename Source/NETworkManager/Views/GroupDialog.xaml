@@ -1194,10 +1194,10 @@
                                     </TextBox.Resources>
                                     <TextBox.Style>
                                         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
-                                            <Setter Property="mah:TextBoxHelper.Watermark" Value="{x:Static localization:StaticStrings.ExampleSNMPOID}" />
+                                            <Setter Property="mah:TextBoxHelper.Watermark" Value="{x:Static localization:StaticStrings.ExampleSnmpOid}" />
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding Path=SNMP_Mode}" Value="Get">
-                                                    <Setter Property="mah:TextBoxHelper.Watermark" Value="{x:Static localization:StaticStrings.ExampleSNMPOIDS}" />
+                                                    <Setter Property="mah:TextBoxHelper.Watermark" Value="{x:Static localization:StaticStrings.ExampleSnmpOids}" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -1206,11 +1206,11 @@
                                         <Binding Path="SNMP_OID" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
                                                 <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                <validators:SNMPOIDValidator ValidatesOnTargetUpdated="True">
-                                                    <validators:SNMPOIDValidator.Wrapper>
+                                                <validators:SnmpOidValidator ValidatesOnTargetUpdated="True">
+                                                    <validators:SnmpOidValidator.Wrapper>
                                                         <validators:SNMPOIDDependencyObjectWrapper Mode="{Binding Data.SNMP_Mode, Source={StaticResource BindingProxy}}" />
-                                                    </validators:SNMPOIDValidator.Wrapper>
-                                                </validators:SNMPOIDValidator>
+                                                    </validators:SnmpOidValidator.Wrapper>
+                                                </validators:SnmpOidValidator>
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>

@@ -5,7 +5,7 @@ using NETworkManager.Models.IPApi;
 namespace NETworkManager.Models.Network;
 
 /// <summary>
-/// Class containing information about a hop in a traceroute.
+/// Class containing information about a hop in a <see cref="Traceroute"/>.
 /// </summary>
 public class TracerouteHopInfo
 {
@@ -60,7 +60,7 @@ public class TracerouteHopInfo
     public IPGeolocationResult IPGeolocationResult { get; set; }
 
     /// <summary>
-    /// Creates a new instance of the <see cref="TracerouteHopInfo"/> class with the specified parameters.
+    /// Creates a new instance of <see cref="TracerouteHopInfo"/> with the specified parameters.
     /// </summary>
     /// <param name="hop">Hop (router).</param>
     /// <param name="status1">Status of the first ping.</param>

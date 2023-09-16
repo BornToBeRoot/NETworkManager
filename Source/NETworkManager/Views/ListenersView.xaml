@@ -34,45 +34,24 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <TextBox x:Name="TextBoxSearch" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
-                <controls:MultiSelectDataGrid x:Name="DataGridConnection" Grid.Row="2" ItemsSource="{Binding ListenerResultsView}" SelectedItem="{Binding SelectedListenerInfo}" SelectedItemsList="{Binding SelectedListenerInfos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <controls:MultiSelectDataGrid x:Name="DataGridConnection" Grid.Row="2" ItemsSource="{Binding ResultsView}" SelectedItem="{Binding SelectedResult}" SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <controls:MultiSelectDataGrid.Resources>
                         <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                         <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"  MinWidth="150">
-                            <MenuItem Header="{x:Static localization:Strings.CopyDots}">
-                                <MenuItem.Icon>
-                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                        <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                        </Rectangle.OpacityMask>
-                                    </Rectangle>
-                                </MenuItem.Icon>
-                                <MenuItem Header="{x:Static localization:Strings.Protocol}" Command="{Binding CopySelectedProtocolCommand}">
-                                    <MenuItem.Icon>
-                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="{x:Static localization:Strings.IPAddress}" Command="{Binding CopySelectedIPAddressCommand}">
-                                    <MenuItem.Icon>
-                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="{x:Static localization:Strings.Port}" Command="{Binding CopySelectedPortCommand}">
-                                    <MenuItem.Icon>
-                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                    </MenuItem.Icon>
-                                </MenuItem>
+                            <MenuItem Header="{x:Static localization:Strings.CopyDots}" 
+                                      Style="{StaticResource ResourceKey=CopyMenuItem}">
+                                <MenuItem Header="{x:Static Member=localization:Strings.Protocol}" 
+                                          Command="{Binding Path=CopyDataToClipboardCommand}"
+                                          CommandParameter="{Binding Path=SelectedResult.Protocol}" 
+                                          Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                                <MenuItem Header="{x:Static Member=localization:Strings.IPAddress}" 
+                                          Command="{Binding Path=CopyDataToClipboardCommand}"
+                                          CommandParameter="{Binding Path=SelectedResult.IPAddress}" 
+                                          Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                                <MenuItem Header="{x:Static Member=localization:Strings.Port}" 
+                                          Command="{Binding Path=CopyDataToClipboardCommand}"
+                                          CommandParameter="{Binding Path=SelectedResult.Port}" 
+                                          Style="{StaticResource ResourceKey=CopyMenuItem}" />
                             </MenuItem>
                             <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
                                 <MenuItem.Icon>

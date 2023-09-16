@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace NETworkManager.Utilities;
+﻿namespace NETworkManager.Utilities;
 
 public static class RegexHelper
 {        
@@ -23,7 +21,7 @@ public static class RegexHelper
     // Match a MAC-Address 000000000000 00:00:00:00:00:00, 00-00-00-00-00-00-00 or 0000.0000.0000
     public const string MACAddressRegex = @"^^[A-Fa-f0-9]{12}$|^[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}$|^[A-Fa-f0-9]{4}.[A-Fa-f0-9]{4}.[A-Fa-f0-9]{4}$$";
 
-    // Matche the first 3 bytes of a MAC-Address 000000, 00:00:00, 00-00-00
+    // Match the first 3 bytes of a MAC-Address 000000, 00:00:00, 00-00-00
     public const string MACAddressFirst3BytesRegex = @"^[A-Fa-f0-9]{6}$|^[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}$|^[A-Fa-f0-9]{4}.[A-Fa-f0-9]{2}$";
 
     // Private subnetmask / cidr values
@@ -84,6 +82,6 @@ public static class RegexHelper
     // Match a number (like 12, 12.4, 12,3) 
     public const string NumberRegex = @"^\d+((\.|,)\d+)?$";
 
-    // Match an SNMP OID (like 1.3.6.1)
-    public const string SNMOIODRegex = @"^[012]\.(?:[0-9]|[1-3][0-9])(\.\d+)*$";
+    // Match an SNMP OID (like 1.3.6.1 or .1.3.6.2)
+    public const string SnmpOidRegex = @"^\.?[012]\.(?:[0-9]|[1-3][0-9])(\.\d+)*$";
 }

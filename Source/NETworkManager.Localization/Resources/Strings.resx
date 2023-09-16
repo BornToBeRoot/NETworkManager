@@ -1988,15 +1988,6 @@ URL: https://api.ipify.org and https://api6.ipify.org</value>
   <data name="CheckNetworkAdapterConfigurationAndNetworkConnectionMessage" xml:space="preserve">
     <value>Check your network adapter configuration (dhcp, static ip) and if you are connected to a network.</value>
   </data>
-  <data name="ConnectionState_Error" xml:space="preserve">
-    <value>Error</value>
-  </data>
-  <data name="ConnectionState_OK" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="ConnectionState_Warning" xml:space="preserve">
-    <value>Warning</value>
-  </data>
   <data name="CouldNotDetectGatewayIPAddressMessage" xml:space="preserve">
     <value>Could not detect gateway ip address!</value>
   </data>
@@ -2442,13 +2433,13 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="DiscoveryProtocol" xml:space="preserve">
     <value>Discovery Protocol</value>
   </data>
-  <data name="DiscoveryProtocolIdentifier_CDP" xml:space="preserve">
+  <data name="DiscoveryProtocol_Cdp" xml:space="preserve">
     <value>CDP</value>
   </data>
-  <data name="DiscoveryProtocolIdentifier_LLDP" xml:space="preserve">
+  <data name="DiscoveryProtocol_Lldp" xml:space="preserve">
     <value>LLDP</value>
   </data>
-  <data name="DiscoveryProtocolIdentifier_LLDP_CDP" xml:space="preserve">
+  <data name="DiscoveryProtocol_LldpCdp" xml:space="preserve">
     <value>LLDP / CDP</value>
   </data>
   <data name="XXSecondsRemainingDots" xml:space="preserve">
@@ -3663,5 +3654,11 @@ Try again in a few seconds.</value>
   </data>
   <data name="GroupViewName_General" xml:space="preserve">
     <value>General</value>
+  </data>
+  <data name="BSSID" xml:space="preserve">
+    <value>BSSID</value>
+  </data>
+  <data name="NoReachableHostsFound" xml:space="preserve">
+    <value>No reachable hosts found!</value>
   </data>
 </root>

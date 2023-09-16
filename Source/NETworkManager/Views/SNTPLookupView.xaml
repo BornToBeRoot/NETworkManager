@@ -3,9 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
         xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
-        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
@@ -17,7 +15,10 @@
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SNTPLookupViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />                
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
+        <converters:DoubleToMillisecondsStringConverter x:Key="IntToMillisecondsStringConverter" />
+        <converters:IntToSecondsStringConverter x:Key="IntToSecondsStringConverter" />
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -26,7 +27,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Lookup}" />
+        <TextBlock Grid.Row="0" Style="{StaticResource ResourceKey=HeaderTextBlock}" Text="{x:Static Member=localization:Strings.Lookup}" />
         <Grid Grid.Row="1" Margin="0,0,0,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -41,14 +42,23 @@
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>                
-                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.SNTPServers}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox x:Name="ComboBoxSNTPServers" Grid.Column="2" Grid.Row="0" ItemsSource="{Binding SNTPServers}" SelectedItem="{Binding SNTPServer}" DisplayMemberPath="Name" />
-                <Button Grid.Column="4" Grid.Row="0" Command="{Binding LookupCommand}" IsDefault="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" HorizontalAlignment="Right">
+                <TextBlock Grid.Column="0" Grid.Row="0" 
+                           Text="{x:Static Member=localization:Strings.SNTPServers}" 
+                           Style="{DynamicResource ResourceKey=DefaultTextBlock}" 
+                           VerticalAlignment="Center" />
+                <ComboBox Grid.Column="2" Grid.Row="0" 
+                          ItemsSource="{Binding Path=SNTPServers}" 
+                          SelectedItem="{Binding Path=SNTPServer}" 
+                          DisplayMemberPath="Name" />
+                <Button Grid.Column="4" Grid.Row="0" 
+                        Command="{Binding Path=LookupCommand}" 
+                        IsDefault="{Binding Path=IsRunning, Converter={StaticResource ResourceKey=BooleanReverseConverter}}"
+                        HorizontalAlignment="Right">
                     <Button.Resources>
-                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                        <Style TargetType="{x:Type TypeName=Button}" BasedOn="{StaticResource ResourceKey=ImageWithTextButton}">
                             <Setter Property="IsEnabled" Value="True" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsLookupRunning}" Value="True">
+                                <DataTrigger Binding="{Binding Path=IsRunning}" Value="True">
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
                             </Style.Triggers>
@@ -60,114 +70,87 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Rectangle>
+                            <Rectangle Grid.Column="0" Grid.Row="0">
                                 <Rectangle.Resources>
                                     <VisualBrush x:Key="VisualMagnify" Stretch="Uniform" Visual="{iconPacks:Material Kind=Magnify}" />
                                 </Rectangle.Resources>
                                 <Rectangle.Style>
-                                    <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ButtonWithImageRectangle}">
-                                        <Setter Property="OpacityMask" Value="{StaticResource VisualMagnify}" />
+                                    <Style TargetType="{x:Type TypeName=Rectangle}" BasedOn="{StaticResource ResourceKey=ButtonWithImageRectangle}">
+                                        <Setter Property="OpacityMask" Value="{StaticResource ResourceKey=VisualMagnify}" />
                                     </Style>
                                 </Rectangle.Style>
                             </Rectangle>
-                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Lookup}" Style="{StaticResource ButtonWithImageTextBlock}"/>
+                            <TextBlock Grid.Column="1" Text="{x:Static Member=localization:Strings.Lookup}" Style="{StaticResource ResourceKey=ButtonWithImageTextBlock}"/>
                         </Grid>
                     </Button.Content>
                 </Button>
             </Grid>
-            <mahAppsControls:MetroProgressBar Grid.Row="1" Margin="0,10,0,0" Foreground="{DynamicResource MahApps.Brushes.Accent}" IsIndeterminate="True">
+            <mahAppsControls:MetroProgressBar Grid.Column="0" Grid.Row="1"
+                                              Margin="0,10,0,0"
+                                              Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Accent}"
+                                              IsIndeterminate="True">
                 <mahAppsControls:MetroProgressBar.Style>
-                    <Style TargetType="{x:Type  mahAppsControls:MetroProgressBar}">
+                    <Style TargetType="{x:Type  TypeName=mahAppsControls:MetroProgressBar}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsLookupRunning}" Value="False">
+                            <DataTrigger Binding="{Binding Path=IsRunning}" Value="False">
                                 <Setter Property="Visibility" Value="Collapsed" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </mahAppsControls:MetroProgressBar.Style>
             </mahAppsControls:MetroProgressBar>
-            <TextBlock Grid.Row="2" Foreground="{DynamicResource MahApps.Brushes.Accent}" Text="{Binding StatusMessage}" Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource StatusMessageTextBlock}" Margin="0,10,0,0" />
+            <TextBlock Grid.Column="0" Grid.Row="2"
+                       Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Accent}" 
+                       Text="{Binding Path=StatusMessage}" 
+                       Visibility="{Binding Path=IsStatusMessageDisplayed, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" 
+                       Style="{DynamicResource ResourceKey=StatusMessageTextBlock}"
+                       Margin="0,10,0,0" />
         </Grid>
-        <TextBlock Grid.Row="2" Text="{x:Static localization:Strings.Result}" Style="{StaticResource HeaderTextBlock}" />        
-        <controls:MultiSelectDataGrid Grid.Row="3" CanUserSortColumns="True" ItemsSource="{Binding LookupResultsView}" SelectedItem="{Binding SelectedLookupResult}" SelectedItemsList="{Binding SelectedLookupResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+        <TextBlock Grid.Column="0" Grid.Row="2"
+                   Text="{x:Static Member=localization:Strings.Result}" 
+                   Style="{StaticResource ResourceKey=HeaderTextBlock}" />        
+        <controls:MultiSelectDataGrid Grid.Column="0" Grid.Row="3"
+                                      CanUserSortColumns="True" 
+                                      ItemsSource="{Binding Path=ResultsView}" 
+                                      SelectedItem="{Binding Path=SelectedResult}" 
+                                      SelectedItemsList="{Binding Path=SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <controls:MultiSelectDataGrid.Resources>
-                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
+                <Style TargetType="{x:Type TypeName=ScrollBar}" BasedOn="{StaticResource ResourceKey=DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                    <MenuItem Header="{x:Static localization:Strings.CopyDots}">
-                        <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                        </MenuItem.Icon>
-                        <MenuItem Header="{x:Static localization:Strings.Server}" Command="{Binding CopySelectedServerCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.IPEndPoint}" Command="{Binding CopySelectedIPEndPointCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.NetworkTime}" Command="{Binding CopySelectedNetworkTimeCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.LocalStartTime}" Command="{Binding CopySelectedLocalStartTimeCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.LocalEndTime}" Command="{Binding CopySelectedLocalEndTimeCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.Offset}" Command="{Binding CopySelectedOffsetCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.RoundTripDelay}" Command="{Binding CopySelectedRoundTripDelayCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
+                    <MenuItem Header="{x:Static Member=localization:Strings.CopyDots}" 
+                              Style="{StaticResource ResourceKey=CopyMenuItem}">
+                        <MenuItem Header="{x:Static Member=localization:Strings.Server}" 
+                                  Command="{Binding Path=CopyDataToClipboardCommand}"
+                                  CommandParameter="{Binding Path=SelectedResult.Server}" 
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.IPEndPoint}" 
+                                  Command="{Binding Path=CopyDataToClipboardCommand}"
+                                  CommandParameter="{Binding Path=SelectedResult.IPEndPoint}" 
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.NetworkTime}" 
+                                  Command="{Binding Path=CopyDataToClipboardCommand}"
+                                  CommandParameter="{Binding Path=SelectedResult.DateTime.NetworkTime, Converter={StaticResource ResourceKey=DateTimeToStringConverter}}" 
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.LocalStartTime}" 
+                                  Command="{Binding Path=CopyDataToClipboardCommand}"
+                                  CommandParameter="{Binding Path=SelectedResult.DateTime.LocalStartTime, Converter={StaticResource ResourceKey=DateTimeToStringConverter}}" 
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.LocalEndTime}" 
+                                  Command="{Binding Path=CopyDataToClipboardCommand}"
+                                  CommandParameter="{Binding Path=SelectedResult.DateTime.LocalEndTime, Converter={StaticResource ResourceKey=DateTimeToStringConverter}}" 
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.Offset}" 
+                                  Command="{Binding Path=CopyDataToClipboardCommand}"
+                                  CommandParameter="{Binding Path=SelectedResult.DateTime.Offset, Converter={StaticResource ResourceKey=IntToSecondsStringConverter}}" 
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.RoundTripDelay}" 
+                                  Command="{Binding Path=CopyDataToClipboardCommand}"
+                                  CommandParameter="{Binding Path=SelectedResult.DateTime.RoundTripDelay, Converter={StaticResource ResourceKey=IntToMillisecondsStringConverter}}" 
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
+                    <MenuItem Header="{x:Static Member=localization:Strings.ExportDots}" Command="{Binding Path=ExportCommand}">
                         <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
                                 </Rectangle.OpacityMask>
@@ -176,9 +159,9 @@
                     </MenuItem>
                 </ContextMenu>
                 <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                    <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
+                    <MenuItem Header="{x:Static Member=localization:Strings.ExportDots}" Command="{Binding Path=ExportCommand}">
                         <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
                                 </Rectangle.OpacityMask>
@@ -188,23 +171,44 @@
                 </ContextMenu>                
             </controls:MultiSelectDataGrid.Resources>
             <controls:MultiSelectDataGrid.RowStyle>
-                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
-                    <Setter Property="ContextMenu" Value="{StaticResource MultiRowContextMenu}"/>
+                <Style TargetType="{x:Type TypeName=DataGridRow}" BasedOn="{StaticResource ResourceKey=MahApps.Styles.DataGridRow}">
+                    <Setter Property="ContextMenu" Value="{StaticResource ResourceKey=MultiRowContextMenu}"/>
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}" Value="1" >
-                            <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>
+                        <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type TypeName=DataGrid}}}" Value="1" >
+                            <Setter Property="ContextMenu" Value="{StaticResource ResourceKey=RowContextMenu}"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </controls:MultiSelectDataGrid.RowStyle>           
             <controls:MultiSelectDataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Server}" Binding="{Binding (network:SNTPLookupResultInfo.Server)}" SortMemberPath="Server" MinWidth="150" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.IPEndPoint}" Binding="{Binding (network:SNTPLookupResultInfo.IPEndPoint)}" SortMemberPath="IPEndPoint" MinWidth="150" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.NetworkTime}" Binding="{Binding (network:SNTPLookupResultInfo.DateTime).NetworkTime,StringFormat={}{0:dd.MM.yyyy HH:mm:ss:fff}}" SortMemberPath="DateTime.NetworkTime" MinWidth="180" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.LocalStartTime}" Binding="{Binding (network:SNTPLookupResultInfo.DateTime).LocalStartTime,StringFormat={}{0:dd.MM.yyyy HH:mm:ss:fff}}" SortMemberPath="DateTime.LocalStartTime" MinWidth="180" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.LocalEndTime}" Binding="{Binding (network:SNTPLookupResultInfo.DateTime).LocalEndTime,StringFormat={}{0:dd.MM.yyyy HH:mm:ss:fff}}" SortMemberPath="DateTime.LocalEndTime" MinWidth="180" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Offset}" Binding="{Binding (network:SNTPLookupResultInfo.DateTime).Offset,StringFormat={}{0} s}" SortMemberPath="DateTime.Offset" MinWidth="80" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.RoundTripDelay}" Binding="{Binding (network:SNTPLookupResultInfo.DateTime).RoundTripDelay,StringFormat={}{0} ms}" SortMemberPath="DateTime.RoundTripDelay" MinWidth="80" />
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.Server}"
+                                    Binding="{Binding Path=(network:SNTPLookupInfo.Server)}"
+                                    SortMemberPath="Server" 
+                                    MinWidth="150" />
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.IPEndPoint}" 
+                                    Binding="{Binding Path=(network:SNTPLookupInfo.IPEndPoint)}" 
+                                    SortMemberPath="IPEndPoint"
+                                    MinWidth="150" />
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.NetworkTime}" 
+                                    Binding="{Binding Path=(network:SNTPLookupInfo.DateTime).NetworkTime, Converter={StaticResource ResourceKey=DateTimeToStringConverter}}" 
+                                    SortMemberPath="DateTime.NetworkTime" 
+                                    MinWidth="180" />
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.LocalStartTime}" 
+                                    Binding="{Binding Path=(network:SNTPLookupInfo.DateTime).LocalStartTime, Converter={StaticResource ResourceKey=DateTimeToStringConverter}}" 
+                                    SortMemberPath="DateTime.LocalStartTime"
+                                    MinWidth="180" />
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.LocalEndTime}"
+                                    Binding="{Binding Path=(network:SNTPLookupInfo.DateTime).LocalEndTime, Converter={StaticResource ResourceKey=DateTimeToStringConverter}}"
+                                    SortMemberPath="DateTime.LocalEndTime" 
+                                    MinWidth="180" />
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.Offset}" 
+                                    Binding="{Binding Path=(network:SNTPLookupInfo.DateTime).Offset, Converter={StaticResource ResourceKey=IntToSecondsStringConverter}}" 
+                                    SortMemberPath="DateTime.Offset" 
+                                    MinWidth="80" />
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.RoundTripDelay}" 
+                                    Binding="{Binding Path=(network:SNTPLookupInfo.DateTime).RoundTripDelay, Converter={StaticResource ResourceKey=IntToMillisecondsStringConverter}}"
+                                    SortMemberPath="DateTime.RoundTripDelay" 
+                                    MinWidth="80" />
             </controls:MultiSelectDataGrid.Columns>
         </controls:MultiSelectDataGrid>
     </Grid>

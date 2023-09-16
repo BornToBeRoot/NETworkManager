@@ -220,7 +220,7 @@
     <value>7</value>
   </data>
   <data name="ExamplePortPortRangeOrService" xml:space="preserve">
-    <value>22; 80; https; ldaps; 777 - 999; 8080</value>
+    <value>22/tcp; 80; 161-162/udp; 1-1024; https; ldaps; Domain Name Server</value>
   </data>
   <data name="ExamplePortScanRange" xml:space="preserve">
     <value>22; 80; 443; 500 - 999; 8080</value>
@@ -234,7 +234,7 @@
   <data name="ExampleSNMPCommunity" xml:space="preserve">
     <value>public</value>
   </data>
-  <data name="ExampleSNMPOID" xml:space="preserve">
+  <data name="ExampleSnmpOid" xml:space="preserve">
     <value>1.3.6.1.2.1.1</value>
   </data>
   <data name="ExampleSNMPUsername" xml:space="preserve">
@@ -339,7 +339,7 @@
   <data name="ExampleSNMPMIB" xml:space="preserve">
     <value>system</value>
   </data>
-  <data name="ExampleSNMPOIDS" xml:space="preserve">
+  <data name="ExampleSnmpOids" xml:space="preserve">
     <value>1.3.6.1.2.1.1; 1.3.6.1.2.1.2</value>
   </data>
   <data name="ExamplePassword" xml:space="preserve">

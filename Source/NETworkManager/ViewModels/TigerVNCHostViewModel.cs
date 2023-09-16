@@ -194,7 +194,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 
         LoadSettings();
 
-        SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
+        SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
 
         _isLoading = false;
     }
@@ -514,7 +514,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
         ConfigurationManager.Current.TigerVNCHasTabs = TabItems.Count > 0;
     }
 
-    private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(SettingsInfo.TigerVNC_ApplicationFilePath))
             CheckSettings();

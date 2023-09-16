@@ -37,52 +37,52 @@ public class ARPTableViewModel : ViewModelBase
 
             _search = value;
 
-            ARPInfoResultsView.Refresh();
+            ResultsView.Refresh();
 
             OnPropertyChanged();
         }
     }
 
-    private ObservableCollection<ARPInfo> _arpInfoResults = new();
-    public ObservableCollection<ARPInfo> ARPInfoResults
+    private ObservableCollection<ARPInfo> _results = new();
+    public ObservableCollection<ARPInfo> Results
     {
-        get => _arpInfoResults;
+        get => _results;
         set
         {
-            if (value == _arpInfoResults)
+            if (value == _results)
                 return;
 
-            _arpInfoResults = value;
+            _results = value;
             OnPropertyChanged();
         }
     }
 
-    public ICollectionView ARPInfoResultsView { get; }
+    public ICollectionView ResultsView { get; }
 
-    private ARPInfo _selectedARPInfo;
-    public ARPInfo SelectedARPInfo
+    private ARPInfo _selectedResult;
+    public ARPInfo SelectedResult
     {
-        get => _selectedARPInfo;
+        get => _selectedResult;
         set
         {
-            if (value == _selectedARPInfo)
+            if (value == _selectedResult)
                 return;
 
-            _selectedARPInfo = value;
+            _selectedResult = value;
             OnPropertyChanged();
         }
     }
 
-    private IList _selectedARPInfos = new ArrayList();
-    public IList SelectedARPInfos
+    private IList _selectedResults = new ArrayList();
+    public IList SelectedResults
     {
-        get => _selectedARPInfos;
+        get => _selectedResults;
         set
         {
-            if (Equals(value, _selectedARPInfos))
+            if (Equals(value, _selectedResults))
                 return;
 
-            _selectedARPInfos = value;
+            _selectedResults = value;
             OnPropertyChanged();
         }
     }
@@ -174,7 +174,7 @@ public class ARPTableViewModel : ViewModelBase
     public string StatusMessage
     {
         get => _statusMessage;
-        set
+        private set
         {
             if (value == _statusMessage)
                 return;
@@ -192,9 +192,9 @@ public class ARPTableViewModel : ViewModelBase
         _dialogCoordinator = instance;
 
         // Result view + search
-        ARPInfoResultsView = CollectionViewSource.GetDefaultView(ARPInfoResults);
-        ARPInfoResultsView.SortDescriptions.Add(new SortDescription(nameof(ARPInfo.IPAddressInt32), ListSortDirection.Ascending));
-        ARPInfoResultsView.Filter = o =>
+        ResultsView = CollectionViewSource.GetDefaultView(Results);
+        ResultsView.SortDescriptions.Add(new SortDescription(nameof(ARPInfo.IPAddressInt32), ListSortDirection.Ascending));
+        ResultsView.Filter = o =>
         {
             if (o is not ARPInfo info)
                 return false;
@@ -203,11 +203,13 @@ public class ARPTableViewModel : ViewModelBase
                 return true;
 
             // Search by IPAddress and MACAddress
-            return info.IPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.MACAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || (info.IsMulticast ? Localization.Resources.Strings.Yes : Localization.Resources.Strings.No).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
+            return info.IPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || 
+                   info.MACAddress.ToString().IndexOf(Search.Replace("-","").Replace(":",""), StringComparison.OrdinalIgnoreCase) > -1 || 
+                   (info.IsMulticast ? Localization.Resources.Strings.Yes : Localization.Resources.Strings.No).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
         // Get ARP table
-        Refresh();
+        Refresh().ConfigureAwait(false);
 
         // Auto refresh
         _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
@@ -221,9 +223,9 @@ public class ARPTableViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
-    public ICommand RefreshCommand => new RelayCommand(p => RefreshAction(), Refresh_CanExecute);
+    public ICommand RefreshCommand => new RelayCommand(_ => RefreshAction().ConfigureAwait(false), Refresh_CanExecute);
 
-    private bool Refresh_CanExecute(object paramter)
+    private bool Refresh_CanExecute(object parameter)
     {
         return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
     }
@@ -235,9 +237,9 @@ public class ARPTableViewModel : ViewModelBase
         await Refresh();
     }
 
-    public ICommand DeleteTableCommand => new RelayCommand(p => DeleteTableAction(), DeleteTable_CanExecute);
+    public ICommand DeleteTableCommand => new RelayCommand(_ => DeleteTableAction().ConfigureAwait(false), DeleteTable_CanExecute);
 
-    private bool DeleteTable_CanExecute(object paramter)
+    private bool DeleteTable_CanExecute(object parameter)
     {
         return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
     }
@@ -263,9 +265,9 @@ public class ARPTableViewModel : ViewModelBase
         }
     }
 
-    public ICommand DeleteEntryCommand => new RelayCommand(p => DeleteEntryAction(), DeleteEntry_CanExecute);
+    public ICommand DeleteEntryCommand => new RelayCommand(_ => DeleteEntryAction().ConfigureAwait(false), DeleteEntry_CanExecute);
 
-    private bool DeleteEntry_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool DeleteEntry_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
     private async Task DeleteEntryAction()
     {
@@ -277,7 +279,7 @@ public class ARPTableViewModel : ViewModelBase
 
             arpTable.UserHasCanceled += ArpTable_UserHasCanceled;
 
-            await arpTable.DeleteEntryAsync(SelectedARPInfo.IPAddress.ToString());
+            await arpTable.DeleteEntryAsync(SelectedResult.IPAddress.ToString());
 
             await Refresh();
         }
@@ -288,9 +290,9 @@ public class ARPTableViewModel : ViewModelBase
         }
     }
 
-    public ICommand AddEntryCommand => new RelayCommand(p => AddEntryAction(), AddEntry_CanExecute);
+    public ICommand AddEntryCommand => new RelayCommand(_ => AddEntryAction().ConfigureAwait(false), AddEntry_CanExecute);
 
-    private bool AddEntry_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool AddEntry_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
     private async Task AddEntryAction()
     {
@@ -320,7 +322,7 @@ public class ARPTableViewModel : ViewModelBase
                 StatusMessage = ex.Message;
                 IsStatusMessageDisplayed = true;
             }
-        }, instance =>
+        }, _ =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
         });
@@ -333,28 +335,7 @@ public class ARPTableViewModel : ViewModelBase
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
-    public ICommand CopySelectedIPAddressCommand => new RelayCommand(p => CopySelectedIPAddressAction());
-
-    private void CopySelectedIPAddressAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedARPInfo.IPAddress.ToString());
-    }
-
-    public ICommand CopySelectedMACAddressCommand => new RelayCommand(p => CopySelectedMACAddressAction());
-
-    private void CopySelectedMACAddressAction()
-    {
-        ClipboardHelper.SetClipboard(MACAddressHelper.GetDefaultFormat(SelectedARPInfo.MACAddress.ToString()));
-    }
-
-    public ICommand CopySelectedMulticastCommand => new RelayCommand(p => CopySelectedMulticastAction());
-
-    private void CopySelectedMulticastAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedARPInfo.IsMulticast ? Localization.Resources.Strings.Yes : Localization.Resources.Strings.No);
-    }
-
-    public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+    public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
 
     private async Task ExportAction()
     {
@@ -369,7 +350,7 @@ public class ARPTableViewModel : ViewModelBase
 
             try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? ARPInfoResults : new ObservableCollection<ARPInfo>(SelectedARPInfos.Cast<ARPInfo>().ToArray()));
+                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? Results : new ObservableCollection<ARPInfo>(SelectedResults.Cast<ARPInfo>().ToArray()));
             }
             catch (Exception ex)
             {
@@ -381,7 +362,13 @@ public class ARPTableViewModel : ViewModelBase
 
             SettingsManager.Current.ARPTable_ExportFileType = instance.FileType;
             SettingsManager.Current.ARPTable_ExportFilePath = instance.FilePath;
-        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportFileType[] { ExportFileType.CSV, ExportFileType.XML, ExportFileType.JSON }, true, SettingsManager.Current.ARPTable_ExportFileType, SettingsManager.Current.ARPTable_ExportFilePath);
+        }, _ =>
+        {
+            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+        }, new[]
+        {
+            ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
+        }, true, SettingsManager.Current.ARPTable_ExportFileType, SettingsManager.Current.ARPTable_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {
@@ -397,9 +384,9 @@ public class ARPTableViewModel : ViewModelBase
     {
         IsRefreshing = true;
 
-        ARPInfoResults.Clear();
+        Results.Clear();
 
-        (await ARP.GetTableAsync()).ForEach(x => ARPInfoResults.Add(x));
+        (await ARP.GetTableAsync()).ForEach(x => Results.Add(x));
 
         IsRefreshing = false;
     }

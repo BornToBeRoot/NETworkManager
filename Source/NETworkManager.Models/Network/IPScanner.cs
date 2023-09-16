@@ -12,61 +12,70 @@ using System.Threading.Tasks;
 
 namespace NETworkManager.Models.Network;
 
-public class IPScanner
+public sealed class IPScanner
 {
     #region Variables
+
     private int _progressValue;
 
     private readonly IPScannerOptions _options;
+
     #endregion
 
     #region Events
-    public event EventHandler<IPScannerHostFoundArgs> HostFound;
 
-    protected virtual void OnHostFound(IPScannerHostFoundArgs e)
+    public event EventHandler<IPScannerHostScannedArgs> HostFound;
+
+    private void OnHostFound(IPScannerHostScannedArgs e)
     {
         HostFound?.Invoke(this, e);
     }
 
     public event EventHandler ScanComplete;
 
-    protected virtual void OnScanComplete()
+    private void OnScanComplete()
     {
         ScanComplete?.Invoke(this, EventArgs.Empty);
     }
 
     public event EventHandler<ProgressChangedArgs> ProgressChanged;
 
-    protected virtual void OnProgressChanged()
+    private void OnProgressChanged()
     {
         ProgressChanged?.Invoke(this, new ProgressChangedArgs(_progressValue));
     }
 
     public event EventHandler UserHasCanceled;
 
-    protected virtual void OnUserHasCanceled()
+    private void OnUserHasCanceled()
     {
         UserHasCanceled?.Invoke(this, EventArgs.Empty);
     }
+
     #endregion
 
     #region Constructor
+
     public IPScanner(IPScannerOptions options)
     {
         _options = options;
     }
+
     #endregion
 
     #region Methods
+
     public void ScanAsync(IPAddress[] ipAddresses, CancellationToken cancellationToken)
     {
-        // Start the scan in a separat task
+        // Start the scan in a separate task
         Task.Run(() =>
         {
             _progressValue = 0;
 
             // Get all network interfaces
-            var networkInterfaces = _options.ResolveMACAddress ? NetworkInterface.GetNetworkInterfaces() : new List<NetworkInterfaceInfo>();
+            var networkInterfaces = _options.ResolveMACAddress
+                ? NetworkInterface.GetNetworkInterfaces()
+                : new List<NetworkInterfaceInfo>();
 
             try
             {
@@ -85,10 +94,10 @@ public class IPScanner
                 // Start scan
                 Parallel.ForEach(ipAddresses, hostParallelOptions, ipAddress =>
                 {
-                    // PING
+                    // Start ping async
                     var pingTask = PingAsync(ipAddress, cancellationToken);
 
-                    // PORT SCAN
+                    // Start port scan async
                     ConcurrentBag<PortInfo> portResults = new();
 
                     if (_options.PortScanEnabled)
@@ -98,7 +107,7 @@ public class IPScanner
                             // Test if port is open
                             using var tcpClient = new TcpClient(ipAddress.AddressFamily);
 
-                            PortState portState = PortState.None;
+                            var portState = PortState.None;
 
                             try
                             {
@@ -118,13 +127,15 @@ public class IPScanner
                                 tcpClient?.Close();
 
                                 if (portState == PortState.Open || _options.ShowAllResults)
-                                    portResults.Add(new PortInfo(port, PortLookup.GetByPortAndProtocol(port), portState));
+                                    portResults.Add(
+                                        new PortInfo(port, PortLookup.LookupByPortAndProtocol(port), portState));
                             }
                         });
                     }
 
                     // Get ping result
                     pingTask.Wait();
+                    
                     cancellationToken.ThrowIfCancellationRequested();
 
                     var pingInfo = pingTask.Result;
@@ -141,7 +152,7 @@ public class IPScanner
 
                         if (_options.ResolveHostname)
                         {
-                            // Don't use await in Paralle.ForEach, this will break
+                            // Don't use await in Parallel.ForEach, this will break
                             var dnsResolverTask = DNSClient.GetInstance().ResolvePtrAsync(ipAddress);
 
                             // Wait for task inside a Parallel.Foreach
@@ -150,7 +161,9 @@ public class IPScanner
                             if (!dnsResolverTask.Result.HasError)
                                 hostname = dnsResolverTask.Result.Value;
                             else
-                                hostname = _options.DNSShowErrorMessage ? dnsResolverTask.Result.ErrorMessage : string.Empty;
+                                hostname = _options.DNSShowErrorMessage
+                                    ? dnsResolverTask.Result.ErrorMessage
+                                    : string.Empty;
                         }
 
                         // ARP
@@ -160,7 +173,8 @@ public class IPScanner
                         if (_options.ResolveMACAddress)
                         {
                             // Get info from arp table
-                            var arpTableInfo = ARP.GetTable().FirstOrDefault(p => p.IPAddress.ToString() == ipAddress.ToString());
+                            var arpTableInfo = ARP.GetTable()
+                                .FirstOrDefault(p => p.IPAddress.ToString() == ipAddress.ToString());
 
                             if (arpTableInfo != null)
                                 macAddress = arpTableInfo.MACAddress;
@@ -168,7 +182,8 @@ public class IPScanner
                             // Check if it is the local mac
                             if (macAddress == null)
                             {
-                                var networkInterfaceInfo = networkInterfaces.FirstOrDefault(p => p.IPv4Address.Any(x => x.Item1.Equals(ipAddress)));
+                                var networkInterfaceInfo = networkInterfaces.FirstOrDefault(p =>
+                                    p.IPv4Address.Any(x => x.Item1.Equals(ipAddress)));
 
                                 if (networkInterfaceInfo != null)
                                     macAddress = networkInterfaceInfo.PhysicalAddress;
@@ -177,17 +192,20 @@ public class IPScanner
                             // Vendor lookup
                             if (macAddress != null)
                             {
-                                var info = OUILookup.Lookup(macAddress.ToString()).FirstOrDefault();
+                                var info = OUILookup.LookupByMacAddress(macAddress.ToString()).FirstOrDefault();
 
                                 if (info != null)
                                     vendor = info.Vendor;
                             }
                         }
 
-                        OnHostFound(new IPScannerHostFoundArgs(isReachable, pingInfo, isAnyPortOpen, portResults.OrderBy(x => x.Port).ToList(), hostname, macAddress, vendor));
+                        OnHostFound(new IPScannerHostScannedArgs(
+                            new IPScannerHostInfo(
+                                isReachable, pingInfo, isAnyPortOpen, portResults.OrderBy(x => x.Port).ToList(),
+                                hostname, macAddress, vendor)));
                     }
 
-                    IncreaseProgess();
+                    IncreaseProgress();
                 });
             }
             catch (OperationCanceledException)
@@ -205,46 +223,54 @@ public class IPScanner
     {
         return Task.Run(() =>
         {
-            var pingInfo = new PingInfo();
-
             using var ping = new System.Net.NetworkInformation.Ping();
 
             for (var i = 0; i < _options.ICMPAttempts; i++)
             {
                 try
                 {
+                    // Get timestamp 
+                    var timestamp = DateTime.Now;
+                    
                     var pingReply = ping.Send(ipAddress, _options.ICMPTimeout, _options.ICMPBuffer);
 
-                    if (pingReply != null && IPStatus.Success == pingReply.Status)
+                    // Success
+                    if (pingReply is { Status: IPStatus.Success })
                     {
+                        // IPv4
                         if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
-                            pingInfo = new PingInfo(pingReply.Address, pingReply.Buffer.Length, pingReply.RoundtripTime, pingReply.Options.Ttl, pingReply.Status);
-                        else
-                            pingInfo = new PingInfo(pingReply.Address, pingReply.Buffer.Length, pingReply.RoundtripTime, pingReply.Status);
-
-                        break; // Continue with the next checks...
+                            return new PingInfo(timestamp, pingReply.Address, pingReply.Buffer.Length, pingReply.RoundtripTime,
+                                pingReply.Options!.Ttl, pingReply.Status);
+                        
+                        // IPv6
+                        return new PingInfo(timestamp, pingReply.Address, pingReply.Buffer.Length, pingReply.RoundtripTime,
+                            pingReply.Status);
                     }
 
+                    // Failed
                     if (pingReply != null)
-                        pingInfo = new PingInfo(ipAddress, pingReply.Status);
+                        return new PingInfo(timestamp, ipAddress, pingReply.Status);
                 }
                 catch (PingException)
-                { }
+                {
+                    
+                }
 
                 // Don't scan again, if the user has canceled (when more than 1 attempt)
                 if (cancellationToken.IsCancellationRequested)
                     break;
             }
 
-            return pingInfo;
+            return new PingInfo();
         });
     }
 
-    private void IncreaseProgess()
+    private void IncreaseProgress()
     {
         // Increase the progress                        
         Interlocked.Increment(ref _progressValue);
         OnProgressChanged();
     }
+
     #endregion
 }

@@ -312,7 +312,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
         LoadSettings();
 
-        SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
+        SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
         SettingsManager.Current.AWSSessionManager_AWSProfiles.CollectionChanged += AWSSessionManager_AWSProfiles_CollectionChanged;
 
         SyncAllInstanceIDsFromAWS();
@@ -938,7 +938,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #region Event
-    private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(SettingsInfo.AWSSessionManager_EnableSyncInstanceIDsFromAWS))
         {

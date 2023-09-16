@@ -19,7 +19,6 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
-using NETworkManager.Localization;
 using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels;
@@ -31,12 +30,10 @@ public class PortScannerViewModel : ViewModelBase
 
     private CancellationTokenSource _cancellationTokenSource;
 
-    public readonly int TabId;
+    private readonly int _tabId;
     private bool _firstLoad = true;
 
     private string _lastSortDescriptionAscending = string.Empty;
-
-    private bool _isLoading;
 
     private string _hosts;
     public string Hosts
@@ -70,16 +67,16 @@ public class PortScannerViewModel : ViewModelBase
 
     public ICollectionView PortsHistoryView { get; }
 
-    private bool _isScanRunning;
-    public bool IsScanRunning
+    private bool _isRunning;
+    public bool IsRunning
     {
-        get => _isScanRunning;
+        get => _isRunning;
         set
         {
-            if (value == _isScanRunning)
+            if (value == _isRunning)
                 return;
 
-            _isScanRunning = value;
+            _isRunning = value;
 
             OnPropertyChanged();
         }
@@ -141,9 +138,7 @@ public class PortScannerViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-
-    public bool ResolveHostname => SettingsManager.Current.PortScanner_ResolveHostname;
-
+    
     private int _portsToScan;
     public int PortsToScan
     {
@@ -204,7 +199,7 @@ public class PortScannerViewModel : ViewModelBase
     public string StatusMessage
     {
         get => _statusMessage;
-        set
+        private set
         {
             if (value == _statusMessage)
                 return;
@@ -218,11 +213,9 @@ public class PortScannerViewModel : ViewModelBase
     #region Constructor, load settings, shutdown
     public PortScannerViewModel(IDialogCoordinator instance, int tabId, string host, string port)
     {
-        _isLoading = true;
-
         _dialogCoordinator = instance;
 
-        TabId = tabId;
+        _tabId = tabId;
         Hosts = host;
         Ports = port;
 
@@ -236,11 +229,6 @@ public class PortScannerViewModel : ViewModelBase
         ResultsView.SortDescriptions.Add(new SortDescription(nameof(PortScannerPortInfo.IPAddressInt32), ListSortDirection.Descending));
 
         LoadSettings();
-
-        // Detect if settings have changed...
-        SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
-
-        _isLoading = false;
     }
 
     private void LoadSettings()
@@ -254,7 +242,7 @@ public class PortScannerViewModel : ViewModelBase
             return;
 
         if (!string.IsNullOrEmpty(Hosts) && !string.IsNullOrEmpty(Ports))
-            StartScan();
+            StartScan().ConfigureAwait(false);
 
         _firstLoad = false;
     }
@@ -262,87 +250,38 @@ public class PortScannerViewModel : ViewModelBase
     public void OnClose()
     {
         // Stop scan
-        if (IsScanRunning)
+        if (IsRunning)
             StopScan();
     }
     #endregion
 
     #region ICommands & Actions
-    public ICommand OpenPortProfileSelectionCommand => new RelayCommand(p => OpenPortProfileSelectionAction(), OpenPortProfileSelection_CanExecute);
+    public ICommand OpenPortProfileSelectionCommand => new RelayCommand(_ => OpenPortProfileSelectionAction(), OpenPortProfileSelection_CanExecute);
 
     private bool OpenPortProfileSelection_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
     private void OpenPortProfileSelectionAction()
     {
-        OpenPortProfileSelection();
+        OpenPortProfileSelection().ConfigureAwait(false);
     }
 
-    public ICommand ScanCommand => new RelayCommand(p => ScanAction(), Scan_CanExecute);
+    public ICommand ScanCommand => new RelayCommand(_ => ScanAction(), Scan_CanExecute);
 
-    private bool Scan_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool Scan_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
     private void ScanAction()
     {
-        if (IsScanRunning)
+        if (IsRunning)
             StopScan();
         else
-            StartScan();
+            StartScan().ConfigureAwait(false);
     }
 
-    public ICommand CopySelectedIPAddressCommand => new RelayCommand(p => CopySelectedIPAddressAction());
-
-    private void CopySelectedIPAddressAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedResult.IPAddress.ToString());
-    }
-
-    public ICommand CopySelectedHostnameCommand => new RelayCommand(p => CopySelectedHostnameAction());
-
-    private void CopySelectedHostnameAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedResult.Hostname);
-    }
-
-    public ICommand CopySelectedPortCommand => new RelayCommand(p => CopySelectedPortAction());
-
-    private void CopySelectedPortAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedResult.Port.ToString());
-    }
-
-    public ICommand CopySelectedStatusCommand => new RelayCommand(p => CopySelectedStatusAction());
-
-    private void CopySelectedStatusAction()
-    {
-        ClipboardHelper.SetClipboard(ResourceTranslator.Translate(ResourceIdentifier.PortState, SelectedResult.State));
-    }
-
-    public ICommand CopySelectedProtocolCommand => new RelayCommand(p => CopySelectedProtocolAction());
-
-    private void CopySelectedProtocolAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedResult.LookupInfo.Protocol.ToString());
-    }
-
-    public ICommand CopySelectedServiceCommand => new RelayCommand(p => CopySelectedServiceAction());
-
-    private void CopySelectedServiceAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedResult.LookupInfo.Service);
-    }
-
-    public ICommand CopySelectedDescriptionCommand => new RelayCommand(p => CopySelectedDescriptionAction());
-
-    private void CopySelectedDescriptionAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedResult.LookupInfo.Description);
-    }
-
-    public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+    public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
 
     private void ExportAction()
     {
-        Export();
+        Export().ConfigureAwait(false);
     }
     #endregion
 
@@ -359,7 +298,7 @@ public class PortScannerViewModel : ViewModelBase
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
             Ports = string.Join("; ", instance.GetSelectedPortProfiles().Select(x => x.Ports));
-        }, async instance =>
+        }, async _ =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
         });
@@ -374,12 +313,10 @@ public class PortScannerViewModel : ViewModelBase
 
     private async Task StartScan()
     {
-        _isLoading = true;
-
         IsStatusMessageDisplayed = false;
         StatusMessage = string.Empty;
 
-        IsScanRunning = true;
+        IsRunning = true;
         PreparingScan = true;
 
         Results.Clear();
@@ -391,7 +328,7 @@ public class PortScannerViewModel : ViewModelBase
         {
             foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
             {
-                tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == TabId).Header = Hosts;
+                tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Hosts;
             }
         }
 
@@ -461,13 +398,7 @@ public class PortScannerViewModel : ViewModelBase
         CancelScan = true;
         _cancellationTokenSource.Cancel();
     }
-
-    private void ScanFinished()
-    {
-        CancelScan = false;
-        IsScanRunning = false;
-    }
-
+    
     private async Task Export()
     {
         var customDialog = new CustomDialog
@@ -493,7 +424,7 @@ public class PortScannerViewModel : ViewModelBase
 
             SettingsManager.Current.PortScanner_ExportFileType = instance.FileType;
             SettingsManager.Current.PortScanner_ExportFilePath = instance.FilePath;
-        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportFileType[] { ExportFileType.CSV, ExportFileType.XML, ExportFileType.JSON }, true, SettingsManager.Current.PortScanner_ExportFileType, SettingsManager.Current.PortScanner_ExportFilePath);
+        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new[] { ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json }, true, SettingsManager.Current.PortScanner_ExportFileType, SettingsManager.Current.PortScanner_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {
@@ -553,7 +484,8 @@ public class PortScannerViewModel : ViewModelBase
         StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
         IsStatusMessageDisplayed = true;
 
-        ScanFinished();
+        CancelScan = false;
+        IsRunning = false;
     }
 
     private void ProgressChanged(object sender, ProgressChangedArgs e)
@@ -566,38 +498,29 @@ public class PortScannerViewModel : ViewModelBase
         StatusMessage = $"{Localization.Resources.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", e.Flatten().InnerExceptions.Select(x => x.Message))}";
         IsStatusMessageDisplayed = true;
 
-        ScanFinished();
+        CancelScan = false;
+        IsRunning = false;
     }
 
     private void ScanComplete(object sender, EventArgs e)
     {
-        ScanFinished();
+        if (Results.Count == 0)
+        {
+            StatusMessage = Localization.Resources.Strings.NoOpenPortsFound;
+            IsStatusMessageDisplayed = true;
+        }
+        
+        CancelScan = false;
+        IsRunning = false;
     }
 
     private void PortScanned(object sender, PortScannerPortScannedArgs e)
     {
-        var portInfo = PortScannerPortInfo.Parse(e);
-
-        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate ()
+        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
         {
-            //lock (PortScanResult)
-            Results.Add(portInfo);
+            Results.Add(e.Args);
         }));
     }
-
-    private void DispatcherTimer_Tick(object sender, EventArgs e)
-    {
-
-    }
-
-    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-        switch (e.PropertyName)
-        {
-            case nameof(SettingsInfo.PortScanner_ResolveHostname):
-                OnPropertyChanged(nameof(ResolveHostname));
-                break;
-        }
-    }
+  
     #endregion
 }

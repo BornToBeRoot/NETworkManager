@@ -25,7 +25,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     private readonly IDialogCoordinator _dialogCoordinator;
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
-    private readonly bool _isLoading = true;
+    private readonly bool _isLoading;
     private bool _isViewActive = true;
 
     private string _host;
@@ -76,7 +76,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     public string StatusMessage
     {
         get => _statusMessage;
-        set
+        private set
         {
             if (value == _statusMessage)
                 return;
@@ -116,11 +116,12 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     }
 
     #region Profiles
-    public ICollectionView _profiles;
+
+    private ICollectionView _profiles;
     public ICollectionView Profiles
     {
         get => _profiles;
-        set
+        private set
         {
             if (value == _profiles)
                 return;
@@ -227,6 +228,8 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     #region Constructor, load settings
     public PingMonitorHostViewModel(IDialogCoordinator instance)
     {
+        _isLoading = true;
+        
         _dialogCoordinator = instance;
 
         // Host history
@@ -259,27 +262,24 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #region ICommands & Actions
-    public ICommand AddHostCommand => new RelayCommand(p => AddHostAction());
+    public ICommand AddHostCommand => new RelayCommand(_ => AddHostAction());
 
-    private void AddHostAction()
+    private async void AddHostAction()
     {
-        AddHost(Host);
+        await AddHost(Host).ConfigureAwait(true);
 
-        // Add the hostname or ip address to the history
         AddHostToHistory(Host);
-
-        Host = "";
+        Host = string.Empty;
     }
 
-    public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+    public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
 
     private void ExportAction()
     {
-        if (SelectedHost != null)
-            SelectedHost.Export();
+        SelectedHost?.Export();
     }
 
-    public ICommand AddHostProfileCommand => new RelayCommand(p => AddHostProfileAction(), AddHostProfile_CanExecute);
+    public ICommand AddHostProfileCommand => new RelayCommand(_ => AddHostProfileAction(), AddHostProfile_CanExecute);
 
     private bool AddHostProfile_CanExecute(object obj)
     {
@@ -288,47 +288,47 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private void AddHostProfileAction()
     {
-        AddHost(SelectedProfile.PingMonitor_Host);
+        AddHost(SelectedProfile.PingMonitor_Host).ConfigureAwait(false);
     }
 
-    public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
+    public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.PingMonitor);
+        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.PingMonitor).ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamic;
+    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
 
-    public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction(), ModifyProfile_CanExecute);
+    public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
     private void EditProfileAction()
     {
-        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
     }
 
-    public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction(), ModifyProfile_CanExecute);
+    public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
     }
 
-    public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction(), ModifyProfile_CanExecute);
+    public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
 
     private void DeleteProfileAction()
     {
-        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile });
+        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile }).ConfigureAwait(false);
     }
 
     public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()));
+        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString())).ConfigureAwait(false);
     }
 
-    public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
+    public ICommand ClearSearchCommand => new RelayCommand(_ => ClearSearchAction());
 
     private void ClearSearchAction()
     {
@@ -337,19 +337,19 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #region Methods
-    public void AddHost(string hosts)
+    public async Task AddHost(string hosts)
     {
         IsStatusMessageDisplayed = false;
         StatusMessage = string.Empty;
 
         IsRunning = true;
 
-        Task.Run(() =>
+        await Task.Run(() =>
         {
             Parallel.ForEach(hosts.Split(';'), currentHost =>
             {
                 var host = currentHost.Trim();
-                string hostname = string.Empty;
+                var hostname = string.Empty;
 
                 // Resolve ip address from hostname
                 if (!IPAddress.TryParse(host, out var ipAddress))
@@ -388,9 +388,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
                     Hosts.Add(new PingMonitorView(Guid.NewGuid(), RemoveHost, new PingMonitorOptions(hostname, ipAddress)));
                 }));
             });
-
+  
             IsRunning = false;
-        });
+        }).ConfigureAwait(true);
     }
 
     private void RemoveHost(Guid hostId)
@@ -403,11 +403,11 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
                 index = Hosts.IndexOf(host);
         }
 
-        if (index != -1)
-        {
-            Hosts[index].CloseView();
-            Hosts.RemoveAt(index);
-        }
+        if (index == -1) 
+            return;
+        
+        Hosts[index].CloseView();
+        Hosts.RemoveAt(index);
     }
 
     private void AddHostToHistory(string host)
@@ -495,7 +495,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
     }
 
-    public void RefreshProfiles()
+    private void RefreshProfiles()
     {
         if (!_isViewActive)
             return;

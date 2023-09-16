@@ -2,7 +2,7 @@
 using NETworkManager.ViewModels;
 using MahApps.Metro.Controls.Dialogs;
 using System.Windows.Controls;
-using NETworkManager.Utilities;
+using System.Windows.Media;
 
 namespace NETworkManager.Views;
 
@@ -38,42 +38,61 @@ public partial class IPScannerView
 
     private void ContextMenu_Opened(object sender, RoutedEventArgs e)
     {
-        if (sender is ContextMenu menu)
+        if (sender is not ContextMenu menu) 
+            return;
+        
+        // Set DataContext to ViewModel
+        menu.DataContext = _viewModel;
+
+        // Append custom commands
+        var index = menu.Items.Count - 1;
+
+        var entryFound = false;
+
+        for (var i = 0; i < menu.Items.Count; i++)
         {
-            // Set DataContext to ViewModel
-            menu.DataContext = _viewModel;
+            if (menu.Items[i] is not MenuItem item) 
+                continue;
+                
+            if ((string)item.Tag != "CustomCommands")
+                continue;
 
-            // Append custom commands
-            int index = menu.Items.Count - 1;
+            index = i;
 
-            bool entryFound = false;
+            entryFound = true;
 
-            for (int i = 0; i < menu.Items.Count; i++)
-            {
-                if (menu.Items[i] is MenuItem item)
-                {
-                    if ((string)item.Tag != "CustomCommands")
-                        continue;
-
-                    index = i;
-
-                    entryFound = true;
-
-                    break;
-                }
-            }
-
-            if (!entryFound)
-                return;
-
-            // Clear existing items in custom commands
-            ((MenuItem)menu.Items[index]).Items.Clear();
-
-            // Add items to custom commands
-            foreach (CustomCommandInfo info in _viewModel.CustomCommands)
-            {
-                ((MenuItem)menu.Items[index]).Items.Add(new MenuItem { Header = info.Name, Command = _viewModel.CustomCommandCommand, CommandParameter = info.ID });
-            }
+            break;
         }
-    }        
+
+        if (!entryFound)
+            return;
+
+        // Clear existing items in custom commands
+        ((MenuItem)menu.Items[index]).Items.Clear();
+
+        // Add items to custom commands
+        foreach (var info in IPScannerViewModel.CustomCommands)
+        {
+            ((MenuItem)menu.Items[index]).Items.Add(new MenuItem
+            {
+                Header = info.Name,
+                Command = _viewModel.CustomCommandCommand,
+                CommandParameter = info.ID
+            });
+        }
+    }
+
+    private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+    {
+        // Get the row from the sender
+        for (var visual = sender as Visual; visual != null; visual = VisualTreeHelper.GetParent(visual) as Visual)
+        {
+            if (visual is not DataGridRow row)
+                continue;
+            
+            row.DetailsVisibility = row.DetailsVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+            
+            break;
+        }
+    }
 }

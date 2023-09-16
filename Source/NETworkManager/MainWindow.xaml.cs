@@ -437,13 +437,13 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                     new ObservableCollection<DNSServerConnectionInfoProfile>(DNSServer.GetDefaultList());
                 SettingsManager.Current.AWSSessionManager_AWSProfiles =
                     new ObservableCollection<AWSProfileInfo>(AWSProfile.GetDefaultList());
-                SettingsManager.Current.SNMP_OIDProfiles =
+                SettingsManager.Current.SNMP_OidProfiles =
                     new ObservableCollection<SNMPOIDProfileInfo>(SNMPOIDProfile.GetDefaultList());
                 SettingsManager.Current.SNTPLookup_SNTPServers =
                     new ObservableCollection<ServerConnectionInfoProfile>(SNTPServer.GetDefaultList());
 
                 // Check if PowerShell is installed
-                foreach (var file in PowerShell.GetDefaultIntallationPaths.Where(File.Exists))
+                foreach (var file in PowerShell.GetDefaultInstallationPaths.Where(File.Exists))
                 {
                     SettingsManager.Current.PowerShell_ApplicationFilePath = file;
                     SettingsManager.Current.AWSSessionManager_ApplicationFilePath = file;
@@ -1395,7 +1395,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     {
         DocumentationManager.OpenDocumentation(ShowSettingsView
             ? _settingsView.GetDocumentationIdentifier()
-            : DocumentationManager.GetIdentifierByAppliactionName(SelectedApplication.Name));
+            : DocumentationManager.GetIdentifierByApplicationName(SelectedApplication.Name));
     }
 
     public ICommand OpenApplicationListCommand => new RelayCommand(_ => OpenApplicationListAction());

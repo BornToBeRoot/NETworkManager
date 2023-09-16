@@ -1,5 +1,4 @@
 ﻿using NETworkManager.Settings;
-using MahApps.Metro.Controls.Dialogs;
 using System;
 using NETworkManager.Models.Network;
 using System.ComponentModel;
@@ -18,10 +17,8 @@ public class BitCalculatorViewModel : ViewModelBase
 {
     #region  Variables 
     private static readonly ILog Log = LogManager.GetLogger(typeof(BitCalculatorViewModel));
-    private readonly IDialogCoordinator _dialogCoordinator;
-
-    private readonly bool _isLoading = true;
-    private bool _isViewActive = true;
+    
+    private readonly bool _isLoading;
 
     private string _input;
     public string Input
@@ -39,11 +36,11 @@ public class BitCalculatorViewModel : ViewModelBase
 
     public ICollectionView InputHistoryView { get; }
 
-    private List<BitCaluclatorUnit> _units = new();
+    private readonly List<BitCaluclatorUnit> _units = new();
     public List<BitCaluclatorUnit> Units
     {
         get => _units;
-        set
+        private init
         {
             if (value == _units)
                 return;
@@ -70,16 +67,16 @@ public class BitCalculatorViewModel : ViewModelBase
         }
     }
 
-    private bool _isCalculationRunning;
-    public bool IsCalculationRunning
+    private bool _isRunning;
+    public bool IsRunning
     {
-        get => _isCalculationRunning;
+        get => _isRunning;
         set
         {
-            if (value == _isCalculationRunning)
+            if (value == _isRunning)
                 return;
 
-            _isCalculationRunning = value;
+            _isRunning = value;
             OnPropertyChanged();
         }
     }
@@ -103,7 +100,7 @@ public class BitCalculatorViewModel : ViewModelBase
     public BitCaluclatorInfo Result
     {
         get => _result;
-        set
+        private set
         {
             if (value == _result)
                 return;
@@ -115,9 +112,9 @@ public class BitCalculatorViewModel : ViewModelBase
     #endregion
 
     #region Constructor, load settings
-    public BitCalculatorViewModel(IDialogCoordinator instance)
+    public BitCalculatorViewModel()
     {
-        _dialogCoordinator = instance;
+        _isLoading = true;
 
         InputHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.BitCalculator_InputHistory);
 
@@ -137,11 +134,11 @@ public class BitCalculatorViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
-    public ICommand CalculateCommand => new RelayCommand(p => CalcualateAction(), Calculate_CanExecute);
+    public ICommand CalculateCommand => new RelayCommand(_ => CalculateAction(), Calculate_CanExecute);
 
-    private bool Calculate_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool Calculate_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
-    private void CalcualateAction()
+    private void CalculateAction()
     {
         Calculate();
     }
@@ -151,9 +148,9 @@ public class BitCalculatorViewModel : ViewModelBase
     private async void Calculate()
     {
         IsResultVisible = false;
-        IsCalculationRunning = true;
+        IsRunning = true;
 
-        if (double.TryParse(Input.Replace('.', ','), out double input))
+        if (double.TryParse(Input.Replace('.', ','), out var input))
         {
             Result = await BitCaluclator.CalculateAsync(input, Unit, SettingsManager.Current.BitCalculator_Notation);
         }
@@ -166,7 +163,7 @@ public class BitCalculatorViewModel : ViewModelBase
 
         AddInputToHistory(Input);
 
-        IsCalculationRunning = false;
+        IsRunning = false;
     }
 
     private void AddInputToHistory(string input)
@@ -184,18 +181,14 @@ public class BitCalculatorViewModel : ViewModelBase
 
     public void OnViewVisible()
     {
-        _isViewActive = true;
+        
     }
 
     public void OnViewHide()
     {
-        _isViewActive = false;
+        
     }
 
-
-    #endregion
-
-    #region Event
 
     #endregion
 }

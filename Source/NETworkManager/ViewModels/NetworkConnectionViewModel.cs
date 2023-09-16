@@ -426,8 +426,8 @@ public class NetworkConnectionViewModel : ViewModelBase
     public NetworkConnectionViewModel()
     {
         // Detect if network address or status changed...
-        NetworkChange.NetworkAvailabilityChanged += (sender, args) => CheckConnection();
-        NetworkChange.NetworkAddressChanged += (sender, args) => CheckConnection();
+        NetworkChange.NetworkAvailabilityChanged += (_, _) => CheckConnection();
+        NetworkChange.NetworkAddressChanged += (_, _) => CheckConnection();
 
         LoadSettings();
 

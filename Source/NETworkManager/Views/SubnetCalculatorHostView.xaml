@@ -7,14 +7,14 @@
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SubnetCalculatorHostViewModel}">
-    <TabControl Style="{StaticResource DefaultTabControl}">
-        <TabItem Header="{x:Static localization:Strings.Calculator}">
+    <TabControl Style="{StaticResource ResourceKey=DefaultTabControl}">
+        <TabItem Header="{x:Static Member=localization:Strings.Calculator}">
             <views:SubnetCalculatorCalculatorView Margin="10" />
         </TabItem>
-        <TabItem Header="{x:Static localization:Strings.Subnetting}">
+        <TabItem Header="{x:Static Member=localization:Strings.Subnetting}">
             <views:SubnetCalculatorSubnettingView Margin="10" />
         </TabItem>
-        <TabItem Header="{x:Static localization:Strings.WideSubnet}">
+        <TabItem Header="{x:Static Member=localization:Strings.WideSubnet}">
             <views:SubnetCalculatorWideSubnetView Margin="10" />
         </TabItem>
     </TabControl>

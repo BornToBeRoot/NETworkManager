@@ -57,16 +57,16 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
 
     public ICollectionView NewSubnetmaskHistoryView { get; }
 
-    private bool _isCalculationRunning;
-    public bool IsCalculationRunning
+    private bool _isRunning;
+    public bool IsRunning
     {
-        get => _isCalculationRunning;
+        get => _isRunning;
         set
         {
-            if (value == _isCalculationRunning)
+            if (value == _isRunning)
                 return;
 
-            _isCalculationRunning = value;
+            _isRunning = value;
             OnPropertyChanged();
         }
     }
@@ -86,47 +86,47 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
         }
     }
 
-    private ObservableCollection<IPNetworkInfo> _subnetsResult = new();
-    public ObservableCollection<IPNetworkInfo> SubnetsResult
+    private ObservableCollection<IPNetworkInfo> _results = new();
+    public ObservableCollection<IPNetworkInfo> Results
     {
-        get => _subnetsResult;
+        get => _results;
         set
         {
-            if (value == _subnetsResult)
+            if (value == _results)
                 return;
 
-            _subnetsResult = value;
+            _results = value;
             OnPropertyChanged();
         }
     }
 
-    public ICollectionView SubnetsResultsView { get; }
+    public ICollectionView ResultsView { get; }
 
-    private IPNetworkInfo _selectedSubnetResult;
-    public IPNetworkInfo SelectedSubnetResult
+    private IPNetworkInfo _selectedResult;
+    public IPNetworkInfo SelectedResult
     {
-        get => _selectedSubnetResult;
+        get => _selectedResult;
         set
         {
-            if (value == _selectedSubnetResult)
+            if (value == _selectedResult)
                 return;
 
-            _selectedSubnetResult = value;
+            _selectedResult = value;
             OnPropertyChanged();
         }
     }
 
 
-    private IList _selectedSubnetResults = new ArrayList();
-    public IList SelectedSubnetResults
+    private IList _selectedResults = new ArrayList();
+    public IList SelectedResults
     {
-        get => _selectedSubnetResults;
+        get => _selectedResults;
         set
         {
-            if (Equals(value, _selectedSubnetResults))
+            if (Equals(value, _selectedResults))
                 return;
 
-            _selectedSubnetResults = value;
+            _selectedResults = value;
             OnPropertyChanged();
         }
     }
@@ -142,77 +142,21 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
         NewSubnetmaskHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskHistory);
 
         // Result view
-        SubnetsResultsView = CollectionViewSource.GetDefaultView(SubnetsResult);
+        ResultsView = CollectionViewSource.GetDefaultView(Results);
     }
     #endregion
 
     #region ICommands & Actions
-    public ICommand CalculateCommand => new RelayCommand(p => CalculateAction(), Calculate_CanExecute);
+    public ICommand CalculateCommand => new RelayCommand(_ => CalculateAction(), Calculate_CanExecute);
 
-    private bool Calculate_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool Calculate_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
     private void CalculateAction()
     {
-        Calculate();
+        Calculate().ConfigureAwait(false);
     }
 
-    public ICommand CopySelectedNetworkAddressCommand => new RelayCommand(p => CopySelectedNetworkAddressAction());
-
-    private void CopySelectedNetworkAddressAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedSubnetResult.Network.ToString());
-    }
-
-    public ICommand CopySelectedBroadcastCommand => new RelayCommand(p => CopySelectedBroadcastAction());
-
-    private void CopySelectedBroadcastAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedSubnetResult.Broadcast.ToString());
-    }
-
-    public ICommand CopySelectedIPAddressesCommand => new RelayCommand(p => CopySelectedIPAddressesAction());
-
-    private void CopySelectedIPAddressesAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedSubnetResult.Total.ToString());
-    }
-
-    public ICommand CopySelectedSubnetmaskCommand => new RelayCommand(p => CopySelectedSubnetmaskAction());
-
-    private void CopySelectedSubnetmaskAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedSubnetResult.Netmask.ToString());
-    }
-
-    public ICommand CopySelectedCIDRCommand => new RelayCommand(p => CopySelectedCIDRAction());
-
-    private void CopySelectedCIDRAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedSubnetResult.Cidr.ToString());
-    }
-
-    public ICommand CopySelectedFirstIPAddressCommand => new RelayCommand(p => CopySelectedFirstIPAddressAction());
-
-    private void CopySelectedFirstIPAddressAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedSubnetResult.FirstUsable.ToString());
-    }
-
-    public ICommand CopySelectedLastIPAddressCommand => new RelayCommand(p => CopySelectedLastIPAddressAction());
-
-    private void CopySelectedLastIPAddressAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedSubnetResult.LastUsable.ToString());
-    }
-
-    public ICommand CopySelectedHostCommand => new RelayCommand(p => CopySelectedHostAction());
-
-    private void CopySelectedHostAction()
-    {
-        ClipboardHelper.SetClipboard(SelectedSubnetResult.Usable.ToString());
-    }
-
-    public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+    public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
 
     private async Task ExportAction()
     {
@@ -227,7 +171,7 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
 
             try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? SubnetsResult : new ObservableCollection<IPNetworkInfo>(SelectedSubnetResults.Cast<IPNetworkInfo>().ToArray()));
+                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? Results : new ObservableCollection<IPNetworkInfo>(SelectedResults.Cast<IPNetworkInfo>().ToArray()));
             }
             catch (Exception ex)
             {
@@ -239,7 +183,13 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
 
             SettingsManager.Current.SubnetCalculator_Subnetting_ExportFileType = instance.FileType;
             SettingsManager.Current.SubnetCalculator_Subnetting_ExportFilePath = instance.FilePath;
-        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportFileType[] { ExportFileType.CSV, ExportFileType.XML, ExportFileType.JSON }, true, SettingsManager.Current.SubnetCalculator_Subnetting_ExportFileType, SettingsManager.Current.SubnetCalculator_Subnetting_ExportFilePath);
+        }, _ =>
+        {
+            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+        }, new[]
+        {
+            ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
+        }, true, SettingsManager.Current.SubnetCalculator_Subnetting_ExportFileType, SettingsManager.Current.SubnetCalculator_Subnetting_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {
@@ -253,22 +203,20 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
     #region Methods
     private async Task Calculate()
     {            
-        IsCalculationRunning = true;
+        IsRunning = true;
 
-        SubnetsResult.Clear();
+        Results.Clear();
 
         var subnet = Subnet.Trim();
         var newSubnetmaskOrCidr = NewSubnetmask.Trim();                
 
         var ipNetwork = IPNetwork.Parse(Subnet.Trim());
 
-        byte newCidr = 0;
-
-        // Support subnetmask like 255.255.255.0
-        if (Regex.IsMatch(newSubnetmaskOrCidr, RegexHelper.SubnetmaskRegex))
-            newCidr = Convert.ToByte(Subnetmask.ConvertSubnetmaskToCidr(IPAddress.Parse(newSubnetmaskOrCidr)));
-        else
-            newCidr = Convert.ToByte(newSubnetmaskOrCidr.TrimStart('/'));
+        var newCidr =
+            // Support subnetmask like 255.255.255.0
+            Regex.IsMatch(newSubnetmaskOrCidr, RegexHelper.SubnetmaskRegex) ?
+            Convert.ToByte(Subnetmask.ConvertSubnetmaskToCidr(IPAddress.Parse(newSubnetmaskOrCidr))) :
+            Convert.ToByte(newSubnetmaskOrCidr.TrimStart('/'));
 
         // Ask the user if there is a large calculation...
         var baseCidr = ipNetwork.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? 32 : 128;
@@ -284,7 +232,7 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
 
             if (await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.AreYouSure, Localization.Resources.Strings.TheProcessCanTakeUpSomeTimeAndResources, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
             {
-                IsCalculationRunning = false;
+                IsRunning = false;
 
                 return;
             }
@@ -297,7 +245,7 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
             {
                 Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
                 {                        
-                    SubnetsResult.Add(new IPNetworkInfo(network));
+                    Results.Add(new IPNetworkInfo(network));
                 }));
             }
         });
@@ -305,9 +253,9 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
         IsResultVisible = true;
 
         AddSubnetToHistory(subnet);
-        AddNewSubnetmaskOrCIDRToHistory(newSubnetmaskOrCidr);
+        AddNewSubnetmaskOrCidrToHistory(newSubnetmaskOrCidr);
 
-        IsCalculationRunning = false;
+        IsRunning = false;
     }
 
     private void AddSubnetToHistory(string subnet)
@@ -323,10 +271,10 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
         list.ForEach(x => SettingsManager.Current.SubnetCalculator_Subnetting_SubnetHistory.Add(x));
     }
 
-    private void AddNewSubnetmaskOrCIDRToHistory(string newSubnetmaskOrCIDR)
+    private void AddNewSubnetmaskOrCidrToHistory(string newSubnetmaskOrCidr)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskHistory.ToList(), newSubnetmaskOrCIDR, SettingsManager.Current.General_HistoryListEntries);
+        var list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskHistory.ToList(), newSubnetmaskOrCidr, SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items
         SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskHistory.Clear();

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Input;
-using System.Net.NetworkInformation;
 using System;
 using System.Linq;
 using MahApps.Metro.Controls.Dialogs;
@@ -10,7 +9,6 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using NETworkManager.Utilities;
 using System.Windows;
-using static NETworkManager.Models.Network.DiscoveryProtocol;
 using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels;
@@ -20,9 +18,9 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     #region Variables
     private readonly IDialogCoordinator _dialogCoordinator;
 
-    private DiscoveryProtocol _discoveryProtocol = new DiscoveryProtocol();
+    private readonly DiscoveryProtocolCapture _discoveryProtocolCapture = new();
     private readonly bool _isLoading;
-    System.Timers.Timer _remainingTimer;
+    private readonly System.Timers.Timer _remainingTimer;
     private int _secondsRemaining;
 
     private bool _firstRun = true;
@@ -39,60 +37,8 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         }
     }
 
-    /*
-    private bool _isNetworkInteraceLoading;
-    public bool IsNetworkInterfaceLoading
-    {
-        get => _isNetworkInteraceLoading;
-        set
-        {
-            if (value == _isNetworkInteraceLoading)
-                return;
-
-            _isNetworkInteraceLoading = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private List<NetworkInterfaceInfo> _networkInterfaces;
-    public List<NetworkInterfaceInfo> NetworkInterfaces
-    {
-        get => _networkInterfaces;
-        set
-        {
-            if (value == _networkInterfaces)
-                return;
-
-            _networkInterfaces = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private NetworkInterfaceInfo _selectedNetworkInterface;
-    public NetworkInterfaceInfo SelectedNetworkInterface
-    {
-        get => _selectedNetworkInterface;
-        set
-        {
-            if (value == _selectedNetworkInterface)
-                return;
-
-            if (value != null)
-            {
-                if (!_isLoading)
-                    SettingsManager.Current.DiscoveryProtocol_InterfaceId = value.Id;
-
-                CanCapture = value.IsOperational;
-            }
-
-            _selectedNetworkInterface = value;
-            OnPropertyChanged();
-        }
-    }
-    */
-
-    private List<Protocol> _protocols = new List<Protocol>();
-    public List<Protocol> Protocols
+    private List<DiscoveryProtocol> _protocols = new();
+    public List<DiscoveryProtocol> Protocols
     {
         get => _protocols;
         set
@@ -105,8 +51,8 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         }
     }
 
-    private Protocol _selectedProtocol;
-    public Protocol SelectedProtocol
+    private DiscoveryProtocol _selectedProtocol;
+    public DiscoveryProtocol SelectedProtocol
     {
         get => _selectedProtocol;
         set
@@ -152,22 +98,6 @@ public class DiscoveryProtocolViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-
-    /*
-    private bool _canCapture;
-    public bool CanCapture
-    {
-        get => _canCapture;
-        set
-        {
-            if (value == _canCapture)
-                return;
-
-            _canCapture = value;
-            OnPropertyChanged();
-        }
-    }
-    */
 
     private bool _isCapturing;
     public bool IsCapturing
@@ -261,16 +191,10 @@ public class DiscoveryProtocolViewModel : ViewModelBase
 
         _dialogCoordinator = instance;
 
-        //LoadNetworkInterfaces();
-
-        // Detect if network address or status changed...
-        //NetworkChange.NetworkAvailabilityChanged += (sender, args) => ReloadNetworkInterfacesAction();
-        //NetworkChange.NetworkAddressChanged += (sender, args) => ReloadNetworkInterfacesAction();
-        
-        _discoveryProtocol.PackageReceived += DiscoveryProtocol_PackageReceived;
-        _discoveryProtocol.ErrorReceived += DiscoveryProtocol_ErrorReceived;
-        _discoveryProtocol.WarningReceived += DiscoveryProtocol_WarningReceived;
-        _discoveryProtocol.Complete += DiscoveryProtocol_Complete;
+        _discoveryProtocolCapture.PackageReceived += DiscoveryProtocol_PackageReceived;
+        _discoveryProtocolCapture.ErrorReceived += DiscoveryProtocol_ErrorReceived;
+        _discoveryProtocolCapture.WarningReceived += DiscoveryProtocol_WarningReceived;
+        _discoveryProtocolCapture.Complete += DiscoveryProtocol_Complete;
 
         _remainingTimer = new System.Timers.Timer
         {
@@ -281,43 +205,22 @@ public class DiscoveryProtocolViewModel : ViewModelBase
 
         LoadSettings();
 
-        SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
-
         _isLoading = false;
     }
 
-    /*
-    private async Task LoadNetworkInterfaces()
-    {
-        IsNetworkInterfaceLoading = true;
-
-        NetworkInterfaces = await Models.Network.NetworkInterface.GetNetworkInterfacesAsync();
-
-        // Get the last selected interface, if it is still available on this machine...
-        if (NetworkInterfaces.Count > 0)
-        {
-            var info = NetworkInterfaces.FirstOrDefault(s => s.Id == SettingsManager.Current.DiscoveryProtocol_InterfaceId);
-
-            SelectedNetworkInterface = info ?? NetworkInterfaces[0];
-        }
-
-        IsNetworkInterfaceLoading = false;
-    }
-    */
-
     private void LoadSettings()
     {
-        Protocols = Enum.GetValues(typeof(Protocol)).Cast<Protocol>().OrderBy(x => x.ToString()).ToList();
+        Protocols = Enum.GetValues(typeof(DiscoveryProtocol)).Cast<DiscoveryProtocol>().OrderBy(x => x.ToString()).ToList();
         SelectedProtocol = Protocols.FirstOrDefault(x => x == SettingsManager.Current.DiscoveryProtocol_Protocol);
-        Durations = new List<int>() { 15, 30, 60, 90, 120 };
+        Durations = new List<int> { 15, 30, 60, 90, 120 };
         SelectedDuration = Durations.FirstOrDefault(x => x == SettingsManager.Current.DiscoveryProtocol_Duration);
     }
     #endregion
 
     #region ICommands & Actions
-    public ICommand RestartAsAdminCommand => new RelayCommand(p => RestartAsAdminAction());
+    public ICommand RestartAsAdminCommand => new RelayCommand(_ => RestartAsAdminAction());
 
-    public async Task RestartAsAdminAction()
+    private async Task RestartAsAdminAction()
     {
         try
         {
@@ -329,9 +232,9 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         }
     }
 
-    public ICommand CaptureCommand => new RelayCommand(p => CaptureAction());
+    public ICommand CaptureCommand => new RelayCommand(_ => CaptureAction());
 
-    public async Task CaptureAction()
+    private async Task CaptureAction()
     {
         if (FirstRun)
             FirstRun = false;
@@ -343,7 +246,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
 
         IsCapturing = true;
 
-        int duration = SelectedDuration + 2; // Capture 2 seconds more than the user chose
+        var duration = SelectedDuration + 2; // Capture 2 seconds more than the user chose
 
         _secondsRemaining = duration + 1; // Init powershell etc. takes some time... 
 
@@ -353,7 +256,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
 
         try
         {
-            _discoveryProtocol.CaptureAsync(duration, SelectedProtocol);
+            _discoveryProtocolCapture.CaptureAsync(duration, SelectedProtocol);
         }
         catch (Exception ex)
         {
@@ -417,10 +320,6 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     {
         _remainingTimer.Stop();
         IsCapturing = false;
-    }
-
-    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
     }
     #endregion
 }

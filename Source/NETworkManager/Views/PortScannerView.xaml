@@ -11,15 +11,16 @@
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-        xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"        
-        xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
+        xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
+        xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         dialogs:DialogParticipation.Register="{Binding}"
         Loaded="UserControl_Loaded"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PortScannerViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />        
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:IPAddressToStringConverter x:Key="IPAddressToStringConverter" />
         <converters:StringNullOrEmptyToStringConverter x:Key="StringNullOrEmptyToStringConverter" />
         <converters:PortStateToStringConverter x:Key="PortStateToStringConverter" />
     </UserControl.Resources>
@@ -51,8 +52,16 @@
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.Host}" Style="{StaticResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox Grid.Column="2" x:Name="ComboBoxHosts" ItemsSource="{Binding HostsHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostRange}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <TextBlock Grid.Column="0" Grid.Row="0"
+                           Text="{x:Static localization:Strings.Host}" 
+                           Style="{StaticResource DefaultTextBlock}" 
+                           VerticalAlignment="Center" />
+                <ComboBox Grid.Column="2" Grid.Row="0"
+                          x:Name="ComboBoxHosts" 
+                          ItemsSource="{Binding HostsHistoryView}"
+                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostRange}"
+                          IsReadOnly="{Binding Path=IsRunning}"
+                          Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Hosts" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -62,8 +71,16 @@
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
-                <TextBlock Grid.Column="4" Text="{x:Static localization:Strings.Ports}" Style="{StaticResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox Grid.Column="6" x:Name="ComboBoxPorts" ItemsSource="{Binding PortsHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortScanRange}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <TextBlock Grid.Column="4" Grid.Row="0"
+                           Text="{x:Static localization:Strings.Ports}" 
+                           Style="{StaticResource DefaultTextBlock}" 
+                           VerticalAlignment="Center" />
+                <ComboBox Grid.Column="6" Grid.Row="0"
+                          x:Name="ComboBoxPorts" 
+                          ItemsSource="{Binding PortsHistoryView}" 
+                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortScanRange}"
+                          IsReadOnly="{Binding Path=IsRunning}" 
+                          Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Ports" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -77,7 +94,7 @@
                     <Button.Resources>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageButton}">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsScanRunning}" Value="True">
+                                <DataTrigger Binding="{Binding IsRunning}" Value="True">
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>                                
                             </Style.Triggers>
@@ -89,7 +106,7 @@
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </Button>
-                <Button Grid.Column="10" Command="{Binding ScanCommand}" IsDefault="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsScanRunning}" HorizontalAlignment="Right">
+                <Button Grid.Column="10" Command="{Binding ScanCommand}" IsDefault="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsRunning}" HorizontalAlignment="Right">
                     <Button.Resources>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Setter Property="IsEnabled" Value="True" />
@@ -121,7 +138,7 @@
                                     <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ButtonWithImageRectangle}">
                                         <Setter Property="OpacityMask" Value="{StaticResource VisualControlPlay}" />
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsScanRunning}" Value="True">
+                                            <DataTrigger Binding="{Binding IsRunning}" Value="True">
                                                 <Setter Property="OpacityMask" Value="{StaticResource VisualClose}" />
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -133,7 +150,7 @@
                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ButtonWithImageTextBlock}">
                                         <Setter Property="Text" Value="{x:Static localization:Strings.Scan}"/>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsScanRunning}" Value="True" >
+                                            <DataTrigger Binding="{Binding IsRunning}" Value="True" >
                                                 <Setter Property="Text" Value="{x:Static localization:Strings.Cancel}"/>
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -148,7 +165,7 @@
                 <StackPanel.Style>
                     <Style TargetType="{x:Type StackPanel}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsScanRunning}" Value="False">
+                            <DataTrigger Binding="{Binding IsRunning}" Value="False">
                                 <Setter Property="Visibility" Value="Collapsed" />
                             </DataTrigger>
                         </Style.Triggers>
@@ -198,7 +215,9 @@
         The sort function is in the code behind -> when you click on the header of the column, the SortMemberPath is passed to the viewmodel
         CanUserSortColumns="False" -> Default sort won't work with grouped
         -->
-        <controls:MultiSelectDataGrid Grid.Row="3" ItemsSource="{Binding ResultsView}" SelectedItem="{Binding SelectedResult}" SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                      
+        <controls:MultiSelectDataGrid Grid.Row="3" ItemsSource="{Binding Path=ResultsView}" 
+                                      SelectedItem="{Binding Path=SelectedResult}" 
+                                      SelectedItemsList="{Binding Path=SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                      
                                       EnableRowVirtualization="True"
                                       ScrollViewer.CanContentScroll="True"
                                       VirtualizingPanel.IsVirtualizing="True"
@@ -208,79 +227,38 @@
                                       VirtualizingPanel.ScrollUnit="Item">
             <controls:MultiSelectDataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
-                <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                    <MenuItem Header="{x:Static localization:Strings.CopyDots}">
-                        <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                        </MenuItem.Icon>
-                        <MenuItem Header="{x:Static localization:Strings.IPAddress}" Command="{Binding CopySelectedIPAddressCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.Hostname}" Command="{Binding CopySelectedHostnameCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.Port}" Command="{Binding CopySelectedPortCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.Status}" Command="{Binding CopySelectedStatusCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.Protocol}" Command="{Binding CopySelectedProtocolCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.Service}" Command="{Binding CopySelectedServiceCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.Description}" Command="{Binding CopySelectedDescriptionCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
+                    <MenuItem Header="{x:Static Member=localization:Strings.CopyDots}" 
+                              Style="{StaticResource ResourceKey=CopyMenuItem}">
+                        <MenuItem Header="{x:Static Member=localization:Strings.IPAddress}" 
+                                  Command="{Binding Path=CopyDataToClipboardCommand}"
+                                  CommandParameter="{Binding Path=SelectedResult.IPAddress, Converter={StaticResource IPAddressToStringConverter}}" 
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.Hostname}" 
+                                  Command="{Binding Path=CopyDataToClipboardCommand}"
+                                  CommandParameter="{Binding Path=SelectedResult.Hostname, Converter={StaticResource StringNullOrEmptyToStringConverter}}"
+                                  Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=PortScanner_ResolveHostname, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.Port}" 
+                                  Command="{Binding Path=CopyDataToClipboardCommand}"
+                                  CommandParameter="{Binding Path=SelectedResult.Port}" 
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.Status}" 
+                                  Command="{Binding Path=CopyDataToClipboardCommand}"
+                                  CommandParameter="{Binding Path=SelectedResult.State, Converter={StaticResource PortStateToStringConverter}}" 
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.Protocol}" 
+                                  Command="{Binding Path=CopyDataToClipboardCommand}"
+                                  CommandParameter="{Binding Path=SelectedResult.LookupInfo.Protocol}" 
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.Service}" 
+                                  Command="{Binding Path=CopyDataToClipboardCommand}"
+                                  CommandParameter="{Binding Path=SelectedResult.LookupInfo.Service}" 
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static Member=localization:Strings.Description}" 
+                                  Command="{Binding Path=CopyDataToClipboardCommand}"
+                                  CommandParameter="{Binding Path=SelectedResult.LookupInfo.Description}" 
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
                     </MenuItem>
                     <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
                         <MenuItem.Icon>
@@ -320,14 +298,14 @@
             <controls:MultiSelectDataGrid.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.ContainerStyle>
-                        <Style TargetType="{x:Type GroupItem}">
+                        <Style TargetType="{x:Type TypeName=GroupItem}">
                             <Setter Property="Template">
                                 <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type GroupItem}">
-                                        <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}">
+                                    <ControlTemplate TargetType="{x:Type TypeName=GroupItem}">
+                                        <Expander IsExpanded="True" Style="{StaticResource ResourceKey=DefaultExpander}">
                                             <Expander.Header>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="{Binding Name}" Style="{DynamicResource DefaultTextBlock}"/>
+                                                    <TextBlock Text="{Binding  Path=(CollectionViewGroup.Name)}" Style="{DynamicResource ResourceKey=DefaultTextBlock}"/>
                                                 </StackPanel>
                                             </Expander.Header>
                                             <ItemsPresenter />
@@ -340,13 +318,34 @@
                 </GroupStyle>
             </controls:MultiSelectDataGrid.GroupStyle>
             <controls:MultiSelectDataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}" Binding="{Binding (network:PortScannerPortInfo.IPAddress)}" SortMemberPath="IPAddressInt32" MinWidth="150" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}" Binding="{Binding (network:PortScannerPortInfo.Hostname), Converter={StaticResource StringNullOrEmptyToStringConverter}}" SortMemberPath="Hostname" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="150" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Port}" Binding="{Binding (network:PortScannerPortInfo.Port)}" SortMemberPath="Port" MinWidth="80" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Status}" Binding="{Binding (network:PortScannerPortInfo.State), Converter={StaticResource PortStateToStringConverter}}" SortMemberPath="Status" MinWidth="100" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Protocol}" Binding="{Binding (network:PortScannerPortInfo.LookupInfo).Protocol}" SortMemberPath="LookupInfo.Protocol" MinWidth="100" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Service}" Binding="{Binding (network:PortScannerPortInfo.LookupInfo).Service}" SortMemberPath="LookupInfo.Service" MinWidth="100" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Description}" Binding="{Binding (network:PortScannerPortInfo.LookupInfo).Description}" SortMemberPath="LookupInfo.Description" MinWidth="200" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}" 
+                                    Binding="{Binding (network:PortScannerPortInfo.IPAddress), Converter={StaticResource IPAddressToStringConverter}}"
+                                    SortMemberPath="IPAddressInt32" MinWidth="150" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}" 
+                                    Binding="{Binding (network:PortScannerPortInfo.Hostname), Converter={StaticResource StringNullOrEmptyToStringConverter}}" 
+                                    SortMemberPath="Hostname" 
+                                    Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=PortScanner_ResolveHostname, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                    MinWidth="150" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Port}" 
+                                    Binding="{Binding (network:PortScannerPortInfo.Port)}"
+                                    SortMemberPath="Port" 
+                                    MinWidth="80" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Status}" 
+                                    Binding="{Binding (network:PortScannerPortInfo.State), Converter={StaticResource PortStateToStringConverter}}" 
+                                    SortMemberPath="State" 
+                                    MinWidth="100" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Protocol}"
+                                    Binding="{Binding (network:PortScannerPortInfo.LookupInfo).Protocol}"
+                                    SortMemberPath="LookupInfo.Protocol" 
+                                    MinWidth="100" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Service}"
+                                    Binding="{Binding (network:PortScannerPortInfo.LookupInfo).Service}" 
+                                    SortMemberPath="LookupInfo.Service" 
+                                    MinWidth="100" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Description}" 
+                                    Binding="{Binding (network:PortScannerPortInfo.LookupInfo).Description}" 
+                                    SortMemberPath="LookupInfo.Description" 
+                                    MinWidth="200" />
             </controls:MultiSelectDataGrid.Columns>
         </controls:MultiSelectDataGrid>
     </Grid>

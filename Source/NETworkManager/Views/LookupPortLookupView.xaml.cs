@@ -6,7 +6,7 @@ namespace NETworkManager.Views;
 
 public partial class LookupPortLookupView
 {
-    private readonly LookupPortLookupViewModel _viewModel = new LookupPortLookupViewModel(DialogCoordinator.Instance);
+    private readonly LookupPortLookupViewModel _viewModel = new(DialogCoordinator.Instance);
 
     public LookupPortLookupView()
     {

@@ -181,7 +181,7 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <GridSplitter Grid.Column="1" Grid.RowSpan="20" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
+                                <GridSplitter Grid.Column="1" Grid.RowSpan="20" Background="Transparent" HorizontalAlignment="Stretch" />
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Name}" />
                                 <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding SelectedNetworkInterface.Name}" />
                                 <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Description}" />
@@ -482,9 +482,9 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <GridSplitter Grid.Column="1" Grid.RowSpan="4" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
-                            <GridSplitter Grid.Column="3" Grid.RowSpan="4" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
-                            <GridSplitter Grid.Column="5" Grid.RowSpan="4" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
+                            <GridSplitter Grid.Column="1" Grid.Row="0" Grid.RowSpan="4" Background="Transparent" HorizontalAlignment="Stretch" />
+                            <GridSplitter Grid.Column="3" Grid.Row="0" Grid.RowSpan="4" Background="Transparent" HorizontalAlignment="Stretch" />
+                            <GridSplitter Grid.Column="5" Grid.Row="0" Grid.RowSpan="4" Background="Transparent" HorizontalAlignment="Stretch" />
                             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.CurrentDownloadSpeed}" />
                             <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding BandwidthBytesReceivedSpeed, Converter={StaticResource BandwidthBytesToSpeedConverter}}" />
                             <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.CurrentUploadSpeed}" />
@@ -1035,11 +1035,10 @@
                                     </Style.Triggers>
                                 </Style>
                             </Grid.Style>
-                            <Button HorizontalAlignment="Center" Focusable="False" Margin="0,0,0,10">
+                            <Button HorizontalAlignment="Center" Margin="0,0,0,10">
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
                                         <Setter Property="Command" Value="{Binding AddProfileCommand}" />
-
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Search, Converter={StaticResource StringNullOrEmptyToBoolConverter}}" Value="False">
                                                 <Setter Property="Command" Value="{Binding ClearSearchCommand}" />

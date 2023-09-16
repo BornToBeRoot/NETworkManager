@@ -6,10 +6,15 @@ using System.Linq;
 
 namespace NETworkManager.Models.PowerShell;
 
-public static partial class PowerShell
+/// <summary>
+/// Class with static methods for PowerShell.
+/// </summary>
+public static class PowerShell
 {
-
-    public static readonly List<string> GetDefaultIntallationPaths = new()
+    /// <summary>
+    /// Default installation paths for PowerShell.
+    /// </summary>
+    public static readonly List<string> GetDefaultInstallationPaths = new()
     {
         Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "PowerShell", "7", "pwsh.exe"),
         Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "PowerShell", "7", "pwsh.exe"),
@@ -19,20 +24,27 @@ public static partial class PowerShell
     /// <summary>
     /// Default SZ registry keys for the global PowerShell profile.
     /// </summary>
-    private static readonly List<Tuple<string, string>> DefaultProfileRegkeysSZBase = new()
+    private static readonly List<Tuple<string, string>> DefaultProfileRegkeysSzBase = new()
     {
         new Tuple<string, string>("FaceName", "Consolas"),
 
     };
 
+    /// <summary>
+    /// Default DWORD registry keys for the global PowerShell profile.
+    /// </summary>
     private static readonly List<Tuple<string, int>> DefaultProfileRegkeysDwordBase = new()
     {
         new Tuple<string, int>("CursorType", 1),
-        new Tuple<string, int>("FontFamiliy", 54), // 36
+        new Tuple<string, int>("FontFamily", 54), // 36
         new Tuple<string, int>("FontSize", 1179648), // 120000
         new Tuple<string, int>("FontWeight", 400) // 190
     };
 
+    /// <summary>
+    /// Default DWORD registry keys for the global PowerShell profile with dark theme.
+    /// </summary>
+    /// <returns>List of <see cref="Tuple{T1,T2}"/> with registry key name and value.</returns>
     private static List<Tuple<string, int>> GetProfileRegkeysDwordDark()
     {
         return DefaultProfileRegkeysDwordBase.Concat(
@@ -42,6 +54,11 @@ public static partial class PowerShell
                 new Tuple<string, int>("ColorTable07", 13421772), // HEX: cccccc
             }).ToList();
     }
+    
+    /// <summary>
+    /// Default DWORD registry keys for the global PowerShell profile with white theme.
+    /// </summary>
+    /// <returns>List of <see cref="Tuple{T1,T2}"/> with registry key name and value.</returns>
     private static List<Tuple<string, int>> GetProfileRegkeysDwordWhite()
     {
         return DefaultProfileRegkeysDwordBase.Concat(
@@ -52,11 +69,19 @@ public static partial class PowerShell
             }).ToList();
     }
 
-    private static List<string> DefaultProfileRegkeysDwordDelete = new()
+    /// <summary>
+    /// Default DWORD registry keys for the global PowerShell profile to delete.
+    /// </summary>
+    private static readonly List<string> DefaultProfileRegkeysDwordDelete = new()
     {
         "ScreenColors"
     };
 
+    /// <summary>
+    /// Write default (global) PowerShell profile to registry.
+    /// </summary>
+    /// <param name="theme">Theme of the PowerShell profile.</param>
+    /// <param name="powerShellPath">Path to the PowerShell executable.</param>
     public static void WriteDefaultProfileToRegistry(string theme, string powerShellPath)
     {
         var registryPath = @"Console\";
@@ -70,7 +95,7 @@ public static partial class PowerShell
         else
             registryPath += powerShellPath.Replace(@"\", "_");
 
-        RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(registryPath, true);
+        var registryKey = Registry.CurrentUser.OpenSubKey(registryPath, true);
 
         registryKey ??= Registry.CurrentUser.CreateSubKey(registryPath);
 
@@ -79,7 +104,7 @@ public static partial class PowerShell
             foreach (var item in theme == "Dark" ? GetProfileRegkeysDwordDark() : GetProfileRegkeysDwordWhite())
                 registryKey.SetValue(item.Item1, item.Item2);
 
-            foreach (var item in DefaultProfileRegkeysSZBase)
+            foreach (var item in DefaultProfileRegkeysSzBase)
                 registryKey.SetValue(item.Item1, item.Item2);
 
             foreach (var item in DefaultProfileRegkeysDwordDelete)
@@ -88,7 +113,7 @@ public static partial class PowerShell
             }
         }
 
-        registryKey.Close();
+        registryKey?.Close();
     }
 
     /// <summary>

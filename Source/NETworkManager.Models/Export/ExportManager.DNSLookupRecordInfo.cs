@@ -21,35 +21,45 @@ public static partial class ExportManager
     {
         switch (fileType)
         {
-            case ExportFileType.CSV:
+            case ExportFileType.Csv:
                 CreateCsv(collection, filePath);
                 break;
-            case ExportFileType.XML:
+            case ExportFileType.Xml:
                 CreateXml(collection, filePath);
                 break;
-            case ExportFileType.JSON:
+            case ExportFileType.Json:
                 CreateJson(collection, filePath);
                 break;
-            case ExportFileType.TXT:
+            case ExportFileType.Txt:
             default:
                 throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
         }
     }
 
+    /// <summary>
+    /// Creates a CSV file from the given <see cref="DNSLookupRecordInfo"/> collection.
+    /// </summary>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{DNSLookupRecordInfo}"/> to export.</param>
+    /// <param name="filePath">Path to the export file.</param>
     private static void CreateCsv(IEnumerable<DNSLookupRecordInfo> collection, string filePath)
     {
         var stringBuilder = new StringBuilder();
 
         stringBuilder.AppendLine(
-            $"{nameof(DNSLookupRecordInfo.DomainName)},{nameof(DNSLookupRecordInfo.TTL)},{nameof(DNSLookupRecordInfo.Class)},{nameof(DNSLookupRecordInfo.Type)},{nameof(DNSLookupRecordInfo.Result)},{nameof(DNSLookupRecordInfo.Server)},{nameof(DNSLookupRecordInfo.IPEndPoint)}");
+            $"{nameof(DNSLookupRecordInfo.DomainName)},{nameof(DNSLookupRecordInfo.TTL)},{nameof(DNSLookupRecordInfo.RecordClass)},{nameof(DNSLookupRecordInfo.RecordType)},{nameof(DNSLookupRecordInfo.Result)},{nameof(DNSLookupRecordInfo.Server)},{nameof(DNSLookupRecordInfo.IPEndPoint)}");
 
         foreach (var info in collection)
             stringBuilder.AppendLine(
-                $"{info.DomainName},{info.TTL},{info.Class},{info.Type},{info.Result},{info.Server},{info.IPEndPoint}");
+                $"{info.DomainName},{info.TTL},{info.RecordClass},{info.RecordType},{info.Result},{info.Server},{info.IPEndPoint}");
 
         System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
     }
 
+    /// <summary>
+    /// Creates a XML file from the given <see cref="DNSLookupRecordInfo"/> collection.
+    /// </summary>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{DNSLookupRecordInfo}"/> to export.</param>
+    /// <param name="filePath">Path to the export file.</param>
     private static void CreateXml(IEnumerable<DNSLookupRecordInfo> collection, string filePath)
     {
         var document = new XDocument(DefaultXDeclaration,
@@ -60,8 +70,8 @@ public static partial class ExportManager
                         new XElement(nameof(DNSLookupRecordInfo),
                             new XElement(nameof(DNSLookupRecordInfo.DomainName), info.DomainName),
                             new XElement(nameof(DNSLookupRecordInfo.TTL), info.TTL),
-                            new XElement(nameof(DNSLookupRecordInfo.Class), info.Class),
-                            new XElement(nameof(DNSLookupRecordInfo.Type), info.Type),
+                            new XElement(nameof(DNSLookupRecordInfo.RecordClass), info.RecordClass),
+                            new XElement(nameof(DNSLookupRecordInfo.RecordType), info.RecordType),
                             new XElement(nameof(DNSLookupRecordInfo.Result), info.Result),
                             new XElement(nameof(DNSLookupRecordInfo.Server), info.Server),
                             new XElement(nameof(DNSLookupRecordInfo.IPEndPoint), info.IPEndPoint)))));
@@ -69,6 +79,11 @@ public static partial class ExportManager
         document.Save(filePath);
     }
 
+    /// <summary>
+    /// Creates a JSON file from the given <see cref="DNSLookupRecordInfo"/> collection.
+    /// </summary>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{DNSLookupRecordInfo}"/> to export.</param>
+    /// <param name="filePath">Path to the export file.</param>
     private static void CreateJson(IReadOnlyList<DNSLookupRecordInfo> collection, string filePath)
     {
         var jsonData = new object[collection.Count];
@@ -79,8 +94,8 @@ public static partial class ExportManager
             {
                 collection[i].DomainName,
                 collection[i].TTL,
-                collection[i].Class,
-                collection[i].Type,
+                collection[i].RecordClass,
+                collection[i].RecordType,
                 collection[i].Result,
                 collection[i].Server,
                 collection[i].IPEndPoint
