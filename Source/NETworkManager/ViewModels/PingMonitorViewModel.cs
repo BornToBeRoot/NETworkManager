@@ -160,7 +160,7 @@ public class PingMonitorViewModel : ViewModelBase
             }
         };
 
-        FormatterDate = value => new DateTime((long)(value * TimeSpan.FromHours(1).Ticks)).ToString("hh:mm:ss");
+        FormatterDate = value => DateTimeHelper.DateTimeToTimeString(new DateTime((long)(value * TimeSpan.FromHours(1).Ticks)));
         FormatterPingTime = value => $"{value} ms";
     }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using NETworkManager.Models.Network;
+using NETworkManager.Utilities;
 using Newtonsoft.Json;
 
 namespace NETworkManager.Models.Export;
@@ -57,7 +58,7 @@ public static partial class ExportManager
                     $"{port.Port}/{port.LookupInfo.Protocol}/{port.LookupInfo.Service}/{port.LookupInfo.Description}/{port.State};");
 
             stringBuilder.AppendLine(
-                $"{info.IsReachable},{info.PingInfo.IPAddress},{info.Hostname},{(info.IsAnyPortOpen ? PortState.Open : PortState.Closed)},{info.PingInfo.Status},{info.MACAddress},\"{info.Vendor}\",\"{stringBuilderPorts.ToString().TrimEnd(';')}\",{info.PingInfo.Timestamp.ToString("yyyy-MM-dd HH:mm:ss.fff")},{Ping.TimeToString(info.PingInfo.Status, info.PingInfo.Time, true)},{info.PingInfo.TTL},{info.PingInfo.Bytes}");
+                $"{info.IsReachable},{info.PingInfo.IPAddress},{info.Hostname},{(info.IsAnyPortOpen ? PortState.Open : PortState.Closed)},{info.PingInfo.Status},{info.MACAddress},\"{info.Vendor}\",\"{stringBuilderPorts.ToString().TrimEnd(';')}\",{DateTimeHelper.DateTimeToFullDateTimeString(info.PingInfo.Timestamp)},{Ping.TimeToString(info.PingInfo.Status, info.PingInfo.Time, true)},{info.PingInfo.TTL},{info.PingInfo.Bytes}");
         }
 
         System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
@@ -90,7 +91,7 @@ public static partial class ExportManager
                                 new XElement(nameof(PortInfo.LookupInfo.Service), port.LookupInfo.Service),
                                 new XElement(nameof(PortInfo.LookupInfo.Description), port.LookupInfo.Description),
                                 new XElement(nameof(PortInfo.State), port.State)),
-                            new XElement(nameof(PingInfo.Timestamp), info.PingInfo.Timestamp.ToString("yyyy-MM-dd HH:mm:ss.fff")),
+                            new XElement(nameof(PingInfo.Timestamp), DateTimeHelper.DateTimeToFullDateTimeString(info.PingInfo.Timestamp)),
                             new XElement(nameof(PingInfo.Time),
                                 Ping.TimeToString(info.PingInfo.Status, info.PingInfo.Time, true)),
                             new XElement(nameof(PingInfo.TTL), info.PingInfo.TTL),
@@ -134,7 +135,7 @@ public static partial class ExportManager
                 MACAddress = collection[i].MACAddress?.ToString(),
                 collection[i].Vendor,
                 Ports = jsonDataPorts,
-                Timestamp = collection[i].PingInfo.Timestamp.ToString("yyyy-MM-dd HH:mm:ss.fff"),
+                Timestamp = DateTimeHelper.DateTimeToFullDateTimeString(collection[i].PingInfo.Timestamp),
                 Time = Ping.TimeToString(collection[i].PingInfo.Status, collection[i].PingInfo.Time, true),
                 collection[i].PingInfo.TTL,
                 collection[i].PingInfo.Bytes

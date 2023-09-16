@@ -10,7 +10,7 @@ public sealed class DateTimeToStringConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value is DateTime dateTime ? DateTimeHelper.DateTimeToString(dateTime) : "-/-";
+        return value is DateTime dateTime ? DateTimeHelper.DateTimeToFullDateTimeString(dateTime) : "-/-";
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

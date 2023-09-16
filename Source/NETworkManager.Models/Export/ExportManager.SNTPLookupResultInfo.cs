@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using NETworkManager.Models.Network;
+using NETworkManager.Utilities;
 using Newtonsoft.Json;
 
 namespace NETworkManager.Models.Export;
@@ -50,7 +51,7 @@ public static partial class ExportManager
 
         foreach (var info in collection)
             stringBuilder.AppendLine(
-                $"{info.Server},{info.IPEndPoint},{info.DateTime.NetworkTime.ToString("yyyy-MM-dd HH:mm:ss.fff")},{info.DateTime.LocalStartTime.ToString("yyyy-MM-dd HH:mm:ss.fff")},{info.DateTime.LocalEndTime.ToString("yyyy-MM-dd HH:mm:ss.fff")},{info.DateTime.Offset} s,{info.DateTime.RoundTripDelay} ms");
+                $"{info.Server},{info.IPEndPoint},{DateTimeHelper.DateTimeToFullDateTimeString(info.DateTime.NetworkTime)},{DateTimeHelper.DateTimeToFullDateTimeString(info.DateTime.LocalStartTime)},{DateTimeHelper.DateTimeToFullDateTimeString(info.DateTime.LocalEndTime)},{info.DateTime.Offset} s,{info.DateTime.RoundTripDelay} ms");
 
         System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
     }
@@ -71,11 +72,11 @@ public static partial class ExportManager
                             new XElement(nameof(SNTPLookupInfo.Server), info.Server),
                             new XElement(nameof(SNTPLookupInfo.IPEndPoint), info.IPEndPoint),
                             new XElement(nameof(SNTPLookupInfo.DateTime.NetworkTime),
-                                info.DateTime.NetworkTime.ToString("yyyy-MM-dd HH:mm:ss.fff")),
+                                DateTimeHelper.DateTimeToFullDateTimeString(info.DateTime.NetworkTime)),
                             new XElement(nameof(SNTPLookupInfo.DateTime.LocalStartTime),
-                                info.DateTime.LocalStartTime.ToString("yyyy-MM-dd HH:mm:ss.fff")),
+                                DateTimeHelper.DateTimeToFullDateTimeString(info.DateTime.LocalStartTime)),
                             new XElement(nameof(SNTPLookupInfo.DateTime.LocalEndTime),
-                                info.DateTime.LocalEndTime.ToString("yyyy-MM-dd HH:mm:ss.fff")),
+                                DateTimeHelper.DateTimeToFullDateTimeString(info.DateTime.LocalEndTime)),
                             new XElement(nameof(SNTPLookupInfo.DateTime.Offset), $"{info.DateTime.Offset} s"),
                             new XElement(nameof(SNTPLookupInfo.DateTime.RoundTripDelay),
                                 $"{info.DateTime.RoundTripDelay} ms")))));
@@ -98,9 +99,9 @@ public static partial class ExportManager
             {
                 collection[i].Server,
                 collection[i].IPEndPoint,
-                NetworkTime = collection[i].DateTime.NetworkTime.ToString("yyyy-MM-dd HH:mm:ss.fff"),
-                LocalStartTime = collection[i].DateTime.LocalStartTime.ToString("yyyy-MM-dd HH:mm:ss.fff"),
-                LocalEndTime = collection[i].DateTime.LocalEndTime.ToString("yyyy-MM-dd HH:mm:ss.fff"),
+                NetworkTime = DateTimeHelper.DateTimeToFullDateTimeString(collection[i].DateTime.NetworkTime),
+                LocalStartTime = DateTimeHelper.DateTimeToFullDateTimeString(collection[i].DateTime.LocalStartTime),
+                LocalEndTime = DateTimeHelper.DateTimeToFullDateTimeString(collection[i].DateTime.LocalEndTime),
                 Offset = $"{collection[i].DateTime.Offset} s",
                 RoundTripDelay = $"{collection[i].DateTime.RoundTripDelay} ms",
             };

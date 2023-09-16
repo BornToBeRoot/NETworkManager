@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using NETworkManager.Models.Network;
+using NETworkManager.Utilities;
 using Newtonsoft.Json;
 
 namespace NETworkManager.Models.Export;
@@ -50,7 +50,7 @@ public static partial class ExportManager
 
         foreach (var info in collection)
             stringBuilder.AppendLine(
-                $"{info.Timestamp.ToString("yyyy-MM-dd HH:mm:ss.fff")},{info.IPAddress},{info.Hostname},{info.Bytes},{Ping.TimeToString(info.Status, info.Time, true)},{info.TTL},{info.Status}");
+                $"{DateTimeHelper.DateTimeToFullDateTimeString(info.Timestamp)},{info.IPAddress},{info.Hostname},{info.Bytes},{Ping.TimeToString(info.Status, info.Time, true)},{info.TTL},{info.Status}");
 
         System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
     }
@@ -68,7 +68,7 @@ public static partial class ExportManager
                     from info in collection
                     select
                         new XElement(nameof(PingInfo),
-                            new XElement(nameof(PingInfo.Timestamp), info.Timestamp.ToString("yyyy-MM-dd HH:mm:ss.fff")),
+                            new XElement(nameof(PingInfo.Timestamp), DateTimeHelper.DateTimeToFullDateTimeString(info.Timestamp)),
                             new XElement(nameof(PingInfo.IPAddress), info.IPAddress),
                             new XElement(nameof(PingInfo.Hostname), info.Hostname),
                             new XElement(nameof(PingInfo.Bytes), info.Bytes),
@@ -92,7 +92,7 @@ public static partial class ExportManager
         {
             jsonData[i] = new
             {
-                Timestamp = collection[i].Timestamp.ToString("yyyy-MM-dd HH:mm:ss.fff"),
+                Timestamp = DateTimeHelper.DateTimeToFullDateTimeString(collection[i].Timestamp),
                 IPAddress = collection[i].IPAddress.ToString(),
                 collection[i].Hostname,
                 collection[i].Bytes,
