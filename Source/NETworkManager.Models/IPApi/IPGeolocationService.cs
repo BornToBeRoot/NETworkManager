@@ -55,7 +55,7 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
     public async Task<IPGeolocationResult> GetIPGeolocationAsync(string ipAddress = "")
     {
         if (IsInRateLimit())
-            return new IPGeolocationResult(isRateLimitReached: true);
+            return new IPGeolocationResult(isRateLimitReached: true, _rateLimitRemainingTime);
 
         // If the url is empty, the current IP address from which the request is made is used.
         var url = $"{BaseUrl}/{ipAddress}?fields={Fields}";
@@ -69,7 +69,7 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
             {
                 // Update rate limit values.
                 if (!UpdateRateLimit(response.Headers))
-                    return new IPGeolocationResult(hasError: true, "The rate limit value could not be extracted from the http header. The request was probably corrupted. Try again in a few seconds.");
+                    return new IPGeolocationResult(hasError: true, "The rate limit values couldn't be extracted from the http header. The request was probably corrupted. Try again in a few seconds.", -1);
 
                 var json = await response.Content.ReadAsStringAsync();
                 var info = JsonConvert.DeserializeObject<IPGeolocationInfo>(json);
@@ -89,11 +89,11 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
             _rateLimitRemainingRequests = 0;
             _rateLimitLastReached = DateTime.Now;
 
-            return new IPGeolocationResult(isRateLimitReached: true);
+            return new IPGeolocationResult(isRateLimitReached: true, _rateLimitRemainingTime);
         }
         catch (Exception ex)
         {
-            return new IPGeolocationResult(hasError: true, ex.Message);
+            return new IPGeolocationResult(hasError: true, ex.Message, -1);
         }
     }
     

@@ -6837,11 +6837,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rate limit reached! Try again in a few seconds....
+        ///   Looks up a localized string similar to Rate limit reached! Try again in {0} seconds....
         /// </summary>
-        public static string RateLimitReachedMessage {
+        public static string RateLimitReachedTryAgainInXSeconds {
             get {
-                return ResourceManager.GetString("RateLimitReachedMessage", resourceCulture);
+                return ResourceManager.GetString("RateLimitReachedTryAgainInXSeconds", resourceCulture);
             }
         }
         

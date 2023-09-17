@@ -5,12 +5,15 @@ using System.ComponentModel;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using log4net;
 
 namespace NETworkManager.ViewModels;
 
 public class IPApiIPGeolocationViewModel : ViewModelBase
 {
-    #region  Variables 
+    #region  Variables
+    private static readonly ILog Log = LogManager.GetLogger(typeof(IPApiIPGeolocationViewModel));
+    
     private bool _isChecking;
     public bool IsChecking
     {
@@ -29,7 +32,7 @@ public class IPApiIPGeolocationViewModel : ViewModelBase
     public IPGeolocationResult Result
     {
         get => _result;
-        set
+        private set
         {
             if (value == _result)
                 return;
@@ -38,7 +41,7 @@ public class IPApiIPGeolocationViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-#endregion
+    #endregion
 
     #region Constructor, load settings
     public IPApiIPGeolocationViewModel()
@@ -92,6 +95,14 @@ public class IPApiIPGeolocationViewModel : ViewModelBase
 
         Result = await IPGeolocationService.GetInstance().GetIPGeolocationAsync();
 
+        // Log error
+        if (Result.HasError)
+            Log.Error($"ip-api.com error: {Result.ErrorMessage}, error code: {Result.ErrorCode}");
+        
+        // Log rate limit
+        if (Result.RateLimitIsReached)
+            Log.Warn($"ip-api.com rate limit reached. Try again in {Result.RateLimitRemainingTime} seconds.");
+        
         IsChecking = false;
     }
     #endregion

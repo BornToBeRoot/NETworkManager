@@ -69,7 +69,7 @@ public sealed class Updater
         {
             try
             {
-                Log.Info("Checking for new program version on GitHub...");
+                Log.Info("Checking for new version on GitHub...");
                 
                 // Create GitHub client
                 var client = new GitHubClient(new ProductHeaderValue(userName + "_" + projectName));
@@ -80,18 +80,18 @@ public sealed class Updater
                 // Compare versions (tag=2021.2.15.0, version=2021.2.15.0)
                 if (new Version(release.TagName) > currentVersion)
                 {
-                    Log.Info($"New version \"{release.TagName}\" is available on GitHub!");
+                    Log.Info($"Version \"{release.TagName}\" is available!");
                     OnUpdateAvailable(new UpdateAvailableArgs(release));
                 }
                 else
                 {
-                    Log.Info("No new program version available on GitHub!");
+                    Log.Info("No newer version found!");
                     OnNoUpdateAvailable();
                 }
             }
             catch (Exception ex)
             {
-                Log.Error("Error while checking for new program version on GitHub!", ex);
+                Log.Error("Error while checking for new version on GitHub!", ex);
                 OnError();
             }
         });

@@ -58,7 +58,7 @@
                                     <DataTrigger Binding="{Binding IsChecking}" Value="True">
                                         <Setter Property="Visibility" Value="Hidden" />
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding Result.IsRateLimitReached}" Value="True">
+                                    <DataTrigger Binding="{Binding Result.RateLimitIsReached}" Value="True">
                                         <Setter Property="Visibility" Value="Hidden" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Result.HasError}" Value="True">
@@ -184,7 +184,7 @@
                                     <DataTrigger Binding="{Binding IsChecking}" Value="True">
                                         <Setter Property="Visibility" Value="Hidden" />
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding Result.IsRateLimitReached}" Value="False">
+                                    <DataTrigger Binding="{Binding Result.RateLimitIsReached}" Value="False">
                                         <Setter Property="Visibility" Value="Hidden" />
                                     </DataTrigger>
                                 </Style.Triggers>

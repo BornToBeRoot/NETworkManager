@@ -14,8 +14,13 @@ public class IPGeolocationResult
     /// <summary>
     /// Indicates if the rate limit of the API is reached.
     /// </summary>
-    public bool IsRateLimitReached { get; set; }
-
+    public bool RateLimitIsReached { get; set; }
+    
+    /// <summary>
+    /// Remaining time in seconds until the rate limit window resets.
+    /// </summary>
+    public int RateLimitRemainingTime { get; set; }
+    
     /// <summary>
     /// Indicates if the IP geolocation information retrieval has failed.
     /// </summary>
@@ -53,20 +58,11 @@ public class IPGeolocationResult
     /// of the API is reached.
     /// </summary>
     /// <param name="isRateLimitReached">Indicates if the rate limit of the API is reached.</param>
-    public IPGeolocationResult(bool isRateLimitReached)
+    /// <param name="rateLimitRemainingTime">Remaining time in seconds until the rate limit window resets.</param>
+    public IPGeolocationResult(bool isRateLimitReached, int rateLimitRemainingTime)
     {
-        IsRateLimitReached = isRateLimitReached;
-    }
-
-    /// <summary>
-    /// Create a new instance of <see cref="IPGeolocationResult"/> with an error message.
-    /// </summary>
-    /// <param name="hasError">Indicates if the IP geolocation information retrieval has failed.</param>
-    /// <param name="errorMessage">Error message if the IP geolocation information retrieval has failed.</param>
-    public IPGeolocationResult(bool hasError, string errorMessage)
-    {
-        HasError = hasError;
-        ErrorMessage = errorMessage;
+        RateLimitIsReached = isRateLimitReached;
+        RateLimitRemainingTime = rateLimitRemainingTime;
     }
 
     /// <summary>
@@ -74,9 +70,11 @@ public class IPGeolocationResult
     /// </summary>
     /// <param name="hasError">Indicates if the IP geolocation information retrieval has failed.</param>
     /// <param name="errorMessage">Error message if the IP geolocation information retrieval has failed.</param>
-    /// <param name="errorCode">Error code if the IP geolocation information retrieval has failed.</param>
-    public IPGeolocationResult(bool hasError, string errorMessage, int errorCode) : this(hasError, errorMessage)
+    /// <param name="errorCode">Error code if the IP geolocation information retrieval has failed (or -1 if exception was thrown).</param>
+    public IPGeolocationResult(bool hasError, string errorMessage, int errorCode)
     {
+        HasError = hasError;
+        ErrorMessage = errorMessage;
         ErrorCode = errorCode;
     }
 }
