@@ -129,7 +129,7 @@ public class TracerouteViewModel : ViewModelBase
         }
     }
 
-    private bool _ipGeolocationIsRateLimitReached;
+    private bool _ipGeolocationRateLimitIsReached;
 
     private bool _isStatusMessageDisplayed;
 
@@ -271,7 +271,7 @@ public class TracerouteViewModel : ViewModelBase
 
     private async Task StartTrace()
     {
-        _ipGeolocationIsRateLimitReached = false;
+        _ipGeolocationRateLimitIsReached = false;
         StatusMessage = string.Empty;
         IsStatusMessageDisplayed = false;
         IsRunning = true;
@@ -420,9 +420,9 @@ public class TracerouteViewModel : ViewModelBase
             }
 
             // Check rate limit 
-            if (!_ipGeolocationIsRateLimitReached && e.Args.IPGeolocationResult.RateLimitIsReached)
+            if (!_ipGeolocationRateLimitIsReached && e.Args.IPGeolocationResult.RateLimitIsReached)
             {
-                _ipGeolocationIsRateLimitReached = true;
+                _ipGeolocationRateLimitIsReached = true;
                 
                 Log.Warn($"ip-api.com rate limit reached. Try again in {e.Args.IPGeolocationResult.RateLimitRemainingTime} seconds.");
                 
