@@ -21,17 +21,18 @@ using NETworkManager.Views;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
 using System.Threading.Tasks;
+using log4net;
 
 namespace NETworkManager.ViewModels;
 
 public class TracerouteViewModel : ViewModelBase
 {
     #region Variables
-
+    private static readonly ILog Log = LogManager.GetLogger(typeof(TracerouteViewModel));
+    
     private readonly IDialogCoordinator _dialogCoordinator;
-
     private CancellationTokenSource _cancellationTokenSource;
-
+    
     private readonly int _tabId;
     private bool _firstLoad = true;
 
@@ -128,7 +129,7 @@ public class TracerouteViewModel : ViewModelBase
         }
     }
 
-    private bool _ipGeolocationIsRateLimitReached;
+    private bool _ipGeolocationRateLimitIsReached;
 
     private bool _isStatusMessageDisplayed;
 
@@ -270,7 +271,7 @@ public class TracerouteViewModel : ViewModelBase
 
     private async Task StartTrace()
     {
-        _ipGeolocationIsRateLimitReached = false;
+        _ipGeolocationRateLimitIsReached = false;
         StatusMessage = string.Empty;
         IsStatusMessageDisplayed = false;
         IsRunning = true;
@@ -410,15 +411,24 @@ public class TracerouteViewModel : ViewModelBase
     {
         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
         {
+            // Check error
             if (e.Args.IPGeolocationResult.HasError)
-                DisplayStatusMessage($"ip-api.com: {e.Args.IPGeolocationResult.ErrorMessage}");
-
-            if (!_ipGeolocationIsRateLimitReached && e.Args.IPGeolocationResult.IsRateLimitReached)
             {
-                _ipGeolocationIsRateLimitReached = true;
-                DisplayStatusMessage($"ip-api: {Localization.Resources.Strings.RateLimitReachedMessage}");
+                Log.Error($"ip-api.com error: {e.Args.IPGeolocationResult.ErrorMessage}, error code: {e.Args.IPGeolocationResult.ErrorCode}");
+                
+                DisplayStatusMessage($"ip-api.com: {e.Args.IPGeolocationResult.ErrorMessage}");
             }
 
+            // Check rate limit 
+            if (!_ipGeolocationRateLimitIsReached && e.Args.IPGeolocationResult.RateLimitIsReached)
+            {
+                _ipGeolocationRateLimitIsReached = true;
+                
+                Log.Warn($"ip-api.com rate limit reached. Try again in {e.Args.IPGeolocationResult.RateLimitRemainingTime} seconds.");
+                
+                DisplayStatusMessage($"ip-api.com {string.Format(Localization.Resources.Strings.RateLimitReachedTryAgainInXSeconds, e.Args.IPGeolocationResult.RateLimitRemainingTime)}");
+            }
+            
             Results.Add(e.Args);
         }));
     }

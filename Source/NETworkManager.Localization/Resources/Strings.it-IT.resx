@@ -3736,7 +3736,7 @@ Riprova tra qualche secondo.</value>
   <data name="Accen_Steel" xml:space="preserve">
     <value>Acciaio</value>
   </data>
-  <data name="RateLimitReachedMessage" xml:space="preserve">
+  <data name="RateLimitReachedTryAgainInXSeconds" xml:space="preserve">
     <value>Raggiunto limite rapporto! 
 Riprova tra qualche secondo...</value>
   </data>

@@ -3649,7 +3649,7 @@ Versuchen Sie es in einigen Sekunden erneut.</value>
   <data name="Accen_Steel" xml:space="preserve">
     <value>Stahl</value>
   </data>
-  <data name="RateLimitReachedMessage" xml:space="preserve">
+  <data name="RateLimitReachedTryAgainInXSeconds" xml:space="preserve">
     <value>Rate Limit erreicht! Versuchen Sie es in ein paar Sekunden erneut...</value>
   </data>
   <data name="GroupViewName_General" xml:space="preserve">
