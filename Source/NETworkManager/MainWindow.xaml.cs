@@ -35,6 +35,9 @@ using NETworkManager.Models.Network;
 using NETworkManager.Models.AWS;
 using NETworkManager.Models.PowerShell;
 using log4net;
+using MahApps.Metro.Controls;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace NETworkManager;
 
@@ -566,6 +569,53 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     #endregion
 
+
+    #region Run Command
+
+    public IEnumerable<RunCommandInfo> RunCommands => Models.RunCommandManager.GetList();
+
+    public ICommand RunCommandHotKey => new RelayCommand(_ => ComboBoxRunCommand.Focus());
+
+    public ICommand RunCommandEnterCommand => new RelayCommand(_ => RunCommandEnterAction());
+
+    private void RunCommandEnterAction()
+    {
+        foreach (var x in RunCommands)
+        {
+            if (RunCommand.StartsWith(x.Command, StringComparison.OrdinalIgnoreCase))
+                EventSystem.RedirectToApplication(x.Name, RunCommand[x.Command.Length..].Trim());
+        }
+
+        RunCommand = string.Empty;
+    }
+
+    private string _runCommand = string.Empty;
+
+    public string RunCommand
+    {
+        get => _runCommand;
+        set
+        {
+            if (value == _runCommand)
+                return;
+
+            _runCommand = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private void TextBoxRunCommand_OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+    {
+        ComboBoxRunCommand.IsDropDownOpen = true;
+    }
+
+    private void TextBoxRunCommand_OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+    {
+        ComboBoxRunCommand.IsDropDownOpen = false;
+    }
+
+    #endregion
+
     #region Application
 
     private void LoadApplicationList()
@@ -590,7 +640,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
             // Search by TranslatedName and Name
             return info.IsVisible &&
-                   (regex.Replace( ResourceTranslator.Translate(ResourceIdentifier.ApplicationName, info.Name), "")
+                   (regex.Replace(ResourceTranslator.Translate(ResourceIdentifier.ApplicationName, info.Name), "")
                        .IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || regex
                        .Replace(info.Name.ToString(), "").Contains(search, StringComparison.OrdinalIgnoreCase));
         };
@@ -954,9 +1004,10 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         if (e is not EventSystemRedirectArgs data)
             return;
 
-        // Change view
+        // Try to find the application
         var application = Applications.Cast<ApplicationInfo>().FirstOrDefault(x => x.Name == data.Application);
 
+        // Show error message if the application was not found
         if (application == null)
         {
             var settings = AppearanceManager.MetroDialog;
@@ -969,8 +1020,11 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             return;
         }
 
-        // Change view
+        // Change application view
         SelectedApplication = application;
+
+        if (string.IsNullOrEmpty(data.Args))
+            return;
 
         // Crate a new tab / perform action
         switch (data.Application)

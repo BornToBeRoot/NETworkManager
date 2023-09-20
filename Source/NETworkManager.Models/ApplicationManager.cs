@@ -7,15 +7,15 @@ using System.Windows.Controls;
 namespace NETworkManager.Models;
 
 /// <summary>
-/// Provides methods to manage networkmanger applications.
+/// Provides methods to manage applications.
 /// </summary>
 public static class ApplicationManager
 {
     /// <summary>
     /// Method to return all available applications in.
     /// </summary>
-    /// <returns>All names as array.</returns>
-    public static ApplicationName[] GetNames() => (ApplicationName[])Enum.GetValues(typeof(ApplicationName));
+    /// <returns>IEnumerable with <see cref="ApplicationName"/>.</returns>
+    public static IEnumerable<ApplicationName> GetNames() => (ApplicationName[])Enum.GetValues(typeof(ApplicationName));
 
     /// <summary>
     /// Method returns a list with all <see cref="ApplicationInfo"/>.
@@ -23,12 +23,7 @@ public static class ApplicationManager
     /// <returns>IEnumerable with <see cref="ApplicationInfo"/></returns>
     public static IEnumerable<ApplicationInfo> GetList()
     {
-        var list = new List<ApplicationInfo>();
-
-        foreach (var name in GetNames().Where(x => x != ApplicationName.None))
-            list.Add(new ApplicationInfo(name));
-
-        return list;
+        return GetNames().Where(x => x != ApplicationName.None).Select(name => new ApplicationInfo(name)).ToList();
     }
 
     /// <summary>

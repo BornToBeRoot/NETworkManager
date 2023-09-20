@@ -29,7 +29,7 @@ public static class AppearanceManager
     /// <summary>
     /// List who contains all MahApps.Metro custom themes.
     /// </summary>
-    public static List<ThemeInfo> CustomThemes { get; set; }
+    public static List<ThemeInfo> CustomThemes { get; private set; }
 
     /// <summary>
     /// List who contains all MahApps.Metro accents.
@@ -82,7 +82,7 @@ public static class AppearanceManager
         {
             ChangeTheme(SettingsManager.Current.Appearance_Theme);
             ChangeAccent(SettingsManager.Current.Appearance_Accent);
-        }
+        }        
     }
 
     /// <summary>

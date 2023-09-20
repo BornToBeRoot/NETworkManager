@@ -127,7 +127,7 @@
     <value>Windows-Testuser</value>
   </data>
   <data name="ExampleDomain" xml:space="preserve">
-    <value>example.com</value>
+    <value>borntoberoot.net</value>
   </data>
   <data name="ExampleGroupServers" xml:space="preserve">
     <value>Servers</value>
@@ -139,37 +139,34 @@
     <value>SERVER-01</value>
   </data>
   <data name="ExampleHostnameAndOrIPAddress" xml:space="preserve">
-    <value>SERVER-01; 172.16.0.100</value>
+    <value>SERVER-01; 10.0.0.10</value>
   </data>
   <data name="ExampleHostnameOrIPAddress" xml:space="preserve">
-    <value>SERVER-01 or 172.16.0.100</value>
+    <value>SERVER-01 or 10.0.0.10</value>
   </data>
   <data name="ExampleHostRange" xml:space="preserve">
-    <value>192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.[178-179].[1,100,150-200]; example.com/24</value>
+    <value>192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.[178-179].[1,100,150-200]; borntoberoot.net/24</value>
   </data>
   <data name="ExampleIPv4Address" xml:space="preserve">
-    <value>192.168.178.55</value>
+    <value>10.0.0.10</value>
   </data>
   <data name="ExampleIPv4Broadcast" xml:space="preserve">
-    <value>192.168.178.255</value>
+    <value>10.0.0.255</value>
   </data>
   <data name="ExampleIPv4DNSServer" xml:space="preserve">
     <value>1.1.1.1</value>
   </data>
   <data name="ExampleIPv4DNSServers" xml:space="preserve">
-    <value>192.168.178.1; 1.1.1.1; 1.0.0.1</value>
+    <value>10.0.0.1; 1.1.1.1; 8.8.8.8</value>
   </data>
   <data name="ExampleIPv4Gateway" xml:space="preserve">
-    <value>192.168.178.1</value>
+    <value>10.0.0.1</value>
   </data>
   <data name="ExampleIPv4IPv6Subnet" xml:space="preserve">
-    <value>192.168.178.133/255.255.255.0 or 2001:0db8::/64</value>
+    <value>10.0.0.13/255.255.255.0 or 2001:0db8::/64</value>
   </data>
   <data name="ExampleIPv4IPv6Subnet2" xml:space="preserve">
-    <value>192.168.178.134/255.255.255.0 or 2001:0db9::/64</value>
-  </data>
-  <data name="ExampleIPv4IPv6Subnet3" xml:space="preserve">
-    <value>192.168.180.0/24 or 2001:0db9::/54</value>
+    <value>10.0.0.14/255.255.255.0 or 2001:0db9::/64</value>
   </data>
   <data name="ExampleIPv4Subnet" xml:space="preserve">
     <value>192.168.178.0/24 or 192.168.178.0/255.255.255.0</value>
@@ -187,7 +184,7 @@
     <value>255.255.255.0 or /64</value>
   </data>
   <data name="ExampleIPv4SubnetWithCIDR" xml:space="preserve">
-    <value>192.168.100.0/24</value>
+    <value>10.0.0.0/24</value>
   </data>
   <data name="ExampleMACAddress" xml:space="preserve">
     <value>00:F1:21:AB:0B:35</value>
@@ -253,7 +250,7 @@
     <value>80; 443; 8080; 8443</value>
   </data>
   <data name="ExampleWebsiteUri" xml:space="preserve">
-    <value>http(s)://example.com/index.html</value>
+    <value>http(s)://borntoberoot.net/index.html</value>
   </data>
   <data name="GitHub" xml:space="preserve">
     <value>GitHub</value>
@@ -325,13 +322,13 @@
     <value>NETworkManager</value>
   </data>
   <data name="ExampleHostFQDN" xml:space="preserve">
-    <value>server-01.example.com</value>
+    <value>server-01.borntoberoot.net</value>
   </data>
   <data name="ExampleGatewayDomain" xml:space="preserve">
-    <value>gw.example.com</value>
+    <value>gw.borntoberoot.net</value>
   </data>
   <data name="ExampleHostWithRDPPort" xml:space="preserve">
-    <value>server-01.example.com:3389</value>
+    <value>server-01.borntoberoot.net:3389</value>
   </data>
   <data name="ExampleSsid" xml:space="preserve">
     <value>IoT-Devices</value>
