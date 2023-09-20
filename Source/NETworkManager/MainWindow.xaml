@@ -101,8 +101,6 @@
                     <ComboBox x:Name="ComboBoxRunCommand"
                               GotKeyboardFocus="TextBoxRunCommand_OnGotKeyboardFocus"
                               LostKeyboardFocus="TextBoxRunCommand_OnLostKeyboardFocus"
-                              DropDownClosed="ComboBoxRunCommand_OnDropDownClosed"
-                              KeyDown="TextBoxRunCommand_OnKeyDown"                              
                               Text="{Binding RunCommand}"
                               FontSize="14"
                               mah:TextBoxHelper.Watermark="Run command... (Ctrl+Shift+P)"
@@ -113,7 +111,6 @@
                               BorderThickness="0"
                               Background="{DynamicResource MahApps.Brushes.Gray10}"
                               ItemsSource="{Binding RunCommands}"
-                              SelectedValuePath="Command"
                               TextSearch.TextPath="Command">
                         <ComboBox.InputBindings>
                             <KeyBinding Gesture="Enter" Command="{Binding RunCommandEnterCommand}" />
