@@ -85,33 +85,39 @@
     </mah:MetroWindow.LeftWindowCommands>
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands ShowSeparators="False">
-            <Grid>
+            <Grid Margin="0,0,10,0">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,10,0">
-                    <Border BorderThickness="1,1,0,1"
-                            BorderBrush="{DynamicResource MahApps.Brushes.Gray10}">
-                        <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Gray8}">
+                    <Grid Grid.Column="0" Grid.Row="0">
+                        <Rectangle Width="24" Fill="{DynamicResource MahApps.Brushes.Gray10}" />
+                        <Rectangle Width="20" Height="20" HorizontalAlignment="Right" Fill="{DynamicResource MahApps.Brushes.Gray8}">
                             <Rectangle.OpacityMask>
                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronRight}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
-                    </Border>
-                    <ComboBox x:Name="ComboBoxRunCommand"
+                    </Grid>
+                    <ComboBox Grid.Column="1" Grid.Row="0" 
+                              x:Name="ComboBoxRunCommand"
                               GotKeyboardFocus="TextBoxRunCommand_OnGotKeyboardFocus"
                               LostKeyboardFocus="TextBoxRunCommand_OnLostKeyboardFocus"
+                              DropDownClosed="ComboBoxRunCommand_OnDropDownClosed"
+                              PreviewKeyDown="ComboBoxRunCommand_OnPreviewKeyDown"
                               Text="{Binding RunCommand}"
-                              FontSize="14"
                               mah:TextBoxHelper.Watermark="Run command... (Ctrl+Shift+P)"
-                              IsEditable="True"
                               IsTextSearchEnabled="True"
                               IsTextSearchCaseSensitive="False"
-                              Width="300"
+                              Width="250"
                               BorderThickness="0"
                               Background="{DynamicResource MahApps.Brushes.Gray10}"
                               ItemsSource="{Binding RunCommands}"
-                              TextSearch.TextPath="Command">
+                              TextSearch.TextPath="Command"
+                              Style="{StaticResource EditableComboBox}">
+                        <ComboBox.Resources>
+                            <Thickness x:Key="ComboBoxBorderThemeThickness">0</Thickness>
+                            <Thickness x:Key="ComboBoxPopupBorderThemeThickness">0</Thickness>
+                        </ComboBox.Resources>
                         <ComboBox.InputBindings>
                             <KeyBinding Gesture="Enter" Command="{Binding RunCommandEnterCommand}" />
                         </ComboBox.InputBindings>
@@ -139,7 +145,6 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                </StackPanel>
             </Grid>
             <StackPanel Orientation="Horizontal">
                 <Button Command="{Binding RestartApplicationCommand}" Opacity="1"

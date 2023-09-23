@@ -35,9 +35,7 @@ using NETworkManager.Models.Network;
 using NETworkManager.Models.AWS;
 using NETworkManager.Models.PowerShell;
 using log4net;
-using MahApps.Metro.Controls;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
-using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace NETworkManager;
 
@@ -606,12 +604,47 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private void TextBoxRunCommand_OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
     {
+        ComboBoxRunCommand.Width = 450;
         ComboBoxRunCommand.IsDropDownOpen = true;
     }
 
     private void TextBoxRunCommand_OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
     {
+        if (!ComboBoxRunCommand.IsDropDownOpen)
+            ComboBoxRunCommand.Width = 250;
+        
         ComboBoxRunCommand.IsDropDownOpen = false;
+    }
+    
+    private void ComboBoxRunCommand_OnDropDownClosed(object sender, EventArgs e)
+    {
+        if(!ComboBoxRunCommand.IsKeyboardFocusWithin)
+            ComboBoxRunCommand.Width = 250;
+    }
+    
+    private void ComboBoxRunCommand_OnPreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        // Handle tab key to autocomplete
+        if (e.Key != Key.Tab) 
+            return;
+        
+        e.Handled = true;
+        
+        // Close the drop down
+        ComboBoxRunCommand.IsDropDownOpen = false;
+
+        // Check if the command can handle arguments and add a space
+        if (RunCommands.Any(x => RunCommand.StartsWith(x.Command, StringComparison.OrdinalIgnoreCase) && x.CanHandleArguments))
+        {
+            if (!RunCommand.EndsWith(" "))
+                RunCommand += " ";
+        }
+
+        // Focus the combobox 
+        var cmbTextBox = (System.Windows.Controls.TextBox)ComboBoxRunCommand.Template.FindName("PART_EditableTextBox", ComboBoxRunCommand);
+        
+        cmbTextBox.SelectionStart = RunCommand.Length;
+        cmbTextBox.SelectionLength = 0;
     }
 
     #endregion
