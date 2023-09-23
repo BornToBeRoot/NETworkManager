@@ -485,6 +485,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         // Load application list, filter, sort, etc.
         LoadApplicationList();
 
+        // Load run commands
+        LoadRunCommands();
+        
         // Load the profiles
         LoadProfiles();
 
@@ -570,8 +573,38 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     #region Run Command
 
-    public IEnumerable<RunCommandInfo> RunCommands => Models.RunCommandManager.GetList();
+    private IEnumerable<RunCommandInfo> RunCommands => RunCommandManager.GetList();
 
+    private ICollectionView _runCommandsSuggestions;
+
+    public ICollectionView RunCommandsSuggestions
+    {
+        get => _runCommandsSuggestions;
+        private set
+        {
+            if (value == _runCommandsSuggestions)
+                return;
+
+            _runCommandsSuggestions = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    private int _selectedRunCommandsSuggestionsIndex;
+    
+    public int SelectedRunCommandsSuggestionsIndex
+    {
+        get => _selectedRunCommandsSuggestionsIndex;
+        set
+        {
+            if (value == _selectedRunCommandsSuggestionsIndex)
+                return;
+
+            _selectedRunCommandsSuggestionsIndex = value;
+            OnPropertyChanged();
+        }
+    }
+    
     public ICommand RunCommandHotKey => new RelayCommand(_ => ComboBoxRunCommand.Focus());
 
     public ICommand RunCommandEnterCommand => new RelayCommand(_ => RunCommandEnterAction());
@@ -601,10 +634,16 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+    
+    private void LoadRunCommands()
+    {
+        RunCommandsSuggestions = new CollectionViewSource { Source = RunCommands }.View;
+        SelectedRunCommandsSuggestionsIndex = -1;
+    }
 
     private void TextBoxRunCommand_OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
     {
-        ComboBoxRunCommand.Width = 450;
+        ComboBoxRunCommand.Width = 350;
         ComboBoxRunCommand.IsDropDownOpen = true;
     }
 
@@ -1217,7 +1256,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 info.Password = instance.Password;
 
                 SwitchProfile(info);
-            }, async instance =>
+            }, async _ =>
             {
                 // Show error message is canceled / escape is pressed (dialog is opened again if the password is wrong)
                 ConfigurationManager.Current.ProfileManagerErrorMessage =
