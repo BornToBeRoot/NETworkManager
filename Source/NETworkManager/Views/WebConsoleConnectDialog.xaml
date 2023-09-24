@@ -31,7 +31,10 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.URL}" />
-            <ComboBox x:Name="ComboBoxUrl" Grid.Column="2" Grid.Row="0" ItemsSource="{Binding UrlHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleWebsiteUri}" Style="{StaticResource EditableComboBox}">
+            <ComboBox x:Name="ComboBoxUrl"
+                      Grid.Column="2" Grid.Row="0" 
+                      ItemsSource="{Binding UrlHistoryView}" 
+                      mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleWebsiteUri}" Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Url" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>

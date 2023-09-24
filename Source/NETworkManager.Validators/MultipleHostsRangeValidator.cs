@@ -54,7 +54,7 @@ public class MultipleHostsRangeValidator : ValidationRule
 
                     foreach (var numberOrRange in octet.Substring(1, octet.Length - 2).Split(','))
                     {
-                        if (!numberOrRange.Contains("-"))
+                        if (!numberOrRange.Contains('-'))
                             continue;
 
                         // 50-100 --> {50, 100}
@@ -73,15 +73,15 @@ public class MultipleHostsRangeValidator : ValidationRule
                 continue;
 
             // server-01.example.com
-            if (Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameRegex))
+            if (Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameOrDomainRegex))
                 continue;
 
             // server-01.example.com/24
-            if (Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameCidrRegex))
+            if (Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameOrDomainWithCidrRegex))
                 continue;
 
             // server-01.example.com/255.255.255.0
-            if (Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameSubnetmaskRegex))
+            if (Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameOrDomainWithSubnetmaskRegex))
                 continue;
 
             isValid = false;

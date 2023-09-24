@@ -734,7 +734,7 @@ public class NetworkConnectionViewModel : ViewModelBase
 
                     var result = await httpResponse.Content.ReadAsStringAsync();
 
-                    var match = Regex.Match(result, RegexHelper.IPv4AddressExctractRegex);
+                    var match = Regex.Match(result, RegexHelper.IPv4AddressExtractRegex);
 
                     if (match.Success)
                     {

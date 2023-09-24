@@ -173,10 +173,12 @@
                                    Style="{StaticResource LinkTextBlock}" VerticalAlignment="Center" Margin="5,0,0,0" />
                     </StackPanel>
                 </Button>
-                <Button Command="{Binding OpenWebsiteCommand}" Opacity="1"
+                <Button Command="{Binding OpenWebsiteCommand}"
+                        Opacity="1"
                         Visibility="{Binding IsUpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
                         CommandParameter="{Binding UpdateReleaseUrl, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                        Cursor="Hand">
+                        Cursor="Hand"
+                        Focusable="False">
                     <Rectangle Width="20" Height="20"
                                Fill="{DynamicResource MahApps.Brushes.Accent}"
                                ToolTip="{x:Static localization:Strings.UpdateAvailable}">
@@ -185,7 +187,10 @@
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </Button>
-                <Button Command="{Binding UnlockProfileCommand}" Opacity="1" Cursor="Hand">
+                <Button Command="{Binding UnlockProfileCommand}"
+                        Opacity="1"
+                        Cursor="Hand"
+                        Focusable="False">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}"
                                BasedOn="{StaticResource MahApps.Styles.Button.WindowCommands}">
@@ -230,6 +235,7 @@
                           BorderThickness="0"
                           MinWidth="100"
                           HorizontalAlignment="Left"
+                          Focusable="False"
                           Margin="0,0,10,0">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
@@ -269,7 +275,9 @@
                 </ComboBox>
                 <Button Command="{Binding OpenWebsiteCommand}"
                         ToolTip="{x:Static localization:Strings.StarForkTheProjectOnGitHub}"
-                        CommandParameter="{x:Static resources:Resources.NETworkManager_RepoUrl}" Cursor="Hand">
+                        CommandParameter="{x:Static resources:Resources.NETworkManager_RepoUrl}" 
+                        Cursor="Hand"
+                        Focusable="False">
                     <StackPanel Orientation="Horizontal">
                         <Rectangle Width="20" Height="20"
                                    Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
@@ -281,7 +289,9 @@
                 </Button>
                 <Button Command="{Binding OpenWebsiteCommand}"
                         ToolTip="{x:Static localization:Strings.ReportAnIssueOrCreateAFeatureRequest}"
-                        CommandParameter="{x:Static resources:Resources.NETworkManager_NewIssueUrl}" Cursor="Hand">
+                        CommandParameter="{x:Static resources:Resources.NETworkManager_NewIssueUrl}" 
+                        Cursor="Hand"
+                        Focusable="False">
                     <StackPanel Orientation="Horizontal">
                         <Rectangle Width="20" Height="20"
                                    Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
@@ -292,7 +302,9 @@
                     </StackPanel>
                 </Button>
                 <Button Command="{Binding OpenDocumentationCommand}"
-                        ToolTip="{x:Static localization:Strings.OpenDocumentation}" Cursor="Hand">
+                        ToolTip="{x:Static localization:Strings.OpenDocumentation}" 
+                        Cursor="Hand"
+                        Focusable="False">
                     <StackPanel Orientation="Horizontal">
                         <Rectangle Width="20" Height="20"
                                    Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
@@ -368,8 +380,10 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="31" />
                             </Grid.RowDefinitions>
-                            <Button Grid.Column="0" Command="{Binding OpenApplicationListCommand}"
-                                    ToolTip="{x:Static localization:Strings.Search}">
+                            <Button Grid.Column="0" Grid.Row="0"
+                                    Command="{Binding OpenApplicationListCommand}"
+                                    ToolTip="{x:Static localization:Strings.Search}"
+                                    Focusable="False">
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
                                         <Style.Triggers>
@@ -470,8 +484,10 @@
                                     </interactivity:EventTrigger>
                                 </interactivity:Interaction.Triggers>
                             </TextBox>
-                            <ToggleButton Grid.Column="1" Width="32" Height="32"
-                                          IsChecked="{Binding ExpandApplicationView}">
+                            <ToggleButton Grid.Column="1" Grid.Row="0" 
+                                          Width="32" Height="32"
+                                          IsChecked="{Binding ExpandApplicationView}"
+                                          Focusable="False">
                                 <ToggleButton.Style>
                                     <Style TargetType="{x:Type ToggleButton}"
                                            BasedOn="{StaticResource MahApps.Styles.Button.Circle}">

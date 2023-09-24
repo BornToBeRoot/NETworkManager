@@ -664,7 +664,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     private void ComboBoxRunCommand_OnPreviewKeyDown(object sender, KeyEventArgs e)
     {
         // Handle tab key to autocomplete
-        if (e.Key != Key.Tab) 
+        if (e.Key != Key.Tab || string.IsNullOrEmpty(RunCommand)) 
             return;
         
         e.Handled = true;

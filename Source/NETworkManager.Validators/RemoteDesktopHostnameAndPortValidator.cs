@@ -16,14 +16,14 @@ public class RemoteDesktopHostnameAndPortValidator : ValidationRule
         {
             string[] hostnameAndPortValues = hostnameAndPort.Split(':');
 
-            if (Regex.IsMatch(hostnameAndPortValues[0], RegexHelper.HostnameRegex) && !string.IsNullOrEmpty(hostnameAndPortValues[1]) && Regex.IsMatch(hostnameAndPortValues[1], RegexHelper.PortRegex))
+            if (Regex.IsMatch(hostnameAndPortValues[0], RegexHelper.HostnameOrDomainRegex) && !string.IsNullOrEmpty(hostnameAndPortValues[1]) && Regex.IsMatch(hostnameAndPortValues[1], RegexHelper.PortRegex))
                 return ValidationResult.ValidResult;
             
             return new ValidationResult(false, Strings.EnterValidHostnameAndPort);
         }
         else
         {
-            return Regex.IsMatch((string)value, RegexHelper.HostnameRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Strings.EnterValidHostname);
+            return Regex.IsMatch((string)value, RegexHelper.HostnameOrDomainRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Strings.EnterValidHostname);
         }
     }
 }

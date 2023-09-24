@@ -156,7 +156,7 @@ public static class HostRangeHelper
                     break;
                 
                 // example.com
-                case var _ when Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameRegex):
+                case var _ when Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameOrDomainRegex):
                     using (var dnsResolverTask = DNSClientHelper.ResolveAorAaaaAsync(ipHostOrRange, dnsResolveHostnamePreferIPv4))
                     {
                         // Wait for task inside a Parallel.Foreach
@@ -171,7 +171,7 @@ public static class HostRangeHelper
                     break;
                     
                 // example.com/24 or example.com/255.255.255.128
-                case var _ when Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameCidrRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameSubnetmaskRegex):
+                case var _ when Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameOrDomainWithCidrRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameOrDomainWithSubnetmaskRegex):
                     var hostAndSubnet = ipHostOrRange.Split('/');
 
                     // Only support IPv4
