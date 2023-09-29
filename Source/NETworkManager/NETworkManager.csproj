@@ -57,9 +57,9 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="AirspaceFixer" Version="1.0.6" />
-		<PackageReference Include="AWSSDK.EC2" Version="3.7.213.4" />
+		<PackageReference Include="AWSSDK.EC2" Version="3.7.215" />
 		<PackageReference Include="DnsClient" Version="1.7.0" />
-		<PackageReference Include="IPNetwork2" Version="2.6.609" />
+		<PackageReference Include="IPNetwork2" Version="2.6.611" />
 		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.2" />
 		<PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
 		<PackageReference Include="LoadingIndicators.WPF" Version="0.0.1" />
@@ -70,11 +70,11 @@
 		<PackageReference Include="MahApps.Metro.IconPacks.MaterialLight" Version="4.11.0" />
 		<PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="4.11.0" />
 		<PackageReference Include="MahApps.Metro.IconPacks.Octicons" Version="4.11.0" />
-		<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1938.49" />
+		<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2045.28" />
 		<PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.3" />
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-		<PackageReference Include="Microsoft.PowerShell.SDK" Version="7.2.13" />
+		<PackageReference Include="Microsoft.PowerShell.SDK" Version="7.2.14" />
 		<PackageReference Include="nulastudio.NetBeauty" Version="2.1.4-beta.1" />
 		<Reference Include="AxMSTSCLib">
 			<HintPath>$(TargetDir)\lib\AxMSTSCLib.dll</HintPath>
