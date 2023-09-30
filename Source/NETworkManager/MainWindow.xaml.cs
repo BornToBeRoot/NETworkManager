@@ -487,7 +487,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         // Load run commands
         LoadRunCommands();
-        
+
         // Load the profiles
         LoadProfiles();
 
@@ -589,9 +589,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    
+
     private int _selectedRunCommandsSuggestionsIndex;
-    
+
     public int SelectedRunCommandsSuggestionsIndex
     {
         get => _selectedRunCommandsSuggestionsIndex;
@@ -604,7 +604,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    
+
     public ICommand RunCommandHotKey => new RelayCommand(_ => ComboBoxRunCommand.Focus());
 
     public ICommand RunCommandEnterCommand => new RelayCommand(_ => RunCommandEnterAction());
@@ -613,8 +613,20 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     {
         foreach (var x in RunCommands)
         {
-            if (RunCommand.StartsWith(x.Command, StringComparison.OrdinalIgnoreCase))
-                EventSystem.RedirectToApplication(x.Name, RunCommand[x.Command.Length..].Trim());
+            if (x.Type == RunCommandType.Application &&
+                RunCommand.StartsWith(x.Command, StringComparison.OrdinalIgnoreCase))
+            {
+                // Close settings if it is open
+                if (ShowSettingsView)
+                    CloseSettings();
+
+                EventSystem.RedirectToApplication((ApplicationName)Enum.Parse(typeof(ApplicationName), x.Name),
+                    RunCommand[x.Command.Length..].Trim());
+            }
+
+            if (x.Type == RunCommandType.Setting &&
+                RunCommand.StartsWith(x.Command, StringComparison.OrdinalIgnoreCase))
+                EventSystem.RedirectToSettings();
         }
 
         RunCommand = string.Empty;
@@ -634,56 +646,11 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    
+
     private void LoadRunCommands()
     {
         RunCommandsSuggestions = new CollectionViewSource { Source = RunCommands }.View;
         SelectedRunCommandsSuggestionsIndex = -1;
-    }
-
-    private void TextBoxRunCommand_OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-    {
-        ComboBoxRunCommand.Width = 350;
-        ComboBoxRunCommand.IsDropDownOpen = true;
-    }
-
-    private void TextBoxRunCommand_OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-    {
-        if (!ComboBoxRunCommand.IsDropDownOpen)
-            ComboBoxRunCommand.Width = 250;
-        
-        ComboBoxRunCommand.IsDropDownOpen = false;
-    }
-    
-    private void ComboBoxRunCommand_OnDropDownClosed(object sender, EventArgs e)
-    {
-        if(!ComboBoxRunCommand.IsKeyboardFocusWithin)
-            ComboBoxRunCommand.Width = 250;
-    }
-    
-    private void ComboBoxRunCommand_OnPreviewKeyDown(object sender, KeyEventArgs e)
-    {
-        // Handle tab key to autocomplete
-        if (e.Key != Key.Tab || string.IsNullOrEmpty(RunCommand)) 
-            return;
-        
-        e.Handled = true;
-        
-        // Close the drop down
-        ComboBoxRunCommand.IsDropDownOpen = false;
-
-        // Check if the command can handle arguments and add a space
-        if (RunCommands.Any(x => RunCommand.StartsWith(x.Command, StringComparison.OrdinalIgnoreCase) && x.CanHandleArguments))
-        {
-            if (!RunCommand.EndsWith(" "))
-                RunCommand += " ";
-        }
-
-        // Focus the combobox 
-        var cmbTextBox = (System.Windows.Controls.TextBox)ComboBoxRunCommand.Template.FindName("PART_EditableTextBox", ComboBoxRunCommand);
-        
-        cmbTextBox.SelectionStart = RunCommand.Length;
-        cmbTextBox.SelectionLength = 0;
     }
 
     #endregion
