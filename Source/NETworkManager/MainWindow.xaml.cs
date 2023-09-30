@@ -559,7 +559,6 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             }
         }
 
-
         // Unregister HotKeys
         if (_registeredHotKeys.Count > 0)
             UnregisterHotKeys();
@@ -613,20 +612,22 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     {
         foreach (var x in RunCommands)
         {
-            if (x.Type == RunCommandType.Application &&
-                RunCommand.StartsWith(x.Command, StringComparison.OrdinalIgnoreCase))
+            switch (x.Type)
             {
-                // Close settings if it is open
-                if (ShowSettingsView)
-                    CloseSettings();
+                case RunCommandType.Application when RunCommand.Trim().Split(" ")[0].Equals(x.Command, StringComparison.OrdinalIgnoreCase):
+                {
+                    // Close settings if it is open
+                    if (ShowSettingsView)
+                        CloseSettings();
 
-                EventSystem.RedirectToApplication((ApplicationName)Enum.Parse(typeof(ApplicationName), x.Name),
-                    RunCommand[x.Command.Length..].Trim());
+                    EventSystem.RedirectToApplication((ApplicationName)Enum.Parse(typeof(ApplicationName), x.Name),
+                        RunCommand[x.Command.Length..].Trim());
+                    break;
+                }
+                case RunCommandType.Setting when RunCommand.Trim().Split(" ")[0].Equals(x.Command, StringComparison.OrdinalIgnoreCase):
+                    EventSystem.RedirectToSettings();
+                    break;
             }
-
-            if (x.Type == RunCommandType.Setting &&
-                RunCommand.StartsWith(x.Command, StringComparison.OrdinalIgnoreCase))
-                EventSystem.RedirectToSettings();
         }
 
         RunCommand = string.Empty;
