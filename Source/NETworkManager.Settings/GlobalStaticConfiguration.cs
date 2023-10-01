@@ -68,6 +68,8 @@ public static class GlobalStaticConfiguration
     // Update
     public static bool Update_CheckForUpdatesAtStartup => true;
     public static bool Update_CheckForPreReleases => false;
+    // Experimental
+    public static bool Experimental_EnableExperimentalFeatures => false;
 
     // Application: Dashboard
     public static string Dashboard_PublicIPv4Address => "1.1.1.1";

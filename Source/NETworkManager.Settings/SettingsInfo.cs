@@ -484,6 +484,21 @@ public class SettingsInfo : PropertyChangedBase
             SettingsChanged = true;
         }
     }
+    
+    private bool _experimental_EnableExperimentalFeatures = GlobalStaticConfiguration.Experimental_EnableExperimentalFeatures;
+    public bool Experimental_EnableExperimentalFeatures
+    {
+        get => _experimental_EnableExperimentalFeatures;
+        set
+        {
+            if (value == _experimental_EnableExperimentalFeatures)
+                return;
+
+            _experimental_EnableExperimentalFeatures = value;
+            OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
 
     // Profiles    
     private string _profiles_LastSelected;

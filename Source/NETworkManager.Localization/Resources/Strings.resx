@@ -3664,4 +3664,16 @@ Try again in a few seconds.</value>
   <data name="ProfileGroup_Application" xml:space="preserve">
     <value />
   </data>
+  <data name="HelpMessage_ExperimentalFeatures" xml:space="preserve">
+    <value>Enable experimental features to test new functions. These are not yet complete, contain bugs, can crash the application and may change again until release.</value>
+  </data>
+  <data name="ExperimentalFeatures" xml:space="preserve">
+    <value>Experimental features</value>
+  </data>
+  <data name="Experimental" xml:space="preserve">
+    <value>Experimental</value>
+  </data>
+  <data name="Watermark_RunCommand" xml:space="preserve">
+    <value>Run command... (Ctrl+Shift+P)</value>
+  </data>
 </root>

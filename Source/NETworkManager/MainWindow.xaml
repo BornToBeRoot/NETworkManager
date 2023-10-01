@@ -85,7 +85,9 @@
     </mah:MetroWindow.LeftWindowCommands>
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands ShowSeparators="False">
-            <Grid Margin="0,0,10,0">
+            <Grid
+                Visibility="{Binding Source={x:Static settings:SettingsManager.Current}, Path=Experimental_EnableExperimentalFeatures, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
+                Margin="0,0,10,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
@@ -106,7 +108,7 @@
                     ItemsSource="{Binding RunCommandsSuggestions}"
                     Text="{Binding RunCommand}"
                     SelectedIndex="{Binding SelectedRunCommandsSuggestionsIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    mah:TextBoxHelper.Watermark="Run command... (Ctrl+Shift+P)"
+                    mah:TextBoxHelper.Watermark="{x:Static localization:Strings.Watermark_RunCommand}"
                     BorderThickness="0"
                     Background="{DynamicResource MahApps.Brushes.Gray10}"
                     Style="{StaticResource EditableComboBox}">

@@ -3590,6 +3590,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Experimental.
+        /// </summary>
+        public static string Experimental {
+            get {
+                return ResourceManager.GetString("Experimental", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Experimental features.
+        /// </summary>
+        public static string ExperimentalFeatures {
+            get {
+                return ResourceManager.GetString("ExperimentalFeatures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Export.
         /// </summary>
         public static string Export {
@@ -4104,6 +4122,15 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_CustomPublicIPv6AddressAPI {
             get {
                 return ResourceManager.GetString("HelpMessage_CustomPublicIPv6AddressAPI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable experimental features to test new functions. These are not yet complete, contain bugs, can crash the application and may change again until release..
+        /// </summary>
+        public static string HelpMessage_ExperimentalFeatures {
+            get {
+                return ResourceManager.GetString("HelpMessage_ExperimentalFeatures", resourceCulture);
             }
         }
         
@@ -10259,6 +10286,15 @@ namespace NETworkManager.Localization.Resources {
         public static string WarnMessage_MultipleInstances {
             get {
                 return ResourceManager.GetString("WarnMessage_MultipleInstances", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run command... (Ctrl+Shift+P).
+        /// </summary>
+        public static string Watermark_RunCommand {
+            get {
+                return ResourceManager.GetString("Watermark_RunCommand", resourceCulture);
             }
         }
         
