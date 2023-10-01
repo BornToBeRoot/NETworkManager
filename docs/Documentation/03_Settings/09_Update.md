@@ -28,3 +28,14 @@ Check for pre-releases when checking for updates.
 **Type:** `Boolean`
 
 **Default:** `Disabled`
+
+### Experimental features
+
+Enable experimental features that are not yet complete.
+
+**Type:** `Boolean`
+
+**Default:** `Disabled`
+
+{: .note}
+These features may contain bugs, crash the application, or change until release.
