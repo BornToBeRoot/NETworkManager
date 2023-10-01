@@ -143,41 +143,41 @@ public static class DocumentationManager
     }
 
     /// <summary>
-    /// Method to get the <see cref="DocumentationIdentifier"/> from an <see cref="SettingsViewName"/>.
+    /// Method to get the <see cref="DocumentationIdentifier"/> from an <see cref="SettingsName"/>.
     /// </summary>
-    /// <param name="name"><see cref="SettingsViewName"/> from which you want to get the <see cref="DocumentationIdentifier"/>.</param>
+    /// <param name="name"><see cref="SettingsName"/> from which you want to get the <see cref="DocumentationIdentifier"/>.</param>
     /// <returns><see cref="DocumentationIdentifier"/> of the application or settings page.</returns>
-    public static DocumentationIdentifier GetIdentifierBySettingsName(SettingsViewName name)
+    public static DocumentationIdentifier GetIdentifierBySettingsName(SettingsName name)
     {
         return name switch
         {
-            SettingsViewName.General => DocumentationIdentifier.SettingsGeneral,
-            SettingsViewName.Window => DocumentationIdentifier.SettingsWindow,
-            SettingsViewName.Appearance => DocumentationIdentifier.SettingsAppearance,
-            SettingsViewName.Language => DocumentationIdentifier.SettingsLanguage,
-            SettingsViewName.Network => DocumentationIdentifier.SettingsNetwork,
-            SettingsViewName.Status => DocumentationIdentifier.SettingsStatus,
-            SettingsViewName.HotKeys => DocumentationIdentifier.SettingsHotKeys,
-            SettingsViewName.Autostart => DocumentationIdentifier.SettingsAutostart,
-            SettingsViewName.Update => DocumentationIdentifier.SettingsUpdate,
-            SettingsViewName.Profiles => DocumentationIdentifier.SettingsProfiles,
-            SettingsViewName.Settings => DocumentationIdentifier.SettingsSettings,
-            SettingsViewName.Dashboard => GetIdentifierByApplicationName(ApplicationName.Dashboard),
-            SettingsViewName.IPScanner => GetIdentifierByApplicationName(ApplicationName.IPScanner),
-            SettingsViewName.PortScanner => GetIdentifierByApplicationName(ApplicationName.PortScanner),
-            SettingsViewName.PingMonitor => GetIdentifierByApplicationName(ApplicationName.PingMonitor),
-            SettingsViewName.Traceroute => GetIdentifierByApplicationName(ApplicationName.Traceroute),
-            SettingsViewName.DNSLookup => GetIdentifierByApplicationName(ApplicationName.DNSLookup),
-            SettingsViewName.RemoteDesktop => GetIdentifierByApplicationName(ApplicationName.RemoteDesktop),
-            SettingsViewName.PowerShell => GetIdentifierByApplicationName(ApplicationName.PowerShell),
-            SettingsViewName.PuTTY => GetIdentifierByApplicationName(ApplicationName.PuTTY),
-            SettingsViewName.AWSSessionManager => GetIdentifierByApplicationName(ApplicationName.AWSSessionManager),
-            SettingsViewName.TigerVNC => GetIdentifierByApplicationName(ApplicationName.TigerVNC),
-            SettingsViewName.SNMP => GetIdentifierByApplicationName(ApplicationName.SNMP),
-            SettingsViewName.SNTPLookup => GetIdentifierByApplicationName(ApplicationName.SNTPLookup),
-            SettingsViewName.WakeOnLAN => GetIdentifierByApplicationName(ApplicationName.WakeOnLAN),
-            //SettingsViewName.Whois => GetIdentifierByApplicationName(ApplicationName.Whois),
-            SettingsViewName.BitCalculator => GetIdentifierByApplicationName(ApplicationName.BitCalculator),
+            SettingsName.General => DocumentationIdentifier.SettingsGeneral,
+            SettingsName.Window => DocumentationIdentifier.SettingsWindow,
+            SettingsName.Appearance => DocumentationIdentifier.SettingsAppearance,
+            SettingsName.Language => DocumentationIdentifier.SettingsLanguage,
+            SettingsName.Network => DocumentationIdentifier.SettingsNetwork,
+            SettingsName.Status => DocumentationIdentifier.SettingsStatus,
+            SettingsName.HotKeys => DocumentationIdentifier.SettingsHotKeys,
+            SettingsName.Autostart => DocumentationIdentifier.SettingsAutostart,
+            SettingsName.Update => DocumentationIdentifier.SettingsUpdate,
+            SettingsName.Profiles => DocumentationIdentifier.SettingsProfiles,
+            SettingsName.Settings => DocumentationIdentifier.SettingsSettings,
+            SettingsName.Dashboard => GetIdentifierByApplicationName(ApplicationName.Dashboard),
+            SettingsName.IPScanner => GetIdentifierByApplicationName(ApplicationName.IPScanner),
+            SettingsName.PortScanner => GetIdentifierByApplicationName(ApplicationName.PortScanner),
+            SettingsName.PingMonitor => GetIdentifierByApplicationName(ApplicationName.PingMonitor),
+            SettingsName.Traceroute => GetIdentifierByApplicationName(ApplicationName.Traceroute),
+            SettingsName.DNSLookup => GetIdentifierByApplicationName(ApplicationName.DNSLookup),
+            SettingsName.RemoteDesktop => GetIdentifierByApplicationName(ApplicationName.RemoteDesktop),
+            SettingsName.PowerShell => GetIdentifierByApplicationName(ApplicationName.PowerShell),
+            SettingsName.PuTTY => GetIdentifierByApplicationName(ApplicationName.PuTTY),
+            SettingsName.AWSSessionManager => GetIdentifierByApplicationName(ApplicationName.AWSSessionManager),
+            SettingsName.TigerVNC => GetIdentifierByApplicationName(ApplicationName.TigerVNC),
+            SettingsName.SNMP => GetIdentifierByApplicationName(ApplicationName.SNMP),
+            SettingsName.SNTPLookup => GetIdentifierByApplicationName(ApplicationName.SNTPLookup),
+            SettingsName.WakeOnLAN => GetIdentifierByApplicationName(ApplicationName.WakeOnLAN),
+            //SettingsName.Whois => GetIdentifierByApplicationName(ApplicationName.Whois),
+            SettingsName.BitCalculator => GetIdentifierByApplicationName(ApplicationName.BitCalculator),
             _ => DocumentationIdentifier.Default,
         };
     }

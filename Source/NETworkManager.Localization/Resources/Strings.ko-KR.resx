@@ -2619,43 +2619,43 @@ $$hostname$$	--&gt;	호스트이름</value>
   <data name="Accen_Steel" xml:space="preserve">
     <value>철색</value>
   </data>
-  <data name="ProfileViewName_General" xml:space="preserve">
+  <data name="ProfileName_General" xml:space="preserve">
     <value>일반</value>
   </data>
-  <data name="SettingsViewGroup_Applications" xml:space="preserve">
+  <data name="SettingsGroup_Application" xml:space="preserve">
     <value>응용 프로그램</value>
   </data>
-  <data name="SettingsViewGroup_General" xml:space="preserve">
+  <data name="SettingsGroup_General" xml:space="preserve">
     <value>일반</value>
   </data>
-  <data name="SettingsViewName_Appearance" xml:space="preserve">
+  <data name="SettingsName_Appearance" xml:space="preserve">
     <value>모양</value>
   </data>
-  <data name="SettingsViewName_Autostart" xml:space="preserve">
+  <data name="SettingsName_Autostart" xml:space="preserve">
     <value>자동 시작</value>
   </data>
-  <data name="SettingsViewName_General" xml:space="preserve">
+  <data name="SettingsName_General" xml:space="preserve">
     <value>일반</value>
   </data>
-  <data name="SettingsViewName_HotKeys" xml:space="preserve">
+  <data name="SettingsName_HotKeys" xml:space="preserve">
     <value>단축키</value>
   </data>
-  <data name="SettingsViewName_Language" xml:space="preserve">
+  <data name="SettingsName_Language" xml:space="preserve">
     <value>언어</value>
   </data>
-  <data name="SettingsViewName_Profiles" xml:space="preserve">
+  <data name="SettingsName_Profiles" xml:space="preserve">
     <value>프로필</value>
   </data>
-  <data name="SettingsViewName_Settings" xml:space="preserve">
+  <data name="SettingsName_Settings" xml:space="preserve">
     <value>설정</value>
   </data>
-  <data name="SettingsViewName_Status" xml:space="preserve">
+  <data name="SettingsName_Status" xml:space="preserve">
     <value>상태</value>
   </data>
-  <data name="SettingsViewName_Update" xml:space="preserve">
+  <data name="SettingsName_Update" xml:space="preserve">
     <value>업데이트</value>
   </data>
-  <data name="SettingsViewName_Window" xml:space="preserve">
+  <data name="SettingsName_Window" xml:space="preserve">
     <value>창</value>
   </data>
   <data name="EnableLog" xml:space="preserve">
@@ -3178,7 +3178,7 @@ If the option is disabled again, the values are no longer modified. However, the
   <data name="EnterANumberAndSelectAUnitToCalculateTheUnits" xml:space="preserve">
     <value>Enter a number and select a unit to calculate the units...</value>
   </data>
-  <data name="SettingsViewName_Network" xml:space="preserve">
+  <data name="SettingsName_Network" xml:space="preserve">
     <value>Network</value>
   </data>
   <data name="Proxy" xml:space="preserve">

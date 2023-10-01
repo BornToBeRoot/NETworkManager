@@ -28,7 +28,8 @@
         <converters:RemoteDesktopKeyboardHookModeToStringConverter x:Key="RemoteDesktopKeyboardHookModeToStringConverter" />
         <converters:RemoteDesktopGatewayServerLogonMethodToStringConverter x:Key="RemoteDesktopGatewayServerLogonMethodToStringConverter" />
         <converters:RemoteDesktopNetworkConnectionTypeToStringConverter x:Key="RemoteDesktopNetworkConnectionTypeToStringConverter" />
-        <converters:ProfileViewNameToTranslatedStringConverter x:Key="ProfileViewNameToTranslatedStringConverter" />
+        <converters:ProfileGroupToTranslatedStringConverter x:Key="ProfileGroupToTranslatedStringConverter" />
+        <converters:ProfileNameToTranslatedStringConverter x:Key="ProfileNameToTranslatedStringConverter" />
         <converters:PuTTYLogModeToStringConverter x:Key="PuTTYLogModeToStringConverter" />
         <converters:StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter x:Key="StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter" />
     </UserControl.Resources>
@@ -78,7 +79,7 @@
                                             </Style>
                                         </Rectangle.Style>
                                     </Rectangle>
-                                    <TextBlock Grid.Column="1" Text="{Binding (profiles:ProfileViewInfo.Name), Converter={StaticResource ProfileViewNameToTranslatedStringConverter}}" >
+                                    <TextBlock Grid.Column="1" Text="{Binding (profiles:ProfileViewInfo.Name), Converter={StaticResource ProfileNameToTranslatedStringConverter}}" >
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
@@ -107,7 +108,7 @@
                                                     <!-- General -->
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.General}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.General}" />
                                                             <Condition Binding="{Binding ElementName=TextBoxName, Path=(Validation.HasError)}" Value="True" />
                                                         </MultiDataTrigger.Conditions>
                                                         <MultiDataTrigger.Setters>
@@ -116,7 +117,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.General}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.General}" />
                                                             <Condition Binding="{Binding ElementName=TextBoxHost, Path=(Validation.HasError)}" Value="True" />
                                                         </MultiDataTrigger.Conditions>
                                                         <MultiDataTrigger.Setters>
@@ -125,7 +126,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.General}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.General}" />
                                                             <Condition Binding="{Binding ElementName=ComboBoxGroup, Path=(Validation.HasError)}" Value="True" />
                                                         </MultiDataTrigger.Conditions>
                                                         <MultiDataTrigger.Setters>
@@ -135,7 +136,7 @@
                                                     <!-- Network Interface -->
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.NetworkInterface}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.NetworkInterface}" />
                                                             <Condition Binding="{Binding Data.NetworkInterface_Enabled, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding Data.NetworkInterface_EnableStaticIPAddress, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding ElementName=TextBoxNetworkInterfaceIPAddress, Path=(Validation.HasError)}" Value="True" />
@@ -146,7 +147,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.NetworkInterface}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.NetworkInterface}" />
                                                             <Condition Binding="{Binding Data.NetworkInterface_Enabled, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding Data.NetworkInterface_EnableStaticIPAddress, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding ElementName=ComboBoxNetworkInterfaceSubnetmask, Path=(Validation.HasError)}" Value="True" />
@@ -157,7 +158,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.NetworkInterface}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.NetworkInterface}" />
                                                             <Condition Binding="{Binding Data.NetworkInterface_Enabled, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding Data.NetworkInterface_EnableStaticIPAddress, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding ElementName=TextBoxNetworkInterfaceGateway, Path=(Validation.HasError)}" Value="True" />
@@ -168,7 +169,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.NetworkInterface}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.NetworkInterface}" />
                                                             <Condition Binding="{Binding Data.NetworkInterface_Enabled, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding Data.NetworkInterface_EnableStaticDNS, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding ElementName=TextBoxNetworkInterfacePrimaryDNSServer, Path=(Validation.HasError)}" Value="True" />
@@ -179,7 +180,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.NetworkInterface}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.NetworkInterface}" />
                                                             <Condition Binding="{Binding Data.NetworkInterface_Enabled, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding Data.NetworkInterface_EnableStaticDNS, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding ElementName=TextBoxNetworkInterfaceSecondaryDNSServer, Path=(Validation.HasError)}" Value="True" />
@@ -191,7 +192,7 @@
                                                     <!-- IP Scanner -->
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.IPScanner}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.IPScanner}" />
                                                             <Condition Binding="{Binding Data.IPScanner_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.IPScanner_InheritHost, Source={StaticResource BindingProxy}}" Value="False"/>
                                                             <Condition Binding="{Binding ElementName=TextBoxIPScannerIPRange, Path=(Validation.HasError)}" Value="True" />
@@ -203,7 +204,7 @@
                                                     <!-- Port Scanner -->
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PortScanner}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.PortScanner}" />
                                                             <Condition Binding="{Binding Data.PortScanner_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.PortScanner_InheritHost, Source={StaticResource BindingProxy}}" Value="False"/>
                                                             <Condition Binding="{Binding ElementName=TextBoxPortScannerHost, Path=(Validation.HasError)}" Value="True" />
@@ -214,7 +215,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PortScanner}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.PortScanner}" />
                                                             <Condition Binding="{Binding Data.PortScanner_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding ElementName=TextBoxPortScannerPorts, Path=(Validation.HasError)}" Value="True" />
                                                         </MultiDataTrigger.Conditions>
@@ -225,7 +226,7 @@
                                                     <!-- Ping Monitor -->
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PingMonitor}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.PingMonitor}" />
                                                             <Condition Binding="{Binding Data.PingMonitor_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.PingMonitor_InheritHost, Source={StaticResource BindingProxy}}" Value="False"/>
                                                             <Condition Binding="{Binding ElementName=TextBoxPingMonitorHost, Path=(Validation.HasError)}" Value="True" />
@@ -237,7 +238,7 @@
                                                     <!-- Traceroute -->
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.Traceroute}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.Traceroute}" />
                                                             <Condition Binding="{Binding Data.Traceroute_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.Traceroute_InheritHost, Source={StaticResource BindingProxy}}" Value="False"/>
                                                             <Condition Binding="{Binding ElementName=TextBoxTracerouteHost, Path=(Validation.HasError)}" Value="True" />
@@ -249,7 +250,7 @@
                                                     <!-- DNS Lookup -->
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.DNSLookup}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.DNSLookup}" />
                                                             <Condition Binding="{Binding Data.DNSLookup_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.DNSLookup_InheritHost, Source={StaticResource BindingProxy}}" Value="False"/>
                                                             <Condition Binding="{Binding ElementName=TextBoxDNSLookupHost, Path=(Validation.HasError)}" Value="True" />
@@ -261,7 +262,7 @@
                                                     <!-- Remote Desktop -->
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.RemoteDesktop}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.RemoteDesktop}" />
                                                             <Condition Binding="{Binding Data.RemoteDesktop_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.RemoteDesktop_InheritHost, Source={StaticResource BindingProxy}}" Value="False"/>
                                                             <Condition Binding="{Binding ElementName=TextBoxRemoteDesktopHost, Path=(Validation.HasError)}" Value="True" />
@@ -272,7 +273,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.RemoteDesktop}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.RemoteDesktop}" />
                                                             <Condition Binding="{Binding Data.RemoteDesktop_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.RemoteDesktop_UseCredentials, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding ElementName=TextBoxRemoteDesktopUsername, Path=(Validation.HasError)}" Value="True" />
@@ -283,7 +284,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.RemoteDesktop}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.RemoteDesktop}" />
                                                             <Condition Binding="{Binding Data.RemoteDesktop_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.RemoteDesktop_UseCredentials, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding ElementName=TextBoxRemoteDesktopDomain, Path=(Validation.HasError)}" Value="True" />
@@ -294,7 +295,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.RemoteDesktop}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.RemoteDesktop}" />
                                                             <Condition Binding="{Binding Data.RemoteDesktop_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.RemoteDesktop_UseCredentials, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding Data.RemoteDesktop_IsPasswordEmpty, Source={StaticResource BindingProxy}}" Value="True" />
@@ -305,7 +306,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.RemoteDesktop}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.RemoteDesktop}" />
                                                             <Condition Binding="{Binding Data.RemoteDesktop_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.RemoteDesktop_OverridePort, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding ElementName=TextBoxRemoteDesktopPort, Path=(Validation.HasError)}" Value="True" />
@@ -316,7 +317,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.RemoteDesktop}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.RemoteDesktop}" />
                                                             <Condition Binding="{Binding Data.RemoteDesktop_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.RemoteDesktop_OverrideGatewayServer, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.RemoteDesktop_EnableGatewayServer, Source={StaticResource BindingProxy}}" Value="True"/>
@@ -328,7 +329,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.RemoteDesktop}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.RemoteDesktop}" />
                                                             <Condition Binding="{Binding Data.RemoteDesktop_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.RemoteDesktop_OverrideGatewayServer, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.RemoteDesktop_EnableGatewayServer, Source={StaticResource BindingProxy}}" Value="True"/>
@@ -342,7 +343,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.RemoteDesktop}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.RemoteDesktop}" />
                                                             <Condition Binding="{Binding Data.RemoteDesktop_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.RemoteDesktop_OverrideGatewayServer, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.RemoteDesktop_EnableGatewayServer, Source={StaticResource BindingProxy}}" Value="True"/>
@@ -356,7 +357,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.RemoteDesktop}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.RemoteDesktop}" />
                                                             <Condition Binding="{Binding Data.RemoteDesktop_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.RemoteDesktop_OverrideGatewayServer, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.RemoteDesktop_EnableGatewayServer, Source={StaticResource BindingProxy}}" Value="True"/>
@@ -371,7 +372,7 @@
                                                     <!-- PowerShell -->
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PowerShell}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.PowerShell}" />
                                                             <Condition Binding="{Binding Data.PowerShell_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.PowerShell_EnableRemoteConsole, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.PowerShell_InheritHost, Source={StaticResource BindingProxy}}" Value="False"/>
@@ -384,7 +385,7 @@
                                                     <!-- PuTTY -->
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PuTTY}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.PuTTY}" />
                                                             <Condition Binding="{Binding Data.PuTTY_Enabled, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding Data.PuTTY_InheritHost, Source={StaticResource BindingProxy}}" Value="False" />
                                                             <Condition Binding="{Binding Data.PuTTY_UseSerial, Source={StaticResource BindingProxy}}" Value="False" />
@@ -396,7 +397,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PuTTY}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.PuTTY}" />
                                                             <Condition Binding="{Binding Data.PuTTY_Enabled, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding Data.PuTTY_UseSerial, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding ElementName=TextBoxPuTTYSerialLine, Path=(Validation.HasError)}" Value="True" />
@@ -407,7 +408,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PuTTY}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.PuTTY}" />
                                                             <Condition Binding="{Binding Data.PuTTY_Enabled, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding Data.PuTTY_OverridePortOrBaud, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding Data.PuTTY_UseSerial, Source={StaticResource BindingProxy}}" Value="False" />
@@ -419,7 +420,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PuTTY}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.PuTTY}" />
                                                             <Condition Binding="{Binding Data.PuTTY_Enabled, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding Data.PuTTY_OverridePortOrBaud, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding Data.PuTTY_UseSerial, Source={StaticResource BindingProxy}}" Value="True" />
@@ -431,7 +432,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PuTTY}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.PuTTY}" />
                                                             <Condition Binding="{Binding Data.PuTTY_Enabled, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding Data.PuTTY_OverrideUsername, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding ElementName=TextBoxPuTTYUsername, Path=(Validation.HasError)}" Value="True" />
@@ -442,7 +443,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PuTTY}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.PuTTY}" />
                                                             <Condition Binding="{Binding Data.PuTTY_Enabled, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding Data.PuTTY_OverridePrivateKeyFile, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding ElementName=TextBoxPuTTYPrivateKeyFile, Path=(Validation.HasError)}" Value="True" />
@@ -453,7 +454,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PuTTY}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.PuTTY}" />
                                                             <Condition Binding="{Binding Data.PuTTY_Enabled, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding Data.PuTTY_OverrideLogPath, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding ElementName=TextBoxPuTTYLogPath, Path=(Validation.HasError)}" Value="True" />
@@ -464,7 +465,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PuTTY}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.PuTTY}" />
                                                             <Condition Binding="{Binding Data.PuTTY_Enabled, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding Data.PuTTY_OverrideLogFileName, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding ElementName=TextBoxPuTTYLogFileName, Path=(Validation.HasError)}" Value="True" />
@@ -476,7 +477,7 @@
                                                     <!-- AWS Session Manager -->
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.AWSSessionManager}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.AWSSessionManager}" />
                                                             <Condition Binding="{Binding Data.AWSSessionManager_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding ElementName=TextBoxAWSSessionManagerInstanceID, Path=(Validation.HasError)}" Value="True" />
                                                         </MultiDataTrigger.Conditions>
@@ -486,7 +487,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.AWSSessionManager}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.AWSSessionManager}" />
                                                             <Condition Binding="{Binding Data.AWSSessionManager_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.AWSSessionManager_OverrideProfile, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding ElementName=TextBoxAWSSessionManagerProfile, Path=(Validation.HasError)}" Value="True" />
@@ -497,7 +498,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.AWSSessionManager}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.AWSSessionManager}" />
                                                             <Condition Binding="{Binding Data.AWSSessionManager_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.AWSSessionManager_OverrideRegion, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding ElementName=TextBoxAWSSessionManagerRegion, Path=(Validation.HasError)}" Value="True" />
@@ -509,7 +510,7 @@
                                                     <!-- TigerVNC -->
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.TigerVNC}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.TigerVNC}" />
                                                             <Condition Binding="{Binding Data.TigerVNC_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.TigerVNC_InheritHost, Source={StaticResource BindingProxy}}" Value="False"/>
                                                             <Condition Binding="{Binding ElementName=TextBoxTigerVNCHost, Path=(Validation.HasError)}" Value="True" />
@@ -520,7 +521,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.TigerVNC}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.TigerVNC}" />
                                                             <Condition Binding="{Binding Data.TigerVNC_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.TigerVNC_OverridePort, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding ElementName=TextBoxTigerVNCPort, Path=(Validation.HasError)}" Value="True" />
@@ -532,7 +533,7 @@
                                                     <!-- WebConsole -->
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.WebConsole}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.WebConsole}" />
                                                             <Condition Binding="{Binding Data.WebConsole_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding ElementName=TextBoxWebConsoleUrl, Path=(Validation.HasError)}" Value="True" />
                                                         </MultiDataTrigger.Conditions>
@@ -543,7 +544,7 @@
                                                     <!-- SNMP -->
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.SNMP}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.SNMP}" />
                                                             <Condition Binding="{Binding Data.SNMP_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.SNMP_InheritHost, Source={StaticResource BindingProxy}}" Value="False"/>
                                                             <Condition Binding="{Binding ElementName=TextBoxSNMPHost, Path=(Validation.HasError)}" Value="True" />
@@ -554,7 +555,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.SNMP}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.SNMP}" />
                                                             <Condition Binding="{Binding Data.SNMP_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.SNMP_OverrideOIDAndMode, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding ElementName=TextBoxSNMPOID, Path=(Validation.HasError)}" Value="True" />
@@ -565,7 +566,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.SNMP}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.SNMP}" />
                                                             <Condition Binding="{Binding Data.SNMP_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.SNMP_OverrideVersionAndAuth, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding Data.SNMP_Version, Source={StaticResource BindingProxy}}" Value="V1" />
@@ -577,7 +578,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.SNMP}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.SNMP}" />
                                                             <Condition Binding="{Binding Data.SNMP_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.SNMP_OverrideVersionAndAuth, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding Data.SNMP_Version, Source={StaticResource BindingProxy}}" Value="V2C" />
@@ -589,7 +590,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.SNMP}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.SNMP}" />
                                                             <Condition Binding="{Binding Data.SNMP_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.SNMP_OverrideVersionAndAuth, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.SNMP_Version, Source={StaticResource BindingProxy}}" Value="V3" />
@@ -601,7 +602,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.SNMP}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.SNMP}" />
                                                             <Condition Binding="{Binding Data.SNMP_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.SNMP_OverrideVersionAndAuth, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding Data.SNMP_Version, Source={StaticResource BindingProxy}}" Value="V3" />
@@ -614,7 +615,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.SNMP}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.SNMP}" />
                                                             <Condition Binding="{Binding Data.SNMP_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.SNMP_OverrideVersionAndAuth, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding Data.SNMP_Version, Source={StaticResource BindingProxy}}" Value="V3" />
@@ -627,7 +628,7 @@
                                                     </MultiDataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.SNMP}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.SNMP}" />
                                                             <Condition Binding="{Binding Data.SNMP_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.SNMP_OverrideVersionAndAuth, Source={StaticResource BindingProxy}}" Value="True" />
                                                             <Condition Binding="{Binding Data.SNMP_Version, Source={StaticResource BindingProxy}}" Value="V3" />
@@ -641,7 +642,7 @@
                                                     <!-- Wake on LAN -->
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.WakeOnLAN}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.WakeOnLAN}" />
                                                             <Condition Binding="{Binding Data.WakeOnLAN_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding ElementName=TextBoxWakeOnLANMACAddress, Path=(Validation.HasError)}" Value="True" />
                                                         </MultiDataTrigger.Conditions>
@@ -652,7 +653,7 @@
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
                                                             <Condition Binding="{Binding Data.WakeOnLAN_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.WakeOnLAN}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.WakeOnLAN}" />
                                                             <Condition Binding="{Binding ElementName=TextBoxWakeOnLANBroadcast, Path=(Validation.HasError)}" Value="True" />
                                                         </MultiDataTrigger.Conditions>
                                                         <MultiDataTrigger.Setters>
@@ -662,7 +663,7 @@
                                                     <!-- Whois -->
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.Whois}" />
+                                                            <Condition Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.Whois}" />
                                                             <Condition Binding="{Binding Data.Whois_Enabled, Source={StaticResource BindingProxy}}" Value="True"/>
                                                             <Condition Binding="{Binding Data.Whois_InheritHost, Source={StaticResource BindingProxy}}" Value="False"/>
                                                             <Condition Binding="{Binding ElementName=TextBoxWhoisDomain, Path=(Validation.HasError)}" Value="True" />
@@ -679,52 +680,52 @@
                                         <CheckBox.Style>
                                             <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource DefaultCheckBox}">
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.General}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.General}">
                                                         <Setter Property="Visibility" Value="Hidden" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.NetworkInterface}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.NetworkInterface}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.NetworkInterface_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.IPScanner}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.IPScanner}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.IPScanner_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PortScanner}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.PortScanner}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.PortScanner_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PingMonitor}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.PingMonitor}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.PingMonitor_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.Traceroute}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.Traceroute}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.Traceroute_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.DNSLookup}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.DNSLookup}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.DNSLookup_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.RemoteDesktop}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.RemoteDesktop}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.RemoteDesktop_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PowerShell}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.PowerShell}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.PowerShell_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PuTTY}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.PuTTY}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.PuTTY_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.AWSSessionManager}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.AWSSessionManager}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.AWSSessionManager_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.TigerVNC}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.TigerVNC}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.TigerVNC_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.WebConsole}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.WebConsole}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.WebConsole_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.SNMP}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.SNMP}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.SNMP_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.WakeOnLAN}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.WakeOnLAN}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.WakeOnLAN_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.Whois}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileName.Whois}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.Whois_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
                                                 </Style.Triggers>

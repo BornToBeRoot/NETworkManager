@@ -1,4 +1,4 @@
-﻿using NETworkManager.Settings;
+﻿using NETworkManager.Profiles;
 using System;
 using System.Globalization;
 using System.Windows.Data;
@@ -7,21 +7,23 @@ using NETworkManager.Localization;
 namespace NETworkManager.Converters;
 
 /// <summary>
-/// Convert <see cref="SettingsViewName"/> to translated <see cref="string"/> or wise versa.
+/// Convert <see cref="ProfileName"/> to translated <see cref="string"/> or wise versa.
 /// </summary>
-public sealed class SettingsViewNameToTranslatedStringConverter : IValueConverter
+public sealed class ProfileNameToTranslatedStringConverter : IValueConverter
 {
     /// <summary>
-    /// Convert <see cref="SettingsViewName"/> to translated <see cref="string"/>. 
+    /// Convert <see cref="ProfileName"/> to translated <see cref="string"/>. 
     /// </summary>
-    /// <param name="value">Object from type <see cref="SettingsViewName"/>.</param>
+    /// <param name="value">Object from type <see cref="ProfileName"/>.</param>
     /// <param name="targetType"></param>
     /// <param name="parameter"></param>
     /// <param name="culture"></param>
-    /// <returns>Translated <see cref="SettingsViewName"/>.</returns>
+    /// <returns>Translated <see cref="ProfileName"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value is not SettingsViewName name ? "-/-" : ResourceTranslator.Translate(ResourceIdentifier.SettingsViewName, name);
+        return value is not ProfileName name
+            ? "-/-"
+            : ResourceTranslator.Translate(new [] {ResourceIdentifier.ProfileName , ResourceIdentifier.ApplicationName}, name);
     }
     
     /// <summary>

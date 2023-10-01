@@ -5,18 +5,18 @@ namespace NETworkManager.Settings;
 
 public class SettingsViewInfo
 {
-    public SettingsViewName Name { get; set; }
+    public SettingsName Name { get; set; }
     public Canvas Icon { get; set; }
-    public SettingsViewGroup Group { get; set; }
+    public SettingsGroup Group { get; set; }
 
-    public SettingsViewInfo(SettingsViewName name, Canvas icon, SettingsViewGroup group)
+    public SettingsViewInfo(SettingsName name, Canvas icon, SettingsGroup group)
     {
         Name = name;
         Icon = icon;
         Group = group;
     }
 
-    public SettingsViewInfo(SettingsViewName name, UIElement uiElement, SettingsViewGroup group)
+    public SettingsViewInfo(SettingsName name, UIElement uiElement, SettingsGroup group)
     {
         Name = name;
         var canvas = new Canvas();

@@ -1,6 +1,6 @@
 ﻿namespace NETworkManager.Profiles;
 
-public enum ProfileViewName
+public enum ProfileName
 {
     General,
     NetworkInterface,

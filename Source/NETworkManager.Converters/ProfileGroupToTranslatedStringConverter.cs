@@ -7,23 +7,23 @@ using NETworkManager.Localization;
 namespace NETworkManager.Converters;
 
 /// <summary>
-/// Convert <see cref="ProfileViewName"/> to translated <see cref="string"/> or wise versa.
+/// Convert <see cref="GroupViewName"/> to translated <see cref="string"/> or wise versa.
 /// </summary>
-public sealed class ProfileViewNameToTranslatedStringConverter : IValueConverter
+public sealed class ProfileGroupToTranslatedStringConverter : IValueConverter
 {
     /// <summary>
-    /// Convert <see cref="ProfileViewName"/> to translated <see cref="string"/>. 
+    /// Convert <see cref="GroupViewName"/> to translated <see cref="string"/>. 
     /// </summary>
-    /// <param name="value">Object from type <see cref="ProfileViewName"/>.</param>
+    /// <param name="value">Object from type <see cref="GroupViewName"/>.</param>
     /// <param name="targetType"></param>
     /// <param name="parameter"></param>
     /// <param name="culture"></param>
-    /// <returns>Translated <see cref="ProfileViewName"/>.</returns>
+    /// <returns>Translated <see cref="GroupViewName"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value is not ProfileViewName name
+        return value is not GroupViewName name
             ? "-/-"
-            : ResourceTranslator.Translate(ResourceIdentifier.ProfileViewName, name);
+            : ResourceTranslator.Translate(ResourceIdentifier.ProfileGroup, name);
     }
     
     /// <summary>

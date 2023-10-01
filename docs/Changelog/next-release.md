@@ -74,12 +74,15 @@ New Feature
   - Don't show duplicate entries [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
 - Profiles
   - Prevent the application from crashing if a profile file cannot be loaded (profile management is then blocked) [#2464](https://github.com/BornToBeRoot/NETworkManager/pull/2464){:target="\_blank"}
+  - Application name not translated [#2502](https://github.com/BornToBeRoot/NETworkManager/pull/2502){:target="\_blank"}
+- Settings
+  - Application name not translated [#2502](https://github.com/BornToBeRoot/NETworkManager/pull/2502){:target="\_blank"}
 - Allow hostnames and domains with `.` at the end / improved validation for several tools [#2502](https://github.com/BornToBeRoot/NETworkManager/pull/2502){:target="\_blank"}
 - Fix some focus issues when the enter key is pressed [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
 - PowerShell window is hidden again (e.g. configure network interface, add/remove arp entry, etc.) [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
 
 ## Other
 
-- Code cleanup & Refactoring [#2388](https://github.com/BornToBeRoot/NETworkManager/pull/2388){:target="\_blank"} [#2392](https://github.com/BornToBeRoot/NETworkManager/pull/2392){:target="\_blank"} [#2477](https://github.com/BornToBeRoot/NETworkManager/pull/2477){:target="\_blank"} [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
+- Code cleanup & Refactoring [#2388](https://github.com/BornToBeRoot/NETworkManager/pull/2388){:target="\_blank"} [#2392](https://github.com/BornToBeRoot/NETworkManager/pull/2392){:target="\_blank"} [#2477](https://github.com/BornToBeRoot/NETworkManager/pull/2477){:target="\_blank"} [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"} [#2502](https://github.com/BornToBeRoot/NETworkManager/pull/2502){:target="\_blank"}
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="\_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="\_blank"}

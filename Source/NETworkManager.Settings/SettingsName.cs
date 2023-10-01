@@ -1,6 +1,6 @@
 ﻿namespace NETworkManager.Settings;
 
-public enum SettingsViewName
+public enum SettingsName
 {
     General,
     Window,

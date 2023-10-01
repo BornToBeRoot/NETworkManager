@@ -2619,43 +2619,43 @@ $$hostname$$	--&gt;	Nombre del host</value>
   <data name="Accen_Steel" xml:space="preserve">
     <value>Acero</value>
   </data>
-  <data name="ProfileViewName_General" xml:space="preserve">
+  <data name="ProfileName_General" xml:space="preserve">
     <value>General</value>
   </data>
-  <data name="SettingsViewGroup_Applications" xml:space="preserve">
+  <data name="SettingsGroup_Application" xml:space="preserve">
     <value>Aplicaciones</value>
   </data>
-  <data name="SettingsViewGroup_General" xml:space="preserve">
+  <data name="SettingsGroup_General" xml:space="preserve">
     <value>General</value>
   </data>
-  <data name="SettingsViewName_Appearance" xml:space="preserve">
+  <data name="SettingsName_Appearance" xml:space="preserve">
     <value>Apariencia</value>
   </data>
-  <data name="SettingsViewName_Autostart" xml:space="preserve">
+  <data name="SettingsName_Autostart" xml:space="preserve">
     <value>Inicio automático</value>
   </data>
-  <data name="SettingsViewName_General" xml:space="preserve">
+  <data name="SettingsName_General" xml:space="preserve">
     <value>General</value>
   </data>
-  <data name="SettingsViewName_HotKeys" xml:space="preserve">
+  <data name="SettingsName_HotKeys" xml:space="preserve">
     <value>Atajos de teclado</value>
   </data>
-  <data name="SettingsViewName_Language" xml:space="preserve">
+  <data name="SettingsName_Language" xml:space="preserve">
     <value>Idioma</value>
   </data>
-  <data name="SettingsViewName_Profiles" xml:space="preserve">
+  <data name="SettingsName_Profiles" xml:space="preserve">
     <value>Perfiles</value>
   </data>
-  <data name="SettingsViewName_Settings" xml:space="preserve">
+  <data name="SettingsName_Settings" xml:space="preserve">
     <value>Configuración</value>
   </data>
-  <data name="SettingsViewName_Status" xml:space="preserve">
+  <data name="SettingsName_Status" xml:space="preserve">
     <value>Estado</value>
   </data>
-  <data name="SettingsViewName_Update" xml:space="preserve">
+  <data name="SettingsName_Update" xml:space="preserve">
     <value>Actualizar</value>
   </data>
-  <data name="SettingsViewName_Window" xml:space="preserve">
+  <data name="SettingsName_Window" xml:space="preserve">
     <value>Ventana</value>
   </data>
   <data name="EnableLog" xml:space="preserve">
@@ -3178,7 +3178,7 @@ If the option is disabled again, the values are no longer modified. However, the
   <data name="EnterANumberAndSelectAUnitToCalculateTheUnits" xml:space="preserve">
     <value>Enter a number and select a unit to calculate the units...</value>
   </data>
-  <data name="SettingsViewName_Network" xml:space="preserve">
+  <data name="SettingsName_Network" xml:space="preserve">
     <value>Red</value>
   </data>
   <data name="Proxy" xml:space="preserve">

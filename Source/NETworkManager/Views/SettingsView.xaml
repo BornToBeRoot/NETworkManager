@@ -13,8 +13,8 @@
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}">
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <converters:SettingsViewGroupToTranslatedStringConverter x:Key="SettingsViewGroupToTranslatedStringConverter" />
-        <converters:SettingsViewNameToTranslatedStringConverter x:Key="SettingsViewNameToTranslatedStringConverter" />        
+        <converters:SettingsGroupToTranslatedStringConverter x:Key="SettingsGroupToTranslatedStringConverter" />
+        <converters:SettingsNameToTranslatedStringConverter x:Key="SettingsNameToTranslatedStringConverter" />        
     </UserControl.Resources>
     <Grid>
         <TabControl Style="{StaticResource DefaultTabControl}" SelectedIndex="{Binding SelectedTabIndex}">
@@ -42,7 +42,7 @@
                                                             <ControlTemplate>
                                                                 <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}">
                                                                     <Expander.Header>
-                                                                        <TextBlock Text="{Binding (CollectionViewGroup.Name), Converter={StaticResource SettingsViewGroupToTranslatedStringConverter}}" Style="{StaticResource DefaultTextBlock}" Margin="0" Foreground="{DynamicResource MahApps.Brushes.Gray3}"/>
+                                                                        <TextBlock Text="{Binding (CollectionViewGroup.Name), Converter={StaticResource SettingsGroupToTranslatedStringConverter}}" Style="{StaticResource DefaultTextBlock}" Margin="0" Foreground="{DynamicResource MahApps.Brushes.Gray3}"/>
                                                                     </Expander.Header>
                                                                     <ItemsPresenter />
                                                                 </Expander>
@@ -78,7 +78,7 @@
                                                         </Style>
                                                     </Rectangle.Style>
                                                 </Rectangle>
-                                                <TextBlock Grid.Column="1" Text="{Binding (settings:SettingsViewInfo.Name), Converter={StaticResource SettingsViewNameToTranslatedStringConverter}}" >
+                                                <TextBlock Grid.Column="1" Text="{Binding (settings:SettingsViewInfo.Name), Converter={StaticResource SettingsNameToTranslatedStringConverter}}" >
                                                     <TextBlock.Style>
                                                         <Style TargetType="{x:Type TextBlock}">
                                                             <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
@@ -162,7 +162,7 @@
                             <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaultScrollViewer}">
                                 <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding SelectedSettingsView.Name}" Value="{x:Static settings:SettingsViewName.Language}">
+                                    <DataTrigger Binding="{Binding SelectedSettingsView.Name}" Value="{x:Static settings:SettingsName.Language}">
                                         <Setter Property="VerticalScrollBarVisibility" Value="Disabled" />
                                     </DataTrigger>
                                 </Style.Triggers>

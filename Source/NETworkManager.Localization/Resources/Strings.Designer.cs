@@ -3932,15 +3932,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to General.
-        /// </summary>
-        public static string GroupViewName_General {
-            get {
-                return ResourceManager.GetString("GroupViewName_General", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Headers.
         /// </summary>
         public static string Headers {
@@ -6629,6 +6620,33 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string ProfileGroup_Application {
+            get {
+                return ResourceManager.GetString("ProfileGroup_Application", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string ProfileGroup_General {
+            get {
+                return ResourceManager.GetString("ProfileGroup_General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string ProfileName_General {
+            get {
+                return ResourceManager.GetString("ProfileName_General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profile name already exists!.
         /// </summary>
         public static string ProfileNameAlreadyExists {
@@ -6661,15 +6679,6 @@ namespace NETworkManager.Localization.Resources {
         public static string ProfilesReloaded {
             get {
                 return ResourceManager.GetString("ProfilesReloaded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to General.
-        /// </summary>
-        public static string ProfileViewName_General {
-            get {
-                return ResourceManager.GetString("ProfileViewName_General", resourceCulture);
             }
         }
         
@@ -8587,6 +8596,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Applications.
+        /// </summary>
+        public static string SettingsGroup_Application {
+            get {
+                return ResourceManager.GetString("SettingsGroup_Application", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string SettingsGroup_General {
+            get {
+                return ResourceManager.GetString("SettingsGroup_General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings have been reset!.
         /// </summary>
         public static string SettingsHaveBeenReset {
@@ -8596,128 +8623,110 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Settings reset!.
-        /// </summary>
-        public static string SettingsResetExclamationMark {
-            get {
-                return ResourceManager.GetString("SettingsResetExclamationMark", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Applications.
-        /// </summary>
-        public static string SettingsViewGroup_Applications {
-            get {
-                return ResourceManager.GetString("SettingsViewGroup_Applications", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to General.
-        /// </summary>
-        public static string SettingsViewGroup_General {
-            get {
-                return ResourceManager.GetString("SettingsViewGroup_General", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Appearance.
         /// </summary>
-        public static string SettingsViewName_Appearance {
+        public static string SettingsName_Appearance {
             get {
-                return ResourceManager.GetString("SettingsViewName_Appearance", resourceCulture);
+                return ResourceManager.GetString("SettingsName_Appearance", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Autostart.
         /// </summary>
-        public static string SettingsViewName_Autostart {
+        public static string SettingsName_Autostart {
             get {
-                return ResourceManager.GetString("SettingsViewName_Autostart", resourceCulture);
+                return ResourceManager.GetString("SettingsName_Autostart", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to General.
         /// </summary>
-        public static string SettingsViewName_General {
+        public static string SettingsName_General {
             get {
-                return ResourceManager.GetString("SettingsViewName_General", resourceCulture);
+                return ResourceManager.GetString("SettingsName_General", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to HotKeys.
         /// </summary>
-        public static string SettingsViewName_HotKeys {
+        public static string SettingsName_HotKeys {
             get {
-                return ResourceManager.GetString("SettingsViewName_HotKeys", resourceCulture);
+                return ResourceManager.GetString("SettingsName_HotKeys", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
-        public static string SettingsViewName_Language {
+        public static string SettingsName_Language {
             get {
-                return ResourceManager.GetString("SettingsViewName_Language", resourceCulture);
+                return ResourceManager.GetString("SettingsName_Language", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Network.
         /// </summary>
-        public static string SettingsViewName_Network {
+        public static string SettingsName_Network {
             get {
-                return ResourceManager.GetString("SettingsViewName_Network", resourceCulture);
+                return ResourceManager.GetString("SettingsName_Network", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Profiles.
         /// </summary>
-        public static string SettingsViewName_Profiles {
+        public static string SettingsName_Profiles {
             get {
-                return ResourceManager.GetString("SettingsViewName_Profiles", resourceCulture);
+                return ResourceManager.GetString("SettingsName_Profiles", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
-        public static string SettingsViewName_Settings {
+        public static string SettingsName_Settings {
             get {
-                return ResourceManager.GetString("SettingsViewName_Settings", resourceCulture);
+                return ResourceManager.GetString("SettingsName_Settings", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Status.
         /// </summary>
-        public static string SettingsViewName_Status {
+        public static string SettingsName_Status {
             get {
-                return ResourceManager.GetString("SettingsViewName_Status", resourceCulture);
+                return ResourceManager.GetString("SettingsName_Status", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Update.
         /// </summary>
-        public static string SettingsViewName_Update {
+        public static string SettingsName_Update {
             get {
-                return ResourceManager.GetString("SettingsViewName_Update", resourceCulture);
+                return ResourceManager.GetString("SettingsName_Update", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Window.
         /// </summary>
-        public static string SettingsViewName_Window {
+        public static string SettingsName_Window {
             get {
-                return ResourceManager.GetString("SettingsViewName_Window", resourceCulture);
+                return ResourceManager.GetString("SettingsName_Window", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings reset!.
+        /// </summary>
+        public static string SettingsResetExclamationMark {
+            get {
+                return ResourceManager.GetString("SettingsResetExclamationMark", resourceCulture);
             }
         }
         
