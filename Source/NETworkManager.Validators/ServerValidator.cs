@@ -29,7 +29,7 @@ public class ServerValidator : ValidationRule
             return ValidationResult.ValidResult;
 
         // Check if it is a valid hostname like server-01 or server-01.example.com
-        if (Regex.IsMatch(input, RegexHelper.HostnameRegex) && !allowOnlyIPAddress)
+        if (Regex.IsMatch(input, RegexHelper.HostnameOrDomainRegex) && !allowOnlyIPAddress)
             return ValidationResult.ValidResult;
 
         return new ValidationResult(false, genericErrorResult);

@@ -1,4 +1,4 @@
-﻿using NETworkManager.Profiles;
+﻿using NETworkManager.Settings;
 using System;
 using System.Globalization;
 using System.Windows.Data;
@@ -7,23 +7,21 @@ using NETworkManager.Localization;
 namespace NETworkManager.Converters;
 
 /// <summary>
-/// Convert <see cref="GroupViewName"/> to translated <see cref="string"/> or wise versa.
+/// Convert <see cref="SettingsGroup"/> to translated <see cref="string"/> or wise versa.
 /// </summary>
-public sealed class GroupViewNameToTranslatedStringConverter : IValueConverter
+public sealed class SettingsGroupToTranslatedStringConverter : IValueConverter
 {
     /// <summary>
-    /// Convert <see cref="GroupViewName"/> to translated <see cref="string"/>. 
+    /// Convert <see cref="SettingsGroup"/> to translated <see cref="string"/>. 
     /// </summary>
-    /// <param name="value">Object from type <see cref="GroupViewName"/>.</param>
+    /// <param name="value">Object from type <see cref="SettingsGroup"/>.</param>
     /// <param name="targetType"></param>
     /// <param name="parameter"></param>
     /// <param name="culture"></param>
-    /// <returns>Translated <see cref="GroupViewName"/>.</returns>
+    /// <returns>Translated <see cref="SettingsGroup"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value is not GroupViewName name
-            ? "-/-"
-            : ResourceTranslator.Translate(ResourceIdentifier.GroupViewName, name);
+        return value is not SettingsGroup group ? "-/-" : ResourceTranslator.Translate(ResourceIdentifier.SettingsGroup, group);
     }
     
     /// <summary>

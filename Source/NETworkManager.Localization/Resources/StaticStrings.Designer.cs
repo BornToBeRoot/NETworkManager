@@ -132,7 +132,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to example.com.
+        ///   Looks up a localized string similar to borntoberoot.net.
         /// </summary>
         public static string ExampleDomain {
             get {
@@ -141,7 +141,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to gw.example.com.
+        ///   Looks up a localized string similar to gw.borntoberoot.net.
         /// </summary>
         public static string ExampleGatewayDomain {
             get {
@@ -168,7 +168,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to server-01.example.com.
+        ///   Looks up a localized string similar to server-01.borntoberoot.net.
         /// </summary>
         public static string ExampleHostFQDN {
             get {
@@ -195,7 +195,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SERVER-01; 172.16.0.100.
+        ///   Looks up a localized string similar to SERVER-01; 10.0.0.10.
         /// </summary>
         public static string ExampleHostnameAndOrIPAddress {
             get {
@@ -204,7 +204,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SERVER-01 or 172.16.0.100.
+        ///   Looks up a localized string similar to SERVER-01 or 10.0.0.10.
         /// </summary>
         public static string ExampleHostnameOrIPAddress {
             get {
@@ -213,7 +213,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.[178-179].[1,100,150-200]; example.com/24.
+        ///   Looks up a localized string similar to 192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.[178-179].[1,100,150-200]; borntoberoot.net/24.
         /// </summary>
         public static string ExampleHostRange {
             get {
@@ -222,7 +222,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to server-01.example.com:3389.
+        ///   Looks up a localized string similar to server-01.borntoberoot.net:3389.
         /// </summary>
         public static string ExampleHostWithRDPPort {
             get {
@@ -231,7 +231,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 192.168.178.55.
+        ///   Looks up a localized string similar to 10.0.0.10.
         /// </summary>
         public static string ExampleIPv4Address {
             get {
@@ -240,7 +240,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 192.168.178.255.
+        ///   Looks up a localized string similar to 10.0.0.255.
         /// </summary>
         public static string ExampleIPv4Broadcast {
             get {
@@ -258,7 +258,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 192.168.178.1; 1.1.1.1; 1.0.0.1.
+        ///   Looks up a localized string similar to 10.0.0.1; 1.1.1.1; 8.8.8.8.
         /// </summary>
         public static string ExampleIPv4DNSServers {
             get {
@@ -267,7 +267,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 192.168.178.1.
+        ///   Looks up a localized string similar to 10.0.0.1.
         /// </summary>
         public static string ExampleIPv4Gateway {
             get {
@@ -276,7 +276,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 192.168.178.133/255.255.255.0 or 2001:0db8::/64.
+        ///   Looks up a localized string similar to 10.0.0.13/255.255.255.0 or 2001:0db8::/64.
         /// </summary>
         public static string ExampleIPv4IPv6Subnet {
             get {
@@ -285,20 +285,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 192.168.178.134/255.255.255.0 or 2001:0db9::/64.
+        ///   Looks up a localized string similar to 10.0.0.14/255.255.255.0 or 2001:0db9::/64.
         /// </summary>
         public static string ExampleIPv4IPv6Subnet2 {
             get {
                 return ResourceManager.GetString("ExampleIPv4IPv6Subnet2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 192.168.180.0/24 or 2001:0db9::/54.
-        /// </summary>
-        public static string ExampleIPv4IPv6Subnet3 {
-            get {
-                return ResourceManager.GetString("ExampleIPv4IPv6Subnet3", resourceCulture);
             }
         }
         
@@ -348,7 +339,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 192.168.100.0/24.
+        ///   Looks up a localized string similar to 10.0.0.0/24.
         /// </summary>
         public static string ExampleIPv4SubnetWithCIDR {
             get {
@@ -672,7 +663,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http(s)://example.com/index.html.
+        ///   Looks up a localized string similar to http(s)://borntoberoot.net/index.html.
         /// </summary>
         public static string ExampleWebsiteUri {
             get {

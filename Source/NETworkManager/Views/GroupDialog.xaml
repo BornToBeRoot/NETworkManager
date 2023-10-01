@@ -26,7 +26,7 @@
         <converters:RemoteDesktopKeyboardHookModeToStringConverter x:Key="RemoteDesktopKeyboardHookModeToStringConverter" />
         <converters:RemoteDesktopGatewayServerLogonMethodToStringConverter x:Key="RemoteDesktopGatewayServerLogonMethodToStringConverter" />
         <converters:RemoteDesktopNetworkConnectionTypeToStringConverter x:Key="RemoteDesktopNetworkConnectionTypeToStringConverter" />
-        <converters:GroupViewNameToTranslatedStringConverter x:Key="GroupViewNameToTranslatedStringConverter" />
+        <converters:ProfileGroupToTranslatedStringConverter x:Key="GroupViewNameToTranslatedStringConverter" />
         <converters:PuTTYLogModeToStringConverter x:Key="PuTTYLogModeToStringConverter" />
         <converters:StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter x:Key="StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter" />
     </UserControl.Resources>

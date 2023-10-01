@@ -2613,43 +2613,43 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="Accent_Steel" xml:space="preserve">
     <value>Steel</value>
   </data>
-  <data name="ProfileViewName_General" xml:space="preserve">
+  <data name="ProfileName_General" xml:space="preserve">
     <value>General</value>
   </data>
-  <data name="SettingsViewGroup_Applications" xml:space="preserve">
+  <data name="SettingsGroup_Application" xml:space="preserve">
     <value>Applications</value>
   </data>
-  <data name="SettingsViewGroup_General" xml:space="preserve">
+  <data name="SettingsGroup_General" xml:space="preserve">
     <value>General</value>
   </data>
-  <data name="SettingsViewName_Appearance" xml:space="preserve">
+  <data name="SettingsName_Appearance" xml:space="preserve">
     <value>Appearance</value>
   </data>
-  <data name="SettingsViewName_Autostart" xml:space="preserve">
+  <data name="SettingsName_Autostart" xml:space="preserve">
     <value>Autostart</value>
   </data>
-  <data name="SettingsViewName_General" xml:space="preserve">
+  <data name="SettingsName_General" xml:space="preserve">
     <value>General</value>
   </data>
-  <data name="SettingsViewName_HotKeys" xml:space="preserve">
+  <data name="SettingsName_HotKeys" xml:space="preserve">
     <value>HotKeys</value>
   </data>
-  <data name="SettingsViewName_Language" xml:space="preserve">
+  <data name="SettingsName_Language" xml:space="preserve">
     <value>Language</value>
   </data>
-  <data name="SettingsViewName_Profiles" xml:space="preserve">
+  <data name="SettingsName_Profiles" xml:space="preserve">
     <value>Profiles</value>
   </data>
-  <data name="SettingsViewName_Settings" xml:space="preserve">
+  <data name="SettingsName_Settings" xml:space="preserve">
     <value>Settings</value>
   </data>
-  <data name="SettingsViewName_Status" xml:space="preserve">
+  <data name="SettingsName_Status" xml:space="preserve">
     <value>Status</value>
   </data>
-  <data name="SettingsViewName_Update" xml:space="preserve">
+  <data name="SettingsName_Update" xml:space="preserve">
     <value>Update</value>
   </data>
-  <data name="SettingsViewName_Window" xml:space="preserve">
+  <data name="SettingsName_Window" xml:space="preserve">
     <value>Window</value>
   </data>
   <data name="EnableLog" xml:space="preserve">
@@ -3173,7 +3173,7 @@ If the option is disabled again, the values are no longer modified. However, the
   <data name="EnterANumberAndSelectAUnitToCalculateTheUnits" xml:space="preserve">
     <value>Enter a number and select a unit to calculate the units...</value>
   </data>
-  <data name="SettingsViewName_Network" xml:space="preserve">
+  <data name="SettingsName_Network" xml:space="preserve">
     <value>Network</value>
   </data>
   <data name="Proxy" xml:space="preserve">
@@ -3652,7 +3652,7 @@ Try again in a few seconds.</value>
   <data name="RateLimitReachedTryAgainInXSeconds" xml:space="preserve">
     <value>Rate limit reached! Try again in {0} seconds...</value>
   </data>
-  <data name="GroupViewName_General" xml:space="preserve">
+  <data name="ProfileGroup_General" xml:space="preserve">
     <value>General</value>
   </data>
   <data name="BSSID" xml:space="preserve">
@@ -3660,5 +3660,20 @@ Try again in a few seconds.</value>
   </data>
   <data name="NoReachableHostsFound" xml:space="preserve">
     <value>No reachable hosts found!</value>
+  </data>
+  <data name="ProfileGroup_Application" xml:space="preserve">
+    <value />
+  </data>
+  <data name="HelpMessage_ExperimentalFeatures" xml:space="preserve">
+    <value>Enable experimental features to test new functions. These are not yet complete, contain bugs, can crash the application and may change again until release.</value>
+  </data>
+  <data name="ExperimentalFeatures" xml:space="preserve">
+    <value>Experimental features</value>
+  </data>
+  <data name="Experimental" xml:space="preserve">
+    <value>Experimental</value>
+  </data>
+  <data name="Watermark_RunCommand" xml:space="preserve">
+    <value>Run command... (Ctrl+Shift+P)</value>
   </data>
 </root>

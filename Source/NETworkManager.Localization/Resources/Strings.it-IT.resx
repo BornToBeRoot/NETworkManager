@@ -2633,43 +2633,43 @@ Vedi messaggio errore: "{0}"</value>
   <data name="Accent_Steel" xml:space="preserve">
     <value>Acciao</value>
   </data>
-  <data name="ProfileViewName_General" xml:space="preserve">
+  <data name="ProfileName_General" xml:space="preserve">
     <value>Generale</value>
   </data>
-  <data name="SettingsViewGroup_Applications" xml:space="preserve">
+  <data name="SettingsGroup_Application" xml:space="preserve">
     <value>Applicazioni</value>
   </data>
-  <data name="SettingsViewGroup_General" xml:space="preserve">
+  <data name="SettingsGroup_General" xml:space="preserve">
     <value>Generale</value>
   </data>
-  <data name="SettingsViewName_Appearance" xml:space="preserve">
+  <data name="SettingsName_Appearance" xml:space="preserve">
     <value>Aspetto</value>
   </data>
-  <data name="SettingsViewName_Autostart" xml:space="preserve">
+  <data name="SettingsName_Autostart" xml:space="preserve">
     <value>Avvio automatico</value>
   </data>
-  <data name="SettingsViewName_General" xml:space="preserve">
+  <data name="SettingsName_General" xml:space="preserve">
     <value>Generale</value>
   </data>
-  <data name="SettingsViewName_HotKeys" xml:space="preserve">
+  <data name="SettingsName_HotKeys" xml:space="preserve">
     <value>Tasti rapidi</value>
   </data>
-  <data name="SettingsViewName_Language" xml:space="preserve">
+  <data name="SettingsName_Language" xml:space="preserve">
     <value>Lingua</value>
   </data>
-  <data name="SettingsViewName_Profiles" xml:space="preserve">
+  <data name="SettingsName_Profiles" xml:space="preserve">
     <value>Profili</value>
   </data>
-  <data name="SettingsViewName_Settings" xml:space="preserve">
+  <data name="SettingsName_Settings" xml:space="preserve">
     <value>Impostazioni</value>
   </data>
-  <data name="SettingsViewName_Status" xml:space="preserve">
+  <data name="SettingsName_Status" xml:space="preserve">
     <value>Stato</value>
   </data>
-  <data name="SettingsViewName_Update" xml:space="preserve">
+  <data name="SettingsName_Update" xml:space="preserve">
     <value>Aggiorna programma</value>
   </data>
-  <data name="SettingsViewName_Window" xml:space="preserve">
+  <data name="SettingsName_Window" xml:space="preserve">
     <value>Finestra</value>
   </data>
   <data name="EnableLog" xml:space="preserve">
@@ -3199,7 +3199,7 @@ Tuttavia, i valori originali NON vengono ripristinati.</value>
   <data name="EnterANumberAndSelectAUnitToCalculateTheUnits" xml:space="preserve">
     <value>Inserisci un numero e seleziona un'unità per calcolare le unità...</value>
   </data>
-  <data name="SettingsViewName_Network" xml:space="preserve">
+  <data name="SettingsName_Network" xml:space="preserve">
     <value>Rete</value>
   </data>
   <data name="Proxy" xml:space="preserve">
@@ -3740,7 +3740,7 @@ Riprova tra qualche secondo.</value>
     <value>Raggiunto limite rapporto! 
 Riprova dentro {0} secondi...</value>
   </data>
-  <data name="GroupViewName_General" xml:space="preserve">
+  <data name="ProfileGroup_General" xml:space="preserve">
     <value>Generale</value>
   </data>
   <data name="BSSID" xml:space="preserve">

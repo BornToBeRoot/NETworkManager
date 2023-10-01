@@ -1,7 +1,7 @@
 ﻿namespace NETworkManager.Models;
 
 /// <summary>
-/// Stores informations about an application.
+/// Stores information's about an application.
 /// </summary>
 public class ApplicationInfo
 {
@@ -24,7 +24,7 @@ public class ApplicationInfo
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ApplicationInfo"/> class with paramteters.
+    /// Initializes a new instance of the <see cref="ApplicationInfo"/> class with parameters.
     /// </summary>
     /// <param name="name"><see cref="Name"/></param>
     public ApplicationInfo(ApplicationName name)
@@ -38,7 +38,7 @@ public class ApplicationInfo
     /// </summary>
     /// <param name="info">Object to check.</param>
     /// <returns>Equality as <see cref="bool"/>.</returns>
-    public bool Equals(ApplicationInfo info)
+    private bool Equals(ApplicationInfo info)
     {
         if (info == null)
             return false;

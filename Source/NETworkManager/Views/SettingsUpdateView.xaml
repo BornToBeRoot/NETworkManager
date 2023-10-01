@@ -3,20 +3,43 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsUpdateViewModel}">
     <StackPanel>
-        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Update}" />
+        <TextBlock Style="{StaticResource HeaderTextBlock}"
+                   Text="{x:Static localization:Strings.Update}" />
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10" >
-            <mahAppsControls:ToggleSwitch Header="{x:Static localization:Strings.CheckForUpdatesAtStartup}" IsOn="{Binding CheckForUpdatesAtStartup}" />
-            <Rectangle Width="24" Height="24" VerticalAlignment="Top" ToolTip="{x:Static localization:Strings.HelpMessage_CheckForUpdatesAtStartup}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+            <mah:ToggleSwitch Header="{x:Static localization:Strings.CheckForUpdatesAtStartup}" 
+                              IsOn="{Binding CheckForUpdatesAtStartup}" />
+            <Rectangle Width="24" Height="24" 
+                       VerticalAlignment="Top" 
+                       ToolTip="{x:Static localization:Strings.HelpMessage_CheckForUpdatesAtStartup}" 
+                       Style="{StaticResource HelpImageRectangle}"
+                       Margin="10,0,0,0">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type ToolTip}" 
+                           BasedOn="{StaticResource HelpToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
+        </StackPanel>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.CheckForPreReleases}"
+                          IsOn="{Binding CheckForPreReleases}" 
+                          Margin="0,0,0,20" />
+        <TextBlock Style="{StaticResource HeaderTextBlock}"
+                   Text="{x:Static localization:Strings.Experimental}" />
+        <StackPanel Orientation="Horizontal">
+            <mah:ToggleSwitch Header="{x:Static localization:Strings.ExperimentalFeatures}" IsOn="{Binding EnableExperimentalFeatures }" />
+            <Rectangle Width="24" Height="24" 
+                       VerticalAlignment="Top" 
+                       ToolTip="{x:Static localization:Strings.HelpMessage_ExperimentalFeatures}" 
+                       Style="{StaticResource HelpImageRectangle}"
+                       Margin="10,0,0,0">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
                 </Rectangle.Resources>
             </Rectangle>
         </StackPanel>
-        <mahAppsControls:ToggleSwitch Header="{x:Static localization:Strings.CheckForPreReleases}" IsOn="{Binding CheckForPreReleases}" />
     </StackPanel>
 </UserControl>

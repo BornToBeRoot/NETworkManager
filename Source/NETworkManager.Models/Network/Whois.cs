@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Reflection;
@@ -12,9 +11,8 @@ namespace NETworkManager.Models.Network;
 public static class Whois
 {
     #region Variables
-    private static readonly string WhoisServerFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Resources", "WhoisServers.xml");
+    private static readonly string WhoisServerFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location)!, "Resources", "WhoisServers.xml");
 
-    private static readonly List<WhoisServerInfo> WhoisServerList;
     private static readonly Lookup<string, WhoisServerInfo> WhoisServers;
     #endregion
 
@@ -25,17 +23,11 @@ public static class Whois
         var document = new XmlDocument();
         document.Load(WhoisServerFilePath);
 
-        WhoisServerList = new List<WhoisServerInfo>();
+        var whoisServerList = (from XmlNode node in document.SelectNodes("/WhoisServers/WhoisServer")! 
+            where node != null 
+            select new WhoisServerInfo(node.SelectSingleNode("Server")?.InnerText, node.SelectSingleNode("TLD")?.InnerText)).ToList();
 
-        foreach (XmlNode node in document.SelectNodes("/WhoisServers/WhoisServer"))
-        {
-            if (node == null)
-                continue;
-
-            WhoisServerList.Add(new WhoisServerInfo(node.SelectSingleNode("Server")?.InnerText, node.SelectSingleNode("TLD")?.InnerText));
-        }
-
-        WhoisServers = (Lookup<string, WhoisServerInfo>)WhoisServerList.ToLookup(x => x.Tld);
+        WhoisServers = (Lookup<string, WhoisServerInfo>)whoisServerList.ToLookup(x => x.Tld);
     }
     #endregion
 
@@ -45,7 +37,7 @@ public static class Whois
         return Task.Run(() => Query(domain, whoisServer));
     }
 
-    public static string Query(string domain, string whoisServer)
+    private static string Query(string domain, string whoisServer)
     {
         var tcpClient = new TcpClient(whoisServer, 43);
 
@@ -70,7 +62,7 @@ public static class Whois
 
     public static string GetWhoisServer(string domain)
     {
-        var domainParts = domain.Split('.');
+        var domainParts = domain.TrimEnd('.').Split('.');
 
         // TLD to upper because the lookup is case sensitive
         return WhoisServers[domainParts[^1].ToUpper()].FirstOrDefault()?.Server;

@@ -34,7 +34,7 @@ public class SettingsViewModel : ViewModelBase
 
     public ICollectionView SettingsViews { get; private set; }
 
-    private SettingsViewName _searchLastSelectedSettingsViewName;
+    private SettingsName _searchLastSelectedSettingsName;
 
     private string _search;
     public string Search
@@ -49,14 +49,14 @@ public class SettingsViewModel : ViewModelBase
 
             // Store the current selected settings view name
             if (SelectedSettingsView != null)
-                _searchLastSelectedSettingsViewName = SelectedSettingsView.Name;
+                _searchLastSelectedSettingsName = SelectedSettingsView.Name;
 
             // Refresh (apply filter)
             SettingsViews.Refresh();
 
             // Try to select the last selected application
             if (!SettingsViews.IsEmpty && SelectedSettingsView == null)
-                SelectedSettingsView = SettingsViews.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name == _searchLastSelectedSettingsViewName) ?? SettingsViews.Cast<SettingsViewInfo>().FirstOrDefault();
+                SelectedSettingsView = SettingsViews.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name == _searchLastSelectedSettingsName) ?? SettingsViews.Cast<SettingsViewInfo>().FirstOrDefault();
 
             // Show note if nothing was found
             SearchNothingFound = SettingsViews.IsEmpty;            
@@ -163,7 +163,7 @@ public class SettingsViewModel : ViewModelBase
             var search = regex.Replace(Search, "");
 
             // Search by TranslatedName and Name
-            return regex.Replace(ResourceTranslator.Translate(ResourceIdentifier.SettingsViewName, info.Name), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || (regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
+            return regex.Replace(ResourceTranslator.Translate(ResourceIdentifier.SettingsName, info.Name), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || (regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
         };
     }
     #endregion
@@ -198,137 +198,137 @@ public class SettingsViewModel : ViewModelBase
     {
         switch (settingsViewInfo.Name)
         {
-            case SettingsViewName.General:
+            case SettingsName.General:
                 _settingsGerneralView ??= new SettingsGeneralView();
 
                 SettingsContent = _settingsGerneralView;
                 break;
-            case SettingsViewName.Window:
+            case SettingsName.Window:
                 _settingsWindowView ??= new SettingsWindowView();
 
                 SettingsContent = _settingsWindowView;
                 break;
-            case SettingsViewName.Appearance:
+            case SettingsName.Appearance:
                 _settingsApperanceView ??= new SettingsAppearanceView();
 
                 SettingsContent = _settingsApperanceView;
                 break;
-            case SettingsViewName.Language:
+            case SettingsName.Language:
                 _settingsLanguageView ??= new SettingsLanguageView();
 
                 SettingsContent = _settingsLanguageView;
                 break;
-            case SettingsViewName.Network:
+            case SettingsName.Network:
                 _settingsNetworkView ??= new SettingsNetworkView();
 
                 SettingsContent = _settingsNetworkView;
                 break;
-            case SettingsViewName.Status:
+            case SettingsName.Status:
                 _settingsStatusView ??= new SettingsStatusView();
 
                 SettingsContent = _settingsStatusView;
                 break;
-            case SettingsViewName.HotKeys:
+            case SettingsName.HotKeys:
                 _settingsHotKeysView ??= new SettingsHotkeysView();
 
                 SettingsContent = _settingsHotKeysView;
                 break;
-            case SettingsViewName.Autostart:
+            case SettingsName.Autostart:
                 _settingsAutostartView ??= new SettingsAutostartView();
 
                 SettingsContent = _settingsAutostartView;
                 break;
-            case SettingsViewName.Update:
+            case SettingsName.Update:
                 _settingsUpdateView ??= new SettingsUpdateView();
 
                 SettingsContent = _settingsUpdateView;
                 break;
-            case SettingsViewName.Settings:
+            case SettingsName.Settings:
                 _settingsSettingsView ??= new SettingsSettingsView();
 
                 SettingsContent = _settingsSettingsView;
                 break;
-            case SettingsViewName.Profiles:
+            case SettingsName.Profiles:
                 _settingsProfilesView ??= new SettingsProfilesView();
 
                 SettingsContent = _settingsProfilesView;
                 break;
-            case SettingsViewName.Dashboard:
+            case SettingsName.Dashboard:
                 _dashboardSettingsView ??= new DashboardSettingsView();
 
                 SettingsContent = _dashboardSettingsView;
                 break;
-            case SettingsViewName.IPScanner:
+            case SettingsName.IPScanner:
                 _ipScannerSettingsView ??= new IPScannerSettingsView();
 
                 SettingsContent = _ipScannerSettingsView;
                 break;
-            case SettingsViewName.PortScanner:
+            case SettingsName.PortScanner:
                 _portScannerSettingsView ??= new PortScannerSettingsView();
 
                 SettingsContent = _portScannerSettingsView;
                 break;
-            case SettingsViewName.PingMonitor:
+            case SettingsName.PingMonitor:
                 _pingMonitorSettingsView ??= new PingMonitorSettingsView();
 
                 SettingsContent = _pingMonitorSettingsView;
                 break;
-            case SettingsViewName.Traceroute:
+            case SettingsName.Traceroute:
                 _tracerouteSettingsView ??= new TracerouteSettingsView();
 
                 SettingsContent = _tracerouteSettingsView;
                 break;
-            case SettingsViewName.DNSLookup:
+            case SettingsName.DNSLookup:
                 _dnsLookupSettingsViewModel ??= new DNSLookupSettingsView();
 
                 SettingsContent = _dnsLookupSettingsViewModel;
                 break;
-            case SettingsViewName.RemoteDesktop:
+            case SettingsName.RemoteDesktop:
                 _remoteDesktopSettingsView ??= new RemoteDesktopSettingsView();
 
                 SettingsContent = _remoteDesktopSettingsView;
                 break;
-            case SettingsViewName.PowerShell:
+            case SettingsName.PowerShell:
                 _powerShellSettingsView ??= new PowerShellSettingsView();
 
                 SettingsContent = _powerShellSettingsView;
                 break;
-            case SettingsViewName.PuTTY:
+            case SettingsName.PuTTY:
                 _puTTYSettingsView ??= new PuTTYSettingsView();
 
                 SettingsContent = _puTTYSettingsView;
                 break;
-            case SettingsViewName.AWSSessionManager:
+            case SettingsName.AWSSessionManager:
                 _awsSessionManagerSettingsView ??= new AWSSessionManagerSettingsView();
 
                 SettingsContent = _awsSessionManagerSettingsView;
                 break;
-            case SettingsViewName.TigerVNC:
+            case SettingsName.TigerVNC:
                 _tigerVNCSettingsView ??= new TigerVNCSettingsView();
 
                 SettingsContent = _tigerVNCSettingsView;
                 break;
-            case SettingsViewName.WebConsole:
+            case SettingsName.WebConsole:
                 _webConsoleSettingsView ??= new WebConsoleSettingsView();
 
                 SettingsContent = _webConsoleSettingsView;
                 break;
-            case SettingsViewName.SNMP:
+            case SettingsName.SNMP:
                 _snmpSettingsView ??= new SNMPSettingsView();
 
                 SettingsContent = _snmpSettingsView;
                 break;
-            case SettingsViewName.SNTPLookup:
+            case SettingsName.SNTPLookup:
                 _sntpLookupSettingsView ??= new SNTPLookupSettingsView();
 
                 SettingsContent = _sntpLookupSettingsView;
                 break;
-            case SettingsViewName.WakeOnLAN:
+            case SettingsName.WakeOnLAN:
                 _wakeOnLANSettingsView ??= new WakeOnLANSettingsView();
 
                 SettingsContent = _wakeOnLANSettingsView;
                 break;
-            case SettingsViewName.BitCalculator:
+            case SettingsName.BitCalculator:
                 _bitCalculatorSettingsView ??= new BitCalculatorSettingsView();
 
                 SettingsContent = _bitCalculatorSettingsView;

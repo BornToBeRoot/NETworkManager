@@ -10,23 +10,23 @@ public static class ProfileViewManager
     public static List<ProfileViewInfo> List => new()
     {
         // General
-        new ProfileViewInfo(ProfileViewName.General, new PackIconModern{ Kind = PackIconModernKind.Box }),
+        new ProfileViewInfo(ProfileName.General, new PackIconModern{ Kind = PackIconModernKind.Box }, ProfileGroup.General),
 
         // Applications
-        new ProfileViewInfo(ProfileViewName.NetworkInterface, ApplicationManager.GetIcon(ApplicationName.NetworkInterface)),
-        new ProfileViewInfo(ProfileViewName.IPScanner, ApplicationManager.GetIcon(ApplicationName.IPScanner)),
-        new ProfileViewInfo(ProfileViewName.PortScanner, ApplicationManager.GetIcon(ApplicationName.PortScanner)),
-        new ProfileViewInfo(ProfileViewName.PingMonitor, ApplicationManager.GetIcon(ApplicationName.PingMonitor)),
-        new ProfileViewInfo(ProfileViewName.Traceroute, ApplicationManager.GetIcon(ApplicationName.Traceroute)),
-        new ProfileViewInfo(ProfileViewName.DNSLookup, ApplicationManager.GetIcon(ApplicationName.DNSLookup)),
-        new ProfileViewInfo(ProfileViewName.RemoteDesktop, ApplicationManager.GetIcon(ApplicationName.RemoteDesktop)),
-        new ProfileViewInfo(ProfileViewName.PowerShell, ApplicationManager.GetIcon(ApplicationName.PowerShell)),
-        new ProfileViewInfo(ProfileViewName.PuTTY, ApplicationManager.GetIcon(ApplicationName.PuTTY)),
-        new ProfileViewInfo(ProfileViewName.AWSSessionManager, ApplicationManager.GetIcon(ApplicationName.AWSSessionManager)),
-        new ProfileViewInfo(ProfileViewName.TigerVNC, ApplicationManager.GetIcon(ApplicationName.TigerVNC)),
-        new ProfileViewInfo(ProfileViewName.WebConsole, ApplicationManager.GetIcon(ApplicationName.WebConsole)),
-        new ProfileViewInfo(ProfileViewName.SNMP, ApplicationManager.GetIcon(ApplicationName.SNMP)),
-        new ProfileViewInfo(ProfileViewName.WakeOnLAN, ApplicationManager.GetIcon(ApplicationName.WakeOnLAN)),            
-        new ProfileViewInfo(ProfileViewName.Whois, ApplicationManager.GetIcon(ApplicationName.Whois))
+        new ProfileViewInfo(ProfileName.NetworkInterface, ApplicationManager.GetIcon(ApplicationName.NetworkInterface), ProfileGroup.Application),
+        new ProfileViewInfo(ProfileName.IPScanner, ApplicationManager.GetIcon(ApplicationName.IPScanner), ProfileGroup.Application),
+        new ProfileViewInfo(ProfileName.PortScanner, ApplicationManager.GetIcon(ApplicationName.PortScanner), ProfileGroup.Application),
+        new ProfileViewInfo(ProfileName.PingMonitor, ApplicationManager.GetIcon(ApplicationName.PingMonitor), ProfileGroup.Application),
+        new ProfileViewInfo(ProfileName.Traceroute, ApplicationManager.GetIcon(ApplicationName.Traceroute), ProfileGroup.Application),
+        new ProfileViewInfo(ProfileName.DNSLookup, ApplicationManager.GetIcon(ApplicationName.DNSLookup), ProfileGroup.Application),
+        new ProfileViewInfo(ProfileName.RemoteDesktop, ApplicationManager.GetIcon(ApplicationName.RemoteDesktop), ProfileGroup.Application),
+        new ProfileViewInfo(ProfileName.PowerShell, ApplicationManager.GetIcon(ApplicationName.PowerShell), ProfileGroup.Application),
+        new ProfileViewInfo(ProfileName.PuTTY, ApplicationManager.GetIcon(ApplicationName.PuTTY), ProfileGroup.Application),
+        new ProfileViewInfo(ProfileName.AWSSessionManager, ApplicationManager.GetIcon(ApplicationName.AWSSessionManager), ProfileGroup.Application),
+        new ProfileViewInfo(ProfileName.TigerVNC, ApplicationManager.GetIcon(ApplicationName.TigerVNC), ProfileGroup.Application),
+        new ProfileViewInfo(ProfileName.WebConsole, ApplicationManager.GetIcon(ApplicationName.WebConsole), ProfileGroup.Application),
+        new ProfileViewInfo(ProfileName.SNMP, ApplicationManager.GetIcon(ApplicationName.SNMP), ProfileGroup.Application),
+        new ProfileViewInfo(ProfileName.WakeOnLAN, ApplicationManager.GetIcon(ApplicationName.WakeOnLAN), ProfileGroup.Application),            
+        new ProfileViewInfo(ProfileName.Whois, ApplicationManager.GetIcon(ApplicationName.Whois), ProfileGroup.Application)
     };              
 }

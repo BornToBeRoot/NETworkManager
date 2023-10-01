@@ -19,6 +19,6 @@ public class EmptyOrWindowsDomainValidator : ValidationRule
         if (domain.Equals("."))
             return ValidationResult.ValidResult;
         
-        return Regex.IsMatch(domain, RegexHelper.HostnameRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Strings.EnterValidDomain);        
+        return Regex.IsMatch(domain, RegexHelper.HostnameOrDomainRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Strings.EnterValidDomain);        
     }
 }

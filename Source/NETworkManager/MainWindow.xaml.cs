@@ -35,6 +35,7 @@ using NETworkManager.Models.Network;
 using NETworkManager.Models.AWS;
 using NETworkManager.Models.PowerShell;
 using log4net;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 
 namespace NETworkManager;
 
@@ -484,6 +485,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         // Load application list, filter, sort, etc.
         LoadApplicationList();
 
+        // Load run commands
+        LoadRunCommands();
+
         // Load the profiles
         LoadProfiles();
 
@@ -555,13 +559,99 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             }
         }
 
-
         // Unregister HotKeys
         if (_registeredHotKeys.Count > 0)
             UnregisterHotKeys();
 
         // Dispose the notify icon to prevent errors
         _notifyIcon?.Dispose();
+    }
+
+    #endregion
+
+
+    #region Run Command
+
+    private IEnumerable<RunCommandInfo> RunCommands => RunCommandManager.GetList();
+
+    private ICollectionView _runCommandsSuggestions;
+
+    public ICollectionView RunCommandsSuggestions
+    {
+        get => _runCommandsSuggestions;
+        private set
+        {
+            if (value == _runCommandsSuggestions)
+                return;
+
+            _runCommandsSuggestions = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private int _selectedRunCommandsSuggestionsIndex;
+
+    public int SelectedRunCommandsSuggestionsIndex
+    {
+        get => _selectedRunCommandsSuggestionsIndex;
+        set
+        {
+            if (value == _selectedRunCommandsSuggestionsIndex)
+                return;
+
+            _selectedRunCommandsSuggestionsIndex = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public ICommand RunCommandHotKey => new RelayCommand(_ => ComboBoxRunCommand.Focus());
+
+    public ICommand RunCommandEnterCommand => new RelayCommand(_ => RunCommandEnterAction());
+
+    private void RunCommandEnterAction()
+    {
+        foreach (var x in RunCommands)
+        {
+            switch (x.Type)
+            {
+                case RunCommandType.Application when RunCommand.Trim().Split(" ")[0].Equals(x.Command, StringComparison.OrdinalIgnoreCase):
+                {
+                    // Close settings if it is open
+                    if (ShowSettingsView)
+                        CloseSettings();
+
+                    EventSystem.RedirectToApplication((ApplicationName)Enum.Parse(typeof(ApplicationName), x.Name),
+                        RunCommand[x.Command.Length..].Trim());
+                    break;
+                }
+                case RunCommandType.Setting when RunCommand.Trim().Split(" ")[0].Equals(x.Command, StringComparison.OrdinalIgnoreCase):
+                    EventSystem.RedirectToSettings();
+                    break;
+            }
+        }
+
+        RunCommand = string.Empty;
+    }
+
+    private string _runCommand = string.Empty;
+
+    public string RunCommand
+    {
+        get => _runCommand;
+        set
+        {
+            if (value == _runCommand)
+                return;
+
+            _runCommand = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private void LoadRunCommands()
+    {
+        RunCommandsSuggestions = new CollectionViewSource { Source = RunCommands }.View;
+        SelectedRunCommandsSuggestionsIndex = -1;
     }
 
     #endregion
@@ -590,7 +680,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
             // Search by TranslatedName and Name
             return info.IsVisible &&
-                   (regex.Replace( ResourceTranslator.Translate(ResourceIdentifier.ApplicationName, info.Name), "")
+                   (regex.Replace(ResourceTranslator.Translate(ResourceIdentifier.ApplicationName, info.Name), "")
                        .IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || regex
                        .Replace(info.Name.ToString(), "").Contains(search, StringComparison.OrdinalIgnoreCase));
         };
@@ -954,9 +1044,10 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         if (e is not EventSystemRedirectArgs data)
             return;
 
-        // Change view
+        // Try to find the application
         var application = Applications.Cast<ApplicationInfo>().FirstOrDefault(x => x.Name == data.Application);
 
+        // Show error message if the application was not found
         if (application == null)
         {
             var settings = AppearanceManager.MetroDialog;
@@ -969,8 +1060,11 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             return;
         }
 
-        // Change view
+        // Change application view
         SelectedApplication = application;
+
+        if (string.IsNullOrEmpty(data.Args))
+            return;
 
         // Crate a new tab / perform action
         switch (data.Application)
@@ -1130,7 +1224,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 info.Password = instance.Password;
 
                 SwitchProfile(info);
-            }, async instance =>
+            }, async _ =>
             {
                 // Show error message is canceled / escape is pressed (dialog is opened again if the password is wrong)
                 ConfigurationManager.Current.ProfileManagerErrorMessage =

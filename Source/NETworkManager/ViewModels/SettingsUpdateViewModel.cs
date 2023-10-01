@@ -40,6 +40,25 @@ public class SettingsUpdateViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+    
+    
+        
+    private bool _enableExperimentalFeatures;
+    public bool EnableExperimentalFeatures
+    {
+        get => _enableExperimentalFeatures;
+        set
+        {
+            if (value == _enableExperimentalFeatures)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Experimental_EnableExperimentalFeatures = value;
+
+            _enableExperimentalFeatures = value;
+            OnPropertyChanged();
+        }
+    }
     #endregion
 
     #region Constructor, LoadSettings
@@ -56,6 +75,7 @@ public class SettingsUpdateViewModel : ViewModelBase
     {
         CheckForUpdatesAtStartup = SettingsManager.Current.Update_CheckForUpdatesAtStartup;
         CheckForPreReleases = SettingsManager.Current.Update_CheckForPreReleases;
+        EnableExperimentalFeatures = SettingsManager.Current.Experimental_EnableExperimentalFeatures;
     }
     #endregion
 }

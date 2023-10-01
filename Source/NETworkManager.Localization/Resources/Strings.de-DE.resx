@@ -2613,43 +2613,43 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="Accent_Steel" xml:space="preserve">
     <value>Stahl</value>
   </data>
-  <data name="ProfileViewName_General" xml:space="preserve">
+  <data name="ProfileName_General" xml:space="preserve">
     <value>Allgemein</value>
   </data>
-  <data name="SettingsViewGroup_Applications" xml:space="preserve">
+  <data name="SettingsGroup_Application" xml:space="preserve">
     <value>Anwendungen</value>
   </data>
-  <data name="SettingsViewGroup_General" xml:space="preserve">
+  <data name="SettingsGroup_General" xml:space="preserve">
     <value>Allgemein</value>
   </data>
-  <data name="SettingsViewName_Appearance" xml:space="preserve">
+  <data name="SettingsName_Appearance" xml:space="preserve">
     <value>Aussehen</value>
   </data>
-  <data name="SettingsViewName_Autostart" xml:space="preserve">
+  <data name="SettingsName_Autostart" xml:space="preserve">
     <value>Autostart</value>
   </data>
-  <data name="SettingsViewName_General" xml:space="preserve">
+  <data name="SettingsName_General" xml:space="preserve">
     <value>Allgemein</value>
   </data>
-  <data name="SettingsViewName_HotKeys" xml:space="preserve">
+  <data name="SettingsName_HotKeys" xml:space="preserve">
     <value>HotKeys</value>
   </data>
-  <data name="SettingsViewName_Language" xml:space="preserve">
+  <data name="SettingsName_Language" xml:space="preserve">
     <value>Sprache</value>
   </data>
-  <data name="SettingsViewName_Profiles" xml:space="preserve">
+  <data name="SettingsName_Profiles" xml:space="preserve">
     <value>Profile</value>
   </data>
-  <data name="SettingsViewName_Settings" xml:space="preserve">
+  <data name="SettingsName_Settings" xml:space="preserve">
     <value>Einstellungen</value>
   </data>
-  <data name="SettingsViewName_Status" xml:space="preserve">
+  <data name="SettingsName_Status" xml:space="preserve">
     <value>Status</value>
   </data>
-  <data name="SettingsViewName_Update" xml:space="preserve">
+  <data name="SettingsName_Update" xml:space="preserve">
     <value>Update</value>
   </data>
-  <data name="SettingsViewName_Window" xml:space="preserve">
+  <data name="SettingsName_Window" xml:space="preserve">
     <value>Fenster</value>
   </data>
   <data name="EnableLog" xml:space="preserve">
@@ -3173,7 +3173,7 @@ Wenn die Option wieder deaktiviert wird, werden die Werte nicht mehr verändert.
   <data name="EnterANumberAndSelectAUnitToCalculateTheUnits" xml:space="preserve">
     <value>Geben Sie eine Zahl ein und wählen Sie eine Einheit, um die Einheiten zu berechnen...</value>
   </data>
-  <data name="SettingsViewName_Network" xml:space="preserve">
+  <data name="SettingsName_Network" xml:space="preserve">
     <value>Netzwerk</value>
   </data>
   <data name="Proxy" xml:space="preserve">
@@ -3652,7 +3652,7 @@ Versuchen Sie es in einigen Sekunden erneut.</value>
   <data name="RateLimitReachedTryAgainInXSeconds" xml:space="preserve">
     <value>Rate Limit erreicht! Versuchen Sie es in {0} Sekunden erneut...</value>
   </data>
-  <data name="GroupViewName_General" xml:space="preserve">
+  <data name="ProfileGroup_General" xml:space="preserve">
     <value>Allgemein</value>
   </data>
   <data name="BSSID" xml:space="preserve">
