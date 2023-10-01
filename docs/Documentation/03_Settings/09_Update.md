@@ -37,5 +37,5 @@ Enable experimental features that are not yet complete.
 
 **Default:** `Disabled`
 
-{: .note}
+{: .warning}
 These features may contain bugs, crash the application, or change until release.

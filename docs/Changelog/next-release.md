@@ -43,7 +43,7 @@ Experimental Feature
 - Run command (HotKey: Ctrl+Shift+P) added. This feature allows you to open a command field to switch between applications and pass parameters to them.
 
 {: .note}
-Experimental features can be enabled in the settings under [`Settings > Update`](https://borntoberoot.net/NETworkManager/Documentation/Settings/Update){:target="\_blank"}.
+Experimental features can be enabled in the settings under [`Settings > Update`](https://borntoberoot.net/NETworkManager/Documentation/Settings/Update#experimental-features){:target="\_blank"}.
 
 ## Improvements
 
