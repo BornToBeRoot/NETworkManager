@@ -2617,7 +2617,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Allgemein</value>
   </data>
   <data name="SettingsGroup_Application" xml:space="preserve">
-    <value>Anwendungen</value>
+    <value>Anwendung</value>
   </data>
   <data name="SettingsGroup_General" xml:space="preserve">
     <value>Allgemein</value>
@@ -3660,5 +3660,20 @@ Versuchen Sie es in einigen Sekunden erneut.</value>
   </data>
   <data name="NoReachableHostsFound" xml:space="preserve">
     <value>Keine erreichbaren Hosts gefunden!</value>
+  </data>
+  <data name="ProfileGroup_Application" xml:space="preserve">
+    <value/>
+  </data>
+  <data name="HelpMessage_ExperimentalFeatures" xml:space="preserve">
+    <value>Aktivieren Sie experimentelle Features, um neue Funktionen zu testen. Diese sind noch nicht vollständig, enthalten Fehler, können die Anwendung zum Absturz bringen und können sich bis zur Veröffentlichung noch ändern.</value>
+  </data>
+  <data name="ExperimentalFeatures" xml:space="preserve">
+    <value>Experimentelle Features</value>
+  </data>
+  <data name="Experimental" xml:space="preserve">
+    <value>Experimental</value>
+  </data>
+  <data name="Watermark_RunCommand" xml:space="preserve">
+    <value>Befehl ausführen... (Strg+Shift+P)</value>
   </data>
 </root>
