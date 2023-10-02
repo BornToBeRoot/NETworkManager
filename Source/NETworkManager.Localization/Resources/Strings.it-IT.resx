@@ -2643,7 +2643,7 @@ Vedi messaggio errore: "{0}"</value>
     <value>Generale</value>
   </data>
   <data name="SettingsName_Appearance" xml:space="preserve">
-    <value>Aspetto</value>
+    <value>Apparenza</value>
   </data>
   <data name="SettingsName_Autostart" xml:space="preserve">
     <value>Avvio automatico</value>
@@ -2667,10 +2667,10 @@ Vedi messaggio errore: "{0}"</value>
     <value>Stato</value>
   </data>
   <data name="SettingsName_Update" xml:space="preserve">
-    <value>Aggiorna programma</value>
+    <value>Aggiorna</value>
   </data>
   <data name="SettingsName_Window" xml:space="preserve">
-    <value>Finestra</value>
+    <value>Finestre</value>
   </data>
   <data name="EnableLog" xml:space="preserve">
     <value>Abilita registro eventi</value>
@@ -3748,5 +3748,21 @@ Riprova dentro {0} secondi...</value>
   </data>
   <data name="NoReachableHostsFound" xml:space="preserve">
     <value>Nessun host raggiungibile trovato!</value>
+  </data>
+  <data name="ProfileGroup_Application" xml:space="preserve">
+    <value/>
+  </data>
+  <data name="HelpMessage_ExperimentalFeatures" xml:space="preserve">
+    <value>Abilita le funzionalità sperimentali per testare nuove funzioni. 
+Questi non sono ancora completi, contengono bug, possono mandare in crash l'applicazione e potrebbero cambiare di nuovo fino al rilascio.</value>
+  </data>
+  <data name="ExperimentalFeatures" xml:space="preserve">
+    <value>Funzioni sperimentali</value>
+  </data>
+  <data name="Experimental" xml:space="preserve">
+    <value>Sperimentale</value>
+  </data>
+  <data name="Watermark_RunCommand" xml:space="preserve">
+    <value>Esegui comando... (Ctrl+Maiusc+P)</value>
   </data>
 </root>
