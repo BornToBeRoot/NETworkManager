@@ -3753,7 +3753,7 @@ Riprova dentro {0} secondi...</value>
     <value/>
   </data>
   <data name="HelpMessage_ExperimentalFeatures" xml:space="preserve">
-    <value>Abilita funzionalità sperimentali per testare nuove funzioni. 
+    <value>Abilita le funzionalità sperimentali per testare nuove funzioni. 
 Questi non sono ancora completi, contengono bug, possono mandare in crash l'applicazione e potrebbero cambiare di nuovo fino al rilascio.</value>
   </data>
   <data name="ExperimentalFeatures" xml:space="preserve">
