@@ -10,9 +10,9 @@
         xmlns:application="clr-namespace:NETworkManager.Models;assembly=NETworkManager.Models"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
-        mc:Ignorable="d"
+        mah:DialogParticipation.Register="{Binding}"
         Style="{DynamicResource DefaultWindow}" MinWidth="800" Width="1024" Height="768" MinHeight="600" TitleAlignment="Left" Activated="MetroWindow_Activated"
-        d:DataContext="{d:DesignInstance controls:DragablzTabHostWindow}">
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance controls:DragablzTabHostWindow}">
     <mah:MetroWindow.WindowButtonCommands>
         <mah:WindowButtonCommands Template="{DynamicResource MahApps.Templates.WindowButtonCommands.Win10}" />
     </mah:MetroWindow.WindowButtonCommands>

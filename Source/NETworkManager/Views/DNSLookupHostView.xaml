@@ -8,10 +8,9 @@
         xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-        xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
-        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"             
-        dialogs:DialogParticipation.Register="{Binding}"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        mah:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:DNSLookupHostViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
@@ -27,9 +26,13 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition MinWidth="{x:Static settings:GlobalStaticConfiguration.Profile_WidthCollapsed}" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="{x:Static settings:GlobalStaticConfiguration.Profile_MaxWidthExpanded}" />
         </Grid.ColumnDefinitions>
-        <dragablz:TabablzControl Grid.Column="0" ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}">
+        <dragablz:TabablzControl Grid.Column="0" Grid.Row="0"
+                                 ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}"
+                                 SelectedIndex="{Binding SelectedTabIndex}">
             <dragablz:TabablzControl.InterTabController>
-                <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" MoveWindowWithSolitaryTabs="False" x:Name="InterTabController" />
+                <dragablz:InterTabController x:Name="InterTabController" 
+                    InterTabClient="{Binding InterTabClient}" 
+                                             MoveWindowWithSolitaryTabs="False" />
             </dragablz:TabablzControl.InterTabController>
             <dragablz:TabablzControl.HeaderSuffixContent>
                 <Grid HorizontalAlignment="Right" Width="32" Height="32">

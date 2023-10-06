@@ -3,6 +3,8 @@ using Dragablz;
 using NETworkManager.Settings;
 using NETworkManager.Views;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using NETworkManager.Utilities;
@@ -28,6 +30,9 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
 
     #region Variables
     public IInterTabClient InterTabClient { get; }
+    
+    private readonly IDialogCoordinator _dialogCoordinator;
+    
     private ApplicationName _applicationName;
 
     public ApplicationName ApplicationName
@@ -64,14 +69,28 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
         InitializeComponent();
         DataContext = this;
 
+        _dialogCoordinator = DialogCoordinator.Instance;
+        
         ApplicationName = applicationName;
 
         InterTabClient = new DragablzInterTabClient(applicationName);
 
         InterTabController.Partition = applicationName.ToString();
 
+        AddHandler(DragablzItem.DragCompleted, new DragablzDragCompletedEventHandler(ItemDragCompleted), true);
+        
         Title = $"NETworkManager {AssemblyManager.Current.Version} - {ResourceTranslator.Translate(ResourceIdentifier.ApplicationName, applicationName)}";
     }
+
+    private void ItemDragCompleted(object sender, DragablzDragCompletedEventArgs e)
+    {
+        if (_applicationName == ApplicationName.DNSLookup)
+        {
+            Debug.WriteLine("Dragged: " + ((DragablzTabItem)e.DragablzItem.Content).Id);
+            ((DNSLookupView)((DragablzTabItem)e.DragablzItem.Content).View).OnDragCompleted();
+        }
+    }
+
     #endregion
 
     #region ICommand & Actions
@@ -209,7 +228,8 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
             {
                 ConfigurationManager.OnDialogOpen();
 
-                await this.ShowMessageAsync(Localization.Resources.Strings.Error, string.Format("{0}\n\nMessage:\n{1}", NETworkManager.Localization.Resources.Strings.CouldNotSendKeystroke, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog));
+                await this.ShowMessageAsync(Localization.Resources.Strings.Error,
+                    $"{Localization.Resources.Strings.CouldNotSendKeystroke}\n\nMessage:\n{ex.Message}");
 
                 ConfigurationManager.OnDialogClose();
             }

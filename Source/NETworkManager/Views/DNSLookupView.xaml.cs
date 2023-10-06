@@ -40,4 +40,9 @@ public partial class DNSLookupView
         if (sender is DataGridColumnHeader columnHeader)
             _viewModel.SortResultByPropertyName(columnHeader.Column.SortMemberPath);
     }
+
+    public void OnDragCompleted()
+    {
+        _viewModel.UpdateDialogCoordinator(DialogCoordinator.Instance);
+    }
 }

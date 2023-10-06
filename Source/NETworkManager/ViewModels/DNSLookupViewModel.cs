@@ -26,7 +26,7 @@ public class DNSLookupViewModel : ViewModelBase
 {
     #region Variables
 
-    private readonly IDialogCoordinator _dialogCoordinator;
+    private IDialogCoordinator _dialogCoordinator;
 
     private readonly int _tabId;
     private bool _firstLoad = true;
@@ -467,4 +467,9 @@ public class DNSLookupViewModel : ViewModelBase
         }
     }
     #endregion
+
+    public void UpdateDialogCoordinator(IDialogCoordinator instance)
+    {
+        _dialogCoordinator = instance;
+    }
 }

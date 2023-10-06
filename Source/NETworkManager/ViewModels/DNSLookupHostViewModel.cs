@@ -27,7 +27,7 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
     public IInterTabClient InterTabClient { get; }
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
-    private readonly bool _isLoading = true;
+    private readonly bool _isLoading;
     private bool _isViewActive = true;
 
     private int _tabId;
@@ -159,13 +159,15 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
     #region Constructor, load settings
     public DNSLookupHostViewModel(IDialogCoordinator instance)
     {
+        _isLoading = true;
+        
         _dialogCoordinator = instance;
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.DNSLookup);
 
         TabItems = new ObservableCollection<DragablzTabItem>
         {
-            new DragablzTabItem(Localization.Resources.Strings.NewTab, new DNSLookupView (_tabId), _tabId)
+            new(Localization.Resources.Strings.NewTab, new DNSLookupView (_tabId), _tabId)
         };
 
         // Profiles
