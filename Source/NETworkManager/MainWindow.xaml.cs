@@ -604,7 +604,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         }
     }
 
-    public ICommand RunCommandHotKey => new RelayCommand(_ => ComboBoxRunCommand.Focus());
+    public ICommand RunCommandHotKey => new RelayCommand(_ => ComboBoxRunCommand.Focus(), _ => !IsAnyDialogOpen );
 
     public ICommand RunCommandEnterCommand => new RelayCommand(_ => RunCommandEnterAction());
 
