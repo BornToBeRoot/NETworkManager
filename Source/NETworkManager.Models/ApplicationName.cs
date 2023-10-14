@@ -106,6 +106,11 @@ public enum ApplicationName
     Whois,
 
     /// <summary>
+    /// IP geolocation application.
+    /// </summary>
+    IPGeolocation,
+    
+    /// <summary>
     /// Subnet calculator application.
     /// </summary>
     SubnetCalculator,

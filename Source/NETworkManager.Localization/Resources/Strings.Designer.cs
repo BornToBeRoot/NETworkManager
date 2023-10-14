@@ -780,6 +780,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to IP Geolocation.
+        /// </summary>
+        public static string ApplicationName_IPGeolocation {
+            get {
+                return ResourceManager.GetString("ApplicationName_IPGeolocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to IP Scanner.
         /// </summary>
         public static string ApplicationName_IPScanner {
