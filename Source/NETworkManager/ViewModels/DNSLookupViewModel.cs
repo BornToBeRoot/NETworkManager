@@ -65,7 +65,7 @@ public class DNSLookupViewModel : ViewModelBase
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.DNSLookup_SelectedDNSServer_v2 = value;
+                SettingsManager.Current.DNSLookup_SelectedDNSServer = value;
 
             _dnsServer = value;
             OnPropertyChanged();
@@ -211,13 +211,13 @@ public class DNSLookupViewModel : ViewModelBase
 
         HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.DNSLookup_HostHistory);
 
-        DNSServers = new CollectionViewSource { Source = SettingsManager.Current.DNSLookup_DNSServers_v2 }.View;
+        DNSServers = new CollectionViewSource { Source = SettingsManager.Current.DNSLookup_DNSServers }.View;
         DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerConnectionInfoProfile.UseWindowsDNSServer),
             ListSortDirection.Descending));
         DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerConnectionInfoProfile.Name),
             ListSortDirection.Ascending));
         DNSServer = DNSServers.SourceCollection.Cast<DNSServerConnectionInfoProfile>()
-                        .FirstOrDefault(x => x.Name == SettingsManager.Current.DNSLookup_SelectedDNSServer_v2.Name) ??
+                        .FirstOrDefault(x => x.Name == SettingsManager.Current.DNSLookup_SelectedDNSServer.Name) ??
                     DNSServers.SourceCollection.Cast<DNSServerConnectionInfoProfile>().First();
 
         ResultsView = CollectionViewSource.GetDefaultView(Results);

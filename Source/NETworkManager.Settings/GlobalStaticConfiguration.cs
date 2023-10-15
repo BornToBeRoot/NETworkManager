@@ -209,6 +209,9 @@ public static class GlobalStaticConfiguration
 
     // Application: Whois
     public static ExportFileType Whois_ExportFileType => ExportFileType.Txt;
+    
+    // Application: IP Geolocation
+    public static ExportFileType IPGeolocation_ExportFileType => ExportFileType.Csv;
 
     // Application: Connections
     public static ExportFileType Connections_ExportFileType => ExportFileType.Csv;

@@ -223,7 +223,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         Hosts = hostOrIPRange;
 
         // Host history
-        HostsHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.IPScanner_HostsHistory);
+        HostsHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.IPScanner_HostHistory);
 
         // Result view
         ResultsView = CollectionViewSource.GetDefaultView(Results);
@@ -513,14 +513,14 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private void AddHostToHistory(string ipRange)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.IPScanner_HostsHistory.ToList(), ipRange, SettingsManager.Current.General_HistoryListEntries);
+        var list = ListHelper.Modify(SettingsManager.Current.IPScanner_HostHistory.ToList(), ipRange, SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items
-        SettingsManager.Current.IPScanner_HostsHistory.Clear();
+        SettingsManager.Current.IPScanner_HostHistory.Clear();
         OnPropertyChanged(nameof(Hosts)); // Raise property changed again, after the collection has been cleared
 
         // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.IPScanner_HostsHistory.Add(x));
+        list.ForEach(x => SettingsManager.Current.IPScanner_HostHistory.Add(x));
     }
 
     private async Task Export()

@@ -18,7 +18,7 @@ using System.Collections.Generic;
 
 namespace NETworkManager.ViewModels;
 
-public class WhoisHostViewModel : ViewModelBase, IProfileManager
+public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
     private readonly IDialogCoordinator _dialogCoordinator;
@@ -122,7 +122,7 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.Whois_ExpandProfileView = value;
+                SettingsManager.Current.IPGeolocation_ExpandProfileView = value;
 
             _expandProfileView = value;
 
@@ -143,7 +143,7 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
                 return;
 
             if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.Profile_FloatPointFix) // Do not save the size when collapsed
-                SettingsManager.Current.Whois_ProfileWidth = value.Value;
+                SettingsManager.Current.IPGeolocation_ProfileWidth = value.Value;
 
             _profileWidth = value;
 
@@ -157,17 +157,17 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #region Constructor
-    public WhoisHostViewModel(IDialogCoordinator instance)
+    public IPGeolocationHostViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
         
         _dialogCoordinator = instance;
 
-        InterTabClient = new DragablzInterTabClient(ApplicationName.Whois);
+        InterTabClient = new DragablzInterTabClient(ApplicationName.IPGeolocation);
 
         TabItems = new ObservableCollection<DragablzTabItem>
         {
-            new(Localization.Resources.Strings.NewTab, new WhoisView (_tabId), _tabId)
+            new(Localization.Resources.Strings.NewTab, new IPGeolocationView (_tabId), _tabId)
         };
 
         // Profiles
@@ -185,11 +185,11 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
 
     private void LoadSettings()
     {
-        ExpandProfileView = SettingsManager.Current.Whois_ExpandProfileView;
+        ExpandProfileView = SettingsManager.Current.IPGeolocation_ExpandProfileView;
 
-        ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.Whois_ProfileWidth) : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
+        ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.IPGeolocation_ProfileWidth) : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
 
-        _tempProfileWidth = SettingsManager.Current.Whois_ProfileWidth;
+        _tempProfileWidth = SettingsManager.Current.IPGeolocation_ProfileWidth;
     }
 
     #endregion
@@ -211,14 +211,14 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
 
     private void QueryProfileAction()
     {
-        AddTab(SelectedProfile.Whois_Domain);
+        AddTab(SelectedProfile.IPGeolocation_Host);
     }
     
     public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.Whois).ConfigureAwait(false);
+        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.IPGeolocation).ConfigureAwait(false);
     }
 
     private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
@@ -262,7 +262,7 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
 
     private static void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
     {
-        ((args.DragablzItem.Content as DragablzTabItem)?.View as WhoisView)?.CloseTab();
+        ((args.DragablzItem.Content as DragablzTabItem)?.View as IPGeolocationView)?.CloseTab();
     }
     #endregion
 
@@ -295,7 +295,7 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
     {
         _tabId++;
 
-        TabItems.Add(new DragablzTabItem(domain ?? Localization.Resources.Strings.NewTab, new WhoisView(_tabId, domain), _tabId));
+        TabItems.Add(new DragablzTabItem(domain ?? Localization.Resources.Strings.NewTab, new IPGeolocationView(_tabId, domain), _tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }
@@ -314,7 +314,7 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
 
     private void SetProfilesView(ProfileInfo profile = null)
     {
-        Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.Whois_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name) }.View;
+        Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.IPGeolocation_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name) }.View;
 
         Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
 
@@ -334,8 +334,8 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
                 return !string.IsNullOrEmpty(info.Tags) && info.PingMonitor_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
             */
 
-            // Search by: Name, Whois_Domain
-            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.Whois_Domain.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
+            // Search by: Name, IPGeolocation_Host
+            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.IPGeolocation_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
         // Set specific profile or first if null

@@ -37,7 +37,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         }
     }
 
-    private List<string> ServerInfoProfileNames => SettingsManager.Current.DNSLookup_DNSServers_v2.Where(x => !x.UseWindowsDNSServer).Select(x => x.Name).ToList();
+    private List<string> ServerInfoProfileNames => SettingsManager.Current.DNSLookup_DNSServers.Where(x => !x.UseWindowsDNSServer).Select(x => x.Name).ToList();
 
     private bool _addDNSSuffix;
     public bool AddDNSSuffix
@@ -219,7 +219,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
 
         _dialogCoordinator = instance;
 
-        DNSServers = CollectionViewSource.GetDefaultView(SettingsManager.Current.DNSLookup_DNSServers_v2);
+        DNSServers = CollectionViewSource.GetDefaultView(SettingsManager.Current.DNSLookup_DNSServers);
         DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerConnectionInfoProfile.Name), ListSortDirection.Ascending));
         DNSServers.Filter = o =>
         {
@@ -286,7 +286,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            SettingsManager.Current.DNSLookup_DNSServers_v2.Add(new DNSServerConnectionInfoProfile(instance.Name, instance.Servers.ToList()));
+            SettingsManager.Current.DNSLookup_DNSServers.Add(new DNSServerConnectionInfoProfile(instance.Name, instance.Servers.ToList()));
         }, instance =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -311,8 +311,8 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            SettingsManager.Current.DNSLookup_DNSServers_v2.Remove(SelectedDNSServer);
-            SettingsManager.Current.DNSLookup_DNSServers_v2.Add(new DNSServerConnectionInfoProfile(instance.Name, instance.Servers.ToList()));
+            SettingsManager.Current.DNSLookup_DNSServers.Remove(SelectedDNSServer);
+            SettingsManager.Current.DNSLookup_DNSServers.Add(new DNSServerConnectionInfoProfile(instance.Name, instance.Servers.ToList()));
         }, instance =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -337,7 +337,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            SettingsManager.Current.DNSLookup_DNSServers_v2.Remove(SelectedDNSServer);
+            SettingsManager.Current.DNSLookup_DNSServers.Remove(SelectedDNSServer);
         }, instance =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);

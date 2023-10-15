@@ -258,7 +258,7 @@ public static class SettingsManager
 
         // Add new DNS lookup profiles
         Log.Info("Init \"DNSLookup_DNSServers_v2\" with default DNS servers...");
-        Current.DNSLookup_DNSServers_v2 = new ObservableCollection<DNSServerConnectionInfoProfile>(DNSServer.GetDefaultList());
+        Current.DNSLookup_DNSServers = new ObservableCollection<DNSServerConnectionInfoProfile>(DNSServer.GetDefaultList());
     }
 
     /// <summary>
@@ -300,6 +300,10 @@ public static class SettingsManager
         // Add IP geolocation application
         Log.Info("Add new app \"IP Geolocation\"...");
         Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.IPGeolocation));
+        
+        // Add DNS lookup profiles after refactoring
+        Log.Info("Init \"DNSLookup_DNSServers\" with default DNS servers...");
+        Current.DNSLookup_DNSServers = new ObservableCollection<DNSServerConnectionInfoProfile>(DNSServer.GetDefaultList());
     }
     #endregion
 }

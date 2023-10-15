@@ -4,18 +4,26 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"        
-        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"                             
-        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"                           
         xmlns:resources="clr-namespace:NETworkManager.Properties"
         xmlns:networkManager="clr-namespace:NETworkManager"
         xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance networkManager:StatusWindow}"
-        Title="{x:Static resources:Resources.NETworkManager_ProjectName}" Style="{DynamicResource DefaultWindow}" Deactivated="MetroWindow_Deactivated" Height="280" Width="950" ShowInTaskbar="False" ResizeMode="NoResize" IsWindowDraggable="False" ShowMinButton="False" ShowMaxRestoreButton="False" ShowCloseButton="False" ShowTitleBar="False" Closing="MetroWindow_Closing" >
+        Title="{x:Static resources:Resources.NETworkManager_ProjectName}" 
+        Style="{DynamicResource DefaultWindow}" 
+        Deactivated="MetroWindow_Deactivated" 
+        Height="280" Width="950"
+        Topmost="True"
+        ShowInTaskbar="False"
+        ResizeMode="NoResize" 
+        IsWindowDraggable="False"
+        ShowMinButton="False" 
+        ShowMaxRestoreButton="False" 
+        ShowCloseButton="False" 
+        ShowTitleBar="False" 
+        Closing="MetroWindow_Closing" >
     <mah:MetroWindow.Resources>
-        <converters:Bytes1000ToSpeedConverter x:Key="Bytes1000ToSpeedConverter" />
-        <converters:IPAddressArrayToStringConverter x:Key="IPAddressArrayToStringConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
     </mah:MetroWindow.Resources>
     <Grid Margin="10">
         <Grid>

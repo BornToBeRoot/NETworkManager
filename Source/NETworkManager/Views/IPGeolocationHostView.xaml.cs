@@ -6,11 +6,11 @@ using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
-public partial class WhoisHostView
+public partial class IPGeolocationHostView
 {
-    private readonly WhoisHostViewModel _viewModel = new(DialogCoordinator.Instance);
+    private readonly IPGeolocationHostViewModel _viewModel = new(DialogCoordinator.Instance);
 
-    public WhoisHostView()
+    public IPGeolocationHostView()
     {
         InitializeComponent();
         DataContext = _viewModel;
