@@ -26,7 +26,7 @@ public partial class StatusWindow : MetroWindow, INotifyPropertyChanged
     private readonly DispatcherTimer _dispatcherTimerClose = new(DispatcherPriority.Normal);
 
     private readonly MainWindow _mainWindow;
-    private readonly NetworkConnectionView _networkConnectionView;
+    private readonly NetworkConnectionWidgetView _networkConnectionView;
 
     private bool _showTime;
     public bool ShowTime
@@ -82,7 +82,7 @@ public partial class StatusWindow : MetroWindow, INotifyPropertyChanged
         _dispatcherTimerClose.Interval = new System.TimeSpan(0, 0, 0, 0, 250);
         _dispatcherTimerClose.Tick += DispatcherTimerTime_Tick;
 
-        _networkConnectionView = new NetworkConnectionView();
+        _networkConnectionView = new NetworkConnectionWidgetView();
         ContentControlNetworkConnection.Content = _networkConnectionView;
     }
     #endregion

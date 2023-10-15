@@ -4,11 +4,11 @@ using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
-public partial class IPApiDNSResolverView
+public partial class NetworkConnectionWidgetView
 {
-    private readonly IPApiDNSResolverViewModel _viewModel = new();
+    private readonly NetworkConnectionWidgetViewModel _viewModel = new();
 
-    public IPApiDNSResolverView()
+    public NetworkConnectionWidgetView()
     {
         InitializeComponent();
         DataContext = _viewModel;
@@ -22,11 +22,11 @@ public partial class IPApiDNSResolverView
 
     public void Reload()
     {
-        _viewModel.Check();
+        _viewModel.CheckConnection();
     }
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e)
     {
-        _viewModel.Check();
+        _viewModel.CheckConnection();
     }
 }

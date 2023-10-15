@@ -16,7 +16,7 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
-public class NetworkConnectionViewModel : ViewModelBase
+public class NetworkConnectionWidgetViewModel : ViewModelBase
 {
     #region  Variables 
     private bool _isChecking;
@@ -423,7 +423,7 @@ public class NetworkConnectionViewModel : ViewModelBase
 
     #region Constructor, load settings
 
-    public NetworkConnectionViewModel()
+    public NetworkConnectionWidgetViewModel()
     {
         // Detect if network address or status changed...
         NetworkChange.NetworkAvailabilityChanged += (_, _) => CheckConnection();

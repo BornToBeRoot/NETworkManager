@@ -4,11 +4,11 @@ using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
-public partial class NetworkConnectionView
+public partial class IPApiIPGeolocationWidgetView
 {
-    private readonly NetworkConnectionViewModel _viewModel = new();
+    private readonly IPApiIPGeolocationWidgetViewModel _viewModel = new();
 
-    public NetworkConnectionView()
+    public IPApiIPGeolocationWidgetView()
     {
         InitializeComponent();
         DataContext = _viewModel;
@@ -22,11 +22,11 @@ public partial class NetworkConnectionView
 
     public void Reload()
     {
-        _viewModel.CheckConnection();
+        _viewModel.Check();
     }
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e)
     {
-        _viewModel.CheckConnection();
+        _viewModel.Check();
     }
 }

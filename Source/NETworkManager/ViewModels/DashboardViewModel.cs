@@ -2,12 +2,6 @@
 
 public class DashboardViewModel : ViewModelBase
 {
-    #region  Variables 
-    
-    #endregion
-
-    #region Constructor, load settings
-
     public DashboardViewModel()
     {
         LoadSettings();
@@ -17,13 +11,6 @@ public class DashboardViewModel : ViewModelBase
     {
 
     }
-    #endregion
-
-    #region ICommands & Actions
-
-    #endregion
-
-    #region Methods
 
     public void OnViewVisible()
     {
@@ -34,10 +21,5 @@ public class DashboardViewModel : ViewModelBase
     {
 
     }
-    #endregion
-
-    #region Events
-   
-    #endregion
 }
 

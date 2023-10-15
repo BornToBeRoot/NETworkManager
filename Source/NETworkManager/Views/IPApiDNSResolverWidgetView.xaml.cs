@@ -4,11 +4,11 @@ using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
-public partial class IPApiIPGeolocationView
+public partial class IPApiDNSResolverWidgetView
 {
-    private readonly IPApiIPGeolocationViewModel _viewModel = new();
+    private readonly IPApiDNSResolverWidgetViewModel _viewModel = new();
 
-    public IPApiIPGeolocationView()
+    public IPApiDNSResolverWidgetView()
     {
         InitializeComponent();
         DataContext = _viewModel;
