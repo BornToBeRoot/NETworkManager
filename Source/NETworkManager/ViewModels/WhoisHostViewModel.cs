@@ -52,7 +52,7 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
     public ICollectionView Profiles
     {
         get => _profiles;
-        set
+        private set
         {
             if (value == _profiles)
                 return;

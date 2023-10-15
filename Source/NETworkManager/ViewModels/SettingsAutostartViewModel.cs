@@ -22,7 +22,7 @@ public class SettingsAutostartViewModel : ViewModelBase
                 return;
 
             if (!_isLoading)
-                EnableDisableAutostart(value);
+                EnableDisableAutostart(value).ConfigureAwait(true);
 
             _startWithWindows = value;
             OnPropertyChanged();

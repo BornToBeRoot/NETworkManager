@@ -453,18 +453,16 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     #region Methods
     public void CheckConnection()
     {
-        Debug.WriteLine("Check network connection....");
-
         CheckConnectionAsync().ConfigureAwait(false);
     }
 
-    CancellationTokenSource tokenSource;
-    CancellationToken ct;
+    private CancellationTokenSource _tokenSource;
+    private CancellationToken _ct;
 
     private async Task CheckConnectionAsync()
     {
         // Already in queue
-        if (tokenSource != null && tokenSource.IsCancellationRequested)
+        if (_tokenSource != null && _tokenSource.IsCancellationRequested)
         {
             return;
         }
@@ -472,7 +470,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         // Cancel if running
         if (IsChecking)
         {
-            tokenSource.Cancel();
+            _tokenSource.Cancel();
 
             while (IsChecking)
             {
@@ -483,8 +481,8 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         // Start check
         IsChecking = true;
 
-        tokenSource = new CancellationTokenSource();
-        ct = tokenSource.Token;
+        _tokenSource = new CancellationTokenSource();
+        _ct = _tokenSource.Token;
 
         try
         {
@@ -492,13 +490,13 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
              {
                  List<Task> tasks = new()
                  {
-                     CheckConnectionComputerAsync(ct),
-                     CheckConnectionRouterAsync(ct),
-                     CheckConnectionInternetAsync(ct)
+                     CheckConnectionComputerAsync(_ct),
+                     CheckConnectionRouterAsync(_ct),
+                     CheckConnectionInternetAsync(_ct)
                  };
 
                  await Task.WhenAll(tasks);
-             }, tokenSource.Token);
+             }, _tokenSource.Token);
         }
         catch (OperationCanceledException)
         {
@@ -506,7 +504,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         }
         finally
         {
-            tokenSource.Dispose();
+            _tokenSource.Dispose();
             IsChecking = false;
         }
     }

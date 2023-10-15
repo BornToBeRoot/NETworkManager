@@ -46,8 +46,8 @@ public class TigerVNCConnectViewModel : ViewModelBase
     
     public TigerVNCConnectViewModel(Action<TigerVNCConnectViewModel> connectCommand, Action<TigerVNCConnectViewModel> cancelHandler, string host = null)
     {
-        ConnectCommand = new RelayCommand(p => connectCommand(this));
-        CancelCommand = new RelayCommand(p => cancelHandler(this));
+        ConnectCommand = new RelayCommand(_ => connectCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
         if (!string.IsNullOrEmpty(host))
             Host = host;

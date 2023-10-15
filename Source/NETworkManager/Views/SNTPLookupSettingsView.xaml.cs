@@ -24,6 +24,6 @@ public partial class SNTPLookupSettingsView
 
     private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        _viewModel.EditServer();
+        _viewModel.EditServer().ConfigureAwait(false);
     }
 }

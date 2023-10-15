@@ -133,8 +133,8 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
 
     public RemoteDesktopConnectViewModel(Action<RemoteDesktopConnectViewModel> connectCommand, Action<RemoteDesktopConnectViewModel> cancelHandler,(string Name, string Host)? connectAsOptions = null)
     {
-        ConnectCommand = new RelayCommand(p => connectCommand(this));
-        CancelCommand = new RelayCommand(p => cancelHandler(this));
+        ConnectCommand = new RelayCommand(_ => connectCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
         if (connectAsOptions == null)
         {

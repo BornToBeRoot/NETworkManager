@@ -15,7 +15,6 @@ using NETworkManager.Profiles;
 using System.Windows.Threading;
 using System.Collections.Generic;
 using NETworkManager.Models;
-using Amazon.EC2.Model;
 
 namespace NETworkManager.ViewModels;
 

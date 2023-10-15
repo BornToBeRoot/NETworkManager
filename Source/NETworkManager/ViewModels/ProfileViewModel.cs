@@ -13,6 +13,7 @@ using NETworkManager.Models.PuTTY;
 using System.Security;
 using NETworkManager.Models;
 using NETworkManager.Models.Network;
+// ReSharper disable InconsistentNaming
 
 namespace NETworkManager.ViewModels;
 
@@ -1094,7 +1095,7 @@ public class ProfileViewModel : ViewModelBase
         }
     }
 
-    public IEnumerable<KeyboardHookMode> RemoteDesktop_KeyboardHookModes => System.Enum.GetValues(typeof(KeyboardHookMode)).Cast<KeyboardHookMode>();
+    public IEnumerable<KeyboardHookMode> RemoteDesktop_KeyboardHookModes => Enum.GetValues(typeof(KeyboardHookMode)).Cast<KeyboardHookMode>();
 
     private KeyboardHookMode _remoteDesktop_KeyboardHookMode;
     public KeyboardHookMode RemoteDesktop_KeyboardHookMode
@@ -1566,11 +1567,11 @@ public class ProfileViewModel : ViewModelBase
         }
     }
 
-    private List<ExecutionPolicy> _powerShell_ExecutionPolicies = new();
+    private readonly List<ExecutionPolicy> _powerShell_ExecutionPolicies = new();
     public List<ExecutionPolicy> PowerShell_ExecutionPolicies
     {
         get => _powerShell_ExecutionPolicies;
-        set
+        private init
         {
             if (value == _powerShell_ExecutionPolicies)
                 return;
@@ -2067,7 +2068,7 @@ public class ProfileViewModel : ViewModelBase
     public ConnectionMode PuTTY_ConnectionMode
     {
         get => _puTTY_ConnectionMode;
-        set
+        private set
         {
             if (value == _puTTY_ConnectionMode)
                 return;
@@ -2641,8 +2642,8 @@ public class ProfileViewModel : ViewModelBase
         ProfileViews = new CollectionViewSource { Source = ProfileViewManager.List }.View;
         ProfileViews.SortDescriptions.Add(new SortDescription(nameof(ProfileViewInfo.Name), ListSortDirection.Ascending));
 
-        SaveCommand = new RelayCommand(p => saveCommand(this));
-        CancelCommand = new RelayCommand(p => cancelHandler(this));
+        SaveCommand = new RelayCommand(_ => saveCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
         var profileInfo = profile ?? new ProfileInfo();
 
@@ -2891,7 +2892,7 @@ public class ProfileViewModel : ViewModelBase
 
     public ICommand CancelCommand { get; }
 
-    public ICommand ResolveHostCommand => new RelayCommand(async p => await ResolveHostActionAsync());
+    public ICommand ResolveHostCommand => new RelayCommand(async _ => await ResolveHostActionAsync());
 
     private async System.Threading.Tasks.Task ResolveHostActionAsync()
     {

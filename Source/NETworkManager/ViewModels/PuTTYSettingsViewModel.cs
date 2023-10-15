@@ -419,7 +419,7 @@ public class PuTTYSettingsViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
-    public ICommand ApplicationBrowseFileCommand => new RelayCommand(p => ApplicationBrowseFileAction());
+    public ICommand ApplicationBrowseFileCommand => new RelayCommand(_ => ApplicationBrowseFileAction());
 
     private void ApplicationBrowseFileAction()
     {
@@ -432,14 +432,14 @@ public class PuTTYSettingsViewModel : ViewModelBase
             ApplicationFilePath = openFileDialog.FileName;
     }
 
-    public ICommand ConfigureCommand => new RelayCommand(p => ConfigureAction());
+    public ICommand ConfigureCommand => new RelayCommand(_ => ConfigureAction());
 
     private void ConfigureAction()
     {
-        Configure();
+        Configure().ConfigureAwait(false);
     }
 
-    public ICommand PrivateKeyFileBrowseFileCommand => new RelayCommand(p => PrivateKeyFileBrowseFileAction());
+    public ICommand PrivateKeyFileBrowseFileCommand => new RelayCommand(_ => PrivateKeyFileBrowseFileAction());
 
     private void PrivateKeyFileBrowseFileAction()
     {
@@ -452,7 +452,7 @@ public class PuTTYSettingsViewModel : ViewModelBase
             PrivateKeyFile = openFileDialog.FileName;
     }
 
-    public ICommand LogPathBrowseFolderCommand => new RelayCommand(p => LogPathBrowseFolderAction());
+    public ICommand LogPathBrowseFolderCommand => new RelayCommand(_ => LogPathBrowseFolderAction());
 
     private void LogPathBrowseFolderAction()
     {

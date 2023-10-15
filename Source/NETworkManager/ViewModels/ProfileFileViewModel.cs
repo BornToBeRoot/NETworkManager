@@ -41,14 +41,14 @@ public class ProfileFileViewModel : ViewModelBase
 
     public ProfileFileViewModel(Action<ProfileFileViewModel> addCommand, Action<ProfileFileViewModel> cancelHandler, ProfileFileInfo info = null)
     {
-        AcceptCommand = new RelayCommand(p => addCommand(this));
-        CancelCommand = new RelayCommand(p => cancelHandler(this));
+        AcceptCommand = new RelayCommand(_ => addCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
-        if (info != null)
-        {
-            Name = info.Name;
+        if (info == null) 
+            return;
+        
+        Name = info.Name;
             
-            IsEdit = true;
-        }
+        IsEdit = true;
     }
 }

@@ -2,7 +2,6 @@
 using NETworkManager.Controls;
 using Dragablz;
 using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Views;
 using NETworkManager.Utilities;
 using NETworkManager.Models;
@@ -12,13 +11,13 @@ namespace NETworkManager.ViewModels;
 public class SNTPLookupHostViewModel : ViewModelBase
 {
     #region Variables
-    private readonly IDialogCoordinator _dialogCoordinator;        
-
-    public IInterTabClient InterTabClient { get; }
+ public IInterTabClient InterTabClient { get; }
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
-    private readonly bool _isLoading = true;
+#pragma warning disable CS0414 // Field is assigned but its value is never used
+    private readonly bool _isLoading;
     private bool _isViewActive = true;
+#pragma warning restore CS0414 // Field is assigned but its value is never used
 
     private int _tabId;
 
@@ -38,15 +37,15 @@ public class SNTPLookupHostViewModel : ViewModelBase
     #endregion
 
     #region Constructor, load settings
-    public SNTPLookupHostViewModel(IDialogCoordinator instance)
+    public SNTPLookupHostViewModel()
     {
-        _dialogCoordinator = instance;
-
+        _isLoading = true;
+        
         InterTabClient = new DragablzInterTabClient(ApplicationName.SNTPLookup);
 
         TabItems = new ObservableCollection<DragablzTabItem>
         {
-            new DragablzTabItem(Localization.Resources.Strings.NewTab, new SNTPLookupView (_tabId), _tabId)
+            new(Localization.Resources.Strings.NewTab, new SNTPLookupView (_tabId), _tabId)
         };
         
         LoadSettings();
@@ -61,7 +60,7 @@ public class SNTPLookupHostViewModel : ViewModelBase
     #endregion
 
     #region ICommand & Actions
-    public ICommand AddTabCommand => new RelayCommand(p => AddTabAction());
+    public ICommand AddTabCommand => new RelayCommand(_ => AddTabAction());
 
     private void AddTabAction()
     {
@@ -77,7 +76,8 @@ public class SNTPLookupHostViewModel : ViewModelBase
     #endregion
 
     #region Methods
-    public void AddTab()
+
+    private void AddTab()
     {
         _tabId++;
 
@@ -95,15 +95,5 @@ public class SNTPLookupHostViewModel : ViewModelBase
     {
         _isViewActive = false;
     }
-
-    public void RefreshProfiles()
-    {
-        if (!_isViewActive)
-            return;
-    }
-    #endregion
-
-    #region Event
-    
     #endregion
 }

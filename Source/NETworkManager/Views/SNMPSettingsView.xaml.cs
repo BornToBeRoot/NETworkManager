@@ -23,6 +23,6 @@ public partial class SNMPSettingsView
 
     private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        _viewModel.EditOIDProfile();
+        _viewModel.EditOIDProfile().ConfigureAwait(false);
     }
 }

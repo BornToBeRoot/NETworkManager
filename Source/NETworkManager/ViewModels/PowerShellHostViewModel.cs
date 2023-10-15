@@ -21,7 +21,6 @@ using NETworkManager.Models.EventSystem;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.ComponentModel.DataAnnotations;
 
 namespace NETworkManager.ViewModels;
 
@@ -34,7 +33,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     public IInterTabClient InterTabClient { get; }
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
-    private readonly bool _isLoading = true;
+    private readonly bool _isLoading;
     private bool _isViewActive = true;
 
     private bool _isConfigured;
@@ -87,11 +86,11 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     }
     #region Profiles
 
-    public ICollectionView _profiles;
+    private ICollectionView _profiles;
     public ICollectionView Profiles
     {
         get => _profiles;
-        set
+        private set
         {
             if (value == _profiles)
                 return;
@@ -135,18 +134,6 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     }
 
     private bool _textBoxSearchIsFocused;
-    public bool TextBoxSearchIsFocused
-    {
-        get => _textBoxSearchIsFocused;
-        set
-        {
-            if (value == _textBoxSearchIsFocused)
-                return;
-
-            _textBoxSearchIsFocused = value;
-            OnPropertyChanged();
-        }
-    }
 
     private bool _isSearching;
     public bool IsSearching
@@ -227,6 +214,8 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     #region Constructor, load settings
     public PowerShellHostViewModel(IDialogCoordinator instance)
     {
+        _isLoading = true;
+        
         _dialogCoordinator = instance;
 
         CheckSettings();
@@ -271,11 +260,11 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
     private bool Connect_CanExecute(object obj) => IsConfigured;
 
-    public ICommand ConnectCommand => new RelayCommand(p => ConnectAction(), Connect_CanExecute);
+    public ICommand ConnectCommand => new RelayCommand(_ => ConnectAction(), Connect_CanExecute);
 
     private void ConnectAction()
     {
-        Connect();
+        Connect().ConfigureAwait(false);
     }
 
     private bool IsConnected_CanExecute(object view)
@@ -290,11 +279,11 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
     private void ReconnectAction(object view)
     {
-        if (view is PowerShellControl control)
-        {
-            if (control.ReconnectCommand.CanExecute(null))
-                control.ReconnectCommand.Execute(null);
-        }
+        if (view is not PowerShellControl control) 
+            return;
+        
+        if (control.ReconnectCommand.CanExecute(null))
+            control.ReconnectCommand.Execute(null);
     }
 
     public ICommand ResizeWindowCommand => new RelayCommand(ResizeWindowAction, IsConnected_CanExecute);
@@ -305,7 +294,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
             control.ResizeEmbeddedWindow();
     }
    
-    public ICommand ConnectProfileCommand => new RelayCommand(p => ConnectProfileAction(), ConnectProfile_CanExecute);
+    public ICommand ConnectProfileCommand => new RelayCommand(_ => ConnectProfileAction(), ConnectProfile_CanExecute);
 
     private bool ConnectProfile_CanExecute(object obj)
     {
@@ -317,78 +306,68 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         ConnectProfile();
     }
 
-    public ICommand ConnectProfileExternalCommand => new RelayCommand(p => ConnectProfileExternalAction());
+    public ICommand ConnectProfileExternalCommand => new RelayCommand(_ => ConnectProfileExternalAction());
 
     private void ConnectProfileExternalAction()
     {
         ConnectProfileExternal();
     }
 
-    public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
+    public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.PowerShell);
+        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.PowerShell).ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamic;
+    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
 
-    public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction(), ModifyProfile_CanExecute);
+    public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
     private void EditProfileAction()
     {
-        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
     }
 
-    public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction(), ModifyProfile_CanExecute);
+    public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
     }
 
-    public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction(), ModifyProfile_CanExecute);
+    public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
 
     private void DeleteProfileAction()
     {
-        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile });
+        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile }).ConfigureAwait(false);
     }
 
     public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()));
+        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString())).ConfigureAwait(false);
     }
 
     public ICommand TextBoxSearchGotFocusCommand
     {
-        get { return new RelayCommand(p => TextBoxSearchGotFocusAction()); }
+        get { return new RelayCommand(_ => _textBoxSearchIsFocused = true); }
     }
-
-    private void TextBoxSearchGotFocusAction()
-    {
-        TextBoxSearchIsFocused = true;
-    }
-
+    
     public ICommand TextBoxSearchLostFocusCommand
     {
-        get { return new RelayCommand(p => TextBoxSearchLostFocusAction()); }
+        get { return new RelayCommand(_ => _textBoxSearchIsFocused = false); }
     }
 
-    private void TextBoxSearchLostFocusAction()
-    {
-        TextBoxSearchIsFocused = false;
-    }
-
-    public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
+    public ICommand ClearSearchCommand => new RelayCommand(_ => ClearSearchAction());
 
     private void ClearSearchAction()
     {
         Search = string.Empty;
     }
 
-    public ICommand OpenSettingsCommand => new RelayCommand(p => OpenSettingsAction());
+    public ICommand OpenSettingsCommand => new RelayCommand(_ => OpenSettingsAction());
 
     private static void OpenSettingsAction()
     {
@@ -431,7 +410,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
             // Connect
             Connect(sessionInfo);
-        }, async instance =>
+        }, async _ =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             ConfigurationManager.OnDialogClose();
@@ -476,7 +455,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
     public void AddTab(string host)
     {
-        Connect(host);
+        Connect(host).ConfigureAwait(false);
     }
 
     // Modify history list
@@ -519,7 +498,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
            - Header ContextMenu is opened
            - Profile ContextMenu is opened
         */
-        if (TextBoxSearchIsFocused || HeaderContextMenuIsOpen || ProfileContextMenuIsOpen)
+        if (_textBoxSearchIsFocused || HeaderContextMenuIsOpen || ProfileContextMenuIsOpen)
             return;
 
         (SelectedTabItem?.View as PowerShellControl)?.FocusEmbeddedWindow();
@@ -575,7 +554,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
     }
 
-    public void RefreshProfiles()
+    private void RefreshProfiles()
     {
         if (!_isViewActive)
             return;

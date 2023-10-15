@@ -151,11 +151,11 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     }
     #region Profiles
 
-    public ICollectionView _profiles;
+    private ICollectionView _profiles;
     public ICollectionView Profiles
     {
         get => _profiles;
-        set
+        private set
         {
             if (value == _profiles)
                 return;

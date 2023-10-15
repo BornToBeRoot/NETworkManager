@@ -13,8 +13,6 @@ namespace NETworkManager.ViewModels;
 
 public class PortProfilesViewModel : ViewModelBase
 {
-    private readonly bool _isLoading;
-
     public ICommand OKCommand { get; }
 
     public ICommand CancelCommand { get; }
@@ -55,10 +53,8 @@ public class PortProfilesViewModel : ViewModelBase
 
     public PortProfilesViewModel(Action<PortProfilesViewModel> okCommand, Action<PortProfilesViewModel> cancelHandler)
     {
-        _isLoading = true;
-
-        OKCommand = new RelayCommand(p => okCommand(this));
-        CancelCommand = new RelayCommand(p => cancelHandler(this));
+        OKCommand = new RelayCommand(_ => okCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
         PortProfiles = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_PortProfiles);
         PortProfiles.SortDescriptions.Add(new SortDescription(nameof(PortProfileInfo.Name), ListSortDirection.Ascending));
@@ -75,11 +71,9 @@ public class PortProfilesViewModel : ViewModelBase
             // Search: Name, Ports
             return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.Ports.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
-
-        _isLoading = false;
     }
 
-    public List<PortProfileInfo> GetSelectedPortProfiles()
+    public IEnumerable<PortProfileInfo> GetSelectedPortProfiles()
     {
         return new List<PortProfileInfo>(SelectedPortProfiles.Cast<PortProfileInfo>());
     }

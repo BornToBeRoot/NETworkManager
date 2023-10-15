@@ -44,8 +44,14 @@
                 </ContextMenu>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (network:DNSServerConnectionInfoProfile.Name)}" MinWidth="200" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.DNSServers}" Binding="{Binding (network:DNSServerConnectionInfoProfile.Servers), Converter={StaticResource ListServerConnectionInfoToStringConverter}}" MinWidth="250" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" 
+                                    Binding="{Binding (network:DNSServerConnectionInfoProfile.Name)}"
+                                    SortMemberPath="Name"
+                                    MinWidth="200" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.DNSServers}" 
+                                    Binding="{Binding (network:DNSServerConnectionInfoProfile.Servers), Converter={StaticResource ListServerConnectionInfoToStringConverter}}" 
+                                    CanUserSort="False"
+                                    MinWidth="250" />
             </DataGrid.Columns>
             <DataGrid.InputBindings>
                 <KeyBinding Command="{Binding EditDNSServerCommand}" Key="F2" />

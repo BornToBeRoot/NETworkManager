@@ -45,16 +45,16 @@ public class SettingsSettingsViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
-    public ICommand OpenLocationCommand => new RelayCommand(p => OpenLocationAction());
+    public ICommand OpenLocationCommand => new RelayCommand(_ => OpenLocationAction());
 
     private static void OpenLocationAction()
     {
         Process.Start("explorer.exe", SettingsManager.GetSettingsFolderLocation());
     }        
 
-    public ICommand ResetSettingsCommand => new RelayCommand(p => ResetSettingsAction());
+    public ICommand ResetSettingsCommand => new RelayCommand(_ => ResetSettingsAction());
 
-    public async void ResetSettingsAction()
+    private async void ResetSettingsAction()
     {
         var settings = AppearanceManager.MetroDialog;
 
@@ -70,7 +70,7 @@ public class SettingsSettingsViewModel : ViewModelBase
         SettingsManager.Initialize();
         
         // Restart the application
-        (Application.Current.MainWindow as MainWindow).RestartApplication();
+        (Application.Current.MainWindow as MainWindow)?.RestartApplication();
     }
     #endregion
 }

@@ -32,7 +32,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
     public IInterTabClient InterTabClient { get; }
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
-    private readonly bool _isLoading = true;
+    private readonly bool _isLoading;
     private bool _isViewActive = true;
 
     private bool _isConfigured;
@@ -64,11 +64,11 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
     }
 
     #region Profiles
-    public ICollectionView _profiles;
+    private ICollectionView _profiles;
     public ICollectionView Profiles
     {
         get => _profiles;
-        set
+        private set
         {
             if (value == _profiles)
                 return;
@@ -175,6 +175,8 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
     #region Constructor, load settings
     public TigerVNCHostViewModel(IDialogCoordinator instance)
     {
+        _isLoading = true;
+        
         _dialogCoordinator = instance;
 
         CheckSettings();
@@ -219,11 +221,11 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 
     private bool Connect_CanExecute(object obj) => IsConfigured;
 
-    public ICommand ConnectCommand => new RelayCommand(p => ConnectAction(), Connect_CanExecute);
+    public ICommand ConnectCommand => new RelayCommand(_ => ConnectAction(), Connect_CanExecute);
 
     private void ConnectAction()
     {
-        Connect();
+        Connect().ConfigureAwait(false);
     }
 
     public ICommand ReconnectCommand => new RelayCommand(ReconnectAction);
@@ -237,7 +239,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    public ICommand ConnectProfileCommand => new RelayCommand(p => ConnectProfileAction(), ConnectProfile_CanExecute);
+    public ICommand ConnectProfileCommand => new RelayCommand(_ => ConnectProfileAction(), ConnectProfile_CanExecute);
 
     private bool ConnectProfile_CanExecute(object obj)
     {
@@ -249,58 +251,58 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
         ConnectProfile();
     }
 
-    public ICommand ConnectProfileExternalCommand => new RelayCommand(p => ConnectProfileExternalAction());
+    public ICommand ConnectProfileExternalCommand => new RelayCommand(_ => ConnectProfileExternalAction());
 
     private void ConnectProfileExternalAction()
     {
         ConnectProfileExternal();
     }
 
-    public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
+    public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.TigerVNC);
+        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.TigerVNC).ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamic;
+    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
 
-    public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction(), ModifyProfile_CanExecute);
+    public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
     private void EditProfileAction()
     {
-        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
     }
 
-    public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction(), ModifyProfile_CanExecute);
+    public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
     }
 
-    public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction(), ModifyProfile_CanExecute);
+    public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
 
     private void DeleteProfileAction()
     {
-        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile });
+        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile }).ConfigureAwait(false);
     }
 
     public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()));
+        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString())).ConfigureAwait(false);
     }
 
-    public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
+    public ICommand ClearSearchCommand => new RelayCommand(_ => ClearSearchAction());
 
     private void ClearSearchAction()
     {
         Search = string.Empty;
     }
 
-    public ICommand OpenSettingsCommand => new RelayCommand(p => OpenSettingsAction());
+    public ICommand OpenSettingsCommand => new RelayCommand(_ => OpenSettingsAction());
 
     private static void OpenSettingsAction()
     {
@@ -341,7 +343,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 
             // Connect
             Connect(sessionInfo);
-        }, async instance =>
+        }, async _ =>
          {
              await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
              ConfigurationManager.OnDialogClose();
@@ -383,7 +385,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 
     public void AddTab(string host)
     {
-        Connect(host);
+        Connect(host).ConfigureAwait(false);
     }
 
     // Modify history list
@@ -475,7 +477,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
     }
 
-    public void RefreshProfiles()
+    private void RefreshProfiles()
     {
         if (!_isViewActive)
             return;

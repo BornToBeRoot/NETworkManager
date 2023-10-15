@@ -1,14 +1,11 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Models;
+﻿using NETworkManager.Models;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
 public partial class SNTPLookupHostView
 {
-    private readonly SNTPLookupHostViewModel _viewModel = new (DialogCoordinator.Instance);
+    private readonly SNTPLookupHostViewModel _viewModel = new ();
 
     public SNTPLookupHostView()
     {

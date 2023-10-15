@@ -83,7 +83,7 @@ public class SettingsViewModel : ViewModelBase
     public UserControl SettingsContent
     {
         get => _settingsContent;
-        set
+        private set
         {
             if (Equals(value, _settingsContent))
                 return;
@@ -110,9 +110,9 @@ public class SettingsViewModel : ViewModelBase
         }
     }
 
-    private SettingsGeneralView _settingsGerneralView;
+    private SettingsGeneralView _settingsGeneralView;
     private SettingsWindowView _settingsWindowView;
-    private SettingsAppearanceView _settingsApperanceView;
+    private SettingsAppearanceView _settingsAppearanceView;
     private SettingsLanguageView _settingsLanguageView;
     private SettingsNetworkView _settingsNetworkView;
     private SettingsStatusView _settingsStatusView;
@@ -169,7 +169,7 @@ public class SettingsViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
-    public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
+    public ICommand ClearSearchCommand => new RelayCommand(_ => ClearSearchAction());
 
     private void ClearSearchAction()
     {
@@ -199,9 +199,9 @@ public class SettingsViewModel : ViewModelBase
         switch (settingsViewInfo.Name)
         {
             case SettingsName.General:
-                _settingsGerneralView ??= new SettingsGeneralView();
+                _settingsGeneralView ??= new SettingsGeneralView();
 
-                SettingsContent = _settingsGerneralView;
+                SettingsContent = _settingsGeneralView;
                 break;
             case SettingsName.Window:
                 _settingsWindowView ??= new SettingsWindowView();
@@ -209,9 +209,9 @@ public class SettingsViewModel : ViewModelBase
                 SettingsContent = _settingsWindowView;
                 break;
             case SettingsName.Appearance:
-                _settingsApperanceView ??= new SettingsAppearanceView();
+                _settingsAppearanceView ??= new SettingsAppearanceView();
 
-                SettingsContent = _settingsApperanceView;
+                SettingsContent = _settingsAppearanceView;
                 break;
             case SettingsName.Language:
                 _settingsLanguageView ??= new SettingsLanguageView();

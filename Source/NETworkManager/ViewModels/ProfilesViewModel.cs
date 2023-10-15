@@ -149,57 +149,57 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #region Commands & Actions
-    public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
+    public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, SelectedGroup?.Name);
+        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, SelectedGroup?.Name).ConfigureAwait(false);
     }
 
-    public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction(), EditProfile_CanExecute);
+    public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), EditProfile_CanExecute);
 
-    private bool EditProfile_CanExecute(object paramter) => SelectedProfiles.Count == 1;
+    private bool EditProfile_CanExecute(object parameter) => SelectedProfiles.Count == 1;
 
     private void EditProfileAction()
     {
-        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamic;
+    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
 
-    public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction(), ModifyProfile_CanExecute);
+    public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
     }
 
-    public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction(), ModifyProfile_CanExecute);
+    public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
 
     private void DeleteProfileAction()
     {
-        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo>(SelectedProfiles.Cast<ProfileInfo>()));
+        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo>(SelectedProfiles.Cast<ProfileInfo>())).ConfigureAwait(false);
     }
 
-    public ICommand AddGroupCommand => new RelayCommand(p => AddGroupAction());
+    public ICommand AddGroupCommand => new RelayCommand(_ => AddGroupAction());
 
     private void AddGroupAction()
     {
-        ProfileDialogManager.ShowAddGroupDialog(this, _dialogCoordinator);
+        ProfileDialogManager.ShowAddGroupDialog(this, _dialogCoordinator).ConfigureAwait(false);
     }
 
-    public ICommand EditGroupCommand => new RelayCommand(p => EditGroupAction());
+    public ICommand EditGroupCommand => new RelayCommand(_ => EditGroupAction());
 
     private void EditGroupAction()
     {
-        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, SelectedGroup);
+        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, SelectedGroup).ConfigureAwait(false);
     }
 
-    public ICommand DeleteGroupCommand => new RelayCommand(p => DeleteGroupAction());
+    public ICommand DeleteGroupCommand => new RelayCommand(_ => DeleteGroupAction());
 
     private void DeleteGroupAction()
     {
-        ProfileDialogManager.ShowDeleteGroupDialog(this, _dialogCoordinator, SelectedGroup);
+        ProfileDialogManager.ShowDeleteGroupDialog(this, _dialogCoordinator, SelectedGroup).ConfigureAwait(false);
     }
     #endregion
 

@@ -30,7 +30,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     public IInterTabClient InterTabClient { get; }
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
-    private readonly bool _isLoading = true;
+    private readonly bool _isLoading;
     private bool _isViewActive = true;
 
     private int _selectedTabIndex;
@@ -48,11 +48,11 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     }
 
     #region Profiles
-    public ICollectionView _profiles;
+    private ICollectionView _profiles;
     public ICollectionView Profiles
     {
         get => _profiles;
-        set
+        private set
         {
             if (value == _profiles)
                 return;
@@ -159,6 +159,8 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     #region Constructor, load settings
     public RemoteDesktopHostViewModel(IDialogCoordinator instance)
     {
+        _isLoading = true;
+        
         _dialogCoordinator = instance;
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.RemoteDesktop);
@@ -190,11 +192,11 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #region ICommand & Actions        
-    public ICommand ConnectCommand => new RelayCommand(p => ConnectAction());
+    public ICommand ConnectCommand => new RelayCommand(_ => ConnectAction());
 
     private void ConnectAction()
     {
-        Connect();
+        Connect().ConfigureAwait(false);
     }
 
     private bool IsConnected_CanExecute(object view)
@@ -255,24 +257,25 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
     private async void SendCtrlAltDelAction(object view)
     {
-        if (view is RemoteDesktopControl control)
+        if (view is not RemoteDesktopControl control) 
+            return;
+        
+        try
         {
-            try
-            {
-                control.SendKey(Keystroke.CtrlAltDel);
-            }
-            catch (Exception ex)
-            {
-                ConfigurationManager.OnDialogOpen();
+            control.SendKey(Keystroke.CtrlAltDel);
+        }
+        catch (Exception ex)
+        {
+            ConfigurationManager.OnDialogOpen();
 
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, string.Format("{0}\n\nMessage:\n{1}", Localization.Resources.Strings.CouldNotSendKeystroke, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog));
+            await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error,
+                $"{Localization.Resources.Strings.CouldNotSendKeystroke}\n\nMessage:\n{ex.Message}");
 
-                ConfigurationManager.OnDialogClose();
-            }
+            ConfigurationManager.OnDialogClose();
         }
     }
 
-    public ICommand ConnectProfileCommand => new RelayCommand(p => ConnectProfileAction(), ConnectProfile_CanExecute);
+    public ICommand ConnectProfileCommand => new RelayCommand(_ => ConnectProfileAction(), ConnectProfile_CanExecute);
 
     private bool ConnectProfile_CanExecute(object obj)
     {
@@ -284,58 +287,58 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
         ConnectProfile();
     }
 
-    public ICommand ConnectProfileAsCommand => new RelayCommand(p => ConnectProfileAsAction());
+    public ICommand ConnectProfileAsCommand => new RelayCommand(_ => ConnectProfileAsAction());
 
     private void ConnectProfileAsAction()
     {
-        ConnectProfileAs();
+        ConnectProfileAs().ConfigureAwait(false);
     }
 
-    public ICommand ConnectProfileExternalCommand => new RelayCommand(p => ConnectProfileExternalAction());
+    public ICommand ConnectProfileExternalCommand => new RelayCommand(_ => ConnectProfileExternalAction());
 
     private void ConnectProfileExternalAction()
     {
         Process.Start("mstsc.exe", $"/V:{SelectedProfile.RemoteDesktop_Host}");
     }
 
-    public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
+    public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.RemoteDesktop);
+        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.RemoteDesktop).ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamic;
+    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
 
-    public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction(), ModifyProfile_CanExecute);
+    public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
     private void EditProfileAction()
     {
-        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
     }
 
-    public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction(), ModifyProfile_CanExecute);
+    public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
     }
 
-    public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction(), ModifyProfile_CanExecute);
+    public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
 
     private void DeleteProfileAction()
     {
-        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile });
+        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile }).ConfigureAwait(false);
     }
 
     public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()));
+        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString())).ConfigureAwait(false);
     }
 
-    public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
+    public ICommand ClearSearchCommand => new RelayCommand(_ => ClearSearchAction());
 
     private void ClearSearchAction()
     {
@@ -393,7 +396,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
             AddHostToHistory(instance.Host);
 
             Connect(sessionInfo);
-        }, async instance =>
+        }, async _ =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             ConfigurationManager.OnDialogClose();
@@ -448,7 +451,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
             }
 
             Connect(sessionInfo, instance.Name);
-        }, async instance =>
+        }, async _ =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             ConfigurationManager.OnDialogClose();
@@ -471,7 +474,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
     public void AddTab(string host)
     {
-        Connect(host);
+        Connect(host).ConfigureAwait(false);
     }
 
     // Modify history list
@@ -555,7 +558,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
     }
 
-    public void RefreshProfiles()
+    private void RefreshProfiles()
     {
         if (!_isViewActive)
             return;

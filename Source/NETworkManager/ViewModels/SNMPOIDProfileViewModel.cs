@@ -51,7 +51,7 @@ public class SNMPOIDProfileViewModel : ViewModelBase
         }
     }
 
-    public List<SNMPMode> Modes { get; set; }
+    public List<SNMPMode> Modes { get; }
 
     private SNMPMode _mode;
     public SNMPMode Mode
@@ -108,8 +108,8 @@ public class SNMPOIDProfileViewModel : ViewModelBase
     {
         _isLoading = true;
 
-        SaveCommand = new RelayCommand(p => saveCommand(this));
-        CancelCommand = new RelayCommand(p => cancelHandler(this));
+        SaveCommand = new RelayCommand(_ => saveCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
         Modes = new List<SNMPMode> { SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set };
         
@@ -124,7 +124,7 @@ public class SNMPOIDProfileViewModel : ViewModelBase
         _isLoading = false;
     }
 
-    public void Validate()
+    private void Validate()
     {
         InfoChanged = _info.Name != Name || _info.OID != OID || _info.Mode != Mode;
     }

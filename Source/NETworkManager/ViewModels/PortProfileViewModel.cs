@@ -51,7 +51,7 @@ public class PortProfileViewModel : ViewModelBase
 
     private readonly PortProfileInfo _info;
 
-    private string _previousPortAsString;
+    private readonly string _previousPortAsString;
 
     private bool _infoChanged;
     public bool InfoChanged
@@ -85,8 +85,8 @@ public class PortProfileViewModel : ViewModelBase
     {
         _isLoading = true;
 
-        SaveCommand = new RelayCommand(p => saveCommand(this));
-        CancelCommand = new RelayCommand(p => cancelHandler(this));
+        SaveCommand = new RelayCommand(_ => saveCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
         IsEdited = isEdited;
 
@@ -103,7 +103,7 @@ public class PortProfileViewModel : ViewModelBase
         _isLoading = false;
     }
 
-    public void Validate()
+    private void Validate()
     {
         InfoChanged = _info.Name != Name || _previousPortAsString != Ports;
     }

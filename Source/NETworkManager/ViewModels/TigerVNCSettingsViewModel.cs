@@ -1,6 +1,5 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Settings;
-using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
 using System.Diagnostics;
@@ -89,7 +88,7 @@ public class TigerVNCSettingsViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
-    public ICommand BrowseFileCommand => new RelayCommand(p => BrowseFileAction());
+    public ICommand BrowseFileCommand => new RelayCommand(_ => BrowseFileAction());
 
     private void BrowseFileAction()
     {
@@ -102,11 +101,11 @@ public class TigerVNCSettingsViewModel : ViewModelBase
             ApplicationFilePath = openFileDialog.FileName;
     }
 
-    public ICommand ConfigureCommand => new RelayCommand(p => ConfigureAction());
+    public ICommand ConfigureCommand => new RelayCommand(_ => ConfigureAction());
 
     private void ConfigureAction()
     {
-        Configure();
+        Configure().ConfigureAwait(false);
     }
     #endregion
 

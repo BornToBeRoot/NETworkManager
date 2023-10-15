@@ -32,7 +32,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     public IInterTabClient InterTabClient { get; }
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
-    private readonly bool _isLoading = true;
+    private readonly bool _isLoading;
     private bool _isViewActive = true;
 
     private bool _isConfigured;
@@ -85,11 +85,11 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     }
 
     #region Profiles
-    public ICollectionView _profiles;
+    private ICollectionView _profiles;
     public ICollectionView Profiles
     {
         get => _profiles;
-        set
+        private set
         {
             if (value == _profiles)
                 return;
@@ -133,19 +133,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     }
 
     private bool _textBoxSearchIsFocused;
-    public bool TextBoxSearchIsFocused
-    {
-        get => _textBoxSearchIsFocused;
-        set
-        {
-            if (value == _textBoxSearchIsFocused)
-                return;
-
-            _textBoxSearchIsFocused = value;
-            OnPropertyChanged();
-        }
-    }
-
+   
     private bool _isSearching;
     public bool IsSearching
     {
@@ -225,6 +213,8 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     #region Constructor, load settings
     public PuTTYHostViewModel(IDialogCoordinator instance)
     {
+        _isLoading = true;
+        
         _dialogCoordinator = instance;
 
         CheckSettings();
@@ -258,9 +248,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         _tempProfileWidth = SettingsManager.Current.PuTTY_ProfileWidth;
     }
     #endregion
-
    
-
     #region ICommand & Actions
     public ItemActionCallback CloseItemCommand => CloseItemAction;
 
@@ -274,11 +262,11 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         return IsConfigured;
     }
 
-    public ICommand ConnectCommand => new RelayCommand(p => ConnectAction(), Connect_CanExecute);
+    public ICommand ConnectCommand => new RelayCommand(_ => ConnectAction(), Connect_CanExecute);
 
     private void ConnectAction()
     {
-        Connect();
+        Connect().ConfigureAwait(false);
     }
 
     private bool IsConnected_CanExecute(object view)
@@ -293,11 +281,11 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
     private void ReconnectAction(object view)
     {
-        if (view is PuTTYControl control)
-        {
-            if (control.ReconnectCommand.CanExecute(null))
-                control.ReconnectCommand.Execute(null);
-        }
+        if (view is not PuTTYControl control) 
+            return;
+        
+        if (control.ReconnectCommand.CanExecute(null))
+            control.ReconnectCommand.Execute(null);
     }
 
     public ICommand ResizeWindowCommand => new RelayCommand(ResizeWindowAction, IsConnected_CanExecute);
@@ -316,7 +304,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
             control.RestartSession();
     }
     
-    public ICommand ConnectProfileCommand => new RelayCommand(p => ConnectProfileAction(), ConnectProfile_CanExecute);
+    public ICommand ConnectProfileCommand => new RelayCommand(_ => ConnectProfileAction(), ConnectProfile_CanExecute);
 
     private bool ConnectProfile_CanExecute(object obj)
     {
@@ -328,78 +316,68 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         ConnectProfile();
     }
 
-    public ICommand ConnectProfileExternalCommand => new RelayCommand(p => ConnectProfileExternalAction());
+    public ICommand ConnectProfileExternalCommand => new RelayCommand(_ => ConnectProfileExternalAction());
 
     private void ConnectProfileExternalAction()
     {
         ConnectProfileExternal();
     }
 
-    public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
+    public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.PuTTY);
+        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.PuTTY).ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamic;
+    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
 
-    public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction(), ModifyProfile_CanExecute);
+    public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
     private void EditProfileAction()
     {
-        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
     }
 
-    public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction(), ModifyProfile_CanExecute);
+    public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
     }
 
-    public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction(), ModifyProfile_CanExecute);
+    public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
 
     private void DeleteProfileAction()
     {
-        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile });
+        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile }).ConfigureAwait(false);
     }
 
     public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()));
+        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString())).ConfigureAwait(false);
     }
 
     public ICommand TextBoxSearchGotFocusCommand
     {
-        get { return new RelayCommand(p => TextBoxSearchGotFocusAction()); }
-    }
-
-    private void TextBoxSearchGotFocusAction()
-    {
-        TextBoxSearchIsFocused = true;
+        get { return new RelayCommand(_ => _textBoxSearchIsFocused = true); }
     }
 
     public ICommand TextBoxSearchLostFocusCommand
     {
-        get { return new RelayCommand(p => TextBoxSearchLostFocusAction()); }
+        get { return new RelayCommand(_ => _textBoxSearchIsFocused = false); }
     }
 
-    private void TextBoxSearchLostFocusAction()
-    {
-        TextBoxSearchIsFocused = false;
-    }
-
-    public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
+    public ICommand ClearSearchCommand => new RelayCommand(_ => ClearSearchAction());
 
     private void ClearSearchAction()
     {
         Search = string.Empty;
     }
 
-    public ICommand OpenSettingsCommand => new RelayCommand(p => OpenSettingsAction());
+    public ICommand OpenSettingsCommand => new RelayCommand(_ => OpenSettingsAction());
 
     private static void OpenSettingsAction()
     {
@@ -456,7 +434,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
             AddProfileToHistory(instance.Profile);
 
             Connect(sessionInfo);
-        }, async instance =>
+        }, async _ =>
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.OnDialogClose();
@@ -481,7 +459,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         // Create log path
         DirectoryHelper.CreateWithEnvironmentVariables(Settings.Application.PuTTY.LogPath);
 
-        PuTTYSessionInfo sessionInfo = NETworkManager.Profiles.Application.PuTTY.CreateSessionInfo(SelectedProfile);
+        var sessionInfo = NETworkManager.Profiles.Application.PuTTY.CreateSessionInfo(SelectedProfile);
 
         ProcessStartInfo info = new()
         {
@@ -507,7 +485,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
     public void AddTab(string host)
     {
-        Connect(host);
+        Connect(host).ConfigureAwait(false);
     }
 
     // Modify history list
@@ -598,7 +576,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
            - Header ContextMenu is opened
            - Profile ContextMenu is opened
         */
-        if (TextBoxSearchIsFocused || HeaderContextMenuIsOpen || ProfileContextMenuIsOpen)
+        if (_textBoxSearchIsFocused || HeaderContextMenuIsOpen || ProfileContextMenuIsOpen)
             return;
 
         (SelectedTabItem?.View as PuTTYControl)?.FocusEmbeddedWindow();
@@ -654,7 +632,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
     }
 
-    public void RefreshProfiles()
+    private void RefreshProfiles()
     {
         if (!_isViewActive)
             return;

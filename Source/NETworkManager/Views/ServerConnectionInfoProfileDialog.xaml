@@ -70,8 +70,14 @@
                 </ContextMenu>
             </controls:MultiSelectDataGrid.Resources>
             <controls:MultiSelectDataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Server}" Binding="{Binding (network:ServerConnectionInfo.Server)}" Width="250" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Port}" Binding="{Binding (network:ServerConnectionInfo.Port)}" Width="*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Server}"
+                                    Binding="{Binding (network:ServerConnectionInfo.Server)}"
+                                    SortMemberPath="Server"
+                                    Width="250" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Port}"
+                                    SortMemberPath="Port"
+                                    Binding="{Binding (network:ServerConnectionInfo.Port)}" 
+                                    Width="*" />
             </controls:MultiSelectDataGrid.Columns>
             <controls:MultiSelectDataGrid.InputBindings>
                 <KeyBinding Command="{Binding DeleteServerCommand}" Key="Delete" />

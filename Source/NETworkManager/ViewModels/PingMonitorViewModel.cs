@@ -27,16 +27,15 @@ public class PingMonitorViewModel : ViewModelBase
 
     public readonly Guid HostId;
     private readonly Action<Guid> _closeCallback;
-    private readonly PingMonitorOptions _pingMonitorOptions;
     private bool _firstLoad = true;
 
     private List<PingInfo> _pingInfoList;
 
-    private string _host;
+    private readonly string _host;
     public string Host
     {
         get => _host;
-        set
+        private init
         {
             if (value == _host)
                 return;
@@ -46,13 +45,13 @@ public class PingMonitorViewModel : ViewModelBase
         }
     }
 
-    private IPAddress _ipAddress;
+    private readonly IPAddress _ipAddress;
     public IPAddress IPAddress
     {
         get => _ipAddress;
-        set
+        private init
         {
-            if (value == _ipAddress)
+            if (Equals(value, _ipAddress))
                 return;
 
             _ipAddress = value;
@@ -92,7 +91,7 @@ public class PingMonitorViewModel : ViewModelBase
     public DateTime StatusTime
     {
         get => _statusTime;
-        set
+        private set
         {
             if (value == _statusTime)
                 return;
@@ -120,7 +119,7 @@ public class PingMonitorViewModel : ViewModelBase
     public int Received
     {
         get => _received;
-        set
+        private set
         {
             if (value == _received)
                 return;
@@ -172,7 +171,7 @@ public class PingMonitorViewModel : ViewModelBase
     public string ErrorMessage
     {
         get => _errorMessage;
-        set
+        private set
         {
             if (value == _errorMessage)
                 return;
@@ -204,10 +203,9 @@ public class PingMonitorViewModel : ViewModelBase
 
         HostId = hostId;
         _closeCallback = closeCallback;
-        _pingMonitorOptions = options;
 
-        Host = _pingMonitorOptions.Host;
-        IPAddress = _pingMonitorOptions.IPAddress;
+        Host = options.Host;
+        IPAddress = options.IPAddress;
 
         InitialTimeChart();
     }
@@ -224,14 +222,14 @@ public class PingMonitorViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
-    public ICommand PingCommand => new RelayCommand(p => PingAction());
+    public ICommand PingCommand => new RelayCommand(_ => PingAction());
 
     private void PingAction()
     {
         Ping();
     }
 
-    public ICommand CloseCommand => new RelayCommand(p => CloseAction());
+    public ICommand CloseCommand => new RelayCommand(_ => CloseAction());
 
     private void CloseAction()
     {
@@ -289,7 +287,7 @@ public class PingMonitorViewModel : ViewModelBase
         _cancellationTokenSource?.Cancel();
     }
 
-    public void ResetTimeChart()
+    private void ResetTimeChart()
     {
         if (Series == null)
             return;
@@ -331,7 +329,13 @@ public class PingMonitorViewModel : ViewModelBase
 
             SettingsManager.Current.PingMonitor_ExportFileType = instance.FileType;
             SettingsManager.Current.PingMonitor_ExportFilePath = instance.FilePath;
-        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportFileType[] { ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json }, false, SettingsManager.Current.PingMonitor_ExportFileType, SettingsManager.Current.PingMonitor_ExportFilePath);
+        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, 
+            new[]
+            {
+                ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
+            }, false, 
+            SettingsManager.Current.PingMonitor_ExportFileType,
+            SettingsManager.Current.PingMonitor_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {
