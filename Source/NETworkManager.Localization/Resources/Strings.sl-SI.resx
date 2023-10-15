@@ -1934,7 +1934,9 @@ Spremembe te vrednosti bodo uveljavljene po ponovnem zagonu aplikacije.</value>
     <value>Preveri javni naslov IP</value>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
-    <value>Hvala, ker uporabljate NETworkManager! Če vam je to orodje všeč, pustite zvezdico na GitHubu in ga priporočite drugim.</value>
+    <value>Hvala, ker uporabljate NETworkManager!
+
+Če vam je to orodje všeč, pustite zvezdico na GitHubu in ga priporočite drugim.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Ob zagonu programa ta v ozadju preveri, če je na GitHubu na voljo nova različica programa.
@@ -1981,15 +1983,6 @@ URL: https://api.ipify.org and https://api6.ipify.org</value>
   </data>
   <data name="CheckNetworkAdapterConfigurationAndNetworkConnectionMessage" xml:space="preserve">
     <value>Preverite nastavitve svoje omrežne kartice (DHCP, statiččni IP)  in ali ste povezani v omrežje.</value>
-  </data>
-  <data name="ConnectionState_Error" xml:space="preserve">
-    <value>Napaka</value>
-  </data>
-  <data name="ConnectionState_OK" xml:space="preserve">
-    <value>Vredu</value>
-  </data>
-  <data name="ConnectionState_Warning" xml:space="preserve">
-    <value>Opozorilo</value>
   </data>
   <data name="CouldNotDetectGatewayIPAddressMessage" xml:space="preserve">
     <value>Ni bilo mogoče zaznati prehoda naslova IP!</value>
@@ -2436,14 +2429,14 @@ $$hostname$$--&gt;Ime gostitelja</value>
   <data name="DiscoveryProtocol" xml:space="preserve">
     <value>Protokol odkritja</value>
   </data>
-  <data name="DiscoveryProtocolIdentifier_CDP" xml:space="preserve">
+  <data name="DiscoveryProtocol_Cdp" xml:space="preserve">
     <value>CDP</value>
   </data>
-  <data name="DiscoveryProtocolIdentifier_LLDP" xml:space="preserve">
+  <data name="DiscoveryProtocol_Lldp" xml:space="preserve">
     <value>LLDP</value>
   </data>
-  <data name="DiscoveryProtocolIdentifier_LLDP_CDP" xml:space="preserve">
-    <value>LLDP/CDP</value>
+  <data name="DiscoveryProtocol_LldpCdp" xml:space="preserve">
+    <value>LLDP / CDP</value>
   </data>
   <data name="XXSecondsRemainingDots" xml:space="preserve">
     <value>{0} preostalih sekund...</value>
@@ -2620,7 +2613,7 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>Splošno</value>
   </data>
   <data name="SettingsGroup_Application" xml:space="preserve">
-    <value>Programi</value>
+    <value>Aplikacije</value>
   </data>
   <data name="SettingsGroup_General" xml:space="preserve">
     <value>Splošno</value>
@@ -2983,9 +2976,6 @@ Sporočilo o napaki:
   </data>
   <data name="DeleteProfilesMessage" xml:space="preserve">
     <value>Izbrani profili bodo trajno izbrisani.</value>
-  </data>
-  <data name="UnlockTheProfileFileMessage2" xml:space="preserve">
-    <value>Odklenite datoteko profila, da dodate, spremenite ali izbrišete profile!</value>
   </data>
   <data name="UseCustomThemes" xml:space="preserve">
     <value>Uporabi teme po meri</value>
@@ -3613,7 +3603,9 @@ V zgornjem desnem kotu kliknite na gumb za Pomoč/Dokumentacijo (levo od gumba z
     <value>Preveri geolokacijo IP</value>
   </data>
   <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
-    <value>Reševalec DNS se določi prek ip-api.com. URL: http://edns.ip-api.com/</value>
+    <value>Reševalec DNS se določi prek ip-api.com.
+
+URL: https://edns.ip-api.com/</value>
   </data>
   <data name="HelpMessage_CheckIPGeolocation" xml:space="preserve">
     <value>Geolokacija IP se določi preko ip-api.com. URL: http://ip-api.com/</value>
@@ -3635,5 +3627,35 @@ V zgornjem desnem kotu kliknite na gumb za Pomoč/Dokumentacijo (levo od gumba z
   </data>
   <data name="HTTPStatusCode" xml:space="preserve">
     <value>Koda stanja HTTP</value>
+  </data>
+  <data name="Accen_Steel" xml:space="preserve">
+    <value>Jeklo</value>
+  </data>
+  <data name="RateLimitReachedTryAgainInXSeconds" xml:space="preserve">
+    <value>Omejitev stopnje je dosežena! Poskusite znova čez {0} sekund ...</value>
+  </data>
+  <data name="ProfileGroup_General" xml:space="preserve">
+    <value>Splošno</value>
+  </data>
+  <data name="BSSID" xml:space="preserve">
+    <value>BSSID</value>
+  </data>
+  <data name="NoReachableHostsFound" xml:space="preserve">
+    <value>Ni dosegljivih gostiteljev!</value>
+  </data>
+  <data name="ProfileGroup_Application" xml:space="preserve">
+    <value/>
+  </data>
+  <data name="HelpMessage_ExperimentalFeatures" xml:space="preserve">
+    <value>Omogočite eksperimentalne funkcije, da preizkusite nove funkcije. Te še niso dokončane, vsebujejo napake, lahko zrušijo aplikacijo in se lahko znova spremenijo do izdaje.</value>
+  </data>
+  <data name="ExperimentalFeatures" xml:space="preserve">
+    <value>Eksperimentalne funkcije</value>
+  </data>
+  <data name="Experimental" xml:space="preserve">
+    <value>Experimentalno</value>
+  </data>
+  <data name="Watermark_RunCommand" xml:space="preserve">
+    <value>Zaženi ukaz... (Ctrl+Shift+P)</value>
   </data>
 </root>
