@@ -24,7 +24,7 @@ public partial class StatusWindow : INotifyPropertyChanged
     
     #region Variables
 
-    // Set prio to make the ui smoother
+    // Set priority to make the ui smoother
     private readonly DispatcherTimer _dispatcherTimerClose = new(DispatcherPriority.Normal);
 
     private readonly MainWindow _mainWindow;
