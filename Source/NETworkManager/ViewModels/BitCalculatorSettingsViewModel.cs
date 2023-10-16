@@ -10,7 +10,7 @@ public class BitCalculatorSettingsViewModel : ViewModelBase
     #region Variables
     private readonly bool _isLoading;
 
-    public List<BitCaluclatorNotation> Notations { get; set; }
+    public List<BitCaluclatorNotation> Notations { get; private set; }
 
     private BitCaluclatorNotation _notation;
     public BitCaluclatorNotation Notation

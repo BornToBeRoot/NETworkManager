@@ -40,7 +40,7 @@ public class ArpTableAddEntryViewModel : ViewModelBase
 
     public ArpTableAddEntryViewModel(Action<ArpTableAddEntryViewModel> addCommand, Action<ArpTableAddEntryViewModel> cancelHandler)
     {
-        AddCommand = new RelayCommand(p => addCommand(this));
-        CancelCommand = new RelayCommand(p => cancelHandler(this));
+        AddCommand = new RelayCommand(_ => addCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
     }        
 }

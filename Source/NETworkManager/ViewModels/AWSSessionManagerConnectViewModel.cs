@@ -62,8 +62,8 @@ public class AWSSessionManagerConnectViewModel : ViewModelBase
 
     public AWSSessionManagerConnectViewModel(Action<AWSSessionManagerConnectViewModel> connectCommand, Action<AWSSessionManagerConnectViewModel> cancelHandler)
     {
-        ConnectCommand = new RelayCommand(p => connectCommand(this));
-        CancelCommand = new RelayCommand(p => cancelHandler(this));
+        ConnectCommand = new RelayCommand(_ => connectCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
         InstanceIDHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.AWSSessionManager_InstanceIDHistory);
         ProfileHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.AWSSessionManager_ProfileHistory);

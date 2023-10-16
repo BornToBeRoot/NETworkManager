@@ -2,15 +2,13 @@
 using NETworkManager.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
-using NETworkManager.Settings;
-using NETworkManager.Profiles;
 using NETworkManager.Models;
 
 namespace NETworkManager.Views;
 
 public partial class PortScannerHostView
 {
-    private readonly PortScannerHostViewModel _viewModel = new PortScannerHostViewModel(DialogCoordinator.Instance);
+    private readonly PortScannerHostViewModel _viewModel = new(DialogCoordinator.Instance);
 
     public PortScannerHostView()
     {
@@ -35,11 +33,6 @@ public partial class PortScannerHostView
     public void AddTab(string host)
     {
         _viewModel.AddTab(host);
-    }
-
-    public void AddTab(ProfileInfo profile)
-    {
-        _viewModel.AddTab(profile);
     }
 
     public void OnViewHide()

@@ -14,11 +14,6 @@ public class SNTPLookupHostViewModel : ViewModelBase
  public IInterTabClient InterTabClient { get; }
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
-#pragma warning disable CS0414 // Field is assigned but its value is never used
-    private readonly bool _isLoading;
-    private bool _isViewActive = true;
-#pragma warning restore CS0414 // Field is assigned but its value is never used
-
     private int _tabId;
 
     private int _selectedTabIndex;
@@ -39,8 +34,6 @@ public class SNTPLookupHostViewModel : ViewModelBase
     #region Constructor, load settings
     public SNTPLookupHostViewModel()
     {
-        _isLoading = true;
-        
         InterTabClient = new DragablzInterTabClient(ApplicationName.SNTPLookup);
 
         TabItems = new ObservableCollection<DragablzTabItem>
@@ -49,8 +42,6 @@ public class SNTPLookupHostViewModel : ViewModelBase
         };
         
         LoadSettings();
-
-        _isLoading = false;
     }
 
     private void LoadSettings()
@@ -88,12 +79,12 @@ public class SNTPLookupHostViewModel : ViewModelBase
 
     public void OnViewVisible()
     {
-        _isViewActive = true;
+        
     }
 
     public void OnViewHide()
     {
-        _isViewActive = false;
+        
     }
     #endregion
 }

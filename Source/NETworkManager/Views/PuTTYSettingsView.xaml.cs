@@ -9,7 +9,7 @@ public partial class PuTTYSettingsView
     /// <summary>
     /// Variable to hold an instance of the view model.
     /// </summary>
-    private readonly PuTTYSettingsViewModel _viewModel = new PuTTYSettingsViewModel(DialogCoordinator.Instance);
+    private readonly PuTTYSettingsViewModel _viewModel = new(DialogCoordinator.Instance);
 
     /// <summary>
     /// Create a new instance of <see cref="PuTTYSettingsView"/>.

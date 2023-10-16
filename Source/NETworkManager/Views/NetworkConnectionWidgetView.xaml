@@ -14,7 +14,6 @@
         <KeyBinding Key="F5" Command="{Binding CheckConnectionViaHotkeyCommand}" />
     </UserControl.InputBindings>
     <UserControl.Resources>
-        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:ConnectionStateToRectangleStyleConverter x:Key="ConnectionStateToRectangleStyleConverter" />

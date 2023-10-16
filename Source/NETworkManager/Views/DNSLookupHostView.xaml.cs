@@ -8,7 +8,7 @@ namespace NETworkManager.Views;
 
 public partial class DNSLookupHostView
 {
-    private readonly DNSLookupHostViewModel _viewModel = new DNSLookupHostViewModel(DialogCoordinator.Instance);
+    private readonly DNSLookupHostViewModel _viewModel = new(DialogCoordinator.Instance);
 
     public DNSLookupHostView()
     {

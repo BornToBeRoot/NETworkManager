@@ -425,7 +425,9 @@
                                     <ColumnDefinition Width="34" />
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Name}" />
-                                <TextBox x:Name="TextBoxName" GotFocus="TextBoxName_OnGotFocus" TextChanged="TextBoxName_OnTextChanged" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleGroupServers}">
+                                <TextBox x:Name="TextBoxName" 
+                                         Grid.Column="2" Grid.Row="0" 
+                                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleGroupServers}">
                                     <TextBox.Text>
                                         <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>

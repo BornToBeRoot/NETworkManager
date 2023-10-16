@@ -7,7 +7,7 @@ namespace NETworkManager.Views;
 
 public partial class SettingsProfilesView
 {
-    private readonly SettingsProfilesViewModel _viewModel = new SettingsProfilesViewModel(DialogCoordinator.Instance);
+    private readonly SettingsProfilesViewModel _viewModel = new(DialogCoordinator.Instance);
 
     public SettingsProfilesView()
     {

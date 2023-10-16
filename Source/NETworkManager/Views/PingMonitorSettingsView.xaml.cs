@@ -4,7 +4,7 @@ namespace NETworkManager.Views;
 
 public partial class PingMonitorSettingsView
 {
-    private readonly PingMonitorSettingsViewModel _viewModel = new PingMonitorSettingsViewModel();
+    private readonly PingMonitorSettingsViewModel _viewModel = new();
 
     public PingMonitorSettingsView()
     {

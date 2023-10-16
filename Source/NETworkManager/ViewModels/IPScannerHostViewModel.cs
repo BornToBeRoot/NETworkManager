@@ -27,7 +27,7 @@ public class IPScannerHostViewModel : ViewModelBase, IProfileManager
     public IInterTabClient InterTabClient { get; }
     public ObservableCollection<DragablzTabItem> TabItems { get; }
     
-    private readonly bool _isLoading = true;
+    private readonly bool _isLoading;
     private bool _isViewActive = true;
 
     private int _tabId;
@@ -158,6 +158,8 @@ public class IPScannerHostViewModel : ViewModelBase, IProfileManager
     #region Constructor, load settings
     public IPScannerHostViewModel(IDialogCoordinator instance)
     {
+        _isLoading = true;
+        
         _dialogCoordinator = instance;
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.IPScanner);

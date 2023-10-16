@@ -6,7 +6,7 @@ namespace NETworkManager.Views;
 
 public partial class PowerShellSettingsView
 {
-    private readonly PowerShellSettingsViewModel _viewModel = new PowerShellSettingsViewModel(DialogCoordinator.Instance);
+    private readonly PowerShellSettingsViewModel _viewModel = new(DialogCoordinator.Instance);
 
     public PowerShellSettingsView()
     {

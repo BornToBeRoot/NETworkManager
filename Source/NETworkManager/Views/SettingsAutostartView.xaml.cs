@@ -5,7 +5,7 @@ namespace NETworkManager.Views;
 
 public partial class SettingsAutostartView
 {
-    private readonly SettingsAutostartViewModel _viewModel = new SettingsAutostartViewModel(DialogCoordinator.Instance);
+    private readonly SettingsAutostartViewModel _viewModel = new(DialogCoordinator.Instance);
 
     public SettingsAutostartView()
     {

@@ -4,7 +4,7 @@ namespace NETworkManager.Views;
 
 public partial class SettingsStatusView
 {
-    private readonly SettingsStatusViewModel _viewModel = new SettingsStatusViewModel();
+    private readonly SettingsStatusViewModel _viewModel = new();
 
     public SettingsStatusView()
     {

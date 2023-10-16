@@ -40,7 +40,7 @@ public class IPAddressAndSubnetmaskViewModel : ViewModelBase
 
     public IPAddressAndSubnetmaskViewModel(Action<IPAddressAndSubnetmaskViewModel> okCommand, Action<IPAddressAndSubnetmaskViewModel> cancelHandler)
     {
-        OKCommand = new RelayCommand(p => okCommand(this));
-        CancelCommand = new RelayCommand(p => cancelHandler(this));
+        OKCommand = new RelayCommand(_ => okCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
     }        
 }

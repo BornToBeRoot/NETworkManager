@@ -61,6 +61,8 @@ Experimental features can be enabled in the settings under [`Settings > Update`]
 
 ## Bugfixes
 
+- Dashboard
+  - IPv6 API call fixed [#2522](https://github.com/BornToBeRoot/NETworkManager/pull/2522){:target="\_blank"}
 - Network Interface
   - Add missing scrollviewer in configure tab [#2410](https://github.com/BornToBeRoot/NETworkManager/pull/2410){:target="\_blank"}
 - WiFi

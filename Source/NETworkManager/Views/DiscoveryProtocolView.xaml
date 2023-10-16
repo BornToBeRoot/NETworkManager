@@ -12,18 +12,10 @@
         xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
         dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:DiscoveryProtocolViewModel}">
-    <UserControl.InputBindings>
-        <!--
-        <KeyBinding Key="F5" Command="{Binding ReloadNetworkInterfacesCommand}" />
-        -->        
-    </UserControl.InputBindings>
     <UserControl.Resources>
-        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:DiscoveryProtocolToStringConverter x:Key="DiscoveryProtocolToStringConverter" />
-        <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
-        <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:StringNullOrEmptyToStringConverter x:Key="StringNullOrEmptyToStringConverter" />        
     </UserControl.Resources>
     <TabControl Style="{StaticResource DefaultTabControl}">

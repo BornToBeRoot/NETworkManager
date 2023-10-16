@@ -1,6 +1,5 @@
 ﻿using NETworkManager.Documentation;
 using NETworkManager.Models;
-using NETworkManager.Settings;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;

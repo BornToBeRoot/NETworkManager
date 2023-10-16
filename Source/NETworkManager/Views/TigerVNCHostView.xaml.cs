@@ -9,7 +9,7 @@ namespace NETworkManager.Views;
 
 public partial class TigerVNCHostView
 {
-    private readonly TigerVNCHostViewModel _viewModel = new TigerVNCHostViewModel(DialogCoordinator.Instance);
+    private readonly TigerVNCHostViewModel _viewModel = new(DialogCoordinator.Instance);
 
     private bool _loaded;
 

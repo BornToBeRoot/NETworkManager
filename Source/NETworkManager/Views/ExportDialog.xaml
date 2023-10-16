@@ -49,10 +49,10 @@
                         <Setter Property="Margin" Value="0,5,10,5" />
                     </Style>
                 </WrapPanel.Resources>
-                <RadioButton Content="{x:Static localization:StaticStrings.CSV}" IsChecked="{Binding UseCSV}" Visibility="{Binding ShowCSV, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,0,10,0" />
-                <RadioButton Content="{x:Static localization:StaticStrings.XML}" IsChecked="{Binding UseXML}" Visibility="{Binding ShowXML, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,0,10,0" />
-                <RadioButton Content="{x:Static localization:StaticStrings.JSON}" IsChecked="{Binding UseJSON}" Visibility="{Binding ShowJSON, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,0,10,0" />
-                <RadioButton Content="{x:Static localization:StaticStrings.TXT}" IsChecked="{Binding UseTXT}" Visibility="{Binding ShowTXT, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                <RadioButton Content="{x:Static localization:StaticStrings.CSV}" IsChecked="{Binding UseCsv}" Visibility="{Binding ShowCsv, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,0,10,0" />
+                <RadioButton Content="{x:Static localization:StaticStrings.XML}" IsChecked="{Binding UseXml}" Visibility="{Binding ShowXml, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,0,10,0" />
+                <RadioButton Content="{x:Static localization:StaticStrings.JSON}" IsChecked="{Binding UseJson}" Visibility="{Binding ShowJson, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,0,10,0" />
+                <RadioButton Content="{x:Static localization:StaticStrings.TXT}" IsChecked="{Binding UseTxt}" Visibility="{Binding ShowTxt, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
             </WrapPanel>
             <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Path}" Style="{StaticResource DefaultTextBlock}" />
             <TextBox Grid.Column="2" Grid.Row="4"  x:Name="TextBoxExportFilePath" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.Location}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFileCommand}">

@@ -101,8 +101,8 @@ public class AWSProfileViewModel : ViewModelBase
     {
         _isLoading = true;
 
-        SaveCommand = new RelayCommand(p => saveCommand(this));
-        CancelCommand = new RelayCommand(p => cancelHandler(this));
+        SaveCommand = new RelayCommand(_ => saveCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
         IsEdited = isEdited;
 
@@ -115,7 +115,7 @@ public class AWSProfileViewModel : ViewModelBase
         _isLoading = false;
     }
 
-    public void Validate()
+    private void Validate()
     {
         InfoChanged = _info.IsEnabled != IsEnabled || _info.Profile != Profile || _info.Region != Region;
     }

@@ -5,7 +5,7 @@ namespace NETworkManager.Views;
 
 public partial class AboutView 
 {
-    private readonly AboutViewModel _viewModel = new AboutViewModel();
+    private readonly AboutViewModel _viewModel = new();
 
     public AboutView()
     {

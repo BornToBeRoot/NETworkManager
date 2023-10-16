@@ -12,7 +12,6 @@ public partial class ProfileDialog
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e)
     {
-        // Need to be in loaded event, focusmanger won't work...
         TextBoxName.Focus();
     }
 

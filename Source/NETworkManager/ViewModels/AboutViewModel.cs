@@ -50,7 +50,7 @@ public class AboutViewModel : ViewModelBase
     public string UpdateText
     {
         get => _updateText;
-        set
+        private set
         {
             if (value == _updateText)
                 return;
@@ -64,7 +64,7 @@ public class AboutViewModel : ViewModelBase
     public string UpdateReleaseUrl
     {
         get => _updateReleaseUrl;
-        set
+        private set
         {
             if (value == _updateReleaseUrl)
                 return;
@@ -92,7 +92,7 @@ public class AboutViewModel : ViewModelBase
     public string UpdaterMessage
     {
         get => _updaterMessage;
-        set
+        private set
         {
             if (value == _updaterMessage)
                 return;
@@ -166,7 +166,7 @@ public class AboutViewModel : ViewModelBase
     #endregion
 
     #region Commands & Actions
-    public ICommand CheckForUpdatesCommand => new RelayCommand(p => CheckForUpdatesAction());
+    public ICommand CheckForUpdatesCommand => new RelayCommand(_ => CheckForUpdatesAction());
 
     private void CheckForUpdatesAction()
     {
@@ -182,7 +182,7 @@ public class AboutViewModel : ViewModelBase
 
     public ICommand OpenDocumentationCommand
     {
-        get { return new RelayCommand(p => OpenDocumentationAction()); }
+        get { return new RelayCommand(_ => OpenDocumentationAction()); }
     }
 
     private void OpenDocumentationAction()
@@ -190,7 +190,7 @@ public class AboutViewModel : ViewModelBase
         DocumentationManager.OpenDocumentation(DocumentationIdentifier.Default);
     }
 
-    public ICommand OpenLicenseFolderCommand => new RelayCommand(p => OpenLicenseFolderAction());
+    public ICommand OpenLicenseFolderCommand => new RelayCommand(_ => OpenLicenseFolderAction());
 
     private void OpenLicenseFolderAction()
     {

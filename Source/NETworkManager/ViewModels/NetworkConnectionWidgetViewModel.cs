@@ -1,11 +1,9 @@
-﻿using NETworkManager.Localization.Resources;
-using NETworkManager.Models.Network;
+﻿using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Net.NetworkInformation;
@@ -20,19 +18,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
 {
     #region  Variables 
     private bool _isChecking;
-    public bool IsChecking
-    {
-        get => _isChecking;
-        set
-        {
-            if (value == _isChecking)
-                return;
-
-            _isChecking = value;
-            OnPropertyChanged();
-        }
-    }
-
+   
     #region Computer
     private bool _isComputerIPv4Checking;
 
@@ -67,7 +53,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     public ConnectionState ComputerIPv4State
     {
         get => _computerIPv4State;
-        set
+        private set
         {
             if (value == _computerIPv4State)
                 return;
@@ -109,7 +95,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     public ConnectionState ComputerIPv6State
     {
         get => _computerIPv6State;
-        set
+        private set
         {
             if (value == _computerIPv6State)
                 return;
@@ -151,7 +137,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     public ConnectionState ComputerDNSState
     {
         get => _computerDNSState;
-        set
+        private set
         {
             if (value == _computerDNSState)
                 return;
@@ -195,7 +181,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     public ConnectionState RouterIPv4State
     {
         get => _routerIPv4State;
-        set
+        private set
         {
             if (value == _routerIPv4State)
                 return;
@@ -237,7 +223,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     public ConnectionState RouterIPv6State
     {
         get => _routerIPv6State;
-        set
+        private set
         {
             if (value == _routerIPv6State)
                 return;
@@ -279,7 +265,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     public ConnectionState RouterDNSState
     {
         get => _routerDNSState;
-        set
+        private set
         {
             if (value == _routerDNSState)
                 return;
@@ -323,7 +309,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     public ConnectionState InternetIPv4State
     {
         get => _internetIPv4State;
-        set
+        private set
         {
             if (value == _internetIPv4State)
                 return;
@@ -365,7 +351,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     public ConnectionState InternetIPv6State
     {
         get => _internetIPv6State;
-        set
+        private set
         {
             if (value == _internetIPv6State)
                 return;
@@ -407,7 +393,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     public ConnectionState InternetDNSState
     {
         get => _internetDNSState;
-        set
+        private set
         {
             if (value == _internetDNSState)
                 return;
@@ -442,7 +428,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
-    public ICommand CheckConnectionViaHotkeyCommand => new RelayCommand(p => CheckConnectionViaHotkeyAction());
+    public ICommand CheckConnectionViaHotkeyCommand => new RelayCommand(_ => CheckConnectionViaHotkeyAction());
 
     private void CheckConnectionViaHotkeyAction()
     {
@@ -462,24 +448,22 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     private async Task CheckConnectionAsync()
     {
         // Already in queue
-        if (_tokenSource != null && _tokenSource.IsCancellationRequested)
-        {
+        if (_tokenSource is { IsCancellationRequested: true })
             return;
-        }
 
         // Cancel if running
-        if (IsChecking)
+        if (_isChecking)
         {
             _tokenSource.Cancel();
 
-            while (IsChecking)
+            while (_isChecking)
             {
-                await Task.Delay(250);
+                await Task.Delay(250, _ct);
             }
         }
 
         // Start check
-        IsChecking = true;
+        _isChecking = true;
 
         _tokenSource = new CancellationTokenSource();
         _ct = _tokenSource.Token;
@@ -505,7 +489,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         finally
         {
             _tokenSource.Dispose();
-            IsChecking = false;
+            _isChecking = false;
         }
     }
 
@@ -525,7 +509,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             ComputerDNSState = ConnectionState.None;
 
             // Detect local IPv4 address
-            var detectedLocalIPv4Address = Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRouting(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv4Address));
+            var detectedLocalIPv4Address = await Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv4Address));
 
             if (detectedLocalIPv4Address != null)
             {
@@ -544,7 +528,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
                 ct.ThrowIfCancellationRequested();
 
             // Detect local IPv6 address
-            var detectedLocalIPv6Address = Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRouting(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv6Address));
+            var detectedLocalIPv6Address = await Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv6Address));
 
             if (detectedLocalIPv6Address != null)
             {
@@ -612,11 +596,11 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             RouterDNSState = ConnectionState.None;
 
             // Detect router IPv4 and if it is reachable
-            var detectedLocalIPv4Address = Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRouting(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv4Address));
+            var detectedLocalIPv4Address = await Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv4Address));
 
             if (detectedLocalIPv4Address != null)
             {
-                var detectedRouterIPv4 = Models.Network.NetworkInterface.DetectGatewayBasedOnLocalIPAddress(detectedLocalIPv4Address);
+                var detectedRouterIPv4 = await Models.Network.NetworkInterface.DetectGatewayBasedOnLocalIPAddressAsync(detectedLocalIPv4Address);
 
                 if (detectedRouterIPv4 != null)
                 {
@@ -641,11 +625,11 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
                 ct.ThrowIfCancellationRequested();
 
             // Detect router IPv6 and if it is reachable
-            var detectedComputerIPv6 = Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRouting(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv6Address));
+            var detectedComputerIPv6 = await Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv6Address));
 
             if (detectedComputerIPv6 != null)
             {
-                var detectedRouterIPv6 = Models.Network.NetworkInterface.DetectGatewayBasedOnLocalIPAddress(detectedComputerIPv6);
+                var detectedRouterIPv6 = await Models.Network.NetworkInterface.DetectGatewayBasedOnLocalIPAddressAsync(detectedComputerIPv6);
 
                 if (detectedRouterIPv6 != null)
                 {
@@ -728,9 +712,9 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
                 try
                 {
                     HttpClient httpClient = new();
-                    var httpResponse = await httpClient.GetAsync(publicIPv4AddressAPI);
+                    var httpResponse = await httpClient.GetAsync(publicIPv4AddressAPI, ct);
 
-                    var result = await httpResponse.Content.ReadAsStringAsync();
+                    var result = await httpResponse.Content.ReadAsStringAsync(ct);
 
                     var match = Regex.Match(result, RegexHelper.IPv4AddressExtractRegex);
 
@@ -762,9 +746,9 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
                 try
                 {
                     HttpClient httpClient = new();
-                    var httpResponse = await httpClient.GetAsync(publicIPv4AddressAPI);
+                    var httpResponse = await httpClient.GetAsync(publicIPv6AddressAPI, ct);
 
-                    var result = await httpResponse.Content.ReadAsStringAsync();
+                    var result = await httpResponse.Content.ReadAsStringAsync(ct);
 
                     var match = Regex.Match(result, RegexHelper.IPv6AddressRegex);
 

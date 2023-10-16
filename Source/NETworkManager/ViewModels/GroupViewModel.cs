@@ -13,6 +13,7 @@ using System.Linq;
 using System.Security;
 using System.Windows.Data;
 using System.Windows.Input;
+// ReSharper disable InconsistentNaming
 
 namespace NETworkManager.ViewModels;
 
@@ -1625,8 +1626,8 @@ public class GroupViewModel : ViewModelBase
         GroupViews = new CollectionViewSource { Source = GroupViewManager.List }.View;
         GroupViews.SortDescriptions.Add(new SortDescription(nameof(GroupViewInfo.Name), ListSortDirection.Ascending));
 
-        SaveCommand = new RelayCommand(p => saveCommand(this));
-        CancelCommand = new RelayCommand(p => cancelHandler(this));
+        SaveCommand = new RelayCommand(_ => saveCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
         var groupInfo = group ?? new GroupInfo();
 

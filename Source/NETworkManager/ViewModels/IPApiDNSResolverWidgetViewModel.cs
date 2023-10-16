@@ -30,7 +30,7 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
     public DNSResolverResult Result
     {
         get => _result;
-        set
+        private set
         {
             if (value == _result)
                 return;
@@ -46,8 +46,8 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
     public IPApiDNSResolverWidgetViewModel()
     {
         // Detect if network address or status changed...
-        NetworkChange.NetworkAvailabilityChanged += (sender, args) => Check();
-        NetworkChange.NetworkAddressChanged += (sender, args) => Check();
+        NetworkChange.NetworkAvailabilityChanged += (_, _) => Check();
+        NetworkChange.NetworkAddressChanged += (_, _) => Check();
 
         LoadSettings();
 
@@ -62,7 +62,7 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
-    public ICommand CheckViaHotkeyCommand => new RelayCommand(p => CheckViaHotkeyAction());
+    public ICommand CheckViaHotkeyCommand => new RelayCommand(_ => CheckViaHotkeyAction());
 
     private void CheckViaHotkeyAction()
     {

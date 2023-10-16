@@ -106,14 +106,16 @@ public class CredentialsPasswordProfileFileViewModel : ViewModelBase
 
 
     /// <summary>
-    /// Initalizes a new class <see cref="CredentialsPasswordProfileFileViewModel"/> with <see cref="OKCommand" /> and <see cref="CancelCommand"/>.
+    /// Initialize a new class <see cref="CredentialsPasswordProfileFileViewModel"/> with <see cref="OKCommand" /> and <see cref="CancelCommand"/>.
     /// </summary>
     /// <param name="okCommand"><see cref="OKCommand"/> which is executed on OK click.</param>
     /// <param name="cancelHandler"><see cref="CancelCommand"/> which is executed on cancel click.</param>
+    /// <param name="profileName">Name of the profile file.</param>
+    /// <param name="showWrongPassword">Show note that the password is wrong.</param>
     public CredentialsPasswordProfileFileViewModel(Action<CredentialsPasswordProfileFileViewModel> okCommand, Action<CredentialsPasswordProfileFileViewModel> cancelHandler, string profileName, bool showWrongPassword = false)
     {
-        OKCommand = new RelayCommand(p => okCommand(this));
-        CancelCommand = new RelayCommand(p => cancelHandler(this));
+        OKCommand = new RelayCommand(_ => okCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
         ProfileName = profileName;
         ShowWrongPassword = showWrongPassword;

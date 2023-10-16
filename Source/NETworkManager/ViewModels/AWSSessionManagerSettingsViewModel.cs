@@ -39,7 +39,7 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
 
     public ICollectionView AWSProfiles { get; }
 
-    private AWSProfileInfo _selectedAWSProfile = new AWSProfileInfo();
+    private AWSProfileInfo _selectedAWSProfile = new();
     public AWSProfileInfo SelectedAWSProfile
     {
         get => _selectedAWSProfile;
@@ -166,28 +166,28 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
-    public ICommand AddAWSProfileCommand => new RelayCommand(p => AddAWSProfileAction());
+    public ICommand AddAWSProfileCommand => new RelayCommand(_ => AddAWSProfileAction());
 
     private void AddAWSProfileAction()
     {
-        AddAWSProfile();
+        AddAWSProfile().ConfigureAwait(false);
     }
 
-    public ICommand EditAWSProfileCommand => new RelayCommand(p => EditAWSProfileAction());
+    public ICommand EditAWSProfileCommand => new RelayCommand(_ => EditAWSProfileAction());
 
     private void EditAWSProfileAction()
     {
-        EditAWSProfile();
+        EditAWSProfile().ConfigureAwait(false);
     }
 
-    public ICommand DeleteAWSProfileCommand => new RelayCommand(p => DeleteAWSProfileAction());
+    public ICommand DeleteAWSProfileCommand => new RelayCommand(_ => DeleteAWSProfileAction());
 
     private void DeleteAWSProfileAction()
     {
-        DeleteAWSProfile();
+        DeleteAWSProfile().ConfigureAwait(false);
     }
 
-    public ICommand BrowseFileCommand => new RelayCommand(p => BrowseFileAction());
+    public ICommand BrowseFileCommand => new RelayCommand(_ => BrowseFileAction());
 
     private void BrowseFileAction()
     {
@@ -200,16 +200,17 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
             ApplicationFilePath = openFileDialog.FileName;
     }
 
-    public ICommand ConfigureCommand => new RelayCommand(p => ConfigureAction());
+    public ICommand ConfigureCommand => new RelayCommand(_ => ConfigureAction());
 
     private void ConfigureAction()
     {
-        Configure();
+        Configure().ConfigureAwait(false);
     }
     #endregion
 
-    #region Methods        
-    public async Task AddAWSProfile()
+    #region Methods
+
+    private async Task AddAWSProfile()
     {            
         var customDialog = new CustomDialog
         {
@@ -221,7 +222,7 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
             SettingsManager.Current.AWSSessionManager_AWSProfiles.Add(new AWSProfileInfo(instance.IsEnabled, instance.Profile, instance.Region));                
-        }, instance =>
+        }, _ =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
         });
@@ -247,7 +248,7 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
 
             SettingsManager.Current.AWSSessionManager_AWSProfiles.Remove(SelectedAWSProfile);
             SettingsManager.Current.AWSSessionManager_AWSProfiles.Add(new AWSProfileInfo(instance.IsEnabled, instance.Profile, instance.Region));
-        }, instance =>
+        }, _ =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
         }, true, SelectedAWSProfile);
@@ -259,20 +260,20 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);            
     }
-            
-    public async Task DeleteAWSProfile()
+
+    private async Task DeleteAWSProfile()
     {            
         var customDialog = new CustomDialog
         {
             Title = Localization.Resources.Strings.DeleteAWSProfile
         };
 
-        var viewModel = new ConfirmDeleteViewModel(instance =>
+        var viewModel = new ConfirmDeleteViewModel(_ =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
             SettingsManager.Current.AWSSessionManager_AWSProfiles.Remove(SelectedAWSProfile);
-        }, instance =>
+        }, _ =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
         }, Localization.Resources.Strings.DeleteAWSProfileMessage);

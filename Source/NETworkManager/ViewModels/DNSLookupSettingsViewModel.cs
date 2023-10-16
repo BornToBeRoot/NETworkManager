@@ -17,7 +17,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
 {
     #region Variables
     private readonly bool _isLoading;
-    private readonly ServerConnectionInfo _profileDialog_DefaultValues = new("10.0.0.1", 53, TransportProtocol.Udp);
+    private readonly ServerConnectionInfo _profileDialogDefaultValues = new("10.0.0.1", 53, TransportProtocol.Udp);
 
     private readonly IDialogCoordinator _dialogCoordinator;
 
@@ -124,7 +124,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         }
     }
 
-    public List<QueryClass> QueryClasses { get; set; }
+    public List<QueryClass> QueryClasses { get; private set; }
 
     private QueryClass _queryClass;
     public QueryClass QueryClass
@@ -251,31 +251,31 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     #endregion
 
     #region ICommand & Actions
-    public ICommand AddDNSServerCommand => new RelayCommand(p => AddDNSServerAction());
+    public ICommand AddDNSServerCommand => new RelayCommand(_ => AddDNSServerAction());
 
     private void AddDNSServerAction()
     {
-        AddDNSServer();
+        AddDNSServer().ConfigureAwait(false);
     }
 
-    public ICommand EditDNSServerCommand => new RelayCommand(p => EditDNSServerAction());
+    public ICommand EditDNSServerCommand => new RelayCommand(_ => EditDNSServerAction());
 
     private void EditDNSServerAction()
     {
-        EditDNSServer();
+        EditDNSServer().ConfigureAwait(false);
     }
 
-    public ICommand DeleteDNSServerCommand => new RelayCommand(p => DeleteDNSServerAction());
+    public ICommand DeleteDNSServerCommand => new RelayCommand(_ => DeleteDNSServerAction());
 
     private void DeleteDNSServerAction()
     {
-        DeleteDNSServer();
+        DeleteDNSServer().ConfigureAwait(false);
     }
     #endregion
 
     #region Methods
 
-    public async Task AddDNSServer()
+    private async Task AddDNSServer()
     {
         var customDialog = new CustomDialog
         {
@@ -287,10 +287,10 @@ public class DNSLookupSettingsViewModel : ViewModelBase
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
             SettingsManager.Current.DNSLookup_DNSServers.Add(new DNSServerConnectionInfoProfile(instance.Name, instance.Servers.ToList()));
-        }, instance =>
+        }, _ =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, (ServerInfoProfileNames, false, true), _profileDialog_DefaultValues);
+        }, (ServerInfoProfileNames, false, true), _profileDialogDefaultValues);
 
         customDialog.Content = new ServerConnectionInfoProfileDialog()
         {
@@ -313,10 +313,10 @@ public class DNSLookupSettingsViewModel : ViewModelBase
 
             SettingsManager.Current.DNSLookup_DNSServers.Remove(SelectedDNSServer);
             SettingsManager.Current.DNSLookup_DNSServers.Add(new DNSServerConnectionInfoProfile(instance.Name, instance.Servers.ToList()));
-        }, instance =>
+        }, _ =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, (ServerInfoProfileNames, true, true), _profileDialog_DefaultValues, SelectedDNSServer);
+        }, (ServerInfoProfileNames, true, true), _profileDialogDefaultValues, SelectedDNSServer);
 
         customDialog.Content = new ServerConnectionInfoProfileDialog()
         {
@@ -326,19 +326,19 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
-    public async Task DeleteDNSServer()
+    private async Task DeleteDNSServer()
     {
         var customDialog = new CustomDialog
         {
             Title = Localization.Resources.Strings.DeleteDNSServer
         };
 
-        var viewModel = new ConfirmDeleteViewModel(instance =>
+        var viewModel = new ConfirmDeleteViewModel(_ =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
             SettingsManager.Current.DNSLookup_DNSServers.Remove(SelectedDNSServer);
-        }, instance =>
+        }, _ =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
         }, Localization.Resources.Strings.DeleteDNSServerMessage);

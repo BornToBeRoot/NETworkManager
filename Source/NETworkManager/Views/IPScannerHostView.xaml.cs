@@ -2,15 +2,13 @@
 using NETworkManager.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
-using NETworkManager.Settings;
-using NETworkManager.Profiles;
 using NETworkManager.Models;
 
 namespace NETworkManager.Views;
 
 public partial class IPScannerHostView
 {
-    private readonly IPScannerHostViewModel _viewModel = new IPScannerHostViewModel(DialogCoordinator.Instance);
+    private readonly IPScannerHostViewModel _viewModel = new(DialogCoordinator.Instance);
 
     public IPScannerHostView()
     {
@@ -35,11 +33,6 @@ public partial class IPScannerHostView
     public void AddTab(string host)
     {
         _viewModel.AddTab(host);
-    }
-
-    public void AddTab(ProfileInfo profile)
-    {
-        _viewModel.AddTab(profile);
     }
 
     public void OnViewHide()
