@@ -489,12 +489,22 @@
                     <Rectangle>
                         <Rectangle.Resources>
                             <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{iconPacks:Material Kind=Play}"/>
+                            <VisualBrush x:Key="VisualMagnify" Stretch="Uniform" Visual="{iconPacks:Material Kind=Magnify}"/>
                             <VisualBrush x:Key="VisualClose" Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
                         </Rectangle.Resources>
                         <Rectangle.Style>
                             <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ButtonWithImageRectangle}">
-                                <Setter Property="OpacityMask" Value="{StaticResource VisualControlPlay}" />
+                                <Setter Property="OpacityMask" Value="{StaticResource VisualMagnify}" />
                                 <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding Mode}" Value="Set" />
+                                            <Condition Binding="{Binding IsRunning}" Value="False" />
+                                        </MultiDataTrigger.Conditions>
+                                        <MultiDataTrigger.Setters>
+                                            <Setter Property="OpacityMask" Value="{StaticResource VisualControlPlay}" />
+                                        </MultiDataTrigger.Setters>
+                                    </MultiDataTrigger>
                                     <DataTrigger Binding="{Binding IsRunning}" Value="True">
                                         <Setter Property="OpacityMask" Value="{StaticResource VisualClose}" />
                                     </DataTrigger>

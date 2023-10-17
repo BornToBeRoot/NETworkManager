@@ -51,14 +51,15 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
     /// <summary>
     /// Gets the IP geolocation details from the API asynchronously.
     /// </summary>
+    /// <param name="ipAddressOrFqdn">IP address or FQDN to get the geolocation information's from.</param>
     /// <returns>IP geolocation information's as <see cref="IPGeolocationResult"/>.</returns>
-    public async Task<IPGeolocationResult> GetIPGeolocationAsync(string ipAddress = "")
+    public async Task<IPGeolocationResult> GetIPGeolocationAsync(string ipAddressOrFqdn = "")
     {
         if (IsInRateLimit())
             return new IPGeolocationResult(isRateLimitReached: true, _rateLimitRemainingTime);
 
         // If the url is empty, the current IP address from which the request is made is used.
-        var url = $"{BaseUrl}/{ipAddress}?fields={Fields}";
+        var url = $"{BaseUrl}/{ipAddressOrFqdn}?fields={Fields}";
 
         try
         {

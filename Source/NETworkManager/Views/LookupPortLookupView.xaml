@@ -26,7 +26,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="{x:Static localization:Strings.Lookup}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Grid.Row="0" Text="{x:Static localization:Strings.Query}" Style="{StaticResource HeaderTextBlock}" />
         <Grid Grid.Row="1" Margin="0,0,0,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -86,7 +86,7 @@
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Magnify}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
-                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Lookup}" Style="{StaticResource ButtonWithImageTextBlock}" />
+                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Query}" Style="{StaticResource ButtonWithImageTextBlock}" />
                         </Grid>
                     </Button.Content>
                 </Button>

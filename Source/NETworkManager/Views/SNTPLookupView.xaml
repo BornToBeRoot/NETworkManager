@@ -27,7 +27,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Style="{StaticResource ResourceKey=HeaderTextBlock}" Text="{x:Static Member=localization:Strings.Lookup}" />
+        <TextBlock Grid.Row="0" Style="{StaticResource ResourceKey=HeaderTextBlock}" Text="{x:Static Member=localization:Strings.Query}" />
         <Grid Grid.Row="1" Margin="0,0,0,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -51,7 +51,7 @@
                           SelectedItem="{Binding Path=SNTPServer}" 
                           DisplayMemberPath="Name" />
                 <Button Grid.Column="4" Grid.Row="0" 
-                        Command="{Binding Path=LookupCommand}" 
+                        Command="{Binding Path=QueryCommand}" 
                         IsDefault="{Binding Path=IsRunning, Converter={StaticResource ResourceKey=BooleanReverseConverter}}"
                         HorizontalAlignment="Right">
                     <Button.Resources>
@@ -80,7 +80,7 @@
                                     </Style>
                                 </Rectangle.Style>
                             </Rectangle>
-                            <TextBlock Grid.Column="1" Text="{x:Static Member=localization:Strings.Lookup}" Style="{StaticResource ResourceKey=ButtonWithImageTextBlock}"/>
+                            <TextBlock Grid.Column="1" Text="{x:Static Member=localization:Strings.Query}" Style="{StaticResource ResourceKey=ButtonWithImageTextBlock}"/>
                         </Grid>
                     </Button.Content>
                 </Button>

@@ -26,7 +26,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Domain}" />
+            <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Query}" />
             <Grid Grid.Row="1" Margin="0,0,0,20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -42,19 +42,19 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" 
-                               Text="{x:Static localization:Strings.Domain}" 
+                               Text="{x:Static localization:Strings.Host}" 
                                Style="{DynamicResource DefaultTextBlock}" 
                                VerticalAlignment="Center" />
                     <ComboBox Grid.Column="2" 
-                              x:Name="ComboBoxWebsiteUri" ItemsSource="{Binding WebsiteUriHistoryView}" 
-                              mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleDomain}" 
+                              x:Name="ComboBoxHost" ItemsSource="{Binding HostHistoryView}" 
+                              mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameOrIPAddress}" 
                               IsReadOnly="{Binding IsRunning}" 
                               Style="{StaticResource HistoryComboBox}">
                         <ComboBox.Text>
-                            <Binding Path="Domain" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                            <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
                                     <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                    <validators:DomainValidator ValidatesOnTargetUpdated="True" />
+                                    <validators:IPAddressOrHostnameValidator ValidatesOnTargetUpdated="True" />
                                 </Binding.ValidationRules>
                             </Binding>
                         </ComboBox.Text>
@@ -64,7 +64,7 @@
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                                 <Setter Property="IsEnabled" Value="True" />
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxWebsiteUri}" Value="True" >
+                                    <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxHost}" Value="True" >
                                         <Setter Property="IsEnabled" Value="False" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding IsRunning}" Value="True">
@@ -81,11 +81,11 @@
                                 </Grid.ColumnDefinitions>
                                 <Rectangle>
                                     <Rectangle.Resources>
-                                        <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{iconPacks:Material Kind=Play}"/>
+                                        <VisualBrush x:Key="VisualMagnify" Stretch="Uniform" Visual="{iconPacks:Material Kind=Magnify}"/>
                                     </Rectangle.Resources>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ButtonWithImageRectangle}">
-                                            <Setter Property="OpacityMask" Value="{StaticResource VisualControlPlay}" />
+                                            <Setter Property="OpacityMask" Value="{StaticResource VisualMagnify}" />
                                         </Style>
                                     </Rectangle.Style>
                                 </Rectangle>

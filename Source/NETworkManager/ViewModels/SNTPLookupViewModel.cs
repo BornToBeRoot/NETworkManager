@@ -163,14 +163,14 @@ public class SNTPLookupViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
-    public ICommand LookupCommand => new RelayCommand(_ => LookupAction(), Lookup_CanExecute);
+    public ICommand QueryCommand => new RelayCommand(_ => QueryAction(), Query_CanExecute);
 
-    private bool Lookup_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool Query_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
-    private void LookupAction()
+    private void QueryAction()
     {
         if (!IsRunning)
-            StartLookup();
+            Query();
     }
 
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
@@ -218,7 +218,7 @@ public class SNTPLookupViewModel : ViewModelBase
     #endregion
 
     #region Methods      
-    private void StartLookup()
+    private void Query()
     {
         IsStatusMessageDisplayed = false;
         StatusMessage = string.Empty;

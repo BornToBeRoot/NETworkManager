@@ -15,6 +15,7 @@ using NETworkManager.Models.Export;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Views;
 using System.Threading.Tasks;
+using NETworkManager.Models.IPApi;
 
 namespace NETworkManager.ViewModels;
 
@@ -26,21 +27,21 @@ public class IPGeolocationViewModel : ViewModelBase
     private readonly int _tabId;
     private bool _firstLoad = true;
 
-    private string _domain;
-    public string Domain
+    private string _host;
+    public string Host
     {
-        get => _domain;
+        get => _host;
         set
         {
-            if (value == _domain)
+            if (value == _host)
                 return;
 
-            _domain = value;
+            _host = value;
             OnPropertyChanged();
         }
     }
 
-    public ICollectionView WebsiteUriHistoryView { get; }
+    public ICollectionView HostHistoryView { get; }
 
     private bool _isRunning;
     public bool IsRunning
@@ -100,15 +101,15 @@ public class IPGeolocationViewModel : ViewModelBase
     #endregion
 
     #region Contructor, load settings
-    public IPGeolocationViewModel(IDialogCoordinator instance ,int tabId, string domain)
+    public IPGeolocationViewModel(IDialogCoordinator instance ,int tabId, string host)
     {
         _dialogCoordinator = instance;
 
         _tabId = tabId;
-        Domain = domain;
+        Host = host;
 
         // Set collection view
-        WebsiteUriHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Whois_DomainHistory);
+        HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.IPGeolocation_HostHistory);
 
         LoadSettings();
     }
@@ -118,7 +119,7 @@ public class IPGeolocationViewModel : ViewModelBase
         if (!_firstLoad)
             return;
 
-        if (!string.IsNullOrEmpty(Domain))
+        if (!string.IsNullOrEmpty(Host))
             Query().ConfigureAwait(false);
 
         _firstLoad = false;
@@ -199,25 +200,31 @@ public class IPGeolocationViewModel : ViewModelBase
         {
             foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
             {
-                tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Domain;
+                tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Host;
             }
         }
 
         try
         {
-            var whoisServer = Whois.GetWhoisServer(Domain);
+            var result = await IPGeolocationService.GetInstance().GetIPGeolocationAsync(Host);
+
+            WhoisResult = result.Info.Continent;
+
+            /*
+            var whoisServer = Whois.GetWhoisServer(Host);
 
             if (string.IsNullOrEmpty(whoisServer))
             {
-                StatusMessage = string.Format(Strings.WhoisServerNotFoundForTheDomain, Domain);
+                StatusMessage = string.Format(Strings.WhoisServerNotFoundForTheDomain, Host);
                 IsStatusMessageDisplayed = true;
             }
             else
             {
-                WhoisResult = await Whois.QueryAsync(Domain, whoisServer);
+                WhoisResult = await Whois.QueryAsync(Host, whoisServer);
 
-                AddDomainToHistory(Domain);
+                AddDomainToHistory(Host);
             }
+            */
         }
         catch (Exception ex)
         {
@@ -233,14 +240,14 @@ public class IPGeolocationViewModel : ViewModelBase
 
     }
 
-    private void AddDomainToHistory(string websiteUri)
+    private void AddDomainToHistory(string host)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.Whois_DomainHistory.ToList(), websiteUri, SettingsManager.Current.General_HistoryListEntries);
+        var list = ListHelper.Modify(SettingsManager.Current.IPGeolocation_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items
-        SettingsManager.Current.Whois_DomainHistory.Clear();
-        OnPropertyChanged(nameof(Domain)); // Raise property changed again, after the collection has been cleared
+        SettingsManager.Current.IPGeolocation_HostHistory.Clear();
+        OnPropertyChanged(nameof(Host)); // Raise property changed again, after the collection has been cleared
 
         // Fill with the new items
         list.ForEach(x => SettingsManager.Current.Whois_DomainHistory.Add(x));
