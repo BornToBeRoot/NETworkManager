@@ -57,16 +57,16 @@ public class IPGeolocationViewModel : ViewModelBase
         }
     }
 
-    private string _whoisResult;
-    public string WhoisResult
+    private IPGeolocationInfo _result;
+    public IPGeolocationInfo Result
     {
-        get => _whoisResult;
-        set
+        get => _result;
+        private set
         {
-            if (value == _whoisResult)
+            if (value == _result)
                 return;
 
-            _whoisResult = value;
+            _result = value;
             OnPropertyChanged();
         }
     }
@@ -156,7 +156,7 @@ public class IPGeolocationViewModel : ViewModelBase
 
             try
             {
-                ExportManager.Export(instance.FilePath, WhoisResult);
+               // ExportManager.Export(instance.FilePath, Result);
             }
             catch (Exception ex)
             {
@@ -191,7 +191,7 @@ public class IPGeolocationViewModel : ViewModelBase
         IsStatusMessageDisplayed = false;
         IsRunning = true;
 
-        WhoisResult = null;
+        Result = null;
 
         // Change the tab title (not nice, but it works)
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
@@ -208,7 +208,9 @@ public class IPGeolocationViewModel : ViewModelBase
         {
             var result = await IPGeolocationService.GetInstance().GetIPGeolocationAsync(Host);
 
-            WhoisResult = result.Info.Continent;
+            Result = result.Info;
+
+            //await Task.Delay(5000);
 
             /*
             var whoisServer = Whois.GetWhoisServer(Host);

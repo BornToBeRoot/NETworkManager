@@ -3,8 +3,8 @@ layout: default
 title: ARP Table
 parent: Application
 grand_parent: Documentation
-nav_order: 25
-description: ""
+nav_order: 26
+description: "Documentation of the ARP Table"
 permalink: /Documentation/Application/ARPTable
 ---
 # ARP Table

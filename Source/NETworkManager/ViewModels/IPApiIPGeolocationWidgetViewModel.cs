@@ -14,16 +14,16 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
     #region  Variables
     private static readonly ILog Log = LogManager.GetLogger(typeof(IPApiIPGeolocationWidgetViewModel));
     
-    private bool _isChecking;
-    public bool IsChecking
+    private bool _isRunning;
+    public bool IsRunning
     {
-        get => _isChecking;
+        get => _isRunning;
         set
         {
-            if (value == _isChecking)
+            if (value == _isRunning)
                 return;
 
-            _isChecking = value;
+            _isRunning = value;
             OnPropertyChanged();
         }
     }
@@ -84,10 +84,10 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
             return;
 
         // Don't check multiple times if already running
-        if (IsChecking)
+        if (IsRunning)
             return;
 
-        IsChecking = true;
+        IsRunning = true;
         Result = null;
 
         // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
@@ -103,7 +103,7 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
         if (Result.RateLimitIsReached)
             Log.Warn($"ip-api.com rate limit reached. Try again in {Result.RateLimitRemainingTime} seconds.");
         
-        IsChecking = false;
+        IsRunning = false;
     }
     #endregion
 

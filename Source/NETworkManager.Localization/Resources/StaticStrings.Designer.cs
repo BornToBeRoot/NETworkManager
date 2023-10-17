@@ -141,6 +141,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to server-01.borntoberoot.net.
+        /// </summary>
+        public static string ExampleFqdn {
+            get {
+                return ResourceManager.GetString("ExampleFqdn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to borntoberoot.net or 1.1.1.1.
+        /// </summary>
+        public static string ExampleFqdnOrIPAddressPublic {
+            get {
+                return ResourceManager.GetString("ExampleFqdnOrIPAddressPublic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to gw.borntoberoot.net.
         /// </summary>
         public static string ExampleGatewayDomain {
@@ -164,15 +182,6 @@ namespace NETworkManager.Localization.Resources {
         public static string ExampleGroupSwitche {
             get {
                 return ResourceManager.GetString("ExampleGroupSwitche", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to server-01.borntoberoot.net.
-        /// </summary>
-        public static string ExampleHostFQDN {
-            get {
-                return ResourceManager.GetString("ExampleHostFQDN", resourceCulture);
             }
         }
         

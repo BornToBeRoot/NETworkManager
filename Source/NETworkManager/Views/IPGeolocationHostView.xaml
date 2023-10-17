@@ -86,7 +86,7 @@
                                 </Style>
                             </Rectangle.Style>
                         </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddATabToQueryWhois}">
+                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddATabToQueryIPGeolocation}">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
                                     <Style.Triggers>

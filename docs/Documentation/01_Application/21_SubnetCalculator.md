@@ -3,7 +3,7 @@ layout: default
 title: Subnet Calculator
 parent: Application
 grand_parent: Documentation
-nav_order: 20
+nav_order: 21
 description: "Documentation of the Subnet Calculator"
 permalink: /Documentation/Application/SubnetCalculator
 ---

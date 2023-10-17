@@ -12,16 +12,16 @@ namespace NETworkManager.ViewModels;
 public class IPApiDNSResolverWidgetViewModel : ViewModelBase
 {
     #region  Variables 
-    private bool _isChecking;
-    public bool IsChecking
+    private bool _isRunning;
+    public bool IsRunning
     {
-        get => _isChecking;
+        get => _isRunning;
         set
         {
-            if (value == _isChecking)
+            if (value == _isRunning)
                 return;
 
-            _isChecking = value;
+            _isRunning = value;
             OnPropertyChanged();
         }
     }
@@ -83,10 +83,10 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
             return;
 
         // Don't check multiple times if already running
-        if (IsChecking)
+        if (IsRunning)
             return;
 
-        IsChecking = true;
+        IsRunning = true;
         Result = null;
 
         // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
@@ -96,7 +96,7 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
 
         Debug.WriteLine(Result);
 
-        IsChecking = false;
+        IsRunning = false;
     }
     #endregion
 
