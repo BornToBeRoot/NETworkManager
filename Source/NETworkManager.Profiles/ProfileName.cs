@@ -17,5 +17,6 @@ public enum ProfileName
     WebConsole,
     SNMP,
     WakeOnLAN,        
-    Whois
+    Whois,
+    IPGeolocation
 }

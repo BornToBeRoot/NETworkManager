@@ -27,6 +27,7 @@ public static class ProfileViewManager
         new ProfileViewInfo(ProfileName.WebConsole, ApplicationManager.GetIcon(ApplicationName.WebConsole), ProfileGroup.Application),
         new ProfileViewInfo(ProfileName.SNMP, ApplicationManager.GetIcon(ApplicationName.SNMP), ProfileGroup.Application),
         new ProfileViewInfo(ProfileName.WakeOnLAN, ApplicationManager.GetIcon(ApplicationName.WakeOnLAN), ProfileGroup.Application),            
-        new ProfileViewInfo(ProfileName.Whois, ApplicationManager.GetIcon(ApplicationName.Whois), ProfileGroup.Application)
+        new ProfileViewInfo(ProfileName.Whois, ApplicationManager.GetIcon(ApplicationName.Whois), ProfileGroup.Application),
+        new ProfileViewInfo(ProfileName.IPGeolocation, ApplicationManager.GetIcon(ApplicationName.IPGeolocation), ProfileGroup.Application)
     };              
 }

@@ -488,7 +488,14 @@ public static class ProfileDialogManager
             // Whois
             Whois_Enabled = instance.Whois_Enabled,
             Whois_InheritHost = instance.Whois_InheritHost,
-            Whois_Domain = instance.Whois_InheritHost ? instance.Host?.Trim() : instance.Whois_Domain?.Trim()
+            Whois_Domain = instance.Whois_InheritHost ? instance.Host?.Trim() : instance.Whois_Domain?.Trim(),
+            
+            // IP Geolocation
+            IPGeolocation_Enabled = instance.IPGeolocation_Enabled,
+            IPGeolocation_InheritHost = instance.IPGeolocation_InheritHost,
+            IPGeolocation_Host = instance.IPGeolocation_InheritHost
+                ? instance.Host?.Trim()
+                : instance.IPGeolocation_Host?.Trim(),
         };
     }
 

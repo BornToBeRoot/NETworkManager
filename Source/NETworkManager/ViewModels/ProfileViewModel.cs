@@ -2634,6 +2634,51 @@ public class ProfileViewModel : ViewModelBase
         }
     }
     #endregion
+    
+    #region IP Geolocation
+    private bool _ipGeolocation_Enabled;
+    public bool IPGeolocation_Enabled
+    {
+        get => _ipGeolocation_Enabled;
+        set
+        {
+            if (value == _ipGeolocation_Enabled)
+                return;
+
+            _ipGeolocation_Enabled = value;
+
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _ipGeolocation_InheritHost;
+    public bool IPGeolocation_InheritHost
+    {
+        get => _ipGeolocation_InheritHost;
+        set
+        {
+            if (value == _ipGeolocation_InheritHost)
+                return;
+
+            _ipGeolocation_InheritHost = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _ipGeolocation_Host;
+    public string IPGeolocation_Host
+    {
+        get => _ipGeolocation_Host;
+        set
+        {
+            if (value == _ipGeolocation_Host)
+                return;
+
+            _ipGeolocation_Host = value;
+            OnPropertyChanged();
+        }
+    }
+    #endregion
 
     #endregion
     public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler, IReadOnlyCollection<string> groups, string group = null, ProfileEditMode editMode = ProfileEditMode.Add, ProfileInfo profile = null, ApplicationName applicationName = ApplicationName.None)
@@ -2884,6 +2929,11 @@ public class ProfileViewModel : ViewModelBase
         Whois_InheritHost = profileInfo.Whois_InheritHost;
         Whois_Domain = profileInfo.Whois_Domain;
 
+        // IP Geolocation
+        IPGeolocation_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.IPGeolocation : profileInfo.IPGeolocation_Enabled;
+        IPGeolocation_InheritHost = profileInfo.IPGeolocation_InheritHost;
+        IPGeolocation_Host = profileInfo.IPGeolocation_Host;
+        
         _isLoading = false;
     }
 

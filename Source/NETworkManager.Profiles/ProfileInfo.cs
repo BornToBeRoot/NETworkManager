@@ -469,5 +469,10 @@ public class ProfileInfo
         Whois_Enabled = profile.Whois_Enabled;
         Whois_InheritHost = profile.Whois_InheritHost;
         Whois_Domain = profile.Whois_Domain;
+        
+        // IP Geolocation
+        IPGeolocation_Enabled = profile.IPGeolocation_Enabled;
+        IPGeolocation_InheritHost = profile.IPGeolocation_InheritHost;
+        IPGeolocation_Host = profile.IPGeolocation_Host;
     }
 }
