@@ -9,7 +9,7 @@ public partial class TracerouteView
 {
     private readonly TracerouteViewModel _viewModel;
 
-    public TracerouteView(int tabId, string host = null)
+    public TracerouteView(Guid tabId, string host = null)
     {
         InitializeComponent();
 

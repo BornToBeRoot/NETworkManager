@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
 
@@ -8,7 +9,7 @@ public partial class WhoisView
 {
     private readonly WhoisViewModel _viewModel;
 
-    public WhoisView(int tabId, string domain = null)
+    public WhoisView(Guid tabId, string domain = null)
     {
         InitializeComponent();
 

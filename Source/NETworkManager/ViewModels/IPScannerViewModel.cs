@@ -36,7 +36,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private CancellationTokenSource _cancellationTokenSource;
 
-    private readonly int _tabId;
+    private readonly Guid _tabId;
     private bool _firstLoad = true;
 
     private string _hosts;
@@ -215,7 +215,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     #endregion
 
     #region Constructor, load settings, shutdown
-    public IPScannerViewModel(IDialogCoordinator instance, int tabId, string hostOrIPRange)
+    public IPScannerViewModel(IDialogCoordinator instance, Guid tabId, string hostOrIPRange)
     {
         _dialogCoordinator = instance;
 

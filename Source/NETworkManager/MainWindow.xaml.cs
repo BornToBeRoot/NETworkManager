@@ -330,6 +330,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 if (!_isProfileFileUpdating)
                     LoadProfile(value);
 
+                ConfigurationManager.Current.ProfileManagerShowUnlock = value.IsEncrypted && !value.IsPasswordValid;
                 SettingsManager.Current.Profiles_LastSelected = value.Name;
             }
 
@@ -1223,7 +1224,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     private async void LoadProfile(ProfileFileInfo info, bool showWrongPassword = false)
     {
         // Disable profile management while switching profiles
-        ConfigurationManager.Current.IsProfileManagerEnabled = false;
+        ConfigurationManager.Current.ProfileManagerIsEnabled = false;
         ConfigurationManager.Current.ProfileManagerErrorMessage = string.Empty;
 
         if (info.IsEncrypted && !info.IsPasswordValid)
@@ -1243,10 +1244,6 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 SwitchProfile(info);
             }, async _ =>
             {
-                // Show error message is canceled / escape is pressed (dialog is opened again if the password is wrong)
-                ConfigurationManager.Current.ProfileManagerErrorMessage =
-                    Localization.Resources.Strings.UnlockTheProfileFileMessage;
-
                 await this.HideMetroDialogAsync(customDialog);
                 ConfigurationManager.OnDialogClose();
 
@@ -1274,7 +1271,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             ProfileManager.Switch(info);
 
             // Enable profile management after successfully loading the profiles
-            ConfigurationManager.Current.IsProfileManagerEnabled = true;
+            ConfigurationManager.Current.ProfileManagerShowUnlock = false;
+            ConfigurationManager.Current.ProfileManagerIsEnabled = true;
 
             OnProfilesLoaded(SelectedApplication.Name);
         }

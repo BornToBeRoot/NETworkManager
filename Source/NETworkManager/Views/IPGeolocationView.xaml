@@ -18,7 +18,7 @@
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <converters:BooleanToVisibilityHiddenConverter x:Key="BooleanToVisibilityHiddenConverter" />
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:DoubleToStringConverter x:Key="DoubleToStringConverter" />
         <converters:IntToStringConverter x:Key="IntToStringConverter" />
         <converters:StringNullOrEmptyToStringConverter x:Key="StringNullOrEmptyToStringConverter" />
@@ -124,9 +124,12 @@
                            Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
                            Style="{DynamicResource StatusMessageTextBlock}" Margin="0,10,0,0" />
             </Grid>
-            <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource HeaderTextBlock}"
-                       Text="{x:Static localization:Strings.Result}" />
-            <Grid Grid.Row="3">
+            <TextBlock Grid.Column="0" Grid.Row="2"
+                       Style="{StaticResource HeaderTextBlock}"
+                       Text="{x:Static localization:Strings.Result}" 
+                       Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+            <Grid Grid.Column="0" Grid.Row="3"
+                  Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                 <Grid.Resources>
                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
                     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">

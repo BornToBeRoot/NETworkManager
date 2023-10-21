@@ -30,8 +30,6 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
     private readonly bool _isLoading;
     private bool _isViewActive = true;
 
-    private int _tabId;
-
     private int _selectedTabIndex;
     public int SelectedTabIndex
     {
@@ -165,9 +163,11 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.IPGeolocation);
 
+        var tabId = Guid.NewGuid();
+        
         TabItems = new ObservableCollection<DragablzTabItem>
         {
-            new(Localization.Resources.Strings.NewTab, new IPGeolocationView (_tabId), _tabId)
+            new(Localization.Resources.Strings.NewTab, new IPGeolocationView (tabId), tabId)
         };
 
         // Profiles
@@ -293,7 +293,7 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
 
     private void AddTab(string domain = null)
     {
-        _tabId++;
+        var _tabId = Guid.NewGuid();
 
         TabItems.Add(new DragablzTabItem(domain ?? Localization.Resources.Strings.NewTab, new IPGeolocationView(_tabId, domain), _tabId));
 

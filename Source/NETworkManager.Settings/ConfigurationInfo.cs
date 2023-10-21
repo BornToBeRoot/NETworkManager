@@ -79,22 +79,43 @@ public class ConfigurationInfo : PropertyChangedBase
     public bool WebConsoleHasTabs { get; set; }
     
     /// <summary>
-    /// Private variable for <see cref="IsProfileManagerEnabled"/>.
+    /// Private variable for <see cref="ProfileManagerIsEnabled"/>.
     /// </summary>
-    private bool _isProfileManagerEnabled;
+    private bool _profileManagerIsEnabled;
     
     /// <summary>
     /// Indicates if the profile manager is enabled.
     /// </summary>
-    public bool IsProfileManagerEnabled
+    public bool ProfileManagerIsEnabled
     {
-        get => _isProfileManagerEnabled;
+        get => _profileManagerIsEnabled;
         set
         {
-            if (value == _isProfileManagerEnabled)
+            if (value == _profileManagerIsEnabled)
                 return;
 
-            _isProfileManagerEnabled = value;
+            _profileManagerIsEnabled = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Private variable for <see cref="ProfileManagerShowUnlock"/>.
+    /// </summary>
+    private bool _profileManagerShowUnlock;
+    
+    /// <summary>
+    /// Indicates if the profile manager should show an unlock option.
+    /// </summary>
+    public bool ProfileManagerShowUnlock
+    {
+        get => _profileManagerShowUnlock;
+        set
+        {
+            if (value == _profileManagerShowUnlock)
+                return;
+
+            _profileManagerShowUnlock = value;
             OnPropertyChanged();
         }
     }

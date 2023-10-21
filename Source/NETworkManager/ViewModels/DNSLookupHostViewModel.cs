@@ -30,8 +30,6 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
     private readonly bool _isLoading;
     private bool _isViewActive = true;
 
-    private int _tabId;
-
     private int _selectedTabIndex;
     public int SelectedTabIndex
     {
@@ -165,9 +163,11 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.DNSLookup);
 
+        var tabId = Guid.NewGuid();
+        
         TabItems = new ObservableCollection<DragablzTabItem>
         {
-            new DragablzTabItem(Localization.Resources.Strings.NewTab, new DNSLookupView (_tabId), _tabId)
+            new(Localization.Resources.Strings.NewTab, new DNSLookupView (tabId), tabId)
         };
 
         // Profiles
@@ -292,9 +292,9 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
 
     public void AddTab(string host = null)
     {
-        _tabId++;
+        var tabId = Guid.NewGuid();
 
-        TabItems.Add(new DragablzTabItem(host ?? Localization.Resources.Strings.NewTab, new DNSLookupView(_tabId, host), _tabId));
+        TabItems.Add(new DragablzTabItem(host ?? Localization.Resources.Strings.NewTab, new DNSLookupView(tabId, host), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }

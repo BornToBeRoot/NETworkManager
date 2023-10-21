@@ -37,7 +37,7 @@ Experimental Feature
   - Check DNS resolver added [#2392](https://github.com/BornToBeRoot/NETworkManager/pull/2392){:target="\_blank"}
 - Traceroute
   - Check IP geolocation for each public IP address added. Feature can be enabled/disabled in settings [#2477](https://github.com/BornToBeRoot/NETworkManager/pull/2477){:target="\_blank"}
-- IP Geolocation added [#2522](https://github.com/BornToBeRoot/NETworkManager/pull/2522){:target="\_blank"}
+- IP Geolocation added [#2522](https://github.com/BornToBeRoot/NETworkManager/pull/2522){:target="\_blank"} (See [documentation](https://borntoberoot.net/NETworkManager/Documentation/Application/IPGeolocation){:target="\_blank"} for more details)
 
 ## Experimental features
 

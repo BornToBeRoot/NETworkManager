@@ -30,8 +30,6 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
     private readonly bool _isLoading ;
     private bool _isViewActive = true;
 
-    private int _tabId;
-
     private int _selectedTabIndex;
     public int SelectedTabIndex
     {
@@ -164,9 +162,11 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.PortScanner);
 
+        var tabId = Guid.NewGuid();
+        
         TabItems = new ObservableCollection<DragablzTabItem>()
         {
-            new(Localization.Resources.Strings.NewTab, new PortScannerView(_tabId), _tabId)
+            new(Localization.Resources.Strings.NewTab, new PortScannerView(tabId), tabId)
         };
 
         // Profiles
@@ -291,9 +291,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
 
     public void AddTab(string host = null, string ports = null)
     {
-        _tabId++;
+        var tabId = Guid.NewGuid();
 
-        TabItems.Add(new DragablzTabItem(string.IsNullOrEmpty(host) ? Localization.Resources.Strings.NewTab : host, new PortScannerView(_tabId, host, ports), _tabId));
+        TabItems.Add(new DragablzTabItem(string.IsNullOrEmpty(host) ? Localization.Resources.Strings.NewTab : host, new PortScannerView(tabId, host, ports), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }

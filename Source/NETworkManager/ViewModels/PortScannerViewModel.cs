@@ -30,7 +30,7 @@ public class PortScannerViewModel : ViewModelBase
 
     private CancellationTokenSource _cancellationTokenSource;
 
-    private readonly int _tabId;
+    private readonly Guid _tabId;
     private bool _firstLoad = true;
 
     private string _lastSortDescriptionAscending = string.Empty;
@@ -211,7 +211,7 @@ public class PortScannerViewModel : ViewModelBase
     #endregion
 
     #region Constructor, load settings, shutdown
-    public PortScannerViewModel(IDialogCoordinator instance, int tabId, string host, string port)
+    public PortScannerViewModel(IDialogCoordinator instance, Guid tabId, string host, string port)
     {
         _dialogCoordinator = instance;
 

@@ -19,7 +19,7 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
     <Grid>
-        <Grid Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsProfileManagerEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+        <Grid Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=ProfileManagerIsEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250" />
                 <ColumnDefinition Width="*" />
@@ -301,7 +301,7 @@
                 </StackPanel>
             </Grid>
         </Grid>
-        <StackPanel Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsProfileManagerEnabled, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
+        <StackPanel Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=ProfileManagerIsEnabled, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
                     VerticalAlignment="Center" HorizontalAlignment="Center">
             <TextBlock Text="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=ProfileManagerErrorMessage}" 
             Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />

@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using NETworkManager.Controls;
 using Dragablz;
 using System.Windows.Input;
@@ -13,8 +14,6 @@ public class SNTPLookupHostViewModel : ViewModelBase
     #region Variables
  public IInterTabClient InterTabClient { get; }
     public ObservableCollection<DragablzTabItem> TabItems { get; }
-
-    private int _tabId;
 
     private int _selectedTabIndex;
     public int SelectedTabIndex
@@ -36,9 +35,11 @@ public class SNTPLookupHostViewModel : ViewModelBase
     {
         InterTabClient = new DragablzInterTabClient(ApplicationName.SNTPLookup);
 
+        var tabId = Guid.NewGuid();
+        
         TabItems = new ObservableCollection<DragablzTabItem>
         {
-            new(Localization.Resources.Strings.NewTab, new SNTPLookupView (_tabId), _tabId)
+            new(Localization.Resources.Strings.NewTab, new SNTPLookupView (tabId), tabId)
         };
         
         LoadSettings();
@@ -70,9 +71,9 @@ public class SNTPLookupHostViewModel : ViewModelBase
 
     private void AddTab()
     {
-        _tabId++;
+        var tabId = Guid.NewGuid();
 
-        TabItems.Add(new DragablzTabItem(Localization.Resources.Strings.NewTab, new SNTPLookupView(_tabId), _tabId));
+        TabItems.Add(new DragablzTabItem(Localization.Resources.Strings.NewTab, new SNTPLookupView(tabId), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }

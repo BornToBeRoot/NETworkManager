@@ -28,7 +28,7 @@ public class DNSLookupViewModel : ViewModelBase
 
     private readonly IDialogCoordinator _dialogCoordinator;
 
-    private readonly int _tabId;
+    private readonly Guid _tabId;
     private bool _firstLoad = true;
 
     private string _lastSortDescriptionAscending = string.Empty;
@@ -200,7 +200,7 @@ public class DNSLookupViewModel : ViewModelBase
 
     #region Contructor, load settings
 
-    public DNSLookupViewModel(IDialogCoordinator instance, int tabId, string host)
+    public DNSLookupViewModel(IDialogCoordinator instance, Guid tabId, string host)
     {
         _isLoading = true;
 

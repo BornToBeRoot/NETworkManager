@@ -31,8 +31,6 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
     private readonly bool _isLoading;
     private bool _isViewActive = true;
 
-    private int _tabId;
-
     private int _selectedTabIndex;
     public int SelectedTabIndex
     {
@@ -287,9 +285,9 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
 
     private void AddTab(SNMPSessionInfo sessionInfo, string header = null)
     {
-        _tabId++;
+        var tabId = Guid.NewGuid();
 
-        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Host ?? Localization.Resources.Strings.NewTab, new SNMPView(_tabId, sessionInfo), _tabId));
+        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Host ?? Localization.Resources.Strings.NewTab, new SNMPView(tabId, sessionInfo), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }

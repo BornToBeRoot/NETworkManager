@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using NETworkManager.ViewModels;
 using MahApps.Metro.Controls.Dialogs;
 using System.Windows.Controls;
@@ -10,7 +11,7 @@ public partial class IPScannerView
 {
     private readonly IPScannerViewModel _viewModel;
 
-    public IPScannerView(int tabId, string hostOrIPRange = null)
+    public IPScannerView(Guid tabId, string hostOrIPRange = null)
     {
         InitializeComponent();
 

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
 
@@ -8,7 +9,7 @@ public partial class IPGeolocationView
 {
     private readonly IPGeolocationViewModel _viewModel;
 
-    public IPGeolocationView(int tabId, string domain = null)
+    public IPGeolocationView(Guid tabId, string domain = null)
     {
         InitializeComponent();
 

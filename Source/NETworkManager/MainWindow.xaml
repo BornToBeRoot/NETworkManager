@@ -192,16 +192,9 @@
                                BasedOn="{StaticResource MahApps.Styles.Button.WindowCommands}">
                             <Setter Property="Visibility" Value="Collapsed" />
                             <Style.Triggers>
-                                <MultiDataTrigger>
-                                    <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding SelectedProfileFile.IsEncrypted}" Value="True" />
-                                        <Condition Binding="{Binding SelectedProfileFile.IsPasswordValid}"
-                                                   Value="False" />
-                                    </MultiDataTrigger.Conditions>
-                                    <MultiDataTrigger.Setters>
-                                        <Setter Property="Visibility" Value="Visible" />
-                                    </MultiDataTrigger.Setters>
-                                </MultiDataTrigger>
+                                <DataTrigger Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=ProfileManagerShowUnlock}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Button.Style>

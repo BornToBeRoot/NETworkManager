@@ -30,8 +30,6 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
     private readonly bool _isLoading;
     private bool _isViewActive = true;
 
-    private int _tabId;
-
     private int _selectedTabIndex;
     public int SelectedTabIndex
     {
@@ -165,9 +163,11 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.Whois);
 
+        var tabId = Guid.NewGuid();
+        
         TabItems = new ObservableCollection<DragablzTabItem>
         {
-            new(Localization.Resources.Strings.NewTab, new WhoisView (_tabId), _tabId)
+            new(Localization.Resources.Strings.NewTab, new WhoisView (tabId), tabId)
         };
 
         // Profiles
@@ -293,9 +293,9 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
 
     private void AddTab(string domain = null)
     {
-        _tabId++;
+        var tabId = Guid.NewGuid();
 
-        TabItems.Add(new DragablzTabItem(domain ?? Localization.Resources.Strings.NewTab, new WhoisView(_tabId, domain), _tabId));
+        TabItems.Add(new DragablzTabItem(domain ?? Localization.Resources.Strings.NewTab, new WhoisView(tabId, domain), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }

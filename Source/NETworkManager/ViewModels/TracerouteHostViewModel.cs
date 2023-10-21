@@ -30,9 +30,7 @@ public class TracerouteHostViewModel : ViewModelBase, IProfileManager
     private readonly bool _isLoading;
     private bool _isViewActive = true;
 
-    private int _tabId;
-
-    private int _selectedTabIndex;
+   private int _selectedTabIndex;
     public int SelectedTabIndex
     {
         get => _selectedTabIndex;
@@ -164,9 +162,11 @@ public class TracerouteHostViewModel : ViewModelBase, IProfileManager
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.Traceroute);
 
+        var tabId = Guid.NewGuid();
+        
         TabItems = new ObservableCollection<DragablzTabItem>
         {
-            new(Localization.Resources.Strings.NewTab, new TracerouteView(_tabId), _tabId)
+            new(Localization.Resources.Strings.NewTab, new TracerouteView(tabId), tabId)
         };
 
         // Profiles
@@ -288,9 +288,9 @@ public class TracerouteHostViewModel : ViewModelBase, IProfileManager
 
     public void AddTab(string host = null)
     {
-        _tabId++;
+        var tabId = Guid.NewGuid();
 
-        TabItems.Add(new DragablzTabItem(host ?? Localization.Resources.Strings.NewTab, new TracerouteView(_tabId, host), _tabId));
+        TabItems.Add(new DragablzTabItem(host ?? Localization.Resources.Strings.NewTab, new TracerouteView(tabId, host), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }

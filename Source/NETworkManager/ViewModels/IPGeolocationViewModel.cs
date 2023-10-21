@@ -15,6 +15,7 @@ using NETworkManager.Models.Export;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Views;
 using System.Threading.Tasks;
+using log4net;
 using NETworkManager.Models.IPApi;
 
 namespace NETworkManager.ViewModels;
@@ -22,9 +23,11 @@ namespace NETworkManager.ViewModels;
 public class IPGeolocationViewModel : ViewModelBase
 {
     #region Variables
+    private static readonly ILog Log = LogManager.GetLogger(typeof(IPGeolocationViewModel));
+    
     private readonly IDialogCoordinator _dialogCoordinator;
 
-    private readonly int _tabId;
+    private readonly Guid _tabId;
     private bool _firstLoad = true;
 
     private string _host;
@@ -57,6 +60,20 @@ public class IPGeolocationViewModel : ViewModelBase
         }
     }
 
+    private bool _isResultVisible;
+    public bool IsResultVisible
+    {
+        get => _isResultVisible;
+        set
+        {
+            if (value == _isResultVisible)
+                return;
+
+            _isResultVisible = value;
+            OnPropertyChanged();
+        }
+    }
+    
     private IPGeolocationInfo _result;
     public IPGeolocationInfo Result
     {
@@ -101,7 +118,7 @@ public class IPGeolocationViewModel : ViewModelBase
     #endregion
 
     #region Contructor, load settings
-    public IPGeolocationViewModel(IDialogCoordinator instance ,int tabId, string host)
+    public IPGeolocationViewModel(IDialogCoordinator instance, Guid tabId, string host)
     {
         _dialogCoordinator = instance;
 
@@ -189,6 +206,7 @@ public class IPGeolocationViewModel : ViewModelBase
     private async Task Query()
     {
         IsStatusMessageDisplayed = false;
+        IsResultVisible = false;
         IsRunning = true;
 
         Result = null;
@@ -207,26 +225,31 @@ public class IPGeolocationViewModel : ViewModelBase
         try
         {
             var result = await IPGeolocationService.GetInstance().GetIPGeolocationAsync(Host);
-
-            Result = result.Info;
-
-            //await Task.Delay(5000);
-
-            /*
-            var whoisServer = Whois.GetWhoisServer(Host);
-
-            if (string.IsNullOrEmpty(whoisServer))
+            
+            if(result.HasError)
             {
-                StatusMessage = string.Format(Strings.WhoisServerNotFoundForTheDomain, Host);
+                Log.Error($"ip-api.com error: {result.ErrorMessage}, error code: {result.ErrorCode}");
+                
+                StatusMessage = $"ip-api.com: {result.ErrorMessage}";
                 IsStatusMessageDisplayed = true;
+                
+                return;
             }
-            else
-            {
-                WhoisResult = await Whois.QueryAsync(Host, whoisServer);
 
-                AddDomainToHistory(Host);
+            if (result.RateLimitIsReached)
+            {
+                Log.Warn($"ip-api.com rate limit reached. Try again in {result.RateLimitRemainingTime} seconds.");
+
+                StatusMessage = $"ip-api.com {string.Format(Strings.RateLimitReachedTryAgainInXSeconds,  result.RateLimitRemainingTime)}";
+                IsStatusMessageDisplayed = true;
+                
+                return;
             }
-            */
+            
+            AddHostToHistory(Host);
+            
+            Result = result.Info;
+            IsResultVisible = true;
         }
         catch (Exception ex)
         {
@@ -242,7 +265,7 @@ public class IPGeolocationViewModel : ViewModelBase
 
     }
 
-    private void AddDomainToHistory(string host)
+    private void AddHostToHistory(string host)
     {
         // Create the new list
         var list = ListHelper.Modify(SettingsManager.Current.IPGeolocation_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);

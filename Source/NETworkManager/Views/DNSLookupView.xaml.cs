@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using MahApps.Metro.Controls.Dialogs;
@@ -10,7 +11,7 @@ public partial class DNSLookupView
 {
     private readonly DNSLookupViewModel _viewModel;
 
-    public DNSLookupView(int tabId, string host = null)
+    public DNSLookupView(Guid tabId, string host = null)
     {
         InitializeComponent();
 

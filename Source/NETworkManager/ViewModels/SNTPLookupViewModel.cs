@@ -25,7 +25,7 @@ public class SNTPLookupViewModel : ViewModelBase
     #region Variables
     private readonly IDialogCoordinator _dialogCoordinator;
 
-    private readonly int _tabId;
+    private readonly Guid _tabId;
 
     private readonly bool _isLoading;
 
@@ -135,7 +135,7 @@ public class SNTPLookupViewModel : ViewModelBase
     #endregion
 
     #region Contructor, load settings
-    public SNTPLookupViewModel(IDialogCoordinator instance, int tabId)
+    public SNTPLookupViewModel(IDialogCoordinator instance, Guid tabId)
     {
         _isLoading = true;
 
