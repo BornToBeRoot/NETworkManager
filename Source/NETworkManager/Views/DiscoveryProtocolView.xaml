@@ -12,18 +12,10 @@
         xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
         dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:DiscoveryProtocolViewModel}">
-    <UserControl.InputBindings>
-        <!--
-        <KeyBinding Key="F5" Command="{Binding ReloadNetworkInterfacesCommand}" />
-        -->        
-    </UserControl.InputBindings>
     <UserControl.Resources>
-        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:DiscoveryProtocolToStringConverter x:Key="DiscoveryProtocolToStringConverter" />
-        <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
-        <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:StringNullOrEmptyToStringConverter x:Key="StringNullOrEmptyToStringConverter" />        
     </UserControl.Resources>
     <TabControl Style="{StaticResource DefaultTabControl}">
@@ -90,7 +82,7 @@
                             </Button>
                         </Grid>
                         <TextBlock Grid.Row="4" Foreground="{DynamicResource MahApps.Brushes.Accent}" Text="{Binding StatusMessage}" TextWrapping="Wrap" Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource StatusMessageTextBlock}" Margin="0,0,0,10" />
-                        <TextBlock Grid.Row="5" Text="{x:Static localization:Strings.Details}" Style="{StaticResource HeaderTextBlock}"  Margin="0,20,0,10" />                         
+                        <TextBlock Grid.Row="5" Text="{x:Static localization:Strings.Result}" Style="{StaticResource HeaderTextBlock}"  Margin="0,20,0,10" />                         
                         <ScrollViewer Grid.Row="6">
                             <ScrollViewer.Style>
                                 <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaultScrollViewer}">

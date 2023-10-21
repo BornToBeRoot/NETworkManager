@@ -106,6 +106,11 @@ public enum DocumentationIdentifier
     ApplicationWhois,
 
     /// <summary>
+    /// IP geolocation documentation page.
+    /// </summary>
+    ApplicationIPGeolocation,
+    
+    /// <summary>
     /// Subnet Calculator documentation page.
     /// </summary>
     ApplicationSubnetCalculator,

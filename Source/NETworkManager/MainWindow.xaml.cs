@@ -35,7 +35,6 @@ using NETworkManager.Models.Network;
 using NETworkManager.Models.AWS;
 using NETworkManager.Models.PowerShell;
 using log4net;
-using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 
 namespace NETworkManager;
 
@@ -331,6 +330,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 if (!_isProfileFileUpdating)
                     LoadProfile(value);
 
+                ConfigurationManager.Current.ProfileManagerShowUnlock = value.IsEncrypted && !value.IsPasswordValid;
                 SettingsManager.Current.Profiles_LastSelected = value.Name;
             }
 
@@ -434,7 +434,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                     new ObservableCollection<CustomCommandInfo>(IPScannerCustomCommand.GetDefaultList());
                 SettingsManager.Current.PortScanner_PortProfiles =
                     new ObservableCollection<PortProfileInfo>(PortProfile.GetDefaultList());
-                SettingsManager.Current.DNSLookup_DNSServers_v2 =
+                SettingsManager.Current.DNSLookup_DNSServers =
                     new ObservableCollection<DNSServerConnectionInfoProfile>(DNSServer.GetDefaultList());
                 SettingsManager.Current.AWSSessionManager_AWSProfiles =
                     new ObservableCollection<AWSProfileInfo>(AWSProfile.GetDefaultList());
@@ -569,7 +569,6 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     #endregion
 
-
     #region Run Command
 
     private IEnumerable<RunCommandInfo> RunCommands => RunCommandManager.GetList();
@@ -604,7 +603,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         }
     }
 
-    public ICommand RunCommandHotKey => new RelayCommand(_ => ComboBoxRunCommand.Focus(), _ => !IsAnyDialogOpen );
+    public ICommand RunCommandHotKey => new RelayCommand(_ => ComboBoxRunCommand.Focus(), _ => !IsAnyDialogOpen);
 
     public ICommand RunCommandEnterCommand => new RelayCommand(_ => RunCommandEnterAction());
 
@@ -614,7 +613,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         {
             switch (x.Type)
             {
-                case RunCommandType.Application when RunCommand.Trim().Split(" ")[0].Equals(x.Command, StringComparison.OrdinalIgnoreCase):
+                case RunCommandType.Application when RunCommand.Trim().Split(" ")[0]
+                    .Equals(x.Command, StringComparison.OrdinalIgnoreCase):
                 {
                     // Close settings if it is open
                     if (ShowSettingsView)
@@ -624,7 +624,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                         RunCommand[x.Command.Length..].Trim());
                     break;
                 }
-                case RunCommandType.Setting when RunCommand.Trim().Split(" ")[0].Equals(x.Command, StringComparison.OrdinalIgnoreCase):
+                case RunCommandType.Setting when RunCommand.Trim().Split(" ")[0]
+                    .Equals(x.Command, StringComparison.OrdinalIgnoreCase):
                     EventSystem.RedirectToSettings();
                     break;
             }
@@ -725,6 +726,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     private BitCalculatorView _bitCalculatorView;
     private LookupHostView _lookupHostView;
     private WhoisHostView _whoisHostView;
+    private IPGeolocationHostView _ipGeolocationHostView;
     private ConnectionsView _connectionsView;
     private ListenersView _listenersView;
     private ARPTableView _arpTableView;
@@ -892,6 +894,14 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
                 ContentControlApplication.Content = _whoisHostView;
                 break;
+            case ApplicationName.IPGeolocation:
+                if (_ipGeolocationHostView == null)
+                    _ipGeolocationHostView = new IPGeolocationHostView();
+                else
+                    _ipGeolocationHostView.OnViewVisible();
+
+                ContentControlApplication.Content = _ipGeolocationHostView;
+                break;
             case ApplicationName.SubnetCalculator:
                 if (_subnetCalculatorHostView == null)
                     _subnetCalculatorHostView = new SubnetCalculatorHostView();
@@ -1000,6 +1010,12 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 break;
             case ApplicationName.WakeOnLAN:
                 _wakeOnLanView?.OnViewHide();
+                break;
+            case ApplicationName.Whois:
+                _whoisHostView?.OnViewHide();
+                break;
+            case ApplicationName.IPGeolocation:
+                _ipGeolocationHostView?.OnViewHide();
                 break;
             case ApplicationName.Lookup:
                 _lookupHostView?.OnViewHide();
@@ -1117,6 +1133,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 break;
             case ApplicationName.Whois:
                 break;
+            case ApplicationName.IPGeolocation:
+                break;
             case ApplicationName.SubnetCalculator:
                 break;
             case ApplicationName.BitCalculator:
@@ -1130,9 +1148,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             case ApplicationName.ARPTable:
                 break;
             case ApplicationName.None:
-                break;
             default:
-                throw new ArgumentOutOfRangeException();
+                Log.Error($"Cannot redirect data to unknown application: {data.Application}");
+                break;
         }
     }
 
@@ -1206,7 +1224,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     private async void LoadProfile(ProfileFileInfo info, bool showWrongPassword = false)
     {
         // Disable profile management while switching profiles
-        ConfigurationManager.Current.IsProfileManagerEnabled = false;
+        ConfigurationManager.Current.ProfileManagerIsEnabled = false;
         ConfigurationManager.Current.ProfileManagerErrorMessage = string.Empty;
 
         if (info.IsEncrypted && !info.IsPasswordValid)
@@ -1226,10 +1244,6 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 SwitchProfile(info);
             }, async _ =>
             {
-                // Show error message is canceled / escape is pressed (dialog is opened again if the password is wrong)
-                ConfigurationManager.Current.ProfileManagerErrorMessage =
-                    Localization.Resources.Strings.UnlockTheProfileFileMessage;
-
                 await this.HideMetroDialogAsync(customDialog);
                 ConfigurationManager.OnDialogClose();
 
@@ -1257,7 +1271,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             ProfileManager.Switch(info);
 
             // Enable profile management after successfully loading the profiles
-            ConfigurationManager.Current.IsProfileManagerEnabled = true;
+            ConfigurationManager.Current.ProfileManagerShowUnlock = false;
+            ConfigurationManager.Current.ProfileManagerIsEnabled = true;
 
             OnProfilesLoaded(SelectedApplication.Name);
         }
@@ -1374,9 +1389,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     private const int WmHotkey = 0x0312;
 
     /* ID | Command
-    *  ---|-------------------
-    *  1  | ShowWindow()
-    */
+     *  ---|-------------------
+     *  1  | ShowWindow()
+     */
 
     private readonly List<int> _registeredHotKeys = new();
 
@@ -1466,7 +1481,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private void OpenStatusWindowAction()
     {
-        OpenStatusWindow(true);
+        OpenStatusWindow();
     }
 
     public ICommand RestartApplicationCommand => new RelayCommand(_ => RestartApplicationAction());
@@ -1715,9 +1730,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     #region Status window
 
-    private void OpenStatusWindow(bool fromNetworkChangeEvent)
+    private void OpenStatusWindow(bool enableCloseTimer = false)
     {
-        _statusWindow.ShowWindow(fromNetworkChangeEvent);
+        _statusWindow.ShowWindow(enableCloseTimer);
     }
 
     private async void OnNetworkHasChanged()
@@ -1739,7 +1754,10 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         // Show status window on network change
         if (SettingsManager.Current.Status_ShowWindowOnNetworkChange)
         {
-            await Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate { OpenStatusWindow(false); }));
+            await Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            {
+                OpenStatusWindow(true);
+            }));
         }
 
         _isNetworkChanging = false;
@@ -1843,6 +1861,5 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 break;
         }
     }
-
     #endregion
 }

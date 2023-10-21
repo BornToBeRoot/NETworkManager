@@ -12,11 +12,11 @@ public class DropdownViewModel : ViewModelBase
 
     public ICommand CancelCommand { get; }
 
-    private string _valueDescription;
+    private readonly string _valueDescription;
     public string ValueDescription
     {
         get => _valueDescription;
-        set
+        private init
         {
             if(value == _valueDescription)
                 return;
@@ -26,11 +26,11 @@ public class DropdownViewModel : ViewModelBase
         }
     }
 
-    private List<string> _values;
+    private readonly List<string> _values;
     public List<string> Values
     {
         get => _values;
-        set
+        private init
         {
             if (value == _values)
                 return;
@@ -61,7 +61,7 @@ public class DropdownViewModel : ViewModelBase
 
         SelectedValue = Values.FirstOrDefault();
 
-        OKCommand = new RelayCommand(p => okCommand(this));
-        CancelCommand = new RelayCommand(p => cancelHandler(this));
+        OKCommand = new RelayCommand(_ => okCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
     }      
 }

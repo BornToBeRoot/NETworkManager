@@ -80,29 +80,29 @@ public class ExportViewModel : ViewModelBase
         }
     }
 
-    public ExportFileType FileType { get; set; }
+    public ExportFileType FileType { get; private set; }
 
-    private bool _showCSV;
-    public bool ShowCSV
+    private bool _showCsv;
+    public bool ShowCsv
     {
-        get => _showCSV;
+        get => _showCsv;
         set
         {
-            if (value == _showCSV)
+            if (value == _showCsv)
                 return;
 
-            _showCSV = value;
+            _showCsv = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _useCSV;
-    public bool UseCSV
+    private bool _useCsv;
+    public bool UseCsv
     {
-        get => _useCSV;
+        get => _useCsv;
         set
         {
-            if (value == _useCSV)
+            if (value == _useCsv)
                 return;
 
             if (value)
@@ -111,32 +111,32 @@ public class ExportViewModel : ViewModelBase
                 ChangeFilePathExtension(FileType);
             }
 
-            _useCSV = value;
+            _useCsv = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _showXML;
-    public bool ShowXML
+    private bool _showXml;
+    public bool ShowXml
     {
-        get => _showXML;
+        get => _showXml;
         set
         {
-            if (value == _showXML)
+            if (value == _showXml)
                 return;
 
-            _showXML = value;
+            _showXml = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _useXML;
-    public bool UseXML
+    private bool _useXml;
+    public bool UseXml
     {
-        get => _useXML;
+        get => _useXml;
         set
         {
-            if (value == _useXML)
+            if (value == _useXml)
                 return;
 
             if (value)
@@ -145,33 +145,33 @@ public class ExportViewModel : ViewModelBase
                 ChangeFilePathExtension(FileType);
             }
 
-            _useXML = value;
+            _useXml = value;
             OnPropertyChanged();
         }
     }
 
 
-    private bool _showJSON;
-    public bool ShowJSON
+    private bool _showJson;
+    public bool ShowJson
     {
-        get => _showJSON;
+        get => _showJson;
         set
         {
-            if (value == _showJSON)
+            if (value == _showJson)
                 return;
 
-            _showJSON = value;
+            _showJson = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _useJSON;
-    public bool UseJSON
+    private bool _useJson;
+    public bool UseJson
     {
-        get => _useJSON;
+        get => _useJson;
         set
         {
-            if (value == _useJSON)
+            if (value == _useJson)
                 return;
 
             if (value)
@@ -180,32 +180,32 @@ public class ExportViewModel : ViewModelBase
                 ChangeFilePathExtension(FileType);
             }
 
-            _useJSON = value;
+            _useJson = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _showTXT;
-    public bool ShowTXT
+    private bool _showTxt;
+    public bool ShowTxt
     {
-        get => _showTXT;
+        get => _showTxt;
         set
         {
-            if (value == _showTXT)
+            if (value == _showTxt)
                 return;
 
-            _showTXT = value;
+            _showTxt = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _useTXT;
-    public bool UseTXT
+    private bool _useTxt;
+    public bool UseTxt
     {
-        get => _useTXT;
+        get => _useTxt;
         set
         {
-            if (value == _useTXT)
+            if (value == _useTxt)
                 return;
 
             if (value)
@@ -214,7 +214,7 @@ public class ExportViewModel : ViewModelBase
                 ChangeFilePathExtension(FileType);
             }
 
-            _useTXT = value;
+            _useTxt = value;
             OnPropertyChanged();
         }
     }
@@ -233,15 +233,15 @@ public class ExportViewModel : ViewModelBase
         }
     }
 
-    public ExportViewModel(Action<ExportViewModel> deleteCommand, Action<ExportViewModel> cancelHandler, ExportFileType[] showFilesTypes, bool showExportSelected)
+    private ExportViewModel(Action<ExportViewModel> deleteCommand, Action<ExportViewModel> cancelHandler, ExportFileType[] showFilesTypes, bool showExportSelected)
     {
-        ExportCommand = new RelayCommand(p => deleteCommand(this));
-        CancelCommand = new RelayCommand(p => cancelHandler(this));
+        ExportCommand = new RelayCommand(_ => deleteCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
-        ShowCSV = showFilesTypes.Contains(ExportFileType.Csv);
-        ShowXML = showFilesTypes.Contains(ExportFileType.Xml);
-        ShowJSON = showFilesTypes.Contains(ExportFileType.Json);
-        ShowTXT = showFilesTypes.Contains(ExportFileType.Txt);
+        ShowCsv = showFilesTypes.Contains(ExportFileType.Csv);
+        ShowXml = showFilesTypes.Contains(ExportFileType.Xml);
+        ShowJson = showFilesTypes.Contains(ExportFileType.Json);
+        ShowTxt = showFilesTypes.Contains(ExportFileType.Txt);
 
         ShowExportSelected = showExportSelected;
     }
@@ -254,23 +254,23 @@ public class ExportViewModel : ViewModelBase
         switch (fileType)
         {
             case ExportFileType.Csv:
-                UseCSV = true;
+                UseCsv = true;
                 break;
             case ExportFileType.Xml:
-                UseXML = true;
+                UseXml = true;
                 break;
             case ExportFileType.Json:
-                UseJSON = true;
+                UseJson = true;
                 break;
             case ExportFileType.Txt:
-                UseTXT = true;                    
+                UseTxt = true;                    
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
         }
     }
 
-    public ICommand BrowseFileCommand => new RelayCommand(p => BrowseFileAction());
+    public ICommand BrowseFileCommand => new RelayCommand(_ => BrowseFileAction());
 
     private void BrowseFileAction()
     {
@@ -295,6 +295,9 @@ public class ExportViewModel : ViewModelBase
 
         var newExtension = ExportManager.GetFileExtensionAsString(fileType);
 
+        if(newExtension == null)
+            return;
+            
         if (extension.Equals(newExtension, StringComparison.OrdinalIgnoreCase))
             return;
 

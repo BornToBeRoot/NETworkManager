@@ -27,10 +27,8 @@ public class IPScannerHostViewModel : ViewModelBase, IProfileManager
     public IInterTabClient InterTabClient { get; }
     public ObservableCollection<DragablzTabItem> TabItems { get; }
     
-    private readonly bool _isLoading = true;
+    private readonly bool _isLoading;
     private bool _isViewActive = true;
-
-    private int _tabId;
 
     private int _selectedTabIndex;
     public int SelectedTabIndex
@@ -158,13 +156,17 @@ public class IPScannerHostViewModel : ViewModelBase, IProfileManager
     #region Constructor, load settings
     public IPScannerHostViewModel(IDialogCoordinator instance)
     {
+        _isLoading = true;
+        
         _dialogCoordinator = instance;
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.IPScanner);
 
+        var tabId = Guid.NewGuid();
+        
         TabItems = new ObservableCollection<DragablzTabItem>
         {
-            new(Localization.Resources.Strings.NewTab, new IPScannerView(_tabId), _tabId)
+            new(Localization.Resources.Strings.NewTab, new IPScannerView(tabId), tabId)
         };
 
         // Profiles
@@ -289,9 +291,9 @@ public class IPScannerHostViewModel : ViewModelBase, IProfileManager
 
     public void AddTab(string hostOrIPRange = null)
     {
-        _tabId++;
+        var tabId = Guid.NewGuid();
 
-        TabItems.Add(new DragablzTabItem(Localization.Resources.Strings.NewTab, new IPScannerView(_tabId, hostOrIPRange), _tabId));
+        TabItems.Add(new DragablzTabItem(Localization.Resources.Strings.NewTab, new IPScannerView(tabId, hostOrIPRange), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }

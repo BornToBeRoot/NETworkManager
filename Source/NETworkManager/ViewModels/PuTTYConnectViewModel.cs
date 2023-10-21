@@ -258,8 +258,8 @@ public class PuTTYConnectViewModel : ViewModelBase
 
     public PuTTYConnectViewModel(Action<PuTTYConnectViewModel> connectCommand, Action<PuTTYConnectViewModel> cancelHandler, string host = null)
     {
-        ConnectCommand = new RelayCommand(p => connectCommand(this));
-        CancelCommand = new RelayCommand(p => cancelHandler(this));
+        ConnectCommand = new RelayCommand(_ => connectCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
         if (!string.IsNullOrEmpty(host))
             Host = host;

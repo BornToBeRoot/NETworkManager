@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="NETworkManager.Views.IPApiIPGeolocationView"
+﻿<UserControl x:Class="NETworkManager.Views.IPApiIPGeolocationWidgetView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
@@ -11,7 +11,7 @@
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" MinHeight="200"
-             d:DataContext="{d:DesignInstance viewModels:IPApiIPGeolocationViewModel}" Loaded="UserControl_Loaded">
+             d:DataContext="{d:DesignInstance viewModels:IPApiIPGeolocationWidgetViewModel}" Loaded="UserControl_Loaded">
     <UserControl.InputBindings>
         <KeyBinding Key="F5" Command="{Binding CheckViaHotkeyCommand}" />
     </UserControl.InputBindings>
@@ -55,7 +55,7 @@
                         <Grid.Style>
                             <Style TargetType="{x:Type Grid}">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsChecking}" Value="True">
+                                    <DataTrigger Binding="{Binding IsRunning}" Value="True">
                                         <Setter Property="Visibility" Value="Hidden" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Result.RateLimitIsReached}" Value="True">
@@ -181,7 +181,7 @@
                         <StackPanel.Style>
                             <Style TargetType="{x:Type StackPanel}">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsChecking}" Value="True">
+                                    <DataTrigger Binding="{Binding IsRunning}" Value="True">
                                         <Setter Property="Visibility" Value="Hidden" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Result.RateLimitIsReached}" Value="False">
@@ -197,7 +197,7 @@
                         <StackPanel.Style>
                             <Style TargetType="{x:Type StackPanel}">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsChecking}" Value="True">
+                                    <DataTrigger Binding="{Binding IsRunning}" Value="True">
                                         <Setter Property="Visibility" Value="Hidden" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Result.HasError}" Value="False">
@@ -220,7 +220,7 @@
                         <TextBlock Text="{x:Static localization:Strings.CheckNetworkConnectionTryAgainMessage}" Style="{StaticResource MessageTextBlock}" />
                     </StackPanel>
                     <!-- Loading indicator -->
-                    <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Visibility="{Binding IsChecking, Converter={StaticResource BooleanToVisibilityHiddenConverter}}">
+                    <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityHiddenConverter}}">
                         <loadingIndicators:LoadingIndicator IsActive="True" Style="{DynamicResource LoadingIndicatorArcsStyle}" SpeedRatio="1" Margin="0,0,0,10"/>
                         <TextBlock Text="{x:Static localization:Strings.CheckingIPGeolocationDots}" Style="{StaticResource MessageTextBlock}" />
                     </StackPanel>

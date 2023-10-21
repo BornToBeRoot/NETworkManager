@@ -23,7 +23,7 @@ public class WhoisViewModel : ViewModelBase
     #region Variables
     private readonly IDialogCoordinator _dialogCoordinator;
 
-    private readonly int _tabId;
+    private readonly Guid _tabId;
     private bool _firstLoad = true;
 
     private string _domain;
@@ -100,7 +100,7 @@ public class WhoisViewModel : ViewModelBase
     #endregion
 
     #region Contructor, load settings
-    public WhoisViewModel(IDialogCoordinator instance ,int tabId, string domain)
+    public WhoisViewModel(IDialogCoordinator instance ,Guid tabId, string domain)
     {
         _dialogCoordinator = instance;
 
@@ -233,10 +233,10 @@ public class WhoisViewModel : ViewModelBase
 
     }
 
-    private void AddDomainToHistory(string websiteUri)
+    private void AddDomainToHistory(string domain)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.Whois_DomainHistory.ToList(), websiteUri, SettingsManager.Current.General_HistoryListEntries);
+        var list = ListHelper.Modify(SettingsManager.Current.Whois_DomainHistory.ToList(), domain, SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items
         SettingsManager.Current.Whois_DomainHistory.Clear();

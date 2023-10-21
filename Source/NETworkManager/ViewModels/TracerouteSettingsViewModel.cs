@@ -5,9 +5,11 @@ namespace NETworkManager.ViewModels;
 public class TracerouteSettingsViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly bool _isLoading;
 
     private int _maximumHops;
+
     public int MaximumHops
     {
         get => _maximumHops;
@@ -25,6 +27,7 @@ public class TracerouteSettingsViewModel : ViewModelBase
     }
 
     private int _timeout;
+
     public int Timeout
     {
         get => _timeout;
@@ -42,6 +45,7 @@ public class TracerouteSettingsViewModel : ViewModelBase
     }
 
     private int _buffer;
+
     public int Buffer
     {
         get => _buffer;
@@ -59,6 +63,7 @@ public class TracerouteSettingsViewModel : ViewModelBase
     }
 
     private bool _resolveHostname;
+
     public bool ResolveHostname
     {
         get => _resolveHostname;
@@ -74,7 +79,7 @@ public class TracerouteSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+
     private bool _checkIPApiIPGeolocation;
 
     public bool CheckIPApiIPGeolocation
@@ -82,19 +87,21 @@ public class TracerouteSettingsViewModel : ViewModelBase
         get => _checkIPApiIPGeolocation;
         set
         {
-          if(value == _checkIPApiIPGeolocation)
-              return;
-          
-            if(!_isLoading)
+            if (value == _checkIPApiIPGeolocation)
+                return;
+
+            if (!_isLoading)
                 SettingsManager.Current.Traceroute_CheckIPApiIPGeolocation = value;
-            
+
             _checkIPApiIPGeolocation = value;
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, load settings
+
     public TracerouteSettingsViewModel()
     {
         _isLoading = true;
@@ -112,5 +119,6 @@ public class TracerouteSettingsViewModel : ViewModelBase
         ResolveHostname = SettingsManager.Current.Traceroute_ResolveHostname;
         CheckIPApiIPGeolocation = SettingsManager.Current.Traceroute_CheckIPApiIPGeolocation;
     }
+
     #endregion
 }

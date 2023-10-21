@@ -2,34 +2,32 @@
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using log4net;
 
 namespace NETworkManager.ViewModels;
 
-public class IPApiIPGeolocationViewModel : ViewModelBase
+public class IPApiDNSResolverWidgetViewModel : ViewModelBase
 {
-    #region  Variables
-    private static readonly ILog Log = LogManager.GetLogger(typeof(IPApiIPGeolocationViewModel));
-    
-    private bool _isChecking;
-    public bool IsChecking
+    #region  Variables 
+    private bool _isRunning;
+    public bool IsRunning
     {
-        get => _isChecking;
+        get => _isRunning;
         set
         {
-            if (value == _isChecking)
+            if (value == _isRunning)
                 return;
 
-            _isChecking = value;
+            _isRunning = value;
             OnPropertyChanged();
         }
     }
 
-    private IPGeolocationResult _result;
-    public IPGeolocationResult Result
+    private DNSResolverResult _result;
+    public DNSResolverResult Result
     {
         get => _result;
         private set
@@ -44,7 +42,8 @@ public class IPApiIPGeolocationViewModel : ViewModelBase
     #endregion
 
     #region Constructor, load settings
-    public IPApiIPGeolocationViewModel()
+
+    public IPApiDNSResolverWidgetViewModel()
     {
         // Detect if network address or status changed...
         NetworkChange.NetworkAvailabilityChanged += (_, _) => Check();
@@ -80,30 +79,24 @@ public class IPApiIPGeolocationViewModel : ViewModelBase
     private async Task CheckAsync()
     {
         // Check is disabled via settings
-        if (!SettingsManager.Current.Dashboard_CheckIPApiIPGeolocation)
+        if (!SettingsManager.Current.Dashboard_CheckIPApiDNSResolver)
             return;
 
         // Don't check multiple times if already running
-        if (IsChecking)
+        if (IsRunning)
             return;
 
-        IsChecking = true;
+        IsRunning = true;
         Result = null;
 
         // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
         await Task.Delay(2000);
 
-        Result = await IPGeolocationService.GetInstance().GetIPGeolocationAsync();
+        Result = await DNSResolverService.GetInstance().GetDNSResolverAsync();
 
-        // Log error
-        if (Result.HasError)
-            Log.Error($"ip-api.com error: {Result.ErrorMessage}, error code: {Result.ErrorCode}");
-        
-        // Log rate limit
-        if (Result.RateLimitIsReached)
-            Log.Warn($"ip-api.com rate limit reached. Try again in {Result.RateLimitRemainingTime} seconds.");
-        
-        IsChecking = false;
+        Debug.WriteLine(Result);
+
+        IsRunning = false;
     }
     #endregion
 
@@ -112,9 +105,9 @@ public class IPApiIPGeolocationViewModel : ViewModelBase
     {
         switch (e.PropertyName)
         {
-            case nameof(SettingsInfo.Dashboard_CheckIPApiIPGeolocation):
+            case nameof(SettingsInfo.Dashboard_CheckIPApiDNSResolver):
                 // Check if enabled via settings
-                if (SettingsManager.Current.Dashboard_CheckIPApiIPGeolocation)
+                if (SettingsManager.Current.Dashboard_CheckIPApiDNSResolver)
                     Check();
 
                 break;

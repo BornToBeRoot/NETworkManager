@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using NETworkManager.ViewModels;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -10,7 +11,7 @@ public partial class PortScannerView
 {
     private readonly PortScannerViewModel _viewModel;
 
-    public PortScannerView(int tabId, string host = null, string ports = null)
+    public PortScannerView(Guid tabId, string host = null, string ports = null)
     {
         InitializeComponent();
 

@@ -30,8 +30,6 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
     private readonly bool _isLoading;
     private bool _isViewActive = true;
 
-    private int _tabId;
-
     private int _selectedTabIndex;
     public int SelectedTabIndex
     {
@@ -52,7 +50,7 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
     public ICollectionView Profiles
     {
         get => _profiles;
-        set
+        private set
         {
             if (value == _profiles)
                 return;
@@ -165,9 +163,11 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.DNSLookup);
 
+        var tabId = Guid.NewGuid();
+        
         TabItems = new ObservableCollection<DragablzTabItem>
         {
-            new DragablzTabItem(Localization.Resources.Strings.NewTab, new DNSLookupView (_tabId), _tabId)
+            new(Localization.Resources.Strings.NewTab, new DNSLookupView (tabId), tabId)
         };
 
         // Profiles
@@ -194,14 +194,14 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #region ICommand & Actions
-    public ICommand AddTabCommand => new RelayCommand(p => AddTabAction());
+    public ICommand AddTabCommand => new RelayCommand(_ => AddTabAction());
 
     private void AddTabAction()
     {
         AddTab();
     }
 
-    public ICommand LookupProfileCommand => new RelayCommand(p => LookupProfileAction(), LookupProfile_CanExecute);
+    public ICommand LookupProfileCommand => new RelayCommand(_ => LookupProfileAction(), LookupProfile_CanExecute);
 
     private bool LookupProfile_CanExecute(object obj)
     {
@@ -213,44 +213,44 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
         AddTab(SelectedProfile.DNSLookup_Host);
     }
 
-    public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
+    public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.DNSLookup);
+        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.DNSLookup).ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamic;
+    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
 
-    public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction(), ModifyProfile_CanExecute);
+    public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
     private void EditProfileAction()
     {
-        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
     }
 
-    public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction(), ModifyProfile_CanExecute);
+    public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
     }
 
-    public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction(), ModifyProfile_CanExecute);
+    public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
 
     private void DeleteProfileAction()
     {
-        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile });
+        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile }).ConfigureAwait(false);
     }
 
     public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()));
+        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString())).ConfigureAwait(false);
     }
 
-    public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
+    public ICommand ClearSearchCommand => new RelayCommand(_ => ClearSearchAction());
 
     private void ClearSearchAction()
     {
@@ -292,9 +292,9 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
 
     public void AddTab(string host = null)
     {
-        _tabId++;
+        var tabId = Guid.NewGuid();
 
-        TabItems.Add(new DragablzTabItem(host ?? Localization.Resources.Strings.NewTab, new DNSLookupView(_tabId, host), _tabId));
+        TabItems.Add(new DragablzTabItem(host ?? Localization.Resources.Strings.NewTab, new DNSLookupView(tabId, host), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }
@@ -347,7 +347,7 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
     }
 
-    public void RefreshProfiles()
+    private void RefreshProfiles()
     {
         if (!_isViewActive)
             return;

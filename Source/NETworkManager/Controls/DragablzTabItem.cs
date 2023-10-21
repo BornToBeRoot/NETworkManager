@@ -1,4 +1,5 @@
-﻿using NETworkManager.ViewModels;
+﻿using System;
+using NETworkManager.ViewModels;
 using System.Windows.Controls;
 
 namespace NETworkManager.Controls;
@@ -20,7 +21,7 @@ public class DragablzTabItem : ViewModelBase
     }
 
     public UserControl View { get; set; }
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     public DragablzTabItem(string header, UserControl view)
     {
@@ -28,7 +29,7 @@ public class DragablzTabItem : ViewModelBase
         View = view;         
     }
 
-    public DragablzTabItem(string header, UserControl view, int id)
+    public DragablzTabItem(string header, UserControl view, Guid id)
     {
         Header = header;
         View = view;

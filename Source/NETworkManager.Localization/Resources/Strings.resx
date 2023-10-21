@@ -3676,4 +3676,10 @@ Try again in a few seconds.</value>
   <data name="Watermark_RunCommand" xml:space="preserve">
     <value>Run command... (Ctrl+Shift+P)</value>
   </data>
+  <data name="ApplicationName_IPGeolocation" xml:space="preserve">
+    <value>IP Geolocation</value>
+  </data>
+  <data name="AddATabToQueryIPGeolocation" xml:space="preserve">
+    <value>Add a tab to query IP geolocation...</value>
+  </data>
 </root>

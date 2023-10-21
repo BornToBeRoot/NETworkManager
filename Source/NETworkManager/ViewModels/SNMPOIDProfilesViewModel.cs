@@ -10,12 +10,8 @@ namespace NETworkManager.ViewModels;
 
 public class SNMPOIDProfilesViewModel : ViewModelBase
 {
-    private readonly bool _isLoading;
-
     public ICommand OKCommand { get; }
-
     public ICommand CancelCommand { get; }
-
 
     private string _search;
     public string Search
@@ -52,10 +48,8 @@ public class SNMPOIDProfilesViewModel : ViewModelBase
 
     public SNMPOIDProfilesViewModel(Action<SNMPOIDProfilesViewModel> okCommand, Action<SNMPOIDProfilesViewModel> cancelHandler)
     {
-        _isLoading = true;
-
-        OKCommand = new RelayCommand(p => okCommand(this));
-        CancelCommand = new RelayCommand(p => cancelHandler(this));
+        OKCommand = new RelayCommand(_ => okCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
         OIDProfiles = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_OidProfiles);
         OIDProfiles.SortDescriptions.Add(new SortDescription(nameof(SNMPOIDProfileInfo.Name), ListSortDirection.Ascending));
@@ -72,7 +66,5 @@ public class SNMPOIDProfilesViewModel : ViewModelBase
             // Search: Name, OID
             return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.OID.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
-
-        _isLoading = false;
     }
 }

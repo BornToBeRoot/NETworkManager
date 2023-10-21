@@ -73,11 +73,11 @@ public class PowerShellConnectViewModel : ViewModelBase
         }
     }
 
-    private List<ExecutionPolicy> _executionPolicies = new List<ExecutionPolicy>();
+    private List<ExecutionPolicy> _executionPolicies = new();
     public List<ExecutionPolicy> ExecutionPolicies
     {
         get => _executionPolicies;
-        set
+        private set
         {
             if (value == _executionPolicies)
                 return;
@@ -103,8 +103,8 @@ public class PowerShellConnectViewModel : ViewModelBase
 
     public PowerShellConnectViewModel(Action<PowerShellConnectViewModel> connectCommand, Action<PowerShellConnectViewModel> cancelHandler, string host = null)
     {
-        ConnectCommand = new RelayCommand(p => connectCommand(this));
-        CancelCommand = new RelayCommand(p => cancelHandler(this));
+        ConnectCommand = new RelayCommand(_ => connectCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
         if (!string.IsNullOrEmpty(host))
         {

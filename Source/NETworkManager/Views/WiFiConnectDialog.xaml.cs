@@ -11,18 +11,22 @@ public partial class WiFiConnectDialog
 
     private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
     {
-        // Get datacontext from viewmodel
+        // Get data context from viewmodel
         var viewModel = (WiFiConnectViewModel)DataContext;
-                
-        // Pre-shared key
-        if (viewModel.ConnectMode == Models.Network.WiFiConnectMode.Psk)
-            PasswordBoxPreSharedKey.Focus();
 
-        // EAP
-        if (viewModel.ConnectMode == Models.Network.WiFiConnectMode.Eap)
-            TextBoxUsername.Focus();
+        switch (viewModel.ConnectMode)
+        {
+            // Pre-shared key
+            case Models.Network.WiFiConnectMode.Psk:
+                PasswordBoxPreSharedKey.Focus();
+                break;
+            // EAP
+            case Models.Network.WiFiConnectMode.Eap:
+                TextBoxUsername.Focus();
+                break;
+        }
 
-        // Check if WPS is availble for the network
+        // Check if WPS is available for the network
         _ = viewModel.CheckWpsAsync();
     }
 }

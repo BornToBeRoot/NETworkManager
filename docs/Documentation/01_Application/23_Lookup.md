@@ -3,8 +3,8 @@ layout: default
 title: Lookup
 parent: Application
 grand_parent: Documentation
-nav_order: 22
-description: ""
+nav_order: 23
+description: "Documentation of the Lookup"
 permalink: /Documentation/Application/Lookup
 ---
 

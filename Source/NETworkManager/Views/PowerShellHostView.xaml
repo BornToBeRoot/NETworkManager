@@ -192,7 +192,7 @@
             <GridSplitter Grid.Column="1" Style="{StaticResource ProfileGridSplitter}" />
             <Expander Grid.Column="2" Header="{x:Static localization:Strings.Profiles}" Style="{StaticResource ProfileExpander}" IsExpanded="{Binding ExpandProfileView}">
                 <Grid>
-                    <Grid Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsProfileManagerEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                    <Grid Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=ProfileManagerIsEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -459,7 +459,7 @@
                             </Button>
                         </Grid>
                     </Grid>
-                    <Grid Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsProfileManagerEnabled, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+                    <Grid Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=ProfileManagerIsEnabled, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                         <Grid.RowDefinitions>
                             <!-- Adjust the Height without TextBox -->
                             <RowDefinition Height="27" />

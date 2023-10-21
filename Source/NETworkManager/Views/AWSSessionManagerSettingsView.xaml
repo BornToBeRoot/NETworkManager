@@ -9,6 +9,7 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+        xmlns:models="clr-namespace:NETworkManager.Models.AWS;assembly=NETworkManager.Models"
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:AWSSessionManagerSettingsViewModel}">
     <StackPanel>
@@ -22,7 +23,7 @@
                 </Rectangle.Resources>
             </Rectangle>
         </StackPanel>
-        <DataGrid x:Name="DataGridAWSProfiles" ItemsSource="{Binding AWSProfiles}" SelectionMode="Single" SelectedItem="{Binding SelectedAWSProfile}" Height="200" Margin="0,0,0,10">
+        <DataGrid x:Name="DataGridAwsProfiles" ItemsSource="{Binding AWSProfiles}" SelectionMode="Single" SelectedItem="{Binding SelectedAWSProfile}" Height="200" Margin="0,0,0,10">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
@@ -47,9 +48,18 @@
                 </ContextMenu>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.Enabled}" Binding="{Binding IsEnabled}" MinWidth="80" Width="Auto" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Profile}" Binding="{Binding Profile}" MinWidth="200" Width="Auto" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Region}" Binding="{Binding Region}" MinWidth="200" Width="Auto" />
+                <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" 
+                                        Header="{x:Static localization:Strings.Enabled}" Binding="{Binding (models:AWSProfileInfo.IsEnabled)}"
+                                        SortMemberPath="IsEnabled"
+                                        MinWidth="80" Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Profile}"
+                                    Binding="{Binding (models:AWSProfileInfo.Profile)}" MinWidth="200"
+                                    SortMemberPath="Profile"
+                                    Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Region}"
+                                    Binding="{Binding (models:AWSProfileInfo.Region)}" MinWidth="200"
+                                    SortMemberPath="Region"
+                                    Width="Auto" />
             </DataGrid.Columns>
             <DataGrid.InputBindings>
                 <KeyBinding Command="{Binding EditAWSProfileCommand}" Key="F2" />
@@ -74,7 +84,7 @@
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding ElementName=DataGridAWSProfiles, Path=SelectedItems.Count}" Value="1" />
+                                    <Condition Binding="{Binding ElementName=DataGridAwsProfiles, Path=SelectedItems.Count}" Value="1" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="True"/>
@@ -105,7 +115,7 @@
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding ElementName=DataGridAWSProfiles, Path=SelectedItems.Count}" Value="1" />
+                                    <Condition Binding="{Binding ElementName=DataGridAwsProfiles, Path=SelectedItems.Count}" Value="1" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="True"/>

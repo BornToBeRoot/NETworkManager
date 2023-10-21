@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using NETworkManager.ViewModels;
 using MahApps.Metro.Controls.Dialogs;
 using System.Windows.Controls;
@@ -10,7 +11,7 @@ public partial class IPScannerView
 {
     private readonly IPScannerViewModel _viewModel;
 
-    public IPScannerView(int tabId, string hostOrIPRange = null)
+    public IPScannerView(Guid tabId, string hostOrIPRange = null)
     {
         InitializeComponent();
 
@@ -68,12 +69,12 @@ public partial class IPScannerView
             return;
 
         // Clear existing items in custom commands
-        ((MenuItem)menu.Items[index]).Items.Clear();
+        ((MenuItem)menu.Items[index])?.Items.Clear();
 
         // Add items to custom commands
         foreach (var info in IPScannerViewModel.CustomCommands)
         {
-            ((MenuItem)menu.Items[index]).Items.Add(new MenuItem
+            ((MenuItem)menu.Items[index])?.Items.Add(new MenuItem
             {
                 Header = info.Name,
                 Command = _viewModel.CustomCommandCommand,

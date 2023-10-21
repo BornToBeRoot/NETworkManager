@@ -28,7 +28,7 @@ public class DNSLookupViewModel : ViewModelBase
 
     private readonly IDialogCoordinator _dialogCoordinator;
 
-    private readonly int _tabId;
+    private readonly Guid _tabId;
     private bool _firstLoad = true;
 
     private string _lastSortDescriptionAscending = string.Empty;
@@ -65,7 +65,7 @@ public class DNSLookupViewModel : ViewModelBase
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.DNSLookup_SelectedDNSServer_v2 = value;
+                SettingsManager.Current.DNSLookup_SelectedDNSServer = value;
 
             _dnsServer = value;
             OnPropertyChanged();
@@ -200,7 +200,7 @@ public class DNSLookupViewModel : ViewModelBase
 
     #region Contructor, load settings
 
-    public DNSLookupViewModel(IDialogCoordinator instance, int tabId, string host)
+    public DNSLookupViewModel(IDialogCoordinator instance, Guid tabId, string host)
     {
         _isLoading = true;
 
@@ -211,13 +211,13 @@ public class DNSLookupViewModel : ViewModelBase
 
         HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.DNSLookup_HostHistory);
 
-        DNSServers = new CollectionViewSource { Source = SettingsManager.Current.DNSLookup_DNSServers_v2 }.View;
+        DNSServers = new CollectionViewSource { Source = SettingsManager.Current.DNSLookup_DNSServers }.View;
         DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerConnectionInfoProfile.UseWindowsDNSServer),
             ListSortDirection.Descending));
         DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerConnectionInfoProfile.Name),
             ListSortDirection.Ascending));
         DNSServer = DNSServers.SourceCollection.Cast<DNSServerConnectionInfoProfile>()
-                        .FirstOrDefault(x => x.Name == SettingsManager.Current.DNSLookup_SelectedDNSServer_v2.Name) ??
+                        .FirstOrDefault(x => x.Name == SettingsManager.Current.DNSLookup_SelectedDNSServer.Name) ??
                     DNSServers.SourceCollection.Cast<DNSServerConnectionInfoProfile>().First();
 
         ResultsView = CollectionViewSource.GetDefaultView(Results);
@@ -239,7 +239,7 @@ public class DNSLookupViewModel : ViewModelBase
             return;
 
         if (!string.IsNullOrEmpty(Host))
-            StartLookup();
+            Query();
 
         _firstLoad = false;
     }
@@ -268,15 +268,15 @@ public class DNSLookupViewModel : ViewModelBase
 
     #region ICommands & Actions
 
-    public ICommand LookupCommand => new RelayCommand(_ => LookupAction(), Lookup_CanExecute);
+    public ICommand QueryCommand => new RelayCommand(_ => QueryAction(), Query_CanExecute);
 
-    private bool Lookup_CanExecute(object parameter) => Application.Current.MainWindow != null &&
+    private bool Query_CanExecute(object parameter) => Application.Current.MainWindow != null &&
                                                        !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
-    private void LookupAction()
+    private void QueryAction()
     {
         if (!IsRunning)
-            StartLookup();
+            Query();
     }
 
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
@@ -334,7 +334,7 @@ public class DNSLookupViewModel : ViewModelBase
 
     #region Methods
 
-    private void StartLookup()
+    private void Query()
     {
         IsStatusMessageDisplayed = false;
         StatusMessage = string.Empty;

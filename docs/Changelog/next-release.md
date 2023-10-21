@@ -37,6 +37,7 @@ Experimental Feature
   - Check DNS resolver added [#2392](https://github.com/BornToBeRoot/NETworkManager/pull/2392){:target="\_blank"}
 - Traceroute
   - Check IP geolocation for each public IP address added. Feature can be enabled/disabled in settings [#2477](https://github.com/BornToBeRoot/NETworkManager/pull/2477){:target="\_blank"}
+- IP Geolocation added [#2522](https://github.com/BornToBeRoot/NETworkManager/pull/2522){:target="\_blank"} (See [documentation](https://borntoberoot.net/NETworkManager/Documentation/Application/IPGeolocation){:target="\_blank"} for more details)
 
 ## Experimental features
 
@@ -61,10 +62,14 @@ Experimental features can be enabled in the settings under [`Settings > Update`]
 
 ## Bugfixes
 
+- Dashboard
+  - IPv6 API call fixed [#2522](https://github.com/BornToBeRoot/NETworkManager/pull/2522){:target="\_blank"}
 - Network Interface
   - Add missing scrollviewer in configure tab [#2410](https://github.com/BornToBeRoot/NETworkManager/pull/2410){:target="\_blank"}
 - WiFi
   - Fix an issue where the UI was broken if a WiFi adapter was found that has no assiciated network interface (e.g. if the WiFi adapter is associated with a network bridge). The WiFi adapter is now ignored [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
+- Port Scanner
+  - Port profiles can now be sorted in the settings [#2522](https://github.com/BornToBeRoot/NETworkManager/pull/2522){:target="\_blank"}
 - Traceroute
   - Copy time to clipboard for non reachable hops fixed [#2477](https://github.com/BornToBeRoot/NETworkManager/pull/2477){:target="\_blank"}
   - Export to Json fixed (if ip address of a hop cannot be resolved) [#2477](https://github.com/BornToBeRoot/NETworkManager/pull/2477){:target="\_blank"}
@@ -72,10 +77,16 @@ Experimental features can be enabled in the settings under [`Settings > Update`]
   - Copy & Export time fixed (format is now `yyyy-MM-dd HH:mm:ss.fff`) [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
 - DNS Lookup
   - Fix a bug where the suffix is not appended [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
+  - Server can now be sorted in the settings [#2522](https://github.com/BornToBeRoot/NETworkManager/pull/2522){:target="\_blank"}
+- AWS Session Manager
+  - Some history settings may not be saved [#2522](https://github.com/BornToBeRoot/NETworkManager/pull/2522){:target="\_blank"}
+  - Profiles can now be sorted in the settings [#2522](https://github.com/BornToBeRoot/NETworkManager/pull/2522){:target="\_blank"}
 - SNMP
   - Allow `.` as first character in OID (e.g. `1.3.6.1.2.1.1.1.0`) [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
+  - SNMP profiles can now be sorted in the settings [#2522](https://github.com/BornToBeRoot/NETworkManager/pull/2522){:target="\_blank"}
 - SNTP Lookup
   - Copy & Export time fixed (format is now `yyyy-MM-dd HH:mm:ss.fff`) [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
+  - Server can now be sorted in the settings [#2522](https://github.com/BornToBeRoot/NETworkManager/pull/2522){:target="\_blank"}
 - Whois
   - Allow domains with `.` at the end / improved domain validation [#2502](https://github.com/BornToBeRoot/NETworkManager/pull/2502){:target="\_blank"}
 - Lookup - OUI
@@ -86,13 +97,13 @@ Experimental features can be enabled in the settings under [`Settings > Update`]
   - Prevent the application from crashing if a profile file cannot be loaded (profile management is then blocked) [#2464](https://github.com/BornToBeRoot/NETworkManager/pull/2464){:target="\_blank"}
   - Application name not translated [#2502](https://github.com/BornToBeRoot/NETworkManager/pull/2502){:target="\_blank"}
 - Settings
-  - Application name not translated [#2502](https://github.com/BornToBeRoot/NETworkManager/pull/2502){:target="\_blank"}
+  - Application name not translated [#2502](https://github.com/BornToBeRoot/NETworkManager/pull/2502){:target="\_blank"}  
 - Allow hostnames and domains with `.` at the end / improved validation for several tools [#2502](https://github.com/BornToBeRoot/NETworkManager/pull/2502){:target="\_blank"}
 - Fix some focus issues when the enter key is pressed [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
 - PowerShell window is hidden again (e.g. configure network interface, add/remove arp entry, etc.) [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
 
 ## Other
 
-- Code cleanup & Refactoring [#2388](https://github.com/BornToBeRoot/NETworkManager/pull/2388){:target="\_blank"} [#2392](https://github.com/BornToBeRoot/NETworkManager/pull/2392){:target="\_blank"} [#2477](https://github.com/BornToBeRoot/NETworkManager/pull/2477){:target="\_blank"} [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"} [#2502](https://github.com/BornToBeRoot/NETworkManager/pull/2502){:target="\_blank"}
+- Code cleanup & Refactoring [#2388](https://github.com/BornToBeRoot/NETworkManager/pull/2388){:target="\_blank"} [#2392](https://github.com/BornToBeRoot/NETworkManager/pull/2392){:target="\_blank"} [#2477](https://github.com/BornToBeRoot/NETworkManager/pull/2477){:target="\_blank"} [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"} [#2502](https://github.com/BornToBeRoot/NETworkManager/pull/2502){:target="\_blank"} [#2522](https://github.com/BornToBeRoot/NETworkManager/pull/2522){:target="\_blank"}
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="\_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="\_blank"}

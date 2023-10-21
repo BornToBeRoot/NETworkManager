@@ -35,6 +35,7 @@ namespace NETworkManager.ViewModels;
 public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
+
     private static readonly ILog Log = LogManager.GetLogger(typeof(AWSSessionManagerHostViewModel));
     private readonly IDialogCoordinator _dialogCoordinator;
     private readonly DispatcherTimer _searchDispatcherTimer = new();
@@ -42,10 +43,11 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     public IInterTabClient InterTabClient { get; }
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
-    private readonly bool _isLoading = true;
+    private readonly bool _isLoading;
     private bool _isViewActive = true;
 
     private bool _isAWSCLIInstalled;
+
     public bool IsAWSCLIInstalled
     {
         get => _isAWSCLIInstalled;
@@ -60,6 +62,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     }
 
     private bool _isAWSSessionManagerPluginInstalled;
+
     public bool IsAWSSessionManagerPluginInstalled
     {
         get => _isAWSSessionManagerPluginInstalled;
@@ -74,6 +77,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     }
 
     private bool _isPowerShellConfigured;
+
     public bool IsPowerShellConfigured
     {
         get => _isPowerShellConfigured;
@@ -88,6 +92,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     }
 
     private bool _isSyncEnabled;
+
     public bool IsSyncEnabled
     {
         get => _isSyncEnabled;
@@ -102,6 +107,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     }
 
     private bool _isSyncing;
+
     public bool IsSyncing
     {
         get => _isSyncing;
@@ -118,6 +124,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     private bool _disableFocusEmbeddedWindow;
 
     private DragablzTabItem _selectedTabItem;
+
     public DragablzTabItem SelectedTabItem
     {
         get => _selectedTabItem;
@@ -137,6 +144,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     }
 
     private bool _headerContextMenuIsOpen;
+
     public bool HeaderContextMenuIsOpen
     {
         get => _headerContextMenuIsOpen;
@@ -149,13 +157,15 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
+
     #region Profiles
 
-    public ICollectionView _profiles;
+    private ICollectionView _profiles;
+
     public ICollectionView Profiles
     {
         get => _profiles;
-        set
+        private set
         {
             if (value == _profiles)
                 return;
@@ -166,6 +176,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     }
 
     private ProfileInfo _selectedProfile = new();
+
     public ProfileInfo SelectedProfile
     {
         get => _selectedProfile;
@@ -180,6 +191,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     }
 
     private string _search;
+
     public string Search
     {
         get => _search;
@@ -199,21 +211,9 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     }
 
     private bool _textBoxSearchIsFocused;
-    public bool TextBoxSearchIsFocused
-    {
-        get => _textBoxSearchIsFocused;
-        set
-        {
-            if (value == _textBoxSearchIsFocused)
-                return;
-
-            _textBoxSearchIsFocused = value;
-            OnPropertyChanged();
-        }
-    }
-
 
     private bool _isSearching;
+
     public bool IsSearching
     {
         get => _isSearching;
@@ -231,6 +231,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     private double _tempProfileWidth;
 
     private bool _expandProfileView;
+
     public bool ExpandProfileView
     {
         get => _expandProfileView;
@@ -252,6 +253,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     }
 
     private GridLength _profileWidth;
+
     public GridLength ProfileWidth
     {
         get => _profileWidth;
@@ -260,7 +262,8 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
             if (value == _profileWidth)
                 return;
 
-            if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.Profile_FloatPointFix) // Do not save the size when collapsed
+            if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
+                GlobalStaticConfiguration.Profile_FloatPointFix) // Do not save the size when collapsed
                 SettingsManager.Current.AWSSessionManager_ProfileWidth = value.Value;
 
             _profileWidth = value;
@@ -273,12 +276,12 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     }
 
     private bool _profileContextMenuIsOpen;
+
     public bool ProfileContextMenuIsOpen
     {
         get => _profileContextMenuIsOpen;
         set
         {
-
             if (value == _profileContextMenuIsOpen)
                 return;
 
@@ -286,12 +289,17 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
+
     #endregion
+
     #endregion
 
     #region Constructor, load settings
+
     public AWSSessionManagerHostViewModel(IDialogCoordinator instance)
     {
+        _isLoading = true;
+
         _dialogCoordinator = instance;
 
         CheckInstallationStatus();
@@ -313,9 +321,10 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         LoadSettings();
 
         SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
-        SettingsManager.Current.AWSSessionManager_AWSProfiles.CollectionChanged += AWSSessionManager_AWSProfiles_CollectionChanged;
+        SettingsManager.Current.AWSSessionManager_AWSProfiles.CollectionChanged +=
+            AWSSessionManager_AWSProfiles_CollectionChanged;
 
-        SyncAllInstanceIDsFromAWS();
+        SyncAllInstanceIDsFromAWS().ConfigureAwait(false);
 
         _isLoading = false;
     }
@@ -326,14 +335,18 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
         ExpandProfileView = SettingsManager.Current.AWSSessionManager_ExpandProfileView;
 
-        ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.AWSSessionManager_ProfileWidth) : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
+        ProfileWidth = ExpandProfileView
+            ? new GridLength(SettingsManager.Current.AWSSessionManager_ProfileWidth)
+            : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
 
         _tempProfileWidth = SettingsManager.Current.AWSSessionManager_ProfileWidth;
     }
+
     #endregion
 
     #region ICommand & Actions
-    public ICommand CheckInstallationStatusCommand => new RelayCommand(p => CheckInstallationStatusAction());
+
+    public ICommand CheckInstallationStatusCommand => new RelayCommand(_ => CheckInstallationStatusAction());
 
     private void CheckInstallationStatusAction()
     {
@@ -349,11 +362,11 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
     private bool Connect_CanExecute(object obj) => IsPowerShellConfigured;
 
-    public ICommand ConnectCommand => new RelayCommand(p => ConnectAction(), Connect_CanExecute);
+    public ICommand ConnectCommand => new RelayCommand(_ => ConnectAction(), Connect_CanExecute);
 
     private void ConnectAction()
     {
-        Connect();
+        Connect().ConfigureAwait(false);
     }
 
     private bool IsConnected_CanExecute(object view)
@@ -383,7 +396,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
             control.ResizeEmbeddedWindow();
     }
 
-    public ICommand ConnectProfileCommand => new RelayCommand(p => ConnectProfileAction(), ConnectProfile_CanExecute);
+    public ICommand ConnectProfileCommand => new RelayCommand(_ => ConnectProfileAction(), ConnectProfile_CanExecute);
 
     private bool ConnectProfile_CanExecute(object obj)
     {
@@ -395,87 +408,84 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         ConnectProfile();
     }
 
-    public ICommand ConnectProfileExternalCommand => new RelayCommand(p => ConnectProfileExternalAction());
+    public ICommand ConnectProfileExternalCommand => new RelayCommand(_ => ConnectProfileExternalAction());
 
     private void ConnectProfileExternalAction()
     {
         ConnectProfileExternal();
     }
 
-    public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
+    public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.AWSSessionManager);
+        ProfileDialogManager
+            .ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.AWSSessionManager)
+            .ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamic;
+    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
 
-    public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction(), ModifyProfile_CanExecute);
+    public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
     private void EditProfileAction()
     {
-        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
     }
 
-    public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction(), ModifyProfile_CanExecute);
+    public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
     }
 
-    public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction(), ModifyProfile_CanExecute);
+    public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
 
     private void DeleteProfileAction()
     {
-        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile });
+        ProfileDialogManager
+            .ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile })
+            .ConfigureAwait(false);
     }
 
     public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()));
+        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()))
+            .ConfigureAwait(false);
     }
 
     private bool SyncInstanceIDsFromAWS_CanExecute(object obj) => !IsSyncing && IsSyncEnabled;
 
-    public ICommand SyncAllInstanceIDsFromAWSCommand => new RelayCommand(p => SyncAllInstanceIDsFromAWSAction(), SyncInstanceIDsFromAWS_CanExecute);
+    public ICommand SyncAllInstanceIDsFromAWSCommand =>
+        new RelayCommand(_ => SyncAllInstanceIDsFromAWSAction(), SyncInstanceIDsFromAWS_CanExecute);
 
     private void SyncAllInstanceIDsFromAWSAction()
     {
-        SyncAllInstanceIDsFromAWS();
+        SyncAllInstanceIDsFromAWS().ConfigureAwait(false);
     }
 
-    public ICommand SyncGroupInstanceIDsFromAWSCommand => new RelayCommand(SyncGroupInstanceIDsFromAWSAction, SyncInstanceIDsFromAWS_CanExecute);
+    public ICommand SyncGroupInstanceIDsFromAWSCommand =>
+        new RelayCommand(SyncGroupInstanceIDsFromAWSAction, SyncInstanceIDsFromAWS_CanExecute);
 
     private void SyncGroupInstanceIDsFromAWSAction(object group)
     {
-        SyncGroupInstanceIDsFromAWS((string)group);
+        SyncGroupInstanceIDsFromAWS((string)group).ConfigureAwait(false);
     }
 
     public ICommand TextBoxSearchGotFocusCommand
     {
-        get { return new RelayCommand(p => TextBoxSearchGotFocusAction()); }
-    }
-
-    private void TextBoxSearchGotFocusAction()
-    {
-        TextBoxSearchIsFocused = true;
+        get { return new RelayCommand(_ => _textBoxSearchIsFocused = true); }
     }
 
     public ICommand TextBoxSearchLostFocusCommand
     {
-        get { return new RelayCommand(p => TextBoxSearchLostFocusAction()); }
+        get { return new RelayCommand(_ => _textBoxSearchIsFocused = false); }
     }
 
-    private void TextBoxSearchLostFocusAction()
-    {
-        TextBoxSearchIsFocused = false;
-    }
-
-    public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
+    public ICommand ClearSearchCommand => new RelayCommand(_ => ClearSearchAction());
 
     private void ClearSearchAction()
     {
@@ -484,7 +494,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
     public ICommand OpenDocumentationCommand
     {
-        get { return new RelayCommand(p => OpenDocumentationAction()); }
+        get { return new RelayCommand(_ => OpenDocumentationAction()); }
     }
 
     private void OpenDocumentationAction()
@@ -492,40 +502,49 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationAWSSessionManager);
     }
 
-    public ICommand OpenSettingsCommand => new RelayCommand(p => OpenSettingsAction());
+    public ICommand OpenSettingsCommand => new RelayCommand(_ => OpenSettingsAction());
 
     private static void OpenSettingsAction()
     {
         EventSystem.RedirectToSettings();
     }
+
     #endregion
 
-    #region Methods        
+    #region Methods
+
     private void CheckInstallationStatus()
     {
-        using (RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"))
+        using var key =
+            Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall");
+
+        if (key == null) 
+            return;
+        
+        foreach (var subKeyName in key.GetSubKeyNames())
         {
-            foreach (string subkeyName in key.GetSubKeyNames())
+            using var subKey = key.OpenSubKey(subKeyName);
+
+            var displayName = subKey?.GetValue("DisplayName");
+
+            switch (displayName)
             {
-                using RegistryKey subKey = key.OpenSubKey(subkeyName);
-
-                var displayName = subKey.GetValue("DisplayName");
-
-                if (displayName == null)
+                case null:
                     continue;
-
-                if (displayName.Equals("AWS Command Line Interface v2"))
+                case "AWS Command Line Interface v2":
                     IsAWSCLIInstalled = true;
-
-                if (displayName.Equals("Session Manager Plugin"))
+                    break;
+                case "Session Manager Plugin":
                     IsAWSSessionManagerPluginInstalled = true;
+                    break;
             }
         }
     }
 
     private void CheckSettings()
     {
-        IsPowerShellConfigured = !string.IsNullOrEmpty(SettingsManager.Current.AWSSessionManager_ApplicationFilePath) && File.Exists(SettingsManager.Current.AWSSessionManager_ApplicationFilePath);
+        IsPowerShellConfigured = !string.IsNullOrEmpty(SettingsManager.Current.AWSSessionManager_ApplicationFilePath) &&
+                                 File.Exists(SettingsManager.Current.AWSSessionManager_ApplicationFilePath);
     }
 
     private bool IsConfigured => IsAWSCLIInstalled && IsAWSSessionManagerPluginInstalled && IsPowerShellConfigured;
@@ -542,7 +561,8 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
         if (!IsConfigured)
         {
-            Log.Warn($"Preconditions not met! AWS CLI installed {IsAWSCLIInstalled}. AWS Session Manager plugin installed {IsAWSSessionManagerPluginInstalled}. PowerShell configured {IsPowerShellConfigured}.");
+            Log.Warn(
+                $"Preconditions not met! AWS CLI installed {IsAWSCLIInstalled}. AWS Session Manager plugin installed {IsAWSSessionManagerPluginInstalled}. PowerShell configured {IsPowerShellConfigured}.");
             return;
         }
 
@@ -585,7 +605,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         Log.Info($"Sync group \"{group}\"...");
 
         IsSyncing = true;
-
+        
         // Extract "profile\region" from "~ [profile\region]"
         Regex regex = new(@"\[(.*?)\]");
         var result = regex.Match(group);
@@ -618,13 +638,14 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
         if (credentials == null)
         {
-            Log.Error($"Could not detect AWS credentials for AWS profile \"{profile}\"! You can configure them in the file \"%USERPROFILE%\\.aws\\config\" or via aws cli with the command \"aws configure --profile <NAME>\" ");
+            Log.Error(
+                $"Could not detect AWS credentials for AWS profile \"{profile}\"! You can configure them in the file \"%USERPROFILE%\\.aws\\config\" or via aws cli with the command \"aws configure --profile <NAME>\" ");
             return;
         }
 
         using AmazonEC2Client client = new(credentials, RegionEndpoint.GetBySystemName(region));
 
-        DescribeInstancesResponse response = null;
+        DescribeInstancesResponse response;
 
         try
         {
@@ -649,12 +670,15 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         {
             foreach (var instance in reservation.Instances)
             {
-                if (SettingsManager.Current.AWSSessionManager_SyncOnlyRunningInstancesFromAWS && instance.State.Name.Value != "running")
+                if (SettingsManager.Current.AWSSessionManager_SyncOnlyRunningInstancesFromAWS &&
+                    instance.State.Name.Value != "running")
                     continue;
 
                 var tagName = instance.Tags.FirstOrDefault(x => x.Key == "Name");
 
-                var name = (tagName == null || tagName.Value == null) ? instance.InstanceId : $"{tagName.Value} ({instance.InstanceId})";
+                var name = (tagName == null || tagName.Value == null)
+                    ? instance.InstanceId
+                    : $"{tagName.Value} ({instance.InstanceId})";
 
                 groupInfo.Profiles.Add(new ProfileInfo()
                 {
@@ -686,7 +710,6 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         }
         else
         {
-
             if (ProfileManager.GroupExists(groupName))
                 ProfileManager.ReplaceGroup(ProfileManager.GetGroup(groupName), groupInfo);
             else
@@ -753,7 +776,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
             // Connect
             Connect(sessionInfo);
-        }, async instance =>
+        }, async _ =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             ConfigurationManager.OnDialogClose();
@@ -779,7 +802,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     {
         var sessionInfo = NETworkManager.Profiles.Application.AWSSessionManager.CreateSessionInfo(SelectedProfile);
 
-        Process.Start(new ProcessStartInfo()
+        Process.Start(new ProcessStartInfo
         {
             FileName = SettingsManager.Current.AWSSessionManager_ApplicationFilePath,
             Arguments = AWSSessionManager.BuildCommandLine(sessionInfo)
@@ -804,7 +827,9 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         if (string.IsNullOrEmpty(instanceID))
             return;
 
-        SettingsManager.Current.AWSSessionManager_InstanceIDHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.AWSSessionManager_InstanceIDHistory.ToList(), instanceID, SettingsManager.Current.General_HistoryListEntries));
+        SettingsManager.Current.AWSSessionManager_InstanceIDHistory = new ObservableCollection<string>(
+            ListHelper.Modify(SettingsManager.Current.AWSSessionManager_InstanceIDHistory.ToList(), instanceID,
+                SettingsManager.Current.General_HistoryListEntries));
     }
 
     private static void AddProfileToHistory(string profile)
@@ -812,7 +837,9 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         if (string.IsNullOrEmpty(profile))
             return;
 
-        SettingsManager.Current.AWSSessionManager_ProfileHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.AWSSessionManager_ProfileHistory.ToList(), profile, SettingsManager.Current.General_HistoryListEntries));
+        SettingsManager.Current.AWSSessionManager_ProfileHistory = new ObservableCollection<string>(
+            ListHelper.Modify(SettingsManager.Current.AWSSessionManager_ProfileHistory.ToList(), profile,
+                SettingsManager.Current.General_HistoryListEntries));
     }
 
     private static void AddRegionToHistory(string region)
@@ -820,7 +847,9 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         if (string.IsNullOrEmpty(region))
             return;
 
-        SettingsManager.Current.AWSSessionManager_RegionHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.AWSSessionManager_RegionHistory.ToList(), region, SettingsManager.Current.General_HistoryListEntries));
+        SettingsManager.Current.AWSSessionManager_RegionHistory = new ObservableCollection<string>(
+            ListHelper.Modify(SettingsManager.Current.AWSSessionManager_RegionHistory.ToList(), region,
+                SettingsManager.Current.General_HistoryListEntries));
     }
 
     private void ResizeProfile(bool dueToChangedSize)
@@ -829,13 +858,18 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
         if (dueToChangedSize)
         {
-            ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.Profile_FloatPointFix;
+            ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
+                                GlobalStaticConfiguration.Profile_FloatPointFix;
         }
         else
         {
             if (ExpandProfileView)
             {
-                ProfileWidth = Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.Profile_WidthCollapsed) < GlobalStaticConfiguration.Profile_FloatPointFix ? new GridLength(GlobalStaticConfiguration.Profile_DefaultWidthExpanded) : new GridLength(_tempProfileWidth);
+                ProfileWidth =
+                    Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.Profile_WidthCollapsed) <
+                    GlobalStaticConfiguration.Profile_FloatPointFix
+                        ? new GridLength(GlobalStaticConfiguration.Profile_DefaultWidthExpanded)
+                        : new GridLength(_tempProfileWidth);
             }
             else
             {
@@ -854,7 +888,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
            - Header ContextMenu is opened
            - Profile ContextMenu is opened
         */
-        if (TextBoxSearchIsFocused || HeaderContextMenuIsOpen || ProfileContextMenuIsOpen)
+        if (_textBoxSearchIsFocused || HeaderContextMenuIsOpen || ProfileContextMenuIsOpen)
             return;
 
         (SelectedTabItem?.View as AWSSessionManagerControl)?.FocusEmbeddedWindow();
@@ -869,7 +903,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         // Do not synchronize If the view becomes visible again
         // after the settings have been opened
         if (!fromSettings)
-            SyncAllInstanceIDsFromAWS();
+            SyncAllInstanceIDsFromAWS().ConfigureAwait(false);
     }
 
     public void OnViewHide()
@@ -879,12 +913,16 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
     public void OnProfileLoaded()
     {
-        SyncAllInstanceIDsFromAWS();
+        SyncAllInstanceIDsFromAWS().ConfigureAwait(false);
     }
 
     private void SetProfilesView(ProfileInfo profile = null)
     {
-        Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.AWSSessionManager_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name) }.View;
+        Profiles = new CollectionViewSource
+        {
+            Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.AWSSessionManager_Enabled)
+                .OrderBy(x => x.Group).ThenBy(x => x.Name)
+        }.View;
 
         Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
 
@@ -905,7 +943,8 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
             */
 
             // Search by: Name, AWSSessionManager_InstanceID
-            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.AWSSessionManager_InstanceID.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
+            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.AWSSessionManager_InstanceID.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
         // Set specific profile or first if null
@@ -913,12 +952,12 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
         if (profile != null)
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault(x => x.Equals(profile)) ??
-                Profiles.Cast<ProfileInfo>().FirstOrDefault();
+                              Profiles.Cast<ProfileInfo>().FirstOrDefault();
         else
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
     }
 
-    public void RefreshProfiles()
+    private void RefreshProfiles()
     {
         if (!_isViewActive)
             return;
@@ -935,29 +974,36 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     {
         ConfigurationManager.OnDialogClose();
     }
+
     #endregion
 
     #region Event
+
     private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(SettingsInfo.AWSSessionManager_EnableSyncInstanceIDsFromAWS))
+        switch (e.PropertyName)
         {
-            IsSyncEnabled = SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS;
+            case nameof(SettingsInfo.AWSSessionManager_EnableSyncInstanceIDsFromAWS):
+            {
+                IsSyncEnabled = SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS;
 
-            if (IsSyncEnabled)
-                SyncAllInstanceIDsFromAWS();
-            else
-                RemoveDynamicGroups();
+                if (IsSyncEnabled)
+                    SyncAllInstanceIDsFromAWS().ConfigureAwait(false);
+                else
+                    RemoveDynamicGroups();
+                break;
+            }
+            case nameof(SettingsInfo.AWSSessionManager_SyncOnlyRunningInstancesFromAWS):
+                SyncAllInstanceIDsFromAWS().ConfigureAwait(false);
+                break;
+            case nameof(SettingsInfo.AWSSessionManager_ApplicationFilePath):
+                CheckSettings();
+                break;
         }
-
-        if (e.PropertyName == nameof(SettingsInfo.AWSSessionManager_SyncOnlyRunningInstancesFromAWS))
-            SyncAllInstanceIDsFromAWS();
-
-        if (e.PropertyName == nameof(SettingsInfo.AWSSessionManager_ApplicationFilePath))
-            CheckSettings();
     }
 
-    private void AWSSessionManager_AWSProfiles_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    private void AWSSessionManager_AWSProfiles_CollectionChanged(object sender,
+        System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
         // Remove groups
         if (e.OldItems != null)
@@ -969,13 +1015,13 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         }
 
         // Sync new groups
-        if (e.NewItems != null)
+        if (e.NewItems == null)
+            return;
+
+        foreach (AWSProfileInfo profile in e.NewItems)
         {
-            foreach (AWSProfileInfo profile in e.NewItems)
-            {
-                if (profile.IsEnabled)
-                    SyncInstanceIDsFromAWS(profile.Profile, profile.Region);
-            }
+            if (profile.IsEnabled)
+                SyncInstanceIDsFromAWS(profile.Profile, profile.Region).ConfigureAwait(false);
         }
     }
 
@@ -993,9 +1039,11 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         IsSearching = false;
     }
 
-    private void TabItems_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    private void TabItems_CollectionChanged(object sender,
+        System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
         ConfigurationManager.Current.AWSSessionManagerHasTabs = TabItems.Count > 0;
     }
+
     #endregion
 }

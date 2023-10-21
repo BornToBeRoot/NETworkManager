@@ -1,8 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using NETworkManager.Controls;
 using Dragablz;
 using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Views;
 using NETworkManager.Utilities;
 using NETworkManager.Models;
@@ -12,15 +12,8 @@ namespace NETworkManager.ViewModels;
 public class SNTPLookupHostViewModel : ViewModelBase
 {
     #region Variables
-    private readonly IDialogCoordinator _dialogCoordinator;        
-
-    public IInterTabClient InterTabClient { get; }
+ public IInterTabClient InterTabClient { get; }
     public ObservableCollection<DragablzTabItem> TabItems { get; }
-
-    private readonly bool _isLoading = true;
-    private bool _isViewActive = true;
-
-    private int _tabId;
 
     private int _selectedTabIndex;
     public int SelectedTabIndex
@@ -38,20 +31,18 @@ public class SNTPLookupHostViewModel : ViewModelBase
     #endregion
 
     #region Constructor, load settings
-    public SNTPLookupHostViewModel(IDialogCoordinator instance)
+    public SNTPLookupHostViewModel()
     {
-        _dialogCoordinator = instance;
-
         InterTabClient = new DragablzInterTabClient(ApplicationName.SNTPLookup);
 
+        var tabId = Guid.NewGuid();
+        
         TabItems = new ObservableCollection<DragablzTabItem>
         {
-            new DragablzTabItem(Localization.Resources.Strings.NewTab, new SNTPLookupView (_tabId), _tabId)
+            new(Localization.Resources.Strings.NewTab, new SNTPLookupView (tabId), tabId)
         };
         
         LoadSettings();
-
-        _isLoading = false;
     }
 
     private void LoadSettings()
@@ -61,7 +52,7 @@ public class SNTPLookupHostViewModel : ViewModelBase
     #endregion
 
     #region ICommand & Actions
-    public ICommand AddTabCommand => new RelayCommand(p => AddTabAction());
+    public ICommand AddTabCommand => new RelayCommand(_ => AddTabAction());
 
     private void AddTabAction()
     {
@@ -77,33 +68,24 @@ public class SNTPLookupHostViewModel : ViewModelBase
     #endregion
 
     #region Methods
-    public void AddTab()
-    {
-        _tabId++;
 
-        TabItems.Add(new DragablzTabItem(Localization.Resources.Strings.NewTab, new SNTPLookupView(_tabId), _tabId));
+    private void AddTab()
+    {
+        var tabId = Guid.NewGuid();
+
+        TabItems.Add(new DragablzTabItem(Localization.Resources.Strings.NewTab, new SNTPLookupView(tabId), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }
 
     public void OnViewVisible()
     {
-        _isViewActive = true;
+        
     }
 
     public void OnViewHide()
     {
-        _isViewActive = false;
+        
     }
-
-    public void RefreshProfiles()
-    {
-        if (!_isViewActive)
-            return;
-    }
-    #endregion
-
-    #region Event
-    
     #endregion
 }

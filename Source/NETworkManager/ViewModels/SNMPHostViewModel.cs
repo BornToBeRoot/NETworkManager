@@ -28,10 +28,8 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
     public IInterTabClient InterTabClient { get; }
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
-    private readonly bool _isLoading = true;
+    private readonly bool _isLoading;
     private bool _isViewActive = true;
-
-    private int _tabId;
 
     private int _selectedTabIndex;
     public int SelectedTabIndex
@@ -48,11 +46,11 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
     }
 
     #region Profiles
-    public ICollectionView _profiles;
+    private ICollectionView _profiles;
     public ICollectionView Profiles
     {
         get => _profiles;
-        set
+        private set
         {
             if (value == _profiles)
                 return;
@@ -159,6 +157,8 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
     #region Constructor, load settings
     public SNMPHostViewModel(IDialogCoordinator instance)
     {
+        _isLoading = true;
+        
         _dialogCoordinator = instance;
         
         InterTabClient = new DragablzInterTabClient(ApplicationName.SNMP);
@@ -190,14 +190,14 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
     #endregion
     
     #region ICommand & Actions
-    public ICommand AddTabCommand => new RelayCommand(p => AddTabAction());
+    public ICommand AddTabCommand => new RelayCommand(_ => AddTabAction());
 
     private void AddTabAction()
     {
         AddTab();
     }
 
-    public ICommand AddTabProfileCommand => new RelayCommand(p => AddTabProfileAction(), AddTabProfile_CanExecute);
+    public ICommand AddTabProfileCommand => new RelayCommand(_ => AddTabProfileAction(), AddTabProfile_CanExecute);
 
     private bool AddTabProfile_CanExecute(object obj) => !IsSearching && SelectedProfile != null;
 
@@ -206,44 +206,44 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
         AddTab(SelectedProfile);
     }
 
-    public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
+    public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.SNMP);
+        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.SNMP).ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamic;
+    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
 
-    public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction(), ModifyProfile_CanExecute);
+    public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
     private void EditProfileAction()
     {
-        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
     }
 
-    public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction(), ModifyProfile_CanExecute);
+    public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
     }
 
-    public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction(), ModifyProfile_CanExecute);
+    public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
 
     private void DeleteProfileAction()
     {
-        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile });
+        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile }).ConfigureAwait(false);
     }
 
     public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()));
+        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString())).ConfigureAwait(false);
     }
 
-    public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
+    public ICommand ClearSearchCommand => new RelayCommand(_ => ClearSearchAction());
 
     private void ClearSearchAction()
     {
@@ -282,35 +282,35 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
 
         _canProfileWidthChange = true;
     }
-    
-    public void AddTab(SNMPSessionInfo sessionInfo, string header = null)
-    {
-        _tabId++;
 
-        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Host ?? Localization.Resources.Strings.NewTab, new SNMPView(_tabId, sessionInfo), _tabId));
+    private void AddTab(SNMPSessionInfo sessionInfo, string header = null)
+    {
+        var tabId = Guid.NewGuid();
+
+        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Host ?? Localization.Resources.Strings.NewTab, new SNMPView(tabId, sessionInfo), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }
 
-    public void AddTab()
+    private void AddTab()
     {
-        SNMPSessionInfo sessionInfo = NETworkManager.Profiles.Application.SNMP.CreateSessionInfo();
+        var sessionInfo = NETworkManager.Profiles.Application.SNMP.CreateSessionInfo();
 
         AddTab(sessionInfo);
     }
 
     public void AddTab(string host)
     {
-        SNMPSessionInfo sessionInfo = NETworkManager.Profiles.Application.SNMP.CreateSessionInfo();
+        var sessionInfo = NETworkManager.Profiles.Application.SNMP.CreateSessionInfo();
 
         sessionInfo.Host = host;
 
         AddTab(sessionInfo);
     }
-    
-    public void AddTab(ProfileInfo profile)
+
+    private void AddTab(ProfileInfo profile)
     {
-        SNMPSessionInfo sessionInfo = NETworkManager.Profiles.Application.SNMP.CreateSessionInfo(profile);
+        var sessionInfo = NETworkManager.Profiles.Application.SNMP.CreateSessionInfo(profile);
 
         AddTab(sessionInfo, profile.Name);
     }
@@ -363,7 +363,7 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
     }
 
-    public void RefreshProfiles()
+    private void RefreshProfiles()
     {
         if (!_isViewActive)
             return;

@@ -7,7 +7,7 @@ namespace NETworkManager.Views;
 
 public partial class NetworkInterfaceView
 {
-    private readonly NetworkInterfaceViewModel _viewModel = new NetworkInterfaceViewModel(DialogCoordinator.Instance);
+    private readonly NetworkInterfaceViewModel _viewModel = new(DialogCoordinator.Instance);
 
     public NetworkInterfaceView()
     {

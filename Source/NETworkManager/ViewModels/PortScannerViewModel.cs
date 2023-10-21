@@ -30,7 +30,7 @@ public class PortScannerViewModel : ViewModelBase
 
     private CancellationTokenSource _cancellationTokenSource;
 
-    private readonly int _tabId;
+    private readonly Guid _tabId;
     private bool _firstLoad = true;
 
     private string _lastSortDescriptionAscending = string.Empty;
@@ -211,7 +211,7 @@ public class PortScannerViewModel : ViewModelBase
     #endregion
 
     #region Constructor, load settings, shutdown
-    public PortScannerViewModel(IDialogCoordinator instance, int tabId, string host, string port)
+    public PortScannerViewModel(IDialogCoordinator instance, Guid tabId, string host, string port)
     {
         _dialogCoordinator = instance;
 
@@ -220,8 +220,8 @@ public class PortScannerViewModel : ViewModelBase
         Ports = port;
 
         // Set collection view
-        HostsHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_HostsHistory);
-        PortsHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_PortsHistory);
+        HostsHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_HostHistory);
+        PortsHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_PortHistory);
 
         // Result view
         ResultsView = CollectionViewSource.GetDefaultView(Results);
@@ -437,27 +437,27 @@ public class PortScannerViewModel : ViewModelBase
     private void AddHostToHistory(string host)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.PortScanner_HostsHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+        var list = ListHelper.Modify(SettingsManager.Current.PortScanner_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items
-        SettingsManager.Current.PortScanner_HostsHistory.Clear();
+        SettingsManager.Current.PortScanner_HostHistory.Clear();
         OnPropertyChanged(nameof(Hosts)); // Raise property changed again, after the collection has been cleared
 
         // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.PortScanner_HostsHistory.Add(x));
+        list.ForEach(x => SettingsManager.Current.PortScanner_HostHistory.Add(x));
     }
 
     private void AddPortToHistory(string port)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.PortScanner_PortsHistory.ToList(), port, SettingsManager.Current.General_HistoryListEntries);
+        var list = ListHelper.Modify(SettingsManager.Current.PortScanner_PortHistory.ToList(), port, SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items
-        SettingsManager.Current.PortScanner_PortsHistory.Clear();
+        SettingsManager.Current.PortScanner_PortHistory.Clear();
         OnPropertyChanged(nameof(Ports)); // Raise property changed again, after the collection has been cleared
 
         // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.PortScanner_PortsHistory.Add(x));
+        list.ForEach(x => SettingsManager.Current.PortScanner_PortHistory.Add(x));
     }
 
     public void SortResultByPropertyName(string sortDescription)

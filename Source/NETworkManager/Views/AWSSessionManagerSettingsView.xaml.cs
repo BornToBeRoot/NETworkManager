@@ -41,6 +41,6 @@ public partial class AWSSessionManagerSettingsView
 
     private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        _viewModel.EditAWSProfile();
+        _viewModel.EditAWSProfile().ConfigureAwait(false);
     }
 }

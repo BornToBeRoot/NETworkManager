@@ -321,7 +321,7 @@
   <data name="ExamplePuTTYProfile" xml:space="preserve">
     <value>NETworkManager</value>
   </data>
-  <data name="ExampleHostFQDN" xml:space="preserve">
+  <data name="ExampleFqdn" xml:space="preserve">
     <value>server-01.borntoberoot.net</value>
   </data>
   <data name="ExampleGatewayDomain" xml:space="preserve">
@@ -347,5 +347,8 @@
   </data>
   <data name="ExampleSNMPPrivSecret" xml:space="preserve">
     <value>Pr1v_S3cr3t%</value>
+  </data>
+  <data name="ExampleFqdnOrIPAddressPublic" xml:space="preserve">
+    <value>borntoberoot.net or 1.1.1.1</value>
   </data>
 </root>

@@ -16,15 +16,15 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
 {
     #region Variables
     private readonly bool _isLoading;
-    private readonly ServerConnectionInfo _profileDialog_DefaultValues = new("time.example.com", 123, TransportProtocol.Tcp);
+    private readonly ServerConnectionInfo _profileDialogDefaultValues = new("time.example.com", 123, TransportProtocol.Tcp);
     
     private readonly IDialogCoordinator _dialogCoordinator;
 
-    private ICollectionView _sntpServers;
+    private readonly ICollectionView _sntpServers;
     public ICollectionView SNTPServers
     {
         get => _sntpServers;
-        set
+        private init
         {
             if(value == _sntpServers) 
                 return;
@@ -90,21 +90,21 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
     #endregion
 
     #region ICommand & Actions
-    public ICommand AddServerCommand => new RelayCommand(p => AddServerAction());
+    public ICommand AddServerCommand => new RelayCommand(_ => AddServerAction());
 
     private void AddServerAction()
     {
-        AddServer();
+        AddServer().ConfigureAwait(false);
     }
 
-    public ICommand EditServerCommand => new RelayCommand(p => EditServerAction());
+    public ICommand EditServerCommand => new RelayCommand(_ => EditServerAction());
 
     private void EditServerAction()
     {
-        EditServer();
+        EditServer().ConfigureAwait(false);
     }
 
-    public ICommand DeleteServerCommand => new RelayCommand(p => DeleteServerAction(), DeleteServer_CanExecute);
+    public ICommand DeleteServerCommand => new RelayCommand(_ => DeleteServerAction(), DeleteServer_CanExecute);
 
     private bool DeleteServer_CanExecute(object obj)
     {
@@ -113,12 +113,13 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
 
     private void DeleteServerAction()
     {
-        DeleteServer();
+        DeleteServer().ConfigureAwait(false);
     }
     #endregion
 
     #region Methods
-    public async Task AddServer()
+
+    private async Task AddServer()
     {
         var customDialog = new CustomDialog
         {
@@ -130,10 +131,10 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
             SettingsManager.Current.SNTPLookup_SNTPServers.Add(new ServerConnectionInfoProfile(instance.Name, instance.Servers.ToList()));
-        }, instance =>
+        }, _ =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, (ServerInfoProfileNames, false, false), _profileDialog_DefaultValues);
+        }, (ServerInfoProfileNames, false, false), _profileDialogDefaultValues);
 
         customDialog.Content = new ServerConnectionInfoProfileDialog()
         {
@@ -156,10 +157,10 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
 
             SettingsManager.Current.SNTPLookup_SNTPServers.Remove(SelectedSNTPServer);
             SettingsManager.Current.SNTPLookup_SNTPServers.Add(new ServerConnectionInfoProfile(instance.Name, instance.Servers.ToList()));
-        }, instance =>
+        }, _ =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, (ServerInfoProfileNames, true, false), _profileDialog_DefaultValues, SelectedSNTPServer);
+        }, (ServerInfoProfileNames, true, false), _profileDialogDefaultValues, SelectedSNTPServer);
 
         customDialog.Content = new ServerConnectionInfoProfileDialog()
         {
@@ -169,19 +170,19 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
-    public async Task DeleteServer()
+    private async Task DeleteServer()
     {
         var customDialog = new CustomDialog
         {
             Title = Localization.Resources.Strings.DeleteSNTPServer
         };
 
-        var viewModel = new ConfirmDeleteViewModel(instance =>
+        var viewModel = new ConfirmDeleteViewModel(_ =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
             SettingsManager.Current.SNTPLookup_SNTPServers.Remove(SelectedSNTPServer);
-        }, instance =>
+        }, _ =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
         }, Localization.Resources.Strings.DeleteSNTPServerMessage);

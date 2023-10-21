@@ -4,7 +4,7 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
-public class IPAddressViewModel : ViewModelBase
+public abstract class IPAddressViewModel : ViewModelBase
 {
     public ICommand OKCommand { get; }
 
@@ -24,9 +24,9 @@ public class IPAddressViewModel : ViewModelBase
         }
     }
 
-    public IPAddressViewModel(Action<IPAddressViewModel> okCommand, Action<IPAddressViewModel> cancelHandler)
+    protected IPAddressViewModel(Action<IPAddressViewModel> okCommand, Action<IPAddressViewModel> cancelHandler)
     {
-        OKCommand = new RelayCommand(p => okCommand(this));
-        CancelCommand = new RelayCommand(p => cancelHandler(this));
+        OKCommand = new RelayCommand(_ => okCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
     }        
 }

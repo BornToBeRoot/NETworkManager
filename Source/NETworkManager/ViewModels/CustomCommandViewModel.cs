@@ -12,11 +12,11 @@ public class CustomCommandViewModel : ViewModelBase
 
     public ICommand CancelCommand { get; }
 
-    private Guid _id;
+    private readonly Guid _id;
     public Guid ID
     {
         get => _id;
-        set
+        private init
         {
             if (_id == value)
                 return;
@@ -114,8 +114,8 @@ public class CustomCommandViewModel : ViewModelBase
     {
         _isLoading = true;
 
-        SaveCommand = new RelayCommand(p => saveCommand(this));
-        CancelCommand = new RelayCommand(p => cancelHandler(this));
+        SaveCommand = new RelayCommand(_ => saveCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
         _isEdited = isEdited;
 
@@ -130,5 +130,5 @@ public class CustomCommandViewModel : ViewModelBase
         _isLoading = false;
     }
 
-    public void CheckInfoChanged() => InfoChanged = _info.Name != null || _info.FilePath != FilePath || _info.Arguments != Arguments;
+    private void CheckInfoChanged() => InfoChanged = _info.Name != null || _info.FilePath != FilePath || _info.Arguments != Arguments;
 }

@@ -33,11 +33,11 @@ public class SettingsProfilesViewModel : ViewModelBase
         }
     }
             
-    private ICollectionView _profileFiles;
+    private readonly ICollectionView _profileFiles;
     public ICollectionView ProfileFiles
     {
         get => _profileFiles;
-        set
+        private init
         {
             if (value == _profileFiles)
                 return;
@@ -102,7 +102,7 @@ public class SettingsProfilesViewModel : ViewModelBase
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
             ProfileManager.CreateEmptyProfileFile(instance.Name);
-        }, async instance =>
+        }, async _ =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
         });
@@ -115,7 +115,7 @@ public class SettingsProfilesViewModel : ViewModelBase
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
-    public ICommand EditProfileFileCommand => new RelayCommand(p => EditProfileFileAction());
+    public ICommand EditProfileFileCommand => new RelayCommand(_ => EditProfileFileAction());
 
     private async void EditProfileFileAction()
     {
@@ -129,7 +129,7 @@ public class SettingsProfilesViewModel : ViewModelBase
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
             ProfileManager.RenameProfileFile(SelectedProfileFile, instance.Name);
-        }, async instance =>
+        }, async _ =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
         }, SelectedProfileFile);
@@ -142,7 +142,7 @@ public class SettingsProfilesViewModel : ViewModelBase
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
-    public ICommand DeleteProfileFileCommand => new RelayCommand(p => DeleteProfileFileAction(), DeleteProfileFile_CanExecute);
+    public ICommand DeleteProfileFileCommand => new RelayCommand(_ => DeleteProfileFileAction(), DeleteProfileFile_CanExecute);
 
     private bool DeleteProfileFile_CanExecute(object obj)
     {
@@ -156,12 +156,12 @@ public class SettingsProfilesViewModel : ViewModelBase
             Title = Localization.Resources.Strings.DeleteProfileFile
         };
 
-        var confirmDeleteViewModel = new ConfirmDeleteViewModel(async instance =>
+        var confirmDeleteViewModel = new ConfirmDeleteViewModel(async _ =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
             ProfileManager.DeleteProfileFile(SelectedProfileFile);
-        }, async instance =>
+        }, async _ =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
         }, Localization.Resources.Strings.DeleteProfileFileMessage);
@@ -174,7 +174,7 @@ public class SettingsProfilesViewModel : ViewModelBase
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
-    public ICommand EnableEncryptionCommand => new RelayCommand(p => EnableEncryptionAction());
+    public ICommand EnableEncryptionCommand => new RelayCommand(_ => EnableEncryptionAction());
 
     private async void EnableEncryptionAction()
     {
@@ -201,12 +201,12 @@ public class SettingsProfilesViewModel : ViewModelBase
                 }
                 catch (Exception ex)
                 {
-                    var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                    var metroDialogSettings = AppearanceManager.MetroDialog;
+                    metroDialogSettings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.EncryptionError, $"{Localization.Resources.Strings.EncryptionErrorMessage}\n\n{ex.Message}", MessageDialogStyle.Affirmative, settings);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.EncryptionError, $"{Localization.Resources.Strings.EncryptionErrorMessage}\n\n{ex.Message}", MessageDialogStyle.Affirmative, metroDialogSettings);
                 }
-            }, async instance =>
+            }, async _ =>
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             });
@@ -220,7 +220,7 @@ public class SettingsProfilesViewModel : ViewModelBase
         }
     }
 
-    public ICommand ChangeMasterPasswordCommand => new RelayCommand(p => ChangeMasterPasswordAction());
+    public ICommand ChangeMasterPasswordCommand => new RelayCommand(_ => ChangeMasterPasswordAction());
 
     private async void ChangeMasterPasswordAction()
     {
@@ -252,7 +252,7 @@ public class SettingsProfilesViewModel : ViewModelBase
                 await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.DecryptionError, $"{Localization.Resources.Strings.DecryptionErrorMessage}\n\n{ex.Message}", MessageDialogStyle.Affirmative, settings);
             }
 
-        }, async instance =>
+        }, async _ =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
         });
@@ -265,7 +265,7 @@ public class SettingsProfilesViewModel : ViewModelBase
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
-    public ICommand DisableEncryptionCommand => new RelayCommand(p => DisableEncryptionAction());
+    public ICommand DisableEncryptionCommand => new RelayCommand(_ => DisableEncryptionAction());
 
     private async void DisableEncryptionAction()
     {
@@ -296,7 +296,7 @@ public class SettingsProfilesViewModel : ViewModelBase
 
                 await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.DecryptionError, $"{Localization.Resources.Strings.DecryptionErrorMessage}\n\n{ex.Message}", MessageDialogStyle.Affirmative, settings);
             }
-        }, async instance =>
+        }, async _1 =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
         });

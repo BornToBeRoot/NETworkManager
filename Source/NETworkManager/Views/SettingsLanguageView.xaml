@@ -28,7 +28,7 @@
             <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Language}" Margin="0,0,0,0" />
             <TextBox x:Name="TextBoxSearch" Grid.Column="2" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
         </Grid>
-        <ListView Grid.Row="2" ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLangauge}" Background="Transparent" BorderThickness="0" SelectionMode="Single">
+        <ListView Grid.Row="2" ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}" Background="Transparent" BorderThickness="0" SelectionMode="Single">
             <ListView.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ListViewScrollBar}" />
             </ListView.Resources>

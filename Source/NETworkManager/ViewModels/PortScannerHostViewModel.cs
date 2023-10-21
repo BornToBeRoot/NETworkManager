@@ -27,10 +27,8 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
     public IInterTabClient InterTabClient { get; }
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
-    private readonly bool _isLoading = true;
+    private readonly bool _isLoading ;
     private bool _isViewActive = true;
-
-    private int _tabId;
 
     private int _selectedTabIndex;
     public int SelectedTabIndex
@@ -47,11 +45,11 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
     }
 
     #region Profiles
-    public ICollectionView _profiles;
+    private ICollectionView _profiles;
     public ICollectionView Profiles
     {
         get => _profiles;
-        set
+        private set
         {
             if (value == _profiles)
                 return;
@@ -158,13 +156,17 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
     #region Constructor, load settings
     public PortScannerHostViewModel(IDialogCoordinator instance)
     {
+        _isLoading = true;
+        
         _dialogCoordinator = instance;
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.PortScanner);
 
+        var tabId = Guid.NewGuid();
+        
         TabItems = new ObservableCollection<DragablzTabItem>()
         {
-            new DragablzTabItem(Localization.Resources.Strings.NewTab, new PortScannerView(_tabId), _tabId)
+            new(Localization.Resources.Strings.NewTab, new PortScannerView(tabId), tabId)
         };
 
         // Profiles
@@ -191,14 +193,14 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #region ICommand & Actions
-    public ICommand AddTabCommand => new RelayCommand(p => AddTabAction());
+    public ICommand AddTabCommand => new RelayCommand(_ => AddTabAction());
 
     private void AddTabAction()
     {
         AddTab();
     }
 
-    public ICommand ScanProfileCommand => new RelayCommand(p => ScanProfileAction(), ScanProfile_CanExecute);
+    public ICommand ScanProfileCommand => new RelayCommand(_ => ScanProfileAction(), ScanProfile_CanExecute);
 
     private bool ScanProfile_CanExecute(object obj)
     {
@@ -210,44 +212,44 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
         AddTab(SelectedProfile);
     }
 
-    public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
+    public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.PortScanner);
+        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.PortScanner).ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamic;
+    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
 
-    public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction(), ModifyProfile_CanExecute);
+    public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
     private void EditProfileAction()
     {
-        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
     }
 
-    public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction(), ModifyProfile_CanExecute);
+    public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
     }
 
-    public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction(), ModifyProfile_CanExecute);
+    public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
 
     private void DeleteProfileAction()
     {
-        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile });
+        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile }).ConfigureAwait(false);
     }
 
     public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()));
+        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString())).ConfigureAwait(false);
     }
 
-    public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
+    public ICommand ClearSearchCommand => new RelayCommand(_ => ClearSearchAction());
 
     private void ClearSearchAction()
     {
@@ -289,9 +291,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
 
     public void AddTab(string host = null, string ports = null)
     {
-        _tabId++;
+        var tabId = Guid.NewGuid();
 
-        TabItems.Add(new DragablzTabItem(string.IsNullOrEmpty(host) ? Localization.Resources.Strings.NewTab : host, new PortScannerView(_tabId, host, ports), _tabId));
+        TabItems.Add(new DragablzTabItem(string.IsNullOrEmpty(host) ? Localization.Resources.Strings.NewTab : host, new PortScannerView(tabId, host, ports), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }
@@ -350,7 +352,7 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
     }
 
 
-    public void RefreshProfiles()
+    private void RefreshProfiles()
     {
         if (!_isViewActive)
             return;

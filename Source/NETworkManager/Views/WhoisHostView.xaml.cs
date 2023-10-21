@@ -8,7 +8,7 @@ namespace NETworkManager.Views;
 
 public partial class WhoisHostView
 {
-    private readonly WhoisHostViewModel _viewModel = new WhoisHostViewModel(DialogCoordinator.Instance);
+    private readonly WhoisHostViewModel _viewModel = new(DialogCoordinator.Instance);
 
     public WhoisHostView()
     {

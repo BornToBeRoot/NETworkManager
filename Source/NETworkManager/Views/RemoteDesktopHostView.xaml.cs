@@ -9,7 +9,7 @@ namespace NETworkManager.Views;
 
 public partial class RemoteDesktopHostView
 {
-    private readonly RemoteDesktopHostViewModel _viewModel = new RemoteDesktopHostViewModel(DialogCoordinator.Instance);
+    private readonly RemoteDesktopHostViewModel _viewModel = new(DialogCoordinator.Instance);
 
     private bool _loaded;
 

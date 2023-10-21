@@ -1,5 +1,4 @@
-﻿using MahApps.Metro.Controls;
-using NETworkManager.Settings;
+﻿using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
 using System.ComponentModel;
@@ -10,25 +9,29 @@ using System.Windows.Threading;
 
 namespace NETworkManager;
 
-public partial class StatusWindow : MetroWindow, INotifyPropertyChanged
+public partial class StatusWindow : INotifyPropertyChanged  
 {
     #region PropertyChangedEventHandler
+
     public event PropertyChangedEventHandler PropertyChanged;
 
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    private void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
-    #endregion
 
+    #endregion
+    
     #region Variables
-    // Set prio to make the ui smoother
+
+    // Set priority to make the ui smoother
     private readonly DispatcherTimer _dispatcherTimerClose = new(DispatcherPriority.Normal);
 
     private readonly MainWindow _mainWindow;
-    private readonly NetworkConnectionView _networkConnectionView;
+    private readonly NetworkConnectionWidgetView _networkConnectionView;
 
     private bool _showTime;
+
     public bool ShowTime
     {
         get => _showTime;
@@ -43,10 +46,11 @@ public partial class StatusWindow : MetroWindow, INotifyPropertyChanged
     }
 
     private int _timeMax;
+
     public int TimeMax
     {
         get => _timeMax;
-        set
+        private set
         {
             if (value == _timeMax)
                 return;
@@ -57,6 +61,7 @@ public partial class StatusWindow : MetroWindow, INotifyPropertyChanged
     }
 
     private int _time;
+
     public int Time
     {
         get => _time;
@@ -69,9 +74,11 @@ public partial class StatusWindow : MetroWindow, INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor
+
     public StatusWindow(MainWindow mainWindow)
     {
         InitializeComponent();
@@ -82,20 +89,22 @@ public partial class StatusWindow : MetroWindow, INotifyPropertyChanged
         _dispatcherTimerClose.Interval = new System.TimeSpan(0, 0, 0, 0, 250);
         _dispatcherTimerClose.Tick += DispatcherTimerTime_Tick;
 
-        _networkConnectionView = new NetworkConnectionView();
+        _networkConnectionView = new NetworkConnectionWidgetView();
         ContentControlNetworkConnection.Content = _networkConnectionView;
     }
+
     #endregion
 
     #region ICommands & Actions
-    public ICommand ReloadCommand => new RelayCommand(p => ReloadAction());
+
+    public ICommand ReloadCommand => new RelayCommand(_ => ReloadAction());
 
     private void ReloadAction()
     {
         Reload();
     }
 
-    public ICommand ShowMainWindowCommand => new RelayCommand(p => ShowMainWindowAction());
+    public ICommand ShowMainWindowCommand => new RelayCommand(_ => ShowMainWindowAction());
 
     private void ShowMainWindowAction()
     {
@@ -105,7 +114,7 @@ public partial class StatusWindow : MetroWindow, INotifyPropertyChanged
             _mainWindow.ShowWindowCommand.Execute(null);
     }
 
-    public ICommand CloseCommand => new RelayCommand(p => CloseAction());
+    public ICommand CloseCommand => new RelayCommand(_ => CloseAction());
 
     private void CloseAction()
     {
@@ -115,6 +124,7 @@ public partial class StatusWindow : MetroWindow, INotifyPropertyChanged
     #endregion
 
     #region Methods
+
     private void Reload()
     {
         _networkConnectionView.Reload();
@@ -123,22 +133,23 @@ public partial class StatusWindow : MetroWindow, INotifyPropertyChanged
     /// <summary>
     /// Show the window on the screen.
     /// </summary>
-    /// <param name="fromNetworkChangeEvent">Focus the window (will automatically hide if the focus is lost).</param>
-    public void ShowWindow(bool fromNetworkChangeEvent)
+    /// <param name="enableCloseTimer">Automatically close the window after a certain time.</param>
+    public void ShowWindow(bool enableCloseTimer = false)
     {
         // Show on primary screen in left/bottom corner
         // ToDo: User setting...
         Left = Screen.PrimaryScreen.WorkingArea.Right - Width - 10;
         Top = Screen.PrimaryScreen.WorkingArea.Bottom - Height - 10;
-
+        
         Show();
 
-        if (fromNetworkChangeEvent)
-            Activate();
-        else
+        if (enableCloseTimer)
+        {
             SetupCloseTimer();
-
-        Topmost = true;
+            return;
+        }
+        
+        Activate();
     }
 
     private void SetupCloseTimer()
@@ -149,9 +160,11 @@ public partial class StatusWindow : MetroWindow, INotifyPropertyChanged
         ShowTime = true;
         _dispatcherTimerClose.Start();
     }
+
     #endregion
 
     #region Events
+
     private void MetroWindow_Deactivated(object sender, System.EventArgs e)
     {
         Hide();
@@ -176,5 +189,6 @@ public partial class StatusWindow : MetroWindow, INotifyPropertyChanged
 
         Hide();
     }
+
     #endregion
 }

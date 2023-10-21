@@ -41,7 +41,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     public List<DiscoveryProtocol> Protocols
     {
         get => _protocols;
-        set
+        private set
         {
             if (value == _protocols)
                 return;
@@ -72,7 +72,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     public List<int> Durations
     {
         get => _durations;
-        set
+        private set
         {
             if (value == _durations)
                 return;
@@ -117,7 +117,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     public string TimeRemainingMessage
     {
         get => _timeRemainingMessage;
-        set
+        private set
         {
             if (value == _timeRemainingMessage)
                 return;
@@ -145,7 +145,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     public string StatusMessage
     {
         get => _statusMessage;
-        set
+        private set
         {
             if (value == _statusMessage)
                 return;
@@ -173,7 +173,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     public DiscoveryProtocolPackageInfo DiscoveryPackage
     {
         get => _discoveryPackage;
-        set
+        private set
         {
             if (value == _discoveryPackage)
                 return;
@@ -218,13 +218,13 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
-    public ICommand RestartAsAdminCommand => new RelayCommand(_ => RestartAsAdminAction());
+    public ICommand RestartAsAdminCommand => new RelayCommand(_ => RestartAsAdminAction().ConfigureAwait(false));
 
     private async Task RestartAsAdminAction()
     {
         try
         {
-            (Application.Current.MainWindow as MainWindow).RestartApplication(true);
+            (Application.Current.MainWindow as MainWindow)?.RestartApplication(true);
         }
         catch (Exception ex)
         {
@@ -232,7 +232,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         }
     }
 
-    public ICommand CaptureCommand => new RelayCommand(_ => CaptureAction());
+    public ICommand CaptureCommand => new RelayCommand(_ => CaptureAction().ConfigureAwait(false));
 
     private async Task CaptureAction()
     {

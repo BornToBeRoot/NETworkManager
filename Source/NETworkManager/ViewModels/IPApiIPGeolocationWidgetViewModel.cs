@@ -2,35 +2,37 @@
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using log4net;
 
 namespace NETworkManager.ViewModels;
 
-public class IPApiDNSResolverViewModel : ViewModelBase
+public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
 {
-    #region  Variables 
-    private bool _isChecking;
-    public bool IsChecking
+    #region  Variables
+    private static readonly ILog Log = LogManager.GetLogger(typeof(IPApiIPGeolocationWidgetViewModel));
+    
+    private bool _isRunning;
+    public bool IsRunning
     {
-        get => _isChecking;
+        get => _isRunning;
         set
         {
-            if (value == _isChecking)
+            if (value == _isRunning)
                 return;
 
-            _isChecking = value;
+            _isRunning = value;
             OnPropertyChanged();
         }
     }
 
-    private DNSResolverResult _result;
-    public DNSResolverResult Result
+    private IPGeolocationResult _result;
+    public IPGeolocationResult Result
     {
         get => _result;
-        set
+        private set
         {
             if (value == _result)
                 return;
@@ -42,12 +44,11 @@ public class IPApiDNSResolverViewModel : ViewModelBase
     #endregion
 
     #region Constructor, load settings
-
-    public IPApiDNSResolverViewModel()
+    public IPApiIPGeolocationWidgetViewModel()
     {
         // Detect if network address or status changed...
-        NetworkChange.NetworkAvailabilityChanged += (sender, args) => Check();
-        NetworkChange.NetworkAddressChanged += (sender, args) => Check();
+        NetworkChange.NetworkAvailabilityChanged += (_, _) => Check();
+        NetworkChange.NetworkAddressChanged += (_, _) => Check();
 
         LoadSettings();
 
@@ -62,7 +63,7 @@ public class IPApiDNSResolverViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
-    public ICommand CheckViaHotkeyCommand => new RelayCommand(p => CheckViaHotkeyAction());
+    public ICommand CheckViaHotkeyCommand => new RelayCommand(_ => CheckViaHotkeyAction());
 
     private void CheckViaHotkeyAction()
     {
@@ -79,24 +80,30 @@ public class IPApiDNSResolverViewModel : ViewModelBase
     private async Task CheckAsync()
     {
         // Check is disabled via settings
-        if (!SettingsManager.Current.Dashboard_CheckIPApiDNSResolver)
+        if (!SettingsManager.Current.Dashboard_CheckIPApiIPGeolocation)
             return;
 
         // Don't check multiple times if already running
-        if (IsChecking)
+        if (IsRunning)
             return;
 
-        IsChecking = true;
+        IsRunning = true;
         Result = null;
 
         // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
         await Task.Delay(2000);
 
-        Result = await DNSResolverService.GetInstance().GetDNSResolverAsync();
+        Result = await IPGeolocationService.GetInstance().GetIPGeolocationAsync();
 
-        Debug.WriteLine(Result);
-
-        IsChecking = false;
+        // Log error
+        if (Result.HasError)
+            Log.Error($"ip-api.com error: {Result.ErrorMessage}, error code: {Result.ErrorCode}");
+        
+        // Log rate limit
+        if (Result.RateLimitIsReached)
+            Log.Warn($"ip-api.com rate limit reached. Try again in {Result.RateLimitRemainingTime} seconds.");
+        
+        IsRunning = false;
     }
     #endregion
 
@@ -105,9 +112,9 @@ public class IPApiDNSResolverViewModel : ViewModelBase
     {
         switch (e.PropertyName)
         {
-            case nameof(SettingsInfo.Dashboard_CheckIPApiDNSResolver):
+            case nameof(SettingsInfo.Dashboard_CheckIPApiIPGeolocation):
                 // Check if enabled via settings
-                if (SettingsManager.Current.Dashboard_CheckIPApiDNSResolver)
+                if (SettingsManager.Current.Dashboard_CheckIPApiIPGeolocation)
                     Check();
 
                 break;

@@ -203,13 +203,9 @@ public static class SettingsManager
         Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.AWSSessionManager));
 
         var powerShellPath = "";
-        foreach (var file in PowerShell.GetDefaultInstallationPaths)
-        {
-            if (File.Exists(file))
-            {
-                powerShellPath = file;
-                break;
-            }
+        foreach (var file in PowerShell.GetDefaultInstallationPaths.Where(File.Exists)) {
+            powerShellPath = file;
+            break;
         }
 
         Log.Info($"Set \"AWSSessionManager_ApplicationFilePath\" to \"{powerShellPath}\"...");
@@ -233,15 +229,13 @@ public static class SettingsManager
         Current.SNTPLookup_SNTPServers = new ObservableCollection<ServerConnectionInfoProfile>(SNTPServer.GetDefaultList());
 
         // Add IP Scanner custom commands
-        foreach (var customCommand in IPScannerCustomCommand.GetDefaultList())
+        foreach (var customCommand in from customCommand in IPScannerCustomCommand.GetDefaultList() 
+                 let customCommandFound = Current.IPScanner_CustomCommands.FirstOrDefault(x => x.Name == customCommand.Name) 
+                 where customCommandFound == null 
+                 select customCommand)
         {
-            var customCommandFound = Current.IPScanner_CustomCommands.FirstOrDefault(x => x.Name == customCommand.Name);
-
-            if (customCommandFound == null)
-            {
-                Log.Info($"Add \"{customCommand.Name}\" to \"IPScanner_CustomCommands\"...");
-                Current.IPScanner_CustomCommands.Add(customCommand);
-            }
+            Log.Info($"Add \"{customCommand.Name}\" to \"IPScanner_CustomCommands\"...");
+            Current.IPScanner_CustomCommands.Add(customCommand);
         }
 
         // Add or update Port Scanner port profiles
@@ -264,7 +258,7 @@ public static class SettingsManager
 
         // Add new DNS lookup profiles
         Log.Info("Init \"DNSLookup_DNSServers_v2\" with default DNS servers...");
-        Current.DNSLookup_DNSServers_v2 = new ObservableCollection<DNSServerConnectionInfoProfile>(DNSServer.GetDefaultList());
+        Current.DNSLookup_DNSServers = new ObservableCollection<DNSServerConnectionInfoProfile>(DNSServer.GetDefaultList());
     }
 
     /// <summary>
@@ -302,6 +296,14 @@ public static class SettingsManager
         // First run is required due to the new settings
         Log.Info("Set \"FirstRun\" to true...");
         Current.WelcomeDialog_Show = true;
+        
+        // Add IP geolocation application
+        Log.Info("Add new app \"IP Geolocation\"...");
+        Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.IPGeolocation));
+        
+        // Add DNS lookup profiles after refactoring
+        Log.Info("Init \"DNSLookup_DNSServers\" with default DNS servers...");
+        Current.DNSLookup_DNSServers = new ObservableCollection<DNSServerConnectionInfoProfile>(DNSServer.GetDefaultList());
     }
     #endregion
 }

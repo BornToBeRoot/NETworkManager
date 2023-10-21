@@ -3,9 +3,11 @@ using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
-using System;
 using System.Security;
 using System.Xml.Serialization;
+// ReSharper disable InconsistentNaming
+// ReSharper disable PropertyCanBeMadeInitOnly.Global
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 
 namespace NETworkManager.Profiles;
 
@@ -79,12 +81,14 @@ public class ProfileInfo
     public bool RemoteDesktop_UseCredentials { get; set; }
     public string RemoteDesktop_Username { get; set; }
     public string RemoteDesktop_Domain { get; set; }
-    
-    [XmlIgnore]
-    public SecureString RemoteDesktop_Password { get; set; }
+
+    [XmlIgnore] public SecureString RemoteDesktop_Password { get; set; }
     public bool RemoteDesktop_OverrideDisplay { get; set; }
     public bool RemoteDesktop_AdjustScreenAutomatically { get; set; }
-    public bool RemoteDesktop_UseCurrentViewSize { get; set; } = GlobalStaticConfiguration.RemoteDesktop_UseCurrentViewSize;
+
+    public bool RemoteDesktop_UseCurrentViewSize { get; set; } =
+        GlobalStaticConfiguration.RemoteDesktop_UseCurrentViewSize;
+
     public bool RemoteDesktop_UseFixedScreenSize { get; set; }
     public int RemoteDesktop_ScreenWidth { get; set; } = GlobalStaticConfiguration.RemoteDesktop_ScreenWidth;
     public int RemoteDesktop_ScreenHeight { get; set; } = GlobalStaticConfiguration.RemoteDesktop_ScreenHeight;
@@ -98,25 +102,43 @@ public class ProfileInfo
     public bool RemoteDesktop_OverrideCredSspSupport { get; set; }
     public bool RemoteDesktop_EnableCredSspSupport { get; set; }
     public bool RemoteDesktop_OverrideAuthenticationLevel { get; set; }
-    public uint RemoteDesktop_AuthenticationLevel { get; set; } = GlobalStaticConfiguration.RemoteDesktop_AuthenticationLevel;
+
+    public uint RemoteDesktop_AuthenticationLevel { get; set; } =
+        GlobalStaticConfiguration.RemoteDesktop_AuthenticationLevel;
+
     public bool RemoteDesktop_OverrideGatewayServer { get; set; }
     public bool RemoteDesktop_EnableGatewayServer { get; set; }
     public string RemoteDesktop_GatewayServerHostname { get; set; }
-    public bool RemoteDesktop_GatewayServerBypassLocalAddresses { get; set; } = GlobalStaticConfiguration.RemoteDesktop_GatewayServerBypassLocalAddresses;
-    public GatewayUserSelectedCredsSource RemoteDesktop_GatewayServerLogonMethod { get; set; } = GlobalStaticConfiguration.RemoteDesktop_GatewayServerLogonMethod;
-    public bool RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer { get; set; } = GlobalStaticConfiguration.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+
+    public bool RemoteDesktop_GatewayServerBypassLocalAddresses { get; set; } =
+        GlobalStaticConfiguration.RemoteDesktop_GatewayServerBypassLocalAddresses;
+
+    public GatewayUserSelectedCredsSource RemoteDesktop_GatewayServerLogonMethod { get; set; } =
+        GlobalStaticConfiguration.RemoteDesktop_GatewayServerLogonMethod;
+
+    public bool RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer { get; set; } =
+        GlobalStaticConfiguration.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+
     public bool RemoteDesktop_UseGatewayServerCredentials { get; set; }
     public string RemoteDesktop_GatewayServerUsername { get; set; }
     public string RemoteDesktop_GatewayServerDomain { get; set; }
 
-    [XmlIgnore]
-    public SecureString RemoteDesktop_GatewayServerPassword { get; set; }
+    [XmlIgnore] public SecureString RemoteDesktop_GatewayServerPassword { get; set; }
     public bool RemoteDesktop_OverrideAudioRedirectionMode { get; set; }
-    public AudioRedirectionMode RemoteDesktop_AudioRedirectionMode { get; set; } = GlobalStaticConfiguration.RemoteDesktop_AudioRedirectionMode;
+
+    public AudioRedirectionMode RemoteDesktop_AudioRedirectionMode { get; set; } =
+        GlobalStaticConfiguration.RemoteDesktop_AudioRedirectionMode;
+
     public bool RemoteDesktop_OverrideAudioCaptureRedirectionMode { get; set; }
-    public AudioCaptureRedirectionMode RemoteDesktop_AudioCaptureRedirectionMode { get; set; } = GlobalStaticConfiguration.RemoteDesktop_AudioCaptureRedirectionMode;
+
+    public AudioCaptureRedirectionMode RemoteDesktop_AudioCaptureRedirectionMode { get; set; } =
+        GlobalStaticConfiguration.RemoteDesktop_AudioCaptureRedirectionMode;
+
     public bool RemoteDesktop_OverrideApplyWindowsKeyCombinations { get; set; }
-    public KeyboardHookMode RemoteDesktop_KeyboardHookMode { get; set; } = GlobalStaticConfiguration.RemoteDesktop_KeyboardHookMode;
+
+    public KeyboardHookMode RemoteDesktop_KeyboardHookMode { get; set; } =
+        GlobalStaticConfiguration.RemoteDesktop_KeyboardHookMode;
+
     public bool RemoteDesktop_OverrideRedirectClipboard { get; set; }
     public bool RemoteDesktop_RedirectClipboard { get; set; } = true;
     public bool RemoteDesktop_OverrideRedirectDevices { get; set; }
@@ -157,7 +179,9 @@ public class ProfileInfo
     public bool PowerShell_OverrideAdditionalCommandLine { get; set; }
     public string PowerShell_AdditionalCommandLine { get; set; }
     public bool PowerShell_OverrideExecutionPolicy { get; set; }
-    public ExecutionPolicy PowerShell_ExecutionPolicy { get; set; } = GlobalStaticConfiguration.PowerShell_ExecutionPolicy;
+
+    public ExecutionPolicy PowerShell_ExecutionPolicy { get; set; } =
+        GlobalStaticConfiguration.PowerShell_ExecutionPolicy;
 
     public bool PuTTY_Enabled { get; set; }
     public ConnectionMode PuTTY_ConnectionMode { get; set; }
@@ -208,16 +232,16 @@ public class ProfileInfo
     public SNMPMode SNMP_Mode { get; set; } = GlobalStaticConfiguration.SNMP_Mode;
     public bool SNMP_OverrideVersionAndAuth { get; set; }
     public SNMPVersion SNMP_Version { get; set; } = GlobalStaticConfiguration.SNMP_Version;
-    [XmlIgnore]
-    public SecureString SNMP_Community { get; set; }
+    [XmlIgnore] public SecureString SNMP_Community { get; set; }
     public SNMPV3Security SNMP_Security { get; set; } = GlobalStaticConfiguration.SNMP_Security;
     public string SNMP_Username { get; set; }
-    public SNMPV3AuthenticationProvider SNMP_AuthenticationProvider { get; set; } = GlobalStaticConfiguration.SNMP_AuthenticationProvider;
-    [XmlIgnore]
-    public SecureString SNMP_Auth { get; set; }
+
+    public SNMPV3AuthenticationProvider SNMP_AuthenticationProvider { get; set; } =
+        GlobalStaticConfiguration.SNMP_AuthenticationProvider;
+
+    [XmlIgnore] public SecureString SNMP_Auth { get; set; }
     public SNMPV3PrivacyProvider SNMP_PrivacyProvider { get; set; } = GlobalStaticConfiguration.SNMP_PrivacyProvider;
-    [XmlIgnore]
-    public SecureString SNMP_Priv { get; set; }
+    [XmlIgnore] public SecureString SNMP_Priv { get; set; }
 
     public bool WakeOnLAN_Enabled { get; set; }
     public string WakeOnLAN_MACAddress { get; set; }
@@ -227,12 +251,15 @@ public class ProfileInfo
     public bool Whois_InheritHost { get; set; } = true;
     public string Whois_Domain { get; set; }
 
+    public bool IPGeolocation_Enabled { get; set; }
+    public bool IPGeolocation_InheritHost { get; set; } = true;
+    public string IPGeolocation_Host { get; set; }
+    
     /// <summary>
     /// Initializes a new instance of the<see cref="ProfileInfo"/> class.
     /// </summary>
     public ProfileInfo()
     {
-
     }
 
     /// <summary>
@@ -314,7 +341,8 @@ public class ProfileInfo
         RemoteDesktop_GatewayServerHostname = profile.RemoteDesktop_GatewayServerHostname;
         RemoteDesktop_GatewayServerBypassLocalAddresses = profile.RemoteDesktop_GatewayServerBypassLocalAddresses;
         RemoteDesktop_GatewayServerLogonMethod = profile.RemoteDesktop_GatewayServerLogonMethod;
-        RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer = profile.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+        RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer =
+            profile.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
         RemoteDesktop_UseGatewayServerCredentials = profile.RemoteDesktop_UseGatewayServerCredentials;
         RemoteDesktop_GatewayServerUsername = profile.RemoteDesktop_GatewayServerUsername;
         RemoteDesktop_GatewayServerDomain = profile.RemoteDesktop_GatewayServerDomain;
@@ -339,7 +367,8 @@ public class ProfileInfo
         RemoteDesktop_RedirectPrinters = profile.RemoteDesktop_RedirectPrinters;
         RemoteDesktop_OverridePersistentBitmapCaching = profile.RemoteDesktop_OverridePersistentBitmapCaching;
         RemoteDesktop_PersistentBitmapCaching = profile.RemoteDesktop_PersistentBitmapCaching;
-        RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped = profile.RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped;
+        RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped =
+            profile.RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped;
         RemoteDesktop_ReconnectIfTheConnectionIsDropped = profile.RemoteDesktop_ReconnectIfTheConnectionIsDropped;
         RemoteDesktop_OverrideNetworkConnectionType = profile.RemoteDesktop_OverrideNetworkConnectionType;
         RemoteDesktop_NetworkConnectionType = profile.RemoteDesktop_NetworkConnectionType;
@@ -349,7 +378,8 @@ public class ProfileInfo
         RemoteDesktop_FontSmoothing = profile.RemoteDesktop_FontSmoothing;
         RemoteDesktop_OverrideDesktopComposition = profile.RemoteDesktop_OverrideDesktopComposition;
         RemoteDesktop_DesktopComposition = profile.RemoteDesktop_DesktopComposition;
-        RemoteDesktop_OverrideShowWindowContentsWhileDragging = profile.RemoteDesktop_OverrideShowWindowContentsWhileDragging;
+        RemoteDesktop_OverrideShowWindowContentsWhileDragging =
+            profile.RemoteDesktop_OverrideShowWindowContentsWhileDragging;
         RemoteDesktop_ShowWindowContentsWhileDragging = profile.RemoteDesktop_ShowWindowContentsWhileDragging;
         RemoteDesktop_OverrideMenuAndWindowAnimation = profile.RemoteDesktop_OverrideMenuAndWindowAnimation;
         RemoteDesktop_MenuAndWindowAnimation = profile.RemoteDesktop_MenuAndWindowAnimation;
@@ -439,5 +469,10 @@ public class ProfileInfo
         Whois_Enabled = profile.Whois_Enabled;
         Whois_InheritHost = profile.Whois_InheritHost;
         Whois_Domain = profile.Whois_Domain;
+        
+        // IP Geolocation
+        IPGeolocation_Enabled = profile.IPGeolocation_Enabled;
+        IPGeolocation_InheritHost = profile.IPGeolocation_InheritHost;
+        IPGeolocation_Host = profile.IPGeolocation_Host;
     }
 }

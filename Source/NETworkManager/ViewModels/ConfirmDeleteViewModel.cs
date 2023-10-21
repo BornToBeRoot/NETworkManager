@@ -10,11 +10,11 @@ public class ConfirmDeleteViewModel : ViewModelBase
 
     public ICommand CancelCommand { get; }
 
-    private string _message;
+    private readonly string _message;
     public string Message
     {
         get => _message;
-        set
+        private init
         {
             if (value == _message)
                 return;
@@ -26,8 +26,8 @@ public class ConfirmDeleteViewModel : ViewModelBase
     
     public ConfirmDeleteViewModel(Action<ConfirmDeleteViewModel> deleteCommand, Action<ConfirmDeleteViewModel> cancelHandler, string message)
     {
-        DeleteCommand = new RelayCommand(p => deleteCommand(this));
-        CancelCommand = new RelayCommand(p => cancelHandler(this));
+        DeleteCommand = new RelayCommand(_ => deleteCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
         Message = message;
     }

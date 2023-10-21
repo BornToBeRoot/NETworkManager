@@ -15,7 +15,7 @@
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.SNMP}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock Text="{x:Static localization:Strings.OIDProfiles}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <DataGrid x:Name="DataGridOIDProfiles" ItemsSource="{Binding OIDProfiles}" SelectionMode="Single" SelectedItem="{Binding SelectedOIDProfile}" Height="200" Margin="0,0,0,10">
+        <DataGrid x:Name="DataGridOidProfiles" ItemsSource="{Binding OIDProfiles}" SelectionMode="Single" SelectedItem="{Binding SelectedOIDProfile}" Height="200" Margin="0,0,0,10">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="RowContextMenu_OnOpened"  MinWidth="150">
@@ -40,9 +40,21 @@
                 </ContextMenu>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (network:SNMPOIDProfileInfo.Name)}" MinWidth="200" Width="Auto" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.OID}" Binding="{Binding (network:SNMPOIDProfileInfo.OID)}" MinWidth="200" Width="Auto" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Mode}" Binding="{Binding (network:SNMPOIDProfileInfo.Mode)}" MinWidth="100" Width="*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" 
+                                    Binding="{Binding (network:SNMPOIDProfileInfo.Name)}"
+                                    SortMemberPath="Name"
+                                    MinWidth="200"
+                                    Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.OID}" 
+                                    Binding="{Binding (network:SNMPOIDProfileInfo.OID)}"
+                                    SortMemberPath="OID"
+                                    MinWidth="200" 
+                                    Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Mode}" 
+                                    Binding="{Binding (network:SNMPOIDProfileInfo.Mode)}"
+                                    SortMemberPath="Mode"
+                                    MinWidth="100"
+                                    Width="*" />
             </DataGrid.Columns>
             <DataGrid.InputBindings>
                 <KeyBinding Command="{Binding EditOIDProfileCommand}" Key="F2" />
@@ -67,7 +79,7 @@
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding ElementName=DataGridOIDProfiles, Path=SelectedItems.Count}" Value="1" />
+                                    <Condition Binding="{Binding ElementName=DataGridOidProfiles, Path=SelectedItems.Count}" Value="1" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="True"/>
@@ -98,7 +110,7 @@
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding ElementName=DataGridOIDProfiles, Path=SelectedItems.Count}" Value="1" />
+                                    <Condition Binding="{Binding ElementName=DataGridOidProfiles, Path=SelectedItems.Count}" Value="1" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="True"/>

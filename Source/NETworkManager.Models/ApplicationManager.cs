@@ -94,6 +94,9 @@ public static class ApplicationManager
             case ApplicationName.Whois:
                 canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.CloudSearchOutline });
                 break;
+            case ApplicationName.IPGeolocation:
+                canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.MapSearchOutline });
+                break;
             case ApplicationName.SubnetCalculator:
                 canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.Calculator });
                 break;

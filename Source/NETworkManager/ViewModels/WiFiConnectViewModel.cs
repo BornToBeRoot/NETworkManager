@@ -35,7 +35,7 @@ public class WiFiConnectViewModel : ViewModelBase
     private WiFiConnectMode _connectMode;
 
     /// <summary>
-    /// WiFi connect mode like <see cref="WiFiConnectMode.Open"/>, <see cref="WiFiConnectMode.Wps"/> or <see cref="WiFiConnectMode.Eap"/>.
+    /// WiFi connect mode like <see cref="WiFiConnectMode.Open"/>, <see cref="WiFiConnectMode.Psk"/> or <see cref="WiFiConnectMode.Eap"/>.
     /// </summary>
     public WiFiConnectMode ConnectMode
     {
@@ -310,15 +310,18 @@ public class WiFiConnectViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Initalizes a new class <see cref="CredentialsPasswordViewModel"/> with <see cref="ConnectCommand" /> and <see cref="CancelCommand"/>.
+    /// Initialize a new class <see cref="CredentialsPasswordViewModel"/> with <see cref="ConnectCommand" /> and <see cref="CancelCommand"/>.
     /// </summary>
     /// <param name="okCommand"><see cref="ConnectCommand"/> which is executed on OK click.</param>
+    /// <param name="connectWpsCommand"><see cref="ConnectWpsCommand"/> which is executed on WPS click.</param>
     /// <param name="cancelHandler"><see cref="CancelCommand"/> which is executed on cancel click.</param>
+    /// <param name="options">Current WiFi adapter info and network info.</param>
+    /// <param name="connectMode">WiFi connect mode like <see cref="WiFiConnectMode.Open"/>, <see cref="WiFiConnectMode.Psk"/> or <see cref="WiFiConnectMode.Eap"/>.</param>
     public WiFiConnectViewModel(Action<WiFiConnectViewModel> okCommand, Action<WiFiConnectViewModel> connectWpsCommand, Action<WiFiConnectViewModel> cancelHandler, (WiFiAdapterInfo AdapterInfo, WiFiNetworkInfo NetworkInfo) options, WiFiConnectMode connectMode)
     {
-        ConnectCommand = new RelayCommand(p => okCommand(this));
-        ConnectWpsCommand = new RelayCommand(p => connectWpsCommand(this));
-        CancelCommand = new RelayCommand(p => cancelHandler(this));
+        ConnectCommand = new RelayCommand(_ => okCommand(this));
+        ConnectWpsCommand = new RelayCommand(_ => connectWpsCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
         Options = options;
         ConnectMode = connectMode;

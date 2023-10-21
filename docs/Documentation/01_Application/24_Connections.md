@@ -3,8 +3,8 @@ layout: default
 title: Conections
 parent: Application
 grand_parent: Documentation
-nav_order: 23
-description: ""
+nav_order: 24
+description: "Documentation of the Connections"
 permalink: /Documentation/Application/Connections
 ---
 

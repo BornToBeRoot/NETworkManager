@@ -6,7 +6,7 @@ namespace NETworkManager.Views;
 
 public partial class ListenersView
 {
-    private readonly ListenersViewModel _viewModel = new ListenersViewModel(DialogCoordinator.Instance);
+    private readonly ListenersViewModel _viewModel = new(DialogCoordinator.Instance);
 
     public ListenersView()
     {

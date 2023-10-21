@@ -30,8 +30,8 @@ public class WebConsoleConnectViewModel : ViewModelBase
 
     public WebConsoleConnectViewModel(Action<WebConsoleConnectViewModel> connectCommand, Action<WebConsoleConnectViewModel> cancelHandler)
     {
-        ConnectCommand = new RelayCommand(p => connectCommand(this));
-        CancelCommand = new RelayCommand(p => cancelHandler(this));
+        ConnectCommand = new RelayCommand(_ => connectCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
         UrlHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.WebConsole_UrlHistory);
 

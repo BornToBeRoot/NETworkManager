@@ -118,13 +118,13 @@ public class CredentialsSetPasswordViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Initalizes a new class <see cref="CredentialsSetPasswordViewModel"/> with <see cref="OKCommand" /> and <see cref="CancelCommand"/>.
+    /// Initialize a new class <see cref="CredentialsSetPasswordViewModel"/> with <see cref="OKCommand" /> and <see cref="CancelCommand"/>.
     /// </summary>
     /// <param name="okCommand"><see cref="OKCommand"/> which is executed on OK click.</param>
     /// <param name="cancelHandler"><see cref="CancelCommand"/> which is executed on cancel click.</param>
     public CredentialsSetPasswordViewModel(Action<CredentialsSetPasswordViewModel> okCommand, Action<CredentialsSetPasswordViewModel> cancelHandler)
     {
-        OKCommand = new RelayCommand(p => okCommand(this));
-        CancelCommand = new RelayCommand(p => cancelHandler(this));
+        OKCommand = new RelayCommand(_ => okCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
     }
 }

@@ -26,7 +26,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Domain}" />
+            <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Query}" />
             <Grid Grid.Row="1" Margin="0,0,0,20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -46,7 +46,7 @@
                                Style="{DynamicResource DefaultTextBlock}" 
                                VerticalAlignment="Center" />
                     <ComboBox Grid.Column="2" 
-                              x:Name="ComboBoxWebsiteUri" ItemsSource="{Binding WebsiteUriHistoryView}" 
+                              x:Name="ComboBoxDomain" ItemsSource="{Binding WebsiteUriHistoryView}" 
                               mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleDomain}" 
                               IsReadOnly="{Binding IsRunning}" 
                               Style="{StaticResource HistoryComboBox}">
@@ -64,7 +64,7 @@
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                                 <Setter Property="IsEnabled" Value="True" />
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxWebsiteUri}" Value="True" >
+                                    <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxDomain}" Value="True" >
                                         <Setter Property="IsEnabled" Value="False" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding IsRunning}" Value="True">
@@ -81,12 +81,11 @@
                                 </Grid.ColumnDefinitions>
                                 <Rectangle>
                                     <Rectangle.Resources>
-                                        <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{iconPacks:Material Kind=Play}"/>
+                                        <VisualBrush x:Key="VisualMagnify" Stretch="Uniform" Visual="{iconPacks:Material Kind=Magnify}"/>
                                     </Rectangle.Resources>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ButtonWithImageRectangle}">
-                                            <Setter Property="OpacityMask" Value="{StaticResource VisualControlPlay}" />
-                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                            <Setter Property="OpacityMask" Value="{StaticResource VisualMagnify}" />
                                         </Style>
                                     </Rectangle.Style>
                                 </Rectangle>

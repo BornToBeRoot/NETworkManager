@@ -4,7 +4,7 @@ namespace NETworkManager.Views;
 
 public partial class SettingsAppearanceView
 {
-    private readonly SettingsAppearanceViewModel _viewModel = new SettingsAppearanceViewModel();
+    private readonly SettingsAppearanceViewModel _viewModel = new();
 
     public SettingsAppearanceView()
     {

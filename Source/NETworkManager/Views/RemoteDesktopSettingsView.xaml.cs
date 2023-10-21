@@ -4,7 +4,7 @@ namespace NETworkManager.Views;
 
 public partial class RemoteDesktopSettingsView
 {
-    private readonly RemoteDesktopSettingsViewModel _viewModel = new RemoteDesktopSettingsViewModel();
+    private readonly RemoteDesktopSettingsViewModel _viewModel = new();
 
     public RemoteDesktopSettingsView()
     {

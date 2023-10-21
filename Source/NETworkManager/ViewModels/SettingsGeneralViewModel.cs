@@ -19,7 +19,7 @@ public class SettingsGeneralViewModel : ViewModelBase
         get => _defaultApplicationSelectedItem;
         set
         {
-            if (value == _defaultApplicationSelectedItem)
+            if (Equals(value, _defaultApplicationSelectedItem))
                 return;
 
             if (value != null && !_isLoading)
@@ -38,7 +38,7 @@ public class SettingsGeneralViewModel : ViewModelBase
         get => _visibleApplicationSelectedItem;
         set
         {
-            if (value == _visibleApplicationSelectedItem)
+            if (Equals(value, _visibleApplicationSelectedItem))
                 return;
 
             _visibleApplicationSelectedItem = value;
@@ -71,7 +71,7 @@ public class SettingsGeneralViewModel : ViewModelBase
         get => _hiddenApplicationSelectedItem;
         set
         {
-            if (value == _hiddenApplicationSelectedItem)
+            if (Equals(value, _hiddenApplicationSelectedItem))
                 return;
 
             _hiddenApplicationSelectedItem = value;
@@ -200,7 +200,7 @@ public class SettingsGeneralViewModel : ViewModelBase
     #region ICommands & Actions
     public ICommand VisibleToHideApplicationCommand
     {
-        get { return new RelayCommand(p => VisibleToHideApplicationAction()); }
+        get { return new RelayCommand(_ => VisibleToHideApplicationAction()); }
     }
 
     private void VisibleToHideApplicationAction()
@@ -223,7 +223,7 @@ public class SettingsGeneralViewModel : ViewModelBase
 
     public ICommand HideToVisibleApplicationCommand
     {
-        get { return new RelayCommand(p => HideToVisibleApplicationAction()); }
+        get { return new RelayCommand(_ => HideToVisibleApplicationAction()); }
     }
 
     private void HideToVisibleApplicationAction()

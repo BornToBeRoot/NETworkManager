@@ -4,7 +4,7 @@ namespace NETworkManager.Views;
 
 public partial class TracerouteSettingsView
 {
-    private readonly TracerouteSettingsViewModel _viewModel = new TracerouteSettingsViewModel();
+    private readonly TracerouteSettingsViewModel _viewModel = new ();
 
     public TracerouteSettingsView()
     {

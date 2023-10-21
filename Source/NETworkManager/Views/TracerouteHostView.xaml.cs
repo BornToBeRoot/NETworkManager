@@ -2,7 +2,6 @@
 using NETworkManager.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
-using NETworkManager.Settings;
 using NETworkManager.Profiles;
 using NETworkManager.Models;
 

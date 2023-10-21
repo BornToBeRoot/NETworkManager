@@ -17,7 +17,7 @@ public class SettingsLanguageViewModel : ViewModelBase
     public ICollectionView Languages { get; }
 
     private LocalizationInfo _selectedLanguage;
-    public LocalizationInfo SelectedLangauge
+    public LocalizationInfo SelectedLanguage
     {
         get => _selectedLanguage;
         set
@@ -25,7 +25,7 @@ public class SettingsLanguageViewModel : ViewModelBase
             if (value == _selectedLanguage)
                 return;
 
-            if (!_isLoading && value != null) // Don't change if the value is null (can happen when a user searchs for a language....)
+            if (!_isLoading && value != null) // Don't change if the value is null (can happen when a user search for a language....)
             {
                 LocalizationManager.GetInstance().Change(value);
 
@@ -78,14 +78,14 @@ public class SettingsLanguageViewModel : ViewModelBase
             return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.NativeName.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
-        SelectedLangauge = Languages.Cast<LocalizationInfo>().FirstOrDefault(x => x.Code == LocalizationManager.GetInstance().Current.Code);
+        SelectedLanguage = Languages.Cast<LocalizationInfo>().FirstOrDefault(x => x.Code == LocalizationManager.GetInstance().Current.Code);
 
         _isLoading = false;
     }
     #endregion
 
     #region ICommands & Actions
-    public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
+    public ICommand ClearSearchCommand => new RelayCommand(_ => ClearSearchAction());
 
     private void ClearSearchAction()
     {

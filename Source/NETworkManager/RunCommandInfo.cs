@@ -2,17 +2,17 @@
 
 public class RunCommandInfo
 {
-    public RunCommandType Type { get; set; }
+    public RunCommandType Type { get; init; }
     
     /// <summary>
     /// Name.
     /// </summary>
-    public string Name { get; set; }
+    public string Name { get; init; }
     
     /// <summary>
     /// Translated name.
     /// </summary>
-    public string TranslatedName { get; set; }
+    public string TranslatedName { get; init; }
     
     /// <summary>
     /// Command to run.
@@ -22,7 +22,7 @@ public class RunCommandInfo
     /// <summary>
     /// Indicates whether (optional) arguments can be passed.
     /// </summary>
-    public bool CanHandleArguments { get; set; }
+    public bool CanHandleArguments { get; init; }
     
     /// <summary>
     /// Example arguments.

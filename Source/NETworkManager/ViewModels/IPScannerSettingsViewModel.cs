@@ -11,11 +11,13 @@ namespace NETworkManager.ViewModels;
 public class IPScannerSettingsViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly bool _isLoading;
 
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private bool _showAllResults;
+
     public bool ShowAllResults
     {
         get => _showAllResults;
@@ -33,6 +35,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
     }
 
     private int _icmpAttempts;
+
     public int ICMPAttempts
     {
         get => _icmpAttempts;
@@ -50,6 +53,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
     }
 
     private int _icmpTimeout;
+
     public int ICMPTimeout
     {
         get => _icmpTimeout;
@@ -67,6 +71,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
     }
 
     private int _icmpBuffer;
+
     public int ICMPBuffer
     {
         get => _icmpBuffer;
@@ -82,8 +87,9 @@ public class IPScannerSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+
     private bool _resolveHostname;
+
     public bool ResolveHostname
     {
         get => _resolveHostname;
@@ -99,8 +105,9 @@ public class IPScannerSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+
     private bool _dnsShowErrorMessage;
+
     public bool DNSShowErrorMessage
     {
         get => _dnsShowErrorMessage;
@@ -118,12 +125,13 @@ public class IPScannerSettingsViewModel : ViewModelBase
     }
 
     private bool _portScanEnabled;
+
     public bool PortScanEnabled
     {
         get => _portScanEnabled;
         set
         {
-            if (value == _portScanEnabled) 
+            if (value == _portScanEnabled)
                 return;
 
             if (!_isLoading)
@@ -135,12 +143,13 @@ public class IPScannerSettingsViewModel : ViewModelBase
     }
 
     private string _portScanPorts;
+
     public string PortScanPorts
     {
         get => _portScanPorts;
         set
         {
-            if(value == _portScanPorts)
+            if (value == _portScanPorts)
                 return;
 
             if (!_isLoading)
@@ -152,6 +161,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
     }
 
     private int _portScanTimeout;
+
     public int PortScanTimeout
 
     {
@@ -165,13 +175,13 @@ public class IPScannerSettingsViewModel : ViewModelBase
             if (!_isLoading)
                 SettingsManager.Current.IPScanner_PortScanTimeout = value;
 
-                        _portScanTimeout = value;
+            _portScanTimeout = value;
             OnPropertyChanged();
         }
-
     }
 
     private bool _resolveMACAddress;
+
     public bool ResolveMACAddress
     {
         get => _resolveMACAddress;
@@ -191,6 +201,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
     public ICollectionView CustomCommands { get; }
 
     private CustomCommandInfo _selectedCustomCommand = new();
+
     public CustomCommandInfo SelectedCustomCommand
     {
         get => _selectedCustomCommand;
@@ -205,6 +216,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
     }
 
     private int _maxHostThreads;
+
     public int MaxHostThreads
     {
         get => _maxHostThreads;
@@ -222,6 +234,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
     }
 
     private int _maxPortThreads;
+
     public int MaxPortThreads
     {
         get => _maxPortThreads;
@@ -237,9 +250,11 @@ public class IPScannerSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, load settings
+
     public IPScannerSettingsViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
@@ -247,7 +262,8 @@ public class IPScannerSettingsViewModel : ViewModelBase
         _dialogCoordinator = instance;
 
         CustomCommands = CollectionViewSource.GetDefaultView(SettingsManager.Current.IPScanner_CustomCommands);
-        CustomCommands.SortDescriptions.Add(new SortDescription(nameof(CustomCommandInfo.Name), ListSortDirection.Ascending));
+        CustomCommands.SortDescriptions.Add(new SortDescription(nameof(CustomCommandInfo.Name),
+            ListSortDirection.Ascending));
 
         LoadSettings();
 
@@ -259,8 +275,8 @@ public class IPScannerSettingsViewModel : ViewModelBase
         ShowAllResults = SettingsManager.Current.IPScanner_ShowAllResults;
         ICMPAttempts = SettingsManager.Current.IPScanner_ICMPAttempts;
         ICMPTimeout = SettingsManager.Current.IPScanner_ICMPTimeout;
-        ICMPBuffer = SettingsManager.Current.IPScanner_ICMPBuffer;        
-        ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname;            
+        ICMPBuffer = SettingsManager.Current.IPScanner_ICMPBuffer;
+        ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname;
         DNSShowErrorMessage = SettingsManager.Current.IPScanner_DNSShowErrorMessage;
         PortScanEnabled = SettingsManager.Current.IPScanner_PortScanEnabled;
         PortScanPorts = SettingsManager.Current.IPScanner_PortScanPorts;
@@ -269,24 +285,26 @@ public class IPScannerSettingsViewModel : ViewModelBase
         MaxHostThreads = SettingsManager.Current.IPScanner_MaxHostThreads;
         MaxPortThreads = SettingsManager.Current.IPScanner_MaxPortThreads;
     }
+
     #endregion
 
     #region ICommand & Actions
-    public ICommand AddCustomCommandCommand => new RelayCommand(p => AddCustomCommandAction());
+
+    public ICommand AddCustomCommandCommand => new RelayCommand(_ => AddCustomCommandAction());
 
     private void AddCustomCommandAction()
     {
         AddCustomCommand();
     }
 
-    public ICommand EditCustomCommandCommand => new RelayCommand(p => EditCustomCommandAction());
+    public ICommand EditCustomCommandCommand => new RelayCommand(_ => EditCustomCommandAction());
 
     private void EditCustomCommandAction()
     {
         EditCustomCommand();
     }
 
-    public ICommand DeleteCustomCommandCommand => new RelayCommand(p => DeleteCustomCommandAction());
+    public ICommand DeleteCustomCommandCommand => new RelayCommand(_ => DeleteCustomCommandAction());
 
     private void DeleteCustomCommandAction()
     {
@@ -296,7 +314,8 @@ public class IPScannerSettingsViewModel : ViewModelBase
     #endregion
 
     #region Methods
-    public async void AddCustomCommand()
+
+    private async void AddCustomCommand()
     {
         var customDialog = new CustomDialog
         {
@@ -307,11 +326,9 @@ public class IPScannerSettingsViewModel : ViewModelBase
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            SettingsManager.Current.IPScanner_CustomCommands.Add(new CustomCommandInfo(instance.ID, instance.Name, instance.FilePath, instance.Arguments));
-        }, instance =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        });
+            SettingsManager.Current.IPScanner_CustomCommands.Add(new CustomCommandInfo(instance.ID, instance.Name,
+                instance.FilePath, instance.Arguments));
+        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); });
 
         customDialog.Content = new CustomCommandDialog
         {
@@ -333,11 +350,9 @@ public class IPScannerSettingsViewModel : ViewModelBase
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
             SettingsManager.Current.IPScanner_CustomCommands.Remove(SelectedCustomCommand);
-            SettingsManager.Current.IPScanner_CustomCommands.Add(new CustomCommandInfo(instance.ID, instance.Name, instance.FilePath, instance.Arguments));
-        }, instance =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, true, SelectedCustomCommand);
+            SettingsManager.Current.IPScanner_CustomCommands.Add(new CustomCommandInfo(instance.ID, instance.Name,
+                instance.FilePath, instance.Arguments));
+        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, true, SelectedCustomCommand);
 
         customDialog.Content = new CustomCommandDialog
         {
@@ -347,22 +362,20 @@ public class IPScannerSettingsViewModel : ViewModelBase
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
-    public async void DeleteCustomCommand()
+    private async void DeleteCustomCommand()
     {
         var customDialog = new CustomDialog
         {
             Title = Localization.Resources.Strings.DeleteCustomCommand
         };
 
-        var confirmDeleteViewModel = new ConfirmDeleteViewModel(instance =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+        var confirmDeleteViewModel = new ConfirmDeleteViewModel(_ =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            SettingsManager.Current.IPScanner_CustomCommands.Remove(SelectedCustomCommand);
-        }, instance =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, Localization.Resources.Strings.DeleteCustomCommandMessage);
+                SettingsManager.Current.IPScanner_CustomCommands.Remove(SelectedCustomCommand);
+            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
+            Localization.Resources.Strings.DeleteCustomCommandMessage);
 
         customDialog.Content = new ConfirmDeleteDialog
         {
@@ -371,5 +384,6 @@ public class IPScannerSettingsViewModel : ViewModelBase
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
+
     #endregion
 }

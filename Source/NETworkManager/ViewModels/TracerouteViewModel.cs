@@ -33,7 +33,7 @@ public class TracerouteViewModel : ViewModelBase
     private readonly IDialogCoordinator _dialogCoordinator;
     private CancellationTokenSource _cancellationTokenSource;
     
-    private readonly int _tabId;
+    private readonly Guid _tabId;
     private bool _firstLoad = true;
 
     private string _host;
@@ -165,7 +165,7 @@ public class TracerouteViewModel : ViewModelBase
 
     #region Constructor, load settings
 
-    public TracerouteViewModel(IDialogCoordinator instance, int tabId, string host)
+    public TracerouteViewModel(IDialogCoordinator instance, Guid tabId, string host)
     {
         _dialogCoordinator = instance;
 

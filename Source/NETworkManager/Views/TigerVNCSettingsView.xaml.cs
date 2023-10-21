@@ -6,7 +6,7 @@ namespace NETworkManager.Views;
 
 public partial class TigerVNCSettingsView
 {
-    private readonly TigerVNCSettingsViewModel _viewModel = new TigerVNCSettingsViewModel(DialogCoordinator.Instance);
+    private readonly TigerVNCSettingsViewModel _viewModel = new(DialogCoordinator.Instance);
 
     public TigerVNCSettingsView()
     {

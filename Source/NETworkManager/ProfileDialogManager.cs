@@ -14,11 +14,16 @@ namespace NETworkManager;
 public static class ProfileDialogManager
 {
     #region Variables
+
     private static string DialogResourceKey => "LargeMetroDialog";
+
     #endregion
 
     #region Dialog to add, edit, copy as and delete profile
-    public static async Task ShowAddProfileDialog(IProfileManagerMinimal viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo profile = null, string group = null, ApplicationName applicationName = ApplicationName.None)
+
+    public static async Task ShowAddProfileDialog(IProfileManagerMinimal viewModel,
+        IDialogCoordinator dialogCoordinator, ProfileInfo profile = null, string group = null,
+        ApplicationName applicationName = ApplicationName.None)
     {
         CustomDialog customDialog = new()
         {
@@ -32,7 +37,7 @@ public static class ProfileDialogManager
             viewModel.OnProfileManagerDialogClose();
 
             ProfileManager.AddProfile(ParseProfileInfo(instance));
-        }, async instance =>
+        }, async _ =>
         {
             await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
             viewModel.OnProfileManagerDialogClose();
@@ -48,7 +53,8 @@ public static class ProfileDialogManager
         await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
 
-    public static async Task ShowEditProfileDialog(IProfileManagerMinimal viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo profile)
+    public static async Task ShowEditProfileDialog(IProfileManagerMinimal viewModel,
+        IDialogCoordinator dialogCoordinator, ProfileInfo profile)
     {
         CustomDialog customDialog = new()
         {
@@ -62,7 +68,7 @@ public static class ProfileDialogManager
             viewModel.OnProfileManagerDialogClose();
 
             ProfileManager.ReplaceProfile(profile, ParseProfileInfo(instance));
-        }, async instance =>
+        }, async _ =>
         {
             await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
             viewModel.OnProfileManagerDialogClose();
@@ -77,7 +83,8 @@ public static class ProfileDialogManager
         await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
 
-    public static async Task ShowCopyAsProfileDialog(IProfileManagerMinimal viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo profile)
+    public static async Task ShowCopyAsProfileDialog(IProfileManagerMinimal viewModel,
+        IDialogCoordinator dialogCoordinator, ProfileInfo profile)
     {
         CustomDialog customDialog = new()
         {
@@ -91,7 +98,7 @@ public static class ProfileDialogManager
             viewModel.OnProfileManagerDialogClose();
 
             ProfileManager.AddProfile(ParseProfileInfo(instance));
-        }, async instance =>
+        }, async _ =>
         {
             await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
             viewModel.OnProfileManagerDialogClose();
@@ -106,25 +113,30 @@ public static class ProfileDialogManager
         await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
 
-    public static async Task ShowDeleteProfileDialog(IProfileManagerMinimal viewModel, IDialogCoordinator dialogCoordinator, IList<ProfileInfo> profiles)
+    public static async Task ShowDeleteProfileDialog(IProfileManagerMinimal viewModel,
+        IDialogCoordinator dialogCoordinator, IList<ProfileInfo> profiles)
     {
         CustomDialog customDialog = new()
         {
-            Title = profiles.Count == 1 ? Localization.Resources.Strings.DeleteProfile : Localization.Resources.Strings.DeleteProfiles
+            Title = profiles.Count == 1
+                ? Localization.Resources.Strings.DeleteProfile
+                : Localization.Resources.Strings.DeleteProfiles
         };
 
-        ConfirmDeleteViewModel confirmDeleteViewModel = new(async instance =>
-        {
-            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileManagerDialogClose();
+        ConfirmDeleteViewModel confirmDeleteViewModel = new(async _ =>
+            {
+                await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                viewModel.OnProfileManagerDialogClose();
 
-            ProfileManager.RemoveProfiles(profiles);
-
-        }, async instance =>
-        {
-            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileManagerDialogClose();
-        }, profiles.Count == 1 ? Localization.Resources.Strings.DeleteProfileMessage : Localization.Resources.Strings.DeleteProfilesMessage);
+                ProfileManager.RemoveProfiles(profiles);
+            }, async _ =>
+            {
+                await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                viewModel.OnProfileManagerDialogClose();
+            },
+            profiles.Count == 1
+                ? Localization.Resources.Strings.DeleteProfileMessage
+                : Localization.Resources.Strings.DeleteProfilesMessage);
 
         customDialog.Content = new ConfirmDeleteDialog
         {
@@ -134,9 +146,11 @@ public static class ProfileDialogManager
         viewModel.OnProfileManagerDialogOpen();
         await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
+
     #endregion
 
-    #region Dialog to add, edit and delete group        
+    #region Dialog to add, edit and delete group
+
     public static async Task ShowAddGroupDialog(IProfileManagerMinimal viewModel, IDialogCoordinator dialogCoordinator)
     {
         CustomDialog customDialog = new()
@@ -151,7 +165,7 @@ public static class ProfileDialogManager
             viewModel.OnProfileManagerDialogClose();
 
             ProfileManager.AddGroup(ParseGroupInfo(instance));
-        }, async instance =>
+        }, async _ =>
         {
             await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
             viewModel.OnProfileManagerDialogClose();
@@ -166,7 +180,8 @@ public static class ProfileDialogManager
         await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
 
-    public static async Task ShowEditGroupDialog(IProfileManagerMinimal viewModel, IDialogCoordinator dialogCoordinator, GroupInfo group)
+    public static async Task ShowEditGroupDialog(IProfileManagerMinimal viewModel, IDialogCoordinator dialogCoordinator,
+        GroupInfo group)
     {
         CustomDialog customDialog = new()
         {
@@ -180,7 +195,7 @@ public static class ProfileDialogManager
             viewModel.OnProfileManagerDialogClose();
 
             ProfileManager.ReplaceGroup(instance.Group, ParseGroupInfo(instance));
-        }, async instance =>
+        }, async _ =>
         {
             await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
             viewModel.OnProfileManagerDialogClose();
@@ -195,20 +210,21 @@ public static class ProfileDialogManager
         await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
 
-    public static async Task ShowDeleteGroupDialog(IProfileManagerMinimal viewModel, IDialogCoordinator dialogCoordinator, GroupInfo group)
+    public static async Task ShowDeleteGroupDialog(IProfileManagerMinimal viewModel,
+        IDialogCoordinator dialogCoordinator, GroupInfo group)
     {
         CustomDialog customDialog = new()
         {
             Title = Localization.Resources.Strings.DeleteGroup
         };
 
-        ConfirmDeleteViewModel confirmDeleteViewModel = new(async instance =>
+        ConfirmDeleteViewModel confirmDeleteViewModel = new(async _ =>
         {
             await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
             viewModel.OnProfileManagerDialogClose();
 
             ProfileManager.RemoveGroup(group);
-        }, async instance =>
+        }, async _ =>
         {
             await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
             viewModel.OnProfileManagerDialogClose();
@@ -222,10 +238,12 @@ public static class ProfileDialogManager
         viewModel.OnProfileManagerDialogOpen();
         await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
+
     #endregion
 
     #region Methods to add and remove profile
-    public static ProfileInfo ParseProfileInfo(ProfileViewModel instance)
+
+    private static ProfileInfo ParseProfileInfo(ProfileViewModel instance)
     {
         return new ProfileInfo
         {
@@ -247,23 +265,30 @@ public static class ProfileDialogManager
             // IP Scanner
             IPScanner_Enabled = instance.IPScanner_Enabled,
             IPScanner_InheritHost = instance.IPScanner_InheritHost,
-            IPScanner_HostOrIPRange = instance.IPScanner_InheritHost ? instance.Host?.Trim() : instance.IPScanner_HostOrIPRange?.Trim(),
+            IPScanner_HostOrIPRange = instance.IPScanner_InheritHost
+                ? instance.Host?.Trim()
+                : instance.IPScanner_HostOrIPRange?.Trim(),
 
             // Port Scanner
             PortScanner_Enabled = instance.PortScanner_Enabled,
             PortScanner_InheritHost = instance.PortScanner_InheritHost,
-            PortScanner_Host = instance.PortScanner_InheritHost ? instance.Host?.Trim() : instance.PortScanner_Host?.Trim(),
+            PortScanner_Host = instance.PortScanner_InheritHost
+                ? instance.Host?.Trim()
+                : instance.PortScanner_Host?.Trim(),
             PortScanner_Ports = instance.PortScanner_Ports?.Trim(),
 
             // Ping Monitor
             PingMonitor_Enabled = instance.PingMonitor_Enabled,
             PingMonitor_InheritHost = instance.PingMonitor_InheritHost,
-            PingMonitor_Host = instance.PingMonitor_InheritHost ? instance.Host?.Trim() : instance.PingMonitor_Host?.Trim(),
+            PingMonitor_Host = instance.PingMonitor_InheritHost
+                ? instance.Host?.Trim()
+                : instance.PingMonitor_Host?.Trim(),
 
             // Traceroute
             Traceroute_Enabled = instance.Traceroute_Enabled,
             Traceroute_InheritHost = instance.Traceroute_InheritHost,
-            Traceroute_Host = instance.Traceroute_InheritHost ? instance.Host?.Trim() : instance.Traceroute_Host?.Trim(),
+            Traceroute_Host =
+                instance.Traceroute_InheritHost ? instance.Host?.Trim() : instance.Traceroute_Host?.Trim(),
 
             // DNS Lookup
             DNSLookup_Enabled = instance.DNSLookup_Enabled,
@@ -273,11 +298,21 @@ public static class ProfileDialogManager
             // Remote Desktop
             RemoteDesktop_Enabled = instance.RemoteDesktop_Enabled,
             RemoteDesktop_InheritHost = instance.RemoteDesktop_InheritHost,
-            RemoteDesktop_Host = instance.RemoteDesktop_InheritHost ? instance.Host?.Trim() : instance.RemoteDesktop_Host?.Trim(),
+            RemoteDesktop_Host = instance.RemoteDesktop_InheritHost
+                ? instance.Host?.Trim()
+                : instance.RemoteDesktop_Host?.Trim(),
             RemoteDesktop_UseCredentials = instance.RemoteDesktop_UseCredentials,
-            RemoteDesktop_Username = instance.RemoteDesktop_UseCredentials ? instance.RemoteDesktop_Username : string.Empty, // Remove sensitive info on disable
-            RemoteDesktop_Domain = instance.RemoteDesktop_UseCredentials ? instance.RemoteDesktop_Domain : string.Empty, // Remove sensitive info on disable
-            RemoteDesktop_Password = instance.RemoteDesktop_UseCredentials ? instance.RemoteDesktop_Password : new SecureString(), // Remove sensitive info on disable
+            RemoteDesktop_Username =
+                instance.RemoteDesktop_UseCredentials
+                    ? instance.RemoteDesktop_Username
+                    : string.Empty, // Remove sensitive info on disable
+            RemoteDesktop_Domain =
+                instance.RemoteDesktop_UseCredentials
+                    ? instance.RemoteDesktop_Domain
+                    : string.Empty, // Remove sensitive info on disable
+            RemoteDesktop_Password = instance.RemoteDesktop_UseCredentials
+                ? instance.RemoteDesktop_Password
+                : new SecureString(), // Remove sensitive info on disable
             RemoteDesktop_OverrideDisplay = instance.RemoteDesktop_OverrideDisplay,
             RemoteDesktop_AdjustScreenAutomatically = instance.RemoteDesktop_AdjustScreenAutomatically,
             RemoteDesktop_UseCurrentViewSize = instance.RemoteDesktop_UseCurrentViewSize,
@@ -300,16 +335,34 @@ public static class ProfileDialogManager
             RemoteDesktop_GatewayServerHostname = instance.RemoteDesktop_GatewayServerHostname,
             RemoteDesktop_GatewayServerBypassLocalAddresses = instance.RemoteDesktop_GatewayServerBypassLocalAddresses,
             RemoteDesktop_GatewayServerLogonMethod = instance.RemoteDesktop_GatewayServerLogonMethod,
-            RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer = instance.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer,
+            RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer =
+                instance.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer,
             RemoteDesktop_UseGatewayServerCredentials = instance.RemoteDesktop_UseGatewayServerCredentials,
-            RemoteDesktop_GatewayServerUsername = instance.RemoteDesktop_EnableGatewayServer && Equals(instance.RemoteDesktop_GatewayServerLogonMethod, Models.RemoteDesktop.GatewayUserSelectedCredsSource.Userpass) && instance.RemoteDesktop_UseGatewayServerCredentials ? instance.RemoteDesktop_GatewayServerUsername : string.Empty, // Remove sensitive info on disable
-            RemoteDesktop_GatewayServerDomain = instance.RemoteDesktop_EnableGatewayServer && Equals(instance.RemoteDesktop_GatewayServerLogonMethod, Models.RemoteDesktop.GatewayUserSelectedCredsSource.Userpass) && instance.RemoteDesktop_UseGatewayServerCredentials ? instance.RemoteDesktop_GatewayServerDomain : string.Empty, // Remove sensitive info on disable
-            RemoteDesktop_GatewayServerPassword = instance.RemoteDesktop_EnableGatewayServer && Equals(instance.RemoteDesktop_GatewayServerLogonMethod, Models.RemoteDesktop.GatewayUserSelectedCredsSource.Userpass) && instance.RemoteDesktop_UseGatewayServerCredentials ? instance.RemoteDesktop_GatewayServerPassword : new SecureString(), // Remove sensitive info on disable
+            RemoteDesktop_GatewayServerUsername = instance.RemoteDesktop_EnableGatewayServer &&
+                                                  Equals(instance.RemoteDesktop_GatewayServerLogonMethod,
+                                                      Models.RemoteDesktop.GatewayUserSelectedCredsSource.Userpass) &&
+                                                  instance.RemoteDesktop_UseGatewayServerCredentials
+                ? instance.RemoteDesktop_GatewayServerUsername
+                : string.Empty, // Remove sensitive info on disable
+            RemoteDesktop_GatewayServerDomain = instance.RemoteDesktop_EnableGatewayServer &&
+                                                Equals(instance.RemoteDesktop_GatewayServerLogonMethod,
+                                                    Models.RemoteDesktop.GatewayUserSelectedCredsSource.Userpass) &&
+                                                instance.RemoteDesktop_UseGatewayServerCredentials
+                ? instance.RemoteDesktop_GatewayServerDomain
+                : string.Empty, // Remove sensitive info on disable
+            RemoteDesktop_GatewayServerPassword = instance.RemoteDesktop_EnableGatewayServer &&
+                                                  Equals(instance.RemoteDesktop_GatewayServerLogonMethod,
+                                                      Models.RemoteDesktop.GatewayUserSelectedCredsSource.Userpass) &&
+                                                  instance.RemoteDesktop_UseGatewayServerCredentials
+                ? instance.RemoteDesktop_GatewayServerPassword
+                : new SecureString(), // Remove sensitive info on disable
             RemoteDesktop_OverrideAudioRedirectionMode = instance.RemoteDesktop_OverrideAudioRedirectionMode,
             RemoteDesktop_AudioRedirectionMode = instance.RemoteDesktop_AudioRedirectionMode,
-            RemoteDesktop_OverrideAudioCaptureRedirectionMode = instance.RemoteDesktop_OverrideAudioCaptureRedirectionMode,
+            RemoteDesktop_OverrideAudioCaptureRedirectionMode =
+                instance.RemoteDesktop_OverrideAudioCaptureRedirectionMode,
             RemoteDesktop_AudioCaptureRedirectionMode = instance.RemoteDesktop_AudioCaptureRedirectionMode,
-            RemoteDesktop_OverrideApplyWindowsKeyCombinations = instance.RemoteDesktop_OverrideApplyWindowsKeyCombinations,
+            RemoteDesktop_OverrideApplyWindowsKeyCombinations =
+                instance.RemoteDesktop_OverrideApplyWindowsKeyCombinations,
             RemoteDesktop_KeyboardHookMode = instance.RemoteDesktop_KeyboardHookMode,
             RemoteDesktop_OverrideRedirectClipboard = instance.RemoteDesktop_OverrideRedirectClipboard,
             RemoteDesktop_RedirectClipboard = instance.RemoteDesktop_RedirectClipboard,
@@ -325,7 +378,8 @@ public static class ProfileDialogManager
             RemoteDesktop_RedirectPrinters = instance.RemoteDesktop_RedirectPrinters,
             RemoteDesktop_OverridePersistentBitmapCaching = instance.RemoteDesktop_OverridePersistentBitmapCaching,
             RemoteDesktop_PersistentBitmapCaching = instance.RemoteDesktop_PersistentBitmapCaching,
-            RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped = instance.RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped,
+            RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped =
+                instance.RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped,
             RemoteDesktop_ReconnectIfTheConnectionIsDropped = instance.RemoteDesktop_ReconnectIfTheConnectionIsDropped,
             RemoteDesktop_OverrideNetworkConnectionType = instance.RemoteDesktop_OverrideNetworkConnectionType,
             RemoteDesktop_NetworkConnectionType = instance.RemoteDesktop_NetworkConnectionType,
@@ -340,7 +394,8 @@ public static class ProfileDialogManager
             PowerShell_Enabled = instance.PowerShell_Enabled,
             PowerShell_EnableRemoteConsole = instance.PowerShell_EnableRemoteConsole,
             PowerShell_InheritHost = instance.PowerShell_InheritHost,
-            PowerShell_Host = instance.PowerShell_InheritHost ? instance.Host?.Trim() : instance.PowerShell_Host?.Trim(),
+            PowerShell_Host =
+                instance.PowerShell_InheritHost ? instance.Host?.Trim() : instance.PowerShell_Host?.Trim(),
             PowerShell_OverrideCommand = instance.PowerShell_OverrideCommand,
             PowerShell_Command = instance.PowerShell_Command,
             PowerShell_OverrideAdditionalCommandLine = instance.PowerShell_OverrideAdditionalCommandLine,
@@ -352,9 +407,13 @@ public static class ProfileDialogManager
             PuTTY_Enabled = instance.PuTTY_Enabled,
             PuTTY_ConnectionMode = instance.PuTTY_ConnectionMode,
             PuTTY_InheritHost = instance.PuTTY_InheritHost,
-            PuTTY_HostOrSerialLine = instance.PuTTY_ConnectionMode == Models.PuTTY.ConnectionMode.Serial ? instance.PuTTY_SerialLine?.Trim() : (instance.PuTTY_InheritHost ? instance.Host?.Trim() : instance.PuTTY_Host?.Trim()),
+            PuTTY_HostOrSerialLine = instance.PuTTY_ConnectionMode == Models.PuTTY.ConnectionMode.Serial
+                ? instance.PuTTY_SerialLine?.Trim()
+                : (instance.PuTTY_InheritHost ? instance.Host?.Trim() : instance.PuTTY_Host?.Trim()),
             PuTTY_OverridePortOrBaud = instance.PuTTY_OverridePortOrBaud,
-            PuTTY_PortOrBaud = instance.PuTTY_ConnectionMode == Models.PuTTY.ConnectionMode.Serial ? instance.PuTTY_Baud : instance.PuTTY_Port,
+            PuTTY_PortOrBaud = instance.PuTTY_ConnectionMode == Models.PuTTY.ConnectionMode.Serial
+                ? instance.PuTTY_Baud
+                : instance.PuTTY_Port,
             PuTTY_OverrideUsername = instance.PuTTY_OverrideUsername,
             PuTTY_Username = instance.PuTTY_Username?.Trim(),
             PuTTY_OverridePrivateKeyFile = instance.PuTTY_OverridePrivateKeyFile,
@@ -402,13 +461,24 @@ public static class ProfileDialogManager
             SNMP_Mode = instance.SNMP_Mode,
             SNMP_OverrideVersionAndAuth = instance.SNMP_OverrideVersionAndAuth,
             SNMP_Version = instance.SNMP_Version,
-            SNMP_Community = instance.SNMP_OverrideVersionAndAuth && instance.SNMP_Version != Models.Network.SNMPVersion.V3 ? instance.SNMP_Community : new SecureString(),
+            SNMP_Community =
+                instance.SNMP_OverrideVersionAndAuth && instance.SNMP_Version != Models.Network.SNMPVersion.V3
+                    ? instance.SNMP_Community
+                    : new SecureString(),
             SNMP_Security = instance.SNMP_Security,
             SNMP_Username = instance.SNMP_Username,
             SNMP_AuthenticationProvider = instance.SNMP_AuthenticationProvider,
-            SNMP_Auth = instance.SNMP_OverrideVersionAndAuth && instance.SNMP_Version == Models.Network.SNMPVersion.V3 && instance.SNMP_Security != Models.Network.SNMPV3Security.NoAuthNoPriv ? instance.SNMP_Auth : new SecureString(),
+            SNMP_Auth = instance.SNMP_OverrideVersionAndAuth &&
+                        instance.SNMP_Version == Models.Network.SNMPVersion.V3 &&
+                        instance.SNMP_Security != Models.Network.SNMPV3Security.NoAuthNoPriv
+                ? instance.SNMP_Auth
+                : new SecureString(),
             SNMP_PrivacyProvider = instance.SNMP_PrivacyProvider,
-            SNMP_Priv = instance.SNMP_OverrideVersionAndAuth && instance.SNMP_Version == Models.Network.SNMPVersion.V3 && instance.SNMP_Security == Models.Network.SNMPV3Security.AuthPriv ? instance.SNMP_Priv : new SecureString(),
+            SNMP_Priv = instance.SNMP_OverrideVersionAndAuth &&
+                        instance.SNMP_Version == Models.Network.SNMPVersion.V3 &&
+                        instance.SNMP_Security == Models.Network.SNMPV3Security.AuthPriv
+                ? instance.SNMP_Priv
+                : new SecureString(),
 
             // Wake on LAN
             WakeOnLAN_Enabled = instance.WakeOnLAN_Enabled,
@@ -418,24 +488,34 @@ public static class ProfileDialogManager
             // Whois
             Whois_Enabled = instance.Whois_Enabled,
             Whois_InheritHost = instance.Whois_InheritHost,
-            Whois_Domain = instance.Whois_InheritHost ? instance.Host?.Trim() : instance.Whois_Domain?.Trim()
+            Whois_Domain = instance.Whois_InheritHost ? instance.Host?.Trim() : instance.Whois_Domain?.Trim(),
+            
+            // IP Geolocation
+            IPGeolocation_Enabled = instance.IPGeolocation_Enabled,
+            IPGeolocation_InheritHost = instance.IPGeolocation_InheritHost,
+            IPGeolocation_Host = instance.IPGeolocation_InheritHost
+                ? instance.Host?.Trim()
+                : instance.IPGeolocation_Host?.Trim(),
         };
     }
+
     #endregion
 
     #region Methods to add and remove group
-    public static GroupInfo ParseGroupInfo(GroupViewModel instance)
-    {
-        List<ProfileInfo> profiles = instance.Group.Profiles;
 
-        string name = instance.Name.Trim();
+    private static GroupInfo ParseGroupInfo(GroupViewModel instance)
+    {
+        var profiles = instance.Group.Profiles;
+
+        var name = instance.Name.Trim();
 
         // Update group in profiles
         if (profiles.Count > 0)
         {
-            if (!string.IsNullOrEmpty(instance.Group.Name) && !string.Equals(instance.Group.Name, name, System.StringComparison.Ordinal))
+            if (!string.IsNullOrEmpty(instance.Group.Name) &&
+                !string.Equals(instance.Group.Name, name, System.StringComparison.Ordinal))
             {
-                foreach (ProfileInfo profile in profiles)
+                foreach (var profile in profiles)
                     profile.Group = name;
             }
             else
@@ -452,9 +532,17 @@ public static class ProfileDialogManager
 
             // Remote Desktop
             RemoteDesktop_UseCredentials = instance.RemoteDesktop_UseCredentials,
-            RemoteDesktop_Username = instance.RemoteDesktop_UseCredentials ? instance.RemoteDesktop_Username : string.Empty, // Remove sensitive info on disable
-            RemoteDesktop_Domain = instance.RemoteDesktop_UseCredentials ? instance.RemoteDesktop_Domain : string.Empty, // Remove sensitive info on disable
-            RemoteDesktop_Password = instance.RemoteDesktop_UseCredentials ? instance.RemoteDesktop_Password : new SecureString(), // Remove sensitive info on disable
+            RemoteDesktop_Username =
+                instance.RemoteDesktop_UseCredentials
+                    ? instance.RemoteDesktop_Username
+                    : string.Empty, // Remove sensitive info on disable
+            RemoteDesktop_Domain =
+                instance.RemoteDesktop_UseCredentials
+                    ? instance.RemoteDesktop_Domain
+                    : string.Empty, // Remove sensitive info on disable
+            RemoteDesktop_Password = instance.RemoteDesktop_UseCredentials
+                ? instance.RemoteDesktop_Password
+                : new SecureString(), // Remove sensitive info on disable
             RemoteDesktop_OverrideDisplay = instance.RemoteDesktop_OverrideDisplay,
             RemoteDesktop_AdjustScreenAutomatically = instance.RemoteDesktop_AdjustScreenAutomatically,
             RemoteDesktop_UseCurrentViewSize = instance.RemoteDesktop_UseCurrentViewSize,
@@ -477,16 +565,34 @@ public static class ProfileDialogManager
             RemoteDesktop_GatewayServerHostname = instance.RemoteDesktop_GatewayServerHostname,
             RemoteDesktop_GatewayServerBypassLocalAddresses = instance.RemoteDesktop_GatewayServerBypassLocalAddresses,
             RemoteDesktop_GatewayServerLogonMethod = instance.RemoteDesktop_GatewayServerLogonMethod,
-            RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer = instance.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer,
+            RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer =
+                instance.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer,
             RemoteDesktop_UseGatewayServerCredentials = instance.RemoteDesktop_UseGatewayServerCredentials,
-            RemoteDesktop_GatewayServerUsername = instance.RemoteDesktop_EnableGatewayServer && Equals(instance.RemoteDesktop_GatewayServerLogonMethod, Models.RemoteDesktop.GatewayUserSelectedCredsSource.Userpass) && instance.RemoteDesktop_UseGatewayServerCredentials ? instance.RemoteDesktop_GatewayServerUsername : string.Empty, // Remove sensitive info on disable
-            RemoteDesktop_GatewayServerDomain = instance.RemoteDesktop_EnableGatewayServer && Equals(instance.RemoteDesktop_GatewayServerLogonMethod, Models.RemoteDesktop.GatewayUserSelectedCredsSource.Userpass) && instance.RemoteDesktop_UseGatewayServerCredentials ? instance.RemoteDesktop_GatewayServerDomain : string.Empty, // Remove sensitive info on disable
-            RemoteDesktop_GatewayServerPassword = instance.RemoteDesktop_EnableGatewayServer && Equals(instance.RemoteDesktop_GatewayServerLogonMethod, Models.RemoteDesktop.GatewayUserSelectedCredsSource.Userpass) && instance.RemoteDesktop_UseGatewayServerCredentials ? instance.RemoteDesktop_GatewayServerPassword : new SecureString(), // Remove sensitive info on disable
+            RemoteDesktop_GatewayServerUsername = instance.RemoteDesktop_EnableGatewayServer &&
+                                                  Equals(instance.RemoteDesktop_GatewayServerLogonMethod,
+                                                      Models.RemoteDesktop.GatewayUserSelectedCredsSource.Userpass) &&
+                                                  instance.RemoteDesktop_UseGatewayServerCredentials
+                ? instance.RemoteDesktop_GatewayServerUsername
+                : string.Empty, // Remove sensitive info on disable
+            RemoteDesktop_GatewayServerDomain = instance.RemoteDesktop_EnableGatewayServer &&
+                                                Equals(instance.RemoteDesktop_GatewayServerLogonMethod,
+                                                    Models.RemoteDesktop.GatewayUserSelectedCredsSource.Userpass) &&
+                                                instance.RemoteDesktop_UseGatewayServerCredentials
+                ? instance.RemoteDesktop_GatewayServerDomain
+                : string.Empty, // Remove sensitive info on disable
+            RemoteDesktop_GatewayServerPassword = instance.RemoteDesktop_EnableGatewayServer &&
+                                                  Equals(instance.RemoteDesktop_GatewayServerLogonMethod,
+                                                      Models.RemoteDesktop.GatewayUserSelectedCredsSource.Userpass) &&
+                                                  instance.RemoteDesktop_UseGatewayServerCredentials
+                ? instance.RemoteDesktop_GatewayServerPassword
+                : new SecureString(), // Remove sensitive info on disable
             RemoteDesktop_OverrideAudioRedirectionMode = instance.RemoteDesktop_OverrideAudioRedirectionMode,
             RemoteDesktop_AudioRedirectionMode = instance.RemoteDesktop_AudioRedirectionMode,
-            RemoteDesktop_OverrideAudioCaptureRedirectionMode = instance.RemoteDesktop_OverrideAudioCaptureRedirectionMode,
+            RemoteDesktop_OverrideAudioCaptureRedirectionMode =
+                instance.RemoteDesktop_OverrideAudioCaptureRedirectionMode,
             RemoteDesktop_AudioCaptureRedirectionMode = instance.RemoteDesktop_AudioCaptureRedirectionMode,
-            RemoteDesktop_OverrideApplyWindowsKeyCombinations = instance.RemoteDesktop_OverrideApplyWindowsKeyCombinations,
+            RemoteDesktop_OverrideApplyWindowsKeyCombinations =
+                instance.RemoteDesktop_OverrideApplyWindowsKeyCombinations,
             RemoteDesktop_KeyboardHookMode = instance.RemoteDesktop_KeyboardHookMode,
             RemoteDesktop_OverrideRedirectClipboard = instance.RemoteDesktop_OverrideRedirectClipboard,
             RemoteDesktop_RedirectClipboard = instance.RemoteDesktop_RedirectClipboard,
@@ -502,7 +608,8 @@ public static class ProfileDialogManager
             RemoteDesktop_RedirectPrinters = instance.RemoteDesktop_RedirectPrinters,
             RemoteDesktop_OverridePersistentBitmapCaching = instance.RemoteDesktop_OverridePersistentBitmapCaching,
             RemoteDesktop_PersistentBitmapCaching = instance.RemoteDesktop_PersistentBitmapCaching,
-            RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped = instance.RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped,
+            RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped =
+                instance.RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped,
             RemoteDesktop_ReconnectIfTheConnectionIsDropped = instance.RemoteDesktop_ReconnectIfTheConnectionIsDropped,
             RemoteDesktop_OverrideNetworkConnectionType = instance.RemoteDesktop_OverrideNetworkConnectionType,
             RemoteDesktop_NetworkConnectionType = instance.RemoteDesktop_NetworkConnectionType,
@@ -555,14 +662,26 @@ public static class ProfileDialogManager
             SNMP_Mode = instance.SNMP_Mode,
             SNMP_OverrideVersionAndAuth = instance.SNMP_OverrideVersionAndAuth,
             SNMP_Version = instance.SNMP_Version,
-            SNMP_Community = instance.SNMP_OverrideVersionAndAuth && instance.SNMP_Version != Models.Network.SNMPVersion.V3 ? instance.SNMP_Community : new SecureString(),
+            SNMP_Community =
+                instance.SNMP_OverrideVersionAndAuth && instance.SNMP_Version != Models.Network.SNMPVersion.V3
+                    ? instance.SNMP_Community
+                    : new SecureString(),
             SNMP_Security = instance.SNMP_Security,
             SNMP_Username = instance.SNMP_Username,
             SNMP_AuthenticationProvider = instance.SNMP_AuthenticationProvider,
-            SNMP_Auth = instance.SNMP_OverrideVersionAndAuth && instance.SNMP_Version == Models.Network.SNMPVersion.V3 && instance.SNMP_Security != Models.Network.SNMPV3Security.NoAuthNoPriv ? instance.SNMP_Auth : new SecureString(),
+            SNMP_Auth = instance.SNMP_OverrideVersionAndAuth &&
+                        instance.SNMP_Version == Models.Network.SNMPVersion.V3 &&
+                        instance.SNMP_Security != Models.Network.SNMPV3Security.NoAuthNoPriv
+                ? instance.SNMP_Auth
+                : new SecureString(),
             SNMP_PrivacyProvider = instance.SNMP_PrivacyProvider,
-            SNMP_Priv = instance.SNMP_OverrideVersionAndAuth && instance.SNMP_Version == Models.Network.SNMPVersion.V3 && instance.SNMP_Security == Models.Network.SNMPV3Security.AuthPriv ? instance.SNMP_Priv : new SecureString(),
+            SNMP_Priv = instance.SNMP_OverrideVersionAndAuth &&
+                        instance.SNMP_Version == Models.Network.SNMPVersion.V3 &&
+                        instance.SNMP_Security == Models.Network.SNMPV3Security.AuthPriv
+                ? instance.SNMP_Priv
+                : new SecureString(),
         };
     }
+
     #endregion
 }

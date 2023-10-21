@@ -31,7 +31,7 @@ public class SNMPViewModel : ViewModelBase
 
     private CancellationTokenSource _cancellationTokenSource;
 
-    private readonly int _tabId;
+    private readonly Guid _tabId;
 
     private readonly bool _isLoading;
 
@@ -388,7 +388,7 @@ public class SNMPViewModel : ViewModelBase
     #endregion
 
     #region Contructor, load settings
-    public SNMPViewModel(IDialogCoordinator instance, int tabId, SNMPSessionInfo sessionInfo)
+    public SNMPViewModel(IDialogCoordinator instance, Guid tabId, SNMPSessionInfo sessionInfo)
     {
         _isLoading = true;
 

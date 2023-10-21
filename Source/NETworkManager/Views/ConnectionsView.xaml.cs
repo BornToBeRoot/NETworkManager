@@ -6,7 +6,7 @@ namespace NETworkManager.Views;
 
 public partial class ConnectionsView
 {
-    private readonly ConnectionsViewModel _viewModel = new ConnectionsViewModel(DialogCoordinator.Instance);
+    private readonly ConnectionsViewModel _viewModel = new(DialogCoordinator.Instance);
 
     public ConnectionsView()
     {

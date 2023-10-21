@@ -8,7 +8,7 @@ namespace NETworkManager.Views;
 
 public partial class IPScannerSettingsView
 {
-    private readonly IPScannerSettingsViewModel _viewModel = new IPScannerSettingsViewModel(DialogCoordinator.Instance);
+    private readonly IPScannerSettingsViewModel _viewModel = new(DialogCoordinator.Instance);
 
     public IPScannerSettingsView()
     {

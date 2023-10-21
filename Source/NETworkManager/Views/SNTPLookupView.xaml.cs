@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
@@ -9,7 +10,7 @@ public partial class SNTPLookupView
 {
     private readonly SNTPLookupViewModel _viewModel;
 
-    public SNTPLookupView(int tabId)
+    public SNTPLookupView(Guid tabId)
     {
         InitializeComponent();
 

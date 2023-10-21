@@ -24,6 +24,6 @@ public partial class DNSLookupSettingsView
 
     private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        _viewModel.EditDNSServer();
+        _viewModel.EditDNSServer().ConfigureAwait(false);
     }
 }

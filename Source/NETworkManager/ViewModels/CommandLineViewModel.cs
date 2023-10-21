@@ -115,7 +115,7 @@ public class CommandLineViewModel : ViewModelBase
     #region ICommand & Actions
     public ICommand OpenDocumentationCommand
     {
-        get { return new RelayCommand(p => OpenDocumentationAction()); }
+        get { return new RelayCommand(_ => OpenDocumentationAction()); }
     }
 
     private void OpenDocumentationAction()
