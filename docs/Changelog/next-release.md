@@ -59,6 +59,8 @@ Experimental features can be enabled in the settings under [`Settings > Update`]
   - Show status message if no open port was found [#2483](
 - Lookup - Ports
   - Search by port number and protocol (e.g. `22/tcp` or `161-162/udp`) added [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
+- Profiles
+  - Add unlock button to profile views [#2538](https://github.com/BornToBeRoot/NETworkManager/pull/2538){:target="\_blank"}
 
 ## Bugfixes
 

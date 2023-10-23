@@ -1284,7 +1284,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         catch (Exception ex)
         {
             ConfigurationManager.Current.ProfileManagerErrorMessage =
-                Localization.Resources.Strings.ProfileCouldNotBeLoaded;
+                Localization.Resources.Strings.ProfileFileCouldNotBeLoaded;
 
             var settings = AppearanceManager.MetroDialog;
             settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
@@ -1292,8 +1292,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
             ConfigurationManager.OnDialogOpen();
-            await this.ShowMessageAsync(Localization.Resources.Strings.ProfileCouldNotBeLoaded,
-                string.Format(Localization.Resources.Strings.ProfileCouldNotBeLoadedMessage, ex.Message),
+            await this.ShowMessageAsync(Localization.Resources.Strings.ProfileFileCouldNotBeLoaded,
+                string.Format(Localization.Resources.Strings.ProfileFileCouldNotBeLoadedMessage, ex.Message),
                 MessageDialogStyle.Affirmative, settings);
             ConfigurationManager.OnDialogClose();
         }
