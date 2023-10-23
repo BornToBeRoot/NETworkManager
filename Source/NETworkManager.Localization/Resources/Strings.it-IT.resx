@@ -3765,4 +3765,10 @@ Questi non sono ancora completi, contengono bug, possono mandare in crash l'appl
   <data name="Watermark_RunCommand" xml:space="preserve">
     <value>Esegui comando... (Ctrl+Maiusc+P)</value>
   </data>
+  <data name="ApplicationName_IPGeolocation" xml:space="preserve">
+    <value>Geolocalizzazione IP</value>
+  </data>
+  <data name="AddATabToQueryIPGeolocation" xml:space="preserve">
+    <value>Aggiungi una scheda per l'interrogazione geolocalizzazione IP...</value>
+  </data>
 </root>
