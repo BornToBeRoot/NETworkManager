@@ -13,7 +13,7 @@ permalink: /Documentation/Application/IPGeolocation
 New Feature
 {: .label .label-green }
 
-Coming soon
+2023.10.22.0
 {: .label .label-purple }
 
 With **IP Geolocation** you can retrieve geolocation information for a fully qualified domain name (FQDN) or a public IP address.
