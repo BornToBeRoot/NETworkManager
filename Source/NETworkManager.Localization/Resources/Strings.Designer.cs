@@ -375,20 +375,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a tab to query IP geolocation....
+        ///   Looks up a localized string similar to Add a tab to query the IP geolocation....
         /// </summary>
-        public static string AddATabToQueryIPGeolocation {
+        public static string AddATabToQueryTheIPGeolocation {
             get {
-                return ResourceManager.GetString("AddATabToQueryIPGeolocation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add a tab to query the HTTP headers....
-        /// </summary>
-        public static string AddATabToQueryTheHTTPHeaders {
-            get {
-                return ResourceManager.GetString("AddATabToQueryTheHTTPHeaders", resourceCulture);
+                return ResourceManager.GetString("AddATabToQueryTheIPGeolocation", resourceCulture);
             }
         }
         
