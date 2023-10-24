@@ -246,10 +246,10 @@ public class IPGeolocationViewModel : ViewModelBase
                 return;
             }
             
-            AddHostToHistory(Host);
-            
             Result = result.Info;
             IsResultVisible = true;
+            
+            AddHostToHistory(Host);
         }
         catch (Exception ex)
         {

@@ -56,16 +56,30 @@ public class WhoisViewModel : ViewModelBase
         }
     }
 
-    private string _whoisResult;
-    public string WhoisResult
+    private bool _isResultVisible;
+    public bool IsResultVisible
     {
-        get => _whoisResult;
+        get => _isResultVisible;
         set
         {
-            if (value == _whoisResult)
+            if (value == _isResultVisible)
                 return;
 
-            _whoisResult = value;
+            _isResultVisible = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    private string _result;
+    public string Result
+    {
+        get => _result;
+        set
+        {
+            if (value == _result)
+                return;
+
+            _result = value;
             OnPropertyChanged();
         }
     }
@@ -155,7 +169,7 @@ public class WhoisViewModel : ViewModelBase
 
             try
             {
-                ExportManager.Export(instance.FilePath, WhoisResult);
+                ExportManager.Export(instance.FilePath, Result);
             }
             catch (Exception ex)
             {
@@ -188,9 +202,10 @@ public class WhoisViewModel : ViewModelBase
     private async Task Query()
     {
         IsStatusMessageDisplayed = false;
+        IsResultVisible = false;
         IsRunning = true;
 
-        WhoisResult = null;
+        Result = null;
 
         // Change the tab title (not nice, but it works)
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
@@ -214,8 +229,9 @@ public class WhoisViewModel : ViewModelBase
             }
             else
             {
-                WhoisResult = await Whois.QueryAsync(Domain, whoisServer);
-
+                Result = await Whois.QueryAsync(Domain, whoisServer);
+                IsResultVisible = true;
+                
                 AddDomainToHistory(Domain);
             }
         }

@@ -4,6 +4,7 @@ using Lextm.SharpSnmpLib.Security;
 using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Security;
 using System.Threading.Tasks;
@@ -56,14 +57,11 @@ public sealed class SNMPClient
         {
             try
             {
-                VersionCode version = options.Version == SNMPVersion.V1 ? VersionCode.V1 : VersionCode.V2;
+                var version = options.Version == SNMPVersion.V1 ? VersionCode.V1 : VersionCode.V2;
                 IPEndPoint ipEndPoint = new(ipAddress, options.Port);
                 OctetString community = new(SecureStringHelper.ConvertToString(options.Community));
 
-                List<Variable> variables = new();
-
-                foreach (var oid in oids)
-                    variables.Add(new Variable(new ObjectIdentifier(oid)));
+                var variables = oids.Select(oid => new Variable(new ObjectIdentifier(oid))).ToList();
 
                 var results = await Messenger.GetAsync(version, ipEndPoint, community, variables, options.CancellationToken);
 
@@ -95,18 +93,15 @@ public sealed class SNMPClient
                 IPEndPoint ipEndpoint = new(ipAddress, options.Port);
                 OctetString username = new(options.Username);
 
-                List<Variable> variables = new();
+                var variables = oids.Select(oid => new Variable(new ObjectIdentifier(oid))).ToList();
 
-                foreach (var oid in oids)
-                    variables.Add(new Variable(new ObjectIdentifier(oid)));
+                var discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
+                var report = await discovery.GetResponseAsync(ipEndpoint, options.CancellationToken);
 
-                Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
-                ReportMessage report = await discovery.GetResponseAsync(ipEndpoint, options.CancellationToken);
-
-                IPrivacyProvider privacy = GetPrivacyProvider(options);
+                var privacy = GetPrivacyProvider(options);
 
                 GetRequestMessage request = new(VersionCode.V3, Messenger.NextMessageId, Messenger.NextMessageId, username, OctetString.Empty, variables, privacy, Messenger.MaxMessageSize, report);
-                ISnmpMessage reply = await request.GetResponseAsync(ipEndpoint, options.CancellationToken);
+                var reply = await request.GetResponseAsync(ipEndpoint, options.CancellationToken);
 
                 if (reply.Pdu().ErrorStatus.ToInt32() == 0)
                 {
@@ -142,7 +137,7 @@ public sealed class SNMPClient
         {
             try
             {
-                VersionCode version = options.Version == SNMPVersion.V1 ? VersionCode.V1 : VersionCode.V2;
+                var version = options.Version == SNMPVersion.V1 ? VersionCode.V1 : VersionCode.V2;
                 IPEndPoint ipEndPoint = new(ipAddress, options.Port);
                 OctetString community = new(SecureStringHelper.ConvertToString(options.Community));
                 ObjectIdentifier table = new(oid);
@@ -180,10 +175,10 @@ public sealed class SNMPClient
                 OctetString username = new(options.Username);
                 ObjectIdentifier table = new(oid);
 
-                Discovery discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
-                ReportMessage report = await discovery.GetResponseAsync(ipEndpoint, options.CancellationToken);
+                var discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
+                var report = await discovery.GetResponseAsync(ipEndpoint, options.CancellationToken);
 
-                IPrivacyProvider privacy = GetPrivacyProvider(options);
+                var privacy = GetPrivacyProvider(options);
 
                 var results = new List<Variable>();
 
@@ -207,7 +202,7 @@ public sealed class SNMPClient
             }
         }, options.CancellationToken);
     }
-
+    
     public void SetAsync(IPAddress ipAddress, string oid, string data, SNMPOptions options)
     {
         Task.Run(async () =>
