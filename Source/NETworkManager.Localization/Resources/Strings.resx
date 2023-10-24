@@ -830,7 +830,7 @@ First make a backup copy of your profile files before enabling encryption!</valu
   <data name="EndTime" xml:space="preserve">
     <value>End time</value>
   </data>
-  <data name="EnterASubnetToCalculateIt" xml:space="preserve">
+  <data name="EnterASubnetToCalculateItDots" xml:space="preserve">
     <value>Enter a subnet to calculate it...</value>
   </data>
   <data name="EnterSubnetAndANewSubnetmaskToCreateSubnets" xml:space="preserve">
@@ -3167,7 +3167,7 @@ If the option is disabled again, the values are no longer modified. However, the
   <data name="Terabytes" xml:space="preserve">
     <value>Terabytes</value>
   </data>
-  <data name="EnterANumberAndSelectAUnitToCalculateTheUnits" xml:space="preserve">
+  <data name="EnterANumberAndSelectAUnitToCalculateTheUnitsDots" xml:space="preserve">
     <value>Enter a number and select a unit to calculate the units...</value>
   </data>
   <data name="SettingsName_Network" xml:space="preserve">
@@ -3659,7 +3659,7 @@ Try again in a few seconds.</value>
     <value>No reachable hosts found!</value>
   </data>
   <data name="ProfileGroup_Application" xml:space="preserve">
-    <value />
+    <value>Application</value>
   </data>
   <data name="HelpMessage_ExperimentalFeatures" xml:space="preserve">
     <value>Enable experimental features to test new functions. These are not yet complete, contain bugs, can crash the application and may change again until release.</value>
@@ -3678,5 +3678,11 @@ Try again in a few seconds.</value>
   </data>
   <data name="AddATabToQueryTheIPGeolocation" xml:space="preserve">
     <value>Add a tab to query the IP geolocation...</value>
+  </data>
+  <data name="EnterADomainToQueryWhoisDots" xml:space="preserve">
+    <value>Enter a domain to query whois...</value>
+  </data>
+  <data name="EnterHostToQueryIPGeolocationDots" xml:space="preserve">
+    <value>Enter host to query IP geolocation...</value>
   </data>
 </root>

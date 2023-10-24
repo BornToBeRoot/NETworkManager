@@ -654,9 +654,6 @@
   <data name="AddATabToPerformATrace" xml:space="preserve">
     <value>Ajouter un onglet pour effectuer une trace…</value>
   </data>
-  <data name="AddATabToQueryTheHTTPHeaders" xml:space="preserve">
-    <value>Ajouter un onglet pour interroger les en-têtes HTTP…</value>
-  </data>
   <data name="AddDNSSuffixToHostname" xml:space="preserve">
     <value>Ajouter suffixe DNS (principal) au nom d'hôte</value>
   </data>
@@ -832,9 +829,6 @@ First make a backup copy of your profile files before enabling encryption!</valu
   </data>
   <data name="EndTime" xml:space="preserve">
     <value>Heure de fin</value>
-  </data>
-  <data name="EnterASubnetToCalculateIt" xml:space="preserve">
-    <value>Entrez un sous-réseau pour le calculer…</value>
   </data>
   <data name="EnterSubnetAndANewSubnetmaskToCreateSubnets" xml:space="preserve">
     <value>Entrez sous-réseau et un nouveau masque de sous-réseau pour créer des sous-réseaux …</value>
@@ -2748,14 +2742,6 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="SSID" xml:space="preserve">
     <value>SSID</value>
   </data>
-  <data name="ProfileCouldNotBeLoaded" xml:space="preserve">
-    <value>Profil n'a pas pu être chargé!</value>
-  </data>
-  <data name="ProfileCouldNotBeLoadedMessage" xml:space="preserve">
-    <value>If this happened after an update, you may need to migrate the profiles to a newer version. When you click "Migrate", a PowerShell window opens with the migration script. Check the path and press Enter.
-
-Otherwise, the profile may be corrupted and you want to report the issue on GitHub.</value>
-  </data>
   <data name="EditGroupDots" xml:space="preserve">
     <value>Éditer le groupe...</value>
   </data>
@@ -2986,9 +2972,6 @@ Activez le cryptage des fichiers de profil dans Paramètres&gt; Profil pour stoc
   <data name="DeleteProfilesMessage" xml:space="preserve">
     <value>Selected profiles will be deleted permanently.</value>
   </data>
-  <data name="UnlockTheProfileFileMessage2" xml:space="preserve">
-    <value>Unlock the profile file to add, change or delete a profile!</value>
-  </data>
   <data name="UseCustomThemes" xml:space="preserve">
     <value>Use custom themes</value>
   </data>
@@ -3174,9 +3157,6 @@ If the option is disabled again, the values are no longer modified. However, the
   </data>
   <data name="Terabytes" xml:space="preserve">
     <value>Terabytes</value>
-  </data>
-  <data name="EnterANumberAndSelectAUnitToCalculateTheUnits" xml:space="preserve">
-    <value>Enter a number and select a unit to calculate the units...</value>
   </data>
   <data name="SettingsName_Network" xml:space="preserve">
     <value>Network</value>

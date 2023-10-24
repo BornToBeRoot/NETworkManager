@@ -3230,20 +3230,38 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter a domain to query whois....
+        /// </summary>
+        public static string EnterADomainToQueryWhoisDots {
+            get {
+                return ResourceManager.GetString("EnterADomainToQueryWhoisDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter a number and select a unit to calculate the units....
         /// </summary>
-        public static string EnterANumberAndSelectAUnitToCalculateTheUnits {
+        public static string EnterANumberAndSelectAUnitToCalculateTheUnitsDots {
             get {
-                return ResourceManager.GetString("EnterANumberAndSelectAUnitToCalculateTheUnits", resourceCulture);
+                return ResourceManager.GetString("EnterANumberAndSelectAUnitToCalculateTheUnitsDots", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Enter a subnet to calculate it....
         /// </summary>
-        public static string EnterASubnetToCalculateIt {
+        public static string EnterASubnetToCalculateItDots {
             get {
-                return ResourceManager.GetString("EnterASubnetToCalculateIt", resourceCulture);
+                return ResourceManager.GetString("EnterASubnetToCalculateItDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter host to query IP geolocation....
+        /// </summary>
+        public static string EnterHostToQueryIPGeolocationDots {
+            get {
+                return ResourceManager.GetString("EnterHostToQueryIPGeolocationDots", resourceCulture);
             }
         }
         
@@ -6656,7 +6674,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Application.
         /// </summary>
         public static string ProfileGroup_Application {
             get {

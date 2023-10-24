@@ -78,7 +78,7 @@ public partial class TigerVNCControl : UserControlBase
         WindowHost.Height = (int)ActualHeight;
         WindowHost.Width = (int)ActualWidth;
 
-        Connect();
+        Connect().ConfigureAwait(false);
 
         _initialized = true;
     }
@@ -222,7 +222,7 @@ public partial class TigerVNCControl : UserControlBase
         if (IsConnected)
             Disconnect();
 
-        Connect();
+        Connect().ConfigureAwait(false);
     }
 
     public void CloseTab()

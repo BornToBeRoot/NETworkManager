@@ -654,9 +654,6 @@
   <data name="AddATabToPerformATrace" xml:space="preserve">
     <value>추적을 수행할 탭 추가...</value>
   </data>
-  <data name="AddATabToQueryTheHTTPHeaders" xml:space="preserve">
-    <value>HTTP 헤더를 쿼리할 탭을 추가...</value>
-  </data>
   <data name="AddDNSSuffixToHostname" xml:space="preserve">
     <value>호스트 이름에 DNS 접미사 (기본) 추가</value>
   </data>
@@ -832,9 +829,6 @@
   </data>
   <data name="EndTime" xml:space="preserve">
     <value>종료시간</value>
-  </data>
-  <data name="EnterASubnetToCalculateIt" xml:space="preserve">
-    <value>계산할 서브넷을 입력하십시오...</value>
   </data>
   <data name="EnterSubnetAndANewSubnetmaskToCreateSubnets" xml:space="preserve">
     <value>서브넷과 새 서브넷 마스크를 입력하여 서브넷을 만듭니다...</value>
@@ -2748,14 +2742,6 @@ $$hostname$$	--&gt;	호스트이름</value>
   <data name="SSID" xml:space="preserve">
     <value>SSID</value>
   </data>
-  <data name="ProfileCouldNotBeLoaded" xml:space="preserve">
-    <value>프로필을 불러올 수 없습니다!</value>
-  </data>
-  <data name="ProfileCouldNotBeLoadedMessage" xml:space="preserve">
-    <value>업데이트 후 이러한 문제가 발생한 경우 프로파일을 최신 버전으로 마이그레이션해야 할 수 있습니다. "마이그레이션"을 클릭하면 마이그레이션 스크립트가 포함된 PowerShell 창이 열립니다. 경로를 확인하고 Enter 키를 누릅니다.
-
-그렇지 않으면 프로필이 손상되어 GitHub에 문제를 보고하고자 할 수 있습니다.</value>
-  </data>
   <data name="EditGroupDots" xml:space="preserve">
     <value>그룹 편집...</value>
   </data>
@@ -2986,9 +2972,6 @@ $$hostname$$	--&gt;	호스트이름</value>
   <data name="DeleteProfilesMessage" xml:space="preserve">
     <value>선택한 프로필은 영구적으로 삭제됩니다.</value>
   </data>
-  <data name="UnlockTheProfileFileMessage2" xml:space="preserve">
-    <value>프로필을 추가, 변경 또는 삭제하려면 프로필 파일의 잠금을 해제하십시오!</value>
-  </data>
   <data name="UseCustomThemes" xml:space="preserve">
     <value>사용자 지정 테마 사용</value>
   </data>
@@ -3174,9 +3157,6 @@ If the option is disabled again, the values are no longer modified. However, the
   </data>
   <data name="Terabytes" xml:space="preserve">
     <value>Terabytes</value>
-  </data>
-  <data name="EnterANumberAndSelectAUnitToCalculateTheUnits" xml:space="preserve">
-    <value>Enter a number and select a unit to calculate the units...</value>
   </data>
   <data name="SettingsName_Network" xml:space="preserve">
     <value>Network</value>

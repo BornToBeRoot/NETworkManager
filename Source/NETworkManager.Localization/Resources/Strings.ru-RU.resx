@@ -654,9 +654,6 @@
   <data name="AddATabToPerformATrace" xml:space="preserve">
     <value>Добавить вкладку для выполнения трассировки...</value>
   </data>
-  <data name="AddATabToQueryTheHTTPHeaders" xml:space="preserve">
-    <value>Добавить вкладку для запроса заголовков HTTP...</value>
-  </data>
   <data name="AddDNSSuffixToHostname" xml:space="preserve">
     <value>Добавить DNS-суффикс (основной) к имени хоста</value>
   </data>
@@ -832,9 +829,6 @@ First make a backup copy of your profile files before enabling encryption!</valu
   </data>
   <data name="EndTime" xml:space="preserve">
     <value>Конечное время</value>
-  </data>
-  <data name="EnterASubnetToCalculateIt" xml:space="preserve">
-    <value>Введите подсеть для ее расчета...</value>
   </data>
   <data name="EnterSubnetAndANewSubnetmaskToCreateSubnets" xml:space="preserve">
     <value>Введите подсеть и новую маску подсети для создания подсетей...</value>
@@ -2751,14 +2745,6 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="SSID" xml:space="preserve">
     <value>SSID</value>
   </data>
-  <data name="ProfileCouldNotBeLoaded" xml:space="preserve">
-    <value>Profile could not be loaded!</value>
-  </data>
-  <data name="ProfileCouldNotBeLoadedMessage" xml:space="preserve">
-    <value>If this happened after an update, you may need to migrate the profiles to a newer version. When you click "Migrate", a PowerShell window opens with the migration script. Check the path and press Enter.
-
-Otherwise, the profile may be corrupted and you want to report the issue on GitHub.</value>
-  </data>
   <data name="EditGroupDots" xml:space="preserve">
     <value>Edit group...</value>
   </data>
@@ -2989,9 +2975,6 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   <data name="DeleteProfilesMessage" xml:space="preserve">
     <value>Selected profiles will be deleted permanently.</value>
   </data>
-  <data name="UnlockTheProfileFileMessage2" xml:space="preserve">
-    <value>Unlock the profile file to add, change or delete a profile!</value>
-  </data>
   <data name="UseCustomThemes" xml:space="preserve">
     <value>Use custom themes</value>
   </data>
@@ -3177,9 +3160,6 @@ If the option is disabled again, the values are no longer modified. However, the
   </data>
   <data name="Terabytes" xml:space="preserve">
     <value>Terabytes</value>
-  </data>
-  <data name="EnterANumberAndSelectAUnitToCalculateTheUnits" xml:space="preserve">
-    <value>Enter a number and select a unit to calculate the units...</value>
   </data>
   <data name="SettingsName_Network" xml:space="preserve">
     <value>Network</value>

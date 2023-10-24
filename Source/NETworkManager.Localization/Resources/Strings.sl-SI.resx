@@ -656,9 +656,6 @@
   <data name="AddATabToPerformATrace" xml:space="preserve">
     <value>Dodaj zavihek za izvedbo sledenja...</value>
   </data>
-  <data name="AddATabToQueryTheHTTPHeaders" xml:space="preserve">
-    <value>Dodaj zavihek za poizvedovanje po glavah HTTP...</value>
-  </data>
   <data name="AddDNSSuffixToHostname" xml:space="preserve">
     <value>V ime gostitelja dodaj pripono DNS (primarno)</value>
   </data>
@@ -832,9 +829,6 @@
   </data>
   <data name="EndTime" xml:space="preserve">
     <value>Končni čas</value>
-  </data>
-  <data name="EnterASubnetToCalculateIt" xml:space="preserve">
-    <value>Za izračun vnesite podomrežje...</value>
   </data>
   <data name="EnterSubnetAndANewSubnetmaskToCreateSubnets" xml:space="preserve">
     <value>Vnesite podomrežje in novo masko podomrežja, da ustvarite podomrežja...</value>
@@ -2738,17 +2732,6 @@ $$hostname$$--&gt;Ime gostitelja</value>
   <data name="SSID" xml:space="preserve">
     <value>SSID</value>
   </data>
-  <data name="ProfileCouldNotBeLoaded" xml:space="preserve">
-    <value>Profila ni bilo mogoče naložiti! </value>
-  </data>
-  <data name="ProfileCouldNotBeLoadedMessage" xml:space="preserve">
-    <value>Datoteke profila ni bilo mogoče naložiti in je morda poškodovana. Datoteko lahko poskusite obnoviti iz varnostne kopije ali jo izbrišete.
-
-Če se to zgodi nepričakovano ali po posodobitvi, prijavite napako na GitHub.
-
-Sporočilo o napaki:
-"{0}"</value>
-  </data>
   <data name="EditGroupDots" xml:space="preserve">
     <value>Uredi skupino...</value>
   </data>
@@ -3160,9 +3143,6 @@ V zgornjem desnem kotu kliknite na gumb za Pomoč/Dokumentacijo (levo od gumba z
   </data>
   <data name="Terabytes" xml:space="preserve">
     <value>terabajtov</value>
-  </data>
-  <data name="EnterANumberAndSelectAUnitToCalculateTheUnits" xml:space="preserve">
-    <value>Vnesite število in izberite enoto za izračun enot...</value>
   </data>
   <data name="SettingsName_Network" xml:space="preserve">
     <value>Omrežje</value>

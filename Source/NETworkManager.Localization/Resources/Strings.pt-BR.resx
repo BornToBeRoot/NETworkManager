@@ -654,9 +654,6 @@
   <data name="AddATabToPerformATrace" xml:space="preserve">
     <value>Adicionar aba para realizar trace...</value>
   </data>
-  <data name="AddATabToQueryTheHTTPHeaders" xml:space="preserve">
-    <value>Adicionar aba para consultar cabeçalhos HTTP...</value>
-  </data>
   <data name="AddDNSSuffixToHostname" xml:space="preserve">
     <value>Adicionar sufixo DNS (primário) ao nome do host</value>
   </data>
@@ -832,9 +829,6 @@ Primeiro faça uma cópia de backup dos seus arquivos de perfil antes de habilit
   </data>
   <data name="EndTime" xml:space="preserve">
     <value>Hora final</value>
-  </data>
-  <data name="EnterASubnetToCalculateIt" xml:space="preserve">
-    <value>Insira uma sub-rede para calculá-la...</value>
   </data>
   <data name="EnterSubnetAndANewSubnetmaskToCreateSubnets" xml:space="preserve">
     <value>Digite a sub-rede e uma nova máscara de sub-rede para criar sub-redes...</value>
@@ -2751,14 +2745,6 @@ $$hostname$$--&gt;Nome do host</value>
   <data name="SSID" xml:space="preserve">
     <value>SSID</value>
   </data>
-  <data name="ProfileCouldNotBeLoaded" xml:space="preserve">
-    <value>O perfil não pôde ser carregado!</value>
-  </data>
-  <data name="ProfileCouldNotBeLoadedMessage" xml:space="preserve">
-    <value>Se isso aconteceu após uma atualização, talvez seja necessário migrar os perfis para uma versão mais recente. Quando você clica em "Migrar", uma janela do PowerShell é aberta com o script de migração. Verifique o caminho e pressione Enter.
-
-Caso contrário, o perfil pode estar corrompido e você pode relatar o problema no GitHub.</value>
-  </data>
   <data name="EditGroupDots" xml:space="preserve">
     <value>Editar grupo...</value>
   </data>
@@ -2989,9 +2975,6 @@ Habilite a criptografia do arquivo de perfil em Configurações &gt; Perfil para
   <data name="DeleteProfilesMessage" xml:space="preserve">
     <value>Os perfis selecionados serão excluídos permanentemente.</value>
   </data>
-  <data name="UnlockTheProfileFileMessage2" xml:space="preserve">
-    <value>Desbloqueie o perfil para adicionar, alterar ou excluir um perfil!</value>
-  </data>
   <data name="UseCustomThemes" xml:space="preserve">
     <value>Usar temas personalizados</value>
   </data>
@@ -3177,9 +3160,6 @@ Se a opção for desativada novamente, os valores não serão mais modificados. 
   </data>
   <data name="Terabytes" xml:space="preserve">
     <value>Terabytes</value>
-  </data>
-  <data name="EnterANumberAndSelectAUnitToCalculateTheUnits" xml:space="preserve">
-    <value>Digite um número e selecione uma unidade para calcular as unidades...</value>
   </data>
   <data name="SettingsName_Network" xml:space="preserve">
     <value>Rede</value>

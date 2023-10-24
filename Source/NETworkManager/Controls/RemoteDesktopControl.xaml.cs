@@ -465,7 +465,7 @@ public partial class RemoteDesktopControl : UserControlBase
     {
         // Resize the RDP screen size when the window size changes
         if (IsConnected && _sessionInfo.AdjustScreenAutomatically && !IsReconnecting)
-            ReconnectOnSizeChanged();
+            ReconnectOnSizeChanged().ConfigureAwait(false);
     }
 
     private async Task ReconnectOnSizeChanged()

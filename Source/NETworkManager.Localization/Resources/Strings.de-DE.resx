@@ -830,9 +830,6 @@ Erstelle zuerst ein Backup der Profildatei bevor du die Verschlüsselung aktivie
   <data name="EndTime" xml:space="preserve">
     <value>Endzeit</value>
   </data>
-  <data name="EnterASubnetToCalculateIt" xml:space="preserve">
-    <value>Geben Sie ein Subnetz ein, um es zu berechnen...</value>
-  </data>
   <data name="EnterSubnetAndANewSubnetmaskToCreateSubnets" xml:space="preserve">
     <value>Geben Sie das Subnetz und eine neue Subnetzmaske ein, um Subnetze zu erstellen...</value>
   </data>
@@ -3166,9 +3163,6 @@ Wenn die Option wieder deaktiviert wird, werden die Werte nicht mehr verändert.
   </data>
   <data name="Terabytes" xml:space="preserve">
     <value>Terabytes</value>
-  </data>
-  <data name="EnterANumberAndSelectAUnitToCalculateTheUnits" xml:space="preserve">
-    <value>Geben Sie eine Zahl ein und wählen Sie eine Einheit, um die Einheiten zu berechnen...</value>
   </data>
   <data name="SettingsName_Network" xml:space="preserve">
     <value>Netzwerk</value>

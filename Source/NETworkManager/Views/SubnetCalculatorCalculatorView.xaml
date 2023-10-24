@@ -79,6 +79,7 @@
                 </Button.Style>
             </Button>
         </Grid>
+        
         <StackPanel Grid.Row="2" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
             <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Result}" />
             <ScrollViewer Style="{DynamicResource DefaultScrollViewer}">
@@ -124,6 +125,6 @@
                 </Grid>
             </ScrollViewer>
         </StackPanel>
-        <TextBlock Grid.Row="2" Foreground="{DynamicResource MahApps.Brushes.Gray3}" Text="{x:Static localization:Strings.EnterASubnetToCalculateIt}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" />
+        <TextBlock Grid.Row="2" Foreground="{DynamicResource MahApps.Brushes.Gray3}" Text="{x:Static localization:Strings.EnterASubnetToCalculateItDots}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" />
     </Grid>
 </UserControl>

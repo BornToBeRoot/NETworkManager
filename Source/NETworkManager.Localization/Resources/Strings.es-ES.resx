@@ -654,9 +654,6 @@
   <data name="AddATabToPerformATrace" xml:space="preserve">
     <value>Añadir una pestaña para realizar un rastreo...</value>
   </data>
-  <data name="AddATabToQueryTheHTTPHeaders" xml:space="preserve">
-    <value>Añadir una pestaña para consultar los encabezados HTTP...</value>
-  </data>
   <data name="AddDNSSuffixToHostname" xml:space="preserve">
     <value>Añadir sufijo de DNS (primario) al nombre del host</value>
   </data>
@@ -832,9 +829,6 @@
   </data>
   <data name="EndTime" xml:space="preserve">
     <value>Fecha/hora de finalización</value>
-  </data>
-  <data name="EnterASubnetToCalculateIt" xml:space="preserve">
-    <value>Ingresa una subred para calcularla...</value>
   </data>
   <data name="EnterSubnetAndANewSubnetmaskToCreateSubnets" xml:space="preserve">
     <value>Ingresa la subred y una nueva máscara de subred para crear subredes...</value>
@@ -2748,14 +2742,6 @@ $$hostname$$	--&gt;	Nombre del host</value>
   <data name="SSID" xml:space="preserve">
     <value>SSID</value>
   </data>
-  <data name="ProfileCouldNotBeLoaded" xml:space="preserve">
-    <value>¡No se pudo cargar el perfil!</value>
-  </data>
-  <data name="ProfileCouldNotBeLoadedMessage" xml:space="preserve">
-    <value>Si esto sucedió después de una actualización, es posible que debas migrar los perfiles a una versión más nueva. Al hacer clic en "Migrar", se abre una ventana de PowerShell con el script de migración. Verifica la ruta y presiona Entrar.
-
-De lo contrario, es posible que el perfil esté dañado y quieras informar del problema en GitHub.</value>
-  </data>
   <data name="EditGroupDots" xml:space="preserve">
     <value>Editar grupo...</value>
   </data>
@@ -2986,9 +2972,6 @@ Habilita el cifrado de archivos de perfil en Configuración &gt; Perfil para alm
   <data name="DeleteProfilesMessage" xml:space="preserve">
     <value>Los perfiles seleccionados serán eliminados permanentemente.</value>
   </data>
-  <data name="UnlockTheProfileFileMessage2" xml:space="preserve">
-    <value>¡Desbloquear el archivo de perfil para añadir, cambiar o eliminar un perfil!</value>
-  </data>
   <data name="UseCustomThemes" xml:space="preserve">
     <value>Use custom themes</value>
   </data>
@@ -3174,9 +3157,6 @@ If the option is disabled again, the values are no longer modified. However, the
   </data>
   <data name="Terabytes" xml:space="preserve">
     <value>Terabytes</value>
-  </data>
-  <data name="EnterANumberAndSelectAUnitToCalculateTheUnits" xml:space="preserve">
-    <value>Enter a number and select a unit to calculate the units...</value>
   </data>
   <data name="SettingsName_Network" xml:space="preserve">
     <value>Red</value>
