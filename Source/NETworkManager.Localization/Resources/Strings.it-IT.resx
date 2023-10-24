@@ -654,9 +654,6 @@
   <data name="AddATabToPerformATrace" xml:space="preserve">
     <value>Aggiungi una scheda per eseguire un trace...</value>
   </data>
-  <data name="AddATabToQueryTheHTTPHeaders" xml:space="preserve">
-    <value>Aggiungi una scheda per interrogare le intestazioni HTTP ...</value>
-  </data>
   <data name="AddDNSSuffixToHostname" xml:space="preserve">
     <value>Aggiungi il suffisso DNS (primario) al nome host</value>
   </data>
@@ -834,9 +831,6 @@ Per alcune funzioni, la password deve essere convertita in una stringa normale e
   </data>
   <data name="EndTime" xml:space="preserve">
     <value>Tempo di fine</value>
-  </data>
-  <data name="EnterASubnetToCalculateIt" xml:space="preserve">
-    <value>Inserisci una sottorete per calcolarla ...</value>
   </data>
   <data name="EnterSubnetAndANewSubnetmaskToCreateSubnets" xml:space="preserve">
     <value>Per creare sottoreti inserisci la sottorete e una nuova maschera di sottorete...</value>
@@ -2762,15 +2756,6 @@ Vedi messaggio errore: "{0}"</value>
   <data name="SSID" xml:space="preserve">
     <value>SSID</value>
   </data>
-  <data name="ProfileCouldNotBeLoaded" xml:space="preserve">
-    <value>Il profilo non può essere caricato!</value>
-  </data>
-  <data name="ProfileCouldNotBeLoadedMessage" xml:space="preserve">
-    <value>Il file del profilo non può essere caricato e potrebbe essere danneggiato.
-Puoi provare a ripristinare il file da un backup o eliminarlo.
-Se ciò accade inaspettatamente o dopo un aggiornamento, segnala l'errore su GitHub.
-Messaggio di errore:"{0}"</value>
-  </data>
   <data name="EditGroupDots" xml:space="preserve">
     <value>Modifica gruppo...</value>
   </data>
@@ -3195,9 +3180,6 @@ Tuttavia, i valori originali NON vengono ripristinati.</value>
   </data>
   <data name="Terabytes" xml:space="preserve">
     <value>Terabyte</value>
-  </data>
-  <data name="EnterANumberAndSelectAUnitToCalculateTheUnits" xml:space="preserve">
-    <value>Inserisci un numero e seleziona un'unità per calcolare le unità...</value>
   </data>
   <data name="SettingsName_Network" xml:space="preserve">
     <value>Rete</value>
@@ -3767,8 +3749,5 @@ Questi non sono ancora completi, contengono bug, possono mandare in crash l'appl
   </data>
   <data name="ApplicationName_IPGeolocation" xml:space="preserve">
     <value>Geolocalizzazione IP</value>
-  </data>
-  <data name="AddATabToQueryIPGeolocation" xml:space="preserve">
-    <value>Aggiungi una scheda per l'interrogazione geolocalizzazione IP...</value>
   </data>
 </root>

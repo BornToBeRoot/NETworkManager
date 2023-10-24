@@ -80,7 +80,7 @@ public partial class AWSSessionManagerControl : UserControlBase
         WindowHost.Height = (int)ActualHeight;
         WindowHost.Width = (int)ActualWidth;
 
-        Connect();
+        Connect().ConfigureAwait(false);
         _initialized = true;
     }
 
@@ -220,7 +220,7 @@ public partial class AWSSessionManagerControl : UserControlBase
         if (IsConnected)
             Disconnect();
 
-        Connect();
+        Connect().ConfigureAwait(false);
     }
 
     public void CloseTab()

@@ -3659,7 +3659,7 @@ Try again in a few seconds.</value>
     <value>No reachable hosts found!</value>
   </data>
   <data name="ProfileGroup_Application" xml:space="preserve">
-    <value />
+    <value>Application</value>
   </data>
   <data name="HelpMessage_ExperimentalFeatures" xml:space="preserve">
     <value>Enable experimental features to test new functions. These are not yet complete, contain bugs, can crash the application and may change again until release.</value>
