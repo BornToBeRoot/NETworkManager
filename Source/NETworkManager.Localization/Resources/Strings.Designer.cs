@@ -375,20 +375,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a tab to query IP geolocation....
+        ///   Looks up a localized string similar to Add a tab to query the IP geolocation....
         /// </summary>
-        public static string AddATabToQueryIPGeolocation {
+        public static string AddATabToQueryTheIPGeolocation {
             get {
-                return ResourceManager.GetString("AddATabToQueryIPGeolocation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add a tab to query the HTTP headers....
-        /// </summary>
-        public static string AddATabToQueryTheHTTPHeaders {
-            get {
-                return ResourceManager.GetString("AddATabToQueryTheHTTPHeaders", resourceCulture);
+                return ResourceManager.GetString("AddATabToQueryTheIPGeolocation", resourceCulture);
             }
         }
         
@@ -6630,11 +6621,22 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Profile could not be loaded!.
+        ///   Looks up a localized string similar to Profile files are encrypted on disk using AES with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
+        ///
+        ///First make a backup copy of your profile files be [rest of string was truncated]&quot;;.
         /// </summary>
-        public static string ProfileCouldNotBeLoaded {
+        public static string ProfileEncryptionDisclaimer {
             get {
-                return ResourceManager.GetString("ProfileCouldNotBeLoaded", resourceCulture);
+                return ResourceManager.GetString("ProfileEncryptionDisclaimer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile file could not be loaded!.
+        /// </summary>
+        public static string ProfileFileCouldNotBeLoaded {
+            get {
+                return ResourceManager.GetString("ProfileFileCouldNotBeLoaded", resourceCulture);
             }
         }
         
@@ -6647,20 +6649,9 @@ namespace NETworkManager.Localization.Resources {
         ///Error message:
         ///&quot;{0}&quot;.
         /// </summary>
-        public static string ProfileCouldNotBeLoadedMessage {
+        public static string ProfileFileCouldNotBeLoadedMessage {
             get {
-                return ResourceManager.GetString("ProfileCouldNotBeLoadedMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Profile files are encrypted on disk using AES with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
-        ///
-        ///First make a backup copy of your profile files be [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string ProfileEncryptionDisclaimer {
-            get {
-                return ResourceManager.GetString("ProfileEncryptionDisclaimer", resourceCulture);
+                return ResourceManager.GetString("ProfileFileCouldNotBeLoadedMessage", resourceCulture);
             }
         }
         

@@ -654,9 +654,6 @@
   <data name="AddATabToPerformATrace" xml:space="preserve">
     <value>Add a tab to perform a trace...</value>
   </data>
-  <data name="AddATabToQueryTheHTTPHeaders" xml:space="preserve">
-    <value>Add a tab to query the HTTP headers...</value>
-  </data>
   <data name="AddDNSSuffixToHostname" xml:space="preserve">
     <value>Add DNS suffix (primary) to hostname</value>
   </data>
@@ -2742,10 +2739,10 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="SSID" xml:space="preserve">
     <value>SSID</value>
   </data>
-  <data name="ProfileCouldNotBeLoaded" xml:space="preserve">
-    <value>Profile could not be loaded!</value>
+  <data name="ProfileFileCouldNotBeLoaded" xml:space="preserve">
+    <value>Profile file could not be loaded!</value>
   </data>
-  <data name="ProfileCouldNotBeLoadedMessage" xml:space="preserve">
+  <data name="ProfileFileCouldNotBeLoadedMessage" xml:space="preserve">
     <value>The profile file could not be loaded and may be corrupted. You can try to restore the file from a backup or delete it.
 
 If this happens unexpectedly or after an update, please report the error on GitHub.
@@ -3679,7 +3676,7 @@ Try again in a few seconds.</value>
   <data name="ApplicationName_IPGeolocation" xml:space="preserve">
     <value>IP Geolocation</value>
   </data>
-  <data name="AddATabToQueryIPGeolocation" xml:space="preserve">
-    <value>Add a tab to query IP geolocation...</value>
+  <data name="AddATabToQueryTheIPGeolocation" xml:space="preserve">
+    <value>Add a tab to query the IP geolocation...</value>
   </data>
 </root>

@@ -129,8 +129,14 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <GridSplitter Grid.Column="1" Style="{StaticResource ProfileGridSplitter}" />
-        <Expander Grid.Column="2" x:Name="ExpanderProfiles" Header="{x:Static localization:Strings.Profiles}" Style="{StaticResource ProfileExpander}" IsExpanded="{Binding ExpandProfileView}">
+        <GridSplitter Grid.Column="1" Grid.Row="0"
+                      Focusable="False"
+                      Style="{StaticResource ProfileGridSplitter}" />
+        <Expander Grid.Column="2" Grid.Row="0"
+                  x:Name="ExpanderProfiles" 
+                  Header="{x:Static localization:Strings.Profiles}" 
+                  Style="{StaticResource ProfileExpander}" 
+                  IsExpanded="{Binding ExpandProfileView}">
             <Grid>
                 <Grid Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=ProfileManagerIsEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                     <Grid.RowDefinitions>
@@ -146,7 +152,9 @@
                             <ColumnDefinition Width="10" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <ToggleButton Grid.Column="0" Grid.Row="0" IsChecked="{Binding ExpandProfileView}">
+                        <ToggleButton Grid.Column="0" Grid.Row="0" 
+                                      IsChecked="{Binding ExpandProfileView}"
+                                      Focusable="False">
                             <ToggleButton.Style>
                                 <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource MahApps.Styles.Button.Circle}">
                                     <Setter Property="Template">
@@ -175,7 +183,11 @@
                             </Rectangle>
                         </ToggleButton>
                         <TextBox x:Name="TextBoxSearch" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
-                        <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource CleanButton}" Command="{Binding AddProfileCommand}" ToolTip="{x:Static localization:Strings.AddProfileDots}">
+                        <Button Grid.Column="4" Grid.Row="0" 
+                                Focusable="False"
+                                Style="{StaticResource CleanButton}"
+                                Command="{Binding AddProfileCommand}" 
+                                ToolTip="{x:Static localization:Strings.AddProfileDots}">
                             <Rectangle Width="16" Height="16">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
@@ -305,7 +317,7 @@
                                 </Style.Triggers>
                             </Style>
                         </Grid.Style>
-                        <Button HorizontalAlignment="Center" Margin="0,0,0,10">
+                        <Button HorizontalAlignment="Center" Focusable="False">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
                                     <Setter Property="Command" Value="{Binding AddProfileCommand}" />
@@ -368,13 +380,18 @@
                         <RowDefinition Height="10" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <ToggleButton Grid.Row="0" IsChecked="{Binding ExpandProfileView}" HorizontalAlignment="Left">
+                    <ToggleButton Grid.Row="0" Grid.Column="0"
+                                  IsChecked="{Binding ExpandProfileView}" 
+                                  HorizontalAlignment="Left"
+                                  Focusable="False">
                         <ToggleButton.Style>
-                            <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource MahApps.Styles.Button.Circle}">
+                            <Style TargetType="{x:Type ToggleButton}"
+                                   BasedOn="{StaticResource MahApps.Styles.Button.Circle}">
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True" />
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                              RecognizesAccessKey="True" />
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>
@@ -396,10 +413,58 @@
                             </Rectangle.Style>
                         </Rectangle>
                     </ToggleButton>
-                    <TextBlock Grid.Column="0" Grid.Row="2" 
-                               Text="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=ProfileManagerErrorMessage}" 
-                               Style="{StaticResource MessageTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" 
-                               Margin="0,0,0,10" />
+                    <Grid Grid.Column="0" Grid.Row="2">
+                        <!-- Unlock profile button -->
+                        <Button HorizontalAlignment="Center" VerticalAlignment="Center"
+                                Focusable="False"
+                                Command="{Binding UnlockProfileCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type mah:MetroWindow}}}"                                    
+                                Style="{StaticResource CleanButton}"
+                                Visibility="{Binding Source={x:Static Member=settings:ConfigurationManager.Current}, Path=ProfileManagerShowUnlock, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Grid.Column="0" Grid.Row="0"
+                                           Width="20" Height="20">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=InterfacePassword}" />
+                                    </Rectangle.OpacityMask>
+                                    <Rectangle.Style>
+                                        <Style TargetType="{x:Type Rectangle}">
+                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Rectangle.Style>
+                                </Rectangle>
+                                <TextBlock Grid.Column="1" Grid.Row="0"
+                                           Text="{x:Static localization:Strings.UnlockTheProfileFileMessage}">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}"
+                                               BasedOn="{StaticResource MessageTextBlock}">
+                                            <Style.Triggers>
+                                                <DataTrigger
+                                                    Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
+                                                    Value="True">
+                                                    <Setter Property="Foreground"
+                                                            Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                        </Button>
+                        <!-- Profile Manager error message -->
+                        <TextBlock
+                            Text="{Binding Source={x:Static Member=settings:ConfigurationManager.Current}, Path=ProfileManagerErrorMessage}"
+                            Visibility="{Binding Source={x:Static Member=settings:ConfigurationManager.Current}, Path=ProfileManagerShowUnlock, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
+                            Style="{StaticResource ResourceKey=MessageTextBlock}" />
+                    </Grid>
                 </Grid>
             </Grid>
         </Expander>
