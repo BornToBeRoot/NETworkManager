@@ -1742,7 +1742,7 @@ Profildateien sind nicht betroffen!</value>
     <value>Whois</value>
   </data>
   <data name="AddATabToQueryWhois" xml:space="preserve">
-    <value>Füge eine Registerkarte hinzu, um eine Whois abfrage durchzuführen...</value>
+    <value>Füge eine Registerkarte hinzu, um eine Whois-Abfrage durchzuführen...</value>
   </data>
   <data name="EnterValidDomain" xml:space="preserve">
     <value>Geben Sie eine gültige Domain ein (z. B. "example.com")!</value>
@@ -2736,6 +2736,18 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="SSID" xml:space="preserve">
     <value>SSID</value>
   </data>
+  <data name="ProfileFileCouldNotBeLoaded" xml:space="preserve">
+    <value>Profildatei konnte nicht geladen werden!</value>
+  </data>
+  <data name="ProfileFileCouldNotBeLoadedMessage" xml:space="preserve">
+    <value>Die Profildatei konnte nicht geladen werden und ist möglicherweise beschädigt. Sie können versuchen, die Datei aus einer Sicherungskopie wiederherzustellen oder sie zu löschen.
+
+Wenn dies unerwartet oder nach einem Update auftritt, melden Sie den Fehler bitte auf GitHub.
+
+
+Fehlermeldung:
+"{0}"</value>
+  </data>
   <data name="EditGroupDots" xml:space="preserve">
     <value>Gruppe bearbeiten...</value>
   </data>
@@ -3654,5 +3666,11 @@ Versuchen Sie es in einigen Sekunden erneut.</value>
   </data>
   <data name="Watermark_RunCommand" xml:space="preserve">
     <value>Befehl ausführen... (Strg+Shift+P)</value>
+  </data>
+  <data name="ApplicationName_IPGeolocation" xml:space="preserve">
+    <value>IP-Geolokation</value>
+  </data>
+  <data name="AddATabToQueryTheIPGeolocation" xml:space="preserve">
+    <value>Fügen Sie eine Registerkarte zur Abfrage der IP-Geolokalisierung hinzu...</value>
   </data>
 </root>
