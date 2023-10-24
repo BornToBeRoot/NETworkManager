@@ -2848,7 +2848,7 @@ Fehlermeldung:
     <value>Eine Sammlung aller Länderflaggen in SVG</value>
   </data>
   <data name="Resource_ListTLD_Description" xml:space="preserve">
-    <value>Liste der Top-Level-Domains von iana.org, die zur Abfrage von whois-Servern der TLD von whois.iana.org über Port 43 verwendet wird</value>
+    <value>Liste der Top-Level-Domains von iana.org, die zur Abfrage von Whois-Servern der TLD von whois.iana.org über Port 43 verwendet wird</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
     <value>OUI-Daten von ieee.org.</value>
