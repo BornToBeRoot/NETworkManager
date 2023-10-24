@@ -830,6 +830,9 @@ Erstelle zuerst ein Backup der Profildatei bevor du die Verschlüsselung aktivie
   <data name="EndTime" xml:space="preserve">
     <value>Endzeit</value>
   </data>
+  <data name="EnterASubnetToCalculateItDots" xml:space="preserve">
+    <value>Geben Sie ein Subnetz ein, um es zu berechnen...</value>
+  </data>
   <data name="EnterSubnetAndANewSubnetmaskToCreateSubnets" xml:space="preserve">
     <value>Geben Sie das Subnetz und eine neue Subnetzmaske ein, um Subnetze zu erstellen...</value>
   </data>
@@ -2845,7 +2848,7 @@ Fehlermeldung:
     <value>Eine Sammlung aller Länderflaggen in SVG</value>
   </data>
   <data name="Resource_ListTLD_Description" xml:space="preserve">
-    <value>Liste der Top-Level-Domains von iana.org, die zur Abfrage von whois-Servern der TLD von whois.iana.org über Port 43 verwendet wird</value>
+    <value>Liste der Top-Level-Domains von iana.org, die zur Abfrage von Whois-Servern der TLD von whois.iana.org über Port 43 verwendet wird</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
     <value>OUI-Daten von ieee.org.</value>
@@ -3163,6 +3166,9 @@ Wenn die Option wieder deaktiviert wird, werden die Werte nicht mehr verändert.
   </data>
   <data name="Terabytes" xml:space="preserve">
     <value>Terabytes</value>
+  </data>
+  <data name="EnterANumberAndSelectAUnitToCalculateTheUnitsDots" xml:space="preserve">
+    <value>Geben Sie eine Zahl ein und wählen Sie eine Einheit, um die Einheiten zu berechnen...</value>
   </data>
   <data name="SettingsName_Network" xml:space="preserve">
     <value>Netzwerk</value>
@@ -3653,7 +3659,7 @@ Versuchen Sie es in einigen Sekunden erneut.</value>
     <value>Keine erreichbaren Hosts gefunden!</value>
   </data>
   <data name="ProfileGroup_Application" xml:space="preserve">
-    <value/>
+    <value>Anwendung</value>
   </data>
   <data name="HelpMessage_ExperimentalFeatures" xml:space="preserve">
     <value>Aktivieren Sie experimentelle Features, um neue Funktionen zu testen. Diese sind noch nicht vollständig, enthalten Fehler, können die Anwendung zum Absturz bringen und können sich bis zur Veröffentlichung noch ändern.</value>
@@ -3672,5 +3678,11 @@ Versuchen Sie es in einigen Sekunden erneut.</value>
   </data>
   <data name="AddATabToQueryTheIPGeolocation" xml:space="preserve">
     <value>Fügen Sie eine Registerkarte zur Abfrage der IP-Geolokalisierung hinzu...</value>
+  </data>
+  <data name="EnterADomainToQueryWhoisDots" xml:space="preserve">
+    <value>Geben Sie eine Domain zur Whois-Abfrage ein...</value>
+  </data>
+  <data name="EnterHostToQueryIPGeolocationDots" xml:space="preserve">
+    <value>Geben Sie einen Host ein, um die IP-Geolokation abzufragen...</value>
   </data>
 </root>
