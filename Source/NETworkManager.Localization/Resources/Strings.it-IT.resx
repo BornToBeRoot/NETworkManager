@@ -832,6 +832,9 @@ Per alcune funzioni, la password deve essere convertita in una stringa normale e
   <data name="EndTime" xml:space="preserve">
     <value>Tempo di fine</value>
   </data>
+  <data name="EnterASubnetToCalculateItDots" xml:space="preserve">
+    <value>Inserisci una sottorete per calcolarlo...</value>
+  </data>
   <data name="EnterSubnetAndANewSubnetmaskToCreateSubnets" xml:space="preserve">
     <value>Per creare sottoreti inserisci la sottorete e una nuova maschera di sottorete...</value>
   </data>
@@ -2756,6 +2759,19 @@ Vedi messaggio errore: "{0}"</value>
   <data name="SSID" xml:space="preserve">
     <value>SSID</value>
   </data>
+  <data name="ProfileFileCouldNotBeLoaded" xml:space="preserve">
+    <value>Impossibile caricare il file del profilo!</value>
+  </data>
+  <data name="ProfileFileCouldNotBeLoadedMessage" xml:space="preserve">
+    <value>Impossibile caricare il file del profilo, potrebbe essere danneggiato. 
+Puoi provare a ripristinare il file da un backup o eliminarlo.
+
+Se ciò accade inaspettatamente o dopo un aggiornamento, segnala l'errore su GitHub.
+
+
+Messaggio di errore:
+"{0}"</value>
+  </data>
   <data name="EditGroupDots" xml:space="preserve">
     <value>Modifica gruppo...</value>
   </data>
@@ -3180,6 +3196,9 @@ Tuttavia, i valori originali NON vengono ripristinati.</value>
   </data>
   <data name="Terabytes" xml:space="preserve">
     <value>Terabyte</value>
+  </data>
+  <data name="EnterANumberAndSelectAUnitToCalculateTheUnitsDots" xml:space="preserve">
+    <value>Inserisci un numero e seleziona un'unità per calcolare le unità...</value>
   </data>
   <data name="SettingsName_Network" xml:space="preserve">
     <value>Rete</value>
@@ -3732,7 +3751,7 @@ Riprova dentro {0} secondi...</value>
     <value>Nessun host raggiungibile trovato!</value>
   </data>
   <data name="ProfileGroup_Application" xml:space="preserve">
-    <value/>
+    <value>Applicazione</value>
   </data>
   <data name="HelpMessage_ExperimentalFeatures" xml:space="preserve">
     <value>Abilita le funzionalità sperimentali per testare nuove funzioni. 
@@ -3749,5 +3768,14 @@ Questi non sono ancora completi, contengono bug, possono mandare in crash l'appl
   </data>
   <data name="ApplicationName_IPGeolocation" xml:space="preserve">
     <value>Geolocalizzazione IP</value>
+  </data>
+  <data name="AddATabToQueryTheIPGeolocation" xml:space="preserve">
+    <value>Aggiungi una scheda per l'interrogazione della geolocalizzazione IP...</value>
+  </data>
+  <data name="EnterADomainToQueryWhoisDots" xml:space="preserve">
+    <value>Inserisci un dominio per interrogare whois...</value>
+  </data>
+  <data name="EnterHostToQueryIPGeolocationDots" xml:space="preserve">
+    <value>Inserisci un host per interrogare la geolocalizzazione IP...</value>
   </data>
 </root>
