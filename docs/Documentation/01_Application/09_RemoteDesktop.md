@@ -32,7 +32,7 @@ Remote Desktop Protocol (RDP) is a proprietary protocol developed by Microsoft t
 
 ### Host
 
-Host to connect to via VNC.
+Host to connect to via Remote Desktop.
 
 **Type:** `String`
 
@@ -42,6 +42,11 @@ Host to connect to via VNC.
 
 - `server-01.borntoberoot.net`
 - `10.0.0.10`
+- `server-01.borntoberoot.net:3389`
+- `10.0.0.10:9999`
+
+{: .note }
+You can specify a custom port as follows: `10.0.0.10:9999`
 
 ### Use credentials
 
@@ -107,7 +112,7 @@ If this option is enabled, the [Host](#host-1) is overwritten by the host from t
 
 ### Host
 
-Host to connect to via VNC.
+Host to connect to via Remote Desktop.
 
 **Type:** `String`
 
