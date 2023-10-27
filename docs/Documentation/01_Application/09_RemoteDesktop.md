@@ -171,7 +171,7 @@ Password to authenticate with the remote computer.
 Only available if [Use credentials](#use-credentials-1) is enabled.
 
 {: .warning }
-The profile file should be encrypted when storing sensitive information like passwords. See [FAQ > Profile encryption](https://borntoberoot.net/NETworkManager/FAQ#profile-encryption) for more details.
+The profile file should be encrypted when storing sensitive information like passwords. See [FAQ > How to enable profile file encryption?](https://borntoberoot.net/NETworkManager/FAQ/ProfileFileEncryption) for more details.
 
 ### Display
 
@@ -358,7 +358,7 @@ Password to authenticate with the gateway server.
 Only available if [Enable gateway server](#enable-gateway-server) is enabled, [Logon method](#logon-method) is set to `Ask for password (NTLM)` and [Use gateway credentials](#use-gateway-credentials) is enabled.
 
 {: .warning }
-The profile file should be encrypted when storing sensitive information like passwords. See [FAQ > Profile encryption](https://borntoberoot.net/NETworkManager/FAQ#profile-encryption) for more details.
+The profile file should be encrypted when storing sensitive information like passwords. See [FAQ > How to enable profile file encryption?](https://borntoberoot.net/NETworkManager/FAQ/ProfileFileEncryption) for more details.
 
 ### Remote audio playback
 
@@ -534,7 +534,7 @@ Password to authenticate with the remote computer.
 Only available if [Use credentials](#use-credentials-2) is enabled.
 
 {: .warning }
-The profile file should be encrypted when storing sensitive information like passwords. See [FAQ > Profile encryption](https://borntoberoot.net/NETworkManager/FAQ#profile-encryption) for more details.
+The profile file should be encrypted when storing sensitive information like passwords. See [FAQ > How to enable profile file encryption?](https://borntoberoot.net/NETworkManager/FAQ/ProfileFileEncryption) for more details.
 
 ### Display
 
@@ -721,7 +721,7 @@ Password to authenticate with the gateway server.
 Only available if [Enable gateway server](#enable-gateway-server-1) is enabled, [Logon method](#logon-method-1) is set to `Ask for password (NTLM)` and [Use gateway credentials](#use-gateway-credentials-1) is enabled.
 
 {: .warning }
-The profile file should be encrypted when storing sensitive information like passwords. See [FAQ > Profile encryption](https://borntoberoot.net/NETworkManager/FAQ#profile-encryption) for more details.
+The profile file should be encrypted when storing sensitive information like passwords. See [FAQ > How to enable profile file encryption?](https://borntoberoot.net/NETworkManager/FAQ/ProfileFileEncryption) for more details.
 
 ### Remote audio playback
 

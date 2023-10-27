@@ -6,3 +6,5 @@ nav_order: 5
 description: "Documentation of the program"
 permalink: /Documentation
 ---
+
+Here you can find all available documentation of NETworkManager.

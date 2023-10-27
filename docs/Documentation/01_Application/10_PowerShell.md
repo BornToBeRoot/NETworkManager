@@ -23,6 +23,12 @@ PowerShell is a command-line shell and scripting language developed by Microsoft
 {: .note}
 Windows PowerShell and PowerShell Core are supported. Indructions for installing PowerShell Core can be found on the [official website](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?){:target="\_blank"}.
 
+{: .note}
+To use Windows Subsystem for Linux (WSL) in PowerShell, you can pass the following [command](#command) to the PowerShell console: `wsl -d <DISTRIBUTION>`. See [FAQ > How to use Windows Subsystem for Linux (WSL) in PowerShell?](https://borntoberoot.net/NETworkManager/FAQ/PowerShellWSL) for more information.
+
+{: .warning}
+If Windows Terminal is installed, change the `Default terminal application` in the settings of Windows Terminal to `Windows Console Host` instead of `Windows Terminal` to use PowerShell in NETworkManager.
+
 ![PowerShell](10_PowerShell.png)
 
 <hr>
