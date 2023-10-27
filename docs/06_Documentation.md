@@ -7,4 +7,6 @@ description: "Documentation of the program"
 permalink: /Documentation
 ---
 
+# Documentation
+
 Here you can find all available documentation of NETworkManager.
