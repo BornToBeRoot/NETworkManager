@@ -7,3 +7,7 @@ nav_order: 3
 description: "Documentation of the settings"
 permalink: /Documentation/Settings
 ---
+
+# Settings
+
+Documentation of all available settings of NETworkManager.

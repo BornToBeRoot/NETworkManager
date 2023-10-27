@@ -14,12 +14,12 @@ With **SNMP** you can manage and monitor network devices using the Simple Networ
 
 Example inputs:
 
-| Host        | Mode   | Version | OID                  | Community | Security       | Username | Auth              | Priv              |
-| ----------- | ------ | ------- | -------------------- | --------- | -------------- | -------- | ----------------- | ----------------- |
-| `server-01` | `Get`  | `V2C`   | `.1.3.6.1; .1.3.6.2` | `public`  | `-/-`          | `-/-`    | `-/-`             | `-/-`             |
-| `10.0.0.10` | `Walk` | `V3`    | `.1.3.6.1.2.1.1`     | `-/-`     | `NoAuthNoPriv` | `Admin`  | `-/-`             | `-/-`             |
-| `10.0.0.10` | `Walk` | `V3`    | `.1.3.6.1.2.1.1`     | `-/-`     | `AuthNoPriv`   | `Admin`  | `SHA1   | S3cr3t!` | `-/-`             |
-| `10.0.0.10` | `Walk` | `V3`    | `.1.3.6.1.2.1.1`     | `-/-`     | `AuthPriv`     | `Admin`  | `SHA1  | S3cr3t!` | `AES   | S3cr3t%` |
+| Host        | Mode   | Version | OID                  | Community | Security       | Username | Auth  | Priv     |
+| ----------- | ------ | ------- | -------------------- | --------- | -------------- | -------- | ----- | -------- | ----- | -------- |
+| `server-01` | `Get`  | `V2C`   | `.1.3.6.1; .1.3.6.2` | `public`  | `-/-`          | `-/-`    | `-/-` | `-/-`    |
+| `10.0.0.10` | `Walk` | `V3`    | `.1.3.6.1.2.1.1`     | `-/-`     | `NoAuthNoPriv` | `Admin`  | `-/-` | `-/-`    |
+| `10.0.0.10` | `Walk` | `V3`    | `.1.3.6.1.2.1.1`     | `-/-`     | `AuthNoPriv`   | `Admin`  | `SHA1 | S3cr3t!` | `-/-` |
+| `10.0.0.10` | `Walk` | `V3`    | `.1.3.6.1.2.1.1`     | `-/-`     | `AuthPriv`     | `Admin`  | `SHA1 | S3cr3t!` | `AES  | S3cr3t%` |
 
 {: .note }
 Multiple OIDs (`.1.3.6.1.2.1.1; .1.3.6.1.2.1.2`) can be specified when using the mode `get`.
@@ -114,7 +114,7 @@ Community for the SNMP `v1` or `v2c` request.
 Only available when using [version `1` or `2c`](#version).
 
 {: .warning }
-The profile file should be encrypted when storing sensitive information like passwords. See [FAQ > Profile encryption](https://borntoberoot.net/NETworkManager/FAQ#profile-encryption) for more details.
+The profile file should be encrypted when storing sensitive information like passwords. See [FAQ > How to enable profile file encryption?](https://borntoberoot.net/NETworkManager/FAQ/ProfileFileEncryption) for more details.
 
 ### Security
 
@@ -163,8 +163,7 @@ Authentication for the SNMP `v3` request.
 {: .note}
 Only available when using [version `3`](#version) and [security `AuthNoPriv` or `AuthPriv`](#security).
 
-{: .warning }
-The profile file should be encrypted when storing sensitive information like passwords. See [FAQ > Profile encryption](https://borntoberoot.net/NETworkManager/FAQ#profile-encryption) for more details.
+The profile file should be encrypted when storing sensitive information like passwords. See [FAQ > How to enable profile file encryption?](https://borntoberoot.net/NETworkManager/FAQ/ProfileFileEncryption) for more details.
 
 ### Priv
 
@@ -184,8 +183,7 @@ Privacy for the SNMP `v3` request.
 {: .note}
 Only available when using [version `3`](#version) and [security `AuthPriv`](#security).
 
-{: .warning }
-The profile file should be encrypted when storing sensitive information like passwords. See [FAQ > Profile encryption](https://borntoberoot.net/NETworkManager/FAQ#profile-encryption) for more details.
+The profile file should be encrypted when storing sensitive information like passwords. See [FAQ > How to enable profile file encryption?](https://borntoberoot.net/NETworkManager/FAQ/ProfileFileEncryption) for more details.
 
 <hr>
 
@@ -247,8 +245,7 @@ Community for the SNMP `v1` or `v2c` request.
 {: .note}
 Only available when using [version `1` or `2c`](#version-1).
 
-{: .warning }
-The profile file should be encrypted when storing sensitive information like passwords. See [FAQ > Profile encryption](https://borntoberoot.net/NETworkManager/FAQ#profile-encryption) for more details.
+The profile file should be encrypted when storing sensitive information like passwords. See [FAQ > How to enable profile file encryption?](https://borntoberoot.net/NETworkManager/FAQ/ProfileFileEncryption) for more details.
 
 ### Security
 
@@ -297,8 +294,7 @@ Authentication for the SNMP `v3` request.
 {: .note}
 Only available when using [version `3`](#version-1) and [security `AuthNoPriv` or `AuthPriv`](#security-1).
 
-{: .warning }
-The profile file should be encrypted when storing sensitive information like passwords. See [FAQ > Profile encryption](https://borntoberoot.net/NETworkManager/FAQ#profile-encryption) for more details.
+The profile file should be encrypted when storing sensitive information like passwords. See [FAQ > How to enable profile file encryption?](https://borntoberoot.net/NETworkManager/FAQ/ProfileFileEncryption) for more details.
 
 ### Priv
 
@@ -318,8 +314,7 @@ Privacy for the SNMP `v3` request.
 {: .note}
 Only available when using [version `3`](#version-1) and [security `AuthPriv`](#security-1).
 
-{: .warning }
-The profile file should be encrypted when storing sensitive information like passwords. See [FAQ > Profile encryption](https://borntoberoot.net/NETworkManager/FAQ#profile-encryption) for more details.
+The profile file should be encrypted when storing sensitive information like passwords. See [FAQ > How to enable profile file encryption?](https://borntoberoot.net/NETworkManager/FAQ/ProfileFileEncryption) for more details.
 
 <hr>
 
