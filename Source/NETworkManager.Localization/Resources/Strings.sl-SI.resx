@@ -830,6 +830,9 @@
   <data name="EndTime" xml:space="preserve">
     <value>Končni čas</value>
   </data>
+  <data name="EnterASubnetToCalculateItDots" xml:space="preserve">
+    <value>Vnesi podomrežje za njegov izračun...</value>
+  </data>
   <data name="EnterSubnetAndANewSubnetmaskToCreateSubnets" xml:space="preserve">
     <value>Vnesite podomrežje in novo masko podomrežja, da ustvarite podomrežja...</value>
   </data>
@@ -2732,6 +2735,17 @@ $$hostname$$--&gt;Ime gostitelja</value>
   <data name="SSID" xml:space="preserve">
     <value>SSID</value>
   </data>
+  <data name="ProfileFileCouldNotBeLoaded" xml:space="preserve">
+    <value>Datoteke profila ni bilo mogoče naložiti!</value>
+  </data>
+  <data name="ProfileFileCouldNotBeLoadedMessage" xml:space="preserve">
+    <value> Datoteke profila ni bilo mogoče naložiti in je morda poškodovana. Datoteko lahko poskusite obnoviti iz varnostne kopije ali jo izbrišete. 
+
+  Če se to zgodi nepričakovano ali po posodobitvi, prijavite napako na GitHub. 
+
+  Sporočilo o napaki:
+"{0}"</value>
+  </data>
   <data name="EditGroupDots" xml:space="preserve">
     <value>Uredi skupino...</value>
   </data>
@@ -3143,6 +3157,9 @@ V zgornjem desnem kotu kliknite na gumb za Pomoč/Dokumentacijo (levo od gumba z
   </data>
   <data name="Terabytes" xml:space="preserve">
     <value>terabajtov</value>
+  </data>
+  <data name="EnterANumberAndSelectAUnitToCalculateTheUnitsDots" xml:space="preserve">
+    <value>Vnesite število in izberite enoto za izračun enot...</value>
   </data>
   <data name="SettingsName_Network" xml:space="preserve">
     <value>Omrežje</value>
@@ -3624,7 +3641,7 @@ URL: https://edns.ip-api.com/</value>
     <value>Ni dosegljivih gostiteljev!</value>
   </data>
   <data name="ProfileGroup_Application" xml:space="preserve">
-    <value/>
+    <value>Aplikacija</value>
   </data>
   <data name="HelpMessage_ExperimentalFeatures" xml:space="preserve">
     <value>Omogočite eksperimentalne funkcije, da preizkusite nove funkcije. Te še niso dokončane, vsebujejo napake, lahko zrušijo aplikacijo in se lahko znova spremenijo do izdaje.</value>
@@ -3637,5 +3654,17 @@ URL: https://edns.ip-api.com/</value>
   </data>
   <data name="Watermark_RunCommand" xml:space="preserve">
     <value>Zaženi ukaz... (Ctrl+Shift+P)</value>
+  </data>
+  <data name="ApplicationName_IPGeolocation" xml:space="preserve">
+    <value>Geolokacija naslova IP</value>
+  </data>
+  <data name="AddATabToQueryTheIPGeolocation" xml:space="preserve">
+    <value>Dodaj zavihek za poizvedbo po geolokaciji naslova IP...</value>
+  </data>
+  <data name="EnterADomainToQueryWhoisDots" xml:space="preserve">
+    <value>Vnesi domeno za poizvedbo whois...</value>
+  </data>
+  <data name="EnterHostToQueryIPGeolocationDots" xml:space="preserve">
+    <value>Vnesi gostitelja za poizvedbo o geolokaciji naslova IP...</value>
   </data>
 </root>
