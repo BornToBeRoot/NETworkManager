@@ -3662,7 +3662,7 @@ URL: https://edns.ip-api.com/</value>
     <value>Dodaj zavihek za poizvedbo po geolokaciji naslova IP...</value>
   </data>
   <data name="EnterADomainToQueryWhoisDots" xml:space="preserve">
-    <value>Vnesite domeno za poizvedbo whois...</value>
+    <value>Vnesi domeno za poizvedbo whois...</value>
   </data>
   <data name="EnterHostToQueryIPGeolocationDots" xml:space="preserve">
     <value>Vnesi gostitelja za poizvedbo o geolokaciji naslova IP...</value>
