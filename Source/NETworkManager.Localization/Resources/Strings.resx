@@ -1151,7 +1151,7 @@ Profile files are not affected!</value>
     <value>The settings location is not affected!</value>
   </data>
   <data name="TimeoutOnSNMPQuery" xml:space="preserve">
-    <value>Timeout on SNMP query.</value>
+    <value>Timeout on SNMP query. Maybe the host is not reachable or the community / password is wrong.</value>
   </data>
   <data name="TimeoutWhenQueryingDNSServerMessage" xml:space="preserve">
     <value>Timeout when querying the DNS server with the IP address "{0}"!</value>

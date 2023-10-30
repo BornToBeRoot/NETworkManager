@@ -9712,7 +9712,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Timeout on SNMP query..
+        ///   Looks up a localized string similar to Timeout on SNMP query. Maybe the host is not reachable or the community / password is wrong..
         /// </summary>
         public static string TimeoutOnSNMPQuery {
             get {
