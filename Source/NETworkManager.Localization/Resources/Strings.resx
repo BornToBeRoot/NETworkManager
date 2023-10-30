@@ -3685,4 +3685,10 @@ Try again in a few seconds.</value>
   <data name="EnterHostToQueryIPGeolocationDots" xml:space="preserve">
     <value>Enter host to query IP geolocation...</value>
   </data>
+  <data name="SNMPV3ErrorCode_UnknownUserName" xml:space="preserve">
+    <value>Unknown user name.</value>
+  </data>
+  <data name="SNMPV3ErrorCode_AuthenticationFailed" xml:space="preserve">
+    <value>Authentication failure (incorrect password, community or key).</value>
+  </data>
 </root>

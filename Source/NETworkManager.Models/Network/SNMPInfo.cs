@@ -22,7 +22,7 @@ public class SNMPInfo
     /// </summary>
     /// <param name="oid">Object identifier of the SNMP message.</param>
     /// <param name="data">Data of the SNMP message.</param>
-    public SNMPInfo(string oid, string data)
+    private SNMPInfo(string oid, string data)
     {
         Oid = oid;
         Data = data;

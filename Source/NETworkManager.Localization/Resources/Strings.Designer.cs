@@ -8947,6 +8947,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Authentication failure (incorrect password, community or key)..
+        /// </summary>
+        public static string SNMPV3ErrorCode_AuthenticationFailed {
+            get {
+                return ResourceManager.GetString("SNMPV3ErrorCode_AuthenticationFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown user name..
+        /// </summary>
+        public static string SNMPV3ErrorCode_UnknownUserName {
+            get {
+                return ResourceManager.GetString("SNMPV3ErrorCode_UnknownUserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SNTP Lookup.
         /// </summary>
         public static string SNTPLookup {

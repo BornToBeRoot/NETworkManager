@@ -128,7 +128,7 @@
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
-            <Button Grid.Column="6" Grid.Row="2" Command="{Binding OpenMibProfilesCommand}" ToolTip="{x:Static localization:Strings.OpenOIDProfilesDots}">
+            <Button Grid.Column="6" Grid.Row="2" x:Name="ButtonQuery" Command="{Binding OpenMibProfilesCommand}" ToolTip="{x:Static localization:Strings.OpenOIDProfilesDots}">
                 <Button.Resources>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageButton}">
                         <Style.Triggers>

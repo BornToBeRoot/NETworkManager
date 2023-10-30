@@ -21,6 +21,7 @@ using NETworkManager.Views;
 using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
+using NETworkManager.Localization;
 
 namespace NETworkManager.ViewModels;
 
@@ -556,11 +557,11 @@ public class SNMPViewModel : ViewModelBase
         // SNMP...
         SNMPClient snmpClient = new();
 
-        snmpClient.Received += Snmp_Received;
-        snmpClient.DataUpdated += SnmpClient_DataUpdated;
-        snmpClient.Error += Snmp_Error;
-        snmpClient.Canceled += Snmp_Canceled;
-        snmpClient.Complete += Snmp_Complete;
+        snmpClient.Received += SNMPClient_Received;
+        snmpClient.DataUpdated += SNMPClient_DataUpdated;
+        snmpClient.Error += SNMPClient_Error;
+        snmpClient.Canceled += SNMPClient_Canceled;
+        snmpClient.Complete += SNMPClient_Complete;
 
         var oidValue = Oid.Replace(" ", "");
 
@@ -698,7 +699,7 @@ public class SNMPViewModel : ViewModelBase
     #endregion
 
     #region Events
-    private void Snmp_Received(object sender, SNMPReceivedArgs e)
+    private void SNMPClient_Received(object sender, SNMPReceivedArgs e)
     {
         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
         {
@@ -706,25 +707,26 @@ public class SNMPViewModel : ViewModelBase
         }));
     }
 
-    private void SnmpClient_DataUpdated(object sender, EventArgs e)
+    private void SNMPClient_DataUpdated(object sender, EventArgs e)
     {
         StatusMessage = Localization.Resources.Strings.DataHasBeenUpdated;
         IsStatusMessageDisplayed = true;
     }
 
-    private void Snmp_Error(object sender, EventArgs e)
+    private void SNMPClient_Error(object sender, SNMPErrorArgs e)
     {
-        StatusMessage = Mode == SNMPMode.Set ? Localization.Resources.Strings.ErrorInResponseCheckIfYouHaveWritePermissions : Localization.Resources.Strings.ErrorInResponse;
+        StatusMessage = e.SNMPV3HasErrorCode ? ResourceTranslator.Translate(ResourceIdentifier.SNMPV3ErrorCode, e.SNMPV3ErrorCode) : e.Message;
+
         IsStatusMessageDisplayed = true;
     }
 
-    private void Snmp_Canceled(object sender, EventArgs e)
+    private void SNMPClient_Canceled(object sender, EventArgs e)
     {
         StatusMessage = CancelScan ? Localization.Resources.Strings.CanceledByUserMessage : Localization.Resources.Strings.TimeoutOnSNMPQuery;
         IsStatusMessageDisplayed = true;
     }
 
-    private void Snmp_Complete(object sender, EventArgs e)
+    private void SNMPClient_Complete(object sender, EventArgs e)
     {
         CancelScan = false;
         IsRunning = false;

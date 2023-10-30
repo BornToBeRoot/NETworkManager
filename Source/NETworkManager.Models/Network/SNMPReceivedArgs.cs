@@ -1,7 +1,7 @@
 ﻿namespace NETworkManager.Models.Network;
 
 /// <summary>
-/// Contains the information of a received SNMP message in a <see cref="SNMPClient"/>.
+/// Contains the information of a received SNMP message in an <see cref="SNMPClient"/>.
 /// </summary>
 public class SNMPReceivedArgs : System.EventArgs
 {
