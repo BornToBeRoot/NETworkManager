@@ -17,6 +17,7 @@ public enum ResourceIdentifier
     RemoteDesktopNetworkConnectionType,
     SettingsGroup,
     SettingsName,
+    SNMPErrorCode,
     SNMPV3ErrorCode,
     TcpState,
     Theme,

@@ -715,7 +715,12 @@ public class SNMPViewModel : ViewModelBase
 
     private void SNMPClient_Error(object sender, SNMPErrorArgs e)
     {
-        StatusMessage = e.SNMPV3HasErrorCode ? ResourceTranslator.Translate(ResourceIdentifier.SNMPV3ErrorCode, e.SNMPV3ErrorCode) : e.Message;
+        if(e.IsErrorCode)
+            StatusMessage = ResourceTranslator.Translate(ResourceIdentifier.SNMPErrorCode, e.ErrorCode);
+        else if (e.IsErrorCodeV3)
+            StatusMessage = ResourceTranslator.Translate(ResourceIdentifier.SNMPV3ErrorCode, e.ErrorCodeV3);
+        else
+            StatusMessage = e.ErrorMessage;
 
         IsStatusMessageDisplayed = true;
     }
