@@ -57,7 +57,7 @@ Write-Host "Build MSTSCLib.dll and AxMSTSCLib.dll..."
 Write-Host "Using aximp.exe from: $AximpPath"
 Start-Process -FilePath $AximpPath -ArgumentList "$($Env:windir)\system32\mstscax.dll" -Wait -NoNewWindow
 
-# Modify MSTSCLib.ddl to fix an issue with SendKeys (See: https://social.msdn.microsoft.com/Forums/windowsdesktop/en-US/9095625c-4361-4e0b-bfcf-be15550b60a8/imsrdpclientnonscriptablesendkeys?forum=windowsgeneraldevelopmentissues&prof=required)
+# Modify MSTSCLib.dll to fix an issue with SendKeys (See: https://social.msdn.microsoft.com/Forums/windowsdesktop/en-US/9095625c-4361-4e0b-bfcf-be15550b60a8/imsrdpclientnonscriptablesendkeys?forum=windowsgeneraldevelopmentissues&prof=required)
 Write-Host "Modify MSTSCLib.dll..."
 Write-Host "Using ildasm.exe from: $IldasmPath"
 
