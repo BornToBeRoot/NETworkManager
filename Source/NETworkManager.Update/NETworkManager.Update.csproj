@@ -21,6 +21,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="log4net" Version="2.0.15" />
-		<PackageReference Include="Octokit" Version="8.1.1" />
+		<PackageReference Include="Octokit" Version="9.0.0" />
 	</ItemGroup>
 </Project>
