@@ -71,6 +71,11 @@ Start-Process -FilePath $MSBuildPath -ArgumentList "$PSScriptRoot\Source\NETwork
 if (-not(Test-Path -Path "$PSScriptRoot\Source\NETworkManager\bin\Release\$TargetFramework\$RuntimeIdentifier\NETworkManager.exe" -PathType Leaf)) {
     Write-Error -Message "Could not find release build. Is .NET SDK 8.0 or later installed? Check logs above for more information." -ErrorAction Stop
 }
+else {
+    Write-Host -Object "`nBuild successful!" -ForegroundColor Green
+}
+
+Start-Sleep -Seconds 10
 
 # Create folder
 New-Item -Path "$BuildPath\NETworkManager" -ItemType Directory -Force
@@ -128,9 +133,7 @@ foreach ($hash in Get-ChildItem -Path $BuildPath | Where-Object { $_.Name.EndsWi
 }
 
 # Build finished
-Write-Host -Object "`n`nBuild finished!" -ForegroundColor Green
-
+Write-Host -Object "`nPackaging finished!`n" -ForegroundColor Green
 Write-Host -Object "The following files have been created under`n`n""$BuildPath""`n"
-
 Write-Host -Object "File hashes:`n"
 Get-Content -Path "$BuildPath\NETworkManager_$($Version)_Hash.txt"
