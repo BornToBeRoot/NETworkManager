@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
-		<TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
-		<RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+		<TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 		<PlatformTarget>x64</PlatformTarget>
 		<SelfContained>false</SelfContained>
 		<!-- Publish a single file can't be used when accessing assembly file path
@@ -41,7 +41,7 @@
 		<BeautyEnableDebugging>False</BeautyEnableDebugging>
 		<BeautyUsePatch>False</BeautyUsePatch>
 		<BeautyLogLevel>Info</BeautyLogLevel>
-	</PropertyGroup>
+	</PropertyGroup>	
 	<ItemGroup>
 		<None Remove="log4net.config" />
 		<None Remove="NETworkManager.ico" />
@@ -51,15 +51,18 @@
 			<Pack>True</Pack>			
 		</None>
 	</ItemGroup>
-	<!-- Target 6.0.0 for compatibility https://github.com/dotnet/core/issues/7176 -->
 	<ItemGroup>
-		<FrameworkReference Update="Microsoft.WindowsDesktop.App;Microsoft.WindowsDesktop.App.WPF;Microsoft.WindowsDesktop.App.WindowsForms" TargetingPackVersion="6.0.0" />
+		<Content Include="log4net.config">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="AirspaceFixer" Version="1.0.6" />
-		<PackageReference Include="AWSSDK.EC2" Version="3.7.301" />
+		<PackageReference Include="AWSSDK.EC2" Version="3.7.303" />
 		<PackageReference Include="DnsClient" Version="1.7.0" />
-		<PackageReference Include="IPNetwork2" Version="2.6.618" />
+		<PackageReference Include="IPNetwork2" Version="2.6.618">
+			<Aliases>IPNetwork2</Aliases>
+		</PackageReference>
 		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.2" />
 		<PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
 		<PackageReference Include="LoadingIndicators.WPF" Version="0.0.1" />
@@ -74,8 +77,8 @@
 		<PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.4" />
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-		<PackageReference Include="Microsoft.PowerShell.SDK" Version="7.2.16" />
-		<PackageReference Include="nulastudio.NetBeauty" Version="2.1.4-beta.1" />
+		<PackageReference Include="Microsoft.PowerShell.SDK" Version="7.4.0-rc.1" />
+		<PackageReference Include="nulastudio.NetBeauty" Version="2.1.4.1" />
 		<Reference Include="AxMSTSCLib">
 			<HintPath>$(TargetDir)\lib\AxMSTSCLib.dll</HintPath>
 		</Reference>
@@ -84,11 +87,7 @@
 		</Reference>
 		<Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
 	</ItemGroup>
-	<ItemGroup>
-	  <Content Include="log4net.config">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </Content>
-	</ItemGroup>
+	
 	<ItemGroup>
 		<ProjectReference Include="..\3rdparty\Dragablz\Dragablz\Dragablz.csproj" />
 		<ProjectReference Include="..\NETworkManager.Controls\NETworkManager.Controls.csproj" />

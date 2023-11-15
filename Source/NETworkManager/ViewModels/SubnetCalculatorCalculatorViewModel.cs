@@ -1,5 +1,6 @@
-﻿using NETworkManager.Settings;
-using System.Net;
+﻿extern alias IPNetwork2;
+
+using NETworkManager.Settings;
 using System.Windows.Input;
 using System.ComponentModel;
 using System.Windows.Data;
@@ -98,8 +99,8 @@ public class SubnetCalculatorCalculatorViewModel : ViewModelBase
         IsRunning = true;
 
         var subnet = Subnet.Trim();
-
-        Result = new IPNetworkInfo(IPNetwork.Parse(subnet));
+        
+        Result = new IPNetworkInfo(IPNetwork2.System.Net.IPNetwork.Parse(subnet));
 
         IsResultVisible = true;
 

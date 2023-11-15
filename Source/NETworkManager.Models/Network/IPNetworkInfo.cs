@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿extern alias IPNetwork2;
+
+using System.Net;
 using System.Numerics;
 
 namespace NETworkManager.Models.Network;
@@ -25,7 +27,7 @@ public class IPNetworkInfo
 
     }
 
-    public IPNetworkInfo(IPNetwork ipNetwork)
+    public IPNetworkInfo(IPNetwork2.System.Net.IPNetwork ipNetwork)
     {
         Network = ipNetwork.Network;
         Broadcast = ipNetwork.Broadcast;

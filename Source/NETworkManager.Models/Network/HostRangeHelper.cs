@@ -1,4 +1,5 @@
-﻿using Amazon.Util.Internal;
+﻿extern alias IPNetwork2;
+
 using NETworkManager.Utilities;
 using System;
 using System.Collections.Concurrent;
@@ -39,7 +40,7 @@ public static class HostRangeHelper
 
                 // 192.168.0.0/24 or 192.168.0.0/255.255.255.0
                 case var _ when Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressCidrRegex) || Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressSubnetmaskRegex):
-                    var network = IPNetwork.Parse(ipOrRange);
+                    var network = IPNetwork2.System.Net.IPNetwork.Parse(ipOrRange);
 
                     Parallel.For(IPv4Address.ToInt32(network.Network), IPv4Address.ToInt32(network.Broadcast) + 1, parallelOptions, i =>
                     {
