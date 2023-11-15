@@ -6,13 +6,13 @@ pull_request_rules:
     actions:
       merge:
         method: squash
-#  - name: automatic merge for Dependabot pull requests based on ci success
-#    conditions:
-#      - author=dependabot[bot]
-#      - check-success=continuous-integration/appveyor/pr
-#    actions:
-#      merge:
-#        method: squash
+  - name: automatic merge for Dependabot pull requests based on ci success
+    conditions:
+      - author=dependabot[bot]
+      - check-success=continuous-integration/appveyor/pr
+    actions:
+      merge:
+        method: squash
   - name: automatic merge for Transifex pull requests based on ci success
     conditions:
       - author=transifex-integration[bot]
@@ -20,10 +20,10 @@ pull_request_rules:
     actions:
       merge:
         method: squash
-#  - name: automatic merge for ImgBot pull requests based on ci success
-#    conditions:
-#      - author=imgbot[bot]      
-#      - check-success=continuous-integration/appveyor/pr
-#    actions:
-#      merge:
-#        method: squash
+  - name: automatic merge for ImgBot pull requests based on ci success
+    conditions:
+      - author=imgbot[bot]      
+      - check-success=continuous-integration/appveyor/pr
+    actions:
+      merge:
+        method: squash
