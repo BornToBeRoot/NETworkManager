@@ -51,10 +51,6 @@
 			<Pack>True</Pack>			
 		</None>
 	</ItemGroup>
-	<!-- Target 6.0.0 for compatibility https://github.com/dotnet/core/issues/7176 -->
-	<ItemGroup>
-		<FrameworkReference Update="Microsoft.WindowsDesktop.App;Microsoft.WindowsDesktop.App.WPF;Microsoft.WindowsDesktop.App.WindowsForms" TargetingPackVersion="6.0.0" />
-	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="AirspaceFixer" Version="1.0.6" />
 		<PackageReference Include="AWSSDK.EC2" Version="3.7.301" />
