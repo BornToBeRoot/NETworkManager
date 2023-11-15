@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
-		<TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
-		<RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+		<TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 		<PlatformTarget>x64</PlatformTarget>
 		<SelfContained>false</SelfContained>
 		<!-- Publish a single file can't be used when accessing assembly file path
@@ -59,7 +59,9 @@
 		<PackageReference Include="AirspaceFixer" Version="1.0.6" />
 		<PackageReference Include="AWSSDK.EC2" Version="3.7.301" />
 		<PackageReference Include="DnsClient" Version="1.7.0" />
-		<PackageReference Include="IPNetwork2" Version="2.6.618" />
+		<PackageReference Include="IPNetwork2" Version="2.6.618">
+			<Aliases>IPNetwork2</Aliases>
+		</PackageReference>
 		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.2" />
 		<PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
 		<PackageReference Include="LoadingIndicators.WPF" Version="0.0.1" />
