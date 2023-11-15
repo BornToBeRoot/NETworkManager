@@ -1,21 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<ProjectGuid>{FF225C2E-AA67-4B10-939A-6C046CEF8697}</ProjectGuid>
 		<OutputType>Library</OutputType>
 		<RootNamespace>NETworkManager.Localization</RootNamespace>
 		<AssemblyName>NETworkManager.Localization</AssemblyName>
-		<TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
-		<RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+		<TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+		<PlatformTarget>x64</PlatformTarget>
 		<SelfContained>false</SelfContained>
 		<UseWPF>true</UseWPF>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<ProduceReferenceAssembly>false</ProduceReferenceAssembly>
 		<NoWarn>1701;1702;CA1712</NoWarn>
 	</PropertyGroup>
-	<!-- Target 6.0.0 for compatibility https://github.com/dotnet/core/issues/7176 -->
-	<ItemGroup>
-		<FrameworkReference Update="Microsoft.WindowsDesktop.App;Microsoft.WindowsDesktop.App.WPF;Microsoft.WindowsDesktop.App.WindowsForms" TargetingPackVersion="6.0.0" />
-	</ItemGroup>
 	<ItemGroup>
 		<None Remove="Resources\Flags\cs-CZ.png" />
 		<None Remove="Resources\Flags\en-US.png" />

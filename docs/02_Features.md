@@ -40,8 +40,8 @@ Hosts can be stored in profiles, which can be used across all features. Individu
 
 ## Languages
 
-NETworkManager is available in 15 languages. [Here](https://www.transifex.com/BornToBeRoot/NETworkManager/dashboard/){:target="\_blank"} you can find the list with all languages and the progress of the translation.
+NETworkManager is available in 15 languages. [Here](https://app.transifex.com/BornToBeRoot/NETworkManager/dashboard/){:target="\_blank"} you can find the list with all languages and the progress of the translation.
 
-If you miss a language, find missing or incorrect translations, you can request a language and help to improve the translation on [Transifex](https://www.transifex.com/BornToBeRoot/NETworkManager){:target="\_blank"}.
+If you miss a language, find missing or incorrect translations, you can request a language and help to improve the translation on [Transifex](https://app.transifex.com/BornToBeRoot/NETworkManager/dashboard/){:target="\_blank"}.
 
 See also the [contributing guidelines](https://github.com/BornToBeRoot/NETworkManager/blob/main/CONTRIBUTING.md){:target="\_blank"} if you want to contribute to the project.
