@@ -2,21 +2,15 @@
   <img alt="NETworkManager Preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Images/NETworkManager_128x128.png?raw=true" />
   <h1>NETworkManager</h1>
   <p>
-    <b>A powerful tool for managing networks and troubleshoot network problems!</b>
+    <b>A powerful open source tool for managing networks and troubleshooting network problems!</b>
   </p>
   <p>
-  You can connect to and manage remote systems via Remote Desktop, PowerShell, PuTTY, TigerVNC or AWS (Systems Manager) Session Manager.
-  <br />
-  <br />
-  Furthermore it contains features like a WiFi analyzer, IP scanner, port scanner, ping monitor, traceroute, DNS lookup or a LLDP/CDP capture (and many <a href="https://borntoberoot.net/NETworkManager/Features">more</a>) to analyze your network and troubleshoot network problems.
-  <br />
-  <br />
-  You can save your hosts (or networks) in profiles which can be used in the various features. For additional security, the profile file can be encrypted.
-  <br />
-  <br />
-  And the best part... it's open source!
+    Connect and manage remote systems with Remote Desktop, PowerShell, PuTTY, TigerVNC or AWS (Systems Manager) Session Manager. Analyze and troubleshoot your network and systems with features such as the WiFi Analyzer, IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS lookup or LLDP/CDP capture (and many <a href="https://borntoberoot.net/NETworkManager/Features">more</a>) in a unfied interface. Hosts (or networks) can be saved in (encrypted) profiles a used across all features.  
+  <p>
+     <a href="https://borntoberoot.net/NETworkManager/Download" target="_blank">
+      <img alt="All releases" src="https://img.shields.io/badge/>>_download_now_<<-00abbd?style=for-the-badge" height="48" />
+    </a>
   </p>
-  <br />
   <p>
     <a href="https://github.com/BornToBeroot/NETworkManager/releases" target="_blank">
       <img alt="All releases" src="https://img.shields.io/github/downloads/BornToBeroot/NETworkManager/total.svg?style=for-the-badge&logo=github" />
