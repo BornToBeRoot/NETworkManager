@@ -7,4 +7,6 @@ description: "Changelog and download links of all available NETworkManager versi
 permalink: /Changelog
 ---
 
+# Changelog
+
 Here you can find the changelog and download links of all available NETworkManager versions.
