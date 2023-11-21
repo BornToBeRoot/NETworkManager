@@ -26,7 +26,8 @@ Experimental Feature
 
 ## Breaking Changes
 
-- Migrated from .NET 6.0 (LTS) to .NET 8.0 (LTS). Upgrade your [.NET Desktop Runtime to version 8.0 (LTS) - x64](https://dotnet.microsoft.com/en-us/download/dotnet/8.0/runtime){:target="\_blank"} before you install this version. [#2560](https://github.com/BornToBeRoot/NETworkManager/pull/2560){:target="\_blank"}
+- Migrated from .NET 6.0 (LTS) to .NET 8.0 (LTS).
+  Upgrade your [.NET Desktop Runtime to version 8.0 (LTS) - x64](https://dotnet.microsoft.com/en-us/download/dotnet/8.0/runtime){:target="\_blank"} before you install this version. [#2560](https://github.com/BornToBeRoot/NETworkManager/pull/2560){:target="\_blank"}
 - Settings will be reset to default values due to refactoring [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
 - Profiles and settings migration (indroduced in `2023.3.7.0`) from `%AppData%\NETworkManager` to `%UserProfile%\Documents\NETworkManager` removed. If you use a version before `2023.3.7.0` you have to install and start version `2023.6.27.1` before you install this version. [#2380](https://github.com/BornToBeRoot/NETworkManager/pull/2380){:target="\_blank"}
 - Remove profile migration script to migrate from `2021.11.30.0` and before to a later version [#2388](https://github.com/BornToBeRoot/NETworkManager/pull/2388){:target="\_blank"}
