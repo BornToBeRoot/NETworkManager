@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
@@ -58,7 +58,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="AirspaceFixer" Version="1.0.6" />
-		<PackageReference Include="AWSSDK.EC2" Version="3.7.303" />
+		<PackageReference Include="AWSSDK.EC2" Version="3.7.305" />
 		<PackageReference Include="DnsClient" Version="1.7.0" />
 		<PackageReference Include="IPNetwork2" Version="2.6.618">
 			<Aliases>IPNetwork2</Aliases>
@@ -77,7 +77,7 @@
 		<PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.4" />
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-		<PackageReference Include="Microsoft.PowerShell.SDK" Version="7.4.0-rc.1" />
+		<PackageReference Include="Microsoft.PowerShell.SDK" Version="7.4.0" />
 		<PackageReference Include="nulastudio.NetBeauty" Version="2.1.4.1" />
 		<Reference Include="AxMSTSCLib">
 			<HintPath>$(TargetDir)\lib\AxMSTSCLib.dll</HintPath>
