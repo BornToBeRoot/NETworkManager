@@ -4,9 +4,11 @@ using Lextm.SharpSnmpLib.Security;
 using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
@@ -252,25 +254,25 @@ public sealed class SNMPClient
                     {
                         new(seed.Id)
                     };
-                    
+
                     var message = new GetNextRequestMessage(Messenger.NextRequestId, version, community, variables);
 
                     var response = await message.GetResponseAsync(ipEndPoint, options.CancellationToken)
                         .ConfigureAwait(false);
-                    
+
                     var pdu = response.Pdu();
-                    
+
                     // No more objects
-                    if(pdu.ErrorStatus.ToErrorCode() == ErrorCode.NoSuchName)
+                    if (pdu.ErrorStatus.ToErrorCode() == ErrorCode.NoSuchName)
                         break;
-                    
+
                     // Check for errors
                     var errorCode = pdu.ErrorStatus.ToInt32();
-                    
+
                     if (errorCode != 0)
                     {
                         OnError(new SNMPErrorArgs(pdu.ErrorStatus.ToErrorCode()));
-                        
+
                         return;
                     }
 
@@ -279,15 +281,15 @@ public sealed class SNMPClient
                         continue;
 
                     // Not in subtree
-                    if (options.WalkMode == WalkMode.WithinSubtree && !pdu.Variables[0].Id.ToString().StartsWith(subTreeMask, StringComparison.Ordinal))
+                    if (options.WalkMode == WalkMode.WithinSubtree && !pdu.Variables[0].Id.ToString()
+                            .StartsWith(subTreeMask, StringComparison.Ordinal))
                         break;
 
                     results.Add(pdu.Variables[0]);
 
                     // Next seed
                     seed = pdu.Variables[0];
-
-                } while (true);
+                } while (!options.CancellationToken.IsCancellationRequested);
 
                 foreach (var result in results)
                     OnReceived(new SNMPReceivedArgs(new SNMPInfo(result.Id, result.Data)));
@@ -319,20 +321,124 @@ public sealed class SNMPClient
         {
             try
             {
-                var ipEndpoint = new IPEndPoint(ipAddress, options.Port);
+                var ipEndPoint = new IPEndPoint(ipAddress, options.Port);
                 var username = new OctetString(options.Username);
+                var privacy = GetPrivacyProvider(options);
                 var table = new ObjectIdentifier(oid);
 
                 var discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
-                var report = await discovery.GetResponseAsync(ipEndpoint, options.CancellationToken);
-
-                var privacy = GetPrivacyProvider(options);
+                var message = await discovery.GetResponseAsync(ipEndPoint, options.CancellationToken) as ISnmpMessage;
 
                 var results = new List<Variable>();
 
-                await BulkWalkAsync(VersionCode.V3, ipEndpoint, username, OctetString.Empty, table, results,
-                    10, options.WalkMode, privacy, report, options.CancellationToken);
+                var seed = new Variable(table);
+                var subTreeMask = string.Format(CultureInfo.InvariantCulture, "{0}.", table);
+                
+                var breakLoop = false;
+                
+                do
+                {
+                    var variables = new List<Variable>
+                    {
+                        new(seed.Id)
+                    };
+                    
+                    var request = new GetBulkRequestMessage(VersionCode.V3, Messenger.NextMessageId,
+                        Messenger.NextRequestId, username, OctetString.Empty, 0, 10, variables, privacy,
+                        Messenger.MaxMessageSize, message);
 
+                    var response = await request.GetResponseAsync(ipEndPoint, options.CancellationToken)
+                        .ConfigureAwait(false);
+
+                    var pdu = response.Pdu();
+                    
+                    // Check for errors
+                    var errorCode = pdu.ErrorStatus.ToInt32();
+
+                    if (errorCode != 0)
+                    {
+                        OnError(new SNMPErrorArgs(pdu.ErrorStatus.ToErrorCode()));
+
+                        return;
+                    }
+
+                    // Check if the response is a report message
+                    if (response is ReportMessage)
+                    {
+                        // Check for SNMPv3 error codes
+                        if (pdu.Variables.Count > 0 &&
+                            _snmpv3ErrorOIDs.TryGetValue(pdu.Variables[0].Id, out var errorCodeV3))
+                        {
+                            OnError(new SNMPErrorArgs(errorCodeV3));
+
+                            return;
+                        }
+
+                        // Check if the response is a not in time window message
+                        var id = pdu.Variables[0].Id;
+
+                        if (id == Messenger.NotInTimeWindow)
+                        {
+                            // according to RFC 3414, send a second request to sync time.
+                            request = new GetBulkRequestMessage(VersionCode.V3, Messenger.NextMessageId,
+                                Messenger.NextRequestId, username, OctetString.Empty, 0, 10, variables, privacy,
+                                Messenger.MaxMessageSize, response);
+                            
+                            response = await request.GetResponseAsync(ipEndPoint, options.CancellationToken).ConfigureAwait(false);
+                            
+                            pdu = response.Pdu();
+                            
+                            // Check for errors
+                            errorCode = pdu.ErrorStatus.ToInt32();
+                            
+                            if (errorCode != 0)
+                            {
+                                OnError(new SNMPErrorArgs(pdu.ErrorStatus.ToErrorCode()));
+
+                                return;
+                            }
+                            
+                            // Check if the response is a report message
+                            if (response is ReportMessage)
+                            {
+                                // Check for SNMPv3 error codes
+                                if (pdu.Variables.Count > 0 &&
+                                    _snmpv3ErrorOIDs.TryGetValue(pdu.Variables[0].Id, out errorCodeV3))
+                                {
+                                    OnError(new SNMPErrorArgs(errorCodeV3));
+
+                                    return;
+                                }
+                            }
+                        }
+                    }
+
+                    // Validate the response and add the variables
+                    foreach (var variable in pdu.Variables)
+                    {
+                        //Debug.WriteLine(variable.Id.ToString());
+                        
+                        if (variable.Data.TypeCode == SnmpType.EndOfMibView)
+                            breakLoop = true;
+                        
+                        if(options.WalkMode == WalkMode.WithinSubtree && !variable.Id.ToString().StartsWith(subTreeMask, StringComparison.Ordinal))
+                            breakLoop = true;
+
+                        if(breakLoop)
+                            break;
+                        
+                        results.Add(variable);
+                    }
+                    
+                    if(breakLoop)
+                        break;
+                    
+                    seed = pdu.Variables[^1];
+                    message = response;
+                    
+                } while (!options.CancellationToken.IsCancellationRequested);
+                    
+                // Return the SNMP information
                 foreach (var result in results)
                     OnReceived(new SNMPReceivedArgs(new SNMPInfo(result.Id, result.Data)));
             }
@@ -349,130 +455,6 @@ public sealed class SNMPClient
                 OnComplete();
             }
         }, options.CancellationToken);
-    }
-
-    private static async Task BulkWalkAsync(VersionCode version, IPEndPoint endpoint, OctetString community,
-        OctetString contextName, ObjectIdentifier table, IList<Variable> list, int maxRepetitions, WalkMode mode,
-        IPrivacyProvider privacy, ISnmpMessage report, CancellationToken token)
-    {
-        if (list == null)
-        {
-            throw new ArgumentNullException(nameof(list));
-        }
-
-        var tableV = new Variable(table);
-        var seed = tableV;
-        var message = report;
-        var data = await BulkHasNextAsync(version, endpoint, community, contextName, seed, maxRepetitions, privacy,
-            message, token).ConfigureAwait(false);
-        var next = data.Item2;
-        message = data.Item3;
-
-        while (data.Item1)
-        {
-            var subTreeMask = string.Format(CultureInfo.InvariantCulture, "{0}.", table);
-            var rowMask = string.Format(CultureInfo.InvariantCulture, "{0}.1.1.", table);
-            foreach (var v in next)
-            {
-                var id = v.Id.ToString();
-                if (v.Data.TypeCode == SnmpType.EndOfMibView)
-                {
-                    goto end;
-                }
-
-                if (mode == WalkMode.WithinSubtree && !id.StartsWith(subTreeMask, StringComparison.Ordinal))
-                {
-                    // not in sub tree
-                    goto end;
-                }
-
-                list.Add(v);
-            }
-
-            seed = next[next.Count - 1];
-            data = await BulkHasNextAsync(version, endpoint, community, contextName, seed, maxRepetitions, privacy,
-                message, token).ConfigureAwait(false);
-            next = data.Item2;
-            message = data.Item3;
-        }
-
-        end: ;
-    }
-
-
-    private static async Task<Tuple<bool, IList<Variable>, ISnmpMessage>> BulkHasNextAsync(VersionCode version,
-        IPEndPoint receiver, OctetString community, OctetString contextName, Variable seed, int maxRepetitions,
-        IPrivacyProvider privacy, ISnmpMessage report, CancellationToken token)
-    {
-        // TODO: report should be updated with latest message from agent.
-        if (version == VersionCode.V1)
-        {
-            throw new NotSupportedException("SNMP v1 is not supported");
-        }
-
-        var variables = new List<Variable> { new(seed.Id) };
-        var request = version == VersionCode.V3
-            ? new GetBulkRequestMessage(
-                version,
-                Messenger.NextMessageId,
-                Messenger.NextRequestId,
-                community,
-                contextName,
-                0,
-                maxRepetitions,
-                variables,
-                privacy,
-                Messenger.MaxMessageSize,
-                report)
-            : new GetBulkRequestMessage(
-                Messenger.NextRequestId,
-                version,
-                community,
-                0,
-                maxRepetitions,
-                variables);
-        var reply = await request.GetResponseAsync(receiver, token).ConfigureAwait(false);
-
-        if (reply is ReportMessage)
-        {
-            if (reply.Pdu().Variables.Count == 0)
-            {
-                // TODO: whether it is good to return?
-                return new Tuple<bool, IList<Variable>, ISnmpMessage>(false, new List<Variable>(0), report);
-            }
-
-            var id = reply.Pdu().Variables[0].Id;
-            if (id != Messenger.NotInTimeWindow)
-            {
-                return new Tuple<bool, IList<Variable>, ISnmpMessage>(false, new List<Variable>(0), report);
-            }
-
-            // according to RFC 3414, send a second request to sync time.
-            request = new GetBulkRequestMessage(
-                version,
-                Messenger.NextMessageId,
-                Messenger.NextRequestId,
-                community,
-                contextName,
-                0,
-                maxRepetitions,
-                variables,
-                privacy,
-                Messenger.MaxMessageSize,
-                reply);
-
-            reply = await request.GetResponseAsync(receiver, token).ConfigureAwait(false);
-        }
-        else if (reply.Pdu().ErrorStatus.ToInt32() != 0)
-        {
-            throw ErrorException.Create(
-                "error in response",
-                receiver.Address,
-                reply);
-        }
-
-        var next = reply.Pdu().Variables;
-        return new Tuple<bool, IList<Variable>, ISnmpMessage>(next.Count != 0, next, request);
     }
 
     /// <summary>
