@@ -1151,7 +1151,7 @@ Profildateien sind nicht betroffen!</value>
     <value>Der Speicherort der Einstellungen ist davon nicht betroffen!</value>
   </data>
   <data name="TimeoutOnSNMPQuery" xml:space="preserve">
-    <value>Zeitüberschreitung bei SNMP-Abfrage.</value>
+    <value>Zeitüberschreitung bei SNMP-Abfrage. Der Host ist möglicherweise nicht erreichbar oder die Community / das Passwort ist falsch.</value>
   </data>
   <data name="TimeoutWhenQueryingDNSServerMessage" xml:space="preserve">
     <value>Timeout beim Abfragen des DNS-Servers mit der IP-Adresse "{0}"!</value>
@@ -3684,5 +3684,68 @@ Versuchen Sie es in einigen Sekunden erneut.</value>
   </data>
   <data name="EnterHostToQueryIPGeolocationDots" xml:space="preserve">
     <value>Geben Sie einen Host ein, um die IP-Geolokation abzufragen...</value>
+  </data>
+  <data name="SNMPV3ErrorCode_UnknownUserName" xml:space="preserve">
+    <value>Unbekannter Benutzername.</value>
+  </data>
+  <data name="SNMPV3ErrorCode_AuthenticationFailed" xml:space="preserve">
+    <value>Authentifizierungsfehler (falsches Passwort, Community oder Key).</value>
+  </data>
+  <data name="SNMPErrorCode_NoError" xml:space="preserve">
+    <value>Der Vorgang war erfolgreich und ohne Fehler.</value>
+  </data>
+  <data name="SNMPErrorCode_TooBig" xml:space="preserve">
+    <value>Die Antwort auf Ihre Anfrage war zu groß, um in eine einzige Antwort zu passen!</value>
+  </data>
+  <data name="SNMPErrorCode_NoSuchName" xml:space="preserve">
+    <value>Die angeforderte OID konnte nicht gefunden werden!</value>
+  </data>
+  <data name="SNMPErrorCode_BadValue" xml:space="preserve">
+    <value>Ein schreib- oder lesegeschütztes Objekt wurde auf einen inkonsistenten Wert gesetzt!</value>
+  </data>
+  <data name="SNMPErrorCode_ReadOnly" xml:space="preserve">
+    <value>Die angeforderte OID existiert nicht und ist nicht beschreibbar!</value>
+  </data>
+  <data name="SNMPErrorCode_GenError" xml:space="preserve">
+    <value>Es ist ein Fehler aufgetreten, für den es keine spezifische Meldung gibt!</value>
+  </data>
+  <data name="SNMPErrorCode_NoAccess" xml:space="preserve">
+    <value>Das angeforderte Objekt kann nicht geändert werden!</value>
+  </data>
+  <data name="SNMPErrorCode_WrongType" xml:space="preserve">
+    <value>Das Objekt wurde auf einen inkompatiblen Datentyp gesetzt!</value>
+  </data>
+  <data name="SNMPErrorCode_WrongLength" xml:space="preserve">
+    <value>Der dem Objekt zugewiesene Wert überschreitet seine maximale Länge!</value>
+  </data>
+  <data name="SNMPErrorCode_WrongEncoding" xml:space="preserve">
+    <value>Die für das Objekt verwendete Kodierung ist falsch!</value>
+  </data>
+  <data name="SNMPErrorCode_WrongValue" xml:space="preserve">
+    <value>Der dem Objekt zugewiesene Wert ist keine gültige Option!</value>
+  </data>
+  <data name="SNMPErrorCode_NoCreation" xml:space="preserve">
+    <value>Das angeforderte Objekt existiert nicht und kann nicht erstellt werden!</value>
+  </data>
+  <data name="SNMPErrorCode_InconsistentValue" xml:space="preserve">
+    <value>Die MIB-Variable befindet sich in einem inkonsistenten Zustand und kann nicht geändert werden!</value>
+  </data>
+  <data name="SNMPErrorCode_ResourceUnavailable" xml:space="preserve">
+    <value>Es sind keine verfügbaren Systemressourcen vorhanden, um die angeforderte Operation auszuführen!</value>
+  </data>
+  <data name="SNMPErrorCode_CommitFailed" xml:space="preserve">
+    <value>Ein Fehler ist während der Set-Operation aufgetreten!</value>
+  </data>
+  <data name="SNMPErrorCode_UndoFailed" xml:space="preserve">
+    <value>Eine Set-Operation ist fehlgeschlagen, und frühere Änderungen konnten nicht zurückgenommen werden!</value>
+  </data>
+  <data name="SNMPErrorCode_AuthorizationError" xml:space="preserve">
+    <value>Authentifizierung fehlgeschlagen. Bitte überprüfen Sie die Community-Zeichenfolge!</value>
+  </data>
+  <data name="SNMPErrorCode_NotWritable" xml:space="preserve">
+    <value>Das angeforderte Objekt ist nicht beschreibbar und kann nicht geändert werden!</value>
+  </data>
+  <data name="SNMPErrorCode_InconsistentName" xml:space="preserve">
+    <value>Der Zustand des Objekts ist inkonsistent und verhindert die Set-Operation!</value>
   </data>
 </root>
