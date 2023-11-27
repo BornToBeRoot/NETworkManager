@@ -58,7 +58,9 @@ Experimental features can be enabled in the settings under [`Settings > Update`]
   - Timestamp added to view and export (export format has changed for `csv`, `json` and `xml`) [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
   - Show status message if no reachable host was found [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
 - Port Scanner
-  - Show status message if no open port was found [#2483](
+  - Show status message if no open port was found [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
+- SNMP
+  - Error handling improved and SNMP v3 error codes (Auth failed, etc.) added [#2547](https://github.com/BornToBeRoot/NETworkManager/pull/2547){:target="\_blank"}
 - Lookup - Ports
   - Search by port number and protocol (e.g. `22/tcp` or `161-162/udp`) added [#2483](https://github.com/BornToBeRoot/NETworkManager/pull/2483){:target="\_blank"}
 - Profiles
