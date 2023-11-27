@@ -45,10 +45,10 @@ public static partial class ExportManager
     {
         var stringBuilder = new StringBuilder();
 
-        stringBuilder.AppendLine($"{nameof(SNMPInfo.Oid)},{nameof(SNMPInfo.Data)}");
+        stringBuilder.AppendLine($"{nameof(SNMPInfo.OID)},{nameof(SNMPInfo.Data)}");
 
         foreach (var info in collection)
-            stringBuilder.AppendLine($"{info.Oid},{info.Data}");
+            stringBuilder.AppendLine($"{info.OID},{info.Data}");
 
         System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
     }
@@ -66,7 +66,7 @@ public static partial class ExportManager
                     from info in collection
                     select
                         new XElement(nameof(SNMPInfo),
-                            new XElement(nameof(SNMPInfo.Oid), info.Oid),
+                            new XElement(nameof(SNMPInfo.OID), info.OID),
                             new XElement(nameof(SNMPInfo.Data), info.Data)))));
 
         document.Save(filePath);
@@ -85,7 +85,7 @@ public static partial class ExportManager
         {
             jsonData[i] = new
             {
-                OID = collection[i].Oid,
+                OID = collection[i].OID,
                 collection[i].Data
             };
         }

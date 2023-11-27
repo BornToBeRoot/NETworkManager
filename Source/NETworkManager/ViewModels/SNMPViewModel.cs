@@ -404,18 +404,18 @@ public class SNMPViewModel : ViewModelBase
 
         // Result view
         ResultsView = CollectionViewSource.GetDefaultView(QueryResults);
-        ResultsView.SortDescriptions.Add(new SortDescription(nameof(SNMPInfo.Oid), ListSortDirection.Ascending));
+        ResultsView.SortDescriptions.Add(new SortDescription(nameof(SNMPInfo.OID), ListSortDirection.Ascending));
 
         // OID
         Oid = sessionInfo?.OID;
 
         // Modes
         Modes = new List<SNMPMode> { SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set };
-        Mode = Modes.FirstOrDefault(x => x == sessionInfo.Mode);
+        Mode = Modes.FirstOrDefault(x => x == sessionInfo?.Mode);
         
         // Versions (v1, v2c, v3)
         Versions = Enum.GetValues(typeof(SNMPVersion)).Cast<SNMPVersion>().ToList();
-        Version = Versions.FirstOrDefault(x => x == sessionInfo.Version);
+        Version = Versions.FirstOrDefault(x => x == sessionInfo?.Version);
 
         // Community
         if(Version != SNMPVersion.V3)
@@ -423,7 +423,7 @@ public class SNMPViewModel : ViewModelBase
 
         // Security
         Securities = new List<SNMPV3Security> { SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv };
-        Security = Securities.FirstOrDefault(x => x == sessionInfo.Security);
+        Security = Securities.FirstOrDefault(x => x == sessionInfo?.Security);
 
         // Username
         if(Version == SNMPVersion.V3)
@@ -431,14 +431,14 @@ public class SNMPViewModel : ViewModelBase
 
         // Auth
         AuthenticationProviders = Enum.GetValues(typeof(SNMPV3AuthenticationProvider)).Cast<SNMPV3AuthenticationProvider>().ToList();
-        AuthenticationProvider = AuthenticationProviders.FirstOrDefault(x => x == sessionInfo.AuthenticationProvider);
+        AuthenticationProvider = AuthenticationProviders.FirstOrDefault(x => x == sessionInfo?.AuthenticationProvider);
        
         if(Version == SNMPVersion.V3 && Security != SNMPV3Security.NoAuthNoPriv)
             Auth = sessionInfo?.Auth;
 
         // Priv
         PrivacyProviders = Enum.GetValues(typeof(SNMPV3PrivacyProvider)).Cast<SNMPV3PrivacyProvider>().ToList();
-        PrivacyProvider = PrivacyProviders.FirstOrDefault(x => x == sessionInfo.PrivacyProvider);
+        PrivacyProvider = PrivacyProviders.FirstOrDefault(x => x == sessionInfo?.PrivacyProvider);
 
         if (Version == SNMPVersion.V3 && Security == SNMPV3Security.AuthPriv)
             Priv = sessionInfo?.Priv;
@@ -448,7 +448,7 @@ public class SNMPViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
-    public ICommand WorkCommand => new RelayCommand(p => WorkAction(), Work_CanExecute);
+    public ICommand WorkCommand => new RelayCommand(_ => WorkAction(), Work_CanExecute);
 
     private bool Work_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
@@ -457,12 +457,12 @@ public class SNMPViewModel : ViewModelBase
         Work();
     }
 
-    public ICommand OpenMibProfilesCommand => new RelayCommand(_ => OpenMibProfilesAction());
+    public ICommand OpenOIDProfilesCommand => new RelayCommand(_ => OpenOIDProfilesAction());
 
 
-    private void OpenMibProfilesAction()
+    private void OpenOIDProfilesAction()
     {
-        OpenMibProfileSelection().ConfigureAwait(false);
+        OpenOIDProfileSelection().ConfigureAwait(false);
     }
 
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
@@ -645,7 +645,7 @@ public class SNMPViewModel : ViewModelBase
 
     }
 
-    private async Task OpenMibProfileSelection()
+    private async Task OpenOIDProfileSelection()
     {
         var customDialog = new CustomDialog
         {
