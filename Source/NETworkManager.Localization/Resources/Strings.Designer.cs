@@ -9039,9 +9039,9 @@ namespace NETworkManager.Localization.Resources {
         /// <summary>
         ///   Looks up a localized string similar to The requested object is not writable and cannot be modified!.
         /// </summary>
-        public static string SNMPErrorCode_NotWritable__ {
+        public static string SNMPErrorCode_NotWritable {
             get {
-                return ResourceManager.GetString("SNMPErrorCode_NotWritable, ", resourceCulture);
+                return ResourceManager.GetString("SNMPErrorCode_NotWritable", resourceCulture);
             }
         }
         

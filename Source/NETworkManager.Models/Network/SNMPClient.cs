@@ -4,15 +4,11 @@ using Lextm.SharpSnmpLib.Security;
 using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Net;
-using System.Net.NetworkInformation;
 using System.Security;
-using System.Threading;
 using System.Threading.Tasks;
-using ABI.Windows.Networking.BackgroundTransfer;
 
 namespace NETworkManager.Models.Network;
 
@@ -185,9 +181,7 @@ public sealed class SNMPClient
                 var pdu = response.Pdu();
 
                 // Check for errors
-                var errorCode = pdu.ErrorStatus.ToInt32();
-
-                if (errorCode != 0)
+                if (pdu.ErrorStatus.ToInt32() != 0)
                 {
                     OnError(new SNMPErrorArgs(pdu.ErrorStatus.ToErrorCode()));
 
@@ -267,9 +261,7 @@ public sealed class SNMPClient
                         break;
 
                     // Check for errors
-                    var errorCode = pdu.ErrorStatus.ToInt32();
-
-                    if (errorCode != 0)
+                    if (pdu.ErrorStatus.ToInt32() != 0)
                     {
                         OnError(new SNMPErrorArgs(pdu.ErrorStatus.ToErrorCode()));
 
@@ -353,9 +345,7 @@ public sealed class SNMPClient
                     var pdu = response.Pdu();
                     
                     // Check for errors
-                    var errorCode = pdu.ErrorStatus.ToInt32();
-
-                    if (errorCode != 0)
+                    if (pdu.ErrorStatus.ToInt32() != 0)
                     {
                         OnError(new SNMPErrorArgs(pdu.ErrorStatus.ToErrorCode()));
 
@@ -389,9 +379,7 @@ public sealed class SNMPClient
                             pdu = response.Pdu();
                             
                             // Check for errors
-                            errorCode = pdu.ErrorStatus.ToInt32();
-                            
-                            if (errorCode != 0)
+                            if (pdu.ErrorStatus.ToInt32() != 0)
                             {
                                 OnError(new SNMPErrorArgs(pdu.ErrorStatus.ToErrorCode()));
 
@@ -416,8 +404,6 @@ public sealed class SNMPClient
                     // Validate the response and add the variables
                     foreach (var variable in pdu.Variables)
                     {
-                        //Debug.WriteLine(variable.Id.ToString());
-                        
                         if (variable.Data.TypeCode == SnmpType.EndOfMibView)
                             breakLoop = true;
                         
@@ -473,10 +459,23 @@ public sealed class SNMPClient
                 var version = options.Version == SNMPVersion.V1 ? VersionCode.V1 : VersionCode.V2;
                 var ipEndPoint = new IPEndPoint(ipAddress, options.Port);
                 var community = new OctetString(SecureStringHelper.ConvertToString(options.Community));
-                var variables = new List<Variable>() { new(new ObjectIdentifier(oid), new OctetString(data)) };
+                
+                var variables = new List<Variable> { new(new ObjectIdentifier(oid), new OctetString(data)) };
 
-                await Messenger.SetAsync(version, ipEndPoint, community, variables, options.CancellationToken);
+                var message = new SetRequestMessage(Messenger.NextMessageId, version, community, variables);
+                
+                var response = await message.GetResponseAsync(ipEndPoint, options.CancellationToken);
+                
+                var pdu = response.Pdu();
+                
+                // Check for errors
+                if (pdu.ErrorStatus.ToInt32() != 0)
+                {
+                    OnError(new SNMPErrorArgs(pdu.ErrorStatus.ToErrorCode()));
 
+                    return;
+                }
+                
                 OnDataUpdated();
             }
             catch (OperationCanceledException)
@@ -509,25 +508,39 @@ public sealed class SNMPClient
             {
                 var ipEndpoint = new IPEndPoint(ipAddress, options.Port);
                 var username = new OctetString(options.Username);
-                var variables = new List<Variable>() { new(new ObjectIdentifier(oid), new OctetString(data)) };
+                var variables = new List<Variable> { new(new ObjectIdentifier(oid), new OctetString(data)) };
 
                 var discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu);
                 var report = await discovery.GetResponseAsync(ipEndpoint, options.CancellationToken);
 
                 var privacy = GetPrivacyProvider(options);
 
-                var request = new SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextMessageId,
+                var message = new SetRequestMessage(VersionCode.V3, Messenger.NextMessageId, Messenger.NextMessageId,
                     username, OctetString.Empty, variables, privacy, Messenger.MaxMessageSize, report);
 
-                var reply = await request.GetResponseAsync(ipEndpoint);
+                var response = await message.GetResponseAsync(ipEndpoint, options.CancellationToken);
 
-                var pdu = reply.Pdu();
-
+                var pdu = response.Pdu();
+                
+                // Check for errors
                 if (pdu.ErrorStatus.ToInt32() != 0)
                 {
-                    OnError(new SNMPErrorArgs($"Pdu error status {pdu.ErrorStatus}, Pdu error index {pdu.ErrorIndex}"));
+                    OnError(new SNMPErrorArgs(pdu.ErrorStatus.ToErrorCode()));
 
                     return;
+                }
+                
+                // Check if the response is a report message
+                if (response is ReportMessage)
+                {
+                    // Check for SNMPv3 error codes
+                    if (pdu.Variables.Count > 0 &&
+                        _snmpv3ErrorOIDs.TryGetValue(pdu.Variables[0].Id, out var errorCodeV3))
+                    {
+                        OnError(new SNMPErrorArgs(errorCodeV3));
+
+                        return;
+                    }
                 }
 
                 OnDataUpdated();
