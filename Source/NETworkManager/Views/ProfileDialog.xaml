@@ -3392,12 +3392,12 @@
                                         <Binding Path="SNMP_OID" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
                                                 <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                <validators:SnmpOidValidator ValidatesOnTargetUpdated="True">
-                                                    <validators:SnmpOidValidator.Wrapper>
+                                                <validators:SNMPOIDValidator ValidatesOnTargetUpdated="True">
+                                                    <validators:SNMPOIDValidator.Wrapper>
                                                         <validators:SNMPOIDDependencyObjectWrapper
                                                             Mode="{Binding Data.SNMP_Mode, Source={StaticResource BindingProxy}}" />
-                                                    </validators:SnmpOidValidator.Wrapper>
-                                                </validators:SnmpOidValidator>
+                                                    </validators:SNMPOIDValidator.Wrapper>
+                                                </validators:SNMPOIDValidator>
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>

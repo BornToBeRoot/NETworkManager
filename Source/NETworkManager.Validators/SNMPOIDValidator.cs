@@ -6,7 +6,7 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Validators;
 
-public class SnmpOidValidator : ValidationRule
+public class SNMPOIDValidator : ValidationRule
 {
     public SNMPOIDDependencyObjectWrapper Wrapper { get; set; }
 

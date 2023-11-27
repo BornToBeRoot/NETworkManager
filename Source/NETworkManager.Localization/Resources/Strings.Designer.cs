@@ -8947,6 +8947,195 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Authentication failed. Please check the community string!.
+        /// </summary>
+        public static string SNMPErrorCode_AuthorizationError {
+            get {
+                return ResourceManager.GetString("SNMPErrorCode_AuthorizationError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A read-write or write-only object was set to an inconsistent value!.
+        /// </summary>
+        public static string SNMPErrorCode_BadValue {
+            get {
+                return ResourceManager.GetString("SNMPErrorCode_BadValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred during the set operation!.
+        /// </summary>
+        public static string SNMPErrorCode_CommitFailed {
+            get {
+                return ResourceManager.GetString("SNMPErrorCode_CommitFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred for which no specific message is available!.
+        /// </summary>
+        public static string SNMPErrorCode_GenError {
+            get {
+                return ResourceManager.GetString("SNMPErrorCode_GenError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The object&apos;s state is inconsistent, preventing the set operation!.
+        /// </summary>
+        public static string SNMPErrorCode_InconsistentName {
+            get {
+                return ResourceManager.GetString("SNMPErrorCode_InconsistentName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The MIB variable is currently in an inconsistent state and cannot be modified!.
+        /// </summary>
+        public static string SNMPErrorCode_InconsistentValue {
+            get {
+                return ResourceManager.GetString("SNMPErrorCode_InconsistentValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The requested object is not accessible for modification!.
+        /// </summary>
+        public static string SNMPErrorCode_NoAccess {
+            get {
+                return ResourceManager.GetString("SNMPErrorCode_NoAccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The requested object does not exist and cannot be created!.
+        /// </summary>
+        public static string SNMPErrorCode_NoCreation {
+            get {
+                return ResourceManager.GetString("SNMPErrorCode_NoCreation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The operation was successful without any errors..
+        /// </summary>
+        public static string SNMPErrorCode_NoError {
+            get {
+                return ResourceManager.GetString("SNMPErrorCode_NoError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The requested OID could not be found!.
+        /// </summary>
+        public static string SNMPErrorCode_NoSuchName {
+            get {
+                return ResourceManager.GetString("SNMPErrorCode_NoSuchName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The requested object is not writable and cannot be modified!.
+        /// </summary>
+        public static string SNMPErrorCode_NotWritable {
+            get {
+                return ResourceManager.GetString("SNMPErrorCode_NotWritable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The requested OID does not exist and is not writable!.
+        /// </summary>
+        public static string SNMPErrorCode_ReadOnly {
+            get {
+                return ResourceManager.GetString("SNMPErrorCode_ReadOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are no available system resources to perform the requested operation!.
+        /// </summary>
+        public static string SNMPErrorCode_ResourceUnavailable {
+            get {
+                return ResourceManager.GetString("SNMPErrorCode_ResourceUnavailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The response to your request was too large to fit into a single response!.
+        /// </summary>
+        public static string SNMPErrorCode_TooBig {
+            get {
+                return ResourceManager.GetString("SNMPErrorCode_TooBig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A set operation failed, and previous changes could not be rolled back!.
+        /// </summary>
+        public static string SNMPErrorCode_UndoFailed {
+            get {
+                return ResourceManager.GetString("SNMPErrorCode_UndoFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The encoding used for the object is incorrect!.
+        /// </summary>
+        public static string SNMPErrorCode_WrongEncoding {
+            get {
+                return ResourceManager.GetString("SNMPErrorCode_WrongEncoding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value assigned to the object exceeds its maximum length!.
+        /// </summary>
+        public static string SNMPErrorCode_WrongLength {
+            get {
+                return ResourceManager.GetString("SNMPErrorCode_WrongLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The object was set to an incompatible data type!.
+        /// </summary>
+        public static string SNMPErrorCode_WrongType {
+            get {
+                return ResourceManager.GetString("SNMPErrorCode_WrongType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value assigned to the object is not a valid choice!.
+        /// </summary>
+        public static string SNMPErrorCode_WrongValue {
+            get {
+                return ResourceManager.GetString("SNMPErrorCode_WrongValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Authentication failure (incorrect password, community or key)..
+        /// </summary>
+        public static string SNMPV3ErrorCode_AuthenticationFailed {
+            get {
+                return ResourceManager.GetString("SNMPV3ErrorCode_AuthenticationFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown user name..
+        /// </summary>
+        public static string SNMPV3ErrorCode_UnknownUserName {
+            get {
+                return ResourceManager.GetString("SNMPV3ErrorCode_UnknownUserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SNTP Lookup.
         /// </summary>
         public static string SNTPLookup {
@@ -9694,7 +9883,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Timeout on SNMP query..
+        ///   Looks up a localized string similar to Timeout on SNMP query. Maybe the host is not reachable or the community / password is wrong..
         /// </summary>
         public static string TimeoutOnSNMPQuery {
             get {

@@ -10,7 +10,7 @@ public class SNMPInfo
     /// <summary>
     /// Object identifier of the SNMP message.
     /// </summary>
-    public string Oid { get; set; }
+    public string OID { get; set; }
     
     /// <summary>
     /// Data of the SNMP message.
@@ -22,9 +22,9 @@ public class SNMPInfo
     /// </summary>
     /// <param name="oid">Object identifier of the SNMP message.</param>
     /// <param name="data">Data of the SNMP message.</param>
-    public SNMPInfo(string oid, string data)
+    private SNMPInfo(string oid, string data)
     {
-        Oid = oid;
+        OID = oid;
         Data = data;
     }
     

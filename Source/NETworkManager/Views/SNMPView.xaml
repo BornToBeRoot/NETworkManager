@@ -98,8 +98,7 @@
                        Style="{StaticResource CenterTextBlock}" />
             <ComboBox Grid.Column="2" Grid.Row="2" 
                       Grid.ColumnSpan="3"
-                      x:Name="ComboBoxOid" 
-                      Height="{Binding ElementName=ButtonQuery, Path=ActualHeight}" 
+                      x:Name="ComboBoxOid"
                       ItemsSource="{Binding OidHistoryView}" 
                       IsReadOnly="{Binding IsRunning}">
                 <ComboBox.Resources>
@@ -119,16 +118,16 @@
                     <Binding Path="Oid" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            <validators:SnmpOidValidator ValidatesOnTargetUpdated="True">
-                                <validators:SnmpOidValidator.Wrapper>
+                            <validators:SNMPOIDValidator ValidatesOnTargetUpdated="True">
+                                <validators:SNMPOIDValidator.Wrapper>
                                     <validators:SNMPOIDDependencyObjectWrapper Mode="{Binding Path=Data.(viewModels:SNMPViewModel.Mode), Source={StaticResource BindingProxy}}" />
-                                </validators:SnmpOidValidator.Wrapper>
-                            </validators:SnmpOidValidator>
+                                </validators:SNMPOIDValidator.Wrapper>
+                            </validators:SNMPOIDValidator>
                         </Binding.ValidationRules>
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
-            <Button Grid.Column="6" Grid.Row="2" Command="{Binding OpenMibProfilesCommand}" ToolTip="{x:Static localization:Strings.OpenOIDProfilesDots}">
+            <Button Grid.Column="6" Grid.Row="2" Command="{Binding OpenOIDProfilesCommand}" ToolTip="{x:Static localization:Strings.OpenOIDProfilesDots}">
                 <Button.Resources>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageButton}">
                         <Style.Triggers>
@@ -262,7 +261,6 @@
                 </TextBlock.Style>
             </TextBlock>
             <ComboBox Grid.Column="2" Grid.Row="3"
-                      Height="{Binding ElementName=ButtonQuery, Path=ActualHeight}"
                       ItemsSource="{Binding AuthenticationProviders}"
                       SelectedItem="{Binding AuthenticationProvider}" Margin="0,10,0,0">
                 <ComboBox.Style>
@@ -391,7 +389,11 @@
             </PasswordBox>
         </Grid>
         <!-- ReSharper disable once Xaml.MissingGridIndex -->
-        <Button Grid.Column="2" Command="{Binding WorkCommand}" IsDefault="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsRunning}" VerticalAlignment="Bottom">
+        <Button Grid.Column="2"
+                Command="{Binding WorkCommand}"
+                IsDefault="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" 
+                IsCancel="{Binding IsRunning}" 
+                VerticalAlignment="Bottom">
             <Button.Resources>
                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                     <Setter Property="IsDefault" Value="False" />
@@ -583,7 +585,10 @@
                 </Style>
             </TextBlock.Style>
         </TextBlock>
-        <controls:MultiSelectDataGrid Grid.Row="5" Grid.ColumnSpan="3" Grid.Column="0" ItemsSource="{Binding ResultsView}" SelectedItem="{Binding SelectedResult}" SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+        <controls:MultiSelectDataGrid Grid.Row="5" Grid.ColumnSpan="3" Grid.Column="0" 
+                                      ItemsSource="{Binding ResultsView}" 
+                                      SelectedItem="{Binding SelectedResult}" 
+                                      SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <controls:MultiSelectDataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
@@ -591,7 +596,7 @@
                               Style="{StaticResource ResourceKey=CopyMenuItem}">
                         <MenuItem Header="{x:Static Member=localization:Strings.OID}" 
                                   Command="{Binding Path=CopyDataToClipboardCommand}"
-                                  CommandParameter="{Binding Path=SelectedResult.Oid}" 
+                                  CommandParameter="{Binding Path=SelectedResult.OID}" 
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         <MenuItem Header="{x:Static Member=localization:Strings.Data}" 
                                   Command="{Binding Path=CopyDataToClipboardCommand}"
@@ -644,7 +649,7 @@
                 </Style>
             </controls:MultiSelectDataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.OID}" Binding="{Binding (network:SNMPInfo.Oid)}" SortMemberPath="OID" MinWidth="200" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.OID}" Binding="{Binding (network:SNMPInfo.OID)}" SortMemberPath="OID" MinWidth="200" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Data}" Binding="{Binding (network:SNMPInfo.Data)}" SortMemberPath="Data" MinWidth="300" />
             </DataGrid.Columns>
         </controls:MultiSelectDataGrid>

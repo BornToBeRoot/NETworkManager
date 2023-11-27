@@ -21,6 +21,7 @@ using NETworkManager.Views;
 using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
+using NETworkManager.Localization;
 
 namespace NETworkManager.ViewModels;
 
@@ -403,18 +404,18 @@ public class SNMPViewModel : ViewModelBase
 
         // Result view
         ResultsView = CollectionViewSource.GetDefaultView(QueryResults);
-        ResultsView.SortDescriptions.Add(new SortDescription(nameof(SNMPInfo.Oid), ListSortDirection.Ascending));
+        ResultsView.SortDescriptions.Add(new SortDescription(nameof(SNMPInfo.OID), ListSortDirection.Ascending));
 
         // OID
         Oid = sessionInfo?.OID;
 
         // Modes
         Modes = new List<SNMPMode> { SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set };
-        Mode = Modes.FirstOrDefault(x => x == sessionInfo.Mode);
+        Mode = Modes.FirstOrDefault(x => x == sessionInfo?.Mode);
         
         // Versions (v1, v2c, v3)
         Versions = Enum.GetValues(typeof(SNMPVersion)).Cast<SNMPVersion>().ToList();
-        Version = Versions.FirstOrDefault(x => x == sessionInfo.Version);
+        Version = Versions.FirstOrDefault(x => x == sessionInfo?.Version);
 
         // Community
         if(Version != SNMPVersion.V3)
@@ -422,7 +423,7 @@ public class SNMPViewModel : ViewModelBase
 
         // Security
         Securities = new List<SNMPV3Security> { SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv };
-        Security = Securities.FirstOrDefault(x => x == sessionInfo.Security);
+        Security = Securities.FirstOrDefault(x => x == sessionInfo?.Security);
 
         // Username
         if(Version == SNMPVersion.V3)
@@ -430,14 +431,14 @@ public class SNMPViewModel : ViewModelBase
 
         // Auth
         AuthenticationProviders = Enum.GetValues(typeof(SNMPV3AuthenticationProvider)).Cast<SNMPV3AuthenticationProvider>().ToList();
-        AuthenticationProvider = AuthenticationProviders.FirstOrDefault(x => x == sessionInfo.AuthenticationProvider);
+        AuthenticationProvider = AuthenticationProviders.FirstOrDefault(x => x == sessionInfo?.AuthenticationProvider);
        
         if(Version == SNMPVersion.V3 && Security != SNMPV3Security.NoAuthNoPriv)
             Auth = sessionInfo?.Auth;
 
         // Priv
         PrivacyProviders = Enum.GetValues(typeof(SNMPV3PrivacyProvider)).Cast<SNMPV3PrivacyProvider>().ToList();
-        PrivacyProvider = PrivacyProviders.FirstOrDefault(x => x == sessionInfo.PrivacyProvider);
+        PrivacyProvider = PrivacyProviders.FirstOrDefault(x => x == sessionInfo?.PrivacyProvider);
 
         if (Version == SNMPVersion.V3 && Security == SNMPV3Security.AuthPriv)
             Priv = sessionInfo?.Priv;
@@ -447,7 +448,7 @@ public class SNMPViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
-    public ICommand WorkCommand => new RelayCommand(p => WorkAction(), Work_CanExecute);
+    public ICommand WorkCommand => new RelayCommand(_ => WorkAction(), Work_CanExecute);
 
     private bool Work_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
@@ -456,12 +457,12 @@ public class SNMPViewModel : ViewModelBase
         Work();
     }
 
-    public ICommand OpenMibProfilesCommand => new RelayCommand(_ => OpenMibProfilesAction());
+    public ICommand OpenOIDProfilesCommand => new RelayCommand(_ => OpenOIDProfilesAction());
 
 
-    private void OpenMibProfilesAction()
+    private void OpenOIDProfilesAction()
     {
-        OpenMibProfileSelection().ConfigureAwait(false);
+        OpenOIDProfileSelection().ConfigureAwait(false);
     }
 
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
@@ -556,11 +557,11 @@ public class SNMPViewModel : ViewModelBase
         // SNMP...
         SNMPClient snmpClient = new();
 
-        snmpClient.Received += Snmp_Received;
-        snmpClient.DataUpdated += SnmpClient_DataUpdated;
-        snmpClient.Error += Snmp_Error;
-        snmpClient.Canceled += Snmp_Canceled;
-        snmpClient.Complete += Snmp_Complete;
+        snmpClient.Received += SNMPClient_Received;
+        snmpClient.DataUpdated += SNMPClient_DataUpdated;
+        snmpClient.Error += SNMPClient_Error;
+        snmpClient.Canceled += SNMPClient_Canceled;
+        snmpClient.Complete += SNMPClient_Complete;
 
         var oidValue = Oid.Replace(" ", "");
 
@@ -644,7 +645,7 @@ public class SNMPViewModel : ViewModelBase
 
     }
 
-    private async Task OpenMibProfileSelection()
+    private async Task OpenOIDProfileSelection()
     {
         var customDialog = new CustomDialog
         {
@@ -698,7 +699,7 @@ public class SNMPViewModel : ViewModelBase
     #endregion
 
     #region Events
-    private void Snmp_Received(object sender, SNMPReceivedArgs e)
+    private void SNMPClient_Received(object sender, SNMPReceivedArgs e)
     {
         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
         {
@@ -706,25 +707,31 @@ public class SNMPViewModel : ViewModelBase
         }));
     }
 
-    private void SnmpClient_DataUpdated(object sender, EventArgs e)
+    private void SNMPClient_DataUpdated(object sender, EventArgs e)
     {
         StatusMessage = Localization.Resources.Strings.DataHasBeenUpdated;
         IsStatusMessageDisplayed = true;
     }
 
-    private void Snmp_Error(object sender, EventArgs e)
+    private void SNMPClient_Error(object sender, SNMPErrorArgs e)
     {
-        StatusMessage = Mode == SNMPMode.Set ? Localization.Resources.Strings.ErrorInResponseCheckIfYouHaveWritePermissions : Localization.Resources.Strings.ErrorInResponse;
+        if(e.IsErrorCode)
+            StatusMessage = ResourceTranslator.Translate(ResourceIdentifier.SNMPErrorCode, e.ErrorCode);
+        else if (e.IsErrorCodeV3)
+            StatusMessage = ResourceTranslator.Translate(ResourceIdentifier.SNMPV3ErrorCode, e.ErrorCodeV3);
+        else
+            StatusMessage = e.ErrorMessage;
+
         IsStatusMessageDisplayed = true;
     }
 
-    private void Snmp_Canceled(object sender, EventArgs e)
+    private void SNMPClient_Canceled(object sender, EventArgs e)
     {
         StatusMessage = CancelScan ? Localization.Resources.Strings.CanceledByUserMessage : Localization.Resources.Strings.TimeoutOnSNMPQuery;
         IsStatusMessageDisplayed = true;
     }
 
-    private void Snmp_Complete(object sender, EventArgs e)
+    private void SNMPClient_Complete(object sender, EventArgs e)
     {
         CancelScan = false;
         IsRunning = false;
