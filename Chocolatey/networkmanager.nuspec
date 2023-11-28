@@ -3,7 +3,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>NETworkManager</id>
-    <version>2023.6.27.1</version>
+    <version>2023.11.28.0</version>
     <owners>BornToBeRoot</owners>
     <title>NETworkManager</title>
     <authors>BornToBeRoot</authors>
@@ -18,7 +18,7 @@
     <summary>A powerful tool for managing networks and troubleshoot network problems!</summary>
     <description>A powerful tool for managing networks and troubleshoot network problems!</description>
     <dependencies>
-      <dependency id="dotnet-6.0-desktopruntime" />      
+      <dependency id="dotnet-8.0-desktopruntime" />      
     </dependencies>    
   </metadata>
   <files>    

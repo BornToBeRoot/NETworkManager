@@ -53,7 +53,7 @@ Release date: **11.28.2023**
 ## System requirements
 
 - Windows 10 / Server x64 (1809 or later)
-- [.NET Desktop Runtime 6.x (LTS)](https://dotnet.microsoft.com/download/dotnet/6.0){:target="\_blank"}
+- [.NET Desktop Runtime 8.0 (LTS) - x64](https://dotnet.microsoft.com/en-us/download/dotnet/8.0/runtime){:target="\_blank"}
 
 ## Package Manager
 
