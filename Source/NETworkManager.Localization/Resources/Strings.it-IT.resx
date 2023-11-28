@@ -1161,7 +1161,8 @@ I file del profilo non sono interessati dal problema!</value>
     <value>I file delle impostazioni non sono interessati dal problema!</value>
   </data>
   <data name="TimeoutOnSNMPQuery" xml:space="preserve">
-    <value>Time out interrogazione SNMP</value>
+    <value>Timeout sulla query SNMP. 
+Forse l'host non è raggiungibile oppure la community/password è sbagliata.</value>
   </data>
   <data name="TimeoutWhenQueryingDNSServerMessage" xml:space="preserve">
     <value>Time out durante l'interrogazione del server DNS con l'indirizzo IP "{0}"</value>
@@ -3777,5 +3778,68 @@ Questi non sono ancora completi, contengono bug, possono mandare in crash l'appl
   </data>
   <data name="EnterHostToQueryIPGeolocationDots" xml:space="preserve">
     <value>Inserisci un host per interrogare la geolocalizzazione IP...</value>
+  </data>
+  <data name="SNMPV3ErrorCode_UnknownUserName" xml:space="preserve">
+    <value>Nome utente sconosciuto.</value>
+  </data>
+  <data name="SNMPV3ErrorCode_AuthenticationFailed" xml:space="preserve">
+    <value>Errore autenticazione (password, comunità o chiave errati).</value>
+  </data>
+  <data name="SNMPErrorCode_NoError" xml:space="preserve">
+    <value>L'operazione è andata a buon fine senza alcun errore.</value>
+  </data>
+  <data name="SNMPErrorCode_TooBig" xml:space="preserve">
+    <value>La risposta alla richiesta era troppo grande per essere contenuta in un'unica risposta!</value>
+  </data>
+  <data name="SNMPErrorCode_NoSuchName" xml:space="preserve">
+    <value>L'OID richiesto non è stato trovato!</value>
+  </data>
+  <data name="SNMPErrorCode_BadValue" xml:space="preserve">
+    <value>Un oggetto di lettura-scrittura o di sola scrittura è stato impostato su un valore non coerente!</value>
+  </data>
+  <data name="SNMPErrorCode_ReadOnly" xml:space="preserve">
+    <value>L'OID richiesto non esiste e non è scrivibile!</value>
+  </data>
+  <data name="SNMPErrorCode_GenError" xml:space="preserve">
+    <value>Si è verificato un errore per il quale non è disponibile alcun messaggio specifico!</value>
+  </data>
+  <data name="SNMPErrorCode_NoAccess" xml:space="preserve">
+    <value>L'oggetto richiesto non è accessibile per la modifica!</value>
+  </data>
+  <data name="SNMPErrorCode_WrongType" xml:space="preserve">
+    <value>L'oggetto è stato impostato su un tipo di dati non compatibile!</value>
+  </data>
+  <data name="SNMPErrorCode_WrongLength" xml:space="preserve">
+    <value>Il valore assegnato all'oggetto supera la sua lunghezza massima!</value>
+  </data>
+  <data name="SNMPErrorCode_WrongEncoding" xml:space="preserve">
+    <value>La codifica usata per l'oggetto non è corretta!</value>
+  </data>
+  <data name="SNMPErrorCode_WrongValue" xml:space="preserve">
+    <value>Il valore assegnato all'oggetto non è una scelta valida!</value>
+  </data>
+  <data name="SNMPErrorCode_NoCreation" xml:space="preserve">
+    <value>L'oggetto richiesto non esiste e non può essere creato!</value>
+  </data>
+  <data name="SNMPErrorCode_InconsistentValue" xml:space="preserve">
+    <value>La variabile MIB è attualmente in uno stato non coerente e non può essere modificata!</value>
+  </data>
+  <data name="SNMPErrorCode_ResourceUnavailable" xml:space="preserve">
+    <value>Non ci sono risorse di sistema disponibili per eseguire l'operazione richiesta!</value>
+  </data>
+  <data name="SNMPErrorCode_CommitFailed" xml:space="preserve">
+    <value>Si è verificato un errore durante l'operazione di impostazione!</value>
+  </data>
+  <data name="SNMPErrorCode_UndoFailed" xml:space="preserve">
+    <value>Un'operazione di impostazione non è riuscita e non è stato possibile ripristinare le modifiche precedenti!</value>
+  </data>
+  <data name="SNMPErrorCode_AuthorizationError" xml:space="preserve">
+    <value>Autenticazione fallita. Controlla la stringa comunità!</value>
+  </data>
+  <data name="SNMPErrorCode_NotWritable" xml:space="preserve">
+    <value>L'oggetto richiesto non è scrivibile e non può essere modificato!</value>
+  </data>
+  <data name="SNMPErrorCode_InconsistentName" xml:space="preserve">
+    <value>Lo stato dell'oggetto non è coerente ed impedisce l'operazione di impostazione!</value>
   </data>
 </root>
