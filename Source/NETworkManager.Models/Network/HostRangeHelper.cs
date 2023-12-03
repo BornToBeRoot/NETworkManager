@@ -20,7 +20,7 @@ public static class HostRangeHelper
         return Task.Run(() => CreateIPAddressesFromIPRanges(ipRanges, cancellationToken), cancellationToken);
     }
 
-    public static IPAddress[] CreateIPAddressesFromIPRanges(string[] ipRanges, CancellationToken cancellationToken)
+    private static IPAddress[] CreateIPAddressesFromIPRanges(IEnumerable<string> ipRanges, CancellationToken cancellationToken)
     {
         var bag = new ConcurrentBag<IPAddress>();
 
@@ -131,7 +131,7 @@ public static class HostRangeHelper
         return Task.Run(() => ResolveHostnamesInIPRanges(ipRanges, dnsResolveHostnamePreferIPv4, cancellationToken), cancellationToken);
     }
 
-    public static List<string> ResolveHostnamesInIPRanges(string[] ipRanges, bool dnsResolveHostnamePreferIPv4, CancellationToken cancellationToken)
+    private static List<string> ResolveHostnamesInIPRanges(IEnumerable<string> ipRanges, bool dnsResolveHostnamePreferIPv4, CancellationToken cancellationToken)
     {
         var bag = new ConcurrentBag<string>();
 
@@ -161,7 +161,7 @@ public static class HostRangeHelper
                     using (var dnsResolverTask = DNSClientHelper.ResolveAorAaaaAsync(ipHostOrRange, dnsResolveHostnamePreferIPv4))
                     {
                         // Wait for task inside a Parallel.Foreach
-                        dnsResolverTask.Wait();
+                        dnsResolverTask.Wait(cancellationToken);
 
                         if (!dnsResolverTask.Result.HasError)
                             bag.Add($"{dnsResolverTask.Result.Value}");
@@ -179,7 +179,7 @@ public static class HostRangeHelper
                     using (var dnsResolverTask = DNSClientHelper.ResolveAorAaaaAsync(hostAndSubnet[0], true))
                     {
                         // Wait for task inside a Parallel.Foreach
-                        dnsResolverTask.Wait();
+                        dnsResolverTask.Wait(cancellationToken);
 
                         if (!dnsResolverTask.Result.HasError)
                         {
