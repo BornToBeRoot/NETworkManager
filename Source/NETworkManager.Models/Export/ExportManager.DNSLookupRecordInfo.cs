@@ -46,11 +46,11 @@ public static partial class ExportManager
         var stringBuilder = new StringBuilder();
 
         stringBuilder.AppendLine(
-            $"{nameof(DNSLookupRecordInfo.DomainName)},{nameof(DNSLookupRecordInfo.TTL)},{nameof(DNSLookupRecordInfo.RecordClass)},{nameof(DNSLookupRecordInfo.RecordType)},{nameof(DNSLookupRecordInfo.Result)},{nameof(DNSLookupRecordInfo.Server)},{nameof(DNSLookupRecordInfo.IPEndPoint)}");
+            $"{nameof(DNSLookupRecordInfo.DomainName)},{nameof(DNSLookupRecordInfo.TTL)},{nameof(DNSLookupRecordInfo.RecordClass)},{nameof(DNSLookupRecordInfo.RecordType)},{nameof(DNSLookupRecordInfo.Result)},{nameof(DNSLookupRecordInfo.NameServerIPAddress)},{nameof(DNSLookupRecordInfo.NameServerHostName)},{nameof(DNSLookupRecordInfo.NameServerPort)}");
 
         foreach (var info in collection)
             stringBuilder.AppendLine(
-                $"{info.DomainName},{info.TTL},{info.RecordClass},{info.RecordType},{info.Result},{info.Server},{info.IPEndPoint}");
+                $"{info.DomainName},{info.TTL},{info.RecordClass},{info.RecordType},{info.Result},{info.NameServerIPAddress},{info.NameServerHostName},{info.NameServerPort}");
 
         System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
     }
@@ -73,8 +73,9 @@ public static partial class ExportManager
                             new XElement(nameof(DNSLookupRecordInfo.RecordClass), info.RecordClass),
                             new XElement(nameof(DNSLookupRecordInfo.RecordType), info.RecordType),
                             new XElement(nameof(DNSLookupRecordInfo.Result), info.Result),
-                            new XElement(nameof(DNSLookupRecordInfo.Server), info.Server),
-                            new XElement(nameof(DNSLookupRecordInfo.IPEndPoint), info.IPEndPoint)))));
+                            new XElement(nameof(DNSLookupRecordInfo.NameServerIPAddress), info.NameServerIPAddress),
+                            new XElement(nameof(DNSLookupRecordInfo.NameServerHostName), info.NameServerHostName),
+                            new XElement(nameof(DNSLookupRecordInfo.NameServerPort), info.NameServerPort)))));
 
         document.Save(filePath);
     }
@@ -97,8 +98,9 @@ public static partial class ExportManager
                 collection[i].RecordClass,
                 collection[i].RecordType,
                 collection[i].Result,
-                collection[i].Server,
-                collection[i].IPEndPoint
+                collection[i].NameServerIPAddress,
+                collection[i].NameServerHostName,
+                collection[i].NameServerPort
             };
         }
 

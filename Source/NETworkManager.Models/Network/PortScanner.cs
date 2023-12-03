@@ -1,6 +1,7 @@
 ﻿using NETworkManager.Models.Lookup;
 using NETworkManager.Utilities;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -54,7 +55,7 @@ public sealed class PortScanner
     #endregion
 
     #region Methods
-    public void ScanAsync(IPAddress[] ipAddresses, int[] ports, CancellationToken cancellationToken)
+    public void ScanAsync(IPAddress[] ipAddresses, IEnumerable<int> ports, CancellationToken cancellationToken)
     {
         _progressValue = 0;
 
@@ -81,7 +82,7 @@ public sealed class PortScanner
 
                     if (_options.ResolveHostname)
                     {
-                        // Don't use await in Paralle.ForEach, this will break
+                        // Don't use await in Parallel.ForEach, this will break
                         var dnsResolverTask = DNSClient.GetInstance().ResolvePtrAsync(ipAddress);
 
                         // Wait for task inside a Parallel.Foreach
