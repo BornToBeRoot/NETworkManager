@@ -15,65 +15,77 @@ namespace NETworkManager.Models.Network;
 
 public static class HostRangeHelper
 {
-    public static Task<IPAddress[]> CreateIPAddressesFromIPRangesAsync(string[] ipRanges, CancellationToken cancellationToken)
+    public static string[] CreateListFromInput(string hosts)
     {
-        return Task.Run(() => CreateIPAddressesFromIPRanges(ipRanges, cancellationToken), cancellationToken);
+        return hosts.Replace(" ", "").Split(';')
+            .Where(x => !string.IsNullOrEmpty(x))
+            .Select(x => x.Trim())
+            .ToArray();
     }
 
-    private static IPAddress[] CreateIPAddressesFromIPRanges(IEnumerable<string> ipRanges, CancellationToken cancellationToken)
+    public static Task<List<(IPAddress ipAddress, string hostname)>> ResolveAsync(IEnumerable<string> hosts, bool dnsResolveHostnamePreferIPv4, CancellationToken cancellationToken)
     {
-        var bag = new ConcurrentBag<IPAddress>();
+        return Task.Run(() => Resolve(hosts, dnsResolveHostnamePreferIPv4, cancellationToken), cancellationToken);
+    }
 
-        var parallelOptions = new ParallelOptions
-        {
-            CancellationToken = cancellationToken
-        };
+    private static List<(IPAddress ipAddress, string hostname)> Resolve(IEnumerable<string> hosts, bool dnsResolveHostnamePreferIPv4, CancellationToken cancellationToken)
+    {
+        var result = new ConcurrentBag<(IPAddress ipAddress, string hostname)>();
 
-        foreach (var ipOrRange in ipRanges)
+        var exceptions = new ConcurrentQueue<HostNotFoundException>();
+
+        Parallel.ForEach(hosts, new ParallelOptions { CancellationToken = cancellationToken }, host =>
         {
-            switch (ipOrRange)
+            switch (host)
             {
-                // 192.168.0.1 or 2001:db8:85a3::8a2e:370:7334
-                case var _ when Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressRegex) || Regex.IsMatch(ipOrRange, RegexHelper.IPv6AddressRegex):
-                    bag.Add(IPAddress.Parse(ipOrRange));
+                // 192.168.0.1
+                case var _ when Regex.IsMatch(host, RegexHelper.IPv4AddressRegex):
+                // 2001:db8:85a3::8a2e:370:7334
+                case var _ when Regex.IsMatch(host, RegexHelper.IPv6AddressRegex):
+                    result.Add((IPAddress.Parse(host), string.Empty));
+                    
                     break;
+                    
+                // 192.168.0.0/24
+                case var _ when Regex.IsMatch(host, RegexHelper.IPv4AddressCidrRegex):
+                // 192.168.0.0/255.255.255.0
+                case var _ when Regex.IsMatch(host, RegexHelper.IPv4AddressSubnetmaskRegex):
+                    var network = IPNetwork2.System.Net.IPNetwork.Parse(host);
 
-                // 192.168.0.0/24 or 192.168.0.0/255.255.255.0
-                case var _ when Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressCidrRegex) || Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressSubnetmaskRegex):
-                    var network = IPNetwork2.System.Net.IPNetwork.Parse(ipOrRange);
-
-                    Parallel.For(IPv4Address.ToInt32(network.Network), IPv4Address.ToInt32(network.Broadcast) + 1, parallelOptions, i =>
+                    Parallel.For(IPv4Address.ToInt32(network.Network), IPv4Address.ToInt32(network.Broadcast) + 1, (i, state) =>
                     {
-                        bag.Add(IPv4Address.FromInt32(i));
+                        if (cancellationToken.IsCancellationRequested)
+                            state.Break();
 
-                        parallelOptions.CancellationToken.ThrowIfCancellationRequested();
+                        result.Add((IPv4Address.FromInt32(i), string.Empty));
+                    });
+                    
+                    break;
+                    
+                // 192.168.0.0 - 192.168.0.100
+                case var _ when Regex.IsMatch(host, RegexHelper.IPv4AddressRangeRegex):
+                    var range = host.Split('-');
+
+                    Parallel.For(IPv4Address.ToInt32(IPAddress.Parse(range[0])), IPv4Address.ToInt32(IPAddress.Parse(range[1])) + 1, (i, state) =>
+                    {
+                        if (cancellationToken.IsCancellationRequested)
+                            state.Break();
+
+                        result.Add((IPv4Address.FromInt32(i), string.Empty));
                     });
 
                     break;
+                    
+                // 192.168.[50-100].1
+                case var _ when Regex.IsMatch(host, RegexHelper.IPv4AddressSpecialRangeRegex):
+                    var octets = host.Split('.');
 
-                // 192.168.0.0 - 192.168.0.100        
-                case var _ when Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressRangeRegex):
-                    var range = ipOrRange.Split('-');
-
-                    Parallel.For(IPv4Address.ToInt32(IPAddress.Parse(range[0])), IPv4Address.ToInt32(IPAddress.Parse(range[1])) + 1, parallelOptions, i =>
-                    {
-                        bag.Add(IPv4Address.FromInt32(i));
-
-                        parallelOptions.CancellationToken.ThrowIfCancellationRequested();
-                    });
-
-                    break;
-
-                // 192.168.[50-100,200].1 --> 192.168.50.1, 192.168.51.1, 192.168.52.1, {..}, 192.168.200.1
-                case var _ when Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressSpecialRangeRegex):
-                    var octets = ipOrRange.Split('.');
-
-                    var list = new List<List<int>>();
+                    var list = new List<ConcurrentBag<int>>();
 
                     // Go through each octet...
                     foreach (var octet in octets)
                     {
-                        var innerList = new List<int>();
+                        var innerList = new ConcurrentBag<int>();
 
                         // Create a range for each octet
                         if (Regex.IsMatch(octet, RegexHelper.SpecialRangeRegex))
@@ -85,10 +97,13 @@ public static class HostRangeHelper
                                 {
                                     var rangeNumbers = numberOrRange.Split('-');
 
-                                    for (var i = int.Parse(rangeNumbers[0]); i < (int.Parse(rangeNumbers[1]) + 1); i++)
+                                    Parallel.For(int.Parse(rangeNumbers[0]), int.Parse(rangeNumbers[1]) + 1, (i, state) =>
                                     {
+                                        if (cancellationToken.IsCancellationRequested)
+                                            state.Break();
+
                                         innerList.Add(i);
-                                    }
+                                    });
                                 } // 200
                                 else
                                 {
@@ -105,75 +120,41 @@ public static class HostRangeHelper
                     }
 
                     // Build the new ipv4
-                    foreach (var i in list[0])
+                    Parallel.ForEach(list[0], new ParallelOptions { CancellationToken = cancellationToken }, i =>
                     {
-                        foreach (var j in list[1])
+                        Parallel.ForEach(list[1], new ParallelOptions { CancellationToken = cancellationToken }, j =>
                         {
-                            foreach (var k in list[2])
+                            Parallel.ForEach(list[2], new ParallelOptions { CancellationToken = cancellationToken }, k =>
                             {
-                                foreach (var h in list[3])
+                                Parallel.ForEach(list[3], new ParallelOptions { CancellationToken = cancellationToken }, h =>
                                 {
-                                    bag.Add(IPAddress.Parse($"{i}.{j}.{k}.{h}"));
-                                }
-                            }
-                        }
-                    }
+                                    result.Add((IPAddress.Parse($"{i}.{j}.{k}.{h}"), string.Empty));
+                                });
+                            });
+                        });
+                    });
 
                     break;
-            }                
-        }
 
-        return bag.ToArray();
-    }
-
-    public static Task<List<string>> ResolveHostnamesInIPRangesAsync(string[] ipRanges, bool dnsResolveHostnamePreferIPv4, CancellationToken cancellationToken)
-    {
-        return Task.Run(() => ResolveHostnamesInIPRanges(ipRanges, dnsResolveHostnamePreferIPv4, cancellationToken), cancellationToken);
-    }
-
-    private static List<string> ResolveHostnamesInIPRanges(IEnumerable<string> ipRanges, bool dnsResolveHostnamePreferIPv4, CancellationToken cancellationToken)
-    {
-        var bag = new ConcurrentBag<string>();
-
-        var exceptions = new ConcurrentQueue<HostNotFoundException>();
-
-        Parallel.ForEach(ipRanges, new ParallelOptions { CancellationToken = cancellationToken }, ipHostOrRange =>
-        {
-            switch (ipHostOrRange)
-            {
-                // 192.168.0.1
-                case var _ when Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressRegex):
-                // 192.168.0.0/24
-                case var _ when Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressCidrRegex):
-                // 192.168.0.0/255.255.255.0
-                case var _ when Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressSubnetmaskRegex):
-                // 192.168.0.0 - 192.168.0.100
-                case var _ when Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressRangeRegex):
-                // 192.168.[50-100].1
-                case var _ when Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressSpecialRangeRegex):
-                // 2001:db8:85a3::8a2e:370:7334
-                case var _ when Regex.IsMatch(ipHostOrRange, RegexHelper.IPv6AddressRegex):
-                    bag.Add(ipHostOrRange);
-                    break;
-                
                 // example.com
-                case var _ when Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameOrDomainRegex):
-                    using (var dnsResolverTask = DNSClientHelper.ResolveAorAaaaAsync(ipHostOrRange, dnsResolveHostnamePreferIPv4))
+                case var _ when Regex.IsMatch(host, RegexHelper.HostnameOrDomainRegex):
+                    using (var dnsResolverTask = DNSClientHelper.ResolveAorAaaaAsync(host, dnsResolveHostnamePreferIPv4))
                     {
                         // Wait for task inside a Parallel.Foreach
                         dnsResolverTask.Wait(cancellationToken);
 
                         if (!dnsResolverTask.Result.HasError)
-                            bag.Add($"{dnsResolverTask.Result.Value}");
+                            result.Add((IPAddress.Parse($"{dnsResolverTask.Result.Value}"), host));
                         else
-                            exceptions.Enqueue(new HostNotFoundException(ipHostOrRange));
+                            exceptions.Enqueue(new HostNotFoundException(host));
                     }
 
                     break;
-                    
+
                 // example.com/24 or example.com/255.255.255.128
-                case var _ when Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameOrDomainWithCidrRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameOrDomainWithSubnetmaskRegex):
-                    var hostAndSubnet = ipHostOrRange.Split('/');
+                case var _ when Regex.IsMatch(host, RegexHelper.HostnameOrDomainWithCidrRegex):
+                case var _ when Regex.IsMatch(host, RegexHelper.HostnameOrDomainWithSubnetmaskRegex):
+                    var hostAndSubnet = host.Split('/');
 
                     // Only support IPv4
                     using (var dnsResolverTask = DNSClientHelper.ResolveAorAaaaAsync(hostAndSubnet[0], true))
@@ -185,12 +166,26 @@ public static class HostRangeHelper
                         {
                             // Only support IPv4 for ranges for now
                             if (dnsResolverTask.Result.Value.AddressFamily == AddressFamily.InterNetwork)
-                                bag.Add($"{dnsResolverTask.Result.Value}/{hostAndSubnet[1]}");
+                            {
+                                network = IPNetwork2.System.Net.IPNetwork.Parse($"{dnsResolverTask.Result.Value}/{hostAndSubnet[1]}");
+
+                                Parallel.For(IPv4Address.ToInt32(network.Network), IPv4Address.ToInt32(network.Broadcast) + 1, (i, state) =>
+                                {
+                                    if (cancellationToken.IsCancellationRequested)
+                                        state.Break();
+
+                                    result.Add((IPv4Address.FromInt32(i), string.Empty));
+                                });
+                            }
                             else
+                            {
                                 exceptions.Enqueue(new HostNotFoundException(hostAndSubnet[0]));
+                            }
                         }
                         else
+                        {
                             exceptions.Enqueue(new HostNotFoundException(hostAndSubnet[0]));
+                        }
                     }
 
                     break;
@@ -200,6 +195,6 @@ public static class HostRangeHelper
         if (!exceptions.IsEmpty)
             throw new AggregateException(exceptions);
 
-        return bag.ToList();
+        return result.ToList();
     }
 }

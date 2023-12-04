@@ -59,14 +59,14 @@
                                        VerticalAlignment="Center" />
                             <ComboBox Grid.Column="2" 
                                       x:Name="ComboBoxHost" ItemsSource="{Binding HostHistoryView}" 
-                                      mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameAndOrIPAddress}" 
+                                      mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostRange}" 
                                       IsReadOnly="{Binding IsRunning}"
                                       Style="{StaticResource HistoryComboBox}">
                                 <ComboBox.Text>
                                     <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
                                             <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                            <validators:IPAddressOrHostnameAsRangeValidator ValidatesOnTargetUpdated="True" />
+                                            <validators:MultipleHostsRangeValidator ValidatesOnTargetUpdated="True" />
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </ComboBox.Text>
@@ -127,7 +127,12 @@
                     </Grid>
                     <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Hosts}" />
                     <ScrollViewer Grid.Row="3" Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Auto">
-                        <ListView ItemsSource="{Binding HostsView}" SelectedItem="{Binding SelectedHost}" Visibility="{Binding Hosts.Count, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}" Background="Transparent" BorderThickness="0" SelectionMode="Single">
+                        <ListView ItemsSource="{Binding HostsView}" 
+                                  SelectedItem="{Binding SelectedHost}"
+                                  Visibility="{Binding Hosts.Count, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}" 
+                                  Background="Transparent" 
+                                  BorderThickness="0" 
+                                  SelectionMode="Single">                                                        
                             <ListView.ContextMenu>
                                 <ContextMenu Opened="ContextMenu_Opened" MinWidth="150">
                                     <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
@@ -141,6 +146,15 @@
                                     </MenuItem>
                                 </ContextMenu>
                             </ListView.ContextMenu>
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
+                                    <Setter Property="Margin" Value="0,0,0,10" />
+                                    <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
+                                    <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
+                                    <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
+                                    <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
+                                </Style>
+                            </ListView.ItemContainerStyle>
                             <!-- BUGFIX This has to be set, to enable mouse wheel scrolling -->
                             <ListView.Template>
                                 <ControlTemplate>

@@ -16,8 +16,7 @@ public sealed class Ping
     public byte[] Buffer = new byte[32];
     public int TTL = 64;
     public bool DontFragment = true;
-    public string Hostname = string.Empty;
-    
+        
     private const int ExceptionCancelCount = 3;
     #endregion
 
@@ -43,6 +42,13 @@ public sealed class Ping
         PingException?.Invoke(this, e);
     }
 
+    public event EventHandler<HostnameArgs> HostnameResolved;
+
+    private void OnHostnameResolved(HostnameArgs e)
+    {
+        HostnameResolved?.Invoke(this, e);
+    }
+
     public event EventHandler UserHasCanceled;
 
     private void OnUserHasCanceled()
@@ -56,17 +62,18 @@ public sealed class Ping
     {
         Task.Run(async () =>
         {
-            var hostname = Hostname;
+            var hostname = string.Empty;
 
             // Try to resolve PTR
-            if (string.IsNullOrEmpty(hostname))
+            var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(ipAddress);
+
+            if (!dnsResult.HasError)
             {
-                var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(ipAddress);
-
-                if (!dnsResult.HasError)
-                    hostname = dnsResult.Value;
+                hostname = dnsResult.Value;
+                    
+                OnHostnameResolved(new HostnameArgs(hostname));
             }
-
+            
             var errorCount = 0;
 
             var options = new PingOptions

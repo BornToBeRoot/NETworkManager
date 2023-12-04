@@ -28,6 +28,11 @@ Experimental features can be enabled in the settings under [`Settings > Update`]
 
 ## Improvements
 
+- Port Scanner
+  - Hostname added to group
+- DNS Lookup
+  - Hostname of the nameserver added to group
+
 ## Bugfixes
 
 ## Other

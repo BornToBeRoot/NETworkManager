@@ -10,11 +10,12 @@ using NETworkManager.Utilities;
 using System.Linq;
 using System.Collections.ObjectModel;
 using NETworkManager.Views;
-using System.Net;
 using NETworkManager.Profiles;
 using System.Windows.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Net;
+using System.Threading;
 using NETworkManager.Models;
 
 namespace NETworkManager.ViewModels;
@@ -23,6 +24,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 {
     #region  Variables 
     private readonly IDialogCoordinator _dialogCoordinator;
+
+    private CancellationTokenSource _cancellationTokenSource;
+
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
     private readonly bool _isLoading;
@@ -229,7 +233,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     public PingMonitorHostViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
-        
+
         _dialogCoordinator = instance;
 
         // Host history
@@ -337,60 +341,45 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #region Methods
-    public async Task AddHost(string hosts)
+    public async Task AddHost(string host)
     {
         IsStatusMessageDisplayed = false;
         StatusMessage = string.Empty;
 
         IsRunning = true;
 
-        await Task.Run(() =>
+        _cancellationTokenSource = new CancellationTokenSource();
+
+        // Resolve hostnames
+        List<(IPAddress ipAddress, string hostname)> hosts;
+
+        try
         {
-            Parallel.ForEach(hosts.Split(';'), currentHost =>
-            {
-                var host = currentHost.Trim();
-                var hostname = string.Empty;
+            hosts = await HostRangeHelper.ResolveAsync(HostRangeHelper.CreateListFromInput(host), SettingsManager.Current.Network_ResolveHostnamePreferIPv4, _cancellationTokenSource.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            //UserHasCanceled(this, EventArgs.Empty);
+            return;
+        }
+        catch (AggregateException exceptions) // DNS error (could not resolve hostname...)
+        {
+           // DnsResolveFailed(exceptions);
+            return;
+        }
 
-                // Resolve ip address from hostname
-                if (!IPAddress.TryParse(host, out var ipAddress))
-                {
-                    hostname = host;
+        // Add hosts
+        foreach (var currentHost in hosts)
+        {
+            var hostView = new PingMonitorView(Guid.NewGuid(), RemoveHost, currentHost);
 
-                    using var dnsResolverTask = DNSClientHelper.ResolveAorAaaaAsync(host, SettingsManager.Current.Network_ResolveHostnamePreferIPv4);
+            Hosts.Add(hostView);
 
-                    // Wait for task inside a Parallel.Foreach
-                    dnsResolverTask.Wait();
-
-                    if (dnsResolverTask.Result.HasError)
-                    {
-                        StatusMessageShowOrAdd(host, dnsResolverTask.Result);
-                        return;
-                    }
-
-                    ipAddress = dnsResolverTask.Result.Value;
-                }
-
-                // Resolve hostname from ip address
-                else
-                {
-                    using var dnsResolverTask = DNSClient.GetInstance().ResolvePtrAsync(ipAddress);
-
-                    // Wait for task inside a Parallel.Foreach
-                    dnsResolverTask.Wait();
-
-                    // Hostname is not necessary for ping. Don't show an error message in the UI.
-                    if (!dnsResolverTask.Result.HasError)
-                        hostname = dnsResolverTask.Result.Value;
-                }
-
-                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-                {
-                    Hosts.Add(new PingMonitorView(Guid.NewGuid(), RemoveHost, new PingMonitorOptions(hostname, ipAddress)));
-                }));
-            });
-  
-            IsRunning = false;
-        }).ConfigureAwait(true);
+            // Start the ping
+            hostView.Start();
+        }
+      
+        IsRunning = false;
     }
 
     private void RemoveHost(Guid hostId)
@@ -403,9 +392,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
                 index = Hosts.IndexOf(host);
         }
 
-        if (index == -1) 
+        if (index == -1)
             return;
-        
+
         Hosts[index].CloseView();
         Hosts.RemoveAt(index);
     }
@@ -422,7 +411,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         // Fill with the new items
         list.ForEach(x => SettingsManager.Current.PingMonitor_HostHistory.Add(x));
     }
-    
+
     private void ResizeProfile(bool dueToChangedSize)
     {
         _canProfileWidthChange = false;
@@ -502,7 +491,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
         SetProfilesView(SelectedProfile);
     }
-    
+
     /// <summary>
     /// Method to display the status message and append messages related to <see cref="DNSClientResult"/>.
     /// </summary>

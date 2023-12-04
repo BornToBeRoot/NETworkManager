@@ -374,11 +374,11 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         _cancellationTokenSource = new CancellationTokenSource();
 
         // Resolve hostnames
-        List<string> ipRanges;
+        List<(IPAddress ipAddress, string hostname)> hosts;
 
         try
         {
-            ipRanges = await HostRangeHelper.ResolveHostnamesInIPRangesAsync(Hosts.Replace(" ", "").Split(';'), SettingsManager.Current.Network_ResolveHostnamePreferIPv4, _cancellationTokenSource.Token);
+            hosts = await HostRangeHelper.ResolveAsync(HostRangeHelper.CreateListFromInput(Hosts), SettingsManager.Current.Network_ResolveHostnamePreferIPv4, _cancellationTokenSource.Token);
         }
         catch (OperationCanceledException)
         {
@@ -391,21 +391,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             return;
         }
 
-        // Create ip addresses 
-        IPAddress[] ipAddresses;
-
-        try
-        {
-            // Create a list of all ip addresses
-            ipAddresses = await HostRangeHelper.CreateIPAddressesFromIPRangesAsync(ipRanges.ToArray(), _cancellationTokenSource.Token);
-        }
-        catch (OperationCanceledException)
-        {
-            UserHasCanceled(this, EventArgs.Empty);
-            return;
-        }
-
-        HostsToScan = ipAddresses.Length;
+        HostsToScan = hosts.Count;
         HostsScanned = 0;
 
         PreparingScan = false;
@@ -433,7 +419,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         ipScanner.ProgressChanged += ProgressChanged;
         ipScanner.UserHasCanceled += UserHasCanceled;
 
-        ipScanner.ScanAsync(ipAddresses, _cancellationTokenSource.Token);
+        ipScanner.ScanAsync(hosts, _cancellationTokenSource.Token);
     }
 
     private void StopScan()

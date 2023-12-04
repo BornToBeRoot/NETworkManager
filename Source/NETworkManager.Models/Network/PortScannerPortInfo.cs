@@ -26,7 +26,7 @@ public class PortScannerPortInfo : PortInfo
     /// <summary>
     /// Hostname (if available) or IP address of the host.
     /// </summary>
-    public string HostAsString => string.IsNullOrWhiteSpace(Hostname) ? IPAddress.ToString() : Hostname;
+    public string HostAsString => string.IsNullOrEmpty(Hostname) ? IPAddress.ToString() : Hostname;
     
     /// <summary>
     /// Creates a new instance of <see cref="PortScannerPortInfo"/> with the specified parameters.

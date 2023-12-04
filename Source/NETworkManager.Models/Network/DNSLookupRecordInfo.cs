@@ -48,9 +48,9 @@ public class DNSLookupRecordInfo
     /// <summary>
     /// Hostname (if available) or/and IP address with port of the name server that provided the result.
     /// </summary>
-    public string NameServerAsString => string.IsNullOrWhiteSpace(NameServerHostName)
+    public string NameServerAsString => string.IsNullOrEmpty(NameServerHostName)
         ? $"{NameServerIPAddress}:{NameServerPort}"
-        : $"{NameServerHostName} ({NameServerIPAddress}:{NameServerPort})";
+        : $"{NameServerHostName.TrimEnd('.')} # {NameServerIPAddress}:{NameServerPort}";
 
     /// <summary>
     /// Creates a new instance of <see cref="DNSLookupRecordInfo"/> with the specified parameters.

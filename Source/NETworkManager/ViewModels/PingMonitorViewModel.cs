@@ -27,20 +27,33 @@ public class PingMonitorViewModel : ViewModelBase
 
     public readonly Guid HostId;
     private readonly Action<Guid> _closeCallback;
-    private bool _firstLoad = true;
-
+ 
     private List<PingInfo> _pingInfoList;
 
-    private readonly string _host;
-    public string Host
+    private string _title;
+    public string Title
     {
-        get => _host;
-        private init
+        get => _title;
+        private set
         {
-            if (value == _host)
+            if (value == _title)
                 return;
 
-            _host = value;
+            _title = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _hostname;
+    public string Hostname
+    {
+        get => _hostname;
+        private set
+        {
+            if (value == _hostname)
+                return;
+
+            _hostname = value;
             OnPropertyChanged();
         }
     }
@@ -197,28 +210,25 @@ public class PingMonitorViewModel : ViewModelBase
     #endregion
 
     #region Contructor, load settings    
-    public PingMonitorViewModel(IDialogCoordinator instance, Guid hostId, Action<Guid> closeCallback, PingMonitorOptions options)
+    public PingMonitorViewModel(IDialogCoordinator instance, Guid hostId, Action<Guid> closeCallback, (IPAddress ipAddress, string hostname) host)
     {
         _dialogCoordinator = instance;
 
         HostId = hostId;
         _closeCallback = closeCallback;
 
-        Host = options.Host;
-        IPAddress = options.IPAddress;
+        Title = string.IsNullOrEmpty(host.hostname) ? host.ipAddress.ToString() : $"{host.hostname} # {host.ipAddress}";
+
+        IPAddress = host.ipAddress;
+        Hostname = host.hostname;
 
         InitialTimeChart();
     }
 
-    public void OnLoaded()
+    public void Start()
     {
-        if (!_firstLoad)
-            return;
-
         StartPing();
-
-        _firstLoad = false;
-    }
+    }       
     #endregion
 
     #region ICommands & Actions
@@ -252,7 +262,7 @@ public class PingMonitorViewModel : ViewModelBase
         IsRunning = true;
 
         // Reset history
-        _pingInfoList = new List<PingInfo>();
+        _pingInfoList = [];
 
         // Reset the latest results            
         StatusTime = DateTime.Now;
@@ -271,17 +281,17 @@ public class PingMonitorViewModel : ViewModelBase
             Buffer = new byte[SettingsManager.Current.PingMonitor_Buffer],
             TTL = SettingsManager.Current.PingMonitor_TTL,
             DontFragment = SettingsManager.Current.PingMonitor_DontFragment,
-            WaitTime = SettingsManager.Current.PingMonitor_WaitTime,
-            Hostname = Host
+            WaitTime = SettingsManager.Current.PingMonitor_WaitTime            
         };
 
         ping.PingReceived += Ping_PingReceived;
         ping.PingException += Ping_PingException;
+        ping.HostnameResolved += Ping_HostnameResolved;
         ping.UserHasCanceled += Ping_UserHasCanceled;
 
         ping.SendAsync(IPAddress, _cancellationTokenSource.Token);
     }
-
+    
     private void StopPing()
     {
         _cancellationTokenSource?.Cancel();
@@ -330,10 +340,9 @@ public class PingMonitorViewModel : ViewModelBase
             SettingsManager.Current.PingMonitor_ExportFileType = instance.FileType;
             SettingsManager.Current.PingMonitor_ExportFilePath = instance.FilePath;
         }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, 
-            new[]
-            {
+            [
                 ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
-            }, false, 
+            ], false, 
             SettingsManager.Current.PingMonitor_ExportFileType,
             SettingsManager.Current.PingMonitor_ExportFilePath);
 
@@ -403,6 +412,15 @@ public class PingMonitorViewModel : ViewModelBase
         IsRunning = false;
     }
 
+    private void Ping_HostnameResolved(object sender, HostnameArgs e)
+    {
+        // Update title if name was not set in the constructor
+        if (string.IsNullOrEmpty(Hostname))
+            Title = $"{e.Hostname.TrimEnd('.')} # {IPAddress}";
+
+        Hostname = e.Hostname;
+    }
+    
     private void Ping_PingException(object sender, PingExceptionArgs e)
     {   
         IsRunning = false;

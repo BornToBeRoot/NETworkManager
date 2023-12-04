@@ -335,11 +335,11 @@ public class PortScannerViewModel : ViewModelBase
         _cancellationTokenSource = new CancellationTokenSource();
 
         // Resolve hostnames
-        List<string> ipRanges;
+        List<(IPAddress ipAddress, string hostname)> hosts;
 
         try
         {
-            ipRanges = await HostRangeHelper.ResolveHostnamesInIPRangesAsync(Hosts.Replace(" ", "").Split(';'), SettingsManager.Current.Network_ResolveHostnamePreferIPv4, _cancellationTokenSource.Token);
+            hosts = await HostRangeHelper.ResolveAsync(HostRangeHelper.CreateListFromInput(Hosts), SettingsManager.Current.Network_ResolveHostnamePreferIPv4, _cancellationTokenSource.Token);
         }
         catch (OperationCanceledException)
         {
@@ -352,23 +352,9 @@ public class PortScannerViewModel : ViewModelBase
             return;
         }
 
-        // Create ip addresses 
-        IPAddress[] ipAddresses;
-
-        try
-        {
-            // Create a list of all ip addresses
-            ipAddresses = await HostRangeHelper.CreateIPAddressesFromIPRangesAsync(ipRanges.ToArray(), _cancellationTokenSource.Token);
-        }
-        catch (OperationCanceledException)
-        {
-            UserHasCanceled(this, EventArgs.Empty);
-            return;
-        }
-
         var ports = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(Ports);
 
-        PortsToScan = ports.Length * ipAddresses.Length;
+        PortsToScan = ports.Length * hosts.Count;
         PortsScanned = 0;
 
         PreparingScan = false;
@@ -390,7 +376,7 @@ public class PortScannerViewModel : ViewModelBase
         portScanner.ProgressChanged += ProgressChanged;
         portScanner.UserHasCanceled += UserHasCanceled;
 
-        portScanner.ScanAsync(ipAddresses, ports, _cancellationTokenSource.Token);
+        portScanner.ScanAsync(hosts, ports, _cancellationTokenSource.Token);
     }
 
     private void StopScan()
