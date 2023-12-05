@@ -13,11 +13,10 @@
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PingMonitorViewModel}">
     <UserControl.Resources>
-        <converters:PercentConverter x:Key="PercentConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
     </UserControl.Resources>
-    <Expander Style="{StaticResource DefaultExpander}" IsExpanded="True" BorderThickness="1,1,1,1" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
+    <Expander Style="{StaticResource DefaultExpander}" IsExpanded="False" BorderThickness="1,1,1,1" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
         <Expander.Header>
             <Grid Margin="0,0,10,0">
                 <Grid.ColumnDefinitions>
@@ -26,13 +25,24 @@
                     <ColumnDefinition Width="*" />                                        
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="20" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
+                    
                 </Grid.ColumnDefinitions>
-                <Rectangle Grid.Column="0" Width="24" Height="24" ToolTip="{Binding ErrorMessage}" Style="{StaticResource ErrorImageRectangle}" Visibility="{Binding IsErrorMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                <Rectangle Grid.Column="0" Width="24" Height="24" Visibility="{Binding IsErrorMessageDisplayed, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" >
+                <Rectangle Grid.Column="0" Grid.Row="0" 
+                           Width="24" Height="24"
+                           ToolTip="{Binding ErrorMessage}"
+                           Style="{StaticResource ErrorImageRectangle}"
+                           Visibility="{Binding IsErrorMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                <Rectangle Grid.Column="0" Grid.Row="0"
+                           Width="24" Height="24" 
+                           Visibility="{Binding IsErrorMessageDisplayed, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" >
                     <Rectangle.Resources>
                         <VisualBrush x:Key="VisualConnected" Stretch="Uniform" Visual="{iconPacks:Material Kind=LanConnect}"/>
                         <VisualBrush x:Key="VisualDisconnected" Stretch="Uniform" Visual="{iconPacks:Material Kind=LanDisconnect}"/>
@@ -67,13 +77,41 @@
                         </Style>
                     </Rectangle.Style>
                 </Rectangle>
-                <TextBlock Grid.Column="2" Text="{Binding Title}" VerticalAlignment="Center" Style="{StaticResource DefaultTextBlock}" />
+                <TextBlock Grid.Column="2" Grid.Row="0"
+                           Text="{Binding Title}"
+                           VerticalAlignment="Center" 
+                           Style="{StaticResource DefaultTextBlock}" />
                 <TextBlock Grid.Column="4" 
+                           VerticalAlignment="Center" 
+                           Style="{StaticResource DefaultTextBlock}" 
+                           Foreground="{StaticResource MahApps.Brushes.Gray5}">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{} {0} / {1} / {2} %">
+                            <Binding Path="Transmitted" />
+                            <Binding Path="Lost" />
+                            <Binding Path="PacketLoss" />
+                            <Binding Path="TimeMS" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock Grid.Column="6" Grid.Row="0"
+                           VerticalAlignment="Center" 
+                           Style="{StaticResource DefaultTextBlock}"
+                           Foreground="{StaticResource MahApps.Brushes.Accent}"
+                           TextAlignment="Right" 
+                           MinWidth="60">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{} {0} ms">                        
+                            <Binding Path="TimeMS" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock Grid.Column="8" 
                            HorizontalAlignment="Right"
                            Background="{DynamicResource MahApps.Brushes.Gray8}"
                            Padding="5" Text="ICMP" Style="{StaticResource AccentTextBlock}" 
                            VerticalAlignment="Center" />
-                <Button Grid.Column="6" Grid.Row="0" Command="{Binding PingCommand}" Style="{StaticResource CleanButton}">
+                <Button Grid.Column="10" Grid.Row="0" Command="{Binding PingCommand}" Style="{StaticResource CleanButton}">
                     <Rectangle Width="16" Height="16">
                         <Rectangle.Resources>
                             <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{iconPacks:Material Kind=Play}" />
@@ -97,7 +135,7 @@
                         </Rectangle.Style>
                     </Rectangle>
                 </Button>
-                <Button Grid.Column="8" Grid.Row="2" Command="{Binding CloseCommand}" Style="{StaticResource CleanButton}" ToolTip="{x:Static localization:Strings.Close}">
+                <Button Grid.Column="12" Grid.Row="2" Command="{Binding CloseCommand}" Style="{StaticResource CleanButton}" ToolTip="{x:Static localization:Strings.Close}">
                     <Rectangle Width="16" Height="16">
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=WindowClose}" />
@@ -161,9 +199,8 @@
                 <TextBlock Grid.Column="4" Grid.Row="4" Text="{x:Static localization:Strings.PacketLoss}" />
                 <TextBox Grid.Column="6" Grid.Row="4">
                     <TextBox.Text>
-                        <MultiBinding Converter="{StaticResource PercentConverter}" Mode="OneWay" StringFormat="{}{0} %">
-                            <Binding Path="Transmitted" />
-                            <Binding Path="Lost" />
+                        <MultiBinding Mode="OneWay" StringFormat="{}{0} %">
+                            <Binding Path="PacketLoss" />                            
                         </MultiBinding>
                     </TextBox.Text>
                 </TextBox>

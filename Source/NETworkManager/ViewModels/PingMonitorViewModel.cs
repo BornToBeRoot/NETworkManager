@@ -26,7 +26,7 @@ public class PingMonitorViewModel : ViewModelBase
     private CancellationTokenSource _cancellationTokenSource;
 
     public readonly Guid HostId;
-    private readonly Action<Guid> _closeCallback;
+    private readonly Action<Guid> _removeHostByGUID;
  
     private List<PingInfo> _pingInfoList;
 
@@ -156,6 +156,34 @@ public class PingMonitorViewModel : ViewModelBase
         }
     }
 
+    private double _packetLoss;
+    public double PacketLoss
+    {
+        get => _packetLoss;
+        set
+        {
+            if (value == _packetLoss)
+                return;
+
+            _packetLoss = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private long _timeMS;
+    public long TimeMS
+    {
+        get => _timeMS;
+        set
+        {
+            if (value == _timeMS)
+                return;
+
+            _timeMS = value;
+            OnPropertyChanged();
+        }
+    }
+
     private void InitialTimeChart()
     {
         var dayConfig = Mappers.Xy<LvlChartsDefaultInfo>()
@@ -210,12 +238,12 @@ public class PingMonitorViewModel : ViewModelBase
     #endregion
 
     #region Contructor, load settings    
-    public PingMonitorViewModel(IDialogCoordinator instance, Guid hostId, Action<Guid> closeCallback, (IPAddress ipAddress, string hostname) host)
+    public PingMonitorViewModel(IDialogCoordinator instance, Guid hostId, Action<Guid> removeHostByGUID, (IPAddress ipAddress, string hostname) host)
     {
         _dialogCoordinator = instance;
 
         HostId = hostId;
-        _closeCallback = closeCallback;
+        _removeHostByGUID = removeHostByGUID;
 
         Title = string.IsNullOrEmpty(host.hostname) ? host.ipAddress.ToString() : $"{host.hostname} # {host.ipAddress}";
 
@@ -223,12 +251,7 @@ public class PingMonitorViewModel : ViewModelBase
         Hostname = host.hostname;
 
         InitialTimeChart();
-    }
-
-    public void Start()
-    {
-        StartPing();
-    }       
+    }     
     #endregion
 
     #region ICommands & Actions
@@ -236,27 +259,22 @@ public class PingMonitorViewModel : ViewModelBase
 
     private void PingAction()
     {
-        Ping();
+        if (IsRunning)
+            Stop();
+        else
+            Start();
     }
 
     public ICommand CloseCommand => new RelayCommand(_ => CloseAction());
 
     private void CloseAction()
     {
-        _closeCallback(HostId);
+        _removeHostByGUID(HostId);
     }
     #endregion
 
     #region Methods      
-    private void Ping()
-    {
-        if (IsRunning)
-            StopPing();
-        else
-            StartPing();
-    }
-
-    private void StartPing()
+    public void Start()
     {
         IsErrorMessageDisplayed = false;
         IsRunning = true;
@@ -269,6 +287,7 @@ public class PingMonitorViewModel : ViewModelBase
         Transmitted = 0;
         Received = 0;
         Lost = 0;
+        PacketLoss = 0;
 
         // Reset chart
         ResetTimeChart();
@@ -292,8 +311,11 @@ public class PingMonitorViewModel : ViewModelBase
         ping.SendAsync(IPAddress, _cancellationTokenSource.Token);
     }
     
-    private void StopPing()
+    public void Stop()
     {
+        if (!IsRunning)
+            return;
+
         _cancellationTokenSource?.Cancel();
     }
 
@@ -353,13 +375,6 @@ public class PingMonitorViewModel : ViewModelBase
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
-
-    public void OnClose()
-    {
-        // Stop the ping
-        if (IsRunning)
-            StopPing();
-    }
     #endregion
 
     #region Events
@@ -394,8 +409,12 @@ public class PingMonitorViewModel : ViewModelBase
 
             timeInfo = new LvlChartsDefaultInfo(e.Args.Timestamp, double.NaN);
         }
+        
+        PacketLoss = Math.Round((double)Lost / Transmitted * 100, 2);
+        TimeMS = e.Args.Time;
 
-        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+        // Null exception may occur when the application is closing        
+        Application.Current?.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
         {
             Series[0].Values.Add(timeInfo);
 

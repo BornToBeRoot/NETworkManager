@@ -194,7 +194,10 @@ public static class HostRangeHelper
 
         if (!exceptions.IsEmpty)
             throw new AggregateException(exceptions);
-
-        return result.ToList();
+        
+        // Sort list and return
+        IPAddressComparer comparer = new();
+        
+        return [.. result.OrderBy(x => x.ipAddress, comparer)];
     }
 }

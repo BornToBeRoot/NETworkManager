@@ -165,10 +165,10 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
 
         var tabId = Guid.NewGuid();
         
-        TabItems = new ObservableCollection<DragablzTabItem>
-        {
+        TabItems = 
+            [
             new(Localization.Resources.Strings.NewTab, new DNSLookupView (tabId), tabId)
-        };
+        ];
 
         // Profiles
         SetProfilesView();

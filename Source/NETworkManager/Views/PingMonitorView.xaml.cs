@@ -11,11 +11,11 @@ public partial class PingMonitorView
 
     public Guid HostId => _viewModel.HostId;
 
-    public PingMonitorView(Guid hostId, Action<Guid> closeCallback, (IPAddress ipAddress, string hostname) host)
+    public PingMonitorView(Guid hostId, Action<Guid> removeHostByGUID, (IPAddress ipAddress, string hostname) host)
     {
         InitializeComponent();
 
-        _viewModel = new PingMonitorViewModel(DialogCoordinator.Instance, hostId, closeCallback, host);
+        _viewModel = new PingMonitorViewModel(DialogCoordinator.Instance, hostId, removeHostByGUID, host);
 
         DataContext = _viewModel;
 
@@ -26,6 +26,10 @@ public partial class PingMonitorView
     {
         _viewModel.Start();
     }
+    public void Stop()
+    {
+        _viewModel.Stop();
+    }
 
     public void Export()
     {
@@ -34,11 +38,6 @@ public partial class PingMonitorView
 
     private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
     {
-        _viewModel.OnClose();
-    }
-
-    public void CloseView()
-    {
-        _viewModel.OnClose();
+        Stop();
     }
 }

@@ -3748,4 +3748,7 @@ Try again in a few seconds.</value>
   <data name="SNMPErrorCode_InconsistentName" xml:space="preserve">
     <value>The object's state is inconsistent, preventing the set operation!</value>
   </data>
+  <data name="CloseAll" xml:space="preserve">
+    <value>Close all</value>
+  </data>
 </root>

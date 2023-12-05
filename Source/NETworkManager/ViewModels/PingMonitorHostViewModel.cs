@@ -90,7 +90,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    private ObservableCollection<PingMonitorView> _hosts = new();
+    private ObservableCollection<PingMonitorView> _hosts = [];
     public ObservableCollection<PingMonitorView> Hosts
     {
         get => _hosts;
@@ -276,6 +276,13 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         Host = string.Empty;
     }
 
+    public ICommand CloseAllCommand => new RelayCommand(_ => CloseAllAction());
+
+    private void CloseAllAction()
+    {
+        RemoveAllHosts();
+    }
+
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
 
     private void ExportAction()
@@ -359,44 +366,55 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         }
         catch (OperationCanceledException)
         {
-            //UserHasCanceled(this, EventArgs.Empty);
+            UserHasCanceled(this, EventArgs.Empty);
             return;
         }
         catch (AggregateException exceptions) // DNS error (could not resolve hostname...)
         {
-           // DnsResolveFailed(exceptions);
+            DnsResolveFailed(exceptions);
             return;
         }
-
+        
         // Add hosts
         foreach (var currentHost in hosts)
         {
-            var hostView = new PingMonitorView(Guid.NewGuid(), RemoveHost, currentHost);
-
+            var hostView = new PingMonitorView(Guid.NewGuid(), RemoveHostByGUID, currentHost);
+            
             Hosts.Add(hostView);
 
             // Start the ping
             hostView.Start();
+
+            await Task.Delay(25);
         }
-      
+
         IsRunning = false;
     }
 
-    private void RemoveHost(Guid hostId)
+    private void RemoveAllHosts()
     {
-        var index = -1;
+        for (int i = Hosts.Count - 1; i >= 0; i--)
+        {
+            Hosts[i].Stop();
+            Hosts.RemoveAt(i);
+        }
+    }
+
+    private void RemoveHostByGUID(Guid hostId)
+    {
+        var i = -1;
 
         foreach (var host in Hosts)
         {
             if (host.HostId.Equals(hostId))
-                index = Hosts.IndexOf(host);
+                i = Hosts.IndexOf(host);
         }
 
-        if (index == -1)
+        if (i == -1)
             return;
 
-        Hosts[index].CloseView();
-        Hosts.RemoveAt(index);
+        Hosts[i].Stop();
+        Hosts.RemoveAt(i);
     }
 
     private void AddHostToHistory(string host)
@@ -529,6 +547,20 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         RefreshProfiles();
 
         IsSearching = false;
+    }
+
+    private void DnsResolveFailed(AggregateException e)
+    {
+        StatusMessage = $"{Localization.Resources.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", e.Flatten().InnerExceptions.Select(x => x.Message))}";
+        IsStatusMessageDisplayed = true;
+                
+        IsRunning = false;
+    }
+
+    private void UserHasCanceled(object sender, EventArgs e)
+    {
+        StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
+        IsStatusMessageDisplayed = true;
     }
     #endregion
 }

@@ -4,6 +4,12 @@ namespace NETworkManager.Utilities;
 
 public static class IPAddressHelper
 {
+
+    /// <summary>
+    /// Test if an IP address is a private address.
+    /// </summary>
+    /// <param name="ipAddress">IP address.</param>
+    /// <returns>True if the IP address is a private address, otherwise false.</returns>
     public static bool IsPrivateIPAddress(IPAddress ipAddress)
     {
         var addressBytes = ipAddress.GetAddressBytes();
@@ -20,5 +26,23 @@ public static class IPAddressHelper
             default:
                 return false;
         }
+    }
+
+    /// <summary>
+    /// Compare two IP addresses.
+    /// </summary>
+    /// <param name="first">First IP address.</param>
+    /// <param name="second">Second IP address.</param>
+    /// <returns>0 if the IP addresses are equal, otherwise a negative or positive value.</returns>
+    public static int CompareIPAddresses(IPAddress first, IPAddress second)
+    {
+        byte[] bytesFirst = first.GetAddressBytes();
+        byte[] bytesSecond = second.GetAddressBytes();
+
+        for (int i = 0; i < bytesFirst.Length; i++)
+            if (bytesFirst[i] != bytesSecond[i])
+                return bytesFirst[i] - bytesSecond[i];
+
+        return 0; // IP addresses are equal
     }
 }
