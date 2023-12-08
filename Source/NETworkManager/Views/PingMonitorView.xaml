@@ -16,7 +16,7 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
     </UserControl.Resources>
-    <Expander Style="{StaticResource DefaultExpander}" IsExpanded="False" BorderThickness="1,1,1,1" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
+    <Expander Style="{StaticResource DefaultExpander}" IsExpanded="{Binding ExpandHostView}" BorderThickness="1,1,1,1" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
         <Expander.Header>
             <Grid Margin="0,0,10,0">
                 <Grid.ColumnDefinitions>
@@ -33,7 +33,6 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
-                    
                 </Grid.ColumnDefinitions>
                 <Rectangle Grid.Column="0" Grid.Row="0" 
                            Width="24" Height="24"
@@ -90,7 +89,7 @@
                             <Binding Path="Transmitted" />
                             <Binding Path="Lost" />
                             <Binding Path="PacketLoss" />
-                            <Binding Path="TimeMS" />
+                            <Binding Path="TimeMs" />
                         </MultiBinding>
                     </TextBlock.Text>
                 </TextBlock>
@@ -102,7 +101,7 @@
                            MinWidth="60">
                     <TextBlock.Text>
                         <MultiBinding StringFormat="{} {0} ms">                        
-                            <Binding Path="TimeMS" />
+                            <Binding Path="TimeMs" />
                         </MultiBinding>
                     </TextBlock.Text>
                 </TextBlock>

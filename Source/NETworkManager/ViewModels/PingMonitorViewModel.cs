@@ -26,7 +26,7 @@ public class PingMonitorViewModel : ViewModelBase
     private CancellationTokenSource _cancellationTokenSource;
 
     public readonly Guid HostId;
-    private readonly Action<Guid> _removeHostByGUID;
+    private readonly Action<Guid> _removeHostByGuid;
  
     private List<PingInfo> _pingInfoList;
 
@@ -162,7 +162,7 @@ public class PingMonitorViewModel : ViewModelBase
         get => _packetLoss;
         set
         {
-            if (value == _packetLoss)
+            if (Math.Abs(value - _packetLoss) < 0.01)
                 return;
 
             _packetLoss = value;
@@ -170,16 +170,16 @@ public class PingMonitorViewModel : ViewModelBase
         }
     }
 
-    private long _timeMS;
-    public long TimeMS
+    private long _timeMs;
+    public long TimeMs
     {
-        get => _timeMS;
+        get => _timeMs;
         set
         {
-            if (value == _timeMS)
+            if (value == _timeMs)
                 return;
 
-            _timeMS = value;
+            _timeMs = value;
             OnPropertyChanged();
         }
     }
@@ -235,15 +235,29 @@ public class PingMonitorViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
+    private bool _expandHostView;
+    public bool ExpandHostView
+    {
+        get => _expandHostView;
+        set
+        {
+            if (value == _expandHostView)
+                return;
+
+            _expandHostView = value;
+            OnPropertyChanged();
+        }
+    }
     #endregion
 
     #region Contructor, load settings    
-    public PingMonitorViewModel(IDialogCoordinator instance, Guid hostId, Action<Guid> removeHostByGUID, (IPAddress ipAddress, string hostname) host)
+    public PingMonitorViewModel(IDialogCoordinator instance, Guid hostId, Action<Guid> removeHostByGuid, (IPAddress ipAddress, string hostname) host)
     {
         _dialogCoordinator = instance;
 
         HostId = hostId;
-        _removeHostByGUID = removeHostByGUID;
+        _removeHostByGuid = removeHostByGuid;
 
         Title = string.IsNullOrEmpty(host.hostname) ? host.ipAddress.ToString() : $"{host.hostname} # {host.ipAddress}";
 
@@ -251,6 +265,8 @@ public class PingMonitorViewModel : ViewModelBase
         Hostname = host.hostname;
 
         InitialTimeChart();
+        
+        ExpandHostView = SettingsManager.Current.PingMonitor_ExpandHostView;
     }     
     #endregion
 
@@ -269,7 +285,7 @@ public class PingMonitorViewModel : ViewModelBase
 
     private void CloseAction()
     {
-        _removeHostByGUID(HostId);
+        _removeHostByGuid(HostId);
     }
     #endregion
 
@@ -411,7 +427,7 @@ public class PingMonitorViewModel : ViewModelBase
         }
         
         PacketLoss = Math.Round((double)Lost / Transmitted * 100, 2);
-        TimeMS = e.Args.Time;
+        TimeMs = e.Args.Time;
 
         // Null exception may occur when the application is closing        
         Application.Current?.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate

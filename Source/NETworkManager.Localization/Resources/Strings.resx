@@ -3751,4 +3751,7 @@ Try again in a few seconds.</value>
   <data name="CloseAll" xml:space="preserve">
     <value>Close all</value>
   </data>
+  <data name="ExpandHostView" xml:space="preserve">
+    <value>Expand host view</value>
+  </data>
 </root>

@@ -11,11 +11,11 @@ public partial class PingMonitorView
 
     public Guid HostId => _viewModel.HostId;
 
-    public PingMonitorView(Guid hostId, Action<Guid> removeHostByGUID, (IPAddress ipAddress, string hostname) host)
+    public PingMonitorView(Guid hostId, Action<Guid> removeHostByGuid, (IPAddress ipAddress, string hostname) host)
     {
         InitializeComponent();
 
-        _viewModel = new PingMonitorViewModel(DialogCoordinator.Instance, hostId, removeHostByGUID, host);
+        _viewModel = new PingMonitorViewModel(DialogCoordinator.Instance, hostId, removeHostByGuid, host);
 
         DataContext = _viewModel;
 
