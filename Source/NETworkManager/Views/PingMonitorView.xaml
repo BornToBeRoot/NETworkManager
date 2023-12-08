@@ -16,7 +16,10 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
     </UserControl.Resources>
-    <Expander Style="{StaticResource DefaultExpander}" IsExpanded="{Binding ExpandHostView}" BorderThickness="1,1,1,1" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
+    <Expander Style="{StaticResource DefaultExpander}" 
+              IsExpanded="{Binding ExpandHostView}" 
+              BorderThickness="1,1,1,1" 
+              BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
         <Expander.Header>
             <Grid Margin="0,0,10,0">
                 <Grid.ColumnDefinitions>
@@ -80,7 +83,7 @@
                            Text="{Binding Title}"
                            VerticalAlignment="Center" 
                            Style="{StaticResource DefaultTextBlock}" />
-                <TextBlock Grid.Column="4" 
+                <TextBlock Grid.Column="4" Grid.Row="0"
                            VerticalAlignment="Center" 
                            Style="{StaticResource DefaultTextBlock}" 
                            Foreground="{StaticResource MahApps.Brushes.Gray5}">
@@ -105,12 +108,14 @@
                         </MultiBinding>
                     </TextBlock.Text>
                 </TextBlock>
-                <TextBlock Grid.Column="8" 
+                <TextBlock Grid.Column="8" Grid.Row="0"
                            HorizontalAlignment="Right"
                            Background="{DynamicResource MahApps.Brushes.Gray8}"
                            Padding="5" Text="ICMP" Style="{StaticResource AccentTextBlock}" 
                            VerticalAlignment="Center" />
-                <Button Grid.Column="10" Grid.Row="0" Command="{Binding PingCommand}" Style="{StaticResource CleanButton}">
+                <Button Grid.Column="10" Grid.Row="0"
+                        Command="{Binding PingCommand}"
+                        Style="{StaticResource CleanButton}">
                     <Rectangle Width="16" Height="16">
                         <Rectangle.Resources>
                             <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{iconPacks:Material Kind=Play}" />
@@ -134,7 +139,10 @@
                         </Rectangle.Style>
                     </Rectangle>
                 </Button>
-                <Button Grid.Column="12" Grid.Row="2" Command="{Binding CloseCommand}" Style="{StaticResource CleanButton}" ToolTip="{x:Static localization:Strings.Close}">
+                <Button Grid.Column="12" Grid.Row="0" 
+                        Command="{Binding CloseCommand}" 
+                        Style="{StaticResource CleanButton}" 
+                        ToolTip="{x:Static localization:Strings.Close}">
                     <Rectangle Width="16" Height="16">
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=WindowClose}" />
@@ -159,7 +167,7 @@
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition MinWidth="200" Width="*" />
             </Grid.ColumnDefinitions>            
-            <Grid Grid.Column="0">
+            <Grid Grid.Column="0" Grid.Row="0">
                 <Grid.Resources>
                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
                     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">

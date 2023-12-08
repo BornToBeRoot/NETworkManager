@@ -96,3 +96,11 @@ Time in milliseconds to wait between each ping.
 **Type:** `Integer` [Min `100`, Max `15000`]
 
 **Default:** `1000`
+
+### Expand host view
+
+Expand the host view to show more information when the host is added.
+
+**Type:** `Boolean`
+
+**Default:** `false`

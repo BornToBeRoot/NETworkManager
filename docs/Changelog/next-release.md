@@ -19,6 +19,10 @@ Release date: **xx.xx.2023**
 
 ## What's new?
 
+- Ping Monitor
+  - UI redesigned [#2573](https://github.com/BornToBeRoot/NETworkManager/pull/2573){:target="\_blank"}
+  - Allow ranges like `192.168.0.0/24` or `10.0.[0-255].1` [#2573](https://github.com/BornToBeRoot/NETworkManager/pull/2573){:target="\_blank"}
+
 ## Experimental features
 
 - Run command (HotKey: Ctrl+Shift+P) added. This feature allows you to open a command field to switch between applications and pass parameters to them.
