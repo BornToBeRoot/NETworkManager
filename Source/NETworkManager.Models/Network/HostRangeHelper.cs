@@ -42,8 +42,6 @@ public static class HostRangeHelper
         var hostsBag = new ConcurrentBag<(IPAddress ipAddress, string hostname)>();
         var hostnamesNotResovledBag = new ConcurrentBag<string>();
 
-        var exceptions = new ConcurrentQueue<HostNotFoundException>();
-
         Parallel.ForEach(hosts, new ParallelOptions { CancellationToken = cancellationToken }, host =>
         {
             switch (host)
@@ -202,9 +200,6 @@ public static class HostRangeHelper
             }
         });
 
-        if (!exceptions.IsEmpty)
-            throw new AggregateException(exceptions);
-        
         // Sort list and return
         IPAddressComparer comparer = new();
 
