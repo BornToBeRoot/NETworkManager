@@ -3842,4 +3842,14 @@ Questi non sono ancora completi, contengono bug, possono mandare in crash l'appl
   <data name="SNMPErrorCode_InconsistentName" xml:space="preserve">
     <value>Lo stato dell'oggetto non è coerente ed impedisce l'operazione di impostazione!</value>
   </data>
+  <data name="CloseAll" xml:space="preserve">
+    <value>Chiudi tutto</value>
+  </data>
+  <data name="ExpandHostView" xml:space="preserve">
+    <value>Espandi visualizzazione host</value>
+  </data>
+  <data name="CannotSetHostWhileRunningMessage" xml:space="preserve">
+    <value>Non è possibile impostare l'host mentre vengono aggiunti altri host. 
+Attendi il completamento del processo e riprova.</value>
+  </data>
 </root>
