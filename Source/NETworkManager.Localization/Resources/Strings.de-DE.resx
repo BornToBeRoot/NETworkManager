@@ -873,7 +873,7 @@ Erstelle zuerst ein Backup der Profildatei bevor du die Verschlüsselung aktivie
     <value>Hostname oder IP-Adresse</value>
   </data>
   <data name="Hosts" xml:space="preserve">
-    <value>Host(s)</value>
+    <value>Hosts</value>
   </data>
   <data name="ID" xml:space="preserve">
     <value>ID</value>
@@ -3747,5 +3747,14 @@ Versuchen Sie es in einigen Sekunden erneut.</value>
   </data>
   <data name="SNMPErrorCode_InconsistentName" xml:space="preserve">
     <value>Der Zustand des Objekts ist inkonsistent und verhindert die Set-Operation!</value>
+  </data>
+  <data name="CloseAll" xml:space="preserve">
+    <value>Alle schließen</value>
+  </data>
+  <data name="ExpandHostView" xml:space="preserve">
+    <value>Hostansicht ausklappen</value>
+  </data>
+  <data name="CannotSetHostWhileRunningMessage" xml:space="preserve">
+    <value>Host kann nicht gesetzt werden, während andere Hosts hinzugefügt werden. Bitte warten Sie, bis der Vorgang abgeschlossen ist, und versuchen Sie es erneut.</value>
   </data>
 </root>
