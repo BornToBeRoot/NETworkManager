@@ -24,11 +24,11 @@ public sealed class IPScanner
 
     #region Events
 
-    public event EventHandler<IPScannerHostScannedArgs> HostFound;
+    public event EventHandler<IPScannerHostScannedArgs> HostScanned;
 
-    private void OnHostFound(IPScannerHostScannedArgs e)
+    private void OnHostScanned(IPScannerHostScannedArgs e)
     {
-        HostFound?.Invoke(this, e);
+        HostScanned?.Invoke(this, e);
     }
 
     public event EventHandler ScanComplete;
@@ -199,7 +199,7 @@ public sealed class IPScanner
                             }
                         }
 
-                        OnHostFound(new IPScannerHostScannedArgs(
+                        OnHostScanned(new IPScannerHostScannedArgs(
                             new IPScannerHostInfo(
                                 isReachable, pingInfo, isAnyPortOpen, portResults.OrderBy(x => x.Port).ToList(),
                                 hostname, macAddress, vendor)));

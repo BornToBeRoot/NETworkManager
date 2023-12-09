@@ -13,9 +13,18 @@ using System.Threading.Tasks;
 
 namespace NETworkManager.Models.Network;
 
+/// <summary>
+/// Helper class to interact with host ranges.
+/// E.g. Parse inputs, resolve hostnames and ip ranges.
+/// </summary>
 public static class HostRangeHelper
 {
-    public static string[] CreateListFromInput(string hosts)
+    /// <summary>
+    /// Create a list of hosts from a string input like "10.0.0.1; example.com; 10.0.0.0/24"
+    /// </summary>
+    /// <param name="hosts">Hosts like "10.0.0.1; example.com; 10.0.0.0/24"</param>
+    /// <returns>List of hosts.</returns>
+    public static IEnumerable<string> CreateListFromInput(string hosts)
     {
         return hosts.Replace(" ", "").Split(';')
             .Where(x => !string.IsNullOrEmpty(x))
@@ -23,14 +32,15 @@ public static class HostRangeHelper
             .ToArray();
     }
 
-    public static Task<List<(IPAddress ipAddress, string hostname)>> ResolveAsync(IEnumerable<string> hosts, bool dnsResolveHostnamePreferIPv4, CancellationToken cancellationToken)
+    public static Task<(List<(IPAddress ipAddress, string hostname)> hosts, List<string> hostnamesNotResolved)> ResolveAsync(IEnumerable<string> hosts, bool dnsResolveHostnamePreferIPv4, CancellationToken cancellationToken)
     {
         return Task.Run(() => Resolve(hosts, dnsResolveHostnamePreferIPv4, cancellationToken), cancellationToken);
     }
 
-    private static List<(IPAddress ipAddress, string hostname)> Resolve(IEnumerable<string> hosts, bool dnsResolveHostnamePreferIPv4, CancellationToken cancellationToken)
+    private static (List<(IPAddress ipAddress, string hostname)> hosts, List<string> hostnamesNotResolved) Resolve(IEnumerable<string> hosts, bool dnsResolveHostnamePreferIPv4, CancellationToken cancellationToken)
     {
-        var result = new ConcurrentBag<(IPAddress ipAddress, string hostname)>();
+        var hostsBag = new ConcurrentBag<(IPAddress ipAddress, string hostname)>();
+        var hostnamesNotResovledBag = new ConcurrentBag<string>();
 
         var exceptions = new ConcurrentQueue<HostNotFoundException>();
 
@@ -42,7 +52,7 @@ public static class HostRangeHelper
                 case var _ when Regex.IsMatch(host, RegexHelper.IPv4AddressRegex):
                 // 2001:db8:85a3::8a2e:370:7334
                 case var _ when Regex.IsMatch(host, RegexHelper.IPv6AddressRegex):
-                    result.Add((IPAddress.Parse(host), string.Empty));
+                    hostsBag.Add((IPAddress.Parse(host), string.Empty));
                     
                     break;
                     
@@ -57,7 +67,7 @@ public static class HostRangeHelper
                         if (cancellationToken.IsCancellationRequested)
                             state.Break();
 
-                        result.Add((IPv4Address.FromInt32(i), string.Empty));
+                        hostsBag.Add((IPv4Address.FromInt32(i), string.Empty));
                     });
                     
                     break;
@@ -71,7 +81,7 @@ public static class HostRangeHelper
                         if (cancellationToken.IsCancellationRequested)
                             state.Break();
 
-                        result.Add((IPv4Address.FromInt32(i), string.Empty));
+                        hostsBag.Add((IPv4Address.FromInt32(i), string.Empty));
                     });
 
                     break;
@@ -128,7 +138,7 @@ public static class HostRangeHelper
                             {
                                 Parallel.ForEach(list[3], new ParallelOptions { CancellationToken = cancellationToken }, h =>
                                 {
-                                    result.Add((IPAddress.Parse($"{i}.{j}.{k}.{h}"), string.Empty));
+                                    hostsBag.Add((IPAddress.Parse($"{i}.{j}.{k}.{h}"), string.Empty));
                                 });
                             });
                         });
@@ -144,9 +154,9 @@ public static class HostRangeHelper
                         dnsResolverTask.Wait(cancellationToken);
 
                         if (!dnsResolverTask.Result.HasError)
-                            result.Add((IPAddress.Parse($"{dnsResolverTask.Result.Value}"), host));
+                            hostsBag.Add((IPAddress.Parse($"{dnsResolverTask.Result.Value}"), host));
                         else
-                            exceptions.Enqueue(new HostNotFoundException(host));
+                            hostnamesNotResovledBag.Add(host);
                     }
 
                     break;
@@ -174,17 +184,17 @@ public static class HostRangeHelper
                                     if (cancellationToken.IsCancellationRequested)
                                         state.Break();
 
-                                    result.Add((IPv4Address.FromInt32(i), string.Empty));
+                                    hostsBag.Add((IPv4Address.FromInt32(i), string.Empty));
                                 });
                             }
                             else
                             {
-                                exceptions.Enqueue(new HostNotFoundException(hostAndSubnet[0]));
+                                hostnamesNotResovledBag.Add(hostAndSubnet[0]);
                             }
                         }
                         else
                         {
-                            exceptions.Enqueue(new HostNotFoundException(hostAndSubnet[0]));
+                            hostnamesNotResovledBag.Add(hostAndSubnet[0]);
                         }
                     }
 
@@ -197,7 +207,7 @@ public static class HostRangeHelper
         
         // Sort list and return
         IPAddressComparer comparer = new();
-        
-        return [.. result.OrderBy(x => x.ipAddress, comparer)];
+
+        return ([.. hostsBag.OrderBy(x => x.ipAddress, comparer)], [.. hostnamesNotResovledBag]);
     }
 }

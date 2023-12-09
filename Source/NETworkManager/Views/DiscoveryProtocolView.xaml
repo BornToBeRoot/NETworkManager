@@ -81,9 +81,18 @@
                                 </Button.Content>
                             </Button>
                         </Grid>
-                        <TextBlock Grid.Row="4" Foreground="{DynamicResource MahApps.Brushes.Accent}" Text="{Binding StatusMessage}" TextWrapping="Wrap" Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource StatusMessageTextBlock}" Margin="0,0,0,10" />
-                        <TextBlock Grid.Row="5" Text="{x:Static localization:Strings.Result}" Style="{StaticResource HeaderTextBlock}"  Margin="0,20,0,10" />                         
-                        <ScrollViewer Grid.Row="6">
+                        <TextBlock Grid.Column="0" Grid.Row="4"
+                                   Foreground="{DynamicResource MahApps.Brushes.Accent}" 
+                                   Text="{Binding StatusMessage}"
+                                   Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" 
+                                   Style="{DynamicResource StatusMessageTextBlock}"
+                                   Margin="0,0,0,10" />
+                        <TextBlock Grid.Column="0" Grid.Row="5" 
+                                   Text="{x:Static localization:Strings.Result}"
+                                   Visibility="{Binding FirstRun, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
+                                   Style="{StaticResource HeaderTextBlock}" 
+                                   Margin="0,20,0,10" />                         
+                        <ScrollViewer Grid.Column="0" Grid.Row="6">
                             <ScrollViewer.Style>
                                 <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaultScrollViewer}">
                                     <Style.Triggers>
@@ -155,18 +164,10 @@
                                 <TextBox Grid.Column="2" Grid.Row="12" Text="{Binding DiscoveryPackage.LocalInterface, Mode=OneWay, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
                             </Grid>
                         </ScrollViewer>
-                        <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.CaptureNetworkPacketsToViewLLDPorCDPInformation}" >
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding FirstRun}" Value="False">
-                                            <Setter Property="Visibility" Value="Collapsed" />
-                                        </DataTrigger>                                        
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
+                        <TextBlock Grid.Column="0" Grid.Row="6" 
+                                   Text="{x:Static localization:Strings.CaptureNetworkPacketsToViewLLDPorCDPInformation}"
+                                   Visibility="{Binding FirstRun, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
+                                   Style="{StaticResource MessageTextBlock}" />
                         <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.NoDiscoveryProtocolPackagesReceived}" >
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">

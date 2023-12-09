@@ -126,8 +126,13 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Result}" />
-                <TextBox Grid.Column="0" Grid.Row="1" VerticalScrollBarVisibility="Auto" Text="{Binding Result}" IsReadOnly="True">
+                <TextBlock Grid.Column="0" Grid.Row="0" 
+                           Style="{StaticResource HeaderTextBlock}"
+                           Text="{x:Static localization:Strings.Result}" />
+                <TextBox Grid.Column="0" Grid.Row="1"
+                         VerticalScrollBarVisibility="Auto" 
+                         Text="{Binding Result}" 
+                         IsReadOnly="True">
                     <TextBox.Resources>
                         <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource TextBoxScrollBar}" />
                     </TextBox.Resources>
