@@ -1400,6 +1400,21 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+    
+    private bool _pingMonitor_ExpandHostView = GlobalStaticConfiguration.PingMonitor_ExpandHostView;
+    
+    public bool PingMonitor_ExpandHostView
+    {
+        get => _pingMonitor_ExpandHostView;
+        set
+        {
+            if (value == _pingMonitor_ExpandHostView)
+                return;
+
+            _pingMonitor_ExpandHostView = value;
+            OnPropertyChanged();
+        }
+    }
 
     private string _pingMonitor_ExportFilePath;
 
@@ -3713,7 +3728,7 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #endregion
     
-  #region Whois
+    #region Whois
 
     private ObservableCollection<string> _whois_DomainHistory = new();
 

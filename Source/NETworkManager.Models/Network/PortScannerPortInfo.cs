@@ -24,6 +24,11 @@ public class PortScannerPortInfo : PortInfo
     public int IPAddressInt32 => IPAddress is { AddressFamily: System.Net.Sockets.AddressFamily.InterNetwork } ? IPv4Address.ToInt32(IPAddress) : 0;
 
     /// <summary>
+    /// Hostname (if available) or IP address of the host.
+    /// </summary>
+    public string HostAsString => string.IsNullOrEmpty(Hostname) ? IPAddress.ToString() : Hostname;
+    
+    /// <summary>
     /// Creates a new instance of <see cref="PortScannerPortInfo"/> with the specified parameters.
     /// </summary>
     /// <param name="ipAddress">IP address of the host.</param>

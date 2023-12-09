@@ -873,7 +873,7 @@ First make a backup copy of your profile files before enabling encryption!</valu
     <value>Hostname or IP address</value>
   </data>
   <data name="Hosts" xml:space="preserve">
-    <value>Host(s)</value>
+    <value>Hosts</value>
   </data>
   <data name="ID" xml:space="preserve">
     <value>ID</value>
@@ -3747,5 +3747,14 @@ Try again in a few seconds.</value>
   </data>
   <data name="SNMPErrorCode_InconsistentName" xml:space="preserve">
     <value>The object's state is inconsistent, preventing the set operation!</value>
+  </data>
+  <data name="CloseAll" xml:space="preserve">
+    <value>Close all</value>
+  </data>
+  <data name="ExpandHostView" xml:space="preserve">
+    <value>Expand host view</value>
+  </data>
+  <data name="CannotSetHostWhileRunningMessage" xml:space="preserve">
+    <value>Host cannot be set while other hosts are being added. Please wait until the process is complete and try again.</value>
   </data>
 </root>

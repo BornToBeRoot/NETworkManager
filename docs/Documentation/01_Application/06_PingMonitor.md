@@ -14,11 +14,19 @@ With the **Ping Monitor** you can monitor one or multiple hosts with ICMP echo r
 
 Example inputs:
 
-- `server-01.borntoberoot.net`
-- `10.0.0.1`
+| Host                             | Description                                                                               |
+| -------------------------------- | ----------------------------------------------------------------------------------------- |
+| `10.0.0.1`                       | Single IP address (`10.0.0.1`)                                                            |
+| `10.0.0.100 - 10.0.0.199`        | All IP addresses in a given range (`10.0.0.100`, `10.0.0.101`, ..., `10.0.0.199`)         |
+| `10.0.0.0/23`                    | All IP addresses in a subnet (`10.0.0.0`, ..., `10.0.1.255`)                              |
+| `10.0.0.0/255.255.254.0`         | All IP addresses in a subnet (`10.0.0.0`, ..., `10.0.1.255`)                              |
+| `10.0.[0-9,20].[1-2]`            | Multipe IP address like (`10.0.0.1`, `10.0.0.2`, `10.0.1.1`, ...,`10.0.9.2`, `10.0.20.1`) |
+| `borntoberoot.net`               | Single IP address resolved from a host (`10.0.0.1`)                                       |
+| `borntoberoot.net/24`            | All IP addresses in a subnet resolved from a host (`10.0.0.0`, ..., `10.0.0.255`)         |
+| `borntoberoot.net/255.255.255.0` | All IP addresses in a subnet resolved from a host (`10.0.0.0`, ..., `10.0.0.255`)         |
 
 {: .note }
-Multiple inputs can be combined with a semicolon (`;`).<br />Example: `server-01.borntoberoot.net; 10.0.0.1`
+Multiple inputs can be combined with a semicolon (`;`).<br />Example: `10.0.0.0/24; 10.0.[10-20]1`
 
 ![PingMonitor](06_PingMonitor.png)
 
@@ -96,3 +104,11 @@ Time in milliseconds to wait between each ping.
 **Type:** `Integer` [Min `100`, Max `15000`]
 
 **Default:** `1000`
+
+### Expand host view
+
+Expand the host view to show more information when the host is added.
+
+**Type:** `Boolean`
+
+**Default:** `false`

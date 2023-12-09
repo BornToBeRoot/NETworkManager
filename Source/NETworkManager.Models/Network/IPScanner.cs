@@ -24,11 +24,11 @@ public sealed class IPScanner
 
     #region Events
 
-    public event EventHandler<IPScannerHostScannedArgs> HostFound;
+    public event EventHandler<IPScannerHostScannedArgs> HostScanned;
 
-    private void OnHostFound(IPScannerHostScannedArgs e)
+    private void OnHostScanned(IPScannerHostScannedArgs e)
     {
-        HostFound?.Invoke(this, e);
+        HostScanned?.Invoke(this, e);
     }
 
     public event EventHandler ScanComplete;
@@ -65,7 +65,7 @@ public sealed class IPScanner
 
     #region Methods
 
-    public void ScanAsync(IPAddress[] ipAddresses, CancellationToken cancellationToken)
+    public void ScanAsync(IEnumerable<(IPAddress ipAddress, string hostname)> hosts, CancellationToken cancellationToken)
     {
         // Start the scan in a separate task
         Task.Run(() =>
@@ -92,10 +92,10 @@ public sealed class IPScanner
                 };
 
                 // Start scan
-                Parallel.ForEach(ipAddresses, hostParallelOptions, ipAddress =>
+                Parallel.ForEach(hosts, hostParallelOptions, host =>
                 {
                     // Start ping async
-                    var pingTask = PingAsync(ipAddress, cancellationToken);
+                    var pingTask = PingAsync(host.ipAddress, cancellationToken);
 
                     // Start port scan async
                     ConcurrentBag<PortInfo> portResults = new();
@@ -105,13 +105,13 @@ public sealed class IPScanner
                         Parallel.ForEach(_options.PortScanPorts, portParallelOptions, port =>
                         {
                             // Test if port is open
-                            using var tcpClient = new TcpClient(ipAddress.AddressFamily);
+                            using var tcpClient = new TcpClient(host.ipAddress.AddressFamily);
 
                             var portState = PortState.None;
 
                             try
                             {
-                                var task = tcpClient.ConnectAsync(ipAddress, port);
+                                var task = tcpClient.ConnectAsync(host.ipAddress, port);
 
                                 if (task.Wait(_options.PortScanTimeout))
                                     portState = tcpClient.Connected ? PortState.Open : PortState.Closed;
@@ -153,7 +153,7 @@ public sealed class IPScanner
                         if (_options.ResolveHostname)
                         {
                             // Don't use await in Parallel.ForEach, this will break
-                            var dnsResolverTask = DNSClient.GetInstance().ResolvePtrAsync(ipAddress);
+                            var dnsResolverTask = DNSClient.GetInstance().ResolvePtrAsync(host.ipAddress);
 
                             // Wait for task inside a Parallel.Foreach
                             dnsResolverTask.Wait();
@@ -174,7 +174,7 @@ public sealed class IPScanner
                         {
                             // Get info from arp table
                             var arpTableInfo = ARP.GetTable()
-                                .FirstOrDefault(p => p.IPAddress.ToString() == ipAddress.ToString());
+                                .FirstOrDefault(p => p.IPAddress.ToString() == host.ipAddress.ToString());
 
                             if (arpTableInfo != null)
                                 macAddress = arpTableInfo.MACAddress;
@@ -183,7 +183,7 @@ public sealed class IPScanner
                             if (macAddress == null)
                             {
                                 var networkInterfaceInfo = networkInterfaces.FirstOrDefault(p =>
-                                    p.IPv4Address.Any(x => x.Item1.Equals(ipAddress)));
+                                    p.IPv4Address.Any(x => x.Item1.Equals(host.ipAddress)));
 
                                 if (networkInterfaceInfo != null)
                                     macAddress = networkInterfaceInfo.PhysicalAddress;
@@ -199,7 +199,7 @@ public sealed class IPScanner
                             }
                         }
 
-                        OnHostFound(new IPScannerHostScannedArgs(
+                        OnHostScanned(new IPScannerHostScannedArgs(
                             new IPScannerHostInfo(
                                 isReachable, pingInfo, isAnyPortOpen, portResults.OrderBy(x => x.Port).ToList(),
                                 hostname, macAddress, vendor)));

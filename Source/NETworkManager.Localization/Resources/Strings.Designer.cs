@@ -1392,6 +1392,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Host cannot be set while other hosts are being added. Please wait until the process is complete and try again..
+        /// </summary>
+        public static string CannotSetHostWhileRunningMessage {
+            get {
+                return ResourceManager.GetString("CannotSetHostWhileRunningMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Caps lock is enabled!.
         /// </summary>
         public static string CapsLockIsEnabled {
@@ -1658,6 +1667,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Close {
             get {
                 return ResourceManager.GetString("Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close all.
+        /// </summary>
+        public static string CloseAll {
+            get {
+                return ResourceManager.GetString("CloseAll", resourceCulture);
             }
         }
         
@@ -3608,6 +3626,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expand host view.
+        /// </summary>
+        public static string ExpandHostView {
+            get {
+                return ResourceManager.GetString("ExpandHostView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Experience.
         /// </summary>
         public static string Experience {
@@ -4387,7 +4414,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Host(s).
+        ///   Looks up a localized string similar to Hosts.
         /// </summary>
         public static string Hosts {
             get {

@@ -11,7 +11,7 @@ public class DNSClient : SingletonBase<DNSClient>
     /// <summary>
     /// Error message which is returned when the DNS client is not configured.
     /// </summary>
-    private static readonly string _notConfiguredMessage = "DNS client is not configured. Call Configure() first.";
+    private const string NotConfiguredMessage = "DNS client is not configured. Call Configure() first.";
 
     /// <summary>
     /// Store the current DNS settings.
@@ -41,13 +41,10 @@ public class DNSClient : SingletonBase<DNSClient>
             // Setup custom DNS servers
             List<NameServer> servers = new();
 
-            foreach (var (Server, Port) in _settings.DNSServers)
-                servers.Add(new IPEndPoint(IPAddress.Parse(Server), Port));
+            foreach (var (server, port) in _settings.DNSServers)
+                servers.Add(new IPEndPoint(IPAddress.Parse(server), port));
 
-            _client = new LookupClient(new LookupClientOptions(servers.ToArray())
-            {
-
-            });
+            _client = new LookupClient(new LookupClientOptions(servers.ToArray()));
         }
         else
         {
@@ -78,7 +75,7 @@ public class DNSClient : SingletonBase<DNSClient>
     public async Task<DNSClientResultIPAddress> ResolveAAsync(string query)
     {
         if (!_isConfigured)
-            throw new DNSClientNotConfiguredException(_notConfiguredMessage);
+            throw new DNSClientNotConfiguredException(NotConfiguredMessage);
 
         try
         {
@@ -91,10 +88,9 @@ public class DNSClient : SingletonBase<DNSClient>
             // Validate result because of https://github.com/BornToBeRoot/NETworkManager/issues/1934
             var record = result.Answers.ARecords().FirstOrDefault();
 
-            if (record != null)
-                return new DNSClientResultIPAddress(record.Address, $"{result.NameServer}");
-            else
-                return new DNSClientResultIPAddress(true, $"IP address for \"{query}\" could not be resolved and the DNS server did not return an error. Try to check your DNS server with: dig @{result.NameServer.Address} {query}", $"{result.NameServer}");
+            return record != null ?
+                new DNSClientResultIPAddress(record.Address, $"{result.NameServer}") : 
+                new DNSClientResultIPAddress(true, $"IP address for \"{query}\" could not be resolved and the DNS server did not return an error. Try to check your DNS server with: dig @{result.NameServer.Address} {query}", $"{result.NameServer}");
         }
         catch (DnsResponseException ex)
         {            
@@ -110,7 +106,7 @@ public class DNSClient : SingletonBase<DNSClient>
     public async Task<DNSClientResultIPAddress> ResolveAaaaAsync(string query)
     {
         if (!_isConfigured)
-            throw new DNSClientNotConfiguredException(_notConfiguredMessage);
+            throw new DNSClientNotConfiguredException(NotConfiguredMessage);
 
         try
         {
@@ -123,10 +119,9 @@ public class DNSClient : SingletonBase<DNSClient>
             // Validate result because of https://github.com/BornToBeRoot/NETworkManager/issues/1934
             var record = result.Answers.AaaaRecords().FirstOrDefault();
             
-            if (record != null)
-                return new DNSClientResultIPAddress(record.Address, $"{result.NameServer}");
-            else
-                return new DNSClientResultIPAddress(true, $"IP address for \"{query}\" could not be resolved and the DNS server did not return an error. Try to check your DNS server with: dig @{result.NameServer.Address} {query}", $"{result.NameServer}");
+            return record != null ?
+                new DNSClientResultIPAddress(record.Address, $"{result.NameServer}") : 
+                new DNSClientResultIPAddress(true, $"IP address for \"{query}\" could not be resolved and the DNS server did not return an error. Try to check your DNS server with: dig @{result.NameServer.Address} {query}", $"{result.NameServer}");
         }
         catch (DnsResponseException ex)
         {
@@ -142,7 +137,7 @@ public class DNSClient : SingletonBase<DNSClient>
     public async Task<DNSClientResultString> ResolveCnameAsync(string query)
     {
         if (!_isConfigured)
-            throw new DNSClientNotConfiguredException(_notConfiguredMessage);
+            throw new DNSClientNotConfiguredException(NotConfiguredMessage);
 
         try
         {
@@ -155,10 +150,9 @@ public class DNSClient : SingletonBase<DNSClient>
             // Validate result because of https://github.com/BornToBeRoot/NETworkManager/issues/1934
             var record = result.Answers.CnameRecords().FirstOrDefault();
 
-            if (record != null)
-                return new DNSClientResultString(record.CanonicalName, $"{result.NameServer}");
-            else
-                return new DNSClientResultString(true, $"CNAME for \"{query}\" could not be resolved and the DNS server did not return an error. Try to check your DNS server with: dig @{result.NameServer.Address} {query}", $"{result.NameServer}");
+            return record != null ?
+                new DNSClientResultString(record.CanonicalName, $"{result.NameServer}") : 
+                new DNSClientResultString(true, $"CNAME for \"{query}\" could not be resolved and the DNS server did not return an error. Try to check your DNS server with: dig @{result.NameServer.Address} {query}", $"{result.NameServer}");
         }
         catch (DnsResponseException ex)
         {
@@ -174,7 +168,7 @@ public class DNSClient : SingletonBase<DNSClient>
     public async Task<DNSClientResultString> ResolvePtrAsync(IPAddress ipAddress)
     {
         if (!_isConfigured)
-            throw new DNSClientNotConfiguredException(_notConfiguredMessage);
+            throw new DNSClientNotConfiguredException(NotConfiguredMessage);
 
         try
         {
@@ -187,10 +181,9 @@ public class DNSClient : SingletonBase<DNSClient>
             // Validate result because of https://github.com/BornToBeRoot/NETworkManager/issues/1934
             var record = result.Answers.PtrRecords().FirstOrDefault();
             
-            if (record != null)
-                return new DNSClientResultString(record.PtrDomainName, $"{result.NameServer}");
-            else
-                return new DNSClientResultString(true, $"PTR for \"{ipAddress}\" could not be resolved and the DNS server did not return an error. Try to check your DNS server with: dig @{result.NameServer.Address} -x {ipAddress}", $"{result.NameServer}");
+            return record != null ? 
+                new DNSClientResultString(record.PtrDomainName, $"{result.NameServer}"):
+                    new DNSClientResultString(true, $"PTR for \"{ipAddress}\" could not be resolved and the DNS server did not return an error. Try to check your DNS server with: dig @{result.NameServer.Address} -x {ipAddress}", $"{result.NameServer}");
         }
         catch (DnsResponseException ex)
         {

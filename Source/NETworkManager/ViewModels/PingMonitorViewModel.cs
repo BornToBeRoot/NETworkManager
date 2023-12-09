@@ -26,21 +26,34 @@ public class PingMonitorViewModel : ViewModelBase
     private CancellationTokenSource _cancellationTokenSource;
 
     public readonly Guid HostId;
-    private readonly Action<Guid> _closeCallback;
-    private bool _firstLoad = true;
-
+    private readonly Action<Guid> _removeHostByGuid;
+ 
     private List<PingInfo> _pingInfoList;
 
-    private readonly string _host;
-    public string Host
+    private string _title;
+    public string Title
     {
-        get => _host;
-        private init
+        get => _title;
+        private set
         {
-            if (value == _host)
+            if (value == _title)
                 return;
 
-            _host = value;
+            _title = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _hostname;
+    public string Hostname
+    {
+        get => _hostname;
+        private set
+        {
+            if (value == _hostname)
+                return;
+
+            _hostname = value;
             OnPropertyChanged();
         }
     }
@@ -143,6 +156,34 @@ public class PingMonitorViewModel : ViewModelBase
         }
     }
 
+    private double _packetLoss;
+    public double PacketLoss
+    {
+        get => _packetLoss;
+        set
+        {
+            if (Math.Abs(value - _packetLoss) < 0.01)
+                return;
+
+            _packetLoss = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private long _timeMs;
+    public long TimeMs
+    {
+        get => _timeMs;
+        set
+        {
+            if (value == _timeMs)
+                return;
+
+            _timeMs = value;
+            OnPropertyChanged();
+        }
+    }
+
     private void InitialTimeChart()
     {
         var dayConfig = Mappers.Xy<LvlChartsDefaultInfo>()
@@ -194,31 +235,39 @@ public class PingMonitorViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
+    private bool _expandHostView;
+    public bool ExpandHostView
+    {
+        get => _expandHostView;
+        set
+        {
+            if (value == _expandHostView)
+                return;
+
+            _expandHostView = value;
+            OnPropertyChanged();
+        }
+    }
     #endregion
 
     #region Contructor, load settings    
-    public PingMonitorViewModel(IDialogCoordinator instance, Guid hostId, Action<Guid> closeCallback, PingMonitorOptions options)
+    public PingMonitorViewModel(IDialogCoordinator instance, Guid hostId, Action<Guid> removeHostByGuid, (IPAddress ipAddress, string hostname) host)
     {
         _dialogCoordinator = instance;
 
         HostId = hostId;
-        _closeCallback = closeCallback;
+        _removeHostByGuid = removeHostByGuid;
 
-        Host = options.Host;
-        IPAddress = options.IPAddress;
+        Title = string.IsNullOrEmpty(host.hostname) ? host.ipAddress.ToString() : $"{host.hostname} # {host.ipAddress}";
+
+        IPAddress = host.ipAddress;
+        Hostname = host.hostname;
 
         InitialTimeChart();
-    }
-
-    public void OnLoaded()
-    {
-        if (!_firstLoad)
-            return;
-
-        StartPing();
-
-        _firstLoad = false;
-    }
+        
+        ExpandHostView = SettingsManager.Current.PingMonitor_ExpandHostView;
+    }     
     #endregion
 
     #region ICommands & Actions
@@ -226,39 +275,35 @@ public class PingMonitorViewModel : ViewModelBase
 
     private void PingAction()
     {
-        Ping();
+        if (IsRunning)
+            Stop();
+        else
+            Start();
     }
 
     public ICommand CloseCommand => new RelayCommand(_ => CloseAction());
 
     private void CloseAction()
     {
-        _closeCallback(HostId);
+        _removeHostByGuid(HostId);
     }
     #endregion
 
     #region Methods      
-    private void Ping()
-    {
-        if (IsRunning)
-            StopPing();
-        else
-            StartPing();
-    }
-
-    private void StartPing()
+    public void Start()
     {
         IsErrorMessageDisplayed = false;
         IsRunning = true;
 
         // Reset history
-        _pingInfoList = new List<PingInfo>();
+        _pingInfoList = [];
 
         // Reset the latest results            
         StatusTime = DateTime.Now;
         Transmitted = 0;
         Received = 0;
         Lost = 0;
+        PacketLoss = 0;
 
         // Reset chart
         ResetTimeChart();
@@ -271,19 +316,22 @@ public class PingMonitorViewModel : ViewModelBase
             Buffer = new byte[SettingsManager.Current.PingMonitor_Buffer],
             TTL = SettingsManager.Current.PingMonitor_TTL,
             DontFragment = SettingsManager.Current.PingMonitor_DontFragment,
-            WaitTime = SettingsManager.Current.PingMonitor_WaitTime,
-            Hostname = Host
+            WaitTime = SettingsManager.Current.PingMonitor_WaitTime            
         };
 
         ping.PingReceived += Ping_PingReceived;
         ping.PingException += Ping_PingException;
+        ping.HostnameResolved += Ping_HostnameResolved;
         ping.UserHasCanceled += Ping_UserHasCanceled;
 
         ping.SendAsync(IPAddress, _cancellationTokenSource.Token);
     }
-
-    private void StopPing()
+    
+    public void Stop()
     {
+        if (!IsRunning)
+            return;
+
         _cancellationTokenSource?.Cancel();
     }
 
@@ -330,10 +378,9 @@ public class PingMonitorViewModel : ViewModelBase
             SettingsManager.Current.PingMonitor_ExportFileType = instance.FileType;
             SettingsManager.Current.PingMonitor_ExportFilePath = instance.FilePath;
         }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, 
-            new[]
-            {
+            [
                 ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
-            }, false, 
+            ], false, 
             SettingsManager.Current.PingMonitor_ExportFileType,
             SettingsManager.Current.PingMonitor_ExportFilePath);
 
@@ -343,13 +390,6 @@ public class PingMonitorViewModel : ViewModelBase
         };
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-    }
-
-    public void OnClose()
-    {
-        // Stop the ping
-        if (IsRunning)
-            StopPing();
     }
     #endregion
 
@@ -385,8 +425,12 @@ public class PingMonitorViewModel : ViewModelBase
 
             timeInfo = new LvlChartsDefaultInfo(e.Args.Timestamp, double.NaN);
         }
+        
+        PacketLoss = Math.Round((double)Lost / Transmitted * 100, 2);
+        TimeMs = e.Args.Time;
 
-        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+        // Null exception may occur when the application is closing        
+        Application.Current?.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
         {
             Series[0].Values.Add(timeInfo);
 
@@ -403,6 +447,15 @@ public class PingMonitorViewModel : ViewModelBase
         IsRunning = false;
     }
 
+    private void Ping_HostnameResolved(object sender, HostnameArgs e)
+    {
+        // Update title if name was not set in the constructor
+        if (string.IsNullOrEmpty(Hostname))
+            Title = $"{e.Hostname.TrimEnd('.')} # {IPAddress}";
+
+        Hostname = e.Hostname;
+    }
+    
     private void Ping_PingException(object sender, PingExceptionArgs e)
     {   
         IsRunning = false;

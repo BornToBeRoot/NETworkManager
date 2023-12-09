@@ -180,6 +180,10 @@ public static class SettingsManager
         if (fromVersion < new Version(2023, 6, 27, 0))
             UpgradeTo_2023_6_27_0();
 
+        // 2023.11.28.0
+        if (fromVersion < new Version(2023, 11, 28, 0))
+            UpgradeTo_2023_11_28_0();
+        
         // Latest
         if (fromVersion < toVersion)
             UpgradeToLatest(toVersion);
@@ -286,12 +290,11 @@ public static class SettingsManager
     }
 
     /// <summary>
-    /// Method to apply changes for the latest version.
+    /// Method to apply changes for version 2023.11.28.0.
     /// </summary>
-    /// <param name="version">Latest version.</param>
-    private static void UpgradeToLatest(Version version)
+    private static void UpgradeTo_2023_11_28_0()
     {
-        Log.Info($"Apply upgrade to {version}...");
+        Log.Info($"Apply upgrade to 2023.11.28.0...");
 
         // First run is required due to the new settings
         Log.Info("Set \"FirstRun\" to true...");
@@ -304,6 +307,15 @@ public static class SettingsManager
         // Add DNS lookup profiles after refactoring
         Log.Info("Init \"DNSLookup_DNSServers\" with default DNS servers...");
         Current.DNSLookup_DNSServers = new ObservableCollection<DNSServerConnectionInfoProfile>(DNSServer.GetDefaultList());
+    }
+    
+    /// <summary>
+    /// Method to apply changes for the latest version.
+    /// </summary>
+    /// <param name="version">Latest version.</param>
+    private static void UpgradeToLatest(Version version)
+    {
+        Log.Info($"Apply upgrade to {version}...");
     }
     #endregion
 }

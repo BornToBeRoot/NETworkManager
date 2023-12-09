@@ -145,7 +145,7 @@
     <value>SERVER-01 or 10.0.0.10</value>
   </data>
   <data name="ExampleHostRange" xml:space="preserve">
-    <value>192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.[178-179].[1,100,150-200]; borntoberoot.net/24</value>
+    <value>192.168.178.0/24; 10.0.0.0 - 10.0.0.9; 10.0.[0-9,20].[1-2]; server-01.borntoberoot.net/24</value>
   </data>
   <data name="ExampleIPv4Address" xml:space="preserve">
     <value>10.0.0.10</value>

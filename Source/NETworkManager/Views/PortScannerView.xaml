@@ -57,13 +57,13 @@
                            Style="{StaticResource DefaultTextBlock}" 
                            VerticalAlignment="Center" />
                 <ComboBox Grid.Column="2" Grid.Row="0"
-                          x:Name="ComboBoxHosts" 
-                          ItemsSource="{Binding HostsHistoryView}"
+                          x:Name="ComboBoxHost" 
+                          ItemsSource="{Binding HostHistoryView}"
                           mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostRange}"
                           IsReadOnly="{Binding Path=IsRunning}"
                           Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
-                        <Binding Path="Hosts" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                                 <validators:MultipleHostsRangeValidator ValidatesOnTargetUpdated="True" />
@@ -111,13 +111,13 @@
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Setter Property="IsEnabled" Value="True" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding ElementName=ComboBoxHosts, Path=(Validation.HasError)}" Value="True">
+                                <DataTrigger Binding="{Binding ElementName=ComboBoxHost, Path=(Validation.HasError)}" Value="True">
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding ElementName=ComboBoxPorts, Path=(Validation.HasError)}" Value="True" >
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding CancelScan}" Value="True">
+                                <DataTrigger Binding="{Binding IsCanceling}" Value="True">
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
                             </Style.Triggers>
@@ -179,7 +179,7 @@
                                 <DataTrigger Binding="{Binding PreparingScan}" Value="True">
                                     <Setter Property="IsIndeterminate" Value="True" />
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding CancelScan}" Value="True">
+                                <DataTrigger Binding="{Binding IsCanceling}" Value="True">
                                     <Setter Property="IsIndeterminate" Value="True" />
                                 </DataTrigger>
                             </Style.Triggers>
@@ -194,7 +194,7 @@
                                 <DataTrigger Binding="{Binding PreparingScan}" Value="True">
                                     <Setter Property="Visibility" Value="Hidden" />
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding CancelScan}" Value="True">
+                                <DataTrigger Binding="{Binding IsCanceling}" Value="True">
                                     <Setter Property="Visibility" Value="Hidden" />
                                 </DataTrigger>
                             </Style.Triggers>
@@ -305,7 +305,7 @@
                                         <Expander IsExpanded="True" Style="{StaticResource ResourceKey=DefaultExpander}">
                                             <Expander.Header>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="{Binding  Path=(CollectionViewGroup.Name)}" Style="{DynamicResource ResourceKey=DefaultTextBlock}"/>
+                                                    <TextBlock Text="{Binding Path=(CollectionViewGroup.Name)}" Style="{DynamicResource ResourceKey=DefaultTextBlock}"/>
                                                 </StackPanel>
                                             </Expander.Header>
                                             <ItemsPresenter />

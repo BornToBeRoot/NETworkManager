@@ -27,7 +27,7 @@ public partial class PortScannerView
         _viewModel.OnLoaded();
     }
 
-    private void Dispatcher_ShutdownStarted(object sender, System.EventArgs e)
+    private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
     {
         _viewModel.OnClose();
     }

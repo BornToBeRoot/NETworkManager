@@ -91,6 +91,23 @@ public class PingMonitorSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
+    private bool _expandHostView;
+    public bool ExpandHostView
+    {
+        get => _expandHostView;
+        set
+        {
+            if (value == _expandHostView)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.PingMonitor_ExpandHostView = value;
+
+            _expandHostView = value;
+            OnPropertyChanged();
+        }
+    }
     #endregion
 
     #region Contructor, load settings
@@ -110,6 +127,7 @@ public class PingMonitorSettingsViewModel : ViewModelBase
         TTL = SettingsManager.Current.PingMonitor_TTL;
         DontFragment = SettingsManager.Current.PingMonitor_DontFragment;
         WaitTime = SettingsManager.Current.PingMonitor_WaitTime;
+        ExpandHostView = SettingsManager.Current.PingMonitor_ExpandHostView;
     }
     #endregion
 }

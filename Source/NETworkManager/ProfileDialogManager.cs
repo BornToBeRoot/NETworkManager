@@ -21,7 +21,7 @@ public static class ProfileDialogManager
 
     #region Dialog to add, edit, copy as and delete profile
 
-    public static async Task ShowAddProfileDialog(IProfileManagerMinimal viewModel,
+    public static Task ShowAddProfileDialog(IProfileManagerMinimal viewModel,
         IDialogCoordinator dialogCoordinator, ProfileInfo profile = null, string group = null,
         ApplicationName applicationName = ApplicationName.None)
     {
@@ -50,10 +50,10 @@ public static class ProfileDialogManager
 
         viewModel.OnProfileManagerDialogOpen();
 
-        await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
+        return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
 
-    public static async Task ShowEditProfileDialog(IProfileManagerMinimal viewModel,
+    public static Task ShowEditProfileDialog(IProfileManagerMinimal viewModel,
         IDialogCoordinator dialogCoordinator, ProfileInfo profile)
     {
         CustomDialog customDialog = new()
@@ -80,10 +80,11 @@ public static class ProfileDialogManager
         };
 
         viewModel.OnProfileManagerDialogOpen();
-        await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
+        
+        return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
 
-    public static async Task ShowCopyAsProfileDialog(IProfileManagerMinimal viewModel,
+    public static Task ShowCopyAsProfileDialog(IProfileManagerMinimal viewModel,
         IDialogCoordinator dialogCoordinator, ProfileInfo profile)
     {
         CustomDialog customDialog = new()
@@ -110,10 +111,11 @@ public static class ProfileDialogManager
         };
 
         viewModel.OnProfileManagerDialogOpen();
-        await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
+        
+        return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
 
-    public static async Task ShowDeleteProfileDialog(IProfileManagerMinimal viewModel,
+    public static Task ShowDeleteProfileDialog(IProfileManagerMinimal viewModel,
         IDialogCoordinator dialogCoordinator, IList<ProfileInfo> profiles)
     {
         CustomDialog customDialog = new()
@@ -144,14 +146,15 @@ public static class ProfileDialogManager
         };
 
         viewModel.OnProfileManagerDialogOpen();
-        await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
+        
+        return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
 
     #endregion
 
     #region Dialog to add, edit and delete group
 
-    public static async Task ShowAddGroupDialog(IProfileManagerMinimal viewModel, IDialogCoordinator dialogCoordinator)
+    public static Task ShowAddGroupDialog(IProfileManagerMinimal viewModel, IDialogCoordinator dialogCoordinator)
     {
         CustomDialog customDialog = new()
         {
@@ -177,10 +180,11 @@ public static class ProfileDialogManager
         };
 
         viewModel.OnProfileManagerDialogOpen();
-        await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
+        
+        return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
 
-    public static async Task ShowEditGroupDialog(IProfileManagerMinimal viewModel, IDialogCoordinator dialogCoordinator,
+    public static Task ShowEditGroupDialog(IProfileManagerMinimal viewModel, IDialogCoordinator dialogCoordinator,
         GroupInfo group)
     {
         CustomDialog customDialog = new()
@@ -207,10 +211,11 @@ public static class ProfileDialogManager
         };
 
         viewModel.OnProfileManagerDialogOpen();
-        await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
+        
+        return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
 
-    public static async Task ShowDeleteGroupDialog(IProfileManagerMinimal viewModel,
+    public static Task ShowDeleteGroupDialog(IProfileManagerMinimal viewModel,
         IDialogCoordinator dialogCoordinator, GroupInfo group)
     {
         CustomDialog customDialog = new()
@@ -236,7 +241,8 @@ public static class ProfileDialogManager
         };
 
         viewModel.OnProfileManagerDialogOpen();
-        await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
+        
+        return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
 
     #endregion

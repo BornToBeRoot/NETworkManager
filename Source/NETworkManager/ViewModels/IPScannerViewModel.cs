@@ -39,21 +39,21 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private readonly Guid _tabId;
     private bool _firstLoad = true;
 
-    private string _hosts;
-    public string Hosts
+    private string _host;
+    public string Host
     {
-        get => _hosts;
+        get => _host;
         set
         {
-            if (value == _hosts)
+            if (value == _host)
                 return;
 
-            _hosts = value;
+            _host = value;
             OnPropertyChanged();
         }
     }
 
-    public ICollectionView HostsHistoryView { get; }
+    public ICollectionView HostHistoryView { get; }
 
     private bool _isSubnetDetectionRunning;
     public bool IsSubnetDetectionRunning
@@ -84,21 +84,21 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         }
     }
 
-    private bool _cancelScan;
-    public bool CancelScan
+    private bool _isCanceling;
+    public bool IsCanceling
     {
-        get => _cancelScan;
+        get => _isCanceling;
         set
         {
-            if (value == _cancelScan)
+            if (value == _isCanceling)
                 return;
 
-            _cancelScan = value;
+            _isCanceling = value;
             OnPropertyChanged();
         }
     }
 
-    private ObservableCollection<IPScannerHostInfo> _results = new();
+    private ObservableCollection<IPScannerHostInfo> _results = [];
     public ObservableCollection<IPScannerHostInfo> Results
     {
         get => _results;
@@ -220,10 +220,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         _dialogCoordinator = instance;
 
         _tabId = tabId;
-        Hosts = hostOrIPRange;
+        Host = hostOrIPRange;
 
         // Host history
-        HostsHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.IPScanner_HostHistory);
+        HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.IPScanner_HostHistory);
 
         // Result view
         ResultsView = CollectionViewSource.GetDefaultView(Results);
@@ -237,8 +237,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         if (!_firstLoad)
             return;
 
-        if (!string.IsNullOrEmpty(Hosts))
-            StartScan().ConfigureAwait(false);
+        if (!string.IsNullOrEmpty(Host))
+            Start().ConfigureAwait(false);
 
         _firstLoad = false;
     }
@@ -260,7 +260,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private void ScanAction()
     {
-        Scan();
+        if (IsRunning)
+            Stop();
+        else
+            Start().ConfigureAwait(false);
     }
 
     public ICommand DetectSubnetCommand => new RelayCommand(_ => DetectSubnetAction());
@@ -344,15 +347,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     #endregion
 
     #region Methods
-    private void Scan()
-    {
-        if (IsRunning)
-            StopScan();
-        else
-            StartScan().ConfigureAwait(false);
-    }
-
-    private async Task StartScan()
+    private async Task Start()
     {
         IsStatusMessageDisplayed = false;
         IsRunning = true;
@@ -367,51 +362,40 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         {
             foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
             {
-                tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Hosts;
+                tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Host;
             }
         }
 
         _cancellationTokenSource = new CancellationTokenSource();
 
         // Resolve hostnames
-        List<string> ipRanges;
+        (List<(IPAddress ipAddress, string hostname)> hosts, List<string> hostnamesNotResolved) hosts;
 
         try
         {
-            ipRanges = await HostRangeHelper.ResolveHostnamesInIPRangesAsync(Hosts.Replace(" ", "").Split(';'), SettingsManager.Current.Network_ResolveHostnamePreferIPv4, _cancellationTokenSource.Token);
+            hosts = await HostRangeHelper.ResolveAsync(HostRangeHelper.CreateListFromInput(Host), SettingsManager.Current.Network_ResolveHostnamePreferIPv4, _cancellationTokenSource.Token);
         }
         catch (OperationCanceledException)
         {
             UserHasCanceled(this, EventArgs.Empty);
             return;
         }
-        catch (AggregateException exceptions) // DNS error (could not resolve hostname...)
+        
+        // Show error message if (some) hostnames could not be resolved
+        if(hosts.hostnamesNotResolved.Count > 0)
         {
-            DnsResolveFailed(exceptions);
-            return;
+            StatusMessage = $"{Localization.Resources.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}";
+            IsStatusMessageDisplayed = true;
+            
         }
 
-        // Create ip addresses 
-        IPAddress[] ipAddresses;
-
-        try
-        {
-            // Create a list of all ip addresses
-            ipAddresses = await HostRangeHelper.CreateIPAddressesFromIPRangesAsync(ipRanges.ToArray(), _cancellationTokenSource.Token);
-        }
-        catch (OperationCanceledException)
-        {
-            UserHasCanceled(this, EventArgs.Empty);
-            return;
-        }
-
-        HostsToScan = ipAddresses.Length;
+        HostsToScan = hosts.hosts.Count;
         HostsScanned = 0;
 
         PreparingScan = false;
 
         // Add host(s) to the history
-        AddHostToHistory(Hosts);
+        AddHostToHistory(Host);
 
         var ipScanner = new IPScanner(new IPScannerOptions(
             SettingsManager.Current.IPScanner_MaxHostThreads,
@@ -428,17 +412,17 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             SettingsManager.Current.IPScanner_ShowAllResults
         ));
 
-        ipScanner.HostFound += HostFound;
+        ipScanner.HostScanned += HostScanned;
         ipScanner.ScanComplete += ScanComplete;
         ipScanner.ProgressChanged += ProgressChanged;
         ipScanner.UserHasCanceled += UserHasCanceled;
 
-        ipScanner.ScanAsync(ipAddresses, _cancellationTokenSource.Token);
+        ipScanner.ScanAsync(hosts.hosts, _cancellationTokenSource.Token);
     }
 
-    private void StopScan()
+    private void Stop()
     {
-        CancelScan = true;
+        IsCanceling = true;
         _cancellationTokenSource.Cancel();
     }
 
@@ -458,10 +442,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             {
                 subnetmaskDetected = true;
 
-                Hosts = $"{localIP}/{Subnetmask.ConvertSubnetmaskToCidr(networkInterface.IPv4Address.First().Item2)}";
+                Host = $"{localIP}/{Subnetmask.ConvertSubnetmaskToCidr(networkInterface.IPv4Address.First().Item2)}";
 
                 // Fix: If the user clears the TextBox and then clicks again on the button, the TextBox remains empty...
-                OnPropertyChanged(nameof(Hosts));
+                OnPropertyChanged(nameof(Host));
 
                 break;
             }
@@ -517,13 +501,13 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         // Clear the old items
         SettingsManager.Current.IPScanner_HostHistory.Clear();
-        OnPropertyChanged(nameof(Hosts)); // Raise property changed again, after the collection has been cleared
+        OnPropertyChanged(nameof(Host)); // Raise property changed again, after the collection has been cleared
 
         // Fill with the new items
         list.ForEach(x => SettingsManager.Current.IPScanner_HostHistory.Add(x));
     }
 
-    private async Task Export()
+    private Task Export()
     {
         var customDialog = new CustomDialog
         {
@@ -561,20 +545,20 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             DataContext = exportViewModel
         };
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        return _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
     public void OnClose()
     {
         // Stop scan
         if (IsRunning)
-            StopScan();
+            Stop();
     }
 
     #endregion
 
     #region Events
-    private void HostFound(object sender, IPScannerHostScannedArgs e)
+    private void HostScanned(object sender, IPScannerHostScannedArgs e)
     {
         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
         {
@@ -582,6 +566,11 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         }));
     }
 
+    private void ProgressChanged(object sender, ProgressChangedArgs e)
+    {
+        HostsScanned = e.Value;
+    }
+    
     private void ScanComplete(object sender, EventArgs e)
     {
         if (Results.Count == 0)
@@ -590,21 +579,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             IsStatusMessageDisplayed = true;
         }
 
-        CancelScan = false;
-        IsRunning = false;
-    }
-
-    private void ProgressChanged(object sender, ProgressChangedArgs e)
-    {
-        HostsScanned = e.Value;
-    }
-
-    private void DnsResolveFailed(AggregateException e)
-    {
-        StatusMessage = $"{Localization.Resources.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", e.Flatten().InnerExceptions.Select(x => x.Message))}";
-        IsStatusMessageDisplayed = true;
-
-        CancelScan = false;
+        IsCanceling = false;
         IsRunning = false;
     }
 
@@ -612,6 +587,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
         IsStatusMessageDisplayed = true;
+        
+        IsCanceling = false;
+        IsRunning = false;
     }
     #endregion
 }

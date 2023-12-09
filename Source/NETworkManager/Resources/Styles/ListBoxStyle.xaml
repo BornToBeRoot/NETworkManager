@@ -12,14 +12,6 @@
     <Style x:Key="ProfileListBox" TargetType="{x:Type ListBox}" BasedOn="{StaticResource DefaultListBox}">
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
-        <!-- Performance problem with large ListBox/view?
-        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden"/>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
-            </Trigger>
-        </Style.Triggers>
-        -->
     </Style>
     
 </ResourceDictionary>

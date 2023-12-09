@@ -11,7 +11,7 @@ using NETworkManager.Models.IPApi;
 
 namespace NETworkManager.Models.Network;
 
-public class Traceroute
+public sealed class Traceroute
 {
     #region Variables
 
@@ -23,35 +23,35 @@ public class Traceroute
 
     public event EventHandler<TracerouteHopReceivedArgs> HopReceived;
 
-    protected virtual void OnHopReceived(TracerouteHopReceivedArgs e)
+    private void OnHopReceived(TracerouteHopReceivedArgs e)
     {
         HopReceived?.Invoke(this, e);
     }
 
     public event EventHandler TraceComplete;
 
-    protected virtual void OnTraceComplete()
+    private void OnTraceComplete()
     {
         TraceComplete?.Invoke(this, EventArgs.Empty);
     }
 
     public event EventHandler<MaximumHopsReachedArgs> MaximumHopsReached;
 
-    protected virtual void OnMaximumHopsReached(MaximumHopsReachedArgs e)
+    private void OnMaximumHopsReached(MaximumHopsReachedArgs e)
     {
         MaximumHopsReached?.Invoke(this, e);
     }
 
     public event EventHandler<TracerouteErrorArgs> TraceError;
 
-    protected virtual void OnTraceError(TracerouteErrorArgs e)
+    private void OnTraceError(TracerouteErrorArgs e)
     {
         TraceError?.Invoke(this, e);
     }
 
     public event EventHandler UserHasCanceled;
 
-    protected virtual void OnUserHasCanceled()
+    private void OnUserHasCanceled()
     {
         UserHasCanceled?.Invoke(this, EventArgs.Empty);
     }

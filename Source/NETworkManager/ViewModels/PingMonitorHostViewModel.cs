@@ -10,11 +10,14 @@ using NETworkManager.Utilities;
 using System.Linq;
 using System.Collections.ObjectModel;
 using NETworkManager.Views;
-using System.Net;
 using NETworkManager.Profiles;
 using System.Windows.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net;
+using System.Threading;
+using MahApps.Metro.Controls;
 using NETworkManager.Models;
 
 namespace NETworkManager.ViewModels;
@@ -23,6 +26,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 {
     #region  Variables 
     private readonly IDialogCoordinator _dialogCoordinator;
+
+    private CancellationTokenSource _cancellationTokenSource;
+
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
     private readonly bool _isLoading;
@@ -57,6 +63,20 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
+    
+    private bool _isCanceling;
+    public bool IsCanceling
+    {
+        get => _isCanceling;
+        set
+        {
+            if (value == _isCanceling)
+                return;
+
+            _isCanceling = value;
+            OnPropertyChanged();
+        }
+    }
 
     private bool _isStatusMessageDisplayed;
     public bool IsStatusMessageDisplayed
@@ -86,7 +106,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    private ObservableCollection<PingMonitorView> _hosts = new();
+    private ObservableCollection<PingMonitorView> _hosts = [];
     public ObservableCollection<PingMonitorView> Hosts
     {
         get => _hosts;
@@ -229,7 +249,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     public PingMonitorHostViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
-        
+
         _dialogCoordinator = instance;
 
         // Host history
@@ -262,14 +282,39 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #region ICommands & Actions
-    public ICommand AddHostCommand => new RelayCommand(_ => AddHostAction());
+    public ICommand PingCommand => new RelayCommand(_ => PingAction(), Ping_CanExecute);
 
-    private async void AddHostAction()
+    private bool Ping_CanExecute(object parameter)
     {
-        await AddHost(Host).ConfigureAwait(true);
+        return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    }
+    
+    private void PingAction()
+    {
+        if (IsRunning)
+            Stop();
+        else
+            Start().ConfigureAwait(false);
+    }
+    
+    public ICommand PingProfileCommand => new RelayCommand(_ => PingProfileAction(), PingProfile_CanExecute);
 
-        AddHostToHistory(Host);
-        Host = string.Empty;
+    private bool PingProfile_CanExecute(object obj)
+    {
+        return !IsSearching && SelectedProfile != null;
+    }
+
+    private void PingProfileAction()
+    {
+        if(SetHost(SelectedProfile.PingMonitor_Host))
+            Start().ConfigureAwait(false);
+    }
+    
+    public ICommand CloseAllCommand => new RelayCommand(_ => CloseAllAction());
+
+    private void CloseAllAction()
+    {
+        RemoveAllHosts();
     }
 
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
@@ -278,19 +323,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     {
         SelectedHost?.Export();
     }
-
-    public ICommand AddHostProfileCommand => new RelayCommand(_ => AddHostProfileAction(), AddHostProfile_CanExecute);
-
-    private bool AddHostProfile_CanExecute(object obj)
-    {
-        return !IsSearching && SelectedProfile != null;
-    }
-
-    private void AddHostProfileAction()
-    {
-        AddHost(SelectedProfile.PingMonitor_Host).ConfigureAwait(false);
-    }
-
+    
     public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
 
     private void AddProfileAction()
@@ -337,77 +370,114 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #region Methods
-    public async Task AddHost(string hosts)
+
+    /// <summary>
+    /// Set the host to ping.
+    /// </summary>
+    /// <param name="host">Host to ping</param>
+    /// <returns>True if the host was set successfully, otherwise false</returns>
+    public bool SetHost(string host)
+    {
+        // Check if it is already running or canceling
+        if (IsRunning || IsCanceling)
+        {
+            _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.CannotSetHostWhileRunningMessage);
+            
+            return false;
+        }
+
+        Host = host;
+
+        return true;
+    }
+    
+    public async Task Start()
     {
         IsStatusMessageDisplayed = false;
-        StatusMessage = string.Empty;
-
         IsRunning = true;
+        
+        _cancellationTokenSource = new CancellationTokenSource();
+        
+        // Resolve hostnames
+        (List<(IPAddress ipAddress, string hostname)> hosts, List<string> hostnamesNotResolved) hosts;
 
-        await Task.Run(() =>
+        try
         {
-            Parallel.ForEach(hosts.Split(';'), currentHost =>
+            hosts = await HostRangeHelper.ResolveAsync(HostRangeHelper.CreateListFromInput(Host), SettingsManager.Current.Network_ResolveHostnamePreferIPv4, _cancellationTokenSource.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            UserHasCanceled();
+            
+            return;
+        }
+        
+        // Show error message if (some) hostnames could not be resolved
+        if(hosts.hostnamesNotResolved.Count > 0)
+        {
+            StatusMessage = $"{Localization.Resources.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}";
+            IsStatusMessageDisplayed = true;
+        }
+        
+        // Add host(s) to history
+        AddHostToHistory(Host);
+        
+        // Add host(s) to list and start the ping
+        foreach (var hostView in hosts.hosts.Select(currentHost => new PingMonitorView(Guid.NewGuid(), RemoveHostByGuid, currentHost)))
+        {
+            // Check if the user has canceled the operation
+            if (_cancellationTokenSource.IsCancellationRequested)
             {
-                var host = currentHost.Trim();
-                var hostname = string.Empty;
+                UserHasCanceled();
+                
+                return;
+            }
+            
+            Hosts.Add(hostView);
+            
+            // Start the ping
+            hostView.Start();
 
-                // Resolve ip address from hostname
-                if (!IPAddress.TryParse(host, out var ipAddress))
-                {
-                    hostname = host;
-
-                    using var dnsResolverTask = DNSClientHelper.ResolveAorAaaaAsync(host, SettingsManager.Current.Network_ResolveHostnamePreferIPv4);
-
-                    // Wait for task inside a Parallel.Foreach
-                    dnsResolverTask.Wait();
-
-                    if (dnsResolverTask.Result.HasError)
-                    {
-                        StatusMessageShowOrAdd(host, dnsResolverTask.Result);
-                        return;
-                    }
-
-                    ipAddress = dnsResolverTask.Result.Value;
-                }
-
-                // Resolve hostname from ip address
-                else
-                {
-                    using var dnsResolverTask = DNSClient.GetInstance().ResolvePtrAsync(ipAddress);
-
-                    // Wait for task inside a Parallel.Foreach
-                    dnsResolverTask.Wait();
-
-                    // Hostname is not necessary for ping. Don't show an error message in the UI.
-                    if (!dnsResolverTask.Result.HasError)
-                        hostname = dnsResolverTask.Result.Value;
-                }
-
-                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-                {
-                    Hosts.Add(new PingMonitorView(Guid.NewGuid(), RemoveHost, new PingMonitorOptions(hostname, ipAddress)));
-                }));
-            });
-  
-            IsRunning = false;
-        }).ConfigureAwait(true);
+            // Wait a bit to prevent the UI from freezing
+            await Task.Delay(25);
+        }
+        
+        Host = string.Empty;
+        
+        IsCanceling = false;
+        IsRunning = false;
+    }
+    
+    private void Stop()
+    {
+        IsCanceling = true;
+        _cancellationTokenSource.Cancel();
     }
 
-    private void RemoveHost(Guid hostId)
+    private void RemoveAllHosts()
     {
-        var index = -1;
+        for (var i = Hosts.Count - 1; i >= 0; i--)
+        {
+            Hosts[i].Stop();
+            Hosts.RemoveAt(i);
+        }
+    }
+
+    private void RemoveHostByGuid(Guid hostId)
+    {
+        var i = -1;
 
         foreach (var host in Hosts)
         {
             if (host.HostId.Equals(hostId))
-                index = Hosts.IndexOf(host);
+                i = Hosts.IndexOf(host);
         }
 
-        if (index == -1) 
+        if (i == -1)
             return;
-        
-        Hosts[index].CloseView();
-        Hosts.RemoveAt(index);
+
+        Hosts[i].Stop();
+        Hosts.RemoveAt(i);
     }
 
     private void AddHostToHistory(string host)
@@ -422,7 +492,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         // Fill with the new items
         list.ForEach(x => SettingsManager.Current.PingMonitor_HostHistory.Add(x));
     }
-    
+
     private void ResizeProfile(bool dueToChangedSize)
     {
         _canProfileWidthChange = false;
@@ -502,29 +572,6 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
         SetProfilesView(SelectedProfile);
     }
-    
-    /// <summary>
-    /// Method to display the status message and append messages related to <see cref="DNSClientResult"/>.
-    /// </summary>
-    /// <param name="host">Host which should be resolved.</param>
-    /// <param name="result">Information about the error that occurred in the <see cref="DNSClientResult"/> query.</param>
-    private void StatusMessageShowOrAdd(string host, DNSClientResult result)
-    {
-        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-        {
-            // Show the message
-            if (!IsStatusMessageDisplayed)
-            {
-                StatusMessage = DNSClientHelper.FormatDNSClientResultError(host, result);
-                IsStatusMessageDisplayed = true;
-
-                return;
-            }
-
-            // Append the message
-            StatusMessage += Environment.NewLine + DNSClientHelper.FormatDNSClientResultError(host, result);
-        }));
-    }
     #endregion
 
     #region Event
@@ -540,6 +587,15 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         RefreshProfiles();
 
         IsSearching = false;
+    }
+
+    private void UserHasCanceled()
+    {
+        StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
+        IsStatusMessageDisplayed = true;
+        
+        IsCanceling = false;
+        IsRunning = false;
     }
     #endregion
 }

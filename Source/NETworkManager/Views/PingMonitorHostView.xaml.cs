@@ -24,12 +24,13 @@ public partial class PingMonitorHostView
     private void ListBoxItem_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
         if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
-            _viewModel.AddHostProfileCommand.Execute(null);
+            _viewModel.PingProfileCommand.Execute(null);
     }
 
     public void AddHost(string host)
     {
-        _viewModel.AddHost(host).ConfigureAwait(false);
+        if (_viewModel.SetHost(host))
+            _viewModel.Start().ConfigureAwait(false);
     }
 
     public void OnViewHide()

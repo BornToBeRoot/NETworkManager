@@ -110,6 +110,7 @@ public static class GlobalStaticConfiguration
     public static int PingMonitor_Timeout => 4000;
     public static int PingMonitor_TTL => 64;
     public static int PingMonitor_WaitTime => 1000;
+    public static bool PingMonitor_ExpandHostView => false;
     public static ExportFileType PingMonitor_ExportFileType => ExportFileType.Csv;
 
     // Application: Traceroute

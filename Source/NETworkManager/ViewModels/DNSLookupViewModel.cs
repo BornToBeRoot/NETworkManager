@@ -221,8 +221,8 @@ public class DNSLookupViewModel : ViewModelBase
                     DNSServers.SourceCollection.Cast<DNSServerConnectionInfoProfile>().First();
 
         ResultsView = CollectionViewSource.GetDefaultView(Results);
-        ResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(DNSLookupRecordInfo.IPEndPoint)));
-        ResultsView.SortDescriptions.Add(new SortDescription(nameof(DNSLookupRecordInfo.IPEndPoint),
+        ResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(DNSLookupRecordInfo.NameServerAsString)));
+        ResultsView.SortDescriptions.Add(new SortDescription(nameof(DNSLookupRecordInfo.NameServerIPAddress),
             ListSortDirection.Descending));
 
         LoadSettings();
@@ -406,7 +406,7 @@ public class DNSLookupViewModel : ViewModelBase
     public void SortResultByPropertyName(string sortDescription)
     {
         ResultsView.SortDescriptions.Clear();
-        ResultsView.SortDescriptions.Add(new SortDescription(nameof(DNSLookupRecordInfo.Server),
+        ResultsView.SortDescriptions.Add(new SortDescription(nameof(DNSLookupRecordInfo.NameServerIPAddress),
             ListSortDirection.Descending));
 
         if (_lastSortDescriptionAscending.Equals(sortDescription))
