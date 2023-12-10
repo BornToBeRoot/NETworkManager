@@ -603,8 +603,16 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         }
     }
 
-    public ICommand RunCommandHotKey => new RelayCommand(_ => ComboBoxRunCommand.Focus(), _ => !IsAnyDialogOpen);
+    public ICommand OpenRunCommand => new RelayCommand(_ => OpenRunAction());
 
+    private void OpenRunAction()
+    {
+        RunCommandFlyout.IsOpen = true;
+    }
+
+
+
+    /*
     public ICommand RunCommandEnterCommand => new RelayCommand(_ => RunCommandEnterAction());
 
     private void RunCommandEnterAction()
@@ -633,6 +641,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         RunCommand = string.Empty;
     }
+    */
 
     private string _runCommand = string.Empty;
 

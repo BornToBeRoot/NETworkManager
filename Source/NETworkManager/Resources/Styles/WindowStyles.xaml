@@ -4,7 +4,7 @@
     <Style x:Key="DefaultWindow" TargetType="{x:Type mahAppsControls:MetroWindow}" BasedOn="{StaticResource MahApps.Styles.MetroWindow.Clean}">
         <Setter Property="TitleCharacterCasing" Value="Normal" />
         <Setter Property="GlowBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
-        <Setter Property="NonActiveGlowBrush" Value="Transparent" />
+        <Setter Property="NonActiveGlowBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
         <Setter Property="TitleForeground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
         <Setter Property="ShowTitleBar" Value="True" />        
     </Style>
