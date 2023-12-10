@@ -12,9 +12,9 @@
                  xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
                  xmlns:resources="clr-namespace:NETworkManager.Properties"
                  xmlns:networkManager="clr-namespace:NETworkManager"
-                 xmlns:controls="clr-namespace:NETworkManager.Controls"                 
+                 xmlns:controls="clr-namespace:NETworkManager.Controls"
                  xmlns:models="clr-namespace:NETworkManager.Models;assembly=NETworkManager.Models"
-                 mc:Ignorable="d"      
+                 mc:Ignorable="d"
                  Style="{DynamicResource DefaultWindow}"
                  MinWidth="800" Width="1024" Height="768" MinHeight="600"
                  SaveWindowPosition="True" TitleAlignment="Center"
@@ -67,40 +67,41 @@
     </mah:MetroWindow.Resources>
     <mah:MetroWindow.TitleTemplate>
         <DataTemplate>
-            <Grid Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:MetroWindow}}, Path=ActualWidth}">
+            <Grid
+                Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:MetroWindow}}, Path=ActualWidth}">
                 <TextBlock Grid.Column="0" Grid.Row="0"
-                       Margin="8,-1,1,0"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Left"
-                       FontFamily="{DynamicResource MahApps.Fonts.Family.Window.Title}"
-                       FontSize="{DynamicResource MahApps.Font.Size.Window.Title}"
-                       Text="{TemplateBinding Content}"
-                       TextTrimming="CharacterEllipsis" />
+                           Margin="8,-1,1,0"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           FontFamily="{DynamicResource MahApps.Fonts.Family.Window.Title}"
+                           FontSize="{DynamicResource MahApps.Font.Size.Window.Title}"
+                           Text="{TemplateBinding Content}"
+                           TextTrimming="CharacterEllipsis" />
                 <Button Grid.Column="0" Grid.Row="0"
                         Command="{Binding OpenRunCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                    Cursor="Hand" 
-                   Style="{StaticResource CleanButton}">
+                        Cursor="Hand"
+                        Style="{StaticResource CleanButton}">
                     <Grid Height="30">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="270" />
                         </Grid.ColumnDefinitions>
                         <Rectangle Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
-                               Fill="{DynamicResource MahApps.Brushes.Gray10}" />
+                                   Fill="{DynamicResource MahApps.Brushes.Gray10}" />
                         <Rectangle Grid.Column="0" Grid.Row="0"
-                           Margin="5,0"
-                           Width="20" Height="20" 
-                           HorizontalAlignment="Right"
-                           Fill="{DynamicResource MahApps.Brushes.Gray8}">
+                                   Margin="5,0"
+                                   Width="20" Height="20"
+                                   HorizontalAlignment="Right"
+                                   Fill="{DynamicResource MahApps.Brushes.Gray8}">
                             <Rectangle.OpacityMask>
                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronRight}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
-                        <TextBlock Grid.Column="1" Grid.Row="0" 
-                           Style="{StaticResource InfoTextBlock}"                               
-                           Text="{x:Static localization:Strings.Watermark_RunCommand}" />
+                        <TextBlock Grid.Column="1" Grid.Row="0"
+                                   Style="{StaticResource InfoTextBlock}"
+                                   Text="{x:Static localization:Strings.Watermark_RunCommandWithHotKey}" />
                     </Grid>
                 </Button>
             </Grid>
@@ -127,8 +128,8 @@
         <mah:WindowCommands ShowSeparators="False">
             <Rectangle Width="10" />
             <Button Command="{Binding RestartApplicationCommand}" Opacity="1"
-                            Visibility="{Binding IsRestartRequired, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                            Cursor="Hand">
+                    Visibility="{Binding IsRestartRequired, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
+                    Cursor="Hand">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Accent}">
                         <Rectangle.OpacityMask>
@@ -136,34 +137,34 @@
                         </Rectangle.OpacityMask>
                     </Rectangle>
                     <TextBlock Text="{x:Static localization:Strings.RestartRequired}"
-                                   Style="{StaticResource LinkTextBlock}" VerticalAlignment="Center" Margin="5,0,0,0" />
+                               Style="{StaticResource LinkTextBlock}" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
             <Button Command="{Binding OpenWebsiteCommand}"
-                            Opacity="1"
-                            Visibility="{Binding IsUpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                            CommandParameter="{Binding UpdateReleaseUrl, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                            Cursor="Hand"
-                            Focusable="False">
+                    Opacity="1"
+                    Visibility="{Binding IsUpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
+                    CommandParameter="{Binding UpdateReleaseUrl, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    Cursor="Hand"
+                    Focusable="False">
                 <Rectangle Width="20" Height="20"
-                                   Fill="{DynamicResource MahApps.Brushes.Accent}"
-                                   ToolTip="{x:Static localization:Strings.UpdateAvailable}">
+                           Fill="{DynamicResource MahApps.Brushes.Accent}"
+                           ToolTip="{x:Static localization:Strings.UpdateAvailable}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=RocketLaunchOutline}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
             <ComboBox ItemsSource="{Binding ProfileFiles}"
-                              SelectedItem="{Binding SelectedProfileFile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                              IsDropDownOpen="{Binding IsProfileFileDropDownOpened}"
-                              Background="{DynamicResource MahApps.Brushes.Gray10}"
-                              BorderThickness="0"
-                              MinWidth="100"
-                              HorizontalAlignment="Left"
-                              Focusable="False"
-                              VerticalAlignment="Center"
-                              Height="30"
-                              Margin="0,0,10,0">
+                      SelectedItem="{Binding SelectedProfileFile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      IsDropDownOpen="{Binding IsProfileFileDropDownOpened}"
+                      Background="{DynamicResource MahApps.Brushes.Gray10}"
+                      BorderThickness="0"
+                      MinWidth="100"
+                      HorizontalAlignment="Left"
+                      Focusable="False"
+                      VerticalAlignment="Center"
+                      Height="30"
+                      Margin="0,0,10,0">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -173,13 +174,13 @@
                                 <ColumnDefinition MinWidth="70" />
                             </Grid.ColumnDefinitions>
                             <Rectangle Grid.Column="0" Grid.Row="0" Width="20" Height="20"
-                                               Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                       Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.Style>
                                     <Style TargetType="Rectangle">
                                         <Setter Property="OpacityMask">
                                             <Setter.Value>
                                                 <VisualBrush Stretch="Uniform"
-                                                                     Visual="{iconPacks:FontAwesome Kind=UserSolid}" />
+                                                             Visual="{iconPacks:FontAwesome Kind=UserSolid}" />
                                             </Setter.Value>
                                         </Setter>
                                         <Style.Triggers>
@@ -187,7 +188,7 @@
                                                 <Setter Property="OpacityMask">
                                                     <Setter.Value>
                                                         <VisualBrush Stretch="Uniform"
-                                                                             Visual="{iconPacks:FontAwesome Kind=UserLockSolid}" />
+                                                                     Visual="{iconPacks:FontAwesome Kind=UserLockSolid}" />
                                                     </Setter.Value>
                                                 </Setter>
                                             </DataTrigger>
@@ -201,13 +202,13 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
             <Button Command="{Binding OpenWebsiteCommand}"
-                            ToolTip="{x:Static localization:Strings.StarForkTheProjectOnGitHub}"
-                            CommandParameter="{x:Static resources:Resources.NETworkManager_RepoUrl}"
-                            Cursor="Hand"
-                            Focusable="False">
+                    ToolTip="{x:Static localization:Strings.StarForkTheProjectOnGitHub}"
+                    CommandParameter="{x:Static resources:Resources.NETworkManager_RepoUrl}"
+                    Cursor="Hand"
+                    Focusable="False">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20" Height="20"
-                                       Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                               Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Github}" />
                         </Rectangle.OpacityMask>
@@ -215,13 +216,13 @@
                 </StackPanel>
             </Button>
             <Button Command="{Binding OpenWebsiteCommand}"
-                            ToolTip="{x:Static localization:Strings.ReportAnIssueOrCreateAFeatureRequest}"
-                            CommandParameter="{x:Static resources:Resources.NETworkManager_NewIssueUrl}"
-                            Cursor="Hand"
-                            Focusable="False">
+                    ToolTip="{x:Static localization:Strings.ReportAnIssueOrCreateAFeatureRequest}"
+                    CommandParameter="{x:Static resources:Resources.NETworkManager_NewIssueUrl}"
+                    Cursor="Hand"
+                    Focusable="False">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20" Height="20"
-                                       Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                               Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Bug}" />
                         </Rectangle.OpacityMask>
@@ -229,12 +230,12 @@
                 </StackPanel>
             </Button>
             <Button Command="{Binding OpenDocumentationCommand}"
-                        ToolTip="{x:Static localization:Strings.OpenDocumentation}"
-                        Cursor="Hand"
-                        Focusable="False">
+                    ToolTip="{x:Static localization:Strings.OpenDocumentation}"
+                    Cursor="Hand"
+                    Focusable="False">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20" Height="20"
-                                   Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                               Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Book}" />
                         </Rectangle.OpacityMask>
@@ -244,22 +245,82 @@
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>
     <mah:MetroWindow.Flyouts>
-        <mah:FlyoutsControl >
-            <mah:Flyout x:Name="RunCommandFlyout" Position="Top" CloseButtonVisibility="Visible" IsModal="False" Width="500" Height="400">
+        <mah:FlyoutsControl>
+            <mah:Flyout x:Name="RunCommandFlyout"
+                        IsKeyboardFocusWithinChanged="RunCommandFlyout_IsKeyboardFocusWithinChanged"
+                        Position="Top"
+                        TitleVisibility="Collapsed"
+                        CloseButtonVisibility="Collapsed"
+                        IsModal="False"
+                        Width="500" MaxHeight="400">
+                <mah:Flyout.InputBindings>
+                    <KeyBinding Command="{Binding CloseRunCommand}" Key="Escape" />
+                </mah:Flyout.InputBindings>
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="10" />
                         <RowDefinition Height="*" />
-                        <RowDefinition Height="10" />
-                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <TextBox x:Name="TextBoxRunCommandSearch" Grid.Column="0" Grid.Row="0"
-                       Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"
-                       Style="{StaticResource SearchTextBox}" 
-                       
-                           />
-                        <!--
+                    <Grid Grid.Column="0" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Grid.Column="0" Grid.Row="0"
+                                   Margin="5,0"
+                                   Width="20" Height="20"
+                                   HorizontalAlignment="Right"
+                                   Fill="{DynamicResource MahApps.Brushes.Gray8}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronRight}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBox Grid.Column="1" Grid.Row="0" 
+                                                x:Name="TextBoxRunCommandSearch"
+                                                Text="{Binding RunCommandSearch, UpdateSourceTrigger=PropertyChanged}"
+                                                mah:TextBoxHelper.Watermark="{x:Static localization:Strings.Watermark_RunCommand}">
+                            <TextBox.Style>
+                                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
+                                    <Setter Property="mah:TextBoxHelper.ClearTextButton" Value="True" />
+                                    <Setter Property="BorderThickness" Value="0,0,0,1" />
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
+                        </Grid>
+                    <ListView Grid.Column="0" Grid.Row="2" ItemsSource="{Binding RunCommands}"
+                              Style="{StaticResource DefaultListBox}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate DataType="{x:Type networkManager:RunCommandInfo}">
+                                <Border BorderThickness="1">
+                                    <Grid Margin="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Column="0" Grid.Row="0"
+                                                   Text="{Binding TranslatedName}"
+                                                   Style="{StaticResource BoldTextBlock}" />
+                                        <TextBlock Grid.Column="0" Grid.Row="1"
+                                                   Style="{StaticResource AccentTextBlock}"
+                                                   FontFamily="Consolas"
+                                                   Margin="0,5,0,0">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} {1}">
+                                                    <Binding Path="Command" />
+                                                    <Binding Path="ExampleArguments" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <!--
                         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
                             <Button HorizontalAlignment="Left" Content="Cancel" Style="{StaticResource DefaultButton}" Margin="0,0,10,0" />
                             <Button Content="Run"  Style="{StaticResource DefaultButton}" />
@@ -903,7 +964,7 @@
                         </Grid.ColumnDefinitions>
                         <Button Grid.Column="0" Grid.Row="0"
                                 Command="{Binding CloseSettingsCommand}"
-                                Style="{StaticResource CleanButton}" 
+                                Style="{StaticResource CleanButton}"
                                 Focusable="False"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"

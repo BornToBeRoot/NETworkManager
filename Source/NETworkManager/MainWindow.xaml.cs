@@ -571,37 +571,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     #region Run Command
 
-    private IEnumerable<RunCommandInfo> RunCommands => RunCommandManager.GetList();
-
-    private ICollectionView _runCommandsSuggestions;
-
-    public ICollectionView RunCommandsSuggestions
-    {
-        get => _runCommandsSuggestions;
-        private set
-        {
-            if (value == _runCommandsSuggestions)
-                return;
-
-            _runCommandsSuggestions = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private int _selectedRunCommandsSuggestionsIndex;
-
-    public int SelectedRunCommandsSuggestionsIndex
-    {
-        get => _selectedRunCommandsSuggestionsIndex;
-        set
-        {
-            if (value == _selectedRunCommandsSuggestionsIndex)
-                return;
-
-            _selectedRunCommandsSuggestionsIndex = value;
-            OnPropertyChanged();
-        }
-    }
+    public IEnumerable<RunCommandInfo> RunCommands => RunCommandManager.GetList();
 
     public ICommand OpenRunCommand => new RelayCommand(_ => OpenRunAction());
 
@@ -610,7 +580,21 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         RunCommandFlyout.IsOpen = true;
     }
 
+    public ICommand CloseRunCommand => new RelayCommand(_ => CloseRunAction());
 
+    private void CloseRunAction()
+    {
+        Debug.WriteLine("CLOSE!!!");
+        
+        RunCommandFlyout.IsOpen = false;
+    }
+
+    private void RunCommandFlyout_IsKeyboardFocusWithinChanged(object sender, DependencyPropertyChangedEventArgs e)
+    {
+        // Close flyout if focus is lost
+        if (e.NewValue is false)
+            RunCommandFlyout.IsOpen = false;
+    }
 
     /*
     public ICommand RunCommandEnterCommand => new RelayCommand(_ => RunCommandEnterAction());
@@ -660,8 +644,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private void LoadRunCommands()
     {
-        RunCommandsSuggestions = new CollectionViewSource { Source = RunCommands }.View;
-        SelectedRunCommandsSuggestionsIndex = -1;
+       
     }
 
     #endregion

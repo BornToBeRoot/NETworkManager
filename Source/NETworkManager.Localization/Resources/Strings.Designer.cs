@@ -10533,11 +10533,20 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Run command... (Ctrl+Shift+P).
+        ///   Looks up a localized string similar to Run command....
         /// </summary>
         public static string Watermark_RunCommand {
             get {
                 return ResourceManager.GetString("Watermark_RunCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run command... (Ctrl+Shift+P).
+        /// </summary>
+        public static string Watermark_RunCommandWithHotKey {
+            get {
+                return ResourceManager.GetString("Watermark_RunCommandWithHotKey", resourceCulture);
             }
         }
         
