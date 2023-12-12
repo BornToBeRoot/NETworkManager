@@ -3760,4 +3760,7 @@ Try again in a few seconds.</value>
   <data name="Watermark_RunCommandWithHotKey" xml:space="preserve">
     <value>Run command... (Ctrl+Shift+P)</value>
   </data>
+  <data name="NoMatchingCommands" xml:space="preserve">
+    <value>No matching commands!</value>
+  </data>
 </root>

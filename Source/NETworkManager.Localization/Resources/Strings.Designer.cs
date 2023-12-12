@@ -5846,6 +5846,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No matching commands!.
+        /// </summary>
+        public static string NoMatchingCommands {
+            get {
+                return ResourceManager.GetString("NoMatchingCommands", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No open ports found!.
         /// </summary>
         public static string NoOpenPortsFound {
