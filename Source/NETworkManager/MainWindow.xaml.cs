@@ -1076,7 +1076,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     }
 
     /// <summary>
-    /// Disable copy, cut, paste because we cannot handle it in the TextBoxApplicationSearch.
+    /// Disable copy, cut, paste because we cannot handle it properly in the TextBoxApplicationSearch.
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -1092,6 +1092,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     #endregion
 
     #region Run Command
+    
+    #region Variables
 
     private ICollectionView _runCommands;
 
@@ -1140,7 +1142,32 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+    #endregion
+    
+    #region ICommands & Actions
+    public ICommand OpenRunCommand => new RelayCommand(_ => OpenRunAction());
 
+    private void OpenRunAction()
+    {
+        FlyoutRunCommand.IsOpen = true;
+    }
+
+    public ICommand RunCommandDoCommand => new RelayCommand(_ => RunCommandDoAction());
+
+    private void RunCommandDoAction()
+    {
+        RunCommandDo();
+    }
+
+    public ICommand RunCommandCloseCommand => new RelayCommand(_ => RunCommandCloseAction());
+
+    private void RunCommandCloseAction()
+    {
+        RunCommandFlyoutClose();
+    }
+    #endregion
+    
+    #region Methods
     private void SetRunCommandsView(RunCommandInfo selectedRunCommand = null)
     {
         RunCommands = new CollectionViewSource { Source = RunCommandManager.GetList() }.View;
@@ -1168,18 +1195,13 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     {
         SetRunCommandsView(SelectedRunCommand);
     }
-
-    public ICommand OpenRunCommand => new RelayCommand(_ => OpenRunAction());
-
-    private void OpenRunAction()
+    
+    /// <summary>
+    /// Execute the selected run command.
+    /// </summary>
+    private void RunCommandDo()
     {
-        RunCommandFlyout.IsOpen = true;
-    }
-
-    public ICommand RunCommandDoCommand => new RelayCommand(_ => RunCommandDoAction());
-
-    private void RunCommandDoAction()
-    {
+        // Do nothing if no command is selected
         if (SelectedRunCommand == null)
             return;
 
@@ -1203,15 +1225,28 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         // Close the flyout
         RunCommandFlyoutClose();
     }
-
-    public ICommand RunCommandFlyoutCloseCommand => new RelayCommand(_ => RunCommandFlyoutCloseAction());
-
-    private void RunCommandFlyoutCloseAction()
+    
+    /// <summary>
+    /// Close the run command flyout and clear the search.
+    /// </summary>
+    private void RunCommandFlyoutClose()
     {
-        RunCommandFlyoutClose();
+        if (!FlyoutRunCommand.IsOpen)
+            return;
+
+        FlyoutRunCommand.AreAnimationsEnabled = false;
+        FlyoutRunCommand.IsOpen = false;
+        RunCommandSearch = string.Empty;
+    }
+    #endregion
+    
+    #region  Events
+    private void ListViewRunCommand_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+    {
+        RunCommandDo();
     }
 
-    private void RunCommandFlyout_IsKeyboardFocusWithinChanged(object sender, DependencyPropertyChangedEventArgs e)
+    private void FlyoutRunCommand_IsKeyboardFocusWithinChanged(object sender, DependencyPropertyChangedEventArgs e)
     {
         // Close flyout if the focus is lost.
         if (e.NewValue is not false)
@@ -1219,19 +1254,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         RunCommandFlyoutClose();
     }
-
-    /// <summary>
-    /// Close the run command flyout and clear the search.
-    /// </summary>
-    private void RunCommandFlyoutClose()
-    {
-        if (!RunCommandFlyout.IsOpen)
-            return;
-
-        RunCommandFlyout.AreAnimationsEnabled = false;
-        RunCommandFlyout.IsOpen = false;
-        RunCommandSearch = string.Empty;
-    }
+    #endregion
 
     #endregion
 

@@ -281,15 +281,16 @@
     </mah:MetroWindow.RightWindowCommands>
     <mah:MetroWindow.Flyouts>
         <mah:FlyoutsControl>
-            <mah:Flyout x:Name="RunCommandFlyout"
-                        IsKeyboardFocusWithinChanged="RunCommandFlyout_IsKeyboardFocusWithinChanged"
+            <mah:Flyout x:Name="FlyoutRunCommand"
+                        IsKeyboardFocusWithinChanged="FlyoutRunCommand_IsKeyboardFocusWithinChanged"
                         Position="Top"
                         TitleVisibility="Collapsed"
                         CloseButtonVisibility="Collapsed"
                         IsModal="False"
-                        Width="500" MaxHeight="400">
+                        Width="500" MaxHeight="400"
+                        Theme="Adapt">
                 <mah:Flyout.InputBindings>
-                    <KeyBinding Command="{Binding RunCommandFlyoutCloseCommand}" Key="Escape" />
+                    <KeyBinding Command="{Binding RunCommandCloseCommand}" Key="Escape" />
                     <KeyBinding Command="{Binding RunCommandDoCommand}" Key="Enter" />
                 </mah:Flyout.InputBindings>
                 <Grid Margin="10">
@@ -324,9 +325,11 @@
                         </TextBox>
                         </Grid>
                     <ListView Grid.Column="0" Grid.Row="2" 
+                              x:Name="ListViewRunCommand"
                               ItemsSource="{Binding RunCommands}"
                               SelectedItem="{Binding SelectedRunCommand, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                               SelectionMode="Single"
+                              PreviewMouseLeftButtonUp="ListViewRunCommand_OnPreviewMouseLeftButtonUp"
                               Style="{StaticResource DefaultListBox}">
                         <ListView.ItemTemplate>
                             <DataTemplate DataType="{x:Type networkManager:RunCommandInfo}">
@@ -372,12 +375,6 @@
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
-                    <!--
-                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                            <Button HorizontalAlignment="Left" Content="Cancel" Style="{StaticResource DefaultButton}" Margin="0,0,10,0" />
-                            <Button Content="Run"  Style="{StaticResource DefaultButton}" />
-                        </StackPanel>                    
-                        -->
                 </Grid>
             </mah:Flyout>
         </mah:FlyoutsControl>
