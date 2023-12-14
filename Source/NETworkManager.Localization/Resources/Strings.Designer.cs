@@ -5846,6 +5846,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No matching commands!.
+        /// </summary>
+        public static string NoMatchingCommands {
+            get {
+                return ResourceManager.GetString("NoMatchingCommands", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No open ports found!.
         /// </summary>
         public static string NoOpenPortsFound {
@@ -10533,11 +10542,20 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Run command... (Ctrl+Shift+P).
+        ///   Looks up a localized string similar to Run command....
         /// </summary>
         public static string Watermark_RunCommand {
             get {
                 return ResourceManager.GetString("Watermark_RunCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run command... (Ctrl+Shift+P).
+        /// </summary>
+        public static string Watermark_RunCommandWithHotKey {
+            get {
+                return ResourceManager.GetString("Watermark_RunCommandWithHotKey", resourceCulture);
             }
         }
         

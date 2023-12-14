@@ -15,9 +15,15 @@ Release date: **xx.xx.2023**
 - Windows 10 / Server x64 (1809 or later)
 - [.NET Desktop Runtime 8.0 (LTS) - x64](https://dotnet.microsoft.com/en-us/download/dotnet/8.0/runtime){:target="\_blank"}
 
+New Feature
+{: .label .label-green }
+
 ## Breaking Changes
 
 ## What's new?
+
+- Run Command
+  - Run command (HotKey: Ctrl+Shift+P) added. This feature allows you to open a command field to switch between applications (and pass parameters to them _in the future_) [#2577](https://github.com/BornToBeRoot/NETworkManager/pull/2577){:target="\_blank"}
 
 - Ping Monitor
   - UI redesigned [#2573](https://github.com/BornToBeRoot/NETworkManager/pull/2573){:target="\_blank"}

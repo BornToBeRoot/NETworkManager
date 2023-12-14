@@ -16,9 +16,9 @@ public static class RunCommandManager
 
     private static IEnumerable<RunCommandInfo> GetSettingsList()
     {
-        return new List<RunCommandInfo>
-        {
-            new()
+        return
+        [
+            new RunCommandInfo
             {
                 Type = RunCommandType.Setting,
                 Name = "Settings",
@@ -27,9 +27,8 @@ public static class RunCommandManager
                 CanHandleArguments = false,
                 ExampleArguments = string.Empty
             }
-        };
+        ];
     }
-
 
     private static IEnumerable<RunCommandInfo> GetApplicationList()
     {

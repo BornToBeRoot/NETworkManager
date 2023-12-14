@@ -61,20 +61,20 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     private readonly bool _isLoading;
     private bool _isProfileFilesLoading;
     private bool _isProfileFileUpdating;
-    private bool _isApplicationListLoading;
+    private bool _isApplicationViewLoading;
     private bool _isNetworkChanging;
 
     private bool _isInTray;
-    private bool _closeApplication;
+    private bool _isClosing;
 
-    private bool _expandApplicationView;
+    private bool _applicationViewIsExpanded;
 
-    public bool ExpandApplicationView
+    public bool ApplicationViewIsExpanded
     {
-        get => _expandApplicationView;
+        get => _applicationViewIsExpanded;
         set
         {
-            if (value == _expandApplicationView)
+            if (value == _applicationViewIsExpanded)
                 return;
 
             if (!_isLoading)
@@ -83,61 +83,61 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             if (!value)
                 ClearSearchOnApplicationListMinimize();
 
-            _expandApplicationView = value;
+            _applicationViewIsExpanded = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _isTextBoxSearchFocused;
+    private bool _textBoxApplicationSearchIsFocused;
 
-    public bool IsTextBoxSearchFocused
+    public bool TextBoxApplicationSearchIsFocused
     {
-        get => _isTextBoxSearchFocused;
+        get => _textBoxApplicationSearchIsFocused;
         set
         {
-            if (value == _isTextBoxSearchFocused)
+            if (value == _textBoxApplicationSearchIsFocused)
                 return;
 
             if (!value)
                 ClearSearchOnApplicationListMinimize();
 
-            _isTextBoxSearchFocused = value;
+            _textBoxApplicationSearchIsFocused = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _isApplicationListOpen;
+    private bool _applicationViewIsOpen;
 
-    public bool IsApplicationListOpen
+    public bool ApplicationViewIsOpen
     {
-        get => _isApplicationListOpen;
+        get => _applicationViewIsOpen;
         set
         {
-            if (value == _isApplicationListOpen)
+            if (value == _applicationViewIsOpen)
                 return;
 
             if (!value)
                 ClearSearchOnApplicationListMinimize();
 
-            _isApplicationListOpen = value;
+            _applicationViewIsOpen = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _isMouseOverApplicationList;
+    private bool _applicationViewIsMouseOver;
 
-    public bool IsMouseOverApplicationList
+    public bool ApplicationViewIsMouseOver
     {
-        get => _isMouseOverApplicationList;
+        get => _applicationViewIsMouseOver;
         set
         {
-            if (value == _isMouseOverApplicationList)
+            if (value == _applicationViewIsMouseOver)
                 return;
 
             if (!value)
                 ClearSearchOnApplicationListMinimize();
 
-            _isMouseOverApplicationList = value;
+            _applicationViewIsMouseOver = value;
             OnPropertyChanged();
         }
     }
@@ -164,88 +164,96 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         get => _selectedApplication;
         set
         {
-            if (_isApplicationListLoading)
+            // Do not change the application view if the application view is loading
+            if (_isApplicationViewLoading)
                 return;
 
+            // Should only be null if we try to re-set the selected application via search
+            if (value == null && !_applicationViewIsEmpty)
+                return;
+
+            // Don't update the application view if the application is the same
             if (Equals(value, _selectedApplication))
                 return;
 
-            if (_selectedApplication != null)
-                OnApplicationViewHide(_selectedApplication.Name);
+            if (value != null && !_applicationViewIsEmpty)
+            {
+                // Hide the old application view
+                if (_selectedApplication != null)
+                {
+                    Debug.WriteLine($"Hide application view: {_selectedApplication.Name}");
+                    OnApplicationViewHide(_selectedApplication.Name);
+                }
 
-            if (value != null)
+                // Show the new application view
+                Debug.WriteLine($"Show application view: {value.Name}");
                 OnApplicationViewVisible(value.Name);
 
-            ConfigurationManager.Current.CurrentApplication = value?.Name ?? ApplicationName.None;
+                // Store the last selected application name
+                ConfigurationManager.Current.CurrentApplication = value.Name;
+            }
 
             _selectedApplication = value;
             OnPropertyChanged();
         }
     }
 
-    private ApplicationName _searchLastSelectedApplicationName;
+    private ApplicationInfo _previousSelectedApplication;
 
-    private string _search = string.Empty;
+    private bool _applicationViewIsEmpty;
 
-    public string Search
+    private string _applicationSearch = string.Empty;
+
+    public string ApplicationSearch
     {
-        get => _search;
+        get => _applicationSearch;
         set
         {
-            if (value == _search)
+            if (value == _applicationSearch)
                 return;
 
-            _search = value;
+            _applicationSearch = value;
 
             // Store the current selected application name
             if (SelectedApplication != null)
-                _searchLastSelectedApplicationName = SelectedApplication.Name;
+                _previousSelectedApplication = SelectedApplication;
 
             // Refresh (apply filter)
             Applications.Refresh();
 
-            // Try to select the last selected application
-            if (!Applications.IsEmpty && SelectedApplication == null)
-                SelectedApplication =
-                    Applications.Cast<ApplicationInfo>()
-                        .FirstOrDefault(x => x.Name == _searchLastSelectedApplicationName) ??
-                    Applications.Cast<ApplicationInfo>().FirstOrDefault();
+            if (Applications.IsEmpty)
+            {
+                _applicationViewIsEmpty = true;
+            }
+            else if (_applicationViewIsEmpty) // Not empty anymore
+            {
+                SelectedApplication = null;
 
-            // Show note if nothing was found
-            SearchNothingFound = Applications.IsEmpty;
+                // Try to select the last selected application, otherwise select the first one
+                SelectedApplication = Applications.Cast<ApplicationInfo>()
+                                          .FirstOrDefault(x => x.Name == _previousSelectedApplication.Name) ??
+                                      Applications.Cast<ApplicationInfo>().FirstOrDefault();
 
-            OnPropertyChanged();
-        }
-    }
+                _applicationViewIsEmpty = false;
+            }
 
-    private bool _searchNothingFound;
-
-    public bool SearchNothingFound
-    {
-        get => _searchNothingFound;
-        set
-        {
-            if (value == _searchNothingFound)
-                return;
-
-            _searchNothingFound = value;
             OnPropertyChanged();
         }
     }
 
     private SettingsView _settingsView;
 
-    private bool _showSettingsView;
+    private bool _settingsViewIsOpen;
 
-    public bool ShowSettingsView
+    public bool SettingsViewIsOpen
     {
-        get => _showSettingsView;
+        get => _settingsViewIsOpen;
         set
         {
-            if (value == _showSettingsView)
+            if (value == _settingsViewIsOpen)
                 return;
 
-            _showSettingsView = value;
+            _settingsViewIsOpen = value;
             OnPropertyChanged();
         }
     }
@@ -486,7 +494,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         LoadApplicationList();
 
         // Load run commands
-        LoadRunCommands();
+        SetRunCommandsView();
 
         // Load the profiles
         LoadProfiles();
@@ -516,7 +524,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)
     {
-        if (!_closeApplication)
+        if (!_isClosing)
         {
             // Hide the application to tray
             if (SettingsManager.Current.Window_MinimizeInsteadOfTerminating && WindowState != WindowState.Minimized)
@@ -552,7 +560,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 if (result != MessageDialogResult.Affirmative)
                     return;
 
-                _closeApplication = true;
+                _isClosing = true;
                 Close();
 
                 return;
@@ -569,99 +577,11 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     #endregion
 
-    #region Run Command
-
-    private IEnumerable<RunCommandInfo> RunCommands => RunCommandManager.GetList();
-
-    private ICollectionView _runCommandsSuggestions;
-
-    public ICollectionView RunCommandsSuggestions
-    {
-        get => _runCommandsSuggestions;
-        private set
-        {
-            if (value == _runCommandsSuggestions)
-                return;
-
-            _runCommandsSuggestions = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private int _selectedRunCommandsSuggestionsIndex;
-
-    public int SelectedRunCommandsSuggestionsIndex
-    {
-        get => _selectedRunCommandsSuggestionsIndex;
-        set
-        {
-            if (value == _selectedRunCommandsSuggestionsIndex)
-                return;
-
-            _selectedRunCommandsSuggestionsIndex = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public ICommand RunCommandHotKey => new RelayCommand(_ => ComboBoxRunCommand.Focus(), _ => !IsAnyDialogOpen);
-
-    public ICommand RunCommandEnterCommand => new RelayCommand(_ => RunCommandEnterAction());
-
-    private void RunCommandEnterAction()
-    {
-        foreach (var x in RunCommands)
-        {
-            switch (x.Type)
-            {
-                case RunCommandType.Application when RunCommand.Trim().Split(" ")[0]
-                    .Equals(x.Command, StringComparison.OrdinalIgnoreCase):
-                {
-                    // Close settings if it is open
-                    if (ShowSettingsView)
-                        CloseSettings();
-
-                    EventSystem.RedirectToApplication((ApplicationName)Enum.Parse(typeof(ApplicationName), x.Name),
-                        RunCommand[x.Command.Length..].Trim());
-                    break;
-                }
-                case RunCommandType.Setting when RunCommand.Trim().Split(" ")[0]
-                    .Equals(x.Command, StringComparison.OrdinalIgnoreCase):
-                    EventSystem.RedirectToSettings();
-                    break;
-            }
-        }
-
-        RunCommand = string.Empty;
-    }
-
-    private string _runCommand = string.Empty;
-
-    public string RunCommand
-    {
-        get => _runCommand;
-        set
-        {
-            if (value == _runCommand)
-                return;
-
-            _runCommand = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private void LoadRunCommands()
-    {
-        RunCommandsSuggestions = new CollectionViewSource { Source = RunCommands }.View;
-        SelectedRunCommandsSuggestionsIndex = -1;
-    }
-
-    #endregion
-
     #region Application
 
     private void LoadApplicationList()
     {
-        _isApplicationListLoading = true;
+        _isApplicationViewLoading = true;
 
         Applications = new CollectionViewSource { Source = SettingsManager.Current.General_ApplicationList }.View;
         Applications.SortDescriptions.Add(
@@ -672,23 +592,24 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             if (o is not ApplicationInfo info)
                 return false;
 
-            if (string.IsNullOrEmpty(Search))
+            if (string.IsNullOrEmpty(ApplicationSearch))
                 return info.IsVisible;
 
             var regex = new Regex(@" |-");
 
-            var search = regex.Replace(Search, "");
+            var search = regex.Replace(ApplicationSearch, "");
 
             // Search by TranslatedName and Name
-            return info.IsVisible &&
-                   (regex.Replace(ResourceTranslator.Translate(ResourceIdentifier.ApplicationName, info.Name), "")
-                       .IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || regex
-                       .Replace(info.Name.ToString(), "").Contains(search, StringComparison.OrdinalIgnoreCase));
+            return info.IsVisible && (
+                regex.Replace(ResourceTranslator.Translate(ResourceIdentifier.ApplicationName, info.Name), "")
+                    .IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || regex
+                    .Replace(info.Name.ToString(), "").Contains(search, StringComparison.OrdinalIgnoreCase)
+            );
         };
 
         SettingsManager.Current.General_ApplicationList.CollectionChanged += (_, _) => Applications.Refresh();
 
-        _isApplicationListLoading = false;
+        _isApplicationViewLoading = false;
 
         // Select the application        
         SelectedApplication = Applications.Cast<ApplicationInfo>().FirstOrDefault(x =>
@@ -701,7 +622,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             ListViewApplication.ScrollIntoView(SelectedApplication);
 
         // Expand application view
-        ExpandApplicationView = SettingsManager.Current.ExpandApplicationView;
+        ApplicationViewIsExpanded = SettingsManager.Current.ExpandApplicationView;
     }
 
     private DashboardView _dashboardView;
@@ -1040,16 +961,16 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private void ClearSearchOnApplicationListMinimize()
     {
-        if (ExpandApplicationView)
+        if (ApplicationViewIsExpanded)
             return;
 
-        if (IsApplicationListOpen && IsTextBoxSearchFocused)
+        if (ApplicationViewIsOpen && TextBoxApplicationSearchIsFocused)
             return;
 
-        if (IsApplicationListOpen && IsMouseOverApplicationList)
+        if (ApplicationViewIsOpen && ApplicationViewIsMouseOver)
             return;
 
-        Search = string.Empty;
+        ApplicationSearch = string.Empty;
 
         // Scroll into view
         ListViewApplication.ScrollIntoView(SelectedApplication);
@@ -1154,6 +1075,187 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Disable copy, cut, paste because we cannot handle it properly in the TextBoxApplicationSearch.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void TextBoxApplicationSearch_OnPreviewExecuted(object sender, ExecutedRoutedEventArgs e)
+    {
+        // Disable copy, cut, paste
+        if (e.Command == ApplicationCommands.Copy ||
+            e.Command == ApplicationCommands.Cut ||
+            e.Command == ApplicationCommands.Paste)
+            e.Handled = true;
+    }
+
+    #endregion
+
+    #region Run Command
+    
+    #region Variables
+
+    private ICollectionView _runCommands;
+
+    public ICollectionView RunCommands
+    {
+        get => _runCommands;
+        private set
+        {
+            if (value == _runCommands)
+                return;
+
+            _runCommands = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private RunCommandInfo _selectedRunCommand;
+
+    public RunCommandInfo SelectedRunCommand
+    {
+        get => _selectedRunCommand;
+        set
+        {
+            if (value == _selectedRunCommand)
+                return;
+
+            _selectedRunCommand = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _runCommandSearch;
+
+    public string RunCommandSearch
+    {
+        get => _runCommandSearch;
+        set
+        {
+            if (value == _runCommandSearch)
+                return;
+
+            _runCommandSearch = value;
+
+            RefreshRunCommandsView();
+
+            OnPropertyChanged();
+        }
+    }
+    #endregion
+    
+    #region ICommands & Actions
+    public ICommand OpenRunCommand => new RelayCommand(_ => OpenRunAction());
+
+    private void OpenRunAction()
+    {
+        FlyoutRunCommand.IsOpen = true;
+    }
+
+    public ICommand RunCommandDoCommand => new RelayCommand(_ => RunCommandDoAction());
+
+    private void RunCommandDoAction()
+    {
+        RunCommandDo();
+    }
+
+    public ICommand RunCommandCloseCommand => new RelayCommand(_ => RunCommandCloseAction());
+
+    private void RunCommandCloseAction()
+    {
+        RunCommandFlyoutClose();
+    }
+    #endregion
+    
+    #region Methods
+    private void SetRunCommandsView(RunCommandInfo selectedRunCommand = null)
+    {
+        RunCommands = new CollectionViewSource { Source = RunCommandManager.GetList() }.View;
+
+        RunCommands.Filter = o =>
+        {
+            if (o is not RunCommandInfo info)
+                return false;
+
+            if (string.IsNullOrEmpty(RunCommandSearch))
+                return true;
+
+            return info.TranslatedName.IndexOf(RunCommandSearch, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.Name.IndexOf(RunCommandSearch, StringComparison.OrdinalIgnoreCase) > -1;
+        };
+
+        if (selectedRunCommand != null)
+            SelectedRunCommand = RunCommands.Cast<RunCommandInfo>()
+                .FirstOrDefault(x => x.Name == selectedRunCommand.Name);
+
+        SelectedRunCommand ??= RunCommands.Cast<RunCommandInfo>().FirstOrDefault();
+    }
+
+    private void RefreshRunCommandsView()
+    {
+        SetRunCommandsView(SelectedRunCommand);
+    }
+    
+    /// <summary>
+    /// Execute the selected run command.
+    /// </summary>
+    private void RunCommandDo()
+    {
+        // Do nothing if no command is selected
+        if (SelectedRunCommand == null)
+            return;
+
+        // Do the command
+        switch (SelectedRunCommand.Type)
+        {
+            // Redirect to application
+            case RunCommandType.Application:
+                if (SettingsViewIsOpen)
+                    CloseSettings();
+
+                var applicationName = (ApplicationName)Enum.Parse(typeof(ApplicationName), SelectedRunCommand.Name);
+                EventSystem.RedirectToApplication(applicationName, string.Empty);
+                break;
+            // Redirect to settings
+            case RunCommandType.Setting:
+                EventSystem.RedirectToSettings();
+                break;
+        }
+
+        // Close the flyout
+        RunCommandFlyoutClose();
+    }
+    
+    /// <summary>
+    /// Close the run command flyout and clear the search.
+    /// </summary>
+    private void RunCommandFlyoutClose()
+    {
+        if (!FlyoutRunCommand.IsOpen)
+            return;
+
+        FlyoutRunCommand.AreAnimationsEnabled = false;
+        FlyoutRunCommand.IsOpen = false;
+        RunCommandSearch = string.Empty;
+    }
+    #endregion
+    
+    #region  Events
+    private void ListViewRunCommand_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+    {
+        RunCommandDo();
+    }
+
+    private void FlyoutRunCommand_IsKeyboardFocusWithinChanged(object sender, DependencyPropertyChangedEventArgs e)
+    {
+        // Close flyout if the focus is lost.
+        if (e.NewValue is not false)
+            return;
+
+        RunCommandFlyoutClose();
+    }
+    #endregion
+
     #endregion
 
     #region Settings
@@ -1175,7 +1277,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         _settingsView.ChangeSettingsView(SelectedApplication.Name);
 
         // Show the view (this will hide other content)
-        ShowSettingsView = true;
+        SettingsViewIsOpen = true;
     }
 
     private void EventSystem_RedirectToSettingsEvent(object sender, EventArgs e)
@@ -1185,7 +1287,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private void CloseSettings()
     {
-        ShowSettingsView = false;
+        SettingsViewIsOpen = false;
 
         _settingsView.OnViewHide();
 
@@ -1502,7 +1604,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private void OpenDocumentationAction()
     {
-        DocumentationManager.OpenDocumentation(ShowSettingsView
+        DocumentationManager.OpenDocumentation(SettingsViewIsOpen
             ? _settingsView.GetDocumentationIdentifier()
             : DocumentationManager.GetIdentifierByApplicationName(SelectedApplication.Name));
     }
@@ -1511,8 +1613,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private void OpenApplicationListAction()
     {
-        IsApplicationListOpen = true;
-        TextBoxSearch.Focus();
+        ApplicationViewIsOpen = true;
+        TextBoxApplicationSearch.Focus();
     }
 
     public ICommand UnlockProfileCommand => new RelayCommand(_ => UnlockProfileAction());
@@ -1562,7 +1664,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private void CloseApplication()
     {
-        _closeApplication = true;
+        _isClosing = true;
 
         // Make it thread safe when it's called inside a dialog
         System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(Close));
@@ -1581,7 +1683,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private void ApplicationListMouseEnterAction()
     {
-        IsMouseOverApplicationList = true;
+        ApplicationViewIsMouseOver = true;
     }
 
     public ICommand ApplicationListMouseLeaveCommand => new RelayCommand(_ => ApplicationListMouseLeaveAction());
@@ -1589,34 +1691,34 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     private void ApplicationListMouseLeaveAction()
     {
         // Don't minimize the list, if the user has accidentally moved the mouse while searching
-        if (!IsTextBoxSearchFocused)
-            IsApplicationListOpen = false;
+        if (!TextBoxApplicationSearchIsFocused)
+            ApplicationViewIsOpen = false;
 
-        IsMouseOverApplicationList = false;
+        ApplicationViewIsMouseOver = false;
     }
 
     public ICommand TextBoxSearchGotFocusCommand => new RelayCommand(_ => TextBoxSearchGotFocusAction());
 
     private void TextBoxSearchGotFocusAction()
     {
-        IsTextBoxSearchFocused = true;
+        TextBoxApplicationSearchIsFocused = true;
     }
 
     public ICommand TextBoxSearchLostFocusCommand => new RelayCommand(_ => TextBoxSearchLostFocusAction());
 
     private void TextBoxSearchLostFocusAction()
     {
-        if (!IsMouseOverApplicationList)
-            IsApplicationListOpen = false;
+        if (!ApplicationViewIsMouseOver)
+            ApplicationViewIsOpen = false;
 
-        IsTextBoxSearchFocused = false;
+        TextBoxApplicationSearchIsFocused = false;
     }
 
     public ICommand ClearSearchCommand => new RelayCommand(_ => ClearSearchAction());
 
     private void ClearSearchAction()
     {
-        Search = string.Empty;
+        ApplicationSearch = string.Empty;
     }
 
     #endregion
@@ -1754,10 +1856,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         // Show status window on network change
         if (SettingsManager.Current.Status_ShowWindowOnNetworkChange)
         {
-            await Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-            {
-                OpenStatusWindow(true);
-            }));
+            await Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate { OpenStatusWindow(true); }));
         }
 
         _isNetworkChanging = false;
@@ -1843,7 +1942,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
            - Application search TextBox is opened
            - Dialog over an embedded window is opened (FixAirspace)
         */
-        if (SelectedApplication == null || ShowSettingsView || IsProfileFileDropDownOpened || IsTextBoxSearchFocused ||
+        if (SelectedApplication == null || SettingsViewIsOpen || IsProfileFileDropDownOpened ||
+            TextBoxApplicationSearchIsFocused ||
             ConfigurationManager.Current.FixAirspace)
             return;
 
@@ -1861,5 +1961,6 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 break;
         }
     }
+
     #endregion
 }

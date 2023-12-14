@@ -3671,7 +3671,7 @@ Try again in a few seconds.</value>
     <value>Experimental</value>
   </data>
   <data name="Watermark_RunCommand" xml:space="preserve">
-    <value>Run command... (Ctrl+Shift+P)</value>
+    <value>Run command...</value>
   </data>
   <data name="ApplicationName_IPGeolocation" xml:space="preserve">
     <value>IP Geolocation</value>
@@ -3756,5 +3756,11 @@ Try again in a few seconds.</value>
   </data>
   <data name="CannotSetHostWhileRunningMessage" xml:space="preserve">
     <value>Host cannot be set while other hosts are being added. Please wait until the process is complete and try again.</value>
+  </data>
+  <data name="Watermark_RunCommandWithHotKey" xml:space="preserve">
+    <value>Run command... (Ctrl+Shift+P)</value>
+  </data>
+  <data name="NoMatchingCommands" xml:space="preserve">
+    <value>No matching commands!</value>
   </data>
 </root>

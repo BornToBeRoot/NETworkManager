@@ -17,15 +17,16 @@
                  mc:Ignorable="d"
                  Style="{DynamicResource DefaultWindow}"
                  MinWidth="800" Width="1024" Height="768" MinHeight="600"
-                 SaveWindowPosition="True" TitleAlignment="Left"
+                 SaveWindowPosition="True" TitleAlignment="Center"
                  ContentRendered="MetroMainWindow_ContentRendered" StateChanged="MetroWindowMain_StateChanged"
                  Activated="MetroMainWindow_Activated" Closing="MetroWindowMain_Closing"
                  d:DataContext="{d:DesignInstance networkManager:MainWindow}">
     <!-- MetroDialogStyles.xaml must be adjusted if MinWidth/MinHeight is changed -->
-    <Window.Resources>
+    <mah:MetroWindow.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:ApplicationNameToTranslatedStringConverter x:Key="ApplicationNameToTranslatedStringConverter" />
         <converters:ApplicationNameToIconConverter x:Key="ApplicationNameToIconConverter" />
+        <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter"/>
         <ContextMenu x:Key="ContextMenuNotifyIcon" MinWidth="200" Opened="ContextMenu_Opened" x:Shared="False">
             <MenuItem Header="{x:Static localization:Strings.Show}" Command="{Binding ShowWindowCommand}">
                 <MenuItem.Icon>
@@ -64,255 +65,327 @@
                 </MenuItem.Icon>
             </MenuItem>
         </ContextMenu>
-    </Window.Resources>
-    <Window.InputBindings>
-        <KeyBinding Command="{Binding RunCommandHotKey}" Modifiers="Control+Shift" Key="P" />
-    </Window.InputBindings>
+    </mah:MetroWindow.Resources>
+    <mah:MetroWindow.TitleTemplate>
+        <DataTemplate>
+            <Grid
+                Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:MetroWindow}}, Path=ActualWidth}">
+                <TextBlock Grid.Column="0" Grid.Row="0"
+                           Margin="8,-1,1,0"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           FontFamily="{DynamicResource MahApps.Fonts.Family.Window.Title}"
+                           FontSize="{DynamicResource MahApps.Font.Size.Window.Title}"
+                           Text="{TemplateBinding Content}"
+                           TextTrimming="CharacterEllipsis" />
+                <Button Grid.Column="0" Grid.Row="0"
+                        Command="{Binding OpenRunCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Cursor="Hand"
+                        Style="{StaticResource CleanButton}">
+                    <Grid Height="30">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="270" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
+                                   Fill="{DynamicResource MahApps.Brushes.Gray10}" />
+                        <Rectangle Grid.Column="0" Grid.Row="0"
+                                   Margin="5,0"
+                                   Width="20" Height="20"
+                                   HorizontalAlignment="Right"
+                                   Fill="{DynamicResource MahApps.Brushes.Gray8}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronRight}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Grid.Column="1" Grid.Row="0"
+                                   Style="{StaticResource InfoTextBlock}"
+                                   Text="{x:Static localization:Strings.Watermark_RunCommandWithHotKey}" />
+                    </Grid>
+                </Button>
+            </Grid>
+        </DataTemplate>
+    </mah:MetroWindow.TitleTemplate>
+    <mah:MetroWindow.InputBindings>
+        <KeyBinding Command="{Binding OpenRunCommand}" Modifiers="Control+Shift" Key="P" />
+    </mah:MetroWindow.InputBindings>
     <mah:MetroWindow.WindowButtonCommands>
         <mah:WindowButtonCommands Template="{DynamicResource MahApps.Templates.WindowButtonCommands.Win10}" />
     </mah:MetroWindow.WindowButtonCommands>
     <mah:MetroWindow.LeftWindowCommands>
         <mah:WindowCommands ShowSeparators="False">
             <!-- Fix some design issues with margin -2 and -1 -->
-            <StackPanel Orientation="Horizontal" Margin="-2,-1,0,0">
-                <Grid Background="{DynamicResource MahApps.Brushes.Gray8}"
-                      Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                    <TextBlock Text="Administrator" Foreground="{DynamicResource MahApps.Brushes.Gray3}"
-                               Style="{StaticResource CenterTextBlock}" Margin="10,0" />
-                </Grid>
-            </StackPanel>
+            <Grid Background="{DynamicResource MahApps.Brushes.Gray8}"
+                  Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
+                  Margin="-2,-1,0,0">
+                <TextBlock Text="Administrator" Foreground="{DynamicResource MahApps.Brushes.Gray3}"
+                           Style="{StaticResource CenterTextBlock}" Margin="10,0" />
+            </Grid>
         </mah:WindowCommands>
     </mah:MetroWindow.LeftWindowCommands>
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands ShowSeparators="False">
-            <Grid
-                Visibility="{Binding Source={x:Static settings:SettingsManager.Current}, Path=Experimental_EnableExperimentalFeatures, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                Margin="0,0,10,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0" Grid.Row="0">
-                    <Rectangle Width="24" Fill="{DynamicResource MahApps.Brushes.Gray10}" />
-                    <Rectangle Width="20" Height="20" HorizontalAlignment="Right"
-                               Fill="{DynamicResource MahApps.Brushes.Gray8}">
+            <Rectangle Width="10" />
+            <Button Command="{Binding RestartApplicationCommand}" Opacity="1"
+                    Visibility="{Binding IsRestartRequired, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
+                    Cursor="Hand">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Accent}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronRight}" />
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Restart}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
-                </Grid>
-                <controls:RunCommandComboBox
-                    Grid.Column="1" Grid.Row="0"
-                    x:Name="ComboBoxRunCommand"
-                    Width="250"
-                    ItemsSource="{Binding RunCommandsSuggestions}"
-                    Text="{Binding RunCommand}"
-                    SelectedIndex="{Binding SelectedRunCommandsSuggestionsIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    mah:TextBoxHelper.Watermark="{x:Static localization:Strings.Watermark_RunCommand}"
-                    BorderThickness="0"
-                    Background="{DynamicResource MahApps.Brushes.Gray10}"
-                    Style="{StaticResource EditableComboBox}">
-                    <ComboBox.Resources>
-                        <!-- ReSharper disable once Xaml.RedundantResource -->
-                        <Thickness x:Key="ComboBoxBorderThemeThickness">0</Thickness>
-                        <!-- ReSharper disable once Xaml.RedundantResource -->
-                        <Thickness x:Key="ComboBoxPopupBorderThemeThickness">0</Thickness>
-                        <!-- ReSharper disable once Xaml.RedundantResource -->
-                        <SolidColorBrush x:Key="MahApps.Brushes.ThemeBackground"
-                                         Color="{DynamicResource MahApps.Colors.Gray10}" />
-                    </ComboBox.Resources>
-                    <ComboBox.InputBindings>
-                        <KeyBinding Gesture="Enter" Command="{Binding RunCommandEnterCommand}" />
-                    </ComboBox.InputBindings>
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate DataType="{x:Type networkManager:RunCommandInfo}">
-                            <Border BorderThickness="1">
-                                <Grid Margin="5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Column="0" Grid.Row="0"
-                                               Text="{Binding TranslatedName}"
-                                               Style="{StaticResource BoldTextBlock}" />
-                                    <TextBlock Grid.Column="0" Grid.Row="1"
-                                               Style="{StaticResource AccentTextBlock}"
-                                               FontFamily="Consolas"
-                                               Margin="0,5,0,0">
-                                        <TextBlock.Text>
-                                            <MultiBinding StringFormat="{}{0} {1}">
-                                                <Binding Path="Command" />
-                                                <Binding Path="ExampleArguments" />
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </controls:RunCommandComboBox>
-            </Grid>
-            <StackPanel Orientation="Horizontal">
-                <Button Command="{Binding RestartApplicationCommand}" Opacity="1"
-                        Visibility="{Binding IsRestartRequired, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                        Cursor="Hand">
-                    <StackPanel Orientation="Horizontal">
-                        <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Accent}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Restart}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBlock Text="{x:Static localization:Strings.RestartRequired}"
-                                   Style="{StaticResource LinkTextBlock}" VerticalAlignment="Center" Margin="5,0,0,0" />
-                    </StackPanel>
-                </Button>
-                <Button Command="{Binding OpenWebsiteCommand}"
-                        Opacity="1"
-                        Visibility="{Binding IsUpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                        CommandParameter="{Binding UpdateReleaseUrl, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                        Cursor="Hand"
-                        Focusable="False">
-                    <Rectangle Width="20" Height="20"
-                               Fill="{DynamicResource MahApps.Brushes.Accent}"
-                               ToolTip="{x:Static localization:Strings.UpdateAvailable}">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=RocketLaunchOutline}" />
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
-                </Button>
-                <Button Command="{Binding UnlockProfileCommand}"
+                    <TextBlock Text="{x:Static localization:Strings.RestartRequired}"
+                               Style="{StaticResource LinkTextBlock}" VerticalAlignment="Center" Margin="5,0,0,0" />
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding OpenWebsiteCommand}"
+                    Opacity="1"
+                    Visibility="{Binding IsUpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
+                    CommandParameter="{Binding UpdateReleaseUrl, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    Cursor="Hand"
+                    Focusable="False">
+                <Rectangle Width="20" Height="20"
+                           Fill="{DynamicResource MahApps.Brushes.Accent}"
+                           ToolTip="{x:Static localization:Strings.UpdateAvailable}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=RocketLaunchOutline}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+            <Button Command="{Binding UnlockProfileCommand}"
                         Opacity="1"
                         Cursor="Hand"
                         Focusable="False">
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}"
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}"
                                BasedOn="{StaticResource MahApps.Styles.Button.WindowCommands}">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=ProfileManagerShowUnlock}" Value="True">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                    <StackPanel Orientation="Horizontal">
-                        <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Accent}">
-                            <Rectangle.Style>
-                                <Style TargetType="Rectangle">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Rectangle.Style>
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=InterfacePassword}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBlock Text="{x:Static localization:Strings.UnlockProfile}"
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=ProfileManagerShowUnlock}" Value="True">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Accent}">
+                        <Rectangle.Style>
+                            <Style TargetType="Rectangle">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=InterfacePassword}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                    <TextBlock Text="{x:Static localization:Strings.UnlockProfile}"
                                    Style="{StaticResource LinkTextBlock}" Margin="5,0" />
-                    </StackPanel>
-                </Button>
-                <ComboBox ItemsSource="{Binding ProfileFiles}"
-                          SelectedItem="{Binding SelectedProfileFile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                          IsDropDownOpen="{Binding IsProfileFileDropDownOpened}"
-                          Background="{DynamicResource MahApps.Brushes.Gray10}"
-                          BorderThickness="0"
-                          MinWidth="100"
-                          HorizontalAlignment="Left"
-                          Focusable="False"
-                          Margin="0,0,10,0">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="10" />
-                                    <ColumnDefinition MinWidth="70" />
-                                </Grid.ColumnDefinitions>
-                                <Rectangle Grid.Column="0" Grid.Row="0" Width="20" Height="20"
-                                           Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.Style>
-                                        <Style TargetType="Rectangle">
-                                            <Setter Property="OpacityMask">
-                                                <Setter.Value>
-                                                    <VisualBrush Stretch="Uniform"
-                                                                 Visual="{iconPacks:FontAwesome Kind=UserSolid}" />
-                                                </Setter.Value>
-                                            </Setter>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding IsEncrypted}" Value="True">
-                                                    <Setter Property="OpacityMask">
-                                                        <Setter.Value>
-                                                            <VisualBrush Stretch="Uniform"
-                                                                         Visual="{iconPacks:FontAwesome Kind=UserLockSolid}" />
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Rectangle.Style>
-                                </Rectangle>
-                                <TextBlock Grid.Column="2" Grid.Row="0" Text="{Binding Name}" />
-                            </Grid>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-                <Button Command="{Binding OpenWebsiteCommand}"
-                        ToolTip="{x:Static localization:Strings.StarForkTheProjectOnGitHub}"
-                        CommandParameter="{x:Static resources:Resources.NETworkManager_RepoUrl}"
-                        Cursor="Hand"
-                        Focusable="False">
-                    <StackPanel Orientation="Horizontal">
-                        <Rectangle Width="20" Height="20"
-                                   Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Github}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                    </StackPanel>
-                </Button>
-                <Button Command="{Binding OpenWebsiteCommand}"
-                        ToolTip="{x:Static localization:Strings.ReportAnIssueOrCreateAFeatureRequest}"
-                        CommandParameter="{x:Static resources:Resources.NETworkManager_NewIssueUrl}"
-                        Cursor="Hand"
-                        Focusable="False">
-                    <StackPanel Orientation="Horizontal">
-                        <Rectangle Width="20" Height="20"
-                                   Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Bug}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                    </StackPanel>
-                </Button>
-                <Button Command="{Binding OpenDocumentationCommand}"
-                        ToolTip="{x:Static localization:Strings.OpenDocumentation}"
-                        Cursor="Hand"
-                        Focusable="False">
-                    <StackPanel Orientation="Horizontal">
-                        <Rectangle Width="20" Height="20"
-                                   Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Book}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                    </StackPanel>
-                </Button>
-            </StackPanel>
+                </StackPanel>
+            </Button>
+            <ComboBox ItemsSource="{Binding ProfileFiles}"
+                      SelectedItem="{Binding SelectedProfileFile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      IsDropDownOpen="{Binding IsProfileFileDropDownOpened}"
+                      Background="{DynamicResource MahApps.Brushes.Gray10}"
+                      BorderThickness="0"
+                      MinWidth="100"
+                      HorizontalAlignment="Left"
+                      Focusable="False"
+                      VerticalAlignment="Center"
+                      Height="30"
+                      Margin="0,0,10,0">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition MinWidth="70" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Grid.Column="0" Grid.Row="0" Width="20" Height="20"
+                                       Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                <Rectangle.Style>
+                                    <Style TargetType="Rectangle">
+                                        <Setter Property="OpacityMask">
+                                            <Setter.Value>
+                                                <VisualBrush Stretch="Uniform"
+                                                             Visual="{iconPacks:FontAwesome Kind=UserSolid}" />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsEncrypted}" Value="True">
+                                                <Setter Property="OpacityMask">
+                                                    <Setter.Value>
+                                                        <VisualBrush Stretch="Uniform"
+                                                                     Visual="{iconPacks:FontAwesome Kind=UserLockSolid}" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
+                            </Rectangle>
+                            <TextBlock Grid.Column="2" Grid.Row="0" Text="{Binding Name}" />
+                        </Grid>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Button Command="{Binding OpenWebsiteCommand}"
+                    ToolTip="{x:Static localization:Strings.StarForkTheProjectOnGitHub}"
+                    CommandParameter="{x:Static resources:Resources.NETworkManager_RepoUrl}"
+                    Cursor="Hand"
+                    Focusable="False">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="20" Height="20"
+                               Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Github}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding OpenWebsiteCommand}"
+                    ToolTip="{x:Static localization:Strings.ReportAnIssueOrCreateAFeatureRequest}"
+                    CommandParameter="{x:Static resources:Resources.NETworkManager_NewIssueUrl}"
+                    Cursor="Hand"
+                    Focusable="False">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="20" Height="20"
+                               Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Bug}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding OpenDocumentationCommand}"
+                    ToolTip="{x:Static localization:Strings.OpenDocumentation}"
+                    Cursor="Hand"
+                    Focusable="False">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="20" Height="20"
+                               Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Book}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </StackPanel>
+            </Button>
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>
+    <mah:MetroWindow.Flyouts>
+        <mah:FlyoutsControl>
+            <mah:Flyout x:Name="FlyoutRunCommand"
+                        IsKeyboardFocusWithinChanged="FlyoutRunCommand_IsKeyboardFocusWithinChanged"
+                        Position="Top"
+                        TitleVisibility="Collapsed"
+                        CloseButtonVisibility="Collapsed"
+                        IsModal="False"
+                        Width="500" MaxHeight="400"
+                        Theme="Adapt">
+                <mah:Flyout.InputBindings>
+                    <KeyBinding Command="{Binding RunCommandCloseCommand}" Key="Escape" />
+                    <KeyBinding Command="{Binding RunCommandDoCommand}" Key="Enter" />
+                </mah:Flyout.InputBindings>
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Column="0" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Grid.Column="0" Grid.Row="0"
+                                   Margin="5,0"
+                                   Width="20" Height="20"
+                                   HorizontalAlignment="Right"
+                                   Fill="{DynamicResource MahApps.Brushes.Gray8}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronRight}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBox Grid.Column="1" Grid.Row="0"
+                                 Text="{Binding RunCommandSearch, UpdateSourceTrigger=PropertyChanged}"
+                                 mah:TextBoxHelper.Watermark="{x:Static localization:Strings.Watermark_RunCommand}">
+                            <TextBox.Style>
+                                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
+                                    <Setter Property="mah:TextBoxHelper.ClearTextButton" Value="True" />
+                                    <Setter Property="BorderThickness" Value="0,0,0,1" />
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
+                        </Grid>
+                    <ListView Grid.Column="0" Grid.Row="2" 
+                              x:Name="ListViewRunCommand"
+                              ItemsSource="{Binding RunCommands}"
+                              SelectedItem="{Binding SelectedRunCommand, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              SelectionMode="Single"
+                              PreviewMouseLeftButtonUp="ListViewRunCommand_OnPreviewMouseLeftButtonUp"
+                              Style="{StaticResource DefaultListBox}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate DataType="{x:Type networkManager:RunCommandInfo}">
+                                <Border BorderThickness="1">
+                                    <Grid Margin="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Column="0" Grid.Row="0"
+                                                   Text="{Binding TranslatedName}"
+                                                   Style="{StaticResource BoldTextBlock}" />
+                                        <TextBlock Grid.Column="0" Grid.Row="1"
+                                                   Style="{StaticResource AccentTextBlock}"
+                                                   FontFamily="Consolas"
+                                                   Margin="0,5,0,0">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0} {1}">
+                                                    <Binding Path="Command" />
+                                                    <Binding Path="ExampleArguments" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <TextBlock Grid.Column="0" Grid.Row="2" Margin="32,0,0,0">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RunCommands.Count}" Value="0">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                        <Setter Property="Text" Value="{x:Static localization:Strings.NoMatchingCommands}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
+            </mah:Flyout>
+        </mah:FlyoutsControl>
+    </mah:MetroWindow.Flyouts>
     <Grid>
         <Grid>
             <Grid.Style>
                 <Style TargetType="{x:Type Grid}">
                     <Setter Property="Visibility" Value="Visible" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding ShowSettingsView}" Value="True">
+                        <DataTrigger Binding="{Binding SettingsViewIsOpen}" Value="True">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                     </Style.Triggers>
@@ -335,13 +408,13 @@
                     <Grid.Style>
                         <Style TargetType="{x:Type Grid}">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding ExpandApplicationView}" Value="True">
+                                <DataTrigger Binding="{Binding ApplicationViewIsExpanded}" Value="True">
                                     <Setter Property="MinWidth" Value="250" />
                                 </DataTrigger>
                                 <MultiDataTrigger>
                                     <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding IsApplicationListOpen}" Value="True" />
-                                        <Condition Binding="{Binding IsTextBoxSearchFocused}" Value="True" />
+                                        <Condition Binding="{Binding ApplicationViewIsOpen}" Value="True" />
+                                        <Condition Binding="{Binding TextBoxApplicationSearchIsFocused}" Value="True" />
                                     </MultiDataTrigger.Conditions>
                                     <MultiDataTrigger.Setters>
                                         <Setter Property="MinWidth" Value="250" />
@@ -349,8 +422,8 @@
                                 </MultiDataTrigger>
                                 <MultiDataTrigger>
                                     <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding IsApplicationListOpen}" Value="True" />
-                                        <Condition Binding="{Binding IsMouseOverApplicationList}" Value="True" />
+                                        <Condition Binding="{Binding ApplicationViewIsOpen}" Value="True" />
+                                        <Condition Binding="{Binding ApplicationViewIsMouseOver}" Value="True" />
                                     </MultiDataTrigger.Conditions>
                                     <MultiDataTrigger.Setters>
                                         <Setter Property="MinWidth" Value="250" />
@@ -376,13 +449,13 @@
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding ExpandApplicationView}" Value="False">
+                                            <DataTrigger Binding="{Binding ApplicationViewIsExpanded}" Value="False">
                                                 <Setter Property="Visibility" Value="Visible" />
                                             </DataTrigger>
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding IsApplicationListOpen}" Value="False" />
-                                                    <Condition Binding="{Binding IsTextBoxSearchFocused}" Value="False" />
+                                                    <Condition Binding="{Binding ApplicationViewIsOpen}" Value="False" />
+                                                    <Condition Binding="{Binding TextBoxApplicationSearchIsFocused}" Value="False" />
                                                 </MultiDataTrigger.Conditions>
                                                 <MultiDataTrigger.Setters>
                                                     <Setter Property="Visibility" Value="Visible" />
@@ -390,8 +463,8 @@
                                             </MultiDataTrigger>
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding IsApplicationListOpen}" Value="False" />
-                                                    <Condition Binding="{Binding IsMouseOverApplicationList}"
+                                                    <Condition Binding="{Binding ApplicationViewIsOpen}" Value="False" />
+                                                    <Condition Binding="{Binding ApplicationViewIsMouseOver}"
                                                                Value="False" />
                                                 </MultiDataTrigger.Conditions>
                                                 <MultiDataTrigger.Setters>
@@ -421,23 +494,29 @@
                                     </Rectangle.Style>
                                 </Rectangle>
                             </Button>
-                            <TextBox x:Name="TextBoxSearch" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"
-                                     BorderThickness="0" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBox x:Name="TextBoxApplicationSearch" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"
+                                     BorderThickness="0" Text="{Binding ApplicationSearch, UpdateSourceTrigger=PropertyChanged}"
                                      mah:TextBoxHelper.Watermark="{x:Static localization:Strings.SearchDots}"
-                                     mah:TextBoxHelper.ClearTextButton="True" Margin="10,0,0,0">
+                                     mah:TextBoxHelper.ClearTextButton="True"
+                                     CommandManager.PreviewExecuted="TextBoxApplicationSearch_OnPreviewExecuted"
+                                     Margin="10,0,0,0">
+                                <TextBox.ContextMenu>
+                                    <!-- Disable context menu -->
+                                    <ContextMenu Visibility="Collapsed" />
+                                </TextBox.ContextMenu>
                                 <TextBox.Style>
                                     <Style BasedOn="{StaticResource SearchTextBox}" TargetType="{x:Type TextBox}">
                                         <Setter Property="Visibility" Value="Hidden" />
                                         <Setter Property="Width" Value="0" />
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding ExpandApplicationView}" Value="True">
+                                            <DataTrigger Binding="{Binding ApplicationViewIsExpanded}" Value="True">
                                                 <Setter Property="Visibility" Value="Visible" />
                                                 <Setter Property="Width" Value="Auto" />
                                             </DataTrigger>
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding IsApplicationListOpen}" Value="True" />
-                                                    <Condition Binding="{Binding IsTextBoxSearchFocused}" Value="True" />
+                                                    <Condition Binding="{Binding ApplicationViewIsOpen}" Value="True" />
+                                                    <Condition Binding="{Binding TextBoxApplicationSearchIsFocused}" Value="True" />
                                                 </MultiDataTrigger.Conditions>
                                                 <MultiDataTrigger.Setters>
                                                     <Setter Property="Visibility" Value="Visible" />
@@ -446,8 +525,8 @@
                                             </MultiDataTrigger>
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding IsApplicationListOpen}" Value="True" />
-                                                    <Condition Binding="{Binding IsMouseOverApplicationList}"
+                                                    <Condition Binding="{Binding ApplicationViewIsOpen}" Value="True" />
+                                                    <Condition Binding="{Binding ApplicationViewIsMouseOver}"
                                                                Value="True" />
                                                 </MultiDataTrigger.Conditions>
                                                 <MultiDataTrigger.Setters>
@@ -475,7 +554,7 @@
                             </TextBox>
                             <ToggleButton Grid.Column="1" Grid.Row="0"
                                           Width="32" Height="32"
-                                          IsChecked="{Binding ExpandApplicationView}"
+                                          IsChecked="{Binding ApplicationViewIsExpanded}"
                                           Focusable="False">
                                 <ToggleButton.Style>
                                     <Style TargetType="{x:Type ToggleButton}"
@@ -491,13 +570,13 @@
                                             </Setter.Value>
                                         </Setter>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding ExpandApplicationView}" Value="True">
+                                            <DataTrigger Binding="{Binding ApplicationViewIsExpanded}" Value="True">
                                                 <Setter Property="Visibility" Value="Visible" />
                                             </DataTrigger>
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding IsApplicationListOpen}" Value="True" />
-                                                    <Condition Binding="{Binding IsTextBoxSearchFocused}" Value="True" />
+                                                    <Condition Binding="{Binding ApplicationViewIsOpen}" Value="True" />
+                                                    <Condition Binding="{Binding TextBoxApplicationSearchIsFocused}" Value="True" />
                                                 </MultiDataTrigger.Conditions>
                                                 <MultiDataTrigger.Setters>
                                                     <Setter Property="Visibility" Value="Visible" />
@@ -505,8 +584,8 @@
                                             </MultiDataTrigger>
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding IsApplicationListOpen}" Value="True" />
-                                                    <Condition Binding="{Binding IsMouseOverApplicationList}"
+                                                    <Condition Binding="{Binding ApplicationViewIsOpen}" Value="True" />
+                                                    <Condition Binding="{Binding ApplicationViewIsMouseOver}"
                                                                Value="True" />
                                                 </MultiDataTrigger.Conditions>
                                                 <MultiDataTrigger.Setters>
@@ -529,7 +608,7 @@
                                                     <Setter Property="Fill"
                                                             Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                 </Trigger>
-                                                <DataTrigger Binding="{Binding ExpandApplicationView}" Value="True">
+                                                <DataTrigger Binding="{Binding ApplicationViewIsExpanded}" Value="True">
                                                     <Setter Property="Fill"
                                                             Value="{DynamicResource MahApps.Brushes.Accent}" />
                                                     <Setter Property="OpacityMask" Value="{StaticResource VisualPin}" />
@@ -545,7 +624,7 @@
                                                         <Condition
                                                             Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}"
                                                             Value="True" />
-                                                        <Condition Binding="{Binding ExpandApplicationView}"
+                                                        <Condition Binding="{Binding ApplicationViewIsExpanded}"
                                                                    Value="True" />
                                                     </MultiDataTrigger.Conditions>
                                                     <MultiDataTrigger.Setters>
@@ -578,17 +657,17 @@
                                                         Value="{Binding Name, Converter={StaticResource ApplicationNameToTranslatedStringConverter}}" />
                                                 <Style.Triggers>
                                                     <DataTrigger
-                                                        Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.ExpandApplicationView}"
+                                                        Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.ApplicationViewIsExpanded}"
                                                         Value="True">
                                                         <Setter Property="ToolTip" Value="{x:Null}" />
                                                     </DataTrigger>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
                                                             <Condition
-                                                                Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.IsApplicationListOpen}"
+                                                                Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.ApplicationViewIsOpen}"
                                                                 Value="True" />
                                                             <Condition
-                                                                Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.IsTextBoxSearchFocused}"
+                                                                Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.TextBoxApplicationSearchIsFocused}"
                                                                 Value="True" />
                                                         </MultiDataTrigger.Conditions>
                                                         <MultiDataTrigger.Setters>
@@ -598,10 +677,10 @@
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
                                                             <Condition
-                                                                Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.IsApplicationListOpen}"
+                                                                Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.ApplicationViewIsOpen}"
                                                                 Value="True" />
                                                             <Condition
-                                                                Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.IsMouseOverApplicationList}"
+                                                                Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.ApplicationViewIsMouseOver}"
                                                                 Value="True" />
                                                         </MultiDataTrigger.Conditions>
                                                         <MultiDataTrigger.Setters>
@@ -682,7 +761,7 @@
                                                                     Value="{DynamicResource MahApps.Brushes.Accent}" />
                                                         </DataTrigger>
                                                         <DataTrigger
-                                                            Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.ExpandApplicationView}"
+                                                            Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.ApplicationViewIsExpanded}"
                                                             Value="True">
                                                             <Setter Property="Visibility" Value="Visible" />
                                                             <Setter Property="Margin" Value="0,0,10,0" />
@@ -690,10 +769,10 @@
                                                         <MultiDataTrigger>
                                                             <MultiDataTrigger.Conditions>
                                                                 <Condition
-                                                                    Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.IsApplicationListOpen}"
+                                                                    Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.ApplicationViewIsOpen}"
                                                                     Value="True" />
                                                                 <Condition
-                                                                    Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.IsTextBoxSearchFocused}"
+                                                                    Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.TextBoxApplicationSearchIsFocused}"
                                                                     Value="True" />
                                                             </MultiDataTrigger.Conditions>
                                                             <MultiDataTrigger.Setters>
@@ -704,10 +783,10 @@
                                                         <MultiDataTrigger>
                                                             <MultiDataTrigger.Conditions>
                                                                 <Condition
-                                                                    Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.IsApplicationListOpen}"
+                                                                    Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.ApplicationViewIsOpen}"
                                                                     Value="True" />
                                                                 <Condition
-                                                                    Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.IsMouseOverApplicationList}"
+                                                                    Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.ApplicationViewIsMouseOver}"
                                                                     Value="True" />
                                                             </MultiDataTrigger.Conditions>
                                                             <MultiDataTrigger.Setters>
@@ -755,7 +834,7 @@
                     </ScrollViewer>
                     <Grid Grid.Row="1" MaxWidth="{Binding ElementName=ApplicationViewGrid, Path=MinWidth}"
                           VerticalAlignment="Center"
-                          Visibility="{Binding SearchNothingFound, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                          Visibility="{Binding Applications.Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
@@ -795,17 +874,17 @@
                                     <Setter Property="ToolTip" Value="{x:Static localization:Strings.Settings}" />
                                     <Style.Triggers>
                                         <DataTrigger
-                                            Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.ExpandApplicationView}"
+                                            Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.ApplicationViewIsExpanded}"
                                             Value="True">
                                             <Setter Property="ToolTip" Value="{x:Null}" />
                                         </DataTrigger>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition
-                                                    Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.IsApplicationListOpen}"
+                                                    Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.ApplicationViewIsOpen}"
                                                     Value="True" />
                                                 <Condition
-                                                    Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.IsTextBoxSearchFocused}"
+                                                    Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.TextBoxApplicationSearchIsFocused}"
                                                     Value="True" />
                                             </MultiDataTrigger.Conditions>
                                             <MultiDataTrigger.Setters>
@@ -815,10 +894,10 @@
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition
-                                                    Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.IsApplicationListOpen}"
+                                                    Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.ApplicationViewIsOpen}"
                                                     Value="True" />
                                                 <Condition
-                                                    Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.IsMouseOverApplicationList}"
+                                                    Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.ApplicationViewIsMouseOver}"
                                                     Value="True" />
                                             </MultiDataTrigger.Conditions>
                                             <MultiDataTrigger.Setters>
@@ -869,13 +948,13 @@
                                                             Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                 </DataTrigger>
                                                 <DataTrigger
-                                                    Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.ExpandApplicationView}"
+                                                    Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.ApplicationViewIsExpanded}"
                                                     Value="True">
                                                     <Setter Property="Visibility" Value="Visible" />
                                                     <Setter Property="Margin" Value="0,0,10,0" />
                                                 </DataTrigger>
                                                 <DataTrigger
-                                                    Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.IsTextBoxSearchFocused}"
+                                                    Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.TextBoxApplicationSearchIsFocused}"
                                                     Value="True">
                                                     <Setter Property="Visibility" Value="Visible" />
                                                     <Setter Property="Margin" Value="0,0,10,0" />
@@ -883,10 +962,10 @@
                                                 <MultiDataTrigger>
                                                     <MultiDataTrigger.Conditions>
                                                         <Condition
-                                                            Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.IsApplicationListOpen}"
+                                                            Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.ApplicationViewIsOpen}"
                                                             Value="True" />
                                                         <Condition
-                                                            Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.IsMouseOverApplicationList}"
+                                                            Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.ApplicationViewIsMouseOver}"
                                                             Value="True" />
                                                     </MultiDataTrigger.Conditions>
                                                     <MultiDataTrigger.Setters>
@@ -921,7 +1000,7 @@
                 <Style TargetType="{x:Type Grid}">
                     <Setter Property="Visibility" Value="Collapsed" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding ShowSettingsView}" Value="True">
+                        <DataTrigger Binding="{Binding SettingsViewIsOpen}" Value="True">
                             <Setter Property="Visibility" Value="Visible" />
                         </DataTrigger>
                     </Style.Triggers>
@@ -940,7 +1019,7 @@
                         </Grid.ColumnDefinitions>
                         <Button Grid.Column="0" Grid.Row="0"
                                 Command="{Binding CloseSettingsCommand}"
-                                Style="{StaticResource CleanButton}" 
+                                Style="{StaticResource CleanButton}"
                                 Focusable="False"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
