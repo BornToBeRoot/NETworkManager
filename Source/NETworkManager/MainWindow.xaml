@@ -500,6 +500,10 @@
                                      mah:TextBoxHelper.ClearTextButton="True"
                                      CommandManager.PreviewExecuted="TextBoxApplicationSearch_OnPreviewExecuted"
                                      Margin="10,0,0,0">
+                                <TextBox.ContextMenu>
+                                    <!-- Disable context menu -->
+                                    <ContextMenu Visibility="Collapsed" />
+                                </TextBox.ContextMenu>
                                 <TextBox.Style>
                                     <Style BasedOn="{StaticResource SearchTextBox}" TargetType="{x:Type TextBox}">
                                         <Setter Property="Visibility" Value="Hidden" />
