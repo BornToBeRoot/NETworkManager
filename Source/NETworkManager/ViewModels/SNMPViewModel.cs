@@ -22,8 +22,6 @@ using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
 using NETworkManager.Localization;
-using ControlzEx.Standard;
-using Microsoft.VisualBasic.Devices;
 
 namespace NETworkManager.ViewModels;
 
