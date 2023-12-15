@@ -226,10 +226,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.IPScanner_HostHistory);
 
         // Result view
+        IPAddressComparer comparer = new();
+        Results = new ObservableCollection<IPScannerHostInfo>(Results.OrderBy(x => x.PingInfo.IPAddress, comparer));
         ResultsView = CollectionViewSource.GetDefaultView(Results);
-        ResultsView.SortDescriptions.Add(new SortDescription(nameof(IPScannerHostInfo.PingInfo) + "." + nameof(PingInfo.IPAddressInt32), ListSortDirection.Ascending));
-
-        LoadSettings();
     }
 
     public void OnLoaded()
@@ -243,10 +242,6 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         _firstLoad = false;
     }
 
-    private void LoadSettings()
-    {
-
-    }
     #endregion
 
     #region ICommands & Actions
@@ -277,11 +272,11 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private void RedirectDataToApplicationAction(object name)
     {
-        if(name is not ApplicationName applicationName)
+        if (name is not ApplicationName applicationName)
             return;
 
-        var host = !string.IsNullOrEmpty(SelectedResult.Hostname) 
-            ? SelectedResult.Hostname 
+        var host = !string.IsNullOrEmpty(SelectedResult.Hostname)
+            ? SelectedResult.Hostname
             : SelectedResult.PingInfo.IPAddress.ToString();
 
         EventSystem.RedirectToApplication(applicationName, host);
@@ -330,7 +325,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         StringBuilder stringBuilder = new();
 
-        foreach(var port in SelectedResult.Ports)
+        foreach (var port in SelectedResult.Ports)
         {
             stringBuilder.AppendLine($"{port.Port}/{port.LookupInfo.Protocol},{ResourceTranslator.Translate(ResourceIdentifier.PortState, port.State)},{port.LookupInfo.Service},{port.LookupInfo.Description}");
         }
@@ -380,13 +375,13 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             UserHasCanceled(this, EventArgs.Empty);
             return;
         }
-        
+
         // Show error message if (some) hostnames could not be resolved
-        if(hosts.hostnamesNotResolved.Count > 0)
+        if (hosts.hostnamesNotResolved.Count > 0)
         {
             StatusMessage = $"{Localization.Resources.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}";
             IsStatusMessageDisplayed = true;
-            
+
         }
 
         HostsToScan = hosts.hosts.Count;
@@ -570,7 +565,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         HostsScanned = e.Value;
     }
-    
+
     private void ScanComplete(object sender, EventArgs e)
     {
         if (Results.Count == 0)
@@ -587,7 +582,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
         IsStatusMessageDisplayed = true;
-        
+
         IsCanceling = false;
         IsRunning = false;
     }

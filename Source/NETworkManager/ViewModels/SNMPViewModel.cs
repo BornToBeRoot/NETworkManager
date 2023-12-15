@@ -402,9 +402,11 @@ public class SNMPViewModel : ViewModelBase
         HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_HostHistory);
         OidHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_OidHistory);
 
-        // Result view
-        ResultsView = CollectionViewSource.GetDefaultView(QueryResults);
-        ResultsView.SortDescriptions.Add(new SortDescription(nameof(SNMPInfo.OID), ListSortDirection.Ascending));
+        //
+        StringComparer comparer = StringComparer.InvariantCultureIgnoreCase;
+        QueryResults = new ObservableCollection<SNMPInfo>(QueryResults.OrderBy(x => x.OID, comparer));
+        ResultsView = CollectionViewSource.GetDefaultView(QueryResults);     
+
 
         // OID
         Oid = sessionInfo?.OID;
