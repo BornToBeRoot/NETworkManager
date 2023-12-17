@@ -1149,7 +1149,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private void OpenRunAction()
     {
-        ConfigurationManager.Current.FixAirspace = true;
+        ConfigurationManager.OnDialogOpen();
         
         FlyoutRunCommand.IsOpen = true;
     }
@@ -1239,7 +1239,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         FlyoutRunCommand.AreAnimationsEnabled = false;
         FlyoutRunCommand.IsOpen = false;
         
-        ConfigurationManager.Current.FixAirspace = false;
+        ConfigurationManager.OnDialogClose();
         
         // Clear the search
         RunCommandSearch = string.Empty;
