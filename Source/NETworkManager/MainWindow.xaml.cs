@@ -1149,6 +1149,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private void OpenRunAction()
     {
+        ConfigurationManager.OnDialogOpen();
+        
         FlyoutRunCommand.IsOpen = true;
     }
 
@@ -1233,9 +1235,13 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     {
         if (!FlyoutRunCommand.IsOpen)
             return;
-
+        
         FlyoutRunCommand.AreAnimationsEnabled = false;
         FlyoutRunCommand.IsOpen = false;
+        
+        ConfigurationManager.OnDialogClose();
+        
+        // Clear the search
         RunCommandSearch = string.Empty;
     }
     #endregion
