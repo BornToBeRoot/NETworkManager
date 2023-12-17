@@ -3765,7 +3765,7 @@ Questi non sono ancora completi, contengono bug, possono mandare in crash l'appl
     <value>Sperimentale</value>
   </data>
   <data name="Watermark_RunCommand" xml:space="preserve">
-    <value>Esegui comando... (Ctrl+Maiusc+P)</value>
+    <value>Esegui comando...</value>
   </data>
   <data name="ApplicationName_IPGeolocation" xml:space="preserve">
     <value>Geolocalizzazione IP</value>
@@ -3851,5 +3851,11 @@ Questi non sono ancora completi, contengono bug, possono mandare in crash l'appl
   <data name="CannotSetHostWhileRunningMessage" xml:space="preserve">
     <value>Non è possibile impostare l'host mentre vengono aggiunti altri host. 
 Attendi il completamento del processo e riprova.</value>
+  </data>
+  <data name="Watermark_RunCommandWithHotKey" xml:space="preserve">
+    <value>Esegui comando... (Ctrl+Maiusc+P)</value>
+  </data>
+  <data name="NoMatchingCommands" xml:space="preserve">
+    <value>Nessun comando corrispondente!</value>
   </data>
 </root>
