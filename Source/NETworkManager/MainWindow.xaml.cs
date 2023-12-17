@@ -1149,6 +1149,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private void OpenRunAction()
     {
+        ConfigurationManager.Current.FixAirspace = true;
+        
         FlyoutRunCommand.IsOpen = true;
     }
 
@@ -1233,9 +1235,13 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     {
         if (!FlyoutRunCommand.IsOpen)
             return;
-
+        
         FlyoutRunCommand.AreAnimationsEnabled = false;
         FlyoutRunCommand.IsOpen = false;
+        
+        ConfigurationManager.Current.FixAirspace = false;
+        
+        // Clear the search
         RunCommandSearch = string.Empty;
     }
     #endregion
