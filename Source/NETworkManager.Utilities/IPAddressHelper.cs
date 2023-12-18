@@ -36,10 +36,10 @@ public static class IPAddressHelper
     /// <returns>0 if the IP addresses are equal, otherwise a negative or positive value.</returns>
     public static int CompareIPAddresses(IPAddress first, IPAddress second)
     {
-        byte[] bytesFirst = first.GetAddressBytes();
-        byte[] bytesSecond = second.GetAddressBytes();
+        var bytesFirst = first.GetAddressBytes();
+        var bytesSecond = second.GetAddressBytes();
 
-        for (int i = 0; i < bytesFirst.Length; i++)
+        for (var i = 0; i < bytesFirst.Length; i++)
             if (bytesFirst[i] != bytesSecond[i])
                 return bytesFirst[i] - bytesSecond[i];
 

@@ -449,23 +449,6 @@ public class PortScannerViewModel : ViewModelBase
         // Fill with the new items
         list.ForEach(x => SettingsManager.Current.PortScanner_PortHistory.Add(x));
     }
-
-    public void SortResultByPropertyName(string sortDescription)
-    {
-        ResultsView.SortDescriptions.Clear();
-        ResultsView.SortDescriptions.Add(new SortDescription(nameof(PortScannerPortInfo.IPAddressInt32), ListSortDirection.Descending));
-
-        if (_lastSortDescriptionAscending.Equals(sortDescription))
-        {
-            ResultsView.SortDescriptions.Add(new SortDescription(sortDescription, ListSortDirection.Descending));
-            _lastSortDescriptionAscending = string.Empty;
-        }
-        else
-        {
-            ResultsView.SortDescriptions.Add(new SortDescription(sortDescription, ListSortDirection.Ascending));
-            _lastSortDescriptionAscending = sortDescription;
-        }
-    }
     #endregion
 
     #region Events

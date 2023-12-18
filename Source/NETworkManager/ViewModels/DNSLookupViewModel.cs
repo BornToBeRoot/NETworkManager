@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Windows.Data;
 using NETworkManager.Utilities;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using NETworkManager.Controls;
 using Dragablz;
 using MahApps.Metro.Controls;
@@ -30,8 +31,6 @@ public class DNSLookupViewModel : ViewModelBase
 
     private readonly Guid _tabId;
     private bool _firstLoad = true;
-
-    private string _lastSortDescriptionAscending = string.Empty;
 
     private readonly bool _isLoading;
 
@@ -402,25 +401,6 @@ public class DNSLookupViewModel : ViewModelBase
         // Fill with the new items
         list.ForEach(x => SettingsManager.Current.DNSLookup_HostHistory.Add(x));
     }
-
-    public void SortResultByPropertyName(string sortDescription)
-    {
-        ResultsView.SortDescriptions.Clear();
-        ResultsView.SortDescriptions.Add(new SortDescription(nameof(DNSLookupRecordInfo.NameServerIPAddress),
-            ListSortDirection.Descending));
-
-        if (_lastSortDescriptionAscending.Equals(sortDescription))
-        {
-            ResultsView.SortDescriptions.Add(new SortDescription(sortDescription, ListSortDirection.Descending));
-            _lastSortDescriptionAscending = string.Empty;
-        }
-        else
-        {
-            ResultsView.SortDescriptions.Add(new SortDescription(sortDescription, ListSortDirection.Ascending));
-            _lastSortDescriptionAscending = sortDescription;
-        }
-    }
-
     #endregion
 
     #region Events
