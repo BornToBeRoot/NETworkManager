@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows;
 using NETworkManager.ViewModels;
 using MahApps.Metro.Controls.Dialogs;
@@ -152,22 +151,19 @@ public partial class IPScannerView
             if (first is not IPScannerHostInfo firstInfo || second is not IPScannerHostInfo secondInfo)
                 return 0;
 
-            switch (comparer)
+            // Compare the data
+            return comparer switch
             {
                 // IP address
-                case 0:
-                    return direction == ListSortDirection.Ascending ?
-                IPAddressHelper.CompareIPAddresses(firstInfo.PingInfo.IPAddress, secondInfo.PingInfo.IPAddress) :
-                IPAddressHelper.CompareIPAddresses(secondInfo.PingInfo.IPAddress, firstInfo.PingInfo.IPAddress);
-
+                0 => direction == ListSortDirection.Ascending
+                    ? IPAddressHelper.CompareIPAddresses(firstInfo.PingInfo.IPAddress, secondInfo.PingInfo.IPAddress)
+                    : IPAddressHelper.CompareIPAddresses(secondInfo.PingInfo.IPAddress, firstInfo.PingInfo.IPAddress),
                 // MAC address
-                case 1:
-
-                    return 0;
-
-                default:
-                    return 0;
-            }
+                1 => direction == ListSortDirection.Ascending
+                    ? MACAddressHelper.CompareMACAddresses(firstInfo.MACAddress, secondInfo.MACAddress)
+                    : MACAddressHelper.CompareMACAddresses(secondInfo.MACAddress, firstInfo.MACAddress),
+                _ => 0
+            };
         }
     }
 }

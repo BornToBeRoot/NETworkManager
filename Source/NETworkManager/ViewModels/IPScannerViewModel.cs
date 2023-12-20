@@ -226,9 +226,11 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.IPScanner_HostHistory);
 
         // Result view
-        IPAddressComparer comparer = new();
-        Results = new ObservableCollection<IPScannerHostInfo>(Results.OrderBy(x => x.PingInfo.IPAddress, comparer));
         ResultsView = CollectionViewSource.GetDefaultView(Results);
+        
+        // Custom comparer to sort by IP address
+        ((ListCollectionView)ResultsView).CustomSort = Comparer<IPScannerHostInfo>.Create((x, y) =>
+            IPAddressHelper.CompareIPAddresses(x.PingInfo.IPAddress, y.PingInfo.IPAddress));
     }
 
     public void OnLoaded()
