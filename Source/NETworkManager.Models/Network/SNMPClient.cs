@@ -4,6 +4,7 @@ using Lextm.SharpSnmpLib.Security;
 using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -248,14 +249,14 @@ public sealed class SNMPClient
                     {
                         new(seed.Id)
                     };
-
+                    
                     var message = new GetNextRequestMessage(Messenger.NextRequestId, version, community, variables);
 
                     var response = await message.GetResponseAsync(ipEndPoint, options.CancellationToken)
                         .ConfigureAwait(false);
 
                     var pdu = response.Pdu();
-
+                    
                     // No more objects
                     if (pdu.ErrorStatus.ToErrorCode() == ErrorCode.NoSuchName)
                         break;
@@ -271,6 +272,10 @@ public sealed class SNMPClient
                     // Skip the first entry
                     if (pdu.Variables[0].Id == table)
                         continue;
+
+                    // End of MIB view
+                    if (pdu.Variables[0].Data.TypeCode == SnmpType.EndOfMibView)
+                        break;
 
                     // Not in subtree
                     if (options.WalkMode == WalkMode.WithinSubtree && !pdu.Variables[0].Id.ToString()
@@ -404,10 +409,12 @@ public sealed class SNMPClient
                     // Validate the response and add the variables
                     foreach (var variable in pdu.Variables)
                     {
+                        // End of MIB view
                         if (variable.Data.TypeCode == SnmpType.EndOfMibView)
                             breakLoop = true;
-                        
-                        if(options.WalkMode == WalkMode.WithinSubtree && !variable.Id.ToString().StartsWith(subTreeMask, StringComparison.Ordinal))
+
+                        // Not in subtree
+                        if (options.WalkMode == WalkMode.WithinSubtree && !variable.Id.ToString().StartsWith(subTreeMask, StringComparison.Ordinal))
                             breakLoop = true;
 
                         if(breakLoop)
