@@ -56,6 +56,9 @@ Experimental features can be enabled in the settings under [`Settings > Update`]
 
 ## Bugfixes
 
+- SNMP
+  - Detect EndOfMibView in v1 and v2c walk [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"}
+
 ## Other
 
 - Code cleanup & Refactoring
