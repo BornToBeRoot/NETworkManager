@@ -45,11 +45,14 @@ Experimental features can be enabled in the settings under [`Settings > Update`]
   - Scan is no longer aborted if the IP of a single host in a series of hosts cannot be resolved (the host is skipped and an error is displayed) [#2573](https://github.com/BornToBeRoot/NETworkManager/pull/2573){:target="\_blank"}
   - Hostname added to group [#2573](https://github.com/BornToBeRoot/NETworkManager/pull/2573){:target="\_blank"}
   - Sort improved [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"}
+  - Port profile column sort fixed [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"}
 - Ping Monitor
   - Scan is no longer aborted if the IP of a single host in a series of hosts cannot be resolved (the host is skipped and an error is displayed) [#2573](https://github.com/BornToBeRoot/NETworkManager/pull/2573){:target="\_blank"}
 - DNS Lookup
   - Hostname of the nameserver added to group [#2573](https://github.com/BornToBeRoot/NETworkManager/pull/2573){:target="\_blank"}
   - Sort improved [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"}
+- SNMP
+  OID profile column sort fixed [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"}
 
 ## Bugfixes
 
