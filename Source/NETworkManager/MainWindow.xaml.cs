@@ -180,13 +180,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             {
                 // Hide the old application view
                 if (_selectedApplication != null)
-                {
-                    Debug.WriteLine($"Hide application view: {_selectedApplication.Name}");
                     OnApplicationViewHide(_selectedApplication.Name);
-                }
 
                 // Show the new application view
-                Debug.WriteLine($"Show application view: {value.Name}");
                 OnApplicationViewVisible(value.Name);
 
                 // Store the last selected application name

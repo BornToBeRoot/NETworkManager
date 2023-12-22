@@ -1,6 +1,7 @@
 ﻿using NETworkManager.Models.Network;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Windows.Input;
 using System.ComponentModel;
 using System.Windows.Data;
@@ -195,7 +196,10 @@ public class ConnectionsViewModel : ViewModelBase
 
         // Result view + search
         ResultsView = CollectionViewSource.GetDefaultView(Results);
-        ResultsView.SortDescriptions.Add(new SortDescription(nameof(ConnectionInfo.LocalIPAddressInt32), ListSortDirection.Ascending));
+        
+        ((ListCollectionView)ResultsView).CustomSort = Comparer<ConnectionInfo>.Create((x, y) =>
+            IPAddressHelper.CompareIPAddresses(x.LocalIPAddress, y.LocalIPAddress));
+        
         ResultsView.Filter = o =>
         {
             if (o is not ConnectionInfo info)

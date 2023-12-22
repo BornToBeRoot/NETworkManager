@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.NetworkInformation;
-using static NETworkManager.Models.Network.Connection;
 
 namespace NETworkManager.Models.Network;
 
@@ -12,9 +11,6 @@ public class ConnectionInfo
     public IPAddress RemoteIPAddress { get; set; }
     public int RemotePort { get; set; }
     public TcpState TcpState { get; set; }
-
-    public int LocalIPAddressInt32 => LocalIPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4Address.ToInt32(LocalIPAddress) : 0;
-    public int RemoteIPAddressInt32 => LocalIPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4Address.ToInt32(RemoteIPAddress) : 0;
     
     public ConnectionInfo()
     {

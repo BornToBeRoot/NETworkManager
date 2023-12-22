@@ -40,18 +40,35 @@ Experimental features can be enabled in the settings under [`Settings > Update`]
 
 - IP Scanner
   - Scan is no longer aborted if the IP of a single host in a series of hosts cannot be resolved (the host is skipped and an error is displayed) [#2573](https://github.com/BornToBeRoot/NETworkManager/pull/2573){:target="\_blank"}
+  - Sort by IP address & MAC address improved / fixed [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"}
 - Port Scanner
   - Scan is no longer aborted if the IP of a single host in a series of hosts cannot be resolved (the host is skipped and an error is displayed) [#2573](https://github.com/BornToBeRoot/NETworkManager/pull/2573){:target="\_blank"}
   - Hostname added to group [#2573](https://github.com/BornToBeRoot/NETworkManager/pull/2573){:target="\_blank"}
+  - Sort improved [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"}
+  - Port profile column sort fixed [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"}
 - Ping Monitor
   - Scan is no longer aborted if the IP of a single host in a series of hosts cannot be resolved (the host is skipped and an error is displayed) [#2573](https://github.com/BornToBeRoot/NETworkManager/pull/2573){:target="\_blank"}
 - DNS Lookup
   - Hostname of the nameserver added to group [#2573](https://github.com/BornToBeRoot/NETworkManager/pull/2573){:target="\_blank"}
+  - Sort improved [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"}
+- SNMP
+  OID profile column sort fixed [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"}
+- Connections
+  - Sort by IP address improved / fixed [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"}
+- Listeners
+  - Sort by IP address improved / fixed [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"}
+- ARP Table
+  - Sort by IP address & MAC address improved / fixed [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"}
 
 ## Bugfixes
 
+- SNMP
+  - Detect EndOfMibView in v1 and v2c walk [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"}
+- Lookup
+  - Fix sort by MAC address [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"}
+
 ## Other
 
-- Code cleanup & Refactoring
+- Code cleanup & Refactoring [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"}
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="\_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="\_blank"}

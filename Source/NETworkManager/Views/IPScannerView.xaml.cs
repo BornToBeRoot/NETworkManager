@@ -1,9 +1,15 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using NETworkManager.ViewModels;
 using MahApps.Metro.Controls.Dialogs;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
+using NETworkManager.Models.Network;
+using NETworkManager.Utilities;
+using VisualTreeHelper = System.Windows.Media.VisualTreeHelper;
+using System.Collections;
 
 namespace NETworkManager.Views;
 
@@ -39,9 +45,9 @@ public partial class IPScannerView
 
     private void ContextMenu_Opened(object sender, RoutedEventArgs e)
     {
-        if (sender is not ContextMenu menu) 
+        if (sender is not ContextMenu menu)
             return;
-        
+
         // Set DataContext to ViewModel
         menu.DataContext = _viewModel;
 
@@ -52,9 +58,9 @@ public partial class IPScannerView
 
         for (var i = 0; i < menu.Items.Count; i++)
         {
-            if (menu.Items[i] is not MenuItem item) 
+            if (menu.Items[i] is not MenuItem item)
                 continue;
-                
+
             if ((string)item.Tag != "CustomCommands")
                 continue;
 
@@ -90,10 +96,74 @@ public partial class IPScannerView
         {
             if (visual is not DataGridRow row)
                 continue;
-            
+
             row.DetailsVisibility = row.DetailsVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-            
+
             break;
+        }
+    }
+
+    private void DataGrid_OnSorting(object sender, DataGridSortingEventArgs e)
+    {
+        var column = e.Column;
+
+        var selectedComparer = -1;
+
+        switch (column.SortMemberPath)
+        {
+            case $"{nameof(PingInfo)}.{nameof(PingInfo.IPAddress)}":
+                selectedComparer = 0;
+                break;
+            case nameof(IPScannerHostInfo.MACAddress):
+                selectedComparer = 1;
+                break;
+            default:
+                return;
+        }
+
+        // Prevent the built-in sort from sorting
+        e.Handled = true;
+
+        // Get the direction
+        var direction = column.SortDirection != ListSortDirection.Ascending
+            ? ListSortDirection.Ascending
+            : ListSortDirection.Descending;
+
+        // Update the sort direction
+        e.Column.SortDirection = direction;
+
+        // Get the view
+        var view = (ListCollectionView)CollectionViewSource.GetDefaultView(((DataGrid)sender).ItemsSource);
+
+        // Sort the view
+        view.CustomSort = new DataGridComparer(direction, selectedComparer);
+    }
+
+    public class DataGridComparer(ListSortDirection direction, int comparer = -1) : IComparer
+    {
+        public int Compare(object x, object y)
+        {
+            // No comparer selected
+            if (comparer == -1)
+                return 0;
+
+            // Get data from objects
+            if (x is not IPScannerHostInfo first || y is not IPScannerHostInfo second)
+                return 0;
+
+            // Compare the data
+            return comparer switch
+            {
+                // IP address
+                0 => direction == ListSortDirection.Ascending
+                    ? IPAddressHelper.CompareIPAddresses(first.PingInfo.IPAddress, second.PingInfo.IPAddress)
+                    : IPAddressHelper.CompareIPAddresses(second.PingInfo.IPAddress, first.PingInfo.IPAddress),
+                // MAC address
+                1 => direction == ListSortDirection.Ascending
+                    ? MACAddressHelper.CompareMACAddresses(first.MACAddress, second.MACAddress)
+                    : MACAddressHelper.CompareMACAddresses(second.MACAddress, first.MACAddress),
+                _ => 0
+            };
         }
     }
 }

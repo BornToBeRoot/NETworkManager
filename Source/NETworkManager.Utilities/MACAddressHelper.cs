@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
 
 namespace NETworkManager.Utilities;
@@ -36,7 +37,6 @@ public static class MACAddressHelper
     /// <returns>MAC-Address in default format</returns>
     public static string GetDefaultFormat(string macAddress)
     {
-        Debug.WriteLine(Format(macAddress, ":"));
         return Format(macAddress, ":");
     }
 
@@ -63,5 +63,17 @@ public static class MACAddressHelper
             "." => string.Join(separator, Enumerable.Range(0, 3).Select(i => macAddress.Substring(i * 4, 4))),
             _ => macAddress
         };
+    }
+
+
+    /// <summary>
+    /// Compare two MAC-Addresses.
+    /// </summary>
+    /// <param name="x">First MAC-Address.</param>
+    /// <param name="y">Second MAC-Address.</param>
+    /// <returns>0 if the MAC-Addresses are equal, otherwise a negative or positive value.</returns>
+    public static int CompareMACAddresses(PhysicalAddress x, PhysicalAddress y)
+    {
+        return ByteHelper.Compare(x.GetAddressBytes(), y.GetAddressBytes());
     }
 }

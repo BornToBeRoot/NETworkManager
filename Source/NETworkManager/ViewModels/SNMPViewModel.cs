@@ -315,7 +315,7 @@ public class SNMPViewModel : ViewModelBase
         }
     }
 
-    private ObservableCollection<SNMPInfo> _queryResults = new();
+    private ObservableCollection<SNMPInfo> _queryResults = [];
     public ObservableCollection<SNMPInfo> QueryResults
     {
         get => _queryResults;
@@ -402,11 +402,12 @@ public class SNMPViewModel : ViewModelBase
         HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_HostHistory);
         OidHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_OidHistory);
 
-        //
-        StringComparer comparer = StringComparer.InvariantCultureIgnoreCase;
-        QueryResults = new ObservableCollection<SNMPInfo>(QueryResults.OrderBy(x => x.OID, comparer));
-        ResultsView = CollectionViewSource.GetDefaultView(QueryResults);     
-
+        // Result view
+        ResultsView = CollectionViewSource.GetDefaultView(QueryResults);
+        
+        // Custom comparer to sort by OID
+        ((ListCollectionView)ResultsView).CustomSort = Comparer<SNMPInfo>.Create((x, y) =>
+            SNMPOIDHelper.CompareOIDs(x.OID, y.OID));
 
         // OID
         Oid = sessionInfo?.OID;

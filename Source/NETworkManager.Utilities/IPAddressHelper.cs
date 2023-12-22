@@ -31,18 +31,11 @@ public static class IPAddressHelper
     /// <summary>
     /// Compare two IP addresses.
     /// </summary>
-    /// <param name="first">First IP address.</param>
-    /// <param name="second">Second IP address.</param>
+    /// <param name="x">First IP address.</param>
+    /// <param name="y">Second IP address.</param>
     /// <returns>0 if the IP addresses are equal, otherwise a negative or positive value.</returns>
-    public static int CompareIPAddresses(IPAddress first, IPAddress second)
+    public static int CompareIPAddresses(IPAddress x, IPAddress y)
     {
-        byte[] bytesFirst = first.GetAddressBytes();
-        byte[] bytesSecond = second.GetAddressBytes();
-
-        for (int i = 0; i < bytesFirst.Length; i++)
-            if (bytesFirst[i] != bytesSecond[i])
-                return bytesFirst[i] - bytesSecond[i];
-
-        return 0; // IP addresses are equal
+        return ByteHelper.Compare(x.GetAddressBytes(), y.GetAddressBytes());
     }
 }

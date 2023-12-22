@@ -200,13 +200,21 @@
                     </TextBlock.Text>
                 </TextBlock>
             </StackPanel>
-            <TextBlock Grid.Row="2" Foreground="{DynamicResource MahApps.Brushes.Accent}" Text="{Binding StatusMessage}" Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource StatusMessageTextBlock}" Margin="0,10,0,0" />
+            <TextBlock Grid.Column="0" Grid.Row="2" 
+                       Foreground="{DynamicResource MahApps.Brushes.Accent}" 
+                       Text="{Binding StatusMessage}" 
+                       Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" 
+                       Style="{DynamicResource StatusMessageTextBlock}" 
+                       Margin="0,10,0,0" />
         </Grid>
-        <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Result}" />
-        <controls:MultiSelectDataGrid Grid.Row="3" 
+        <TextBlock Grid.Column="0" Grid.Row="2"
+                   Style="{StaticResource HeaderTextBlock}"
+                   Text="{x:Static localization:Strings.Result}" />
+        <controls:MultiSelectDataGrid Grid.Column="0" Grid.Row="3"
                                       ItemsSource="{Binding Path=ResultsView}" 
                                       SelectedItem="{Binding Path=SelectedResult}" 
                                       SelectedItemsList="{Binding Path=SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      Sorting="DataGrid_OnSorting"
                                       RowDetailsVisibilityMode="Collapsed"
                                       EnableRowVirtualization="True"
                                       ScrollViewer.CanContentScroll="True"
@@ -467,7 +475,7 @@
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}" 
                                     Binding="{Binding (network:IPScannerHostInfo.PingInfo).IPAddress}" 
-                                    SortMemberPath="PingInfo.IPAddressInt32" 
+                                    SortMemberPath="PingInfo.IPAddress"
                                     MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}"
                                     Binding="{Binding (network:IPScannerHostInfo.Hostname)}" 
@@ -481,10 +489,11 @@
                                     MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.PingStatus}"
                                     Binding="{Binding (network:IPScannerHostInfo.PingInfo).Status, Converter={StaticResource IPStatusToStringConverter}}"
+                                    SortMemberPath="PingInfo.Status"
                                     MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}" 
                                     Binding="{Binding (network:IPScannerHostInfo.MACAddress), Converter={StaticResource PhysicalAddressToStringConverter}}" 
-                                    SortMemberPath="MACAddressString"
+                                    SortMemberPath="MACAddress"
                                     Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_ResolveMACAddress, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" 
                                     MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Vendor}"

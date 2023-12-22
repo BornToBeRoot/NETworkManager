@@ -131,11 +131,7 @@
             <TextBlock Grid.Row="2" Foreground="{DynamicResource MahApps.Brushes.Accent}" Text="{Binding StatusMessage}" Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource StatusMessageTextBlock}" Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Row="2" Text="{x:Static localization:Strings.Result}" Style="{StaticResource HeaderTextBlock}" />
-        <!-- 
-        The sort function is in the code behind -> when you click on the header of the column, the SortMemberPath is passed to the viewmodel
-        CanUserSortColumns="False" -> Default sort won't work with grouped
-        -->
-        <controls:MultiSelectDataGrid Grid.Row="3" CanUserSortColumns="False" ItemsSource="{Binding ResultsView}" SelectedItem="{Binding SelectedResult}" SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+        <controls:MultiSelectDataGrid Grid.Row="3" ItemsSource="{Binding ResultsView}" SelectedItem="{Binding SelectedResult}" SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <controls:MultiSelectDataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
@@ -182,10 +178,7 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                </ContextMenu>
-                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource DefaultDataGridColumnHeader}">
-                    <EventSetter Event="Click" Handler="ColumnHeader_Click" />
-                </Style>
+                </ContextMenu>                
             </controls:MultiSelectDataGrid.Resources>
             <controls:MultiSelectDataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
@@ -221,24 +214,24 @@
             </controls:MultiSelectDataGrid.GroupStyle>
             <controls:MultiSelectDataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static localization:Strings.DomainName}" 
-                                    Binding="{Binding (network:DNSLookupRecordInfo.DomainName)}"
-                                    SortMemberPath="DomainName" 
+                                    Binding="{Binding Path=(network:DNSLookupRecordInfo.DomainName)}"
+                                    SortMemberPath="DomainName"
                                     MinWidth="200" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.TTL}"
-                                    Binding="{Binding (network:DNSLookupRecordInfo.TTL)}" 
-                                    SortMemberPath="TTL" 
+                                    Binding="{Binding Path=(network:DNSLookupRecordInfo.TTL)}"
+                                    SortMemberPath="TTL"
                                     MinWidth="80" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Class}" 
-                                    Binding="{Binding (network:DNSLookupRecordInfo.RecordClass)}"
-                                    SortMemberPath="Class" 
+                                    Binding="{Binding Path=(network:DNSLookupRecordInfo.RecordClass)}"
+                                    SortMemberPath="RecordClass"
                                     MinWidth="80" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Type}" 
-                                    Binding="{Binding (network:DNSLookupRecordInfo.RecordType)}" 
-                                    SortMemberPath="Type"
+                                    Binding="{Binding Path=(network:DNSLookupRecordInfo.RecordType)}"
+                                    SortMemberPath="RecordType"
                                     MinWidth="80" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Result}" 
-                                    Binding="{Binding (network:DNSLookupRecordInfo.Result)}" 
-                                    SortMemberPath="Result" 
+                                    Binding="{Binding Path=(network:DNSLookupRecordInfo.Result)}"
+                                    SortMemberPath="Result"
                                     MinWidth="200" />
             </controls:MultiSelectDataGrid.Columns>
         </controls:MultiSelectDataGrid>

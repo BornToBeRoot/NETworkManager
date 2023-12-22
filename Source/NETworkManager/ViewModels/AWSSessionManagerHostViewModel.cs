@@ -734,9 +734,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
     private void RemoveDynamicGroup(string profile, string region)
     {
-        string groupName = $"~ [{profile}\\{region}]";
-
-        //Debug.WriteLine("Remove dynamic group: " + groupName);
+        var groupName = $"~ [{profile}\\{region}]";
 
         var profilesChangedCurrentState = ProfileManager.ProfilesChanged;
         ProfileManager.ProfilesChanged = false;

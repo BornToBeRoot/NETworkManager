@@ -19,11 +19,6 @@ public class PortScannerPortInfo : PortInfo
     public string Hostname { get; set; }
     
     /// <summary>
-    /// IP address of the host as a integer.
-    /// </summary>
-    public int IPAddressInt32 => IPAddress is { AddressFamily: System.Net.Sockets.AddressFamily.InterNetwork } ? IPv4Address.ToInt32(IPAddress) : 0;
-
-    /// <summary>
     /// Hostname (if available) or IP address of the host.
     /// </summary>
     public string HostAsString => string.IsNullOrEmpty(Hostname) ? IPAddress.ToString() : Hostname;

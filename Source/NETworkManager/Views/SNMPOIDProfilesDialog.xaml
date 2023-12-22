@@ -11,37 +11,56 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="10" />
-            <RowDefinition MinHeight="150" Height="*" />
+            <RowDefinition Height="300" />
             <RowDefinition Height="10" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBox x:Name="TextBoxSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
-        <Grid Grid.Row="2">
-            <DataGrid x:Name="DataGridPortProfiles" ItemsSource="{Binding OIDProfiles}" SelectedItem="{Binding SelectedOIDProfile}">
+        <TextBox x:Name="TextBoxSearch" 
+                 Grid.Column="0" Grid.Row="0"
+                 VerticalAlignment="Center"
+                 Text="{Binding Path=Search, UpdateSourceTrigger=PropertyChanged}"
+                 Style="{StaticResource ResourceKey=SearchTextBox}" />
+        <Grid Grid.Column="0" Grid.Row="2">
+            <DataGrid x:Name="DataGridProfiles"
+                      ItemsSource="{Binding Path=OIDProfiles}" 
+                      SelectedItem="{Binding Path=SelectedOIDProfile}"
+                      SelectionMode="Single">
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
+                </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (network:SNMPOIDProfileInfo.Name)}" Width="1*" />
-                    <DataGridTextColumn Header="{x:Static localization:Strings.OID}" Binding="{Binding (network:SNMPOIDProfileInfo.OID)}" Width="2*" />
-                    <DataGridTextColumn Header="{x:Static localization:Strings.Mode}" Binding="{Binding (network:SNMPOIDProfileInfo.Mode)}" Width="1*" />
+                    <DataGridTextColumn Header="{x:Static Member=localization:Strings.Name}" 
+                                        Binding="{Binding Path=(network:SNMPOIDProfileInfo.Name)}"
+                                        SortMemberPath="Name"
+                                        Width="1*" />
+                    <DataGridTextColumn Header="{x:Static Member=localization:Strings.OID}" 
+                                        Binding="{Binding Path=(network:SNMPOIDProfileInfo.OID)}"
+                                        SortMemberPath="OID"
+                                        Width="2*" />
+                    <DataGridTextColumn Header="{x:Static Member=localization:Strings.Mode}" 
+                                        Binding="{Binding (network:SNMPOIDProfileInfo.Mode)}"
+                                        SortMemberPath="Mode"
+                                        Width="1*" />
                 </DataGrid.Columns>
                 <DataGrid.InputBindings>
-                    <KeyBinding Command="{Binding OKCommand}" Key="Return" />
+                    <KeyBinding Command="{Binding Path=OKCommand}" Key="Return" />
                 </DataGrid.InputBindings>
                 <DataGrid.RowStyle>
-                    <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
+                    <Style TargetType="{x:Type TypeName=DataGridRow}" BasedOn="{StaticResource ResourceKey=MahApps.Styles.DataGridRow}">
                         <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick" />
                     </Style>
                 </DataGrid.RowStyle>
             </DataGrid>
         </Grid>
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="{x:Static localization:Strings.OK}" Command="{Binding OKCommand}" IsDefault="True" Margin="0,0,10,0">
+            <Button Content="{x:Static Member=localization:Strings.OK}" Command="{Binding Path=OKCommand}" IsDefault="True" Margin="0,0,10,0">
                 <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
+                    <Style TargetType="{x:Type TypeName=Button}" BasedOn="{StaticResource ResourceKey=HighlightedButton}">
                         <Setter Property="IsEnabled" Value="True" />
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding ElementName=DataGridPortProfiles, Path=SelectedItems.Count}" Value="0" />
+                                    <Condition Binding="{Binding ElementName=DataGridProfiles, Path=SelectedItems.Count}" Value="0" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False"/>
@@ -51,7 +70,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button Content="{x:Static localization:Strings.Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />
+            <Button Content="{x:Static Member=localization:Strings.Cancel}" Command="{Binding Path=CancelCommand}" IsCancel="True" Style="{StaticResource ResourceKey=DefaultButton}" />
         </StackPanel>
     </Grid>
 </UserControl>
