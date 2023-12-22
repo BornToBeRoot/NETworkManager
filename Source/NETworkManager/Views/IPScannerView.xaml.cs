@@ -141,14 +141,14 @@ public partial class IPScannerView
 
     public class DataGridComparer(ListSortDirection direction, int comparer = -1) : IComparer
     {
-        public int Compare(object first, object second)
+        public int Compare(object x, object y)
         {
             // No comparer selected
             if (comparer == -1)
                 return 0;
 
             // Get data from objects
-            if (first is not IPScannerHostInfo firstInfo || second is not IPScannerHostInfo secondInfo)
+            if (x is not IPScannerHostInfo first || y is not IPScannerHostInfo second)
                 return 0;
 
             // Compare the data
@@ -156,12 +156,12 @@ public partial class IPScannerView
             {
                 // IP address
                 0 => direction == ListSortDirection.Ascending
-                    ? IPAddressHelper.CompareIPAddresses(firstInfo.PingInfo.IPAddress, secondInfo.PingInfo.IPAddress)
-                    : IPAddressHelper.CompareIPAddresses(secondInfo.PingInfo.IPAddress, firstInfo.PingInfo.IPAddress),
+                    ? IPAddressHelper.CompareIPAddresses(first.PingInfo.IPAddress, second.PingInfo.IPAddress)
+                    : IPAddressHelper.CompareIPAddresses(second.PingInfo.IPAddress, first.PingInfo.IPAddress),
                 // MAC address
                 1 => direction == ListSortDirection.Ascending
-                    ? MACAddressHelper.CompareMACAddresses(firstInfo.MACAddress, secondInfo.MACAddress)
-                    : MACAddressHelper.CompareMACAddresses(secondInfo.MACAddress, firstInfo.MACAddress),
+                    ? MACAddressHelper.CompareMACAddresses(first.MACAddress, second.MACAddress)
+                    : MACAddressHelper.CompareMACAddresses(second.MACAddress, first.MACAddress),
                 _ => 0
             };
         }

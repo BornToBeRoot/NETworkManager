@@ -11,7 +11,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="10" />
-            <RowDefinition MinHeight="150" Height="*" />
+            <RowDefinition Height="300" />
             <RowDefinition Height="10" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -21,7 +21,13 @@
                  Text="{Binding Path=Search, UpdateSourceTrigger=PropertyChanged}"
                  Style="{StaticResource ResourceKey=SearchTextBox}" />
         <Grid Grid.Column="0" Grid.Row="2">
-            <DataGrid x:Name="DataGridPortProfiles" ItemsSource="{Binding Path=OIDProfiles}" SelectedItem="{Binding Path=SelectedOIDProfile}">
+            <DataGrid x:Name="DataGridProfiles"
+                      ItemsSource="{Binding Path=OIDProfiles}" 
+                      SelectedItem="{Binding Path=SelectedOIDProfile}"
+                      SelectionMode="Single">
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
+                </DataGrid.Resources>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="{x:Static Member=localization:Strings.Name}" 
                                         Binding="{Binding Path=(network:SNMPOIDProfileInfo.Name)}"
@@ -54,7 +60,7 @@
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding ElementName=DataGridPortProfiles, Path=SelectedItems.Count}" Value="0" />
+                                    <Condition Binding="{Binding ElementName=DataGridProfiles, Path=SelectedItems.Count}" Value="0" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False"/>

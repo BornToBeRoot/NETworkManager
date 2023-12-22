@@ -315,7 +315,7 @@ public class SNMPViewModel : ViewModelBase
         }
     }
 
-    private ObservableCollection<SNMPInfo> _queryResults = new();
+    private ObservableCollection<SNMPInfo> _queryResults = [];
     public ObservableCollection<SNMPInfo> QueryResults
     {
         get => _queryResults;

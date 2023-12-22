@@ -587,7 +587,8 @@
         </TextBlock>
         <controls:MultiSelectDataGrid Grid.Row="5" Grid.ColumnSpan="3" Grid.Column="0" 
                                       ItemsSource="{Binding ResultsView}" 
-                                      SelectedItem="{Binding SelectedResult}" 
+                                      SelectedItem="{Binding SelectedResult}"
+                                      Sorting="DataGrid_OnSorting"
                                       SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <controls:MultiSelectDataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
@@ -649,8 +650,13 @@
                 </Style>
             </controls:MultiSelectDataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.OID}" Binding="{Binding (network:SNMPInfo.OID)}" SortMemberPath="OID" MinWidth="200" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Data}" Binding="{Binding (network:SNMPInfo.Data)}" SortMemberPath="Data" MinWidth="300" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.OID}"
+                                    Binding="{Binding (network:SNMPInfo.OID)}"
+                                    SortMemberPath="OID" 
+                                    MinWidth="200" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Data}" 
+                                    Binding="{Binding (network:SNMPInfo.Data)}"
+                                    SortMemberPath="Data" MinWidth="300" />
             </DataGrid.Columns>
         </controls:MultiSelectDataGrid>
         <TextBox Grid.Row="5" Grid.Column="0" Text="{Binding Data}">
