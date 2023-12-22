@@ -1,5 +1,4 @@
-﻿using NETworkManager.Utilities;
-using System.Net;
+﻿using System.Net;
 using System.Net.NetworkInformation;
 
 namespace NETworkManager.Models.Network;
@@ -23,24 +22,6 @@ public class ARPInfo
     /// Indicates if the ARP entry is a multicast address.
     /// </summary>
     public bool IsMulticast { get; set; }
-
-    /// <summary>
-    /// IP address as Int32.
-    /// </summary>
-    public int IPAddressInt32 => IPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4Address.ToInt32(IPAddress) : 0;
-    
-    /// <summary>
-    /// Physical address as string.
-    /// </summary>
-    public string MACAddressString => MACAddress.ToString().Replace("-","").Replace("-","");
-
-    /// <summary>
-    /// Creates a new instance of <see cref="ARPInfo"/>.
-    /// </summary>
-    public ARPInfo()
-    {
-
-    }
 
     /// <summary>
     /// Creates a new instance of <see cref="ARPInfo"/> with the given parameters.

@@ -141,10 +141,12 @@ public class LookupOUILookupViewModel : ViewModelBase
     {
         _dialogCoordinator = instance;
 
-        // Set collection view
-        SearchHistoryView =
-            CollectionViewSource.GetDefaultView(SettingsManager.Current.Lookup_OUI_SearchHistory);
+        // Search history
+        SearchHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Lookup_OUI_SearchHistory);
+        
+        // Result view
         ResultsView = CollectionViewSource.GetDefaultView(Results);
+        ResultsView.SortDescriptions.Add(new SortDescription(nameof(OUIInfo.MACAddress), ListSortDirection.Ascending));
     }
 
     #endregion

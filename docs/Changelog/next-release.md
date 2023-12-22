@@ -53,14 +53,18 @@ Experimental features can be enabled in the settings under [`Settings > Update`]
   - Sort improved [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"}
 - SNMP
   OID profile column sort fixed [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"}
+- ARP Table
+  - Sort by IP address & MAC address improved / fixed [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"}
 
 ## Bugfixes
 
 - SNMP
   - Detect EndOfMibView in v1 and v2c walk [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"}
+- Lookup
+  - Fix sort by MAC address [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"}
 
 ## Other
 
-- Code cleanup & Refactoring
+- Code cleanup & Refactoring [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"}
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="\_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="\_blank"}

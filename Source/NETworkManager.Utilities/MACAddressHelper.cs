@@ -37,7 +37,6 @@ public static class MACAddressHelper
     /// <returns>MAC-Address in default format</returns>
     public static string GetDefaultFormat(string macAddress)
     {
-        Debug.WriteLine(Format(macAddress, ":"));
         return Format(macAddress, ":");
     }
 
