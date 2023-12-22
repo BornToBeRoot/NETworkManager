@@ -53,6 +53,10 @@ Experimental features can be enabled in the settings under [`Settings > Update`]
   - Sort improved [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"}
 - SNMP
   OID profile column sort fixed [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"}
+- Connections
+  - Sort by IP address improved / fixed [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"}
+- Listeners
+  - Sort by IP address improved / fixed [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"}
 - ARP Table
   - Sort by IP address & MAC address improved / fixed [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"}
 

@@ -200,7 +200,7 @@ public partial class App
         else
         {
             // Bring the already running application into the foreground
-            Log.Info("Another NETworkManager process is already running. Try to bring the window to the foreground...");
+            Log.Info("Another NETworkManager process is already running. Trying to bring the window to the foreground...");
             SingleInstance.PostMessage((IntPtr)SingleInstance.HWND_BROADCAST, SingleInstance.WM_SHOWME, IntPtr.Zero, IntPtr.Zero);
 
             // Close the application                

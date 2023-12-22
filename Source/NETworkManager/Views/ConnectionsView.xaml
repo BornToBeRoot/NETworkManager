@@ -34,8 +34,17 @@
                     <RowDefinition Height="10" />
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <TextBox x:Name="TextBoxSearch" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
-                <controls:MultiSelectDataGrid x:Name="DataGridConnection" Grid.Row="2" ItemsSource="{Binding ResultsView}" SelectedItem="{Binding SelectedResult}" SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox Grid.Column="0" Grid.Row="0"
+                         VerticalAlignment="Center" 
+                         HorizontalAlignment="Right" 
+                         Width="250" 
+                         Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" 
+                         Style="{StaticResource SearchTextBox}" />
+                <controls:MultiSelectDataGrid Grid.Column="0" Grid.Row="2" 
+                                              ItemsSource="{Binding ResultsView}" 
+                                              SelectedItem="{Binding SelectedResult}"
+                                              SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              Sorting="DataGrid_OnSorting">
                     <DataGrid.Resources>
                         <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                         <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"  MinWidth="150">
@@ -99,12 +108,24 @@
                         </Style>
                     </DataGrid.RowStyle>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="{x:Static localization:Strings.Protocol}" Binding="{Binding (network:ConnectionInfo.Protocol)}" SortMemberPath="Protocol" MinWidth="100" />
-                        <DataGridTextColumn Header="{x:Static localization:Strings.LocalIPAddress}" Binding="{Binding (network:ConnectionInfo.LocalIPAddress)}" SortMemberPath="LocalIPAddressInt32" MinWidth="150" />
-                        <DataGridTextColumn Header="{x:Static localization:Strings.LocalPort}" Binding="{Binding (network:ConnectionInfo.LocalPort)}" SortMemberPath="LocalPort" MinWidth="100" />
-                        <DataGridTextColumn Header="{x:Static localization:Strings.RemoteIPAddress}" Binding="{Binding (network:ConnectionInfo.RemoteIPAddress)}" SortMemberPath="RemoteIPAddressInt32" MinWidth="150"/>
-                        <DataGridTextColumn Header="{x:Static localization:Strings.RemotePort}" Binding="{Binding (network:ConnectionInfo.RemotePort)}" SortMemberPath="RemotePort" MinWidth="100" />
-                        <DataGridTextColumn Header="{x:Static localization:Strings.State}" Binding="{Binding (network:ConnectionInfo.TcpState), Converter={StaticResource TcpStateToStringConverter}}" SortMemberPath="TcpState" MinWidth="150" />
+                        <DataGridTextColumn Header="{x:Static localization:Strings.Protocol}" 
+                                            Binding="{Binding (network:ConnectionInfo.Protocol)}" 
+                                            SortMemberPath="Protocol" MinWidth="100" />
+                        <DataGridTextColumn Header="{x:Static localization:Strings.LocalIPAddress}"
+                                            Binding="{Binding (network:ConnectionInfo.LocalIPAddress)}"
+                                            SortMemberPath="LocalIPAddress" MinWidth="150" />
+                        <DataGridTextColumn Header="{x:Static localization:Strings.LocalPort}" 
+                                            Binding="{Binding (network:ConnectionInfo.LocalPort)}"
+                                            SortMemberPath="LocalPort" MinWidth="100" />
+                        <DataGridTextColumn Header="{x:Static localization:Strings.RemoteIPAddress}"
+                                            Binding="{Binding (network:ConnectionInfo.RemoteIPAddress)}" 
+                                            SortMemberPath="RemoteIPAddress" MinWidth="150"/>
+                        <DataGridTextColumn Header="{x:Static localization:Strings.RemotePort}" 
+                                            Binding="{Binding (network:ConnectionInfo.RemotePort)}"
+                                            SortMemberPath="RemotePort" MinWidth="100" />
+                        <DataGridTextColumn Header="{x:Static localization:Strings.State}" 
+                                            Binding="{Binding (network:ConnectionInfo.TcpState), Converter={StaticResource TcpStateToStringConverter}}" 
+                                            SortMemberPath="TcpState" MinWidth="150" />
                     </DataGrid.Columns>
                 </controls:MultiSelectDataGrid>
                 <TextBlock Grid.Row="3" Foreground="{DynamicResource MahApps.Brushes.Accent}" Text="{Binding StatusMessage}" Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource StatusMessageTextBlock}" Margin="0,10,0,0" />

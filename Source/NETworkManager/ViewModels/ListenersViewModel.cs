@@ -1,6 +1,7 @@
 ﻿using NETworkManager.Models.Network;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Windows.Input;
 using System.ComponentModel;
 using System.Windows.Data;
@@ -194,11 +195,12 @@ public class ListenersViewModel : ViewModelBase
 
         // Result view + search
         ResultsView = CollectionViewSource.GetDefaultView(Results);
-        ResultsView.SortDescriptions.Add(new SortDescription(nameof(ListenerInfo.Protocol), ListSortDirection.Ascending));
-        ResultsView.SortDescriptions.Add(new SortDescription(nameof(ListenerInfo.IPAddressInt32), ListSortDirection.Ascending));
+        
+        ((ListCollectionView)ResultsView).CustomSort = Comparer<ListenerInfo>.Create((x, y) =>
+            IPAddressHelper.CompareIPAddresses(x.IPAddress, y.IPAddress));
+        
         ResultsView.Filter = o =>
         {
-
             if (o is not ListenerInfo info)
                 return false;
 
