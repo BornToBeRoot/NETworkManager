@@ -49,7 +49,7 @@ public class ConnectionsViewModel : ViewModelBase
             return info.LocalIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    info.LocalPort.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    info.RemoteIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   info.RemoteHostName.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.RemoteHostname.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    info.RemotePort.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    info.Protocol.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    ResourceTranslator.Translate(ResourceIdentifier.TcpState, info.TcpState)

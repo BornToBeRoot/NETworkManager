@@ -9,7 +9,7 @@ public class ConnectionInfo(
     int localPort,
     IPAddress remoteIPAddress,
     int remotePort,
-    string remoteHostName,
+    string remoteHostname,
     TcpState tcpState,
     int processId,
     string processName,
@@ -44,7 +44,7 @@ public class ConnectionInfo(
     /// <summary>
     /// Remote host name of the connection.
     /// </summary>
-    public string RemoteHostName { get; set; } = remoteHostName;
+    public string RemoteHostname { get; set; } = remoteHostname;
 
     /// <summary>
     /// State of the connection.
