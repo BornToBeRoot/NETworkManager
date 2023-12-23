@@ -1,5 +1,4 @@
-﻿using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -8,6 +7,7 @@ using System.Net.NetworkInformation;
 using System.Threading;
 using System.Threading.Tasks;
 using NETworkManager.Models.IPApi;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
@@ -16,45 +16,6 @@ public sealed class Traceroute
     #region Variables
 
     private readonly TracerouteOptions _options;
-
-    #endregion
-
-    #region Events
-
-    public event EventHandler<TracerouteHopReceivedArgs> HopReceived;
-
-    private void OnHopReceived(TracerouteHopReceivedArgs e)
-    {
-        HopReceived?.Invoke(this, e);
-    }
-
-    public event EventHandler TraceComplete;
-
-    private void OnTraceComplete()
-    {
-        TraceComplete?.Invoke(this, EventArgs.Empty);
-    }
-
-    public event EventHandler<MaximumHopsReachedArgs> MaximumHopsReached;
-
-    private void OnMaximumHopsReached(MaximumHopsReachedArgs e)
-    {
-        MaximumHopsReached?.Invoke(this, e);
-    }
-
-    public event EventHandler<TracerouteErrorArgs> TraceError;
-
-    private void OnTraceError(TracerouteErrorArgs e)
-    {
-        TraceError?.Invoke(this, e);
-    }
-
-    public event EventHandler UserHasCanceled;
-
-    private void OnUserHasCanceled()
-    {
-        UserHasCanceled?.Invoke(this, EventArgs.Empty);
-    }
 
     #endregion
 
@@ -136,7 +97,8 @@ public sealed class Traceroute
                     IPGeolocationResult ipGeolocationResult = null;
 
                     // Get IP geolocation info
-                    if (_options.CheckIPApiIPGeolocation && ipAddressHop != null && !IPAddressHelper.IsPrivateIPAddress(ipAddressHop))
+                    if (_options.CheckIPApiIPGeolocation && ipAddressHop != null &&
+                        !IPAddressHelper.IsPrivateIPAddress(ipAddressHop))
                         ipGeolocationResult =
                             await IPGeolocationService.GetInstance().GetIPGeolocationAsync($"{ipAddressHop}");
 
@@ -169,6 +131,45 @@ public sealed class Traceroute
                 OnTraceError(new TracerouteErrorArgs(ex.Message));
             }
         }, cancellationToken);
+    }
+
+    #endregion
+
+    #region Events
+
+    public event EventHandler<TracerouteHopReceivedArgs> HopReceived;
+
+    private void OnHopReceived(TracerouteHopReceivedArgs e)
+    {
+        HopReceived?.Invoke(this, e);
+    }
+
+    public event EventHandler TraceComplete;
+
+    private void OnTraceComplete()
+    {
+        TraceComplete?.Invoke(this, EventArgs.Empty);
+    }
+
+    public event EventHandler<MaximumHopsReachedArgs> MaximumHopsReached;
+
+    private void OnMaximumHopsReached(MaximumHopsReachedArgs e)
+    {
+        MaximumHopsReached?.Invoke(this, e);
+    }
+
+    public event EventHandler<TracerouteErrorArgs> TraceError;
+
+    private void OnTraceError(TracerouteErrorArgs e)
+    {
+        TraceError?.Invoke(this, e);
+    }
+
+    public event EventHandler UserHasCanceled;
+
+    private void OnUserHasCanceled()
+    {
+        UserHasCanceled?.Invoke(this, EventArgs.Empty);
     }
 
     #endregion

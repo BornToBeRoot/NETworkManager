@@ -1,15 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.ComponentModel;
 using System.Windows;
-using NETworkManager.ViewModels;
-using MahApps.Metro.Controls.Dialogs;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
+using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Network;
 using NETworkManager.Utilities;
+using NETworkManager.ViewModels;
 using VisualTreeHelper = System.Windows.Media.VisualTreeHelper;
-using System.Collections;
 
 namespace NETworkManager.Views;
 
@@ -79,14 +79,12 @@ public partial class IPScannerView
 
         // Add items to custom commands
         foreach (var info in IPScannerViewModel.CustomCommands)
-        {
             ((MenuItem)menu.Items[index])?.Items.Add(new MenuItem
             {
                 Header = info.Name,
                 Command = _viewModel.CustomCommandCommand,
                 CommandParameter = info.ID
             });
-        }
     }
 
     private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
@@ -97,7 +95,8 @@ public partial class IPScannerView
             if (visual is not DataGridRow row)
                 continue;
 
-            row.DetailsVisibility = row.DetailsVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+            row.DetailsVisibility =
+                row.DetailsVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
 
             break;
         }

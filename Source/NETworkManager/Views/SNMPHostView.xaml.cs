@@ -1,7 +1,9 @@
-﻿using MahApps.Metro.Controls.Dialogs;
+﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models;
 using NETworkManager.ViewModels;
-using System.Windows.Controls;
 
 namespace NETworkManager.Views;
 
@@ -17,18 +19,18 @@ public partial class SNMPHostView
         InterTabController.Partition = ApplicationName.SNMP.ToString();
     }
 
-    private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
+    private void ContextMenu_Opened(object sender, RoutedEventArgs e)
     {
         if (sender is ContextMenu menu)
             menu.DataContext = _viewModel;
     }
 
-    private void ListBoxItem_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    private void ListBoxItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
+        if (e.ChangedButton == MouseButton.Left)
             _viewModel.AddTabProfileCommand.Execute(null);
     }
-    
+
     public void AddTab(string host)
     {
         _viewModel.AddTab(host);

@@ -35,8 +35,8 @@ public static class RemoteDesktop
         switch (keystroke)
         {
             case Keystroke.CtrlAltDel:
-                info.ArrayKeyUp = new bool[] { false, false, false, true, true, true, };
-                info.KeyData = new int[] { 0x1d, 0x38, 0x53, 0x53, 0x38, 0x1d };
+                info.ArrayKeyUp = new[] { false, false, false, true, true, true };
+                info.KeyData = new[] { 0x1d, 0x38, 0x53, 0x53, 0x38, 0x1d };
                 break;
         }
 

@@ -1,25 +1,29 @@
-﻿using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Windows.Input;
-using NETworkManager.Models.PowerShell;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Windows.Input;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models.PowerShell;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
 public class PowerShellSettingsViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly bool _isLoading;
 
     private string _applicationFilePath;
+
     public string ApplicationFilePath
     {
         get => _applicationFilePath;
@@ -39,6 +43,7 @@ public class PowerShellSettingsViewModel : ViewModelBase
     }
 
     private string _command;
+
     public string Command
     {
         get => _command;
@@ -56,12 +61,13 @@ public class PowerShellSettingsViewModel : ViewModelBase
     }
 
     private string _additionalCommandLine;
+
     public string AdditionalCommandLine
     {
         get => _additionalCommandLine;
         set
         {
-            if(value == _additionalCommandLine)
+            if (value == _additionalCommandLine)
                 return;
 
             if (!_isLoading)
@@ -72,7 +78,8 @@ public class PowerShellSettingsViewModel : ViewModelBase
         }
     }
 
-    private List<ExecutionPolicy> _executionPolicies = new List<ExecutionPolicy>();
+    private List<ExecutionPolicy> _executionPolicies = new();
+
     public List<ExecutionPolicy> ExecutionPolicies
     {
         get => _executionPolicies;
@@ -87,6 +94,7 @@ public class PowerShellSettingsViewModel : ViewModelBase
     }
 
     private ExecutionPolicy _executionPolicy;
+
     public ExecutionPolicy ExecutionPolicy
     {
         get => _executionPolicy;
@@ -104,6 +112,7 @@ public class PowerShellSettingsViewModel : ViewModelBase
     }
 
     private bool _isConfigured;
+
     public bool IsConfigured
     {
         get => _isConfigured;
@@ -116,9 +125,11 @@ public class PowerShellSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Contructor, load settings
+
     public PowerShellSettingsViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
@@ -143,21 +154,24 @@ public class PowerShellSettingsViewModel : ViewModelBase
     private void LoadExecutionPolicies()
     {
         ExecutionPolicies = Enum.GetValues(typeof(ExecutionPolicy)).Cast<ExecutionPolicy>().ToList();
-        ExecutionPolicy = ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_ExecutionPolicy);
+        ExecutionPolicy =
+            ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_ExecutionPolicy);
     }
+
     #endregion
 
     #region ICommands & Actions
+
     public ICommand BrowseFileCommand => new RelayCommand(_ => BrowseFileAction());
 
     private void BrowseFileAction()
     {
-        var openFileDialog = new System.Windows.Forms.OpenFileDialog
+        var openFileDialog = new OpenFileDialog
         {
             Filter = GlobalStaticConfiguration.ApplicationFileExtensionFilter
         };
 
-        if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+        if (openFileDialog.ShowDialog() == DialogResult.OK)
             ApplicationFilePath = openFileDialog.FileName;
     }
 
@@ -167,9 +181,11 @@ public class PowerShellSettingsViewModel : ViewModelBase
     {
         Configure().ConfigureAwait(false);
     }
+
     #endregion
 
     #region Methods
+
     private async Task Configure()
     {
         try
@@ -180,9 +196,10 @@ public class PowerShellSettingsViewModel : ViewModelBase
         {
             var settings = AppearanceManager.MetroDialog;
 
-            settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+            settings.AffirmativeButtonText = Strings.OK;
 
-            await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, settings);
+            await _dialogCoordinator.ShowMessageAsync(this, Strings.Error, ex.Message,
+                MessageDialogStyle.Affirmative, settings);
         }
     }
 
@@ -192,5 +209,6 @@ public class PowerShellSettingsViewModel : ViewModelBase
 
         OnPropertyChanged(nameof(ApplicationFilePath));
     }
+
     #endregion
 }

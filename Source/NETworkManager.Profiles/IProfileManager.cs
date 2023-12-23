@@ -5,7 +5,7 @@ namespace NETworkManager.Profiles;
 
 public interface IProfileManager : IProfileManagerMinimal
 {
-    ICollectionView Profiles { get; }       
+    ICollectionView Profiles { get; }
     ICommand AddProfileCommand { get; }
     ICommand EditProfileCommand { get; }
     ICommand CopyAsProfileCommand { get; }

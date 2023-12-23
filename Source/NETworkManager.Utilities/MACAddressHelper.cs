@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
@@ -9,7 +8,7 @@ namespace NETworkManager.Utilities;
 public static class MACAddressHelper
 {
     /// <summary>
-    /// Convert a MAC-Address to a byte array
+    ///     Convert a MAC-Address to a byte array
     /// </summary>
     /// <param name="macAddress">MAC-Address to convert</param>
     /// <returns>Byte array of the MAC-Address</returns>
@@ -31,7 +30,7 @@ public static class MACAddressHelper
 
 
     /// <summary>
-    /// Format a MAC-Address to the default format (00:00:00:00:00:00).
+    ///     Format a MAC-Address to the default format (00:00:00:00:00:00).
     /// </summary>
     /// <param name="macAddress">MAC-Address to format</param>
     /// <returns>MAC-Address in default format</returns>
@@ -41,7 +40,8 @@ public static class MACAddressHelper
     }
 
     /// <summary>
-    /// Format a MAC-Address to a specific format (e.g. 00:00:00:00:00:00, 00-00-00-00-00-00, 0000.0000.0000 or 000000000000)
+    ///     Format a MAC-Address to a specific format (e.g. 00:00:00:00:00:00, 00-00-00-00-00-00, 0000.0000.0000 or
+    ///     000000000000)
     /// </summary>
     /// <param name="macAddress">MAC-Address to format</param>
     /// <param name="separator">Separator to use (e.g. -, :, . or empty)</param>
@@ -53,7 +53,7 @@ public static class MACAddressHelper
             .Replace(":", "")
             .Replace(".", "");
 
-        if(toUpper)
+        if (toUpper)
             macAddress = macAddress.ToUpper();
 
         return separator switch
@@ -67,7 +67,7 @@ public static class MACAddressHelper
 
 
     /// <summary>
-    /// Compare two MAC-Addresses.
+    ///     Compare two MAC-Addresses.
     /// </summary>
     /// <param name="x">First MAC-Address.</param>
     /// <param name="y">Second MAC-Address.</param>

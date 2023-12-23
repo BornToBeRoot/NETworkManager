@@ -1,15 +1,16 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using DnsClient;
 using Lextm.SharpSnmpLib.Messaging;
+using NETworkManager.Models;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
-using NETworkManager.Utilities;
 using NETworkManager.Models.RemoteDesktop;
-using DnsClient;
-using NETworkManager.Models;
+using NETworkManager.Utilities;
+
 // ReSharper disable InconsistentNaming
 
 namespace NETworkManager.Settings;
@@ -17,6 +18,7 @@ namespace NETworkManager.Settings;
 public static class GlobalStaticConfiguration
 {
     #region Global settings
+
     // Type to search (average type speed --> 187 chars/min)
     public static TimeSpan SearchDispatcherTimerTimeSpan => new(0, 0, 0, 0, 750);
 
@@ -37,9 +39,11 @@ public static class GlobalStaticConfiguration
     public static string PuTTYPrivateKeyFileExtensionFilter => "PuTTY Private Key Files (*.ppk)|*.ppk";
     public static string ZipFileExtensionFilter => "ZIP Archive (*.zip)|*.zip";
     public static string XmlFileExtensionFilter => "XML-File (*.xml)|*.xml";
+
     #endregion
 
     #region Default settings
+
     // Settings: General
     public static ApplicationName General_DefaultApplicationViewName => ApplicationName.Dashboard;
     public static int General_BackgroundJobInterval => 5;
@@ -67,7 +71,9 @@ public static class GlobalStaticConfiguration
 
     // Update
     public static bool Update_CheckForUpdatesAtStartup => true;
+
     public static bool Update_CheckForPreReleases => false;
+
     // Experimental
     public static bool Experimental_EnableExperimentalFeatures => false;
 
@@ -79,11 +85,14 @@ public static class GlobalStaticConfiguration
     public static string Dashboard_PublicIPv6AddressAPI => "https://api6.ipify.org";
     public static bool Dashboard_CheckIPApiIPGeolocation => false;
     public static bool Dashboard_CheckIPApiDNSResolver => false;
-    
+
     // Application: WiFi
     public static bool WiFi_Show2dot4GHzNetworks => true;
     public static bool WiFi_Show5GHzNetworks => true;
-    public static AutoRefreshTimeInfo WiFi_AutoRefreshTime => AutoRefreshTime.GetDefaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
+
+    public static AutoRefreshTimeInfo WiFi_AutoRefreshTime =>
+        AutoRefreshTime.GetDefaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
+
     public static ExportFileType WiFi_ExportFileType => ExportFileType.Csv;
 
     // Application: IP Scanner    
@@ -137,16 +146,23 @@ public static class GlobalStaticConfiguration
     public static int RemoteDesktop_ColorDepth => 32;
     public static int RemoteDesktop_Port => 3389;
     public static bool RemoteDesktop_GatewayServerBypassLocalAddresses => true;
-    public static GatewayUserSelectedCredsSource RemoteDesktop_GatewayServerLogonMethod => GatewayUserSelectedCredsSource.Any;
+
+    public static GatewayUserSelectedCredsSource RemoteDesktop_GatewayServerLogonMethod =>
+        GatewayUserSelectedCredsSource.Any;
+
     public static bool RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer => true;
     public static AudioRedirectionMode RemoteDesktop_AudioRedirectionMode => AudioRedirectionMode.PlayOnThisComputer;
-    public static AudioCaptureRedirectionMode RemoteDesktop_AudioCaptureRedirectionMode => AudioCaptureRedirectionMode.DoNotRecord;
+
+    public static AudioCaptureRedirectionMode RemoteDesktop_AudioCaptureRedirectionMode =>
+        AudioCaptureRedirectionMode.DoNotRecord;
+
     public static KeyboardHookMode RemoteDesktop_KeyboardHookMode => KeyboardHookMode.OnTheRemoteComputer;
     public static bool RemoteDesktop_RedirectClipboard => true;
     public static bool RemoteDesktop_EnableCredSspSupport => true;
     public static uint RemoteDesktop_AuthenticationLevel => 2;
 
-    public static NetworkConnectionType RemoteDesktop_NetworkConnectionType => NetworkConnectionType.DetectAutomatically;
+    public static NetworkConnectionType RemoteDesktop_NetworkConnectionType =>
+        NetworkConnectionType.DetectAutomatically;
 
     // Application: PowerShell
     public static string PowerShell_Command => "Set-Location ~";
@@ -156,7 +172,11 @@ public static class GlobalStaticConfiguration
     public static ConnectionMode PuTTY_DefaultConnectionMode => ConnectionMode.SSH;
     public static string PuTTY_DefaultProfile => "NETworkManager";
     public static LogMode PuTTY_LogMode => LogMode.SessionLog;
-    public static string PuTTY_LogPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AssemblyManager.Current.Name, "PuTTY_Log");
+
+    public static string PuTTY_LogPath =>
+        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            AssemblyManager.Current.Name, "PuTTY_Log");
+
     public static string PuTTY_LogFileName => "&H_&Y-&M-&D_&T.log";
     public static int PuTTY_SSHPort => 22;
     public static string PuTTY_SerialLine => "COM1";
@@ -174,7 +194,10 @@ public static class GlobalStaticConfiguration
 
     // WebConsole
     public static bool WebConsole_ShowAddressBar => true;
-    public static string WebConsole_Cache => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AssemblyManager.Current.Name, "WebConsole_Cache");
+
+    public static string WebConsole_Cache =>
+        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            AssemblyManager.Current.Name, "WebConsole_Cache");
 
     // Application: SNMP
     public static WalkMode SNMP_WalkMode => WalkMode.WithinSubtree;
@@ -210,20 +233,27 @@ public static class GlobalStaticConfiguration
 
     // Application: Whois
     public static ExportFileType Whois_ExportFileType => ExportFileType.Txt;
-    
+
     // Application: IP Geolocation
     public static ExportFileType IPGeolocation_ExportFileType => ExportFileType.Csv;
 
     // Application: Connections
     public static ExportFileType Connections_ExportFileType => ExportFileType.Csv;
-    public static AutoRefreshTimeInfo Connections_AutoRefreshTime => AutoRefreshTime.GetDefaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
+
+    public static AutoRefreshTimeInfo Connections_AutoRefreshTime =>
+        AutoRefreshTime.GetDefaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
 
     // Application: Listeners
     public static ExportFileType Listeners_ExportFileType => ExportFileType.Csv;
-    public static AutoRefreshTimeInfo Listeners_AutoRefreshTime => AutoRefreshTime.GetDefaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
+
+    public static AutoRefreshTimeInfo Listeners_AutoRefreshTime =>
+        AutoRefreshTime.GetDefaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
 
     // Application: ARP Table
     public static ExportFileType ARPTable_ExportFileType => ExportFileType.Csv;
-    public static AutoRefreshTimeInfo ARPTable_AutoRefreshTime => AutoRefreshTime.GetDefaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
+
+    public static AutoRefreshTimeInfo ARPTable_AutoRefreshTime =>
+        AutoRefreshTime.GetDefaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
+
     #endregion
 }

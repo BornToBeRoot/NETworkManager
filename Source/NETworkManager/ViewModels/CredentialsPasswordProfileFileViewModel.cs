@@ -1,29 +1,64 @@
-﻿using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Security;
 using System.Windows.Input;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
 public class CredentialsPasswordProfileFileViewModel : ViewModelBase
 {
     /// <summary>
-    /// Command which is called when the OK button is clicked.
+    ///     Private variable for <see cref="IsPasswordEmpty" />.
     /// </summary>
-    public ICommand OKCommand { get; }
+    private bool _isPasswordEmpty = true;
 
     /// <summary>
-    /// Command which is called when the cancel button is clicked.
+    ///     Private variable for <see cref="Password" />.
     /// </summary>
-    public ICommand CancelCommand { get; }
+    private SecureString _password = new();
 
     /// <summary>
-    /// Private variable for <see cref="ProfileName"/>.
+    ///     Private variable for <see cref="ProfileName" />.
     /// </summary>
     private string _profileName;
 
     /// <summary>
-    /// Name of the profile file.
+    ///     Private variable for <see cref="ShowWrongPassword" />.
+    /// </summary>
+    private bool _showWrongPassword;
+
+
+    /// <summary>
+    ///     Initialize a new class <see cref="CredentialsPasswordProfileFileViewModel" /> with <see cref="OKCommand" /> and
+    ///     <see cref="CancelCommand" />.
+    /// </summary>
+    /// <param name="okCommand"><see cref="OKCommand" /> which is executed on OK click.</param>
+    /// <param name="cancelHandler"><see cref="CancelCommand" /> which is executed on cancel click.</param>
+    /// <param name="profileName">Name of the profile file.</param>
+    /// <param name="showWrongPassword">Show note that the password is wrong.</param>
+    public CredentialsPasswordProfileFileViewModel(Action<CredentialsPasswordProfileFileViewModel> okCommand,
+        Action<CredentialsPasswordProfileFileViewModel> cancelHandler, string profileName,
+        bool showWrongPassword = false)
+    {
+        OKCommand = new RelayCommand(_ => okCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
+
+        ProfileName = profileName;
+        ShowWrongPassword = showWrongPassword;
+    }
+
+    /// <summary>
+    ///     Command which is called when the OK button is clicked.
+    /// </summary>
+    public ICommand OKCommand { get; }
+
+    /// <summary>
+    ///     Command which is called when the cancel button is clicked.
+    /// </summary>
+    public ICommand CancelCommand { get; }
+
+    /// <summary>
+    ///     Name of the profile file.
     /// </summary>
     public string ProfileName
     {
@@ -39,12 +74,7 @@ public class CredentialsPasswordProfileFileViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Private variable for <see cref="ShowWrongPassword"/>.
-    /// </summary>
-    private bool _showWrongPassword;
-
-    /// <summary>
-    /// Show note that the password is wrong.
+    ///     Show note that the password is wrong.
     /// </summary>
     public bool ShowWrongPassword
     {
@@ -58,14 +88,9 @@ public class CredentialsPasswordProfileFileViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
-    /// <summary>
-    /// Private variable for <see cref="Password"/>.
-    /// </summary>
-    private SecureString _password = new();
 
     /// <summary>
-    /// Password as <see cref="SecureString"/>.
+    ///     Password as <see cref="SecureString" />.
     /// </summary>
     public SecureString Password
     {
@@ -84,12 +109,7 @@ public class CredentialsPasswordProfileFileViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Private variable for <see cref="IsPasswordEmpty"/>.
-    /// </summary>
-    private bool _isPasswordEmpty = true;
-
-    /// <summary>
-    /// Indicate if one of the password fields are empty.
+    ///     Indicate if one of the password fields are empty.
     /// </summary>
     public bool IsPasswordEmpty
     {
@@ -104,25 +124,11 @@ public class CredentialsPasswordProfileFileViewModel : ViewModelBase
         }
     }
 
-
     /// <summary>
-    /// Initialize a new class <see cref="CredentialsPasswordProfileFileViewModel"/> with <see cref="OKCommand" /> and <see cref="CancelCommand"/>.
+    ///     Check if the passwords are valid.
     /// </summary>
-    /// <param name="okCommand"><see cref="OKCommand"/> which is executed on OK click.</param>
-    /// <param name="cancelHandler"><see cref="CancelCommand"/> which is executed on cancel click.</param>
-    /// <param name="profileName">Name of the profile file.</param>
-    /// <param name="showWrongPassword">Show note that the password is wrong.</param>
-    public CredentialsPasswordProfileFileViewModel(Action<CredentialsPasswordProfileFileViewModel> okCommand, Action<CredentialsPasswordProfileFileViewModel> cancelHandler, string profileName, bool showWrongPassword = false)
+    private void ValidatePassword()
     {
-        OKCommand = new RelayCommand(_ => okCommand(this));
-        CancelCommand = new RelayCommand(_ => cancelHandler(this));
-
-        ProfileName = profileName;
-        ShowWrongPassword = showWrongPassword;
+        IsPasswordEmpty = Password == null || Password.Length == 0;
     }
-
-    /// <summary>
-    /// Check if the passwords are valid.
-    /// </summary>
-    private void ValidatePassword() => IsPasswordEmpty = Password == null || Password.Length == 0;
 }

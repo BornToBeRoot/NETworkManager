@@ -4,10 +4,8 @@ namespace NETworkManager.Utilities.WPF;
 
 public class BindingProxy : Freezable
 {
-    protected override Freezable CreateInstanceCore()
-    {
-        return new BindingProxy();
-    }
+    public static readonly DependencyProperty DataProperty =
+        DependencyProperty.Register("Data", typeof(object), typeof(BindingProxy));
 
     public object Data
     {
@@ -15,5 +13,8 @@ public class BindingProxy : Freezable
         set => SetValue(DataProperty, value);
     }
 
-    public static readonly DependencyProperty DataProperty = DependencyProperty.Register("Data", typeof(object), typeof(BindingProxy));
+    protected override Freezable CreateInstanceCore()
+    {
+        return new BindingProxy();
+    }
 }

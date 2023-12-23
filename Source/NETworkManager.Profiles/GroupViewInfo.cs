@@ -5,13 +5,8 @@ namespace NETworkManager.Profiles;
 
 public class GroupViewInfo
 {
-    public GroupViewName Name { get; set; }
-
-    public Canvas Icon { get; set; }
-
     public GroupViewInfo()
     {
-        
     }
 
     public GroupViewInfo(GroupViewName name, Canvas icon)
@@ -27,4 +22,8 @@ public class GroupViewInfo
         canvas.Children.Add(uiElement);
         Icon = canvas;
     }
+
+    public GroupViewName Name { get; set; }
+
+    public Canvas Icon { get; set; }
 }

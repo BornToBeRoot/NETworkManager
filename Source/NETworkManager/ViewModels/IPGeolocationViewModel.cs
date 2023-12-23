@@ -1,36 +1,37 @@
-﻿using NETworkManager.Models.Network;
-using System;
-using System.Windows.Input;
-using NETworkManager.Settings;
+﻿using System;
 using System.ComponentModel;
-using System.Windows.Data;
 using System.Linq;
-using NETworkManager.Utilities;
+using System.Threading.Tasks;
 using System.Windows;
-using NETworkManager.Controls;
+using System.Windows.Data;
+using System.Windows.Input;
 using Dragablz;
+using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Models.Export;
+using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
-using NETworkManager.Views;
-using System.Threading.Tasks;
-using log4net;
+using NETworkManager.Models.Export;
 using NETworkManager.Models.IPApi;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
 public class IPGeolocationViewModel : ViewModelBase
 {
     #region Variables
+
     private static readonly ILog Log = LogManager.GetLogger(typeof(IPGeolocationViewModel));
-    
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly Guid _tabId;
     private bool _firstLoad = true;
 
     private string _host;
+
     public string Host
     {
         get => _host;
@@ -47,6 +48,7 @@ public class IPGeolocationViewModel : ViewModelBase
     public ICollectionView HostHistoryView { get; }
 
     private bool _isRunning;
+
     public bool IsRunning
     {
         get => _isRunning;
@@ -61,6 +63,7 @@ public class IPGeolocationViewModel : ViewModelBase
     }
 
     private bool _isResultVisible;
+
     public bool IsResultVisible
     {
         get => _isResultVisible;
@@ -73,8 +76,9 @@ public class IPGeolocationViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+
     private IPGeolocationInfo _result;
+
     public IPGeolocationInfo Result
     {
         get => _result;
@@ -89,6 +93,7 @@ public class IPGeolocationViewModel : ViewModelBase
     }
 
     private bool _isStatusMessageDisplayed;
+
     public bool IsStatusMessageDisplayed
     {
         get => _isStatusMessageDisplayed;
@@ -103,6 +108,7 @@ public class IPGeolocationViewModel : ViewModelBase
     }
 
     private string _statusMessage;
+
     public string StatusMessage
     {
         get => _statusMessage;
@@ -115,9 +121,11 @@ public class IPGeolocationViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Contructor, load settings
+
     public IPGeolocationViewModel(IDialogCoordinator instance, Guid tabId, string host)
     {
         _dialogCoordinator = instance;
@@ -144,14 +152,19 @@ public class IPGeolocationViewModel : ViewModelBase
 
     private void LoadSettings()
     {
-
     }
+
     #endregion
 
     #region ICommands & Actions
+
     public ICommand QueryCommand => new RelayCommand(_ => QueryAction(), Query_CanExecute);
 
-    private bool Query_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool Query_CanExecute(object parameter)
+    {
+        return Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    }
 
     private void QueryAction()
     {
@@ -173,22 +186,21 @@ public class IPGeolocationViewModel : ViewModelBase
 
             try
             {
-               // ExportManager.Export(instance.FilePath, Result);
+                // ExportManager.Export(instance.FilePath, Result);
             }
             catch (Exception ex)
             {
                 var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = Strings.OK;
 
-                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error, Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine +
+                    ex.Message, MessageDialogStyle.Affirmative, settings);
             }
 
             SettingsManager.Current.Whois_ExportFileType = instance.FileType;
             SettingsManager.Current.Whois_ExportFilePath = instance.FilePath;
-        }, _ =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, new[]
+        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new[]
         {
             ExportFileType.Txt
         }, false, SettingsManager.Current.Whois_ExportFileType, SettingsManager.Current.Whois_ExportFilePath);
@@ -200,9 +212,11 @@ public class IPGeolocationViewModel : ViewModelBase
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
+
     #endregion
 
     #region Methods
+
     private async Task Query()
     {
         IsStatusMessageDisplayed = false;
@@ -215,24 +229,20 @@ public class IPGeolocationViewModel : ViewModelBase
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
         if (window != null)
-        {
             foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
-            {
                 tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Host;
-            }
-        }
 
         try
         {
             var result = await IPGeolocationService.GetInstance().GetIPGeolocationAsync(Host);
-            
-            if(result.HasError)
+
+            if (result.HasError)
             {
                 Log.Error($"ip-api.com error: {result.ErrorMessage}, error code: {result.ErrorCode}");
-                
+
                 StatusMessage = $"ip-api.com: {result.ErrorMessage}";
                 IsStatusMessageDisplayed = true;
-                
+
                 return;
             }
 
@@ -240,15 +250,16 @@ public class IPGeolocationViewModel : ViewModelBase
             {
                 Log.Warn($"ip-api.com rate limit reached. Try again in {result.RateLimitRemainingTime} seconds.");
 
-                StatusMessage = $"ip-api.com {string.Format(Strings.RateLimitReachedTryAgainInXSeconds,  result.RateLimitRemainingTime)}";
+                StatusMessage =
+                    $"ip-api.com {string.Format(Strings.RateLimitReachedTryAgainInXSeconds, result.RateLimitRemainingTime)}";
                 IsStatusMessageDisplayed = true;
-                
+
                 return;
             }
-            
+
             Result = result.Info;
             IsResultVisible = true;
-            
+
             AddHostToHistory(Host);
         }
         catch (Exception ex)
@@ -262,13 +273,13 @@ public class IPGeolocationViewModel : ViewModelBase
 
     public void OnClose()
     {
-
     }
 
     private void AddHostToHistory(string host)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.IPGeolocation_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+        var list = ListHelper.Modify(SettingsManager.Current.IPGeolocation_HostHistory.ToList(), host,
+            SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items
         SettingsManager.Current.IPGeolocation_HostHistory.Clear();
@@ -277,6 +288,6 @@ public class IPGeolocationViewModel : ViewModelBase
         // Fill with the new items
         list.ForEach(x => SettingsManager.Current.Whois_DomainHistory.Add(x));
     }
-    #endregion
 
+    #endregion
 }

@@ -2,6 +2,27 @@
 
 public class BitCaluclatorInfo
 {
+    public BitCaluclatorInfo()
+    {
+    }
+
+    public BitCaluclatorInfo(double bits, double bytes, double kilobits, double kilobytes, double megabits,
+        double megabytes, double gigabits, double gigabytes, double terabits, double terabytes, double petabits,
+        double petabytes)
+    {
+        Bits = bits;
+        Bytes = bytes;
+        Kilobits = kilobits;
+        Kilobytes = kilobytes;
+        Megabits = megabits;
+        Megabytes = megabytes;
+        Gigabits = gigabits;
+        Gigabytes = gigabytes;
+        Terabits = terabits;
+        Terabytes = terabytes;
+        Petabits = petabits;
+        Petabytes = petabytes;
+    }
 
     public double Bits { get; set; }
 
@@ -26,25 +47,4 @@ public class BitCaluclatorInfo
     public double Petabits { get; set; }
 
     public double Petabytes { get; set; }
-
-    public BitCaluclatorInfo()
-    {
-
-    }
-
-    public BitCaluclatorInfo(double bits, double bytes, double kilobits, double kilobytes, double megabits, double megabytes, double gigabits, double gigabytes, double terabits, double terabytes, double petabits, double petabytes)
-    {
-        Bits = bits;
-        Bytes = bytes;
-        Kilobits = kilobits;
-        Kilobytes = kilobytes;
-        Megabits = megabits;
-        Megabytes = megabytes;
-        Gigabits = gigabits;
-        Gigabytes = gigabytes;
-        Terabits = terabits;
-        Terabytes = terabytes;
-        Petabits = petabits;
-        Petabytes = petabytes;
-    }
 }

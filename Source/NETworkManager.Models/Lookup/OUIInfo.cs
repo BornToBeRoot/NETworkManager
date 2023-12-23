@@ -1,22 +1,12 @@
 ﻿namespace NETworkManager.Models.Lookup;
 
 /// <summary>
-/// Class to hold OUI information.
+///     Class to hold OUI information.
 /// </summary>
 public class OUIInfo
 {
     /// <summary>
-    /// MAC address.
-    /// </summary>
-    public string MACAddress { get; set; }
-    
-    /// <summary>
-    /// Name of the vendor.
-    /// </summary>
-    public string Vendor { get; set; }
-
-    /// <summary>
-    /// Creates a new instance of the <see cref="OUIInfo"/> class with the specified parameters.
+    ///     Creates a new instance of the <see cref="OUIInfo" /> class with the specified parameters.
     /// </summary>
     /// <param name="macAddress">MAC address.</param>
     /// <param name="vendor">Name of the vendor.</param>
@@ -25,4 +15,14 @@ public class OUIInfo
         MACAddress = macAddress;
         Vendor = vendor;
     }
+
+    /// <summary>
+    ///     MAC address.
+    /// </summary>
+    public string MACAddress { get; set; }
+
+    /// <summary>
+    ///     Name of the vendor.
+    /// </summary>
+    public string Vendor { get; set; }
 }

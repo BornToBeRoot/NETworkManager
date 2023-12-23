@@ -4,9 +4,8 @@ namespace NETworkManager.Utilities;
 
 public static class IPAddressHelper
 {
-
     /// <summary>
-    /// Test if an IP address is a private address.
+    ///     Test if an IP address is a private address.
     /// </summary>
     /// <param name="ipAddress">IP address.</param>
     /// <returns>True if the IP address is a private address, otherwise false.</returns>
@@ -29,7 +28,7 @@ public static class IPAddressHelper
     }
 
     /// <summary>
-    /// Compare two IP addresses.
+    ///     Compare two IP addresses.
     /// </summary>
     /// <param name="x">First IP address.</param>
     /// <param name="y">Second IP address.</param>

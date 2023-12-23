@@ -1,27 +1,45 @@
-﻿using System.Windows.Input;
-using System.ComponentModel;
-using System.Windows.Data;
-using MahApps.Metro.Controls.Dialogs;
-using System;
-using NETworkManager.Utilities;
-using System.Linq;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Threading;
+using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
 public class ProfilesViewModel : ViewModelBase, IProfileManager
 {
+    #region Constructor
+
+    public ProfilesViewModel(IDialogCoordinator instance)
+    {
+        _dialogCoordinator = instance;
+
+        SetGroupsView();
+
+        ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
+
+        _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
+        _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
+    }
+
+    #endregion
+
     #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
     private bool _isViewActive = true;
 
     private ICollectionView _groups;
+
     public ICollectionView Groups
     {
         get => _groups;
@@ -38,6 +56,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     private ProfileInfo _lastSelectedProfileOnRefresh;
 
     private GroupInfo _selectedGroup = new();
+
     public GroupInfo SelectedGroup
     {
         get => _selectedGroup;
@@ -59,6 +78,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     }
 
     private ICollectionView _profiles;
+
     public ICollectionView Profiles
     {
         get => _profiles;
@@ -73,6 +93,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     }
 
     private ProfileInfo _selectedProfile = new();
+
     public ProfileInfo SelectedProfile
     {
         get => _selectedProfile;
@@ -87,6 +108,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     }
 
     private IList _selectedProfiles = new ArrayList();
+
     public IList SelectedProfiles
     {
         get => _selectedProfiles;
@@ -101,6 +123,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     }
 
     private string _search;
+
     public string Search
     {
         get => _search;
@@ -120,6 +143,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     }
 
     private bool _isSearching;
+
     public bool IsSearching
     {
         get => _isSearching;
@@ -132,40 +156,35 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-    #endregion
 
-    #region Constructor
-    public ProfilesViewModel(IDialogCoordinator instance)
-    {
-        _dialogCoordinator = instance;
-
-        SetGroupsView();
-
-        ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
-
-        _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
-        _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
-    }
     #endregion
 
     #region Commands & Actions
+
     public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, SelectedGroup?.Name).ConfigureAwait(false);
+        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, SelectedGroup?.Name)
+            .ConfigureAwait(false);
     }
 
     public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), EditProfile_CanExecute);
 
-    private bool EditProfile_CanExecute(object parameter) => SelectedProfiles.Count == 1;
+    private bool EditProfile_CanExecute(object parameter)
+    {
+        return SelectedProfiles.Count == 1;
+    }
 
     private void EditProfileAction()
     {
         ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
+    private bool ModifyProfile_CanExecute(object obj)
+    {
+        return SelectedProfile is { IsDynamic: false };
+    }
 
     public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
@@ -178,7 +197,9 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
     private void DeleteProfileAction()
     {
-        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo>(SelectedProfiles.Cast<ProfileInfo>())).ConfigureAwait(false);
+        ProfileDialogManager
+            .ShowDeleteProfileDialog(this, _dialogCoordinator,
+                new List<ProfileInfo>(SelectedProfiles.Cast<ProfileInfo>())).ConfigureAwait(false);
     }
 
     public ICommand AddGroupCommand => new RelayCommand(_ => AddGroupAction());
@@ -201,9 +222,11 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     {
         ProfileDialogManager.ShowDeleteGroupDialog(this, _dialogCoordinator, SelectedGroup).ConfigureAwait(false);
     }
+
     #endregion
 
     #region Methods
+
     public void OnViewVisible()
     {
         _isViewActive = true;
@@ -218,21 +241,26 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
     private void SetGroupsView(GroupInfo group = null)
     {
-        Groups = new CollectionViewSource { Source = ProfileManager.Groups.Where(x => !x.IsDynamic).OrderBy(x => x.Name) }.View;
+        Groups = new CollectionViewSource
+            { Source = ProfileManager.Groups.Where(x => !x.IsDynamic).OrderBy(x => x.Name) }.View;
 
         // Set specific group or first if null
         SelectedGroup = null;
 
         if (group != null)
             SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().FirstOrDefault(x => x.Equals(group)) ??
-                Groups.SourceCollection.Cast<GroupInfo>().MinBy(x => x.Name);
+                            Groups.SourceCollection.Cast<GroupInfo>().MinBy(x => x.Name);
         else
             SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().MinBy(x => x.Name);
     }
 
     private void SetProfilesView(GroupInfo group, ProfileInfo profile = null)
     {
-        Profiles = new CollectionViewSource { Source = ProfileManager.Groups.FirstOrDefault(x => x.Equals(group))?.Profiles.Where(x => !x.IsDynamic).OrderBy(x => x.Name) }.View;
+        Profiles = new CollectionViewSource
+        {
+            Source = ProfileManager.Groups.FirstOrDefault(x => x.Equals(group))?.Profiles.Where(x => !x.IsDynamic)
+                .OrderBy(x => x.Name)
+        }.View;
 
         Profiles.Filter = o =>
         {
@@ -251,7 +279,8 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
             */
 
             // Search by: Name, Host
-            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
+            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
         // Set specific profile or first if null
@@ -259,11 +288,12 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
         if (profile != null)
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault(x => x.Equals(profile)) ??
-                Profiles.Cast<ProfileInfo>().FirstOrDefault();
+                              Profiles.Cast<ProfileInfo>().FirstOrDefault();
         else
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
 
-        SelectedProfiles = new List<ProfileInfo> { SelectedProfile }; // Fix --> Count need to be 1 for EditProfile_CanExecute
+        SelectedProfiles = new List<ProfileInfo>
+            { SelectedProfile }; // Fix --> Count need to be 1 for EditProfile_CanExecute
     }
 
     private void RefreshProfiles()
@@ -277,9 +307,11 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
         _lastSelectedProfileOnRefresh = null;
     }
+
     #endregion
 
     #region Event
+
     private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
     {
         RefreshProfiles();
@@ -293,5 +325,6 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
         IsSearching = false;
     }
+
     #endregion
 }

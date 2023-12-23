@@ -1,8 +1,10 @@
-﻿using NETworkManager.Utilities;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models.Network;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Validators;
 
@@ -14,13 +16,13 @@ public class SNMPOIDValidator : ValidationRule
     {
         var oidValue = (value as string)!.Replace(" ", "");
 
-        if (Wrapper.Mode != Models.Network.SNMPMode.Get || !oidValue.Contains(';'))
+        if (Wrapper.Mode != SNMPMode.Get || !oidValue.Contains(';'))
             return Regex.IsMatch(oidValue, RegexHelper.SnmpOidRegex)
                 ? ValidationResult.ValidResult
-                : new ValidationResult(false, Localization.Resources.Strings.EnterValidOID);
-        
-        return oidValue.Split(';').Any(oid => !Regex.IsMatch(oid, RegexHelper.SnmpOidRegex)) ? 
-            new ValidationResult(false, Localization.Resources.Strings.EnterValidOID) : 
-            ValidationResult.ValidResult;
+                : new ValidationResult(false, Strings.EnterValidOID);
+
+        return oidValue.Split(';').Any(oid => !Regex.IsMatch(oid, RegexHelper.SnmpOidRegex))
+            ? new ValidationResult(false, Strings.EnterValidOID)
+            : ValidationResult.ValidResult;
     }
 }

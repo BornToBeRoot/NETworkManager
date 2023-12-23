@@ -1,16 +1,17 @@
 ﻿<UserControl x:Class="NETworkManager.Views.PowerShellConnectDialog"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
-             mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance viewModels:PowerShellConnectViewModel}">
+             mc:Ignorable="d" Loaded="UserControl_Loaded"
+             d:DataContext="{d:DesignInstance viewModels:PowerShellConnectViewModel}">
     <UserControl.Resources>
-        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />        
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
     <Grid Margin="0,20">
@@ -40,7 +41,8 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.RemoteConsole}" />
-            <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OffContent="" OnContent="" IsOn="{Binding EnableRemoteConsole}" />
+            <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OffContent="" OnContent=""
+                              IsOn="{Binding EnableRemoteConsole}" />
             <TextBlock Grid.Column="0" Grid.Row="2">
                 <TextBlock.Style>
                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
@@ -53,7 +55,11 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <ComboBox x:Name="ComboBoxHost" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}" IsEnabled="{Binding EnableRemoteConsole}" Visibility="{Binding EnableRemoteConsole, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource EditableComboBox}">
+            <ComboBox x:Name="ComboBoxHost" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding HostHistoryView}"
+                      mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}"
+                      IsEnabled="{Binding EnableRemoteConsole}"
+                      Visibility="{Binding EnableRemoteConsole, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
+                      Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -63,14 +69,21 @@
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
-            <TextBox x:Name="TextBoxCommand" Grid.Column="2" Grid.Row="2" Text="{Binding Command, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding EnableRemoteConsole, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource DefaultTextBox}" />
+            <TextBox x:Name="TextBoxCommand" Grid.Column="2" Grid.Row="2"
+                     Text="{Binding Command, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Visibility="{Binding EnableRemoteConsole, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
+                     Style="{StaticResource DefaultTextBox}" />
             <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.AdditionalCommandLine}" />
-            <TextBox x:Name="TextBoxAdditionalCommandLine" Grid.Column="2" Grid.Row="4" Text="{Binding AdditionalCommandLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
+            <TextBox x:Name="TextBoxAdditionalCommandLine" Grid.Column="2" Grid.Row="4"
+                     Text="{Binding AdditionalCommandLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Style="{StaticResource DefaultTextBox}" />
             <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.ExecutionPolicy}" />
-            <ComboBox x:Name="ComboBoxTypes" Grid.Column="2" Grid.Row="6" ItemsSource="{Binding ExecutionPolicies}" SelectedItem="{Binding ExecutionPolicy}" />
+            <ComboBox x:Name="ComboBoxTypes" Grid.Column="2" Grid.Row="6" ItemsSource="{Binding ExecutionPolicies}"
+                      SelectedItem="{Binding ExecutionPolicy}" />
         </Grid>
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="{x:Static localization:Strings.Connect}" Command="{Binding ConnectCommand}" IsDefault="True" Margin="0,0,10,0">
+            <Button Content="{x:Static localization:Strings.Connect}" Command="{Binding ConnectCommand}"
+                    IsDefault="True" Margin="0,0,10,0">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
                         <Setter Property="IsEnabled" Value="True" />
@@ -78,17 +91,19 @@
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding EnableRemoteConsole}" Value="True" />
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxHost}" Value="True" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxHost}"
+                                               Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />
                                 </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>                                                 
+                            </MultiDataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Button.Style>
             </Button>
-            <Button Content="{x:Static localization:Strings.Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />
+            <Button Content="{x:Static localization:Strings.Cancel}" Command="{Binding CancelCommand}" IsCancel="True"
+                    Style="{StaticResource DefaultButton}" />
         </StackPanel>
     </Grid>
 </UserControl>

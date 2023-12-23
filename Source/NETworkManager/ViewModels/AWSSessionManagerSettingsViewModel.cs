@@ -1,26 +1,30 @@
-﻿using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using System;
+﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Windows.Input;
 using System.Threading.Tasks;
-using NETworkManager.Views;
-using NETworkManager.Models.AWS;
-using System.ComponentModel;
 using System.Windows.Data;
+using System.Windows.Forms;
+using System.Windows.Input;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models.AWS;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
 public class AWSSessionManagerSettingsViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly bool _isLoading;
 
     private bool _enableSyncInstanceIDsFromAWS;
+
     public bool EnableSyncInstanceIDsFromAWS
     {
         get => _enableSyncInstanceIDsFromAWS;
@@ -40,6 +44,7 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
     public ICollectionView AWSProfiles { get; }
 
     private AWSProfileInfo _selectedAWSProfile = new();
+
     public AWSProfileInfo SelectedAWSProfile
     {
         get => _selectedAWSProfile;
@@ -54,6 +59,7 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
     }
 
     private bool _syncOnlyRunningInstancesFromAWS;
+
     public bool SyncOnlyRunningInstancesFromAWS
     {
         get => _syncOnlyRunningInstancesFromAWS;
@@ -62,7 +68,7 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
             if (value == _syncOnlyRunningInstancesFromAWS)
                 return;
 
-            if(!_isLoading)
+            if (!_isLoading)
                 SettingsManager.Current.AWSSessionManager_SyncOnlyRunningInstancesFromAWS = value;
 
             _syncOnlyRunningInstancesFromAWS = value;
@@ -71,6 +77,7 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
     }
 
     private string _profile;
+
     public string Profile
     {
         get => _profile;
@@ -88,6 +95,7 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
     }
 
     private string _region;
+
     public string Region
     {
         get => _region;
@@ -105,6 +113,7 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
     }
 
     private string _applicationFilePath;
+
     public string ApplicationFilePath
     {
         get => _applicationFilePath;
@@ -124,6 +133,7 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
     }
 
     private bool _isConfigured;
+
     public bool IsConfigured
     {
         get => _isConfigured;
@@ -136,9 +146,11 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Contructor, load settings
+
     public AWSSessionManagerSettingsViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
@@ -146,8 +158,10 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
         _dialogCoordinator = instance;
 
         AWSProfiles = CollectionViewSource.GetDefaultView(SettingsManager.Current.AWSSessionManager_AWSProfiles);
-        AWSProfiles.SortDescriptions.Add(new SortDescription(nameof(AWSProfileInfo.Profile), ListSortDirection.Ascending));
-        AWSProfiles.SortDescriptions.Add(new SortDescription(nameof(AWSProfileInfo.Region), ListSortDirection.Ascending));
+        AWSProfiles.SortDescriptions.Add(new SortDescription(nameof(AWSProfileInfo.Profile),
+            ListSortDirection.Ascending));
+        AWSProfiles.SortDescriptions.Add(
+            new SortDescription(nameof(AWSProfileInfo.Region), ListSortDirection.Ascending));
 
         LoadSettings();
 
@@ -161,11 +175,13 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
         Profile = SettingsManager.Current.AWSSessionManager_Profile;
         Region = SettingsManager.Current.AWSSessionManager_Region;
         ApplicationFilePath = SettingsManager.Current.AWSSessionManager_ApplicationFilePath;
-        IsConfigured = File.Exists(ApplicationFilePath);            
+        IsConfigured = File.Exists(ApplicationFilePath);
     }
+
     #endregion
 
     #region ICommands & Actions
+
     public ICommand AddAWSProfileCommand => new RelayCommand(_ => AddAWSProfileAction());
 
     private void AddAWSProfileAction()
@@ -191,12 +207,12 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
 
     private void BrowseFileAction()
     {
-        var openFileDialog = new System.Windows.Forms.OpenFileDialog
+        var openFileDialog = new OpenFileDialog
         {
             Filter = GlobalStaticConfiguration.ApplicationFileExtensionFilter
         };
 
-        if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+        if (openFileDialog.ShowDialog() == DialogResult.OK)
             ApplicationFilePath = openFileDialog.FileName;
     }
 
@@ -206,40 +222,39 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
     {
         Configure().ConfigureAwait(false);
     }
+
     #endregion
 
     #region Methods
 
     private async Task AddAWSProfile()
-    {            
+    {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.AddAWSProfile
+            Title = Strings.AddAWSProfile
         };
 
         var viewModel = new AWSProfileViewModel(instance =>
         {
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            SettingsManager.Current.AWSSessionManager_AWSProfiles.Add(new AWSProfileInfo(instance.IsEnabled, instance.Profile, instance.Region));                
-        }, _ =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        });
+            SettingsManager.Current.AWSSessionManager_AWSProfiles.Add(new AWSProfileInfo(instance.IsEnabled,
+                instance.Profile, instance.Region));
+        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); });
 
         customDialog.Content = new AWSProfileDialog
         {
             DataContext = viewModel
         };
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);            
+        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
-    
+
     public async Task EditAWSProfile()
-    {            
+    {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.EditAWSProfile
+            Title = Strings.EditAWSProfile
         };
 
         var viewModel = new AWSProfileViewModel(instance =>
@@ -247,45 +262,41 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
             _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
             SettingsManager.Current.AWSSessionManager_AWSProfiles.Remove(SelectedAWSProfile);
-            SettingsManager.Current.AWSSessionManager_AWSProfiles.Add(new AWSProfileInfo(instance.IsEnabled, instance.Profile, instance.Region));
-        }, _ =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, true, SelectedAWSProfile);
+            SettingsManager.Current.AWSSessionManager_AWSProfiles.Add(new AWSProfileInfo(instance.IsEnabled,
+                instance.Profile, instance.Region));
+        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, true, SelectedAWSProfile);
 
         customDialog.Content = new AWSProfileDialog
         {
             DataContext = viewModel
         };
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);            
+        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
     private async Task DeleteAWSProfile()
-    {            
+    {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.DeleteAWSProfile
+            Title = Strings.DeleteAWSProfile
         };
 
         var viewModel = new ConfirmDeleteViewModel(_ =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            SettingsManager.Current.AWSSessionManager_AWSProfiles.Remove(SelectedAWSProfile);
-        }, _ =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, Localization.Resources.Strings.DeleteAWSProfileMessage);
+                SettingsManager.Current.AWSSessionManager_AWSProfiles.Remove(SelectedAWSProfile);
+            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
+            Strings.DeleteAWSProfileMessage);
 
         customDialog.Content = new ConfirmDeleteDialog
         {
             DataContext = viewModel
         };
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);            
+        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
-    
+
     private async Task Configure()
     {
         try
@@ -296,9 +307,10 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
         {
             var settings = AppearanceManager.MetroDialog;
 
-            settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+            settings.AffirmativeButtonText = Strings.OK;
 
-            await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, settings);
+            await _dialogCoordinator.ShowMessageAsync(this, Strings.Error, ex.Message,
+                MessageDialogStyle.Affirmative, settings);
         }
     }
 
@@ -308,5 +320,6 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
 
         OnPropertyChanged(nameof(ApplicationFilePath));
     }
+
     #endregion
 }

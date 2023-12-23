@@ -1,16 +1,17 @@
-﻿using System.Windows.Input;
+﻿using System.Windows.Forms;
+using System.Windows.Input;
 
 namespace NETworkManager.Utilities;
 
 /// <summary>
-/// Class provides static methods for hotkeys.
+///     Class provides static methods for hotkeys.
 /// </summary>
 public static class HotKeys
 {
     /// <summary>
-    /// Method to calculate the sum of the modifier keys.
+    ///     Method to calculate the sum of the modifier keys.
     /// </summary>
-    /// <param name="modifierKeys"><see cref="ModifierKeys"/>.</param>
+    /// <param name="modifierKeys"><see cref="ModifierKeys" />.</param>
     /// <returns>Sum of the calculated modifier keys.</returns>
     public static int GetModifierKeysSum(ModifierKeys modifierKeys)
     {
@@ -32,41 +33,40 @@ public static class HotKeys
     }
 
     /// <summary>
-    /// Method to convert WPF key to WinForms key.
+    ///     Method to convert WPF key to WinForms key.
     /// </summary>
     /// <param name="key">WPF key.</param>
     /// <returns>WinForms key.</returns>
-    public static System.Windows.Forms.Keys WpfKeyToFormsKeys(Key key)
+    public static Keys WpfKeyToFormsKeys(Key key)
     {
-        return (System.Windows.Forms.Keys)KeyInterop.VirtualKeyFromKey(key);
+        return (Keys)KeyInterop.VirtualKeyFromKey(key);
     }
 
     /// <summary>
-    /// Method to convert WinForms key to WPF key.
+    ///     Method to convert WinForms key to WPF key.
     /// </summary>
     /// <param name="keys">WinForms key.</param>
     /// <returns>WPF key.</returns>
-    public static Key FormsKeysToWpfKey(System.Windows.Forms.Keys keys)
+    public static Key FormsKeysToWpfKey(Keys keys)
     {
         return FormsKeysToWpfKey((int)keys);
     }
 
     /// <summary>
-    /// Method to convert WinForms key to WPF key.
+    ///     Method to convert WinForms key to WPF key.
     /// </summary>
-    /// <param name="keys">WinForms key as  <see cref="int"/>.</param>
+    /// <param name="keys">WinForms key as  <see cref="int" />.</param>
     /// <returns>WPF key.</returns>
-
     public static Key FormsKeysToWpfKey(int keys)
     {
         return KeyInterop.KeyFromVirtualKey(keys);
     }
 
     /// <summary>
-    /// Method to get modifier keys from an <see cref="int"/> value.
+    ///     Method to get modifier keys from an <see cref="int" /> value.
     /// </summary>
-    /// <param name="modifierKeys">Modifier key as <see cref="int"/>.</param>
-    /// <returns>Return <see cref="ModifierKeys"/>.</returns>
+    /// <param name="modifierKeys">Modifier key as <see cref="int" />.</param>
+    /// <returns>Return <see cref="ModifierKeys" />.</returns>
     public static ModifierKeys GetModifierKeysFromInt(int modifierKeys)
     {
         var modKeys = ModifierKeys.None;

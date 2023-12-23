@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Globalization;
+using System.Net.NetworkInformation;
 using System.Windows.Data;
 using NETworkManager.Utilities;
-using System.Net.NetworkInformation;
 
 namespace NETworkManager.Converters;
 
@@ -12,10 +12,10 @@ public sealed class PhysicalAddressToStringConverter : IValueConverter
     {
         if (value is not PhysicalAddress physicalAddress)
             return "-/-";
-        
+
         var macAddress = physicalAddress.ToString();
 
-       return string.IsNullOrEmpty(macAddress) ? "-/-" : MACAddressHelper.GetDefaultFormat(macAddress);
+        return string.IsNullOrEmpty(macAddress) ? "-/-" : MACAddressHelper.GetDefaultFormat(macAddress);
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

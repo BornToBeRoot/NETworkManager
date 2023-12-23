@@ -1,13 +1,18 @@
-﻿using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Models;
-using NETworkManager.Profiles;
-using NETworkManager.ViewModels;
-using NETworkManager.Views;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security;
 using System.Threading.Tasks;
 using System.Windows;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models;
+using NETworkManager.Models.Network;
+using NETworkManager.Models.PuTTY;
+using NETworkManager.Models.RemoteDesktop;
+using NETworkManager.Profiles;
+using NETworkManager.ViewModels;
+using NETworkManager.Views;
 
 namespace NETworkManager;
 
@@ -16,234 +21,6 @@ public static class ProfileDialogManager
     #region Variables
 
     private static string DialogResourceKey => "LargeMetroDialog";
-
-    #endregion
-
-    #region Dialog to add, edit, copy as and delete profile
-
-    public static Task ShowAddProfileDialog(IProfileManagerMinimal viewModel,
-        IDialogCoordinator dialogCoordinator, ProfileInfo profile = null, string group = null,
-        ApplicationName applicationName = ApplicationName.None)
-    {
-        CustomDialog customDialog = new()
-        {
-            Title = Localization.Resources.Strings.AddProfile,
-            Style = (Style)Application.Current.FindResource(DialogResourceKey)
-        };
-
-        ProfileViewModel profileViewModel = new(async instance =>
-        {
-            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileManagerDialogClose();
-
-            ProfileManager.AddProfile(ParseProfileInfo(instance));
-        }, async _ =>
-        {
-            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileManagerDialogClose();
-        }, ProfileManager.GetGroupNames(), group, ProfileEditMode.Add, profile, applicationName);
-
-        customDialog.Content = new ProfileDialog
-        {
-            DataContext = profileViewModel
-        };
-
-        viewModel.OnProfileManagerDialogOpen();
-
-        return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
-    }
-
-    public static Task ShowEditProfileDialog(IProfileManagerMinimal viewModel,
-        IDialogCoordinator dialogCoordinator, ProfileInfo profile)
-    {
-        CustomDialog customDialog = new()
-        {
-            Title = Localization.Resources.Strings.EditProfile,
-            Style = (Style)Application.Current.FindResource(DialogResourceKey)
-        };
-
-        ProfileViewModel profileViewModel = new(async instance =>
-        {
-            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileManagerDialogClose();
-
-            ProfileManager.ReplaceProfile(profile, ParseProfileInfo(instance));
-        }, async _ =>
-        {
-            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileManagerDialogClose();
-        }, ProfileManager.GetGroupNames(), profile.Group, ProfileEditMode.Edit, profile);
-
-        customDialog.Content = new ProfileDialog
-        {
-            DataContext = profileViewModel
-        };
-
-        viewModel.OnProfileManagerDialogOpen();
-        
-        return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
-    }
-
-    public static Task ShowCopyAsProfileDialog(IProfileManagerMinimal viewModel,
-        IDialogCoordinator dialogCoordinator, ProfileInfo profile)
-    {
-        CustomDialog customDialog = new()
-        {
-            Title = Localization.Resources.Strings.CopyProfile,
-            Style = (Style)Application.Current.FindResource(DialogResourceKey)
-        };
-
-        ProfileViewModel profileViewModel = new(async instance =>
-        {
-            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileManagerDialogClose();
-
-            ProfileManager.AddProfile(ParseProfileInfo(instance));
-        }, async _ =>
-        {
-            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileManagerDialogClose();
-        }, ProfileManager.GetGroupNames(), profile.Group, ProfileEditMode.Copy, profile);
-
-        customDialog.Content = new ProfileDialog
-        {
-            DataContext = profileViewModel
-        };
-
-        viewModel.OnProfileManagerDialogOpen();
-        
-        return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
-    }
-
-    public static Task ShowDeleteProfileDialog(IProfileManagerMinimal viewModel,
-        IDialogCoordinator dialogCoordinator, IList<ProfileInfo> profiles)
-    {
-        CustomDialog customDialog = new()
-        {
-            Title = profiles.Count == 1
-                ? Localization.Resources.Strings.DeleteProfile
-                : Localization.Resources.Strings.DeleteProfiles
-        };
-
-        ConfirmDeleteViewModel confirmDeleteViewModel = new(async _ =>
-            {
-                await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-                viewModel.OnProfileManagerDialogClose();
-
-                ProfileManager.RemoveProfiles(profiles);
-            }, async _ =>
-            {
-                await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-                viewModel.OnProfileManagerDialogClose();
-            },
-            profiles.Count == 1
-                ? Localization.Resources.Strings.DeleteProfileMessage
-                : Localization.Resources.Strings.DeleteProfilesMessage);
-
-        customDialog.Content = new ConfirmDeleteDialog
-        {
-            DataContext = confirmDeleteViewModel
-        };
-
-        viewModel.OnProfileManagerDialogOpen();
-        
-        return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
-    }
-
-    #endregion
-
-    #region Dialog to add, edit and delete group
-
-    public static Task ShowAddGroupDialog(IProfileManagerMinimal viewModel, IDialogCoordinator dialogCoordinator)
-    {
-        CustomDialog customDialog = new()
-        {
-            Title = Localization.Resources.Strings.AddGroup,
-            Style = (Style)Application.Current.FindResource(DialogResourceKey)
-        };
-
-        GroupViewModel groupViewModel = new(async instance =>
-        {
-            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileManagerDialogClose();
-
-            ProfileManager.AddGroup(ParseGroupInfo(instance));
-        }, async _ =>
-        {
-            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileManagerDialogClose();
-        }, ProfileManager.GetGroupNames());
-
-        customDialog.Content = new GroupDialog
-        {
-            DataContext = groupViewModel
-        };
-
-        viewModel.OnProfileManagerDialogOpen();
-        
-        return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
-    }
-
-    public static Task ShowEditGroupDialog(IProfileManagerMinimal viewModel, IDialogCoordinator dialogCoordinator,
-        GroupInfo group)
-    {
-        CustomDialog customDialog = new()
-        {
-            Title = Localization.Resources.Strings.EditGroup,
-            Style = (Style)Application.Current.FindResource(DialogResourceKey)
-        };
-
-        GroupViewModel groupViewModel = new(async instance =>
-        {
-            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileManagerDialogClose();
-
-            ProfileManager.ReplaceGroup(instance.Group, ParseGroupInfo(instance));
-        }, async _ =>
-        {
-            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileManagerDialogClose();
-        }, ProfileManager.GetGroupNames(), GroupEditMode.Edit, group);
-
-        customDialog.Content = new GroupDialog
-        {
-            DataContext = groupViewModel
-        };
-
-        viewModel.OnProfileManagerDialogOpen();
-        
-        return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
-    }
-
-    public static Task ShowDeleteGroupDialog(IProfileManagerMinimal viewModel,
-        IDialogCoordinator dialogCoordinator, GroupInfo group)
-    {
-        CustomDialog customDialog = new()
-        {
-            Title = Localization.Resources.Strings.DeleteGroup
-        };
-
-        ConfirmDeleteViewModel confirmDeleteViewModel = new(async _ =>
-        {
-            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileManagerDialogClose();
-
-            ProfileManager.RemoveGroup(group);
-        }, async _ =>
-        {
-            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileManagerDialogClose();
-        }, Localization.Resources.Strings.DeleteGroupMessage);
-
-        customDialog.Content = new ConfirmDeleteDialog
-        {
-            DataContext = confirmDeleteViewModel
-        };
-
-        viewModel.OnProfileManagerDialogOpen();
-        
-        return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
-    }
 
     #endregion
 
@@ -346,19 +123,19 @@ public static class ProfileDialogManager
             RemoteDesktop_UseGatewayServerCredentials = instance.RemoteDesktop_UseGatewayServerCredentials,
             RemoteDesktop_GatewayServerUsername = instance.RemoteDesktop_EnableGatewayServer &&
                                                   Equals(instance.RemoteDesktop_GatewayServerLogonMethod,
-                                                      Models.RemoteDesktop.GatewayUserSelectedCredsSource.Userpass) &&
+                                                      GatewayUserSelectedCredsSource.Userpass) &&
                                                   instance.RemoteDesktop_UseGatewayServerCredentials
                 ? instance.RemoteDesktop_GatewayServerUsername
                 : string.Empty, // Remove sensitive info on disable
             RemoteDesktop_GatewayServerDomain = instance.RemoteDesktop_EnableGatewayServer &&
                                                 Equals(instance.RemoteDesktop_GatewayServerLogonMethod,
-                                                    Models.RemoteDesktop.GatewayUserSelectedCredsSource.Userpass) &&
+                                                    GatewayUserSelectedCredsSource.Userpass) &&
                                                 instance.RemoteDesktop_UseGatewayServerCredentials
                 ? instance.RemoteDesktop_GatewayServerDomain
                 : string.Empty, // Remove sensitive info on disable
             RemoteDesktop_GatewayServerPassword = instance.RemoteDesktop_EnableGatewayServer &&
                                                   Equals(instance.RemoteDesktop_GatewayServerLogonMethod,
-                                                      Models.RemoteDesktop.GatewayUserSelectedCredsSource.Userpass) &&
+                                                      GatewayUserSelectedCredsSource.Userpass) &&
                                                   instance.RemoteDesktop_UseGatewayServerCredentials
                 ? instance.RemoteDesktop_GatewayServerPassword
                 : new SecureString(), // Remove sensitive info on disable
@@ -413,11 +190,13 @@ public static class ProfileDialogManager
             PuTTY_Enabled = instance.PuTTY_Enabled,
             PuTTY_ConnectionMode = instance.PuTTY_ConnectionMode,
             PuTTY_InheritHost = instance.PuTTY_InheritHost,
-            PuTTY_HostOrSerialLine = instance.PuTTY_ConnectionMode == Models.PuTTY.ConnectionMode.Serial
+            PuTTY_HostOrSerialLine = instance.PuTTY_ConnectionMode == ConnectionMode.Serial
                 ? instance.PuTTY_SerialLine?.Trim()
-                : (instance.PuTTY_InheritHost ? instance.Host?.Trim() : instance.PuTTY_Host?.Trim()),
+                : instance.PuTTY_InheritHost
+                    ? instance.Host?.Trim()
+                    : instance.PuTTY_Host?.Trim(),
             PuTTY_OverridePortOrBaud = instance.PuTTY_OverridePortOrBaud,
-            PuTTY_PortOrBaud = instance.PuTTY_ConnectionMode == Models.PuTTY.ConnectionMode.Serial
+            PuTTY_PortOrBaud = instance.PuTTY_ConnectionMode == ConnectionMode.Serial
                 ? instance.PuTTY_Baud
                 : instance.PuTTY_Port,
             PuTTY_OverrideUsername = instance.PuTTY_OverrideUsername,
@@ -468,21 +247,21 @@ public static class ProfileDialogManager
             SNMP_OverrideVersionAndAuth = instance.SNMP_OverrideVersionAndAuth,
             SNMP_Version = instance.SNMP_Version,
             SNMP_Community =
-                instance.SNMP_OverrideVersionAndAuth && instance.SNMP_Version != Models.Network.SNMPVersion.V3
+                instance.SNMP_OverrideVersionAndAuth && instance.SNMP_Version != SNMPVersion.V3
                     ? instance.SNMP_Community
                     : new SecureString(),
             SNMP_Security = instance.SNMP_Security,
             SNMP_Username = instance.SNMP_Username,
             SNMP_AuthenticationProvider = instance.SNMP_AuthenticationProvider,
             SNMP_Auth = instance.SNMP_OverrideVersionAndAuth &&
-                        instance.SNMP_Version == Models.Network.SNMPVersion.V3 &&
-                        instance.SNMP_Security != Models.Network.SNMPV3Security.NoAuthNoPriv
+                        instance.SNMP_Version == SNMPVersion.V3 &&
+                        instance.SNMP_Security != SNMPV3Security.NoAuthNoPriv
                 ? instance.SNMP_Auth
                 : new SecureString(),
             SNMP_PrivacyProvider = instance.SNMP_PrivacyProvider,
             SNMP_Priv = instance.SNMP_OverrideVersionAndAuth &&
-                        instance.SNMP_Version == Models.Network.SNMPVersion.V3 &&
-                        instance.SNMP_Security == Models.Network.SNMPV3Security.AuthPriv
+                        instance.SNMP_Version == SNMPVersion.V3 &&
+                        instance.SNMP_Security == SNMPV3Security.AuthPriv
                 ? instance.SNMP_Priv
                 : new SecureString(),
 
@@ -495,13 +274,13 @@ public static class ProfileDialogManager
             Whois_Enabled = instance.Whois_Enabled,
             Whois_InheritHost = instance.Whois_InheritHost,
             Whois_Domain = instance.Whois_InheritHost ? instance.Host?.Trim() : instance.Whois_Domain?.Trim(),
-            
+
             // IP Geolocation
             IPGeolocation_Enabled = instance.IPGeolocation_Enabled,
             IPGeolocation_InheritHost = instance.IPGeolocation_InheritHost,
             IPGeolocation_Host = instance.IPGeolocation_InheritHost
                 ? instance.Host?.Trim()
-                : instance.IPGeolocation_Host?.Trim(),
+                : instance.IPGeolocation_Host?.Trim()
         };
     }
 
@@ -519,15 +298,11 @@ public static class ProfileDialogManager
         if (profiles.Count > 0)
         {
             if (!string.IsNullOrEmpty(instance.Group.Name) &&
-                !string.Equals(instance.Group.Name, name, System.StringComparison.Ordinal))
-            {
+                !string.Equals(instance.Group.Name, name, StringComparison.Ordinal))
                 foreach (var profile in profiles)
                     profile.Group = name;
-            }
             else
-            {
                 Debug.WriteLine("Cannot update group in profiles");
-            }
         }
 
         return new GroupInfo
@@ -576,19 +351,19 @@ public static class ProfileDialogManager
             RemoteDesktop_UseGatewayServerCredentials = instance.RemoteDesktop_UseGatewayServerCredentials,
             RemoteDesktop_GatewayServerUsername = instance.RemoteDesktop_EnableGatewayServer &&
                                                   Equals(instance.RemoteDesktop_GatewayServerLogonMethod,
-                                                      Models.RemoteDesktop.GatewayUserSelectedCredsSource.Userpass) &&
+                                                      GatewayUserSelectedCredsSource.Userpass) &&
                                                   instance.RemoteDesktop_UseGatewayServerCredentials
                 ? instance.RemoteDesktop_GatewayServerUsername
                 : string.Empty, // Remove sensitive info on disable
             RemoteDesktop_GatewayServerDomain = instance.RemoteDesktop_EnableGatewayServer &&
                                                 Equals(instance.RemoteDesktop_GatewayServerLogonMethod,
-                                                    Models.RemoteDesktop.GatewayUserSelectedCredsSource.Userpass) &&
+                                                    GatewayUserSelectedCredsSource.Userpass) &&
                                                 instance.RemoteDesktop_UseGatewayServerCredentials
                 ? instance.RemoteDesktop_GatewayServerDomain
                 : string.Empty, // Remove sensitive info on disable
             RemoteDesktop_GatewayServerPassword = instance.RemoteDesktop_EnableGatewayServer &&
                                                   Equals(instance.RemoteDesktop_GatewayServerLogonMethod,
-                                                      Models.RemoteDesktop.GatewayUserSelectedCredsSource.Userpass) &&
+                                                      GatewayUserSelectedCredsSource.Userpass) &&
                                                   instance.RemoteDesktop_UseGatewayServerCredentials
                 ? instance.RemoteDesktop_GatewayServerPassword
                 : new SecureString(), // Remove sensitive info on disable
@@ -669,24 +444,252 @@ public static class ProfileDialogManager
             SNMP_OverrideVersionAndAuth = instance.SNMP_OverrideVersionAndAuth,
             SNMP_Version = instance.SNMP_Version,
             SNMP_Community =
-                instance.SNMP_OverrideVersionAndAuth && instance.SNMP_Version != Models.Network.SNMPVersion.V3
+                instance.SNMP_OverrideVersionAndAuth && instance.SNMP_Version != SNMPVersion.V3
                     ? instance.SNMP_Community
                     : new SecureString(),
             SNMP_Security = instance.SNMP_Security,
             SNMP_Username = instance.SNMP_Username,
             SNMP_AuthenticationProvider = instance.SNMP_AuthenticationProvider,
             SNMP_Auth = instance.SNMP_OverrideVersionAndAuth &&
-                        instance.SNMP_Version == Models.Network.SNMPVersion.V3 &&
-                        instance.SNMP_Security != Models.Network.SNMPV3Security.NoAuthNoPriv
+                        instance.SNMP_Version == SNMPVersion.V3 &&
+                        instance.SNMP_Security != SNMPV3Security.NoAuthNoPriv
                 ? instance.SNMP_Auth
                 : new SecureString(),
             SNMP_PrivacyProvider = instance.SNMP_PrivacyProvider,
             SNMP_Priv = instance.SNMP_OverrideVersionAndAuth &&
-                        instance.SNMP_Version == Models.Network.SNMPVersion.V3 &&
-                        instance.SNMP_Security == Models.Network.SNMPV3Security.AuthPriv
+                        instance.SNMP_Version == SNMPVersion.V3 &&
+                        instance.SNMP_Security == SNMPV3Security.AuthPriv
                 ? instance.SNMP_Priv
-                : new SecureString(),
+                : new SecureString()
         };
+    }
+
+    #endregion
+
+    #region Dialog to add, edit, copy as and delete profile
+
+    public static Task ShowAddProfileDialog(IProfileManagerMinimal viewModel,
+        IDialogCoordinator dialogCoordinator, ProfileInfo profile = null, string group = null,
+        ApplicationName applicationName = ApplicationName.None)
+    {
+        CustomDialog customDialog = new()
+        {
+            Title = Strings.AddProfile,
+            Style = (Style)Application.Current.FindResource(DialogResourceKey)
+        };
+
+        ProfileViewModel profileViewModel = new(async instance =>
+        {
+            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+            viewModel.OnProfileManagerDialogClose();
+
+            ProfileManager.AddProfile(ParseProfileInfo(instance));
+        }, async _ =>
+        {
+            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+            viewModel.OnProfileManagerDialogClose();
+        }, ProfileManager.GetGroupNames(), group, ProfileEditMode.Add, profile, applicationName);
+
+        customDialog.Content = new ProfileDialog
+        {
+            DataContext = profileViewModel
+        };
+
+        viewModel.OnProfileManagerDialogOpen();
+
+        return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
+    }
+
+    public static Task ShowEditProfileDialog(IProfileManagerMinimal viewModel,
+        IDialogCoordinator dialogCoordinator, ProfileInfo profile)
+    {
+        CustomDialog customDialog = new()
+        {
+            Title = Strings.EditProfile,
+            Style = (Style)Application.Current.FindResource(DialogResourceKey)
+        };
+
+        ProfileViewModel profileViewModel = new(async instance =>
+        {
+            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+            viewModel.OnProfileManagerDialogClose();
+
+            ProfileManager.ReplaceProfile(profile, ParseProfileInfo(instance));
+        }, async _ =>
+        {
+            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+            viewModel.OnProfileManagerDialogClose();
+        }, ProfileManager.GetGroupNames(), profile.Group, ProfileEditMode.Edit, profile);
+
+        customDialog.Content = new ProfileDialog
+        {
+            DataContext = profileViewModel
+        };
+
+        viewModel.OnProfileManagerDialogOpen();
+
+        return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
+    }
+
+    public static Task ShowCopyAsProfileDialog(IProfileManagerMinimal viewModel,
+        IDialogCoordinator dialogCoordinator, ProfileInfo profile)
+    {
+        CustomDialog customDialog = new()
+        {
+            Title = Strings.CopyProfile,
+            Style = (Style)Application.Current.FindResource(DialogResourceKey)
+        };
+
+        ProfileViewModel profileViewModel = new(async instance =>
+        {
+            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+            viewModel.OnProfileManagerDialogClose();
+
+            ProfileManager.AddProfile(ParseProfileInfo(instance));
+        }, async _ =>
+        {
+            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+            viewModel.OnProfileManagerDialogClose();
+        }, ProfileManager.GetGroupNames(), profile.Group, ProfileEditMode.Copy, profile);
+
+        customDialog.Content = new ProfileDialog
+        {
+            DataContext = profileViewModel
+        };
+
+        viewModel.OnProfileManagerDialogOpen();
+
+        return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
+    }
+
+    public static Task ShowDeleteProfileDialog(IProfileManagerMinimal viewModel,
+        IDialogCoordinator dialogCoordinator, IList<ProfileInfo> profiles)
+    {
+        CustomDialog customDialog = new()
+        {
+            Title = profiles.Count == 1
+                ? Strings.DeleteProfile
+                : Strings.DeleteProfiles
+        };
+
+        ConfirmDeleteViewModel confirmDeleteViewModel = new(async _ =>
+            {
+                await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                viewModel.OnProfileManagerDialogClose();
+
+                ProfileManager.RemoveProfiles(profiles);
+            }, async _ =>
+            {
+                await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                viewModel.OnProfileManagerDialogClose();
+            },
+            profiles.Count == 1
+                ? Strings.DeleteProfileMessage
+                : Strings.DeleteProfilesMessage);
+
+        customDialog.Content = new ConfirmDeleteDialog
+        {
+            DataContext = confirmDeleteViewModel
+        };
+
+        viewModel.OnProfileManagerDialogOpen();
+
+        return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
+    }
+
+    #endregion
+
+    #region Dialog to add, edit and delete group
+
+    public static Task ShowAddGroupDialog(IProfileManagerMinimal viewModel, IDialogCoordinator dialogCoordinator)
+    {
+        CustomDialog customDialog = new()
+        {
+            Title = Strings.AddGroup,
+            Style = (Style)Application.Current.FindResource(DialogResourceKey)
+        };
+
+        GroupViewModel groupViewModel = new(async instance =>
+        {
+            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+            viewModel.OnProfileManagerDialogClose();
+
+            ProfileManager.AddGroup(ParseGroupInfo(instance));
+        }, async _ =>
+        {
+            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+            viewModel.OnProfileManagerDialogClose();
+        }, ProfileManager.GetGroupNames());
+
+        customDialog.Content = new GroupDialog
+        {
+            DataContext = groupViewModel
+        };
+
+        viewModel.OnProfileManagerDialogOpen();
+
+        return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
+    }
+
+    public static Task ShowEditGroupDialog(IProfileManagerMinimal viewModel, IDialogCoordinator dialogCoordinator,
+        GroupInfo group)
+    {
+        CustomDialog customDialog = new()
+        {
+            Title = Strings.EditGroup,
+            Style = (Style)Application.Current.FindResource(DialogResourceKey)
+        };
+
+        GroupViewModel groupViewModel = new(async instance =>
+        {
+            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+            viewModel.OnProfileManagerDialogClose();
+
+            ProfileManager.ReplaceGroup(instance.Group, ParseGroupInfo(instance));
+        }, async _ =>
+        {
+            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+            viewModel.OnProfileManagerDialogClose();
+        }, ProfileManager.GetGroupNames(), GroupEditMode.Edit, group);
+
+        customDialog.Content = new GroupDialog
+        {
+            DataContext = groupViewModel
+        };
+
+        viewModel.OnProfileManagerDialogOpen();
+
+        return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
+    }
+
+    public static Task ShowDeleteGroupDialog(IProfileManagerMinimal viewModel,
+        IDialogCoordinator dialogCoordinator, GroupInfo group)
+    {
+        CustomDialog customDialog = new()
+        {
+            Title = Strings.DeleteGroup
+        };
+
+        ConfirmDeleteViewModel confirmDeleteViewModel = new(async _ =>
+        {
+            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+            viewModel.OnProfileManagerDialogClose();
+
+            ProfileManager.RemoveGroup(group);
+        }, async _ =>
+        {
+            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+            viewModel.OnProfileManagerDialogClose();
+        }, Strings.DeleteGroupMessage);
+
+        customDialog.Content = new ConfirmDeleteDialog
+        {
+            DataContext = confirmDeleteViewModel
+        };
+
+        viewModel.OnProfileManagerDialogOpen();
+
+        return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
 
     #endregion

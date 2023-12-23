@@ -1,4 +1,5 @@
-﻿using NETworkManager.ViewModels;
+﻿using System.Windows;
+using NETworkManager.ViewModels;
 
 namespace NETworkManager;
 
@@ -13,7 +14,7 @@ public partial class CommandLineWindow
         DataContext = _viewModel;
     }
 
-    private void Click(object sender, System.Windows.RoutedEventArgs e)
+    private void Click(object sender, RoutedEventArgs e)
     {
         Close();
     }

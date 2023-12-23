@@ -1,34 +1,36 @@
-﻿using System.Collections.ObjectModel;
-using NETworkManager.Controls;
-using Dragablz;
-using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Settings;
-using System.Linq;
-using NETworkManager.Views;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Windows.Data;
-using System;
 using System.Diagnostics;
 using System.IO;
-using NETworkManager.Utilities;
-using System.Windows;
-using NETworkManager.Profiles;
-using System.Windows.Threading;
-using NETworkManager.Models;
-using NETworkManager.Models.EventSystem;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Threading;
 using Amazon;
 using Amazon.EC2;
-using Amazon.Runtime;
-using Amazon.Runtime.CredentialManagement;
-using NETworkManager.Models.AWS;
-using System.Text.RegularExpressions;
-using Microsoft.Win32;
-using NETworkManager.Documentation;
-using log4net;
 using Amazon.EC2.Model;
+using Amazon.Runtime.CredentialManagement;
+using Dragablz;
+using log4net;
+using MahApps.Metro.Controls.Dialogs;
+using Microsoft.Win32;
+using NETworkManager.Controls;
+using NETworkManager.Documentation;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models;
+using NETworkManager.Models.AWS;
+using NETworkManager.Models.EventSystem;
+using NETworkManager.Profiles;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
+using AWSSessionManager = NETworkManager.Profiles.Application.AWSSessionManager;
 
 namespace NETworkManager.ViewModels;
 
@@ -360,7 +362,10 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         ((args.DragablzItem.Content as DragablzTabItem)?.View as AWSSessionManagerControl)?.CloseTab();
     }
 
-    private bool Connect_CanExecute(object obj) => IsPowerShellConfigured;
+    private bool Connect_CanExecute(object obj)
+    {
+        return IsPowerShellConfigured;
+    }
 
     public ICommand ConnectCommand => new RelayCommand(_ => ConnectAction(), Connect_CanExecute);
 
@@ -382,10 +387,8 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     private void ReconnectAction(object view)
     {
         if (view is AWSSessionManagerControl control)
-        {
             if (control.ReconnectCommand.CanExecute(null))
                 control.ReconnectCommand.Execute(null);
-        }
     }
 
     public ICommand ResizeWindowCommand => new RelayCommand(ResizeWindowAction, IsConnected_CanExecute);
@@ -424,7 +427,10 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
+    private bool ModifyProfile_CanExecute(object obj)
+    {
+        return SelectedProfile is { IsDynamic: false };
+    }
 
     public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
@@ -457,7 +463,10 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
-    private bool SyncInstanceIDsFromAWS_CanExecute(object obj) => !IsSyncing && IsSyncEnabled;
+    private bool SyncInstanceIDsFromAWS_CanExecute(object obj)
+    {
+        return !IsSyncing && IsSyncEnabled;
+    }
 
     public ICommand SyncAllInstanceIDsFromAWSCommand =>
         new RelayCommand(_ => SyncAllInstanceIDsFromAWSAction(), SyncInstanceIDsFromAWS_CanExecute);
@@ -518,9 +527,9 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         using var key =
             Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall");
 
-        if (key == null) 
+        if (key == null)
             return;
-        
+
         foreach (var subKeyName in key.GetSubKeyNames())
         {
             using var subKey = key.OpenSubKey(subKeyName);
@@ -605,7 +614,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         Log.Info($"Sync group \"{group}\"...");
 
         IsSyncing = true;
-        
+
         // Extract "profile\region" from "~ [profile\region]"
         Regex regex = new(@"\[(.*?)\]");
         var result = regex.Match(group);
@@ -624,7 +633,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
         await Task.Delay(2000);
 
-        Log.Info($"Group synced!");
+        Log.Info("Group synced!");
 
         IsSyncing = false;
     }
@@ -634,7 +643,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         Log.Info($"Sync EC2 Instance(s) for AWS profile \"[{profile}\\{region}]\"...");
 
         CredentialProfileStoreChain credentialProfileStoreChain = new();
-        credentialProfileStoreChain.TryGetAWSCredentials(profile, out AWSCredentials credentials);
+        credentialProfileStoreChain.TryGetAWSCredentials(profile, out var credentials);
 
         if (credentials == null)
         {
@@ -660,41 +669,39 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         var groupName = $"~ [{profile}\\{region}]";
 
         // Create a new group info for profiles
-        var groupInfo = new GroupInfo()
+        var groupInfo = new GroupInfo
         {
             Name = groupName,
-            IsDynamic = true,
+            IsDynamic = true
         };
 
         foreach (var reservation in response.Reservations)
+        foreach (var instance in reservation.Instances)
         {
-            foreach (var instance in reservation.Instances)
+            if (SettingsManager.Current.AWSSessionManager_SyncOnlyRunningInstancesFromAWS &&
+                instance.State.Name.Value != "running")
+                continue;
+
+            var tagName = instance.Tags.FirstOrDefault(x => x.Key == "Name");
+
+            var name = tagName == null || tagName.Value == null
+                ? instance.InstanceId
+                : $"{tagName.Value} ({instance.InstanceId})";
+
+            groupInfo.Profiles.Add(new ProfileInfo
             {
-                if (SettingsManager.Current.AWSSessionManager_SyncOnlyRunningInstancesFromAWS &&
-                    instance.State.Name.Value != "running")
-                    continue;
+                Name = name,
+                Host = instance.InstanceId,
+                Group = $"~ [{profile}\\{region}]",
+                IsDynamic = true,
 
-                var tagName = instance.Tags.FirstOrDefault(x => x.Key == "Name");
-
-                var name = (tagName == null || tagName.Value == null)
-                    ? instance.InstanceId
-                    : $"{tagName.Value} ({instance.InstanceId})";
-
-                groupInfo.Profiles.Add(new ProfileInfo()
-                {
-                    Name = name,
-                    Host = instance.InstanceId,
-                    Group = $"~ [{profile}\\{region}]",
-                    IsDynamic = true,
-
-                    AWSSessionManager_Enabled = true,
-                    AWSSessionManager_InstanceID = instance.InstanceId,
-                    AWSSessionManager_OverrideProfile = true,
-                    AWSSessionManager_Profile = profile,
-                    AWSSessionManager_OverrideRegion = true,
-                    AWSSessionManager_Region = region
-                });
-            }
+                AWSSessionManager_Enabled = true,
+                AWSSessionManager_InstanceID = instance.InstanceId,
+                AWSSessionManager_OverrideProfile = true,
+                AWSSessionManager_Profile = profile,
+                AWSSessionManager_OverrideRegion = true,
+                AWSSessionManager_Region = region
+            });
         }
 
         // Remove, replace or add group
@@ -749,7 +756,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.Connect
+            Title = Strings.Connect
         };
 
         var connectViewModel = new AWSSessionManagerConnectViewModel(async instance =>
@@ -791,19 +798,19 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
     private void ConnectProfile()
     {
-        var sessionInfo = NETworkManager.Profiles.Application.AWSSessionManager.CreateSessionInfo(SelectedProfile);
+        var sessionInfo = AWSSessionManager.CreateSessionInfo(SelectedProfile);
 
         Connect(sessionInfo, SelectedProfile.Name);
     }
 
     private void ConnectProfileExternal()
     {
-        var sessionInfo = NETworkManager.Profiles.Application.AWSSessionManager.CreateSessionInfo(SelectedProfile);
+        var sessionInfo = AWSSessionManager.CreateSessionInfo(SelectedProfile);
 
         Process.Start(new ProcessStartInfo
         {
             FileName = SettingsManager.Current.AWSSessionManager_ApplicationFilePath,
-            Arguments = AWSSessionManager.BuildCommandLine(sessionInfo)
+            Arguments = Models.AWS.AWSSessionManager.BuildCommandLine(sessionInfo)
         });
     }
 
@@ -1001,26 +1008,20 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     }
 
     private void AWSSessionManager_AWSProfiles_CollectionChanged(object sender,
-        System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        NotifyCollectionChangedEventArgs e)
     {
         // Remove groups
         if (e.OldItems != null)
-        {
             foreach (AWSProfileInfo profile in e.OldItems)
-            {
                 RemoveDynamicGroup(profile.Profile, profile.Region);
-            }
-        }
 
         // Sync new groups
         if (e.NewItems == null)
             return;
 
         foreach (AWSProfileInfo profile in e.NewItems)
-        {
             if (profile.IsEnabled)
                 SyncInstanceIDsFromAWS(profile.Profile, profile.Region).ConfigureAwait(false);
-        }
     }
 
     private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
@@ -1038,7 +1039,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     }
 
     private void TabItems_CollectionChanged(object sender,
-        System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        NotifyCollectionChangedEventArgs e)
     {
         ConfigurationManager.Current.AWSSessionManagerHasTabs = TabItems.Count > 0;
     }

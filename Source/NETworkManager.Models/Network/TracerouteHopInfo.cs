@@ -5,62 +5,12 @@ using NETworkManager.Models.IPApi;
 namespace NETworkManager.Models.Network;
 
 /// <summary>
-/// Class containing information about a hop in a <see cref="Traceroute"/>.
+///     Class containing information about a hop in a <see cref="Traceroute" />.
 /// </summary>
 public class TracerouteHopInfo
 {
     /// <summary>
-    /// Hop (router).
-    /// </summary>
-    public int Hop { get; set; }
-
-    /// <summary>
-    /// Status of the first ping.
-    /// </summary>
-    public IPStatus Status1 { get; set; }
-
-    /// <summary>
-    /// Time (ms) of the first ping.
-    /// </summary>
-    public long Time1 { get; set; }
-
-    /// <summary>
-    /// Status of the second ping.
-    /// </summary>
-    public IPStatus Status2 { get; set; }
-
-    /// <summary>
-    /// Time (ms) of the second ping.
-    /// </summary>
-    public long Time2 { get; set; }
-
-    /// <summary>
-    /// Status of the third ping.
-    /// </summary>
-    public IPStatus Status3 { get; set; }
-
-    /// <summary>
-    /// Time (ms) of the third ping.
-    /// </summary>
-    public long Time3 { get; set; }
-
-    /// <summary>
-    /// IP address of the hop (router).
-    /// </summary>
-    public IPAddress IPAddress { get; set; }
-
-    /// <summary>
-    /// Hostname of the hop (router).
-    /// </summary>
-    public string Hostname { get; set; }
-
-    /// <summary>
-    /// IP geolocation result (and info) of the hop (router).
-    /// </summary>
-    public IPGeolocationResult IPGeolocationResult { get; set; }
-
-    /// <summary>
-    /// Creates a new instance of <see cref="TracerouteHopInfo"/> with the specified parameters.
+    ///     Creates a new instance of <see cref="TracerouteHopInfo" /> with the specified parameters.
     /// </summary>
     /// <param name="hop">Hop (router).</param>
     /// <param name="status1">Status of the first ping.</param>
@@ -86,4 +36,54 @@ public class TracerouteHopInfo
         Hostname = hostname;
         IPGeolocationResult = ipGeolocationResult;
     }
+
+    /// <summary>
+    ///     Hop (router).
+    /// </summary>
+    public int Hop { get; set; }
+
+    /// <summary>
+    ///     Status of the first ping.
+    /// </summary>
+    public IPStatus Status1 { get; set; }
+
+    /// <summary>
+    ///     Time (ms) of the first ping.
+    /// </summary>
+    public long Time1 { get; set; }
+
+    /// <summary>
+    ///     Status of the second ping.
+    /// </summary>
+    public IPStatus Status2 { get; set; }
+
+    /// <summary>
+    ///     Time (ms) of the second ping.
+    /// </summary>
+    public long Time2 { get; set; }
+
+    /// <summary>
+    ///     Status of the third ping.
+    /// </summary>
+    public IPStatus Status3 { get; set; }
+
+    /// <summary>
+    ///     Time (ms) of the third ping.
+    /// </summary>
+    public long Time3 { get; set; }
+
+    /// <summary>
+    ///     IP address of the hop (router).
+    /// </summary>
+    public IPAddress IPAddress { get; set; }
+
+    /// <summary>
+    ///     Hostname of the hop (router).
+    /// </summary>
+    public string Hostname { get; set; }
+
+    /// <summary>
+    ///     IP geolocation result (and info) of the hop (router).
+    /// </summary>
+    public IPGeolocationResult IPGeolocationResult { get; set; }
 }

@@ -2,20 +2,21 @@
 using System.IO;
 using System.Linq;
 using System.Windows.Controls;
+using NETworkManager.Localization.Resources;
 
 namespace NETworkManager.Validators;
 
 public class TigerVNCPathValidator : ValidationRule
 {
-    private static readonly string[] fileNames = new[] { "vncviewer-", "vncviewer64-" };
+    private static readonly string[] fileNames = { "vncviewer-", "vncviewer64-" };
 
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
-        string fileName = Path.GetFileName((string)value).ToLower();
+        var fileName = Path.GetFileName((string)value).ToLower();
 
         if (fileNames.Any(x => fileName.StartsWith(x) && fileName.EndsWith(".exe")))
             return ValidationResult.ValidResult;
 
-        return new ValidationResult(false, Localization.Resources.Strings.NoValidTigerVNCPath);
+        return new ValidationResult(false, Strings.NoValidTigerVNCPath);
     }
 }

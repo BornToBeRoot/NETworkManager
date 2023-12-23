@@ -1,6 +1,6 @@
-﻿using NETworkManager.Models.Network;
+﻿using System.Net;
+using NETworkManager.Models.Network;
 using NETworkManager.Settings;
-using System.Net;
 
 namespace NETworkManager.Profiles.Application;
 

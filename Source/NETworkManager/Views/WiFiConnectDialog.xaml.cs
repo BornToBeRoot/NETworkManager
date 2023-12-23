@@ -1,4 +1,6 @@
-﻿using NETworkManager.ViewModels;
+﻿using System.Windows;
+using NETworkManager.Models.Network;
+using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
@@ -9,7 +11,7 @@ public partial class WiFiConnectDialog
         InitializeComponent();
     }
 
-    private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+    private void UserControl_Loaded(object sender, RoutedEventArgs e)
     {
         // Get data context from viewmodel
         var viewModel = (WiFiConnectViewModel)DataContext;
@@ -17,11 +19,11 @@ public partial class WiFiConnectDialog
         switch (viewModel.ConnectMode)
         {
             // Pre-shared key
-            case Models.Network.WiFiConnectMode.Psk:
+            case WiFiConnectMode.Psk:
                 PasswordBoxPreSharedKey.Focus();
                 break;
             // EAP
-            case Models.Network.WiFiConnectMode.Eap:
+            case WiFiConnectMode.Eap:
                 TextBoxUsername.Focus();
                 break;
         }

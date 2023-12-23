@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
@@ -11,11 +12,11 @@ namespace NETworkManager.Models.Export;
 public static partial class ExportManager
 {
     /// <summary>
-    /// Method to export objects from type <see cref="ConnectionInfo"/> to a file.
+    ///     Method to export objects from type <see cref="ConnectionInfo" /> to a file.
     /// </summary>
     /// <param name="filePath">Path to the export file.</param>
-    /// <param name="fileType">Allowed <see cref="ExportFileType"/> are CSV, XML or JSON.</param>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{ConnectionInfo}"/> to export.</param>
+    /// <param name="fileType">Allowed <see cref="ExportFileType" /> are CSV, XML or JSON.</param>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{ConnectionInfo}" /> to export.</param>
     public static void Export(string filePath, ExportFileType fileType, IReadOnlyList<ConnectionInfo> collection)
     {
         switch (fileType)
@@ -36,9 +37,9 @@ public static partial class ExportManager
     }
 
     /// <summary>
-    /// Creates a CSV file from the given <see cref="ConnectionInfo"/> collection.
+    ///     Creates a CSV file from the given <see cref="ConnectionInfo" /> collection.
     /// </summary>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{ConnectionInfo}"/> to export.</param>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{ConnectionInfo}" /> to export.</param>
     /// <param name="filePath">Path to the export file.</param>
     private static void CreateCsv(IEnumerable<ConnectionInfo> collection, string filePath)
     {
@@ -51,13 +52,13 @@ public static partial class ExportManager
             stringBuilder.AppendLine(
                 $"{info.Protocol},{info.LocalIPAddress},{info.LocalPort},{info.RemoteIPAddress},{info.RemotePort},{info.TcpState}");
 
-        System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
+        File.WriteAllText(filePath, stringBuilder.ToString());
     }
 
     /// <summary>
-    /// Creates a XML file from the given <see cref="ConnectionInfo"/> collection.
+    ///     Creates a XML file from the given <see cref="ConnectionInfo" /> collection.
     /// </summary>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{ConnectionInfo}"/> to export.</param>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{ConnectionInfo}" /> to export.</param>
     /// <param name="filePath">Path to the export file.</param>
     private static void CreateXml(IEnumerable<ConnectionInfo> collection, string filePath)
     {
@@ -78,16 +79,15 @@ public static partial class ExportManager
     }
 
     /// <summary>
-    /// Creates a JSON file from the given <see cref="ConnectionInfo"/> collection.
+    ///     Creates a JSON file from the given <see cref="ConnectionInfo" /> collection.
     /// </summary>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{ConnectionInfo}"/> to export.</param>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{ConnectionInfo}" /> to export.</param>
     /// <param name="filePath">Path to the export file.</param>
     private static void CreateJson(IReadOnlyList<ConnectionInfo> collection, string filePath)
     {
         var jsonData = new object[collection.Count];
 
         for (var i = 0; i < collection.Count; i++)
-        {
             jsonData[i] = new
             {
                 Protocol = collection[i].Protocol.ToString(),
@@ -97,8 +97,7 @@ public static partial class ExportManager
                 collection[i].RemotePort,
                 TcpState = collection[i].TcpState.ToString()
             };
-        }
 
-        System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
+        File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
     }
 }

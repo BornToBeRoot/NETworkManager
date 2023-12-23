@@ -1,22 +1,21 @@
 ﻿using System.Collections.Generic;
-using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 
 namespace NETworkManager.Models.Network;
 
-public partial class Listener
+public class Listener
 {
     #region Methods
+
     public static Task<List<ListenerInfo>> GetAllActiveListenersAsync()
     {
         return Task.Run(() => GetAllActiveListeners());
-
     }
 
     public static List<ListenerInfo> GetAllActiveListeners()
     {
-        List<ListenerInfo> list = new List<ListenerInfo>();
+        var list = new List<ListenerInfo>();
 
         list.AddRange(GetActiveTcpListeners());
         list.AddRange(GetActiveUdpListeners());
@@ -31,9 +30,9 @@ public partial class Listener
 
     public static List<ListenerInfo> GetActiveTcpListeners()
     {
-        List<ListenerInfo> list = new List<ListenerInfo>();
+        var list = new List<ListenerInfo>();
 
-        foreach (IPEndPoint ipEndPoint in IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpListeners())
+        foreach (var ipEndPoint in IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpListeners())
             list.Add(new ListenerInfo(TransportProtocol.Tcp, ipEndPoint.Address, ipEndPoint.Port));
 
         return list;
@@ -46,9 +45,9 @@ public partial class Listener
 
     public static List<ListenerInfo> GetActiveUdpListeners()
     {
-        List<ListenerInfo> list = new List<ListenerInfo>();
+        var list = new List<ListenerInfo>();
 
-        foreach (IPEndPoint ipEndPoint in IPGlobalProperties.GetIPGlobalProperties().GetActiveUdpListeners())
+        foreach (var ipEndPoint in IPGlobalProperties.GetIPGlobalProperties().GetActiveUdpListeners())
             list.Add(new ListenerInfo(TransportProtocol.Udp, ipEndPoint.Address, ipEndPoint.Port));
 
         return list;

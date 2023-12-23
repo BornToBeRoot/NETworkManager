@@ -6,14 +6,13 @@ namespace NETworkManager.Controls;
 
 public class MultiSelectDataGrid : DataGrid
 {
+    public static readonly DependencyProperty SelectedItemsListProperty =
+        DependencyProperty.Register("SelectedItemsList", typeof(IList), typeof(MultiSelectDataGrid),
+            new PropertyMetadata(null));
+
     public MultiSelectDataGrid()
     {
         SelectionChanged += DataGridMultiItemSelect_SelectionChanged;
-    }
-
-    private void DataGridMultiItemSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        SelectedItemsList = SelectedItems;
     }
 
     public IList SelectedItemsList
@@ -22,5 +21,8 @@ public class MultiSelectDataGrid : DataGrid
         set => SetValue(SelectedItemsListProperty, value);
     }
 
-    public static readonly DependencyProperty SelectedItemsListProperty = DependencyProperty.Register("SelectedItemsList", typeof(IList), typeof(MultiSelectDataGrid), new PropertyMetadata(null));
+    private void DataGridMultiItemSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        SelectedItemsList = SelectedItems;
+    }
 }

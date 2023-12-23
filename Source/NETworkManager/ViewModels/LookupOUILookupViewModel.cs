@@ -1,26 +1,62 @@
 ﻿using System;
 using System.Collections;
-using System.Windows.Input;
-using System.Collections.ObjectModel;
-using NETworkManager.Settings;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows.Data;
-using NETworkManager.Models.Lookup;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
+using NETworkManager.Models.Lookup;
+using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
-using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels;
 
 public class LookupOUILookupViewModel : ViewModelBase
 {
+    #region Constructor, Load settings
+
+    public LookupOUILookupViewModel(IDialogCoordinator instance)
+    {
+        _dialogCoordinator = instance;
+
+        // Search history
+        SearchHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Lookup_OUI_SearchHistory);
+
+        // Result view
+        ResultsView = CollectionViewSource.GetDefaultView(Results);
+        ResultsView.SortDescriptions.Add(new SortDescription(nameof(OUIInfo.MACAddress), ListSortDirection.Ascending));
+    }
+
+    #endregion
+
+    #region Methods
+
+    private void AddSearchToHistory(string macAddressOrVendor)
+    {
+        // Create the new list
+        var list = ListHelper.Modify(SettingsManager.Current.Lookup_OUI_SearchHistory.ToList(),
+            macAddressOrVendor, SettingsManager.Current.General_HistoryListEntries);
+
+        // Clear the old items
+        SettingsManager.Current.Lookup_OUI_SearchHistory.Clear();
+        OnPropertyChanged(
+            nameof(Search)); // Raise property changed again, after the collection has been cleared
+
+        // Fill with the new items
+        list.ForEach(x => SettingsManager.Current.Lookup_OUI_SearchHistory.Add(x));
+    }
+
+    #endregion
+
     #region Variables
 
     private readonly IDialogCoordinator _dialogCoordinator;
@@ -135,29 +171,16 @@ public class LookupOUILookupViewModel : ViewModelBase
 
     #endregion
 
-    #region Constructor, Load settings
-
-    public LookupOUILookupViewModel(IDialogCoordinator instance)
-    {
-        _dialogCoordinator = instance;
-
-        // Search history
-        SearchHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Lookup_OUI_SearchHistory);
-        
-        // Result view
-        ResultsView = CollectionViewSource.GetDefaultView(Results);
-        ResultsView.SortDescriptions.Add(new SortDescription(nameof(OUIInfo.MACAddress), ListSortDirection.Ascending));
-    }
-
-    #endregion
-
     #region ICommands & Actions
 
     public ICommand OUILookupCommand => new RelayCommand(_ => OUILookupAction(), OUILookup_CanExecute);
 
-    private bool OUILookup_CanExecute(object parameter) => Application.Current.MainWindow != null &&
-                                                           !((MetroWindow)Application.Current.MainWindow)
-                                                               .IsAnyDialogOpen && !HasError;
+    private bool OUILookup_CanExecute(object parameter)
+    {
+        return Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow)
+                   .IsAnyDialogOpen && !HasError;
+    }
 
     private async void OUILookupAction()
     {
@@ -171,8 +194,8 @@ public class LookupOUILookupViewModel : ViewModelBase
         // Parse the input
         foreach (var search in Search.Split(';'))
         {
-            var searchTrim  = search.Trim();
-            
+            var searchTrim = search.Trim();
+
             if (Regex.IsMatch(searchTrim, RegexHelper.MACAddressRegex) ||
                 Regex.IsMatch(searchTrim, RegexHelper.MACAddressFirst3BytesRegex))
                 macAddresses.Add(searchTrim);
@@ -182,25 +205,20 @@ public class LookupOUILookupViewModel : ViewModelBase
 
         // Temporary collection to avoid duplicate entries
         var results = new HashSet<OUIInfo>();
-        
+
         // Get OUI information's by MAC-Address
         // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator (Doesn't work with async/await)
         foreach (var macAddress in macAddresses)
-        {
-            foreach (var info in await OUILookup.LookupByMacAddressAsync(macAddress))
-                results.Add(info);
-        }
+        foreach (var info in await OUILookup.LookupByMacAddressAsync(macAddress))
+            results.Add(info);
 
         // Get OUI information's by Vendor
-        foreach (var info in await OUILookup.SearchByVendorsAsync(vendors))
-        {
-            results.Add(info);
-        }
+        foreach (var info in await OUILookup.SearchByVendorsAsync(vendors)) results.Add(info);
 
         // Add the results to the collection
         foreach (var result in results)
             Results.Add(result);
-        
+
         // Show a message if no vendor was found
         NothingFound = Results.Count == 0;
 
@@ -216,7 +234,7 @@ public class LookupOUILookupViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.Export
+            Title = Strings.Export
         };
 
         var exportViewModel = new ExportViewModel(async instance =>
@@ -233,10 +251,10 @@ public class LookupOUILookupViewModel : ViewModelBase
             catch (Exception ex)
             {
                 var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                settings.AffirmativeButtonText = Strings.OK;
 
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error,
-                    Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
                     Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
             }
 
@@ -253,25 +271,6 @@ public class LookupOUILookupViewModel : ViewModelBase
         };
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-    }
-
-    #endregion
-
-    #region Methods
-
-    private void AddSearchToHistory(string macAddressOrVendor)
-    {
-        // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.Lookup_OUI_SearchHistory.ToList(),
-            macAddressOrVendor, SettingsManager.Current.General_HistoryListEntries);
-
-        // Clear the old items
-        SettingsManager.Current.Lookup_OUI_SearchHistory.Clear();
-        OnPropertyChanged(
-            nameof(Search)); // Raise property changed again, after the collection has been cleared
-
-        // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.Lookup_OUI_SearchHistory.Add(x));
     }
 
     #endregion

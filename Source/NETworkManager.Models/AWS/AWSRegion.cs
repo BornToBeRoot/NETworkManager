@@ -1,6 +1,6 @@
-﻿using Amazon;
+﻿using System.Collections.Generic;
+using Amazon;
 using NETworkManager.Utilities;
-using System.Collections.Generic;
 
 namespace NETworkManager.Models.AWS;
 
@@ -10,8 +10,8 @@ public class AWSRegion : SingletonBase<AWSRegion>
 
     public AWSRegion()
     {
-        foreach(var region in RegionEndpoint.EnumerableAllRegions)
-           _regions.Add(region.SystemName);
+        foreach (var region in RegionEndpoint.EnumerableAllRegions)
+            _regions.Add(region.SystemName);
     }
 
     public bool RegionExists(string region)

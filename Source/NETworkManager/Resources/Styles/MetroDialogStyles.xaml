@@ -6,24 +6,28 @@
     </ResourceDictionary.MergedDictionaries>
 
     <!-- Wide dialog for a lot of content -->
-    <Style x:Key="LargeMetroDialog" TargetType="{x:Type dialog:BaseMetroDialog}" BasedOn="{StaticResource {x:Type dialog:BaseMetroDialog}}">
+    <Style x:Key="LargeMetroDialog" TargetType="{x:Type dialog:BaseMetroDialog}"
+           BasedOn="{StaticResource {x:Type dialog:BaseMetroDialog}}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type dialog:BaseMetroDialog}">
                     <ControlTemplate.Resources>
                         <Storyboard x:Key="DialogShownStoryboard">
-                            <DoubleAnimation AccelerationRatio=".9" BeginTime="0:0:0" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.2" />
+                            <DoubleAnimation AccelerationRatio=".9" BeginTime="0:0:0"
+                                             Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.2" />
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <Grid Background="{TemplateBinding Background}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <!-- Height should be maximum Window.xaml MinHeight, otherwise the dialog will be truncated -->
-                            <RowDefinition Height="600" />                            
+                            <RowDefinition Height="600" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <ContentPresenter Grid.Row="0" AutomationProperties.Name="Dialog top" Content="{TemplateBinding DialogTop}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Grid Grid.Row="1" >
+                        <ContentPresenter Grid.Row="0" AutomationProperties.Name="Dialog top"
+                                          Content="{TemplateBinding DialogTop}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="5*" />
                                 <ColumnDefinition Width="90*" MaxWidth="1280" />
@@ -35,11 +39,24 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <TextBlock x:Name="PART_Title" Grid.Row="0" AutomationProperties.Name="Dialog title" FontSize="{TemplateBinding DialogTitleFontSize}" Foreground="{TemplateBinding Foreground}" Text="{TemplateBinding Title}" TextWrapping="Wrap" />
-                                <ContentPresenter Grid.Row="1" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" AutomationProperties.Name="Dialog content" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                <TextBlock x:Name="PART_Title" Grid.Row="0" AutomationProperties.Name="Dialog title"
+                                           FontSize="{TemplateBinding DialogTitleFontSize}"
+                                           Foreground="{TemplateBinding Foreground}" Text="{TemplateBinding Title}"
+                                           TextWrapping="Wrap" />
+                                <ContentPresenter Grid.Row="1"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  AutomationProperties.Name="Dialog content"
+                                                  Content="{TemplateBinding Content}"
+                                                  ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             </Grid>
                         </Grid>
-                        <ContentPresenter Grid.Row="2" AutomationProperties.Name="Dialog bottom" Content="{TemplateBinding DialogBottom}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <ContentPresenter Grid.Row="2" AutomationProperties.Name="Dialog bottom"
+                                          Content="{TemplateBinding DialogBottom}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="Title" Value="{x:Null}">
@@ -59,11 +76,10 @@
     <!-- Override the buttons in MahApps.Metro Dialogs -->
     <Style x:Key="MahApps.Styles.Button.Dialogs" BasedOn="{StaticResource DefaultButton}" TargetType="{x:Type Button}">
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="FontSize" Value="14" />
     </Style>
 
-    <Style x:Key="MahApps.Styles.Button.Dialogs.Accent" BasedOn="{StaticResource HighlightedButton}" TargetType="{x:Type Button}">
+    <Style x:Key="MahApps.Styles.Button.Dialogs.Accent" BasedOn="{StaticResource HighlightedButton}"
+           TargetType="{x:Type Button}">
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="FontSize" Value="14" />
     </Style>
 </ResourceDictionary>

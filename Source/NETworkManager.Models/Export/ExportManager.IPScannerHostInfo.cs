@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
@@ -12,11 +13,11 @@ namespace NETworkManager.Models.Export;
 public static partial class ExportManager
 {
     /// <summary>
-    /// Method to export objects from type <see cref="IPScannerHostInfo"/> to a file.
+    ///     Method to export objects from type <see cref="IPScannerHostInfo" /> to a file.
     /// </summary>
     /// <param name="filePath">Path to the export file.</param>
-    /// <param name="fileType">Allowed <see cref="ExportFileType"/> are CSV, XML or JSON.</param>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{HostInfo}"/> to export.</param>
+    /// <param name="fileType">Allowed <see cref="ExportFileType" /> are CSV, XML or JSON.</param>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{HostInfo}" /> to export.</param>
     public static void Export(string filePath, ExportFileType fileType,
         IReadOnlyList<IPScannerHostInfo> collection)
     {
@@ -38,9 +39,9 @@ public static partial class ExportManager
     }
 
     /// <summary>
-    /// Creates a CSV file from the given <see cref="IPScannerHostInfo"/> collection.
+    ///     Creates a CSV file from the given <see cref="IPScannerHostInfo" /> collection.
     /// </summary>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{HostInfo}"/> to export.</param>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{HostInfo}" /> to export.</param>
     /// <param name="filePath">Path to the export file.</param>
     private static void CreateCsv(IEnumerable<IPScannerHostInfo> collection, string filePath)
     {
@@ -61,13 +62,13 @@ public static partial class ExportManager
                 $"{info.IsReachable},{info.PingInfo.IPAddress},{info.Hostname},{(info.IsAnyPortOpen ? PortState.Open : PortState.Closed)},{info.PingInfo.Status},{info.MACAddress},\"{info.Vendor}\",\"{stringBuilderPorts.ToString().TrimEnd(';')}\",{DateTimeHelper.DateTimeToFullDateTimeString(info.PingInfo.Timestamp)},{Ping.TimeToString(info.PingInfo.Status, info.PingInfo.Time, true)},{info.PingInfo.TTL},{info.PingInfo.Bytes}");
         }
 
-        System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
+        File.WriteAllText(filePath, stringBuilder.ToString());
     }
 
     /// <summary>
-    /// Creates a XML file from the given <see cref="IPScannerHostInfo"/> collection.
+    ///     Creates a XML file from the given <see cref="IPScannerHostInfo" /> collection.
     /// </summary>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{HostInfo}"/> to export.</param>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{HostInfo}" /> to export.</param>
     /// <param name="filePath">Path to the export file.</param>
     private static void CreateXml(IEnumerable<IPScannerHostInfo> collection, string filePath)
     {
@@ -91,7 +92,8 @@ public static partial class ExportManager
                                 new XElement(nameof(PortInfo.LookupInfo.Service), port.LookupInfo.Service),
                                 new XElement(nameof(PortInfo.LookupInfo.Description), port.LookupInfo.Description),
                                 new XElement(nameof(PortInfo.State), port.State)),
-                            new XElement(nameof(PingInfo.Timestamp), DateTimeHelper.DateTimeToFullDateTimeString(info.PingInfo.Timestamp)),
+                            new XElement(nameof(PingInfo.Timestamp),
+                                DateTimeHelper.DateTimeToFullDateTimeString(info.PingInfo.Timestamp)),
                             new XElement(nameof(PingInfo.Time),
                                 Ping.TimeToString(info.PingInfo.Status, info.PingInfo.Time, true)),
                             new XElement(nameof(PingInfo.TTL), info.PingInfo.TTL),
@@ -101,9 +103,9 @@ public static partial class ExportManager
     }
 
     /// <summary>
-    /// Creates a JSON file from the given <see cref="IPScannerHostInfo"/> collection.
+    ///     Creates a JSON file from the given <see cref="IPScannerHostInfo" /> collection.
     /// </summary>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{HostInfo}"/> to export.</param>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{HostInfo}" /> to export.</param>
     /// <param name="filePath">Path to the export file.</param>
     private static void CreateJson(IReadOnlyList<IPScannerHostInfo> collection, string filePath)
     {
@@ -114,7 +116,6 @@ public static partial class ExportManager
             var jsonDataPorts = new object[collection[i].Ports.Count];
 
             for (var j = 0; j < collection[i].Ports.Count; j++)
-            {
                 jsonDataPorts[j] = new
                 {
                     collection[i].Ports[j].Port,
@@ -123,7 +124,6 @@ public static partial class ExportManager
                     collection[i].Ports[j].LookupInfo.Description,
                     State = collection[i].Ports[j].State.ToString()
                 };
-            }
 
             jsonData[i] = new
             {
@@ -142,6 +142,6 @@ public static partial class ExportManager
             };
         }
 
-        System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
+        File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
     }
 }

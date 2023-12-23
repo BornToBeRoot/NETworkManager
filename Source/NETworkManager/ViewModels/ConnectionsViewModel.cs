@@ -1,34 +1,102 @@
-﻿using NETworkManager.Models.Network;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Windows.Input;
-using System.ComponentModel;
-using System.Windows.Data;
 using System.Collections.ObjectModel;
-using NETworkManager.Utilities;
-using NETworkManager.Settings;
-using System.Windows.Threading;
+using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Threading;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Models.Export;
-using NETworkManager.Views;
-using System.Threading.Tasks;
 using NETworkManager.Localization;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models.Export;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
 public class ConnectionsViewModel : ViewModelBase
 {
+    #region Contructor, load settings
+
+    public ConnectionsViewModel(IDialogCoordinator instance)
+    {
+        _isLoading = true;
+
+        _dialogCoordinator = instance;
+
+        // Result view + search
+        ResultsView = CollectionViewSource.GetDefaultView(Results);
+
+        ((ListCollectionView)ResultsView).CustomSort = Comparer<ConnectionInfo>.Create((x, y) =>
+            IPAddressHelper.CompareIPAddresses(x.LocalIPAddress, y.LocalIPAddress));
+
+        ResultsView.Filter = o =>
+        {
+            if (o is not ConnectionInfo info)
+                return false;
+
+            if (string.IsNullOrEmpty(Search))
+                return true;
+
+            // Search by local/remote IP Address, local/remote Port, Protocol and State
+            return info.LocalIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.LocalPort.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.RemoteIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.RemotePort.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.Protocol.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   ResourceTranslator.Translate(ResourceIdentifier.TcpState, info.TcpState)
+                       .IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
+        };
+
+        // Get connections
+        Refresh().ConfigureAwait(false);
+
+        // Auto refresh
+        _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
+
+        AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
+        SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x =>
+            x.Value == SettingsManager.Current.Connections_AutoRefreshTime.Value &&
+            x.TimeUnit == SettingsManager.Current.Connections_AutoRefreshTime.TimeUnit);
+        AutoRefreshEnabled = SettingsManager.Current.Connections_AutoRefreshEnabled;
+
+        _isLoading = false;
+    }
+
+    #endregion
+
+    #region Events
+
+    private async void AutoRefreshTimer_Tick(object sender, EventArgs e)
+    {
+        // Stop timer...
+        _autoRefreshTimer.Stop();
+
+        // Refresh
+        await Refresh();
+
+        // Restart timer...
+        _autoRefreshTimer.Start();
+    }
+
+    #endregion
+
     #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly bool _isLoading;
     private readonly DispatcherTimer _autoRefreshTimer = new();
 
     private string _search;
+
     public string Search
     {
         get => _search;
@@ -46,6 +114,7 @@ public class ConnectionsViewModel : ViewModelBase
     }
 
     private ObservableCollection<ConnectionInfo> _results = new();
+
     public ObservableCollection<ConnectionInfo> Results
     {
         get => _results;
@@ -62,6 +131,7 @@ public class ConnectionsViewModel : ViewModelBase
     public ICollectionView ResultsView { get; }
 
     private ConnectionInfo _selectedResult;
+
     public ConnectionInfo SelectedResult
     {
         get => _selectedResult;
@@ -76,6 +146,7 @@ public class ConnectionsViewModel : ViewModelBase
     }
 
     private IList _selectedResults = new ArrayList();
+
     public IList SelectedResults
     {
         get => _selectedResults;
@@ -90,6 +161,7 @@ public class ConnectionsViewModel : ViewModelBase
     }
 
     private bool _autoRefreshEnabled;
+
     public bool AutoRefreshEnabled
     {
         get => _autoRefreshEnabled;
@@ -121,6 +193,7 @@ public class ConnectionsViewModel : ViewModelBase
     public ICollectionView AutoRefreshTimes { get; }
 
     private AutoRefreshTimeInfo _selectedAutoRefreshTime;
+
     public AutoRefreshTimeInfo SelectedAutoRefreshTime
     {
         get => _selectedAutoRefreshTime;
@@ -145,6 +218,7 @@ public class ConnectionsViewModel : ViewModelBase
     }
 
     private bool _isRefreshing;
+
     public bool IsRefreshing
     {
         get => _isRefreshing;
@@ -159,6 +233,7 @@ public class ConnectionsViewModel : ViewModelBase
     }
 
     private bool _isStatusMessageDisplayed;
+
     public bool IsStatusMessageDisplayed
     {
         get => _isStatusMessageDisplayed;
@@ -173,6 +248,7 @@ public class ConnectionsViewModel : ViewModelBase
     }
 
     private string _statusMessage;
+
     public string StatusMessage
     {
         get => _statusMessage;
@@ -185,48 +261,11 @@ public class ConnectionsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    #endregion
 
-    #region Contructor, load settings
-    public ConnectionsViewModel(IDialogCoordinator instance)
-    {
-        _isLoading = true;
-
-        _dialogCoordinator = instance;
-
-        // Result view + search
-        ResultsView = CollectionViewSource.GetDefaultView(Results);
-        
-        ((ListCollectionView)ResultsView).CustomSort = Comparer<ConnectionInfo>.Create((x, y) =>
-            IPAddressHelper.CompareIPAddresses(x.LocalIPAddress, y.LocalIPAddress));
-        
-        ResultsView.Filter = o =>
-        {
-            if (o is not ConnectionInfo info)
-                return false;
-
-            if (string.IsNullOrEmpty(Search))
-                return true;
-
-            // Search by local/remote IP Address, local/remote Port, Protocol and State
-            return info.LocalIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.LocalPort.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.RemoteIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.RemotePort.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.Protocol.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || ResourceTranslator.Translate(ResourceIdentifier.TcpState, info.TcpState).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
-        };
-
-        // Get connections
-        Refresh().ConfigureAwait(false);
-
-        // Auto refresh
-        _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
-
-        AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
-        SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => x.Value == SettingsManager.Current.Connections_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.Connections_AutoRefreshTime.TimeUnit);
-        AutoRefreshEnabled = SettingsManager.Current.Connections_AutoRefreshEnabled;
-        
-        _isLoading = false;
-    }
     #endregion
 
     #region ICommands & Actions
+
     public ICommand RefreshCommand => new RelayCommand(_ => RefreshAction().ConfigureAwait(false), Refresh_CanExecute);
 
     private bool Refresh_CanExecute(object parameter)
@@ -247,34 +286,38 @@ public class ConnectionsViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.Export
+            Title = Strings.Export
         };
 
         var exportViewModel = new ExportViewModel(async instance =>
-        {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-            try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? Results : new ObservableCollection<ConnectionInfo>(SelectedResults.Cast<ConnectionInfo>().ToArray()));
-            }
-            catch (Exception ex)
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType,
+                        instance.ExportAll
+                            ? Results
+                            : new ObservableCollection<ConnectionInfo>(SelectedResults.Cast<ConnectionInfo>()
+                                .ToArray()));
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                        Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                        Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.Connections_ExportFileType = instance.FileType;
+                SettingsManager.Current.Connections_ExportFilePath = instance.FilePath;
+            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new[]
             {
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
-
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
-            }
-
-            SettingsManager.Current.Connections_ExportFileType = instance.FileType;
-            SettingsManager.Current.Connections_ExportFilePath = instance.FilePath;
-        }, _ =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, new[]
-        {
-            ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
-        }, true, SettingsManager.Current.Connections_ExportFileType, SettingsManager.Current.Connections_ExportFilePath);
+                ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
+            }, true, SettingsManager.Current.Connections_ExportFileType,
+            SettingsManager.Current.Connections_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {
@@ -283,9 +326,11 @@ public class ConnectionsViewModel : ViewModelBase
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
+
     #endregion
 
     #region Methods
+
     private async Task Refresh()
     {
         IsRefreshing = true;
@@ -296,7 +341,7 @@ public class ConnectionsViewModel : ViewModelBase
 
         IsRefreshing = false;
     }
-    
+
     public void OnViewVisible()
     {
         // Restart timer...
@@ -310,19 +355,6 @@ public class ConnectionsViewModel : ViewModelBase
         if (AutoRefreshEnabled)
             _autoRefreshTimer.Stop();
     }
-    #endregion
 
-    #region Events
-    private async void AutoRefreshTimer_Tick(object sender, EventArgs e)
-    {
-        // Stop timer...
-        _autoRefreshTimer.Stop();
-
-        // Refresh
-        await Refresh();
-
-        // Restart timer...
-        _autoRefreshTimer.Start();
-    }
     #endregion
 }

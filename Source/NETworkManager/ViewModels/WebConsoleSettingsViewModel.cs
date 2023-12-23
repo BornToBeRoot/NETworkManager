@@ -5,9 +5,11 @@ namespace NETworkManager.ViewModels;
 public class WebConsoleSettingsViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly bool _isLoading;
 
     private bool _showAddressBar;
+
     public bool ShowAddressBar
     {
         get => _showAddressBar;
@@ -23,9 +25,11 @@ public class WebConsoleSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, load settings
+
     public WebConsoleSettingsViewModel()
     {
         _isLoading = true;
@@ -39,5 +43,6 @@ public class WebConsoleSettingsViewModel : ViewModelBase
     {
         ShowAddressBar = SettingsManager.Current.WebConsole_ShowAddressBar;
     }
+
     #endregion
 }

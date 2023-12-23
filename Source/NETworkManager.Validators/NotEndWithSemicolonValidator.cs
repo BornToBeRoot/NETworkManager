@@ -10,6 +10,8 @@ public class NotEndWithSemicolonValidator : ValidationRule
 {
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
-        return Regex.IsMatch(((string) value).Trim(), RegexHelper.StringNotEndWithSemicolonRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Strings.InputCannotEndWithSemicolon);
+        return Regex.IsMatch(((string)value).Trim(), RegexHelper.StringNotEndWithSemicolonRegex)
+            ? ValidationResult.ValidResult
+            : new ValidationResult(false, Strings.InputCannotEndWithSemicolon);
     }
 }

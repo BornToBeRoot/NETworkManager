@@ -10,11 +10,11 @@ public class DomainValidator : ValidationRule
 {
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
-        if(value is not string domain)
+        if (value is not string domain)
             return new ValidationResult(false, Strings.EnterValidDomain);
-        
-        return Regex.IsMatch(domain, RegexHelper.DomainRegex) ? 
-            ValidationResult.ValidResult :
-            new ValidationResult(false,Strings.EnterValidDomain);
+
+        return Regex.IsMatch(domain, RegexHelper.DomainRegex)
+            ? ValidationResult.ValidResult
+            : new ValidationResult(false, Strings.EnterValidDomain);
     }
 }

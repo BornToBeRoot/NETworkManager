@@ -1,33 +1,101 @@
-﻿using NETworkManager.Utilities;
-using NETworkManager.Models.Network;
-using NETworkManager.Settings;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Net;
+using System.Security;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using NETworkManager.Controls;
 using Dragablz;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Models.Export;
-using NETworkManager.Views;
-using System.Security;
-using System.Threading;
-using System.Threading.Tasks;
+using NETworkManager.Controls;
 using NETworkManager.Localization;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models.Export;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
 public class SNMPViewModel : ViewModelBase
 {
+    #region Contructor, load settings
+
+    public SNMPViewModel(IDialogCoordinator instance, Guid tabId, SNMPSessionInfo sessionInfo)
+    {
+        _isLoading = true;
+
+        _dialogCoordinator = instance;
+
+        _tabId = tabId;
+        Host = sessionInfo?.Host;
+
+        // Set collection view
+        HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_HostHistory);
+        OidHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_OidHistory);
+
+        // Result view
+        ResultsView = CollectionViewSource.GetDefaultView(QueryResults);
+
+        // Custom comparer to sort by OID
+        ((ListCollectionView)ResultsView).CustomSort = Comparer<SNMPInfo>.Create((x, y) =>
+            SNMPOIDHelper.CompareOIDs(x.OID, y.OID));
+
+        // OID
+        Oid = sessionInfo?.OID;
+
+        // Modes
+        Modes = new List<SNMPMode> { SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set };
+        Mode = Modes.FirstOrDefault(x => x == sessionInfo?.Mode);
+
+        // Versions (v1, v2c, v3)
+        Versions = Enum.GetValues(typeof(SNMPVersion)).Cast<SNMPVersion>().ToList();
+        Version = Versions.FirstOrDefault(x => x == sessionInfo?.Version);
+
+        // Community
+        if (Version != SNMPVersion.V3)
+            Community = sessionInfo?.Community;
+
+        // Security
+        Securities = new List<SNMPV3Security>
+            { SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv };
+        Security = Securities.FirstOrDefault(x => x == sessionInfo?.Security);
+
+        // Username
+        if (Version == SNMPVersion.V3)
+            Username = sessionInfo?.Username;
+
+        // Auth
+        AuthenticationProviders = Enum.GetValues(typeof(SNMPV3AuthenticationProvider))
+            .Cast<SNMPV3AuthenticationProvider>().ToList();
+        AuthenticationProvider = AuthenticationProviders.FirstOrDefault(x => x == sessionInfo?.AuthenticationProvider);
+
+        if (Version == SNMPVersion.V3 && Security != SNMPV3Security.NoAuthNoPriv)
+            Auth = sessionInfo?.Auth;
+
+        // Priv
+        PrivacyProviders = Enum.GetValues(typeof(SNMPV3PrivacyProvider)).Cast<SNMPV3PrivacyProvider>().ToList();
+        PrivacyProvider = PrivacyProviders.FirstOrDefault(x => x == sessionInfo?.PrivacyProvider);
+
+        if (Version == SNMPVersion.V3 && Security == SNMPV3Security.AuthPriv)
+            Priv = sessionInfo?.Priv;
+
+        _isLoading = false;
+    }
+
+    #endregion
+
     #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private CancellationTokenSource _cancellationTokenSource;
@@ -37,6 +105,7 @@ public class SNMPViewModel : ViewModelBase
     private readonly bool _isLoading;
 
     private string _host;
+
     public string Host
     {
         get => _host;
@@ -55,6 +124,7 @@ public class SNMPViewModel : ViewModelBase
     public IEnumerable<SNMPMode> Modes { get; set; }
 
     private SNMPMode _mode;
+
     public SNMPMode Mode
     {
         get => _mode;
@@ -77,6 +147,7 @@ public class SNMPViewModel : ViewModelBase
     public IEnumerable<SNMPVersion> Versions { get; }
 
     private SNMPVersion _version;
+
     public SNMPVersion Version
     {
         get => _version;
@@ -94,6 +165,7 @@ public class SNMPViewModel : ViewModelBase
     }
 
     private string _oid;
+
     public string Oid
     {
         get => _oid;
@@ -112,6 +184,7 @@ public class SNMPViewModel : ViewModelBase
     public IEnumerable<SNMPV3Security> Securities { get; }
 
     private SNMPV3Security _security;
+
     public SNMPV3Security Security
     {
         get => _security;
@@ -129,6 +202,7 @@ public class SNMPViewModel : ViewModelBase
     }
 
     private bool _isCommunityEmpty = true; // Initial it's empty
+
     public bool IsCommunityEmpty
     {
         get => _isCommunityEmpty;
@@ -143,6 +217,7 @@ public class SNMPViewModel : ViewModelBase
     }
 
     private SecureString _community;
+
     public SecureString Community
     {
         get => _community;
@@ -160,6 +235,7 @@ public class SNMPViewModel : ViewModelBase
     }
 
     private string _username;
+
     public string Username
     {
         get => _username;
@@ -176,6 +252,7 @@ public class SNMPViewModel : ViewModelBase
     public IEnumerable<SNMPV3AuthenticationProvider> AuthenticationProviders { get; }
 
     private SNMPV3AuthenticationProvider _authenticationProvider;
+
     public SNMPV3AuthenticationProvider AuthenticationProvider
     {
         get => _authenticationProvider;
@@ -193,6 +270,7 @@ public class SNMPViewModel : ViewModelBase
     }
 
     private bool _isAuthEmpty = true; // Initial it's empty
+
     public bool IsAuthEmpty
     {
         get => _isAuthEmpty;
@@ -207,6 +285,7 @@ public class SNMPViewModel : ViewModelBase
     }
 
     private SecureString _auth;
+
     public SecureString Auth
     {
         get => _auth;
@@ -226,6 +305,7 @@ public class SNMPViewModel : ViewModelBase
     public IEnumerable<SNMPV3PrivacyProvider> PrivacyProviders { get; }
 
     private SNMPV3PrivacyProvider _privacyProvider;
+
     public SNMPV3PrivacyProvider PrivacyProvider
     {
         get => _privacyProvider;
@@ -243,6 +323,7 @@ public class SNMPViewModel : ViewModelBase
     }
 
     private bool _isPrivEmpty = true; // Initial it's empty
+
     public bool IsPrivEmpty
     {
         get => _isPrivEmpty;
@@ -257,6 +338,7 @@ public class SNMPViewModel : ViewModelBase
     }
 
     private SecureString _priv;
+
     public SecureString Priv
     {
         get => _priv;
@@ -274,6 +356,7 @@ public class SNMPViewModel : ViewModelBase
     }
 
     private string _data = string.Empty;
+
     public string Data
     {
         get => _data;
@@ -288,6 +371,7 @@ public class SNMPViewModel : ViewModelBase
     }
 
     private bool _isRunning;
+
     public bool IsRunning
     {
         get => _isRunning;
@@ -302,6 +386,7 @@ public class SNMPViewModel : ViewModelBase
     }
 
     private bool _cancelScan;
+
     public bool CancelScan
     {
         get => _cancelScan;
@@ -316,6 +401,7 @@ public class SNMPViewModel : ViewModelBase
     }
 
     private ObservableCollection<SNMPInfo> _queryResults = [];
+
     public ObservableCollection<SNMPInfo> QueryResults
     {
         get => _queryResults;
@@ -331,6 +417,7 @@ public class SNMPViewModel : ViewModelBase
     public ICollectionView ResultsView { get; }
 
     private SNMPInfo _selectedResult;
+
     public SNMPInfo SelectedResult
     {
         get => _selectedResult;
@@ -345,6 +432,7 @@ public class SNMPViewModel : ViewModelBase
     }
 
     private IList _selectedResults = new ArrayList();
+
     public IList SelectedResults
     {
         get => _selectedResults;
@@ -360,6 +448,7 @@ public class SNMPViewModel : ViewModelBase
 
 
     private bool _isStatusMessageDisplayed;
+
     public bool IsStatusMessageDisplayed
     {
         get => _isStatusMessageDisplayed;
@@ -374,6 +463,7 @@ public class SNMPViewModel : ViewModelBase
     }
 
     private string _statusMessage;
+
     public string StatusMessage
     {
         get => _statusMessage;
@@ -386,74 +476,18 @@ public class SNMPViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    #endregion
 
-    #region Contructor, load settings
-    public SNMPViewModel(IDialogCoordinator instance, Guid tabId, SNMPSessionInfo sessionInfo)
-    {
-        _isLoading = true;
-
-        _dialogCoordinator = instance;
-
-        _tabId = tabId;
-        Host = sessionInfo?.Host;
-
-        // Set collection view
-        HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_HostHistory);
-        OidHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_OidHistory);
-
-        // Result view
-        ResultsView = CollectionViewSource.GetDefaultView(QueryResults);
-        
-        // Custom comparer to sort by OID
-        ((ListCollectionView)ResultsView).CustomSort = Comparer<SNMPInfo>.Create((x, y) =>
-            SNMPOIDHelper.CompareOIDs(x.OID, y.OID));
-
-        // OID
-        Oid = sessionInfo?.OID;
-
-        // Modes
-        Modes = new List<SNMPMode> { SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set };
-        Mode = Modes.FirstOrDefault(x => x == sessionInfo?.Mode);
-        
-        // Versions (v1, v2c, v3)
-        Versions = Enum.GetValues(typeof(SNMPVersion)).Cast<SNMPVersion>().ToList();
-        Version = Versions.FirstOrDefault(x => x == sessionInfo?.Version);
-
-        // Community
-        if(Version != SNMPVersion.V3)
-            Community = sessionInfo?.Community;
-
-        // Security
-        Securities = new List<SNMPV3Security> { SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv };
-        Security = Securities.FirstOrDefault(x => x == sessionInfo?.Security);
-
-        // Username
-        if(Version == SNMPVersion.V3)
-            Username = sessionInfo?.Username;
-
-        // Auth
-        AuthenticationProviders = Enum.GetValues(typeof(SNMPV3AuthenticationProvider)).Cast<SNMPV3AuthenticationProvider>().ToList();
-        AuthenticationProvider = AuthenticationProviders.FirstOrDefault(x => x == sessionInfo?.AuthenticationProvider);
-       
-        if(Version == SNMPVersion.V3 && Security != SNMPV3Security.NoAuthNoPriv)
-            Auth = sessionInfo?.Auth;
-
-        // Priv
-        PrivacyProviders = Enum.GetValues(typeof(SNMPV3PrivacyProvider)).Cast<SNMPV3PrivacyProvider>().ToList();
-        PrivacyProvider = PrivacyProviders.FirstOrDefault(x => x == sessionInfo?.PrivacyProvider);
-
-        if (Version == SNMPVersion.V3 && Security == SNMPV3Security.AuthPriv)
-            Priv = sessionInfo?.Priv;
-
-        _isLoading = false;
-    }
     #endregion
 
     #region ICommands & Actions
+
     public ICommand WorkCommand => new RelayCommand(_ => WorkAction(), Work_CanExecute);
 
-    private bool Work_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool Work_CanExecute(object parameter)
+    {
+        return Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    }
 
     private void WorkAction()
     {
@@ -474,7 +508,7 @@ public class SNMPViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.Export
+            Title = Strings.Export
         };
 
         var exportViewModel = new ExportViewModel(async instance =>
@@ -483,22 +517,24 @@ public class SNMPViewModel : ViewModelBase
 
             try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? QueryResults : new ObservableCollection<SNMPInfo>(SelectedResults.Cast<SNMPInfo>().ToArray()));
+                ExportManager.Export(instance.FilePath, instance.FileType,
+                    instance.ExportAll
+                        ? QueryResults
+                        : new ObservableCollection<SNMPInfo>(SelectedResults.Cast<SNMPInfo>().ToArray()));
             }
             catch (Exception ex)
             {
                 var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                settings.AffirmativeButtonText = Strings.OK;
 
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
             }
 
             SettingsManager.Current.SNMP_ExportFileType = instance.FileType;
             SettingsManager.Current.SNMP_ExportFilePath = instance.FilePath;
-        }, _ =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, new[]
+        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new[]
         {
             ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
         }, true, SettingsManager.Current.SNMP_ExportFileType, SettingsManager.Current.SNMP_ExportFilePath);
@@ -510,9 +546,11 @@ public class SNMPViewModel : ViewModelBase
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
+
     #endregion
 
     #region Methods
+
     private void Work()
     {
         if (IsRunning)
@@ -532,17 +570,15 @@ public class SNMPViewModel : ViewModelBase
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
         if (window != null)
-        {
             foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
-            {
                 tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Host;
-            }
-        }
 
         // Try to parse the string into an IP-Address
         if (!IPAddress.TryParse(Host, out var ipAddress))
         {
-            var dnsResult = await DNSClientHelper.ResolveAorAaaaAsync(Host, SettingsManager.Current.Network_ResolveHostnamePreferIPv4);
+            var dnsResult =
+                await DNSClientHelper.ResolveAorAaaaAsync(Host,
+                    SettingsManager.Current.Network_ResolveHostnamePreferIPv4);
 
             if (dnsResult.HasError)
             {
@@ -645,14 +681,13 @@ public class SNMPViewModel : ViewModelBase
 
     public void OnClose()
     {
-
     }
 
     private async Task OpenOIDProfileSelection()
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.SelectOIDProfile
+            Title = Strings.SelectOIDProfile
         };
 
         var viewModel = new SNMPOIDProfilesViewModel(async instance =>
@@ -661,10 +696,7 @@ public class SNMPViewModel : ViewModelBase
 
             Mode = instance.SelectedOIDProfile.Mode;
             Oid = instance.SelectedOIDProfile.OID;
-        }, async _ =>
-        {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        });
+        }, async _ => { await _dialogCoordinator.HideMetroDialogAsync(this, customDialog); });
 
         customDialog.Content = new SNMPOIDProfilesDialog
         {
@@ -677,7 +709,8 @@ public class SNMPViewModel : ViewModelBase
     private void AddHostToHistory(string host)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.SNMP_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+        var list = ListHelper.Modify(SettingsManager.Current.SNMP_HostHistory.ToList(), host,
+            SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items
         SettingsManager.Current.SNMP_HostHistory.Clear();
@@ -690,7 +723,8 @@ public class SNMPViewModel : ViewModelBase
     private void AddOidToHistory(string oid)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.SNMP_OidHistory.ToList(), oid, SettingsManager.Current.General_HistoryListEntries);
+        var list = ListHelper.Modify(SettingsManager.Current.SNMP_OidHistory.ToList(), oid,
+            SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items
         SettingsManager.Current.SNMP_OidHistory.Clear();
@@ -699,26 +733,26 @@ public class SNMPViewModel : ViewModelBase
         // Fill with the new items
         list.ForEach(x => SettingsManager.Current.SNMP_OidHistory.Add(x));
     }
+
     #endregion
 
     #region Events
+
     private void SNMPClient_Received(object sender, SNMPReceivedArgs e)
     {
-        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-        {
-            QueryResults.Add(e.Args);
-        }));
+        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
+            new Action(delegate { QueryResults.Add(e.Args); }));
     }
 
     private void SNMPClient_DataUpdated(object sender, EventArgs e)
     {
-        StatusMessage = Localization.Resources.Strings.DataHasBeenUpdated;
+        StatusMessage = Strings.DataHasBeenUpdated;
         IsStatusMessageDisplayed = true;
     }
 
     private void SNMPClient_Error(object sender, SNMPErrorArgs e)
     {
-        if(e.IsErrorCode)
+        if (e.IsErrorCode)
             StatusMessage = ResourceTranslator.Translate(ResourceIdentifier.SNMPErrorCode, e.ErrorCode);
         else if (e.IsErrorCodeV3)
             StatusMessage = ResourceTranslator.Translate(ResourceIdentifier.SNMPV3ErrorCode, e.ErrorCodeV3);
@@ -730,7 +764,9 @@ public class SNMPViewModel : ViewModelBase
 
     private void SNMPClient_Canceled(object sender, EventArgs e)
     {
-        StatusMessage = CancelScan ? Localization.Resources.Strings.CanceledByUserMessage : Localization.Resources.Strings.TimeoutOnSNMPQuery;
+        StatusMessage = CancelScan
+            ? Strings.CanceledByUserMessage
+            : Strings.TimeoutOnSNMPQuery;
         IsStatusMessageDisplayed = true;
     }
 
@@ -739,5 +775,6 @@ public class SNMPViewModel : ViewModelBase
         CancelScan = false;
         IsRunning = false;
     }
+
     #endregion
 }

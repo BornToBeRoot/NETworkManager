@@ -1,26 +1,28 @@
-﻿using NETworkManager.Settings;
-using System.Net;
-using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
-using System.Windows;
-using System;
-using NETworkManager.Models.Network;
-using System.ComponentModel;
-using System.Windows.Data;
-using NETworkManager.Utilities;
-using System.Threading.Tasks;
-using System.Linq;
-using MahApps.Metro.Controls;
-using NETworkManager.Profiles;
-using System.Windows.Threading;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Threading;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
+using NETworkManager.Models.Network;
+using NETworkManager.Profiles;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
 public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 {
-    #region  Variables 
+    #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
@@ -28,6 +30,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
     private bool _isViewActive = true;
 
     private bool _isRunning;
+
     public bool IsRunning
     {
         get => _isRunning;
@@ -40,9 +43,11 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
+
     public ICollectionView MACAddressHistoryView { get; }
 
     private string _macAddress;
+
     public string MACAddress
     {
         get => _macAddress;
@@ -59,6 +64,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
     public ICollectionView BroadcastHistoryView { get; }
 
     private string _broadcast;
+
     public string Broadcast
     {
         get => _broadcast;
@@ -73,6 +79,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
     }
 
     private bool _isStatusMessageDisplayed;
+
     public bool IsStatusMessageDisplayed
     {
         get => _isStatusMessageDisplayed;
@@ -87,6 +94,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
     }
 
     private string _statusMessage;
+
     public string StatusMessage
     {
         get => _statusMessage;
@@ -103,6 +111,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
     #region Profiles
 
     private ICollectionView _profiles;
+
     public ICollectionView Profiles
     {
         get => _profiles;
@@ -117,6 +126,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
     }
 
     private ProfileInfo _selectedProfile = new();
+
     public ProfileInfo SelectedProfile
     {
         get => _selectedProfile;
@@ -137,6 +147,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
     }
 
     private string _search;
+
     public string Search
     {
         get => _search;
@@ -156,6 +167,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
     }
 
     private bool _isSearching;
+
     public bool IsSearching
     {
         get => _isSearching;
@@ -173,6 +185,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
     private double _tempProfileWidth;
 
     private bool _expandProfileView;
+
     public bool ExpandProfileView
     {
         get => _expandProfileView;
@@ -194,6 +207,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
     }
 
     private GridLength _profileWidth;
+
     public GridLength ProfileWidth
     {
         get => _profileWidth;
@@ -202,7 +216,8 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
             if (value == _profileWidth)
                 return;
 
-            if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.Profile_FloatPointFix) // Do not save the size when collapsed
+            if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
+                GlobalStaticConfiguration.Profile_FloatPointFix) // Do not save the size when collapsed
                 SettingsManager.Current.WakeOnLAN_ProfileWidth = value.Value;
 
             _profileWidth = value;
@@ -213,17 +228,21 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
+
     #endregion
+
     #endregion
 
     #region Constructor, load settings
+
     public WakeOnLANViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
-        
+
         _dialogCoordinator = instance;
 
-        MACAddressHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.WakeOnLan_MACAddressHistory);
+        MACAddressHistoryView =
+            CollectionViewSource.GetDefaultView(SettingsManager.Current.WakeOnLan_MACAddressHistory);
         BroadcastHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.WakeOnLan_BroadcastHistory);
 
         // Profiles
@@ -243,16 +262,25 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
     {
         ExpandProfileView = SettingsManager.Current.WakeOnLAN_ExpandProfileView;
 
-        ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.WakeOnLAN_ProfileWidth) : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
+        ProfileWidth = ExpandProfileView
+            ? new GridLength(SettingsManager.Current.WakeOnLAN_ProfileWidth)
+            : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
 
         _tempProfileWidth = SettingsManager.Current.WakeOnLAN_ProfileWidth;
     }
+
     #endregion
 
     #region ICommands & Actions
+
     public ICommand WakeUpCommand => new RelayCommand(_ => WakeUpAction(), WakeUpAction_CanExecute);
 
-    private bool WakeUpAction_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool WakeUpAction_CanExecute(object parameter)
+    {
+        return Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow)
+                   .IsAnyDialogOpen;
+    }
 
     private void WakeUpAction()
     {
@@ -280,10 +308,14 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.WakeOnLAN).ConfigureAwait(false);
+        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.WakeOnLAN)
+            .ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
+    private bool ModifyProfile_CanExecute(object obj)
+    {
+        return SelectedProfile is { IsDynamic: false };
+    }
 
     public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
@@ -303,14 +335,17 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     private void DeleteProfileAction()
     {
-        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile }).ConfigureAwait(false);
+        ProfileDialogManager
+            .ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile })
+            .ConfigureAwait(false);
     }
 
     public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString())).ConfigureAwait(false);
+        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()))
+            .ConfigureAwait(false);
     }
 
     public ICommand ClearSearchCommand => new RelayCommand(_ => ClearSearchAction());
@@ -319,9 +354,11 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
     {
         Search = string.Empty;
     }
+
     #endregion
 
     #region Methods
+
     private async Task WakeUp(WakeOnLANInfo info)
     {
         IsStatusMessageDisplayed = false;
@@ -334,7 +371,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
             // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
             await Task.Delay(2000);
 
-            StatusMessage = Localization.Resources.Strings.MagicPacketSentMessage;
+            StatusMessage = Strings.MagicPacketSentMessage;
             IsStatusMessageDisplayed = true;
         }
         catch (Exception ex)
@@ -349,7 +386,8 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
     private void AddMACAddressToHistory(string macAddress)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.WakeOnLan_MACAddressHistory.ToList(), macAddress, SettingsManager.Current.General_HistoryListEntries);
+        var list = ListHelper.Modify(SettingsManager.Current.WakeOnLan_MACAddressHistory.ToList(), macAddress,
+            SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items
         SettingsManager.Current.WakeOnLan_MACAddressHistory.Clear();
@@ -362,7 +400,8 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
     private void AddBroadcastToHistory(string broadcast)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.WakeOnLan_BroadcastHistory.ToList(), broadcast, SettingsManager.Current.General_HistoryListEntries);
+        var list = ListHelper.Modify(SettingsManager.Current.WakeOnLan_BroadcastHistory.ToList(), broadcast,
+            SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items
         SettingsManager.Current.WakeOnLan_BroadcastHistory.Clear();
@@ -378,13 +417,18 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
         if (dueToChangedSize)
         {
-            ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.Profile_FloatPointFix;
+            ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
+                                GlobalStaticConfiguration.Profile_FloatPointFix;
         }
         else
         {
             if (ExpandProfileView)
             {
-                ProfileWidth = Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.Profile_WidthCollapsed) < GlobalStaticConfiguration.Profile_FloatPointFix ? new GridLength(GlobalStaticConfiguration.Profile_DefaultWidthExpanded) : new GridLength(_tempProfileWidth);
+                ProfileWidth =
+                    Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.Profile_WidthCollapsed) <
+                    GlobalStaticConfiguration.Profile_FloatPointFix
+                        ? new GridLength(GlobalStaticConfiguration.Profile_DefaultWidthExpanded)
+                        : new GridLength(_tempProfileWidth);
             }
             else
             {
@@ -410,7 +454,11 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     private void SetProfilesView(ProfileInfo profile = null)
     {
-        Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.WakeOnLAN_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name) }.View;
+        Profiles = new CollectionViewSource
+        {
+            Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.WakeOnLAN_Enabled)
+                .OrderBy(x => x.Group).ThenBy(x => x.Name)
+        }.View;
 
         Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
 
@@ -431,7 +479,8 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
             */
 
             // Search by: Name, WakeOnLAN_MACAddress
-            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.WakeOnLAN_MACAddress.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
+            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.WakeOnLAN_MACAddress.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
         // Set specific profile or first if null
@@ -439,7 +488,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
         if (profile != null)
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault(x => x.Equals(profile)) ??
-                Profiles.Cast<ProfileInfo>().FirstOrDefault();
+                              Profiles.Cast<ProfileInfo>().FirstOrDefault();
         else
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
     }
@@ -451,9 +500,11 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
         SetProfilesView(SelectedProfile);
     }
+
     #endregion
 
     #region Event
+
     private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
     {
         RefreshProfiles();
@@ -467,5 +518,6 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
         IsSearching = false;
     }
+
     #endregion
 }

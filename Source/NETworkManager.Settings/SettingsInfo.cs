@@ -11,6 +11,7 @@ using NETworkManager.Models;
 using NETworkManager.Models.AWS;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
+using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Utilities;
@@ -1400,9 +1401,9 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    
+
     private bool _pingMonitor_ExpandHostView = GlobalStaticConfiguration.PingMonitor_ExpandHostView;
-    
+
     public bool PingMonitor_ExpandHostView
     {
         get => _pingMonitor_ExpandHostView;
@@ -2548,10 +2549,10 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private Models.PowerShell.ExecutionPolicy _powerShell_ExecutionPolicy =
+    private ExecutionPolicy _powerShell_ExecutionPolicy =
         GlobalStaticConfiguration.PowerShell_ExecutionPolicy;
 
-    public Models.PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy
+    public ExecutionPolicy PowerShell_ExecutionPolicy
     {
         get => _powerShell_ExecutionPolicy;
         set
@@ -3617,6 +3618,7 @@ public class SettingsInfo : INotifyPropertyChanged
     #endregion
 
     #region Discovery Protocol
+
     private DiscoveryProtocol _discoveryProtocol_Protocol = GlobalStaticConfiguration.DiscoveryProtocol_Protocol;
 
     public DiscoveryProtocol DiscoveryProtocol_Protocol
@@ -3648,7 +3650,7 @@ public class SettingsInfo : INotifyPropertyChanged
     }
 
     #endregion
-    
+
     #region WakeOnLAN
 
     private int _wakeOnLAN_Port = GlobalStaticConfiguration.WakeOnLAN_Port;
@@ -3727,7 +3729,7 @@ public class SettingsInfo : INotifyPropertyChanged
     }
 
     #endregion
-    
+
     #region Whois
 
     private ObservableCollection<string> _whois_DomainHistory = new();
@@ -3885,8 +3887,7 @@ public class SettingsInfo : INotifyPropertyChanged
     }
 
     #endregion
-  
- 
+
 
     #region Subnet Calculator
 
@@ -4154,7 +4155,6 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #endregion
 
-  
 
     #region Connections
 
@@ -4396,7 +4396,7 @@ public class SettingsInfo : INotifyPropertyChanged
         AWSSessionManager_InstanceIDHistory.CollectionChanged += CollectionChanged;
         AWSSessionManager_ProfileHistory.CollectionChanged += CollectionChanged;
         AWSSessionManager_RegionHistory.CollectionChanged += CollectionChanged;
-        
+
         // TigerVNC
         TigerVNC_HostHistory.CollectionChanged += CollectionChanged;
         TigerVNC_PortHistory.CollectionChanged += CollectionChanged;
@@ -4435,7 +4435,7 @@ public class SettingsInfo : INotifyPropertyChanged
 
         // Bit Calculator
         BitCalculator_InputHistory.CollectionChanged += CollectionChanged;
-        
+
         // Lookup > OUI
         Lookup_OUI_SearchHistory.CollectionChanged += CollectionChanged;
 

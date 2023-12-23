@@ -1,6 +1,6 @@
-﻿using Dragablz;
+﻿using System.Windows;
+using Dragablz;
 using NETworkManager.Models;
-using System.Windows;
 
 namespace NETworkManager.Controls;
 

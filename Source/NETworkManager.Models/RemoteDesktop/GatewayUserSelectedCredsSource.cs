@@ -1,25 +1,25 @@
-﻿namespace NETworkManager.Models.RemoteDesktop
+﻿namespace NETworkManager.Models.RemoteDesktop;
+
+/// <summary>
+///     Specifies the RD Gateway authentication method.
+///     Docs:
+///     https://learn.microsoft.com/en-us/windows/win32/termserv/imsrdpclienttransportsettings-gatewayuserselectedcredssource
+/// </summary>
+public enum GatewayUserSelectedCredsSource : uint
 {
     /// <summary>
-    /// Specifies the RD Gateway authentication method.
-    /// Docs: https://learn.microsoft.com/en-us/windows/win32/termserv/imsrdpclienttransportsettings-gatewayuserselectedcredssource
+    ///     Use a password (NTLM) as the authentication method for RD Gateway.
     /// </summary>
-    public enum GatewayUserSelectedCredsSource : uint
-    {
-        /// <summary>
-        /// Use a password (NTLM) as the authentication method for RD Gateway.
-        /// </summary>
-        Userpass,
+    Userpass,
 
-        /// <summary>
-        /// Use a smart card as the authentication method for RD Gateway.
-        /// Should also support Windows Hello for Business.
-        /// </summary>
-        Smartcard,
+    /// <summary>
+    ///     Use a smart card as the authentication method for RD Gateway.
+    ///     Should also support Windows Hello for Business.
+    /// </summary>
+    Smartcard,
 
-        /// <summary>
-        /// Use any authentication method for RD Gateway.
-        /// </summary>
-        Any
-    }
+    /// <summary>
+    ///     Use any authentication method for RD Gateway.
+    /// </summary>
+    Any
 }

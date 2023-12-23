@@ -1,26 +1,29 @@
-﻿using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
 public sealed class Ping
 {
-    #region Varaibles        
+    #region Varaibles
+
     public int WaitTime = 1000;
     public int Timeout = 4000;
     public byte[] Buffer = new byte[32];
     public int TTL = 64;
     public bool DontFragment = true;
-        
+
     private const int ExceptionCancelCount = 3;
+
     #endregion
 
     #region Events
+
     public event EventHandler<PingReceivedArgs> PingReceived;
 
     private void OnPingReceived(PingReceivedArgs e)
@@ -55,9 +58,11 @@ public sealed class Ping
     {
         UserHasCanceled?.Invoke(this, EventArgs.Empty);
     }
+
     #endregion
 
     #region Methods
+
     public void SendAsync(IPAddress ipAddress, CancellationToken cancellationToken)
     {
         Task.Run(async () =>
@@ -70,10 +75,10 @@ public sealed class Ping
             if (!dnsResult.HasError)
             {
                 hostname = dnsResult.Value;
-                    
+
                 OnHostnameResolved(new HostnameArgs(hostname));
             }
-            
+
             var errorCount = 0;
 
             var options = new PingOptions
@@ -108,11 +113,12 @@ public sealed class Ping
                             if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
                                 OnPingReceived(new PingReceivedArgs(
                                     new PingInfo(timestamp, pingReply.Address, hostname,
-                                    pingReply.Buffer.Length, pingReply.RoundtripTime, pingReply.Options!.Ttl, pingReply.Status)));
+                                        pingReply.Buffer.Length, pingReply.RoundtripTime, pingReply.Options!.Ttl,
+                                        pingReply.Status)));
                             else
                                 OnPingReceived(new PingReceivedArgs(
                                     new PingInfo(timestamp, pingReply.Address, hostname,
-                                    pingReply.Buffer.Length, pingReply.RoundtripTime, pingReply.Status)));
+                                        pingReply.Buffer.Length, pingReply.RoundtripTime, pingReply.Status)));
                         }
                     }
                     catch (PingException ex)
@@ -156,6 +162,6 @@ public sealed class Ping
 
         return disableSpecialChar ? $"{t} ms" : t == 0 ? "<1 ms" : $"{t} ms";
     }
+
     #endregion
 }
-

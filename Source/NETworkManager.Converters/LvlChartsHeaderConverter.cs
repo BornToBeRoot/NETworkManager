@@ -1,7 +1,7 @@
-﻿using LiveCharts.Wpf;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows.Data;
+using LiveCharts.Wpf;
 
 namespace NETworkManager.Converters;
 

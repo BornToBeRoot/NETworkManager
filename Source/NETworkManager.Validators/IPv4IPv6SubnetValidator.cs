@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Utilities;
 
 namespace NETworkManager.Validators;
@@ -12,7 +13,7 @@ public class IPv4IPv6SubnetValidator : ValidationRule
         var subnet = (value as string)?.Trim();
 
         if (string.IsNullOrEmpty(subnet))
-            return new ValidationResult(false, Localization.Resources.Strings.EnterValidSubnet);
+            return new ValidationResult(false, Strings.EnterValidSubnet);
 
         // Check if it is a IPv4 address with a cidr like 192.168.0.0/24            
         if (Regex.IsMatch(subnet, RegexHelper.IPv4AddressCidrRegex))
@@ -26,6 +27,6 @@ public class IPv4IPv6SubnetValidator : ValidationRule
         if (Regex.IsMatch(subnet, RegexHelper.IPv6AddressCidrRegex))
             return ValidationResult.ValidResult;
 
-        return new ValidationResult(false, Localization.Resources.Strings.EnterValidSubnet);
+        return new ValidationResult(false, Strings.EnterValidSubnet);
     }
 }

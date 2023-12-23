@@ -6,9 +6,4 @@ public class AWSSessionManagerSessionInfo
     public string InstanceID { get; set; }
     public string Profile { get; set; }
     public string Region { get; set; }
-
-    public AWSSessionManagerSessionInfo()
-    {
-
-    }
 }

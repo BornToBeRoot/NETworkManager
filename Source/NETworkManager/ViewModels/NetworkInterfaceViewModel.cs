@@ -1,32 +1,36 @@
-﻿using System.Collections.Generic;
-using System.Windows.Input;
-using System.Net.NetworkInformation;
-using System;
-using System.Linq;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Settings;
-using NETworkManager.Models.Network;
-using System.Threading.Tasks;
-using System.Windows.Data;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using NETworkManager.Views;
-using NETworkManager.Utilities;
+using System.Linq;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Threading;
 using LiveCharts;
 using LiveCharts.Configurations;
 using LiveCharts.Wpf;
 using MahApps.Metro.Controls;
-using NETworkManager.Profiles;
-using System.Windows.Threading;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
+using NETworkManager.Models.Network;
+using NETworkManager.Profiles;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
+using NetworkInterface = NETworkManager.Models.Network.NetworkInterface;
 
 namespace NETworkManager.ViewModels;
 
 public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
     private readonly DispatcherTimer _searchDispatcherTimer = new();
     private BandwidthMeter _bandwidthMeter;
@@ -35,6 +39,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     private bool _isViewActive = true;
 
     private bool _isNetworkInterfaceLoading;
+
     public bool IsNetworkInterfaceLoading
     {
         get => _isNetworkInterfaceLoading;
@@ -49,6 +54,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     }
 
     private bool _canConfigure;
+
     public bool CanConfigure
     {
         get => _canConfigure;
@@ -63,6 +69,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     }
 
     private bool _isConfigurationRunning;
+
     public bool IsConfigurationRunning
     {
         get => _isConfigurationRunning;
@@ -77,6 +84,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     }
 
     private bool _isStatusMessageDisplayed;
+
     public bool IsStatusMessageDisplayed
     {
         get => _isStatusMessageDisplayed;
@@ -91,6 +99,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     }
 
     private string _statusMessage;
+
     public string StatusMessage
     {
         get => _statusMessage;
@@ -105,7 +114,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     }
 
     #region NetworkInterfaces, SelectedNetworkInterface
+
     private List<NetworkInterfaceInfo> _networkInterfaces;
+
     public List<NetworkInterfaceInfo> NetworkInterfaces
     {
         get => _networkInterfaces;
@@ -120,6 +131,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     }
 
     private NetworkInterfaceInfo _selectedNetworkInterface;
+
     public NetworkInterfaceInfo SelectedNetworkInterface
     {
         get => _selectedNetworkInterface;
@@ -132,7 +144,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
             {
                 if (!_isLoading)
                     SettingsManager.Current.NetworkInterface_InterfaceId = value.Id;
-                                    
+
                 // Bandwidth
                 StopBandwidthMeter();
                 StartBandwidthMeter(value.Id);
@@ -147,12 +159,15 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Bandwidth
+
     private long _bandwidthTotalBytesSentTemp;
 
     private long _bandwidthTotalBytesSent;
+
     public long BandwidthTotalBytesSent
     {
         get => _bandwidthTotalBytesSent;
@@ -168,6 +183,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private long _bandwidthTotalBytesReceivedTemp;
     private long _bandwidthTotalBytesReceived;
+
     public long BandwidthTotalBytesReceived
     {
         get => _bandwidthTotalBytesReceived;
@@ -182,6 +198,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     }
 
     private long _bandwidthDiffBytesSent;
+
     public long BandwidthDiffBytesSent
     {
         get => _bandwidthDiffBytesSent;
@@ -196,6 +213,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     }
 
     private long _bandwidthDiffBytesReceived;
+
     public long BandwidthDiffBytesReceived
     {
         get => _bandwidthDiffBytesReceived;
@@ -210,6 +228,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     }
 
     private long _bandwidthBytesReceivedSpeed;
+
     public long BandwidthBytesReceivedSpeed
     {
         get => _bandwidthBytesReceivedSpeed;
@@ -224,6 +243,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     }
 
     private long _bandwidthBytesSentSpeed;
+
     public long BandwidthBytesSentSpeed
     {
         get => _bandwidthBytesSentSpeed;
@@ -238,6 +258,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     }
 
     private DateTime _bandwidthStartTime;
+
     public DateTime BandwidthStartTime
     {
         get => _bandwidthStartTime;
@@ -252,6 +273,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     }
 
     private TimeSpan _bandwidthMeasuredTime;
+
     public TimeSpan BandwidthMeasuredTime
     {
         get => _bandwidthMeasuredTime;
@@ -264,10 +286,13 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Config
+
     private bool _configEnableDynamicIPAddress = true;
+
     public bool ConfigEnableDynamicIPAddress
     {
         get => _configEnableDynamicIPAddress;
@@ -282,6 +307,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     }
 
     private bool _configEnableStaticIPAddress;
+
     public bool ConfigEnableStaticIPAddress
     {
         get => _configEnableStaticIPAddress;
@@ -298,6 +324,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     }
 
     private string _configIPAddress;
+
     public string ConfigIPAddress
     {
         get => _configIPAddress;
@@ -312,6 +339,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     }
 
     private string _configSubnetmask;
+
     public string ConfigSubnetmask
     {
         get => _configSubnetmask;
@@ -326,6 +354,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     }
 
     private string _configGateway;
+
     public string ConfigGateway
     {
         get => _configGateway;
@@ -340,6 +369,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     }
 
     private bool _configEnableDynamicDNS = true;
+
     public bool ConfigEnableDynamicDNS
     {
         get => _configEnableDynamicDNS;
@@ -354,6 +384,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     }
 
     private bool _configEnableStaticDNS;
+
     public bool ConfigEnableStaticDNS
     {
         get => _configEnableStaticDNS;
@@ -368,6 +399,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     }
 
     private string _configPrimaryDNSServer;
+
     public string ConfigPrimaryDNSServer
     {
         get => _configPrimaryDNSServer;
@@ -382,6 +414,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     }
 
     private string _configSecondaryDNSServer;
+
     public string ConfigSecondaryDNSServer
     {
         get => _configSecondaryDNSServer;
@@ -394,11 +427,13 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Profiles
 
     private ICollectionView _profiles;
+
     public ICollectionView Profiles
     {
         get => _profiles;
@@ -413,6 +448,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     }
 
     private ProfileInfo _selectedProfile = new();
+
     public ProfileInfo SelectedProfile
     {
         get => _selectedProfile;
@@ -440,6 +476,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     }
 
     private string _search;
+
     public string Search
     {
         get => _search;
@@ -459,6 +496,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     }
 
     private bool _isSearching;
+
     public bool IsSearching
     {
         get => _isSearching;
@@ -476,6 +514,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     private double _tempProfileWidth;
 
     private bool _expandProfileView;
+
     public bool ExpandProfileView
     {
         get => _expandProfileView;
@@ -497,6 +536,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     }
 
     private GridLength _profileWidth;
+
     public GridLength ProfileWidth
     {
         get => _profileWidth;
@@ -505,25 +545,29 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
             if (value == _profileWidth)
                 return;
 
-            if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.Profile_FloatPointFix) // Do not save the size when collapsed
+            if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
+                GlobalStaticConfiguration.Profile_FloatPointFix) // Do not save the size when collapsed
                 SettingsManager.Current.NetworkInterface_ProfileWidth = value.Value;
 
             _profileWidth = value;
 
             if (_canProfileWidthChange)
-                ResizeProfile(dueToChangedSize: true);
+                ResizeProfile(true);
 
             OnPropertyChanged();
         }
     }
-    #endregion               
+
+    #endregion
+
     #endregion
 
     #region Constructor, LoadSettings, OnShutdown
+
     public NetworkInterfaceViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
-        
+
         _dialogCoordinator = instance;
 
         LoadNetworkInterfaces().ConfigureAwait(false);
@@ -532,7 +576,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
         // Profiles
         SetProfilesView();
-        
+
         ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
 
         _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
@@ -543,7 +587,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         NetworkChange.NetworkAddressChanged += (_, _) => ReloadNetworkInterfaces();
 
         LoadSettings();
-        
+
         _isLoading = false;
     }
 
@@ -569,7 +613,8 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
             }
         };
 
-        FormatterDate = value => DateTimeHelper.DateTimeToTimeString(new DateTime((long)(value * TimeSpan.FromHours(1).Ticks)));
+        FormatterDate = value =>
+            DateTimeHelper.DateTimeToTimeString(new DateTime((long)(value * TimeSpan.FromHours(1).Ticks)));
         FormatterSpeed = value => $"{FileSizeConverter.GetBytesReadable((long)value * 8)}it/s";
     }
 
@@ -581,12 +626,13 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     {
         IsNetworkInterfaceLoading = true;
 
-        NetworkInterfaces = await Models.Network.NetworkInterface.GetNetworkInterfacesAsync();
+        NetworkInterfaces = await NetworkInterface.GetNetworkInterfacesAsync();
 
         // Get the last selected interface, if it is still available on this machine...
         if (NetworkInterfaces.Count > 0)
         {
-            var info = NetworkInterfaces.FirstOrDefault(s => s.Id == SettingsManager.Current.NetworkInterface_InterfaceId);
+            var info = NetworkInterfaces.FirstOrDefault(s =>
+                s.Id == SettingsManager.Current.NetworkInterface_InterfaceId);
 
             SelectedNetworkInterface = info ?? NetworkInterfaces[0];
         }
@@ -598,25 +644,42 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     {
         ExpandProfileView = SettingsManager.Current.NetworkInterface_ExpandProfileView;
 
-        ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.NetworkInterface_ProfileWidth) : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
+        ProfileWidth = ExpandProfileView
+            ? new GridLength(SettingsManager.Current.NetworkInterface_ProfileWidth)
+            : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
 
         _tempProfileWidth = SettingsManager.Current.NetworkInterface_ProfileWidth;
     }
+
     #endregion
 
     #region ICommands & Actions
-    public ICommand ReloadNetworkInterfacesCommand => new RelayCommand(_ => ReloadNetworkInterfacesAction(), ReloadNetworkInterfaces_CanExecute);
 
-    private bool ReloadNetworkInterfaces_CanExecute(object obj) => !IsNetworkInterfaceLoading && Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    public ICommand ReloadNetworkInterfacesCommand =>
+        new RelayCommand(_ => ReloadNetworkInterfacesAction(), ReloadNetworkInterfaces_CanExecute);
+
+    private bool ReloadNetworkInterfaces_CanExecute(object obj)
+    {
+        return !IsNetworkInterfaceLoading &&
+               Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow)
+                   .IsAnyDialogOpen;
+    }
 
     private void ReloadNetworkInterfacesAction()
     {
         ReloadNetworkInterfaces();
     }
-    
-    public ICommand ApplyConfigurationCommand => new RelayCommand(_ => ApplyConfigurationAction(), ApplyConfiguration_CanExecute);
 
-    private bool ApplyConfiguration_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    public ICommand ApplyConfigurationCommand =>
+        new RelayCommand(_ => ApplyConfigurationAction(), ApplyConfiguration_CanExecute);
+
+    private bool ApplyConfiguration_CanExecute(object parameter)
+    {
+        return Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow)
+                   .IsAnyDialogOpen;
+    }
 
     private void ApplyConfigurationAction()
     {
@@ -634,10 +697,15 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.NetworkInterface).ConfigureAwait(false);
+        ProfileDialogManager
+            .ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.NetworkInterface)
+            .ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
+    private bool ModifyProfile_CanExecute(object obj)
+    {
+        return SelectedProfile is { IsDynamic: false };
+    }
 
     public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
@@ -657,16 +725,19 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void DeleteProfileAction()
     {
-        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile }).ConfigureAwait(false);
+        ProfileDialogManager
+            .ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile })
+            .ConfigureAwait(false);
     }
 
     public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString())).ConfigureAwait(false);
+        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()))
+            .ConfigureAwait(false);
     }
-    
+
     public ICommand ClearSearchCommand => new RelayCommand(_ => ClearSearchAction());
 
     private void ClearSearchAction()
@@ -675,9 +746,16 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     }
 
     #region Additional commands
-    private bool AdditionalCommands_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
-    
-    public ICommand OpenNetworkConnectionsCommand => new RelayCommand(_ => OpenNetworkConnectionsAction(), AdditionalCommands_CanExecute);
+
+    private bool AdditionalCommands_CanExecute(object parameter)
+    {
+        return Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow)
+                   .IsAnyDialogOpen;
+    }
+
+    public ICommand OpenNetworkConnectionsCommand =>
+        new RelayCommand(_ => OpenNetworkConnectionsAction(), AdditionalCommands_CanExecute);
 
     private void OpenNetworkConnectionsAction()
     {
@@ -693,8 +771,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         // ToDo: Log error in the future
         if (ipTuple == null)
             return;
-        
-        EventSystem.RedirectToApplication(ApplicationName.IPScanner, $"{ipTuple.Item1}/{Subnetmask.ConvertSubnetmaskToCidr(ipTuple.Item2)}");
+
+        EventSystem.RedirectToApplication(ApplicationName.IPScanner,
+            $"{ipTuple.Item1}/{Subnetmask.ConvertSubnetmaskToCidr(ipTuple.Item2)}");
     }
 
     public ICommand FlushDNSCommand => new RelayCommand(_ => FlushDNSAction(), AdditionalCommands_CanExecute);
@@ -703,20 +782,20 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     {
         FlushDNSAsync().ConfigureAwait(false);
     }
-    
+
     public ICommand ReleaseRenewCommand => new RelayCommand(_ => ReleaseRenewAction(), AdditionalCommands_CanExecute);
 
     private void ReleaseRenewAction()
     {
         ReleaseRenewAsync(IPConfigReleaseRenewMode.ReleaseRenew).ConfigureAwait(false);
     }
-    
+
     public ICommand ReleaseCommand => new RelayCommand(_ => ReleaseAction(), AdditionalCommands_CanExecute);
 
     private void ReleaseAction()
     {
         ReleaseRenewAsync(IPConfigReleaseRenewMode.Release).ConfigureAwait(false);
-    }       
+    }
 
     public ICommand RenewCommand => new RelayCommand(_ => RenewAction(), AdditionalCommands_CanExecute);
 
@@ -746,13 +825,14 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         ReleaseRenewAsync(IPConfigReleaseRenewMode.Renew).ConfigureAwait(false);
     }
 
-    public ICommand AddIPv4AddressCommand => new RelayCommand(_ => AddIPv4AddressAction().ConfigureAwait(false), AdditionalCommands_CanExecute);
+    public ICommand AddIPv4AddressCommand => new RelayCommand(_ => AddIPv4AddressAction().ConfigureAwait(false),
+        AdditionalCommands_CanExecute);
 
     private async Task AddIPv4AddressAction()
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.AddIPv4Address
+            Title = Strings.AddIPv4Address
         };
 
         var ipAddressAndSubnetmaskViewModel = new IPAddressAndSubnetmaskViewModel(async instance =>
@@ -760,37 +840,34 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
             await AddIPv4Address(instance.IPAddress, instance.Subnetmask);
-        }, _ =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        });
+        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); });
 
         customDialog.Content = new IPAddressAndSubnetmaskDialog
         {
-            DataContext = ipAddressAndSubnetmaskViewModel                
+            DataContext = ipAddressAndSubnetmaskViewModel
         };
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
-    public ICommand RemoveIPv4AddressCommand => new RelayCommand(_ => RemoveIPv4AddressAction().ConfigureAwait(false), AdditionalCommands_CanExecute);
+    public ICommand RemoveIPv4AddressCommand => new RelayCommand(_ => RemoveIPv4AddressAction().ConfigureAwait(false),
+        AdditionalCommands_CanExecute);
 
     private async Task RemoveIPv4AddressAction()
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.RemoveIPv4Address
+            Title = Strings.RemoveIPv4Address
         };
 
         var dropdownViewModel = new DropdownViewModel(async instance =>
-        {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-           await RemoveIPv4Address(instance.SelectedValue.Split("/")[0]);
-        }, _ =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, SelectedNetworkInterface.IPv4Address.Select(x => $"{x.Item1}/{Subnetmask.ConvertSubnetmaskToCidr(x.Item2)}").ToList(), Localization.Resources.Strings.IPv4Address);
+                await RemoveIPv4Address(instance.SelectedValue.Split("/")[0]);
+            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
+            SelectedNetworkInterface.IPv4Address.Select(x => $"{x.Item1}/{Subnetmask.ConvertSubnetmaskToCidr(x.Item2)}")
+                .ToList(), Strings.IPv4Address);
 
         customDialog.Content = new DropdownDialog
         {
@@ -799,30 +876,35 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
+
     #endregion
+
     #endregion
 
     #region Methods
+
     private async void ReloadNetworkInterfaces()
     {
         IsNetworkInterfaceLoading = true;
 
         // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
-        await Task.Delay(2000); 
+        await Task.Delay(2000);
 
         var id = string.Empty;
 
         if (SelectedNetworkInterface != null)
             id = SelectedNetworkInterface.Id;
 
-        NetworkInterfaces = await Models.Network.NetworkInterface.GetNetworkInterfacesAsync();
+        NetworkInterfaces = await NetworkInterface.GetNetworkInterfacesAsync();
 
         // Change interface...
-        SelectedNetworkInterface = string.IsNullOrEmpty(id) ? NetworkInterfaces.FirstOrDefault() : NetworkInterfaces.FirstOrDefault(x => x.Id == id);
+        SelectedNetworkInterface = string.IsNullOrEmpty(id)
+            ? NetworkInterfaces.FirstOrDefault()
+            : NetworkInterfaces.FirstOrDefault(x => x.Id == id);
 
         IsNetworkInterfaceLoading = false;
     }
-    
+
     private void SetConfigurationDefaults(NetworkInterfaceInfo info)
     {
         if (info.DhcpEnabled)
@@ -834,7 +916,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
             ConfigEnableStaticIPAddress = true;
             ConfigIPAddress = info.IPv4Address.FirstOrDefault()?.Item1.ToString();
             ConfigSubnetmask = info.IPv4Address.FirstOrDefault()?.Item2.ToString();
-            ConfigGateway = info.IPv4Gateway?.Any() == true ? info.IPv4Gateway.FirstOrDefault()?.ToString() : string.Empty;
+            ConfigGateway = info.IPv4Gateway?.Any() == true
+                ? info.IPv4Gateway.FirstOrDefault()?.ToString()
+                : string.Empty;
         }
 
         if (info.DNSAutoconfigurationEnabled)
@@ -845,7 +929,8 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         {
             ConfigEnableStaticDNS = true;
 
-            var dnsServers = info.DNSServer.Where(x => x.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).ToList();
+            var dnsServers = info.DNSServer.Where(x => x.AddressFamily == AddressFamily.InterNetwork)
+                .ToList();
             ConfigPrimaryDNSServer = dnsServers.Count > 0 ? dnsServers[0].ToString() : string.Empty;
             ConfigSecondaryDNSServer = dnsServers.Count > 1 ? dnsServers[1].ToString() : string.Empty;
         }
@@ -863,11 +948,13 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
             subnetmask = Subnetmask.GetFromCidr(int.Parse(subnetmask.TrimStart('/'))).Subnetmask;
 
         // If primary and secondary DNS are empty --> autoconfiguration
-        if (ConfigEnableStaticDNS && string.IsNullOrEmpty(ConfigPrimaryDNSServer) && string.IsNullOrEmpty(ConfigSecondaryDNSServer))
+        if (ConfigEnableStaticDNS && string.IsNullOrEmpty(ConfigPrimaryDNSServer) &&
+            string.IsNullOrEmpty(ConfigSecondaryDNSServer))
             ConfigEnableDynamicDNS = true;
 
         // When primary DNS is empty, swap it with secondary (if not empty)
-        if (ConfigEnableStaticDNS && string.IsNullOrEmpty(ConfigPrimaryDNSServer) && !string.IsNullOrEmpty(ConfigSecondaryDNSServer))
+        if (ConfigEnableStaticDNS && string.IsNullOrEmpty(ConfigPrimaryDNSServer) &&
+            !string.IsNullOrEmpty(ConfigSecondaryDNSServer))
         {
             ConfigPrimaryDNSServer = ConfigSecondaryDNSServer;
             ConfigSecondaryDNSServer = string.Empty;
@@ -887,7 +974,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
         try
         {
-            var networkInterface = new Models.Network.NetworkInterface();
+            var networkInterface = new NetworkInterface();
 
             networkInterface.UserHasCanceled += NetworkInterface_UserHasCanceled;
 
@@ -927,7 +1014,8 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
             enableStaticDNS = false;
 
         // When primary DNS is empty, swap it with secondary (if not empty)
-        if (SelectedProfile.NetworkInterface_EnableStaticDNS && string.IsNullOrEmpty(primaryDNSServer) && !string.IsNullOrEmpty(secondaryDNSServer))
+        if (SelectedProfile.NetworkInterface_EnableStaticDNS && string.IsNullOrEmpty(primaryDNSServer) &&
+            !string.IsNullOrEmpty(secondaryDNSServer))
         {
             primaryDNSServer = secondaryDNSServer;
             secondaryDNSServer = string.Empty;
@@ -947,7 +1035,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
         try
         {
-            var networkInterface = new Models.Network.NetworkInterface();
+            var networkInterface = new NetworkInterface();
 
             networkInterface.UserHasCanceled += NetworkInterface_UserHasCanceled;
 
@@ -980,16 +1068,17 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         }
         catch (Exception ex)
         {
-            await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+            await _dialogCoordinator.ShowMessageAsync(this, Strings.Error, ex.Message,
+                MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
         }
     }
-    
+
     private async Task FlushDNSAsync()
     {
         IsConfigurationRunning = true;
         IsStatusMessageDisplayed = false;
 
-        await Models.Network.NetworkInterface.FlushDnsAsync();
+        await NetworkInterface.FlushDnsAsync();
 
         IsConfigurationRunning = false;
     }
@@ -998,7 +1087,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     {
         IsConfigurationRunning = true;
 
-        await Models.Network.NetworkInterface.ReleaseRenewAsync(releaseRenewMode, SelectedNetworkInterface.Name);
+        await NetworkInterface.ReleaseRenewAsync(releaseRenewMode, SelectedNetworkInterface.Name);
 
         ReloadNetworkInterfaces();
 
@@ -1025,7 +1114,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
         try
         {
-            await Models.Network.NetworkInterface.AddIPAddressToNetworkInterfaceAsync(config);
+            await NetworkInterface.AddIPAddressToNetworkInterfaceAsync(config);
 
             ReloadNetworkInterfaces();
         }
@@ -1053,7 +1142,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
         try
         {
-            await Models.Network.NetworkInterface.RemoveIPAddressFromNetworkInterfaceAsync(config);
+            await NetworkInterface.RemoveIPAddressFromNetworkInterfaceAsync(config);
 
             ReloadNetworkInterfaces();
         }
@@ -1067,20 +1156,25 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
             IsConfigurationRunning = false;
         }
     }
-    
+
     private void ResizeProfile(bool dueToChangedSize)
     {
         _canProfileWidthChange = false;
 
         if (dueToChangedSize)
         {
-            ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.Profile_FloatPointFix;
+            ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
+                                GlobalStaticConfiguration.Profile_FloatPointFix;
         }
         else
         {
             if (ExpandProfileView)
             {
-                ProfileWidth = Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.Profile_WidthCollapsed) < GlobalStaticConfiguration.Profile_FloatPointFix ? new GridLength(GlobalStaticConfiguration.Profile_DefaultWidthExpanded) : new GridLength(_tempProfileWidth);
+                ProfileWidth =
+                    Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.Profile_WidthCollapsed) <
+                    GlobalStaticConfiguration.Profile_FloatPointFix
+                        ? new GridLength(GlobalStaticConfiguration.Profile_DefaultWidthExpanded)
+                        : new GridLength(_tempProfileWidth);
             }
             else
             {
@@ -1110,7 +1204,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
             Series[1].Values.Add(bandwidthInfo);
         }
     }
-    
+
     private bool _resetBandwidthStatisticOnNextUpdate;
 
     private void StartBandwidthMeter(string networkInterfaceId)
@@ -1128,9 +1222,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void ResumeBandwidthMeter()
     {
-        if (_bandwidthMeter is not { IsRunning: false }) 
+        if (_bandwidthMeter is not { IsRunning: false })
             return;
-        
+
         ResetBandwidthChart();
 
         _resetBandwidthStatisticOnNextUpdate = true;
@@ -1140,9 +1234,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void StopBandwidthMeter()
     {
-        if (_bandwidthMeter is not { IsRunning: true }) 
+        if (_bandwidthMeter is not { IsRunning: true })
             return;
-        
+
         _bandwidthMeter.Stop();
     }
 
@@ -1164,7 +1258,11 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void SetProfilesView(ProfileInfo profile = null)
     {
-        Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.NetworkInterface_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name) }.View;
+        Profiles = new CollectionViewSource
+        {
+            Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.NetworkInterface_Enabled)
+                .OrderBy(x => x.Group).ThenBy(x => x.Name)
+        }.View;
 
         Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
 
@@ -1193,7 +1291,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
         if (profile != null)
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault(x => x.Equals(profile)) ??
-                Profiles.Cast<ProfileInfo>().FirstOrDefault();
+                              Profiles.Cast<ProfileInfo>().FirstOrDefault();
         else
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
     }
@@ -1205,9 +1303,11 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
         SetProfilesView(SelectedProfile);
     }
+
     #endregion
 
     #region Events
+
     private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
     {
         RefreshProfiles();
@@ -1225,7 +1325,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     private void BandwidthMeter_UpdateSpeed(object sender, BandwidthMeterSpeedArgs e)
     {
         // Reset statistics
-        if(_resetBandwidthStatisticOnNextUpdate)
+        if (_resetBandwidthStatisticOnNextUpdate)
         {
             BandwidthStartTime = DateTime.Now;
             _bandwidthTotalBytesReceivedTemp = e.TotalBytesReceived;
@@ -1261,8 +1361,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void NetworkInterface_UserHasCanceled(object sender, EventArgs e)
     {
-        StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
+        StatusMessage = Strings.CanceledByUserMessage;
         IsStatusMessageDisplayed = true;
     }
+
     #endregion
 }

@@ -1,22 +1,26 @@
-﻿using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
 public class TigerVNCSettingsViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
-    
+
     private readonly bool _isLoading;
 
     private string _applicationFilePath;
+
     public string ApplicationFilePath
     {
         get => _applicationFilePath;
@@ -30,12 +34,13 @@ public class TigerVNCSettingsViewModel : ViewModelBase
 
             IsConfigured = !string.IsNullOrEmpty(value);
 
-            _applicationFilePath = value;                               
+            _applicationFilePath = value;
             OnPropertyChanged();
         }
     }
 
     private bool _isConfigured;
+
     public bool IsConfigured
     {
         get => _isConfigured;
@@ -48,8 +53,9 @@ public class TigerVNCSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+
     private int _port;
+
     public int Port
     {
         get => _port;
@@ -65,9 +71,11 @@ public class TigerVNCSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Contructor, load settings
+
     public TigerVNCSettingsViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
@@ -85,19 +93,21 @@ public class TigerVNCSettingsViewModel : ViewModelBase
         IsConfigured = File.Exists(ApplicationFilePath);
         Port = SettingsManager.Current.TigerVNC_Port;
     }
+
     #endregion
 
     #region ICommands & Actions
+
     public ICommand BrowseFileCommand => new RelayCommand(_ => BrowseFileAction());
 
     private void BrowseFileAction()
     {
-        var openFileDialog = new System.Windows.Forms.OpenFileDialog
+        var openFileDialog = new OpenFileDialog
         {
             Filter = GlobalStaticConfiguration.ApplicationFileExtensionFilter
         };
 
-        if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+        if (openFileDialog.ShowDialog() == DialogResult.OK)
             ApplicationFilePath = openFileDialog.FileName;
     }
 
@@ -107,9 +117,11 @@ public class TigerVNCSettingsViewModel : ViewModelBase
     {
         Configure().ConfigureAwait(false);
     }
+
     #endregion
 
     #region Methods
+
     private async Task Configure()
     {
         try
@@ -120,9 +132,10 @@ public class TigerVNCSettingsViewModel : ViewModelBase
         {
             var settings = AppearanceManager.MetroDialog;
 
-            settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+            settings.AffirmativeButtonText = Strings.OK;
 
-            await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, settings);
+            await _dialogCoordinator.ShowMessageAsync(this, Strings.Error, ex.Message,
+                MessageDialogStyle.Affirmative, settings);
         }
     }
 
@@ -132,5 +145,6 @@ public class TigerVNCSettingsViewModel : ViewModelBase
 
         OnPropertyChanged(nameof(ApplicationFilePath));
     }
+
     #endregion
 }

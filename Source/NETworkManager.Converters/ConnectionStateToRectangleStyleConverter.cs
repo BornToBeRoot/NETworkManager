@@ -10,9 +10,9 @@ public sealed class ConnectionStateToRectangleStyleConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is not ConnectionState state) 
+        if (value is not ConnectionState state)
             return Application.Current.Resources["HiddenRectangle"] as Style;
-        
+
         switch (state)
         {
             case ConnectionState.None:

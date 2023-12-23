@@ -1,37 +1,39 @@
-﻿using NETworkManager.Settings;
-using System.Collections.ObjectModel;
-using System.Net;
-using System.Windows.Input;
-using System.Windows;
-using System;
+﻿using System;
 using System.Collections;
-using System.Threading;
 using System.Collections.Generic;
-using NETworkManager.Models.Network;
-using System.Windows.Threading;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows.Data;
 using System.Linq;
-using NETworkManager.Utilities;
+using System.Net;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Threading;
 using Dragablz;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
-using NETworkManager.Models.Export;
-using NETworkManager.Views;
-using System.Text.RegularExpressions;
-using NETworkManager.Profiles;
 using NETworkManager.Localization;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
-using System.Threading.Tasks;
-using System.Text;
+using NETworkManager.Models.Export;
+using NETworkManager.Models.Network;
+using NETworkManager.Profiles;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
 public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 {
     #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private CancellationTokenSource _cancellationTokenSource;
@@ -40,6 +42,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private bool _firstLoad = true;
 
     private string _host;
+
     public string Host
     {
         get => _host;
@@ -56,6 +59,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     public ICollectionView HostHistoryView { get; }
 
     private bool _isSubnetDetectionRunning;
+
     public bool IsSubnetDetectionRunning
     {
         get => _isSubnetDetectionRunning;
@@ -71,6 +75,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
 
     private bool _isRunning;
+
     public bool IsRunning
     {
         get => _isRunning;
@@ -85,6 +90,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     private bool _isCanceling;
+
     public bool IsCanceling
     {
         get => _isCanceling;
@@ -99,6 +105,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     private ObservableCollection<IPScannerHostInfo> _results = [];
+
     public ObservableCollection<IPScannerHostInfo> Results
     {
         get => _results;
@@ -114,6 +121,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     public ICollectionView ResultsView { get; }
 
     private IPScannerHostInfo _selectedResult;
+
     public IPScannerHostInfo SelectedResult
     {
         get => _selectedResult;
@@ -128,6 +136,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     private IList _selectedResults = new ArrayList();
+
     public IList SelectedResults
     {
         get => _selectedResults;
@@ -142,6 +151,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     private int _hostsToScan;
+
     public int HostsToScan
     {
         get => _hostsToScan;
@@ -156,6 +166,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     private int _hostsScanned;
+
     public int HostsScanned
     {
         get => _hostsScanned;
@@ -170,6 +181,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     private bool _preparingScan;
+
     public bool PreparingScan
     {
         get => _preparingScan;
@@ -184,6 +196,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     private bool _isStatusMessageDisplayed;
+
     public bool IsStatusMessageDisplayed
     {
         get => _isStatusMessageDisplayed;
@@ -198,6 +211,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     private string _statusMessage;
+
     public string StatusMessage
     {
         get => _statusMessage;
@@ -212,9 +226,11 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     public static IEnumerable<CustomCommandInfo> CustomCommands => SettingsManager.Current.IPScanner_CustomCommands;
+
     #endregion
 
     #region Constructor, load settings, shutdown
+
     public IPScannerViewModel(IDialogCoordinator instance, Guid tabId, string hostOrIPRange)
     {
         _dialogCoordinator = instance;
@@ -227,7 +243,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         // Result view
         ResultsView = CollectionViewSource.GetDefaultView(Results);
-        
+
         // Custom comparer to sort by IP address
         ((ListCollectionView)ResultsView).CustomSort = Comparer<IPScannerHostInfo>.Create((x, y) =>
             IPAddressHelper.CompareIPAddresses(x.PingInfo.IPAddress, y.PingInfo.IPAddress));
@@ -311,7 +327,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         ProfileInfo profileInfo = new()
         {
-            Name = string.IsNullOrEmpty(SelectedResult.Hostname) ? SelectedResult.PingInfo.IPAddress.ToString() : SelectedResult.Hostname.TrimEnd('.'),
+            Name = string.IsNullOrEmpty(SelectedResult.Hostname)
+                ? SelectedResult.PingInfo.IPAddress.ToString()
+                : SelectedResult.Hostname.TrimEnd('.'),
             Host = SelectedResult.PingInfo.IPAddress.ToString(),
 
             // Additional data
@@ -328,9 +346,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         StringBuilder stringBuilder = new();
 
         foreach (var port in SelectedResult.Ports)
-        {
-            stringBuilder.AppendLine($"{port.Port}/{port.LookupInfo.Protocol},{ResourceTranslator.Translate(ResourceIdentifier.PortState, port.State)},{port.LookupInfo.Service},{port.LookupInfo.Description}");
-        }
+            stringBuilder.AppendLine(
+                $"{port.Port}/{port.LookupInfo.Protocol},{ResourceTranslator.Translate(ResourceIdentifier.PortState, port.State)},{port.LookupInfo.Service},{port.LookupInfo.Description}");
 
         ClipboardHelper.SetClipboard(stringBuilder.ToString());
     }
@@ -341,9 +358,11 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         Export().ConfigureAwait(false);
     }
+
     #endregion
 
     #region Methods
+
     private async Task Start()
     {
         IsStatusMessageDisplayed = false;
@@ -356,12 +375,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
         if (window != null)
-        {
             foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
-            {
                 tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Host;
-            }
-        }
 
         _cancellationTokenSource = new CancellationTokenSource();
 
@@ -370,7 +385,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         try
         {
-            hosts = await HostRangeHelper.ResolveAsync(HostRangeHelper.CreateListFromInput(Host), SettingsManager.Current.Network_ResolveHostnamePreferIPv4, _cancellationTokenSource.Token);
+            hosts = await HostRangeHelper.ResolveAsync(HostRangeHelper.CreateListFromInput(Host),
+                SettingsManager.Current.Network_ResolveHostnamePreferIPv4, _cancellationTokenSource.Token);
         }
         catch (OperationCanceledException)
         {
@@ -381,9 +397,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         // Show error message if (some) hostnames could not be resolved
         if (hosts.hostnamesNotResolved.Count > 0)
         {
-            StatusMessage = $"{Localization.Resources.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}";
+            StatusMessage =
+                $"{Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}";
             IsStatusMessageDisplayed = true;
-
         }
 
         HostsToScan = hosts.hosts.Count;
@@ -435,7 +451,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             var subnetmaskDetected = false;
 
             // Get subnetmask, based on ip address
-            foreach (var networkInterface in (await NetworkInterface.GetNetworkInterfacesAsync()).Where(networkInterface => networkInterface.IPv4Address.Any(x => x.Item1.Equals(localIP))))
+            foreach (var networkInterface in (await NetworkInterface.GetNetworkInterfacesAsync()).Where(
+                         networkInterface => networkInterface.IPv4Address.Any(x => x.Item1.Equals(localIP))))
             {
                 subnetmaskDetected = true;
 
@@ -448,11 +465,15 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             }
 
             if (!subnetmaskDetected)
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.CouldNotDetectSubnetmask, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                    Strings.CouldNotDetectSubnetmask, MessageDialogStyle.Affirmative,
+                    AppearanceManager.MetroDialog);
         }
         else
         {
-            await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.CouldNotDetectLocalIPAddressMessage, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+            await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                Strings.CouldNotDetectLocalIPAddressMessage, MessageDialogStyle.Affirmative,
+                AppearanceManager.MetroDialog);
         }
 
         IsSubnetDetectionRunning = false;
@@ -476,8 +497,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             if (!string.IsNullOrEmpty(info.Arguments))
             {
-                info.Arguments = Regex.Replace(info.Arguments, "\\$\\$hostname\\$\\$", hostname, RegexOptions.IgnoreCase);
-                info.Arguments = Regex.Replace(info.Arguments, "\\$\\$ipaddress\\$\\$", ipAddress, RegexOptions.IgnoreCase);
+                info.Arguments = Regex.Replace(info.Arguments, "\\$\\$hostname\\$\\$", hostname,
+                    RegexOptions.IgnoreCase);
+                info.Arguments = Regex.Replace(info.Arguments, "\\$\\$ipaddress\\$\\$", ipAddress,
+                    RegexOptions.IgnoreCase);
             }
 
             try
@@ -486,7 +509,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             }
             catch (Exception ex)
             {
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.ResourceManager.GetString("Error", LocalizationManager.GetInstance().Culture), ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                await _dialogCoordinator.ShowMessageAsync(this,
+                    Strings.ResourceManager.GetString("Error",
+                        LocalizationManager.GetInstance().Culture), ex.Message, MessageDialogStyle.Affirmative,
+                    AppearanceManager.MetroDialog);
             }
         }
     }
@@ -494,7 +520,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private void AddHostToHistory(string ipRange)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.IPScanner_HostHistory.ToList(), ipRange, SettingsManager.Current.General_HistoryListEntries);
+        var list = ListHelper.Modify(SettingsManager.Current.IPScanner_HostHistory.ToList(), ipRange,
+            SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items
         SettingsManager.Current.IPScanner_HostHistory.Clear();
@@ -508,7 +535,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.Export
+            Title = Strings.Export
         };
 
         var exportViewModel = new ExportViewModel(async instance =>
@@ -517,22 +544,25 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? Results : new ObservableCollection<IPScannerHostInfo>(SelectedResults.Cast<IPScannerHostInfo>().ToArray()));
+                ExportManager.Export(instance.FilePath, instance.FileType,
+                    instance.ExportAll
+                        ? Results
+                        : new ObservableCollection<IPScannerHostInfo>(SelectedResults.Cast<IPScannerHostInfo>()
+                            .ToArray()));
             }
             catch (Exception ex)
             {
                 var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                settings.AffirmativeButtonText = Strings.OK;
 
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
             }
 
             SettingsManager.Current.IPScanner_ExportFileType = instance.FileType;
             SettingsManager.Current.IPScanner_ExportFilePath = instance.FilePath;
-        }, _ =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, new[]
+        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new[]
         {
             ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
         }, true, SettingsManager.Current.IPScanner_ExportFileType, SettingsManager.Current.IPScanner_ExportFilePath);
@@ -555,12 +585,11 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     #endregion
 
     #region Events
+
     private void HostScanned(object sender, IPScannerHostScannedArgs e)
     {
-        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-        {
-            Results.Add(e.Args);
-        }));
+        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
+            new Action(delegate { Results.Add(e.Args); }));
     }
 
     private void ProgressChanged(object sender, ProgressChangedArgs e)
@@ -572,7 +601,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         if (Results.Count == 0)
         {
-            StatusMessage = Localization.Resources.Strings.NoReachableHostsFound;
+            StatusMessage = Strings.NoReachableHostsFound;
             IsStatusMessageDisplayed = true;
         }
 
@@ -582,11 +611,12 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private void UserHasCanceled(object sender, EventArgs e)
     {
-        StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
+        StatusMessage = Strings.CanceledByUserMessage;
         IsStatusMessageDisplayed = true;
 
         IsCanceling = false;
         IsRunning = false;
     }
+
     #endregion
 }

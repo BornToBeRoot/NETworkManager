@@ -1,15 +1,16 @@
 ﻿<local:UserControlBase x:Class="NETworkManager.Controls.AWSSessionManagerControl"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
-        xmlns:windowsForms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"        
-        xmlns:local="clr-namespace:NETworkManager.Controls"
-        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        mah:DialogParticipation.Register="{Binding}"
-        mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance local:AWSSessionManagerControl}">
+                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                       xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
+                       xmlns:windowsForms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+                       xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+                       xmlns:local="clr-namespace:NETworkManager.Controls"
+                       xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                       mah:DialogParticipation.Register="{Binding}"
+                       mc:Ignorable="d" Loaded="UserControl_Loaded"
+                       d:DataContext="{d:DesignInstance local:AWSSessionManagerControl}">
     <local:UserControlBase.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
@@ -18,9 +19,10 @@
     </local:UserControlBase.Resources>
     <Grid SizeChanged="WindowGrid_SizeChanged">
         <!-- Background color will prevent flickering when app inside the panel is closed -->
-        <WindowsFormsHost Visibility="{Binding Path=IsConnected, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" 
-                          Background="{DynamicResource ResourceKey=MahApps.Brushes.Window.Background}"
-                          Margin="10">
+        <WindowsFormsHost
+            Visibility="{Binding Path=IsConnected, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+            Background="{DynamicResource ResourceKey=MahApps.Brushes.Window.Background}"
+            Margin="10">
             <windowsForms:Panel x:Name="WindowHost" />
         </WindowsFormsHost>
         <Grid VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center"
@@ -31,29 +33,29 @@
                 <RowDefinition Height="20" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0" 
-                       Text="{x:Static Member=localization:Strings.Disconnected}" 
-                       Style="{StaticResource ResourceKey=HeaderTextBlock}" 
+            <TextBlock Grid.Column="0" Grid.Row="0"
+                       Text="{x:Static Member=localization:Strings.Disconnected}"
+                       Style="{StaticResource ResourceKey=HeaderTextBlock}"
                        Visibility="{Binding Path=IsConnecting, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityHiddenConverter}}" />
-            <TextBlock Grid.Column="0" Grid.Row="1" 
-                       Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Accent}" 
-                       Text="{x:Static Member=localization:Strings.PowerShellProcessHasEnded}" 
-                       Style="{DynamicResource ResourceKey=DefaultTextBlock}" 
+            <TextBlock Grid.Column="0" Grid.Row="1"
+                       Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Accent}"
+                       Text="{x:Static Member=localization:Strings.PowerShellProcessHasEnded}"
+                       Style="{DynamicResource ResourceKey=DefaultTextBlock}"
                        Visibility="{Binding Path=IsConnecting, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityHiddenConverter}}" />
-            <mah:ProgressRing Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" 
-                              Height="50" Width="50" 
-                              IsActive="{Binding Path=IsConnecting}" 
-                              Visibility="{Binding Path=IsConnecting, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"/>
-            <Button Grid.Column="0" Grid.Row="3" 
-                    Content="{x:Static Member=localization:Strings.Reconnect}" 
-                    Command="{Binding Path=ReconnectCommand}" 
-                    Visibility="{Binding Path=IsConnecting, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}" 
-                    IsDefault="True" 
-                    IsEnabled="{Binding Path=IsConnecting, Converter={StaticResource ResourceKey=BooleanReverseConverter}}" 
-                    HorizontalAlignment="Center" Style="{StaticResource ResourceKey=DefaultButton}"/>
+            <mah:ProgressRing Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"
+                              Height="50" Width="50"
+                              IsActive="{Binding Path=IsConnecting}"
+                              Visibility="{Binding Path=IsConnecting, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" />
+            <Button Grid.Column="0" Grid.Row="3"
+                    Content="{x:Static Member=localization:Strings.Reconnect}"
+                    Command="{Binding Path=ReconnectCommand}"
+                    Visibility="{Binding Path=IsConnecting, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}"
+                    IsDefault="True"
+                    IsEnabled="{Binding Path=IsConnecting, Converter={StaticResource ResourceKey=BooleanReverseConverter}}"
+                    HorizontalAlignment="Center" Style="{StaticResource ResourceKey=DefaultButton}" />
             <TextBlock Grid.Column="0" Grid.Row="3"
-                       Text="{x:Static Member=localization:Strings.ConnectingDots}" 
-                       Style="{StaticResource ResourceKey=MessageTextBlock}" 
+                       Text="{x:Static Member=localization:Strings.ConnectingDots}"
+                       Style="{StaticResource ResourceKey=MessageTextBlock}"
                        Visibility="{Binding Path=IsConnecting, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" />
         </Grid>
     </Grid>

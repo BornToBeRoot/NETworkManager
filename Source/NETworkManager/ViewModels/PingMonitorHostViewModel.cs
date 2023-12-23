@@ -1,30 +1,31 @@
-﻿using NETworkManager.Settings;
-using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
-using System.Windows;
-using System;
-using NETworkManager.Models.Network;
-using System.ComponentModel;
-using System.Windows.Data;
-using NETworkManager.Utilities;
-using System.Linq;
-using System.Collections.ObjectModel;
-using NETworkManager.Views;
-using NETworkManager.Profiles;
-using System.Windows.Threading;
-using System.Threading.Tasks;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Threading;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
+using NETworkManager.Models.Network;
+using NETworkManager.Profiles;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
 public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 {
-    #region  Variables 
+    #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private CancellationTokenSource _cancellationTokenSource;
@@ -35,6 +36,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     private bool _isViewActive = true;
 
     private string _host;
+
     public string Host
     {
         get => _host;
@@ -51,6 +53,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     public ICollectionView HostHistoryView { get; }
 
     private bool _isRunning;
+
     public bool IsRunning
     {
         get => _isRunning;
@@ -63,8 +66,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-    
+
     private bool _isCanceling;
+
     public bool IsCanceling
     {
         get => _isCanceling;
@@ -79,6 +83,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     }
 
     private bool _isStatusMessageDisplayed;
+
     public bool IsStatusMessageDisplayed
     {
         get => _isStatusMessageDisplayed;
@@ -93,6 +98,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     }
 
     private string _statusMessage;
+
     public string StatusMessage
     {
         get => _statusMessage;
@@ -107,6 +113,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     }
 
     private ObservableCollection<PingMonitorView> _hosts = [];
+
     public ObservableCollection<PingMonitorView> Hosts
     {
         get => _hosts;
@@ -122,6 +129,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     public ICollectionView HostsView { get; }
 
     private PingMonitorView _selectedHost;
+
     public PingMonitorView SelectedHost
     {
         get => _selectedHost;
@@ -138,6 +146,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     #region Profiles
 
     private ICollectionView _profiles;
+
     public ICollectionView Profiles
     {
         get => _profiles;
@@ -152,6 +161,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     }
 
     private ProfileInfo _selectedProfile;
+
     public ProfileInfo SelectedProfile
     {
         get => _selectedProfile;
@@ -166,6 +176,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     }
 
     private string _search;
+
     public string Search
     {
         get => _search;
@@ -185,6 +196,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     }
 
     private bool _isSearching;
+
     public bool IsSearching
     {
         get => _isSearching;
@@ -202,6 +214,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     private double _tempProfileWidth;
 
     private bool _expandProfileView;
+
     public bool ExpandProfileView
     {
         get => _expandProfileView;
@@ -223,6 +236,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     }
 
     private GridLength _profileWidth;
+
     public GridLength ProfileWidth
     {
         get => _profileWidth;
@@ -231,7 +245,8 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
             if (value == _profileWidth)
                 return;
 
-            if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.Profile_FloatPointFix) // Do not save the size when collapsed
+            if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
+                GlobalStaticConfiguration.Profile_FloatPointFix) // Do not save the size when collapsed
                 SettingsManager.Current.PingMonitor_ProfileWidth = value.Value;
 
             _profileWidth = value;
@@ -242,10 +257,13 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
+
     #endregion
+
     #endregion
 
     #region Constructor, load settings
+
     public PingMonitorHostViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
@@ -275,20 +293,24 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     {
         ExpandProfileView = SettingsManager.Current.PingMonitor_ExpandProfileView;
 
-        ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.PingMonitor_ProfileWidth) : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
+        ProfileWidth = ExpandProfileView
+            ? new GridLength(SettingsManager.Current.PingMonitor_ProfileWidth)
+            : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
 
         _tempProfileWidth = SettingsManager.Current.PingMonitor_ProfileWidth;
     }
+
     #endregion
 
     #region ICommands & Actions
+
     public ICommand PingCommand => new RelayCommand(_ => PingAction(), Ping_CanExecute);
 
     private bool Ping_CanExecute(object parameter)
     {
         return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
     }
-    
+
     private void PingAction()
     {
         if (IsRunning)
@@ -296,7 +318,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         else
             Start().ConfigureAwait(false);
     }
-    
+
     public ICommand PingProfileCommand => new RelayCommand(_ => PingProfileAction(), PingProfile_CanExecute);
 
     private bool PingProfile_CanExecute(object obj)
@@ -306,10 +328,10 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private void PingProfileAction()
     {
-        if(SetHost(SelectedProfile.PingMonitor_Host))
+        if (SetHost(SelectedProfile.PingMonitor_Host))
             Start().ConfigureAwait(false);
     }
-    
+
     public ICommand CloseAllCommand => new RelayCommand(_ => CloseAllAction());
 
     private void CloseAllAction()
@@ -323,15 +345,19 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     {
         SelectedHost?.Export();
     }
-    
+
     public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.PingMonitor).ConfigureAwait(false);
+        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.PingMonitor)
+            .ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
+    private bool ModifyProfile_CanExecute(object obj)
+    {
+        return SelectedProfile is { IsDynamic: false };
+    }
 
     public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
@@ -351,14 +377,17 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private void DeleteProfileAction()
     {
-        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile }).ConfigureAwait(false);
+        ProfileDialogManager
+            .ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile })
+            .ConfigureAwait(false);
     }
 
     public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString())).ConfigureAwait(false);
+        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()))
+            .ConfigureAwait(false);
     }
 
     public ICommand ClearSearchCommand => new RelayCommand(_ => ClearSearchAction());
@@ -367,12 +396,13 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     {
         Search = string.Empty;
     }
+
     #endregion
 
     #region Methods
 
     /// <summary>
-    /// Set the host to ping.
+    ///     Set the host to ping.
     /// </summary>
     /// <param name="host">Host to ping</param>
     /// <returns>True if the host was set successfully, otherwise false</returns>
@@ -381,8 +411,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         // Check if it is already running or canceling
         if (IsRunning || IsCanceling)
         {
-            _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.CannotSetHostWhileRunningMessage);
-            
+            _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                Strings.CannotSetHostWhileRunningMessage);
+
             return false;
         }
 
@@ -390,64 +421,67 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
         return true;
     }
-    
+
     public async Task Start()
     {
         IsStatusMessageDisplayed = false;
         IsRunning = true;
-        
+
         _cancellationTokenSource = new CancellationTokenSource();
-        
+
         // Resolve hostnames
         (List<(IPAddress ipAddress, string hostname)> hosts, List<string> hostnamesNotResolved) hosts;
 
         try
         {
-            hosts = await HostRangeHelper.ResolveAsync(HostRangeHelper.CreateListFromInput(Host), SettingsManager.Current.Network_ResolveHostnamePreferIPv4, _cancellationTokenSource.Token);
+            hosts = await HostRangeHelper.ResolveAsync(HostRangeHelper.CreateListFromInput(Host),
+                SettingsManager.Current.Network_ResolveHostnamePreferIPv4, _cancellationTokenSource.Token);
         }
         catch (OperationCanceledException)
         {
             UserHasCanceled();
-            
+
             return;
         }
-        
+
         // Show error message if (some) hostnames could not be resolved
-        if(hosts.hostnamesNotResolved.Count > 0)
+        if (hosts.hostnamesNotResolved.Count > 0)
         {
-            StatusMessage = $"{Localization.Resources.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}";
+            StatusMessage =
+                $"{Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}";
             IsStatusMessageDisplayed = true;
         }
-        
+
         // Add host(s) to history
         AddHostToHistory(Host);
-        
+
         // Add host(s) to list and start the ping
-        foreach (var hostView in hosts.hosts.Select(currentHost => new PingMonitorView(Guid.NewGuid(), RemoveHostByGuid, currentHost)))
+        foreach (var hostView in hosts.hosts.Select(currentHost =>
+                     new PingMonitorView(Guid.NewGuid(), RemoveHostByGuid, currentHost)))
         {
             // Check if the user has canceled the operation
             if (_cancellationTokenSource.IsCancellationRequested)
             {
                 UserHasCanceled();
-                
+
                 return;
             }
-            
+
             Hosts.Add(hostView);
-            
+
             // Start the ping
             hostView.Start();
 
             // Wait a bit to prevent the UI from freezing
             await Task.Delay(25);
         }
-        
+
         Host = string.Empty;
-        
+
         IsCanceling = false;
         IsRunning = false;
     }
-    
+
     private void Stop()
     {
         IsCanceling = true;
@@ -468,10 +502,8 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         var i = -1;
 
         foreach (var host in Hosts)
-        {
             if (host.HostId.Equals(hostId))
                 i = Hosts.IndexOf(host);
-        }
 
         if (i == -1)
             return;
@@ -483,7 +515,8 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     private void AddHostToHistory(string host)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.PingMonitor_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+        var list = ListHelper.Modify(SettingsManager.Current.PingMonitor_HostHistory.ToList(), host,
+            SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items
         SettingsManager.Current.PingMonitor_HostHistory.Clear();
@@ -499,13 +532,18 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
         if (dueToChangedSize)
         {
-            ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.Profile_FloatPointFix;
+            ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
+                                GlobalStaticConfiguration.Profile_FloatPointFix;
         }
         else
         {
             if (ExpandProfileView)
             {
-                ProfileWidth = Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.Profile_WidthCollapsed) < GlobalStaticConfiguration.Profile_FloatPointFix ? new GridLength(GlobalStaticConfiguration.Profile_DefaultWidthExpanded) : new GridLength(_tempProfileWidth);
+                ProfileWidth =
+                    Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.Profile_WidthCollapsed) <
+                    GlobalStaticConfiguration.Profile_FloatPointFix
+                        ? new GridLength(GlobalStaticConfiguration.Profile_DefaultWidthExpanded)
+                        : new GridLength(_tempProfileWidth);
             }
             else
             {
@@ -531,7 +569,11 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private void SetProfilesView(ProfileInfo profile = null)
     {
-        Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.PingMonitor_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name) }.View;
+        Profiles = new CollectionViewSource
+        {
+            Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.PingMonitor_Enabled)
+                .OrderBy(x => x.Group).ThenBy(x => x.Name)
+        }.View;
 
         Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
 
@@ -552,7 +594,8 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
             */
 
             // Search by: Name, PingMonitor_Host
-            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.PingMonitor_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
+            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.PingMonitor_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
         // Set specific profile or first if null
@@ -560,7 +603,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
         if (profile != null)
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault(x => x.Equals(profile)) ??
-                Profiles.Cast<ProfileInfo>().FirstOrDefault();
+                              Profiles.Cast<ProfileInfo>().FirstOrDefault();
         else
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
     }
@@ -572,9 +615,11 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
         SetProfilesView(SelectedProfile);
     }
+
     #endregion
 
     #region Event
+
     private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
     {
         RefreshProfiles();
@@ -591,11 +636,12 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private void UserHasCanceled()
     {
-        StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
+        StatusMessage = Strings.CanceledByUserMessage;
         IsStatusMessageDisplayed = true;
-        
+
         IsCanceling = false;
         IsRunning = false;
     }
+
     #endregion
 }

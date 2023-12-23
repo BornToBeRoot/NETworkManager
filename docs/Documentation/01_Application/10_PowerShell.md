@@ -10,7 +10,7 @@ permalink: /Documentation/Application/PowerShell
 
 # PowerShell
 
-With **PowerShell** you can start PowerShell consoles on the local computer or connect to remote computers via [PowerShell Remoting](https://learn.microsoft.com/en-us/powershell/scripting/learn/ps101/08-powershell-remoting){:target="\_blank"}. The integration of PowerShell with NETworkManger supports tabs and profiles for hosts. The connection can be established via a profile (double-click, Enter key or right-click `Connect`) or directly via the [connection](#connect) dialog.  
+With **PowerShell** you can start PowerShell consoles on the local computer or connect to remote computers via [PowerShell Remoting](https://learn.microsoft.com/en-us/powershell/scripting/learn/ps101/08-powershell-remoting){:target="\_blank"}. The integration of PowerShell with NETworkManger supports tabs and profiles for hosts. The connection can be established via a profile (double-click, Enter key or right-click `Connect`) or directly via the [connection](#connect) dialog.
 
 Right-click on the tab will open the context menu with the following options:
 
@@ -230,6 +230,7 @@ Path to the PowerShell console.
 **Default:** `%ProgramFiles%\PowerShell\7\pwsh.exe`, `%ProgramFiles(x86)%\PowerShell\7\pwsh.exe` or `%windir%\System32\WindowsPowerShell\v1.0\powershell.exe`
 
 **Example:**
+
 - `C:\Program Files\PowerShell\7\pwsh.exe`
 
 {: .note }

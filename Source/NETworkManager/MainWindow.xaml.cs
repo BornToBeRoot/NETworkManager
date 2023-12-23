@@ -1,45 +1,105 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Net.NetworkInformation;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
-using System.Windows.Input;
-using System.Drawing;
 using System.Windows.Forms;
-using System.Text.RegularExpressions;
-using System.Linq;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Views;
-using NETworkManager.Settings;
-using System.Runtime.InteropServices;
+using System.Windows.Input;
 using System.Windows.Interop;
-using System.Collections.Generic;
-using NETworkManager.Utilities;
-using System.Runtime.CompilerServices;
 using System.Windows.Markup;
+using System.Windows.Threading;
+using log4net;
+using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
 using NETworkManager.Documentation;
-using NETworkManager.ViewModels;
-using ContextMenu = System.Windows.Controls.ContextMenu;
-using NETworkManager.Profiles;
 using NETworkManager.Localization;
-using NETworkManager.Update;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
-using NETworkManager.Models.EventSystem;
-using System.Windows.Threading;
-using System.Threading.Tasks;
-using System.Net.NetworkInformation;
-using System.IO;
-using System.Collections.ObjectModel;
-using NETworkManager.Models.Network;
 using NETworkManager.Models.AWS;
+using NETworkManager.Models.EventSystem;
+using NETworkManager.Models.Network;
 using NETworkManager.Models.PowerShell;
-using log4net;
+using NETworkManager.Models.PuTTY;
+using NETworkManager.Profiles;
+using NETworkManager.Settings;
+using NETworkManager.Update;
+using NETworkManager.Utilities;
+using NETworkManager.ViewModels;
+using NETworkManager.Views;
+using Application = System.Windows.Application;
+using ContextMenu = System.Windows.Controls.ContextMenu;
+using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
 
 namespace NETworkManager;
 
 public sealed partial class MainWindow : INotifyPropertyChanged
 {
+    #region Events
+
+    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+            // Show restart required note for some settings
+            case nameof(SettingsInfo.Localization_CultureCode):
+                IsRestartRequired = true;
+
+                break;
+
+            // Update TrayIcon if changed in the settings    
+            case nameof(SettingsInfo.TrayIcon_AlwaysShowIcon):
+                if (SettingsManager.Current.TrayIcon_AlwaysShowIcon && _notifyIcon == null)
+                    InitNotifyIcon();
+
+                if (_notifyIcon != null)
+                    _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
+
+                break;
+
+            // Update DNS server if changed in the settings
+            case nameof(SettingsInfo.Network_UseCustomDNSServer):
+            case nameof(SettingsInfo.Network_CustomDNSServer):
+                ConfigureDNS();
+
+                break;
+
+            // Update PowerShell profile if changed in the settings
+            case nameof(SettingsInfo.Appearance_PowerShellModifyGlobalProfile):
+            case nameof(SettingsInfo.Appearance_Theme):
+            case nameof(SettingsInfo.PowerShell_ApplicationFilePath):
+            case nameof(SettingsInfo.AWSSessionManager_ApplicationFilePath):
+                // Skip on welcome dialog
+                if (SettingsManager.Current.WelcomeDialog_Show)
+                    return;
+
+                WriteDefaultPowerShellProfileToRegistry();
+
+                break;
+        }
+    }
+
+    #endregion
+
+    #region Bugfixes
+
+    private void ScrollViewer_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
+    {
+        e.Handled = true;
+    }
+
+    #endregion
+
     #region PropertyChangedEventHandler
 
     public event PropertyChangedEventHandler PropertyChanged;
@@ -402,10 +462,10 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         if (ConfigurationManager.Current.ShowSettingsResetNoteOnStartup)
         {
             var settings = AppearanceManager.MetroDialog;
-            settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+            settings.AffirmativeButtonText = Strings.OK;
 
-            await this.ShowMessageAsync(Localization.Resources.Strings.SettingsHaveBeenReset,
-                Localization.Resources.Strings.SettingsFileFoundWasCorruptOrNotCompatibleMessage,
+            await this.ShowMessageAsync(Strings.SettingsHaveBeenReset,
+                Strings.SettingsFileFoundWasCorruptOrNotCompatibleMessage,
                 MessageDialogStyle.Affirmative, settings);
         }
 
@@ -414,7 +474,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.Resources.Strings.Welcome
+                Title = Strings.Welcome
             };
 
             var welcomeViewModel = new WelcomeViewModel(async instance =>
@@ -457,7 +517,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 }
 
                 // Check if PuTTY is installed
-                foreach (var file in Models.PuTTY.PuTTY.GetDefaultInstallationPaths.Where(File.Exists))
+                foreach (var file in PuTTY.GetDefaultInstallationPaths.Where(File.Exists))
                 {
                     SettingsManager.Current.PuTTY_ApplicationFilePath = file;
                     break;
@@ -543,13 +603,13 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
                 var settings = AppearanceManager.MetroDialog;
 
-                settings.AffirmativeButtonText = Localization.Resources.Strings.Close;
-                settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
+                settings.AffirmativeButtonText = Strings.Close;
+                settings.NegativeButtonText = Strings.Cancel;
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
                 ConfigurationManager.OnDialogOpen();
-                var result = await this.ShowMessageAsync(Localization.Resources.Strings.ConfirmClose,
-                    Localization.Resources.Strings.ConfirmCloseMessage, MessageDialogStyle.AffirmativeAndNegative,
+                var result = await this.ShowMessageAsync(Strings.ConfirmClose,
+                    Strings.ConfirmCloseMessage, MessageDialogStyle.AffirmativeAndNegative,
                     settings);
                 ConfigurationManager.OnDialogClose();
 
@@ -650,8 +710,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
 
     /// <summary>
-    /// Method when the application view becomes visible (again). Either when switching the applications 
-    /// or after opening and closing the settings.
+    ///     Method when the application view becomes visible (again). Either when switching the applications
+    ///     or after opening and closing the settings.
     /// </summary>
     /// <param name="name">Name of the application</param>
     /// <param name="fromSettings">Indicates whether the settings were previously open</param>
@@ -984,10 +1044,10 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         if (application == null)
         {
             var settings = AppearanceManager.MetroDialog;
-            settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+            settings.AffirmativeButtonText = Strings.OK;
 
-            await this.ShowMessageAsync(Localization.Resources.Strings.Error,
-                string.Format(Localization.Resources.Strings.CouldNotFindApplicationXXXMessage,
+            await this.ShowMessageAsync(Strings.Error,
+                string.Format(Strings.CouldNotFindApplicationXXXMessage,
                     data.Application.ToString()));
 
             return;
@@ -1072,7 +1132,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     }
 
     /// <summary>
-    /// Disable copy, cut, paste because we cannot handle it properly in the TextBoxApplicationSearch.
+    ///     Disable copy, cut, paste because we cannot handle it properly in the TextBoxApplicationSearch.
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -1088,7 +1148,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     #endregion
 
     #region Run Command
-    
+
     #region Variables
 
     private ICollectionView _runCommands;
@@ -1138,15 +1198,17 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+
     #endregion
-    
+
     #region ICommands & Actions
+
     public ICommand OpenRunCommand => new RelayCommand(_ => OpenRunAction());
 
     private void OpenRunAction()
     {
         ConfigurationManager.OnDialogOpen();
-        
+
         FlyoutRunCommand.IsOpen = true;
     }
 
@@ -1163,9 +1225,11 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     {
         RunCommandFlyoutClose();
     }
+
     #endregion
-    
+
     #region Methods
+
     private void SetRunCommandsView(RunCommandInfo selectedRunCommand = null)
     {
         RunCommands = new CollectionViewSource { Source = RunCommandManager.GetList() }.View;
@@ -1193,9 +1257,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     {
         SetRunCommandsView(SelectedRunCommand);
     }
-    
+
     /// <summary>
-    /// Execute the selected run command.
+    ///     Execute the selected run command.
     /// </summary>
     private void RunCommandDo()
     {
@@ -1223,26 +1287,28 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         // Close the flyout
         RunCommandFlyoutClose();
     }
-    
+
     /// <summary>
-    /// Close the run command flyout and clear the search.
+    ///     Close the run command flyout and clear the search.
     /// </summary>
     private void RunCommandFlyoutClose()
     {
         if (!FlyoutRunCommand.IsOpen)
             return;
-        
+
         FlyoutRunCommand.AreAnimationsEnabled = false;
         FlyoutRunCommand.IsOpen = false;
-        
+
         ConfigurationManager.OnDialogClose();
-        
+
         // Clear the search
         RunCommandSearch = string.Empty;
     }
+
     #endregion
-    
-    #region  Events
+
+    #region Events
+
     private void ListViewRunCommand_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
     {
         RunCommandDo();
@@ -1256,6 +1322,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         RunCommandFlyoutClose();
     }
+
     #endregion
 
     #endregion
@@ -1335,7 +1402,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.Resources.Strings.UnlockProfileFile
+                Title = Strings.UnlockProfileFile
             };
 
             var viewModel = new CredentialsPasswordProfileFileViewModel(async instance =>
@@ -1380,7 +1447,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
             OnProfilesLoaded(SelectedApplication.Name);
         }
-        catch (System.Security.Cryptography.CryptographicException)
+        catch (CryptographicException)
         {
             // Wrong password, try again...
             LoadProfile(info, true);
@@ -1388,16 +1455,16 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         catch (Exception ex)
         {
             ConfigurationManager.Current.ProfileManagerErrorMessage =
-                Localization.Resources.Strings.ProfileFileCouldNotBeLoaded;
+                Strings.ProfileFileCouldNotBeLoaded;
 
             var settings = AppearanceManager.MetroDialog;
-            settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+            settings.AffirmativeButtonText = Strings.OK;
 
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
             ConfigurationManager.OnDialogOpen();
-            await this.ShowMessageAsync(Localization.Resources.Strings.ProfileFileCouldNotBeLoaded,
-                string.Format(Localization.Resources.Strings.ProfileFileCouldNotBeLoadedMessage, ex.Message),
+            await this.ShowMessageAsync(Strings.ProfileFileCouldNotBeLoaded,
+                string.Format(Strings.ProfileFileCouldNotBeLoadedMessage, ex.Message),
                 MessageDialogStyle.Affirmative, settings);
             ConfigurationManager.OnDialogClose();
         }
@@ -1414,7 +1481,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     }
 
     /// <summary>
-    /// Update the view when the loaded profile file changed
+    ///     Update the view when the loaded profile file changed
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -1470,7 +1537,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     private IntPtr HwndHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
     {
         // Single instance or Hotkey --> Show window
-        if (msg == SingleInstance.WM_SHOWME || msg == WmHotkey && wParam.ToInt32() == 1)
+        if (msg == SingleInstance.WM_SHOWME || (msg == WmHotkey && wParam.ToInt32() == 1))
         {
             ShowWindow();
             handled = true;
@@ -1528,7 +1595,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         _notifyIcon = new NotifyIcon();
 
         // Get the application icon for the tray
-        using (var iconStream = System.Windows.Application
+        using (var iconStream = Application
                    .GetResourceStream(new Uri("pack://application:,,,/NETworkManager.ico"))?.Stream)
         {
             if (iconStream != null)
@@ -1541,7 +1608,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         _notifyIcon.Visible = true;
     }
 
-    private void NotifyIcon_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+    private void NotifyIcon_MouseDown(object sender, MouseEventArgs e)
     {
         if (e.Button != MouseButtons.Right)
             return;
@@ -1553,7 +1620,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private void NotifyIcon_Click(object sender, EventArgs e)
     {
-        System.Windows.Forms.MouseEventArgs mouse = (System.Windows.Forms.MouseEventArgs)e;
+        var mouse = (MouseEventArgs)e;
 
         if (mouse.Button != MouseButtons.Left)
             return;
@@ -1669,7 +1736,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         _isClosing = true;
 
         // Make it thread safe when it's called inside a dialog
-        System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(Close));
+        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(Close));
     }
 
     public void RestartApplication(bool asAdmin = false)
@@ -1781,9 +1848,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 List<(string Server, int Port)> dnsServers = new();
 
                 foreach (var dnsServer in SettingsManager.Current.Network_CustomDNSServer.Split(";"))
-                {
                     dnsServers.Add((dnsServer, 53));
-                }
 
                 dnsSettings.UseCustomDNSServers = true;
                 dnsSettings.DNSServers = dnsServers;
@@ -1857,66 +1922,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         // Show status window on network change
         if (SettingsManager.Current.Status_ShowWindowOnNetworkChange)
-        {
             await Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate { OpenStatusWindow(true); }));
-        }
 
         _isNetworkChanging = false;
-    }
-
-    #endregion
-
-    #region Events
-
-    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-        switch (e.PropertyName)
-        {
-            // Show restart required note for some settings
-            case nameof(SettingsInfo.Localization_CultureCode):
-                IsRestartRequired = true;
-
-                break;
-
-            // Update TrayIcon if changed in the settings    
-            case nameof(SettingsInfo.TrayIcon_AlwaysShowIcon):
-                if (SettingsManager.Current.TrayIcon_AlwaysShowIcon && _notifyIcon == null)
-                    InitNotifyIcon();
-
-                if (_notifyIcon != null)
-                    _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
-
-                break;
-
-            // Update DNS server if changed in the settings
-            case nameof(SettingsInfo.Network_UseCustomDNSServer):
-            case nameof(SettingsInfo.Network_CustomDNSServer):
-                ConfigureDNS();
-
-                break;
-
-            // Update PowerShell profile if changed in the settings
-            case nameof(SettingsInfo.Appearance_PowerShellModifyGlobalProfile):
-            case nameof(SettingsInfo.Appearance_Theme):
-            case nameof(SettingsInfo.PowerShell_ApplicationFilePath):
-            case nameof(SettingsInfo.AWSSessionManager_ApplicationFilePath):
-                // Skip on welcome dialog
-                if (SettingsManager.Current.WelcomeDialog_Show)
-                    return;
-
-                WriteDefaultPowerShellProfileToRegistry();
-
-                break;
-        }
-    }
-
-    #endregion
-
-    #region Bugfixes
-
-    private void ScrollViewer_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
-    {
-        e.Handled = true;
     }
 
     #endregion

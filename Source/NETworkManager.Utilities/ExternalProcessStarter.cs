@@ -5,7 +5,7 @@ namespace NETworkManager.Utilities;
 public static class ExternalProcessStarter
 {
     /// <summary>
-    /// Open an url with the default browser.
+    ///     Open an url with the default browser.
     /// </summary>
     /// <param name="url">Url like: https://github.com/BornToBeRoot</param>
     public static void OpenUrl(string url)

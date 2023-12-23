@@ -1,18 +1,18 @@
-﻿using MahApps.Metro.Controls.Dialogs;
+﻿using System.Windows;
+using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
-using System.Windows;
 
 namespace NETworkManager.Views;
 
 public partial class PuTTYSettingsView
 {
     /// <summary>
-    /// Variable to hold an instance of the view model.
+    ///     Variable to hold an instance of the view model.
     /// </summary>
     private readonly PuTTYSettingsViewModel _viewModel = new(DialogCoordinator.Instance);
 
     /// <summary>
-    /// Create a new instance of <see cref="PuTTYSettingsView"/>.
+    ///     Create a new instance of <see cref="PuTTYSettingsView" />.
     /// </summary>
     public PuTTYSettingsView()
     {
@@ -21,7 +21,7 @@ public partial class PuTTYSettingsView
     }
 
     /// <summary>
-    /// Set the file from drag and drop.
+    ///     Set the file from drag and drop.
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -37,7 +37,7 @@ public partial class PuTTYSettingsView
     }
 
     /// <summary>
-    /// Method to override the drag over effect.
+    ///     Method to override the drag over effect.
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -48,7 +48,7 @@ public partial class PuTTYSettingsView
     }
 
     /// <summary>
-    /// Set the file from drag and drop.
+    ///     Set the file from drag and drop.
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -64,7 +64,7 @@ public partial class PuTTYSettingsView
     }
 
     /// <summary>
-    /// Method to override the drag over effect.
+    ///     Method to override the drag over effect.
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -75,7 +75,7 @@ public partial class PuTTYSettingsView
     }
 
     /// <summary>
-    /// Set the folder from drag and drop.
+    ///     Set the folder from drag and drop.
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -91,7 +91,7 @@ public partial class PuTTYSettingsView
     }
 
     /// <summary>
-    /// Method to override the drag over effect.
+    ///     Method to override the drag over effect.
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>

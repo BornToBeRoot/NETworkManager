@@ -1,5 +1,5 @@
-﻿using NETworkManager.Models;
-using System;
+﻿using System;
+using NETworkManager.Models;
 
 namespace NETworkManager.Settings;
 
@@ -8,17 +8,6 @@ public static class CommandLineManager
     private const string ParameterIdentifier = "--";
     private const char ValueSplitIdentifier = ':';
 
-    // Public 
-    public static string ParameterHelp => $"{ParameterIdentifier}help";
-    public static string ParameterResetSettings => $"{ParameterIdentifier}reset-settings";
-    public static string ParameterApplication => $"{ParameterIdentifier}application";
-
-    // Internal use only
-    public static string ParameterAutostart => $"{ParameterIdentifier}autostart";
-    public static string ParameterRestartPid => $"{ParameterIdentifier}restart-pid";
-
-    public static CommandLineInfo Current { get; set; }
-            
     static CommandLineManager()
     {
         Current = new CommandLineInfo();
@@ -35,7 +24,7 @@ public static class CommandLineManager
                 if (param[0].Equals(ParameterHelp, StringComparison.InvariantCultureIgnoreCase))
                 {
                     Current.Help = true;
-                }// Autostart
+                } // Autostart
                 else if (param[0].Equals(ParameterAutostart, StringComparison.InvariantCultureIgnoreCase))
                 {
                     Current.Autostart = true;
@@ -85,6 +74,17 @@ public static class CommandLineManager
             }
         }
     }
+
+    // Public 
+    public static string ParameterHelp => $"{ParameterIdentifier}help";
+    public static string ParameterResetSettings => $"{ParameterIdentifier}reset-settings";
+    public static string ParameterApplication => $"{ParameterIdentifier}application";
+
+    // Internal use only
+    public static string ParameterAutostart => $"{ParameterIdentifier}autostart";
+    public static string ParameterRestartPid => $"{ParameterIdentifier}restart-pid";
+
+    public static CommandLineInfo Current { get; set; }
 
     public static string GetParameterWithSplitIdentifier(string parameter)
     {

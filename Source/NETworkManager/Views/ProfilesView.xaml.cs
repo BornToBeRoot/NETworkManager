@@ -1,8 +1,8 @@
-﻿using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.ViewModels;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
@@ -25,18 +25,15 @@ public partial class ProfilesView
     private void DataGridGroupsRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
         if (e.ChangedButton == MouseButton.Left)
-        {
             if (_viewModel.EditGroupCommand.CanExecute(null))
                 _viewModel.EditGroupCommand.Execute(null);
-        }
     }
+
     private void DataGridProfilesRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
         if (e.ChangedButton == MouseButton.Left)
-        {
             if (_viewModel.EditProfileCommand.CanExecute(null))
                 _viewModel.EditProfileCommand.Execute(null);
-        }
     }
 
     public void OnViewVisible()

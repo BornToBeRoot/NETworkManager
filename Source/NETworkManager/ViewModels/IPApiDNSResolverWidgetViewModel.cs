@@ -1,18 +1,37 @@
-﻿using NETworkManager.Models.IPApi;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Diagnostics;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using NETworkManager.Models.IPApi;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
 public class IPApiDNSResolverWidgetViewModel : ViewModelBase
 {
-    #region  Variables 
+    #region Events
+
+    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+            case nameof(SettingsInfo.Dashboard_CheckIPApiDNSResolver):
+                // Check if enabled via settings
+                if (SettingsManager.Current.Dashboard_CheckIPApiDNSResolver)
+                    Check();
+
+                break;
+        }
+    }
+
+    #endregion
+
+    #region Variables
+
     private bool _isRunning;
+
     public bool IsRunning
     {
         get => _isRunning;
@@ -27,6 +46,7 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
     }
 
     private DNSResolverResult _result;
+
     public DNSResolverResult Result
     {
         get => _result;
@@ -39,6 +59,7 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, load settings
@@ -57,20 +78,23 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
 
     private void LoadSettings()
     {
-
     }
+
     #endregion
 
     #region ICommands & Actions
+
     public ICommand CheckViaHotkeyCommand => new RelayCommand(_ => CheckViaHotkeyAction());
 
     private void CheckViaHotkeyAction()
     {
         Check();
     }
+
     #endregion
 
     #region Methods
+
     public void Check()
     {
         CheckAsync().ConfigureAwait(false);
@@ -98,20 +122,6 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
 
         IsRunning = false;
     }
-    #endregion
 
-    #region Events
-    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-        switch (e.PropertyName)
-        {
-            case nameof(SettingsInfo.Dashboard_CheckIPApiDNSResolver):
-                // Check if enabled via settings
-                if (SettingsManager.Current.Dashboard_CheckIPApiDNSResolver)
-                    Check();
-
-                break;
-        }
-    }
     #endregion
 }

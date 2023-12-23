@@ -1,16 +1,26 @@
-﻿using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Windows.Input;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
 public class ArpTableAddEntryViewModel : ViewModelBase
 {
+    private string _ipAddress;
+
+    private string _macAddress;
+
+    public ArpTableAddEntryViewModel(Action<ArpTableAddEntryViewModel> addCommand,
+        Action<ArpTableAddEntryViewModel> cancelHandler)
+    {
+        AddCommand = new RelayCommand(_ => addCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
+    }
+
     public ICommand AddCommand { get; }
 
     public ICommand CancelCommand { get; }
 
-    private string _ipAddress;
     public string IPAddress
     {
         get => _ipAddress;
@@ -24,7 +34,6 @@ public class ArpTableAddEntryViewModel : ViewModelBase
         }
     }
 
-    private string _macAddress;
     public string MACAddress
     {
         get => _macAddress;
@@ -37,10 +46,4 @@ public class ArpTableAddEntryViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-
-    public ArpTableAddEntryViewModel(Action<ArpTableAddEntryViewModel> addCommand, Action<ArpTableAddEntryViewModel> cancelHandler)
-    {
-        AddCommand = new RelayCommand(_ => addCommand(this));
-        CancelCommand = new RelayCommand(_ => cancelHandler(this));
-    }        
 }

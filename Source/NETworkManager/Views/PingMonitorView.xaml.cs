@@ -1,15 +1,13 @@
-﻿using NETworkManager.ViewModels;
-using System;
-using MahApps.Metro.Controls.Dialogs;
+﻿using System;
 using System.Net;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
 public partial class PingMonitorView
 {
     private readonly PingMonitorViewModel _viewModel;
-
-    public Guid HostId => _viewModel.HostId;
 
     public PingMonitorView(Guid hostId, Action<Guid> removeHostByGuid, (IPAddress ipAddress, string hostname) host)
     {
@@ -22,10 +20,13 @@ public partial class PingMonitorView
         Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
     }
 
+    public Guid HostId => _viewModel.HostId;
+
     public void Start()
     {
         _viewModel.Start();
     }
+
     public void Stop()
     {
         _viewModel.Stop();

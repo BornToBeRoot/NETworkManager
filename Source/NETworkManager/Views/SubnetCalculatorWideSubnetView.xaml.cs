@@ -1,4 +1,5 @@
-﻿using NETworkManager.ViewModels;
+﻿using System;
+using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
@@ -14,7 +15,7 @@ public partial class SubnetCalculatorWideSubnetView
         Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
     }
 
-    private void Dispatcher_ShutdownStarted(object sender, System.EventArgs e)
+    private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
     {
         _viewModel.OnShutdown();
     }

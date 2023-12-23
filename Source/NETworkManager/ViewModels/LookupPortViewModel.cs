@@ -1,27 +1,58 @@
 ﻿using System;
 using System.Collections;
-using System.Windows.Input;
-using System.Collections.ObjectModel;
-using NETworkManager.Settings;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows.Data;
-using NETworkManager.Models.Lookup;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
+using NETworkManager.Models.Lookup;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
-using System.Threading.Tasks;
-using NETworkManager.Models.Network;
 
 namespace NETworkManager.ViewModels;
 
 public class LookupPortLookupViewModel : ViewModelBase
 {
+    #region Constructor, Load settings
+
+    public LookupPortLookupViewModel(IDialogCoordinator instance)
+    {
+        _dialogCoordinator = instance;
+
+        SearchHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Lookup_Port_SearchHistory);
+        ResultsView = CollectionViewSource.GetDefaultView(Results);
+    }
+
+    #endregion
+
+    #region Methods
+
+    private void AddSearchToHistory(string portOrService)
+    {
+        // Create the new list
+        var list = ListHelper.Modify(SettingsManager.Current.Lookup_Port_SearchHistory.ToList(), portOrService,
+            SettingsManager.Current.General_HistoryListEntries);
+
+        // Clear the old items
+        SettingsManager.Current.Lookup_Port_SearchHistory.Clear();
+        OnPropertyChanged(nameof(Search)); // Raise property changed again, after the collection has been cleared
+
+        // Fill with the new items
+        list.ForEach(x => SettingsManager.Current.Lookup_Port_SearchHistory.Add(x));
+    }
+
+    #endregion
+
     #region Variables
 
     private readonly IDialogCoordinator _dialogCoordinator;
@@ -137,26 +168,17 @@ public class LookupPortLookupViewModel : ViewModelBase
 
     #endregion
 
-    #region Constructor, Load settings
-
-    public LookupPortLookupViewModel(IDialogCoordinator instance)
-    {
-        _dialogCoordinator = instance;
-
-        SearchHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Lookup_Port_SearchHistory);
-        ResultsView = CollectionViewSource.GetDefaultView(Results);
-    }
-
-    #endregion
-
     #region ICommands & Actions
 
     public ICommand PortLookupCommand =>
         new RelayCommand(_ => PortLookupAction().ConfigureAwait(false), PortLookup_CanExecute);
 
-    private bool PortLookup_CanExecute(object parameter) => Application.Current.MainWindow != null &&
-                                                            !((MetroWindow)Application.Current.MainWindow)
-                                                                .IsAnyDialogOpen && !HasError;
+    private bool PortLookup_CanExecute(object parameter)
+    {
+        return Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow)
+                   .IsAnyDialogOpen && !HasError;
+    }
 
     private async Task PortLookupAction()
     {
@@ -165,7 +187,7 @@ public class LookupPortLookupViewModel : ViewModelBase
         Results.Clear();
 
         var ports = new HashSet<int>();
-        var portsAndProtocols = new HashSet<Tuple<int,string>>();
+        var portsAndProtocols = new HashSet<Tuple<int, string>>();
         var services = new HashSet<string>();
 
         foreach (var search in Search.Split(';'))
@@ -173,40 +195,33 @@ public class LookupPortLookupViewModel : ViewModelBase
             var searchTrim = search.Trim();
 
             // Check if the search is a port number like 22
-            if (Regex.IsMatch( searchTrim, "^[0-9]{1,5}$"))
-            {
+            if (Regex.IsMatch(searchTrim, "^[0-9]{1,5}$"))
                 if (int.TryParse(searchTrim, out var port))
-                {
                     if (port is > 0 and < 65536)
                     {
                         ports.Add(port);
                         continue;
                     }
-                }
-            }
-            
+
             // Check if the search is a port number with protocol like 22/tcp
             if (Regex.IsMatch(searchTrim, "^[0-9]{1,5}/(tcp|udp|sctp)$"))
             {
                 var portAndProtocol = searchTrim.Split('/');
 
                 if (int.TryParse(portAndProtocol[0], out var port))
-                {
                     if (port is > 0 and < 65536)
                     {
                         portsAndProtocols.Add(new Tuple<int, string>(port, portAndProtocol[1]));
                         continue;
                     }
-                }
             }
 
             // Check if the search is a port range like 1-100
-            if (Regex.IsMatch(searchTrim,"^[0-9]{1,5}-[0-9]{1,5}$"))
+            if (Regex.IsMatch(searchTrim, "^[0-9]{1,5}-[0-9]{1,5}$"))
             {
                 var portRange = searchTrim.Split('-');
 
                 if (int.TryParse(portRange[0], out var startPort) && int.TryParse(portRange[1], out var endPort))
-                {
                     if (startPort is > 0 and < 65536 && endPort is > 0 and < 65536 && startPort < endPort)
                     {
                         for (var i = startPort; i < endPort + 1; i++)
@@ -214,18 +229,16 @@ public class LookupPortLookupViewModel : ViewModelBase
 
                         continue;
                     }
-                }
             }
-            
+
             // Check if the search is a port range with protocol like 1-100/tcp
-            if (Regex.IsMatch(searchTrim,"^[0-9]{1,5}-[0-9]{1,5}/(tcp|udp|sctp)$"))
+            if (Regex.IsMatch(searchTrim, "^[0-9]{1,5}-[0-9]{1,5}/(tcp|udp|sctp)$"))
             {
                 var portRangeAndProtocol = searchTrim.Split('/');
 
                 var portRange = portRangeAndProtocol[0].Split('-');
 
                 if (int.TryParse(portRange[0], out var startPort) && int.TryParse(portRange[1], out var endPort))
-                {
                     if (startPort is > 0 and < 65536 && endPort is > 0 and < 65536 && startPort < endPort)
                     {
                         for (var i = startPort; i < endPort + 1; i++)
@@ -233,7 +246,6 @@ public class LookupPortLookupViewModel : ViewModelBase
 
                         continue;
                     }
-                }
             }
 
             // Assume that everything else is a service like ssh
@@ -242,38 +254,32 @@ public class LookupPortLookupViewModel : ViewModelBase
 
         // Temporary collection to avoid duplicate entries
         var results = new HashSet<PortLookupInfo>();
-        
+
         // Get Port information's by port number
         // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator (Doesn't work with async/await)
         foreach (var port in ports)
-        {
-            foreach (var info in await PortLookup.LookupByPortAsync(port))
-                results.Add(info);
-        }
-        
+        foreach (var info in await PortLookup.LookupByPortAsync(port))
+            results.Add(info);
+
         // Get Port information's by port number and protocol
         // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator (Doesn't work with async/await)
-        foreach(var portAndProtocol in portsAndProtocols)
-        {
+        foreach (var portAndProtocol in portsAndProtocols)
             results.Add(
                 await PortLookup.LookupByPortAndProtocolAsync(
                     portAndProtocol.Item1,
                     (TransportProtocol)Enum.Parse(typeof(TransportProtocol), portAndProtocol.Item2, true))
             );
-        }
 
         // Get Port information's by service
         // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator (Doesn't work with async/await)
         foreach (var service in services)
-        {
-            foreach (var info in await PortLookup.SearchByServiceAsync(service))
-                results.Add(info);
-        }
+        foreach (var info in await PortLookup.SearchByServiceAsync(service))
+            results.Add(info);
 
         // Add the results to the collection
-        foreach(var result in results)
+        foreach (var result in results)
             Results.Add(result);
-        
+
         // Show a message if no vendor was found
         NothingFound = Results.Count == 0;
 
@@ -289,7 +295,7 @@ public class LookupPortLookupViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.Export
+            Title = Strings.Export
         };
 
         var exportViewModel = new ExportViewModel(async instance =>
@@ -307,10 +313,10 @@ public class LookupPortLookupViewModel : ViewModelBase
                 catch (Exception ex)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                    settings.AffirmativeButtonText = Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error,
-                        Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                    await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                        Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
                         Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
@@ -328,24 +334,6 @@ public class LookupPortLookupViewModel : ViewModelBase
         };
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-    }
-
-    #endregion
-
-    #region Methods
-
-    private void AddSearchToHistory(string portOrService)
-    {
-        // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.Lookup_Port_SearchHistory.ToList(), portOrService,
-            SettingsManager.Current.General_HistoryListEntries);
-
-        // Clear the old items
-        SettingsManager.Current.Lookup_Port_SearchHistory.Clear();
-        OnPropertyChanged(nameof(Search)); // Raise property changed again, after the collection has been cleared
-
-        // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.Lookup_Port_SearchHistory.Add(x));
     }
 
     #endregion

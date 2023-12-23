@@ -9,7 +9,8 @@
              d:DataContext="{d:DesignInstance viewModels:DashboardViewModel}">
     <TabControl Style="{StaticResource ResourceKey=DefaultTabControl}">
         <TabItem Header="{x:Static Member=localization:Strings.Dashboard }">
-            <ScrollViewer Style="{StaticResource ResourceKey=DefaultScrollViewer}" HorizontalScrollBarVisibility="Disabled" Margin="10">
+            <ScrollViewer Style="{StaticResource ResourceKey=DefaultScrollViewer}"
+                          HorizontalScrollBarVisibility="Disabled" Margin="10">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -25,8 +26,10 @@
                         <RowDefinition Height="10" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <ContentControl x:Name="ContentControlNetworkConnection" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" />
-                    <ContentControl x:Name="ContentControlIPApiIPGeolocation" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" />
+                    <ContentControl x:Name="ContentControlNetworkConnection" Grid.Column="0" Grid.Row="0"
+                                    Grid.ColumnSpan="5" />
+                    <ContentControl x:Name="ContentControlIPApiIPGeolocation" Grid.Column="0" Grid.Row="2"
+                                    Grid.ColumnSpan="3" />
                     <ContentControl x:Name="ContentControlIPApiDNSResolver" Grid.Column="4" Grid.Row="2" />
                 </Grid>
             </ScrollViewer>

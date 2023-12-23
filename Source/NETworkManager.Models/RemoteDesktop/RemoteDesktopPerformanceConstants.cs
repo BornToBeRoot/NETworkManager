@@ -31,5 +31,4 @@ public static class RemoteDesktopPerformanceConstants
 
     // Desktop composition
     public const int TS_PERF_ENABLE_DESKTOP_COMPOSITION = 0x00000100;
-
 }

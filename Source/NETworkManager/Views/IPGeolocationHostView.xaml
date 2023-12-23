@@ -37,7 +37,7 @@
             </dragablz:TabablzControl.InterTabController>
             <dragablz:TabablzControl.HeaderSuffixContent>
                 <Grid HorizontalAlignment="Right" Width="32" Height="32">
-                    <Button Style="{StaticResource CleanButton}" 
+                    <Button Style="{StaticResource CleanButton}"
                             Command="{Binding AddTabCommand}"
                             ToolTip="{x:Static localization:Strings.NewTab}"
                             Focusable="False">
@@ -97,7 +97,8 @@
                                 </Style>
                             </Rectangle.Style>
                         </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddATabToQueryTheIPGeolocation}">
+                        <TextBlock Grid.Column="1"
+                                   Text="{x:Static localization:Strings.AddATabToQueryTheIPGeolocation}">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
                                     <Style.Triggers>
@@ -119,9 +120,9 @@
                       Focusable="False"
                       Style="{StaticResource ProfileGridSplitter}" />
         <Expander Grid.Column="2" Grid.Row="0"
-                  x:Name="ExpanderProfiles" 
+                  x:Name="ExpanderProfiles"
                   Header="{x:Static localization:Strings.Profiles}"
-                  Style="{StaticResource ProfileExpander}" 
+                  Style="{StaticResource ProfileExpander}"
                   IsExpanded="{Binding ExpandProfileView}">
             <Grid>
                 <Grid
@@ -139,7 +140,7 @@
                             <ColumnDefinition Width="10" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <ToggleButton Grid.Column="0" Grid.Row="0" 
+                        <ToggleButton Grid.Column="0" Grid.Row="0"
                                       IsChecked="{Binding ExpandProfileView}"
                                       Focusable="False">
                             <ToggleButton.Style>
@@ -214,7 +215,8 @@
                                         <Rectangle Width="16" Height="16"
                                                    Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                             <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Magnify}" />
+                                                <VisualBrush Stretch="Uniform"
+                                                             Visual="{iconPacks:Material Kind=Magnify}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </MenuItem.Icon>
@@ -420,7 +422,8 @@
                         </Button>
                     </Grid>
                 </Grid>
-                <Grid Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=ProfileManagerIsEnabled, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+                <Grid
+                    Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=ProfileManagerIsEnabled, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                     <Grid.RowDefinitions>
                         <!-- Adjust the Height without TextBox -->
                         <RowDefinition Height="27" />
@@ -428,7 +431,7 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <ToggleButton Grid.Row="0" Grid.Column="0"
-                                  IsChecked="{Binding ExpandProfileView}" 
+                                  IsChecked="{Binding ExpandProfileView}"
                                   HorizontalAlignment="Left"
                                   Focusable="False">
                         <ToggleButton.Style>
@@ -464,7 +467,7 @@
                         <!-- Unlock profile button -->
                         <Button HorizontalAlignment="Center" VerticalAlignment="Center"
                                 Focusable="False"
-                                Command="{Binding UnlockProfileCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type mah:MetroWindow}}}"                                    
+                                Command="{Binding UnlockProfileCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type mah:MetroWindow}}}"
                                 Style="{StaticResource CleanButton}"
                                 Visibility="{Binding Source={x:Static Member=settings:ConfigurationManager.Current}, Path=ProfileManagerShowUnlock, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                             <Grid>
@@ -475,14 +478,18 @@
                                 <Rectangle Grid.Column="0" Grid.Row="0"
                                            Width="20" Height="20">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=InterfacePassword}" />
+                                        <VisualBrush Stretch="Uniform"
+                                                     Visual="{iconPacks:Modern Kind=InterfacePassword}" />
                                     </Rectangle.OpacityMask>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
                                             <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                                <DataTrigger
+                                                    Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
+                                                    Value="True">
+                                                    <Setter Property="Fill"
+                                                            Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>

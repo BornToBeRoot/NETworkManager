@@ -1,7 +1,8 @@
-﻿using NETworkManager.Utilities;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Validators;
 
@@ -12,6 +13,8 @@ public class EmptyOrIPv4AddressValidator : ValidationRule
         if (string.IsNullOrEmpty(value as string))
             return ValidationResult.ValidResult;
 
-        return Regex.IsMatch((string)value, RegexHelper.IPv4AddressRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Localization.Resources.Strings.EnterValidIPv4Address);
+        return Regex.IsMatch((string)value, RegexHelper.IPv4AddressRegex)
+            ? ValidationResult.ValidResult
+            : new ValidationResult(false, Strings.EnterValidIPv4Address);
     }
 }

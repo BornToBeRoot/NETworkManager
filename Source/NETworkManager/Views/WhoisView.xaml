@@ -121,17 +121,17 @@
                            Style="{DynamicResource StatusMessageTextBlock}" Margin="0,10,0,0" />
             </Grid>
             <Grid Grid.Column="0" Grid.Row="2"
-                        Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                  Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" 
+                <TextBlock Grid.Column="0" Grid.Row="0"
                            Style="{StaticResource HeaderTextBlock}"
                            Text="{x:Static localization:Strings.Result}" />
                 <TextBox Grid.Column="0" Grid.Row="1"
-                         VerticalScrollBarVisibility="Auto" 
-                         Text="{Binding Result}" 
+                         VerticalScrollBarVisibility="Auto"
+                         Text="{Binding Result}"
                          IsReadOnly="True">
                     <TextBox.Resources>
                         <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource TextBoxScrollBar}" />

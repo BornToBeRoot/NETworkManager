@@ -1,4 +1,6 @@
-﻿using NETworkManager.ViewModels;
+﻿using System.Windows;
+using System.Windows.Input;
+using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
@@ -9,12 +11,12 @@ public partial class SNMPOIDProfilesDialog
         InitializeComponent();
     }
 
-    private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+    private void UserControl_Loaded(object sender, RoutedEventArgs e)
     {
         TextBoxSearch.Focus();
     }
 
-    private void DataGridRow_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
         var x = (SNMPOIDProfilesViewModel)DataContext;
 

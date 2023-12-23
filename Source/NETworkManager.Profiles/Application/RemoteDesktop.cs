@@ -18,8 +18,12 @@ public static class RemoteDesktop
             // Display
             AdjustScreenAutomatically = SettingsManager.Current.RemoteDesktop_AdjustScreenAutomatically,
             UseCurrentViewSize = SettingsManager.Current.RemoteDesktop_UseCurrentViewSize,
-            DesktopWidth = SettingsManager.Current.RemoteDesktop_UseCustomScreenSize ? SettingsManager.Current.RemoteDesktop_CustomScreenWidth : SettingsManager.Current.RemoteDesktop_ScreenWidth,
-            DesktopHeight = SettingsManager.Current.RemoteDesktop_UseCustomScreenSize ? SettingsManager.Current.RemoteDesktop_CustomScreenHeight : SettingsManager.Current.RemoteDesktop_ScreenHeight,
+            DesktopWidth = SettingsManager.Current.RemoteDesktop_UseCustomScreenSize
+                ? SettingsManager.Current.RemoteDesktop_CustomScreenWidth
+                : SettingsManager.Current.RemoteDesktop_ScreenWidth,
+            DesktopHeight = SettingsManager.Current.RemoteDesktop_UseCustomScreenSize
+                ? SettingsManager.Current.RemoteDesktop_CustomScreenHeight
+                : SettingsManager.Current.RemoteDesktop_ScreenHeight,
             ColorDepth = SettingsManager.Current.RemoteDesktop_ColorDepth,
 
             // Authentication
@@ -31,8 +35,9 @@ public static class RemoteDesktop
             GatewayServerHostname = SettingsManager.Current.RemoteDesktop_GatewayServerHostname,
             GatewayServerBypassLocalAddresses = SettingsManager.Current.RemoteDesktop_GatewayServerBypassLocalAddresses,
             GatewayServerLogonMethod = SettingsManager.Current.RemoteDesktop_GatewayServerLogonMethod,
-            GatewayServerShareCredentialsWithRemoteComputer = SettingsManager.Current.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer,
-            
+            GatewayServerShareCredentialsWithRemoteComputer = SettingsManager.Current
+                .RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer,
+
             // Remote audio
             AudioRedirectionMode = SettingsManager.Current.RemoteDesktop_AudioRedirectionMode,
             AudioCaptureRedirectionMode = SettingsManager.Current.RemoteDesktop_AudioCaptureRedirectionMode,
@@ -68,7 +73,7 @@ public static class RemoteDesktop
         var info = CreateSessionInfo();
 
         // Get group info
-        GroupInfo group = ProfileManager.GetGroup(profile.Group);
+        var group = ProfileManager.GetGroup(profile.Group);
 
         // Override hostname
         info.Hostname = profile.RemoteDesktop_Host;
@@ -102,16 +107,24 @@ public static class RemoteDesktop
         {
             info.AdjustScreenAutomatically = profile.RemoteDesktop_AdjustScreenAutomatically;
             info.UseCurrentViewSize = profile.RemoteDesktop_UseCurrentViewSize;
-            info.DesktopWidth = profile.RemoteDesktop_UseCustomScreenSize ? profile.RemoteDesktop_CustomScreenWidth : profile.RemoteDesktop_ScreenWidth;
-            info.DesktopHeight = profile.RemoteDesktop_UseCustomScreenSize ? profile.RemoteDesktop_CustomScreenHeight : profile.RemoteDesktop_ScreenHeight;
+            info.DesktopWidth = profile.RemoteDesktop_UseCustomScreenSize
+                ? profile.RemoteDesktop_CustomScreenWidth
+                : profile.RemoteDesktop_ScreenWidth;
+            info.DesktopHeight = profile.RemoteDesktop_UseCustomScreenSize
+                ? profile.RemoteDesktop_CustomScreenHeight
+                : profile.RemoteDesktop_ScreenHeight;
             info.ColorDepth = profile.RemoteDesktop_ColorDepth;
         }
         else if (group.RemoteDesktop_OverrideDisplay)
         {
             info.AdjustScreenAutomatically = group.RemoteDesktop_AdjustScreenAutomatically;
             info.UseCurrentViewSize = group.RemoteDesktop_UseCurrentViewSize;
-            info.DesktopWidth = group.RemoteDesktop_UseCustomScreenSize ? group.RemoteDesktop_CustomScreenWidth : group.RemoteDesktop_ScreenWidth;
-            info.DesktopHeight = group.RemoteDesktop_UseCustomScreenSize ? group.RemoteDesktop_CustomScreenHeight : group.RemoteDesktop_ScreenHeight;
+            info.DesktopWidth = group.RemoteDesktop_UseCustomScreenSize
+                ? group.RemoteDesktop_CustomScreenWidth
+                : group.RemoteDesktop_ScreenWidth;
+            info.DesktopHeight = group.RemoteDesktop_UseCustomScreenSize
+                ? group.RemoteDesktop_CustomScreenHeight
+                : group.RemoteDesktop_ScreenHeight;
             info.ColorDepth = group.RemoteDesktop_ColorDepth;
         }
 
@@ -133,7 +146,8 @@ public static class RemoteDesktop
             info.GatewayServerHostname = profile.RemoteDesktop_GatewayServerHostname;
             info.GatewayServerBypassLocalAddresses = profile.RemoteDesktop_GatewayServerBypassLocalAddresses;
             info.GatewayServerLogonMethod = profile.RemoteDesktop_GatewayServerLogonMethod;
-            info.GatewayServerShareCredentialsWithRemoteComputer = profile.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+            info.GatewayServerShareCredentialsWithRemoteComputer =
+                profile.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
             info.UseGatewayServerCredentials = profile.RemoteDesktop_UseGatewayServerCredentials;
             info.GatewayServerUsername = profile.RemoteDesktop_GatewayServerUsername;
             info.GatewayServerDomain = profile.RemoteDesktop_GatewayServerDomain;
@@ -145,7 +159,8 @@ public static class RemoteDesktop
             info.GatewayServerHostname = group.RemoteDesktop_GatewayServerHostname;
             info.GatewayServerBypassLocalAddresses = group.RemoteDesktop_GatewayServerBypassLocalAddresses;
             info.GatewayServerLogonMethod = group.RemoteDesktop_GatewayServerLogonMethod;
-            info.GatewayServerShareCredentialsWithRemoteComputer = group.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+            info.GatewayServerShareCredentialsWithRemoteComputer =
+                group.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
             info.UseGatewayServerCredentials = group.RemoteDesktop_UseGatewayServerCredentials;
             info.GatewayServerUsername = group.RemoteDesktop_GatewayServerUsername;
             info.GatewayServerDomain = group.RemoteDesktop_GatewayServerDomain;
@@ -246,7 +261,7 @@ public static class RemoteDesktop
             info.VisualStyles = profile.RemoteDesktop_VisualStyles;
         else if (group.RemoteDesktop_OverrideVisualStyles)
             info.VisualStyles = group.RemoteDesktop_VisualStyles;
-        
+
         return info;
     }
 }

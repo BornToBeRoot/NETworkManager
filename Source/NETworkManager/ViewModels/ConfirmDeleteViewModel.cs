@@ -1,16 +1,26 @@
-﻿using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Windows.Input;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
 public class ConfirmDeleteViewModel : ViewModelBase
 {
+    private readonly string _message;
+
+    public ConfirmDeleteViewModel(Action<ConfirmDeleteViewModel> deleteCommand,
+        Action<ConfirmDeleteViewModel> cancelHandler, string message)
+    {
+        DeleteCommand = new RelayCommand(_ => deleteCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
+
+        Message = message;
+    }
+
     public ICommand DeleteCommand { get; }
 
     public ICommand CancelCommand { get; }
 
-    private readonly string _message;
     public string Message
     {
         get => _message;
@@ -22,13 +32,5 @@ public class ConfirmDeleteViewModel : ViewModelBase
             _message = value;
             OnPropertyChanged();
         }
-    }
-    
-    public ConfirmDeleteViewModel(Action<ConfirmDeleteViewModel> deleteCommand, Action<ConfirmDeleteViewModel> cancelHandler, string message)
-    {
-        DeleteCommand = new RelayCommand(_ => deleteCommand(this));
-        CancelCommand = new RelayCommand(_ => cancelHandler(this));
-
-        Message = message;
     }
 }

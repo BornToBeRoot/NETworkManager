@@ -1,22 +1,22 @@
 ﻿namespace NETworkManager.Models.Network;
 
+/// <summary>
+///     Represents all discovery protocols.
+/// </summary>
+public enum DiscoveryProtocol
+{
     /// <summary>
-    /// Represents all discovery protocols.
+    ///     Link layer and Cisco discovery protocol.
     /// </summary>
-    public enum DiscoveryProtocol
-    {
-        /// <summary>
-        /// Link layer and Cisco discovery protocol.
-        /// </summary>
-        LldpCdp,
+    LldpCdp,
 
-        /// <summary>
-        /// Link layer discovery protocol.
-        /// </summary>
-        Lldp,
+    /// <summary>
+    ///     Link layer discovery protocol.
+    /// </summary>
+    Lldp,
 
-        /// <summary>
-        /// Cisco discovery protocol.
-        /// </summary>
-        Cdp,
-    }
+    /// <summary>
+    ///     Cisco discovery protocol.
+    /// </summary>
+    Cdp
+}

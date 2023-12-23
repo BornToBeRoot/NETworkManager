@@ -1,23 +1,35 @@
-﻿using NETworkManager.Models.Lookup;
-using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using NETworkManager.Models.Lookup;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
 public sealed class PortScanner
 {
+    #region Constructor
+
+    public PortScanner(PortScannerOptions options)
+    {
+        _options = options;
+    }
+
+    #endregion
+
     #region Variables
+
     private int _progressValue;
 
     private readonly PortScannerOptions _options;
+
     #endregion
 
     #region Events
+
     public event EventHandler<PortScannerPortScannedArgs> PortScanned;
 
     private void OnPortScanned(PortScannerPortScannedArgs e)
@@ -45,17 +57,13 @@ public sealed class PortScanner
     {
         UserHasCanceled?.Invoke(this, EventArgs.Empty);
     }
-    #endregion
 
-    #region Constructor
-    public PortScanner(PortScannerOptions options)
-    {
-        _options = options;
-    }
     #endregion
 
     #region Methods
-    public void ScanAsync(IEnumerable<(IPAddress ipAddress, string hostname)> hosts, IEnumerable<int> ports, CancellationToken cancellationToken)
+
+    public void ScanAsync(IEnumerable<(IPAddress ipAddress, string hostname)> hosts, IEnumerable<int> ports,
+        CancellationToken cancellationToken)
     {
         _progressValue = 0;
 
@@ -119,7 +127,8 @@ public sealed class PortScanner
 
                                 if (_options.ShowAllResults || portState == PortState.Open)
                                     OnPortScanned(new PortScannerPortScannedArgs(
-                                        new PortScannerPortInfo(host.ipAddress, hostname, port, PortLookup.LookupByPortAndProtocol(port), portState)));
+                                        new PortScannerPortInfo(host.ipAddress, hostname, port,
+                                            PortLookup.LookupByPortAndProtocol(port), portState)));
                             }
                         }
 
@@ -144,5 +153,6 @@ public sealed class PortScanner
         Interlocked.Increment(ref _progressValue);
         OnProgressChanged();
     }
+
     #endregion
 }

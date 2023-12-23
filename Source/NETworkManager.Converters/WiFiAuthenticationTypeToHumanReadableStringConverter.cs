@@ -1,8 +1,8 @@
-﻿using NETworkManager.Models.Network;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows.Data;
 using Windows.Networking.Connectivity;
+using NETworkManager.Models.Network;
 
 namespace NETworkManager.Converters;
 
@@ -11,7 +11,9 @@ public sealed class WiFiAuthenticationTypeToHumanReadableStringConverter : IValu
     /* Translate the name of the accent */
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value is not NetworkAuthenticationType type ? "-/-" : $"{WiFi.GetHumanReadableNetworkAuthenticationType(type)}";
+        return value is not NetworkAuthenticationType type
+            ? "-/-"
+            : $"{WiFi.GetHumanReadableNetworkAuthenticationType(type)}";
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

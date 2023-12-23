@@ -17,6 +17,7 @@ namespace NETworkManager.ViewModels;
 public class SettingsViewModel : ViewModelBase
 {
     #region Variables
+
     private int _selectedTabIndex;
 
     public int SelectedTabIndex
@@ -37,6 +38,7 @@ public class SettingsViewModel : ViewModelBase
     private SettingsName _searchLastSelectedSettingsName;
 
     private string _search;
+
     public string Search
     {
         get => _search;
@@ -56,16 +58,20 @@ public class SettingsViewModel : ViewModelBase
 
             // Try to select the last selected application
             if (!SettingsViews.IsEmpty && SelectedSettingsView == null)
-                SelectedSettingsView = SettingsViews.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name == _searchLastSelectedSettingsName) ?? SettingsViews.Cast<SettingsViewInfo>().FirstOrDefault();
+                SelectedSettingsView =
+                    SettingsViews.Cast<SettingsViewInfo>()
+                        .FirstOrDefault(x => x.Name == _searchLastSelectedSettingsName) ??
+                    SettingsViews.Cast<SettingsViewInfo>().FirstOrDefault();
 
             // Show note if nothing was found
-            SearchNothingFound = SettingsViews.IsEmpty;            
+            SearchNothingFound = SettingsViews.IsEmpty;
 
             OnPropertyChanged();
         }
     }
 
     private bool _searchNothingFound;
+
     public bool SearchNothingFound
     {
         get => _searchNothingFound;
@@ -80,6 +86,7 @@ public class SettingsViewModel : ViewModelBase
     }
 
     private UserControl _settingsContent;
+
     public UserControl SettingsContent
     {
         get => _settingsContent;
@@ -94,6 +101,7 @@ public class SettingsViewModel : ViewModelBase
     }
 
     private SettingsViewInfo _selectedSettingsView;
+
     public SettingsViewInfo SelectedSettingsView
     {
         get => _selectedSettingsView;
@@ -137,9 +145,11 @@ public class SettingsViewModel : ViewModelBase
     private SNTPLookupSettingsView _sntpLookupSettingsView;
     private WakeOnLANSettingsView _wakeOnLANSettingsView;
     private BitCalculatorSettingsView _bitCalculatorSettingsView;
+
     #endregion
 
     #region Contructor, load settings
+
     public SettingsViewModel()
     {
         LoadSettings();
@@ -149,7 +159,8 @@ public class SettingsViewModel : ViewModelBase
     {
         SettingsViews = new CollectionViewSource { Source = SettingsViewManager.List }.View;
         SettingsViews.GroupDescriptions.Add(new PropertyGroupDescription(nameof(SettingsViewInfo.Group)));
-        SettingsViews.SortDescriptions.Add(new SortDescription(nameof(SettingsViewInfo.Name), ListSortDirection.Ascending));
+        SettingsViews.SortDescriptions.Add(new SortDescription(nameof(SettingsViewInfo.Name),
+            ListSortDirection.Ascending));
         SettingsViews.Filter = o =>
         {
             if (string.IsNullOrEmpty(Search))
@@ -163,28 +174,35 @@ public class SettingsViewModel : ViewModelBase
             var search = regex.Replace(Search, "");
 
             // Search by TranslatedName and Name
-            return regex.Replace(ResourceTranslator.Translate(ResourceIdentifier.SettingsName, info.Name), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || (regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
+            return regex.Replace(ResourceTranslator.Translate(ResourceIdentifier.SettingsName, info.Name), "")
+                .IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || regex.Replace(info.Name.ToString(), "")
+                .IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
     }
+
     #endregion
 
     #region ICommands & Actions
+
     public ICommand ClearSearchCommand => new RelayCommand(_ => ClearSearchAction());
 
     private void ClearSearchAction()
     {
         Search = string.Empty;
     }
+
     #endregion
 
     #region Methods
+
     public void ChangeSettingsView(ApplicationName applicationName)
     {
         if (SettingsViews.IsEmpty)
             return;
 
         // Try to find application in (filtered) settings views
-        var selectedApplicationSettingsView = SettingsViews.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name.ToString() == applicationName.ToString());
+        var selectedApplicationSettingsView = SettingsViews.Cast<SettingsViewInfo>()
+            .FirstOrDefault(x => x.Name.ToString() == applicationName.ToString());
 
         // Update selected settings view if application is found in (filtered) settings views
         if (selectedApplicationSettingsView != null)
@@ -342,8 +360,9 @@ public class SettingsViewModel : ViewModelBase
         {
             0 => DocumentationManager.GetIdentifierBySettingsName(SelectedSettingsView.Name),
             1 => DocumentationIdentifier.Profiles,
-            _ => DocumentationIdentifier.Default,
+            _ => DocumentationIdentifier.Default
         };
     }
+
     #endregion
 }

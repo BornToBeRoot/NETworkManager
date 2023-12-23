@@ -7,14 +7,13 @@ namespace NETworkManager.Controls;
 
 public class MultiSelectScrollingDataGrid : DataGrid
 {
+    public static readonly DependencyProperty SelectedItemsListProperty =
+        DependencyProperty.Register("SelectedItemsList", typeof(IList), typeof(MultiSelectScrollingDataGrid),
+            new PropertyMetadata(null));
+
     public MultiSelectScrollingDataGrid()
     {
         SelectionChanged += DataGridMultiItemSelect_SelectionChanged;
-    }
-
-    private void DataGridMultiItemSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        SelectedItemsList = SelectedItems;
     }
 
     public IList SelectedItemsList
@@ -23,7 +22,10 @@ public class MultiSelectScrollingDataGrid : DataGrid
         set => SetValue(SelectedItemsListProperty, value);
     }
 
-    public static readonly DependencyProperty SelectedItemsListProperty = DependencyProperty.Register("SelectedItemsList", typeof(IList), typeof(MultiSelectScrollingDataGrid), new PropertyMetadata(null));
+    private void DataGridMultiItemSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        SelectedItemsList = SelectedItems;
+    }
 
     protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
     {

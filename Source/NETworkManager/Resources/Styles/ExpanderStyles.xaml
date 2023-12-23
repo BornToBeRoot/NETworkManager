@@ -2,8 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks">
-    <Style x:Key="ExpanderDownHeader" 
-           BasedOn="{StaticResource ResourceKey=MahApps.Styles.ToggleButton.ExpanderHeader.Down}" 
+    <Style x:Key="ExpanderDownHeader"
+           BasedOn="{StaticResource ResourceKey=MahApps.Styles.ToggleButton.ExpanderHeader.Down}"
            TargetType="{x:Type TypeName=ToggleButton}">
         <Setter Property="Template">
             <Setter.Value>
@@ -17,29 +17,28 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Rectangle Grid.Column="0" Grid.Row="0" 
-                                       x:Name="Chevron" 
-                                       Width="16" Height="16" 
-                                       Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" 
+                            <Rectangle Grid.Column="0" Grid.Row="0"
+                                       x:Name="Chevron"
+                                       Width="16" Height="16"
+                                       Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}"
                                        VerticalAlignment="Center">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronUp}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
-                            <mahAppsControls:ContentControlEx Grid.Column="1" 
-                                                       Margin="10,0,0,0" 
-                                                       HorizontalAlignment="Stretch"
-                                                       Padding="{TemplateBinding Property=Padding}" 
-                                                       HorizontalContentAlignment="{TemplateBinding Property=HorizontalContentAlignment}"
-                                                       VerticalContentAlignment="{TemplateBinding Property=VerticalContentAlignment}"
-                                                       Content="{TemplateBinding Property=Content}"
-                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(mahAppsControls:ControlsHelper.ContentCharacterCasing)}"
-                                                       ContentStringFormat="{TemplateBinding Property=ContentStringFormat}"
-                                                       ContentTemplate="{TemplateBinding Property=ContentTemplate}"
-                                                       ContentTemplateSelector="{TemplateBinding Property=ContentTemplateSelector}"
-                                                       RecognizesAccessKey="True"
-                                                       SnapsToDevicePixels="{TemplateBinding Property=SnapsToDevicePixels}">
-                            </mahAppsControls:ContentControlEx>
+                            <mahAppsControls:ContentControlEx Grid.Column="1"
+                                                              Margin="10,0,0,0"
+                                                              HorizontalAlignment="Stretch"
+                                                              Padding="{TemplateBinding Property=Padding}"
+                                                              HorizontalContentAlignment="{TemplateBinding Property=HorizontalContentAlignment}"
+                                                              VerticalContentAlignment="{TemplateBinding Property=VerticalContentAlignment}"
+                                                              Content="{TemplateBinding Property=Content}"
+                                                              ContentCharacterCasing="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(mahAppsControls:ControlsHelper.ContentCharacterCasing)}"
+                                                              ContentStringFormat="{TemplateBinding Property=ContentStringFormat}"
+                                                              ContentTemplate="{TemplateBinding Property=ContentTemplate}"
+                                                              ContentTemplateSelector="{TemplateBinding Property=ContentTemplateSelector}"
+                                                              RecognizesAccessKey="True"
+                                                              SnapsToDevicePixels="{TemplateBinding Property=SnapsToDevicePixels}" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -51,8 +50,8 @@
                             </Setter>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Chevron" Property="Fill" 
-                                    Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}"/>
+                            <Setter TargetName="Chevron" Property="Fill"
+                                    Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -60,19 +59,19 @@
         </Setter>
     </Style>
 
-    <Style x:Key="DefaultExpander" 
-           TargetType="{x:Type TypeName=Expander}" 
+    <Style x:Key="DefaultExpander"
+           TargetType="{x:Type TypeName=Expander}"
            BasedOn="{StaticResource ResourceKey=MahApps.Styles.Expander}">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="ExpandDirection" Value="Down" />
         <Setter Property="Padding" Value="0" />
-        <Setter Property="mahAppsControls:HeaderedControlHelper.HeaderBackground" 
+        <Setter Property="mahAppsControls:HeaderedControlHelper.HeaderBackground"
                 Value="Transparent" />
         <Setter Property="mahAppsControls:HeaderedControlHelper.HeaderForeground"
                 Value="{StaticResource ResourceKey=MahApps.Brushes.Gray3}" />
-        <Setter Property="mahAppsControls:ControlsHelper.ContentCharacterCasing" 
+        <Setter Property="mahAppsControls:ControlsHelper.ContentCharacterCasing"
                 Value="Normal" />
-        <Setter Property="mahAppsControls:ExpanderHelper.HeaderDownStyle" 
+        <Setter Property="mahAppsControls:ExpanderHelper.HeaderDownStyle"
                 Value="{DynamicResource ResourceKey=ExpanderDownHeader}" />
     </Style>
 
@@ -82,7 +81,7 @@
         <Setter Property="Template" Value="{x:Null}" />
     </Style>
 
-    <Style x:Key="ProfileExpanderClosed" 
+    <Style x:Key="ProfileExpanderClosed"
            BasedOn="{StaticResource ResourceKey=MahApps.Styles.ToggleButton.ExpanderHeader.Right}"
            TargetType="{x:Type TypeName=ToggleButton}">
         <Setter Property="Template">
@@ -98,33 +97,33 @@
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <Rectangle Grid.Row="0" x:Name="Chevron"
-                                       Width="16" Height="16" 
-                                       Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" Margin="10,15,10,10" 
-                                       VerticalAlignment="Center" 
+                                       Width="16" Height="16"
+                                       Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" Margin="10,15,10,10"
+                                       VerticalAlignment="Center"
                                        HorizontalAlignment="Center">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronLeft}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
-                            <TextBlock Grid.Row="1" 
-                                       Text="{TemplateBinding Property=Content}" 
-                                       TextOptions.TextFormattingMode="Display" 
-                                       Foreground="{TemplateBinding Property=Foreground}" 
-                                       Style="{StaticResource ResourceKey=DefaultTextBlock}" 
-                                       FontSize="18" 
-                                       Margin="0" 
+                            <TextBlock Grid.Row="1"
+                                       Text="{TemplateBinding Property=Content}"
+                                       TextOptions.TextFormattingMode="Display"
+                                       Foreground="{TemplateBinding Property=Foreground}"
+                                       Style="{StaticResource ResourceKey=DefaultTextBlock}"
+                                       FontSize="18"
+                                       Margin="0"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center">
                                 <TextBlock.LayoutTransform>
-                                        <RotateTransform Angle="-90" />
+                                    <RotateTransform Angle="-90" />
                                 </TextBlock.LayoutTransform>
                             </TextBlock>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Chevron" Property="Fill" 
-                                    Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}"/>
+                            <Setter TargetName="Chevron" Property="Fill"
+                                    Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -132,24 +131,24 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ProfileExpander" 
-           TargetType="{x:Type TypeName=Expander}" 
+    <Style x:Key="ProfileExpander"
+           TargetType="{x:Type TypeName=Expander}"
            BasedOn="{StaticResource ResourceKey=MahApps.Styles.Expander}">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="ExpandDirection" Value="Right" />
         <Setter Property="Padding" Value="10" />
-        <Setter Property="mahAppsControls:HeaderedControlHelper.HeaderBackground" 
+        <Setter Property="mahAppsControls:HeaderedControlHelper.HeaderBackground"
                 Value="Transparent" />
-        <Setter Property="mahAppsControls:HeaderedControlHelper.HeaderForeground" 
+        <Setter Property="mahAppsControls:HeaderedControlHelper.HeaderForeground"
                 Value="{StaticResource ResourceKey=MahApps.Brushes.Gray3}" />
-        <Setter Property="mahAppsControls:ControlsHelper.ContentCharacterCasing" 
+        <Setter Property="mahAppsControls:ControlsHelper.ContentCharacterCasing"
                 Value="Normal" />
         <Setter Property="mahAppsControls:ExpanderHelper.HeaderRightStyle"
                 Value="{DynamicResource ResourceKey=ProfileExpanderClosed}" />
         <Style.Triggers>
             <Trigger Property="IsExpanded" Value="True">
                 <Setter Property="ExpandDirection" Value="Down" />
-                <Setter Property="mahAppsControls:ExpanderHelper.HeaderDownStyle" 
+                <Setter Property="mahAppsControls:ExpanderHelper.HeaderDownStyle"
                         Value="{DynamicResource ResourceKey=ProfileExpanderOpen}" />
             </Trigger>
         </Style.Triggers>

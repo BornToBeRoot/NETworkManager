@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Windows.Controls;
+using NETworkManager.Localization.Resources;
 
 namespace NETworkManager.Validators;
 
@@ -11,7 +12,8 @@ public class IsNameUnique : ValidationRule
 
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
-        return Wrapper.UsedNames.Any(x => x.Equals(value as string, StringComparison.OrdinalIgnoreCase)) ?
-            new ValidationResult(false, Localization.Resources.Strings.ErrorMessage_NameIsAlreadyUsed) : ValidationResult.ValidResult;
+        return Wrapper.UsedNames.Any(x => x.Equals(value as string, StringComparison.OrdinalIgnoreCase))
+            ? new ValidationResult(false, Strings.ErrorMessage_NameIsAlreadyUsed)
+            : ValidationResult.ValidResult;
     }
 }

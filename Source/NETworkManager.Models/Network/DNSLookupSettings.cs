@@ -1,10 +1,10 @@
-﻿using DnsClient;
-using System;
+﻿using System;
+using DnsClient;
 
 namespace NETworkManager.Models.Network;
 
 public class DNSLookupSettings
-{        
+{
     public bool AddDNSSuffix { get; set; } = true;
     public bool UseCustomDNSSuffix { get; set; }
     public string CustomDNSSuffix { get; set; }

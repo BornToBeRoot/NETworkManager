@@ -1,33 +1,12 @@
 ﻿namespace NETworkManager.Models.IPApi;
 
 /// <summary>
-/// Class contains the DNS resolver information.
+///     Class contains the DNS resolver information.
 /// </summary>
 public class DNSResolverInfo
 {
     /// <summary>
-    /// IP address of the DNS server.
-    /// </summary>
-    public string DnsIp { get; set; }
-
-    /// <summary>
-    /// Geographic location of the DNS server.
-    /// </summary>
-    public string DnsGeo { get; set; }
-
-
-    /// <summary>
-    /// IP address of the Edns server.
-    /// </summary>
-    public string EdnsIp { get; set; }
-
-    /// <summary>
-    /// Geographic location of the Edns server.
-    /// </summary>
-    public string EdnsGeo { get; set; }
-
-    /// <summary>
-    /// Create an instance of <see cref="DNSResolverInfo"/> with parameters.
+    ///     Create an instance of <see cref="DNSResolverInfo" /> with parameters.
     /// </summary>
     /// <param name="dnsIp">IP address of the DNS server.</param>
     /// <param name="dnsGeo">Geographic location of the DNS server.</param>
@@ -42,10 +21,31 @@ public class DNSResolverInfo
     }
 
     /// <summary>
-    /// Parses the DNS resolver from the deserialization info.
+    ///     IP address of the DNS server.
     /// </summary>
-    /// <param name="info"><see cref="DNSResolverDeserializationInfo"/> to parse to <see cref="DNSResolverInfo"/>.</param>
-    /// <returns>New instance of <see cref="DNSResolverInfo"/> from <see cref="DNSResolverDeserializationInfo"/> data.</returns>
+    public string DnsIp { get; set; }
+
+    /// <summary>
+    ///     Geographic location of the DNS server.
+    /// </summary>
+    public string DnsGeo { get; set; }
+
+
+    /// <summary>
+    ///     IP address of the Edns server.
+    /// </summary>
+    public string EdnsIp { get; set; }
+
+    /// <summary>
+    ///     Geographic location of the Edns server.
+    /// </summary>
+    public string EdnsGeo { get; set; }
+
+    /// <summary>
+    ///     Parses the DNS resolver from the deserialization info.
+    /// </summary>
+    /// <param name="info"><see cref="DNSResolverDeserializationInfo" /> to parse to <see cref="DNSResolverInfo" />.</param>
+    /// <returns>New instance of <see cref="DNSResolverInfo" /> from <see cref="DNSResolverDeserializationInfo" /> data.</returns>
     public static DNSResolverInfo Parse(DNSResolverDeserializationInfo info)
     {
         // Strings can be null if no data is available.

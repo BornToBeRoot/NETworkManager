@@ -7,7 +7,7 @@
         <Setter Property="Margin" Value="10,5,0,5" />
         <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
     </Style>
-    
+
     <Style x:Key="HelpImageRectangle" TargetType="{x:Type Rectangle}">
         <Style.Resources>
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
@@ -15,7 +15,7 @@
         <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
         <Setter Property="OpacityMask">
             <Setter.Value>
-                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=HelpCircleOutline}"/>
+                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=HelpCircleOutline}" />
             </Setter.Value>
         </Setter>
         <Setter Property="ToolTipService.InitialShowDelay" Value="0" />
@@ -29,7 +29,7 @@
         <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
         <Setter Property="OpacityMask">
             <Setter.Value>
-                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=InformationOutline}"/>
+                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=InformationOutline}" />
             </Setter.Value>
         </Setter>
         <Setter Property="ToolTipService.InitialShowDelay" Value="0" />
@@ -43,7 +43,7 @@
         <Setter Property="Fill" Value="Orange" />
         <Setter Property="OpacityMask">
             <Setter.Value>
-                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=AlertOutline}"/>
+                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=AlertOutline}" />
             </Setter.Value>
         </Setter>
         <Setter Property="ToolTipService.InitialShowDelay" Value="0" />
@@ -57,7 +57,7 @@
         <Setter Property="Fill" Value="Red" />
         <Setter Property="OpacityMask">
             <Setter.Value>
-                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=AlertOctagonOutline}"/>
+                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=AlertOctagonOutline}" />
             </Setter.Value>
         </Setter>
         <Setter Property="ToolTipService.InitialShowDelay" Value="0" />
@@ -76,7 +76,8 @@
                 <Trigger.EnterActions>
                     <BeginStoryboard>
                         <Storyboard>
-                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" From="0" To="720" Duration="0:0:2" />
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" From="0" To="720"
+                                             Duration="0:0:2" />
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.EnterActions>
@@ -92,7 +93,7 @@
         <Setter Property="Fill" Value="#badc58" />
         <Setter Property="OpacityMask">
             <Setter.Value>
-                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Check}"/>
+                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Check}" />
             </Setter.Value>
         </Setter>
     </Style>
@@ -105,7 +106,7 @@
         <Setter Property="Fill" Value="Orange" />
         <Setter Property="OpacityMask">
             <Setter.Value>
-                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=AlertOutline}"/>
+                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=AlertOutline}" />
             </Setter.Value>
         </Setter>
     </Style>
@@ -118,7 +119,7 @@
         <Setter Property="Fill" Value="Red" />
         <Setter Property="OpacityMask">
             <Setter.Value>
-                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}"/>
+                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
             </Setter.Value>
         </Setter>
     </Style>
@@ -146,7 +147,7 @@
         <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
         <Setter Property="OpacityMask">
             <Setter.Value>
-                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=InformationOutline}"/>
+                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=InformationOutline}" />
             </Setter.Value>
         </Setter>
     </Style>
@@ -165,7 +166,7 @@
         <Setter Property="Fill" Value="#badc58" />
         <Setter Property="OpacityMask">
             <Setter.Value>
-                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=LanConnect}"/>
+                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=LanConnect}" />
             </Setter.Value>
         </Setter>
     </Style>
@@ -178,7 +179,7 @@
         <Setter Property="Fill" Value="Red" />
         <Setter Property="OpacityMask">
             <Setter.Value>
-                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=LanDisconnect}"/>
+                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=LanDisconnect}" />
             </Setter.Value>
         </Setter>
     </Style>
@@ -191,7 +192,7 @@
         <Setter Property="Fill" Value="#badc58" />
         <Setter Property="OpacityMask">
             <Setter.Value>
-                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=NetworkPort}"/>
+                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=NetworkPort}" />
             </Setter.Value>
         </Setter>
     </Style>
@@ -204,7 +205,7 @@
         <Setter Property="Fill" Value="Red" />
         <Setter Property="OpacityMask">
             <Setter.Value>
-                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=NetworkPortDisconnect}"/>
+                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=NetworkPortDisconnect}" />
             </Setter.Value>
         </Setter>
     </Style>

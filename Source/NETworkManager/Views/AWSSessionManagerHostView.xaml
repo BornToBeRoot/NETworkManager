@@ -10,7 +10,6 @@
              xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-             xmlns:resources="clr-namespace:NETworkManager.Properties"
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              xmlns:interactivity="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
@@ -19,7 +18,6 @@
              Loaded="UserControl_Loaded"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:AWSSessionManagerHostViewModel}">
     <UserControl.Resources>
-        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:IsDynamicProfileToBooleanConverter x:Key="IsDynamicProfileToBooleanConverter" />
@@ -63,7 +61,7 @@
                 </dragablz:TabablzControl.InterTabController>
                 <dragablz:TabablzControl.HeaderSuffixContent>
                     <Grid HorizontalAlignment="Right" Width="32" Height="32">
-                        <Button Style="{StaticResource CleanButton}" 
+                        <Button Style="{StaticResource CleanButton}"
                                 Command="{Binding ConnectCommand}"
                                 ToolTip="{x:Static localization:Strings.NewConnectionDots}"
                                 Focusable="False">
@@ -262,7 +260,7 @@
                                 <ColumnDefinition Width="10" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <ToggleButton Grid.Column="0" Grid.Row="0" 
+                            <ToggleButton Grid.Column="0" Grid.Row="0"
                                           IsChecked="{Binding ExpandProfileView}"
                                           Focusable="False">
                                 <ToggleButton.Style>
@@ -349,7 +347,7 @@
                                 </Button>
                                 <mah:ProgressRing Width="16" Height="16" IsActive="{Binding IsSyncing}" />
                             </Grid>
-                            <Button Grid.Column="6" Grid.Row="0" 
+                            <Button Grid.Column="6" Grid.Row="0"
                                     Focusable="False"
                                     Style="{StaticResource CleanButton}"
                                     Command="{Binding AddProfileCommand}"

@@ -1,23 +1,34 @@
 ﻿// Contains code from: https://stackoverflow.com/questions/5028598/hosting-external-app-in-wpf-window
 
-using System.Windows;
 using System;
-using System.Windows.Threading;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using NETworkManager.Utilities;
-using NETworkManager.Models.TigerVNC;
+using System.Windows;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models.TigerVNC;
 using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Controls;
 
 public partial class TigerVNCControl : UserControlBase
 {
+    #region Events
+
+    private void TigerVNCGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        if (IsConnected)
+            ResizeEmbeddedWindow();
+    }
+
+    #endregion
+
     #region Variables
+
     private bool _initialized;
-    private bool _closing;      // When the tab is closed --> OnClose()
+    private bool _closing; // When the tab is closed --> OnClose()
 
     private readonly IDialogCoordinator _dialogCoordinator;
 
@@ -27,6 +38,7 @@ public partial class TigerVNCControl : UserControlBase
     private IntPtr _appWin;
 
     private bool _isConnected;
+
     public bool IsConnected
     {
         get => _isConnected;
@@ -41,6 +53,7 @@ public partial class TigerVNCControl : UserControlBase
     }
 
     private bool _isConnecting;
+
     public bool IsConnecting
     {
         get => _isConnecting;
@@ -53,9 +66,11 @@ public partial class TigerVNCControl : UserControlBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, load
+
     public TigerVNCControl(TigerVNCSessionInfo sessionInfo)
     {
         InitializeComponent();
@@ -87,9 +102,11 @@ public partial class TigerVNCControl : UserControlBase
     {
         CloseTab();
     }
+
     #endregion
 
     #region ICommands & Actions
+
     public ICommand ReconnectCommand
     {
         get { return new RelayCommand(p => ReconnectAction()); }
@@ -99,9 +116,11 @@ public partial class TigerVNCControl : UserControlBase
     {
         Reconnect();
     }
+
     #endregion
 
-    #region Methods       
+    #region Methods
+
     private async Task Connect()
     {
         IsConnecting = true;
@@ -145,7 +164,8 @@ public partial class TigerVNCControl : UserControlBase
 
                 if (_appWin != IntPtr.Zero)
                 {
-                    while (!_process.HasExited && _process.MainWindowTitle.IndexOf(" - TigerVNC", StringComparison.Ordinal) == -1)
+                    while (!_process.HasExited &&
+                           _process.MainWindowTitle.IndexOf(" - TigerVNC", StringComparison.Ordinal) == -1)
                     {
                         await Task.Delay(100);
 
@@ -164,7 +184,9 @@ public partial class TigerVNCControl : UserControlBase
 
                         // Remove border etc.
                         long style = (int)NativeMethods.GetWindowLong(_appWin, NativeMethods.GWL_STYLE);
-                        style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP | NativeMethods.WS_THICKFRAME); // NativeMethods.WS_POPUP --> Overflow? (https://github.com/BornToBeRoot/NETworkManager/issues/167)
+                        style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP |
+                                   NativeMethods
+                                       .WS_THICKFRAME); // NativeMethods.WS_POPUP --> Overflow? (https://github.com/BornToBeRoot/NETworkManager/issues/167)
                         NativeMethods.SetWindowLongPtr(_appWin, NativeMethods.GWL_STYLE, new IntPtr(style));
 
                         IsConnected = true;
@@ -186,10 +208,10 @@ public partial class TigerVNCControl : UserControlBase
             if (!_closing)
             {
                 var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                settings.AffirmativeButtonText = Strings.OK;
                 ConfigurationManager.OnDialogOpen();
 
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error,
+                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
                     ex.Message, MessageDialogStyle.Affirmative, settings);
 
                 ConfigurationManager.OnDialogClose();
@@ -208,7 +230,8 @@ public partial class TigerVNCControl : UserControlBase
     private void ResizeEmbeddedWindow()
     {
         if (IsConnected)
-            NativeMethods.SetWindowPos(_process.MainWindowHandle, IntPtr.Zero, 0, 0, WindowHost.ClientSize.Width, WindowHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
+            NativeMethods.SetWindowPos(_process.MainWindowHandle, IntPtr.Zero, 0, 0, WindowHost.ClientSize.Width,
+                WindowHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
     }
 
     public void Disconnect()
@@ -231,13 +254,6 @@ public partial class TigerVNCControl : UserControlBase
 
         Disconnect();
     }
-    #endregion
 
-    #region Events
-    private void TigerVNCGrid_SizeChanged(object sender, SizeChangedEventArgs e)
-    {
-        if (IsConnected)
-            ResizeEmbeddedWindow();
-    }
     #endregion
 }

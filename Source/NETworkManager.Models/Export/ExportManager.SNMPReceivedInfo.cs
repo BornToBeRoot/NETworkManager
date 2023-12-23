@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
@@ -11,11 +12,11 @@ namespace NETworkManager.Models.Export;
 public static partial class ExportManager
 {
     /// <summary>
-    /// Method to export objects from type <see cref="SNMPInfo"/> to a file.
+    ///     Method to export objects from type <see cref="SNMPInfo" /> to a file.
     /// </summary>
     /// <param name="filePath">Path to the export file.</param>
-    /// <param name="fileType">Allowed <see cref="ExportFileType"/> are CSV, XML or JSON.</param>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{SNMPInfo}"/> to export.</param>
+    /// <param name="fileType">Allowed <see cref="ExportFileType" /> are CSV, XML or JSON.</param>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{SNMPInfo}" /> to export.</param>
     public static void Export(string filePath, ExportFileType fileType,
         IReadOnlyList<SNMPInfo> collection)
     {
@@ -37,9 +38,9 @@ public static partial class ExportManager
     }
 
     /// <summary>
-    /// Creates a CSV file from the given <see cref="SNMPInfo"/> collection.
+    ///     Creates a CSV file from the given <see cref="SNMPInfo" /> collection.
     /// </summary>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{SNMPInfo}"/> to export.</param>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{SNMPInfo}" /> to export.</param>
     /// <param name="filePath">Path to the export file.</param>
     private static void CreateCsv(IEnumerable<SNMPInfo> collection, string filePath)
     {
@@ -50,13 +51,13 @@ public static partial class ExportManager
         foreach (var info in collection)
             stringBuilder.AppendLine($"{info.OID},{info.Data}");
 
-        System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
+        File.WriteAllText(filePath, stringBuilder.ToString());
     }
 
     /// <summary>
-    /// Creates a XML file from the given <see cref="SNMPInfo"/> collection.
+    ///     Creates a XML file from the given <see cref="SNMPInfo" /> collection.
     /// </summary>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{SNMPInfo}"/> to export.</param>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{SNMPInfo}" /> to export.</param>
     /// <param name="filePath">Path to the export file.</param>
     private static void CreateXml(IEnumerable<SNMPInfo> collection, string filePath)
     {
@@ -73,23 +74,21 @@ public static partial class ExportManager
     }
 
     /// <summary>
-    /// Creates a JSON file from the given <see cref="SNMPInfo"/> collection.
+    ///     Creates a JSON file from the given <see cref="SNMPInfo" /> collection.
     /// </summary>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{SNMPInfo}"/> to export.</param>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{SNMPInfo}" /> to export.</param>
     /// <param name="filePath">Path to the export file.</param>
     private static void CreateJson(IReadOnlyList<SNMPInfo> collection, string filePath)
     {
         var jsonData = new object[collection.Count];
 
         for (var i = 0; i < collection.Count; i++)
-        {
             jsonData[i] = new
             {
-                OID = collection[i].OID,
+                collection[i].OID,
                 collection[i].Data
             };
-        }
 
-        System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
+        File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
     }
 }

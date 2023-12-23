@@ -1,16 +1,39 @@
-﻿using NETworkManager.Documentation;
+﻿using System;
+using System.Linq;
+using System.Windows.Input;
+using NETworkManager.Documentation;
 using NETworkManager.Models;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
-using System.Linq;
-using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
 public class CommandLineViewModel : ViewModelBase
 {
+    #region Constructor, load settings
+
+    public CommandLineViewModel()
+    {
+        if (!string.IsNullOrEmpty(CommandLineManager.Current.WrongParameter))
+        {
+            WrongParameter = CommandLineManager.Current.WrongParameter;
+            DisplayWrongParameter = true;
+        }
+
+        ParameterHelp = CommandLineManager.ParameterHelp;
+        ParameterResetSettings = CommandLineManager.ParameterResetSettings;
+        ParameterApplication =
+            CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterApplication);
+        ParameterApplicationValues = string.Join(", ",
+            Enum.GetValues(typeof(ApplicationName)).Cast<ApplicationName>().ToList());
+    }
+
+    #endregion
+
     #region Variables
+
     private bool _displayWrongParameter;
+
     public bool DisplayWrongParameter
     {
         get => _displayWrongParameter;
@@ -25,6 +48,7 @@ public class CommandLineViewModel : ViewModelBase
     }
 
     private string _wrongParameter;
+
     public string WrongParameter
     {
         get => _wrongParameter;
@@ -39,6 +63,7 @@ public class CommandLineViewModel : ViewModelBase
     }
 
     private string _parameterHelp;
+
     public string ParameterHelp
     {
         get => _parameterHelp;
@@ -53,6 +78,7 @@ public class CommandLineViewModel : ViewModelBase
     }
 
     private string _parameterResetSettings;
+
     public string ParameterResetSettings
     {
         get => _parameterResetSettings;
@@ -67,6 +93,7 @@ public class CommandLineViewModel : ViewModelBase
     }
 
     private string _parameterApplication;
+
     public string ParameterApplication
     {
         get => _parameterApplication;
@@ -81,6 +108,7 @@ public class CommandLineViewModel : ViewModelBase
     }
 
     private string _parameterApplicationValues;
+
     public string ParameterApplicationValues
     {
         get => _parameterApplicationValues;
@@ -96,23 +124,8 @@ public class CommandLineViewModel : ViewModelBase
 
     #endregion
 
-    #region Constructor, load settings
-    public CommandLineViewModel()
-    {
-        if (!string.IsNullOrEmpty(CommandLineManager.Current.WrongParameter))
-        {
-            WrongParameter = CommandLineManager.Current.WrongParameter;
-            DisplayWrongParameter = true;
-        }
-
-        ParameterHelp = CommandLineManager.ParameterHelp;
-        ParameterResetSettings = CommandLineManager.ParameterResetSettings;
-        ParameterApplication = CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterApplication);
-        ParameterApplicationValues = string.Join(", ", System.Enum.GetValues(typeof(ApplicationName)).Cast<ApplicationName>().ToList());
-    }
-    #endregion
-
     #region ICommand & Actions
+
     public ICommand OpenDocumentationCommand
     {
         get { return new RelayCommand(_ => OpenDocumentationAction()); }
@@ -122,5 +135,6 @@ public class CommandLineViewModel : ViewModelBase
     {
         DocumentationManager.OpenDocumentation(DocumentationIdentifier.CommandLineArguments);
     }
+
     #endregion
 }

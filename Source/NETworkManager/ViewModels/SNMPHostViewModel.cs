@@ -1,30 +1,33 @@
-﻿using System.Collections.ObjectModel;
-using NETworkManager.Controls;
-using Dragablz;
-using System.Windows.Input;
-using NETworkManager.Views;
-using NETworkManager.Utilities;
-using NETworkManager.Models;
-using MahApps.Metro.Controls.Dialogs;
-using System.Windows.Threading;
-using NETworkManager.Settings;
-using System.Windows;
-using NETworkManager.Profiles;
-using System.ComponentModel;
-using System;
-using System.Windows.Data;
-using System.Linq;
+﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Threading;
+using Dragablz;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Controls;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models;
 using NETworkManager.Models.Network;
+using NETworkManager.Profiles;
+using NETworkManager.Profiles.Application;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
 public class SNMPHostViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
     private readonly DispatcherTimer _searchDispatcherTimer = new();
-    
+
     public IInterTabClient InterTabClient { get; }
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
@@ -32,6 +35,7 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
     private bool _isViewActive = true;
 
     private int _selectedTabIndex;
+
     public int SelectedTabIndex
     {
         get => _selectedTabIndex;
@@ -46,7 +50,9 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
     }
 
     #region Profiles
+
     private ICollectionView _profiles;
+
     public ICollectionView Profiles
     {
         get => _profiles;
@@ -61,6 +67,7 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
     }
 
     private ProfileInfo _selectedProfile = new();
+
     public ProfileInfo SelectedProfile
     {
         get => _selectedProfile;
@@ -75,6 +82,7 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
     }
 
     private string _search;
+
     public string Search
     {
         get => _search;
@@ -94,6 +102,7 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
     }
 
     private bool _isSearching;
+
     public bool IsSearching
     {
         get => _isSearching;
@@ -111,6 +120,7 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
     private double _tempProfileWidth;
 
     private bool _expandProfileView;
+
     public bool ExpandProfileView
     {
         get => _expandProfileView;
@@ -132,6 +142,7 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
     }
 
     private GridLength _profileWidth;
+
     public GridLength ProfileWidth
     {
         get => _profileWidth;
@@ -140,7 +151,8 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
             if (value == _profileWidth)
                 return;
 
-            if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.Profile_FloatPointFix) // Do not save the size when collapsed
+            if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
+                GlobalStaticConfiguration.Profile_FloatPointFix) // Do not save the size when collapsed
                 SettingsManager.Current.SNMP_ProfileWidth = value.Value;
 
             _profileWidth = value;
@@ -151,16 +163,19 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
+
     #endregion
+
     #endregion
 
     #region Constructor, load settings
+
     public SNMPHostViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
-        
+
         _dialogCoordinator = instance;
-        
+
         InterTabClient = new DragablzInterTabClient(ApplicationName.SNMP);
 
         TabItems = new ObservableCollection<DragablzTabItem>();
@@ -183,13 +198,17 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
     {
         ExpandProfileView = SettingsManager.Current.SNMP_ExpandProfileView;
 
-        ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.SNMP_ProfileWidth) : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
+        ProfileWidth = ExpandProfileView
+            ? new GridLength(SettingsManager.Current.SNMP_ProfileWidth)
+            : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
 
         _tempProfileWidth = SettingsManager.Current.SNMP_ProfileWidth;
     }
+
     #endregion
-    
+
     #region ICommand & Actions
+
     public ICommand AddTabCommand => new RelayCommand(_ => AddTabAction());
 
     private void AddTabAction()
@@ -199,7 +218,10 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
 
     public ICommand AddTabProfileCommand => new RelayCommand(_ => AddTabProfileAction(), AddTabProfile_CanExecute);
 
-    private bool AddTabProfile_CanExecute(object obj) => !IsSearching && SelectedProfile != null;
+    private bool AddTabProfile_CanExecute(object obj)
+    {
+        return !IsSearching && SelectedProfile != null;
+    }
 
     private void AddTabProfileAction()
     {
@@ -210,10 +232,14 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.SNMP).ConfigureAwait(false);
+        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.SNMP)
+            .ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
+    private bool ModifyProfile_CanExecute(object obj)
+    {
+        return SelectedProfile is { IsDynamic: false };
+    }
 
     public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
@@ -233,14 +259,17 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
 
     private void DeleteProfileAction()
     {
-        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile }).ConfigureAwait(false);
+        ProfileDialogManager
+            .ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile })
+            .ConfigureAwait(false);
     }
 
     public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString())).ConfigureAwait(false);
+        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()))
+            .ConfigureAwait(false);
     }
 
     public ICommand ClearSearchCommand => new RelayCommand(_ => ClearSearchAction());
@@ -256,22 +285,29 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
     {
         ((args.DragablzItem.Content as DragablzTabItem)?.View as SNMPView)?.CloseTab();
     }
+
     #endregion
 
     #region Methods
+
     private void ResizeProfile(bool dueToChangedSize)
     {
         _canProfileWidthChange = false;
 
         if (dueToChangedSize)
         {
-            ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.Profile_FloatPointFix;
+            ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
+                                GlobalStaticConfiguration.Profile_FloatPointFix;
         }
         else
         {
             if (ExpandProfileView)
             {
-                ProfileWidth = Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.Profile_WidthCollapsed) < GlobalStaticConfiguration.Profile_FloatPointFix ? new GridLength(GlobalStaticConfiguration.Profile_DefaultWidthExpanded) : new GridLength(_tempProfileWidth);
+                ProfileWidth =
+                    Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.Profile_WidthCollapsed) <
+                    GlobalStaticConfiguration.Profile_FloatPointFix
+                        ? new GridLength(GlobalStaticConfiguration.Profile_DefaultWidthExpanded)
+                        : new GridLength(_tempProfileWidth);
             }
             else
             {
@@ -287,21 +323,22 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
     {
         var tabId = Guid.NewGuid();
 
-        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Host ?? Localization.Resources.Strings.NewTab, new SNMPView(tabId, sessionInfo), tabId));
+        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Host ?? Strings.NewTab,
+            new SNMPView(tabId, sessionInfo), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }
 
     private void AddTab()
     {
-        var sessionInfo = NETworkManager.Profiles.Application.SNMP.CreateSessionInfo();
+        var sessionInfo = SNMP.CreateSessionInfo();
 
         AddTab(sessionInfo);
     }
 
     public void AddTab(string host)
     {
-        var sessionInfo = NETworkManager.Profiles.Application.SNMP.CreateSessionInfo();
+        var sessionInfo = SNMP.CreateSessionInfo();
 
         sessionInfo.Host = host;
 
@@ -310,7 +347,7 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
 
     private void AddTab(ProfileInfo profile)
     {
-        var sessionInfo = NETworkManager.Profiles.Application.SNMP.CreateSessionInfo(profile);
+        var sessionInfo = SNMP.CreateSessionInfo(profile);
 
         AddTab(sessionInfo, profile.Name);
     }
@@ -329,7 +366,11 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
 
     private void SetProfilesView(ProfileInfo profile = null)
     {
-        Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.SNMP_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name) }.View;
+        Profiles = new CollectionViewSource
+        {
+            Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.SNMP_Enabled).OrderBy(x => x.Group)
+                .ThenBy(x => x.Name)
+        }.View;
 
         Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
 
@@ -350,7 +391,8 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
             */
 
             // Search by: Name, SNMP_Host
-            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.SNMP_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
+            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.SNMP_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
         // Set specific profile or first if null
@@ -358,7 +400,7 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
 
         if (profile != null)
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault(x => x.Equals(profile)) ??
-                Profiles.Cast<ProfileInfo>().FirstOrDefault();
+                              Profiles.Cast<ProfileInfo>().FirstOrDefault();
         else
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
     }
@@ -370,9 +412,11 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
 
         SetProfilesView(SelectedProfile);
     }
+
     #endregion
 
     #region Event
+
     private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
     {
         RefreshProfiles();
@@ -386,5 +430,6 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
 
         IsSearching = false;
     }
+
     #endregion
 }

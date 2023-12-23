@@ -40,7 +40,7 @@
     <Style x:Key="ReadOnlyTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
         <Setter Property="IsReadOnly" Value="True" />
     </Style>
-    
+
     <Style x:Key="TextBlockAsTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="VerticalAlignment" Value="Center" />
@@ -50,7 +50,8 @@
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
-    <Style x:Key="BrowseFolderTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource MahApps.Styles.TextBox.Button}">
+    <Style x:Key="BrowseFolderTextBox" TargetType="{x:Type TextBox}"
+           BasedOn="{StaticResource MahApps.Styles.TextBox.Button}">
         <Setter Property="FontSize" Value="14" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
         <Setter Property="ContextMenu" Value="{StaticResource CutCopyPasteContextMenu}" />
@@ -58,8 +59,13 @@
         <Setter Property="mah:TextBoxHelper.ButtonContentTemplate">
             <Setter.Value>
                 <DataTemplate>
-                     <!-- Modern - FolderOpen -->
-                    <ContentControl x:Name="PART_PackIcon" Width="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=(mah:TextBoxHelper.ButtonWidth), Mode=OneWay}" Height="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=(mah:TextBoxHelper.ButtonWidth), Mode=OneWay}" Padding="3" HorizontalAlignment="Center" VerticalAlignment="Center" Content="F1 M 19,50L 28,34L 63,34L 54,50L 19,50 Z M 19,28.0001L 35,28C 36,25 37.4999,24.0001 37.4999,24.0001L 48.75,24C 49.3023,24 50,24.6977 50,25.25L 50,28L 53.9999,28.0001L 53.9999,32L 27,32L 19,46.4L 19,28.0001 Z " Style="{DynamicResource MahApps.Styles.ContentControl.PathIcon}" />
+                    <!-- Modern - FolderOpen -->
+                    <ContentControl x:Name="PART_PackIcon"
+                                    Width="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=(mah:TextBoxHelper.ButtonWidth), Mode=OneWay}"
+                                    Height="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=(mah:TextBoxHelper.ButtonWidth), Mode=OneWay}"
+                                    Padding="3" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                    Content="F1 M 19,50L 28,34L 63,34L 54,50L 19,50 Z M 19,28.0001L 35,28C 36,25 37.4999,24.0001 37.4999,24.0001L 48.75,24C 49.3023,24 50,24.6977 50,25.25L 50,28L 53.9999,28.0001L 53.9999,32L 27,32L 19,46.4L 19,28.0001 Z "
+                                    Style="{DynamicResource MahApps.Styles.ContentControl.PathIcon}" />
                 </DataTemplate>
             </Setter.Value>
         </Setter>

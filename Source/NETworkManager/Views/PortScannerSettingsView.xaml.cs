@@ -1,8 +1,8 @@
-﻿using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.ViewModels;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
@@ -15,6 +15,7 @@ public partial class PortScannerSettingsView
         InitializeComponent();
         DataContext = _viewModel;
     }
+
     private void RowContextMenu_OnOpened(object sender, RoutedEventArgs e)
     {
         if (sender is ContextMenu menu)

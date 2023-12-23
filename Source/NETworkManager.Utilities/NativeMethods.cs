@@ -1,7 +1,6 @@
 ﻿// Source: https://github.com/jimradford/superputty/blob/master/SuperPutty/Utils/NativeMethods.cs
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace NETworkManager.Utilities;
@@ -9,12 +8,14 @@ namespace NETworkManager.Utilities;
 public class NativeMethods
 {
     #region Win32 Constants
+
     public const int GWL_STYLE = -16;
     public const int WS_THICKFRAME = 0x00040000;
     public const int SWP_NOZORDER = 0x0004;
     public const int SWP_NOACTIVATE = 0x0010;
     public const long WS_POPUP = 0x80000000L;
     public const long WS_CAPTION = 0x00C00000L;
+
     #endregion
 
     #region Enum
@@ -40,9 +41,11 @@ public class NativeMethods
     {
         SYSCOMMAND = 0x0112
     }
+
     #endregion
 
     #region Pinvoke/Win32 Methods
+
     [DllImport("user32.dll")]
     public static extern IntPtr GetForegroundWindow();
 
@@ -55,7 +58,9 @@ public class NativeMethods
     // https://msdn.microsoft.com/en-us/library/windows/desktop/ms644898%28v=vs.85%29.aspx
     public static IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
     {
-        return IntPtr.Size == 8 ? SetWindowLongPtr64(hWnd, nIndex, dwNewLong) : new IntPtr(SetWindowLong32(hWnd, nIndex, dwNewLong));
+        return IntPtr.Size == 8
+            ? SetWindowLongPtr64(hWnd, nIndex, dwNewLong)
+            : new IntPtr(SetWindowLong32(hWnd, nIndex, dwNewLong));
     }
 
     [DllImport("user32.dll", EntryPoint = "SetWindowLong")]
@@ -65,7 +70,8 @@ public class NativeMethods
     private static extern IntPtr SetWindowLongPtr64(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
 
     [DllImport("user32.dll", EntryPoint = "SetWindowPos")]
-    public static extern IntPtr SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int Y, int cx, int cy, int wFlags);
+    public static extern IntPtr SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int Y, int cx, int cy,
+        int wFlags);
 
     [DllImport("user32.dll", CharSet = CharSet.Auto)]
     public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
@@ -78,5 +84,6 @@ public class NativeMethods
 
     [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
     public static extern bool SetForegroundWindow(IntPtr hWnd);
+
     #endregion
 }

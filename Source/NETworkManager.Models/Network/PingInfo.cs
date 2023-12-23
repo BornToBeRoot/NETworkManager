@@ -1,64 +1,24 @@
 ﻿using System;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Net.Sockets;
 
 namespace NETworkManager.Models.Network;
 
 /// <summary>
-/// Class containing the information of a ping.
+///     Class containing the information of a ping.
 /// </summary>
 public class PingInfo
 {
     /// <summary>
-    /// Timestamp when the ping was sent.
-    /// </summary>
-    public DateTime Timestamp { get; set; }
-    
-    /// <summary>
-    /// IP address of the host.
-    /// </summary>
-    public IPAddress IPAddress { get; set; }
-    
-    /// <summary>
-    /// Hostname of the host.
-    /// </summary>
-    public string Hostname { get; set; }
-    
-    /// <summary>
-    /// Bytes used to send the icmp packet.
-    /// </summary>
-    public int Bytes { get; set; }
-    
-    /// <summary>
-    /// Time in milliseconds how long it took to receive a response.
-    /// </summary>
-    public long Time { get; set; }
-    
-    /// <summary>
-    /// Time to live of the icmp packet.
-    /// </summary>
-    public int TTL { get; set; }
-    
-    /// <summary>
-    /// IP status of the ping.
-    /// </summary>
-    public IPStatus Status { get; set; }
-
-    /// <summary>
-    /// IP address as an integer.
-    /// </summary>
-    public int IPAddressInt32 => IPAddress is { AddressFamily: System.Net.Sockets.AddressFamily.InterNetwork } ? IPv4Address.ToInt32(IPAddress) : 0;
-
-    /// <summary>
-    /// Creates a new instance of <see cref="PingInfo"/>.
+    ///     Creates a new instance of <see cref="PingInfo" />.
     /// </summary>
     public PingInfo()
     {
-
     }
 
     /// <summary>
-    /// Creates a new instance of <see cref="PingInfo"/> with the specified parameters.
+    ///     Creates a new instance of <see cref="PingInfo" /> with the specified parameters.
     /// </summary>
     /// <param name="timestamp">Timestamp when the ping was sent.</param>
     /// <param name="ipAddress">IP address of the host.</param>
@@ -71,7 +31,7 @@ public class PingInfo
     }
 
     /// <summary>
-    /// Creates a new instance of <see cref="PingInfo"/> with the specified parameters.
+    ///     Creates a new instance of <see cref="PingInfo" /> with the specified parameters.
     /// </summary>
     /// <param name="timestamp">Timestamp when the ping was sent.</param>
     /// <param name="ipAddress">IP address of the host.</param>
@@ -84,9 +44,9 @@ public class PingInfo
         Hostname = hostname;
         Status = status;
     }
-    
+
     /// <summary>
-    /// Creates a new instance of <see cref="PingInfo"/> with the specified parameters.
+    ///     Creates a new instance of <see cref="PingInfo" /> with the specified parameters.
     /// </summary>
     /// <param name="timestamp">Timestamp when the ping was sent.</param>
     /// <param name="ipAddress">IP address of the host.</param>
@@ -103,7 +63,7 @@ public class PingInfo
     }
 
     /// <summary>
-    /// Creates a new instance of <see cref="PingInfo"/> with the specified parameters.
+    ///     Creates a new instance of <see cref="PingInfo" /> with the specified parameters.
     /// </summary>
     /// <param name="timestamp">Timestamp when the ping was sent.</param>
     /// <param name="ipAddress">IP address of the host.</param>
@@ -122,7 +82,7 @@ public class PingInfo
     }
 
     /// <summary>
-    /// Creates a new instance of <see cref="PingInfo"/> with the specified parameters.
+    ///     Creates a new instance of <see cref="PingInfo" /> with the specified parameters.
     /// </summary>
     /// <param name="timestamp">Timestamp when the ping was sent.</param>
     /// <param name="ipAddress">IP address of the host.</param>
@@ -141,7 +101,7 @@ public class PingInfo
     }
 
     /// <summary>
-    /// Creates a new instance of <see cref="PingInfo"/> with the specified parameters.
+    ///     Creates a new instance of <see cref="PingInfo" /> with the specified parameters.
     /// </summary>
     /// <param name="timestamp">Timestamp when the ping was sent.</param>
     /// <param name="ipAddress">IP address of the host.</param>
@@ -150,7 +110,8 @@ public class PingInfo
     /// <param name="time">Time in milliseconds how long it took to receive a response.</param>
     /// <param name="ttl">Time to live of the icmp packet.</param>
     /// <param name="status">IP status of the ping.</param>
-    public PingInfo(DateTime timestamp, IPAddress ipAddress, string hostname, int bytes, long time, int ttl, IPStatus status)
+    public PingInfo(DateTime timestamp, IPAddress ipAddress, string hostname, int bytes, long time, int ttl,
+        IPStatus status)
     {
         Timestamp = timestamp;
         IPAddress = ipAddress;
@@ -160,4 +121,46 @@ public class PingInfo
         TTL = ttl;
         Status = status;
     }
+
+    /// <summary>
+    ///     Timestamp when the ping was sent.
+    /// </summary>
+    public DateTime Timestamp { get; set; }
+
+    /// <summary>
+    ///     IP address of the host.
+    /// </summary>
+    public IPAddress IPAddress { get; set; }
+
+    /// <summary>
+    ///     Hostname of the host.
+    /// </summary>
+    public string Hostname { get; set; }
+
+    /// <summary>
+    ///     Bytes used to send the icmp packet.
+    /// </summary>
+    public int Bytes { get; set; }
+
+    /// <summary>
+    ///     Time in milliseconds how long it took to receive a response.
+    /// </summary>
+    public long Time { get; set; }
+
+    /// <summary>
+    ///     Time to live of the icmp packet.
+    /// </summary>
+    public int TTL { get; set; }
+
+    /// <summary>
+    ///     IP status of the ping.
+    /// </summary>
+    public IPStatus Status { get; set; }
+
+    /// <summary>
+    ///     IP address as an integer.
+    /// </summary>
+    public int IPAddressInt32 => IPAddress is { AddressFamily: AddressFamily.InterNetwork }
+        ? IPv4Address.ToInt32(IPAddress)
+        : 0;
 }

@@ -20,7 +20,7 @@
     </UserControl.Resources>
     <Grid>
         <Grid Grid.Column="0" Grid.Row="0"
-            Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=ProfileManagerIsEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+              Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=ProfileManagerIsEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250" />
                 <ColumnDefinition Width="*" />

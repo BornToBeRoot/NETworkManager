@@ -1,26 +1,28 @@
-﻿using NETworkManager.Settings;
-using System;
-using NETworkManager.Models.Network;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Collections.Generic;
-using NETworkManager.Utilities;
-using System.Windows.Data;
-using MahApps.Metro.Controls;
-using System.Windows.Input;
 using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
 using log4net;
+using MahApps.Metro.Controls;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
 public class BitCalculatorViewModel : ViewModelBase
 {
-    #region  Variables 
+    #region Variables
+
     private static readonly ILog Log = LogManager.GetLogger(typeof(BitCalculatorViewModel));
-    
+
     private readonly bool _isLoading;
 
     private string _input;
+
     public string Input
     {
         get => _input;
@@ -37,6 +39,7 @@ public class BitCalculatorViewModel : ViewModelBase
     public ICollectionView InputHistoryView { get; }
 
     private readonly List<BitCaluclatorUnit> _units = new();
+
     public List<BitCaluclatorUnit> Units
     {
         get => _units;
@@ -51,6 +54,7 @@ public class BitCalculatorViewModel : ViewModelBase
     }
 
     private BitCaluclatorUnit _unit;
+
     public BitCaluclatorUnit Unit
     {
         get => _unit;
@@ -68,6 +72,7 @@ public class BitCalculatorViewModel : ViewModelBase
     }
 
     private bool _isRunning;
+
     public bool IsRunning
     {
         get => _isRunning;
@@ -82,6 +87,7 @@ public class BitCalculatorViewModel : ViewModelBase
     }
 
     private bool _isResultVisible;
+
     public bool IsResultVisible
     {
         get => _isResultVisible;
@@ -97,6 +103,7 @@ public class BitCalculatorViewModel : ViewModelBase
     }
 
     private BitCaluclatorInfo _result = new();
+
     public BitCaluclatorInfo Result
     {
         get => _result;
@@ -109,9 +116,11 @@ public class BitCalculatorViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, load settings
+
     public BitCalculatorViewModel()
     {
         _isLoading = true;
@@ -128,36 +137,39 @@ public class BitCalculatorViewModel : ViewModelBase
 
     private void LoadSettings()
     {
-
-
     }
+
     #endregion
 
     #region ICommands & Actions
+
     public ICommand CalculateCommand => new RelayCommand(_ => CalculateAction(), Calculate_CanExecute);
 
-    private bool Calculate_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool Calculate_CanExecute(object parameter)
+    {
+        return Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow)
+                   .IsAnyDialogOpen;
+    }
 
     private void CalculateAction()
     {
         Calculate();
     }
+
     #endregion
 
     #region Methods
+
     private async void Calculate()
     {
         IsResultVisible = false;
         IsRunning = true;
 
         if (double.TryParse(Input.Replace('.', ','), out var input))
-        {
             Result = await BitCaluclator.CalculateAsync(input, Unit, SettingsManager.Current.BitCalculator_Notation);
-        }
         else
-        {
             Log.Error($"Could not parse input \"{Input}\" into double!");
-        }
 
         IsResultVisible = true;
 
@@ -169,7 +181,8 @@ public class BitCalculatorViewModel : ViewModelBase
     private void AddInputToHistory(string input)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.BitCalculator_InputHistory.ToList(), input, SettingsManager.Current.General_HistoryListEntries);
+        var list = ListHelper.Modify(SettingsManager.Current.BitCalculator_InputHistory.ToList(), input,
+            SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items
         SettingsManager.Current.BitCalculator_InputHistory.Clear();
@@ -181,14 +194,11 @@ public class BitCalculatorViewModel : ViewModelBase
 
     public void OnViewVisible()
     {
-        
     }
 
     public void OnViewHide()
     {
-        
     }
-
 
     #endregion
 }

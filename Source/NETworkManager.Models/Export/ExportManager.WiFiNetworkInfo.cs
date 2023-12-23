@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
@@ -12,11 +13,11 @@ namespace NETworkManager.Models.Export;
 public static partial class ExportManager
 {
     /// <summary>
-    /// Method to export objects from type <see cref="WiFiNetworkInfo"/> to a file.
+    ///     Method to export objects from type <see cref="WiFiNetworkInfo" /> to a file.
     /// </summary>
     /// <param name="filePath">Path to the export file.</param>
-    /// <param name="fileType">Allowed <see cref="ExportFileType"/> are CSV, XML or JSON.</param>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{T}"/> to export.</param>
+    /// <param name="fileType">Allowed <see cref="ExportFileType" /> are CSV, XML or JSON.</param>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{T}" /> to export.</param>
     public static void Export(string filePath, ExportFileType fileType, IReadOnlyList<WiFiNetworkInfo> collection)
     {
         switch (fileType)
@@ -37,9 +38,9 @@ public static partial class ExportManager
     }
 
     /// <summary>
-    /// Creates a CSV file from the given <see cref="WiFiNetworkInfo"/> collection.
+    ///     Creates a CSV file from the given <see cref="WiFiNetworkInfo" /> collection.
     /// </summary>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{WiFiNetworkInfo}"/> to export.</param>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{WiFiNetworkInfo}" /> to export.</param>
     /// <param name="filePath">Path to the export file.</param>
     private static void CreateCsv(IEnumerable<WiFiNetworkInfo> collection, string filePath)
     {
@@ -52,13 +53,13 @@ public static partial class ExportManager
             stringBuilder.AppendLine(
                 $"{info.AvailableNetwork.Bssid},{info.AvailableNetwork.Ssid},{info.AvailableNetwork.ChannelCenterFrequencyInKilohertz},{info.AvailableNetwork.SignalBars},{info.AvailableNetwork.IsWiFiDirect},{info.AvailableNetwork.NetworkRssiInDecibelMilliwatts},{info.AvailableNetwork.PhyKind},{info.AvailableNetwork.NetworkKind},{info.AvailableNetwork.SecuritySettings.NetworkAuthenticationType},{info.AvailableNetwork.SecuritySettings.NetworkEncryptionType},{info.AvailableNetwork.BeaconInterval},{info.AvailableNetwork.Uptime}");
 
-        System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
+        File.WriteAllText(filePath, stringBuilder.ToString());
     }
 
     /// <summary>
-    /// Creates a XML file from the given <see cref="WiFiNetworkInfo"/> collection.
+    ///     Creates a XML file from the given <see cref="WiFiNetworkInfo" /> collection.
     /// </summary>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{WiFiNetworkInfo}"/> to export.</param>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{WiFiNetworkInfo}" /> to export.</param>
     /// <param name="filePath">Path to the export file.</param>
     private static void CreateXml(IEnumerable<WiFiNetworkInfo> collection, string filePath)
     {
@@ -97,16 +98,15 @@ public static partial class ExportManager
     }
 
     /// <summary>
-    /// Creates a JSON file from the given <see cref="WiFiNetworkInfo"/> collection.
+    ///     Creates a JSON file from the given <see cref="WiFiNetworkInfo" /> collection.
     /// </summary>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{WiFiNetworkInfo}"/> to export.</param>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{WiFiNetworkInfo}" /> to export.</param>
     /// <param name="filePath">Path to the export file.</param>
     private static void CreateJson(IReadOnlyList<WiFiNetworkInfo> collection, string filePath)
     {
         var jsonData = new object[collection.Count];
 
         for (var i = 0; i < collection.Count; i++)
-        {
             jsonData[i] = new
             {
                 collection[i].AvailableNetwork.Bssid,
@@ -125,8 +125,7 @@ public static partial class ExportManager
                 BeaconInterval = collection[i].AvailableNetwork.BeaconInterval.ToString(),
                 Uptime = collection[i].AvailableNetwork.Uptime.ToString()
             };
-        }
 
-        System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
+        File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
     }
 }

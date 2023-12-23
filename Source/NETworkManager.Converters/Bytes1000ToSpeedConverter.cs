@@ -13,9 +13,9 @@ public sealed class Bytes1000ToSpeedConverter : IValueConverter
         if (value == null)
             return "-/-";
 
-        if (!double.TryParse(value.ToString(), out var bits)) 
+        if (!double.TryParse(value.ToString(), out var bits))
             return "-/-";
-        
+
         var sizeCount = 0;
 
         while (bits >= 1000 && ++sizeCount < _sizes.Length)

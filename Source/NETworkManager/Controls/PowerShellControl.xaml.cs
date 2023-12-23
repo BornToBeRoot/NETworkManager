@@ -1,23 +1,34 @@
 ﻿// Contains code from: https://stackoverflow.com/questions/5028598/hosting-external-app-in-wpf-window
 
-using System.Windows;
 using System;
-using System.Windows.Threading;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using NETworkManager.Utilities;
+using System.Windows;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Settings;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models.PowerShell;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Controls;
 
 public partial class PowerShellControl : UserControlBase
 {
+    #region Events
+
+    private void WindowGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        if (IsConnected)
+            ResizeEmbeddedWindow();
+    }
+
+    #endregion
+
     #region Variables
+
     private bool _initialized;
-    private bool _closing;      // When the tab is closed --> OnClose()
+    private bool _closing; // When the tab is closed --> OnClose()
 
     private readonly IDialogCoordinator _dialogCoordinator;
 
@@ -27,6 +38,7 @@ public partial class PowerShellControl : UserControlBase
     private IntPtr _appWin;
 
     private bool _isConnected;
+
     public bool IsConnected
     {
         get => _isConnected;
@@ -41,6 +53,7 @@ public partial class PowerShellControl : UserControlBase
     }
 
     private bool _isConnecting;
+
     public bool IsConnecting
     {
         get => _isConnecting;
@@ -53,9 +66,11 @@ public partial class PowerShellControl : UserControlBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, load
+
     public PowerShellControl(PowerShellSessionInfo sessionInfo)
     {
         InitializeComponent();
@@ -86,9 +101,11 @@ public partial class PowerShellControl : UserControlBase
     {
         CloseTab();
     }
+
     #endregion
 
     #region ICommands & Actions
+
     public ICommand ReconnectCommand
     {
         get { return new RelayCommand(p => ReconnectAction()); }
@@ -98,9 +115,11 @@ public partial class PowerShellControl : UserControlBase
     {
         Reconnect();
     }
+
     #endregion
 
-    #region Methods       
+    #region Methods
+
     private async Task Connect()
     {
         IsConnecting = true;
@@ -134,7 +153,7 @@ public partial class PowerShellControl : UserControlBase
 
                         if (_process.HasExited)
                             break;
-                        
+
 
                         _appWin = _process.MainWindowHandle;
 
@@ -156,7 +175,7 @@ public partial class PowerShellControl : UserControlBase
                     long style = (int)NativeMethods.GetWindowLong(_appWin, NativeMethods.GWL_STYLE);
                     style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP | NativeMethods.WS_THICKFRAME);
                     NativeMethods.SetWindowLongPtr(_appWin, NativeMethods.GWL_STYLE, new IntPtr(style));
-                    
+
                     IsConnected = true;
 
                     // Resize embedded application & refresh
@@ -175,11 +194,11 @@ public partial class PowerShellControl : UserControlBase
             if (!_closing)
             {
                 var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                settings.AffirmativeButtonText = Strings.OK;
 
                 ConfigurationManager.OnDialogOpen();
 
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error,
+                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
                     ex.Message, MessageDialogStyle.Affirmative, settings);
 
                 ConfigurationManager.OnDialogClose();
@@ -204,7 +223,8 @@ public partial class PowerShellControl : UserControlBase
     public void ResizeEmbeddedWindow()
     {
         if (IsConnected)
-            NativeMethods.SetWindowPos(_process.MainWindowHandle, IntPtr.Zero, 0, 0, WindowHost.ClientSize.Width, WindowHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
+            NativeMethods.SetWindowPos(_process.MainWindowHandle, IntPtr.Zero, 0, 0, WindowHost.ClientSize.Width,
+                WindowHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
     }
 
     public void Disconnect()
@@ -227,13 +247,6 @@ public partial class PowerShellControl : UserControlBase
 
         Disconnect();
     }
-    #endregion
 
-    #region Events
-    private void WindowGrid_SizeChanged(object sender, SizeChangedEventArgs e)
-    {
-        if (IsConnected)
-            ResizeEmbeddedWindow();
-    }
     #endregion
 }

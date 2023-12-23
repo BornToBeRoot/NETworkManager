@@ -1,36 +1,63 @@
-﻿using NETworkManager.Models.Network;
-using NETworkManager.Settings;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
-using NETworkManager.Utilities;
 using LiveCharts;
 using LiveCharts.Configurations;
 using LiveCharts.Wpf;
-using System.Collections.Generic;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Views;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
+using Ping = NETworkManager.Models.Network.Ping;
 
 namespace NETworkManager.ViewModels;
 
 public class PingMonitorViewModel : ViewModelBase
 {
-    #region Variables        
+    #region Contructor, load settings
+
+    public PingMonitorViewModel(IDialogCoordinator instance, Guid hostId, Action<Guid> removeHostByGuid,
+        (IPAddress ipAddress, string hostname) host)
+    {
+        _dialogCoordinator = instance;
+
+        HostId = hostId;
+        _removeHostByGuid = removeHostByGuid;
+
+        Title = string.IsNullOrEmpty(host.hostname) ? host.ipAddress.ToString() : $"{host.hostname} # {host.ipAddress}";
+
+        IPAddress = host.ipAddress;
+        Hostname = host.hostname;
+
+        InitialTimeChart();
+
+        ExpandHostView = SettingsManager.Current.PingMonitor_ExpandHostView;
+    }
+
+    #endregion
+
+    #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
     private CancellationTokenSource _cancellationTokenSource;
 
     public readonly Guid HostId;
     private readonly Action<Guid> _removeHostByGuid;
- 
+
     private List<PingInfo> _pingInfoList;
 
     private string _title;
+
     public string Title
     {
         get => _title;
@@ -45,6 +72,7 @@ public class PingMonitorViewModel : ViewModelBase
     }
 
     private string _hostname;
+
     public string Hostname
     {
         get => _hostname;
@@ -59,6 +87,7 @@ public class PingMonitorViewModel : ViewModelBase
     }
 
     private readonly IPAddress _ipAddress;
+
     public IPAddress IPAddress
     {
         get => _ipAddress;
@@ -73,6 +102,7 @@ public class PingMonitorViewModel : ViewModelBase
     }
 
     private bool _isRunning;
+
     public bool IsRunning
     {
         get => _isRunning;
@@ -87,6 +117,7 @@ public class PingMonitorViewModel : ViewModelBase
     }
 
     private bool _isReachable;
+
     public bool IsReachable
     {
         get => _isReachable;
@@ -101,6 +132,7 @@ public class PingMonitorViewModel : ViewModelBase
     }
 
     private DateTime _statusTime;
+
     public DateTime StatusTime
     {
         get => _statusTime;
@@ -115,6 +147,7 @@ public class PingMonitorViewModel : ViewModelBase
     }
 
     private int _transmitted;
+
     public int Transmitted
     {
         get => _transmitted;
@@ -129,6 +162,7 @@ public class PingMonitorViewModel : ViewModelBase
     }
 
     private int _received;
+
     public int Received
     {
         get => _received;
@@ -143,6 +177,7 @@ public class PingMonitorViewModel : ViewModelBase
     }
 
     private int _lost;
+
     public int Lost
     {
         get => _lost;
@@ -157,6 +192,7 @@ public class PingMonitorViewModel : ViewModelBase
     }
 
     private double _packetLoss;
+
     public double PacketLoss
     {
         get => _packetLoss;
@@ -171,6 +207,7 @@ public class PingMonitorViewModel : ViewModelBase
     }
 
     private long _timeMs;
+
     public long TimeMs
     {
         get => _timeMs;
@@ -200,7 +237,8 @@ public class PingMonitorViewModel : ViewModelBase
             }
         };
 
-        FormatterDate = value => DateTimeHelper.DateTimeToTimeString(new DateTime((long)(value * TimeSpan.FromHours(1).Ticks)));
+        FormatterDate = value =>
+            DateTimeHelper.DateTimeToTimeString(new DateTime((long)(value * TimeSpan.FromHours(1).Ticks)));
         FormatterPingTime = value => $"{value} ms";
     }
 
@@ -209,6 +247,7 @@ public class PingMonitorViewModel : ViewModelBase
     public SeriesCollection Series { get; set; }
 
     private string _errorMessage;
+
     public string ErrorMessage
     {
         get => _errorMessage;
@@ -223,6 +262,7 @@ public class PingMonitorViewModel : ViewModelBase
     }
 
     private bool _isErrorMessageDisplayed;
+
     public bool IsErrorMessageDisplayed
     {
         get => _isErrorMessageDisplayed;
@@ -237,6 +277,7 @@ public class PingMonitorViewModel : ViewModelBase
     }
 
     private bool _expandHostView;
+
     public bool ExpandHostView
     {
         get => _expandHostView;
@@ -249,28 +290,11 @@ public class PingMonitorViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    #endregion
 
-    #region Contructor, load settings    
-    public PingMonitorViewModel(IDialogCoordinator instance, Guid hostId, Action<Guid> removeHostByGuid, (IPAddress ipAddress, string hostname) host)
-    {
-        _dialogCoordinator = instance;
-
-        HostId = hostId;
-        _removeHostByGuid = removeHostByGuid;
-
-        Title = string.IsNullOrEmpty(host.hostname) ? host.ipAddress.ToString() : $"{host.hostname} # {host.ipAddress}";
-
-        IPAddress = host.ipAddress;
-        Hostname = host.hostname;
-
-        InitialTimeChart();
-        
-        ExpandHostView = SettingsManager.Current.PingMonitor_ExpandHostView;
-    }     
     #endregion
 
     #region ICommands & Actions
+
     public ICommand PingCommand => new RelayCommand(_ => PingAction());
 
     private void PingAction()
@@ -287,9 +311,11 @@ public class PingMonitorViewModel : ViewModelBase
     {
         _removeHostByGuid(HostId);
     }
+
     #endregion
 
-    #region Methods      
+    #region Methods
+
     public void Start()
     {
         IsErrorMessageDisplayed = false;
@@ -316,7 +342,7 @@ public class PingMonitorViewModel : ViewModelBase
             Buffer = new byte[SettingsManager.Current.PingMonitor_Buffer],
             TTL = SettingsManager.Current.PingMonitor_TTL,
             DontFragment = SettingsManager.Current.PingMonitor_DontFragment,
-            WaitTime = SettingsManager.Current.PingMonitor_WaitTime            
+            WaitTime = SettingsManager.Current.PingMonitor_WaitTime
         };
 
         ping.PingReceived += Ping_PingReceived;
@@ -326,7 +352,7 @@ public class PingMonitorViewModel : ViewModelBase
 
         ping.SendAsync(IPAddress, _cancellationTokenSource.Token);
     }
-    
+
     public void Stop()
     {
         if (!IsRunning)
@@ -356,31 +382,34 @@ public class PingMonitorViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.Export
+            Title = Strings.Export
         };
 
         var exportViewModel = new ExportViewModel(async instance =>
-        {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-            try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType, new ObservableCollection<PingInfo>(_pingInfoList));
-            }
-            catch (Exception ex)
-            {
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
-            }
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType,
+                        new ObservableCollection<PingInfo>(_pingInfoList));
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Strings.OK;
 
-            SettingsManager.Current.PingMonitor_ExportFileType = instance.FileType;
-            SettingsManager.Current.PingMonitor_ExportFilePath = instance.FilePath;
-        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, 
+                    await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                        Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                        Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.PingMonitor_ExportFileType = instance.FileType;
+                SettingsManager.Current.PingMonitor_ExportFilePath = instance.FilePath;
+            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
             [
                 ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
-            ], false, 
+            ], false,
             SettingsManager.Current.PingMonitor_ExportFileType,
             SettingsManager.Current.PingMonitor_ExportFilePath);
 
@@ -391,9 +420,11 @@ public class PingMonitorViewModel : ViewModelBase
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
+
     #endregion
 
     #region Events
+
     private void Ping_PingReceived(object sender, PingReceivedArgs e)
     {
         // Calculate statistics
@@ -401,7 +432,7 @@ public class PingMonitorViewModel : ViewModelBase
 
         LvlChartsDefaultInfo timeInfo;
 
-        if (e.Args.Status == System.Net.NetworkInformation.IPStatus.Success)
+        if (e.Args.Status == IPStatus.Success)
         {
             if (!IsReachable)
             {
@@ -425,7 +456,7 @@ public class PingMonitorViewModel : ViewModelBase
 
             timeInfo = new LvlChartsDefaultInfo(e.Args.Timestamp, double.NaN);
         }
-        
+
         PacketLoss = Math.Round((double)Lost / Transmitted * 100, 2);
         TimeMs = e.Args.Time;
 
@@ -455,13 +486,14 @@ public class PingMonitorViewModel : ViewModelBase
 
         Hostname = e.Hostname;
     }
-    
+
     private void Ping_PingException(object sender, PingExceptionArgs e)
-    {   
+    {
         IsRunning = false;
 
         ErrorMessage = e.Message;
         IsErrorMessageDisplayed = true;
     }
+
     #endregion
 }

@@ -1,87 +1,87 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<ProjectGuid>{FF225C2E-AA67-4B10-939A-6C046CEF8697}</ProjectGuid>
-		<OutputType>Library</OutputType>
-		<RootNamespace>NETworkManager.Localization</RootNamespace>
-		<AssemblyName>NETworkManager.Localization</AssemblyName>
-		<TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
-		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
-		<PlatformTarget>x64</PlatformTarget>
-		<SelfContained>false</SelfContained>
-		<UseWPF>true</UseWPF>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-		<ProduceReferenceAssembly>false</ProduceReferenceAssembly>
-		<NoWarn>1701;1702;CA1712</NoWarn>
-	</PropertyGroup>
-	<ItemGroup>
-		<None Remove="Resources\Flags\cs-CZ.png" />
-		<None Remove="Resources\Flags\en-US.png" />
-		<None Remove="Resources\Flags\de-DE.png" />
-		<None Remove="Resources\Flags\es-ES.png" />
-		<None Remove="Resources\Flags\fr-FR.png" />
-		<None Remove="Resources\Flags\hu-HU.png" />
-		<None Remove="Resources\Flags\it-IT.png" />
-		<None Remove="Resources\Flags\ko-KR.png" />
-		<None Remove="Resources\Flags\nl-NL.png" />
-		<None Remove="Resources\Flags\pl-PL.png" />
-		<None Remove="Resources\Flags\pt-BR.png" />
-		<None Remove="Resources\Flags\ru-RU.png" />
-		<None Remove="Resources\Flags\sl-SI.png" />
-		<None Remove="Resources\Flags\zh-CN.png" />
-		<None Remove="Resources\Flags\zh-TW.png" />
-	</ItemGroup>
-	<ItemGroup>
-		<Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
-	</ItemGroup>
-	<ItemGroup>
-		<Resource Include="Resources\Flags\cs-CZ.png" />
-		<Resource Include="Resources\Flags\en-US.png" />
-		<Resource Include="Resources\Flags\de-DE.png" />
-		<Resource Include="Resources\Flags\es-ES.png" />
-		<Resource Include="Resources\Flags\fr-FR.png" />
-		<Resource Include="Resources\Flags\hu-HU.png" />
-		<Resource Include="Resources\Flags\it-IT.png" />
-		<Resource Include="Resources\Flags\ko-KR.png" />
-		<Resource Include="Resources\Flags\nl-NL.png" />
-		<Resource Include="Resources\Flags\pl-PL.png" />
-		<Resource Include="Resources\Flags\pt-BR.png" />
-		<Resource Include="Resources\Flags\ru-RU.png" />
-		<Resource Include="Resources\Flags\sl-SI.png" />
-		<Resource Include="Resources\Flags\zh-CN.png" />
-		<Resource Include="Resources\Flags\zh-TW.png" />
-	</ItemGroup>
+    <PropertyGroup>
+        <ProjectGuid>{FF225C2E-AA67-4B10-939A-6C046CEF8697}</ProjectGuid>
+        <OutputType>Library</OutputType>
+        <RootNamespace>NETworkManager.Localization</RootNamespace>
+        <AssemblyName>NETworkManager.Localization</AssemblyName>
+        <TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+        <PlatformTarget>x64</PlatformTarget>
+        <SelfContained>false</SelfContained>
+        <UseWPF>true</UseWPF>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+        <NoWarn>1701;1702;CA1712</NoWarn>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Remove="Resources\Flags\cs-CZ.png"/>
+        <None Remove="Resources\Flags\en-US.png"/>
+        <None Remove="Resources\Flags\de-DE.png"/>
+        <None Remove="Resources\Flags\es-ES.png"/>
+        <None Remove="Resources\Flags\fr-FR.png"/>
+        <None Remove="Resources\Flags\hu-HU.png"/>
+        <None Remove="Resources\Flags\it-IT.png"/>
+        <None Remove="Resources\Flags\ko-KR.png"/>
+        <None Remove="Resources\Flags\nl-NL.png"/>
+        <None Remove="Resources\Flags\pl-PL.png"/>
+        <None Remove="Resources\Flags\pt-BR.png"/>
+        <None Remove="Resources\Flags\ru-RU.png"/>
+        <None Remove="Resources\Flags\sl-SI.png"/>
+        <None Remove="Resources\Flags\zh-CN.png"/>
+        <None Remove="Resources\Flags\zh-TW.png"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Resource Include="Resources\Flags\cs-CZ.png"/>
+        <Resource Include="Resources\Flags\en-US.png"/>
+        <Resource Include="Resources\Flags\de-DE.png"/>
+        <Resource Include="Resources\Flags\es-ES.png"/>
+        <Resource Include="Resources\Flags\fr-FR.png"/>
+        <Resource Include="Resources\Flags\hu-HU.png"/>
+        <Resource Include="Resources\Flags\it-IT.png"/>
+        <Resource Include="Resources\Flags\ko-KR.png"/>
+        <Resource Include="Resources\Flags\nl-NL.png"/>
+        <Resource Include="Resources\Flags\pl-PL.png"/>
+        <Resource Include="Resources\Flags\pt-BR.png"/>
+        <Resource Include="Resources\Flags\ru-RU.png"/>
+        <Resource Include="Resources\Flags\sl-SI.png"/>
+        <Resource Include="Resources\Flags\zh-CN.png"/>
+        <Resource Include="Resources\Flags\zh-TW.png"/>
+    </ItemGroup>
 
-	<ItemGroup>
-		<PackageReference Include="MahApps.Metro" Version="2.4.10" />
-	</ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="MahApps.Metro" Version="2.4.10"/>
+    </ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj" />
-		<ProjectReference Include="..\NETworkManager.Profiles\NETworkManager.Profiles.csproj" />
-		<ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj" />
-	</ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj"/>
+        <ProjectReference Include="..\NETworkManager.Profiles\NETworkManager.Profiles.csproj"/>
+        <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj"/>
+    </ItemGroup>
 
-	<ItemGroup>
-		<Compile Update="Resources\StaticStrings.Designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>StaticStrings.resx</DependentUpon>
-		</Compile>
-		<Compile Update="Resources\Strings.Designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>Strings.resx</DependentUpon>
-		</Compile>
-	</ItemGroup>
+    <ItemGroup>
+        <Compile Update="Resources\StaticStrings.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>StaticStrings.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Resources\Strings.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Strings.resx</DependentUpon>
+        </Compile>
+    </ItemGroup>
 
-	<ItemGroup>
-		<EmbeddedResource Update="Resources\StaticStrings.resx">
-			<Generator>PublicResXFileCodeGenerator</Generator>
-			<LastGenOutput>StaticStrings.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-		<EmbeddedResource Update="Resources\Strings.resx">
-			<Generator>PublicResXFileCodeGenerator</Generator>
-			<LastGenOutput>Strings.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-	</ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Update="Resources\StaticStrings.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>StaticStrings.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\Strings.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+    </ItemGroup>
 </Project>

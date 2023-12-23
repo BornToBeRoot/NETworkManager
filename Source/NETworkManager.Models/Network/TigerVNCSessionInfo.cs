@@ -15,9 +15,4 @@ public class SNMPSessionInfo
     public SecureString Auth { get; set; } = null;
     public SNMPV3PrivacyProvider PrivacyProvider { get; set; }
     public SecureString Priv { get; set; } = null;
-
-    public SNMPSessionInfo()
-    {
-
-    }
 }

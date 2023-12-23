@@ -120,7 +120,7 @@
                       Style="{StaticResource ProfileGridSplitter}" />
         <Expander Grid.Column="2" Grid.Row="0"
                   Header="{x:Static localization:Strings.Profiles}"
-                  Style="{StaticResource ProfileExpander}" 
+                  Style="{StaticResource ProfileExpander}"
                   IsExpanded="{Binding ExpandProfileView}">
             <Grid>
                 <Grid
@@ -138,7 +138,7 @@
                             <ColumnDefinition Width="10" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <ToggleButton Grid.Column="0" Grid.Row="0" 
+                        <ToggleButton Grid.Column="0" Grid.Row="0"
                                       IsChecked="{Binding ExpandProfileView}"
                                       Focusable="False">
                             <ToggleButton.Style>

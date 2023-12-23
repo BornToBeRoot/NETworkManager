@@ -5,7 +5,7 @@ namespace NETworkManager.Utilities;
 public static class StringHelper
 {
     /// <summary>
-    /// Method to remove whitespaces from a string.
+    ///     Method to remove whitespaces from a string.
     /// </summary>
     /// <param name="input">Text with whitespaces.</param>
     /// <returns>Text without whitespaces.</returns>

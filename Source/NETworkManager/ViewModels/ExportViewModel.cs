@@ -1,36 +1,95 @@
-﻿using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Input;
-using NETworkManager.Models.Export;
 using NETworkManager.Localization.Resources;
-using System.Linq;
+using NETworkManager.Models.Export;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
 /// <summary>
-/// 
 /// </summary>
 public class ExportViewModel : ViewModelBase
 {
     /// <summary>
-    /// 
+    /// </summary>
+    private bool _exportAll = true;
+
+    private bool _exportSelected;
+
+    private string _filePath;
+
+    private bool _showCsv;
+
+    /// <summary>
+    /// </summary>
+    private bool _showExportSelected;
+
+
+    private bool _showJson;
+
+    private bool _showTxt;
+
+    private bool _showXml;
+
+    private bool _useCsv;
+
+    private bool _useJson;
+
+    private bool _useTxt;
+
+    private bool _useXml;
+
+    private ExportViewModel(Action<ExportViewModel> deleteCommand, Action<ExportViewModel> cancelHandler,
+        ExportFileType[] showFilesTypes, bool showExportSelected)
+    {
+        ExportCommand = new RelayCommand(_ => deleteCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
+
+        ShowCsv = showFilesTypes.Contains(ExportFileType.Csv);
+        ShowXml = showFilesTypes.Contains(ExportFileType.Xml);
+        ShowJson = showFilesTypes.Contains(ExportFileType.Json);
+        ShowTxt = showFilesTypes.Contains(ExportFileType.Txt);
+
+        ShowExportSelected = showExportSelected;
+    }
+
+    public ExportViewModel(Action<ExportViewModel> deleteCommand, Action<ExportViewModel> cancelHandler,
+        ExportFileType[] showFilesTypes, bool showExportSelected, ExportFileType fileType, string filePath) :
+        this(deleteCommand, cancelHandler, showFilesTypes, showExportSelected)
+    {
+        FilePath = filePath;
+
+        switch (fileType)
+        {
+            case ExportFileType.Csv:
+                UseCsv = true;
+                break;
+            case ExportFileType.Xml:
+                UseXml = true;
+                break;
+            case ExportFileType.Json:
+                UseJson = true;
+                break;
+            case ExportFileType.Txt:
+                UseTxt = true;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
+        }
+    }
+
+    /// <summary>
     /// </summary>
     public ICommand ExportCommand { get; }
 
     /// <summary>
-    ///
     /// </summary>
     public ICommand CancelCommand { get; }
 
     /// <summary>
-    /// 
-    /// </summary>
-    private bool _exportAll = true;
-
-    /// <summary>
-    /// 
     /// </summary>
     public bool ExportAll
     {
@@ -46,12 +105,6 @@ public class ExportViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// 
-    /// </summary>
-    private bool _showExportSelected;
-
-    /// <summary>
-    /// 
     /// </summary>
     public bool ShowExportSelected
     {
@@ -66,7 +119,6 @@ public class ExportViewModel : ViewModelBase
         }
     }
 
-    private bool _exportSelected;
     public bool ExportSelected
     {
         get => _exportSelected;
@@ -82,7 +134,6 @@ public class ExportViewModel : ViewModelBase
 
     public ExportFileType FileType { get; private set; }
 
-    private bool _showCsv;
     public bool ShowCsv
     {
         get => _showCsv;
@@ -96,7 +147,6 @@ public class ExportViewModel : ViewModelBase
         }
     }
 
-    private bool _useCsv;
     public bool UseCsv
     {
         get => _useCsv;
@@ -116,7 +166,6 @@ public class ExportViewModel : ViewModelBase
         }
     }
 
-    private bool _showXml;
     public bool ShowXml
     {
         get => _showXml;
@@ -130,7 +179,6 @@ public class ExportViewModel : ViewModelBase
         }
     }
 
-    private bool _useXml;
     public bool UseXml
     {
         get => _useXml;
@@ -150,8 +198,6 @@ public class ExportViewModel : ViewModelBase
         }
     }
 
-
-    private bool _showJson;
     public bool ShowJson
     {
         get => _showJson;
@@ -165,7 +211,6 @@ public class ExportViewModel : ViewModelBase
         }
     }
 
-    private bool _useJson;
     public bool UseJson
     {
         get => _useJson;
@@ -185,7 +230,6 @@ public class ExportViewModel : ViewModelBase
         }
     }
 
-    private bool _showTxt;
     public bool ShowTxt
     {
         get => _showTxt;
@@ -199,7 +243,6 @@ public class ExportViewModel : ViewModelBase
         }
     }
 
-    private bool _useTxt;
     public bool UseTxt
     {
         get => _useTxt;
@@ -219,7 +262,6 @@ public class ExportViewModel : ViewModelBase
         }
     }
 
-    private string _filePath;
     public string FilePath
     {
         get => _filePath;
@@ -233,43 +275,6 @@ public class ExportViewModel : ViewModelBase
         }
     }
 
-    private ExportViewModel(Action<ExportViewModel> deleteCommand, Action<ExportViewModel> cancelHandler, ExportFileType[] showFilesTypes, bool showExportSelected)
-    {
-        ExportCommand = new RelayCommand(_ => deleteCommand(this));
-        CancelCommand = new RelayCommand(_ => cancelHandler(this));
-
-        ShowCsv = showFilesTypes.Contains(ExportFileType.Csv);
-        ShowXml = showFilesTypes.Contains(ExportFileType.Xml);
-        ShowJson = showFilesTypes.Contains(ExportFileType.Json);
-        ShowTxt = showFilesTypes.Contains(ExportFileType.Txt);
-
-        ShowExportSelected = showExportSelected;
-    }
-
-    public ExportViewModel(Action<ExportViewModel> deleteCommand, Action<ExportViewModel> cancelHandler, ExportFileType[] showFilesTypes, bool showExportSelected, ExportFileType fileType, string filePath) :
-        this(deleteCommand, cancelHandler, showFilesTypes, showExportSelected)
-    {
-        FilePath = filePath;
-
-        switch (fileType)
-        {
-            case ExportFileType.Csv:
-                UseCsv = true;
-                break;
-            case ExportFileType.Xml:
-                UseXml = true;
-                break;
-            case ExportFileType.Json:
-                UseJson = true;
-                break;
-            case ExportFileType.Txt:
-                UseTxt = true;                    
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
-        }
-    }
-
     public ICommand BrowseFileCommand => new RelayCommand(_ => BrowseFileAction());
 
     private void BrowseFileAction()
@@ -280,10 +285,7 @@ public class ExportViewModel : ViewModelBase
 
         saveFileDialog.Filter = $@"{fileExtension}-{Strings.File} | *.{fileExtension.ToLower()}";
 
-        if (saveFileDialog.ShowDialog() == DialogResult.OK)
-        {
-            FilePath = saveFileDialog.FileName;
-        }
+        if (saveFileDialog.ShowDialog() == DialogResult.OK) FilePath = saveFileDialog.FileName;
     }
 
     private void ChangeFilePathExtension(ExportFileType fileType)
@@ -295,9 +297,9 @@ public class ExportViewModel : ViewModelBase
 
         var newExtension = ExportManager.GetFileExtensionAsString(fileType);
 
-        if(newExtension == null)
+        if (newExtension == null)
             return;
-            
+
         if (extension.Equals(newExtension, StringComparison.OrdinalIgnoreCase))
             return;
 

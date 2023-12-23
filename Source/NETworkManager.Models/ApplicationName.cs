@@ -1,142 +1,142 @@
 ﻿namespace NETworkManager.Models;
 
 /// <summary>
-/// Represents all available applications.
+///     Represents all available applications.
 /// </summary>
 public enum ApplicationName
 {
     /// <summary>
-    /// No application.
+    ///     No application.
     /// </summary>
     None,
 
     /// <summary>
-    /// Dashboard application.
-    /// </summary>            
+    ///     Dashboard application.
+    /// </summary>
     Dashboard,
 
     /// <summary>
-    ///  Network interface application.
+    ///     Network interface application.
     /// </summary>
     NetworkInterface,
 
     /// <summary>
-    ///  WiFi application.
+    ///     WiFi application.
     /// </summary>
     WiFi,
 
     /// <summary>
-    /// IP scanner application.
+    ///     IP scanner application.
     /// </summary>
     IPScanner,
 
     /// <summary>
-    /// Port scanner application.
+    ///     Port scanner application.
     /// </summary>
     PortScanner,
 
     /// <summary>
-    /// Ping monitor application.
+    ///     Ping monitor application.
     /// </summary>
     PingMonitor,
 
     /// <summary>
-    /// Traceroute application.
+    ///     Traceroute application.
     /// </summary>
     Traceroute,
 
     /// <summary>
-    /// DNS lookup application.
+    ///     DNS lookup application.
     /// </summary>
     DNSLookup,
 
     /// <summary>
-    /// Remote Desktop application.
+    ///     Remote Desktop application.
     /// </summary>
     RemoteDesktop,
 
     /// <summary>
-    /// PowerShell application.
+    ///     PowerShell application.
     /// </summary>
     PowerShell,
 
     /// <summary>
-    /// PuTTY application.
+    ///     PuTTY application.
     /// </summary>
     PuTTY,
 
     /// <summary>
-    /// AWS Systems Manager Session Manager.
+    ///     AWS Systems Manager Session Manager.
     /// </summary>
     AWSSessionManager,
 
     /// <summary>
-    /// TigerVNC application.
+    ///     TigerVNC application.
     /// </summary>
     TigerVNC,
 
     /// <summary>
-    /// WebConsole application.
+    ///     WebConsole application.
     /// </summary>
     WebConsole,
-                  
+
     /// <summary>
-    /// SNMP application.
+    ///     SNMP application.
     /// </summary>
     SNMP,
-    
+
     /// <summary>
-    /// SNTP lookup application.
+    ///     SNTP lookup application.
     /// </summary>
     SNTPLookup,
-    
+
     /// <summary>
-    /// Discovery protocol application.
+    ///     Discovery protocol application.
     /// </summary>
     DiscoveryProtocol,
 
     /// <summary>
-    /// Wake on LAN application.
+    ///     Wake on LAN application.
     /// </summary>
     WakeOnLAN,
 
     /// <summary>
-    /// Whois application.
+    ///     Whois application.
     /// </summary>
     Whois,
 
     /// <summary>
-    /// IP geolocation application.
+    ///     IP geolocation application.
     /// </summary>
     IPGeolocation,
-    
+
     /// <summary>
-    /// Subnet calculator application.
+    ///     Subnet calculator application.
     /// </summary>
     SubnetCalculator,
 
     /// <summary>
-    /// Bit calculator application.
+    ///     Bit calculator application.
     /// </summary>
     BitCalculator,
 
     /// <summary>
-    /// Lookup application.
+    ///     Lookup application.
     /// </summary>
     Lookup,
 
     /// <summary>
-    /// Connections application.
+    ///     Connections application.
     /// </summary>
     Connections,
 
     /// <summary>
-    /// Listeners application.
+    ///     Listeners application.
     /// </summary>
     Listeners,
 
     /// <summary>
-    /// ARP table application.
+    ///     ARP table application.
     /// </summary>
     ARPTable
 }

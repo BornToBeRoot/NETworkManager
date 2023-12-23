@@ -1,20 +1,15 @@
-﻿using Microsoft.Xaml.Behaviors;
-using System.Security;
+﻿using System.Security;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using Microsoft.Xaml.Behaviors;
 
 namespace NETworkManager.Utilities.WPF;
 
 public class PasswordBoxBindingBehavior : Behavior<PasswordBox>
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    protected override void OnAttached()
-    {
-        AssociatedObject.PasswordChanged += OnPasswordBoxValueChanged;
-    }
+    public static readonly DependencyProperty PasswordProperty = DependencyProperty.Register("Password",
+        typeof(SecureString), typeof(PasswordBoxBindingBehavior), new PropertyMetadata(null));
 
     public SecureString Password
     {
@@ -22,8 +17,13 @@ public class PasswordBoxBindingBehavior : Behavior<PasswordBox>
         set => SetValue(PasswordProperty, value);
     }
 
-    public static readonly DependencyProperty PasswordProperty = DependencyProperty.Register("Password", typeof(SecureString), typeof(PasswordBoxBindingBehavior), new PropertyMetadata(null));
-    
+    /// <summary>
+    /// </summary>
+    protected override void OnAttached()
+    {
+        AssociatedObject.PasswordChanged += OnPasswordBoxValueChanged;
+    }
+
     private void OnPasswordBoxValueChanged(object sender, RoutedEventArgs e)
     {
         var binding = BindingOperations.GetBindingExpression(this, PasswordProperty);

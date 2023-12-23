@@ -1,16 +1,35 @@
-﻿using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using NETworkManager.Views;
+﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Threading;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
 
 namespace NETworkManager;
 
-public partial class StatusWindow : INotifyPropertyChanged  
+public partial class StatusWindow : INotifyPropertyChanged
 {
+    #region Constructor
+
+    public StatusWindow(MainWindow mainWindow)
+    {
+        InitializeComponent();
+        DataContext = this;
+
+        _mainWindow = mainWindow;
+
+        _dispatcherTimerClose.Interval = new TimeSpan(0, 0, 0, 0, 250);
+        _dispatcherTimerClose.Tick += DispatcherTimerTime_Tick;
+
+        _networkConnectionView = new NetworkConnectionWidgetView();
+        ContentControlNetworkConnection.Content = _networkConnectionView;
+    }
+
+    #endregion
+
     #region PropertyChangedEventHandler
 
     public event PropertyChangedEventHandler PropertyChanged;
@@ -21,7 +40,7 @@ public partial class StatusWindow : INotifyPropertyChanged
     }
 
     #endregion
-    
+
     #region Variables
 
     // Set priority to make the ui smoother
@@ -77,24 +96,6 @@ public partial class StatusWindow : INotifyPropertyChanged
 
     #endregion
 
-    #region Constructor
-
-    public StatusWindow(MainWindow mainWindow)
-    {
-        InitializeComponent();
-        DataContext = this;
-
-        _mainWindow = mainWindow;
-
-        _dispatcherTimerClose.Interval = new System.TimeSpan(0, 0, 0, 0, 250);
-        _dispatcherTimerClose.Tick += DispatcherTimerTime_Tick;
-
-        _networkConnectionView = new NetworkConnectionWidgetView();
-        ContentControlNetworkConnection.Content = _networkConnectionView;
-    }
-
-    #endregion
-
     #region ICommands & Actions
 
     public ICommand ReloadCommand => new RelayCommand(_ => ReloadAction());
@@ -131,7 +132,7 @@ public partial class StatusWindow : INotifyPropertyChanged
     }
 
     /// <summary>
-    /// Show the window on the screen.
+    ///     Show the window on the screen.
     /// </summary>
     /// <param name="enableCloseTimer">Automatically close the window after a certain time.</param>
     public void ShowWindow(bool enableCloseTimer = false)
@@ -140,7 +141,7 @@ public partial class StatusWindow : INotifyPropertyChanged
         // ToDo: User setting...
         Left = Screen.PrimaryScreen.WorkingArea.Right - Width - 10;
         Top = Screen.PrimaryScreen.WorkingArea.Bottom - Height - 10;
-        
+
         Show();
 
         if (enableCloseTimer)
@@ -148,7 +149,7 @@ public partial class StatusWindow : INotifyPropertyChanged
             SetupCloseTimer();
             return;
         }
-        
+
         Activate();
     }
 
@@ -165,7 +166,7 @@ public partial class StatusWindow : INotifyPropertyChanged
 
     #region Events
 
-    private void MetroWindow_Deactivated(object sender, System.EventArgs e)
+    private void MetroWindow_Deactivated(object sender, EventArgs e)
     {
         Hide();
     }
@@ -177,7 +178,7 @@ public partial class StatusWindow : INotifyPropertyChanged
         Hide();
     }
 
-    private void DispatcherTimerTime_Tick(object sender, System.EventArgs e)
+    private void DispatcherTimerTime_Tick(object sender, EventArgs e)
     {
         Time--;
 

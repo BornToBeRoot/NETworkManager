@@ -2,31 +2,29 @@
 using System.Globalization;
 using System.Windows.Data;
 using NETworkManager.Localization;
-using NETworkManager.Settings;
 
 namespace NETworkManager.Converters;
 
 /// <summary>
-/// Convert <see cref="ThemeColorInfo"/> to translated <see cref="string"/> or wise versa.
+///     Convert <see cref="ThemeColorInfo" /> to translated <see cref="string" /> or wise versa.
 /// </summary>
 public sealed class ThemeToStringConverter : IValueConverter
 {
-
     /// <summary>
-    /// Convert <see cref="ThemeColorInfo"/> to translated <see cref="string"/>. 
+    ///     Convert <see cref="ThemeColorInfo" /> to translated <see cref="string" />.
     /// </summary>
-    /// <param name="value">Object from type <see cref="ThemeColorInfo"/>.</param>
+    /// <param name="value">Object from type <see cref="ThemeColorInfo" />.</param>
     /// <param name="targetType"></param>
     /// <param name="parameter"></param>
     /// <param name="culture"></param>
-    /// <returns>Translated <see cref="ThemeColorInfo"/>.</returns>
+    /// <returns>Translated <see cref="ThemeColorInfo" />.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         return value is not string theme ? "-/-" : ResourceTranslator.Translate(ResourceIdentifier.Theme, theme);
     }
 
     /// <summary>
-    /// !!! Method not implemented !!!
+    ///     !!! Method not implemented !!!
     /// </summary>
     /// <param name="value"></param>
     /// <param name="targetType"></param>

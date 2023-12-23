@@ -1,4 +1,5 @@
-﻿using NETworkManager.Documentation;
+﻿using System.Windows.Input;
+using NETworkManager.Documentation;
 using NETworkManager.Models;
 using NETworkManager.ViewModels;
 
@@ -16,7 +17,8 @@ public partial class SettingsView
         DataContext = _viewModel;
     }
 
-    private void ScrollViewer_ManipulationBoundaryFeedback(object sender, System.Windows.Input.ManipulationBoundaryFeedbackEventArgs e)
+    private void ScrollViewer_ManipulationBoundaryFeedback(object sender,
+        ManipulationBoundaryFeedbackEventArgs e)
     {
         e.Handled = true;
     }
@@ -42,5 +44,5 @@ public partial class SettingsView
     public DocumentationIdentifier GetDocumentationIdentifier()
     {
         return _viewModel.GetDocumentationIdentifier();
-    }        
+    }
 }

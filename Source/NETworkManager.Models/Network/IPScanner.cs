@@ -1,6 +1,4 @@
-﻿using NETworkManager.Models.Lookup;
-using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +7,22 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using NETworkManager.Models.Lookup;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
 public sealed class IPScanner
 {
+    #region Constructor
+
+    public IPScanner(IPScannerOptions options)
+    {
+        _options = options;
+    }
+
+    #endregion
+
     #region Variables
 
     private int _progressValue;
@@ -54,18 +63,10 @@ public sealed class IPScanner
 
     #endregion
 
-    #region Constructor
-
-    public IPScanner(IPScannerOptions options)
-    {
-        _options = options;
-    }
-
-    #endregion
-
     #region Methods
 
-    public void ScanAsync(IEnumerable<(IPAddress ipAddress, string hostname)> hosts, CancellationToken cancellationToken)
+    public void ScanAsync(IEnumerable<(IPAddress ipAddress, string hostname)> hosts,
+        CancellationToken cancellationToken)
     {
         // Start the scan in a separate task
         Task.Run(() =>
@@ -101,7 +102,6 @@ public sealed class IPScanner
                     ConcurrentBag<PortInfo> portResults = new();
 
                     if (_options.PortScanEnabled)
-                    {
                         Parallel.ForEach(_options.PortScanPorts, portParallelOptions, port =>
                         {
                             // Test if port is open
@@ -131,11 +131,10 @@ public sealed class IPScanner
                                         new PortInfo(port, PortLookup.LookupByPortAndProtocol(port), portState));
                             }
                         });
-                    }
 
                     // Get ping result
                     pingTask.Wait();
-                    
+
                     cancellationToken.ThrowIfCancellationRequested();
 
                     var pingInfo = pingTask.Result;
@@ -231,7 +230,7 @@ public sealed class IPScanner
                 {
                     // Get timestamp 
                     var timestamp = DateTime.Now;
-                    
+
                     var pingReply = ping.Send(ipAddress, _options.ICMPTimeout, _options.ICMPBuffer);
 
                     // Success
@@ -239,11 +238,13 @@ public sealed class IPScanner
                     {
                         // IPv4
                         if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
-                            return new PingInfo(timestamp, pingReply.Address, pingReply.Buffer.Length, pingReply.RoundtripTime,
+                            return new PingInfo(timestamp, pingReply.Address, pingReply.Buffer.Length,
+                                pingReply.RoundtripTime,
                                 pingReply.Options!.Ttl, pingReply.Status);
-                        
+
                         // IPv6
-                        return new PingInfo(timestamp, pingReply.Address, pingReply.Buffer.Length, pingReply.RoundtripTime,
+                        return new PingInfo(timestamp, pingReply.Address, pingReply.Buffer.Length,
+                            pingReply.RoundtripTime,
                             pingReply.Status);
                     }
 
@@ -253,7 +254,6 @@ public sealed class IPScanner
                 }
                 catch (PingException)
                 {
-                    
                 }
 
                 // Don't scan again, if the user has canceled (when more than 1 attempt)

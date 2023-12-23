@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.NetworkInformation;
 
@@ -16,7 +15,7 @@ public class NetworkInterfaceInfo
     public bool IsOperational { get; set; }
     public long Speed { get; set; }
     public bool IPv4ProtocolAvailable { get; set; }
-    public Tuple<IPAddress, IPAddress>[] IPv4Address {get;set;}
+    public Tuple<IPAddress, IPAddress>[] IPv4Address { get; set; }
     public IPAddress[] IPv4Gateway { get; set; }
     public bool DhcpEnabled { get; set; }
     public IPAddress[] DhcpServer { get; set; }
@@ -29,9 +28,4 @@ public class NetworkInterfaceInfo
     public bool DNSAutoconfigurationEnabled { get; set; }
     public string DNSSuffix { get; set; }
     public IPAddress[] DNSServer { get; set; }
-
-    public NetworkInterfaceInfo()
-    {
-            
-    }
 }

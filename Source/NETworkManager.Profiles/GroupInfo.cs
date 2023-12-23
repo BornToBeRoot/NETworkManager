@@ -1,152 +1,21 @@
-﻿using NETworkManager.Models.Network;
+﻿using System.Collections.Generic;
+using System.Security;
+using System.Xml.Serialization;
+using NETworkManager.Models.Network;
 using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
-using System.Collections.Generic;
-using System.Security;
-using System.Xml.Serialization;
 
 namespace NETworkManager.Profiles;
 
 /// <summary>
-/// Class represents a group.
+///     Class represents a group.
 /// </summary>
 public class GroupInfo
 {
     /// <summary>
-    /// Name of the group.
-    /// </summary>
-    public string Name { get; set; }
-
-    [XmlIgnore]
-    public bool IsDynamic { get; set; }
-
-    [XmlIgnore]
-    public List<ProfileInfo> Profiles { get; set; }
-
-    public bool RemoteDesktop_UseCredentials { get; set; }
-    public string RemoteDesktop_Username { get; set; }
-    public string RemoteDesktop_Domain { get; set; }
-
-    [XmlIgnore]
-    public SecureString RemoteDesktop_Password { get; set; }
-    public bool RemoteDesktop_OverrideDisplay { get; set; }
-    public bool RemoteDesktop_AdjustScreenAutomatically { get; set; }
-    public bool RemoteDesktop_UseCurrentViewSize { get; set; } = GlobalStaticConfiguration.RemoteDesktop_UseCurrentViewSize;
-    public bool RemoteDesktop_UseFixedScreenSize { get; set; }
-    public int RemoteDesktop_ScreenWidth { get; set; } = GlobalStaticConfiguration.RemoteDesktop_ScreenWidth;
-    public int RemoteDesktop_ScreenHeight { get; set; } = GlobalStaticConfiguration.RemoteDesktop_ScreenHeight;
-    public bool RemoteDesktop_UseCustomScreenSize { get; set; }
-    public int RemoteDesktop_CustomScreenWidth { get; set; }
-    public int RemoteDesktop_CustomScreenHeight { get; set; }
-    public bool RemoteDesktop_OverrideColorDepth { get; set; }
-    public int RemoteDesktop_ColorDepth { get; set; } = GlobalStaticConfiguration.RemoteDesktop_ColorDepth;
-    public bool RemoteDesktop_OverridePort { get; set; }
-    public int RemoteDesktop_Port { get; set; } = GlobalStaticConfiguration.RemoteDesktop_Port;
-    public bool RemoteDesktop_OverrideCredSspSupport { get; set; }
-    public bool RemoteDesktop_EnableCredSspSupport { get; set; }
-    public bool RemoteDesktop_OverrideAuthenticationLevel { get; set; }
-    public uint RemoteDesktop_AuthenticationLevel { get; set; } = GlobalStaticConfiguration.RemoteDesktop_AuthenticationLevel;
-    public bool RemoteDesktop_OverrideGatewayServer { get; set; }
-    public bool RemoteDesktop_EnableGatewayServer { get; set; }
-    public string RemoteDesktop_GatewayServerHostname { get; set; }
-    public bool RemoteDesktop_GatewayServerBypassLocalAddresses { get; set; } = GlobalStaticConfiguration.RemoteDesktop_GatewayServerBypassLocalAddresses;
-    public GatewayUserSelectedCredsSource RemoteDesktop_GatewayServerLogonMethod { get; set; } = GlobalStaticConfiguration.RemoteDesktop_GatewayServerLogonMethod;
-    public bool RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer { get; set; } = GlobalStaticConfiguration.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
-    public bool RemoteDesktop_UseGatewayServerCredentials { get; set; }
-    public string RemoteDesktop_GatewayServerUsername { get; set; }
-    public string RemoteDesktop_GatewayServerDomain { get; set; }
-
-    [XmlIgnore]
-    public SecureString RemoteDesktop_GatewayServerPassword { get; set; }
-    public bool RemoteDesktop_OverrideAudioRedirectionMode { get; set; }
-    public AudioRedirectionMode RemoteDesktop_AudioRedirectionMode { get; set; } = GlobalStaticConfiguration.RemoteDesktop_AudioRedirectionMode;
-    public bool RemoteDesktop_OverrideAudioCaptureRedirectionMode { get; set; }
-    public AudioCaptureRedirectionMode RemoteDesktop_AudioCaptureRedirectionMode { get; set; } = GlobalStaticConfiguration.RemoteDesktop_AudioCaptureRedirectionMode;
-    public bool RemoteDesktop_OverrideApplyWindowsKeyCombinations { get; set; }
-    public KeyboardHookMode RemoteDesktop_KeyboardHookMode { get; set; } = GlobalStaticConfiguration.RemoteDesktop_KeyboardHookMode;
-    public bool RemoteDesktop_OverrideRedirectClipboard { get; set; }
-    public bool RemoteDesktop_RedirectClipboard { get; set; } = true;
-    public bool RemoteDesktop_OverrideRedirectDevices { get; set; }
-    public bool RemoteDesktop_RedirectDevices { get; set; }
-    public bool RemoteDesktop_OverrideRedirectDrives { get; set; }
-    public bool RemoteDesktop_RedirectDrives { get; set; }
-    public bool RemoteDesktop_OverrideRedirectPorts { get; set; }
-    public bool RemoteDesktop_RedirectPorts { get; set; }
-    public bool RemoteDesktop_OverrideRedirectSmartcards { get; set; }
-    public bool RemoteDesktop_RedirectSmartCards { get; set; }
-    public bool RemoteDesktop_OverrideRedirectPrinters { get; set; }
-    public bool RemoteDesktop_RedirectPrinters { get; set; }
-    public bool RemoteDesktop_OverridePersistentBitmapCaching { get; set; }
-    public bool RemoteDesktop_PersistentBitmapCaching { get; set; }
-    public bool RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped { get; set; }
-    public bool RemoteDesktop_ReconnectIfTheConnectionIsDropped { get; set; }
-    public bool RemoteDesktop_OverrideNetworkConnectionType { get; set; }
-    public NetworkConnectionType RemoteDesktop_NetworkConnectionType { get; set; }
-    public bool RemoteDesktop_OverrideDesktopBackground { get; set; }
-    public bool RemoteDesktop_DesktopBackground { get; set; }
-    public bool RemoteDesktop_OverrideFontSmoothing { get; set; }
-    public bool RemoteDesktop_FontSmoothing { get; set; }
-    public bool RemoteDesktop_OverrideDesktopComposition { get; set; }
-    public bool RemoteDesktop_DesktopComposition { get; set; }
-    public bool RemoteDesktop_OverrideShowWindowContentsWhileDragging { get; set; }
-    public bool RemoteDesktop_ShowWindowContentsWhileDragging { get; set; }
-    public bool RemoteDesktop_OverrideMenuAndWindowAnimation { get; set; }
-    public bool RemoteDesktop_MenuAndWindowAnimation { get; set; }
-    public bool RemoteDesktop_OverrideVisualStyles { get; set; }
-    public bool RemoteDesktop_VisualStyles { get; set; }
-
-    public bool PowerShell_OverrideCommand { get; set; }
-    public string PowerShell_Command { get; set; }
-    public bool PowerShell_OverrideAdditionalCommandLine { get; set; }
-    public string PowerShell_AdditionalCommandLine { get; set; }
-    public bool PowerShell_OverrideExecutionPolicy { get; set; }
-    public ExecutionPolicy PowerShell_ExecutionPolicy { get; set; } = GlobalStaticConfiguration.PowerShell_ExecutionPolicy;
-
-    public bool PuTTY_OverrideUsername { get; set; }
-    public string PuTTY_Username { get; set; }
-    public bool PuTTY_OverridePrivateKeyFile { get; set; }
-    public string PuTTY_PrivateKeyFile { get; set; }
-    public bool PuTTY_OverrideProfile { get; set; }
-    public string PuTTY_Profile { get; set; }
-    public bool PuTTY_OverrideEnableLog { get; set; }
-    public bool PuTTY_EnableLog { get; set; }
-    public bool PuTTY_OverrideLogMode { get; set; }
-    public LogMode PuTTY_LogMode { get; set; } = GlobalStaticConfiguration.PuTTY_LogMode;
-    public bool PuTTY_OverrideLogPath { get; set; }
-    public string PuTTY_LogPath { get; set; } = GlobalStaticConfiguration.PuTTY_LogPath;
-    public bool PuTTY_OverrideLogFileName { get; set; }
-    public string PuTTY_LogFileName { get; set; } = GlobalStaticConfiguration.PuTTY_LogFileName;
-    public bool PuTTY_OverrideAdditionalCommandLine { get; set; }
-    public string PuTTY_AdditionalCommandLine { get; set; }
-
-    public bool AWSSessionManager_OverrideProfile { get; set; }
-    public string AWSSessionManager_Profile { get; set; }
-    public bool AWSSessionManager_OverrideRegion { get; set; }
-    public string AWSSessionManager_Region { get; set; }
-
-    public bool TigerVNC_OverridePort { get; set; }
-    public int TigerVNC_Port { get; set; } = GlobalStaticConfiguration.TigerVNC_DefaultVNCPort;
-
-    public bool SNMP_OverrideOIDAndMode { get; set; }
-    public string SNMP_OID { get; set; }
-    public SNMPMode SNMP_Mode { get; set; } = GlobalStaticConfiguration.SNMP_Mode;
-    public bool SNMP_OverrideVersionAndAuth { get; set; }
-    public SNMPVersion SNMP_Version { get; set; } = GlobalStaticConfiguration.SNMP_Version;
-    [XmlIgnore]
-    public SecureString SNMP_Community { get; set; }
-    public SNMPV3Security SNMP_Security { get; set; } = GlobalStaticConfiguration.SNMP_Security;
-    public string SNMP_Username { get; set; }
-    public SNMPV3AuthenticationProvider SNMP_AuthenticationProvider { get; set; } = GlobalStaticConfiguration.SNMP_AuthenticationProvider;
-    [XmlIgnore]
-    public SecureString SNMP_Auth { get; set; }
-    public SNMPV3PrivacyProvider SNMP_PrivacyProvider { get; set; } = GlobalStaticConfiguration.SNMP_PrivacyProvider;
-    [XmlIgnore]
-    public SecureString SNMP_Priv { get; set; }
-
-    /// <summary>
-    /// Initializes a new instance of the<see cref="GroupInfo"/> class.
+    ///     Initializes a new instance of the<see cref="GroupInfo" /> class.
     /// </summary>
     public GroupInfo()
     {
@@ -154,7 +23,7 @@ public class GroupInfo
     }
 
     /// <summary>
-    /// Initializes a new instance of the<see cref="GroupInfo"/> class with name.
+    ///     Initializes a new instance of the<see cref="GroupInfo" /> class with name.
     /// </summary>
     public GroupInfo(string name) : this()
     {
@@ -162,7 +31,7 @@ public class GroupInfo
     }
 
     /// <summary>
-    /// Initializes a new instance of the<see cref="GroupInfo"/> class with properties.
+    ///     Initializes a new instance of the<see cref="GroupInfo" /> class with properties.
     /// </summary>
     public GroupInfo(GroupInfo group) : this(group.Name)
     {
@@ -195,7 +64,8 @@ public class GroupInfo
         RemoteDesktop_GatewayServerHostname = group.RemoteDesktop_GatewayServerHostname;
         RemoteDesktop_GatewayServerBypassLocalAddresses = group.RemoteDesktop_GatewayServerBypassLocalAddresses;
         RemoteDesktop_GatewayServerLogonMethod = group.RemoteDesktop_GatewayServerLogonMethod;
-        RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer = group.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+        RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer =
+            group.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
         RemoteDesktop_UseGatewayServerCredentials = group.RemoteDesktop_UseGatewayServerCredentials;
         RemoteDesktop_GatewayServerUsername = group.RemoteDesktop_GatewayServerUsername;
         RemoteDesktop_GatewayServerDomain = group.RemoteDesktop_GatewayServerDomain;
@@ -220,7 +90,8 @@ public class GroupInfo
         RemoteDesktop_RedirectPrinters = group.RemoteDesktop_RedirectPrinters;
         RemoteDesktop_OverridePersistentBitmapCaching = group.RemoteDesktop_OverridePersistentBitmapCaching;
         RemoteDesktop_PersistentBitmapCaching = group.RemoteDesktop_PersistentBitmapCaching;
-        RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped = group.RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped;
+        RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped =
+            group.RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped;
         RemoteDesktop_ReconnectIfTheConnectionIsDropped = group.RemoteDesktop_ReconnectIfTheConnectionIsDropped;
         RemoteDesktop_OverrideNetworkConnectionType = group.RemoteDesktop_OverrideNetworkConnectionType;
         RemoteDesktop_NetworkConnectionType = group.RemoteDesktop_NetworkConnectionType;
@@ -230,7 +101,8 @@ public class GroupInfo
         RemoteDesktop_FontSmoothing = group.RemoteDesktop_FontSmoothing;
         RemoteDesktop_OverrideDesktopComposition = group.RemoteDesktop_OverrideDesktopComposition;
         RemoteDesktop_DesktopComposition = group.RemoteDesktop_DesktopComposition;
-        RemoteDesktop_OverrideShowWindowContentsWhileDragging = group.RemoteDesktop_OverrideShowWindowContentsWhileDragging;
+        RemoteDesktop_OverrideShowWindowContentsWhileDragging =
+            group.RemoteDesktop_OverrideShowWindowContentsWhileDragging;
         RemoteDesktop_ShowWindowContentsWhileDragging = group.RemoteDesktop_ShowWindowContentsWhileDragging;
         RemoteDesktop_OverrideMenuAndWindowAnimation = group.RemoteDesktop_OverrideMenuAndWindowAnimation;
         RemoteDesktop_MenuAndWindowAnimation = group.RemoteDesktop_MenuAndWindowAnimation;
@@ -287,4 +159,155 @@ public class GroupInfo
         SNMP_PrivacyProvider = group.SNMP_PrivacyProvider;
         SNMP_Priv = group.SNMP_Priv;
     }
+
+    /// <summary>
+    ///     Name of the group.
+    /// </summary>
+    public string Name { get; set; }
+
+    [XmlIgnore] public bool IsDynamic { get; set; }
+
+    [XmlIgnore] public List<ProfileInfo> Profiles { get; set; }
+
+    public bool RemoteDesktop_UseCredentials { get; set; }
+    public string RemoteDesktop_Username { get; set; }
+    public string RemoteDesktop_Domain { get; set; }
+
+    [XmlIgnore] public SecureString RemoteDesktop_Password { get; set; }
+    public bool RemoteDesktop_OverrideDisplay { get; set; }
+    public bool RemoteDesktop_AdjustScreenAutomatically { get; set; }
+
+    public bool RemoteDesktop_UseCurrentViewSize { get; set; } =
+        GlobalStaticConfiguration.RemoteDesktop_UseCurrentViewSize;
+
+    public bool RemoteDesktop_UseFixedScreenSize { get; set; }
+    public int RemoteDesktop_ScreenWidth { get; set; } = GlobalStaticConfiguration.RemoteDesktop_ScreenWidth;
+    public int RemoteDesktop_ScreenHeight { get; set; } = GlobalStaticConfiguration.RemoteDesktop_ScreenHeight;
+    public bool RemoteDesktop_UseCustomScreenSize { get; set; }
+    public int RemoteDesktop_CustomScreenWidth { get; set; }
+    public int RemoteDesktop_CustomScreenHeight { get; set; }
+    public bool RemoteDesktop_OverrideColorDepth { get; set; }
+    public int RemoteDesktop_ColorDepth { get; set; } = GlobalStaticConfiguration.RemoteDesktop_ColorDepth;
+    public bool RemoteDesktop_OverridePort { get; set; }
+    public int RemoteDesktop_Port { get; set; } = GlobalStaticConfiguration.RemoteDesktop_Port;
+    public bool RemoteDesktop_OverrideCredSspSupport { get; set; }
+    public bool RemoteDesktop_EnableCredSspSupport { get; set; }
+    public bool RemoteDesktop_OverrideAuthenticationLevel { get; set; }
+
+    public uint RemoteDesktop_AuthenticationLevel { get; set; } =
+        GlobalStaticConfiguration.RemoteDesktop_AuthenticationLevel;
+
+    public bool RemoteDesktop_OverrideGatewayServer { get; set; }
+    public bool RemoteDesktop_EnableGatewayServer { get; set; }
+    public string RemoteDesktop_GatewayServerHostname { get; set; }
+
+    public bool RemoteDesktop_GatewayServerBypassLocalAddresses { get; set; } =
+        GlobalStaticConfiguration.RemoteDesktop_GatewayServerBypassLocalAddresses;
+
+    public GatewayUserSelectedCredsSource RemoteDesktop_GatewayServerLogonMethod { get; set; } =
+        GlobalStaticConfiguration.RemoteDesktop_GatewayServerLogonMethod;
+
+    public bool RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer { get; set; } =
+        GlobalStaticConfiguration.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+
+    public bool RemoteDesktop_UseGatewayServerCredentials { get; set; }
+    public string RemoteDesktop_GatewayServerUsername { get; set; }
+    public string RemoteDesktop_GatewayServerDomain { get; set; }
+
+    [XmlIgnore] public SecureString RemoteDesktop_GatewayServerPassword { get; set; }
+    public bool RemoteDesktop_OverrideAudioRedirectionMode { get; set; }
+
+    public AudioRedirectionMode RemoteDesktop_AudioRedirectionMode { get; set; } =
+        GlobalStaticConfiguration.RemoteDesktop_AudioRedirectionMode;
+
+    public bool RemoteDesktop_OverrideAudioCaptureRedirectionMode { get; set; }
+
+    public AudioCaptureRedirectionMode RemoteDesktop_AudioCaptureRedirectionMode { get; set; } =
+        GlobalStaticConfiguration.RemoteDesktop_AudioCaptureRedirectionMode;
+
+    public bool RemoteDesktop_OverrideApplyWindowsKeyCombinations { get; set; }
+
+    public KeyboardHookMode RemoteDesktop_KeyboardHookMode { get; set; } =
+        GlobalStaticConfiguration.RemoteDesktop_KeyboardHookMode;
+
+    public bool RemoteDesktop_OverrideRedirectClipboard { get; set; }
+    public bool RemoteDesktop_RedirectClipboard { get; set; } = true;
+    public bool RemoteDesktop_OverrideRedirectDevices { get; set; }
+    public bool RemoteDesktop_RedirectDevices { get; set; }
+    public bool RemoteDesktop_OverrideRedirectDrives { get; set; }
+    public bool RemoteDesktop_RedirectDrives { get; set; }
+    public bool RemoteDesktop_OverrideRedirectPorts { get; set; }
+    public bool RemoteDesktop_RedirectPorts { get; set; }
+    public bool RemoteDesktop_OverrideRedirectSmartcards { get; set; }
+    public bool RemoteDesktop_RedirectSmartCards { get; set; }
+    public bool RemoteDesktop_OverrideRedirectPrinters { get; set; }
+    public bool RemoteDesktop_RedirectPrinters { get; set; }
+    public bool RemoteDesktop_OverridePersistentBitmapCaching { get; set; }
+    public bool RemoteDesktop_PersistentBitmapCaching { get; set; }
+    public bool RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped { get; set; }
+    public bool RemoteDesktop_ReconnectIfTheConnectionIsDropped { get; set; }
+    public bool RemoteDesktop_OverrideNetworkConnectionType { get; set; }
+    public NetworkConnectionType RemoteDesktop_NetworkConnectionType { get; set; }
+    public bool RemoteDesktop_OverrideDesktopBackground { get; set; }
+    public bool RemoteDesktop_DesktopBackground { get; set; }
+    public bool RemoteDesktop_OverrideFontSmoothing { get; set; }
+    public bool RemoteDesktop_FontSmoothing { get; set; }
+    public bool RemoteDesktop_OverrideDesktopComposition { get; set; }
+    public bool RemoteDesktop_DesktopComposition { get; set; }
+    public bool RemoteDesktop_OverrideShowWindowContentsWhileDragging { get; set; }
+    public bool RemoteDesktop_ShowWindowContentsWhileDragging { get; set; }
+    public bool RemoteDesktop_OverrideMenuAndWindowAnimation { get; set; }
+    public bool RemoteDesktop_MenuAndWindowAnimation { get; set; }
+    public bool RemoteDesktop_OverrideVisualStyles { get; set; }
+    public bool RemoteDesktop_VisualStyles { get; set; }
+
+    public bool PowerShell_OverrideCommand { get; set; }
+    public string PowerShell_Command { get; set; }
+    public bool PowerShell_OverrideAdditionalCommandLine { get; set; }
+    public string PowerShell_AdditionalCommandLine { get; set; }
+    public bool PowerShell_OverrideExecutionPolicy { get; set; }
+
+    public ExecutionPolicy PowerShell_ExecutionPolicy { get; set; } =
+        GlobalStaticConfiguration.PowerShell_ExecutionPolicy;
+
+    public bool PuTTY_OverrideUsername { get; set; }
+    public string PuTTY_Username { get; set; }
+    public bool PuTTY_OverridePrivateKeyFile { get; set; }
+    public string PuTTY_PrivateKeyFile { get; set; }
+    public bool PuTTY_OverrideProfile { get; set; }
+    public string PuTTY_Profile { get; set; }
+    public bool PuTTY_OverrideEnableLog { get; set; }
+    public bool PuTTY_EnableLog { get; set; }
+    public bool PuTTY_OverrideLogMode { get; set; }
+    public LogMode PuTTY_LogMode { get; set; } = GlobalStaticConfiguration.PuTTY_LogMode;
+    public bool PuTTY_OverrideLogPath { get; set; }
+    public string PuTTY_LogPath { get; set; } = GlobalStaticConfiguration.PuTTY_LogPath;
+    public bool PuTTY_OverrideLogFileName { get; set; }
+    public string PuTTY_LogFileName { get; set; } = GlobalStaticConfiguration.PuTTY_LogFileName;
+    public bool PuTTY_OverrideAdditionalCommandLine { get; set; }
+    public string PuTTY_AdditionalCommandLine { get; set; }
+
+    public bool AWSSessionManager_OverrideProfile { get; set; }
+    public string AWSSessionManager_Profile { get; set; }
+    public bool AWSSessionManager_OverrideRegion { get; set; }
+    public string AWSSessionManager_Region { get; set; }
+
+    public bool TigerVNC_OverridePort { get; set; }
+    public int TigerVNC_Port { get; set; } = GlobalStaticConfiguration.TigerVNC_DefaultVNCPort;
+
+    public bool SNMP_OverrideOIDAndMode { get; set; }
+    public string SNMP_OID { get; set; }
+    public SNMPMode SNMP_Mode { get; set; } = GlobalStaticConfiguration.SNMP_Mode;
+    public bool SNMP_OverrideVersionAndAuth { get; set; }
+    public SNMPVersion SNMP_Version { get; set; } = GlobalStaticConfiguration.SNMP_Version;
+    [XmlIgnore] public SecureString SNMP_Community { get; set; }
+    public SNMPV3Security SNMP_Security { get; set; } = GlobalStaticConfiguration.SNMP_Security;
+    public string SNMP_Username { get; set; }
+
+    public SNMPV3AuthenticationProvider SNMP_AuthenticationProvider { get; set; } =
+        GlobalStaticConfiguration.SNMP_AuthenticationProvider;
+
+    [XmlIgnore] public SecureString SNMP_Auth { get; set; }
+    public SNMPV3PrivacyProvider SNMP_PrivacyProvider { get; set; } = GlobalStaticConfiguration.SNMP_PrivacyProvider;
+    [XmlIgnore] public SecureString SNMP_Priv { get; set; }
 }

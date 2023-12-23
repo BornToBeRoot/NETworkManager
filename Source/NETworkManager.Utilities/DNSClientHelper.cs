@@ -8,7 +8,7 @@ public static class DNSClientHelper
     {
         DNSClientResultIPAddress firstResult = null;
 
-        for (int i = 0; i < 2; i++)
+        for (var i = 0; i < 2; i++)
         {
             if (preferIPv4)
             {
@@ -16,8 +16,7 @@ public static class DNSClientHelper
 
                 if (!resultIPv4.HasError)
                     return resultIPv4;
-                else
-                    firstResult ??= resultIPv4;
+                firstResult ??= resultIPv4;
             }
             else
             {
@@ -25,8 +24,7 @@ public static class DNSClientHelper
 
                 if (!resultIPv6.HasError)
                     return resultIPv6;
-                else
-                    firstResult ??= resultIPv6;
+                firstResult ??= resultIPv6;
             }
 
             preferIPv4 = !preferIPv4;

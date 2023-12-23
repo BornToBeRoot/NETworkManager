@@ -6,8 +6,32 @@ namespace NETworkManager.Models.Network;
 
 public class BandwidthMeter
 {
+    #region Constructor
+
+    public BandwidthMeter(string id)
+    {
+        _timer.Interval = TimeSpan.FromMilliseconds(UpdateInterval);
+        _timer.Tick += Timer_Tick;
+
+        _networkInterface = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces()
+            .FirstOrDefault(x => x.Id == id);
+    }
+
+    #endregion
+
+    #region Events
+
+    private void Timer_Tick(object sender, EventArgs e)
+    {
+        Update();
+    }
+
+    #endregion
+
     #region Variables
+
     private double _updateInterval = 1000;
+
     public double UpdateInterval
     {
         get => _updateInterval;
@@ -21,35 +45,30 @@ public class BandwidthMeter
             _updateInterval = value;
         }
     }
+
     public bool IsRunning => _timer.IsEnabled;
 
-    private DispatcherTimer _timer = new DispatcherTimer();
+    private readonly DispatcherTimer _timer = new();
     private readonly System.Net.NetworkInformation.NetworkInterface _networkInterface;
     private long _previousBytesSent;
     private long _previousBytesReceived;
-    private bool _canUpdate;          // Collect initial data for correct calculation
+    private bool _canUpdate; // Collect initial data for correct calculation
+
     #endregion
 
     #region Public events
+
     public event EventHandler<BandwidthMeterSpeedArgs> UpdateSpeed;
 
     protected virtual void OnUpdateSpeed(BandwidthMeterSpeedArgs e)
     {
         UpdateSpeed?.Invoke(this, e);
     }
-    #endregion
 
-    #region Constructor
-    public BandwidthMeter(string id)
-    {
-        _timer.Interval = TimeSpan.FromMilliseconds(UpdateInterval);
-        _timer.Tick += Timer_Tick;
-
-        _networkInterface = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces().FirstOrDefault(x => x.Id == id);
-    }
     #endregion
 
     #region Methods
+
     public void Start()
     {
         _timer.Start();
@@ -84,14 +103,9 @@ public class BandwidthMeter
             return;
         }
 
-        OnUpdateSpeed(new BandwidthMeterSpeedArgs(DateTime.Now, totalBytesReceived, totalBytesSent, byteReceivedSpeed, byteSentSpeed));
+        OnUpdateSpeed(new BandwidthMeterSpeedArgs(DateTime.Now, totalBytesReceived, totalBytesSent, byteReceivedSpeed,
+            byteSentSpeed));
     }
-    #endregion
 
-    #region Events
-    private void Timer_Tick(object sender, EventArgs e)
-    {
-        Update();
-    }
     #endregion
 }

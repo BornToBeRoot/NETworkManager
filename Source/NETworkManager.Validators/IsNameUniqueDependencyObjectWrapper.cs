@@ -11,7 +11,7 @@ public class IsNameUniqueDependencyObjectWrapper : DependencyObject
 
     public List<string> UsedNames
     {
-        get { return GetValue(UsedNamesProperty) as List<string>; }
-        set { SetValue(UsedNamesProperty, value); }
+        get => GetValue(UsedNamesProperty) as List<string>;
+        set => SetValue(UsedNamesProperty, value);
     }
 }

@@ -11,8 +11,13 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabItem}">
-                    <Grid x:Name="PART_Grid" Background="{TemplateBinding Background}" SnapsToDevicePixels="True" Margin="0">
-                        <ContentPresenter x:Name="PART_HeaderContent" Margin="{TemplateBinding Padding}" ContentSource="Header" VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.FontSize="18" TextBlock.FontFamily="{StaticResource MahApps.Fonts.Family.Header}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    <Grid x:Name="PART_Grid" Background="{TemplateBinding Background}" SnapsToDevicePixels="True"
+                          Margin="0">
+                        <ContentPresenter x:Name="PART_HeaderContent" Margin="{TemplateBinding Padding}"
+                                          ContentSource="Header" VerticalAlignment="Center"
+                                          HorizontalAlignment="Center" TextBlock.FontSize="18"
+                                          TextBlock.FontFamily="{StaticResource MahApps.Fonts.Family.Header}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <!--<Rectangle x:Name="PART_Selector" VerticalAlignment="Bottom" Height="2" Visibility="Collapsed" Fill="{DynamicResource MahApps.Brushes.Accent}" />-->
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -43,10 +48,19 @@
                 <ControlTemplate TargetType="{x:Type TabControl}">
                     <DockPanel LastChildFill="True">
                         <Grid x:Name="HeaderGrid" DockPanel.Dock="Left" Margin="0,-3,0,0">
-                            <UniformGrid x:Name="HeaderPanel" HorizontalAlignment="Stretch" Columns="{Binding Items.Count, RelativeSource={RelativeSource FindAncestor,AncestorType=TabControl}}" Panel.ZIndex="1" IsItemsHost="True" KeyboardNavigation.TabIndex="1" />
+                            <UniformGrid x:Name="HeaderPanel" HorizontalAlignment="Stretch"
+                                         Columns="{Binding Items.Count, RelativeSource={RelativeSource FindAncestor,AncestorType=TabControl}}"
+                                         Panel.ZIndex="1" IsItemsHost="True" KeyboardNavigation.TabIndex="1" />
                         </Grid>
-                        <Border x:Name="ContentPanel" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" KeyboardNavigation.DirectionalNavigation="Contained" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                            <ContentPresenter x:Name="PART_SelectedContentHost" UseLayoutRounding="False" ContentSource="SelectedContent" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Border x:Name="ContentPanel" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                KeyboardNavigation.DirectionalNavigation="Contained" KeyboardNavigation.TabIndex="2"
+                                KeyboardNavigation.TabNavigation="Local"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <ContentPresenter x:Name="PART_SelectedContentHost" UseLayoutRounding="False"
+                                              ContentSource="SelectedContent"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Border>
                     </DockPanel>
                     <ControlTemplate.Triggers>

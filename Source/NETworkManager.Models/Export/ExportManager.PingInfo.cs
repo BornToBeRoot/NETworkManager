@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
@@ -12,11 +13,11 @@ namespace NETworkManager.Models.Export;
 public static partial class ExportManager
 {
     /// <summary>
-    /// Method to export objects from type <see cref="PingInfo"/> to a file.
+    ///     Method to export objects from type <see cref="PingInfo" /> to a file.
     /// </summary>
     /// <param name="filePath">Path to the export file.</param>
-    /// <param name="fileType">Allowed <see cref="ExportFileType"/> are CSV, XML or JSON.</param>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{PingInfo}"/> to export.</param>
+    /// <param name="fileType">Allowed <see cref="ExportFileType" /> are CSV, XML or JSON.</param>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{PingInfo}" /> to export.</param>
     public static void Export(string filePath, ExportFileType fileType, IReadOnlyList<PingInfo> collection)
     {
         switch (fileType)
@@ -37,9 +38,9 @@ public static partial class ExportManager
     }
 
     /// <summary>
-    /// Creates a CSV file from the given <see cref="PingInfo"/> collection.
+    ///     Creates a CSV file from the given <see cref="PingInfo" /> collection.
     /// </summary>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{PingInfo}"/> to export.</param>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{PingInfo}" /> to export.</param>
     /// <param name="filePath">Path to the export file.</param>
     private static void CreateCsv(IEnumerable<PingInfo> collection, string filePath)
     {
@@ -52,13 +53,13 @@ public static partial class ExportManager
             stringBuilder.AppendLine(
                 $"{DateTimeHelper.DateTimeToFullDateTimeString(info.Timestamp)},{info.IPAddress},{info.Hostname},{info.Bytes},{Ping.TimeToString(info.Status, info.Time, true)},{info.TTL},{info.Status}");
 
-        System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
+        File.WriteAllText(filePath, stringBuilder.ToString());
     }
 
     /// <summary>
-    /// Creates a XML file from the given <see cref="PingInfo"/> collection.
+    ///     Creates a XML file from the given <see cref="PingInfo" /> collection.
     /// </summary>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{PingInfo}"/> to export.</param>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{PingInfo}" /> to export.</param>
     /// <param name="filePath">Path to the export file.</param>
     private static void CreateXml(IEnumerable<PingInfo> collection, string filePath)
     {
@@ -68,7 +69,8 @@ public static partial class ExportManager
                     from info in collection
                     select
                         new XElement(nameof(PingInfo),
-                            new XElement(nameof(PingInfo.Timestamp), DateTimeHelper.DateTimeToFullDateTimeString(info.Timestamp)),
+                            new XElement(nameof(PingInfo.Timestamp),
+                                DateTimeHelper.DateTimeToFullDateTimeString(info.Timestamp)),
                             new XElement(nameof(PingInfo.IPAddress), info.IPAddress),
                             new XElement(nameof(PingInfo.Hostname), info.Hostname),
                             new XElement(nameof(PingInfo.Bytes), info.Bytes),
@@ -80,16 +82,15 @@ public static partial class ExportManager
     }
 
     /// <summary>
-    /// Creates a JSON file from the given <see cref="PingInfo"/> collection.
+    ///     Creates a JSON file from the given <see cref="PingInfo" /> collection.
     /// </summary>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{PingInfo}"/> to export.</param>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{PingInfo}" /> to export.</param>
     /// <param name="filePath">Path to the export file.</param>
     private static void CreateJson(IReadOnlyList<PingInfo> collection, string filePath)
     {
         var jsonData = new object[collection.Count];
 
         for (var i = 0; i < collection.Count; i++)
-        {
             jsonData[i] = new
             {
                 Timestamp = DateTimeHelper.DateTimeToFullDateTimeString(collection[i].Timestamp),
@@ -100,8 +101,7 @@ public static partial class ExportManager
                 collection[i].TTL,
                 Status = collection[i].Status.ToString()
             };
-        }
 
-        System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
+        File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
     }
 }

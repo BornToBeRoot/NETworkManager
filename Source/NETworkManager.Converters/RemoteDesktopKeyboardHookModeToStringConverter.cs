@@ -7,25 +7,27 @@ using NETworkManager.Models.RemoteDesktop;
 namespace NETworkManager.Converters;
 
 /// <summary>
-/// Convert <see cref="KeyboardHookMode"/> to translated <see cref="string"/> or wise versa.
+///     Convert <see cref="KeyboardHookMode" /> to translated <see cref="string" /> or wise versa.
 /// </summary>
 public sealed class RemoteDesktopKeyboardHookModeToStringConverter : IValueConverter
 {
     /// <summary>
-    /// Convert <see cref="KeyboardHookMode"/> to translated <see cref="string"/>. 
+    ///     Convert <see cref="KeyboardHookMode" /> to translated <see cref="string" />.
     /// </summary>
-    /// <param name="value">Object from type <see cref="KeyboardHookMode"/>.</param>
+    /// <param name="value">Object from type <see cref="KeyboardHookMode" />.</param>
     /// <param name="targetType"></param>
     /// <param name="parameter"></param>
     /// <param name="culture"></param>
-    /// <returns>Translated <see cref="KeyboardHookMode"/>.</returns>
+    /// <returns>Translated <see cref="KeyboardHookMode" />.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value is not KeyboardHookMode keyboardHookMode ? "-/-" : ResourceTranslator.Translate(ResourceIdentifier.RemoteDesktopKeyboardHookMode, keyboardHookMode);
+        return value is not KeyboardHookMode keyboardHookMode
+            ? "-/-"
+            : ResourceTranslator.Translate(ResourceIdentifier.RemoteDesktopKeyboardHookMode, keyboardHookMode);
     }
 
     /// <summary>
-    /// !!! Method not implemented !!!
+    ///     !!! Method not implemented !!!
     /// </summary>
     /// <param name="value"></param>
     /// <param name="targetType"></param>

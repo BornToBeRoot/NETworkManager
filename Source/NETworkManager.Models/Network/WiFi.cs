@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Devices.WiFi;
@@ -14,56 +13,55 @@ using log4net;
 namespace NETworkManager.Models.Network;
 
 /// <summary>
-/// Class with WiFi related methods.
+///     Class with WiFi related methods.
 /// </summary>
 public static class WiFi
 {
     private static readonly ILog Log = LogManager.GetLogger(typeof(WiFi));
-    
+
     /// <summary>
-    /// Get all WiFi adapters async with additional information from <see cref="NetworkInterface"/>.
+    ///     Get all WiFi adapters async with additional information from <see cref="NetworkInterface" />.
     /// </summary>
-    /// <returns><see cref="WiFiAdapterInfo"/> with <see cref="NetworkInterface"/> and <see cref="WiFiAdapter"/> as <see cref="List{T}"/>.</returns>
+    /// <returns>
+    ///     <see cref="WiFiAdapterInfo" /> with <see cref="NetworkInterface" /> and <see cref="WiFiAdapter" /> as
+    ///     <see cref="List{T}" />.
+    /// </returns>
     public static async Task<List<WiFiAdapterInfo>> GetAdapterAsync()
     {
         List<WiFiAdapterInfo> wifiAdapterInfos = new();
 
         var wifiAdapters = await WiFiAdapter.FindAllAdaptersAsync();
 
-        if (wifiAdapters.Count <= 0) 
+        if (wifiAdapters.Count <= 0)
             return wifiAdapterInfos;
-        
+
         var networkInterfaces = await NetworkInterface.GetNetworkInterfacesAsync();
 
         foreach (var wiFiAdapter in wifiAdapters)
         {
             var wiFiAdapterId = wiFiAdapter.NetworkAdapter.NetworkAdapterId.ToString();
-                
+
             var networkInterface = networkInterfaces.FirstOrDefault(x => x.Id.TrimStart('{').TrimEnd('}')
                 .Equals(wiFiAdapterId, StringComparison.OrdinalIgnoreCase));
 
             if (networkInterface != null)
-            {
                 wifiAdapterInfos.Add(new WiFiAdapterInfo
                 {
                     NetworkInterfaceInfo = networkInterface,
                     WiFiAdapter = wiFiAdapter
                 });
-            }
             else
-            {
                 Log.Warn($"Could not find network interface for WiFi adapter with id: {wiFiAdapterId}");
-            }
         }
 
         return wifiAdapterInfos;
     }
 
     /// <summary>
-    /// Get all available WiFi networks for an adapter with additional information's.
+    ///     Get all available WiFi networks for an adapter with additional information's.
     /// </summary>
-    /// <param name="adapter">WiFi adapter as <see cref="WiFiAdapter"/>.</param>
-    /// <returns>A report as <see cref="WiFiNetworkScanInfo"/> including a list of <see cref="WiFiNetworkInfo"/>.</returns>
+    /// <param name="adapter">WiFi adapter as <see cref="WiFiAdapter" />.</param>
+    /// <returns>A report as <see cref="WiFiNetworkScanInfo" /> including a list of <see cref="WiFiNetworkInfo" />.</returns>
     public static async Task<WiFiNetworkScanInfo> GetNetworksAsync(WiFiAdapter adapter)
     {
         // Scan network adapter async
@@ -74,8 +72,8 @@ public static class WiFi
 
         var wifiNetworkInfos = adapter.NetworkReport.AvailableNetworks.Select(availableNetwork => new WiFiNetworkInfo
         {
-            AvailableNetwork = availableNetwork, 
-            IsHidden = string.IsNullOrEmpty(availableNetwork.Ssid), 
+            AvailableNetwork = availableNetwork,
+            IsHidden = string.IsNullOrEmpty(availableNetwork.Ssid),
             IsConnected = availableNetwork.Bssid.Equals(bssid, StringComparison.OrdinalIgnoreCase)
         }).ToList();
 
@@ -88,12 +86,11 @@ public static class WiFi
     }
 
     /// <summary>
-    /// Try to get the current connected wifi network (SSID and BSSID) of a network adapter from 
-    /// netsh.exe.
-    /// 
-    /// Calling netsh.exe and parsing the output feels so dirty, but Microsoft's API returns only 
-    /// the WLAN profile and the SSID of the connected network. The BSSID is needed to find a 
-    /// specific access point among several.
+    ///     Try to get the current connected wifi network (SSID and BSSID) of a network adapter from
+    ///     netsh.exe.
+    ///     Calling netsh.exe and parsing the output feels so dirty, but Microsoft's API returns only
+    ///     the WLAN profile and the SSID of the connected network. The BSSID is needed to find a
+    ///     specific access point among several.
     /// </summary>
     /// <param name="adapterId">GUID of the WiFi network adapter.</param>
     /// <returns>SSID and BSSID of the connected wifi network. Values are null if not detected.</returns>
@@ -115,13 +112,13 @@ public static class WiFi
             */
 
             /* Each object looks like this:
-            * 
-            * Name : Wireless
-            * Description : Intel ...
-            * GUID : 90d8...
-            * SSID : Devices
-            * BSSID : 6a:d7:...
-            */
+             *
+             * Name : Wireless
+             * Description : Intel ...
+             * GUID : 90d8...
+             * SSID : Devices
+             * BSSID : 6a:d7:...
+             */
 
             var foundAdapter = false;
 
@@ -132,9 +129,9 @@ public static class WiFi
                     foundAdapter = true;
 
                 // ...and skip all lines until we found it.
-                if (!foundAdapter) 
+                if (!foundAdapter)
                     continue;
-                
+
                 // Extract SSID from the line
                 if (outputItem.ToString().Contains(" SSID ", StringComparison.OrdinalIgnoreCase))
                     ssid = outputItem.ToString().Split(':')[1].Trim();
@@ -154,7 +151,7 @@ public static class WiFi
     }
 
     /// <summary>
-    /// Connect to a WiFi network with Pre-shared key, EAP or no security.
+    ///     Connect to a WiFi network with Pre-shared key, EAP or no security.
     /// </summary>
     /// <param name="adapter">WiFi adapter which should be used for the connection.</param>
     /// <param name="network">WiFi network to connect to.</param>
@@ -162,7 +159,8 @@ public static class WiFi
     /// <param name="credential">Credentials for EAP or PSK. Empty for open networks.</param>
     /// <param name="ssid">SSID for hidden networks.</param>
     /// <returns></returns>
-    public static async Task<WiFiConnectionStatus> ConnectAsync(WiFiAdapter adapter, WiFiAvailableNetwork network, WiFiReconnectionKind reconnectionKind, PasswordCredential credential, string ssid = null)
+    public static async Task<WiFiConnectionStatus> ConnectAsync(WiFiAdapter adapter, WiFiAvailableNetwork network,
+        WiFiReconnectionKind reconnectionKind, PasswordCredential credential, string ssid = null)
     {
         WiFiConnectionResult connectionResult;
 
@@ -180,15 +178,17 @@ public static class WiFi
     }
 
     /// <summary>
-    /// Connect to a WiFi network with WPS push button.
+    ///     Connect to a WiFi network with WPS push button.
     /// </summary>
     /// <param name="adapter">WiFi adapter which should be used for the connection.</param>
     /// <param name="network">WiFi network to connect to.</param>
     /// <param name="reconnectionKind">Reconnection type to automatically or manuel reconnect.</param>
     /// <returns></returns>
-    public static async Task<WiFiConnectionStatus> ConnectWpsAsync(WiFiAdapter adapter, WiFiAvailableNetwork network, WiFiReconnectionKind reconnectionKind)
+    public static async Task<WiFiConnectionStatus> ConnectWpsAsync(WiFiAdapter adapter, WiFiAvailableNetwork network,
+        WiFiReconnectionKind reconnectionKind)
     {
-        WiFiConnectionResult connectionResult = await adapter.ConnectAsync(network, reconnectionKind, null, string.Empty, WiFiConnectionMethod.WpsPushButton);
+        var connectionResult = await adapter.ConnectAsync(network, reconnectionKind, null,
+            string.Empty, WiFiConnectionMethod.WpsPushButton);
 
         // Wrong password may cause connection to timeout.
         // Disconnect any network from the adapter to return it to a non-busy state.
@@ -199,7 +199,7 @@ public static class WiFi
     }
 
     /// <summary>
-    /// Disconnect the wifi adapter from the current wifi network.
+    ///     Disconnect the wifi adapter from the current wifi network.
     /// </summary>
     /// <param name="adapter">WiFi adapter from which the wifi network should be disconnected.</param>
     public static void Disconnect(WiFiAdapter adapter)
@@ -208,11 +208,11 @@ public static class WiFi
     }
 
     /// <summary>
-    /// Get the connect mode of a wifi network like Open, Eap (WPA2-Enterprise) 
-    /// or Psk (WPA2-Personal).
+    ///     Get the connect mode of a wifi network like Open, Eap (WPA2-Enterprise)
+    ///     or Psk (WPA2-Personal).
     /// </summary>
-    /// <param name="network">WiFi network as <see cref="WiFiAvailableNetwork"/>.</param>
-    /// <returns>Connect mode as <see cref="WiFiConnectMode"/>.</returns>
+    /// <param name="network">WiFi network as <see cref="WiFiAvailableNetwork" />.</param>
+    /// <returns>Connect mode as <see cref="WiFiConnectMode" />.</returns>
     public static WiFiConnectMode GetConnectMode(WiFiAvailableNetwork network)
     {
         // Enterprise
@@ -222,7 +222,7 @@ public static class WiFi
 
         // Open
         if (network.SecuritySettings.NetworkAuthenticationType == NetworkAuthenticationType.Open80211 ||
-             network.SecuritySettings.NetworkEncryptionType == NetworkEncryptionType.None)
+            network.SecuritySettings.NetworkEncryptionType == NetworkEncryptionType.None)
             return WiFiConnectMode.Open;
 
         // Pre-Shared-Key
@@ -230,10 +230,10 @@ public static class WiFi
     }
 
     /// <summary>
-    /// Check if WPS is available for a wifi network.
+    ///     Check if WPS is available for a wifi network.
     /// </summary>
-    /// <param name="adapter">WiFi adapter as <see cref="WiFiAdapter"/>.</param>
-    /// <param name="network">WiFi network as <see cref="WiFiAvailableNetwork"/>.</param>
+    /// <param name="adapter">WiFi adapter as <see cref="WiFiAdapter" />.</param>
+    /// <param name="network">WiFi network as <see cref="WiFiAvailableNetwork" />.</param>
     /// <returns></returns>
     public static async Task<bool> IsWpsAvailable(WiFiAdapter adapter, WiFiAvailableNetwork network)
     {
@@ -243,7 +243,7 @@ public static class WiFi
     }
 
     /// <summary>
-    /// Get the WiFi channel from channel frequency.
+    ///     Get the WiFi channel from channel frequency.
     /// </summary>
     /// <param name="kilohertz">Input like 2422000 or 5240000.</param>
     /// <returns>WiFi channel like 3 or 48.</returns>
@@ -291,12 +291,12 @@ public static class WiFi
             5.785 => 157,
             5.805 => 161,
             5.825 => 165,
-            _ => -1,
+            _ => -1
         };
     }
 
     /// <summary>
-    /// Convert the channel frequency to gigahertz.
+    ///     Convert the channel frequency to gigahertz.
     /// </summary>
     /// <param name="kilohertz">Frequency in kilohertz like 2422000 or 5240000.</param>
     /// <returns>Frequency in gigahertz like 2.422 or 5.240.</returns>
@@ -306,7 +306,7 @@ public static class WiFi
     }
 
     /// <summary>
-    /// Check if the WiFi network is a 2.4 GHz network.
+    ///     Check if the WiFi network is a 2.4 GHz network.
     /// </summary>
     /// <param name="kilohertz">Frequency in kilohertz like 2422000 or 5240000.</param>
     /// <returns>True if WiFi network is 2.4 GHz.</returns>
@@ -318,7 +318,7 @@ public static class WiFi
     }
 
     /// <summary>
-    /// Check if the WiFi network is a 5 GHz network.
+    ///     Check if the WiFi network is a 5 GHz network.
     /// </summary>
     /// <param name="kilohertz">Frequency in kilohertz like 2422000 or 5240000.</param>
     /// <returns>True if WiFi network is 5 GHz.</returns>
@@ -330,9 +330,9 @@ public static class WiFi
     }
 
     /// <summary>
-    /// Get the human readable network authentication type.
+    ///     Get the human readable network authentication type.
     /// </summary>
-    /// <param name="networkAuthenticationType">WiFi network authentication type as <see cref="NetworkAuthenticationType"/>.</param>
+    /// <param name="networkAuthenticationType">WiFi network authentication type as <see cref="NetworkAuthenticationType" />.</param>
     /// <returns>Human readable authentication type as string like "Open" or "WPA2 Enterprise".</returns>
     public static string GetHumanReadableNetworkAuthenticationType(NetworkAuthenticationType networkAuthenticationType)
     {
@@ -348,14 +348,14 @@ public static class WiFi
             NetworkAuthenticationType.Ihv => "IHV",
             NetworkAuthenticationType.Unknown => "Unknown",
             NetworkAuthenticationType.None => "-/-",
-            _ => "-/-",
+            _ => "-/-"
         };
     }
 
     /// <summary>
-    /// Get the human readable network phy kind.
+    ///     Get the human readable network phy kind.
     /// </summary>
-    /// <param name="phyKind">WiFi network phy kind as <see cref="WiFiPhyKind"/>.</param>
+    /// <param name="phyKind">WiFi network phy kind as <see cref="WiFiPhyKind" />.</param>
     /// <returns>Human readable phy kind as string like "802.11g" or "802.11ax".</returns>
     public static string GetHumanReadablePhyKind(WiFiPhyKind phyKind)
     {
@@ -369,7 +369,7 @@ public static class WiFi
             WiFiPhyKind.Dmg => "802.11ad",
             WiFiPhyKind.Vht => "802.11ac",
             WiFiPhyKind.HE => "802.11ax",
-            _ => "-/-",
+            _ => "-/-"
         };
     }
 }

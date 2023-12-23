@@ -1,20 +1,56 @@
-﻿using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Security;
 using System.Windows.Data;
 using System.Windows.Input;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
 public class RemoteDesktopConnectViewModel : ViewModelBase
 {
+    private bool _connectAs;
+
+    private string _domain;
+
+    private string _host;
+
+    private bool _isPasswordEmpty = true;
+
+    private string _name;
+
+    private SecureString _password = new();
+
+    private bool _useCredentials;
+
+    private string _username;
+
+    public RemoteDesktopConnectViewModel(Action<RemoteDesktopConnectViewModel> connectCommand,
+        Action<RemoteDesktopConnectViewModel> cancelHandler, (string Name, string Host)? connectAsOptions = null)
+    {
+        ConnectCommand = new RelayCommand(_ => connectCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
+
+        if (connectAsOptions == null)
+        {
+            HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.RemoteDesktop_HostHistory);
+        }
+        else
+        {
+            ConnectAs = true;
+
+            UseCredentials = true;
+
+            Name = connectAsOptions.Value.Name;
+            Host = connectAsOptions.Value.Host;
+        }
+    }
+
     public ICommand ConnectCommand { get; }
 
     public ICommand CancelCommand { get; }
 
-    private bool _connectAs;
     public bool ConnectAs
     {
         get => _connectAs;
@@ -28,7 +64,6 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
         }
     }
 
-    private string _name;
     public string Name
     {
         get => _name;
@@ -42,7 +77,6 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
         }
     }
 
-    private string _host;
     public string Host
     {
         get => _host;
@@ -58,7 +92,6 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
 
     public ICollectionView HostHistoryView { get; }
 
-    private bool _useCredentials;
     public bool UseCredentials
     {
         get => _useCredentials;
@@ -72,7 +105,6 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
         }
     }
 
-    private string _username;
     public string Username
     {
         get => _username;
@@ -86,7 +118,6 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
         }
     }
 
-    private string _domain;
     public string Domain
     {
         get => _domain;
@@ -100,7 +131,6 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
         }
     }
 
-    private SecureString _password = new();
     public SecureString Password
     {
         get => _password;
@@ -117,7 +147,6 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
         }
     }
 
-    private bool _isPasswordEmpty = true;
     public bool IsPasswordEmpty
     {
         get => _isPasswordEmpty;
@@ -131,28 +160,11 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
         }
     }
 
-    public RemoteDesktopConnectViewModel(Action<RemoteDesktopConnectViewModel> connectCommand, Action<RemoteDesktopConnectViewModel> cancelHandler,(string Name, string Host)? connectAsOptions = null)
-    {
-        ConnectCommand = new RelayCommand(_ => connectCommand(this));
-        CancelCommand = new RelayCommand(_ => cancelHandler(this));
-
-        if (connectAsOptions == null)
-        {
-            HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.RemoteDesktop_HostHistory);
-        }
-        else
-        {
-            ConnectAs = true;
-
-            UseCredentials = true;
-            
-            Name = connectAsOptions.Value.Name;
-            Host = connectAsOptions.Value.Host;
-        }
-    }
-
     /// <summary>
-    /// Check if the passwords are valid.
+    ///     Check if the passwords are valid.
     /// </summary>
-    private void ValidatePassword() => IsPasswordEmpty = Password == null || Password.Length == 0;
+    private void ValidatePassword()
+    {
+        IsPasswordEmpty = Password == null || Password.Length == 0;
+    }
 }

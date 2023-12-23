@@ -1,10 +1,14 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace NETworkManager.Views;
 
 public partial class ProfileDialog
 {
+    // Set name as hostname (if empty or identical)
+    private string _oldName = string.Empty;
+
     public ProfileDialog()
     {
         InitializeComponent();
@@ -14,9 +18,6 @@ public partial class ProfileDialog
     {
         TextBoxName.Focus();
     }
-
-    // Set name as hostname (if empty or identical)
-    private string _oldName = string.Empty;
 
     private void TextBoxName_OnGotFocus(object sender, RoutedEventArgs e)
     {
@@ -31,7 +32,8 @@ public partial class ProfileDialog
         _oldName = TextBoxName.Text;
     }
 
-    private void ScrollViewer_ManipulationBoundaryFeedback(object sender, System.Windows.Input.ManipulationBoundaryFeedbackEventArgs e)
+    private void ScrollViewer_ManipulationBoundaryFeedback(object sender,
+        ManipulationBoundaryFeedbackEventArgs e)
     {
         e.Handled = true;
     }

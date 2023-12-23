@@ -1,19 +1,21 @@
-﻿using NETworkManager.Settings;
-using System.ComponentModel;
-using System.Windows.Data;
+﻿using System.ComponentModel;
 using System.Linq;
+using System.Windows.Data;
 using NETworkManager.Models.Appearance;
+using NETworkManager.Settings;
 
 namespace NETworkManager.ViewModels;
 
 public class SettingsAppearanceViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly bool _isLoading;
 
-    public ICollectionView Themes { get; private set; }
+    public ICollectionView Themes { get; }
 
     private ThemeColorInfo _selectedTheme;
+
     public ThemeColorInfo SelectedTheme
     {
         get => _selectedTheme;
@@ -34,9 +36,10 @@ public class SettingsAppearanceViewModel : ViewModelBase
     }
 
 
-    public ICollectionView Accents { get; private set; }
+    public ICollectionView Accents { get; }
 
     private AccentColorInfo _selectedAccent;
+
     public AccentColorInfo SelectedAccent
     {
         get => _selectedAccent;
@@ -57,6 +60,7 @@ public class SettingsAppearanceViewModel : ViewModelBase
     }
 
     private bool _useCustomTheme;
+
     public bool UseCustomTheme
     {
         get => _useCustomTheme;
@@ -76,10 +80,11 @@ public class SettingsAppearanceViewModel : ViewModelBase
         }
     }
 
-    public ICollectionView CustomThemes { get; private set; }
+    public ICollectionView CustomThemes { get; }
 
 
     private ThemeInfo _selectedCustomTheme;
+
     public ThemeInfo SelectedCustomTheme
     {
         get => _selectedCustomTheme;
@@ -100,6 +105,7 @@ public class SettingsAppearanceViewModel : ViewModelBase
     }
 
     private bool _powerShellModifyGlobalProfile;
+
     public bool PowerShellModifyGlobalProfile
     {
         get => _powerShellModifyGlobalProfile;
@@ -115,9 +121,11 @@ public class SettingsAppearanceViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, LoadSettings
+
     public SettingsAppearanceViewModel()
     {
         _isLoading = true;
@@ -133,11 +141,17 @@ public class SettingsAppearanceViewModel : ViewModelBase
 
     private void LoadSettings()
     {
-        SelectedTheme = Themes.Cast<ThemeColorInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_Theme);
-        SelectedAccent = Accents.Cast<AccentColorInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_Accent);            
-        UseCustomTheme = SettingsManager.Current.Appearance_UseCustomTheme;            
-        SelectedCustomTheme = CustomThemes.Cast<ThemeInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_CustomThemeName) ?? CustomThemes.Cast<ThemeInfo>().FirstOrDefault();
+        SelectedTheme = Themes.Cast<ThemeColorInfo>()
+            .FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_Theme);
+        SelectedAccent = Accents.Cast<AccentColorInfo>()
+            .FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_Accent);
+        UseCustomTheme = SettingsManager.Current.Appearance_UseCustomTheme;
+        SelectedCustomTheme =
+            CustomThemes.Cast<ThemeInfo>()
+                .FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_CustomThemeName) ??
+            CustomThemes.Cast<ThemeInfo>().FirstOrDefault();
         PowerShellModifyGlobalProfile = SettingsManager.Current.Appearance_PowerShellModifyGlobalProfile;
     }
+
     #endregion
 }

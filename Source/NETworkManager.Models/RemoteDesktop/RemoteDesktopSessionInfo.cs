@@ -44,9 +44,4 @@ public class RemoteDesktopSessionInfo
     public bool ShowWindowContentsWhileDragging { get; set; }
     public bool MenuAndWindowAnimation { get; set; }
     public bool VisualStyles { get; set; }
-
-    public RemoteDesktopSessionInfo()
-    {
-
-    }
 }

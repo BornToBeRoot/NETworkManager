@@ -1,28 +1,35 @@
 ﻿<UserControl x:Class="NETworkManager.Views.SettingsWindowView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsWindowViewModel  }">
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+             xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsWindowViewModel  }">
     <StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Window}" />
-        <controls:ToggleSwitch Header="{x:Static localization:Strings.MinimizeInsteadOfTerminating}" IsOn="{Binding MinimizeInsteadOfTerminating}" Margin="0,0,0,10" />
-        <controls:ToggleSwitch Header="{x:Static localization:Strings.MinimizeToTrayInsteadOfTaskbar}" IsOn="{Binding MinimizeToTrayInsteadOfTaskbar}" Margin="0,0,0,10" />
-        <controls:ToggleSwitch Header="{x:Static localization:Strings.ConfirmClose}" IsOn="{Binding ConfirmClose}" Margin="0,0,0,10"/>
+        <controls:ToggleSwitch Header="{x:Static localization:Strings.MinimizeInsteadOfTerminating}"
+                               IsOn="{Binding MinimizeInsteadOfTerminating}" Margin="0,0,0,10" />
+        <controls:ToggleSwitch Header="{x:Static localization:Strings.MinimizeToTrayInsteadOfTaskbar}"
+                               IsOn="{Binding MinimizeToTrayInsteadOfTaskbar}" Margin="0,0,0,10" />
+        <controls:ToggleSwitch Header="{x:Static localization:Strings.ConfirmClose}" IsOn="{Binding ConfirmClose}"
+                               Margin="0,0,0,10" />
         <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
-            <controls:ToggleSwitch Header="{x:Static localization:Strings.MultipleInstances}" IsOn="{Binding MultipleInstances}"/>
-            <Rectangle Width="24" Height="24" ToolTip="{x:Static localization:Strings.WarnMessage_MultipleInstances}" Style="{StaticResource WarnImageRectangle}" VerticalAlignment="Top" Margin="10,0,0,0">
+            <controls:ToggleSwitch Header="{x:Static localization:Strings.MultipleInstances}"
+                                   IsOn="{Binding MultipleInstances}" />
+            <Rectangle Width="24" Height="24" ToolTip="{x:Static localization:Strings.WarnMessage_MultipleInstances}"
+                       Style="{StaticResource WarnImageRectangle}" VerticalAlignment="Top" Margin="10,0,0,0">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource WarnToolTip}" />
                 </Rectangle.Resources>
             </Rectangle>
         </StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Tray}" />
-        <controls:ToggleSwitch Header="{x:Static localization:Strings.AlwaysShowIconInTray}" IsOn="{Binding AlwaysShowIconInTray}" Margin="0,0,0,20" />
+        <controls:ToggleSwitch Header="{x:Static localization:Strings.AlwaysShowIconInTray}"
+                               IsOn="{Binding AlwaysShowIconInTray}" Margin="0,0,0,20" />
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.SplashScreen}" />
-        <controls:ToggleSwitch Header="{x:Static localization:Strings.ShowSplashScreenOnStart}" IsOn="{Binding SplashScreenEnabled}" />
+        <controls:ToggleSwitch Header="{x:Static localization:Strings.ShowSplashScreenOnStart}"
+                               IsOn="{Binding SplashScreenEnabled}" />
     </StackPanel>
 </UserControl>

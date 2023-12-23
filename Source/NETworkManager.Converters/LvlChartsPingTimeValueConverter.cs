@@ -1,15 +1,13 @@
-﻿using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows.Data;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Converters;
 
 public sealed class LvlChartsPingTimeValueConverter : IValueConverter
 {
-
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="value">ChartPoint.Instance (object)</param>
     /// <param name="targetType"></param>

@@ -1,27 +1,27 @@
 ﻿namespace NETworkManager.Models.Export;
 
 /// <summary>
-/// Enum for the export file type.
+///     Enum for the export file type.
 /// </summary>
 public enum ExportFileType
 {
     /// <summary>
-    /// Csv file.
+    ///     Csv file.
     /// </summary>
     Csv,
 
     /// <summary>
-    /// Xml file.
+    ///     Xml file.
     /// </summary>
     Xml,
 
     /// <summary>
-    /// Json file.
+    ///     Json file.
     /// </summary>
     Json,
 
     /// <summary>
-    /// Text file.
+    ///     Text file.
     /// </summary>
     Txt
 }

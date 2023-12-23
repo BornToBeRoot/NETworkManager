@@ -1,49 +1,56 @@
-﻿using NETworkManager.Models;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+using NETworkManager.Models;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Documentation;
 
 /// <summary>
-/// This class is designed to interact with the documentation at https://borntoberoot.net/NETworkManager/.
+///     This class is designed to interact with the documentation at https://borntoberoot.net/NETworkManager/.
 /// </summary>
 public static class DocumentationManager
 {
     /// <summary>
-    /// Base path of the documentation.
+    ///     Base path of the documentation.
     /// </summary>
     private const string DocumentationBaseUrl = @"https://borntoberoot.net/NETworkManager/";
 
     /// <summary>
-    /// List with all known documentation entries.
+    ///     List with all known documentation entries.
     /// </summary>
     private static List<DocumentationInfo> List => new()
     {
         new DocumentationInfo(DocumentationIdentifier.ApplicationDashboard, @"Documentation/Application/Dashboard"),
-        new DocumentationInfo(DocumentationIdentifier.ApplicationNetworkInterface, @"Documentation/Application/NetworkInterface"),
+        new DocumentationInfo(DocumentationIdentifier.ApplicationNetworkInterface,
+            @"Documentation/Application/NetworkInterface"),
         new DocumentationInfo(DocumentationIdentifier.ApplicationWiFi, @"Documentation/Application/WiFi"),
         new DocumentationInfo(DocumentationIdentifier.ApplicationIPScanner, @"Documentation/Application/IPScanner"),
         new DocumentationInfo(DocumentationIdentifier.ApplicationPortScanner, @"Documentation/Application/PortScanner"),
         new DocumentationInfo(DocumentationIdentifier.ApplicationPingMonitor, @"Documentation/Application/PingMonitor"),
         new DocumentationInfo(DocumentationIdentifier.ApplicationTraceroute, @"Documentation/Application/Traceroute"),
         new DocumentationInfo(DocumentationIdentifier.ApplicationDnsLookup, @"Documentation/Application/DNSLookup"),
-        new DocumentationInfo(DocumentationIdentifier.ApplicationRemoteDesktop, @"Documentation/Application/RemoteDesktop"),
+        new DocumentationInfo(DocumentationIdentifier.ApplicationRemoteDesktop,
+            @"Documentation/Application/RemoteDesktop"),
         new DocumentationInfo(DocumentationIdentifier.ApplicationPowerShell, @"Documentation/Application/PowerShell"),
         new DocumentationInfo(DocumentationIdentifier.ApplicationPutty, @"Documentation/Application/PuTTY"),
-        new DocumentationInfo(DocumentationIdentifier.ApplicationAWSSessionManager, @"Documentation/Application/AWSSessionManager"),
+        new DocumentationInfo(DocumentationIdentifier.ApplicationAWSSessionManager,
+            @"Documentation/Application/AWSSessionManager"),
         new DocumentationInfo(DocumentationIdentifier.ApplicationTigerVNC, @"Documentation/Application/TigerVNC"),
         new DocumentationInfo(DocumentationIdentifier.ApplicationWebConsole, @"Documentation/Application/WebConsole"),
         new DocumentationInfo(DocumentationIdentifier.ApplicationSnmp, @"Documentation/Application/SNMP"),
         new DocumentationInfo(DocumentationIdentifier.ApplicationSntpLookup, @"Documentation/Application/SNTPLookup"),
-        new DocumentationInfo(DocumentationIdentifier.ApplicationDiscoveryProtocol, @"Documentation/Application/DiscoveryProtocol"),
+        new DocumentationInfo(DocumentationIdentifier.ApplicationDiscoveryProtocol,
+            @"Documentation/Application/DiscoveryProtocol"),
         new DocumentationInfo(DocumentationIdentifier.ApplicationWakeOnLan, @"Documentation/Application/WakeOnLAN"),
         new DocumentationInfo(DocumentationIdentifier.ApplicationWhois, @"Documentation/Application/Whois"),
-        new DocumentationInfo(DocumentationIdentifier.ApplicationIPGeolocation, @"Documentation/Application/IPGeolocation"),
-        new DocumentationInfo(DocumentationIdentifier.ApplicationSubnetCalculator, @"Documentation/Application/SubnetCalculator"),
-        new DocumentationInfo(DocumentationIdentifier.ApplicationBitCalculator, @"Documentation/Application/BitCalculator"),
+        new DocumentationInfo(DocumentationIdentifier.ApplicationIPGeolocation,
+            @"Documentation/Application/IPGeolocation"),
+        new DocumentationInfo(DocumentationIdentifier.ApplicationSubnetCalculator,
+            @"Documentation/Application/SubnetCalculator"),
+        new DocumentationInfo(DocumentationIdentifier.ApplicationBitCalculator,
+            @"Documentation/Application/BitCalculator"),
         new DocumentationInfo(DocumentationIdentifier.ApplicationLookup, @"Documentation/Application/Lookup"),
         new DocumentationInfo(DocumentationIdentifier.ApplicationConnections, @"Documentation/Application/Connection"),
         new DocumentationInfo(DocumentationIdentifier.ApplicationListeners, @"Documentation/Application/Listeners"),
@@ -60,13 +67,21 @@ public static class DocumentationManager
         new DocumentationInfo(DocumentationIdentifier.SettingsProfiles, @"Documentation/Settings/Profiles"),
         new DocumentationInfo(DocumentationIdentifier.SettingsSettings, @"Documentation/Settings/Settings"),
         new DocumentationInfo(DocumentationIdentifier.Profiles, @"Documentation/Profiles"),
-        new DocumentationInfo(DocumentationIdentifier.CommandLineArguments, @"Documentation/CommandLineArguments"),
+        new DocumentationInfo(DocumentationIdentifier.CommandLineArguments, @"Documentation/CommandLineArguments")
     };
 
     /// <summary>
-    /// Method to create the documentation url from <see cref="DocumentationIdentifier"/>.
+    ///     Command to open a documentation page based on <see cref="DocumentationIdentifier" />.
     /// </summary>
-    /// <param name="documentationIdentifier"><see cref="DocumentationIdentifier"/> of the documentation page you want to open.</param>
+    public static ICommand OpenDocumentationCommand => new RelayCommand(OpenDocumentationAction);
+
+    /// <summary>
+    ///     Method to create the documentation url from <see cref="DocumentationIdentifier" />.
+    /// </summary>
+    /// <param name="documentationIdentifier">
+    ///     <see cref="DocumentationIdentifier" /> of the documentation page you want to
+    ///     open.
+    /// </param>
     /// <returns>URL of the documentation page.</returns>
     private static string CreateUrl(DocumentationIdentifier documentationIdentifier)
     {
@@ -81,21 +96,20 @@ public static class DocumentationManager
     }
 
     /// <summary>
-    /// Method for opening a documentation page with the default web browser based on the <see cref="DocumentationIdentifier"/> .
+    ///     Method for opening a documentation page with the default web browser based on the
+    ///     <see cref="DocumentationIdentifier" /> .
     /// </summary>
-    /// <param name="documentationIdentifier"><see cref="DocumentationIdentifier"/> of the documentation page you want to open.</param>
+    /// <param name="documentationIdentifier">
+    ///     <see cref="DocumentationIdentifier" /> of the documentation page you want to
+    ///     open.
+    /// </param>
     public static void OpenDocumentation(DocumentationIdentifier documentationIdentifier)
     {
         ExternalProcessStarter.OpenUrl(CreateUrl(documentationIdentifier));
     }
 
     /// <summary>
-    /// Command to open a documentation page based on <see cref="DocumentationIdentifier"/>.
-    /// </summary>
-    public static ICommand OpenDocumentationCommand => new RelayCommand(OpenDocumentationAction);
-
-    /// <summary>
-    /// Method to open a documentation page based on <see cref="DocumentationIdentifier"/>.
+    ///     Method to open a documentation page based on <see cref="DocumentationIdentifier" />.
     /// </summary>
     /// <param name="documentationIdentifier"></param>
     private static void OpenDocumentationAction(object documentationIdentifier)
@@ -105,10 +119,13 @@ public static class DocumentationManager
     }
 
     /// <summary>
-    /// Method to get the <see cref="DocumentationIdentifier"/> from an <see cref="ApplicationName"/>.
+    ///     Method to get the <see cref="DocumentationIdentifier" /> from an <see cref="ApplicationName" />.
     /// </summary>
-    /// <param name="name"><see cref="ApplicationName"/> from which you want to get the <see cref="DocumentationIdentifier"/>.</param>
-    /// <returns><see cref="DocumentationIdentifier"/> of the application.</returns>
+    /// <param name="name">
+    ///     <see cref="ApplicationName" /> from which you want to get the <see cref="DocumentationIdentifier" />
+    ///     .
+    /// </param>
+    /// <returns><see cref="DocumentationIdentifier" /> of the application.</returns>
     public static DocumentationIdentifier GetIdentifierByApplicationName(ApplicationName name)
     {
         return name switch
@@ -140,15 +157,15 @@ public static class DocumentationManager
             ApplicationName.Listeners => DocumentationIdentifier.ApplicationListeners,
             ApplicationName.ARPTable => DocumentationIdentifier.ApplicationArpTable,
             ApplicationName.None => DocumentationIdentifier.Default,
-            _ => DocumentationIdentifier.Default,
+            _ => DocumentationIdentifier.Default
         };
     }
 
     /// <summary>
-    /// Method to get the <see cref="DocumentationIdentifier"/> from an <see cref="SettingsName"/>.
+    ///     Method to get the <see cref="DocumentationIdentifier" /> from an <see cref="SettingsName" />.
     /// </summary>
-    /// <param name="name"><see cref="SettingsName"/> from which you want to get the <see cref="DocumentationIdentifier"/>.</param>
-    /// <returns><see cref="DocumentationIdentifier"/> of the application or settings page.</returns>
+    /// <param name="name"><see cref="SettingsName" /> from which you want to get the <see cref="DocumentationIdentifier" />.</param>
+    /// <returns><see cref="DocumentationIdentifier" /> of the application or settings page.</returns>
     public static DocumentationIdentifier GetIdentifierBySettingsName(SettingsName name)
     {
         return name switch
@@ -179,7 +196,7 @@ public static class DocumentationManager
             SettingsName.SNTPLookup => GetIdentifierByApplicationName(ApplicationName.SNTPLookup),
             SettingsName.WakeOnLAN => GetIdentifierByApplicationName(ApplicationName.WakeOnLAN),
             SettingsName.BitCalculator => GetIdentifierByApplicationName(ApplicationName.BitCalculator),
-            _ => DocumentationIdentifier.Default,
+            _ => DocumentationIdentifier.Default
         };
     }
 }

@@ -10,7 +10,7 @@ public enum SettingsName
     Status,
     HotKeys,
     Autostart,
-    Update,        
+    Update,
     Profiles,
     Settings,
     Dashboard,

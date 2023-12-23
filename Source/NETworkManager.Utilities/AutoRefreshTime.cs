@@ -4,27 +4,27 @@ using System.Collections.Generic;
 namespace NETworkManager.Utilities;
 
 /// <summary>
-/// Class provides static methods to manage auto refresh time.
+///     Class provides static methods to manage auto refresh time.
 /// </summary>
 public static class AutoRefreshTime
 {
     /// <summary>
-    /// Method returns a list with default <see cref="AutoRefreshTimeInfo"/>s.
+    ///     Method returns a list with default <see cref="AutoRefreshTimeInfo" />s.
     /// </summary>
     public static IEnumerable<AutoRefreshTimeInfo> GetDefaults => new List<AutoRefreshTimeInfo>
     {
-        new AutoRefreshTimeInfo(5, TimeUnit.Second),
-        new AutoRefreshTimeInfo(15, TimeUnit.Second),
-        new AutoRefreshTimeInfo(30, TimeUnit.Second),
-        new AutoRefreshTimeInfo(1, TimeUnit.Minute),
-        new AutoRefreshTimeInfo(5, TimeUnit.Minute),
+        new(5, TimeUnit.Second),
+        new(15, TimeUnit.Second),
+        new(30, TimeUnit.Second),
+        new(1, TimeUnit.Minute),
+        new(5, TimeUnit.Minute)
     };
 
     /// <summary>
-    /// Method to calculate a <see cref="TimeSpan"/> based on <see cref="AutoRefreshTimeInfo"/>.
+    ///     Method to calculate a <see cref="TimeSpan" /> based on <see cref="AutoRefreshTimeInfo" />.
     /// </summary>
-    /// <param name="info"><see cref="AutoRefreshTimeInfo"/> to calculate <see cref="TimeSpan"/></param>
-    /// <returns>Returns the calculated <see cref="TimeSpan"/>.</returns>
+    /// <param name="info"><see cref="AutoRefreshTimeInfo" /> to calculate <see cref="TimeSpan" /></param>
+    /// <returns>Returns the calculated <see cref="TimeSpan" />.</returns>
     public static TimeSpan CalculateTimeSpan(AutoRefreshTimeInfo info)
     {
         switch (info.TimeUnit)
@@ -42,5 +42,5 @@ public static class AutoRefreshTime
             default:
                 throw new Exception("Wrong time unit.");
         }
-    }              
+    }
 }

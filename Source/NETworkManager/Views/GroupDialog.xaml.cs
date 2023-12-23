@@ -1,4 +1,7 @@
-﻿namespace NETworkManager.Views;
+﻿using System.Windows;
+using System.Windows.Input;
+
+namespace NETworkManager.Views;
 
 public partial class GroupDialog
 {
@@ -7,12 +10,13 @@ public partial class GroupDialog
         InitializeComponent();
     }
 
-    private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+    private void UserControl_Loaded(object sender, RoutedEventArgs e)
     {
         TextBoxName.Focus();
     }
-    
-    private void ScrollViewer_ManipulationBoundaryFeedback(object sender, System.Windows.Input.ManipulationBoundaryFeedbackEventArgs e)
+
+    private void ScrollViewer_ManipulationBoundaryFeedback(object sender,
+        ManipulationBoundaryFeedbackEventArgs e)
     {
         e.Handled = true;
     }

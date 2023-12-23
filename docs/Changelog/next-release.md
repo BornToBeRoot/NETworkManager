@@ -23,6 +23,7 @@ New Feature
 ## What's new?
 
 - Run Command
+
   - Run command (HotKey: Ctrl+Shift+P) added. This feature allows you to open a command field to switch between applications (and pass parameters to them _in the future_) [#2577](https://github.com/BornToBeRoot/NETworkManager/pull/2577){:target="\_blank"}
 
 - Ping Monitor
@@ -69,6 +70,6 @@ Experimental features can be enabled in the settings under [`Settings > Update`]
 
 ## Other
 
-- Code cleanup & Refactoring [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"}
+- Code cleanup & Refactoring [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583){:target="\_blank"} [#2586](https://github.com/BornToBeRoot/NETworkManager/pull/2586){:target="\_blank"}
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="\_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="\_blank"}

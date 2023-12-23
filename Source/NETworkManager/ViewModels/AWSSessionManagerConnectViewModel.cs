@@ -1,18 +1,39 @@
-﻿using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Windows.Input;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
 public class AWSSessionManagerConnectViewModel : ViewModelBase
 {
+    private string _instanceID;
+
+    private string _profile;
+
+    private string _region;
+
+    public AWSSessionManagerConnectViewModel(Action<AWSSessionManagerConnectViewModel> connectCommand,
+        Action<AWSSessionManagerConnectViewModel> cancelHandler)
+    {
+        ConnectCommand = new RelayCommand(_ => connectCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
+
+        InstanceIDHistoryView =
+            CollectionViewSource.GetDefaultView(SettingsManager.Current.AWSSessionManager_InstanceIDHistory);
+        ProfileHistoryView =
+            CollectionViewSource.GetDefaultView(SettingsManager.Current.AWSSessionManager_ProfileHistory);
+        RegionHistoryView =
+            CollectionViewSource.GetDefaultView(SettingsManager.Current.AWSSessionManager_RegionHistory);
+
+        LoadSettings();
+    }
+
     public ICommand ConnectCommand { get; }
     public ICommand CancelCommand { get; }
 
-    private string _instanceID;
     public string InstanceID
     {
         get => _instanceID;
@@ -28,7 +49,6 @@ public class AWSSessionManagerConnectViewModel : ViewModelBase
 
     public ICollectionView InstanceIDHistoryView { get; }
 
-    private string _profile;
     public string Profile
     {
         get => _profile;
@@ -44,7 +64,6 @@ public class AWSSessionManagerConnectViewModel : ViewModelBase
 
     public ICollectionView ProfileHistoryView { get; }
 
-    private string _region;
     public string Region
     {
         get => _region;
@@ -60,21 +79,9 @@ public class AWSSessionManagerConnectViewModel : ViewModelBase
 
     public ICollectionView RegionHistoryView { get; }
 
-    public AWSSessionManagerConnectViewModel(Action<AWSSessionManagerConnectViewModel> connectCommand, Action<AWSSessionManagerConnectViewModel> cancelHandler)
-    {
-        ConnectCommand = new RelayCommand(_ => connectCommand(this));
-        CancelCommand = new RelayCommand(_ => cancelHandler(this));
-
-        InstanceIDHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.AWSSessionManager_InstanceIDHistory);
-        ProfileHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.AWSSessionManager_ProfileHistory);
-        RegionHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.AWSSessionManager_RegionHistory);
-
-        LoadSettings();
-    }
-
     private void LoadSettings()
     {
         Profile = SettingsManager.Current.AWSSessionManager_Profile;
-        Region = SettingsManager.Current.AWSSessionManager_Region;                
+        Region = SettingsManager.Current.AWSSessionManager_Region;
     }
 }

@@ -1,21 +1,22 @@
-﻿using NETworkManager.Models.Network;
-using NETworkManager.Settings;
-using System;
+﻿using System;
 using System.Collections;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using System.Linq;
-using System.ComponentModel;
-using System.Windows.Data;
-using NETworkManager.Utilities;
-using System.Collections.ObjectModel;
-using NETworkManager.Controls;
 using Dragablz;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using System.Threading.Tasks;
+using NETworkManager.Controls;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
@@ -23,6 +24,7 @@ namespace NETworkManager.ViewModels;
 public class SNTPLookupViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly Guid _tabId;
@@ -32,6 +34,7 @@ public class SNTPLookupViewModel : ViewModelBase
     public ICollectionView SNTPServers { get; }
 
     private ServerConnectionInfoProfile _sntpServer = new();
+
     public ServerConnectionInfoProfile SNTPServer
     {
         get => _sntpServer;
@@ -49,6 +52,7 @@ public class SNTPLookupViewModel : ViewModelBase
     }
 
     private bool _isRunning;
+
     public bool IsRunning
     {
         get => _isRunning;
@@ -63,6 +67,7 @@ public class SNTPLookupViewModel : ViewModelBase
     }
 
     private ObservableCollection<SNTPLookupInfo> _results = new();
+
     public ObservableCollection<SNTPLookupInfo> Results
     {
         get => _results;
@@ -78,6 +83,7 @@ public class SNTPLookupViewModel : ViewModelBase
     public ICollectionView ResultsView { get; }
 
     private SNTPLookupInfo _selectedResult;
+
     public SNTPLookupInfo SelectedResult
     {
         get => _selectedResult;
@@ -92,6 +98,7 @@ public class SNTPLookupViewModel : ViewModelBase
     }
 
     private IList _selectedResults = new ArrayList();
+
     public IList SelectedResults
     {
         get => _selectedResults;
@@ -106,6 +113,7 @@ public class SNTPLookupViewModel : ViewModelBase
     }
 
     private bool _isStatusMessageDisplayed;
+
     public bool IsStatusMessageDisplayed
     {
         get => _isStatusMessageDisplayed;
@@ -120,6 +128,7 @@ public class SNTPLookupViewModel : ViewModelBase
     }
 
     private string _statusMessage;
+
     public string StatusMessage
     {
         get => _statusMessage;
@@ -132,9 +141,11 @@ public class SNTPLookupViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Contructor, load settings
+
     public SNTPLookupViewModel(IDialogCoordinator instance, Guid tabId)
     {
         _isLoading = true;
@@ -144,11 +155,16 @@ public class SNTPLookupViewModel : ViewModelBase
         _tabId = tabId;
 
         SNTPServers = new CollectionViewSource { Source = SettingsManager.Current.SNTPLookup_SNTPServers }.View;
-        SNTPServers.SortDescriptions.Add(new SortDescription(nameof(ServerConnectionInfoProfile.Name), ListSortDirection.Ascending));
-        SNTPServer = SNTPServers.SourceCollection.Cast<ServerConnectionInfoProfile>().FirstOrDefault(x => x.Name == SettingsManager.Current.SNTPLookup_SelectedSNTPServer.Name) ?? SNTPServers.SourceCollection.Cast<ServerConnectionInfoProfile>().First();
+        SNTPServers.SortDescriptions.Add(new SortDescription(nameof(ServerConnectionInfoProfile.Name),
+            ListSortDirection.Ascending));
+        SNTPServer =
+            SNTPServers.SourceCollection.Cast<ServerConnectionInfoProfile>().FirstOrDefault(x =>
+                x.Name == SettingsManager.Current.SNTPLookup_SelectedSNTPServer.Name) ??
+            SNTPServers.SourceCollection.Cast<ServerConnectionInfoProfile>().First();
 
         ResultsView = CollectionViewSource.GetDefaultView(Results);
-        ResultsView.SortDescriptions.Add(new SortDescription(nameof(SNTPLookupInfo.Server), ListSortDirection.Ascending));
+        ResultsView.SortDescriptions.Add(
+            new SortDescription(nameof(SNTPLookupInfo.Server), ListSortDirection.Ascending));
 
         LoadSettings();
 
@@ -157,15 +173,19 @@ public class SNTPLookupViewModel : ViewModelBase
 
     private void LoadSettings()
     {
-
     }
 
     #endregion
 
     #region ICommands & Actions
+
     public ICommand QueryCommand => new RelayCommand(_ => QueryAction(), Query_CanExecute);
 
-    private bool Query_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool Query_CanExecute(object parameter)
+    {
+        return Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    }
 
     private void QueryAction()
     {
@@ -179,7 +199,7 @@ public class SNTPLookupViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.Export
+            Title = Strings.Export
         };
 
         var exportViewModel = new ExportViewModel(async instance =>
@@ -188,22 +208,24 @@ public class SNTPLookupViewModel : ViewModelBase
 
             try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? Results : new ObservableCollection<SNTPLookupInfo>(SelectedResults.Cast<SNTPLookupInfo>().ToArray()));
+                ExportManager.Export(instance.FilePath, instance.FileType,
+                    instance.ExportAll
+                        ? Results
+                        : new ObservableCollection<SNTPLookupInfo>(SelectedResults.Cast<SNTPLookupInfo>().ToArray()));
             }
             catch (Exception ex)
             {
                 var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                settings.AffirmativeButtonText = Strings.OK;
 
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
             }
 
             SettingsManager.Current.SNTPLookup_ExportFileType = instance.FileType;
             SettingsManager.Current.SNTPLookup_ExportFilePath = instance.FilePath;
-        }, _ =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, new[]
+        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new[]
         {
             ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
         }, true, SettingsManager.Current.SNTPLookup_ExportFileType, SettingsManager.Current.SNTPLookup_ExportFilePath);
@@ -215,9 +237,11 @@ public class SNTPLookupViewModel : ViewModelBase
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
+
     #endregion
 
-    #region Methods      
+    #region Methods
+
     private void Query()
     {
         IsStatusMessageDisplayed = false;
@@ -232,12 +256,8 @@ public class SNTPLookupViewModel : ViewModelBase
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
         if (window != null)
-        {
             foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
-            {
                 tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = SNTPServer.Name;
-            }
-        }
 
         SNTPLookupSettings settings = new(
             SettingsManager.Current.SNTPLookup_Timeout
@@ -254,17 +274,16 @@ public class SNTPLookupViewModel : ViewModelBase
 
     public void OnClose()
     {
-
     }
+
     #endregion
 
     #region Events
+
     private void Lookup_ResultReceived(object sender, SNTPLookupResultArgs e)
     {
-        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-        {
-            Results.Add(e.Args);
-        }));
+        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
+            new Action(delegate { Results.Add(e.Args); }));
     }
 
     private void Lookup_LookupError(object sender, SNTPLookupErrorArgs e)
@@ -280,5 +299,6 @@ public class SNTPLookupViewModel : ViewModelBase
     {
         IsRunning = false;
     }
+
     #endregion
 }

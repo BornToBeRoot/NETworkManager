@@ -9,15 +9,16 @@ namespace NETworkManager.Validators;
 public class ServerValidator : ValidationRule
 {
     public ServerDependencyObjectWrapper Wrapper { get; set; }
-    
+
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
-        bool allowOnlyIPAddress = Wrapper.AllowOnlyIPAddress;
-        var genericErrorResult = allowOnlyIPAddress ? Strings.EnterValidIPAddress : Strings.EnterValidHostnameOrIPAddress;
+        var allowOnlyIPAddress = Wrapper.AllowOnlyIPAddress;
+        var genericErrorResult =
+            allowOnlyIPAddress ? Strings.EnterValidIPAddress : Strings.EnterValidHostnameOrIPAddress;
 
         var input = (value as string)?.Trim();
 
-        if(string.IsNullOrEmpty(input))
+        if (string.IsNullOrEmpty(input))
             return new ValidationResult(false, genericErrorResult);
 
         // Check if it is a valid IPv4 address like 192.168.0.1

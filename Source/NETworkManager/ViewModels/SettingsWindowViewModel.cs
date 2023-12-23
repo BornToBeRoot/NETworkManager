@@ -5,9 +5,11 @@ namespace NETworkManager.ViewModels;
 public class SettingsWindowViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly bool _isLoading;
 
     private bool _minimizeInsteadOfTerminating;
+
     public bool MinimizeInsteadOfTerminating
     {
         get => _minimizeInsteadOfTerminating;
@@ -25,6 +27,7 @@ public class SettingsWindowViewModel : ViewModelBase
     }
 
     private bool _minimizeToTrayInsteadOfTaskbar;
+
     public bool MinimizeToTrayInsteadOfTaskbar
     {
         get => _minimizeToTrayInsteadOfTaskbar;
@@ -42,6 +45,7 @@ public class SettingsWindowViewModel : ViewModelBase
     }
 
     private bool _confirmClose;
+
     public bool ConfirmClose
     {
         get => _confirmClose;
@@ -59,6 +63,7 @@ public class SettingsWindowViewModel : ViewModelBase
     }
 
     private bool _multipleInstances;
+
     public bool MultipleInstances
     {
         get => _multipleInstances;
@@ -76,6 +81,7 @@ public class SettingsWindowViewModel : ViewModelBase
     }
 
     private bool _alwaysShowIconInTray;
+
     public bool AlwaysShowIconInTray
     {
         get => _alwaysShowIconInTray;
@@ -93,6 +99,7 @@ public class SettingsWindowViewModel : ViewModelBase
     }
 
     private bool _splashScreenEnabled;
+
     public bool SplashScreenEnabled
     {
         get => _splashScreenEnabled;
@@ -108,9 +115,11 @@ public class SettingsWindowViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, LoadSettings
+
     public SettingsWindowViewModel()
     {
         _isLoading = true;
@@ -121,7 +130,7 @@ public class SettingsWindowViewModel : ViewModelBase
     }
 
     private void LoadSettings()
-    {            
+    {
         MinimizeInsteadOfTerminating = SettingsManager.Current.Window_MinimizeInsteadOfTerminating;
         ConfirmClose = SettingsManager.Current.Window_ConfirmClose;
         MultipleInstances = SettingsManager.Current.Window_MultipleInstances;
@@ -129,5 +138,6 @@ public class SettingsWindowViewModel : ViewModelBase
         AlwaysShowIconInTray = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
         SplashScreenEnabled = SettingsManager.Current.SplashScreen_Enabled;
     }
+
     #endregion
 }

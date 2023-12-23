@@ -1,16 +1,26 @@
-﻿using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Windows.Input;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
 public class IPAddressAndSubnetmaskViewModel : ViewModelBase
 {
+    private string _ipAddress;
+
+    private string _subnetmask;
+
+    public IPAddressAndSubnetmaskViewModel(Action<IPAddressAndSubnetmaskViewModel> okCommand,
+        Action<IPAddressAndSubnetmaskViewModel> cancelHandler)
+    {
+        OKCommand = new RelayCommand(_ => okCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
+    }
+
     public ICommand OKCommand { get; }
 
     public ICommand CancelCommand { get; }
 
-    private string _ipAddress;
     public string IPAddress
     {
         get => _ipAddress;
@@ -24,7 +34,6 @@ public class IPAddressAndSubnetmaskViewModel : ViewModelBase
         }
     }
 
-    private string _subnetmask;
     public string Subnetmask
     {
         get => _subnetmask;
@@ -37,10 +46,4 @@ public class IPAddressAndSubnetmaskViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-
-    public IPAddressAndSubnetmaskViewModel(Action<IPAddressAndSubnetmaskViewModel> okCommand, Action<IPAddressAndSubnetmaskViewModel> cancelHandler)
-    {
-        OKCommand = new RelayCommand(_ => okCommand(this));
-        CancelCommand = new RelayCommand(_ => cancelHandler(this));
-    }        
 }

@@ -1,9 +1,10 @@
 ﻿using System.Globalization;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
-using NETworkManager.Utilities;
-using System.Net;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Network;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Validators;
 
@@ -14,7 +15,7 @@ public class MultipleHostsRangeValidator : ValidationRule
         var isValid = true;
 
         if (value == null)
-            return new ValidationResult(false, Localization.Resources.Strings.EnterValidIPScanRange);
+            return new ValidationResult(false, Strings.EnterValidIPScanRange);
 
         foreach (var ipHostOrRange in ((string)value).Replace(" ", "").Split(';'))
         {
@@ -87,6 +88,8 @@ public class MultipleHostsRangeValidator : ValidationRule
             isValid = false;
         }
 
-        return isValid ? ValidationResult.ValidResult : new ValidationResult(false, Localization.Resources.Strings.EnterValidIPScanRange);
+        return isValid
+            ? ValidationResult.ValidResult
+            : new ValidationResult(false, Strings.EnterValidIPScanRange);
     }
 }

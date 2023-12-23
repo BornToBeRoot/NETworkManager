@@ -1,27 +1,32 @@
-﻿using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
 public sealed class SNTPLookup
 {
     #region Variables
+
     private readonly SNTPLookupSettings _settings;
+
     #endregion
 
     #region Constructor
+
     public SNTPLookup(SNTPLookupSettings settings)
     {
         _settings = settings;
     }
+
     #endregion
 
     #region Events
+
     public event EventHandler<SNTPLookupResultArgs> ResultReceived;
 
     private void OnResultReceived(SNTPLookupResultArgs e)
@@ -42,6 +47,7 @@ public sealed class SNTPLookup
     {
         LookupComplete?.Invoke(this, EventArgs.Empty);
     }
+
     #endregion
 
     #region Methods
@@ -65,15 +71,17 @@ public sealed class SNTPLookup
 
         udpClient.Close();
 
-        var intPart = (ulong)ntpData[40] << 24 | (ulong)ntpData[41] << 16 | (ulong)ntpData[42] << 8 | ntpData[43];
-        var fractionPart = (ulong)ntpData[44] << 24 | (ulong)ntpData[45] << 16 | (ulong)ntpData[46] << 8 | ntpData[47];
+        var intPart = ((ulong)ntpData[40] << 24) | ((ulong)ntpData[41] << 16) | ((ulong)ntpData[42] << 8) | ntpData[43];
+        var fractionPart = ((ulong)ntpData[44] << 24) | ((ulong)ntpData[45] << 16) | ((ulong)ntpData[46] << 8) |
+                           ntpData[47];
 
-        var milliseconds = (intPart * 1000) + (fractionPart * 1000 / 0x100000000L);
+        var milliseconds = intPart * 1000 + fractionPart * 1000 / 0x100000000L;
         var networkTime = new DateTime(1900, 1, 1).AddMilliseconds((long)milliseconds);
 
         // Calculate local offset with local start/end time and network time in seconds            
         var roundTripDelayTicks = localEndTime.Ticks - localStartTime.Ticks;
-        var offsetInSeconds = (localStartTime.Ticks + (roundTripDelayTicks / 2) - networkTime.Ticks) / TimeSpan.TicksPerSecond;
+        var offsetInSeconds = (localStartTime.Ticks + roundTripDelayTicks / 2 - networkTime.Ticks) /
+                              TimeSpan.TicksPerSecond;
 
         return new SNTPDateTime
         {
@@ -94,20 +102,23 @@ public sealed class SNTPLookup
                 // NTP requires an IP address to connect to
                 IPAddress serverIP = null;
 
-                if (Regex.IsMatch(server.Server, RegexHelper.IPv4AddressRegex) || Regex.IsMatch(server.Server, RegexHelper.IPv6AddressRegex))
+                if (Regex.IsMatch(server.Server, RegexHelper.IPv4AddressRegex) ||
+                    Regex.IsMatch(server.Server, RegexHelper.IPv6AddressRegex))
                 {
                     serverIP = IPAddress.Parse(server.Server);
                 }
                 else
                 {
-                    using var dnsResolverTask = DNSClientHelper.ResolveAorAaaaAsync(server.Server, dnsResolveHostnamePreferIPv4);
+                    using var dnsResolverTask =
+                        DNSClientHelper.ResolveAorAaaaAsync(server.Server, dnsResolveHostnamePreferIPv4);
 
                     // Wait for task inside a Parallel.Foreach
                     dnsResolverTask.Wait();
 
                     if (dnsResolverTask.Result.HasError)
                     {
-                        OnLookupError(new SNTPLookupErrorArgs(DNSClientHelper.FormatDNSClientResultError(server.Server, dnsResolverTask.Result), true));
+                        OnLookupError(new SNTPLookupErrorArgs(
+                            DNSClientHelper.FormatDNSClientResultError(server.Server, dnsResolverTask.Result), true));
                         return;
                     }
 
@@ -130,5 +141,6 @@ public sealed class SNTPLookup
             OnLookupComplete();
         });
     }
-    #endregion                
+
+    #endregion
 }

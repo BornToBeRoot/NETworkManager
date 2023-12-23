@@ -1,5 +1,5 @@
-﻿using NETworkManager.Settings;
-using MahApps.Metro.Controls;
+﻿using MahApps.Metro.Controls;
+using NETworkManager.Settings;
 using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
@@ -7,9 +7,11 @@ namespace NETworkManager.ViewModels;
 public class SettingsHotKeysViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly bool _isLoading;
 
     private bool _hotKeyShowWindowEnabled;
+
     public bool HotKeyShowWindowEnabled
     {
         get => _hotKeyShowWindowEnabled;
@@ -22,7 +24,7 @@ public class SettingsHotKeysViewModel : ViewModelBase
             {
                 SettingsManager.Current.HotKey_ShowWindowEnabled = value;
 
-                SettingsManager.HotKeysChanged = true;                    
+                SettingsManager.HotKeysChanged = true;
             }
 
             _hotKeyShowWindowEnabled = value;
@@ -31,6 +33,7 @@ public class SettingsHotKeysViewModel : ViewModelBase
     }
 
     private HotKey _hotKeyShowWindow;
+
     public HotKey HotKeyShowWindow
     {
         get => _hotKeyShowWindow;
@@ -51,9 +54,11 @@ public class SettingsHotKeysViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, LoadSettings
+
     public SettingsHotKeysViewModel()
     {
         _isLoading = true;
@@ -66,7 +71,9 @@ public class SettingsHotKeysViewModel : ViewModelBase
     private void LoadSettings()
     {
         HotKeyShowWindowEnabled = SettingsManager.Current.HotKey_ShowWindowEnabled;
-        HotKeyShowWindow = new HotKey(HotKeys.FormsKeysToWpfKey(SettingsManager.Current.HotKey_ShowWindowKey), HotKeys.GetModifierKeysFromInt(SettingsManager.Current.HotKey_ShowWindowModifier));
+        HotKeyShowWindow = new HotKey(HotKeys.FormsKeysToWpfKey(SettingsManager.Current.HotKey_ShowWindowKey),
+            HotKeys.GetModifierKeysFromInt(SettingsManager.Current.HotKey_ShowWindowModifier));
     }
-    #endregion        
+
+    #endregion
 }

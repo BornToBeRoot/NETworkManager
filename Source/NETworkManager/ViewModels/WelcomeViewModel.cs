@@ -1,15 +1,29 @@
-﻿using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Windows.Input;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
 public class WelcomeViewModel : ViewModelBase
 {
+    private bool _checkForUpdatesAtStartup = GlobalStaticConfiguration.Update_CheckForUpdatesAtStartup;
+
+    private bool _checkIPApiDNSResolver = GlobalStaticConfiguration.Dashboard_CheckIPApiDNSResolver;
+
+    private bool _checkIPApiIPGeolocation = GlobalStaticConfiguration.Dashboard_CheckIPApiIPGeolocation;
+
+    private bool _checkPublicIPAddress = GlobalStaticConfiguration.Dashboard_CheckPublicIPAddress;
+
+    private bool _powerShellModifyGlobalProfile;
+
+    public WelcomeViewModel(Action<WelcomeViewModel> continueCommand)
+    {
+        ContinueCommand = new RelayCommand(_ => continueCommand(this));
+    }
+
     public ICommand ContinueCommand { get; }
 
-    private bool _checkForUpdatesAtStartup = GlobalStaticConfiguration.Update_CheckForUpdatesAtStartup;
     public bool CheckForUpdatesAtStartup
     {
         get => _checkForUpdatesAtStartup;
@@ -23,7 +37,6 @@ public class WelcomeViewModel : ViewModelBase
         }
     }
 
-    private bool _checkPublicIPAddress = GlobalStaticConfiguration.Dashboard_CheckPublicIPAddress;
     public bool CheckPublicIPAddress
     {
         get => _checkPublicIPAddress;
@@ -37,7 +50,6 @@ public class WelcomeViewModel : ViewModelBase
         }
     }
 
-    private bool _checkIPApiIPGeolocation = GlobalStaticConfiguration.Dashboard_CheckIPApiIPGeolocation;
     public bool CheckIPApiIPGeolocation
     {
         get => _checkIPApiIPGeolocation;
@@ -51,7 +63,6 @@ public class WelcomeViewModel : ViewModelBase
         }
     }
 
-    private bool _checkIPApiDNSResolver = GlobalStaticConfiguration.Dashboard_CheckIPApiDNSResolver;
     public bool CheckIPApiDNSResolver
     {
         get => _checkIPApiDNSResolver;
@@ -65,7 +76,6 @@ public class WelcomeViewModel : ViewModelBase
         }
     }
 
-    private bool _powerShellModifyGlobalProfile;
     public bool PowerShellModifyGlobalProfile
     {
         get => _powerShellModifyGlobalProfile;
@@ -77,10 +87,5 @@ public class WelcomeViewModel : ViewModelBase
             _powerShellModifyGlobalProfile = value;
             OnPropertyChanged();
         }
-    }
-
-    public WelcomeViewModel(Action<WelcomeViewModel> continueCommand)
-    {
-        ContinueCommand = new RelayCommand(_ => continueCommand(this));
     }
 }

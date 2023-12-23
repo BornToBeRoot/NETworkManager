@@ -1,29 +1,19 @@
-﻿using Microsoft.Win32;
-using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Microsoft.Win32;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.PuTTY;
 
 /// <summary>
-/// Class control PuTTY.
+///     Class control PuTTY.
 /// </summary>
-public partial class PuTTY
+public class PuTTY
 {
     /// <summary>
-    /// Name of the PuTTY folder.
-    /// </summary>
-    private static string _puttyFolder => "PuTTY";
-
-    /// <summary>
-    /// Name of the PuTTY executable.
-    /// </summary>
-    private static string _puttyFile => "putty.exe";
-
-    /// <summary>
-    /// Default PuTTY installation paths.
+    ///     Default PuTTY installation paths.
     /// </summary>
     public static readonly List<string> GetDefaultInstallationPaths = new()
     {
@@ -32,7 +22,7 @@ public partial class PuTTY
     };
 
     /// <summary>
-    /// Default SZ registry keys for PuTTY profile NETworkManager.
+    ///     Default SZ registry keys for PuTTY profile NETworkManager.
     /// </summary>
     private static readonly List<Tuple<string, string>> DefaultProfileRegkeysSZBase = new()
     {
@@ -61,35 +51,7 @@ public partial class PuTTY
     };
 
     /// <summary>
-    /// SZ registry keys for PuTTY profile NETworkManager if app theme is dark.
-    /// </summary>
-    /// <returns>List with SZ registry keys.</returns>
-    private static List<Tuple<string, string>> GetProfileRegkeysSZDark()
-    {
-        return DefaultProfileRegkeysSZBase.Concat(
-            new[] {
-                // new Tuple<string, string>("Colour0", "255,255,255"),
-                new Tuple<string, string>("Colour0", "187,187,187"),    // Foreground
-                new Tuple<string, string>("Colour2", "37,37,37")        // Background
-            }).ToList();
-    }
-
-    /// <summary>
-    /// SZ registry keys for PuTTY profile NETworkManager if app theme is white.
-    /// </summary>
-    /// <returns>List with DWORD registry keys.</returns>
-    private static List<Tuple<string, string>> GetProfileRegkeysSZWhite()
-    {
-        return DefaultProfileRegkeysSZBase.Concat(
-            new[] {
-                // new Tuple<string, string>("Colour0", "68,68,68"),
-                new Tuple<string, string>("Colour0", "0,0,0"),          // Foreground
-                new Tuple<string, string>("Colour2", "255,255,255")     // Background
-            }).ToList();
-    }
-
-    /// <summary>
-    /// Default DWORD registry keys for PuTTY profile NETworkManager.
+    ///     Default DWORD registry keys for PuTTY profile NETworkManager.
     /// </summary>
     private static readonly List<Tuple<string, int>> DefaultProfileRegkeysDwordBase = new()
     {
@@ -100,15 +62,55 @@ public partial class PuTTY
     };
 
     /// <summary>
-    /// Write the default PuTTY profile NETworkManager to the registry.
-    /// HKCU\Software\SimonTatham\PuTTY\Sessions\NETworkManager
+    ///     Name of the PuTTY folder.
+    /// </summary>
+    private static string _puttyFolder => "PuTTY";
+
+    /// <summary>
+    ///     Name of the PuTTY executable.
+    /// </summary>
+    private static string _puttyFile => "putty.exe";
+
+    /// <summary>
+    ///     SZ registry keys for PuTTY profile NETworkManager if app theme is dark.
+    /// </summary>
+    /// <returns>List with SZ registry keys.</returns>
+    private static List<Tuple<string, string>> GetProfileRegkeysSZDark()
+    {
+        return DefaultProfileRegkeysSZBase.Concat(
+            new[]
+            {
+                // new Tuple<string, string>("Colour0", "255,255,255"),
+                new Tuple<string, string>("Colour0", "187,187,187"), // Foreground
+                new Tuple<string, string>("Colour2", "37,37,37") // Background
+            }).ToList();
+    }
+
+    /// <summary>
+    ///     SZ registry keys for PuTTY profile NETworkManager if app theme is white.
+    /// </summary>
+    /// <returns>List with DWORD registry keys.</returns>
+    private static List<Tuple<string, string>> GetProfileRegkeysSZWhite()
+    {
+        return DefaultProfileRegkeysSZBase.Concat(
+            new[]
+            {
+                // new Tuple<string, string>("Colour0", "68,68,68"),
+                new Tuple<string, string>("Colour0", "0,0,0"), // Foreground
+                new Tuple<string, string>("Colour2", "255,255,255") // Background
+            }).ToList();
+    }
+
+    /// <summary>
+    ///     Write the default PuTTY profile NETworkManager to the registry.
+    ///     HKCU\Software\SimonTatham\PuTTY\Sessions\NETworkManager
     /// </summary>
     /// <param name="theme">Current application theme to adjust the PuTTY colors</param>
     public static void WriteDefaultProfileToRegistry(string theme)
     {
-        string profilePath = @"Software\SimonTatham\PuTTY\Sessions\NETworkManager";
+        var profilePath = @"Software\SimonTatham\PuTTY\Sessions\NETworkManager";
 
-        RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(profilePath, true);
+        var registryKey = Registry.CurrentUser.OpenSubKey(profilePath, true);
 
         registryKey ??= Registry.CurrentUser.CreateSubKey(profilePath);
 
@@ -125,9 +127,9 @@ public partial class PuTTY
     }
 
     /// <summary>
-    /// Build command line arguments based on a <see cref="PuTTYSessionInfo"/>.
+    ///     Build command line arguments based on a <see cref="PuTTYSessionInfo" />.
     /// </summary>
-    /// <param name="sessionInfo">Instance of <see cref="PuTTYSessionInfo"/>.</param>
+    /// <param name="sessionInfo">Instance of <see cref="PuTTYSessionInfo" />.</param>
     /// <returns>Command line arguments like "-ssh -l root -i C:\data\key.ppk".</returns>
     public static string BuildCommandLine(PuTTYSessionInfo sessionInfo)
     {
@@ -158,7 +160,8 @@ public partial class PuTTY
         }
 
         // Username
-        if (new []{ ConnectionMode.SSH, ConnectionMode.Telnet, ConnectionMode.Rlogin}.Contains(sessionInfo.Mode) && !string.IsNullOrEmpty(sessionInfo.Username))
+        if (new[] { ConnectionMode.SSH, ConnectionMode.Telnet, ConnectionMode.Rlogin }.Contains(sessionInfo.Mode) &&
+            !string.IsNullOrEmpty(sessionInfo.Username))
             command += $" -l {sessionInfo.Username}";
 
         // SSH specific settings
@@ -170,8 +173,9 @@ public partial class PuTTY
 
             // Hostkey(s)
             if (sessionInfo.Mode == ConnectionMode.SSH && !string.IsNullOrEmpty(sessionInfo.Hostkey))
-            {                
-                var hostkeys = StringHelper.RemoveWhitespace(sessionInfo.Hostkey).Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            {
+                var hostkeys = StringHelper.RemoveWhitespace(sessionInfo.Hostkey)
+                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
                 foreach (var hostkey in hostkeys)
                     command += $" -hostkey \"{hostkey}\"";
@@ -184,17 +188,18 @@ public partial class PuTTY
             switch (sessionInfo.LogMode)
             {
                 case LogMode.SessionLog:
-                    command += $" -sessionlog";
+                    command += " -sessionlog";
                     break;
                 case LogMode.SSHLog:
-                    command += $" -sshlog";
+                    command += " -sshlog";
                     break;
                 case LogMode.SSHRawLog:
-                    command += $" -sshrawlog";
+                    command += " -sshrawlog";
                     break;
             }
 
-            command += $" \"{Environment.ExpandEnvironmentVariables(Path.Combine(sessionInfo.LogPath, sessionInfo.LogFileName))}\"";
+            command +=
+                $" \"{Environment.ExpandEnvironmentVariables(Path.Combine(sessionInfo.LogPath, sessionInfo.LogFileName))}\"";
         }
 
         // Additional command line
