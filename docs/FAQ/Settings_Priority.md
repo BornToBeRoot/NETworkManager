@@ -21,7 +21,6 @@ There are three levels of settings:
 - **Profile settings**
   Profile settings are applied to a specific profile. They overwrite group settings. E.g. for a specific server to overwrite the SSH key file or Windows credentials.
 
-
 The priority is as follows:
 
 `Global settings (default) → Group settings (overwrites global) → Profile settings (overwrites group)`

@@ -10,7 +10,7 @@ permalink: /Documentation/Application/WakeOnLAN
 
 # Wake on LAN
 
-With **Wake on LAN** you can wake up a computer in the local network from a low power state. 
+With **Wake on LAN** you can wake up a computer in the local network from a low power state.
 
 {: .info }
 Wake on LAN uses a magic packet starting with 6 bytes with the value `0xFF` followed by 16 repetitions of the MAC address of the computer to be woken up. The magic packet is sent on layer 2 to the broadcast address via port `9/udp` of the network where the computer is located. The computer must be in a low power state in order to detect the magic packet and wake up.
@@ -20,7 +20,7 @@ The computers network interface card (NIC) must support Wake on LAN and the feat
 
 Possible inputs:
 
-| MAC address         | Broadcast address | Note                                     |
+| MAC address         | Broadcast address | Note                                            |
 | ------------------- | ----------------- | ----------------------------------------------- |
 | `00:11:22:33:44:55` | `192.168.0.255`   | Broadcast address of a `192.168.0.0/24` network |
 
