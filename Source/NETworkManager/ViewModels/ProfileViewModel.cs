@@ -1,18 +1,20 @@
-﻿using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Security;
+using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
-using NETworkManager.Models.PowerShell;
-using NETworkManager.Models.RemoteDesktop;
-using NETworkManager.Profiles;
-using NETworkManager.Models.PuTTY;
-using System.Security;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.Network;
+using NETworkManager.Models.PowerShell;
+using NETworkManager.Models.PuTTY;
+using NETworkManager.Models.RemoteDesktop;
+using NETworkManager.Profiles;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 // ReSharper disable InconsistentNaming
 
@@ -20,6 +22,360 @@ namespace NETworkManager.ViewModels;
 
 public class ProfileViewModel : ViewModelBase
 {
+    public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler,
+        IReadOnlyCollection<string> groups, string group = null, ProfileEditMode editMode = ProfileEditMode.Add,
+        ProfileInfo profile = null, ApplicationName applicationName = ApplicationName.None)
+    {
+        // Load the view
+        ProfileViews = new CollectionViewSource { Source = ProfileViewManager.List }.View;
+        ProfileViews.SortDescriptions.Add(
+            new SortDescription(nameof(ProfileViewInfo.Name), ListSortDirection.Ascending));
+
+        SaveCommand = new RelayCommand(_ => saveCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
+
+        var profileInfo = profile ?? new ProfileInfo();
+
+        Name = profileInfo.Name;
+
+        if (editMode == ProfileEditMode.Copy)
+            Name += " - " + Strings.CopyNoun;
+
+        Host = profileInfo.Host;
+
+        // Try to get group (name) as parameter, then from profile, then the first in the list of groups, then the default group            
+        Group = group ?? (string.IsNullOrEmpty(profileInfo.Group)
+            ? groups.Count > 0 ? groups.OrderBy(x => x).First() : Strings.Default
+            : profileInfo.Group);
+
+        Tags = profileInfo.Tags;
+
+        Groups = CollectionViewSource.GetDefaultView(groups);
+        Groups.SortDescriptions.Add(new SortDescription());
+
+        // Network Interface
+        NetworkInterface_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.NetworkInterface
+            : profileInfo.NetworkInterface_Enabled;
+        NetworkInterface_EnableDynamicIPAddress = !profileInfo.NetworkInterface_EnableStaticIPAddress;
+        NetworkInterface_EnableStaticIPAddress = profileInfo.NetworkInterface_EnableStaticIPAddress;
+        NetworkInterface_IPAddress = profileInfo.NetworkInterface_IPAddress;
+        NetworkInterface_Gateway = profileInfo.NetworkInterface_Gateway;
+        NetworkInterface_Subnetmask = profileInfo.NetworkInterface_Subnetmask;
+        NetworkInterface_EnableDynamicDNS = !profileInfo.NetworkInterface_EnableStaticDNS;
+        NetworkInterface_EnableStaticDNS = profileInfo.NetworkInterface_EnableStaticDNS;
+        NetworkInterface_PrimaryDNSServer = profileInfo.NetworkInterface_PrimaryDNSServer;
+        NetworkInterface_SecondaryDNSServer = profileInfo.NetworkInterface_SecondaryDNSServer;
+
+        // IP Scanner
+        IPScanner_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.IPScanner
+            : profileInfo.IPScanner_Enabled;
+        IPScanner_InheritHost = profileInfo.IPScanner_InheritHost;
+        IPScanner_HostOrIPRange = profileInfo.IPScanner_HostOrIPRange;
+
+        // Port Scanner
+        PortScanner_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.PortScanner
+            : profileInfo.PortScanner_Enabled;
+        PortScanner_InheritHost = profileInfo.PortScanner_InheritHost;
+        PortScanner_Host = profileInfo.PortScanner_Host;
+        PortScanner_Ports = profileInfo.PortScanner_Ports;
+
+        // Ping Monitor
+        PingMonitor_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.PingMonitor
+            : profileInfo.PingMonitor_Enabled;
+        PingMonitor_InheritHost = profileInfo.PingMonitor_InheritHost;
+        PingMonitor_Host = profileInfo.PingMonitor_Host;
+
+        // Traceroute
+        Traceroute_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.Traceroute
+            : profileInfo.Traceroute_Enabled;
+        Traceroute_InheritHost = profileInfo.Traceroute_InheritHost;
+        Traceroute_Host = profileInfo.Traceroute_Host;
+
+        // DNS Lookup
+        DNSLookup_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.DNSLookup
+            : profileInfo.DNSLookup_Enabled;
+        DNSLookup_InheritHost = profileInfo.DNSLookup_InheritHost;
+        DNSLookup_Host = profileInfo.DNSLookup_Host;
+
+        // Remote Desktop
+        RemoteDesktop_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.RemoteDesktop
+            : profileInfo.RemoteDesktop_Enabled;
+        RemoteDesktop_InheritHost = profileInfo.RemoteDesktop_InheritHost;
+        RemoteDesktop_Host = profileInfo.RemoteDesktop_Host;
+        RemoteDesktop_UseCredentials = profileInfo.RemoteDesktop_UseCredentials;
+        RemoteDesktop_Username = profileInfo.RemoteDesktop_Username;
+        RemoteDesktop_Domain = profileInfo.RemoteDesktop_Domain;
+        RemoteDesktop_Password = profileInfo.RemoteDesktop_Password;
+        RemoteDesktop_OverrideDisplay = profileInfo.RemoteDesktop_OverrideDisplay;
+        RemoteDesktop_AdjustScreenAutomatically = profileInfo.RemoteDesktop_AdjustScreenAutomatically;
+        RemoteDesktop_UseCurrentViewSize = profileInfo.RemoteDesktop_UseCurrentViewSize;
+        RemoteDesktop_UseFixedScreenSize = profileInfo.RemoteDesktop_UseFixedScreenSize;
+        RemoteDesktop_SelectedScreenResolution = RemoteDesktop_ScreenResolutions.FirstOrDefault(x =>
+            x == $"{profileInfo.RemoteDesktop_ScreenWidth}x{profileInfo.RemoteDesktop_ScreenHeight}");
+        RemoteDesktop_UseCustomScreenSize = profileInfo.RemoteDesktop_UseCustomScreenSize;
+        RemoteDesktop_CustomScreenWidth = profileInfo.RemoteDesktop_CustomScreenWidth.ToString();
+        RemoteDesktop_CustomScreenHeight = profileInfo.RemoteDesktop_CustomScreenHeight.ToString();
+        RemoteDesktop_OverrideColorDepth = profileInfo.RemoteDesktop_OverrideColorDepth;
+        RemoteDesktop_SelectedColorDepth =
+            RemoteDesktop_ColorDepths.FirstOrDefault(x => x == profileInfo.RemoteDesktop_ColorDepth);
+        RemoteDesktop_OverridePort = profileInfo.RemoteDesktop_OverridePort;
+        RemoteDesktop_Port = profileInfo.RemoteDesktop_Port;
+        RemoteDesktop_OverrideCredSspSupport = profileInfo.RemoteDesktop_OverrideCredSspSupport;
+        RemoteDesktop_EnableCredSspSupport = profileInfo.RemoteDesktop_EnableCredSspSupport;
+        RemoteDesktop_OverrideAuthenticationLevel = profileInfo.RemoteDesktop_OverrideAuthenticationLevel;
+        RemoteDesktop_AuthenticationLevel = profileInfo.RemoteDesktop_AuthenticationLevel;
+        RemoteDesktop_OverrideGatewayServer = profileInfo.RemoteDesktop_OverrideGatewayServer;
+        RemoteDesktop_EnableGatewayServer = profileInfo.RemoteDesktop_EnableGatewayServer;
+        RemoteDesktop_GatewayServerHostname = profileInfo.RemoteDesktop_GatewayServerHostname;
+        RemoteDesktop_GatewayServerBypassLocalAddresses = profileInfo.RemoteDesktop_GatewayServerBypassLocalAddresses;
+        RemoteDesktop_GatewayServerLogonMethod = profileInfo.RemoteDesktop_GatewayServerLogonMethod;
+        RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer =
+            profileInfo.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+        RemoteDesktop_UseGatewayServerCredentials = profileInfo.RemoteDesktop_UseGatewayServerCredentials;
+        RemoteDesktop_GatewayServerUsername = profileInfo.RemoteDesktop_GatewayServerUsername;
+        RemoteDesktop_GatewayServerDomain = profileInfo.RemoteDesktop_GatewayServerDomain;
+        RemoteDesktop_GatewayServerPassword = profileInfo.RemoteDesktop_GatewayServerPassword;
+        RemoteDesktop_OverrideAudioRedirectionMode = profileInfo.RemoteDesktop_OverrideAudioRedirectionMode;
+        RemoteDesktop_AudioRedirectionMode =
+            RemoteDesktop_AudioRedirectionModes.FirstOrDefault(x =>
+                x == profileInfo.RemoteDesktop_AudioRedirectionMode);
+        RemoteDesktop_OverrideAudioCaptureRedirectionMode =
+            profileInfo.RemoteDesktop_OverrideAudioCaptureRedirectionMode;
+        RemoteDesktop_AudioCaptureRedirectionMode =
+            RemoteDesktop_AudioCaptureRedirectionModes.FirstOrDefault(x =>
+                x == profileInfo.RemoteDesktop_AudioCaptureRedirectionMode);
+        RemoteDesktop_OverrideApplyWindowsKeyCombinations =
+            profileInfo.RemoteDesktop_OverrideApplyWindowsKeyCombinations;
+        RemoteDesktop_KeyboardHookMode =
+            RemoteDesktop_KeyboardHookModes.FirstOrDefault(x => x == profileInfo.RemoteDesktop_KeyboardHookMode);
+        RemoteDesktop_OverrideRedirectClipboard = profileInfo.RemoteDesktop_OverrideRedirectClipboard;
+        RemoteDesktop_RedirectClipboard = profileInfo.RemoteDesktop_RedirectClipboard;
+        RemoteDesktop_OverrideRedirectDevices = profileInfo.RemoteDesktop_OverrideRedirectDevices;
+        RemoteDesktop_RedirectDevices = profileInfo.RemoteDesktop_RedirectDevices;
+        RemoteDesktop_OverrideRedirectDrives = profileInfo.RemoteDesktop_OverrideRedirectDrives;
+        RemoteDesktop_RedirectDrives = profileInfo.RemoteDesktop_RedirectDrives;
+        RemoteDesktop_OverrideRedirectPorts = profileInfo.RemoteDesktop_OverrideRedirectPorts;
+        RemoteDesktop_RedirectPorts = profileInfo.RemoteDesktop_RedirectPorts;
+        RemoteDesktop_OverrideRedirectSmartcards = profileInfo.RemoteDesktop_OverrideRedirectSmartcards;
+        RemoteDesktop_RedirectSmartCards = profileInfo.RemoteDesktop_RedirectSmartCards;
+        RemoteDesktop_OverrideRedirectPrinters = profileInfo.RemoteDesktop_OverrideRedirectPrinters;
+        RemoteDesktop_RedirectPrinters = profileInfo.RemoteDesktop_RedirectPrinters;
+        RemoteDesktop_OverridePersistentBitmapCaching = profileInfo.RemoteDesktop_OverridePersistentBitmapCaching;
+        RemoteDesktop_PersistentBitmapCaching = profileInfo.RemoteDesktop_PersistentBitmapCaching;
+        RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped =
+            profileInfo.RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped;
+        RemoteDesktop_ReconnectIfTheConnectionIsDropped = profileInfo.RemoteDesktop_ReconnectIfTheConnectionIsDropped;
+        RemoteDesktop_NetworkConnectionType =
+            RemoteDesktop_NetworkConnectionTypes.FirstOrDefault(x =>
+                x == profileInfo.RemoteDesktop_NetworkConnectionType);
+        RemoteDesktop_DesktopBackground = profileInfo.RemoteDesktop_DesktopBackground;
+        RemoteDesktop_FontSmoothing = profileInfo.RemoteDesktop_FontSmoothing;
+        RemoteDesktop_DesktopComposition = profileInfo.RemoteDesktop_DesktopComposition;
+        RemoteDesktop_ShowWindowContentsWhileDragging = profileInfo.RemoteDesktop_ShowWindowContentsWhileDragging;
+        RemoteDesktop_MenuAndWindowAnimation = profileInfo.RemoteDesktop_MenuAndWindowAnimation;
+        RemoteDesktop_VisualStyles = profileInfo.RemoteDesktop_VisualStyles;
+
+        // PowerShell
+        PowerShell_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.PowerShell
+            : profileInfo.PowerShell_Enabled;
+        PowerShell_EnableRemoteConsole = profileInfo.PowerShell_EnableRemoteConsole;
+        PowerShell_InheritHost = profileInfo.PowerShell_InheritHost;
+        PowerShell_Host = profileInfo.PowerShell_Host;
+        PowerShell_OverrideCommand = profileInfo.PowerShell_OverrideCommand;
+        PowerShell_Command = profileInfo.PowerShell_Command;
+        PowerShell_OverrideAdditionalCommandLine = profileInfo.PowerShell_OverrideAdditionalCommandLine;
+        PowerShell_AdditionalCommandLine = profileInfo.PowerShell_AdditionalCommandLine;
+        PowerShell_ExecutionPolicies = Enum.GetValues(typeof(ExecutionPolicy)).Cast<ExecutionPolicy>().ToList();
+        PowerShell_OverrideExecutionPolicy = profileInfo.PowerShell_OverrideExecutionPolicy;
+        PowerShell_ExecutionPolicy = profileInfo.PowerShell_ExecutionPolicy;
+
+        // PuTTY
+        PuTTY_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.PuTTY
+            : profileInfo.PuTTY_Enabled;
+
+        switch (profileInfo.PuTTY_ConnectionMode)
+        {
+            // SSH is default
+            case ConnectionMode.SSH:
+                PuTTY_UseSSH = true;
+                break;
+            case ConnectionMode.Telnet:
+                PuTTY_UseTelnet = true;
+                break;
+            case ConnectionMode.Serial:
+                PuTTY_UseSerial = true;
+                break;
+            case ConnectionMode.Rlogin:
+                PuTTY_UseRlogin = true;
+                break;
+            case ConnectionMode.RAW:
+                PuTTY_UseRAW = true;
+                break;
+        }
+
+        PuTTY_InheritHost = profileInfo.PuTTY_InheritHost;
+
+        if (profileInfo.PuTTY_ConnectionMode != ConnectionMode.Serial)
+            PuTTY_Host = profileInfo.PuTTY_HostOrSerialLine;
+        else
+            PuTTY_SerialLine = profileInfo.PuTTY_HostOrSerialLine;
+
+        PuTTY_OverridePortOrBaud = profileInfo.PuTTY_OverridePortOrBaud;
+
+        if (profileInfo.PuTTY_ConnectionMode != ConnectionMode.Serial)
+            PuTTY_Port = profileInfo.PuTTY_PortOrBaud;
+        else
+            PuTTY_Baud = profileInfo.PuTTY_PortOrBaud;
+
+        PuTTY_OverrideUsername = profileInfo.PuTTY_OverrideUsername;
+        PuTTY_Username = profileInfo.PuTTY_Username;
+        PuTTY_OverridePrivateKeyFile = profileInfo.PuTTY_OverridePrivateKeyFile;
+        PuTTY_PrivateKeyFile = profileInfo.PuTTY_PrivateKeyFile;
+        PuTTY_OverrideProfile = profileInfo.PuTTY_OverrideProfile;
+        PuTTY_Profile = profileInfo.PuTTY_Profile;
+        PuTTY_OverrideHostkey = profileInfo.PuTTY_OverrideHostkey;
+        PuTTY_Hostkey = profileInfo.PuTTY_Hostkey;
+        PuTTY_OverrideEnableLog = profileInfo.PuTTY_OverrideEnableLog;
+        PuTTY_EnableLog = profileInfo.PuTTY_EnableLog;
+        PuTTY_OverrideLogMode = profileInfo.PuTTY_OverrideLogMode;
+        PuTTY_LogMode = PuTTY_LogModes.FirstOrDefault(x => x == profileInfo.PuTTY_LogMode);
+        PuTTY_OverrideLogPath = profileInfo.PuTTY_OverrideLogPath;
+        PuTTY_LogPath = profileInfo.PuTTY_LogPath;
+        PuTTY_OverrideLogFileName = profileInfo.PuTTY_OverrideLogFileName;
+        PuTTY_LogFileName = profileInfo.PuTTY_LogFileName;
+        PuTTY_OverrideAdditionalCommandLine = profileInfo.PuTTY_OverrideAdditionalCommandLine;
+        PuTTY_AdditionalCommandLine = profileInfo.PuTTY_AdditionalCommandLine;
+
+        // AWS Session Manager
+        AWSSessionManager_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.AWSSessionManager
+            : profileInfo.AWSSessionManager_Enabled;
+        AWSSessionManager_InstanceID = profileInfo.AWSSessionManager_InstanceID;
+        AWSSessionManager_OverrideProfile = profileInfo.AWSSessionManager_OverrideProfile;
+        AWSSessionManager_Profile = profileInfo.AWSSessionManager_Profile;
+        AWSSessionManager_OverrideRegion = profileInfo.AWSSessionManager_OverrideRegion;
+        AWSSessionManager_Region = profileInfo.AWSSessionManager_Region;
+
+        // TigerVNC
+        TigerVNC_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.TigerVNC
+            : profileInfo.TigerVNC_Enabled;
+        TigerVNC_InheritHost = profileInfo.TigerVNC_InheritHost;
+        TigerVNC_Host = profileInfo.TigerVNC_Host;
+        TigerVNC_OverridePort = profileInfo.TigerVNC_OverridePort;
+        TigerVNC_Port = profileInfo.TigerVNC_Port;
+
+        // Web Console
+        WebConsole_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.WebConsole
+            : profileInfo.WebConsole_Enabled;
+        WebConsole_Url = profileInfo.WebConsole_Url;
+
+        // SNMP
+        SNMP_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.SNMP
+            : profileInfo.SNMP_Enabled;
+        SNMP_InheritHost = profileInfo.SNMP_InheritHost;
+        SNMP_Host = profileInfo.SNMP_Host;
+        SNMP_OverrideOIDAndMode = profileInfo.SNMP_OverrideOIDAndMode;
+        SNMP_OID = profileInfo.SNMP_OID;
+        SNMP_Modes = new List<SNMPMode> { SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set };
+        SNMP_Mode = SNMP_Modes.FirstOrDefault(x => x == profileInfo.SNMP_Mode);
+        SNMP_OverrideVersionAndAuth = profileInfo.SNMP_OverrideVersionAndAuth;
+        SNMP_Versions = Enum.GetValues(typeof(SNMPVersion)).Cast<SNMPVersion>().ToList();
+        SNMP_Version = SNMP_Versions.FirstOrDefault(x => x == profileInfo.SNMP_Version);
+        SNMP_Community = profileInfo.SNMP_Community;
+        SNMP_Securities = new List<SNMPV3Security>
+            { SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv };
+        SNMP_Security = SNMP_Securities.FirstOrDefault(x => x == profileInfo.SNMP_Security);
+        SNMP_Username = profileInfo.SNMP_Username;
+        SNMP_AuthenticationProviders = Enum.GetValues(typeof(SNMPV3AuthenticationProvider))
+            .Cast<SNMPV3AuthenticationProvider>().ToList();
+        SNMP_AuthenticationProvider =
+            SNMP_AuthenticationProviders.FirstOrDefault(x => x == profileInfo.SNMP_AuthenticationProvider);
+        SNMP_Auth = profileInfo.SNMP_Auth;
+        SNMP_PrivacyProviders = Enum.GetValues(typeof(SNMPV3PrivacyProvider)).Cast<SNMPV3PrivacyProvider>().ToList();
+        SNMP_PrivacyProvider = SNMP_PrivacyProviders.FirstOrDefault(x => x == profileInfo.SNMP_PrivacyProvider);
+        SNMP_Priv = profileInfo.SNMP_Priv;
+
+        // Wake on LAN
+        WakeOnLAN_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.WakeOnLAN
+            : profileInfo.WakeOnLAN_Enabled;
+        WakeOnLAN_MACAddress = profileInfo.WakeOnLAN_MACAddress;
+        WakeOnLAN_Broadcast = profileInfo.WakeOnLAN_Broadcast;
+
+        // Whois
+        Whois_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.Whois
+            : profileInfo.Whois_Enabled;
+        Whois_InheritHost = profileInfo.Whois_InheritHost;
+        Whois_Domain = profileInfo.Whois_Domain;
+
+        // IP Geolocation
+        IPGeolocation_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.IPGeolocation
+            : profileInfo.IPGeolocation_Enabled;
+        IPGeolocation_InheritHost = profileInfo.IPGeolocation_InheritHost;
+        IPGeolocation_Host = profileInfo.IPGeolocation_Host;
+
+        _isLoading = false;
+    }
+
+    #region Methods
+
+    private void ChangeNetworkConnectionTypeSettings(NetworkConnectionType connectionSpeed)
+    {
+        switch (connectionSpeed)
+        {
+            case NetworkConnectionType.Modem:
+                RemoteDesktop_DesktopBackground = false;
+                RemoteDesktop_FontSmoothing = false;
+                RemoteDesktop_DesktopComposition = false;
+                RemoteDesktop_ShowWindowContentsWhileDragging = false;
+                RemoteDesktop_MenuAndWindowAnimation = false;
+                RemoteDesktop_VisualStyles = false;
+                break;
+            case NetworkConnectionType.BroadbandLow:
+                RemoteDesktop_DesktopBackground = false;
+                RemoteDesktop_FontSmoothing = false;
+                RemoteDesktop_DesktopComposition = false;
+                RemoteDesktop_ShowWindowContentsWhileDragging = false;
+                RemoteDesktop_MenuAndWindowAnimation = false;
+                RemoteDesktop_VisualStyles = true;
+                break;
+            case NetworkConnectionType.Satellite:
+            case NetworkConnectionType.BroadbandHigh:
+                RemoteDesktop_DesktopBackground = false;
+                RemoteDesktop_FontSmoothing = false;
+                RemoteDesktop_DesktopComposition = true;
+                RemoteDesktop_ShowWindowContentsWhileDragging = false;
+                RemoteDesktop_MenuAndWindowAnimation = false;
+                RemoteDesktop_VisualStyles = true;
+                break;
+            case NetworkConnectionType.WAN:
+            case NetworkConnectionType.LAN:
+                RemoteDesktop_DesktopBackground = true;
+                RemoteDesktop_FontSmoothing = true;
+                RemoteDesktop_DesktopComposition = true;
+                RemoteDesktop_ShowWindowContentsWhileDragging = true;
+                RemoteDesktop_MenuAndWindowAnimation = true;
+                RemoteDesktop_VisualStyles = true;
+                break;
+        }
+    }
+
+    #endregion
+
     #region Variables
 
     private readonly bool _isLoading = true;
@@ -2900,315 +3256,6 @@ public class ProfileViewModel : ViewModelBase
 
     #endregion
 
-    public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler,
-        IReadOnlyCollection<string> groups, string group = null, ProfileEditMode editMode = ProfileEditMode.Add,
-        ProfileInfo profile = null, ApplicationName applicationName = ApplicationName.None)
-    {
-        // Load the view
-        ProfileViews = new CollectionViewSource { Source = ProfileViewManager.List }.View;
-        ProfileViews.SortDescriptions.Add(
-            new SortDescription(nameof(ProfileViewInfo.Name), ListSortDirection.Ascending));
-
-        SaveCommand = new RelayCommand(_ => saveCommand(this));
-        CancelCommand = new RelayCommand(_ => cancelHandler(this));
-
-        var profileInfo = profile ?? new ProfileInfo();
-
-        Name = profileInfo.Name;
-
-        if (editMode == ProfileEditMode.Copy)
-            Name += " - " + Localization.Resources.Strings.CopyNoun;
-
-        Host = profileInfo.Host;
-
-        // Try to get group (name) as parameter, then from profile, then the first in the list of groups, then the default group            
-        Group = group ?? (string.IsNullOrEmpty(profileInfo.Group)
-            ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : Localization.Resources.Strings.Default)
-            : profileInfo.Group);
-
-        Tags = profileInfo.Tags;
-
-        Groups = CollectionViewSource.GetDefaultView(groups);
-        Groups.SortDescriptions.Add(new SortDescription());
-
-        // Network Interface
-        NetworkInterface_Enabled = editMode == ProfileEditMode.Add
-            ? applicationName == ApplicationName.NetworkInterface
-            : profileInfo.NetworkInterface_Enabled;
-        NetworkInterface_EnableDynamicIPAddress = !profileInfo.NetworkInterface_EnableStaticIPAddress;
-        NetworkInterface_EnableStaticIPAddress = profileInfo.NetworkInterface_EnableStaticIPAddress;
-        NetworkInterface_IPAddress = profileInfo.NetworkInterface_IPAddress;
-        NetworkInterface_Gateway = profileInfo.NetworkInterface_Gateway;
-        NetworkInterface_Subnetmask = profileInfo.NetworkInterface_Subnetmask;
-        NetworkInterface_EnableDynamicDNS = !profileInfo.NetworkInterface_EnableStaticDNS;
-        NetworkInterface_EnableStaticDNS = profileInfo.NetworkInterface_EnableStaticDNS;
-        NetworkInterface_PrimaryDNSServer = profileInfo.NetworkInterface_PrimaryDNSServer;
-        NetworkInterface_SecondaryDNSServer = profileInfo.NetworkInterface_SecondaryDNSServer;
-
-        // IP Scanner
-        IPScanner_Enabled = editMode == ProfileEditMode.Add
-            ? applicationName == ApplicationName.IPScanner
-            : profileInfo.IPScanner_Enabled;
-        IPScanner_InheritHost = profileInfo.IPScanner_InheritHost;
-        IPScanner_HostOrIPRange = profileInfo.IPScanner_HostOrIPRange;
-
-        // Port Scanner
-        PortScanner_Enabled = editMode == ProfileEditMode.Add
-            ? applicationName == ApplicationName.PortScanner
-            : profileInfo.PortScanner_Enabled;
-        PortScanner_InheritHost = profileInfo.PortScanner_InheritHost;
-        PortScanner_Host = profileInfo.PortScanner_Host;
-        PortScanner_Ports = profileInfo.PortScanner_Ports;
-
-        // Ping Monitor
-        PingMonitor_Enabled = editMode == ProfileEditMode.Add
-            ? applicationName == ApplicationName.PingMonitor
-            : profileInfo.PingMonitor_Enabled;
-        PingMonitor_InheritHost = profileInfo.PingMonitor_InheritHost;
-        PingMonitor_Host = profileInfo.PingMonitor_Host;
-
-        // Traceroute
-        Traceroute_Enabled = editMode == ProfileEditMode.Add
-            ? applicationName == ApplicationName.Traceroute
-            : profileInfo.Traceroute_Enabled;
-        Traceroute_InheritHost = profileInfo.Traceroute_InheritHost;
-        Traceroute_Host = profileInfo.Traceroute_Host;
-
-        // DNS Lookup
-        DNSLookup_Enabled = editMode == ProfileEditMode.Add
-            ? applicationName == ApplicationName.DNSLookup
-            : profileInfo.DNSLookup_Enabled;
-        DNSLookup_InheritHost = profileInfo.DNSLookup_InheritHost;
-        DNSLookup_Host = profileInfo.DNSLookup_Host;
-
-        // Remote Desktop
-        RemoteDesktop_Enabled = editMode == ProfileEditMode.Add
-            ? applicationName == ApplicationName.RemoteDesktop
-            : profileInfo.RemoteDesktop_Enabled;
-        RemoteDesktop_InheritHost = profileInfo.RemoteDesktop_InheritHost;
-        RemoteDesktop_Host = profileInfo.RemoteDesktop_Host;
-        RemoteDesktop_UseCredentials = profileInfo.RemoteDesktop_UseCredentials;
-        RemoteDesktop_Username = profileInfo.RemoteDesktop_Username;
-        RemoteDesktop_Domain = profileInfo.RemoteDesktop_Domain;
-        RemoteDesktop_Password = profileInfo.RemoteDesktop_Password;
-        RemoteDesktop_OverrideDisplay = profileInfo.RemoteDesktop_OverrideDisplay;
-        RemoteDesktop_AdjustScreenAutomatically = profileInfo.RemoteDesktop_AdjustScreenAutomatically;
-        RemoteDesktop_UseCurrentViewSize = profileInfo.RemoteDesktop_UseCurrentViewSize;
-        RemoteDesktop_UseFixedScreenSize = profileInfo.RemoteDesktop_UseFixedScreenSize;
-        RemoteDesktop_SelectedScreenResolution = RemoteDesktop_ScreenResolutions.FirstOrDefault(x =>
-            x == $"{profileInfo.RemoteDesktop_ScreenWidth}x{profileInfo.RemoteDesktop_ScreenHeight}");
-        RemoteDesktop_UseCustomScreenSize = profileInfo.RemoteDesktop_UseCustomScreenSize;
-        RemoteDesktop_CustomScreenWidth = profileInfo.RemoteDesktop_CustomScreenWidth.ToString();
-        RemoteDesktop_CustomScreenHeight = profileInfo.RemoteDesktop_CustomScreenHeight.ToString();
-        RemoteDesktop_OverrideColorDepth = profileInfo.RemoteDesktop_OverrideColorDepth;
-        RemoteDesktop_SelectedColorDepth =
-            RemoteDesktop_ColorDepths.FirstOrDefault(x => x == profileInfo.RemoteDesktop_ColorDepth);
-        RemoteDesktop_OverridePort = profileInfo.RemoteDesktop_OverridePort;
-        RemoteDesktop_Port = profileInfo.RemoteDesktop_Port;
-        RemoteDesktop_OverrideCredSspSupport = profileInfo.RemoteDesktop_OverrideCredSspSupport;
-        RemoteDesktop_EnableCredSspSupport = profileInfo.RemoteDesktop_EnableCredSspSupport;
-        RemoteDesktop_OverrideAuthenticationLevel = profileInfo.RemoteDesktop_OverrideAuthenticationLevel;
-        RemoteDesktop_AuthenticationLevel = profileInfo.RemoteDesktop_AuthenticationLevel;
-        RemoteDesktop_OverrideGatewayServer = profileInfo.RemoteDesktop_OverrideGatewayServer;
-        RemoteDesktop_EnableGatewayServer = profileInfo.RemoteDesktop_EnableGatewayServer;
-        RemoteDesktop_GatewayServerHostname = profileInfo.RemoteDesktop_GatewayServerHostname;
-        RemoteDesktop_GatewayServerBypassLocalAddresses = profileInfo.RemoteDesktop_GatewayServerBypassLocalAddresses;
-        RemoteDesktop_GatewayServerLogonMethod = profileInfo.RemoteDesktop_GatewayServerLogonMethod;
-        RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer =
-            profileInfo.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
-        RemoteDesktop_UseGatewayServerCredentials = profileInfo.RemoteDesktop_UseGatewayServerCredentials;
-        RemoteDesktop_GatewayServerUsername = profileInfo.RemoteDesktop_GatewayServerUsername;
-        RemoteDesktop_GatewayServerDomain = profileInfo.RemoteDesktop_GatewayServerDomain;
-        RemoteDesktop_GatewayServerPassword = profileInfo.RemoteDesktop_GatewayServerPassword;
-        RemoteDesktop_OverrideAudioRedirectionMode = profileInfo.RemoteDesktop_OverrideAudioRedirectionMode;
-        RemoteDesktop_AudioRedirectionMode =
-            RemoteDesktop_AudioRedirectionModes.FirstOrDefault(x =>
-                x == profileInfo.RemoteDesktop_AudioRedirectionMode);
-        RemoteDesktop_OverrideAudioCaptureRedirectionMode =
-            profileInfo.RemoteDesktop_OverrideAudioCaptureRedirectionMode;
-        RemoteDesktop_AudioCaptureRedirectionMode =
-            RemoteDesktop_AudioCaptureRedirectionModes.FirstOrDefault(x =>
-                x == profileInfo.RemoteDesktop_AudioCaptureRedirectionMode);
-        RemoteDesktop_OverrideApplyWindowsKeyCombinations =
-            profileInfo.RemoteDesktop_OverrideApplyWindowsKeyCombinations;
-        RemoteDesktop_KeyboardHookMode =
-            RemoteDesktop_KeyboardHookModes.FirstOrDefault(x => x == profileInfo.RemoteDesktop_KeyboardHookMode);
-        RemoteDesktop_OverrideRedirectClipboard = profileInfo.RemoteDesktop_OverrideRedirectClipboard;
-        RemoteDesktop_RedirectClipboard = profileInfo.RemoteDesktop_RedirectClipboard;
-        RemoteDesktop_OverrideRedirectDevices = profileInfo.RemoteDesktop_OverrideRedirectDevices;
-        RemoteDesktop_RedirectDevices = profileInfo.RemoteDesktop_RedirectDevices;
-        RemoteDesktop_OverrideRedirectDrives = profileInfo.RemoteDesktop_OverrideRedirectDrives;
-        RemoteDesktop_RedirectDrives = profileInfo.RemoteDesktop_RedirectDrives;
-        RemoteDesktop_OverrideRedirectPorts = profileInfo.RemoteDesktop_OverrideRedirectPorts;
-        RemoteDesktop_RedirectPorts = profileInfo.RemoteDesktop_RedirectPorts;
-        RemoteDesktop_OverrideRedirectSmartcards = profileInfo.RemoteDesktop_OverrideRedirectSmartcards;
-        RemoteDesktop_RedirectSmartCards = profileInfo.RemoteDesktop_RedirectSmartCards;
-        RemoteDesktop_OverrideRedirectPrinters = profileInfo.RemoteDesktop_OverrideRedirectPrinters;
-        RemoteDesktop_RedirectPrinters = profileInfo.RemoteDesktop_RedirectPrinters;
-        RemoteDesktop_OverridePersistentBitmapCaching = profileInfo.RemoteDesktop_OverridePersistentBitmapCaching;
-        RemoteDesktop_PersistentBitmapCaching = profileInfo.RemoteDesktop_PersistentBitmapCaching;
-        RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped =
-            profileInfo.RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped;
-        RemoteDesktop_ReconnectIfTheConnectionIsDropped = profileInfo.RemoteDesktop_ReconnectIfTheConnectionIsDropped;
-        RemoteDesktop_NetworkConnectionType =
-            RemoteDesktop_NetworkConnectionTypes.FirstOrDefault(x =>
-                x == profileInfo.RemoteDesktop_NetworkConnectionType);
-        RemoteDesktop_DesktopBackground = profileInfo.RemoteDesktop_DesktopBackground;
-        RemoteDesktop_FontSmoothing = profileInfo.RemoteDesktop_FontSmoothing;
-        RemoteDesktop_DesktopComposition = profileInfo.RemoteDesktop_DesktopComposition;
-        RemoteDesktop_ShowWindowContentsWhileDragging = profileInfo.RemoteDesktop_ShowWindowContentsWhileDragging;
-        RemoteDesktop_MenuAndWindowAnimation = profileInfo.RemoteDesktop_MenuAndWindowAnimation;
-        RemoteDesktop_VisualStyles = profileInfo.RemoteDesktop_VisualStyles;
-
-        // PowerShell
-        PowerShell_Enabled = editMode == ProfileEditMode.Add
-            ? applicationName == ApplicationName.PowerShell
-            : profileInfo.PowerShell_Enabled;
-        PowerShell_EnableRemoteConsole = profileInfo.PowerShell_EnableRemoteConsole;
-        PowerShell_InheritHost = profileInfo.PowerShell_InheritHost;
-        PowerShell_Host = profileInfo.PowerShell_Host;
-        PowerShell_OverrideCommand = profileInfo.PowerShell_OverrideCommand;
-        PowerShell_Command = profileInfo.PowerShell_Command;
-        PowerShell_OverrideAdditionalCommandLine = profileInfo.PowerShell_OverrideAdditionalCommandLine;
-        PowerShell_AdditionalCommandLine = profileInfo.PowerShell_AdditionalCommandLine;
-        PowerShell_ExecutionPolicies = Enum.GetValues(typeof(ExecutionPolicy)).Cast<ExecutionPolicy>().ToList();
-        PowerShell_OverrideExecutionPolicy = profileInfo.PowerShell_OverrideExecutionPolicy;
-        PowerShell_ExecutionPolicy = profileInfo.PowerShell_ExecutionPolicy;
-
-        // PuTTY
-        PuTTY_Enabled = editMode == ProfileEditMode.Add
-            ? applicationName == ApplicationName.PuTTY
-            : profileInfo.PuTTY_Enabled;
-
-        switch (profileInfo.PuTTY_ConnectionMode)
-        {
-            // SSH is default
-            case ConnectionMode.SSH:
-                PuTTY_UseSSH = true;
-                break;
-            case ConnectionMode.Telnet:
-                PuTTY_UseTelnet = true;
-                break;
-            case ConnectionMode.Serial:
-                PuTTY_UseSerial = true;
-                break;
-            case ConnectionMode.Rlogin:
-                PuTTY_UseRlogin = true;
-                break;
-            case ConnectionMode.RAW:
-                PuTTY_UseRAW = true;
-                break;
-        }
-
-        PuTTY_InheritHost = profileInfo.PuTTY_InheritHost;
-
-        if (profileInfo.PuTTY_ConnectionMode != ConnectionMode.Serial)
-            PuTTY_Host = profileInfo.PuTTY_HostOrSerialLine;
-        else
-            PuTTY_SerialLine = profileInfo.PuTTY_HostOrSerialLine;
-
-        PuTTY_OverridePortOrBaud = profileInfo.PuTTY_OverridePortOrBaud;
-
-        if (profileInfo.PuTTY_ConnectionMode != ConnectionMode.Serial)
-            PuTTY_Port = profileInfo.PuTTY_PortOrBaud;
-        else
-            PuTTY_Baud = profileInfo.PuTTY_PortOrBaud;
-
-        PuTTY_OverrideUsername = profileInfo.PuTTY_OverrideUsername;
-        PuTTY_Username = profileInfo.PuTTY_Username;
-        PuTTY_OverridePrivateKeyFile = profileInfo.PuTTY_OverridePrivateKeyFile;
-        PuTTY_PrivateKeyFile = profileInfo.PuTTY_PrivateKeyFile;
-        PuTTY_OverrideProfile = profileInfo.PuTTY_OverrideProfile;
-        PuTTY_Profile = profileInfo.PuTTY_Profile;
-        PuTTY_OverrideHostkey = profileInfo.PuTTY_OverrideHostkey;
-        PuTTY_Hostkey = profileInfo.PuTTY_Hostkey;
-        PuTTY_OverrideEnableLog = profileInfo.PuTTY_OverrideEnableLog;
-        PuTTY_EnableLog = profileInfo.PuTTY_EnableLog;
-        PuTTY_OverrideLogMode = profileInfo.PuTTY_OverrideLogMode;
-        PuTTY_LogMode = PuTTY_LogModes.FirstOrDefault(x => x == profileInfo.PuTTY_LogMode);
-        PuTTY_OverrideLogPath = profileInfo.PuTTY_OverrideLogPath;
-        PuTTY_LogPath = profileInfo.PuTTY_LogPath;
-        PuTTY_OverrideLogFileName = profileInfo.PuTTY_OverrideLogFileName;
-        PuTTY_LogFileName = profileInfo.PuTTY_LogFileName;
-        PuTTY_OverrideAdditionalCommandLine = profileInfo.PuTTY_OverrideAdditionalCommandLine;
-        PuTTY_AdditionalCommandLine = profileInfo.PuTTY_AdditionalCommandLine;
-
-        // AWS Session Manager
-        AWSSessionManager_Enabled = editMode == ProfileEditMode.Add
-            ? applicationName == ApplicationName.AWSSessionManager
-            : profileInfo.AWSSessionManager_Enabled;
-        AWSSessionManager_InstanceID = profileInfo.AWSSessionManager_InstanceID;
-        AWSSessionManager_OverrideProfile = profileInfo.AWSSessionManager_OverrideProfile;
-        AWSSessionManager_Profile = profileInfo.AWSSessionManager_Profile;
-        AWSSessionManager_OverrideRegion = profileInfo.AWSSessionManager_OverrideRegion;
-        AWSSessionManager_Region = profileInfo.AWSSessionManager_Region;
-
-        // TigerVNC
-        TigerVNC_Enabled = editMode == ProfileEditMode.Add
-            ? applicationName == ApplicationName.TigerVNC
-            : profileInfo.TigerVNC_Enabled;
-        TigerVNC_InheritHost = profileInfo.TigerVNC_InheritHost;
-        TigerVNC_Host = profileInfo.TigerVNC_Host;
-        TigerVNC_OverridePort = profileInfo.TigerVNC_OverridePort;
-        TigerVNC_Port = profileInfo.TigerVNC_Port;
-
-        // Web Console
-        WebConsole_Enabled = editMode == ProfileEditMode.Add
-            ? applicationName == ApplicationName.WebConsole
-            : profileInfo.WebConsole_Enabled;
-        WebConsole_Url = profileInfo.WebConsole_Url;
-
-        // SNMP
-        SNMP_Enabled = editMode == ProfileEditMode.Add
-            ? applicationName == ApplicationName.SNMP
-            : profileInfo.SNMP_Enabled;
-        SNMP_InheritHost = profileInfo.SNMP_InheritHost;
-        SNMP_Host = profileInfo.SNMP_Host;
-        SNMP_OverrideOIDAndMode = profileInfo.SNMP_OverrideOIDAndMode;
-        SNMP_OID = profileInfo.SNMP_OID;
-        SNMP_Modes = new List<SNMPMode> { SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set };
-        SNMP_Mode = SNMP_Modes.FirstOrDefault(x => x == profileInfo.SNMP_Mode);
-        SNMP_OverrideVersionAndAuth = profileInfo.SNMP_OverrideVersionAndAuth;
-        SNMP_Versions = Enum.GetValues(typeof(SNMPVersion)).Cast<SNMPVersion>().ToList();
-        SNMP_Version = SNMP_Versions.FirstOrDefault(x => x == profileInfo.SNMP_Version);
-        SNMP_Community = profileInfo.SNMP_Community;
-        SNMP_Securities = new List<SNMPV3Security>
-            { SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv };
-        SNMP_Security = SNMP_Securities.FirstOrDefault(x => x == profileInfo.SNMP_Security);
-        SNMP_Username = profileInfo.SNMP_Username;
-        SNMP_AuthenticationProviders = Enum.GetValues(typeof(SNMPV3AuthenticationProvider))
-            .Cast<SNMPV3AuthenticationProvider>().ToList();
-        SNMP_AuthenticationProvider =
-            SNMP_AuthenticationProviders.FirstOrDefault(x => x == profileInfo.SNMP_AuthenticationProvider);
-        SNMP_Auth = profileInfo.SNMP_Auth;
-        SNMP_PrivacyProviders = Enum.GetValues(typeof(SNMPV3PrivacyProvider)).Cast<SNMPV3PrivacyProvider>().ToList();
-        SNMP_PrivacyProvider = SNMP_PrivacyProviders.FirstOrDefault(x => x == profileInfo.SNMP_PrivacyProvider);
-        SNMP_Priv = profileInfo.SNMP_Priv;
-
-        // Wake on LAN
-        WakeOnLAN_Enabled = editMode == ProfileEditMode.Add
-            ? applicationName == ApplicationName.WakeOnLAN
-            : profileInfo.WakeOnLAN_Enabled;
-        WakeOnLAN_MACAddress = profileInfo.WakeOnLAN_MACAddress;
-        WakeOnLAN_Broadcast = profileInfo.WakeOnLAN_Broadcast;
-
-        // Whois
-        Whois_Enabled = editMode == ProfileEditMode.Add
-            ? applicationName == ApplicationName.Whois
-            : profileInfo.Whois_Enabled;
-        Whois_InheritHost = profileInfo.Whois_InheritHost;
-        Whois_Domain = profileInfo.Whois_Domain;
-
-        // IP Geolocation
-        IPGeolocation_Enabled = editMode == ProfileEditMode.Add
-            ? applicationName == ApplicationName.IPGeolocation
-            : profileInfo.IPGeolocation_Enabled;
-        IPGeolocation_InheritHost = profileInfo.IPGeolocation_InheritHost;
-        IPGeolocation_Host = profileInfo.IPGeolocation_Host;
-
-        _isLoading = false;
-    }
-
     #region ICommands & Actions
 
     public ICommand SaveCommand { get; }
@@ -3217,7 +3264,7 @@ public class ProfileViewModel : ViewModelBase
 
     public ICommand ResolveHostCommand => new RelayCommand(async _ => await ResolveHostActionAsync());
 
-    private async System.Threading.Tasks.Task ResolveHostActionAsync()
+    private async Task ResolveHostActionAsync()
     {
         IsResolveHostnameRunning = true;
 
@@ -3230,51 +3277,6 @@ public class ProfileViewModel : ViewModelBase
             ShowCouldNotResolveHostnameWarning = true;
 
         IsResolveHostnameRunning = false;
-    }
-
-    #endregion
-
-    #region Methods
-
-    private void ChangeNetworkConnectionTypeSettings(NetworkConnectionType connectionSpeed)
-    {
-        switch (connectionSpeed)
-        {
-            case NetworkConnectionType.Modem:
-                RemoteDesktop_DesktopBackground = false;
-                RemoteDesktop_FontSmoothing = false;
-                RemoteDesktop_DesktopComposition = false;
-                RemoteDesktop_ShowWindowContentsWhileDragging = false;
-                RemoteDesktop_MenuAndWindowAnimation = false;
-                RemoteDesktop_VisualStyles = false;
-                break;
-            case NetworkConnectionType.BroadbandLow:
-                RemoteDesktop_DesktopBackground = false;
-                RemoteDesktop_FontSmoothing = false;
-                RemoteDesktop_DesktopComposition = false;
-                RemoteDesktop_ShowWindowContentsWhileDragging = false;
-                RemoteDesktop_MenuAndWindowAnimation = false;
-                RemoteDesktop_VisualStyles = true;
-                break;
-            case NetworkConnectionType.Satellite:
-            case NetworkConnectionType.BroadbandHigh:
-                RemoteDesktop_DesktopBackground = false;
-                RemoteDesktop_FontSmoothing = false;
-                RemoteDesktop_DesktopComposition = true;
-                RemoteDesktop_ShowWindowContentsWhileDragging = false;
-                RemoteDesktop_MenuAndWindowAnimation = false;
-                RemoteDesktop_VisualStyles = true;
-                break;
-            case NetworkConnectionType.WAN:
-            case NetworkConnectionType.LAN:
-                RemoteDesktop_DesktopBackground = true;
-                RemoteDesktop_FontSmoothing = true;
-                RemoteDesktop_DesktopComposition = true;
-                RemoteDesktop_ShowWindowContentsWhileDragging = true;
-                RemoteDesktop_MenuAndWindowAnimation = true;
-                RemoteDesktop_VisualStyles = true;
-                break;
-        }
     }
 
     #endregion

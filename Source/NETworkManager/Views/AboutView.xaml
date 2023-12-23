@@ -66,7 +66,7 @@
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10">
                         <StackPanel.Resources>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
-                                <Setter Property="Cursor" Value="Hand"></Setter>
+                                <Setter Property="Cursor" Value="Hand" />
                             </Style>
                         </StackPanel.Resources>
                         <Button ToolTip="{x:Static localization:Strings.ToolTip_GitHubProjectUrl}"

@@ -38,8 +38,7 @@
                                                               ContentTemplate="{TemplateBinding Property=ContentTemplate}"
                                                               ContentTemplateSelector="{TemplateBinding Property=ContentTemplateSelector}"
                                                               RecognizesAccessKey="True"
-                                                              SnapsToDevicePixels="{TemplateBinding Property=SnapsToDevicePixels}">
-                            </mahAppsControls:ContentControlEx>
+                                                              SnapsToDevicePixels="{TemplateBinding Property=SnapsToDevicePixels}" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace NETworkManager.Controls;
@@ -15,10 +14,9 @@ namespace NETworkManager.Controls;
 
 public class RunCommandComboBox : ComboBox
 {
+    private readonly UserChange<bool> _isDropDownOpenUc;
     private string _currentFilter = string.Empty;
     private bool _textBoxFreezed;
-    private TextBox EditableTextBox => GetTemplateChild("PART_EditableTextBox") as TextBox;
-    private readonly UserChange<bool> _isDropDownOpenUc;
 
     public RunCommandComboBox()
     {
@@ -37,8 +35,10 @@ public class RunCommandComboBox : ComboBox
         };
     }
 
+    private TextBox EditableTextBox => GetTemplateChild("PART_EditableTextBox") as TextBox;
+
     /// <summary>
-    /// Open the dropdown when the control gets focus.
+    ///     Open the dropdown when the control gets focus.
     /// </summary>
     /// <param name="e">Focus change information.</param>
     protected override void OnPreviewGotKeyboardFocus(KeyboardFocusChangedEventArgs e)
@@ -108,9 +108,12 @@ public class RunCommandComboBox : ComboBox
     }
 
     /// <summary>
-    /// Inserts the selected item into the text box.
+    ///     Inserts the selected item into the text box.
     /// </summary>
-    /// <returns>Returns 0 if the item was inserted, 1 if the item was inserted with example arguments, and -1 if the item was not inserted.</returns>
+    /// <returns>
+    ///     Returns 0 if the item was inserted, 1 if the item was inserted with example arguments, and -1 if the item was
+    ///     not inserted.
+    /// </returns>
     private int InsertSelectedItem()
     {
         if (SelectedItem is not RunCommandInfo info)
@@ -243,11 +246,7 @@ public class RunCommandComboBox : ComboBox
 
     private class TextBoxBaseUserChangeTracker
     {
-        private bool IsTextInput { get; set; }
-
-        private TextBoxBase TextBoxBase { get; }
         private readonly List<Key> _pressedKeys = new();
-        public event EventHandler UserTextChanged;
 
         public TextBoxBaseUserChangeTracker(TextBoxBase textBoxBase)
         {
@@ -304,18 +303,23 @@ public class RunCommandComboBox : ComboBox
                 IsTextInput = false;
             };
         }
+
+        private bool IsTextInput { get; set; }
+
+        private TextBoxBase TextBoxBase { get; }
+        public event EventHandler UserTextChanged;
     }
 
     private class UserChange<T>
     {
         private readonly Action<T> _action;
 
-        public bool IsUserChange { get; private set; } = true;
-
         public UserChange(Action<T> action)
         {
             _action = action;
         }
+
+        public bool IsUserChange { get; private set; } = true;
 
         public void Set(T val)
         {

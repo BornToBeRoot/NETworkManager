@@ -1,7 +1,6 @@
 ﻿// Source: https://github.com/jimradford/superputty/blob/master/SuperPutty/Utils/NativeMethods.cs
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace NETworkManager.Utilities;

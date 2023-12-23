@@ -1,5 +1,5 @@
-﻿using NETworkManager.Models.Network;
-using System.Windows;
+﻿using System.Windows;
+using NETworkManager.Models.Network;
 
 namespace NETworkManager.Validators;
 
@@ -11,7 +11,7 @@ public class SNMPOIDDependencyObjectWrapper : DependencyObject
 
     public SNMPMode Mode
     {
-        get { return (SNMPMode)GetValue(ModeProperty); }
-        set { SetValue(ModeProperty, value); }
+        get => (SNMPMode)GetValue(ModeProperty);
+        set => SetValue(ModeProperty, value);
     }
 }

@@ -1,7 +1,8 @@
-﻿using NETworkManager.Models.Network;
-using NETworkManager.Settings;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
 
 namespace NETworkManager.ViewModels;
 
@@ -48,7 +49,7 @@ public class BitCalculatorSettingsViewModel : ViewModelBase
 
     private void LoadSettings()
     {
-        Notations = System.Enum.GetValues(typeof(BitCaluclatorNotation)).Cast<BitCaluclatorNotation>()
+        Notations = Enum.GetValues(typeof(BitCaluclatorNotation)).Cast<BitCaluclatorNotation>()
             .OrderBy(x => x.ToString()).ToList();
         Notation = Notations.First(x => x == SettingsManager.Current.BitCalculator_Notation);
     }

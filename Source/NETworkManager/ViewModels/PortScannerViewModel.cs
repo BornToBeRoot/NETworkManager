@@ -1,25 +1,26 @@
-﻿using System.Windows.Input;
-using System.Windows;
-using System;
+﻿using System;
 using System.Collections;
-using System.Collections.ObjectModel;
-using NETworkManager.Settings;
 using System.Collections.Generic;
-using NETworkManager.Models.Network;
-using System.Threading;
-using System.Net;
-using System.Windows.Threading;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows.Data;
 using System.Linq;
-using NETworkManager.Utilities;
+using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Threading;
 using Dragablz;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 using NETworkManager.Views;
-using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels;
 
@@ -274,9 +275,12 @@ public class PortScannerViewModel : ViewModelBase
     public ICommand OpenPortProfileSelectionCommand =>
         new RelayCommand(_ => OpenPortProfileSelectionAction(), OpenPortProfileSelection_CanExecute);
 
-    private bool OpenPortProfileSelection_CanExecute(object parameter) => Application.Current.MainWindow != null &&
-                                                                          !((MetroWindow)Application.Current.MainWindow)
-                                                                              .IsAnyDialogOpen;
+    private bool OpenPortProfileSelection_CanExecute(object parameter)
+    {
+        return Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow)
+                   .IsAnyDialogOpen;
+    }
 
     private void OpenPortProfileSelectionAction()
     {
@@ -285,8 +289,11 @@ public class PortScannerViewModel : ViewModelBase
 
     public ICommand ScanCommand => new RelayCommand(_ => ScanAction(), Scan_CanExecute);
 
-    private bool Scan_CanExecute(object parameter) => Application.Current.MainWindow != null &&
-                                                      !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool Scan_CanExecute(object parameter)
+    {
+        return Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    }
 
     private void ScanAction()
     {
@@ -311,7 +318,7 @@ public class PortScannerViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.SelectPortProfile
+            Title = Strings.SelectPortProfile
         };
 
         var viewModel = new PortProfilesViewModel(async instance =>
@@ -343,12 +350,8 @@ public class PortScannerViewModel : ViewModelBase
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
         if (window != null)
-        {
             foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
-            {
                 tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Host;
-            }
-        }
 
         _cancellationTokenSource = new CancellationTokenSource();
 
@@ -370,7 +373,7 @@ public class PortScannerViewModel : ViewModelBase
         if (hosts.hostnamesNotResolved.Count > 0)
         {
             StatusMessage =
-                $"{Localization.Resources.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}";
+                $"{Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}";
             IsStatusMessageDisplayed = true;
         }
 
@@ -412,7 +415,7 @@ public class PortScannerViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.Export
+            Title = Strings.Export
         };
 
         var exportViewModel = new ExportViewModel(async instance =>
@@ -430,10 +433,10 @@ public class PortScannerViewModel : ViewModelBase
                 catch (Exception ex)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                    settings.AffirmativeButtonText = Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error,
-                        Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                    await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                        Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
                         Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
@@ -498,7 +501,7 @@ public class PortScannerViewModel : ViewModelBase
     {
         if (Results.Count == 0)
         {
-            StatusMessage = Localization.Resources.Strings.NoOpenPortsFound;
+            StatusMessage = Strings.NoOpenPortsFound;
             IsStatusMessageDisplayed = true;
         }
 
@@ -508,7 +511,7 @@ public class PortScannerViewModel : ViewModelBase
 
     private void UserHasCanceled(object sender, EventArgs e)
     {
-        StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
+        StatusMessage = Strings.CanceledByUserMessage;
         IsStatusMessageDisplayed = true;
 
         IsCanceling = false;

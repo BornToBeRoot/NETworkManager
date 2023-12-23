@@ -1,80 +1,24 @@
-﻿using System.Threading.Tasks;
-using System.Reflection;
-using System.IO;
-using System;
-using System.Text;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace NETworkManager.Models.Network;
 
 /// <summary>
-/// Class to capture network discovery protocol packages.
+///     Class to capture network discovery protocol packages.
 /// </summary>
 public class DiscoveryProtocolCapture
 {
     /// <summary>
-    /// Holds the PowerShell script which is loaded when the class is initialized.
+    ///     Holds the PowerShell script which is loaded when the class is initialized.
     /// </summary>
     private readonly string _psDiscoveryProtocolModule;
 
     /// <summary>
-    /// Is triggered when a network package with a discovery protocol is received.
-    /// </summary>
-    public event EventHandler<DiscoveryProtocolPackageArgs> PackageReceived;
-
-    /// <summary>
-    /// Triggers the <see cref="PackageReceived"/> event.
-    /// </summary>
-    /// <param name="e">Passes <see cref="DiscoveryProtocolPackageArgs"/> to the event.</param>
-    protected virtual void OnPackageReceived(DiscoveryProtocolPackageArgs e)
-    {
-        PackageReceived?.Invoke(this, e);
-    }
-
-    /// <summary>
-    /// Is triggered when an error occurs during the capturing.
-    /// </summary>
-    public event EventHandler<DiscoveryProtocolErrorArgs> ErrorReceived;
-
-
-    /// <summary>
-    /// Triggers the <see cref="ErrorReceived"/> event.
-    /// </summary>
-    /// <param name="e">Passes <see cref="DiscoveryProtocolErrorArgs"/> to the event.</param>
-    protected virtual void OnErrorReceived(DiscoveryProtocolErrorArgs e)
-    {
-        ErrorReceived?.Invoke(this, e);
-    }
-
-    /// <summary>
-    /// Is triggered when a warning occurs during the capturing.
-    /// </summary>
-    public event EventHandler<DiscoveryProtocolWarningArgs> WarningReceived;
-
-    /// <summary>
-    /// Triggers the <see cref="WarningReceived"/> event.
-    /// </summary>
-    /// <param name="e">Passes <see cref="DiscoveryProtocolWarningArgs"/> to the event.</param>
-    protected virtual void OnWarningReceived(DiscoveryProtocolWarningArgs e)
-    {
-        WarningReceived?.Invoke(this, e);
-    }
-
-    /// <summary>
-    /// Is triggered when the capturing is completed.
-    /// </summary>
-    public event EventHandler Complete;
-
-    /// <summary>
-    /// Triggers the <see cref="Complete"/> event.
-    /// </summary>
-    protected virtual void OnComplete()
-    {
-        Complete?.Invoke(this, EventArgs.Empty);
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="DiscoveryProtocol"/> class.
+    ///     Initializes a new instance of the <see cref="DiscoveryProtocol" /> class.
     /// </summary>
     public DiscoveryProtocolCapture()
     {
@@ -87,13 +31,70 @@ public class DiscoveryProtocolCapture
         _psDiscoveryProtocolModule = reader.ReadToEnd();
     }
 
+    /// <summary>
+    ///     Is triggered when a network package with a discovery protocol is received.
+    /// </summary>
+    public event EventHandler<DiscoveryProtocolPackageArgs> PackageReceived;
+
+    /// <summary>
+    ///     Triggers the <see cref="PackageReceived" /> event.
+    /// </summary>
+    /// <param name="e">Passes <see cref="DiscoveryProtocolPackageArgs" /> to the event.</param>
+    protected virtual void OnPackageReceived(DiscoveryProtocolPackageArgs e)
+    {
+        PackageReceived?.Invoke(this, e);
+    }
+
+    /// <summary>
+    ///     Is triggered when an error occurs during the capturing.
+    /// </summary>
+    public event EventHandler<DiscoveryProtocolErrorArgs> ErrorReceived;
+
+
+    /// <summary>
+    ///     Triggers the <see cref="ErrorReceived" /> event.
+    /// </summary>
+    /// <param name="e">Passes <see cref="DiscoveryProtocolErrorArgs" /> to the event.</param>
+    protected virtual void OnErrorReceived(DiscoveryProtocolErrorArgs e)
+    {
+        ErrorReceived?.Invoke(this, e);
+    }
+
+    /// <summary>
+    ///     Is triggered when a warning occurs during the capturing.
+    /// </summary>
+    public event EventHandler<DiscoveryProtocolWarningArgs> WarningReceived;
+
+    /// <summary>
+    ///     Triggers the <see cref="WarningReceived" /> event.
+    /// </summary>
+    /// <param name="e">Passes <see cref="DiscoveryProtocolWarningArgs" /> to the event.</param>
+    protected virtual void OnWarningReceived(DiscoveryProtocolWarningArgs e)
+    {
+        WarningReceived?.Invoke(this, e);
+    }
+
+    /// <summary>
+    ///     Is triggered when the capturing is completed.
+    /// </summary>
+    public event EventHandler Complete;
+
+    /// <summary>
+    ///     Triggers the <see cref="Complete" /> event.
+    /// </summary>
+    protected virtual void OnComplete()
+    {
+        Complete?.Invoke(this, EventArgs.Empty);
+    }
+
     #region Methods
 
     /// <summary>
-    /// Captures the network packets on the network adapter asynchronously for a certain period of time and filters the packets according to the protocol.
+    ///     Captures the network packets on the network adapter asynchronously for a certain period of time and filters the
+    ///     packets according to the protocol.
     /// </summary>
     /// <param name="duration">Duration in seconds.</param>
-    /// <param name="protocol"><see cref="DiscoveryProtocol"/> to filter on.</param>
+    /// <param name="protocol"><see cref="DiscoveryProtocol" /> to filter on.</param>
     public void CaptureAsync(int duration, DiscoveryProtocol protocol)
     {
         Task.Run(() =>
@@ -169,7 +170,7 @@ public class DiscoveryProtocolCapture
                         Management = string.Join("; ", managements),
                         ChassisId = outputItem.Properties["ChassisId"]?.Value.ToString(),
                         LocalConnection = outputItem.Properties["Connection"]?.Value.ToString(),
-                        LocalInterface = outputItem.Properties["Interface"]?.Value.ToString(),
+                        LocalInterface = outputItem.Properties["Interface"]?.Value.ToString()
                     };
 
                     OnPackageReceived(new DiscoveryProtocolPackageArgs(packageInfo));

@@ -1,14 +1,15 @@
-﻿using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 using NETworkManager.Views;
-using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels;
 
@@ -136,7 +137,7 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.AddSNTPServer
+            Title = Strings.AddSNTPServer
         };
 
         var viewModel = new ServerConnectionInfoProfileViewModel(instance =>
@@ -148,7 +149,7 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
             }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
             (ServerInfoProfileNames, false, false), _profileDialogDefaultValues);
 
-        customDialog.Content = new ServerConnectionInfoProfileDialog()
+        customDialog.Content = new ServerConnectionInfoProfileDialog
         {
             DataContext = viewModel
         };
@@ -160,7 +161,7 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.EditSNTPServer
+            Title = Strings.EditSNTPServer
         };
 
         var viewModel = new ServerConnectionInfoProfileViewModel(instance =>
@@ -174,7 +175,7 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
             (ServerInfoProfileNames, true, false),
             _profileDialogDefaultValues, SelectedSNTPServer);
 
-        customDialog.Content = new ServerConnectionInfoProfileDialog()
+        customDialog.Content = new ServerConnectionInfoProfileDialog
         {
             DataContext = viewModel
         };
@@ -186,7 +187,7 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.DeleteSNTPServer
+            Title = Strings.DeleteSNTPServer
         };
 
         var viewModel = new ConfirmDeleteViewModel(_ =>
@@ -195,7 +196,7 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
 
                 SettingsManager.Current.SNTPLookup_SNTPServers.Remove(SelectedSNTPServer);
             }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-            Localization.Resources.Strings.DeleteSNTPServerMessage);
+            Strings.DeleteSNTPServerMessage);
 
         customDialog.Content = new ConfirmDeleteDialog
         {

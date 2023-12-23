@@ -1,10 +1,11 @@
-﻿using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
@@ -64,13 +65,13 @@ public class SettingsSettingsViewModel : ViewModelBase
     {
         var settings = AppearanceManager.MetroDialog;
 
-        settings.AffirmativeButtonText = Localization.Resources.Strings.Reset;
-        settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
+        settings.AffirmativeButtonText = Strings.Reset;
+        settings.NegativeButtonText = Strings.Cancel;
 
         settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-        if (await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.ResetSettingsQuestion,
-                Localization.Resources.Strings.SettingsAreResetAndApplicationWillBeRestartedMessage,
+        if (await _dialogCoordinator.ShowMessageAsync(this, Strings.ResetSettingsQuestion,
+                Strings.SettingsAreResetAndApplicationWillBeRestartedMessage,
                 MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
             return;
 

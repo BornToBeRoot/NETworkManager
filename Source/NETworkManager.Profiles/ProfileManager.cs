@@ -13,40 +13,52 @@ namespace NETworkManager.Profiles;
 
 public static class ProfileManager
 {
+    #region Constructor
+
+    /// <summary>
+    ///     Static constructor. Load all profile files on startup.
+    /// </summary>
+    static ProfileManager()
+    {
+        LoadProfileFiles();
+    }
+
+    #endregion
+
     #region Variables
 
     /// <summary>
-    /// Profiles directory name.
+    ///     Profiles directory name.
     /// </summary>
     private const string ProfilesFolderName = "Profiles";
 
     /// <summary>
-    /// Default profile name.
+    ///     Default profile name.
     /// </summary>
     private const string ProfilesDefaultFileName = "Default";
 
     /// <summary>
-    /// Profile file extension.
+    ///     Profile file extension.
     /// </summary>
     private const string ProfileFileExtension = ".xml";
 
     /// <summary>
-    /// Profile file extension for encrypted files.
+    ///     Profile file extension for encrypted files.
     /// </summary>
     private const string ProfileFileExtensionEncrypted = ".encrypted";
 
     /// <summary>
-    /// ObservableCollection of all profile files.
+    ///     ObservableCollection of all profile files.
     /// </summary>
     public static ObservableCollection<ProfileFileInfo> ProfileFiles { get; set; } = new();
 
     /// <summary>
-    /// Currently loaded profile file.
+    ///     Currently loaded profile file.
     /// </summary>
     private static ProfileFileInfo _loadedProfileFile;
 
     /// <summary>
-    /// Currently loaded profile file.
+    ///     Currently loaded profile file.
     /// </summary>
     public static ProfileFileInfo LoadedProfileFile
     {
@@ -61,12 +73,12 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// Currently loaded groups with profiles.
+    ///     Currently loaded groups with profiles.
     /// </summary>
     public static List<GroupInfo> Groups { get; set; } = new();
 
     /// <summary>
-    /// Indicates if profiles have changed.
+    ///     Indicates if profiles have changed.
     /// </summary>
     public static bool ProfilesChanged { get; set; }
 
@@ -75,16 +87,16 @@ public static class ProfileManager
     #region Events
 
     /// <summary>
-    /// Event is fired if the currently loaded <see cref="ProfileFileInfo"/> is changed. 
-    /// The <see cref="ProfileFileInfo"/> with the current loaded profile file is passed 
-    /// as argument.
+    ///     Event is fired if the currently loaded <see cref="ProfileFileInfo" /> is changed.
+    ///     The <see cref="ProfileFileInfo" /> with the current loaded profile file is passed
+    ///     as argument.
     /// </summary>
     public static event EventHandler<ProfileFileInfoArgs> OnLoadedProfileFileChangedEvent;
 
     /// <summary>
-    /// Method to fire the <see cref="OnLoadedProfileFileChangedEvent"/>.
+    ///     Method to fire the <see cref="OnLoadedProfileFileChangedEvent" />.
     /// </summary>
-    /// <param name="profileFileInfo">Loaded <see cref="ProfileFileInfo"/>.</param>
+    /// <param name="profileFileInfo">Loaded <see cref="ProfileFileInfo" />.</param>
     /// <param name="profileFileUpdating">Indicates if the profile file is updating.</param>
     private static void LoadedProfileFileChanged(ProfileFileInfo profileFileInfo, bool profileFileUpdating = false)
     {
@@ -92,12 +104,12 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// Event is fired if the profiles have changed.
+    ///     Event is fired if the profiles have changed.
     /// </summary>
     public static event EventHandler OnProfilesUpdated;
 
     /// <summary>
-    /// Method to fire the <see cref="OnProfilesUpdated"/>.
+    ///     Method to fire the <see cref="OnProfilesUpdated" />.
     /// </summary>
     private static void ProfilesUpdated()
     {
@@ -108,22 +120,10 @@ public static class ProfileManager
 
     #endregion
 
-    #region Constructor
-
-    /// <summary>
-    /// Static constructor. Load all profile files on startup.
-    /// </summary>
-    static ProfileManager()
-    {
-        LoadProfileFiles();
-    }
-
-    #endregion
-
     #region Profiles locations, default paths and file names
 
     /// <summary>
-    /// Method to get the path of the profiles folder.
+    ///     Method to get the path of the profiles folder.
     /// </summary>
     /// <returns>Path to the profiles folder.</returns>
     public static string GetProfilesFolderLocation()
@@ -135,7 +135,7 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// Method to get the default profile file name.
+    ///     Method to get the default profile file name.
     /// </summary>
     /// <returns>Default profile file name.</returns>
     private static string GetProfilesDefaultFileName()
@@ -144,7 +144,7 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// Method to get the default profile file path.
+    ///     Method to get the default profile file path.
     /// </summary>
     /// <returns>Default profile file path.</returns>
     private static string GetProfilesDefaultFilePath()
@@ -157,7 +157,8 @@ public static class ProfileManager
     #region Get and load profile files
 
     /// <summary>
-    /// Get all files in the folder with the extension <see cref="ProfileFileExtension" /> or <see cref="ProfileFileExtensionEncrypted"/>.
+    ///     Get all files in the folder with the extension <see cref="ProfileFileExtension" /> or
+    ///     <see cref="ProfileFileExtensionEncrypted" />.
     /// </summary>
     /// <param name="location">Path of the profile folder.</param>
     /// <returns>List of profile files.</returns>
@@ -168,7 +169,7 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// Method to get the list of profile files from file system and detect if the file is encrypted.
+    ///     Method to get the list of profile files from file system and detect if the file is encrypted.
     /// </summary>
     private static void LoadProfileFiles()
     {
@@ -176,14 +177,10 @@ public static class ProfileManager
 
         // Folder exists
         if (Directory.Exists(location))
-        {
             foreach (var file in GetProfileFiles(location))
-            {
                 // Gets the filename, path and if the file is encrypted.
                 ProfileFiles.Add(new ProfileFileInfo(Path.GetFileNameWithoutExtension(file), file,
                     Path.GetFileName(file).EndsWith(ProfileFileExtensionEncrypted)));
-            }
-        }
 
         // Create default profile if no profile file exists.
         if (ProfileFiles.Count == 0)
@@ -195,7 +192,7 @@ public static class ProfileManager
     #region Create, rename and delete profile file
 
     /// <summary>
-    /// Method to create a profile file.
+    ///     Method to create a profile file.
     /// </summary>
     /// <param name="profileName"></param>
     public static void CreateEmptyProfileFile(string profileName)
@@ -211,10 +208,10 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// Method to rename a profile file.
+    ///     Method to rename a profile file.
     /// </summary>
-    /// <param name="profileFileInfo"><see cref="ProfileFileInfo"/> to rename.</param>
-    /// <param name="newProfileName">New <see cref="ProfileFileInfo.Name"/> of the profile file.</param>
+    /// <param name="profileFileInfo"><see cref="ProfileFileInfo" /> to rename.</param>
+    /// <param name="newProfileName">New <see cref="ProfileFileInfo.Name" /> of the profile file.</param>
     public static void RenameProfileFile(ProfileFileInfo profileFileInfo, string newProfileName)
     {
         var switchProfile = false;
@@ -248,9 +245,9 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// Method to delete a profile file.
+    ///     Method to delete a profile file.
     /// </summary>
-    /// <param name="profileFileInfo"><see cref="ProfileFileInfo"/> to delete.</param>
+    /// <param name="profileFileInfo"><see cref="ProfileFileInfo" /> to delete.</param>
     public static void DeleteProfileFile(ProfileFileInfo profileFileInfo)
     {
         // Trigger switch via UI (to get the password if the file is encrypted), if the selected profile file is deleted
@@ -266,9 +263,9 @@ public static class ProfileManager
     #region Enable, disable encryption and change master password
 
     /// <summary>
-    /// Method to enable encryption for a profile file.
+    ///     Method to enable encryption for a profile file.
     /// </summary>
-    /// <param name="profileFileInfo"><see cref="ProfileFileInfo"/> which should be encrypted.</param>
+    /// <param name="profileFileInfo"><see cref="ProfileFileInfo" /> which should be encrypted.</param>
     /// <param name="password">Password to encrypt the profile file.</param>
     public static void EnableEncryption(ProfileFileInfo profileFileInfo, SecureString password)
     {
@@ -319,9 +316,9 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// Method to change the master password of an encrypted profile file.
+    ///     Method to change the master password of an encrypted profile file.
     /// </summary>
-    /// <param name="profileFileInfo"><see cref="ProfileFileInfo"/> which should be changed.</param>
+    /// <param name="profileFileInfo"><see cref="ProfileFileInfo" /> which should be changed.</param>
     /// <param name="password">Password to decrypt the profile file.</param>
     /// <param name="newPassword">Password to encrypt the profile file.</param>
     public static void ChangeMasterPassword(ProfileFileInfo profileFileInfo, SecureString password,
@@ -376,9 +373,9 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// Method to disable encryption for a profile file.
+    ///     Method to disable encryption for a profile file.
     /// </summary>
-    /// <param name="profileFileInfo"><see cref="ProfileFileInfo"/> which should be decrypted.</param>
+    /// <param name="profileFileInfo"><see cref="ProfileFileInfo" /> which should be decrypted.</param>
     /// <param name="password">Password to decrypt the profile file.</param>
     public static void DisableEncryption(ProfileFileInfo profileFileInfo, SecureString password)
     {
@@ -425,9 +422,9 @@ public static class ProfileManager
     #region Load, save and switch profile
 
     /// <summary>
-    /// Method to load profiles based on the infos provided in the <see cref="ProfileFileInfo"/>.
+    ///     Method to load profiles based on the infos provided in the <see cref="ProfileFileInfo" />.
     /// </summary>
-    /// <param name="profileFileInfo"><see cref="ProfileFileInfo"/> to be loaded.</param>
+    /// <param name="profileFileInfo"><see cref="ProfileFileInfo" /> to be loaded.</param>
     private static void Load(ProfileFileInfo profileFileInfo)
     {
         var loadedProfileUpdated = false;
@@ -470,7 +467,7 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// Method to save the currently loaded profiles based on the infos provided in the <see cref="ProfileFileInfo"/>.
+    ///     Method to save the currently loaded profiles based on the infos provided in the <see cref="ProfileFileInfo" />.
     /// </summary>
     public static void Save()
     {
@@ -503,7 +500,7 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// Method to unload the currently loaded profile file.
+    ///     Method to unload the currently loaded profile file.
     /// </summary>
     /// <param name="saveLoadedProfiles">Save loaded profile file (default is true)</param>
     public static void Unload(bool saveLoadedProfiles = true)
@@ -519,9 +516,9 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// Method to switch to another profile file.
+    ///     Method to switch to another profile file.
     /// </summary>
-    /// <param name="info">New <see cref="ProfileFileInfo"/> to load.</param>
+    /// <param name="info">New <see cref="ProfileFileInfo" /> to load.</param>
     /// <param name="saveLoadedProfiles">Save loaded profile file (default is true)</param>
     public static void Switch(ProfileFileInfo info, bool saveLoadedProfiles = true)
     {
@@ -535,10 +532,10 @@ public static class ProfileManager
     #region Serialize and deserialize
 
     /// <summary>
-    /// Method to serialize a list of groups as <see cref="GroupInfo"/> to an xml file.
+    ///     Method to serialize a list of groups as <see cref="GroupInfo" /> to an xml file.
     /// </summary>
     /// <param name="filePath">Path to an xml file.</param>
-    /// <param name="groups">List of the groups as <see cref="GroupInfo"/> to serialize.</param>
+    /// <param name="groups">List of the groups as <see cref="GroupInfo" /> to serialize.</param>
     private static void SerializeToFile(string filePath, List<GroupInfo> groups)
     {
         var xmlSerializer = new XmlSerializer(typeof(List<GroupInfoSerializable>));
@@ -549,10 +546,10 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// Method to serialize a list of groups as <see cref="GroupInfo"/> to a byte array.
+    ///     Method to serialize a list of groups as <see cref="GroupInfo" /> to a byte array.
     /// </summary>
-    /// <param name="groups">List of the groups as <see cref="GroupInfo"/> to serialize.</param>
-    /// <returns>Serialized list of groups as <see cref="GroupInfo"/> as byte array.</returns>
+    /// <param name="groups">List of the groups as <see cref="GroupInfo" /> to serialize.</param>
+    /// <returns>Serialized list of groups as <see cref="GroupInfo" /> as byte array.</returns>
     private static byte[] SerializeToByteArray(List<GroupInfo> groups)
     {
         var xmlSerializer = new XmlSerializer(typeof(List<GroupInfoSerializable>));
@@ -567,10 +564,10 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// Method to serialize a list of groups as <see cref="GroupInfo"/>.
+    ///     Method to serialize a list of groups as <see cref="GroupInfo" />.
     /// </summary>
-    /// <param name="groups">List of the groups as <see cref="GroupInfo"/> to serialize.</param>
-    /// <returns>Serialized list of groups as <see cref="GroupInfoSerializable"/>.</returns>
+    /// <param name="groups">List of the groups as <see cref="GroupInfo" /> to serialize.</param>
+    /// <returns>Serialized list of groups as <see cref="GroupInfoSerializable" />.</returns>
     private static List<GroupInfoSerializable> SerializeGroup(List<GroupInfo> groups)
     {
         List<GroupInfoSerializable> groupsSerializable = new();
@@ -599,7 +596,7 @@ public static class ProfileManager
                         : string.Empty,
                     SNMP_Priv = profile.SNMP_Priv != null
                         ? SecureStringHelper.ConvertToString(profile.SNMP_Priv)
-                        : string.Empty,
+                        : string.Empty
                 }).ToList();
 
             groupsSerializable.Add(new GroupInfoSerializable(group)
@@ -617,7 +614,7 @@ public static class ProfileManager
                 SNMP_Auth =
                     group.SNMP_Auth != null ? SecureStringHelper.ConvertToString(group.SNMP_Auth) : string.Empty,
                 SNMP_Priv =
-                    group.SNMP_Priv != null ? SecureStringHelper.ConvertToString(group.SNMP_Priv) : string.Empty,
+                    group.SNMP_Priv != null ? SecureStringHelper.ConvertToString(group.SNMP_Priv) : string.Empty
             });
         }
 
@@ -625,10 +622,10 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// Method to deserialize a list of groups as <see cref="GroupInfo"/> from an xml file.
+    ///     Method to deserialize a list of groups as <see cref="GroupInfo" /> from an xml file.
     /// </summary>
     /// <param name="filePath">Path to an xml file.</param>
-    /// <returns>List of groups as <see cref="GroupInfo"/>.</returns>
+    /// <returns>List of groups as <see cref="GroupInfo" />.</returns>
     private static List<GroupInfo> DeserializeFromFile(string filePath)
     {
         using FileStream fileStream = new(filePath, FileMode.Open);
@@ -637,10 +634,10 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// Method to deserialize a list of groups as <see cref="GroupInfo"/> from a byte array.
+    ///     Method to deserialize a list of groups as <see cref="GroupInfo" /> from a byte array.
     /// </summary>
-    /// <param name="xml">Serialized list of groups as <see cref="GroupInfo"/> as byte array.</param>
-    /// <returns>List of groups as <see cref="GroupInfo"/>.</returns>
+    /// <param name="xml">Serialized list of groups as <see cref="GroupInfo" /> as byte array.</param>
+    /// <returns>List of groups as <see cref="GroupInfo" />.</returns>
     private static List<GroupInfo> DeserializeFromByteArray(byte[] xml)
     {
         using MemoryStream memoryStream = new(xml);
@@ -649,10 +646,10 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// Method to deserialize a list of groups as <see cref="GroupInfo"/>.
+    ///     Method to deserialize a list of groups as <see cref="GroupInfo" />.
     /// </summary>
     /// <param name="stream">Stream to deserialize.</param>
-    /// <returns>List of groups as <see cref="GroupInfo"/>.</returns>
+    /// <returns>List of groups as <see cref="GroupInfo" />.</returns>
     private static List<GroupInfo> DeserializeGroup(Stream stream)
     {
         XmlSerializer xmlSerializer = new(typeof(List<GroupInfoSerializable>));
@@ -684,7 +681,7 @@ public static class ProfileManager
                         : null,
                     SNMP_Priv = !string.IsNullOrEmpty(profileSerializable.SNMP_Priv)
                         ? SecureStringHelper.ConvertToSecureString(profileSerializable.SNMP_Priv)
-                        : null,
+                        : null
                 })
                 .ToList()
             select new GroupInfo(groupSerializable)
@@ -708,7 +705,7 @@ public static class ProfileManager
                     : null,
                 SNMP_Priv = !string.IsNullOrEmpty(groupSerializable.SNMP_Priv)
                     ? SecureStringHelper.ConvertToSecureString(groupSerializable.SNMP_Priv)
-                    : null,
+                    : null
             }).ToList();
     }
 
@@ -717,9 +714,9 @@ public static class ProfileManager
     #region Add, remove, replace group(s) and more.
 
     /// <summary>
-    /// Method to add a list of <see cref="GroupInfo"/> to the <see cref="Groups"/> list.
+    ///     Method to add a list of <see cref="GroupInfo" /> to the <see cref="Groups" /> list.
     /// </summary>
-    /// <param name="groups">List of groups as <see cref="GroupInfo"/> to add.</param>
+    /// <param name="groups">List of groups as <see cref="GroupInfo" /> to add.</param>
     private static void AddGroups(List<GroupInfo> groups)
     {
         foreach (var group in groups)
@@ -729,9 +726,9 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// Method to add a <see cref="GroupInfo"/> to the <see cref="Groups"/> list.
+    ///     Method to add a <see cref="GroupInfo" /> to the <see cref="Groups" /> list.
     /// </summary>
-    /// <param name="group">Group as <see cref="GroupInfo"/> to add.</param>
+    /// <param name="group">Group as <see cref="GroupInfo" /> to add.</param>
     public static void AddGroup(GroupInfo group)
     {
         Groups.Add(group);
@@ -740,20 +737,20 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// Method to get a group by name.
+    ///     Method to get a group by name.
     /// </summary>
     /// <param name="name">Name of the group.</param>
-    /// <returns>Group as <see cref="GroupInfo"/>.</returns>
+    /// <returns>Group as <see cref="GroupInfo" />.</returns>
     public static GroupInfo GetGroup(string name)
     {
         return Groups.First(x => x.Name.Equals(name));
     }
 
     /// <summary>
-    /// Method to replace a group.
+    ///     Method to replace a group.
     /// </summary>
-    /// <param name="oldGroup">Old group as <see cref="GroupInfo"/>.</param>
-    /// <param name="newGroup">New group as <see cref="GroupInfo"/>.</param>
+    /// <param name="oldGroup">Old group as <see cref="GroupInfo" />.</param>
+    /// <param name="newGroup">New group as <see cref="GroupInfo" />.</param>
     public static void ReplaceGroup(GroupInfo oldGroup, GroupInfo newGroup)
     {
         Groups.Remove(oldGroup);
@@ -763,9 +760,9 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// Method to remove a group.
+    ///     Method to remove a group.
     /// </summary>
-    /// <param name="group">Group as <see cref="GroupInfo"/> to remove</param>
+    /// <param name="group">Group as <see cref="GroupInfo" /> to remove</param>
     public static void RemoveGroup(GroupInfo group)
     {
         Groups.Remove(group);
@@ -774,16 +771,16 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// Method to get a list of all group names.
+    ///     Method to get a list of all group names.
     /// </summary>
-    /// <returns>List of group names.</returns>       
+    /// <returns>List of group names.</returns>
     public static IReadOnlyCollection<string> GetGroupNames()
     {
         return (from groups in Groups where !groups.IsDynamic select groups.Name).ToList();
     }
 
     /// <summary>
-    /// Method to check if a profile exists.
+    ///     Method to check if a profile exists.
     /// </summary>
     /// <param name="name">Name of the group.</param>
     /// <returns>True if the profile exists.</returns>
@@ -793,7 +790,7 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// Method checks if a group has profiles.
+    ///     Method checks if a group has profiles.
     /// </summary>
     /// <param name="name">Name of the group</param>
     /// <returns>True if the group has no profiles.</returns>
@@ -807,9 +804,9 @@ public static class ProfileManager
     #region Add, replace and remove profile(s)
 
     /// <summary>
-    /// Method to add a profile to a group.
+    ///     Method to add a profile to a group.
     /// </summary>
-    /// <param name="profile">Profile as <see cref="ProfileInfo"/> to add.</param>
+    /// <param name="profile">Profile as <see cref="ProfileInfo" /> to add.</param>
     public static void AddProfile(ProfileInfo profile)
     {
         if (!GroupExists(profile.Group))
@@ -821,10 +818,10 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// Method to replace a profile in a group.
+    ///     Method to replace a profile in a group.
     /// </summary>
-    /// <param name="oldProfile">Old profile as <see cref="ProfileInfo"/>.</param>
-    /// <param name="newProfile">New profile as <see cref="ProfileInfo"/>.</param>
+    /// <param name="oldProfile">Old profile as <see cref="ProfileInfo" />.</param>
+    /// <param name="newProfile">New profile as <see cref="ProfileInfo" />.</param>
     public static void ReplaceProfile(ProfileInfo oldProfile, ProfileInfo newProfile)
     {
         // Remove
@@ -840,9 +837,9 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// Method to remove a profile from a group.
+    ///     Method to remove a profile from a group.
     /// </summary>
-    /// <param name="profile">Profile as <see cref="ProfileInfo"/> to remove.</param>
+    /// <param name="profile">Profile as <see cref="ProfileInfo" /> to remove.</param>
     public static void RemoveProfile(ProfileInfo profile)
     {
         Groups.First(x => x.Name.Equals(profile.Group)).Profiles.Remove(profile);
@@ -851,9 +848,9 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// Method to remove a list of profiles from a group.
+    ///     Method to remove a list of profiles from a group.
     /// </summary>
-    /// <param name="profiles">List of profiles as <see cref="ProfileInfo"/> to remove.</param>
+    /// <param name="profiles">List of profiles as <see cref="ProfileInfo" /> to remove.</param>
     public static void RemoveProfiles(IEnumerable<ProfileInfo> profiles)
     {
         foreach (var profile in profiles)

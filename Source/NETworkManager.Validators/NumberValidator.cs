@@ -1,8 +1,8 @@
-﻿using NETworkManager.Localization.Resources;
-using NETworkManager.Utilities;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Validators;
 

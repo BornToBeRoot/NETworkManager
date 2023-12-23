@@ -1,5 +1,5 @@
-﻿using NETworkManager.Utilities;
-using System.Net.Sockets;
+﻿using System.Net.Sockets;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
@@ -23,10 +23,8 @@ public static class WakeOnLAN
             packet[i] = 0xFF;
 
         for (var i = 1; i <= 16; i++)
-        {
-            for (var j = 0; j < 6; j++)
-                packet[i * 6 + j] = mac[j];
-        }
+        for (var j = 0; j < 6; j++)
+            packet[i * 6 + j] = mac[j];
 
         return packet;
     }

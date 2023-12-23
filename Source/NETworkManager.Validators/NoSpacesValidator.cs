@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Linq;
 using System.Windows.Controls;
+using NETworkManager.Localization.Resources;
 
 namespace NETworkManager.Validators;
 
@@ -11,6 +12,6 @@ public class NoSpacesValidator : ValidationRule
         if (string.IsNullOrEmpty(value as string) || !((string)value).Any(char.IsWhiteSpace))
             return ValidationResult.ValidResult;
 
-        return new ValidationResult(false, Localization.Resources.Strings.SpacesAreNotAllowed);
+        return new ValidationResult(false, Strings.SpacesAreNotAllowed);
     }
 }

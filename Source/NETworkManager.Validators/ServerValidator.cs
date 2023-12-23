@@ -12,7 +12,7 @@ public class ServerValidator : ValidationRule
 
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
-        bool allowOnlyIPAddress = Wrapper.AllowOnlyIPAddress;
+        var allowOnlyIPAddress = Wrapper.AllowOnlyIPAddress;
         var genericErrorResult =
             allowOnlyIPAddress ? Strings.EnterValidIPAddress : Strings.EnterValidHostnameOrIPAddress;
 

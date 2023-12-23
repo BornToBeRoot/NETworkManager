@@ -1,6 +1,6 @@
-﻿using Amazon;
+﻿using System.Collections.Generic;
+using Amazon;
 using NETworkManager.Utilities;
-using System.Collections.Generic;
 
 namespace NETworkManager.Models.AWS;
 

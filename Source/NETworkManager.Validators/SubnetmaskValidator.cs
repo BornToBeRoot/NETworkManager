@@ -1,7 +1,8 @@
-﻿using NETworkManager.Utilities;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Validators;
 
@@ -11,6 +12,6 @@ public class SubnetmaskValidator : ValidationRule
     {
         return value != null && Regex.IsMatch((string)value, RegexHelper.SubnetmaskRegex)
             ? ValidationResult.ValidResult
-            : new ValidationResult(false, Localization.Resources.Strings.EnterValidSubnetmask);
+            : new ValidationResult(false, Strings.EnterValidSubnetmask);
     }
 }

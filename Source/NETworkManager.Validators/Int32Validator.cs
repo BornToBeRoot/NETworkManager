@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Windows.Controls;
+using NETworkManager.Localization.Resources;
 
 namespace NETworkManager.Validators;
 
@@ -9,6 +10,6 @@ public class Int32Validator : ValidationRule
     {
         return int.TryParse(value as string, out var x) && x > 0
             ? ValidationResult.ValidResult
-            : new ValidationResult(false, Localization.Resources.Strings.EnterValidNumber);
+            : new ValidationResult(false, Strings.EnterValidNumber);
     }
 }

@@ -1,10 +1,10 @@
-﻿using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
@@ -71,15 +71,16 @@ public sealed class SNTPLookup
 
         udpClient.Close();
 
-        var intPart = (ulong)ntpData[40] << 24 | (ulong)ntpData[41] << 16 | (ulong)ntpData[42] << 8 | ntpData[43];
-        var fractionPart = (ulong)ntpData[44] << 24 | (ulong)ntpData[45] << 16 | (ulong)ntpData[46] << 8 | ntpData[47];
+        var intPart = ((ulong)ntpData[40] << 24) | ((ulong)ntpData[41] << 16) | ((ulong)ntpData[42] << 8) | ntpData[43];
+        var fractionPart = ((ulong)ntpData[44] << 24) | ((ulong)ntpData[45] << 16) | ((ulong)ntpData[46] << 8) |
+                           ntpData[47];
 
-        var milliseconds = (intPart * 1000) + (fractionPart * 1000 / 0x100000000L);
+        var milliseconds = intPart * 1000 + fractionPart * 1000 / 0x100000000L;
         var networkTime = new DateTime(1900, 1, 1).AddMilliseconds((long)milliseconds);
 
         // Calculate local offset with local start/end time and network time in seconds            
         var roundTripDelayTicks = localEndTime.Ticks - localStartTime.Ticks;
-        var offsetInSeconds = (localStartTime.Ticks + (roundTripDelayTicks / 2) - networkTime.Ticks) /
+        var offsetInSeconds = (localStartTime.Ticks + roundTripDelayTicks / 2 - networkTime.Ticks) /
                               TimeSpan.TicksPerSecond;
 
         return new SNTPDateTime

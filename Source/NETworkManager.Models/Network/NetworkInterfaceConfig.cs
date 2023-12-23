@@ -10,8 +10,4 @@ public class NetworkInterfaceConfig
     public bool EnableStaticDNS { get; set; }
     public string PrimaryDNSServer { get; set; }
     public string SecondaryDNSServer { get; set; }
-
-    public NetworkInterfaceConfig()
-    {
-    }
 }

@@ -1,16 +1,25 @@
-﻿using NETworkManager.Models.Lookup;
-using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using NETworkManager.Models.Lookup;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
 public sealed class PortScanner
 {
+    #region Constructor
+
+    public PortScanner(PortScannerOptions options)
+    {
+        _options = options;
+    }
+
+    #endregion
+
     #region Variables
 
     private int _progressValue;
@@ -47,15 +56,6 @@ public sealed class PortScanner
     private void OnUserHasCanceled()
     {
         UserHasCanceled?.Invoke(this, EventArgs.Empty);
-    }
-
-    #endregion
-
-    #region Constructor
-
-    public PortScanner(PortScannerOptions options)
-    {
-        _options = options;
     }
 
     #endregion

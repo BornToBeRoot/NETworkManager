@@ -1,15 +1,16 @@
-﻿using NETworkManager.Utilities;
-using NETworkManager.Settings;
-using System;
+﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
-using NETworkManager.Profiles;
-using NETworkManager.Localization;
-using System.IO;
 using log4net;
+using NETworkManager.Localization;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Profiles;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager;
 
@@ -28,12 +29,11 @@ namespace NETworkManager;
 
 public partial class App
 {
-    private static readonly ILog Log = LogManager.GetLogger(typeof(App));
-
     // Single instance identifier
     private const string Guid = "6A3F34B2-161F-4F70-A8BC-A19C40F79CFB";
-    private Mutex _mutex;
+    private static readonly ILog Log = LogManager.GetLogger(typeof(App));
     private DispatcherTimer _dispatcherTimer;
+    private Mutex _mutex;
 
     private bool _singleInstanceClose;
 
@@ -128,7 +128,7 @@ public partial class App
 
         // Initialize localization
         var localizationManager = LocalizationManager.GetInstance(SettingsManager.Current.Localization_CultureCode);
-        Localization.Resources.Strings.Culture = localizationManager.Culture;
+        Strings.Culture = localizationManager.Culture;
 
         Log.Info(
             $"Application localization culture has been set to {localizationManager.Current.Code} (Settings value is \"{SettingsManager.Current.Localization_CultureCode}\").");
@@ -211,7 +211,7 @@ public partial class App
             // Bring the already running application into the foreground
             Log.Info(
                 "Another NETworkManager process is already running. Trying to bring the window to the foreground...");
-            SingleInstance.PostMessage((IntPtr)SingleInstance.HWND_BROADCAST, SingleInstance.WM_SHOWME, IntPtr.Zero,
+            SingleInstance.PostMessage(SingleInstance.HWND_BROADCAST, SingleInstance.WM_SHOWME, IntPtr.Zero,
                 IntPtr.Zero);
 
             // Close the application                

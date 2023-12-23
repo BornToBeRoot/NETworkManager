@@ -1,15 +1,15 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using DnsClient;
 using Lextm.SharpSnmpLib.Messaging;
+using NETworkManager.Models;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
-using NETworkManager.Utilities;
 using NETworkManager.Models.RemoteDesktop;
-using DnsClient;
-using NETworkManager.Models;
+using NETworkManager.Utilities;
 
 // ReSharper disable InconsistentNaming
 

@@ -1,5 +1,5 @@
-﻿using DnsClient;
-using System;
+﻿using System;
+using DnsClient;
 
 namespace NETworkManager.Models.Network;
 

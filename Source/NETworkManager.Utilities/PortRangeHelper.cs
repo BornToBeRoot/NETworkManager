@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace NETworkManager.Utilities;
 
@@ -16,21 +16,16 @@ public static class PortRangeHelper
         var list = new List<int>();
 
         foreach (var portOrRange in portRange.Replace(" ", "").Split(';'))
-        {
             if (portOrRange.Contains('-'))
             {
                 var portRangeSplit = portOrRange.Split('-');
 
-                for (var i = int.Parse(portRangeSplit[0]); i < int.Parse(portRangeSplit[1]) + 1; i++)
-                {
-                    list.Add(i);
-                }
+                for (var i = int.Parse(portRangeSplit[0]); i < int.Parse(portRangeSplit[1]) + 1; i++) list.Add(i);
             }
             else
             {
                 list.Add(int.Parse(portOrRange));
             }
-        }
 
         return list.ToArray();
     }

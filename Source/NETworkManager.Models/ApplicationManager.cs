@@ -1,36 +1,41 @@
-﻿using MahApps.Metro.IconPacks;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
+using MahApps.Metro.IconPacks;
 
 namespace NETworkManager.Models;
 
 /// <summary>
-/// Provides methods to manage applications.
+///     Provides methods to manage applications.
 /// </summary>
 public static class ApplicationManager
 {
     /// <summary>
-    /// Method to return all available applications in.
+    ///     Method to return all available applications in.
     /// </summary>
-    /// <returns>IEnumerable with <see cref="ApplicationName"/>.</returns>
-    public static IEnumerable<ApplicationName> GetNames() => (ApplicationName[])Enum.GetValues(typeof(ApplicationName));
+    /// <returns>IEnumerable with <see cref="ApplicationName" />.</returns>
+    public static IEnumerable<ApplicationName> GetNames()
+    {
+        return (ApplicationName[])Enum.GetValues(typeof(ApplicationName));
+    }
 
     /// <summary>
-    /// Method returns a list with all <see cref="ApplicationInfo"/>.
+    ///     Method returns a list with all <see cref="ApplicationInfo" />.
     /// </summary>
-    /// <returns>IEnumerable with <see cref="ApplicationInfo"/></returns>
+    /// <returns>IEnumerable with <see cref="ApplicationInfo" /></returns>
     public static IEnumerable<ApplicationInfo> GetList()
     {
         return GetNames().Where(x => x != ApplicationName.None).Select(name => new ApplicationInfo(name)).ToList();
     }
 
     /// <summary>
-    /// Method will return the icon based on <see cref="ApplicationName"/>.
+    ///     Method will return the icon based on <see cref="ApplicationName" />.
     /// </summary>
-    /// <param name="name"><see cref="ApplicationName"/></param>
-    /// <returns>Application icon as <see cref="Canvas"/>.</returns>
+    /// <param name="name">
+    ///     <see cref="ApplicationName" />
+    /// </param>
+    /// <returns>Application icon as <see cref="Canvas" />.</returns>
     public static Canvas GetIcon(ApplicationName name)
     {
         var canvas = new Canvas();

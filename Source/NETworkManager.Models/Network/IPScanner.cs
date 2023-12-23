@@ -1,6 +1,4 @@
-﻿using NETworkManager.Models.Lookup;
-using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +7,22 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using NETworkManager.Models.Lookup;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
 public sealed class IPScanner
 {
+    #region Constructor
+
+    public IPScanner(IPScannerOptions options)
+    {
+        _options = options;
+    }
+
+    #endregion
+
     #region Variables
 
     private int _progressValue;
@@ -50,15 +59,6 @@ public sealed class IPScanner
     private void OnUserHasCanceled()
     {
         UserHasCanceled?.Invoke(this, EventArgs.Empty);
-    }
-
-    #endregion
-
-    #region Constructor
-
-    public IPScanner(IPScannerOptions options)
-    {
-        _options = options;
     }
 
     #endregion
@@ -102,7 +102,6 @@ public sealed class IPScanner
                     ConcurrentBag<PortInfo> portResults = new();
 
                     if (_options.PortScanEnabled)
-                    {
                         Parallel.ForEach(_options.PortScanPorts, portParallelOptions, port =>
                         {
                             // Test if port is open
@@ -132,7 +131,6 @@ public sealed class IPScanner
                                         new PortInfo(port, PortLookup.LookupByPortAndProtocol(port), portState));
                             }
                         });
-                    }
 
                     // Get ping result
                     pingTask.Wait();

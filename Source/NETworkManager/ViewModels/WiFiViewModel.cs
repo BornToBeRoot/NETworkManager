@@ -1,14 +1,4 @@
-﻿using LiveCharts;
-using LiveCharts.Wpf;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Localization;
-using NETworkManager.Models.Export;
-using NETworkManager.Models.Lookup;
-using NETworkManager.Models.Network;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using NETworkManager.Views;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,6 +11,17 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using Windows.Devices.WiFi;
 using Windows.Security.Credentials;
+using LiveCharts;
+using LiveCharts.Wpf;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models.Export;
+using NETworkManager.Models.Lookup;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
@@ -472,8 +473,10 @@ public class WiFiViewModel : ViewModelBase
     public ICommand ScanNetworksCommand =>
         new RelayCommand(_ => ScanNetworksAction().ConfigureAwait(false), ScanNetworks_CanExecute);
 
-    private bool ScanNetworks_CanExecute(object obj) =>
-        !IsAdaptersLoading && !IsNetworksLoading && !IsBackgroundSearchRunning && !IsConnecting;
+    private bool ScanNetworks_CanExecute(object obj)
+    {
+        return !IsAdaptersLoading && !IsNetworksLoading && !IsBackgroundSearchRunning && !IsConnecting;
+    }
 
     private async Task ScanNetworksAction()
     {
@@ -537,7 +540,7 @@ public class WiFiViewModel : ViewModelBase
     {
         if (refreshing)
         {
-            StatusMessage = Localization.Resources.Strings.SearchingForNetworksDots;
+            StatusMessage = Strings.SearchingForNetworksDots;
             IsBackgroundSearchRunning = true;
         }
         else
@@ -571,7 +574,7 @@ public class WiFiViewModel : ViewModelBase
                     Radio2Series.Add(GetSeriesCollection(network, WiFiRadio.Two));
             }
 
-            statusMessage = string.Format(Localization.Resources.Strings.LastScanAtX,
+            statusMessage = string.Format(Strings.LastScanAtX,
                 wiFiNetworkScanInfo.Timestamp.ToLongTimeString());
         }
         catch (Exception ex)
@@ -581,7 +584,7 @@ public class WiFiViewModel : ViewModelBase
             Radio1Series.Clear();
             Radio2Series.Clear();
 
-            statusMessage = string.Format(Localization.Resources.Strings.ErrorWhileScanningWiFiAdapterXXXWithErrorXXX,
+            statusMessage = string.Format(Strings.ErrorWhileScanningWiFiAdapterXXXWithErrorXXX,
                 adapterInfo.NetworkInterfaceInfo.Name, ex.Message);
         }
         finally
@@ -608,7 +611,7 @@ public class WiFiViewModel : ViewModelBase
     {
         var values = GetDefaultChartValues(radio);
 
-        var reverseMilliwatts = 100 - (network.AvailableNetwork.NetworkRssiInDecibelMilliwatts * -1);
+        var reverseMilliwatts = 100 - network.AvailableNetwork.NetworkRssiInDecibelMilliwatts * -1;
 
         values[index - 2] = -1;
         values[index - 1] = reverseMilliwatts;
@@ -621,7 +624,7 @@ public class WiFiViewModel : ViewModelBase
 
     private LineSeries GetSeriesCollection(WiFiNetworkInfo network, WiFiRadio radio)
     {
-        int index = Array.IndexOf(radio == WiFiRadio.One ? Radio1Labels : Radio2Labels,
+        var index = Array.IndexOf(radio == WiFiRadio.One ? Radio1Labels : Radio2Labels,
             $"{WiFi.GetChannelFromChannelFrequency(network.AvailableNetwork.ChannelCenterFrequencyInKilohertz)}");
 
         return new LineSeries
@@ -643,8 +646,8 @@ public class WiFiViewModel : ViewModelBase
         var customDialog = new CustomDialog
         {
             Title = selectedNetwork.IsHidden
-                ? Localization.Resources.Strings.HiddenNetwork
-                : string.Format(Localization.Resources.Strings.ConnectToXXX, selectedNetwork.AvailableNetwork.Ssid)
+                ? Strings.HiddenNetwork
+                : string.Format(Strings.ConnectToXXX, selectedNetwork.AvailableNetwork.Ssid)
         };
 
         var exportViewModel = new WiFiConnectViewModel(async instance =>
@@ -652,15 +655,15 @@ public class WiFiViewModel : ViewModelBase
                 // Connect Open/PSK/EAP
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                string ssid = selectedNetwork.IsHidden ? instance.Ssid : selectedNetwork.AvailableNetwork.Ssid;
+                var ssid = selectedNetwork.IsHidden ? instance.Ssid : selectedNetwork.AvailableNetwork.Ssid;
 
                 // Show status message
                 IsConnecting = true;
-                ConnectionStatusMessage = string.Format(Localization.Resources.Strings.ConnectingToXXX, ssid);
+                ConnectionStatusMessage = string.Format(Strings.ConnectingToXXX, ssid);
                 IsConnectionStatusMessageDisplayed = true;
 
                 // Connect to the network
-                WiFiReconnectionKind reconnectionKind = instance.ConnectAutomatically
+                var reconnectionKind = instance.ConnectAutomatically
                     ? WiFiReconnectionKind.Automatic
                     : WiFiReconnectionKind.Manual;
 
@@ -695,8 +698,8 @@ public class WiFiViewModel : ViewModelBase
 
                 // Get result
                 ConnectionStatusMessage = connectionResult == WiFiConnectionStatus.Success
-                    ? string.Format(Localization.Resources.Strings.SuccessfullyConnectedToXXX, ssid)
-                    : string.Format(Localization.Resources.Strings.CouldNotConnectToXXXReasonXXX, ssid,
+                    ? string.Format(Strings.SuccessfullyConnectedToXXX, ssid)
+                    : string.Format(Strings.CouldNotConnectToXXXReasonXXX, ssid,
                         ResourceTranslator.Translate(ResourceIdentifier.WiFiConnectionStatus, connectionResult));
 
                 // Hide message automatically
@@ -714,15 +717,15 @@ public class WiFiViewModel : ViewModelBase
 
                 // Show status message
                 IsConnecting = true;
-                ConnectionStatusMessage = string.Format(Localization.Resources.Strings.ConnectingToXXX, ssid);
+                ConnectionStatusMessage = string.Format(Strings.ConnectingToXXX, ssid);
                 IsConnectionStatusMessageDisplayed = true;
 
                 // Connect to the network
-                WiFiReconnectionKind reconnectionKind = instance.ConnectAutomatically
+                var reconnectionKind = instance.ConnectAutomatically
                     ? WiFiReconnectionKind.Automatic
                     : WiFiReconnectionKind.Manual;
 
-                WiFiConnectionStatus connectionResult = await WiFi.ConnectWpsAsync(
+                var connectionResult = await WiFi.ConnectWpsAsync(
                     instance.Options.AdapterInfo.WiFiAdapter, instance.Options.NetworkInfo.AvailableNetwork,
                     reconnectionKind);
 
@@ -731,8 +734,8 @@ public class WiFiViewModel : ViewModelBase
 
                 // Get result
                 ConnectionStatusMessage = connectionResult == WiFiConnectionStatus.Success
-                    ? string.Format(Localization.Resources.Strings.SuccessfullyConnectedToXXX, ssid)
-                    : string.Format(Localization.Resources.Strings.CouldNotConnectToXXXReasonXXX, ssid,
+                    ? string.Format(Strings.SuccessfullyConnectedToXXX, ssid)
+                    : string.Format(Strings.CouldNotConnectToXXXReasonXXX, ssid,
                         ResourceTranslator.Translate(ResourceIdentifier.WiFiConnectionStatus, connectionResult));
 
                 // Hide message automatically
@@ -761,7 +764,7 @@ public class WiFiViewModel : ViewModelBase
 
         if (connectedNetwork != null)
         {
-            ConnectionStatusMessage = string.Format(Localization.Resources.Strings.XXXDisconnected,
+            ConnectionStatusMessage = string.Format(Strings.XXXDisconnected,
                 connectedNetwork.AvailableNetwork.Ssid);
             IsConnectionStatusMessageDisplayed = true;
 
@@ -777,7 +780,7 @@ public class WiFiViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.Export
+            Title = Strings.Export
         };
 
         var exportViewModel = new ExportViewModel(async instance =>
@@ -795,10 +798,10 @@ public class WiFiViewModel : ViewModelBase
                 catch (Exception ex)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                    settings.AffirmativeButtonText = Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error,
-                        Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                    await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                        Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
                         Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 

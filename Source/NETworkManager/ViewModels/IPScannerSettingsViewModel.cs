@@ -1,10 +1,11 @@
-﻿using MahApps.Metro.Controls.Dialogs;
+﻿using System.ComponentModel;
+using System.Windows.Data;
+using System.Windows.Input;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
-using System.ComponentModel;
-using System.Windows.Data;
-using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
@@ -319,7 +320,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.AddCustomCommand
+            Title = Strings.AddCustomCommand
         };
 
         var customCommandViewModel = new CustomCommandViewModel(instance =>
@@ -342,7 +343,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.EditCustomCommand
+            Title = Strings.EditCustomCommand
         };
 
         var customCommandViewModel = new CustomCommandViewModel(instance =>
@@ -366,7 +367,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.DeleteCustomCommand
+            Title = Strings.DeleteCustomCommand
         };
 
         var confirmDeleteViewModel = new ConfirmDeleteViewModel(_ =>
@@ -375,7 +376,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
 
                 SettingsManager.Current.IPScanner_CustomCommands.Remove(SelectedCustomCommand);
             }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-            Localization.Resources.Strings.DeleteCustomCommandMessage);
+            Strings.DeleteCustomCommandMessage);
 
         customDialog.Content = new ConfirmDeleteDialog
         {

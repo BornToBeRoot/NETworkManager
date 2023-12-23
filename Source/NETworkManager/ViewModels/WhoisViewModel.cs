@@ -1,20 +1,20 @@
-﻿using NETworkManager.Models.Network;
-using System;
-using System.Windows.Input;
-using NETworkManager.Settings;
+﻿using System;
 using System.ComponentModel;
-using System.Windows.Data;
 using System.Linq;
-using NETworkManager.Utilities;
+using System.Threading.Tasks;
 using System.Windows;
-using NETworkManager.Controls;
+using System.Windows.Data;
+using System.Windows.Input;
 using Dragablz;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Models.Export;
+using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
+using NETworkManager.Models.Export;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 using NETworkManager.Views;
-using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels;
 
@@ -157,8 +157,11 @@ public class WhoisViewModel : ViewModelBase
 
     public ICommand QueryCommand => new RelayCommand(_ => QueryAction(), Query_CanExecute);
 
-    private bool Query_CanExecute(object parameter) => Application.Current.MainWindow != null &&
-                                                       !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool Query_CanExecute(object parameter)
+    {
+        return Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    }
 
     private void QueryAction()
     {
@@ -223,12 +226,8 @@ public class WhoisViewModel : ViewModelBase
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
         if (window != null)
-        {
             foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
-            {
                 tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Domain;
-            }
-        }
 
         try
         {

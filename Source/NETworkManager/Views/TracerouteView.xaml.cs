@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
@@ -20,7 +21,7 @@ public partial class TracerouteView
         Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
     }
 
-    private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+    private void UserControl_Loaded(object sender, RoutedEventArgs e)
     {
         _viewModel.OnLoaded();
     }
@@ -35,7 +36,7 @@ public partial class TracerouteView
         _viewModel.OnClose();
     }
 
-    private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
+    private void ContextMenu_Opened(object sender, RoutedEventArgs e)
     {
         if (sender is ContextMenu menu)
             menu.DataContext = _viewModel;

@@ -1,67 +1,67 @@
 ﻿namespace NETworkManager.Models.Network;
 
 /// <summary>
-/// Represents the notation which is used to calculate.
+///     Represents the notation which is used to calculate.
 /// </summary>
 public enum BitCaluclatorUnit
 {
     /// <summary>
-    /// Unit bits.
+    ///     Unit bits.
     /// </summary>
     Bits,
 
     /// <summary>
-    /// Unit bytes.
+    ///     Unit bytes.
     /// </summary>
     Bytes,
 
     /// <summary>
-    /// Unit kilobits
+    ///     Unit kilobits
     /// </summary>
     Kilobits,
 
     /// <summary>
-    /// Unit kilobytes
+    ///     Unit kilobytes
     /// </summary>
     Kilobytes,
 
     /// <summary>
-    /// Unit megabits
+    ///     Unit megabits
     /// </summary>
     Megabits,
 
     /// <summary>
-    /// Unit megabytes
+    ///     Unit megabytes
     /// </summary>
     Megabytes,
 
     /// <summary>
-    /// Unit gigabits
+    ///     Unit gigabits
     /// </summary>
     Gigabits,
 
     /// <summary>
-    /// Unit gigabytes
+    ///     Unit gigabytes
     /// </summary>
     Gigabytes,
 
     /// <summary>
-    /// Unit terabits
+    ///     Unit terabits
     /// </summary>
     Terabits,
 
     /// <summary>
-    /// Unit terabytes
+    ///     Unit terabytes
     /// </summary>
     Terabytes,
 
     /// <summary>
-    /// Unit petabits
+    ///     Unit petabits
     /// </summary>
     Petabits,
 
     /// <summary>
-    /// Unit petabytes
+    ///     Unit petabytes
     /// </summary>
     Petabytes
 }

@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Windows.Controls;
+using NETworkManager.Localization.Resources;
 
 namespace NETworkManager.Validators;
 
@@ -11,7 +12,7 @@ public class GroupNameValidator : ValidationRule
 
         if (groupName.StartsWith("~"))
             return new ValidationResult(false,
-                string.Format(Localization.Resources.Strings.GroupNameCannotStartWithX, "~"));
+                string.Format(Strings.GroupNameCannotStartWithX, "~"));
 
         return ValidationResult.ValidResult;
     }

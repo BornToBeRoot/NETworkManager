@@ -1,26 +1,28 @@
-﻿using System.Collections.ObjectModel;
-using NETworkManager.Controls;
-using Dragablz;
-using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Settings;
-using System.Linq;
-using NETworkManager.Views;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Windows.Data;
-using System;
 using System.Diagnostics;
 using System.IO;
-using NETworkManager.Utilities;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
-using NETworkManager.Models.PowerShell;
-using NETworkManager.Profiles;
+using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Threading;
+using Dragablz;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Controls;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Collections.Specialized;
+using NETworkManager.Models.PowerShell;
+using NETworkManager.Profiles;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
+using PowerShell = NETworkManager.Profiles.Application.PowerShell;
 
 namespace NETworkManager.ViewModels;
 
@@ -277,7 +279,10 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         ((args.DragablzItem.Content as DragablzTabItem)?.View as PowerShellControl)?.CloseTab();
     }
 
-    private bool Connect_CanExecute(object obj) => IsConfigured;
+    private bool Connect_CanExecute(object obj)
+    {
+        return IsConfigured;
+    }
 
     public ICommand ConnectCommand => new RelayCommand(_ => ConnectAction(), Connect_CanExecute);
 
@@ -340,7 +345,10 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
+    private bool ModifyProfile_CanExecute(object obj)
+    {
+        return SelectedProfile is { IsDynamic: false };
+    }
 
     public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
@@ -411,7 +419,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.Connect
+            Title = Strings.Connect
         };
 
         var connectViewModel = new PowerShellConnectViewModel(async instance =>
@@ -453,19 +461,19 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
     private void ConnectProfile()
     {
-        Connect(NETworkManager.Profiles.Application.PowerShell.CreateSessionInfo(SelectedProfile),
+        Connect(PowerShell.CreateSessionInfo(SelectedProfile),
             SelectedProfile.Name);
     }
 
     private void ConnectProfileExternal()
     {
-        PowerShellSessionInfo sessionInfo =
-            NETworkManager.Profiles.Application.PowerShell.CreateSessionInfo(SelectedProfile);
+        var sessionInfo =
+            PowerShell.CreateSessionInfo(SelectedProfile);
 
-        Process.Start(new ProcessStartInfo()
+        Process.Start(new ProcessStartInfo
         {
             FileName = SettingsManager.Current.PowerShell_ApplicationFilePath,
-            Arguments = PowerShell.BuildCommandLine(sessionInfo)
+            Arguments = Models.PowerShell.PowerShell.BuildCommandLine(sessionInfo)
         });
     }
 
@@ -474,7 +482,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         sessionInfo.ApplicationFilePath = SettingsManager.Current.PowerShell_ApplicationFilePath;
 
         TabItems.Add(new DragablzTabItem(
-            header ?? (sessionInfo.EnableRemoteConsole ? sessionInfo.Host : Localization.Resources.Strings.PowerShell),
+            header ?? (sessionInfo.EnableRemoteConsole ? sessionInfo.Host : Strings.PowerShell),
             new PowerShellControl(sessionInfo)));
 
         // Select the added tab

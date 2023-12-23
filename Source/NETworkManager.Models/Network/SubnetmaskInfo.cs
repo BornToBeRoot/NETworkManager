@@ -2,9 +2,6 @@
 
 public class SubnetmaskInfo
 {
-    public int CIDR { get; set; }
-    public string Subnetmask { get; set; }
-
     public SubnetmaskInfo()
     {
     }
@@ -14,6 +11,9 @@ public class SubnetmaskInfo
         CIDR = cidr;
         Subnetmask = subnetmask;
     }
+
+    public int CIDR { get; set; }
+    public string Subnetmask { get; set; }
 
     public override string ToString()
     {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using NETworkManager.Models.Network;
 using NETworkManager.Localization.Resources;
+using NETworkManager.Models.Network;
 
 namespace NETworkManager.Converters;
 

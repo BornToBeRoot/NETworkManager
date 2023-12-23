@@ -14,7 +14,6 @@
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
-        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:PuTTYLogModeToStringConverter x:Key="PuTTYLogModeToStringConverter" />
     </UserControl.Resources>
     <StackPanel>

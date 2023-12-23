@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Controls;
+using NETworkManager.Localization.Resources;
 
 namespace NETworkManager.Validators;
 
@@ -11,6 +12,6 @@ public class HttpAndHttpsUriValidator : ValidationRule
         return Uri.TryCreate(value as string, UriKind.Absolute, out var uriResult) &&
                (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps)
             ? ValidationResult.ValidResult
-            : new ValidationResult(false, Localization.Resources.Strings.EnterValidWebsiteUri);
+            : new ValidationResult(false, Strings.EnterValidWebsiteUri);
     }
 }

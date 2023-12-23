@@ -1,34 +1,33 @@
 ﻿namespace NETworkManager.Models.Network;
 
 /// <summary>
-/// Enum SNMP Mode.
-/// 
-/// Trap and Inform are not implemented yet.
+///     Enum SNMP Mode.
+///     Trap and Inform are not implemented yet.
 /// </summary>
 public enum SNMPMode
 {
     /// <summary>
-    /// SNMP Get.
+    ///     SNMP Get.
     /// </summary>
     Get,
 
     /// <summary>
-    /// SNMP Walk.
+    ///     SNMP Walk.
     /// </summary>
     Walk,
 
     /// <summary>
-    /// SNMP Set.
+    ///     SNMP Set.
     /// </summary>
     Set,
 
     /// <summary>
-    /// SNMP Trap.
+    ///     SNMP Trap.
     /// </summary>
     Trap,
 
     /// <summary>
-    /// SNMP Inform.
+    ///     SNMP Inform.
     /// </summary>
     Inform
 }

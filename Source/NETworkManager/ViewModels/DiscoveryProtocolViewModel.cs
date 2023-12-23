@@ -1,15 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Windows.Input;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Settings;
-using NETworkManager.Models.Network;
 using System.Threading.Tasks;
-using System.ComponentModel;
-using NETworkManager.Utilities;
+using System.Timers;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Threading;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
@@ -21,7 +22,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
 
     private readonly DiscoveryProtocolCapture _discoveryProtocolCapture = new();
     private readonly bool _isLoading;
-    private readonly System.Timers.Timer _remainingTimer;
+    private readonly Timer _remainingTimer;
     private int _secondsRemaining;
 
     private bool _firstRun = true;
@@ -210,7 +211,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         _discoveryProtocolCapture.WarningReceived += DiscoveryProtocol_WarningReceived;
         _discoveryProtocolCapture.Complete += DiscoveryProtocol_Complete;
 
-        _remainingTimer = new System.Timers.Timer
+        _remainingTimer = new Timer
         {
             Interval = 1000
         };
@@ -245,7 +246,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message,
+            await _dialogCoordinator.ShowMessageAsync(this, Strings.Error, ex.Message,
                 MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
         }
     }
@@ -268,7 +269,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
 
         _secondsRemaining = duration + 1; // Init powershell etc. takes some time... 
 
-        TimeRemainingMessage = string.Format(Localization.Resources.Strings.XXSecondsRemainingDots, _secondsRemaining);
+        TimeRemainingMessage = string.Format(Strings.XXSecondsRemainingDots, _secondsRemaining);
 
         _remainingTimer.Start();
 
@@ -278,17 +279,17 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message,
+            await _dialogCoordinator.ShowMessageAsync(this, Strings.Error, ex.Message,
                 MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
         }
     }
 
-    private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+    private void Timer_Elapsed(object sender, ElapsedEventArgs e)
     {
         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
         {
             TimeRemainingMessage =
-                string.Format(Localization.Resources.Strings.XXSecondsRemainingDots, _secondsRemaining);
+                string.Format(Strings.XXSecondsRemainingDots, _secondsRemaining);
 
             if (_secondsRemaining > 0)
                 _secondsRemaining--;

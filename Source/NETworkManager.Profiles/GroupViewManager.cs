@@ -1,6 +1,6 @@
-﻿using MahApps.Metro.IconPacks;
+﻿using System.Collections.Generic;
+using MahApps.Metro.IconPacks;
 using NETworkManager.Models;
-using System.Collections.Generic;
 
 namespace NETworkManager.Profiles;
 
@@ -19,6 +19,6 @@ public static class GroupViewManager
         new GroupViewInfo(GroupViewName.AWSSessionManager,
             ApplicationManager.GetIcon(ApplicationName.AWSSessionManager)),
         new GroupViewInfo(GroupViewName.TigerVNC, ApplicationManager.GetIcon(ApplicationName.TigerVNC)),
-        new GroupViewInfo(GroupViewName.SNMP, ApplicationManager.GetIcon(ApplicationName.SNMP)),
+        new GroupViewInfo(GroupViewName.SNMP, ApplicationManager.GetIcon(ApplicationName.SNMP))
     };
 }

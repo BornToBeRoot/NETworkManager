@@ -1,20 +1,36 @@
-﻿using System.Windows.Input;
-using System.ComponentModel;
-using System.Windows.Data;
-using MahApps.Metro.Controls.Dialogs;
-using System;
-using NETworkManager.Utilities;
-using System.Linq;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Threading;
+using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
 public class ProfilesViewModel : ViewModelBase, IProfileManager
 {
+    #region Constructor
+
+    public ProfilesViewModel(IDialogCoordinator instance)
+    {
+        _dialogCoordinator = instance;
+
+        SetGroupsView();
+
+        ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
+
+        _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
+        _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
+    }
+
+    #endregion
+
     #region Variables
 
     private readonly IDialogCoordinator _dialogCoordinator;
@@ -143,22 +159,6 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
     #endregion
 
-    #region Constructor
-
-    public ProfilesViewModel(IDialogCoordinator instance)
-    {
-        _dialogCoordinator = instance;
-
-        SetGroupsView();
-
-        ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
-
-        _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
-        _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
-    }
-
-    #endregion
-
     #region Commands & Actions
 
     public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
@@ -171,14 +171,20 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
     public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), EditProfile_CanExecute);
 
-    private bool EditProfile_CanExecute(object parameter) => SelectedProfiles.Count == 1;
+    private bool EditProfile_CanExecute(object parameter)
+    {
+        return SelectedProfiles.Count == 1;
+    }
 
     private void EditProfileAction()
     {
         ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
+    private bool ModifyProfile_CanExecute(object obj)
+    {
+        return SelectedProfile is { IsDynamic: false };
+    }
 
     public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
 

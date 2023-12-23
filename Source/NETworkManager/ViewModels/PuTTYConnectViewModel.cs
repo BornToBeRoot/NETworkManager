@@ -1,20 +1,68 @@
-﻿using NETworkManager.Models.PuTTY;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Windows.Input;
+using NETworkManager.Models.PuTTY;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
 public class PuTTYConnectViewModel : ViewModelBase
 {
+    private string _additionalCommandLine;
+
+    private int _baud;
+
+    private ConnectionMode _connectionMode;
+
+    private string _host;
+
+    private int _port;
+
+    private string _privateKeyFile;
+
+
+    private string _profile;
+
+    private string _serialLine;
+
+    private bool _useRAW;
+
+    private bool _useRlogin;
+
+    private string _username;
+
+    private bool _useSerial;
+
+    private bool _useSSH;
+
+    private bool _useTelnet;
+
+    public PuTTYConnectViewModel(Action<PuTTYConnectViewModel> connectCommand,
+        Action<PuTTYConnectViewModel> cancelHandler, string host = null)
+    {
+        ConnectCommand = new RelayCommand(_ => connectCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
+
+        if (!string.IsNullOrEmpty(host))
+            Host = host;
+
+        HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_HostHistory);
+        SerialLineHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_SerialLineHistory);
+        PortHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_PortHistory);
+        BaudHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_BaudHistory);
+        UsernameHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_UsernameHistory);
+        PrivateKeyFileHistoryView =
+            CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_PrivateKeyFileHistory);
+        ProfileHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_ProfileHistory);
+
+        LoadSettings();
+    }
+
     public ICommand ConnectCommand { get; }
 
     public ICommand CancelCommand { get; }
-
-    private ConnectionMode _connectionMode;
 
     public ConnectionMode ConnectionMode
     {
@@ -28,8 +76,6 @@ public class PuTTYConnectViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-
-    private bool _useSSH;
 
     public bool UseSSH
     {
@@ -50,8 +96,6 @@ public class PuTTYConnectViewModel : ViewModelBase
         }
     }
 
-    private bool _useTelnet;
-
     public bool UseTelnet
     {
         get => _useTelnet;
@@ -70,8 +114,6 @@ public class PuTTYConnectViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-
-    private bool _useSerial;
 
     public bool UseSerial
     {
@@ -92,8 +134,6 @@ public class PuTTYConnectViewModel : ViewModelBase
         }
     }
 
-    private bool _useRlogin;
-
     public bool UseRlogin
     {
         get => _useRlogin;
@@ -112,8 +152,6 @@ public class PuTTYConnectViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-
-    private bool _useRAW;
 
     public bool UseRAW
     {
@@ -134,8 +172,6 @@ public class PuTTYConnectViewModel : ViewModelBase
         }
     }
 
-    private string _host;
-
     public string Host
     {
         get => _host;
@@ -148,8 +184,6 @@ public class PuTTYConnectViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-
-    private string _serialLine;
 
     public string SerialLine
     {
@@ -164,8 +198,6 @@ public class PuTTYConnectViewModel : ViewModelBase
         }
     }
 
-    private int _port;
-
     public int Port
     {
         get => _port;
@@ -178,8 +210,6 @@ public class PuTTYConnectViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-
-    private int _baud;
 
     public int Baud
     {
@@ -194,8 +224,6 @@ public class PuTTYConnectViewModel : ViewModelBase
         }
     }
 
-    private string _username;
-
     public string Username
     {
         get => _username;
@@ -208,8 +236,6 @@ public class PuTTYConnectViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-
-    private string _privateKeyFile;
 
     public string PrivateKeyFile
     {
@@ -224,9 +250,6 @@ public class PuTTYConnectViewModel : ViewModelBase
         }
     }
 
-
-    private string _profile;
-
     public string Profile
     {
         get => _profile;
@@ -239,8 +262,6 @@ public class PuTTYConnectViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-
-    private string _additionalCommandLine;
 
     public string AdditionalCommandLine
     {
@@ -268,27 +289,6 @@ public class PuTTYConnectViewModel : ViewModelBase
     public ICollectionView PrivateKeyFileHistoryView { get; set; }
 
     public ICollectionView ProfileHistoryView { get; }
-
-    public PuTTYConnectViewModel(Action<PuTTYConnectViewModel> connectCommand,
-        Action<PuTTYConnectViewModel> cancelHandler, string host = null)
-    {
-        ConnectCommand = new RelayCommand(_ => connectCommand(this));
-        CancelCommand = new RelayCommand(_ => cancelHandler(this));
-
-        if (!string.IsNullOrEmpty(host))
-            Host = host;
-
-        HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_HostHistory);
-        SerialLineHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_SerialLineHistory);
-        PortHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_PortHistory);
-        BaudHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_BaudHistory);
-        UsernameHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_UsernameHistory);
-        PrivateKeyFileHistoryView =
-            CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_PrivateKeyFileHistory);
-        ProfileHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_ProfileHistory);
-
-        LoadSettings();
-    }
 
     private void LoadSettings()
     {

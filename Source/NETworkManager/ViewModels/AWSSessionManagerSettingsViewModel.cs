@@ -1,15 +1,17 @@
-﻿using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using System;
+﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Windows.Input;
 using System.Threading.Tasks;
-using NETworkManager.Views;
-using NETworkManager.Models.AWS;
-using System.ComponentModel;
 using System.Windows.Data;
+using System.Windows.Forms;
+using System.Windows.Input;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models.AWS;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
@@ -205,12 +207,12 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
 
     private void BrowseFileAction()
     {
-        var openFileDialog = new System.Windows.Forms.OpenFileDialog
+        var openFileDialog = new OpenFileDialog
         {
             Filter = GlobalStaticConfiguration.ApplicationFileExtensionFilter
         };
 
-        if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+        if (openFileDialog.ShowDialog() == DialogResult.OK)
             ApplicationFilePath = openFileDialog.FileName;
     }
 
@@ -229,7 +231,7 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.AddAWSProfile
+            Title = Strings.AddAWSProfile
         };
 
         var viewModel = new AWSProfileViewModel(instance =>
@@ -252,7 +254,7 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.EditAWSProfile
+            Title = Strings.EditAWSProfile
         };
 
         var viewModel = new AWSProfileViewModel(instance =>
@@ -276,7 +278,7 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.DeleteAWSProfile
+            Title = Strings.DeleteAWSProfile
         };
 
         var viewModel = new ConfirmDeleteViewModel(_ =>
@@ -285,7 +287,7 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
 
                 SettingsManager.Current.AWSSessionManager_AWSProfiles.Remove(SelectedAWSProfile);
             }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-            Localization.Resources.Strings.DeleteAWSProfileMessage);
+            Strings.DeleteAWSProfileMessage);
 
         customDialog.Content = new ConfirmDeleteDialog
         {
@@ -305,9 +307,9 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
         {
             var settings = AppearanceManager.MetroDialog;
 
-            settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+            settings.AffirmativeButtonText = Strings.OK;
 
-            await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message,
+            await _dialogCoordinator.ShowMessageAsync(this, Strings.Error, ex.Message,
                 MessageDialogStyle.Affirmative, settings);
         }
     }

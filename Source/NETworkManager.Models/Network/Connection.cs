@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NETworkManager.Models.Network;
 
-public partial class Connection
+public class Connection
 {
     #region Methods
 

@@ -1,27 +1,28 @@
-﻿using System.Net;
-using System.Windows.Input;
-using System.Windows;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.ObjectModel;
-using NETworkManager.Settings;
-using NETworkManager.Models.Network;
-using System.Threading;
-using NETworkManager.Utilities;
-using System.Windows.Threading;
 using System.ComponentModel;
-using System.Windows.Data;
 using System.Linq;
+using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Threading;
 using Dragablz;
+using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
-using NETworkManager.Models.Export;
-using NETworkManager.Views;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
-using System.Threading.Tasks;
-using log4net;
+using NETworkManager.Models.Export;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
@@ -205,8 +206,11 @@ public class TracerouteViewModel : ViewModelBase
 
     public ICommand TraceCommand => new RelayCommand(_ => TraceAction(), Trace_CanExecute);
 
-    private bool Trace_CanExecute(object parameter) => Application.Current.MainWindow != null &&
-                                                       !((MetroWindow)Application.Current.MainWindow)!.IsAnyDialogOpen;
+    private bool Trace_CanExecute(object parameter)
+    {
+        return Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow)!.IsAnyDialogOpen;
+    }
 
     private void TraceAction()
     {
@@ -282,12 +286,8 @@ public class TracerouteViewModel : ViewModelBase
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
         if (window != null)
-        {
             foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
-            {
                 tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Host;
-            }
-        }
 
         _cancellationTokenSource = new CancellationTokenSource();
 
@@ -344,7 +344,7 @@ public class TracerouteViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.Export
+            Title = Strings.Export
         };
 
         var exportViewModel = new ExportViewModel(async instance =>
@@ -361,10 +361,10 @@ public class TracerouteViewModel : ViewModelBase
                 catch (Exception ex)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                    settings.AffirmativeButtonText = Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error,
-                        Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                    await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                        Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
                         Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
@@ -429,7 +429,7 @@ public class TracerouteViewModel : ViewModelBase
                     $"ip-api.com rate limit reached. Try again in {e.Args.IPGeolocationResult.RateLimitRemainingTime} seconds.");
 
                 DisplayStatusMessage(
-                    $"ip-api.com {string.Format(Localization.Resources.Strings.RateLimitReachedTryAgainInXSeconds, e.Args.IPGeolocationResult.RateLimitRemainingTime)}");
+                    $"ip-api.com {string.Format(Strings.RateLimitReachedTryAgainInXSeconds, e.Args.IPGeolocationResult.RateLimitRemainingTime)}");
             }
 
             Results.Add(e.Args);
@@ -438,13 +438,13 @@ public class TracerouteViewModel : ViewModelBase
 
     private void Traceroute_MaximumHopsReached(object sender, MaximumHopsReachedArgs e)
     {
-        DisplayStatusMessage(string.Format(Localization.Resources.Strings.MaximumNumberOfHopsReached, e.Hops));
+        DisplayStatusMessage(string.Format(Strings.MaximumNumberOfHopsReached, e.Hops));
         IsRunning = false;
     }
 
     private void Traceroute_UserHasCanceled(object sender, EventArgs e)
     {
-        DisplayStatusMessage(Localization.Resources.Strings.CanceledByUserMessage);
+        DisplayStatusMessage(Strings.CanceledByUserMessage);
         CancelTrace = false;
         IsRunning = false;
     }

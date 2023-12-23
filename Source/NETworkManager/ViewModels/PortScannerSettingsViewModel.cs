@@ -1,12 +1,13 @@
-﻿using NETworkManager.Settings;
-using NETworkManager.Models.Network;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows.Data;
-using NETworkManager.Utilities;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 using NETworkManager.Views;
-using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels;
 
@@ -186,7 +187,7 @@ public class PortScannerSettingsViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.AddPortProfile
+            Title = Strings.AddPortProfile
         };
 
         var viewModel = new PortProfileViewModel(async instance =>
@@ -208,7 +209,7 @@ public class PortScannerSettingsViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.EditPortProfile
+            Title = Strings.EditPortProfile
         };
 
         var viewModel = new PortProfileViewModel(async instance =>
@@ -233,7 +234,7 @@ public class PortScannerSettingsViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.DeletePortProfile
+            Title = Strings.DeletePortProfile
         };
 
         var confirmDeleteViewModel = new ConfirmDeleteViewModel(async _ =>
@@ -242,7 +243,7 @@ public class PortScannerSettingsViewModel : ViewModelBase
 
                 SettingsManager.Current.PortScanner_PortProfiles.Remove(SelectedPortProfile);
             }, async _ => { await _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-            Localization.Resources.Strings.DeletePortProfileMessage);
+            Strings.DeletePortProfileMessage);
 
         customDialog.Content = new ConfirmDeleteDialog
         {

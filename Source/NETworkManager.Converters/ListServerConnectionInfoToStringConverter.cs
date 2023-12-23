@@ -1,9 +1,9 @@
-﻿using NETworkManager.Models.Network;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Windows.Data;
 using System.Text;
+using System.Windows.Data;
+using NETworkManager.Models.Network;
 
 namespace NETworkManager.Converters;
 

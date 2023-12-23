@@ -14,8 +14,8 @@ public static class BitCaluclator
     public static BitCaluclatorInfo Calculate(double input, BitCaluclatorUnit unit, BitCaluclatorNotation notation)
     {
         // Get bits from input
-        int u = GetUnitBase(unit);
-        int n = GetNotationBase(notation);
+        var u = GetUnitBase(unit);
+        var n = GetNotationBase(notation);
 
         double bits;
 
@@ -38,7 +38,7 @@ public static class BitCaluclator
             Terabits = bits / Math.Pow(n, GetUnitBase(BitCaluclatorUnit.Terabits)),
             Terabytes = bits / 8 / Math.Pow(n, GetUnitBase(BitCaluclatorUnit.Terabytes)),
             Petabits = bits / Math.Pow(n, GetUnitBase(BitCaluclatorUnit.Petabits)),
-            Petabytes = bits / 8 / Math.Pow(n, GetUnitBase(BitCaluclatorUnit.Petabytes)),
+            Petabytes = bits / 8 / Math.Pow(n, GetUnitBase(BitCaluclatorUnit.Petabytes))
         };
     }
 
@@ -63,7 +63,7 @@ public static class BitCaluclator
             BitCaluclatorUnit.Terabytes => 4,
             BitCaluclatorUnit.Petabits => 5,
             BitCaluclatorUnit.Petabytes => 5,
-            _ => -1,
+            _ => -1
         };
     }
 }

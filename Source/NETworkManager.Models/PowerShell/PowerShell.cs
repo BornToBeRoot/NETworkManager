@@ -1,18 +1,18 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Microsoft.Win32;
 
 namespace NETworkManager.Models.PowerShell;
 
 /// <summary>
-/// Class with static methods for PowerShell.
+///     Class with static methods for PowerShell.
 /// </summary>
 public static class PowerShell
 {
     /// <summary>
-    /// Default installation paths for PowerShell.
+    ///     Default installation paths for PowerShell.
     /// </summary>
     public static readonly List<string> GetDefaultInstallationPaths = new()
     {
@@ -24,15 +24,15 @@ public static class PowerShell
     };
 
     /// <summary>
-    /// Default SZ registry keys for the global PowerShell profile.
+    ///     Default SZ registry keys for the global PowerShell profile.
     /// </summary>
     private static readonly List<Tuple<string, string>> DefaultProfileRegkeysSzBase = new()
     {
-        new Tuple<string, string>("FaceName", "Consolas"),
+        new Tuple<string, string>("FaceName", "Consolas")
     };
 
     /// <summary>
-    /// Default DWORD registry keys for the global PowerShell profile.
+    ///     Default DWORD registry keys for the global PowerShell profile.
     /// </summary>
     private static readonly List<Tuple<string, int>> DefaultProfileRegkeysDwordBase = new()
     {
@@ -43,37 +43,7 @@ public static class PowerShell
     };
 
     /// <summary>
-    /// Default DWORD registry keys for the global PowerShell profile with dark theme.
-    /// </summary>
-    /// <returns>List of <see cref="Tuple{T1,T2}"/> with registry key name and value.</returns>
-    private static List<Tuple<string, int>> GetProfileRegkeysDwordDark()
-    {
-        return DefaultProfileRegkeysDwordBase.Concat(
-            new[]
-            {
-                new Tuple<string, int>("DefaultBackground", 2434341), // HEX: 252525
-                new Tuple<string, int>("ColorTable00", 2434341), // HEX: 252525
-                new Tuple<string, int>("ColorTable07", 13421772), // HEX: cccccc
-            }).ToList();
-    }
-
-    /// <summary>
-    /// Default DWORD registry keys for the global PowerShell profile with white theme.
-    /// </summary>
-    /// <returns>List of <see cref="Tuple{T1,T2}"/> with registry key name and value.</returns>
-    private static List<Tuple<string, int>> GetProfileRegkeysDwordWhite()
-    {
-        return DefaultProfileRegkeysDwordBase.Concat(
-            new[]
-            {
-                new Tuple<string, int>("DefaultBackground", 16777215), // HEX: FFFFFF
-                new Tuple<string, int>("ColorTable00", 16777215), // HEX: FFFFFF
-                new Tuple<string, int>("ColorTable07", 2434341), // HEX: 252525
-            }).ToList();
-    }
-
-    /// <summary>
-    /// Default DWORD registry keys for the global PowerShell profile to delete.
+    ///     Default DWORD registry keys for the global PowerShell profile to delete.
     /// </summary>
     private static readonly List<string> DefaultProfileRegkeysDwordDelete = new()
     {
@@ -81,7 +51,37 @@ public static class PowerShell
     };
 
     /// <summary>
-    /// Write default (global) PowerShell profile to registry.
+    ///     Default DWORD registry keys for the global PowerShell profile with dark theme.
+    /// </summary>
+    /// <returns>List of <see cref="Tuple{T1,T2}" /> with registry key name and value.</returns>
+    private static List<Tuple<string, int>> GetProfileRegkeysDwordDark()
+    {
+        return DefaultProfileRegkeysDwordBase.Concat(
+            new[]
+            {
+                new Tuple<string, int>("DefaultBackground", 2434341), // HEX: 252525
+                new Tuple<string, int>("ColorTable00", 2434341), // HEX: 252525
+                new Tuple<string, int>("ColorTable07", 13421772) // HEX: cccccc
+            }).ToList();
+    }
+
+    /// <summary>
+    ///     Default DWORD registry keys for the global PowerShell profile with white theme.
+    /// </summary>
+    /// <returns>List of <see cref="Tuple{T1,T2}" /> with registry key name and value.</returns>
+    private static List<Tuple<string, int>> GetProfileRegkeysDwordWhite()
+    {
+        return DefaultProfileRegkeysDwordBase.Concat(
+            new[]
+            {
+                new Tuple<string, int>("DefaultBackground", 16777215), // HEX: FFFFFF
+                new Tuple<string, int>("ColorTable00", 16777215), // HEX: FFFFFF
+                new Tuple<string, int>("ColorTable07", 2434341) // HEX: 252525
+            }).ToList();
+    }
+
+    /// <summary>
+    ///     Write default (global) PowerShell profile to registry.
     /// </summary>
     /// <param name="theme">Theme of the PowerShell profile.</param>
     /// <param name="powerShellPath">Path to the PowerShell executable.</param>
@@ -111,19 +111,16 @@ public static class PowerShell
             foreach (var item in DefaultProfileRegkeysSzBase)
                 registryKey.SetValue(item.Item1, item.Item2);
 
-            foreach (var item in DefaultProfileRegkeysDwordDelete)
-            {
-                registryKey.DeleteValue(item, false);
-            }
+            foreach (var item in DefaultProfileRegkeysDwordDelete) registryKey.DeleteValue(item, false);
         }
 
         registryKey?.Close();
     }
 
     /// <summary>
-    /// Build command line arguments based on a <see cref="PowerShellSessionInfo"/>.
+    ///     Build command line arguments based on a <see cref="PowerShellSessionInfo" />.
     /// </summary>
-    /// <param name="sessionInfo">Instance of <see cref="PowerShellSessionInfo"/>.</param>
+    /// <param name="sessionInfo">Instance of <see cref="PowerShellSessionInfo" />.</param>
     /// <returns>Command line arguments like "-NoExit -ExecutionPolicy RemoteSigned ...".</returns>
     public static string BuildCommandLine(PowerShellSessionInfo sessionInfo)
     {

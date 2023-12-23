@@ -1,17 +1,9 @@
-﻿namespace NETworkManager.Models.Network;
+﻿using System;
 
-public class DNSLookupErrorArgs : System.EventArgs
+namespace NETworkManager.Models.Network;
+
+public class DNSLookupErrorArgs : EventArgs
 {
-    public string Query { get; set; }
-
-    public string Server { get; set; }
-
-    public bool HasIPEndPoint { get; set; }
-
-    public string IPEndPoint { get; set; }
-
-    public string ErrorMessage { get; set; }
-
     public DNSLookupErrorArgs()
     {
     }
@@ -23,4 +15,14 @@ public class DNSLookupErrorArgs : System.EventArgs
         ErrorMessage = errorMessage;
         IPEndPoint = ipEndPoint;
     }
+
+    public string Query { get; set; }
+
+    public string Server { get; set; }
+
+    public bool HasIPEndPoint { get; set; }
+
+    public string IPEndPoint { get; set; }
+
+    public string ErrorMessage { get; set; }
 }

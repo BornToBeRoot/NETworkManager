@@ -1,10 +1,10 @@
-﻿using NETworkManager.Models.Network;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Net;
 using System.Windows;
 using System.Windows.Data;
+using NETworkManager.Models.Network;
 
 namespace NETworkManager.Converters;
 

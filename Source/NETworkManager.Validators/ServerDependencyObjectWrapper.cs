@@ -11,7 +11,7 @@ public class ServerDependencyObjectWrapper : DependencyObject
 
     public bool AllowOnlyIPAddress
     {
-        get { return (bool)GetValue(AllowOnlyIPAddressProperty); }
-        set { SetValue(AllowOnlyIPAddressProperty, value); }
+        get => (bool)GetValue(AllowOnlyIPAddressProperty);
+        set => SetValue(AllowOnlyIPAddressProperty, value);
     }
 }

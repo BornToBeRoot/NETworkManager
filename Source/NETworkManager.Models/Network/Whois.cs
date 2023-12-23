@@ -10,15 +10,6 @@ namespace NETworkManager.Models.Network;
 
 public static class Whois
 {
-    #region Variables
-
-    private static readonly string WhoisServerFilePath =
-        Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location)!, "Resources", "WhoisServers.xml");
-
-    private static readonly Lookup<string, WhoisServerInfo> WhoisServers;
-
-    #endregion
-
     #region Constructor
 
     static Whois()
@@ -33,6 +24,15 @@ public static class Whois
 
         WhoisServers = (Lookup<string, WhoisServerInfo>)whoisServerList.ToLookup(x => x.Tld);
     }
+
+    #endregion
+
+    #region Variables
+
+    private static readonly string WhoisServerFilePath =
+        Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location)!, "Resources", "WhoisServers.xml");
+
+    private static readonly Lookup<string, WhoisServerInfo> WhoisServers;
 
     #endregion
 

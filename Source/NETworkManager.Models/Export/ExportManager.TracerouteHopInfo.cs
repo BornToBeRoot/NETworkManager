@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
@@ -11,11 +12,11 @@ namespace NETworkManager.Models.Export;
 public static partial class ExportManager
 {
     /// <summary>
-    /// Method to export objects from type <see cref="TracerouteHopInfo"/> to a file.
+    ///     Method to export objects from type <see cref="TracerouteHopInfo" /> to a file.
     /// </summary>
     /// <param name="filePath">Path to the export file.</param>
-    /// <param name="fileType">Allowed <see cref="ExportFileType"/> are CSV, XML or JSON.</param>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{TracerouteHopInfo}"/> to export.</param>
+    /// <param name="fileType">Allowed <see cref="ExportFileType" /> are CSV, XML or JSON.</param>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{TracerouteHopInfo}" /> to export.</param>
     public static void Export(string filePath, ExportFileType fileType,
         IReadOnlyList<TracerouteHopInfo> collection)
     {
@@ -37,9 +38,9 @@ public static partial class ExportManager
     }
 
     /// <summary>
-    /// Creates a CSV file from the given <see cref="TracerouteHopInfo"/> collection.
+    ///     Creates a CSV file from the given <see cref="TracerouteHopInfo" /> collection.
     /// </summary>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{TracerouteHopInfo}"/> to export.</param>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{TracerouteHopInfo}" /> to export.</param>
     /// <param name="filePath">Path to the export file.</param>
     private static void CreateCsv(IEnumerable<TracerouteHopInfo> collection, string filePath)
     {
@@ -52,13 +53,13 @@ public static partial class ExportManager
             stringBuilder.AppendLine(
                 $"{info.Hop},{info.Status1},{Ping.TimeToString(info.Status1, info.Time1, true)},{info.Status2},{Ping.TimeToString(info.Status2, info.Time2, true)},{info.Status3},{Ping.TimeToString(info.Status3, info.Time3, true)},{info.IPAddress},{info.Hostname},{info.IPGeolocationResult.Info.Continent},{info.IPGeolocationResult.Info.Country},{info.IPGeolocationResult.Info.Region},{info.IPGeolocationResult.Info.City},{info.IPGeolocationResult.Info.District},{info.IPGeolocationResult.Info.Isp?.Replace(",", "")},{info.IPGeolocationResult.Info.Org?.Replace(",", "")},{info.IPGeolocationResult.Info.As?.Replace(",", "")},{info.IPGeolocationResult.Info.Asname?.Replace(",", "")},{info.IPGeolocationResult.Info.Hosting},{info.IPGeolocationResult.Info.Proxy},{info.IPGeolocationResult.Info.Mobile}");
 
-        System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
+        File.WriteAllText(filePath, stringBuilder.ToString());
     }
 
     /// <summary>
-    /// Creates a XML file from the given <see cref="TracerouteHopInfo"/> collection.
+    ///     Creates a XML file from the given <see cref="TracerouteHopInfo" /> collection.
     /// </summary>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{TracerouteHopInfo}"/> to export.</param>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{TracerouteHopInfo}" /> to export.</param>
     /// <param name="filePath">Path to the export file.</param>
     private static void CreateXml(IEnumerable<TracerouteHopInfo> collection, string filePath)
     {
@@ -109,16 +110,15 @@ public static partial class ExportManager
     }
 
     /// <summary>
-    /// Creates a JSON file from the given <see cref="TracerouteHopInfo"/> collection.
+    ///     Creates a JSON file from the given <see cref="TracerouteHopInfo" /> collection.
     /// </summary>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{TracerouteHopInfo}"/> to export.</param>
+    /// <param name="collection">Objects as <see cref="IReadOnlyList{TracerouteHopInfo}" /> to export.</param>
     /// <param name="filePath">Path to the export file.</param>
     private static void CreateJson(IReadOnlyList<TracerouteHopInfo> collection, string filePath)
     {
         var jsonData = new object[collection.Count];
 
         for (var i = 0; i < collection.Count; i++)
-        {
             jsonData[i] = new
             {
                 collection[i].Hop,
@@ -143,8 +143,7 @@ public static partial class ExportManager
                 collection[i].IPGeolocationResult.Info.Proxy,
                 collection[i].IPGeolocationResult.Info.Mobile
             };
-        }
 
-        System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
+        File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
     }
 }

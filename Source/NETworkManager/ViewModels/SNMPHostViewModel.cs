@@ -1,21 +1,23 @@
-﻿using System.Collections.ObjectModel;
-using NETworkManager.Controls;
-using Dragablz;
-using System.Windows.Input;
-using NETworkManager.Views;
-using NETworkManager.Utilities;
-using NETworkManager.Models;
-using MahApps.Metro.Controls.Dialogs;
-using System.Windows.Threading;
-using NETworkManager.Settings;
-using System.Windows;
-using NETworkManager.Profiles;
-using System.ComponentModel;
-using System;
-using System.Windows.Data;
-using System.Linq;
+﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Threading;
+using Dragablz;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Controls;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models;
 using NETworkManager.Models.Network;
+using NETworkManager.Profiles;
+using NETworkManager.Profiles.Application;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
@@ -216,7 +218,10 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
 
     public ICommand AddTabProfileCommand => new RelayCommand(_ => AddTabProfileAction(), AddTabProfile_CanExecute);
 
-    private bool AddTabProfile_CanExecute(object obj) => !IsSearching && SelectedProfile != null;
+    private bool AddTabProfile_CanExecute(object obj)
+    {
+        return !IsSearching && SelectedProfile != null;
+    }
 
     private void AddTabProfileAction()
     {
@@ -231,7 +236,10 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
+    private bool ModifyProfile_CanExecute(object obj)
+    {
+        return SelectedProfile is { IsDynamic: false };
+    }
 
     public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
@@ -315,7 +323,7 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
     {
         var tabId = Guid.NewGuid();
 
-        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Host ?? Localization.Resources.Strings.NewTab,
+        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Host ?? Strings.NewTab,
             new SNMPView(tabId, sessionInfo), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
@@ -323,14 +331,14 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
 
     private void AddTab()
     {
-        var sessionInfo = NETworkManager.Profiles.Application.SNMP.CreateSessionInfo();
+        var sessionInfo = SNMP.CreateSessionInfo();
 
         AddTab(sessionInfo);
     }
 
     public void AddTab(string host)
     {
-        var sessionInfo = NETworkManager.Profiles.Application.SNMP.CreateSessionInfo();
+        var sessionInfo = SNMP.CreateSessionInfo();
 
         sessionInfo.Host = host;
 
@@ -339,7 +347,7 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
 
     private void AddTab(ProfileInfo profile)
     {
-        var sessionInfo = NETworkManager.Profiles.Application.SNMP.CreateSessionInfo(profile);
+        var sessionInfo = SNMP.CreateSessionInfo(profile);
 
         AddTab(sessionInfo, profile.Name);
     }

@@ -4,8 +4,8 @@ namespace NETworkManager.Models.Network;
 
 public class WakeOnLANInfo
 {
-    public byte[] MagicPacket;
     public IPAddress Broadcast;
+    public byte[] MagicPacket;
     public int Port;
 
     public WakeOnLANInfo()

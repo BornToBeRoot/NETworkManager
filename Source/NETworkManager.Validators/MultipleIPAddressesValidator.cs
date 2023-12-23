@@ -1,7 +1,8 @@
-﻿using NETworkManager.Utilities;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Validators;
 
@@ -18,7 +19,7 @@ public class MultipleIPAddressesValidator : ValidationRule
 
             if (!Regex.IsMatch(ipAddress.Trim(), RegexHelper.IPv4AddressRegex) &&
                 !Regex.IsMatch(ipAddress.Trim(), RegexHelper.IPv6AddressRegex))
-                return new ValidationResult(false, Localization.Resources.Strings.EnterOneOrMoreValidIPAddresses);
+                return new ValidationResult(false, Strings.EnterOneOrMoreValidIPAddresses);
         }
 
         return ValidationResult.ValidResult;

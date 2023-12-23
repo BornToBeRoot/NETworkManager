@@ -1,11 +1,13 @@
-﻿using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
@@ -100,12 +102,12 @@ public class TigerVNCSettingsViewModel : ViewModelBase
 
     private void BrowseFileAction()
     {
-        var openFileDialog = new System.Windows.Forms.OpenFileDialog
+        var openFileDialog = new OpenFileDialog
         {
             Filter = GlobalStaticConfiguration.ApplicationFileExtensionFilter
         };
 
-        if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+        if (openFileDialog.ShowDialog() == DialogResult.OK)
             ApplicationFilePath = openFileDialog.FileName;
     }
 
@@ -130,9 +132,9 @@ public class TigerVNCSettingsViewModel : ViewModelBase
         {
             var settings = AppearanceManager.MetroDialog;
 
-            settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+            settings.AffirmativeButtonText = Strings.OK;
 
-            await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message,
+            await _dialogCoordinator.ShowMessageAsync(this, Strings.Error, ex.Message,
                 MessageDialogStyle.Affirmative, settings);
         }
     }

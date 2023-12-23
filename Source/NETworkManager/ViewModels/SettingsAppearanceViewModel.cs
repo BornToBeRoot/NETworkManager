@@ -1,8 +1,8 @@
-﻿using NETworkManager.Settings;
-using System.ComponentModel;
-using System.Windows.Data;
+﻿using System.ComponentModel;
 using System.Linq;
+using System.Windows.Data;
 using NETworkManager.Models.Appearance;
+using NETworkManager.Settings;
 
 namespace NETworkManager.ViewModels;
 
@@ -12,7 +12,7 @@ public class SettingsAppearanceViewModel : ViewModelBase
 
     private readonly bool _isLoading;
 
-    public ICollectionView Themes { get; private set; }
+    public ICollectionView Themes { get; }
 
     private ThemeColorInfo _selectedTheme;
 
@@ -36,7 +36,7 @@ public class SettingsAppearanceViewModel : ViewModelBase
     }
 
 
-    public ICollectionView Accents { get; private set; }
+    public ICollectionView Accents { get; }
 
     private AccentColorInfo _selectedAccent;
 
@@ -80,7 +80,7 @@ public class SettingsAppearanceViewModel : ViewModelBase
         }
     }
 
-    public ICollectionView CustomThemes { get; private set; }
+    public ICollectionView CustomThemes { get; }
 
 
     private ThemeInfo _selectedCustomTheme;

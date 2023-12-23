@@ -1,24 +1,27 @@
-﻿using System.Collections.ObjectModel;
-using NETworkManager.Controls;
-using Dragablz;
-using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Settings;
-using System.Linq;
-using NETworkManager.Views;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Windows.Data;
-using System;
-using NETworkManager.Utilities;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
-using NETworkManager.Profiles;
-using NETworkManager.Models.WebConsole;
+using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Threading;
+using Dragablz;
+using MahApps.Metro.Controls.Dialogs;
+using Microsoft.Web.WebView2.Core;
+using NETworkManager.Controls;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
-using Microsoft.Web.WebView2.Core;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+using NETworkManager.Models.WebConsole;
+using NETworkManager.Profiles;
+using NETworkManager.Profiles.Application;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
@@ -36,12 +39,12 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
     private bool _isViewActive = true;
 
     /// <summary>
-    /// Private variable for <see cref="IsRuntimeAvailable"/>.
+    ///     Private variable for <see cref="IsRuntimeAvailable" />.
     /// </summary>
     private bool _isRuntimeAvailable;
 
     /// <summary>
-    /// Variable indicates if the Edge WebView2 runtime is available.
+    ///     Variable indicates if the Edge WebView2 runtime is available.
     /// </summary>
     public bool IsRuntimeAvailable
     {
@@ -260,10 +263,8 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
     private void ReloadAction(object view)
     {
         if (view is WebConsoleControl control)
-        {
             if (control.ReloadCommand.CanExecute(null))
                 control.ReloadCommand.Execute(null);
-        }
     }
 
     public ICommand ConnectProfileCommand => new RelayCommand(_ => ConnectProfileAction(), ConnectProfile_CanExecute);
@@ -286,7 +287,10 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
+    private bool ModifyProfile_CanExecute(object obj)
+    {
+        return SelectedProfile is { IsDynamic: false };
+    }
 
     public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
@@ -348,7 +352,7 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.Connect
+            Title = Strings.Connect
         };
 
         var connectViewModel = new WebConsoleConnectViewModel(async instance =>
@@ -385,7 +389,7 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
 
     private void ConnectProfile()
     {
-        Connect(NETworkManager.Profiles.Application.WebConsole.CreateSessionInfo(SelectedProfile),
+        Connect(WebConsole.CreateSessionInfo(SelectedProfile),
             SelectedProfile.Name);
     }
 
@@ -526,7 +530,7 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
     }
 
     private void TabItems_CollectionChanged(object sender,
-        System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        NotifyCollectionChangedEventArgs e)
     {
         ConfigurationManager.Current.WebConsoleHasTabs = TabItems.Count > 0;
     }

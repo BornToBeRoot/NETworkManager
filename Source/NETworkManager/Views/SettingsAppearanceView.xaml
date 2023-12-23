@@ -8,7 +8,6 @@
              xmlns:appearance="clr-namespace:NETworkManager.Models.Appearance;assembly=NETworkManager.Models"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-             xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsAppearanceViewModel}">
     <UserControl.Resources>
         <converters:AccentToStringConverter x:Key="AccentToStringConverter" />

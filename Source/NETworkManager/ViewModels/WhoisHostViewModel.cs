@@ -1,20 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
-using NETworkManager.Controls;
-using Dragablz;
 using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Settings;
-using NETworkManager.Views;
-using NETworkManager.Utilities;
-using NETworkManager.Profiles;
 using System.Windows.Threading;
+using Dragablz;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Controls;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
-using System.Collections.Generic;
+using NETworkManager.Profiles;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
@@ -179,7 +180,7 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
 
         TabItems = new ObservableCollection<DragablzTabItem>
         {
-            new(Localization.Resources.Strings.NewTab, new WhoisView(tabId), tabId)
+            new(Strings.NewTab, new WhoisView(tabId), tabId)
         };
 
         // Profiles
@@ -237,7 +238,10 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
+    private bool ModifyProfile_CanExecute(object obj)
+    {
+        return SelectedProfile is { IsDynamic: false };
+    }
 
     public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
@@ -321,7 +325,7 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
     {
         var tabId = Guid.NewGuid();
 
-        TabItems.Add(new DragablzTabItem(domain ?? Localization.Resources.Strings.NewTab, new WhoisView(tabId, domain),
+        TabItems.Add(new DragablzTabItem(domain ?? Strings.NewTab, new WhoisView(tabId, domain),
             tabId));
 
         SelectedTabIndex = TabItems.Count - 1;

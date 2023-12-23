@@ -5,10 +5,6 @@ namespace NETworkManager.Settings;
 
 public class SettingsViewInfo
 {
-    public SettingsName Name { get; set; }
-    public Canvas Icon { get; set; }
-    public SettingsGroup Group { get; set; }
-
     public SettingsViewInfo(SettingsName name, Canvas icon, SettingsGroup group)
     {
         Name = name;
@@ -24,4 +20,8 @@ public class SettingsViewInfo
         Icon = canvas;
         Group = group;
     }
+
+    public SettingsName Name { get; set; }
+    public Canvas Icon { get; set; }
+    public SettingsGroup Group { get; set; }
 }

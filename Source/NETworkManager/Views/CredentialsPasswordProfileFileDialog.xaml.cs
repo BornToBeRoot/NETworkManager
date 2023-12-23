@@ -1,4 +1,6 @@
-﻿namespace NETworkManager.Views;
+﻿using System.Windows;
+
+namespace NETworkManager.Views;
 
 public partial class CredentialsPasswordProfileFileDialog
 {
@@ -7,7 +9,7 @@ public partial class CredentialsPasswordProfileFileDialog
         InitializeComponent();
     }
 
-    private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+    private void UserControl_Loaded(object sender, RoutedEventArgs e)
     {
         PasswordBoxPassword.Focus();
     }

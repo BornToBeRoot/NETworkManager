@@ -1,7 +1,4 @@
-﻿using NETworkManager.Models.Network;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Net;
@@ -11,11 +8,34 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NetworkInterface = NETworkManager.Models.Network.NetworkInterface;
 
 namespace NETworkManager.ViewModels;
 
 public class NetworkConnectionWidgetViewModel : ViewModelBase
 {
+    #region Events
+
+    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+            case nameof(SettingsInfo.Dashboard_CheckPublicIPAddress):
+                OnPropertyChanged(nameof(CheckPublicIPAddressEnabled));
+
+                // Check connection if enabled via settings
+                if (CheckPublicIPAddressEnabled)
+                    CheckConnection();
+
+                break;
+        }
+    }
+
+    #endregion
+
     #region Variables
 
     private bool _isChecking;
@@ -493,10 +513,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         {
             _tokenSource.Cancel();
 
-            while (_isChecking)
-            {
-                await Task.Delay(250, _ct);
-            }
+            while (_isChecking) await Task.Delay(250, _ct);
         }
 
         // Start check
@@ -546,7 +563,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
 
             // Detect local IPv4 address
             var detectedLocalIPv4Address =
-                await Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(
+                await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(
                     IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv4Address));
 
             if (detectedLocalIPv4Address != null)
@@ -567,7 +584,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
 
             // Detect local IPv6 address
             var detectedLocalIPv6Address =
-                await Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(
+                await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(
                     IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv6Address));
 
             if (detectedLocalIPv6Address != null)
@@ -637,13 +654,13 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
 
             // Detect router IPv4 and if it is reachable
             var detectedLocalIPv4Address =
-                await Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(
+                await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(
                     IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv4Address));
 
             if (detectedLocalIPv4Address != null)
             {
                 var detectedRouterIPv4 =
-                    await Models.Network.NetworkInterface.DetectGatewayBasedOnLocalIPAddressAsync(
+                    await NetworkInterface.DetectGatewayBasedOnLocalIPAddressAsync(
                         detectedLocalIPv4Address);
 
                 if (detectedRouterIPv4 != null)
@@ -670,13 +687,13 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
 
             // Detect router IPv6 and if it is reachable
             var detectedComputerIPv6 =
-                await Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(
+                await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(
                     IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv6Address));
 
             if (detectedComputerIPv6 != null)
             {
                 var detectedRouterIPv6 =
-                    await Models.Network.NetworkInterface.DetectGatewayBasedOnLocalIPAddressAsync(detectedComputerIPv6);
+                    await NetworkInterface.DetectGatewayBasedOnLocalIPAddressAsync(detectedComputerIPv6);
 
                 if (detectedRouterIPv6 != null)
                 {
@@ -857,25 +874,6 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
 
             IsInternetDNSChecking = false;
         }, ct);
-    }
-
-    #endregion
-
-    #region Events
-
-    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-        switch (e.PropertyName)
-        {
-            case nameof(SettingsInfo.Dashboard_CheckPublicIPAddress):
-                OnPropertyChanged(nameof(CheckPublicIPAddressEnabled));
-
-                // Check connection if enabled via settings
-                if (CheckPublicIPAddressEnabled)
-                    CheckConnection();
-
-                break;
-        }
     }
 
     #endregion

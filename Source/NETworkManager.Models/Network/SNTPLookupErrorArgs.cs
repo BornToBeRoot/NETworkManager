@@ -1,15 +1,9 @@
-﻿namespace NETworkManager.Models.Network;
+﻿using System;
 
-public class SNTPLookupErrorArgs : System.EventArgs
+namespace NETworkManager.Models.Network;
+
+public class SNTPLookupErrorArgs : EventArgs
 {
-    public string Server { get; set; }
-
-    public string IPEndPoint { get; set; }
-
-    public string ErrorMessage { get; set; }
-
-    public bool IsDNSError { get; set; }
-
     public SNTPLookupErrorArgs()
     {
     }
@@ -26,4 +20,12 @@ public class SNTPLookupErrorArgs : System.EventArgs
         IPEndPoint = ipEndPoint;
         ErrorMessage = errorMessage;
     }
+
+    public string Server { get; set; }
+
+    public string IPEndPoint { get; set; }
+
+    public string ErrorMessage { get; set; }
+
+    public bool IsDNSError { get; set; }
 }

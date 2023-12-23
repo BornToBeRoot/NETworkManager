@@ -1,8 +1,9 @@
-﻿using MahApps.Metro.Controls.Dialogs;
+﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models;
 using NETworkManager.ViewModels;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace NETworkManager.Views;
 
@@ -31,9 +32,9 @@ public partial class AWSSessionManagerHostView
             menu.DataContext = _viewModel;
     }
 
-    private void ListBoxItem_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    private void ListBoxItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
+        if (e.ChangedButton == MouseButton.Left)
             _viewModel.ConnectProfileCommand.Execute(null);
     }
 

@@ -18,9 +18,7 @@
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance viewModels:GroupViewModel}">
     <UserControl.Resources>
-        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
-        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:RemoteDesktopAudioCaptureRedirectionModeToStringConverter
             x:Key="RemoteDesktopAudioCaptureRedirectionModeToStringConverter" />
         <converters:RemoteDesktopAudioRedirectionModeToStringConverter
@@ -33,8 +31,6 @@
             x:Key="RemoteDesktopNetworkConnectionTypeToStringConverter" />
         <converters:ProfileGroupToTranslatedStringConverter x:Key="GroupViewNameToTranslatedStringConverter" />
         <converters:PuTTYLogModeToStringConverter x:Key="PuTTYLogModeToStringConverter" />
-        <converters:StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter
-            x:Key="StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter" />
     </UserControl.Resources>
     <Grid Margin="0,20">
         <Grid.RowDefinitions>

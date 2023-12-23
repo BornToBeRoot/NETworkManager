@@ -14,15 +14,9 @@ public class VisualTreeHelper
         {
             var child = System.Windows.Media.VisualTreeHelper.GetChild(depObj, i);
 
-            if (child is T variable)
-            {
-                yield return variable;
-            }
+            if (child is T variable) yield return variable;
 
-            foreach (var childOfChild in FindVisualChildren<T>(child))
-            {
-                yield return childOfChild;
-            }
+            foreach (var childOfChild in FindVisualChildren<T>(child)) yield return childOfChild;
         }
     }
 }

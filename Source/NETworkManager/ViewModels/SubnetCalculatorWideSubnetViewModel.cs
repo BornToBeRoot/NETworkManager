@@ -1,18 +1,32 @@
 ﻿extern alias IPNetwork2;
-using NETworkManager.Settings;
-using System.Windows.Input;
-using NETworkManager.Utilities;
-using System.Windows.Data;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using IPNetwork2::System.Net;
 using MahApps.Metro.Controls;
 using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
 public class SubnetCalculatorWideSubnetViewModel : ViewModelBase
 {
+    #region Constructor, load settings
+
+    public SubnetCalculatorWideSubnetViewModel()
+    {
+        // Set collection view
+        Subnet1HistoryView =
+            CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet1);
+        Subnet2HistoryView =
+            CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet2);
+    }
+
+    #endregion
+
     #region Variables
 
     private string _subnet1;
@@ -97,26 +111,16 @@ public class SubnetCalculatorWideSubnetViewModel : ViewModelBase
 
     #endregion
 
-    #region Constructor, load settings
-
-    public SubnetCalculatorWideSubnetViewModel()
-    {
-        // Set collection view
-        Subnet1HistoryView =
-            CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet1);
-        Subnet2HistoryView =
-            CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet2);
-    }
-
-    #endregion
-
     #region ICommands & Actions
 
     public ICommand CalculateCommand => new RelayCommand(_ => CalculateAction(), Calculate_CanExecute);
 
-    private bool Calculate_CanExecute(object parameter) => Application.Current.MainWindow != null &&
-                                                           !((MetroWindow)Application.Current.MainWindow)
-                                                               .IsAnyDialogOpen;
+    private bool Calculate_CanExecute(object parameter)
+    {
+        return Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow)
+                   .IsAnyDialogOpen;
+    }
 
     private void CalculateAction()
     {
@@ -134,10 +138,10 @@ public class SubnetCalculatorWideSubnetViewModel : ViewModelBase
         var subnet1 = Subnet1.Trim();
         var subnet2 = Subnet2.Trim();
 
-        var ipNetwork1 = IPNetwork2.System.Net.IPNetwork.Parse(subnet1);
-        var ipNetwork2 = IPNetwork2.System.Net.IPNetwork.Parse(subnet2);
+        var ipNetwork1 = IPNetwork.Parse(subnet1);
+        var ipNetwork2 = IPNetwork.Parse(subnet2);
 
-        Result = new IPNetworkInfo(IPNetwork2.System.Net.IPNetwork.WideSubnet(new[] { ipNetwork1, ipNetwork2 }));
+        Result = new IPNetworkInfo(IPNetwork.WideSubnet(new[] { ipNetwork1, ipNetwork2 }));
 
         IsResultVisible = true;
 

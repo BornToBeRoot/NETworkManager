@@ -1,16 +1,33 @@
-﻿using NETworkManager.Models.IPApi;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using log4net;
+using NETworkManager.Models.IPApi;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
 public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
 {
+    #region Events
+
+    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+            case nameof(SettingsInfo.Dashboard_CheckIPApiIPGeolocation):
+                // Check if enabled via settings
+                if (SettingsManager.Current.Dashboard_CheckIPApiIPGeolocation)
+                    Check();
+
+                break;
+        }
+    }
+
+    #endregion
+
     #region Variables
 
     private static readonly ILog Log = LogManager.GetLogger(typeof(IPApiIPGeolocationWidgetViewModel));
@@ -112,23 +129,6 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
             Log.Warn($"ip-api.com rate limit reached. Try again in {Result.RateLimitRemainingTime} seconds.");
 
         IsRunning = false;
-    }
-
-    #endregion
-
-    #region Events
-
-    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-        switch (e.PropertyName)
-        {
-            case nameof(SettingsInfo.Dashboard_CheckIPApiIPGeolocation):
-                // Check if enabled via settings
-                if (SettingsManager.Current.Dashboard_CheckIPApiIPGeolocation)
-                    Check();
-
-                break;
-        }
     }
 
     #endregion

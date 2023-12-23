@@ -1,8 +1,8 @@
-﻿using NETworkManager.Localization.Resources;
-using NETworkManager.Utilities;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Validators;
 
@@ -10,7 +10,7 @@ public class EmptyOrWindowsDomainValidator : ValidationRule
 {
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
-        string domain = value as string;
+        var domain = value as string;
 
         if (string.IsNullOrEmpty(domain))
             return ValidationResult.ValidResult;

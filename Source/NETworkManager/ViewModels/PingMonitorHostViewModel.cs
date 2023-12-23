@@ -1,24 +1,24 @@
-﻿using NETworkManager.Settings;
-using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
-using System.Windows;
-using System;
-using NETworkManager.Models.Network;
-using System.ComponentModel;
-using System.Windows.Data;
-using NETworkManager.Utilities;
-using System.Linq;
-using System.Collections.ObjectModel;
-using NETworkManager.Views;
-using NETworkManager.Profiles;
-using System.Windows.Threading;
-using System.Threading.Tasks;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Threading;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
+using NETworkManager.Models.Network;
+using NETworkManager.Profiles;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
@@ -354,7 +354,10 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
+    private bool ModifyProfile_CanExecute(object obj)
+    {
+        return SelectedProfile is { IsDynamic: false };
+    }
 
     public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
@@ -399,7 +402,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     #region Methods
 
     /// <summary>
-    /// Set the host to ping.
+    ///     Set the host to ping.
     /// </summary>
     /// <param name="host">Host to ping</param>
     /// <returns>True if the host was set successfully, otherwise false</returns>
@@ -408,8 +411,8 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         // Check if it is already running or canceling
         if (IsRunning || IsCanceling)
         {
-            _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error,
-                Localization.Resources.Strings.CannotSetHostWhileRunningMessage);
+            _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                Strings.CannotSetHostWhileRunningMessage);
 
             return false;
         }
@@ -445,7 +448,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         if (hosts.hostnamesNotResolved.Count > 0)
         {
             StatusMessage =
-                $"{Localization.Resources.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}";
+                $"{Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}";
             IsStatusMessageDisplayed = true;
         }
 
@@ -499,10 +502,8 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         var i = -1;
 
         foreach (var host in Hosts)
-        {
             if (host.HostId.Equals(hostId))
                 i = Hosts.IndexOf(host);
-        }
 
         if (i == -1)
             return;
@@ -635,7 +636,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private void UserHasCanceled()
     {
-        StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
+        StatusMessage = Strings.CanceledByUserMessage;
         IsStatusMessageDisplayed = true;
 
         IsCanceling = false;

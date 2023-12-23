@@ -5,13 +5,6 @@ namespace NETworkManager.Models.Network;
 
 public class ConnectionInfo
 {
-    public TransportProtocol Protocol { get; set; }
-    public IPAddress LocalIPAddress { get; set; }
-    public int LocalPort { get; set; }
-    public IPAddress RemoteIPAddress { get; set; }
-    public int RemotePort { get; set; }
-    public TcpState TcpState { get; set; }
-
     public ConnectionInfo()
     {
     }
@@ -26,4 +19,11 @@ public class ConnectionInfo
         RemotePort = remotePort;
         TcpState = tcpState;
     }
+
+    public TransportProtocol Protocol { get; set; }
+    public IPAddress LocalIPAddress { get; set; }
+    public int LocalPort { get; set; }
+    public IPAddress RemoteIPAddress { get; set; }
+    public int RemotePort { get; set; }
+    public TcpState TcpState { get; set; }
 }

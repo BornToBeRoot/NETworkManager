@@ -1,6 +1,6 @@
-﻿using MahApps.Metro.IconPacks;
+﻿using System.Collections.Generic;
+using MahApps.Metro.IconPacks;
 using NETworkManager.Models;
-using System.Collections.Generic;
 
 namespace NETworkManager.Settings;
 
@@ -65,6 +65,6 @@ public static class SettingsViewManager
         new SettingsViewInfo(SettingsName.WakeOnLAN, ApplicationManager.GetIcon(ApplicationName.WakeOnLAN),
             SettingsGroup.Application),
         new SettingsViewInfo(SettingsName.BitCalculator, ApplicationManager.GetIcon(ApplicationName.BitCalculator),
-            SettingsGroup.Application),
+            SettingsGroup.Application)
     };
 }

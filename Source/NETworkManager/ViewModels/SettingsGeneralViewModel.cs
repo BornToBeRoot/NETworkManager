@@ -1,15 +1,28 @@
-﻿using NETworkManager.Models;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
+﻿using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
+using NETworkManager.Models;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
 public class SettingsGeneralViewModel : ViewModelBase
 {
+    #region Methods
+
+    private void ValidateHideVisibleApplications()
+    {
+        IsVisibleToHideApplicationEnabled = ApplicationsVisible.Cast<ApplicationInfo>().Count() > 1 &&
+                                            VisibleApplicationSelectedItem != null;
+        IsHideToVisibleApplicationEnabled =
+            ApplicationsHidden.Cast<ApplicationInfo>().Any() && HiddenApplicationSelectedItem != null;
+    }
+
+    #endregion
+
     #region Variables
 
     private readonly bool _isLoading;
@@ -172,7 +185,7 @@ public class SettingsGeneralViewModel : ViewModelBase
     }
 
     private void General_ApplicationList_CollectionChanged(object sender,
-        System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        NotifyCollectionChangedEventArgs e)
     {
         ApplicationsVisible.Refresh();
         ApplicationsHidden.Refresh();
@@ -257,18 +270,6 @@ public class SettingsGeneralViewModel : ViewModelBase
         SettingsManager.Current.General_ApplicationList.Add(info);
 
         ValidateHideVisibleApplications();
-    }
-
-    #endregion
-
-    #region Methods
-
-    private void ValidateHideVisibleApplications()
-    {
-        IsVisibleToHideApplicationEnabled = ApplicationsVisible.Cast<ApplicationInfo>().Count() > 1 &&
-                                            VisibleApplicationSelectedItem != null;
-        IsHideToVisibleApplicationEnabled =
-            ApplicationsHidden.Cast<ApplicationInfo>().Any() && HiddenApplicationSelectedItem != null;
     }
 
     #endregion

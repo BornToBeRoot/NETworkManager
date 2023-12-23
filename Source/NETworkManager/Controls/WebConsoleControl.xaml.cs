@@ -1,12 +1,10 @@
-﻿using System.ComponentModel;
+﻿using System;
 using System.Windows;
-using System;
-using System.Windows.Threading;
-using NETworkManager.Utilities;
 using System.Windows.Input;
-using NETworkManager.Models.WebConsole;
 using Microsoft.Web.WebView2.Core;
+using NETworkManager.Models.WebConsole;
 using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Controls;
 
@@ -106,7 +104,10 @@ public partial class WebConsoleControl : UserControlBase
 
     #region ICommands & Actions
 
-    private bool NavigateCommand_CanExecute(object obj) => !IsLoading;
+    private bool NavigateCommand_CanExecute(object obj)
+    {
+        return !IsLoading;
+    }
 
     public ICommand NavigateCommand => new RelayCommand(p => NavigateAction(), NavigateCommand_CanExecute);
 
@@ -115,7 +116,10 @@ public partial class WebConsoleControl : UserControlBase
         Navigate(Url);
     }
 
-    private bool StopCommand_CanExecute(object obj) => IsLoading;
+    private bool StopCommand_CanExecute(object obj)
+    {
+        return IsLoading;
+    }
 
     public ICommand StopCommand => new RelayCommand(p => StopAction(), StopCommand_CanExecute);
 
@@ -124,7 +128,10 @@ public partial class WebConsoleControl : UserControlBase
         Stop();
     }
 
-    private bool ReloadCommand_CanExecute(object obj) => !IsLoading;
+    private bool ReloadCommand_CanExecute(object obj)
+    {
+        return !IsLoading;
+    }
 
     public ICommand ReloadCommand => new RelayCommand(p => ReloadAction(), ReloadCommand_CanExecute);
 
@@ -133,7 +140,10 @@ public partial class WebConsoleControl : UserControlBase
         Browser2.Reload();
     }
 
-    private bool GoBackCommand_CanExecute(object obj) => !IsLoading && Browser2.CanGoBack;
+    private bool GoBackCommand_CanExecute(object obj)
+    {
+        return !IsLoading && Browser2.CanGoBack;
+    }
 
     public ICommand GoBackCommand => new RelayCommand(p => GoBackAction(), GoBackCommand_CanExecute);
 
@@ -142,7 +152,10 @@ public partial class WebConsoleControl : UserControlBase
         Browser2.GoBack();
     }
 
-    private bool GoForwardCommand_CanExecute(object obj) => !IsLoading && Browser2.CanGoForward;
+    private bool GoForwardCommand_CanExecute(object obj)
+    {
+        return !IsLoading && Browser2.CanGoForward;
+    }
 
     public ICommand GoForwardCommand => new RelayCommand(p => GoForwardAction(), GoForwardCommand_CanExecute);
 

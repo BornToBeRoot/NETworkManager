@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using NETworkManager.ViewModels;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Network;
 using NETworkManager.Utilities;
+using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
@@ -19,7 +20,7 @@ public partial class ARPTableView
         DataContext = _viewModel;
     }
 
-    private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
+    private void ContextMenu_Opened(object sender, RoutedEventArgs e)
     {
         if (sender is ContextMenu menu)
             menu.DataContext = _viewModel;

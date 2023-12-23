@@ -1,48 +1,33 @@
-﻿using ControlzEx.Theming;
-using MahApps.Metro.Controls.Dialogs;
-using MahApps.Metro.Theming;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
+using ControlzEx.Theming;
+using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.Theming;
 using NETworkManager.Models.Appearance;
 
 namespace NETworkManager.Settings;
 
 /// <summary>
-/// Class provides static variables and methods to change the theme and accent of the application.
+///     Class provides static variables and methods to change the theme and accent of the application.
 /// </summary>
 public static class AppearanceManager
 {
     /// <summary>
-    /// Name of the folder inside the application directory where the custom themes are stored.
+    ///     Name of the folder inside the application directory where the custom themes are stored.
     /// </summary>
     private const string ThemeFolderName = "Themes";
 
     /// <summary>
-    /// List who contains all MahApps.Metro themes.
-    /// </summary>
-    public static List<ThemeColorInfo> Themes { get; set; }
-
-    /// <summary>
-    /// List who contains all MahApps.Metro custom themes.
-    /// </summary>
-    public static List<ThemeInfo> CustomThemes { get; private set; }
-
-    /// <summary>
-    /// List who contains all MahApps.Metro accents.
-    /// </summary>
-    public static List<AccentColorInfo> Accents { get; set; }
-
-    /// <summary>
-    /// Contains the default settings for a new <see cref="BaseMetroDialog"/> 
+    ///     Contains the default settings for a new <see cref="BaseMetroDialog" />
     /// </summary>
     public static readonly MetroDialogSettings MetroDialog = new();
 
     /// <summary>
-    /// Load the MahApps.Metro themes and accents when needed.
+    ///     Load the MahApps.Metro themes and accents when needed.
     /// </summary>
     static AppearanceManager()
     {
@@ -64,7 +49,7 @@ public static class AppearanceManager
         MetroDialog.CustomResourceDictionary = new ResourceDictionary
         {
             Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml",
-                UriKind.RelativeOrAbsolute),
+                UriKind.RelativeOrAbsolute)
         };
 
         MetroDialog.DialogButtonFontSize = 14;
@@ -72,7 +57,22 @@ public static class AppearanceManager
     }
 
     /// <summary>
-    /// Change the appearance based on the user settings. This method should be called once, when starting the application.
+    ///     List who contains all MahApps.Metro themes.
+    /// </summary>
+    public static List<ThemeColorInfo> Themes { get; set; }
+
+    /// <summary>
+    ///     List who contains all MahApps.Metro custom themes.
+    /// </summary>
+    public static List<ThemeInfo> CustomThemes { get; private set; }
+
+    /// <summary>
+    ///     List who contains all MahApps.Metro accents.
+    /// </summary>
+    public static List<AccentColorInfo> Accents { get; set; }
+
+    /// <summary>
+    ///     Change the appearance based on the user settings. This method should be called once, when starting the application.
     /// </summary>
     public static void Load()
     {
@@ -90,7 +90,7 @@ public static class AppearanceManager
     }
 
     /// <summary>
-    /// Method to load the custom themes from a folder into the <see cref="ThemeManager"/>.
+    ///     Method to load the custom themes from a folder into the <see cref="ThemeManager" />.
     /// </summary>
     private static void LoadCustomThemes()
     {
@@ -110,7 +110,7 @@ public static class AppearanceManager
     }
 
     /// <summary>
-    /// Method to change the application theme.
+    ///     Method to change the application theme.
     /// </summary>
     /// <param name="name">Name of the MahApps theme base color.</param>
     public static void ChangeTheme(string name)
@@ -119,7 +119,7 @@ public static class AppearanceManager
     }
 
     /// <summary>
-    /// Method to change the application accent.
+    ///     Method to change the application accent.
     /// </summary>
     /// <param name="name">Name of the MahApps theme accent color.</param>
     public static void ChangeAccent(string name)
@@ -128,9 +128,9 @@ public static class AppearanceManager
     }
 
     /// <summary>
-    /// Method to change the application theme based on the name in <see cref="ThemeInfo"/>.
+    ///     Method to change the application theme based on the name in <see cref="ThemeInfo" />.
     /// </summary>
-    /// <param name="themeInfo">Theme as <see cref="ThemeInfo"/> to apply.</param>
+    /// <param name="themeInfo">Theme as <see cref="ThemeInfo" /> to apply.</param>
     public static void ChangeTheme(ThemeInfo themeInfo)
     {
         ThemeManager.Current.ChangeTheme(System.Windows.Application.Current, themeInfo.Name);

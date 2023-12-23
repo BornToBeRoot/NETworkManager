@@ -1,23 +1,26 @@
-﻿using System.Collections.ObjectModel;
-using NETworkManager.Controls;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Threading;
 using Dragablz;
 using MahApps.Metro.Controls.Dialogs;
-using System.Windows.Input;
-using NETworkManager.Views;
-using NETworkManager.Settings;
-using System.ComponentModel;
-using System.Windows.Data;
-using System;
-using System.Linq;
-using System.Diagnostics;
-using NETworkManager.Utilities;
-using System.Windows;
+using NETworkManager.Controls;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Profiles;
-using System.Windows.Threading;
-using NETworkManager.Models;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
+using RemoteDesktop = NETworkManager.Profiles.Application.RemoteDesktop;
 
 namespace NETworkManager.ViewModels;
 
@@ -237,10 +240,8 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     private void ReconnectAction(object view)
     {
         if (view is RemoteDesktopControl control)
-        {
             if (control.ReconnectCommand.CanExecute(null))
                 control.ReconnectCommand.Execute(null);
-        }
     }
 
     public ICommand DisconnectCommand => new RelayCommand(DisconnectAction, IsConnected_CanExecute);
@@ -248,10 +249,8 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     private void DisconnectAction(object view)
     {
         if (view is RemoteDesktopControl control)
-        {
             if (control.DisconnectCommand.CanExecute(null))
                 control.DisconnectCommand.Execute(null);
-        }
     }
 
     public ICommand FullscreenCommand => new RelayCommand(FullscreenAction, IsConnected_CanExecute);
@@ -285,8 +284,8 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
         {
             ConfigurationManager.OnDialogOpen();
 
-            await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error,
-                $"{Localization.Resources.Strings.CouldNotSendKeystroke}\n\nMessage:\n{ex.Message}");
+            await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                $"{Strings.CouldNotSendKeystroke}\n\nMessage:\n{ex.Message}");
 
             ConfigurationManager.OnDialogClose();
         }
@@ -326,7 +325,10 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
+    private bool ModifyProfile_CanExecute(object obj)
+    {
+        return SelectedProfile is { IsDynamic: false };
+    }
 
     public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
@@ -382,7 +384,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.Connect
+            Title = Strings.Connect
         };
 
         var remoteDesktopConnectViewModel = new RemoteDesktopConnectViewModel(async instance =>
@@ -391,7 +393,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
             ConfigurationManager.OnDialogClose();
 
             // Create new session info with default settings
-            var sessionInfo = NETworkManager.Profiles.Application.RemoteDesktop.CreateSessionInfo();
+            var sessionInfo = RemoteDesktop.CreateSessionInfo();
 
             if (instance.Host.Contains(':'))
             {
@@ -442,7 +444,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     {
         var profileInfo = SelectedProfile;
 
-        var sessionInfo = NETworkManager.Profiles.Application.RemoteDesktop.CreateSessionInfo(profileInfo);
+        var sessionInfo = RemoteDesktop.CreateSessionInfo(profileInfo);
 
         Connect(sessionInfo, profileInfo.Name);
     }
@@ -452,11 +454,11 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     {
         var profileInfo = SelectedProfile;
 
-        var sessionInfo = NETworkManager.Profiles.Application.RemoteDesktop.CreateSessionInfo(profileInfo);
+        var sessionInfo = RemoteDesktop.CreateSessionInfo(profileInfo);
 
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.ConnectAs
+            Title = Strings.ConnectAs
         };
 
         var remoteDesktopConnectViewModel = new RemoteDesktopConnectViewModel(async instance =>
@@ -630,7 +632,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     }
 
     private void TabItems_CollectionChanged(object sender,
-        System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        NotifyCollectionChangedEventArgs e)
     {
         ConfigurationManager.Current.RemoteDesktopHasTabs = TabItems.Count > 0;
     }

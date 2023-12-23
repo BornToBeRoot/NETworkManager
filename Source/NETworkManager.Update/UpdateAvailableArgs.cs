@@ -1,24 +1,24 @@
-﻿using Octokit;
-using System;
+﻿using System;
+using Octokit;
 
 namespace NETworkManager.Update;
 
 /// <summary>
-/// Contains informations about a program update.
+///     Contains informations about a program update.
 /// </summary>
 public class UpdateAvailableArgs : EventArgs
 {
     /// <summary>
-    /// Release of the program update.
-    /// </summary>
-    public Release Release { get; private set; }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="UpdateAvailableArgs"/> class with parameters.
+    ///     Initializes a new instance of the <see cref="UpdateAvailableArgs" /> class with parameters.
     /// </summary>
     /// <param name="release">Release of the program update.</param>
     public UpdateAvailableArgs(Release release)
     {
         Release = release;
     }
+
+    /// <summary>
+    ///     Release of the program update.
+    /// </summary>
+    public Release Release { get; private set; }
 }

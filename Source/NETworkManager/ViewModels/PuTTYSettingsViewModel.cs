@@ -1,14 +1,17 @@
-﻿using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Windows.Input;
-using NETworkManager.Models.PuTTY;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Windows.Input;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models.PuTTY;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using PuTTY = NETworkManager.Settings.Application.PuTTY;
 
 namespace NETworkManager.ViewModels;
 
@@ -20,7 +23,7 @@ public class PuTTYSettingsViewModel : ViewModelBase
 
     public bool IsPortable => ConfigurationManager.Current.IsPortable;
 
-    public string PortableLogPath => Settings.Application.PuTTY.PortableLogPath;
+    public string PortableLogPath => PuTTY.PortableLogPath;
 
     private readonly bool _isLoading;
 
@@ -448,12 +451,12 @@ public class PuTTYSettingsViewModel : ViewModelBase
 
     private void ApplicationBrowseFileAction()
     {
-        var openFileDialog = new System.Windows.Forms.OpenFileDialog
+        var openFileDialog = new OpenFileDialog
         {
             Filter = GlobalStaticConfiguration.ApplicationFileExtensionFilter
         };
 
-        if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+        if (openFileDialog.ShowDialog() == DialogResult.OK)
             ApplicationFilePath = openFileDialog.FileName;
     }
 
@@ -468,12 +471,12 @@ public class PuTTYSettingsViewModel : ViewModelBase
 
     private void PrivateKeyFileBrowseFileAction()
     {
-        var openFileDialog = new System.Windows.Forms.OpenFileDialog
+        var openFileDialog = new OpenFileDialog
         {
             Filter = GlobalStaticConfiguration.PuTTYPrivateKeyFileExtensionFilter
         };
 
-        if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+        if (openFileDialog.ShowDialog() == DialogResult.OK)
             PrivateKeyFile = openFileDialog.FileName;
     }
 
@@ -481,12 +484,12 @@ public class PuTTYSettingsViewModel : ViewModelBase
 
     private void LogPathBrowseFolderAction()
     {
-        var openFolderDialog = new System.Windows.Forms.FolderBrowserDialog
+        var openFolderDialog = new FolderBrowserDialog
         {
             ShowNewFolderButton = true
         };
 
-        if (openFolderDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+        if (openFolderDialog.ShowDialog() == DialogResult.OK)
             LogPath = openFolderDialog.SelectedPath;
     }
 
@@ -504,15 +507,15 @@ public class PuTTYSettingsViewModel : ViewModelBase
         {
             var settings = AppearanceManager.MetroDialog;
 
-            settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+            settings.AffirmativeButtonText = Strings.OK;
 
-            await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message,
+            await _dialogCoordinator.ShowMessageAsync(this, Strings.Error, ex.Message,
                 MessageDialogStyle.Affirmative, settings);
         }
     }
 
     /// <summary>
-    /// Method to set the <see cref="ApplicationFilePath"/> from drag and drop.
+    ///     Method to set the <see cref="ApplicationFilePath" /> from drag and drop.
     /// </summary>
     /// <param name="filePath">Path to the file.</param>
     public void SetApplicationFilePathFromDragDrop(string filePath)
@@ -523,7 +526,7 @@ public class PuTTYSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Method to set the <see cref="PrivateKeyFile"/> drag drop.
+    ///     Method to set the <see cref="PrivateKeyFile" /> drag drop.
     /// </summary>
     /// <param name="filePath">Path to the file.</param>
     public void SetPrivateKeyFilePathFromDragDrop(string filePath)
@@ -534,7 +537,7 @@ public class PuTTYSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Method to set the <see cref="LogPath"/> from drag and drop.
+    ///     Method to set the <see cref="LogPath" /> from drag and drop.
     /// </summary>
     /// <param name="folderPath">Path to the folder.</param>
     public void SetLogPathFolderPathFromDragDrop(string folderPath)

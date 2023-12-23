@@ -1,22 +1,12 @@
 ﻿namespace NETworkManager.Models.Appearance;
 
 /// <summary>
-/// Class contains information's about MahApps.Metro custom theme.
+///     Class contains information's about MahApps.Metro custom theme.
 /// </summary>
 public class ThemeInfo
 {
     /// <summary>
-    /// Name of the MahApps.Metro custom theme.
-    /// </summary>
-    public string Name { get; set; }
-
-    /// <summary>
-    /// Display name of the MahApps.Metro custom theme.
-    /// </summary>
-    public string DisplayName { get; set; }
-
-    /// <summary>
-    /// Initializes a new instance of the<see cref="ThemeInfo"/> class with properties.
+    ///     Initializes a new instance of the<see cref="ThemeInfo" /> class with properties.
     /// </summary>
     /// <param name="name">Name of of the MahApps.Metro custom theme.</param>
     /// <param name="displayName">Display name of the MahApps.Metro custom theme.</param>
@@ -25,4 +15,14 @@ public class ThemeInfo
         Name = name;
         DisplayName = displayName;
     }
+
+    /// <summary>
+    ///     Name of the MahApps.Metro custom theme.
+    /// </summary>
+    public string Name { get; set; }
+
+    /// <summary>
+    ///     Display name of the MahApps.Metro custom theme.
+    /// </summary>
+    public string DisplayName { get; set; }
 }

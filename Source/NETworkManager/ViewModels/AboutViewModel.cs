@@ -1,19 +1,57 @@
-﻿using NETworkManager.Settings;
-using System.Windows.Input;
-using System.Diagnostics;
-using NETworkManager.Update;
-using System;
+﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows.Data;
-using NETworkManager.Localization.Resources;
-using NETworkManager.Utilities;
+using System.Windows.Input;
 using NETworkManager.Documentation;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Properties;
+using NETworkManager.Settings;
+using NETworkManager.Update;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
 public class AboutViewModel : ViewModelBase
 {
+    #region Constructor
+
+    public AboutViewModel()
+    {
+        LibrariesView = CollectionViewSource.GetDefaultView(LibraryManager.List);
+        LibrariesView.SortDescriptions.Add(new SortDescription(nameof(LibraryInfo.Name), ListSortDirection.Ascending));
+
+        ExternalServicesView = CollectionViewSource.GetDefaultView(ExternalServicesManager.List);
+        ExternalServicesView.SortDescriptions.Add(new SortDescription(nameof(ExternalServicesInfo.Name),
+            ListSortDirection.Ascending));
+
+        ResourcesView = CollectionViewSource.GetDefaultView(ResourceManager.List);
+        ResourcesView.SortDescriptions.Add(new SortDescription(nameof(ResourceInfo.Name), ListSortDirection.Ascending));
+    }
+
+    #endregion
+
+    #region Methods
+
+    private void CheckForUpdates()
+    {
+        IsUpdateAvailable = false;
+        ShowUpdaterMessage = false;
+
+        IsUpdateCheckRunning = true;
+
+        var updater = new Updater();
+
+        updater.UpdateAvailable += Updater_UpdateAvailable;
+        updater.NoUpdateAvailable += Updater_NoUpdateAvailable;
+        updater.Error += Updater_Error;
+
+        updater.CheckOnGitHub(Resources.NETworkManager_GitHub_User, Resources.NETworkManager_GitHub_Repo,
+            AssemblyManager.Current.Version, SettingsManager.Current.Update_CheckForPreReleases);
+    }
+
+    #endregion
+
     #region Variables
 
     public string Version => $"{Strings.Version} {AssemblyManager.Current.Version}";
@@ -164,23 +202,6 @@ public class AboutViewModel : ViewModelBase
 
     #endregion
 
-    #region Constructor
-
-    public AboutViewModel()
-    {
-        LibrariesView = CollectionViewSource.GetDefaultView(LibraryManager.List);
-        LibrariesView.SortDescriptions.Add(new SortDescription(nameof(LibraryInfo.Name), ListSortDirection.Ascending));
-
-        ExternalServicesView = CollectionViewSource.GetDefaultView(ExternalServicesManager.List);
-        ExternalServicesView.SortDescriptions.Add(new SortDescription(nameof(ExternalServicesInfo.Name),
-            ListSortDirection.Ascending));
-
-        ResourcesView = CollectionViewSource.GetDefaultView(ResourceManager.List);
-        ResourcesView.SortDescriptions.Add(new SortDescription(nameof(ResourceInfo.Name), ListSortDirection.Ascending));
-    }
-
-    #endregion
-
     #region Commands & Actions
 
     public ICommand CheckForUpdatesCommand => new RelayCommand(_ => CheckForUpdatesAction());
@@ -212,27 +233,6 @@ public class AboutViewModel : ViewModelBase
     private void OpenLicenseFolderAction()
     {
         Process.Start("explorer.exe", LibraryManager.GetLicenseLocation());
-    }
-
-    #endregion
-
-    #region Methods
-
-    private void CheckForUpdates()
-    {
-        IsUpdateAvailable = false;
-        ShowUpdaterMessage = false;
-
-        IsUpdateCheckRunning = true;
-
-        var updater = new Updater();
-
-        updater.UpdateAvailable += Updater_UpdateAvailable;
-        updater.NoUpdateAvailable += Updater_NoUpdateAvailable;
-        updater.Error += Updater_Error;
-
-        updater.CheckOnGitHub(Resources.NETworkManager_GitHub_User, Resources.NETworkManager_GitHub_Repo,
-            AssemblyManager.Current.Version, SettingsManager.Current.Update_CheckForPreReleases);
     }
 
     #endregion

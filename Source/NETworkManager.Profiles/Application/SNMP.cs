@@ -7,14 +7,14 @@ public static class SNMP
 {
     public static SNMPSessionInfo CreateSessionInfo()
     {
-        return new SNMPSessionInfo()
+        return new SNMPSessionInfo
         {
             Mode = SettingsManager.Current.SNMP_Mode,
 
             Version = SettingsManager.Current.SNMP_Version,
             Security = SettingsManager.Current.SNMP_Security,
             AuthenticationProvider = SettingsManager.Current.SNMP_AuthenticationProvider,
-            PrivacyProvider = SettingsManager.Current.SNMP_PrivacyProvider,
+            PrivacyProvider = SettingsManager.Current.SNMP_PrivacyProvider
         };
     }
 
@@ -23,7 +23,7 @@ public static class SNMP
         SNMPSessionInfo info = new();
 
         // Get group info
-        GroupInfo group = ProfileManager.GetGroup(profile.Group);
+        var group = ProfileManager.GetGroup(profile.Group);
 
         info.Host = profile.SNMP_Host;
 

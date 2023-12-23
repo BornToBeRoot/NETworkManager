@@ -1,5 +1,5 @@
-﻿using NETworkManager.Utilities;
-using System.Windows.Input;
+﻿using System.Windows.Input;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 

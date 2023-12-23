@@ -1,15 +1,17 @@
-﻿using Lextm.SharpSnmpLib.Messaging;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Models.Network;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using NETworkManager.Views;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
+using Lextm.SharpSnmpLib.Messaging;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
@@ -115,7 +117,7 @@ public class SNMPSettingsViewModel : ViewModelBase
 
     private void LoadSettings()
     {
-        WalkModes = System.Enum.GetValues(typeof(WalkMode)).Cast<WalkMode>().OrderBy(x => x.ToString()).ToList();
+        WalkModes = Enum.GetValues(typeof(WalkMode)).Cast<WalkMode>().OrderBy(x => x.ToString()).ToList();
         WalkMode = WalkModes.First(x => x == SettingsManager.Current.SNMP_WalkMode);
         Timeout = SettingsManager.Current.SNMP_Timeout;
         Port = SettingsManager.Current.SNMP_Port;
@@ -154,7 +156,7 @@ public class SNMPSettingsViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.AddOIDProfile
+            Title = Strings.AddOIDProfile
         };
 
         var viewModel = new SNMPOIDProfileViewModel(async instance =>
@@ -177,7 +179,7 @@ public class SNMPSettingsViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.EditOIDProfile
+            Title = Strings.EditOIDProfile
         };
 
         var viewModel = new SNMPOIDProfileViewModel(async instance =>
@@ -201,7 +203,7 @@ public class SNMPSettingsViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.DeleteOIDProfile
+            Title = Strings.DeleteOIDProfile
         };
 
         var confirmDeleteViewModel = new ConfirmDeleteViewModel(_ =>
@@ -210,7 +212,7 @@ public class SNMPSettingsViewModel : ViewModelBase
 
                 SettingsManager.Current.SNMP_OidProfiles.Remove(SelectedOIDProfile);
             }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-            Localization.Resources.Strings.DeleteOIDProfileMessage);
+            Strings.DeleteOIDProfileMessage);
 
         customDialog.Content = new ConfirmDeleteDialog
         {

@@ -1,26 +1,88 @@
-﻿using NETworkManager.Models.Network;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Windows.Input;
-using System.ComponentModel;
-using System.Windows.Data;
 using System.Collections.ObjectModel;
-using NETworkManager.Utilities;
-using NETworkManager.Settings;
-using System.Windows.Threading;
+using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Threading;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 using NETworkManager.Views;
-using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels;
 
 public class ListenersViewModel : ViewModelBase
 {
+    #region Contructor, load settings
+
+    public ListenersViewModel(IDialogCoordinator instance)
+    {
+        _isLoading = true;
+
+        _dialogCoordinator = instance;
+
+        // Result view + search
+        ResultsView = CollectionViewSource.GetDefaultView(Results);
+
+        ((ListCollectionView)ResultsView).CustomSort = Comparer<ListenerInfo>.Create((x, y) =>
+            IPAddressHelper.CompareIPAddresses(x.IPAddress, y.IPAddress));
+
+        ResultsView.Filter = o =>
+        {
+            if (o is not ListenerInfo info)
+                return false;
+
+            if (string.IsNullOrEmpty(Search))
+                return true;
+
+            // Search by IP Address, Port and Protocol
+            return info.IPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.Port.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.Protocol.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
+        };
+
+        // Get listeners
+        Refresh().ConfigureAwait(false);
+
+        // Auto refresh
+        _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
+
+        AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
+        SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x =>
+            x.Value == SettingsManager.Current.Listeners_AutoRefreshTime.Value &&
+            x.TimeUnit == SettingsManager.Current.Listeners_AutoRefreshTime.TimeUnit);
+        AutoRefreshEnabled = SettingsManager.Current.Listeners_AutoRefreshEnabled;
+
+        _isLoading = false;
+    }
+
+    #endregion
+
+    #region Events
+
+    private async void AutoRefreshTimer_Tick(object sender, EventArgs e)
+    {
+        // Stop timer...
+        _autoRefreshTimer.Stop();
+
+        // Refresh
+        await Refresh();
+
+        // Restart timer...
+        _autoRefreshTimer.Start();
+    }
+
+    #endregion
+
     #region Variables
 
     private readonly IDialogCoordinator _dialogCoordinator;
@@ -197,57 +259,15 @@ public class ListenersViewModel : ViewModelBase
 
     #endregion
 
-    #region Contructor, load settings
-
-    public ListenersViewModel(IDialogCoordinator instance)
-    {
-        _isLoading = true;
-
-        _dialogCoordinator = instance;
-
-        // Result view + search
-        ResultsView = CollectionViewSource.GetDefaultView(Results);
-
-        ((ListCollectionView)ResultsView).CustomSort = Comparer<ListenerInfo>.Create((x, y) =>
-            IPAddressHelper.CompareIPAddresses(x.IPAddress, y.IPAddress));
-
-        ResultsView.Filter = o =>
-        {
-            if (o is not ListenerInfo info)
-                return false;
-
-            if (string.IsNullOrEmpty(Search))
-                return true;
-
-            // Search by IP Address, Port and Protocol
-            return info.IPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   info.Port.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   info.Protocol.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
-        };
-
-        // Get listeners
-        Refresh().ConfigureAwait(false);
-
-        // Auto refresh
-        _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
-
-        AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
-        SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x =>
-            x.Value == SettingsManager.Current.Listeners_AutoRefreshTime.Value &&
-            x.TimeUnit == SettingsManager.Current.Listeners_AutoRefreshTime.TimeUnit);
-        AutoRefreshEnabled = SettingsManager.Current.Listeners_AutoRefreshEnabled;
-
-        _isLoading = false;
-    }
-
-    #endregion
-
     #region ICommands & Actions
 
     public ICommand RefreshCommand => new RelayCommand(_ => RefreshAction().ConfigureAwait(false), Refresh_CanExecute);
 
-    private bool Refresh_CanExecute(object parameter) => Application.Current.MainWindow != null &&
-                                                         !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool Refresh_CanExecute(object parameter)
+    {
+        return Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    }
 
     private async Task RefreshAction()
     {
@@ -262,7 +282,7 @@ public class ListenersViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.Export
+            Title = Strings.Export
         };
 
         var exportViewModel = new ExportViewModel(async instance =>
@@ -279,10 +299,10 @@ public class ListenersViewModel : ViewModelBase
             catch (Exception ex)
             {
                 var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                settings.AffirmativeButtonText = Strings.OK;
 
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error,
-                    Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
                     Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
             }
 
@@ -328,22 +348,6 @@ public class ListenersViewModel : ViewModelBase
         // Temporarily stop timer...
         if (AutoRefreshEnabled)
             _autoRefreshTimer.Stop();
-    }
-
-    #endregion
-
-    #region Events
-
-    private async void AutoRefreshTimer_Tick(object sender, EventArgs e)
-    {
-        // Stop timer...
-        _autoRefreshTimer.Stop();
-
-        // Refresh
-        await Refresh();
-
-        // Restart timer...
-        _autoRefreshTimer.Start();
     }
 
     #endregion

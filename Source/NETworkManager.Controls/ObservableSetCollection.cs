@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-
 namespace NETworkManager.Controls;
 
 public class ObservableSetCollection<T> : ObservableCollection<T>
@@ -28,7 +27,7 @@ public class ObservableSetCollection<T> : ObservableCollection<T>
 
     protected override void SetItem(int index, T item)
     {
-        int i = IndexOf(item);
+        var i = IndexOf(item);
 
         if (i >= 0 && i != index)
             return; // Item already exists

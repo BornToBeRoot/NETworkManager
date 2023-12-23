@@ -6,6 +6,28 @@ namespace NETworkManager.Models.Network;
 
 public class BandwidthMeter
 {
+    #region Constructor
+
+    public BandwidthMeter(string id)
+    {
+        _timer.Interval = TimeSpan.FromMilliseconds(UpdateInterval);
+        _timer.Tick += Timer_Tick;
+
+        _networkInterface = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces()
+            .FirstOrDefault(x => x.Id == id);
+    }
+
+    #endregion
+
+    #region Events
+
+    private void Timer_Tick(object sender, EventArgs e)
+    {
+        Update();
+    }
+
+    #endregion
+
     #region Variables
 
     private double _updateInterval = 1000;
@@ -26,7 +48,7 @@ public class BandwidthMeter
 
     public bool IsRunning => _timer.IsEnabled;
 
-    private DispatcherTimer _timer = new DispatcherTimer();
+    private readonly DispatcherTimer _timer = new();
     private readonly System.Net.NetworkInformation.NetworkInterface _networkInterface;
     private long _previousBytesSent;
     private long _previousBytesReceived;
@@ -41,19 +63,6 @@ public class BandwidthMeter
     protected virtual void OnUpdateSpeed(BandwidthMeterSpeedArgs e)
     {
         UpdateSpeed?.Invoke(this, e);
-    }
-
-    #endregion
-
-    #region Constructor
-
-    public BandwidthMeter(string id)
-    {
-        _timer.Interval = TimeSpan.FromMilliseconds(UpdateInterval);
-        _timer.Tick += Timer_Tick;
-
-        _networkInterface = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces()
-            .FirstOrDefault(x => x.Id == id);
     }
 
     #endregion
@@ -96,15 +105,6 @@ public class BandwidthMeter
 
         OnUpdateSpeed(new BandwidthMeterSpeedArgs(DateTime.Now, totalBytesReceived, totalBytesSent, byteReceivedSpeed,
             byteSentSpeed));
-    }
-
-    #endregion
-
-    #region Events
-
-    private void Timer_Tick(object sender, EventArgs e)
-    {
-        Update();
     }
 
     #endregion

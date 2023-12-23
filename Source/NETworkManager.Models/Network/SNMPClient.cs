@@ -1,15 +1,14 @@
-﻿using Lextm.SharpSnmpLib;
-using Lextm.SharpSnmpLib.Messaging;
-using Lextm.SharpSnmpLib.Security;
-using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Security;
 using System.Threading.Tasks;
+using Lextm.SharpSnmpLib;
+using Lextm.SharpSnmpLib.Messaging;
+using Lextm.SharpSnmpLib.Security;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
@@ -18,7 +17,7 @@ public sealed class SNMPClient
     #region Variables
 
     /// <summary>
-    /// List of known SNMPv3 error codes with their Object Identifier.
+    ///     List of known SNMPv3 error codes with their Object Identifier.
     /// </summary>
     private readonly Dictionary<ObjectIdentifier, SNMPV3ErrorCode> _snmpv3ErrorOIDs = new()
     {
@@ -31,12 +30,12 @@ public sealed class SNMPClient
     #region Events
 
     /// <summary>
-    /// Event that is called when an SNMP message is received (Applies to Get and Walk).
+    ///     Event that is called when an SNMP message is received (Applies to Get and Walk).
     /// </summary>
     public event EventHandler<SNMPReceivedArgs> Received;
 
     /// <summary>
-    /// Private method to call the <see cref="Received"/> event.
+    ///     Private method to call the <see cref="Received" /> event.
     /// </summary>
     /// <param name="e">SNMP received arguments.</param>
     private void OnReceived(SNMPReceivedArgs e)
@@ -45,12 +44,12 @@ public sealed class SNMPClient
     }
 
     /// <summary>
-    /// Event that is called when the data is updated (Applies to Set).
+    ///     Event that is called when the data is updated (Applies to Set).
     /// </summary>
     public event EventHandler DataUpdated;
 
     /// <summary>
-    /// Private method to call the <see cref="DataUpdated"/> event.
+    ///     Private method to call the <see cref="DataUpdated" /> event.
     /// </summary>
     private void OnDataUpdated()
     {
@@ -58,12 +57,12 @@ public sealed class SNMPClient
     }
 
     /// <summary>
-    /// Event that is called when an error occurs.
+    ///     Event that is called when an error occurs.
     /// </summary>
     public event EventHandler<SNMPErrorArgs> Error;
 
     /// <summary>
-    /// Private method to call the <see cref="Error"/> event.
+    ///     Private method to call the <see cref="Error" /> event.
     /// </summary>
     /// <param name="e">SNMP error arguments.</param>
     private void OnError(SNMPErrorArgs e)
@@ -72,12 +71,12 @@ public sealed class SNMPClient
     }
 
     /// <summary>
-    /// Event that is called when the operation is complete.
+    ///     Event that is called when the operation is complete.
     /// </summary>
     public event EventHandler Complete;
 
     /// <summary>
-    /// Private method to call the <see cref="Complete"/> event.
+    ///     Private method to call the <see cref="Complete" /> event.
     /// </summary>
     private void OnComplete()
     {
@@ -85,12 +84,12 @@ public sealed class SNMPClient
     }
 
     /// <summary>
-    /// Event that is called when the operation is canceled.
+    ///     Event that is called when the operation is canceled.
     /// </summary>
     public event EventHandler Canceled;
 
     /// <summary>
-    /// Private method to call the <see cref="Canceled"/> event.
+    ///     Private method to call the <see cref="Canceled" /> event.
     /// </summary>
     private void OnCanceled()
     {
@@ -102,7 +101,7 @@ public sealed class SNMPClient
     #region Methods
 
     /// <summary>
-    /// Get asynchronously the SNMP information of the given IP address (Applies to v1 and v2c).
+    ///     Get asynchronously the SNMP information of the given IP address (Applies to v1 and v2c).
     /// </summary>
     /// <param name="ipAddress">IP address of the host.</param>
     /// <param name="oids">List of Object Identifiers.</param>
@@ -154,7 +153,7 @@ public sealed class SNMPClient
     }
 
     /// <summary>
-    /// Get asynchronously the SNMP information of the given IP address (Applies to v3).
+    ///     Get asynchronously the SNMP information of the given IP address (Applies to v3).
     /// </summary>
     /// <param name="ipAddress">IP address of the host.</param>
     /// <param name="oids">List of Object Identifiers.</param>
@@ -191,7 +190,6 @@ public sealed class SNMPClient
 
                 // Check if the response is a report message
                 if (response is ReportMessage)
-                {
                     // Check for SNMPv3 error codes
                     if (pdu.Variables.Count > 0 &&
                         _snmpv3ErrorOIDs.TryGetValue(pdu.Variables[0].Id, out var errorCodeV3))
@@ -200,7 +198,6 @@ public sealed class SNMPClient
 
                         return;
                     }
-                }
 
                 // Return the SNMP information
                 foreach (var variable in pdu.Variables)
@@ -222,7 +219,7 @@ public sealed class SNMPClient
     }
 
     /// <summary>
-    /// Walk asynchronously the SNMP information of the given IP address (Applies to v1 and v2c).
+    ///     Walk asynchronously the SNMP information of the given IP address (Applies to v1 and v2c).
     /// </summary>
     /// <param name="ipAddress">IP address of the host.</param>
     /// <param name="oid">Object Identifier to use for the walk.</param>
@@ -307,7 +304,7 @@ public sealed class SNMPClient
     }
 
     /// <summary>
-    /// Walk asynchronously the SNMP information of the given IP address (Applies to v3).
+    ///     Walk asynchronously the SNMP information of the given IP address (Applies to v3).
     /// </summary>
     /// <param name="ipAddress">IP address of the host.</param>
     /// <param name="oid">Object Identifier to use for the walk.</param>
@@ -394,7 +391,6 @@ public sealed class SNMPClient
 
                             // Check if the response is a report message
                             if (response is ReportMessage)
-                            {
                                 // Check for SNMPv3 error codes
                                 if (pdu.Variables.Count > 0 &&
                                     _snmpv3ErrorOIDs.TryGetValue(pdu.Variables[0].Id, out errorCodeV3))
@@ -403,7 +399,6 @@ public sealed class SNMPClient
 
                                     return;
                                 }
-                            }
                         }
                     }
 
@@ -452,7 +447,7 @@ public sealed class SNMPClient
     }
 
     /// <summary>
-    /// Set asynchronously the SNMP information of the given IP address (Applies to v1 and v2c).
+    ///     Set asynchronously the SNMP information of the given IP address (Applies to v1 and v2c).
     /// </summary>
     /// <param name="ipAddress">IP address of the host.</param>
     /// <param name="oid">Object Identifier to use for the set.</param>
@@ -502,7 +497,7 @@ public sealed class SNMPClient
     }
 
     /// <summary>
-    /// Set asynchronously the SNMP information of the given IP address (Applies to v3).
+    ///     Set asynchronously the SNMP information of the given IP address (Applies to v3).
     /// </summary>
     /// <param name="ipAddress">IP address of the host.</param>
     /// <param name="oid">Object Identifier to use for the set.</param>
@@ -540,7 +535,6 @@ public sealed class SNMPClient
 
                 // Check if the response is a report message
                 if (response is ReportMessage)
-                {
                     // Check for SNMPv3 error codes
                     if (pdu.Variables.Count > 0 &&
                         _snmpv3ErrorOIDs.TryGetValue(pdu.Variables[0].Id, out var errorCodeV3))
@@ -549,7 +543,6 @@ public sealed class SNMPClient
 
                         return;
                     }
-                }
 
                 OnDataUpdated();
             }
@@ -569,7 +562,7 @@ public sealed class SNMPClient
     }
 
     /// <summary>
-    /// Create the privacy provider based on the given information's.
+    ///     Create the privacy provider based on the given information's.
     /// </summary>
     /// <param name="options">SNMP v3 options.</param>
     /// <returns>Privacy provider.</returns>
@@ -590,7 +583,7 @@ public sealed class SNMPClient
     }
 
     /// <summary>
-    /// Create the privacy provider with default values.
+    ///     Create the privacy provider with default values.
     /// </summary>
     /// <returns>Privacy provider.</returns>
     private static IPrivacyProvider GetPrivacyProvider()
@@ -599,7 +592,7 @@ public sealed class SNMPClient
     }
 
     /// <summary>
-    /// Create the privacy provider based on the given information's.
+    ///     Create the privacy provider based on the given information's.
     /// </summary>
     /// <param name="authProvider">Authentication provider to use.</param>
     /// <param name="auth">Authentication password.</param>
@@ -610,7 +603,7 @@ public sealed class SNMPClient
     }
 
     /// <summary>
-    /// Create the privacy provider based on the given information's.
+    ///     Create the privacy provider based on the given information's.
     /// </summary>
     /// <param name="authProvider">Authentication provider to use.</param>
     /// <param name="auth">Authentication password.</param>
@@ -634,12 +627,12 @@ public sealed class SNMPClient
                 GetAuthenticationProvider(authProvider, auth)),
             SNMPV3PrivacyProvider.AES256 => new AES256PrivacyProvider(new OctetString(privPlain),
                 GetAuthenticationProvider(authProvider, auth)),
-            _ => null,
+            _ => null
         };
     }
 
     /// <summary>
-    /// Create the authentication provider based on the given information's.
+    ///     Create the authentication provider based on the given information's.
     /// </summary>
     /// <param name="authProvider">Authentication provider to use.</param>
     /// <param name="auth">Authentication password.</param>
@@ -658,7 +651,7 @@ public sealed class SNMPClient
             SNMPV3AuthenticationProvider.SHA256 => new SHA256AuthenticationProvider(new OctetString(authPlain)),
             SNMPV3AuthenticationProvider.SHA384 => new SHA384AuthenticationProvider(new OctetString(authPlain)),
             SNMPV3AuthenticationProvider.SHA512 => new SHA512AuthenticationProvider(new OctetString(authPlain)),
-            _ => null,
+            _ => null
         };
     }
 

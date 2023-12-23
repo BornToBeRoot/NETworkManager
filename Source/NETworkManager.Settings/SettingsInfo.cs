@@ -11,6 +11,7 @@ using NETworkManager.Models;
 using NETworkManager.Models.AWS;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
+using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Utilities;
@@ -2548,10 +2549,10 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private Models.PowerShell.ExecutionPolicy _powerShell_ExecutionPolicy =
+    private ExecutionPolicy _powerShell_ExecutionPolicy =
         GlobalStaticConfiguration.PowerShell_ExecutionPolicy;
 
-    public Models.PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy
+    public ExecutionPolicy PowerShell_ExecutionPolicy
     {
         get => _powerShell_ExecutionPolicy;
         set

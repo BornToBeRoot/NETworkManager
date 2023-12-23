@@ -1,21 +1,167 @@
-﻿using NETworkManager.Models.Network;
+﻿using System.Collections.Generic;
+using System.Security;
+using System.Xml.Serialization;
+using NETworkManager.Models.Network;
 using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
-using System.Collections.Generic;
-using System.Security;
-using System.Xml.Serialization;
 
 namespace NETworkManager.Profiles;
 
 /// <summary>
-/// Class represents a group.
+///     Class represents a group.
 /// </summary>
 public class GroupInfo
 {
     /// <summary>
-    /// Name of the group.
+    ///     Initializes a new instance of the<see cref="GroupInfo" /> class.
+    /// </summary>
+    public GroupInfo()
+    {
+        Profiles = new List<ProfileInfo>();
+    }
+
+    /// <summary>
+    ///     Initializes a new instance of the<see cref="GroupInfo" /> class with name.
+    /// </summary>
+    public GroupInfo(string name) : this()
+    {
+        Name = name;
+    }
+
+    /// <summary>
+    ///     Initializes a new instance of the<see cref="GroupInfo" /> class with properties.
+    /// </summary>
+    public GroupInfo(GroupInfo group) : this(group.Name)
+    {
+        Profiles = group.Profiles;
+
+        // Remote Desktop
+        RemoteDesktop_UseCredentials = group.RemoteDesktop_UseCredentials;
+        RemoteDesktop_Username = group.RemoteDesktop_Username;
+        RemoteDesktop_Domain = group.RemoteDesktop_Domain;
+        RemoteDesktop_Password = group.RemoteDesktop_Password;
+        RemoteDesktop_OverrideDisplay = group.RemoteDesktop_OverrideDisplay;
+        RemoteDesktop_AdjustScreenAutomatically = group.RemoteDesktop_AdjustScreenAutomatically;
+        RemoteDesktop_UseCurrentViewSize = group.RemoteDesktop_UseCurrentViewSize;
+        RemoteDesktop_UseFixedScreenSize = group.RemoteDesktop_UseFixedScreenSize;
+        RemoteDesktop_ScreenWidth = group.RemoteDesktop_ScreenWidth;
+        RemoteDesktop_ScreenHeight = group.RemoteDesktop_ScreenHeight;
+        RemoteDesktop_UseCustomScreenSize = group.RemoteDesktop_UseCustomScreenSize;
+        RemoteDesktop_CustomScreenWidth = group.RemoteDesktop_CustomScreenWidth;
+        RemoteDesktop_CustomScreenHeight = group.RemoteDesktop_CustomScreenHeight;
+        RemoteDesktop_OverrideColorDepth = group.RemoteDesktop_OverrideColorDepth;
+        RemoteDesktop_ColorDepth = group.RemoteDesktop_ColorDepth;
+        RemoteDesktop_OverridePort = group.RemoteDesktop_OverridePort;
+        RemoteDesktop_Port = group.RemoteDesktop_Port;
+        RemoteDesktop_OverrideCredSspSupport = group.RemoteDesktop_OverrideCredSspSupport;
+        RemoteDesktop_EnableCredSspSupport = group.RemoteDesktop_EnableCredSspSupport;
+        RemoteDesktop_OverrideAuthenticationLevel = group.RemoteDesktop_OverrideAuthenticationLevel;
+        RemoteDesktop_AuthenticationLevel = group.RemoteDesktop_AuthenticationLevel;
+        RemoteDesktop_OverrideGatewayServer = group.RemoteDesktop_OverrideGatewayServer;
+        RemoteDesktop_EnableGatewayServer = group.RemoteDesktop_EnableGatewayServer;
+        RemoteDesktop_GatewayServerHostname = group.RemoteDesktop_GatewayServerHostname;
+        RemoteDesktop_GatewayServerBypassLocalAddresses = group.RemoteDesktop_GatewayServerBypassLocalAddresses;
+        RemoteDesktop_GatewayServerLogonMethod = group.RemoteDesktop_GatewayServerLogonMethod;
+        RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer =
+            group.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+        RemoteDesktop_UseGatewayServerCredentials = group.RemoteDesktop_UseGatewayServerCredentials;
+        RemoteDesktop_GatewayServerUsername = group.RemoteDesktop_GatewayServerUsername;
+        RemoteDesktop_GatewayServerDomain = group.RemoteDesktop_GatewayServerDomain;
+        RemoteDesktop_GatewayServerPassword = group.RemoteDesktop_GatewayServerPassword;
+        RemoteDesktop_OverrideAudioRedirectionMode = group.RemoteDesktop_OverrideAudioRedirectionMode;
+        RemoteDesktop_AudioRedirectionMode = group.RemoteDesktop_AudioRedirectionMode;
+        RemoteDesktop_OverrideAudioCaptureRedirectionMode = group.RemoteDesktop_OverrideAudioCaptureRedirectionMode;
+        RemoteDesktop_AudioCaptureRedirectionMode = group.RemoteDesktop_AudioCaptureRedirectionMode;
+        RemoteDesktop_OverrideApplyWindowsKeyCombinations = group.RemoteDesktop_OverrideApplyWindowsKeyCombinations;
+        RemoteDesktop_KeyboardHookMode = group.RemoteDesktop_KeyboardHookMode;
+        RemoteDesktop_OverrideRedirectClipboard = group.RemoteDesktop_OverrideRedirectClipboard;
+        RemoteDesktop_RedirectClipboard = group.RemoteDesktop_RedirectClipboard;
+        RemoteDesktop_OverrideRedirectDevices = group.RemoteDesktop_OverrideRedirectDevices;
+        RemoteDesktop_RedirectDevices = group.RemoteDesktop_RedirectDevices;
+        RemoteDesktop_OverrideRedirectDrives = group.RemoteDesktop_OverrideRedirectDrives;
+        RemoteDesktop_RedirectDrives = group.RemoteDesktop_RedirectDrives;
+        RemoteDesktop_OverrideRedirectPorts = group.RemoteDesktop_OverrideRedirectPorts;
+        RemoteDesktop_RedirectPorts = group.RemoteDesktop_RedirectPorts;
+        RemoteDesktop_OverrideRedirectSmartcards = group.RemoteDesktop_OverrideRedirectSmartcards;
+        RemoteDesktop_RedirectSmartCards = group.RemoteDesktop_RedirectSmartCards;
+        RemoteDesktop_OverrideRedirectPrinters = group.RemoteDesktop_OverrideRedirectPrinters;
+        RemoteDesktop_RedirectPrinters = group.RemoteDesktop_RedirectPrinters;
+        RemoteDesktop_OverridePersistentBitmapCaching = group.RemoteDesktop_OverridePersistentBitmapCaching;
+        RemoteDesktop_PersistentBitmapCaching = group.RemoteDesktop_PersistentBitmapCaching;
+        RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped =
+            group.RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped;
+        RemoteDesktop_ReconnectIfTheConnectionIsDropped = group.RemoteDesktop_ReconnectIfTheConnectionIsDropped;
+        RemoteDesktop_OverrideNetworkConnectionType = group.RemoteDesktop_OverrideNetworkConnectionType;
+        RemoteDesktop_NetworkConnectionType = group.RemoteDesktop_NetworkConnectionType;
+        RemoteDesktop_OverrideDesktopBackground = group.RemoteDesktop_OverrideDesktopBackground;
+        RemoteDesktop_DesktopBackground = group.RemoteDesktop_DesktopBackground;
+        RemoteDesktop_OverrideFontSmoothing = group.RemoteDesktop_OverrideFontSmoothing;
+        RemoteDesktop_FontSmoothing = group.RemoteDesktop_FontSmoothing;
+        RemoteDesktop_OverrideDesktopComposition = group.RemoteDesktop_OverrideDesktopComposition;
+        RemoteDesktop_DesktopComposition = group.RemoteDesktop_DesktopComposition;
+        RemoteDesktop_OverrideShowWindowContentsWhileDragging =
+            group.RemoteDesktop_OverrideShowWindowContentsWhileDragging;
+        RemoteDesktop_ShowWindowContentsWhileDragging = group.RemoteDesktop_ShowWindowContentsWhileDragging;
+        RemoteDesktop_OverrideMenuAndWindowAnimation = group.RemoteDesktop_OverrideMenuAndWindowAnimation;
+        RemoteDesktop_MenuAndWindowAnimation = group.RemoteDesktop_MenuAndWindowAnimation;
+        RemoteDesktop_OverrideVisualStyles = group.RemoteDesktop_OverrideVisualStyles;
+        RemoteDesktop_VisualStyles = group.RemoteDesktop_VisualStyles;
+
+        // PowerShell
+        PowerShell_OverrideCommand = group.PowerShell_OverrideCommand;
+        PowerShell_Command = group.PowerShell_Command;
+        PowerShell_OverrideAdditionalCommandLine = group.PowerShell_OverrideAdditionalCommandLine;
+        PowerShell_AdditionalCommandLine = group.PowerShell_AdditionalCommandLine;
+        PowerShell_OverrideExecutionPolicy = group.PowerShell_OverrideExecutionPolicy;
+        PowerShell_ExecutionPolicy = group.PowerShell_ExecutionPolicy;
+
+        // PuTTY
+        PuTTY_OverrideUsername = group.PuTTY_OverrideUsername;
+        PuTTY_Username = group.PuTTY_Username;
+        PuTTY_OverridePrivateKeyFile = group.PuTTY_OverridePrivateKeyFile;
+        PuTTY_PrivateKeyFile = group.PuTTY_PrivateKeyFile;
+        PuTTY_OverrideProfile = group.PuTTY_OverrideProfile;
+        PuTTY_Profile = group.PuTTY_Profile;
+        PuTTY_OverrideEnableLog = group.PuTTY_OverrideEnableLog;
+        PuTTY_EnableLog = group.PuTTY_EnableLog;
+        PuTTY_OverrideLogMode = group.PuTTY_OverrideLogMode;
+        PuTTY_LogMode = group.PuTTY_LogMode;
+        PuTTY_OverrideLogPath = group.PuTTY_OverrideLogPath;
+        PuTTY_LogPath = group.PuTTY_LogPath;
+        PuTTY_OverrideLogFileName = group.PuTTY_OverrideLogFileName;
+        PuTTY_LogFileName = group.PuTTY_LogFileName;
+        PuTTY_OverrideAdditionalCommandLine = group.PuTTY_OverrideAdditionalCommandLine;
+        PuTTY_AdditionalCommandLine = group.PuTTY_AdditionalCommandLine;
+
+        // AWS Session Manager
+        AWSSessionManager_OverrideProfile = group.AWSSessionManager_OverrideProfile;
+        AWSSessionManager_Profile = group.AWSSessionManager_Profile;
+        AWSSessionManager_OverrideRegion = group.AWSSessionManager_OverrideRegion;
+        AWSSessionManager_Region = group.AWSSessionManager_Region;
+
+        // TigerVNC
+        TigerVNC_OverridePort = group.TigerVNC_OverridePort;
+        TigerVNC_Port = group.TigerVNC_Port;
+
+        // SNMP
+        SNMP_OverrideOIDAndMode = group.SNMP_OverrideOIDAndMode;
+        SNMP_OID = group.SNMP_OID;
+        SNMP_Mode = group.SNMP_Mode;
+        SNMP_OverrideVersionAndAuth = group.SNMP_OverrideVersionAndAuth;
+        SNMP_Version = group.SNMP_Version;
+        SNMP_Community = group.SNMP_Community;
+        SNMP_Security = group.SNMP_Security;
+        SNMP_Username = group.SNMP_Username;
+        SNMP_AuthenticationProvider = group.SNMP_AuthenticationProvider;
+        SNMP_Auth = group.SNMP_Auth;
+        SNMP_PrivacyProvider = group.SNMP_PrivacyProvider;
+        SNMP_Priv = group.SNMP_Priv;
+    }
+
+    /// <summary>
+    ///     Name of the group.
     /// </summary>
     public string Name { get; set; }
 
@@ -164,150 +310,4 @@ public class GroupInfo
     [XmlIgnore] public SecureString SNMP_Auth { get; set; }
     public SNMPV3PrivacyProvider SNMP_PrivacyProvider { get; set; } = GlobalStaticConfiguration.SNMP_PrivacyProvider;
     [XmlIgnore] public SecureString SNMP_Priv { get; set; }
-
-    /// <summary>
-    /// Initializes a new instance of the<see cref="GroupInfo"/> class.
-    /// </summary>
-    public GroupInfo()
-    {
-        Profiles = new List<ProfileInfo>();
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the<see cref="GroupInfo"/> class with name.
-    /// </summary>
-    public GroupInfo(string name) : this()
-    {
-        Name = name;
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the<see cref="GroupInfo"/> class with properties.
-    /// </summary>
-    public GroupInfo(GroupInfo group) : this(group.Name)
-    {
-        Profiles = group.Profiles;
-
-        // Remote Desktop
-        RemoteDesktop_UseCredentials = group.RemoteDesktop_UseCredentials;
-        RemoteDesktop_Username = group.RemoteDesktop_Username;
-        RemoteDesktop_Domain = group.RemoteDesktop_Domain;
-        RemoteDesktop_Password = group.RemoteDesktop_Password;
-        RemoteDesktop_OverrideDisplay = group.RemoteDesktop_OverrideDisplay;
-        RemoteDesktop_AdjustScreenAutomatically = group.RemoteDesktop_AdjustScreenAutomatically;
-        RemoteDesktop_UseCurrentViewSize = group.RemoteDesktop_UseCurrentViewSize;
-        RemoteDesktop_UseFixedScreenSize = group.RemoteDesktop_UseFixedScreenSize;
-        RemoteDesktop_ScreenWidth = group.RemoteDesktop_ScreenWidth;
-        RemoteDesktop_ScreenHeight = group.RemoteDesktop_ScreenHeight;
-        RemoteDesktop_UseCustomScreenSize = group.RemoteDesktop_UseCustomScreenSize;
-        RemoteDesktop_CustomScreenWidth = group.RemoteDesktop_CustomScreenWidth;
-        RemoteDesktop_CustomScreenHeight = group.RemoteDesktop_CustomScreenHeight;
-        RemoteDesktop_OverrideColorDepth = group.RemoteDesktop_OverrideColorDepth;
-        RemoteDesktop_ColorDepth = group.RemoteDesktop_ColorDepth;
-        RemoteDesktop_OverridePort = group.RemoteDesktop_OverridePort;
-        RemoteDesktop_Port = group.RemoteDesktop_Port;
-        RemoteDesktop_OverrideCredSspSupport = group.RemoteDesktop_OverrideCredSspSupport;
-        RemoteDesktop_EnableCredSspSupport = group.RemoteDesktop_EnableCredSspSupport;
-        RemoteDesktop_OverrideAuthenticationLevel = group.RemoteDesktop_OverrideAuthenticationLevel;
-        RemoteDesktop_AuthenticationLevel = group.RemoteDesktop_AuthenticationLevel;
-        RemoteDesktop_OverrideGatewayServer = group.RemoteDesktop_OverrideGatewayServer;
-        RemoteDesktop_EnableGatewayServer = group.RemoteDesktop_EnableGatewayServer;
-        RemoteDesktop_GatewayServerHostname = group.RemoteDesktop_GatewayServerHostname;
-        RemoteDesktop_GatewayServerBypassLocalAddresses = group.RemoteDesktop_GatewayServerBypassLocalAddresses;
-        RemoteDesktop_GatewayServerLogonMethod = group.RemoteDesktop_GatewayServerLogonMethod;
-        RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer =
-            group.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
-        RemoteDesktop_UseGatewayServerCredentials = group.RemoteDesktop_UseGatewayServerCredentials;
-        RemoteDesktop_GatewayServerUsername = group.RemoteDesktop_GatewayServerUsername;
-        RemoteDesktop_GatewayServerDomain = group.RemoteDesktop_GatewayServerDomain;
-        RemoteDesktop_GatewayServerPassword = group.RemoteDesktop_GatewayServerPassword;
-        RemoteDesktop_OverrideAudioRedirectionMode = group.RemoteDesktop_OverrideAudioRedirectionMode;
-        RemoteDesktop_AudioRedirectionMode = group.RemoteDesktop_AudioRedirectionMode;
-        RemoteDesktop_OverrideAudioCaptureRedirectionMode = group.RemoteDesktop_OverrideAudioCaptureRedirectionMode;
-        RemoteDesktop_AudioCaptureRedirectionMode = group.RemoteDesktop_AudioCaptureRedirectionMode;
-        RemoteDesktop_OverrideApplyWindowsKeyCombinations = group.RemoteDesktop_OverrideApplyWindowsKeyCombinations;
-        RemoteDesktop_KeyboardHookMode = group.RemoteDesktop_KeyboardHookMode;
-        RemoteDesktop_OverrideRedirectClipboard = group.RemoteDesktop_OverrideRedirectClipboard;
-        RemoteDesktop_RedirectClipboard = group.RemoteDesktop_RedirectClipboard;
-        RemoteDesktop_OverrideRedirectDevices = group.RemoteDesktop_OverrideRedirectDevices;
-        RemoteDesktop_RedirectDevices = group.RemoteDesktop_RedirectDevices;
-        RemoteDesktop_OverrideRedirectDrives = group.RemoteDesktop_OverrideRedirectDrives;
-        RemoteDesktop_RedirectDrives = group.RemoteDesktop_RedirectDrives;
-        RemoteDesktop_OverrideRedirectPorts = group.RemoteDesktop_OverrideRedirectPorts;
-        RemoteDesktop_RedirectPorts = group.RemoteDesktop_RedirectPorts;
-        RemoteDesktop_OverrideRedirectSmartcards = group.RemoteDesktop_OverrideRedirectSmartcards;
-        RemoteDesktop_RedirectSmartCards = group.RemoteDesktop_RedirectSmartCards;
-        RemoteDesktop_OverrideRedirectPrinters = group.RemoteDesktop_OverrideRedirectPrinters;
-        RemoteDesktop_RedirectPrinters = group.RemoteDesktop_RedirectPrinters;
-        RemoteDesktop_OverridePersistentBitmapCaching = group.RemoteDesktop_OverridePersistentBitmapCaching;
-        RemoteDesktop_PersistentBitmapCaching = group.RemoteDesktop_PersistentBitmapCaching;
-        RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped =
-            group.RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped;
-        RemoteDesktop_ReconnectIfTheConnectionIsDropped = group.RemoteDesktop_ReconnectIfTheConnectionIsDropped;
-        RemoteDesktop_OverrideNetworkConnectionType = group.RemoteDesktop_OverrideNetworkConnectionType;
-        RemoteDesktop_NetworkConnectionType = group.RemoteDesktop_NetworkConnectionType;
-        RemoteDesktop_OverrideDesktopBackground = group.RemoteDesktop_OverrideDesktopBackground;
-        RemoteDesktop_DesktopBackground = group.RemoteDesktop_DesktopBackground;
-        RemoteDesktop_OverrideFontSmoothing = group.RemoteDesktop_OverrideFontSmoothing;
-        RemoteDesktop_FontSmoothing = group.RemoteDesktop_FontSmoothing;
-        RemoteDesktop_OverrideDesktopComposition = group.RemoteDesktop_OverrideDesktopComposition;
-        RemoteDesktop_DesktopComposition = group.RemoteDesktop_DesktopComposition;
-        RemoteDesktop_OverrideShowWindowContentsWhileDragging =
-            group.RemoteDesktop_OverrideShowWindowContentsWhileDragging;
-        RemoteDesktop_ShowWindowContentsWhileDragging = group.RemoteDesktop_ShowWindowContentsWhileDragging;
-        RemoteDesktop_OverrideMenuAndWindowAnimation = group.RemoteDesktop_OverrideMenuAndWindowAnimation;
-        RemoteDesktop_MenuAndWindowAnimation = group.RemoteDesktop_MenuAndWindowAnimation;
-        RemoteDesktop_OverrideVisualStyles = group.RemoteDesktop_OverrideVisualStyles;
-        RemoteDesktop_VisualStyles = group.RemoteDesktop_VisualStyles;
-
-        // PowerShell
-        PowerShell_OverrideCommand = group.PowerShell_OverrideCommand;
-        PowerShell_Command = group.PowerShell_Command;
-        PowerShell_OverrideAdditionalCommandLine = group.PowerShell_OverrideAdditionalCommandLine;
-        PowerShell_AdditionalCommandLine = group.PowerShell_AdditionalCommandLine;
-        PowerShell_OverrideExecutionPolicy = group.PowerShell_OverrideExecutionPolicy;
-        PowerShell_ExecutionPolicy = group.PowerShell_ExecutionPolicy;
-
-        // PuTTY
-        PuTTY_OverrideUsername = group.PuTTY_OverrideUsername;
-        PuTTY_Username = group.PuTTY_Username;
-        PuTTY_OverridePrivateKeyFile = group.PuTTY_OverridePrivateKeyFile;
-        PuTTY_PrivateKeyFile = group.PuTTY_PrivateKeyFile;
-        PuTTY_OverrideProfile = group.PuTTY_OverrideProfile;
-        PuTTY_Profile = group.PuTTY_Profile;
-        PuTTY_OverrideEnableLog = group.PuTTY_OverrideEnableLog;
-        PuTTY_EnableLog = group.PuTTY_EnableLog;
-        PuTTY_OverrideLogMode = group.PuTTY_OverrideLogMode;
-        PuTTY_LogMode = group.PuTTY_LogMode;
-        PuTTY_OverrideLogPath = group.PuTTY_OverrideLogPath;
-        PuTTY_LogPath = group.PuTTY_LogPath;
-        PuTTY_OverrideLogFileName = group.PuTTY_OverrideLogFileName;
-        PuTTY_LogFileName = group.PuTTY_LogFileName;
-        PuTTY_OverrideAdditionalCommandLine = group.PuTTY_OverrideAdditionalCommandLine;
-        PuTTY_AdditionalCommandLine = group.PuTTY_AdditionalCommandLine;
-
-        // AWS Session Manager
-        AWSSessionManager_OverrideProfile = group.AWSSessionManager_OverrideProfile;
-        AWSSessionManager_Profile = group.AWSSessionManager_Profile;
-        AWSSessionManager_OverrideRegion = group.AWSSessionManager_OverrideRegion;
-        AWSSessionManager_Region = group.AWSSessionManager_Region;
-
-        // TigerVNC
-        TigerVNC_OverridePort = group.TigerVNC_OverridePort;
-        TigerVNC_Port = group.TigerVNC_Port;
-
-        // SNMP
-        SNMP_OverrideOIDAndMode = group.SNMP_OverrideOIDAndMode;
-        SNMP_OID = group.SNMP_OID;
-        SNMP_Mode = group.SNMP_Mode;
-        SNMP_OverrideVersionAndAuth = group.SNMP_OverrideVersionAndAuth;
-        SNMP_Version = group.SNMP_Version;
-        SNMP_Community = group.SNMP_Community;
-        SNMP_Security = group.SNMP_Security;
-        SNMP_Username = group.SNMP_Username;
-        SNMP_AuthenticationProvider = group.SNMP_AuthenticationProvider;
-        SNMP_Auth = group.SNMP_Auth;
-        SNMP_PrivacyProvider = group.SNMP_PrivacyProvider;
-        SNMP_Priv = group.SNMP_Priv;
-    }
 }

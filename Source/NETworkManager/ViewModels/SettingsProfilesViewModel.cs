@@ -1,14 +1,16 @@
-﻿using MahApps.Metro.Controls.Dialogs;
+﻿using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Windows.Data;
+using System.Windows.Input;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
-using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Windows.Data;
-using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
@@ -102,7 +104,7 @@ public class SettingsProfilesViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.AddProfileFile
+            Title = Strings.AddProfileFile
         };
 
         var profileFileViewModel = new ProfileFileViewModel(async instance =>
@@ -126,7 +128,7 @@ public class SettingsProfilesViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.EditProfileFile
+            Title = Strings.EditProfileFile
         };
 
         var profileFileViewModel = new ProfileFileViewModel(async instance =>
@@ -156,7 +158,7 @@ public class SettingsProfilesViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.DeleteProfileFile
+            Title = Strings.DeleteProfileFile
         };
 
         var confirmDeleteViewModel = new ConfirmDeleteViewModel(async _ =>
@@ -165,7 +167,7 @@ public class SettingsProfilesViewModel : ViewModelBase
 
                 ProfileManager.DeleteProfileFile(SelectedProfileFile);
             }, async _ => { await _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-            Localization.Resources.Strings.DeleteProfileFileMessage);
+            Strings.DeleteProfileFileMessage);
 
         customDialog.Content = new ConfirmDeleteDialog
         {
@@ -181,17 +183,17 @@ public class SettingsProfilesViewModel : ViewModelBase
     {
         var settings = AppearanceManager.MetroDialog;
 
-        settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
-        settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
+        settings.AffirmativeButtonText = Strings.OK;
+        settings.NegativeButtonText = Strings.Cancel;
         settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-        if (await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Disclaimer,
-                Localization.Resources.Strings.ProfileEncryptionDisclaimer,
+        if (await _dialogCoordinator.ShowMessageAsync(this, Strings.Disclaimer,
+                Strings.ProfileEncryptionDisclaimer,
                 MessageDialogStyle.AffirmativeAndNegative) == MessageDialogResult.Affirmative)
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.Resources.Strings.SetMasterPassword
+                Title = Strings.SetMasterPassword
             };
 
             var credentialsSetPasswordViewModel = new CredentialsSetPasswordViewModel(async instance =>
@@ -205,10 +207,10 @@ public class SettingsProfilesViewModel : ViewModelBase
                 catch (Exception ex)
                 {
                     var metroDialogSettings = AppearanceManager.MetroDialog;
-                    metroDialogSettings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                    metroDialogSettings.AffirmativeButtonText = Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.EncryptionError,
-                        $"{Localization.Resources.Strings.EncryptionErrorMessage}\n\n{ex.Message}",
+                    await _dialogCoordinator.ShowMessageAsync(this, Strings.EncryptionError,
+                        $"{Strings.EncryptionErrorMessage}\n\n{ex.Message}",
                         MessageDialogStyle.Affirmative, metroDialogSettings);
                 }
             }, async _ => { await _dialogCoordinator.HideMetroDialogAsync(this, customDialog); });
@@ -228,7 +230,7 @@ public class SettingsProfilesViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.ChangeMasterPassword
+            Title = Strings.ChangeMasterPassword
         };
 
         var credentialsPasswordViewModel = new CredentialsChangePasswordViewModel(async instance =>
@@ -239,22 +241,22 @@ public class SettingsProfilesViewModel : ViewModelBase
             {
                 ProfileManager.ChangeMasterPassword(SelectedProfileFile, instance.Password, instance.NewPassword);
             }
-            catch (System.Security.Cryptography.CryptographicException)
+            catch (CryptographicException)
             {
                 var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                settings.AffirmativeButtonText = Strings.OK;
 
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.WrongPassword,
-                    Localization.Resources.Strings.WrongPasswordDecryptionFailedMessage, MessageDialogStyle.Affirmative,
+                await _dialogCoordinator.ShowMessageAsync(this, Strings.WrongPassword,
+                    Strings.WrongPasswordDecryptionFailedMessage, MessageDialogStyle.Affirmative,
                     settings);
             }
             catch (Exception ex)
             {
                 var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                settings.AffirmativeButtonText = Strings.OK;
 
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.DecryptionError,
-                    $"{Localization.Resources.Strings.DecryptionErrorMessage}\n\n{ex.Message}",
+                await _dialogCoordinator.ShowMessageAsync(this, Strings.DecryptionError,
+                    $"{Strings.DecryptionErrorMessage}\n\n{ex.Message}",
                     MessageDialogStyle.Affirmative, settings);
             }
         }, async _ => { await _dialogCoordinator.HideMetroDialogAsync(this, customDialog); });
@@ -273,7 +275,7 @@ public class SettingsProfilesViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.MasterPassword
+            Title = Strings.MasterPassword
         };
 
         var credentialsPasswordViewModel = new CredentialsPasswordViewModel(async instance =>
@@ -284,22 +286,22 @@ public class SettingsProfilesViewModel : ViewModelBase
             {
                 ProfileManager.DisableEncryption(SelectedProfileFile, instance.Password);
             }
-            catch (System.Security.Cryptography.CryptographicException)
+            catch (CryptographicException)
             {
                 var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                settings.AffirmativeButtonText = Strings.OK;
 
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.WrongPassword,
-                    Localization.Resources.Strings.WrongPasswordDecryptionFailedMessage, MessageDialogStyle.Affirmative,
+                await _dialogCoordinator.ShowMessageAsync(this, Strings.WrongPassword,
+                    Strings.WrongPasswordDecryptionFailedMessage, MessageDialogStyle.Affirmative,
                     settings);
             }
             catch (Exception ex)
             {
                 var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                settings.AffirmativeButtonText = Strings.OK;
 
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.DecryptionError,
-                    $"{Localization.Resources.Strings.DecryptionErrorMessage}\n\n{ex.Message}",
+                await _dialogCoordinator.ShowMessageAsync(this, Strings.DecryptionError,
+                    $"{Strings.DecryptionErrorMessage}\n\n{ex.Message}",
                     MessageDialogStyle.Affirmative, settings);
             }
         }, async _1 => { await _dialogCoordinator.HideMetroDialogAsync(this, customDialog); });

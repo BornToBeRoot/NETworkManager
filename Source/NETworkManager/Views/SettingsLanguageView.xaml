@@ -10,7 +10,6 @@
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsLanguageViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseToVisibilityHiddenConverter x:Key="BooleanReverseToVisibilityHiddenConverter" />
-        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityHiddenConverter x:Key="BooleanToVisibilityHiddenConverter" />
     </UserControl.Resources>
     <Grid>

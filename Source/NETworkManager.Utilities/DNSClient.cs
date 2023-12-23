@@ -1,35 +1,35 @@
-﻿using DnsClient;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using DnsClient;
 
 namespace NETworkManager.Utilities;
 
 public class DNSClient : SingletonBase<DNSClient>
 {
     /// <summary>
-    /// Error message which is returned when the DNS client is not configured.
+    ///     Error message which is returned when the DNS client is not configured.
     /// </summary>
     private const string NotConfiguredMessage = "DNS client is not configured. Call Configure() first.";
 
     /// <summary>
-    /// Store the current DNS settings.
-    /// </summary>        
-    private DNSClientSettings _settings;
-
-    /// <summary>
-    /// Hold the current instance of the LookupClient.
+    ///     Hold the current instance of the LookupClient.
     /// </summary>
     private LookupClient _client;
 
     /// <summary>
-    /// Indicates if the DNS client is configured.
+    ///     Indicates if the DNS client is configured.
     /// </summary>
     private bool _isConfigured;
 
     /// <summary>
-    /// Method to configure the DNS client.
+    ///     Store the current DNS settings.
+    /// </summary>
+    private DNSClientSettings _settings;
+
+    /// <summary>
+    ///     Method to configure the DNS client.
     /// </summary>
     /// <param name="settings"></param>
     public void Configure(DNSClientSettings settings)
@@ -55,8 +55,8 @@ public class DNSClient : SingletonBase<DNSClient>
     }
 
     /// <summary>
-    /// Method to update the (Windows) name servers of the DNS client 
-    /// when they may have changed due to a network update.
+    ///     Method to update the (Windows) name servers of the DNS client
+    ///     when they may have changed due to a network update.
     /// </summary>
     public void UpdateFromWindows()
     {
@@ -68,10 +68,10 @@ public class DNSClient : SingletonBase<DNSClient>
     }
 
     /// <summary>
-    /// Resolve an IPv4 address from a hostname or FQDN.
+    ///     Resolve an IPv4 address from a hostname or FQDN.
     /// </summary>
     /// <param name="query">Hostname or FQDN as string like "example.com".</param>
-    /// <returns><see cref="IPAddress"/> of the host.</returns>
+    /// <returns><see cref="IPAddress" /> of the host.</returns>
     public async Task<DNSClientResultIPAddress> ResolveAAsync(string query)
     {
         if (!_isConfigured)
@@ -101,10 +101,10 @@ public class DNSClient : SingletonBase<DNSClient>
     }
 
     /// <summary>
-    /// Resolve an IPv6 address from a hostname or FQDN.
+    ///     Resolve an IPv6 address from a hostname or FQDN.
     /// </summary>
     /// <param name="query">Hostname or FQDN as string like "example.com".</param>
-    /// <returns><see cref="IPAddress"/> of the host.</returns>
+    /// <returns><see cref="IPAddress" /> of the host.</returns>
     public async Task<DNSClientResultIPAddress> ResolveAaaaAsync(string query)
     {
         if (!_isConfigured)
@@ -134,7 +134,7 @@ public class DNSClient : SingletonBase<DNSClient>
     }
 
     /// <summary>
-    /// Resolve a CNAME from a hostname or FQDN.
+    ///     Resolve a CNAME from a hostname or FQDN.
     /// </summary>
     /// <param name="query">Hostname or FQDN as string like "example.com".</param>
     /// <returns>CNAME of the host.</returns>
@@ -167,7 +167,7 @@ public class DNSClient : SingletonBase<DNSClient>
     }
 
     /// <summary>
-    /// Resolve a PTR for an IP address.
+    ///     Resolve a PTR for an IP address.
     /// </summary>
     /// <param name="ipAddress">IP address of the host.</param>
     /// <returns>PTR domain name.</returns>

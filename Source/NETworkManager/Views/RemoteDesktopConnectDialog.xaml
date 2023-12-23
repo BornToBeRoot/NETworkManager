@@ -14,7 +14,6 @@
              d:DataContext="{d:DesignInstance viewModels:RemoteDesktopConnectViewModel}">
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
     </UserControl.Resources>
     <Grid Margin="0,20">

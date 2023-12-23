@@ -1,6 +1,6 @@
-﻿using MahApps.Metro.IconPacks;
+﻿using System.Collections.Generic;
+using MahApps.Metro.IconPacks;
 using NETworkManager.Models;
-using System.Collections.Generic;
 
 namespace NETworkManager.Profiles;
 

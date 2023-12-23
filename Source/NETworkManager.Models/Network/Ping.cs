@@ -1,10 +1,10 @@
-﻿using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 

@@ -1,22 +1,30 @@
 ﻿// Contains code from: https://stackoverflow.com/questions/5028598/hosting-external-app-in-wpf-window
 
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows;
 using System;
-using System.Windows.Threading;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using NETworkManager.Utilities;
+using System.Windows;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Settings;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models.AWS;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Controls;
 
 public partial class AWSSessionManagerControl : UserControlBase
 {
+    #region Events
+
+    private void WindowGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        if (IsConnected)
+            ResizeEmbeddedWindow();
+    }
+
+    #endregion
+
     #region Variables
 
     private bool _initialized;
@@ -186,11 +194,11 @@ public partial class AWSSessionManagerControl : UserControlBase
             if (!_closing)
             {
                 var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                settings.AffirmativeButtonText = Strings.OK;
 
                 ConfigurationManager.OnDialogOpen();
 
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error,
+                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
                     ex.Message, MessageDialogStyle.Affirmative, settings);
 
                 ConfigurationManager.OnDialogClose();
@@ -238,16 +246,6 @@ public partial class AWSSessionManagerControl : UserControlBase
         _closing = true;
 
         Disconnect();
-    }
-
-    #endregion
-
-    #region Events
-
-    private void WindowGrid_SizeChanged(object sender, SizeChangedEventArgs e)
-    {
-        if (IsConnected)
-            ResizeEmbeddedWindow();
     }
 
     #endregion

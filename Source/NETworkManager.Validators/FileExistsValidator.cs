@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.IO;
 using System.Windows.Controls;
+using NETworkManager.Localization.Resources;
 
 namespace NETworkManager.Validators;
 
@@ -10,6 +11,6 @@ public class FileExistsValidator : ValidationRule
     {
         return File.Exists((string)value)
             ? ValidationResult.ValidResult
-            : new ValidationResult(false, Localization.Resources.Strings.FileDoesNotExist);
+            : new ValidationResult(false, Strings.FileDoesNotExist);
     }
 }

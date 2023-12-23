@@ -1,15 +1,17 @@
-﻿using NETworkManager.Settings;
-using NETworkManager.Utilities;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Models.Network;
-using NETworkManager.Views;
 using DnsClient;
-using System.Threading.Tasks;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
@@ -257,7 +259,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix;
         Recursion = SettingsManager.Current.DNSLookup_Recursion;
         UseCache = SettingsManager.Current.DNSLookup_UseCache;
-        QueryClasses = System.Enum.GetValues(typeof(QueryClass)).Cast<QueryClass>().OrderBy(x => x.ToString()).ToList();
+        QueryClasses = Enum.GetValues(typeof(QueryClass)).Cast<QueryClass>().OrderBy(x => x.ToString()).ToList();
         QueryClass = QueryClasses.First(x => x == SettingsManager.Current.DNSLookup_QueryClass);
         ShowOnlyMostCommonQueryTypes = SettingsManager.Current.DNSLookup_ShowOnlyMostCommonQueryTypes;
         UseTCPOnly = SettingsManager.Current.DNSLookup_UseTCPOnly;
@@ -298,7 +300,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.AddDNSServer
+            Title = Strings.AddDNSServer
         };
 
         var viewModel = new ServerConnectionInfoProfileViewModel(instance =>
@@ -311,7 +313,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
             (ServerInfoProfileNames, false, true),
             _profileDialogDefaultValues);
 
-        customDialog.Content = new ServerConnectionInfoProfileDialog()
+        customDialog.Content = new ServerConnectionInfoProfileDialog
         {
             DataContext = viewModel
         };
@@ -323,7 +325,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.EditDNSServer
+            Title = Strings.EditDNSServer
         };
 
         var viewModel = new ServerConnectionInfoProfileViewModel(instance =>
@@ -337,7 +339,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
             (ServerInfoProfileNames, true, true),
             _profileDialogDefaultValues, SelectedDNSServer);
 
-        customDialog.Content = new ServerConnectionInfoProfileDialog()
+        customDialog.Content = new ServerConnectionInfoProfileDialog
         {
             DataContext = viewModel
         };
@@ -349,7 +351,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.DeleteDNSServer
+            Title = Strings.DeleteDNSServer
         };
 
         var viewModel = new ConfirmDeleteViewModel(_ =>
@@ -358,7 +360,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
 
                 SettingsManager.Current.DNSLookup_DNSServers.Remove(SelectedDNSServer);
             }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-            Localization.Resources.Strings.DeleteDNSServerMessage);
+            Strings.DeleteDNSServerMessage);
 
         customDialog.Content = new ConfirmDeleteDialog
         {

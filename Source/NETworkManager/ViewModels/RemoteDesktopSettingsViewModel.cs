@@ -1,12 +1,58 @@
-﻿using NETworkManager.Models.RemoteDesktop;
-using NETworkManager.Settings;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NETworkManager.Models.RemoteDesktop;
+using NETworkManager.Settings;
 
 namespace NETworkManager.ViewModels;
 
 public class RemoteDesktopSettingsViewModel : ViewModelBase
 {
+    #region Methods
+
+    private void ChangeNetworkConnectionTypeSettings(NetworkConnectionType networkConnectionType)
+    {
+        switch (networkConnectionType)
+        {
+            case NetworkConnectionType.Modem:
+                DesktopBackground = false;
+                FontSmoothing = false;
+                DesktopComposition = false;
+                ShowWindowContentsWhileDragging = false;
+                MenuAndWindowAnimation = false;
+                VisualStyles = false;
+                break;
+            case NetworkConnectionType.BroadbandLow:
+                DesktopBackground = false;
+                FontSmoothing = false;
+                DesktopComposition = false;
+                ShowWindowContentsWhileDragging = false;
+                MenuAndWindowAnimation = false;
+                VisualStyles = true;
+                break;
+            case NetworkConnectionType.Satellite:
+            case NetworkConnectionType.BroadbandHigh:
+                DesktopBackground = false;
+                FontSmoothing = false;
+                DesktopComposition = true;
+                ShowWindowContentsWhileDragging = false;
+                MenuAndWindowAnimation = false;
+                VisualStyles = true;
+                break;
+            case NetworkConnectionType.WAN:
+            case NetworkConnectionType.LAN:
+                DesktopBackground = true;
+                FontSmoothing = true;
+                DesktopComposition = true;
+                ShowWindowContentsWhileDragging = true;
+                MenuAndWindowAnimation = true;
+                VisualStyles = true;
+                break;
+        }
+    }
+
+    #endregion
+
     #region Variables
 
     private readonly bool _isLoading;
@@ -272,7 +318,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
         }
     }
 
-    public IEnumerable<GatewayUserSelectedCredsSource> GatewayServerLogonMethods => System.Enum
+    public IEnumerable<GatewayUserSelectedCredsSource> GatewayServerLogonMethods => Enum
         .GetValues(typeof(GatewayUserSelectedCredsSource)).Cast<GatewayUserSelectedCredsSource>();
 
     private GatewayUserSelectedCredsSource _gatewayServerLogonMethod;
@@ -312,7 +358,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     public IEnumerable<AudioRedirectionMode> AudioRedirectionModes =>
-        System.Enum.GetValues(typeof(AudioRedirectionMode)).Cast<AudioRedirectionMode>();
+        Enum.GetValues(typeof(AudioRedirectionMode)).Cast<AudioRedirectionMode>();
 
     private AudioRedirectionMode _audioRedirectionMode;
 
@@ -332,7 +378,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
         }
     }
 
-    public IEnumerable<AudioCaptureRedirectionMode> AudioCaptureRedirectionModes => System.Enum
+    public IEnumerable<AudioCaptureRedirectionMode> AudioCaptureRedirectionModes => Enum
         .GetValues(typeof(AudioCaptureRedirectionMode)).Cast<AudioCaptureRedirectionMode>();
 
     private AudioCaptureRedirectionMode _audioCaptureRedirectionMode;
@@ -354,7 +400,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     public IEnumerable<KeyboardHookMode> KeyboardHookModes =>
-        System.Enum.GetValues(typeof(KeyboardHookMode)).Cast<KeyboardHookMode>();
+        Enum.GetValues(typeof(KeyboardHookMode)).Cast<KeyboardHookMode>();
 
     private KeyboardHookMode _keyboardHookMode;
 
@@ -519,7 +565,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     public IEnumerable<NetworkConnectionType> NetworkConnectionTypes =>
-        System.Enum.GetValues(typeof(NetworkConnectionType)).Cast<NetworkConnectionType>();
+        Enum.GetValues(typeof(NetworkConnectionType)).Cast<NetworkConnectionType>();
 
     private NetworkConnectionType _networkConnectionType;
 
@@ -709,51 +755,6 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
         ShowWindowContentsWhileDragging = SettingsManager.Current.RemoteDesktop_ShowWindowContentsWhileDragging;
         MenuAndWindowAnimation = SettingsManager.Current.RemoteDesktop_MenuAndWindowAnimation;
         VisualStyles = SettingsManager.Current.RemoteDesktop_VisualStyles;
-    }
-
-    #endregion
-
-    #region Methods
-
-    private void ChangeNetworkConnectionTypeSettings(NetworkConnectionType networkConnectionType)
-    {
-        switch (networkConnectionType)
-        {
-            case NetworkConnectionType.Modem:
-                DesktopBackground = false;
-                FontSmoothing = false;
-                DesktopComposition = false;
-                ShowWindowContentsWhileDragging = false;
-                MenuAndWindowAnimation = false;
-                VisualStyles = false;
-                break;
-            case NetworkConnectionType.BroadbandLow:
-                DesktopBackground = false;
-                FontSmoothing = false;
-                DesktopComposition = false;
-                ShowWindowContentsWhileDragging = false;
-                MenuAndWindowAnimation = false;
-                VisualStyles = true;
-                break;
-            case NetworkConnectionType.Satellite:
-            case NetworkConnectionType.BroadbandHigh:
-                DesktopBackground = false;
-                FontSmoothing = false;
-                DesktopComposition = true;
-                ShowWindowContentsWhileDragging = false;
-                MenuAndWindowAnimation = false;
-                VisualStyles = true;
-                break;
-            case NetworkConnectionType.WAN:
-            case NetworkConnectionType.LAN:
-                DesktopBackground = true;
-                FontSmoothing = true;
-                DesktopComposition = true;
-                ShowWindowContentsWhileDragging = true;
-                MenuAndWindowAnimation = true;
-                VisualStyles = true;
-                break;
-        }
     }
 
     #endregion

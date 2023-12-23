@@ -1,25 +1,28 @@
-﻿using System.Collections.ObjectModel;
-using NETworkManager.Controls;
-using Dragablz;
-using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Settings;
-using System.Linq;
-using NETworkManager.Views;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Windows.Data;
-using System;
-using System.IO;
-using NETworkManager.Utilities;
 using System.Diagnostics;
-using NETworkManager.Models.PuTTY;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
-using NETworkManager.Profiles;
+using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Threading;
+using Dragablz;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Controls;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+using NETworkManager.Models.PuTTY;
+using NETworkManager.Profiles;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
+using PuTTY = NETworkManager.Settings.Application.PuTTY;
 
 namespace NETworkManager.ViewModels;
 
@@ -350,7 +353,10 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
+    private bool ModifyProfile_CanExecute(object obj)
+    {
+        return SelectedProfile is { IsDynamic: false };
+    }
 
     public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
@@ -424,7 +430,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.Connect
+            Title = Strings.Connect
         };
 
         var connectViewModel = new PuTTYConnectViewModel(async instance =>
@@ -446,7 +452,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
                 EnableLog = SettingsManager.Current.PuTTY_EnableSessionLog,
                 LogMode = SettingsManager.Current.PuTTY_LogMode,
                 LogFileName = SettingsManager.Current.PuTTY_LogFileName,
-                LogPath = Settings.Application.PuTTY.LogPath,
+                LogPath = PuTTY.LogPath,
                 AdditionalCommandLine = instance.AdditionalCommandLine
             };
 
@@ -485,14 +491,14 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     private void ConnectProfileExternal()
     {
         // Create log path
-        DirectoryHelper.CreateWithEnvironmentVariables(Settings.Application.PuTTY.LogPath);
+        DirectoryHelper.CreateWithEnvironmentVariables(PuTTY.LogPath);
 
         var sessionInfo = NETworkManager.Profiles.Application.PuTTY.CreateSessionInfo(SelectedProfile);
 
         ProcessStartInfo info = new()
         {
             FileName = SettingsManager.Current.PuTTY_ApplicationFilePath,
-            Arguments = PuTTY.BuildCommandLine(sessionInfo)
+            Arguments = Models.PuTTY.PuTTY.BuildCommandLine(sessionInfo)
         };
 
         Process.Start(info);
@@ -705,7 +711,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     private void WriteDefaultProfileToRegistry()
     {
         if (IsConfigured)
-            PuTTY.WriteDefaultProfileToRegistry(SettingsManager.Current.Appearance_Theme);
+            Models.PuTTY.PuTTY.WriteDefaultProfileToRegistry(SettingsManager.Current.Appearance_Theme);
     }
 
     #endregion
@@ -737,7 +743,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     }
 
     private void TabItems_CollectionChanged(object sender,
-        System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        NotifyCollectionChangedEventArgs e)
     {
         ConfigurationManager.Current.PuTTYHasTabs = TabItems.Count > 0;
     }

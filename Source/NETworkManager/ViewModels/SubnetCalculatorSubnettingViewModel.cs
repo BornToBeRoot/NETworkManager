@@ -1,28 +1,50 @@
 ﻿extern alias IPNetwork2;
-using NETworkManager.Settings;
-using System.Windows.Input;
-using NETworkManager.Utilities;
-using System.Collections.ObjectModel;
-using System.Windows;
-using System.Windows.Data;
-using System.ComponentModel;
-using MahApps.Metro.Controls.Dialogs;
-using System.Linq;
 using System;
 using System.Collections;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Net.Sockets;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Threading;
+using IPNetwork2::System.Net;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 using NETworkManager.Views;
-using System.Text.RegularExpressions;
-using System.Net;
+using IPAddress = System.Net.IPAddress;
 
 namespace NETworkManager.ViewModels;
 
 public class SubnetCalculatorSubnettingViewModel : ViewModelBase
 {
+    #region Constructor, load settings
+
+    public SubnetCalculatorSubnettingViewModel(IDialogCoordinator instance)
+    {
+        _dialogCoordinator = instance;
+
+        // Set collection view
+        SubnetHistoryView =
+            CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Subnetting_SubnetHistory);
+        NewSubnetmaskHistoryView =
+            CollectionViewSource.GetDefaultView(
+                SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskHistory);
+
+        // Result view
+        ResultsView = CollectionViewSource.GetDefaultView(Results);
+    }
+
+    #endregion
+
     #region Variables
 
     private readonly IDialogCoordinator _dialogCoordinator;
@@ -142,32 +164,16 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
 
     #endregion
 
-    #region Constructor, load settings
-
-    public SubnetCalculatorSubnettingViewModel(IDialogCoordinator instance)
-    {
-        _dialogCoordinator = instance;
-
-        // Set collection view
-        SubnetHistoryView =
-            CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Subnetting_SubnetHistory);
-        NewSubnetmaskHistoryView =
-            CollectionViewSource.GetDefaultView(
-                SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskHistory);
-
-        // Result view
-        ResultsView = CollectionViewSource.GetDefaultView(Results);
-    }
-
-    #endregion
-
     #region ICommands & Actions
 
     public ICommand CalculateCommand => new RelayCommand(_ => CalculateAction(), Calculate_CanExecute);
 
-    private bool Calculate_CanExecute(object parameter) => Application.Current.MainWindow != null &&
-                                                           !((MetroWindow)Application.Current.MainWindow)
-                                                               .IsAnyDialogOpen;
+    private bool Calculate_CanExecute(object parameter)
+    {
+        return Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow)
+                   .IsAnyDialogOpen;
+    }
 
     private void CalculateAction()
     {
@@ -180,7 +186,7 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.Export
+            Title = Strings.Export
         };
 
         var exportViewModel = new ExportViewModel(async instance =>
@@ -197,10 +203,10 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
                 catch (Exception ex)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                    settings.AffirmativeButtonText = Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error,
-                        Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                    await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                        Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
                         Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
@@ -233,7 +239,7 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
         var subnet = Subnet.Trim();
         var newSubnetmaskOrCidr = NewSubnetmask.Trim();
 
-        var ipNetwork = IPNetwork2.System.Net.IPNetwork.Parse(Subnet.Trim());
+        var ipNetwork = IPNetwork.Parse(Subnet.Trim());
 
         var newCidr =
             // Support subnetmask like 255.255.255.0
@@ -242,19 +248,19 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
                 : Convert.ToByte(newSubnetmaskOrCidr.TrimStart('/'));
 
         // Ask the user if there is a large calculation...
-        var baseCidr = ipNetwork.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? 32 : 128;
+        var baseCidr = ipNetwork.AddressFamily == AddressFamily.InterNetwork ? 32 : 128;
 
-        if (65535 < Math.Pow(2, baseCidr - ipNetwork.Cidr) / Math.Pow(2, (baseCidr - newCidr)))
+        if (65535 < Math.Pow(2, baseCidr - ipNetwork.Cidr) / Math.Pow(2, baseCidr - newCidr))
         {
             var settings = AppearanceManager.MetroDialog;
 
-            settings.AffirmativeButtonText = Localization.Resources.Strings.Continue;
-            settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
+            settings.AffirmativeButtonText = Strings.Continue;
+            settings.NegativeButtonText = Strings.Cancel;
 
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-            if (await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.AreYouSure,
-                    Localization.Resources.Strings.TheProcessCanTakeUpSomeTimeAndResources,
+            if (await _dialogCoordinator.ShowMessageAsync(this, Strings.AreYouSure,
+                    Strings.TheProcessCanTakeUpSomeTimeAndResources,
                     MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
             {
                 IsRunning = false;
@@ -267,10 +273,8 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
         await Task.Run(() =>
         {
             foreach (var network in ipNetwork.Subnet(newCidr))
-            {
                 Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
                     new Action(delegate { Results.Add(new IPNetworkInfo(network)); }));
-            }
         });
 
         IsResultVisible = true;

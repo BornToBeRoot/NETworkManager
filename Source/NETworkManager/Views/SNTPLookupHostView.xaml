@@ -9,14 +9,9 @@
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-             xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
-             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              dialogs:DialogParticipation.Register="{Binding}"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SNTPLookupHostViewModel}">
     <UserControl.Resources>
-        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
-        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <converters:StringNullOrEmptyToBoolConverter x:Key="StringNullOrEmptyToBoolConverter" />
     </UserControl.Resources>
     <UserControl.InputBindings>
         <KeyBinding Key="T" Modifiers="Ctrl" Command="{Binding AddTabCommand}" />

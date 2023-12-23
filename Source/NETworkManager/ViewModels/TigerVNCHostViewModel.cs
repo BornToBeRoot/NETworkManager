@@ -1,25 +1,28 @@
-﻿using System.Collections.ObjectModel;
-using NETworkManager.Controls;
-using Dragablz;
-using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Settings;
-using System.Linq;
-using NETworkManager.Views;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Windows.Data;
-using System;
 using System.Diagnostics;
 using System.IO;
-using NETworkManager.Utilities;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
-using NETworkManager.Models.TigerVNC;
-using NETworkManager.Profiles;
+using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Threading;
+using Dragablz;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Controls;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+using NETworkManager.Models.TigerVNC;
+using NETworkManager.Profiles;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
+using TigerVNC = NETworkManager.Profiles.Application.TigerVNC;
 
 namespace NETworkManager.ViewModels;
 
@@ -237,7 +240,10 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
         ((args.DragablzItem.Content as DragablzTabItem)?.View as TigerVNCControl)?.CloseTab();
     }
 
-    private bool Connect_CanExecute(object obj) => IsConfigured;
+    private bool Connect_CanExecute(object obj)
+    {
+        return IsConfigured;
+    }
 
     public ICommand ConnectCommand => new RelayCommand(_ => ConnectAction(), Connect_CanExecute);
 
@@ -251,10 +257,8 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
     private void ReconnectAction(object view)
     {
         if (view is TigerVNCControl control)
-        {
             if (control.ReconnectCommand.CanExecute(null))
                 control.ReconnectCommand.Execute(null);
-        }
     }
 
     public ICommand ConnectProfileCommand => new RelayCommand(_ => ConnectProfileAction(), ConnectProfile_CanExecute);
@@ -284,7 +288,10 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
+    private bool ModifyProfile_CanExecute(object obj)
+    {
+        return SelectedProfile is { IsDynamic: false };
+    }
 
     public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
@@ -345,7 +352,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.Connect
+            Title = Strings.Connect
         };
 
         var connectViewModel = new TigerVNCConnectViewModel(async instance =>
@@ -385,17 +392,17 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 
     private void ConnectProfile()
     {
-        Connect(NETworkManager.Profiles.Application.TigerVNC.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
+        Connect(TigerVNC.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
     }
 
     private void ConnectProfileExternal()
     {
-        var sessionInfo = NETworkManager.Profiles.Application.TigerVNC.CreateSessionInfo(SelectedProfile);
+        var sessionInfo = TigerVNC.CreateSessionInfo(SelectedProfile);
 
-        Process.Start(new ProcessStartInfo()
+        Process.Start(new ProcessStartInfo
         {
             FileName = SettingsManager.Current.TigerVNC_ApplicationFilePath,
-            Arguments = TigerVNC.BuildCommandLine(sessionInfo)
+            Arguments = Models.TigerVNC.TigerVNC.BuildCommandLine(sessionInfo)
         });
     }
 
@@ -553,7 +560,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
     }
 
     private void TabItems_CollectionChanged(object sender,
-        System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        NotifyCollectionChangedEventArgs e)
     {
         ConfigurationManager.Current.TigerVNCHasTabs = TabItems.Count > 0;
     }

@@ -1,10 +1,11 @@
-﻿using NETworkManager.Models.Network;
-using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Net;
+using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Windows.Data;
+using NETworkManager.Models.Network;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Converters;
 
@@ -31,11 +32,11 @@ public sealed class ValidateSubnetCalculatorSubnettingConverter : IMultiValueCon
 
         var cidr = ipAddress.AddressFamily switch
         {
-            System.Net.Sockets.AddressFamily.InterNetwork when subnetmaskOrCidr.Length < 3 => int.Parse(
+            AddressFamily.InterNetwork when subnetmaskOrCidr.Length < 3 => int.Parse(
                 subnetmaskOrCidr),
-            System.Net.Sockets.AddressFamily.InterNetwork => Subnetmask.ConvertSubnetmaskToCidr(
+            AddressFamily.InterNetwork => Subnetmask.ConvertSubnetmaskToCidr(
                 IPAddress.Parse(subnetmaskOrCidr)),
-            _ => int.Parse(subnetmaskOrCidr),
+            _ => int.Parse(subnetmaskOrCidr)
         };
 
         // Support subnetmask like 255.255.255.0

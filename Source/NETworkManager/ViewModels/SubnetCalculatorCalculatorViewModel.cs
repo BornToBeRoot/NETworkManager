@@ -1,18 +1,29 @@
 ﻿extern alias IPNetwork2;
-using NETworkManager.Settings;
-using System.Windows.Input;
 using System.ComponentModel;
-using System.Windows.Data;
 using System.Linq;
-using NETworkManager.Utilities;
 using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using IPNetwork2::System.Net;
 using MahApps.Metro.Controls;
 using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
 public class SubnetCalculatorCalculatorViewModel : ViewModelBase
 {
+    #region Constructor, load settings
+
+    public SubnetCalculatorCalculatorViewModel()
+    {
+        SubnetHistoryView =
+            CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Calculator_SubnetHistory);
+    }
+
+    #endregion
+
     #region Variables
 
     private string _subnet;
@@ -80,23 +91,16 @@ public class SubnetCalculatorCalculatorViewModel : ViewModelBase
 
     #endregion
 
-    #region Constructor, load settings
-
-    public SubnetCalculatorCalculatorViewModel()
-    {
-        SubnetHistoryView =
-            CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Calculator_SubnetHistory);
-    }
-
-    #endregion
-
     #region ICommands
 
     public ICommand CalculateCommand => new RelayCommand(_ => CalculateAction(), Calculate_CanExecute);
 
-    private bool Calculate_CanExecute(object parameter) => Application.Current.MainWindow != null &&
-                                                           !((MetroWindow)Application.Current.MainWindow)
-                                                               .IsAnyDialogOpen;
+    private bool Calculate_CanExecute(object parameter)
+    {
+        return Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow)
+                   .IsAnyDialogOpen;
+    }
 
     private void CalculateAction()
     {
@@ -113,7 +117,7 @@ public class SubnetCalculatorCalculatorViewModel : ViewModelBase
 
         var subnet = Subnet.Trim();
 
-        Result = new IPNetworkInfo(IPNetwork2.System.Net.IPNetwork.Parse(subnet));
+        Result = new IPNetworkInfo(IPNetwork.Parse(subnet));
 
         IsResultVisible = true;
 

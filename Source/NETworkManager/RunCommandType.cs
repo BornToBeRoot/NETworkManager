@@ -4,5 +4,5 @@ public enum RunCommandType
 {
     Application,
 
-    Setting,
+    Setting
 }

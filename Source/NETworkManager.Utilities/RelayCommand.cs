@@ -8,14 +8,6 @@ namespace NETworkManager.Utilities;
 
 public class RelayCommand : ICommand
 {
-    #region Fields
-
-    private readonly Action<object> _execute;
-
-    private readonly Predicate<object> _canExecute;
-
-    #endregion
-
     #region Constructors
 
     public RelayCommand(Action<object> execute, Predicate<object> canExecute = null)
@@ -23,6 +15,14 @@ public class RelayCommand : ICommand
         _execute = execute ?? throw new ArgumentNullException(nameof(execute));
         _canExecute = canExecute;
     }
+
+    #endregion
+
+    #region Fields
+
+    private readonly Action<object> _execute;
+
+    private readonly Predicate<object> _canExecute;
 
     #endregion
 

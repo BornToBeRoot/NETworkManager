@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using NETworkManager.Localization;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 
 namespace NETworkManager;
@@ -22,7 +23,7 @@ public static class RunCommandManager
             {
                 Type = RunCommandType.Setting,
                 Name = "Settings",
-                TranslatedName = Localization.Resources.Strings.Settings,
+                TranslatedName = Strings.Settings,
                 Command = "settings",
                 CanHandleArguments = false,
                 ExampleArguments = string.Empty

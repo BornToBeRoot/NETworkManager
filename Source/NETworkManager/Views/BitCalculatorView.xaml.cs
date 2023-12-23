@@ -1,7 +1,4 @@
-﻿using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.ViewModels;
-using System.Windows;
-using System.Windows.Controls;
+﻿using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 

@@ -1,23 +1,24 @@
 ﻿using System.Collections.Generic;
+using NETworkManager.Localization.Resources;
 
 namespace NETworkManager.Localization;
 
 public static class ResourceTranslator
 {
     /// <summary>
-    /// Translate the resource name to the localized value. Returns the value if no translation is found.
+    ///     Translate the resource name to the localized value. Returns the value if no translation is found.
     /// </summary>
     /// <param name="identifier">Identifier of the resource to translate.</param>
     /// <param name="value">Value of the resource to translate.</param>
     /// <returns>Localized value of the resource. Returns the value if no translation is found.</returns>
     public static string Translate(ResourceIdentifier identifier, object value)
     {
-        return Resources.Strings.ResourceManager.GetString($"{identifier}_{value}",
+        return Strings.ResourceManager.GetString($"{identifier}_{value}",
             LocalizationManager.GetInstance().Culture) ?? value.ToString();
     }
 
     /// <summary>
-    /// Translate the resource name to the localized value. Returns the value if no translation is found.
+    ///     Translate the resource name to the localized value. Returns the value if no translation is found.
     /// </summary>
     /// <param name="identifiers">List of identifiers of the resource to translate.</param>
     /// <param name="value">Value of the resource to translate.</param>
@@ -26,7 +27,7 @@ public static class ResourceTranslator
     {
         foreach (var identifier in identifiers)
         {
-            var foundResource = Resources.Strings.ResourceManager.GetString($"{identifier}_{value}",
+            var foundResource = Strings.ResourceManager.GetString($"{identifier}_{value}",
                 LocalizationManager.GetInstance().Culture);
 
             if (foundResource != null)

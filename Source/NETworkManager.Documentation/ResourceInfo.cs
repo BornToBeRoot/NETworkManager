@@ -1,12 +1,12 @@
 ﻿namespace NETworkManager.Documentation;
 
 /// <summary>
-/// Class to hold all information's about a resource.
+///     Class to hold all information's about a resource.
 /// </summary>
 public class ResourceInfo : BaseInfo
 {
     /// <summary>
-    /// Create an instance of <see cref="ResourceInfo"/> with parameters.
+    ///     Create an instance of <see cref="ResourceInfo" /> with parameters.
     /// </summary>
     /// <param name="name">Name of the resource.</param>
     /// <param name="websiteUrl">Url of the resource.</param>

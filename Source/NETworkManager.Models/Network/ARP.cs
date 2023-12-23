@@ -1,7 +1,6 @@
 ﻿// Contains code from: https://stackoverflow.com/a/1148861/4986782
 // Modified by BornToBeRoot
 
-using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +8,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
@@ -40,13 +40,14 @@ public class ARP
     // Declare the GetIpNetTable function.
     [DllImport("IpHlpApi.dll")]
     [return: MarshalAs(UnmanagedType.U4)]
-    static extern int GetIpNetTable(IntPtr pIpNetTable, [MarshalAs(UnmanagedType.U4)] ref int pdwSize, bool bOrder);
+    private static extern int GetIpNetTable(IntPtr pIpNetTable, [MarshalAs(UnmanagedType.U4)] ref int pdwSize,
+        bool bOrder);
 
     [DllImport("IpHlpApi.dll", SetLastError = true, CharSet = CharSet.Auto)]
     internal static extern int FreeMibTable(IntPtr plpNetTable);
 
     // The insufficient buffer error.
-    const int ERROR_INSUFFICIENT_BUFFER = 122;
+    private const int ERROR_INSUFFICIENT_BUFFER = 122;
 
     #endregion
 
@@ -80,10 +81,8 @@ public class ARP
 
         // Call the function, expecting an insufficient buffer.
         if (result != ERROR_INSUFFICIENT_BUFFER)
-        {
             // Throw an exception.
             throw new Win32Exception(result);
-        }
 
         // Allocate the memory, do it in a try/finally block, to ensure
         // that it is released.
@@ -101,10 +100,8 @@ public class ARP
 
             // If the result is not 0 (no error), then throw an exception.
             if (result != 0)
-            {
                 // Throw an exception.
                 throw new Win32Exception(result);
-            }
 
             // Now we have the buffer, we have to marshal it. We can read
             // the first 4 bytes to get the length of the buffer.
@@ -119,11 +116,9 @@ public class ARP
 
             // Cycle through the entries.
             for (var i = 0; i < entries; i++)
-            {
                 // Call PtrToStructure, getting the structure information.
                 table[i] = (MIB_IPNETROW)Marshal.PtrToStructure(new
-                    IntPtr(currentBuffer.ToInt64() + (i * Marshal.SizeOf(typeof(MIB_IPNETROW)))), typeof(MIB_IPNETROW));
-            }
+                    IntPtr(currentBuffer.ToInt64() + i * Marshal.SizeOf(typeof(MIB_IPNETROW))), typeof(MIB_IPNETROW));
 
             var virtualMAC = new PhysicalAddress(new byte[] { 0, 0, 0, 0, 0, 0 });
             var broadcastMAC = new PhysicalAddress(new byte[] { 255, 255, 255, 255, 255, 255 });

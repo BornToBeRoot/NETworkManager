@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.NetworkInformation;
 
@@ -29,8 +28,4 @@ public class NetworkInterfaceInfo
     public bool DNSAutoconfigurationEnabled { get; set; }
     public string DNSSuffix { get; set; }
     public IPAddress[] DNSServer { get; set; }
-
-    public NetworkInterfaceInfo()
-    {
-    }
 }

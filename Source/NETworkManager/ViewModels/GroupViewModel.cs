@@ -1,18 +1,16 @@
-﻿using Amazon.EC2.Model;
-using NETworkManager.Models.Network;
-using NETworkManager.Models.PowerShell;
-using NETworkManager.Models.PuTTY;
-using NETworkManager.Models.RemoteDesktop;
-using NETworkManager.Profiles;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Security;
 using System.Windows.Data;
 using System.Windows.Input;
+using NETworkManager.Models.Network;
+using NETworkManager.Models.PowerShell;
+using NETworkManager.Models.PuTTY;
+using NETworkManager.Models.RemoteDesktop;
+using NETworkManager.Profiles;
+using NETworkManager.Utilities;
 
 // ReSharper disable InconsistentNaming
 
@@ -22,12 +20,209 @@ public class GroupViewModel : ViewModelBase
 {
     private readonly bool _isLoading = true;
 
+    public GroupViewModel(Action<GroupViewModel> saveCommand, Action<GroupViewModel> cancelHandler,
+        IReadOnlyCollection<string> groups, GroupEditMode editMode = GroupEditMode.Add, GroupInfo group = null)
+    {
+        // Load the view
+        GroupViews = new CollectionViewSource { Source = GroupViewManager.List }.View;
+        GroupViews.SortDescriptions.Add(new SortDescription(nameof(GroupViewInfo.Name), ListSortDirection.Ascending));
+
+        SaveCommand = new RelayCommand(_ => saveCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
+
+        var groupInfo = group ?? new GroupInfo();
+
+        Group = groupInfo;
+        _groups = groups;
+
+        // General
+        Name = groupInfo.Name;
+
+        // Remote Desktop
+        RemoteDesktop_UseCredentials = groupInfo.RemoteDesktop_UseCredentials;
+        RemoteDesktop_Username = groupInfo.RemoteDesktop_Username;
+        RemoteDesktop_Domain = groupInfo.RemoteDesktop_Domain;
+        RemoteDesktop_Password = groupInfo.RemoteDesktop_Password;
+        RemoteDesktop_OverrideDisplay = groupInfo.RemoteDesktop_OverrideDisplay;
+        RemoteDesktop_AdjustScreenAutomatically = groupInfo.RemoteDesktop_AdjustScreenAutomatically;
+        RemoteDesktop_UseCurrentViewSize = groupInfo.RemoteDesktop_UseCurrentViewSize;
+        RemoteDesktop_UseFixedScreenSize = groupInfo.RemoteDesktop_UseFixedScreenSize;
+        RemoteDesktop_SelectedScreenResolution = RemoteDesktop_ScreenResolutions.FirstOrDefault(x =>
+            x == $"{groupInfo.RemoteDesktop_ScreenWidth}x{groupInfo.RemoteDesktop_ScreenHeight}");
+        RemoteDesktop_UseCustomScreenSize = groupInfo.RemoteDesktop_UseCustomScreenSize;
+        RemoteDesktop_CustomScreenWidth = groupInfo.RemoteDesktop_CustomScreenWidth.ToString();
+        RemoteDesktop_CustomScreenHeight = groupInfo.RemoteDesktop_CustomScreenHeight.ToString();
+        RemoteDesktop_OverrideColorDepth = groupInfo.RemoteDesktop_OverrideColorDepth;
+        RemoteDesktop_SelectedColorDepth =
+            RemoteDesktop_ColorDepths.FirstOrDefault(x => x == groupInfo.RemoteDesktop_ColorDepth);
+        RemoteDesktop_OverridePort = groupInfo.RemoteDesktop_OverridePort;
+        RemoteDesktop_Port = groupInfo.RemoteDesktop_Port;
+        RemoteDesktop_OverrideCredSspSupport = groupInfo.RemoteDesktop_OverrideCredSspSupport;
+        RemoteDesktop_EnableCredSspSupport = groupInfo.RemoteDesktop_EnableCredSspSupport;
+        RemoteDesktop_OverrideAuthenticationLevel = groupInfo.RemoteDesktop_OverrideAuthenticationLevel;
+        RemoteDesktop_AuthenticationLevel = groupInfo.RemoteDesktop_AuthenticationLevel;
+        RemoteDesktop_OverrideGatewayServer = groupInfo.RemoteDesktop_OverrideGatewayServer;
+        RemoteDesktop_EnableGatewayServer = groupInfo.RemoteDesktop_EnableGatewayServer;
+        RemoteDesktop_GatewayServerHostname = groupInfo.RemoteDesktop_GatewayServerHostname;
+        RemoteDesktop_GatewayServerBypassLocalAddresses = groupInfo.RemoteDesktop_GatewayServerBypassLocalAddresses;
+        RemoteDesktop_GatewayServerLogonMethod = groupInfo.RemoteDesktop_GatewayServerLogonMethod;
+        RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer =
+            groupInfo.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+        RemoteDesktop_UseGatewayServerCredentials = groupInfo.RemoteDesktop_UseGatewayServerCredentials;
+        RemoteDesktop_GatewayServerUsername = groupInfo.RemoteDesktop_GatewayServerUsername;
+        RemoteDesktop_GatewayServerDomain = groupInfo.RemoteDesktop_GatewayServerDomain;
+        RemoteDesktop_GatewayServerPassword = groupInfo.RemoteDesktop_GatewayServerPassword;
+        RemoteDesktop_OverrideAudioRedirectionMode = groupInfo.RemoteDesktop_OverrideAudioRedirectionMode;
+        RemoteDesktop_AudioRedirectionMode =
+            RemoteDesktop_AudioRedirectionModes.FirstOrDefault(x => x == groupInfo.RemoteDesktop_AudioRedirectionMode);
+        RemoteDesktop_OverrideAudioCaptureRedirectionMode = groupInfo.RemoteDesktop_OverrideAudioCaptureRedirectionMode;
+        RemoteDesktop_AudioCaptureRedirectionMode =
+            RemoteDesktop_AudioCaptureRedirectionModes.FirstOrDefault(x =>
+                x == groupInfo.RemoteDesktop_AudioCaptureRedirectionMode);
+        RemoteDesktop_OverrideApplyWindowsKeyCombinations = groupInfo.RemoteDesktop_OverrideApplyWindowsKeyCombinations;
+        RemoteDesktop_KeyboardHookMode =
+            RemoteDesktop_KeyboardHookModes.FirstOrDefault(x => x == groupInfo.RemoteDesktop_KeyboardHookMode);
+        RemoteDesktop_OverrideRedirectClipboard = groupInfo.RemoteDesktop_OverrideRedirectClipboard;
+        RemoteDesktop_RedirectClipboard = groupInfo.RemoteDesktop_RedirectClipboard;
+        RemoteDesktop_OverrideRedirectDevices = groupInfo.RemoteDesktop_OverrideRedirectDevices;
+        RemoteDesktop_RedirectDevices = groupInfo.RemoteDesktop_RedirectDevices;
+        RemoteDesktop_OverrideRedirectDrives = groupInfo.RemoteDesktop_OverrideRedirectDrives;
+        RemoteDesktop_RedirectDrives = groupInfo.RemoteDesktop_RedirectDrives;
+        RemoteDesktop_OverrideRedirectPorts = groupInfo.RemoteDesktop_OverrideRedirectPorts;
+        RemoteDesktop_RedirectPorts = groupInfo.RemoteDesktop_RedirectPorts;
+        RemoteDesktop_OverrideRedirectSmartcards = groupInfo.RemoteDesktop_OverrideRedirectSmartcards;
+        RemoteDesktop_RedirectSmartCards = groupInfo.RemoteDesktop_RedirectSmartCards;
+        RemoteDesktop_OverrideRedirectPrinters = groupInfo.RemoteDesktop_OverrideRedirectPrinters;
+        RemoteDesktop_RedirectPrinters = groupInfo.RemoteDesktop_RedirectPrinters;
+        RemoteDesktop_OverridePersistentBitmapCaching = groupInfo.RemoteDesktop_OverridePersistentBitmapCaching;
+        RemoteDesktop_PersistentBitmapCaching = groupInfo.RemoteDesktop_PersistentBitmapCaching;
+        RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped =
+            groupInfo.RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped;
+        RemoteDesktop_ReconnectIfTheConnectionIsDropped = groupInfo.RemoteDesktop_ReconnectIfTheConnectionIsDropped;
+        RemoteDesktop_NetworkConnectionType =
+            RemoteDesktop_NetworkConnectionTypes.FirstOrDefault(x =>
+                x == groupInfo.RemoteDesktop_NetworkConnectionType);
+        RemoteDesktop_DesktopBackground = groupInfo.RemoteDesktop_DesktopBackground;
+        RemoteDesktop_FontSmoothing = groupInfo.RemoteDesktop_FontSmoothing;
+        RemoteDesktop_DesktopComposition = groupInfo.RemoteDesktop_DesktopComposition;
+        RemoteDesktop_ShowWindowContentsWhileDragging = groupInfo.RemoteDesktop_ShowWindowContentsWhileDragging;
+        RemoteDesktop_MenuAndWindowAnimation = groupInfo.RemoteDesktop_MenuAndWindowAnimation;
+        RemoteDesktop_VisualStyles = groupInfo.RemoteDesktop_VisualStyles;
+
+        // PowerShell
+        PowerShell_OverrideCommand = groupInfo.PowerShell_OverrideCommand;
+        PowerShell_Command = groupInfo.PowerShell_Command;
+        PowerShell_OverrideAdditionalCommandLine = groupInfo.PowerShell_OverrideAdditionalCommandLine;
+        PowerShell_AdditionalCommandLine = groupInfo.PowerShell_AdditionalCommandLine;
+        PowerShell_OverrideExecutionPolicy = groupInfo.PowerShell_OverrideExecutionPolicy;
+        PowerShell_ExecutionPolicies = Enum.GetValues(typeof(ExecutionPolicy)).Cast<ExecutionPolicy>().ToList();
+        PowerShell_ExecutionPolicy =
+            PowerShell_ExecutionPolicies.FirstOrDefault(x => x == groupInfo.PowerShell_ExecutionPolicy);
+
+        // PuTTY
+        PuTTY_OverrideUsername = groupInfo.PuTTY_OverrideUsername;
+        PuTTY_Username = groupInfo.PuTTY_Username;
+        PuTTY_OverridePrivateKeyFile = groupInfo.PuTTY_OverridePrivateKeyFile;
+        PuTTY_PrivateKeyFile = groupInfo.PuTTY_PrivateKeyFile;
+        PuTTY_OverrideProfile = groupInfo.PuTTY_OverrideProfile;
+        PuTTY_Profile = groupInfo.PuTTY_Profile;
+        PuTTY_OverrideEnableLog = groupInfo.PuTTY_OverrideEnableLog;
+        PuTTY_EnableLog = groupInfo.PuTTY_EnableLog;
+        PuTTY_OverrideLogMode = groupInfo.PuTTY_OverrideLogMode;
+        PuTTY_LogMode = PuTTY_LogModes.FirstOrDefault(x => x == groupInfo.PuTTY_LogMode);
+        PuTTY_OverrideLogPath = groupInfo.PuTTY_OverrideLogPath;
+        PuTTY_LogPath = groupInfo.PuTTY_LogPath;
+        PuTTY_OverrideLogFileName = groupInfo.PuTTY_OverrideLogFileName;
+        PuTTY_LogFileName = groupInfo.PuTTY_LogFileName;
+        PuTTY_OverrideAdditionalCommandLine = groupInfo.PuTTY_OverrideAdditionalCommandLine;
+        PuTTY_AdditionalCommandLine = groupInfo.PuTTY_AdditionalCommandLine;
+
+        // AWS Session Manager
+        AWSSessionManager_OverrideProfile = groupInfo.AWSSessionManager_OverrideProfile;
+        AWSSessionManager_Profile = groupInfo.AWSSessionManager_Profile;
+        AWSSessionManager_OverrideRegion = groupInfo.AWSSessionManager_OverrideRegion;
+        AWSSessionManager_Region = groupInfo.AWSSessionManager_Region;
+
+        // TigerVNC
+        TigerVNC_OverridePort = groupInfo.TigerVNC_OverridePort;
+        TigerVNC_Port = groupInfo.TigerVNC_Port;
+
+        // SNMP
+        SNMP_OverrideOIDAndMode = groupInfo.SNMP_OverrideOIDAndMode;
+        SNMP_OID = groupInfo.SNMP_OID;
+        SNMP_Modes = new List<SNMPMode> { SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set };
+        SNMP_Mode = SNMP_Modes.FirstOrDefault(x => x == groupInfo.SNMP_Mode);
+        SNMP_OverrideVersionAndAuth = groupInfo.SNMP_OverrideVersionAndAuth;
+        SNMP_Versions = Enum.GetValues(typeof(SNMPVersion)).Cast<SNMPVersion>().ToList();
+        SNMP_Version = SNMP_Versions.FirstOrDefault(x => x == groupInfo.SNMP_Version);
+        SNMP_Community = groupInfo.SNMP_Community;
+        SNMP_Securities = new List<SNMPV3Security>
+            { SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv };
+        SNMP_Security = SNMP_Securities.FirstOrDefault(x => x == groupInfo.SNMP_Security);
+        SNMP_Username = groupInfo.SNMP_Username;
+        SNMP_AuthenticationProviders = Enum.GetValues(typeof(SNMPV3AuthenticationProvider))
+            .Cast<SNMPV3AuthenticationProvider>().ToList();
+        SNMP_AuthenticationProvider =
+            SNMP_AuthenticationProviders.FirstOrDefault(x => x == groupInfo.SNMP_AuthenticationProvider);
+        SNMP_Auth = groupInfo.SNMP_Auth;
+        SNMP_PrivacyProviders = Enum.GetValues(typeof(SNMPV3PrivacyProvider)).Cast<SNMPV3PrivacyProvider>().ToList();
+        SNMP_PrivacyProvider = SNMP_PrivacyProviders.FirstOrDefault(x => x == groupInfo.SNMP_PrivacyProvider);
+        SNMP_Priv = groupInfo.SNMP_Priv;
+
+        _isLoading = false;
+    }
+
     public bool IsProfileFileEncrypted => ProfileManager.LoadedProfileFile.IsEncrypted;
 
     public ICollectionView GroupViews { get; }
     public GroupInfo Group { get; }
 
     private IReadOnlyCollection<string> _groups { get; }
+
+    #region Methods
+
+    private void ChangeNetworkConnectionTypeSettings(NetworkConnectionType connectionSpeed)
+    {
+        switch (connectionSpeed)
+        {
+            case NetworkConnectionType.Modem:
+                RemoteDesktop_DesktopBackground = false;
+                RemoteDesktop_FontSmoothing = false;
+                RemoteDesktop_DesktopComposition = false;
+                RemoteDesktop_ShowWindowContentsWhileDragging = false;
+                RemoteDesktop_MenuAndWindowAnimation = false;
+                RemoteDesktop_VisualStyles = false;
+                break;
+            case NetworkConnectionType.BroadbandLow:
+                RemoteDesktop_DesktopBackground = false;
+                RemoteDesktop_FontSmoothing = false;
+                RemoteDesktop_DesktopComposition = false;
+                RemoteDesktop_ShowWindowContentsWhileDragging = false;
+                RemoteDesktop_MenuAndWindowAnimation = false;
+                RemoteDesktop_VisualStyles = true;
+                break;
+            case NetworkConnectionType.Satellite:
+            case NetworkConnectionType.BroadbandHigh:
+                RemoteDesktop_DesktopBackground = false;
+                RemoteDesktop_FontSmoothing = false;
+                RemoteDesktop_DesktopComposition = true;
+                RemoteDesktop_ShowWindowContentsWhileDragging = false;
+                RemoteDesktop_MenuAndWindowAnimation = false;
+                RemoteDesktop_VisualStyles = true;
+                break;
+            case NetworkConnectionType.WAN:
+            case NetworkConnectionType.LAN:
+                RemoteDesktop_DesktopBackground = true;
+                RemoteDesktop_FontSmoothing = true;
+                RemoteDesktop_DesktopComposition = true;
+                RemoteDesktop_ShowWindowContentsWhileDragging = true;
+                RemoteDesktop_MenuAndWindowAnimation = true;
+                RemoteDesktop_VisualStyles = true;
+                break;
+        }
+    }
+
+    #endregion
 
     #region General
 
@@ -1750,208 +1945,11 @@ public class GroupViewModel : ViewModelBase
 
     #endregion
 
-    public GroupViewModel(Action<GroupViewModel> saveCommand, Action<GroupViewModel> cancelHandler,
-        IReadOnlyCollection<string> groups, GroupEditMode editMode = GroupEditMode.Add, GroupInfo group = null)
-    {
-        // Load the view
-        GroupViews = new CollectionViewSource { Source = GroupViewManager.List }.View;
-        GroupViews.SortDescriptions.Add(new SortDescription(nameof(GroupViewInfo.Name), ListSortDirection.Ascending));
-
-        SaveCommand = new RelayCommand(_ => saveCommand(this));
-        CancelCommand = new RelayCommand(_ => cancelHandler(this));
-
-        var groupInfo = group ?? new GroupInfo();
-
-        Group = groupInfo;
-        _groups = groups;
-
-        // General
-        Name = groupInfo.Name;
-
-        // Remote Desktop
-        RemoteDesktop_UseCredentials = groupInfo.RemoteDesktop_UseCredentials;
-        RemoteDesktop_Username = groupInfo.RemoteDesktop_Username;
-        RemoteDesktop_Domain = groupInfo.RemoteDesktop_Domain;
-        RemoteDesktop_Password = groupInfo.RemoteDesktop_Password;
-        RemoteDesktop_OverrideDisplay = groupInfo.RemoteDesktop_OverrideDisplay;
-        RemoteDesktop_AdjustScreenAutomatically = groupInfo.RemoteDesktop_AdjustScreenAutomatically;
-        RemoteDesktop_UseCurrentViewSize = groupInfo.RemoteDesktop_UseCurrentViewSize;
-        RemoteDesktop_UseFixedScreenSize = groupInfo.RemoteDesktop_UseFixedScreenSize;
-        RemoteDesktop_SelectedScreenResolution = RemoteDesktop_ScreenResolutions.FirstOrDefault(x =>
-            x == $"{groupInfo.RemoteDesktop_ScreenWidth}x{groupInfo.RemoteDesktop_ScreenHeight}");
-        RemoteDesktop_UseCustomScreenSize = groupInfo.RemoteDesktop_UseCustomScreenSize;
-        RemoteDesktop_CustomScreenWidth = groupInfo.RemoteDesktop_CustomScreenWidth.ToString();
-        RemoteDesktop_CustomScreenHeight = groupInfo.RemoteDesktop_CustomScreenHeight.ToString();
-        RemoteDesktop_OverrideColorDepth = groupInfo.RemoteDesktop_OverrideColorDepth;
-        RemoteDesktop_SelectedColorDepth =
-            RemoteDesktop_ColorDepths.FirstOrDefault(x => x == groupInfo.RemoteDesktop_ColorDepth);
-        RemoteDesktop_OverridePort = groupInfo.RemoteDesktop_OverridePort;
-        RemoteDesktop_Port = groupInfo.RemoteDesktop_Port;
-        RemoteDesktop_OverrideCredSspSupport = groupInfo.RemoteDesktop_OverrideCredSspSupport;
-        RemoteDesktop_EnableCredSspSupport = groupInfo.RemoteDesktop_EnableCredSspSupport;
-        RemoteDesktop_OverrideAuthenticationLevel = groupInfo.RemoteDesktop_OverrideAuthenticationLevel;
-        RemoteDesktop_AuthenticationLevel = groupInfo.RemoteDesktop_AuthenticationLevel;
-        RemoteDesktop_OverrideGatewayServer = groupInfo.RemoteDesktop_OverrideGatewayServer;
-        RemoteDesktop_EnableGatewayServer = groupInfo.RemoteDesktop_EnableGatewayServer;
-        RemoteDesktop_GatewayServerHostname = groupInfo.RemoteDesktop_GatewayServerHostname;
-        RemoteDesktop_GatewayServerBypassLocalAddresses = groupInfo.RemoteDesktop_GatewayServerBypassLocalAddresses;
-        RemoteDesktop_GatewayServerLogonMethod = groupInfo.RemoteDesktop_GatewayServerLogonMethod;
-        RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer =
-            groupInfo.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
-        RemoteDesktop_UseGatewayServerCredentials = groupInfo.RemoteDesktop_UseGatewayServerCredentials;
-        RemoteDesktop_GatewayServerUsername = groupInfo.RemoteDesktop_GatewayServerUsername;
-        RemoteDesktop_GatewayServerDomain = groupInfo.RemoteDesktop_GatewayServerDomain;
-        RemoteDesktop_GatewayServerPassword = groupInfo.RemoteDesktop_GatewayServerPassword;
-        RemoteDesktop_OverrideAudioRedirectionMode = groupInfo.RemoteDesktop_OverrideAudioRedirectionMode;
-        RemoteDesktop_AudioRedirectionMode =
-            RemoteDesktop_AudioRedirectionModes.FirstOrDefault(x => x == groupInfo.RemoteDesktop_AudioRedirectionMode);
-        RemoteDesktop_OverrideAudioCaptureRedirectionMode = groupInfo.RemoteDesktop_OverrideAudioCaptureRedirectionMode;
-        RemoteDesktop_AudioCaptureRedirectionMode =
-            RemoteDesktop_AudioCaptureRedirectionModes.FirstOrDefault(x =>
-                x == groupInfo.RemoteDesktop_AudioCaptureRedirectionMode);
-        RemoteDesktop_OverrideApplyWindowsKeyCombinations = groupInfo.RemoteDesktop_OverrideApplyWindowsKeyCombinations;
-        RemoteDesktop_KeyboardHookMode =
-            RemoteDesktop_KeyboardHookModes.FirstOrDefault(x => x == groupInfo.RemoteDesktop_KeyboardHookMode);
-        RemoteDesktop_OverrideRedirectClipboard = groupInfo.RemoteDesktop_OverrideRedirectClipboard;
-        RemoteDesktop_RedirectClipboard = groupInfo.RemoteDesktop_RedirectClipboard;
-        RemoteDesktop_OverrideRedirectDevices = groupInfo.RemoteDesktop_OverrideRedirectDevices;
-        RemoteDesktop_RedirectDevices = groupInfo.RemoteDesktop_RedirectDevices;
-        RemoteDesktop_OverrideRedirectDrives = groupInfo.RemoteDesktop_OverrideRedirectDrives;
-        RemoteDesktop_RedirectDrives = groupInfo.RemoteDesktop_RedirectDrives;
-        RemoteDesktop_OverrideRedirectPorts = groupInfo.RemoteDesktop_OverrideRedirectPorts;
-        RemoteDesktop_RedirectPorts = groupInfo.RemoteDesktop_RedirectPorts;
-        RemoteDesktop_OverrideRedirectSmartcards = groupInfo.RemoteDesktop_OverrideRedirectSmartcards;
-        RemoteDesktop_RedirectSmartCards = groupInfo.RemoteDesktop_RedirectSmartCards;
-        RemoteDesktop_OverrideRedirectPrinters = groupInfo.RemoteDesktop_OverrideRedirectPrinters;
-        RemoteDesktop_RedirectPrinters = groupInfo.RemoteDesktop_RedirectPrinters;
-        RemoteDesktop_OverridePersistentBitmapCaching = groupInfo.RemoteDesktop_OverridePersistentBitmapCaching;
-        RemoteDesktop_PersistentBitmapCaching = groupInfo.RemoteDesktop_PersistentBitmapCaching;
-        RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped =
-            groupInfo.RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped;
-        RemoteDesktop_ReconnectIfTheConnectionIsDropped = groupInfo.RemoteDesktop_ReconnectIfTheConnectionIsDropped;
-        RemoteDesktop_NetworkConnectionType =
-            RemoteDesktop_NetworkConnectionTypes.FirstOrDefault(x =>
-                x == groupInfo.RemoteDesktop_NetworkConnectionType);
-        RemoteDesktop_DesktopBackground = groupInfo.RemoteDesktop_DesktopBackground;
-        RemoteDesktop_FontSmoothing = groupInfo.RemoteDesktop_FontSmoothing;
-        RemoteDesktop_DesktopComposition = groupInfo.RemoteDesktop_DesktopComposition;
-        RemoteDesktop_ShowWindowContentsWhileDragging = groupInfo.RemoteDesktop_ShowWindowContentsWhileDragging;
-        RemoteDesktop_MenuAndWindowAnimation = groupInfo.RemoteDesktop_MenuAndWindowAnimation;
-        RemoteDesktop_VisualStyles = groupInfo.RemoteDesktop_VisualStyles;
-
-        // PowerShell
-        PowerShell_OverrideCommand = groupInfo.PowerShell_OverrideCommand;
-        PowerShell_Command = groupInfo.PowerShell_Command;
-        PowerShell_OverrideAdditionalCommandLine = groupInfo.PowerShell_OverrideAdditionalCommandLine;
-        PowerShell_AdditionalCommandLine = groupInfo.PowerShell_AdditionalCommandLine;
-        PowerShell_OverrideExecutionPolicy = groupInfo.PowerShell_OverrideExecutionPolicy;
-        PowerShell_ExecutionPolicies = Enum.GetValues(typeof(ExecutionPolicy)).Cast<ExecutionPolicy>().ToList();
-        PowerShell_ExecutionPolicy =
-            PowerShell_ExecutionPolicies.FirstOrDefault(x => x == groupInfo.PowerShell_ExecutionPolicy);
-
-        // PuTTY
-        PuTTY_OverrideUsername = groupInfo.PuTTY_OverrideUsername;
-        PuTTY_Username = groupInfo.PuTTY_Username;
-        PuTTY_OverridePrivateKeyFile = groupInfo.PuTTY_OverridePrivateKeyFile;
-        PuTTY_PrivateKeyFile = groupInfo.PuTTY_PrivateKeyFile;
-        PuTTY_OverrideProfile = groupInfo.PuTTY_OverrideProfile;
-        PuTTY_Profile = groupInfo.PuTTY_Profile;
-        PuTTY_OverrideEnableLog = groupInfo.PuTTY_OverrideEnableLog;
-        PuTTY_EnableLog = groupInfo.PuTTY_EnableLog;
-        PuTTY_OverrideLogMode = groupInfo.PuTTY_OverrideLogMode;
-        PuTTY_LogMode = PuTTY_LogModes.FirstOrDefault(x => x == groupInfo.PuTTY_LogMode);
-        PuTTY_OverrideLogPath = groupInfo.PuTTY_OverrideLogPath;
-        PuTTY_LogPath = groupInfo.PuTTY_LogPath;
-        PuTTY_OverrideLogFileName = groupInfo.PuTTY_OverrideLogFileName;
-        PuTTY_LogFileName = groupInfo.PuTTY_LogFileName;
-        PuTTY_OverrideAdditionalCommandLine = groupInfo.PuTTY_OverrideAdditionalCommandLine;
-        PuTTY_AdditionalCommandLine = groupInfo.PuTTY_AdditionalCommandLine;
-
-        // AWS Session Manager
-        AWSSessionManager_OverrideProfile = groupInfo.AWSSessionManager_OverrideProfile;
-        AWSSessionManager_Profile = groupInfo.AWSSessionManager_Profile;
-        AWSSessionManager_OverrideRegion = groupInfo.AWSSessionManager_OverrideRegion;
-        AWSSessionManager_Region = groupInfo.AWSSessionManager_Region;
-
-        // TigerVNC
-        TigerVNC_OverridePort = groupInfo.TigerVNC_OverridePort;
-        TigerVNC_Port = groupInfo.TigerVNC_Port;
-
-        // SNMP
-        SNMP_OverrideOIDAndMode = groupInfo.SNMP_OverrideOIDAndMode;
-        SNMP_OID = groupInfo.SNMP_OID;
-        SNMP_Modes = new List<SNMPMode> { SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set };
-        SNMP_Mode = SNMP_Modes.FirstOrDefault(x => x == groupInfo.SNMP_Mode);
-        SNMP_OverrideVersionAndAuth = groupInfo.SNMP_OverrideVersionAndAuth;
-        SNMP_Versions = Enum.GetValues(typeof(SNMPVersion)).Cast<SNMPVersion>().ToList();
-        SNMP_Version = SNMP_Versions.FirstOrDefault(x => x == groupInfo.SNMP_Version);
-        SNMP_Community = groupInfo.SNMP_Community;
-        SNMP_Securities = new List<SNMPV3Security>
-            { SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv };
-        SNMP_Security = SNMP_Securities.FirstOrDefault(x => x == groupInfo.SNMP_Security);
-        SNMP_Username = groupInfo.SNMP_Username;
-        SNMP_AuthenticationProviders = Enum.GetValues(typeof(SNMPV3AuthenticationProvider))
-            .Cast<SNMPV3AuthenticationProvider>().ToList();
-        SNMP_AuthenticationProvider =
-            SNMP_AuthenticationProviders.FirstOrDefault(x => x == groupInfo.SNMP_AuthenticationProvider);
-        SNMP_Auth = groupInfo.SNMP_Auth;
-        SNMP_PrivacyProviders = Enum.GetValues(typeof(SNMPV3PrivacyProvider)).Cast<SNMPV3PrivacyProvider>().ToList();
-        SNMP_PrivacyProvider = SNMP_PrivacyProviders.FirstOrDefault(x => x == groupInfo.SNMP_PrivacyProvider);
-        SNMP_Priv = groupInfo.SNMP_Priv;
-
-        _isLoading = false;
-    }
-
     #region ICommand & Actions
 
     public ICommand SaveCommand { get; }
 
     public ICommand CancelCommand { get; }
-
-    #endregion
-
-    #region Methods
-
-    private void ChangeNetworkConnectionTypeSettings(NetworkConnectionType connectionSpeed)
-    {
-        switch (connectionSpeed)
-        {
-            case NetworkConnectionType.Modem:
-                RemoteDesktop_DesktopBackground = false;
-                RemoteDesktop_FontSmoothing = false;
-                RemoteDesktop_DesktopComposition = false;
-                RemoteDesktop_ShowWindowContentsWhileDragging = false;
-                RemoteDesktop_MenuAndWindowAnimation = false;
-                RemoteDesktop_VisualStyles = false;
-                break;
-            case NetworkConnectionType.BroadbandLow:
-                RemoteDesktop_DesktopBackground = false;
-                RemoteDesktop_FontSmoothing = false;
-                RemoteDesktop_DesktopComposition = false;
-                RemoteDesktop_ShowWindowContentsWhileDragging = false;
-                RemoteDesktop_MenuAndWindowAnimation = false;
-                RemoteDesktop_VisualStyles = true;
-                break;
-            case NetworkConnectionType.Satellite:
-            case NetworkConnectionType.BroadbandHigh:
-                RemoteDesktop_DesktopBackground = false;
-                RemoteDesktop_FontSmoothing = false;
-                RemoteDesktop_DesktopComposition = true;
-                RemoteDesktop_ShowWindowContentsWhileDragging = false;
-                RemoteDesktop_MenuAndWindowAnimation = false;
-                RemoteDesktop_VisualStyles = true;
-                break;
-            case NetworkConnectionType.WAN:
-            case NetworkConnectionType.LAN:
-                RemoteDesktop_DesktopBackground = true;
-                RemoteDesktop_FontSmoothing = true;
-                RemoteDesktop_DesktopComposition = true;
-                RemoteDesktop_ShowWindowContentsWhileDragging = true;
-                RemoteDesktop_MenuAndWindowAnimation = true;
-                RemoteDesktop_VisualStyles = true;
-                break;
-        }
-    }
 
     #endregion
 }

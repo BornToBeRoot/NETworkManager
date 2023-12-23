@@ -1,5 +1,5 @@
-﻿using NETworkManager.Models;
-using System;
+﻿using System;
+using NETworkManager.Models;
 
 namespace NETworkManager.Settings;
 
@@ -7,17 +7,6 @@ public static class CommandLineManager
 {
     private const string ParameterIdentifier = "--";
     private const char ValueSplitIdentifier = ':';
-
-    // Public 
-    public static string ParameterHelp => $"{ParameterIdentifier}help";
-    public static string ParameterResetSettings => $"{ParameterIdentifier}reset-settings";
-    public static string ParameterApplication => $"{ParameterIdentifier}application";
-
-    // Internal use only
-    public static string ParameterAutostart => $"{ParameterIdentifier}autostart";
-    public static string ParameterRestartPid => $"{ParameterIdentifier}restart-pid";
-
-    public static CommandLineInfo Current { get; set; }
 
     static CommandLineManager()
     {
@@ -85,6 +74,17 @@ public static class CommandLineManager
             }
         }
     }
+
+    // Public 
+    public static string ParameterHelp => $"{ParameterIdentifier}help";
+    public static string ParameterResetSettings => $"{ParameterIdentifier}reset-settings";
+    public static string ParameterApplication => $"{ParameterIdentifier}application";
+
+    // Internal use only
+    public static string ParameterAutostart => $"{ParameterIdentifier}autostart";
+    public static string ParameterRestartPid => $"{ParameterIdentifier}restart-pid";
+
+    public static CommandLineInfo Current { get; set; }
 
     public static string GetParameterWithSplitIdentifier(string parameter)
     {

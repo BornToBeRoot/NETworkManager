@@ -1,15 +1,15 @@
-﻿using NETworkManager.Settings;
-using System;
-using NETworkManager.Models.Network;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Collections.Generic;
-using NETworkManager.Utilities;
-using System.Windows.Data;
-using MahApps.Metro.Controls;
-using System.Windows.Input;
 using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
 using log4net;
+using MahApps.Metro.Controls;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
@@ -145,9 +145,12 @@ public class BitCalculatorViewModel : ViewModelBase
 
     public ICommand CalculateCommand => new RelayCommand(_ => CalculateAction(), Calculate_CanExecute);
 
-    private bool Calculate_CanExecute(object parameter) => Application.Current.MainWindow != null &&
-                                                           !((MetroWindow)Application.Current.MainWindow)
-                                                               .IsAnyDialogOpen;
+    private bool Calculate_CanExecute(object parameter)
+    {
+        return Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow)
+                   .IsAnyDialogOpen;
+    }
 
     private void CalculateAction()
     {
@@ -164,13 +167,9 @@ public class BitCalculatorViewModel : ViewModelBase
         IsRunning = true;
 
         if (double.TryParse(Input.Replace('.', ','), out var input))
-        {
             Result = await BitCaluclator.CalculateAsync(input, Unit, SettingsManager.Current.BitCalculator_Notation);
-        }
         else
-        {
             Log.Error($"Could not parse input \"{Input}\" into double!");
-        }
 
         IsResultVisible = true;
 

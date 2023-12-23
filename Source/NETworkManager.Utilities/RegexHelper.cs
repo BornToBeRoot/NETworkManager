@@ -3,20 +3,20 @@
 public static class RegexHelper
 {
     /// <summary>
-    /// Match an IPv4-Address like 192.168.178.1
+    ///     Match an IPv4-Address like 192.168.178.1
     /// </summary>
     // ReSharper disable once InconsistentNaming
     private const string IPv4AddressValues =
         @"((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
 
     /// <summary>
-    /// Match exactly an IPv4-Address like 192.168.178.1 
+    ///     Match exactly an IPv4-Address like 192.168.178.1
     /// </summary>
     // ReSharper disable once InconsistentNaming
     public const string IPv4AddressRegex = $"^{IPv4AddressValues}$";
 
     /// <summary>
-    /// Match IPv4-Address within a string 
+    ///     Match IPv4-Address within a string
     /// </summary>
     // ReSharper disable once InconsistentNaming
     public const string IPv4AddressExtractRegex = IPv4AddressValues;

@@ -1,20 +1,21 @@
-﻿using System.Collections.ObjectModel;
-using NETworkManager.Controls;
-using Dragablz;
-using System.Windows.Input;
-using NETworkManager.Views;
-using NETworkManager.Utilities;
-using NETworkManager.Settings;
-using System.ComponentModel;
-using System;
-using System.Windows.Data;
-using MahApps.Metro.Controls.Dialogs;
-using System.Windows;
-using System.Linq;
-using NETworkManager.Profiles;
-using System.Windows.Threading;
-using NETworkManager.Models;
+﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Threading;
+using Dragablz;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Controls;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models;
+using NETworkManager.Profiles;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
@@ -179,7 +180,7 @@ public class IPScannerHostViewModel : ViewModelBase, IProfileManager
 
         TabItems = new ObservableCollection<DragablzTabItem>
         {
-            new(Localization.Resources.Strings.NewTab, new IPScannerView(tabId), tabId)
+            new(Strings.NewTab, new IPScannerView(tabId), tabId)
         };
 
         // Profiles
@@ -237,7 +238,10 @@ public class IPScannerHostViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
+    private bool ModifyProfile_CanExecute(object obj)
+    {
+        return SelectedProfile is { IsDynamic: false };
+    }
 
     public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
@@ -321,7 +325,7 @@ public class IPScannerHostViewModel : ViewModelBase, IProfileManager
     {
         var tabId = Guid.NewGuid();
 
-        TabItems.Add(new DragablzTabItem(Localization.Resources.Strings.NewTab, new IPScannerView(tabId, hostOrIPRange),
+        TabItems.Add(new DragablzTabItem(Strings.NewTab, new IPScannerView(tabId, hostOrIPRange),
             tabId));
 
         SelectedTabIndex = TabItems.Count - 1;

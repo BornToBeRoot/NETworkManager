@@ -1,41 +1,17 @@
-﻿using DnsClient;
-using DnsClient.Protocol;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
+using DnsClient;
+using DnsClient.Protocol;
 using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
 public sealed class DNSLookup
 {
-    #region Variables
-
-    /// <summary>
-    /// DNS lookup settings to use for the DNS lookup.
-    /// </summary>
-    private readonly DNSLookupSettings _settings;
-
-    /// <summary>
-    /// List of Windows DNS servers or custom DNS servers from the settings to use for the DNS lookup.
-    /// </summary>
-    private readonly IEnumerable<IPEndPoint> _servers;
-
-    /// <summary>
-    /// Indicates whether the DNS suffix should be appended to the hostname. 
-    /// </summary>
-    private readonly bool _addSuffix;
-
-    /// <summary>
-    /// DNS suffix to append to hostname.
-    /// </summary>
-    private readonly string _suffix;
-
-    #endregion
-
     #region Constructor
 
     public DNSLookup(DNSLookupSettings settings, IEnumerable<ServerConnectionInfo> dnsServers = null)
@@ -54,6 +30,30 @@ public sealed class DNSLookup
             _addSuffix = !string.IsNullOrEmpty(_suffix);
         }
     }
+
+    #endregion
+
+    #region Variables
+
+    /// <summary>
+    ///     DNS lookup settings to use for the DNS lookup.
+    /// </summary>
+    private readonly DNSLookupSettings _settings;
+
+    /// <summary>
+    ///     List of Windows DNS servers or custom DNS servers from the settings to use for the DNS lookup.
+    /// </summary>
+    private readonly IEnumerable<IPEndPoint> _servers;
+
+    /// <summary>
+    ///     Indicates whether the DNS suffix should be appended to the hostname.
+    /// </summary>
+    private readonly bool _addSuffix;
+
+    /// <summary>
+    ///     DNS suffix to append to hostname.
+    /// </summary>
+    private readonly string _suffix;
 
     #endregion
 
@@ -85,9 +85,9 @@ public sealed class DNSLookup
     #region Methods
 
     /// <summary>
-    /// Get the DNS servers from Windows or get custom DNS servers from <see cref="DNSLookupSettings"/>.
+    ///     Get the DNS servers from Windows or get custom DNS servers from <see cref="DNSLookupSettings" />.
     /// </summary>
-    /// <returns>List of DNS servers as <see cref="IPEndPoint"/>.</returns>
+    /// <returns>List of DNS servers as <see cref="IPEndPoint" />.</returns>
     private IEnumerable<IPEndPoint> GetDnsServer(IEnumerable<ServerConnectionInfo> dnsServers = null)
     {
         List<IPEndPoint> servers = new();
@@ -102,7 +102,7 @@ public sealed class DNSLookup
     }
 
     /// <summary>
-    /// Append DNS suffix to hostname if not set.
+    ///     Append DNS suffix to hostname if not set.
     /// </summary>
     /// <param name="hosts">List of hosts</param>
     /// <returns>List of host with DNS suffix</returns>
@@ -112,7 +112,7 @@ public sealed class DNSLookup
     }
 
     /// <summary>
-    /// Resolve hostname, fqdn or ip address.
+    ///     Resolve hostname, fqdn or ip address.
     /// </summary>
     /// <param name="hosts">List of hostnames, FQDNs or ip addresses.</param>
     public void ResolveAsync(IEnumerable<string> hosts)
@@ -139,7 +139,7 @@ public sealed class DNSLookup
                     UseCache = _settings.UseCache,
                     Recursion = _settings.Recursion,
                     Timeout = _settings.Timeout,
-                    Retries = _settings.Retries,
+                    Retries = _settings.Retries
                 };
 
                 LookupClient lookupClient = new(lookupClientOptions);
@@ -187,7 +187,7 @@ public sealed class DNSLookup
     }
 
     /// <summary>
-    /// Process the DNS answers and raise the <see cref="RecordReceived"/> event.
+    ///     Process the DNS answers and raise the <see cref="RecordReceived" /> event.
     /// </summary>
     /// <param name="answers">List of DNS resource records.</param>
     /// <param name="nameServer">DNS name server that answered the query.</param>

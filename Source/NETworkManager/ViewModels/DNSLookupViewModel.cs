@@ -1,25 +1,25 @@
-﻿using NETworkManager.Models.Network;
-using NETworkManager.Settings;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using System.Linq;
-using System.ComponentModel;
-using System.Windows.Data;
-using NETworkManager.Utilities;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using NETworkManager.Controls;
+using DnsClient;
 using Dragablz;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Controls;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 using NETworkManager.Views;
-using DnsClient;
-using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels;
 
@@ -269,8 +269,11 @@ public class DNSLookupViewModel : ViewModelBase
 
     public ICommand QueryCommand => new RelayCommand(_ => QueryAction(), Query_CanExecute);
 
-    private bool Query_CanExecute(object parameter) => Application.Current.MainWindow != null &&
-                                                       !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool Query_CanExecute(object parameter)
+    {
+        return Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    }
 
     private void QueryAction()
     {
@@ -284,7 +287,7 @@ public class DNSLookupViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.Export
+            Title = Strings.Export
         };
 
         var exportViewModel = new ExportViewModel(async instance =>
@@ -302,10 +305,10 @@ public class DNSLookupViewModel : ViewModelBase
                 catch (Exception ex)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                    settings.AffirmativeButtonText = Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error,
-                        Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                    await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                        Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
                         Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
@@ -344,12 +347,8 @@ public class DNSLookupViewModel : ViewModelBase
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
         if (window != null)
-        {
             foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
-            {
                 tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Host;
-            }
-        }
 
         AddHostToHistory(Host);
 
@@ -362,7 +361,7 @@ public class DNSLookupViewModel : ViewModelBase
             UseCache = SettingsManager.Current.DNSLookup_UseCache,
             UseTCPOnly = SettingsManager.Current.DNSLookup_UseTCPOnly,
             Retries = SettingsManager.Current.DNSLookup_Retries,
-            Timeout = TimeSpan.FromSeconds(SettingsManager.Current.DNSLookup_Timeout),
+            Timeout = TimeSpan.FromSeconds(SettingsManager.Current.DNSLookup_Timeout)
         };
 
         if (SettingsManager.Current.DNSLookup_UseCustomDNSSuffix)

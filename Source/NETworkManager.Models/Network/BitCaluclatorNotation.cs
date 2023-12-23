@@ -1,17 +1,17 @@
 ﻿namespace NETworkManager.Models.Network;
 
 /// <summary>
-/// Represents the notation which is used to calculate.
+///     Represents the notation which is used to calculate.
 /// </summary>
 public enum BitCaluclatorNotation
 {
     /// <summary>
-    /// Binary base is 1024.
+    ///     Binary base is 1024.
     /// </summary>
     Binary,
 
     /// <summary>
-    /// Decimal base is 1000.
+    ///     Decimal base is 1000.
     /// </summary>
     Decimal
 }

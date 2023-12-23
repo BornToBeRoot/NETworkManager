@@ -1,16 +1,33 @@
-﻿using NETworkManager.Models.IPApi;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Diagnostics;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using NETworkManager.Models.IPApi;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
 public class IPApiDNSResolverWidgetViewModel : ViewModelBase
 {
+    #region Events
+
+    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+            case nameof(SettingsInfo.Dashboard_CheckIPApiDNSResolver):
+                // Check if enabled via settings
+                if (SettingsManager.Current.Dashboard_CheckIPApiDNSResolver)
+                    Check();
+
+                break;
+        }
+    }
+
+    #endregion
+
     #region Variables
 
     private bool _isRunning;
@@ -104,23 +121,6 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
         Debug.WriteLine(Result);
 
         IsRunning = false;
-    }
-
-    #endregion
-
-    #region Events
-
-    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-        switch (e.PropertyName)
-        {
-            case nameof(SettingsInfo.Dashboard_CheckIPApiDNSResolver):
-                // Check if enabled via settings
-                if (SettingsManager.Current.Dashboard_CheckIPApiDNSResolver)
-                    Check();
-
-                break;
-        }
     }
 
     #endregion

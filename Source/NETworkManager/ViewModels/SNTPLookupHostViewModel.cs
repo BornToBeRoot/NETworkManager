@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using NETworkManager.Controls;
-using Dragablz;
 using System.Windows.Input;
-using NETworkManager.Views;
-using NETworkManager.Utilities;
+using Dragablz;
+using NETworkManager.Controls;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
@@ -43,7 +44,7 @@ public class SNTPLookupHostViewModel : ViewModelBase
 
         TabItems = new ObservableCollection<DragablzTabItem>
         {
-            new(Localization.Resources.Strings.NewTab, new SNTPLookupView(tabId), tabId)
+            new(Strings.NewTab, new SNTPLookupView(tabId), tabId)
         };
 
         LoadSettings();
@@ -79,7 +80,7 @@ public class SNTPLookupHostViewModel : ViewModelBase
     {
         var tabId = Guid.NewGuid();
 
-        TabItems.Add(new DragablzTabItem(Localization.Resources.Strings.NewTab, new SNTPLookupView(tabId), tabId));
+        TabItems.Add(new DragablzTabItem(Strings.NewTab, new SNTPLookupView(tabId), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }

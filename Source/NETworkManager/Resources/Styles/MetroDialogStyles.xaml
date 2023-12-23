@@ -76,12 +76,10 @@
     <!-- Override the buttons in MahApps.Metro Dialogs -->
     <Style x:Key="MahApps.Styles.Button.Dialogs" BasedOn="{StaticResource DefaultButton}" TargetType="{x:Type Button}">
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="FontSize" Value="14" />
     </Style>
 
     <Style x:Key="MahApps.Styles.Button.Dialogs.Accent" BasedOn="{StaticResource HighlightedButton}"
            TargetType="{x:Type Button}">
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="FontSize" Value="14" />
     </Style>
 </ResourceDictionary>

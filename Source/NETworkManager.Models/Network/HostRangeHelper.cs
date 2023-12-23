@@ -1,6 +1,4 @@
 ﻿extern alias IPNetwork2;
-using NETworkManager.Utilities;
-using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,17 +7,19 @@ using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using NETworkManager.Utilities;
+using IPNetwork = IPNetwork2::System.Net.IPNetwork;
 
 namespace NETworkManager.Models.Network;
 
 /// <summary>
-/// Helper class to interact with host ranges.
-/// E.g. Parse inputs, resolve hostnames and ip ranges.
+///     Helper class to interact with host ranges.
+///     E.g. Parse inputs, resolve hostnames and ip ranges.
 /// </summary>
 public static class HostRangeHelper
 {
     /// <summary>
-    /// Create a list of hosts from a string input like "10.0.0.1; example.com; 10.0.0.0/24"
+    ///     Create a list of hosts from a string input like "10.0.0.1; example.com; 10.0.0.0/24"
     /// </summary>
     /// <param name="hosts">Hosts like "10.0.0.1; example.com; 10.0.0.0/24"</param>
     /// <returns>List of hosts.</returns>
@@ -59,7 +59,7 @@ public static class HostRangeHelper
                 case var _ when Regex.IsMatch(host, RegexHelper.IPv4AddressCidrRegex):
                 // 192.168.0.0/255.255.255.0
                 case var _ when Regex.IsMatch(host, RegexHelper.IPv4AddressSubnetmaskRegex):
-                    var network = IPNetwork2.System.Net.IPNetwork.Parse(host);
+                    var network = IPNetwork.Parse(host);
 
                     Parallel.For(IPv4Address.ToInt32(network.Network), IPv4Address.ToInt32(network.Broadcast) + 1,
                         (i, state) =>
@@ -100,9 +100,7 @@ public static class HostRangeHelper
 
                         // Create a range for each octet
                         if (Regex.IsMatch(octet, RegexHelper.SpecialRangeRegex))
-                        {
                             foreach (var numberOrRange in octet[1..^1].Split(','))
-                            {
                                 // 50-100
                                 if (numberOrRange.Contains('-'))
                                 {
@@ -121,12 +119,8 @@ public static class HostRangeHelper
                                 {
                                     innerList.Add(int.Parse(numberOrRange));
                                 }
-                            }
-                        }
                         else
-                        {
                             innerList.Add(int.Parse(octet));
-                        }
 
                         list.Add(innerList);
                     }
@@ -186,7 +180,7 @@ public static class HostRangeHelper
                             // Only support IPv4 for ranges for now
                             if (dnsResolverTask.Result.Value.AddressFamily == AddressFamily.InterNetwork)
                             {
-                                network = IPNetwork2.System.Net.IPNetwork.Parse(
+                                network = IPNetwork.Parse(
                                     $"{dnsResolverTask.Result.Value}/{hostAndSubnet[1]}");
 
                                 Parallel.For(IPv4Address.ToInt32(network.Network),

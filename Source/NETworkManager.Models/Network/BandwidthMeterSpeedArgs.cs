@@ -4,12 +4,6 @@ namespace NETworkManager.Models.Network;
 
 public class BandwidthMeterSpeedArgs : EventArgs
 {
-    public DateTime DateTime { get; }
-    public long TotalBytesReceived { get; }
-    public long TotalBytesSent { get; }
-    public long ByteReceivedSpeed { get; }
-    public long ByteSentSpeed { get; }
-
     public BandwidthMeterSpeedArgs(DateTime dateTime, long totoTotalBytesReceived, long totalBytesSent,
         long byteReceivedSpeed, long byteSentSpeed)
     {
@@ -19,4 +13,10 @@ public class BandwidthMeterSpeedArgs : EventArgs
         ByteReceivedSpeed = byteReceivedSpeed;
         ByteSentSpeed = byteSentSpeed;
     }
+
+    public DateTime DateTime { get; }
+    public long TotalBytesReceived { get; }
+    public long TotalBytesSent { get; }
+    public long ByteReceivedSpeed { get; }
+    public long ByteSentSpeed { get; }
 }

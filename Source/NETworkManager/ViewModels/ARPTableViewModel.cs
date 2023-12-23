@@ -1,26 +1,73 @@
-﻿using NETworkManager.Models.Network;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Windows.Input;
-using System.ComponentModel;
-using System.Windows.Data;
 using System.Collections.ObjectModel;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Views;
-using NETworkManager.Utilities;
-using NETworkManager.Settings;
-using System.Windows.Threading;
+using System.ComponentModel;
 using System.Linq;
-using System.Windows;
-using MahApps.Metro.Controls;
-using NETworkManager.Models.Export;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Threading;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models.Export;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
 public class ARPTableViewModel : ViewModelBase
 {
+    #region Contructor, load settings
+
+    public ARPTableViewModel(IDialogCoordinator instance)
+    {
+        _isLoading = true;
+        _dialogCoordinator = instance;
+
+        // Result view + search
+        ResultsView = CollectionViewSource.GetDefaultView(Results);
+
+        ((ListCollectionView)ResultsView).CustomSort = Comparer<ARPInfo>.Create((x, y) =>
+            IPAddressHelper.CompareIPAddresses(x.IPAddress, y.IPAddress));
+
+        ResultsView.Filter = o =>
+        {
+            if (o is not ARPInfo info)
+                return false;
+
+            if (string.IsNullOrEmpty(Search))
+                return true;
+
+            // Search by IPAddress and MACAddress
+            return info.IPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.MACAddress.ToString().IndexOf(Search.Replace("-", "").Replace(":", ""),
+                       StringComparison.OrdinalIgnoreCase) > -1 ||
+                   (info.IsMulticast ? Strings.Yes : Strings.No).IndexOf(
+                       Search, StringComparison.OrdinalIgnoreCase) > -1;
+        };
+
+        // Get ARP table
+        Refresh().ConfigureAwait(false);
+
+        // Auto refresh
+        _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
+
+        AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
+        SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x =>
+            x.Value == SettingsManager.Current.ARPTable_AutoRefreshTime.Value &&
+            x.TimeUnit == SettingsManager.Current.ARPTable_AutoRefreshTime.TimeUnit);
+        AutoRefreshEnabled = SettingsManager.Current.ARPTable_AutoRefreshEnabled;
+
+        _isLoading = false;
+    }
+
+    #endregion
+
     #region Variables
 
     private readonly IDialogCoordinator _dialogCoordinator;
@@ -197,52 +244,6 @@ public class ARPTableViewModel : ViewModelBase
 
     #endregion
 
-    #region Contructor, load settings
-
-    public ARPTableViewModel(IDialogCoordinator instance)
-    {
-        _isLoading = true;
-        _dialogCoordinator = instance;
-
-        // Result view + search
-        ResultsView = CollectionViewSource.GetDefaultView(Results);
-
-        ((ListCollectionView)ResultsView).CustomSort = Comparer<ARPInfo>.Create((x, y) =>
-            IPAddressHelper.CompareIPAddresses(x.IPAddress, y.IPAddress));
-
-        ResultsView.Filter = o =>
-        {
-            if (o is not ARPInfo info)
-                return false;
-
-            if (string.IsNullOrEmpty(Search))
-                return true;
-
-            // Search by IPAddress and MACAddress
-            return info.IPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   info.MACAddress.ToString().IndexOf(Search.Replace("-", "").Replace(":", ""),
-                       StringComparison.OrdinalIgnoreCase) > -1 ||
-                   (info.IsMulticast ? Localization.Resources.Strings.Yes : Localization.Resources.Strings.No).IndexOf(
-                       Search, StringComparison.OrdinalIgnoreCase) > -1;
-        };
-
-        // Get ARP table
-        Refresh().ConfigureAwait(false);
-
-        // Auto refresh
-        _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
-
-        AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
-        SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x =>
-            (x.Value == SettingsManager.Current.ARPTable_AutoRefreshTime.Value &&
-             x.TimeUnit == SettingsManager.Current.ARPTable_AutoRefreshTime.TimeUnit));
-        AutoRefreshEnabled = SettingsManager.Current.ARPTable_AutoRefreshEnabled;
-
-        _isLoading = false;
-    }
-
-    #endregion
-
     #region ICommands & Actions
 
     public ICommand RefreshCommand => new RelayCommand(_ => RefreshAction().ConfigureAwait(false), Refresh_CanExecute);
@@ -291,9 +292,12 @@ public class ARPTableViewModel : ViewModelBase
     public ICommand DeleteEntryCommand =>
         new RelayCommand(_ => DeleteEntryAction().ConfigureAwait(false), DeleteEntry_CanExecute);
 
-    private bool DeleteEntry_CanExecute(object parameter) => Application.Current.MainWindow != null &&
-                                                             !((MetroWindow)Application.Current.MainWindow)
-                                                                 .IsAnyDialogOpen;
+    private bool DeleteEntry_CanExecute(object parameter)
+    {
+        return Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow)
+                   .IsAnyDialogOpen;
+    }
 
     private async Task DeleteEntryAction()
     {
@@ -319,9 +323,12 @@ public class ARPTableViewModel : ViewModelBase
     public ICommand AddEntryCommand =>
         new RelayCommand(_ => AddEntryAction().ConfigureAwait(false), AddEntry_CanExecute);
 
-    private bool AddEntry_CanExecute(object parameter) => Application.Current.MainWindow != null &&
-                                                          !((MetroWindow)Application.Current.MainWindow)
-                                                              .IsAnyDialogOpen;
+    private bool AddEntry_CanExecute(object parameter)
+    {
+        return Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow)
+                   .IsAnyDialogOpen;
+    }
 
     private async Task AddEntryAction()
     {
@@ -329,7 +336,7 @@ public class ARPTableViewModel : ViewModelBase
 
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.AddEntry
+            Title = Strings.AddEntry
         };
 
         var arpTableAddEntryViewModel = new ArpTableAddEntryViewModel(async instance =>
@@ -367,7 +374,7 @@ public class ARPTableViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.Export
+            Title = Strings.Export
         };
 
         var exportViewModel = new ExportViewModel(async instance =>
@@ -384,10 +391,10 @@ public class ARPTableViewModel : ViewModelBase
             catch (Exception ex)
             {
                 var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                settings.AffirmativeButtonText = Strings.OK;
 
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error,
-                    Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
                     Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
             }
 
@@ -441,7 +448,7 @@ public class ARPTableViewModel : ViewModelBase
 
     private void ArpTable_UserHasCanceled(object sender, EventArgs e)
     {
-        StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
+        StatusMessage = Strings.CanceledByUserMessage;
         IsStatusMessageDisplayed = true;
     }
 

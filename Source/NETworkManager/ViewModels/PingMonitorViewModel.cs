@@ -1,26 +1,51 @@
-﻿using NETworkManager.Models.Network;
-using NETworkManager.Settings;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
-using NETworkManager.Utilities;
 using LiveCharts;
 using LiveCharts.Configurations;
 using LiveCharts.Wpf;
-using System.Collections.Generic;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Views;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
+using Ping = NETworkManager.Models.Network.Ping;
 
 namespace NETworkManager.ViewModels;
 
 public class PingMonitorViewModel : ViewModelBase
 {
+    #region Contructor, load settings
+
+    public PingMonitorViewModel(IDialogCoordinator instance, Guid hostId, Action<Guid> removeHostByGuid,
+        (IPAddress ipAddress, string hostname) host)
+    {
+        _dialogCoordinator = instance;
+
+        HostId = hostId;
+        _removeHostByGuid = removeHostByGuid;
+
+        Title = string.IsNullOrEmpty(host.hostname) ? host.ipAddress.ToString() : $"{host.hostname} # {host.ipAddress}";
+
+        IPAddress = host.ipAddress;
+        Hostname = host.hostname;
+
+        InitialTimeChart();
+
+        ExpandHostView = SettingsManager.Current.PingMonitor_ExpandHostView;
+    }
+
+    #endregion
+
     #region Variables
 
     private readonly IDialogCoordinator _dialogCoordinator;
@@ -268,28 +293,6 @@ public class PingMonitorViewModel : ViewModelBase
 
     #endregion
 
-    #region Contructor, load settings
-
-    public PingMonitorViewModel(IDialogCoordinator instance, Guid hostId, Action<Guid> removeHostByGuid,
-        (IPAddress ipAddress, string hostname) host)
-    {
-        _dialogCoordinator = instance;
-
-        HostId = hostId;
-        _removeHostByGuid = removeHostByGuid;
-
-        Title = string.IsNullOrEmpty(host.hostname) ? host.ipAddress.ToString() : $"{host.hostname} # {host.ipAddress}";
-
-        IPAddress = host.ipAddress;
-        Hostname = host.hostname;
-
-        InitialTimeChart();
-
-        ExpandHostView = SettingsManager.Current.PingMonitor_ExpandHostView;
-    }
-
-    #endregion
-
     #region ICommands & Actions
 
     public ICommand PingCommand => new RelayCommand(_ => PingAction());
@@ -379,7 +382,7 @@ public class PingMonitorViewModel : ViewModelBase
     {
         var customDialog = new CustomDialog
         {
-            Title = Localization.Resources.Strings.Export
+            Title = Strings.Export
         };
 
         var exportViewModel = new ExportViewModel(async instance =>
@@ -394,10 +397,10 @@ public class PingMonitorViewModel : ViewModelBase
                 catch (Exception ex)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                    settings.AffirmativeButtonText = Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error,
-                        Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                    await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                        Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
                         Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
@@ -429,7 +432,7 @@ public class PingMonitorViewModel : ViewModelBase
 
         LvlChartsDefaultInfo timeInfo;
 
-        if (e.Args.Status == System.Net.NetworkInformation.IPStatus.Success)
+        if (e.Args.Status == IPStatus.Success)
         {
             if (!IsReachable)
             {

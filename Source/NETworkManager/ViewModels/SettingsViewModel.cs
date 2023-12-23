@@ -175,8 +175,8 @@ public class SettingsViewModel : ViewModelBase
 
             // Search by TranslatedName and Name
             return regex.Replace(ResourceTranslator.Translate(ResourceIdentifier.SettingsName, info.Name), "")
-                .IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || (regex.Replace(info.Name.ToString(), "")
-                .IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
+                .IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || regex.Replace(info.Name.ToString(), "")
+                .IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
     }
 
@@ -360,7 +360,7 @@ public class SettingsViewModel : ViewModelBase
         {
             0 => DocumentationManager.GetIdentifierBySettingsName(SelectedSettingsView.Name),
             1 => DocumentationIdentifier.Profiles,
-            _ => DocumentationIdentifier.Default,
+            _ => DocumentationIdentifier.Default
         };
     }
 

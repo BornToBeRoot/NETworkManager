@@ -1,52 +1,18 @@
-﻿using NETworkManager.Utilities;
-using System;
-using System.Windows.Input;
-using NETworkManager.Models.Network;
+﻿using System;
 using System.ComponentModel;
 using System.Windows.Data;
+using System.Windows.Input;
+using NETworkManager.Models.Network;
 using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
 public class SNMPOIDProfilesViewModel : ViewModelBase
 {
-    public ICommand OKCommand { get; }
-    public ICommand CancelCommand { get; }
-
     private string _search;
 
-    public string Search
-    {
-        get => _search;
-        set
-        {
-            if (value == _search)
-                return;
-
-            _search = value;
-
-            OIDProfiles.Refresh();
-
-            OnPropertyChanged();
-        }
-    }
-
-    public ICollectionView OIDProfiles { get; }
-
     private SNMPOIDProfileInfo _selectedOIDProfile;
-
-    public SNMPOIDProfileInfo SelectedOIDProfile
-    {
-        get => _selectedOIDProfile;
-        set
-        {
-            if (Equals(value, _selectedOIDProfile))
-                return;
-
-            _selectedOIDProfile = value;
-            OnPropertyChanged();
-        }
-    }
 
     public SNMPOIDProfilesViewModel(Action<SNMPOIDProfilesViewModel> okCommand,
         Action<SNMPOIDProfilesViewModel> cancelHandler)
@@ -71,5 +37,39 @@ public class SNMPOIDProfilesViewModel : ViewModelBase
             return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    info.OID.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
+    }
+
+    public ICommand OKCommand { get; }
+    public ICommand CancelCommand { get; }
+
+    public string Search
+    {
+        get => _search;
+        set
+        {
+            if (value == _search)
+                return;
+
+            _search = value;
+
+            OIDProfiles.Refresh();
+
+            OnPropertyChanged();
+        }
+    }
+
+    public ICollectionView OIDProfiles { get; }
+
+    public SNMPOIDProfileInfo SelectedOIDProfile
+    {
+        get => _selectedOIDProfile;
+        set
+        {
+            if (Equals(value, _selectedOIDProfile))
+                return;
+
+            _selectedOIDProfile = value;
+            OnPropertyChanged();
+        }
     }
 }

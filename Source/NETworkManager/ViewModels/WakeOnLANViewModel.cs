@@ -1,20 +1,21 @@
-﻿using NETworkManager.Settings;
-using System.Net;
-using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
-using System.Windows;
-using System;
-using NETworkManager.Models.Network;
-using System.ComponentModel;
-using System.Windows.Data;
-using NETworkManager.Utilities;
-using System.Threading.Tasks;
-using System.Linq;
-using MahApps.Metro.Controls;
-using NETworkManager.Profiles;
-using System.Windows.Threading;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Threading;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
+using NETworkManager.Models.Network;
+using NETworkManager.Profiles;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
@@ -274,9 +275,12 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     public ICommand WakeUpCommand => new RelayCommand(_ => WakeUpAction(), WakeUpAction_CanExecute);
 
-    private bool WakeUpAction_CanExecute(object parameter) => Application.Current.MainWindow != null &&
-                                                              !((MetroWindow)Application.Current.MainWindow)
-                                                                  .IsAnyDialogOpen;
+    private bool WakeUpAction_CanExecute(object parameter)
+    {
+        return Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow)
+                   .IsAnyDialogOpen;
+    }
 
     private void WakeUpAction()
     {
@@ -308,7 +312,10 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
-    private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
+    private bool ModifyProfile_CanExecute(object obj)
+    {
+        return SelectedProfile is { IsDynamic: false };
+    }
 
     public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
@@ -364,7 +371,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
             // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
             await Task.Delay(2000);
 
-            StatusMessage = Localization.Resources.Strings.MagicPacketSentMessage;
+            StatusMessage = Strings.MagicPacketSentMessage;
             IsStatusMessageDisplayed = true;
         }
         catch (Exception ex)

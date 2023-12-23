@@ -8,8 +8,8 @@ public static class AWSProfile
     {
         return new List<AWSProfileInfo>
         {
-            new AWSProfileInfo(false, "default", "eu-central-1"),
-            new AWSProfileInfo(false, "default", "us-east-1"),
+            new(false, "default", "eu-central-1"),
+            new(false, "default", "us-east-1")
         };
     }
 }

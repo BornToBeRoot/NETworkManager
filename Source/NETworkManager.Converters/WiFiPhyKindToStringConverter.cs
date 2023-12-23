@@ -1,8 +1,8 @@
-﻿using NETworkManager.Models.Network;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows.Data;
 using Windows.Devices.WiFi;
+using NETworkManager.Models.Network;
 
 namespace NETworkManager.Converters;
 
