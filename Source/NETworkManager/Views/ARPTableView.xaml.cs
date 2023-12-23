@@ -52,7 +52,7 @@ public partial class ARPTableView
             default:
                 return;
         }
-        
+
         // Prevent the built-in sort from sorting
         e.Handled = true;
 
@@ -70,7 +70,7 @@ public partial class ARPTableView
         // Sort the view
         view.CustomSort = new DataGridComparer(direction, selectedComparer);
     }
-    
+
     public class DataGridComparer(ListSortDirection direction, int comparer = -1) : IComparer
     {
         public int Compare(object x, object y)

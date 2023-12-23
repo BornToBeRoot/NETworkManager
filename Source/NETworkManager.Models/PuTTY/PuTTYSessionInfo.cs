@@ -75,6 +75,5 @@ public class PuTTYSessionInfo
     /// </summary>
     public PuTTYSessionInfo()
     {
-
-    } 
+    }
 }

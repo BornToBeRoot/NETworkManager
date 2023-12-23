@@ -5,5 +5,4 @@
 /// </summary>
 public class ThemeColorInfo : BaseColorInfo
 {
-    
 }

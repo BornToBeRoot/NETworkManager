@@ -13,6 +13,5 @@ public class ResourceInfo : BaseInfo
     /// <param name="description">Description of the resource.</param>
     public ResourceInfo(string name, string websiteUrl, string description) : base(name, websiteUrl, description)
     {
-        
     }
 }

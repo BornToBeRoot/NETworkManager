@@ -7,6 +7,8 @@ public class EmptyValidator : ValidationRule
 {
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
-        return string.IsNullOrEmpty((string)value) ? new ValidationResult(false, Localization.Resources.Strings.FieldCannotBeEmpty) : ValidationResult.ValidResult;
+        return string.IsNullOrEmpty((string)value)
+            ? new ValidationResult(false, Localization.Resources.Strings.FieldCannotBeEmpty)
+            : ValidationResult.ValidResult;
     }
 }

@@ -11,12 +11,12 @@ public class SNMPErrorArgs : System.EventArgs
     /// SNMP error message.
     /// </summary>
     public string ErrorMessage { get; }
-    
+
     /// <summary>
     /// Indicate if the error code is an SNMP error code.
     /// </summary>
     public bool IsErrorCode { get; }
-    
+
     /// <summary>
     /// SNMP error code.
     /// </summary>
@@ -31,7 +31,7 @@ public class SNMPErrorArgs : System.EventArgs
     /// SNMPv3 error code.
     /// </summary>
     public SNMPV3ErrorCode ErrorCodeV3 { get; }
-    
+
     /// <summary>
     /// Creates a new instance of <see cref="SNMPErrorArgs"/> with the given SNMP error message.
     /// </summary>
@@ -40,7 +40,7 @@ public class SNMPErrorArgs : System.EventArgs
     {
         ErrorMessage = errorMessage;
     }
-    
+
     /// <summary>
     /// Creates a new instance of <see cref="SNMPErrorArgs"/> with the given SNMP error code.
     /// </summary>
@@ -50,7 +50,7 @@ public class SNMPErrorArgs : System.EventArgs
         IsErrorCode = true;
         ErrorCode = errorCode;
     }
-    
+
     /// <summary>
     /// Creates a new instance of <see cref="SNMPErrorArgs"/> with the given SNMPv3 error code.
     /// </summary>

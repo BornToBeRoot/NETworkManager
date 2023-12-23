@@ -15,7 +15,7 @@ public partial class SettingsGeneralView
 
     private void ListBoxVisibleToHide_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        if(!_viewModel.IsVisibleToHideApplicationEnabled)
+        if (!_viewModel.IsVisibleToHideApplicationEnabled)
             return;
 
         if (e.ChangedButton == MouseButton.Left)

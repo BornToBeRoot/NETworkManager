@@ -9,17 +9,17 @@ public enum TransportProtocol
     /// Transmission Control Protocol (TCP).
     /// </summary>
     Tcp,
-    
+
     /// <summary>
     /// User Datagram Protocol (UDP).
     /// </summary>
     Udp,
-    
+
     /// <summary>
     /// Stream Control Transmission Protocol (SCTP).
     /// </summary>
     Sctp,
-    
+
     /// <summary>
     /// Datagram Congestion Control Protocol (DCCP).
     /// </summary>

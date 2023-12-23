@@ -22,7 +22,8 @@ namespace NETworkManager.Models.Network
         /// <param name="port">Port to use for SNMP requests.</param>
         /// <param name="walkMode">Walk mode.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
-        public SNMPOptions(SecureString community, SNMPVersion version, int port, WalkMode walkMode, CancellationToken cancellationToken) : base(version, port, walkMode, cancellationToken)
+        public SNMPOptions(SecureString community, SNMPVersion version, int port, WalkMode walkMode,
+            CancellationToken cancellationToken) : base(version, port, walkMode, cancellationToken)
         {
             Community = community;
         }

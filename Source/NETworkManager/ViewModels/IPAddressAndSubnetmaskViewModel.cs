@@ -11,6 +11,7 @@ public class IPAddressAndSubnetmaskViewModel : ViewModelBase
     public ICommand CancelCommand { get; }
 
     private string _ipAddress;
+
     public string IPAddress
     {
         get => _ipAddress;
@@ -25,6 +26,7 @@ public class IPAddressAndSubnetmaskViewModel : ViewModelBase
     }
 
     private string _subnetmask;
+
     public string Subnetmask
     {
         get => _subnetmask;
@@ -38,9 +40,10 @@ public class IPAddressAndSubnetmaskViewModel : ViewModelBase
         }
     }
 
-    public IPAddressAndSubnetmaskViewModel(Action<IPAddressAndSubnetmaskViewModel> okCommand, Action<IPAddressAndSubnetmaskViewModel> cancelHandler)
+    public IPAddressAndSubnetmaskViewModel(Action<IPAddressAndSubnetmaskViewModel> okCommand,
+        Action<IPAddressAndSubnetmaskViewModel> cancelHandler)
     {
         OKCommand = new RelayCommand(_ => okCommand(this));
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
-    }        
+    }
 }

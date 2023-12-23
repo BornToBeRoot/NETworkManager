@@ -14,6 +14,8 @@ public class IPv4AddressValidator : ValidationRule
         if (string.IsNullOrEmpty(ipAddress))
             return new ValidationResult(false, Localization.Resources.Strings.EnterValidIPv4Address);
 
-        return Regex.IsMatch(ipAddress, RegexHelper.IPv4AddressRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Localization.Resources.Strings.EnterValidIPv4Address);
+        return Regex.IsMatch(ipAddress, RegexHelper.IPv4AddressRegex)
+            ? ValidationResult.ValidResult
+            : new ValidationResult(false, Localization.Resources.Strings.EnterValidIPv4Address);
     }
 }

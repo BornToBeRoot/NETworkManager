@@ -24,7 +24,8 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
     /// <summary>
     /// Fields to be returned by the API. See documentation for more details.
     /// </summary>
-    private const string Fields = "status,message,continent,continentCode,country,countryCode,region,regionName,city,district,zip,lat,lon,timezone,offset,currency,isp,org,as,asname,reverse,mobile,proxy,hosting,query";
+    private const string Fields =
+        "status,message,continent,continentCode,country,countryCode,region,regionName,city,district,zip,lat,lon,timezone,offset,currency,isp,org,as,asname,reverse,mobile,proxy,hosting,query";
 
     /// <summary>
     /// Indicates whether we have reached the rate limit.
@@ -70,7 +71,9 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
             {
                 // Update rate limit values.
                 if (!UpdateRateLimit(response.Headers))
-                    return new IPGeolocationResult(hasError: true, "The rate limit values couldn't be extracted from the http header. The request was probably corrupted. Try again in a few seconds.", -1);
+                    return new IPGeolocationResult(hasError: true,
+                        "The rate limit values couldn't be extracted from the http header. The request was probably corrupted. Try again in a few seconds.",
+                        -1);
 
                 var json = await response.Content.ReadAsStringAsync();
                 var info = JsonConvert.DeserializeObject<IPGeolocationInfo>(json);
@@ -81,7 +84,7 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
             // Consider the request as failed if the status code is not successful or 429.
             if ((int)response.StatusCode != 429)
                 return new IPGeolocationResult(hasError: true, response.ReasonPhrase, (int)response.StatusCode);
-            
+
             // Code 429
             // We have already reached the rate limit (on the network)
             // Since we don't get any information about the remaining time, we set it to the default value.
@@ -97,7 +100,7 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
             return new IPGeolocationResult(hasError: true, ex.Message, -1);
         }
     }
-    
+
     /// <summary>
     /// Checks whether the rate limit is reached.
     /// </summary>
@@ -112,9 +115,9 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
         var lastReached = _rateLimitLastReached;
 
         // We are still in the rate limit
-        if (lastReached.AddSeconds(_rateLimitRemainingTime + 1) >= DateTime.Now) 
+        if (lastReached.AddSeconds(_rateLimitRemainingTime + 1) >= DateTime.Now)
             return true;
-        
+
         // We are not in the rate limit anymore
         _rateLimitIsReached = false;
 
@@ -147,14 +150,14 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
         // Only allow 40 requests... to prevent a 429 error if other
         // devices or tools on the network (e.g. another NETworkManager
         // instance) doing requests against ip-api.com.
-        if (_rateLimitRemainingRequests >= 5) 
+        if (_rateLimitRemainingRequests >= 5)
             return true;
-        
+
         // We have reached the rate limit (on the network)
         // Disable the service and store the time when the rate limit was reached.
         _rateLimitIsReached = true;
         _rateLimitLastReached = DateTime.Now;
-        
+
         return true;
     }
 }

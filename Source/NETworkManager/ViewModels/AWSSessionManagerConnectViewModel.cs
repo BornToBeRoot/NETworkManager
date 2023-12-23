@@ -13,6 +13,7 @@ public class AWSSessionManagerConnectViewModel : ViewModelBase
     public ICommand CancelCommand { get; }
 
     private string _instanceID;
+
     public string InstanceID
     {
         get => _instanceID;
@@ -29,6 +30,7 @@ public class AWSSessionManagerConnectViewModel : ViewModelBase
     public ICollectionView InstanceIDHistoryView { get; }
 
     private string _profile;
+
     public string Profile
     {
         get => _profile;
@@ -45,6 +47,7 @@ public class AWSSessionManagerConnectViewModel : ViewModelBase
     public ICollectionView ProfileHistoryView { get; }
 
     private string _region;
+
     public string Region
     {
         get => _region;
@@ -60,14 +63,18 @@ public class AWSSessionManagerConnectViewModel : ViewModelBase
 
     public ICollectionView RegionHistoryView { get; }
 
-    public AWSSessionManagerConnectViewModel(Action<AWSSessionManagerConnectViewModel> connectCommand, Action<AWSSessionManagerConnectViewModel> cancelHandler)
+    public AWSSessionManagerConnectViewModel(Action<AWSSessionManagerConnectViewModel> connectCommand,
+        Action<AWSSessionManagerConnectViewModel> cancelHandler)
     {
         ConnectCommand = new RelayCommand(_ => connectCommand(this));
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
-        InstanceIDHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.AWSSessionManager_InstanceIDHistory);
-        ProfileHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.AWSSessionManager_ProfileHistory);
-        RegionHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.AWSSessionManager_RegionHistory);
+        InstanceIDHistoryView =
+            CollectionViewSource.GetDefaultView(SettingsManager.Current.AWSSessionManager_InstanceIDHistory);
+        ProfileHistoryView =
+            CollectionViewSource.GetDefaultView(SettingsManager.Current.AWSSessionManager_ProfileHistory);
+        RegionHistoryView =
+            CollectionViewSource.GetDefaultView(SettingsManager.Current.AWSSessionManager_RegionHistory);
 
         LoadSettings();
     }
@@ -75,6 +82,6 @@ public class AWSSessionManagerConnectViewModel : ViewModelBase
     private void LoadSettings()
     {
         Profile = SettingsManager.Current.AWSSessionManager_Profile;
-        Region = SettingsManager.Current.AWSSessionManager_Region;                
+        Region = SettingsManager.Current.AWSSessionManager_Region;
     }
 }

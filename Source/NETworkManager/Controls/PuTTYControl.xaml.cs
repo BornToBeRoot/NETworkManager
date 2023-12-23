@@ -17,8 +17,9 @@ namespace NETworkManager.Controls;
 public partial class PuTTYControl : UserControlBase
 {
     #region Variables
+
     private bool _initialized;
-    private bool _closing;       // When the tab is closed --> OnClose()
+    private bool _closing; // When the tab is closed --> OnClose()
 
     private readonly IDialogCoordinator _dialogCoordinator;
 
@@ -28,6 +29,7 @@ public partial class PuTTYControl : UserControlBase
     private IntPtr _appWin;
 
     private bool _isConnected;
+
     public bool IsConnected
     {
         get => _isConnected;
@@ -42,6 +44,7 @@ public partial class PuTTYControl : UserControlBase
     }
 
     private bool _isConnecting;
+
     public bool IsConnecting
     {
         get => _isConnecting;
@@ -54,9 +57,11 @@ public partial class PuTTYControl : UserControlBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, load
+
     public PuTTYControl(PuTTYSessionInfo sessionInfo)
     {
         InitializeComponent();
@@ -88,9 +93,11 @@ public partial class PuTTYControl : UserControlBase
     {
         CloseTab();
     }
+
     #endregion
 
     #region ICommands & Actions
+
     public ICommand ReconnectCommand
     {
         get { return new RelayCommand(p => ReconnectAction()); }
@@ -100,9 +107,11 @@ public partial class PuTTYControl : UserControlBase
     {
         Reconnect();
     }
+
     #endregion
 
-    #region Methods       
+    #region Methods
+
     private async Task Connect()
     {
         IsConnecting = true;
@@ -134,10 +143,10 @@ public partial class PuTTYControl : UserControlBase
                     while ((DateTime.Now - startTime).TotalSeconds < 10)
                     {
                         _process.Refresh();
-                        
+
                         if (_process.HasExited)
                             break;
-                        
+
 
                         _appWin = _process.MainWindowHandle;
 
@@ -150,7 +159,8 @@ public partial class PuTTYControl : UserControlBase
 
                 if (_appWin != IntPtr.Zero)
                 {
-                    while (!_process.HasExited && _process.MainWindowTitle.IndexOf(" - PuTTY", StringComparison.Ordinal) == -1)
+                    while (!_process.HasExited &&
+                           _process.MainWindowTitle.IndexOf(" - PuTTY", StringComparison.Ordinal) == -1)
                     {
                         await Task.Delay(100);
 
@@ -166,7 +176,9 @@ public partial class PuTTYControl : UserControlBase
 
                         // Remove border etc.
                         long style = (int)NativeMethods.GetWindowLong(_appWin, NativeMethods.GWL_STYLE);
-                        style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP | NativeMethods.WS_THICKFRAME); // NativeMethods.WS_POPUP --> Overflow? (https://github.com/BornToBeRoot/NETworkManager/issues/167)
+                        style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP |
+                                   NativeMethods
+                                       .WS_THICKFRAME); // NativeMethods.WS_POPUP --> Overflow? (https://github.com/BornToBeRoot/NETworkManager/issues/167)
                         NativeMethods.SetWindowLongPtr(_appWin, NativeMethods.GWL_STYLE, new IntPtr(style));
 
                         IsConnected = true;
@@ -174,7 +186,7 @@ public partial class PuTTYControl : UserControlBase
                         // Resize embedded application & refresh
                         // Requires a short delay because it's not applied immediately
                         await Task.Delay(250);
-                                                    
+
                         ResizeEmbeddedWindow();
                     }
                 }
@@ -218,7 +230,8 @@ public partial class PuTTYControl : UserControlBase
     public void ResizeEmbeddedWindow()
     {
         if (IsConnected)
-            NativeMethods.SetWindowPos(_process.MainWindowHandle, IntPtr.Zero, 0, 0, WindowHost.ClientSize.Width, WindowHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
+            NativeMethods.SetWindowPos(_process.MainWindowHandle, IntPtr.Zero, 0, 0, WindowHost.ClientSize.Width,
+                WindowHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
     }
 
     public void Disconnect()
@@ -238,7 +251,8 @@ public partial class PuTTYControl : UserControlBase
     public void RestartSession()
     {
         if (IsConnected)
-            NativeMethods.SendMessage(_process.MainWindowHandle, (uint)NativeMethods.WM.SYSCOMMAND, new IntPtr(64), new IntPtr(0));
+            NativeMethods.SendMessage(_process.MainWindowHandle, (uint)NativeMethods.WM.SYSCOMMAND, new IntPtr(64),
+                new IntPtr(0));
     }
 
     public void CloseTab()
@@ -247,13 +261,16 @@ public partial class PuTTYControl : UserControlBase
 
         Disconnect();
     }
+
     #endregion
 
     #region Events
+
     private void WindowGrid_SizeChanged(object sender, SizeChangedEventArgs e)
     {
         if (IsConnected)
             ResizeEmbeddedWindow();
     }
+
     #endregion
 }

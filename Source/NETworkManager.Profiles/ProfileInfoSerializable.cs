@@ -26,14 +26,12 @@ public class ProfileInfoSerializable : ProfileInfo
     /// Override the default snmp priv to make it serializable.
     /// </summary>
     public new string SNMP_Priv { get; set; }
-    
+
     public ProfileInfoSerializable()
     {
-
     }
-            
+
     public ProfileInfoSerializable(ProfileInfo profile) : base(profile)
     {
-        
     }
 }

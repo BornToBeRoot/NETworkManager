@@ -16,6 +16,7 @@ public class SNMPOIDProfileViewModel : ViewModelBase
     public ICommand CancelCommand { get; }
 
     private string _name;
+
     public string Name
     {
         get => _name;
@@ -34,6 +35,7 @@ public class SNMPOIDProfileViewModel : ViewModelBase
     }
 
     private string _oid;
+
     public string OID
     {
         get => _oid;
@@ -54,6 +56,7 @@ public class SNMPOIDProfileViewModel : ViewModelBase
     public List<SNMPMode> Modes { get; }
 
     private SNMPMode _mode;
+
     public SNMPMode Mode
     {
         get => _mode;
@@ -63,12 +66,12 @@ public class SNMPOIDProfileViewModel : ViewModelBase
                 return;
 
             _mode = value;
-            
+
             if (!_isLoading)
                 Validate();
 
             OnPropertyChanged();
-            
+
             // Re-validate OID if mode changed
             OnPropertyChanged(nameof(OID));
         }
@@ -77,6 +80,7 @@ public class SNMPOIDProfileViewModel : ViewModelBase
     private readonly SNMPOIDProfileInfo _info;
 
     private bool _infoChanged;
+
     public bool InfoChanged
     {
         get => _infoChanged;
@@ -91,6 +95,7 @@ public class SNMPOIDProfileViewModel : ViewModelBase
     }
 
     private bool _isEdited;
+
     public bool IsEdited
     {
         get => _isEdited;
@@ -104,7 +109,8 @@ public class SNMPOIDProfileViewModel : ViewModelBase
         }
     }
 
-    public SNMPOIDProfileViewModel(Action<SNMPOIDProfileViewModel> saveCommand, Action<SNMPOIDProfileViewModel> cancelHandler, bool isEdited = false, SNMPOIDProfileInfo info = null)
+    public SNMPOIDProfileViewModel(Action<SNMPOIDProfileViewModel> saveCommand,
+        Action<SNMPOIDProfileViewModel> cancelHandler, bool isEdited = false, SNMPOIDProfileInfo info = null)
     {
         _isLoading = true;
 
@@ -112,7 +118,7 @@ public class SNMPOIDProfileViewModel : ViewModelBase
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
         Modes = new List<SNMPMode> { SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set };
-        
+
         IsEdited = isEdited;
 
         _info = info ?? new SNMPOIDProfileInfo();

@@ -13,6 +13,7 @@ namespace NETworkManager.Settings;
 public static class SettingsManager
 {
     #region Variables
+
     /// <summary>
     /// Logger for logging.
     /// </summary>
@@ -42,18 +43,21 @@ public static class SettingsManager
     /// Indicates if the HotKeys have changed. May need to be reworked if we add more HotKeys.
     /// </summary>
     public static bool HotKeysChanged { get; set; }
+
     #endregion
 
     #region Settings location, default paths and file names
+
     /// <summary>
     /// Method to get the path of the settings folder.
     /// </summary>
     /// <returns>Path to the settings folder.</returns>
     public static string GetSettingsFolderLocation()
     {
-        return ConfigurationManager.Current.IsPortable ?
-            Path.Combine(AssemblyManager.Current.Location, SettingsFolderName) :
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), AssemblyManager.Current.Name, SettingsFolderName);
+        return ConfigurationManager.Current.IsPortable
+            ? Path.Combine(AssemblyManager.Current.Location, SettingsFolderName)
+            : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                AssemblyManager.Current.Name, SettingsFolderName);
     }
 
     /// <summary>
@@ -73,9 +77,11 @@ public static class SettingsManager
     {
         return Path.Combine(GetSettingsFolderLocation(), GetSettingsFileName());
     }
+
     #endregion
 
     #region Initialize, load and save
+
     /// <summary>
     /// Initialize new settings (<see cref="SettingsInfo"/>) and save them (to a file).
     /// </summary>
@@ -119,7 +125,7 @@ public static class SettingsManager
         var xmlSerializer = new XmlSerializer(typeof(SettingsInfo));
 
         using var fileStream = new FileStream(filePath, FileMode.Open);
-        
+
         var settingsInfo = (SettingsInfo)xmlSerializer.Deserialize(fileStream);
 
         return settingsInfo;
@@ -152,9 +158,11 @@ public static class SettingsManager
 
         xmlSerializer.Serialize(fileStream, Current);
     }
+
     #endregion
-    
+
     #region Upgrade
+
     /// <summary>
     /// Method to upgrade the settings.
     /// </summary>
@@ -183,7 +191,7 @@ public static class SettingsManager
         // 2023.11.28.0
         if (fromVersion < new Version(2023, 11, 28, 0))
             UpgradeTo_2023_11_28_0();
-        
+
         // Latest
         if (fromVersion < toVersion)
             UpgradeToLatest(toVersion);
@@ -204,10 +212,12 @@ public static class SettingsManager
 
         // Add AWS Session Manager application
         Log.Info("Add new app \"AWSSessionManager\"...");
-        Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.AWSSessionManager));
+        Current.General_ApplicationList.Add(ApplicationManager.GetList()
+            .First(x => x.Name == ApplicationName.AWSSessionManager));
 
         var powerShellPath = "";
-        foreach (var file in PowerShell.GetDefaultInstallationPaths.Where(File.Exists)) {
+        foreach (var file in PowerShell.GetDefaultInstallationPaths.Where(File.Exists))
+        {
             powerShellPath = file;
             break;
         }
@@ -217,7 +227,8 @@ public static class SettingsManager
 
         // Add Bit Calculator application
         Log.Info("Add new app \"BitCalculator\"...");
-        Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.BitCalculator));
+        Current.General_ApplicationList.Add(ApplicationManager.GetList()
+            .First(x => x.Name == ApplicationName.BitCalculator));
     }
 
     /// <summary>
@@ -229,13 +240,16 @@ public static class SettingsManager
 
         // Add NTP Lookup application
         Log.Info($"Add new app \"SNTPLookup\"...");
-        Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.SNTPLookup));
-        Current.SNTPLookup_SNTPServers = new ObservableCollection<ServerConnectionInfoProfile>(SNTPServer.GetDefaultList());
+        Current.General_ApplicationList.Add(ApplicationManager.GetList()
+            .First(x => x.Name == ApplicationName.SNTPLookup));
+        Current.SNTPLookup_SNTPServers =
+            new ObservableCollection<ServerConnectionInfoProfile>(SNTPServer.GetDefaultList());
 
         // Add IP Scanner custom commands
-        foreach (var customCommand in from customCommand in IPScannerCustomCommand.GetDefaultList() 
-                 let customCommandFound = Current.IPScanner_CustomCommands.FirstOrDefault(x => x.Name == customCommand.Name) 
-                 where customCommandFound == null 
+        foreach (var customCommand in from customCommand in IPScannerCustomCommand.GetDefaultList()
+                 let customCommandFound =
+                     Current.IPScanner_CustomCommands.FirstOrDefault(x => x.Name == customCommand.Name)
+                 where customCommandFound == null
                  select customCommand)
         {
             Log.Info($"Add \"{customCommand.Name}\" to \"IPScanner_CustomCommands\"...");
@@ -262,7 +276,8 @@ public static class SettingsManager
 
         // Add new DNS lookup profiles
         Log.Info("Init \"DNSLookup_DNSServers_v2\" with default DNS servers...");
-        Current.DNSLookup_DNSServers = new ObservableCollection<DNSServerConnectionInfoProfile>(DNSServer.GetDefaultList());
+        Current.DNSLookup_DNSServers =
+            new ObservableCollection<DNSServerConnectionInfoProfile>(DNSServer.GetDefaultList());
     }
 
     /// <summary>
@@ -299,16 +314,18 @@ public static class SettingsManager
         // First run is required due to the new settings
         Log.Info("Set \"FirstRun\" to true...");
         Current.WelcomeDialog_Show = true;
-        
+
         // Add IP geolocation application
         Log.Info("Add new app \"IP Geolocation\"...");
-        Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.IPGeolocation));
-        
+        Current.General_ApplicationList.Add(ApplicationManager.GetList()
+            .First(x => x.Name == ApplicationName.IPGeolocation));
+
         // Add DNS lookup profiles after refactoring
         Log.Info("Init \"DNSLookup_DNSServers\" with default DNS servers...");
-        Current.DNSLookup_DNSServers = new ObservableCollection<DNSServerConnectionInfoProfile>(DNSServer.GetDefaultList());
+        Current.DNSLookup_DNSServers =
+            new ObservableCollection<DNSServerConnectionInfoProfile>(DNSServer.GetDefaultList());
     }
-    
+
     /// <summary>
     /// Method to apply changes for the latest version.
     /// </summary>
@@ -317,5 +334,6 @@ public static class SettingsManager
     {
         Log.Info($"Apply upgrade to {version}...");
     }
+
     #endregion
 }

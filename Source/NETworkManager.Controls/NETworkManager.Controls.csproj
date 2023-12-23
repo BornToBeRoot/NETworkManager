@@ -1,18 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<ProjectGuid>{95EA884C-E498-4A47-A316-DC890BF7F0D2}</ProjectGuid>
-		<OutputType>Library</OutputType>
-		<RootNamespace>NETworkManager.Controls</RootNamespace>
-		<AssemblyName>NETworkManager.Controls</AssemblyName>
-		<TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
-		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
-		<PlatformTarget>x64</PlatformTarget>
-		<SelfContained>false</SelfContained>
-		<UseWPF>true</UseWPF>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-		<ProduceReferenceAssembly>false</ProduceReferenceAssembly>
-	</PropertyGroup>	
-	<ItemGroup>
-		<Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
-	</ItemGroup>
+    <PropertyGroup>
+        <ProjectGuid>{95EA884C-E498-4A47-A316-DC890BF7F0D2}</ProjectGuid>
+        <OutputType>Library</OutputType>
+        <RootNamespace>NETworkManager.Controls</RootNamespace>
+        <AssemblyName>NETworkManager.Controls</AssemblyName>
+        <TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+        <PlatformTarget>x64</PlatformTarget>
+        <SelfContained>false</SelfContained>
+        <UseWPF>true</UseWPF>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+    </PropertyGroup>
+    <ItemGroup>
+        <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs"/>
+    </ItemGroup>
 </Project>

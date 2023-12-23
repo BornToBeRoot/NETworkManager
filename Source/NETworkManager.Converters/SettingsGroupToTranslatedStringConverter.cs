@@ -21,9 +21,11 @@ public sealed class SettingsGroupToTranslatedStringConverter : IValueConverter
     /// <returns>Translated <see cref="SettingsGroup"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value is not SettingsGroup group ? "-/-" : ResourceTranslator.Translate(ResourceIdentifier.SettingsGroup, group);
+        return value is not SettingsGroup group
+            ? "-/-"
+            : ResourceTranslator.Translate(ResourceIdentifier.SettingsGroup, group);
     }
-    
+
     /// <summary>
     /// !!! Method not implemented !!!
     /// </summary>

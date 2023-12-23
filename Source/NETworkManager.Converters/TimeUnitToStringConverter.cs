@@ -21,7 +21,9 @@ public sealed class TimeUnitToStringConverter : IValueConverter
     /// <returns>Translated <see cref="TimeUnit"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value is not TimeUnit timeUnit ? "-/-" : ResourceTranslator.Translate(ResourceIdentifier.TimeUnit, timeUnit);
+        return value is not TimeUnit timeUnit
+            ? "-/-"
+            : ResourceTranslator.Translate(ResourceIdentifier.TimeUnit, timeUnit);
     }
 
     /// <summary>

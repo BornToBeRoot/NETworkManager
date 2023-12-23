@@ -21,12 +21,14 @@ namespace NETworkManager.ViewModels;
 public class WhoisViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly Guid _tabId;
     private bool _firstLoad = true;
 
     private string _domain;
+
     public string Domain
     {
         get => _domain;
@@ -43,6 +45,7 @@ public class WhoisViewModel : ViewModelBase
     public ICollectionView WebsiteUriHistoryView { get; }
 
     private bool _isRunning;
+
     public bool IsRunning
     {
         get => _isRunning;
@@ -57,6 +60,7 @@ public class WhoisViewModel : ViewModelBase
     }
 
     private bool _isResultVisible;
+
     public bool IsResultVisible
     {
         get => _isResultVisible;
@@ -69,8 +73,9 @@ public class WhoisViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+
     private string _result;
+
     public string Result
     {
         get => _result;
@@ -85,6 +90,7 @@ public class WhoisViewModel : ViewModelBase
     }
 
     private bool _isStatusMessageDisplayed;
+
     public bool IsStatusMessageDisplayed
     {
         get => _isStatusMessageDisplayed;
@@ -99,6 +105,7 @@ public class WhoisViewModel : ViewModelBase
     }
 
     private string _statusMessage;
+
     public string StatusMessage
     {
         get => _statusMessage;
@@ -111,10 +118,12 @@ public class WhoisViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Contructor, load settings
-    public WhoisViewModel(IDialogCoordinator instance ,Guid tabId, string domain)
+
+    public WhoisViewModel(IDialogCoordinator instance, Guid tabId, string domain)
     {
         _dialogCoordinator = instance;
 
@@ -140,14 +149,16 @@ public class WhoisViewModel : ViewModelBase
 
     private void LoadSettings()
     {
-
     }
+
     #endregion
 
     #region ICommands & Actions
+
     public ICommand QueryCommand => new RelayCommand(_ => QueryAction(), Query_CanExecute);
 
-    private bool Query_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool Query_CanExecute(object parameter) => Application.Current.MainWindow != null &&
+                                                       !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
     private void QueryAction()
     {
@@ -176,15 +187,14 @@ public class WhoisViewModel : ViewModelBase
                 var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = Strings.OK;
 
-                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error, Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine +
+                    ex.Message, MessageDialogStyle.Affirmative, settings);
             }
 
             SettingsManager.Current.Whois_ExportFileType = instance.FileType;
             SettingsManager.Current.Whois_ExportFilePath = instance.FilePath;
-        }, _ =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, new[]
+        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new[]
         {
             ExportFileType.Txt
         }, false, SettingsManager.Current.Whois_ExportFileType, SettingsManager.Current.Whois_ExportFilePath);
@@ -196,9 +206,11 @@ public class WhoisViewModel : ViewModelBase
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
+
     #endregion
 
     #region Methods
+
     private async Task Query()
     {
         IsStatusMessageDisplayed = false;
@@ -231,7 +243,7 @@ public class WhoisViewModel : ViewModelBase
             {
                 Result = await Whois.QueryAsync(Domain, whoisServer);
                 IsResultVisible = true;
-                
+
                 AddDomainToHistory(Domain);
             }
         }
@@ -246,13 +258,13 @@ public class WhoisViewModel : ViewModelBase
 
     public void OnClose()
     {
-
     }
 
     private void AddDomainToHistory(string domain)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.Whois_DomainHistory.ToList(), domain, SettingsManager.Current.General_HistoryListEntries);
+        var list = ListHelper.Modify(SettingsManager.Current.Whois_DomainHistory.ToList(), domain,
+            SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items
         SettingsManager.Current.Whois_DomainHistory.Clear();
@@ -261,6 +273,6 @@ public class WhoisViewModel : ViewModelBase
         // Fill with the new items
         list.ForEach(x => SettingsManager.Current.Whois_DomainHistory.Add(x));
     }
-    #endregion
 
+    #endregion
 }

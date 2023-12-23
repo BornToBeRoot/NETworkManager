@@ -11,6 +11,7 @@ public abstract class IPAddressViewModel : ViewModelBase
     public ICommand CancelCommand { get; }
 
     private string _ipAddress;
+
     public string IPAddress
     {
         get => _ipAddress;
@@ -28,5 +29,5 @@ public abstract class IPAddressViewModel : ViewModelBase
     {
         OKCommand = new RelayCommand(_ => okCommand(this));
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
-    }        
+    }
 }

@@ -22,7 +22,7 @@ public static class SNTPServer
             new ServerConnectionInfo("time.google.com", 123),
             new ServerConnectionInfo("time1.google.com", 123),
             new ServerConnectionInfo("time2.google.com", 123),
-            new ServerConnectionInfo ("time3.google.com", 123),
+            new ServerConnectionInfo("time3.google.com", 123),
             new ServerConnectionInfo("time4.google.com", 123)
         }),
         new ServerConnectionInfoProfile("Microsoft", new()

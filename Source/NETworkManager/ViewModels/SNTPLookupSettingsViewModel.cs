@@ -15,18 +15,22 @@ namespace NETworkManager.ViewModels;
 public class SNTPLookupSettingsViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly bool _isLoading;
-    private readonly ServerConnectionInfo _profileDialogDefaultValues = new("time.example.com", 123, TransportProtocol.Tcp);
-    
+
+    private readonly ServerConnectionInfo _profileDialogDefaultValues =
+        new("time.example.com", 123, TransportProtocol.Tcp);
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly ICollectionView _sntpServers;
+
     public ICollectionView SNTPServers
     {
         get => _sntpServers;
         private init
         {
-            if(value == _sntpServers) 
+            if (value == _sntpServers)
                 return;
 
             _sntpServers = value;
@@ -35,6 +39,7 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
     }
 
     private ServerConnectionInfoProfile _selectedSNTPServer = new();
+
     public ServerConnectionInfoProfile SelectedSNTPServer
     {
         get => _selectedSNTPServer;
@@ -48,9 +53,11 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
         }
     }
 
-    private List<string> ServerInfoProfileNames => SettingsManager.Current.SNTPLookup_SNTPServers.Select(x => x.Name).ToList();
+    private List<string> ServerInfoProfileNames =>
+        SettingsManager.Current.SNTPLookup_SNTPServers.Select(x => x.Name).ToList();
 
     private int _timeout;
+
     public int Timeout
     {
         get => _timeout;
@@ -65,10 +72,12 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
             _timeout = value;
             OnPropertyChanged();
         }
-    }                
+    }
+
     #endregion
 
     #region Constructor, load settings
+
     public SNTPLookupSettingsViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
@@ -76,7 +85,8 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
         _dialogCoordinator = instance;
 
         SNTPServers = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNTPLookup_SNTPServers);
-        SNTPServers.SortDescriptions.Add(new SortDescription(nameof(ServerConnectionInfoProfile.Name), ListSortDirection.Ascending));
+        SNTPServers.SortDescriptions.Add(new SortDescription(nameof(ServerConnectionInfoProfile.Name),
+            ListSortDirection.Ascending));
 
         LoadSettings();
 
@@ -87,9 +97,11 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
     {
         Timeout = SettingsManager.Current.SNTPLookup_Timeout;
     }
+
     #endregion
 
     #region ICommand & Actions
+
     public ICommand AddServerCommand => new RelayCommand(_ => AddServerAction());
 
     private void AddServerAction()
@@ -115,6 +127,7 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
     {
         DeleteServer().ConfigureAwait(false);
     }
+
     #endregion
 
     #region Methods
@@ -127,14 +140,13 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
         };
 
         var viewModel = new ServerConnectionInfoProfileViewModel(instance =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            SettingsManager.Current.SNTPLookup_SNTPServers.Add(new ServerConnectionInfoProfile(instance.Name, instance.Servers.ToList()));
-        }, _ =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, (ServerInfoProfileNames, false, false), _profileDialogDefaultValues);
+                SettingsManager.Current.SNTPLookup_SNTPServers.Add(
+                    new ServerConnectionInfoProfile(instance.Name, instance.Servers.ToList()));
+            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
+            (ServerInfoProfileNames, false, false), _profileDialogDefaultValues);
 
         customDialog.Content = new ServerConnectionInfoProfileDialog()
         {
@@ -152,15 +164,15 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
         };
 
         var viewModel = new ServerConnectionInfoProfileViewModel(instance =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            SettingsManager.Current.SNTPLookup_SNTPServers.Remove(SelectedSNTPServer);
-            SettingsManager.Current.SNTPLookup_SNTPServers.Add(new ServerConnectionInfoProfile(instance.Name, instance.Servers.ToList()));
-        }, _ =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, (ServerInfoProfileNames, true, false), _profileDialogDefaultValues, SelectedSNTPServer);
+                SettingsManager.Current.SNTPLookup_SNTPServers.Remove(SelectedSNTPServer);
+                SettingsManager.Current.SNTPLookup_SNTPServers.Add(
+                    new ServerConnectionInfoProfile(instance.Name, instance.Servers.ToList()));
+            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
+            (ServerInfoProfileNames, true, false),
+            _profileDialogDefaultValues, SelectedSNTPServer);
 
         customDialog.Content = new ServerConnectionInfoProfileDialog()
         {
@@ -178,14 +190,12 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
         };
 
         var viewModel = new ConfirmDeleteViewModel(_ =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            SettingsManager.Current.SNTPLookup_SNTPServers.Remove(SelectedSNTPServer);
-        }, _ =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, Localization.Resources.Strings.DeleteSNTPServerMessage);
+                SettingsManager.Current.SNTPLookup_SNTPServers.Remove(SelectedSNTPServer);
+            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
+            Localization.Resources.Strings.DeleteSNTPServerMessage);
 
         customDialog.Content = new ConfirmDeleteDialog
         {
@@ -194,5 +204,6 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
-    #endregion        
+
+    #endregion
 }

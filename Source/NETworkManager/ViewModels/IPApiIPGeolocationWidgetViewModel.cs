@@ -11,10 +11,12 @@ namespace NETworkManager.ViewModels;
 
 public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
 {
-    #region  Variables
+    #region Variables
+
     private static readonly ILog Log = LogManager.GetLogger(typeof(IPApiIPGeolocationWidgetViewModel));
-    
+
     private bool _isRunning;
+
     public bool IsRunning
     {
         get => _isRunning;
@@ -29,6 +31,7 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
     }
 
     private IPGeolocationResult _result;
+
     public IPGeolocationResult Result
     {
         get => _result;
@@ -41,9 +44,11 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, load settings
+
     public IPApiIPGeolocationWidgetViewModel()
     {
         // Detect if network address or status changed...
@@ -58,20 +63,23 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
 
     private void LoadSettings()
     {
-
     }
+
     #endregion
 
     #region ICommands & Actions
+
     public ICommand CheckViaHotkeyCommand => new RelayCommand(_ => CheckViaHotkeyAction());
 
     private void CheckViaHotkeyAction()
     {
         Check();
     }
+
     #endregion
 
     #region Methods
+
     public void Check()
     {
         CheckAsync().ConfigureAwait(false);
@@ -98,16 +106,18 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
         // Log error
         if (Result.HasError)
             Log.Error($"ip-api.com error: {Result.ErrorMessage}, error code: {Result.ErrorCode}");
-        
+
         // Log rate limit
         if (Result.RateLimitIsReached)
             Log.Warn($"ip-api.com rate limit reached. Try again in {Result.RateLimitRemainingTime} seconds.");
-        
+
         IsRunning = false;
     }
+
     #endregion
 
     #region Events
+
     private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
         switch (e.PropertyName)
@@ -120,5 +130,6 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
                 break;
         }
     }
+
     #endregion
 }

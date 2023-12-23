@@ -11,7 +11,7 @@ public class SNMPInfo
     /// Object identifier of the SNMP message.
     /// </summary>
     public string OID { get; set; }
-    
+
     /// <summary>
     /// Data of the SNMP message.
     /// </summary>
@@ -27,7 +27,7 @@ public class SNMPInfo
         OID = oid;
         Data = data;
     }
-    
+
     /// <summary>
     /// Creates a new instance of <see cref="SNMPInfo"/> with the specified parameters.
     /// </summary>
@@ -35,7 +35,5 @@ public class SNMPInfo
     /// <param name="data">Data of the SNMP message.</param>
     public SNMPInfo(ObjectIdentifier oid, ISnmpData data) : this(oid.ToString(), data.ToString())
     {
-        
     }
-    
 }

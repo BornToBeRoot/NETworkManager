@@ -18,8 +18,9 @@ namespace NETworkManager.Controls;
 public partial class AWSSessionManagerControl : UserControlBase
 {
     #region Variables
+
     private bool _initialized;
-    private bool _closing;      // When the tab is closed --> OnClose()
+    private bool _closing; // When the tab is closed --> OnClose()
 
     private readonly IDialogCoordinator _dialogCoordinator;
 
@@ -29,6 +30,7 @@ public partial class AWSSessionManagerControl : UserControlBase
     private IntPtr _appWin;
 
     private bool _isConnected;
+
     public bool IsConnected
     {
         get => _isConnected;
@@ -43,6 +45,7 @@ public partial class AWSSessionManagerControl : UserControlBase
     }
 
     private bool _isConnecting;
+
     public bool IsConnecting
     {
         get => _isConnecting;
@@ -55,9 +58,11 @@ public partial class AWSSessionManagerControl : UserControlBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, load
+
     public AWSSessionManagerControl(AWSSessionManagerSessionInfo sessionInfo)
     {
         InitializeComponent();
@@ -88,9 +93,11 @@ public partial class AWSSessionManagerControl : UserControlBase
     {
         CloseTab();
     }
+
     #endregion
 
     #region ICommands & Actions
+
     public ICommand ReconnectCommand
     {
         get { return new RelayCommand(p => ReconnectAction()); }
@@ -100,9 +107,11 @@ public partial class AWSSessionManagerControl : UserControlBase
     {
         Reconnect();
     }
+
     #endregion
 
-    #region Methods       
+    #region Methods
+
     private async Task Connect()
     {
         IsConnecting = true;
@@ -206,7 +215,8 @@ public partial class AWSSessionManagerControl : UserControlBase
     public void ResizeEmbeddedWindow()
     {
         if (IsConnected)
-            NativeMethods.SetWindowPos(_process.MainWindowHandle, IntPtr.Zero, 0, 0, WindowHost.ClientSize.Width, WindowHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
+            NativeMethods.SetWindowPos(_process.MainWindowHandle, IntPtr.Zero, 0, 0, WindowHost.ClientSize.Width,
+                WindowHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
     }
 
     public void Disconnect()
@@ -229,13 +239,16 @@ public partial class AWSSessionManagerControl : UserControlBase
 
         Disconnect();
     }
+
     #endregion
 
     #region Events
+
     private void WindowGrid_SizeChanged(object sender, SizeChangedEventArgs e)
     {
         if (IsConnected)
             ResizeEmbeddedWindow();
     }
+
     #endregion
 }

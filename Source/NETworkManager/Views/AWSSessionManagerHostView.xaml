@@ -63,7 +63,7 @@
                 </dragablz:TabablzControl.InterTabController>
                 <dragablz:TabablzControl.HeaderSuffixContent>
                     <Grid HorizontalAlignment="Right" Width="32" Height="32">
-                        <Button Style="{StaticResource CleanButton}" 
+                        <Button Style="{StaticResource CleanButton}"
                                 Command="{Binding ConnectCommand}"
                                 ToolTip="{x:Static localization:Strings.NewConnectionDots}"
                                 Focusable="False">
@@ -262,7 +262,7 @@
                                 <ColumnDefinition Width="10" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <ToggleButton Grid.Column="0" Grid.Row="0" 
+                            <ToggleButton Grid.Column="0" Grid.Row="0"
                                           IsChecked="{Binding ExpandProfileView}"
                                           Focusable="False">
                                 <ToggleButton.Style>
@@ -349,7 +349,7 @@
                                 </Button>
                                 <mah:ProgressRing Width="16" Height="16" IsActive="{Binding IsSyncing}" />
                             </Grid>
-                            <Button Grid.Column="6" Grid.Row="0" 
+                            <Button Grid.Column="6" Grid.Row="0"
                                     Focusable="False"
                                     Style="{StaticResource CleanButton}"
                                     Command="{Binding AddProfileCommand}"

@@ -53,7 +53,7 @@ public static class MACAddressHelper
             .Replace(":", "")
             .Replace(".", "");
 
-        if(toUpper)
+        if (toUpper)
             macAddress = macAddress.ToUpper();
 
         return separator switch

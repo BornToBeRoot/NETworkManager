@@ -15,6 +15,7 @@ public partial class PortScannerSettingsView
         InitializeComponent();
         DataContext = _viewModel;
     }
+
     private void RowContextMenu_OnOpened(object sender, RoutedEventArgs e)
     {
         if (sender is ContextMenu menu)

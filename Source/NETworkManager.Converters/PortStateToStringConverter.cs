@@ -25,7 +25,7 @@ public sealed class PortStateToStringConverter : IValueConverter
             ? "-/-"
             : ResourceTranslator.Translate(ResourceIdentifier.PortState, portState);
     }
-    
+
     /// <summary>
     /// !!! Method not implemented !!!
     /// </summary>

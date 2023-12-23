@@ -14,6 +14,7 @@ public class PortProfileViewModel : ViewModelBase
     public ICommand CancelCommand { get; }
 
     private string _name;
+
     public string Name
     {
         get => _name;
@@ -32,6 +33,7 @@ public class PortProfileViewModel : ViewModelBase
     }
 
     private string _ports;
+
     public string Ports
     {
         get => _ports;
@@ -54,6 +56,7 @@ public class PortProfileViewModel : ViewModelBase
     private readonly string _previousPortAsString;
 
     private bool _infoChanged;
+
     public bool InfoChanged
     {
         get => _infoChanged;
@@ -68,6 +71,7 @@ public class PortProfileViewModel : ViewModelBase
     }
 
     private bool _isEdited;
+
     public bool IsEdited
     {
         get => _isEdited;
@@ -81,7 +85,8 @@ public class PortProfileViewModel : ViewModelBase
         }
     }
 
-    public PortProfileViewModel(Action<PortProfileViewModel> saveCommand, Action<PortProfileViewModel> cancelHandler, bool isEdited = false, PortProfileInfo info = null)
+    public PortProfileViewModel(Action<PortProfileViewModel> saveCommand, Action<PortProfileViewModel> cancelHandler,
+        bool isEdited = false, PortProfileInfo info = null)
     {
         _isLoading = true;
 

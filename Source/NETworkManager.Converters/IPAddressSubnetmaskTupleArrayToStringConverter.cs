@@ -11,7 +11,7 @@ namespace NETworkManager.Converters;
 public sealed class IPAddressSubnetmaskTupleArrayToStringConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {        
+    {
         if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             return "-/-";
 

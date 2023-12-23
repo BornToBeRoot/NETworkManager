@@ -16,6 +16,7 @@ public class PowerShellConnectViewModel : ViewModelBase
     public ICommand CancelCommand { get; }
 
     private bool _enableRemoteConsole;
+
     public bool EnableRemoteConsole
     {
         get => _enableRemoteConsole;
@@ -30,6 +31,7 @@ public class PowerShellConnectViewModel : ViewModelBase
     }
 
     private string _host;
+
     public string Host
     {
         get => _host;
@@ -37,7 +39,7 @@ public class PowerShellConnectViewModel : ViewModelBase
         {
             if (value == _host)
                 return;
-                            
+
             _host = value;
             OnPropertyChanged();
         }
@@ -46,6 +48,7 @@ public class PowerShellConnectViewModel : ViewModelBase
     public ICollectionView HostHistoryView { get; }
 
     private string _command;
+
     public string Command
     {
         get => _command;
@@ -60,6 +63,7 @@ public class PowerShellConnectViewModel : ViewModelBase
     }
 
     private string _additionalCommandLine;
+
     public string AdditionalCommandLine
     {
         get => _additionalCommandLine;
@@ -74,6 +78,7 @@ public class PowerShellConnectViewModel : ViewModelBase
     }
 
     private List<ExecutionPolicy> _executionPolicies = new();
+
     public List<ExecutionPolicy> ExecutionPolicies
     {
         get => _executionPolicies;
@@ -88,6 +93,7 @@ public class PowerShellConnectViewModel : ViewModelBase
     }
 
     private ExecutionPolicy _executionPolicy;
+
     public ExecutionPolicy ExecutionPolicy
     {
         get => _executionPolicy;
@@ -101,7 +107,8 @@ public class PowerShellConnectViewModel : ViewModelBase
         }
     }
 
-    public PowerShellConnectViewModel(Action<PowerShellConnectViewModel> connectCommand, Action<PowerShellConnectViewModel> cancelHandler, string host = null)
+    public PowerShellConnectViewModel(Action<PowerShellConnectViewModel> connectCommand,
+        Action<PowerShellConnectViewModel> cancelHandler, string host = null)
     {
         ConnectCommand = new RelayCommand(_ => connectCommand(this));
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
@@ -121,8 +128,9 @@ public class PowerShellConnectViewModel : ViewModelBase
     {
         Command = SettingsManager.Current.PowerShell_Command;
         AdditionalCommandLine = SettingsManager.Current.PowerShell_AdditionalCommandLine;
-                    
+
         ExecutionPolicies = Enum.GetValues(typeof(ExecutionPolicy)).Cast<ExecutionPolicy>().ToList();
-        ExecutionPolicy = ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_ExecutionPolicy);
+        ExecutionPolicy =
+            ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_ExecutionPolicy);
     }
 }

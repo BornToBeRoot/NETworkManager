@@ -56,7 +56,6 @@ public static class HotKeys
     /// </summary>
     /// <param name="keys">WinForms key as  <see cref="int"/>.</param>
     /// <returns>WPF key.</returns>
-
     public static Key FormsKeysToWpfKey(int keys)
     {
         return KeyInterop.KeyFromVirtualKey(keys);

@@ -27,6 +27,7 @@ namespace NETworkManager.ViewModels;
 public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
@@ -37,6 +38,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     private bool _isViewActive = true;
 
     private bool _isConfigured;
+
     public bool IsConfigured
     {
         get => _isConfigured;
@@ -53,6 +55,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     private bool _disableFocusEmbeddedWindow;
 
     private DragablzTabItem _selectedTabItem;
+
     public DragablzTabItem SelectedTabItem
     {
         get => _selectedTabItem;
@@ -72,6 +75,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     }
 
     private bool _headerContextMenuIsOpen;
+
     public bool HeaderContextMenuIsOpen
     {
         get => _headerContextMenuIsOpen;
@@ -84,9 +88,11 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
+
     #region Profiles
 
     private ICollectionView _profiles;
+
     public ICollectionView Profiles
     {
         get => _profiles;
@@ -101,6 +107,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     }
 
     private ProfileInfo _selectedProfile = new();
+
     public ProfileInfo SelectedProfile
     {
         get => _selectedProfile;
@@ -115,6 +122,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     }
 
     private string _search;
+
     public string Search
     {
         get => _search;
@@ -136,6 +144,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     private bool _textBoxSearchIsFocused;
 
     private bool _isSearching;
+
     public bool IsSearching
     {
         get => _isSearching;
@@ -153,6 +162,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     private double _tempProfileWidth;
 
     private bool _expandProfileView;
+
     public bool ExpandProfileView
     {
         get => _expandProfileView;
@@ -174,6 +184,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     }
 
     private GridLength _profileWidth;
+
     public GridLength ProfileWidth
     {
         get => _profileWidth;
@@ -182,7 +193,8 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
             if (value == _profileWidth)
                 return;
 
-            if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.Profile_FloatPointFix) // Do not save the size when collapsed
+            if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
+                GlobalStaticConfiguration.Profile_FloatPointFix) // Do not save the size when collapsed
                 SettingsManager.Current.PowerShell_ProfileWidth = value.Value;
 
             _profileWidth = value;
@@ -195,12 +207,12 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     }
 
     private bool _profileContextMenuIsOpen;
+
     public bool ProfileContextMenuIsOpen
     {
         get => _profileContextMenuIsOpen;
         set
         {
-
             if (value == _profileContextMenuIsOpen)
                 return;
 
@@ -208,14 +220,17 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
+
     #endregion
+
     #endregion
 
     #region Constructor, load settings
+
     public PowerShellHostViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
-        
+
         _dialogCoordinator = instance;
 
         CheckSettings();
@@ -239,20 +254,24 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
         _isLoading = false;
     }
-    
+
     private void LoadSettings()
     {
         ExpandProfileView = SettingsManager.Current.PowerShell_ExpandProfileView;
 
-        ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.PowerShell_ProfileWidth) : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
+        ProfileWidth = ExpandProfileView
+            ? new GridLength(SettingsManager.Current.PowerShell_ProfileWidth)
+            : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
 
         _tempProfileWidth = SettingsManager.Current.PowerShell_ProfileWidth;
     }
+
     #endregion
 
     #region ICommand & Actions
+
     public ItemActionCallback CloseItemCommand => CloseItemAction;
-        
+
     private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
     {
         ((args.DragablzItem.Content as DragablzTabItem)?.View as PowerShellControl)?.CloseTab();
@@ -279,9 +298,9 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
     private void ReconnectAction(object view)
     {
-        if (view is not PowerShellControl control) 
+        if (view is not PowerShellControl control)
             return;
-        
+
         if (control.ReconnectCommand.CanExecute(null))
             control.ReconnectCommand.Execute(null);
     }
@@ -293,7 +312,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         if (view is PowerShellControl control)
             control.ResizeEmbeddedWindow();
     }
-   
+
     public ICommand ConnectProfileCommand => new RelayCommand(_ => ConnectProfileAction(), ConnectProfile_CanExecute);
 
     private bool ConnectProfile_CanExecute(object obj)
@@ -317,7 +336,8 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.PowerShell).ConfigureAwait(false);
+        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.PowerShell)
+            .ConfigureAwait(false);
     }
 
     private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
@@ -340,21 +360,24 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
     private void DeleteProfileAction()
     {
-        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile }).ConfigureAwait(false);
+        ProfileDialogManager
+            .ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile })
+            .ConfigureAwait(false);
     }
 
     public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString())).ConfigureAwait(false);
+        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()))
+            .ConfigureAwait(false);
     }
 
     public ICommand TextBoxSearchGotFocusCommand
     {
         get { return new RelayCommand(_ => _textBoxSearchIsFocused = true); }
     }
-    
+
     public ICommand TextBoxSearchLostFocusCommand
     {
         get { return new RelayCommand(_ => _textBoxSearchIsFocused = false); }
@@ -373,12 +396,15 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     {
         EventSystem.RedirectToSettings();
     }
+
     #endregion
 
     #region Methods
+
     private void CheckSettings()
     {
-        IsConfigured = !string.IsNullOrEmpty(SettingsManager.Current.PowerShell_ApplicationFilePath) && File.Exists(SettingsManager.Current.PowerShell_ApplicationFilePath);
+        IsConfigured = !string.IsNullOrEmpty(SettingsManager.Current.PowerShell_ApplicationFilePath) &&
+                       File.Exists(SettingsManager.Current.PowerShell_ApplicationFilePath);
     }
 
     private async Task Connect(string host = null)
@@ -427,12 +453,14 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
     private void ConnectProfile()
     {
-        Connect(NETworkManager.Profiles.Application.PowerShell.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
+        Connect(NETworkManager.Profiles.Application.PowerShell.CreateSessionInfo(SelectedProfile),
+            SelectedProfile.Name);
     }
 
     private void ConnectProfileExternal()
     {
-        PowerShellSessionInfo sessionInfo = NETworkManager.Profiles.Application.PowerShell.CreateSessionInfo(SelectedProfile);
+        PowerShellSessionInfo sessionInfo =
+            NETworkManager.Profiles.Application.PowerShell.CreateSessionInfo(SelectedProfile);
 
         Process.Start(new ProcessStartInfo()
         {
@@ -445,7 +473,9 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     {
         sessionInfo.ApplicationFilePath = SettingsManager.Current.PowerShell_ApplicationFilePath;
 
-        TabItems.Add(new DragablzTabItem(header ?? (sessionInfo.EnableRemoteConsole ? sessionInfo.Host : Localization.Resources.Strings.PowerShell), new PowerShellControl(sessionInfo)));
+        TabItems.Add(new DragablzTabItem(
+            header ?? (sessionInfo.EnableRemoteConsole ? sessionInfo.Host : Localization.Resources.Strings.PowerShell),
+            new PowerShellControl(sessionInfo)));
 
         // Select the added tab
         _disableFocusEmbeddedWindow = true;
@@ -464,7 +494,9 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         if (string.IsNullOrEmpty(host))
             return;
 
-        SettingsManager.Current.PowerShell_HostHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.PowerShell_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries));
+        SettingsManager.Current.PowerShell_HostHistory = new ObservableCollection<string>(
+            ListHelper.Modify(SettingsManager.Current.PowerShell_HostHistory.ToList(), host,
+                SettingsManager.Current.General_HistoryListEntries));
     }
 
     private void ResizeProfile(bool dueToChangedSize)
@@ -473,13 +505,18 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
         if (dueToChangedSize)
         {
-            ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.Profile_FloatPointFix;
+            ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
+                                GlobalStaticConfiguration.Profile_FloatPointFix;
         }
         else
         {
             if (ExpandProfileView)
             {
-                ProfileWidth = Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.Profile_WidthCollapsed) < GlobalStaticConfiguration.Profile_FloatPointFix ? new GridLength(GlobalStaticConfiguration.Profile_DefaultWidthExpanded) : new GridLength(_tempProfileWidth);
+                ProfileWidth =
+                    Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.Profile_WidthCollapsed) <
+                    GlobalStaticConfiguration.Profile_FloatPointFix
+                        ? new GridLength(GlobalStaticConfiguration.Profile_DefaultWidthExpanded)
+                        : new GridLength(_tempProfileWidth);
             }
             else
             {
@@ -520,7 +557,11 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
     private void SetProfilesView(ProfileInfo profile = null)
     {
-        Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.PowerShell_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name) }.View;
+        Profiles = new CollectionViewSource
+        {
+            Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.PowerShell_Enabled)
+                .OrderBy(x => x.Group).ThenBy(x => x.Name)
+        }.View;
 
         Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
 
@@ -541,7 +582,8 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
             */
 
             // Search by: Name, PowerShell_Host
-            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.PowerShell_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
+            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.PowerShell_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
         // Set specific profile or first if null
@@ -549,7 +591,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
         if (profile != null)
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault(x => x.Equals(profile)) ??
-                Profiles.Cast<ProfileInfo>().FirstOrDefault();
+                              Profiles.Cast<ProfileInfo>().FirstOrDefault();
         else
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
     }
@@ -571,9 +613,11 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     {
         ConfigurationManager.OnDialogClose();
     }
+
     #endregion
 
     #region Event
+
     private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
     {
         RefreshProfiles();
@@ -598,5 +642,6 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         if (e.PropertyName == nameof(SettingsInfo.PowerShell_ApplicationFilePath))
             CheckSettings();
     }
+
     #endregion
 }

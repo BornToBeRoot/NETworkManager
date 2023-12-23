@@ -13,6 +13,7 @@ using System.Linq;
 using System.Security;
 using System.Windows.Data;
 using System.Windows.Input;
+
 // ReSharper disable InconsistentNaming
 
 namespace NETworkManager.ViewModels;
@@ -29,7 +30,9 @@ public class GroupViewModel : ViewModelBase
     private IReadOnlyCollection<string> _groups { get; }
 
     #region General
+
     private bool _nameIsValid = true;
+
     public bool NameIsValid
     {
         get => _nameIsValid;
@@ -44,6 +47,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private string _name;
+
     public string Name
     {
         get => _name;
@@ -53,7 +57,8 @@ public class GroupViewModel : ViewModelBase
                 return;
 
             // Check name for duplicate...
-            if (_groups.Contains(value, StringComparer.OrdinalIgnoreCase) && !value.Equals(Group.Name, StringComparison.OrdinalIgnoreCase))
+            if (_groups.Contains(value, StringComparer.OrdinalIgnoreCase) &&
+                !value.Equals(Group.Name, StringComparison.OrdinalIgnoreCase))
                 NameIsValid = false;
             else
                 NameIsValid = true;
@@ -62,10 +67,13 @@ public class GroupViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Remote Desktop
+
     private bool _remoteDesktop_UseCredentials;
+
     public bool RemoteDesktop_UseCredentials
     {
         get => _remoteDesktop_UseCredentials;
@@ -80,6 +88,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private string _remoteDesktop_Username;
+
     public string RemoteDesktop_Username
     {
         get => _remoteDesktop_Username;
@@ -94,6 +103,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private string _remoteDesktop_Domain;
+
     public string RemoteDesktop_Domain
     {
         get => _remoteDesktop_Domain;
@@ -108,6 +118,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_IsPasswordEmpty = true; // Initial it's empty
+
     public bool RemoteDesktop_IsPasswordEmpty
     {
         get => _remoteDesktop_IsPasswordEmpty;
@@ -122,6 +133,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private SecureString _remoteDesktop_Password;
+
     public SecureString RemoteDesktop_Password
     {
         get => _remoteDesktop_Password;
@@ -131,7 +143,8 @@ public class GroupViewModel : ViewModelBase
                 return;
 
             // Validate the password string
-            RemoteDesktop_IsPasswordEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
+            RemoteDesktop_IsPasswordEmpty =
+                value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
 
             _remoteDesktop_Password = value;
             OnPropertyChanged();
@@ -139,6 +152,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverrideDisplay;
+
     public bool RemoteDesktop_OverrideDisplay
     {
         get => _remoteDesktop_OverrideDisplay;
@@ -153,6 +167,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_AdjustScreenAutomatically;
+
     public bool RemoteDesktop_AdjustScreenAutomatically
     {
         get => _remoteDesktop_AdjustScreenAutomatically;
@@ -167,6 +182,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_UseCurrentViewSize;
+
     public bool RemoteDesktop_UseCurrentViewSize
     {
         get => _remoteDesktop_UseCurrentViewSize;
@@ -181,6 +197,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_UseFixedScreenSize;
+
     public bool RemoteDesktop_UseFixedScreenSize
     {
         get => _remoteDesktop_UseFixedScreenSize;
@@ -200,6 +217,7 @@ public class GroupViewModel : ViewModelBase
     public int RemoteDesktop_ScreenHeight;
 
     private string _remoteDesktop_SelectedScreenResolution;
+
     public string RemoteDesktop_SelectedScreenResolution
     {
         get => _remoteDesktop_SelectedScreenResolution;
@@ -219,6 +237,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_UseCustomScreenSize;
+
     public bool RemoteDesktop_UseCustomScreenSize
     {
         get => _remoteDesktop_UseCustomScreenSize;
@@ -233,6 +252,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private string _remoteDesktop_CustomScreenWidth;
+
     public string RemoteDesktop_CustomScreenWidth
     {
         get => _remoteDesktop_CustomScreenWidth;
@@ -247,6 +267,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private string _remoteDesktop_CustomScreenHeight;
+
     public string RemoteDesktop_CustomScreenHeight
     {
         get => _remoteDesktop_CustomScreenHeight;
@@ -261,6 +282,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverrideColorDepth;
+
     public bool RemoteDesktop_OverrideColorDepth
     {
         get => _remoteDesktop_OverrideColorDepth;
@@ -277,6 +299,7 @@ public class GroupViewModel : ViewModelBase
     public List<int> RemoteDesktop_ColorDepths => RemoteDesktop.ColorDepths;
 
     private int _remoteDesktop_SelectedColorDepth;
+
     public int RemoteDesktop_SelectedColorDepth
     {
         get => _remoteDesktop_SelectedColorDepth;
@@ -291,6 +314,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverridePort;
+
     public bool RemoteDesktop_OverridePort
     {
         get => _remoteDesktop_OverridePort;
@@ -305,6 +329,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private int _remoteDesktop_Port;
+
     public int RemoteDesktop_Port
     {
         get => _remoteDesktop_Port;
@@ -319,6 +344,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverrideCredSspSupport;
+
     public bool RemoteDesktop_OverrideCredSspSupport
     {
         get => _remoteDesktop_OverrideCredSspSupport;
@@ -333,6 +359,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_EnableCredSspSupport;
+
     public bool RemoteDesktop_EnableCredSspSupport
     {
         get => _remoteDesktop_EnableCredSspSupport;
@@ -347,6 +374,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverrideAuthenticationLevel;
+
     public bool RemoteDesktop_OverrideAuthenticationLevel
     {
         get => _remoteDesktop_OverrideAuthenticationLevel;
@@ -361,6 +389,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private uint _remoteDesktop_AuthenticationLevel;
+
     public uint RemoteDesktop_AuthenticationLevel
     {
         get => _remoteDesktop_AuthenticationLevel;
@@ -375,6 +404,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverrideGatewayServer;
+
     public bool RemoteDesktop_OverrideGatewayServer
     {
         get => _remoteDesktop_OverrideGatewayServer;
@@ -389,6 +419,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_EnableGatewayServer;
+
     public bool RemoteDesktop_EnableGatewayServer
     {
         get => _remoteDesktop_EnableGatewayServer;
@@ -403,6 +434,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private string _remoteDesktop_GatewayServerHostname;
+
     public string RemoteDesktop_GatewayServerHostname
     {
         get => _remoteDesktop_GatewayServerHostname;
@@ -417,6 +449,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_GatewayServerBypassLocalAddresses;
+
     public bool RemoteDesktop_GatewayServerBypassLocalAddresses
     {
         get => _remoteDesktop_GatewayServerBypassLocalAddresses;
@@ -430,7 +463,8 @@ public class GroupViewModel : ViewModelBase
         }
     }
 
-    public IEnumerable<GatewayUserSelectedCredsSource> RemoteDesktop_GatewayServerLogonMethods => Enum.GetValues(typeof(GatewayUserSelectedCredsSource)).Cast<GatewayUserSelectedCredsSource>();
+    public IEnumerable<GatewayUserSelectedCredsSource> RemoteDesktop_GatewayServerLogonMethods =>
+        Enum.GetValues(typeof(GatewayUserSelectedCredsSource)).Cast<GatewayUserSelectedCredsSource>();
 
     private GatewayUserSelectedCredsSource _remoteDesktop_GatewayServerLogonMethod;
 
@@ -448,6 +482,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+
     public bool RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer
     {
         get => _remoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
@@ -462,6 +497,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_UseGatewayServerCredentials;
+
     public bool RemoteDesktop_UseGatewayServerCredentials
     {
         get => _remoteDesktop_UseGatewayServerCredentials;
@@ -476,6 +512,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private string _remoteDesktop_GatewayServerUsername;
+
     public string RemoteDesktop_GatewayServerUsername
     {
         get => _remoteDesktop_GatewayServerUsername;
@@ -490,6 +527,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private string _remoteDesktop_GatewayServerDomain;
+
     public string RemoteDesktop_GatewayServerDomain
     {
         get => _remoteDesktop_GatewayServerDomain;
@@ -504,6 +542,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_IsGatewayServerPasswordEmpty = true; // Initial it's empty
+
     public bool RemoteDesktop_IsGatewayServerPasswordEmpty
     {
         get => _remoteDesktop_IsGatewayServerPasswordEmpty;
@@ -518,6 +557,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private SecureString _remoteDesktop_GatewayServerPassword;
+
     public SecureString RemoteDesktop_GatewayServerPassword
     {
         get => _remoteDesktop_GatewayServerPassword;
@@ -527,7 +567,8 @@ public class GroupViewModel : ViewModelBase
                 return;
 
             // Validate the password string
-            RemoteDesktop_IsGatewayServerPasswordEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
+            RemoteDesktop_IsGatewayServerPasswordEmpty =
+                value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
 
             _remoteDesktop_GatewayServerPassword = value;
             OnPropertyChanged();
@@ -535,6 +576,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverrideAudioRedirectionMode;
+
     public bool RemoteDesktop_OverrideAudioRedirectionMode
     {
         get => _remoteDesktop_OverrideAudioRedirectionMode;
@@ -548,9 +590,11 @@ public class GroupViewModel : ViewModelBase
         }
     }
 
-    public IEnumerable<AudioRedirectionMode> RemoteDesktop_AudioRedirectionModes => Enum.GetValues(typeof(AudioRedirectionMode)).Cast<AudioRedirectionMode>();
+    public IEnumerable<AudioRedirectionMode> RemoteDesktop_AudioRedirectionModes =>
+        Enum.GetValues(typeof(AudioRedirectionMode)).Cast<AudioRedirectionMode>();
 
     private AudioRedirectionMode _remoteDesktop_AudioRedirectionMode;
+
     public AudioRedirectionMode RemoteDesktop_AudioRedirectionMode
     {
         get => _remoteDesktop_AudioRedirectionMode;
@@ -566,6 +610,7 @@ public class GroupViewModel : ViewModelBase
 
 
     private bool _remoteDesktop_OverrideAudioCaptureRedirectionMode;
+
     public bool RemoteDesktop_OverrideAudioCaptureRedirectionMode
     {
         get => _remoteDesktop_OverrideAudioCaptureRedirectionMode;
@@ -579,9 +624,11 @@ public class GroupViewModel : ViewModelBase
         }
     }
 
-    public IEnumerable<AudioCaptureRedirectionMode> RemoteDesktop_AudioCaptureRedirectionModes => Enum.GetValues(typeof(AudioCaptureRedirectionMode)).Cast<AudioCaptureRedirectionMode>();
+    public IEnumerable<AudioCaptureRedirectionMode> RemoteDesktop_AudioCaptureRedirectionModes =>
+        Enum.GetValues(typeof(AudioCaptureRedirectionMode)).Cast<AudioCaptureRedirectionMode>();
 
     private AudioCaptureRedirectionMode _remoteDesktop_AudioCaptureRedirectionMode;
+
     public AudioCaptureRedirectionMode RemoteDesktop_AudioCaptureRedirectionMode
     {
         get => _remoteDesktop_AudioCaptureRedirectionMode;
@@ -597,6 +644,7 @@ public class GroupViewModel : ViewModelBase
 
 
     private bool _remoteDesktop_OverrideApplyWindowsKeyCombinations;
+
     public bool RemoteDesktop_OverrideApplyWindowsKeyCombinations
     {
         get => _remoteDesktop_OverrideApplyWindowsKeyCombinations;
@@ -610,9 +658,11 @@ public class GroupViewModel : ViewModelBase
         }
     }
 
-    public IEnumerable<KeyboardHookMode> RemoteDesktop_KeyboardHookModes => Enum.GetValues(typeof(KeyboardHookMode)).Cast<KeyboardHookMode>();
+    public IEnumerable<KeyboardHookMode> RemoteDesktop_KeyboardHookModes =>
+        Enum.GetValues(typeof(KeyboardHookMode)).Cast<KeyboardHookMode>();
 
     private KeyboardHookMode _remoteDesktop_KeyboardHookMode;
+
     public KeyboardHookMode RemoteDesktop_KeyboardHookMode
     {
         get => _remoteDesktop_KeyboardHookMode;
@@ -627,6 +677,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverrideRedirectClipboard;
+
     public bool RemoteDesktop_OverrideRedirectClipboard
     {
         get => _remoteDesktop_OverrideRedirectClipboard;
@@ -641,6 +692,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_RedirectClipboard;
+
     public bool RemoteDesktop_RedirectClipboard
     {
         get => _remoteDesktop_RedirectClipboard;
@@ -655,6 +707,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverrideRedirectDevices;
+
     public bool RemoteDesktop_OverrideRedirectDevices
     {
         get => _remoteDesktop_OverrideRedirectDevices;
@@ -669,6 +722,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_RedirectDevices;
+
     public bool RemoteDesktop_RedirectDevices
     {
         get => _remoteDesktop_RedirectDevices;
@@ -683,6 +737,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverrideRedirectDrives;
+
     public bool RemoteDesktop_OverrideRedirectDrives
     {
         get => _remoteDesktop_OverrideRedirectDrives;
@@ -697,6 +752,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_RedirectDrives;
+
     public bool RemoteDesktop_RedirectDrives
     {
         get => _remoteDesktop_RedirectDrives;
@@ -711,6 +767,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverrideRedirectPorts;
+
     public bool RemoteDesktop_OverrideRedirectPorts
     {
         get => _remoteDesktop_OverrideRedirectPorts;
@@ -725,6 +782,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_RedirectPorts;
+
     public bool RemoteDesktop_RedirectPorts
     {
         get => _remoteDesktop_RedirectPorts;
@@ -739,6 +797,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverrideRedirectSmartcards;
+
     public bool RemoteDesktop_OverrideRedirectSmartcards
     {
         get => _remoteDesktop_OverrideRedirectSmartcards;
@@ -753,6 +812,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_RedirectSmartCards;
+
     public bool RemoteDesktop_RedirectSmartCards
     {
         get => _remoteDesktop_RedirectSmartCards;
@@ -767,6 +827,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverrideRedirectPrinters;
+
     public bool RemoteDesktop_OverrideRedirectPrinters
     {
         get => _remoteDesktop_OverrideRedirectPrinters;
@@ -781,6 +842,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_RedirectPrinters;
+
     public bool RemoteDesktop_RedirectPrinters
     {
         get => _remoteDesktop_RedirectPrinters;
@@ -795,6 +857,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverridePersistentBitmapCaching;
+
     public bool RemoteDesktop_OverridePersistentBitmapCaching
     {
         get => _remoteDesktop_OverridePersistentBitmapCaching;
@@ -809,6 +872,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_PersistentBitmapCaching;
+
     public bool RemoteDesktop_PersistentBitmapCaching
     {
         get => _remoteDesktop_PersistentBitmapCaching;
@@ -823,6 +887,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverrideReconnectIfTheConnectionIsDropped;
+
     public bool RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped
     {
         get => _remoteDesktop_OverrideReconnectIfTheConnectionIsDropped;
@@ -837,6 +902,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_ReconnectIfTheConnectionIsDropped;
+
     public bool RemoteDesktop_ReconnectIfTheConnectionIsDropped
     {
         get => _remoteDesktop_ReconnectIfTheConnectionIsDropped;
@@ -851,6 +917,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverrideNetworkConnectionType;
+
     public bool RemoteDesktop_OverrideNetworkConnectionType
     {
         get => _remoteDesktop_OverrideNetworkConnectionType;
@@ -864,9 +931,11 @@ public class GroupViewModel : ViewModelBase
         }
     }
 
-    public IEnumerable<NetworkConnectionType> RemoteDesktop_NetworkConnectionTypes => Enum.GetValues(typeof(NetworkConnectionType)).Cast<NetworkConnectionType>();
+    public IEnumerable<NetworkConnectionType> RemoteDesktop_NetworkConnectionTypes =>
+        Enum.GetValues(typeof(NetworkConnectionType)).Cast<NetworkConnectionType>();
 
     private NetworkConnectionType _remoteDesktop_NetworkConnectionType;
+
     public NetworkConnectionType RemoteDesktop_NetworkConnectionType
     {
         get => _remoteDesktop_NetworkConnectionType;
@@ -884,6 +953,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_DesktopBackground;
+
     public bool RemoteDesktop_DesktopBackground
     {
         get => _remoteDesktop_DesktopBackground;
@@ -898,6 +968,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_FontSmoothing;
+
     public bool RemoteDesktop_FontSmoothing
     {
         get => _remoteDesktop_FontSmoothing;
@@ -912,6 +983,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_DesktopComposition;
+
     public bool RemoteDesktop_DesktopComposition
     {
         get => _remoteDesktop_DesktopComposition;
@@ -926,6 +998,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_ShowWindowContentsWhileDragging;
+
     public bool RemoteDesktop_ShowWindowContentsWhileDragging
     {
         get => _remoteDesktop_ShowWindowContentsWhileDragging;
@@ -940,6 +1013,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_MenuAndWindowAnimation;
+
     public bool RemoteDesktop_MenuAndWindowAnimation
     {
         get => _remoteDesktop_MenuAndWindowAnimation;
@@ -954,6 +1028,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_VisualStyles;
+
     public bool RemoteDesktop_VisualStyles
     {
         get => _remoteDesktop_VisualStyles;
@@ -966,10 +1041,13 @@ public class GroupViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region PowerShell
+
     private bool _powerShell_OverrideCommand;
+
     public bool PowerShell_OverrideCommand
     {
         get => _powerShell_OverrideCommand;
@@ -984,6 +1062,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private string _powerShell_Command;
+
     public string PowerShell_Command
     {
         get => _powerShell_Command;
@@ -998,6 +1077,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _powerShell_OverrideAdditionalCommandLine;
+
     public bool PowerShell_OverrideAdditionalCommandLine
     {
         get => _powerShell_OverrideAdditionalCommandLine;
@@ -1012,6 +1092,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private string _powerShell_AdditionalCommandLine;
+
     public string PowerShell_AdditionalCommandLine
     {
         get => _powerShell_AdditionalCommandLine;
@@ -1026,6 +1107,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _powerShell_OverrideExecutionPolicy;
+
     public bool PowerShell_OverrideExecutionPolicy
     {
         get => _powerShell_OverrideExecutionPolicy;
@@ -1042,6 +1124,7 @@ public class GroupViewModel : ViewModelBase
     public IEnumerable<ExecutionPolicy> PowerShell_ExecutionPolicies { get; set; }
 
     private ExecutionPolicy _powerShell_ExecutionPolicy;
+
     public ExecutionPolicy PowerShell_ExecutionPolicy
     {
         get => _powerShell_ExecutionPolicy;
@@ -1054,10 +1137,13 @@ public class GroupViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
-    #region PuTTY 
+    #region PuTTY
+
     private bool _puTTY_OverrideUsername;
+
     public bool PuTTY_OverrideUsername
     {
         get => _puTTY_OverrideUsername;
@@ -1072,6 +1158,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private string _puTTY__Username;
+
     public string PuTTY_Username
     {
         get => _puTTY__Username;
@@ -1086,6 +1173,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _puTTY_OverridePrivateKeyFile;
+
     public bool PuTTY_OverridePrivateKeyFile
     {
         get => _puTTY_OverridePrivateKeyFile;
@@ -1100,6 +1188,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private string _puTTY__PrivateKeyFile;
+
     public string PuTTY_PrivateKeyFile
     {
         get => _puTTY__PrivateKeyFile;
@@ -1114,6 +1203,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _puTTY_OverrideProfile;
+
     public bool PuTTY_OverrideProfile
     {
         get => _puTTY_OverrideProfile;
@@ -1128,6 +1218,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private string _puTTY_Profile;
+
     public string PuTTY_Profile
     {
         get => _puTTY_Profile;
@@ -1142,6 +1233,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _puTTY_OverrideEnableLog;
+
     public bool PuTTY_OverrideEnableLog
     {
         get => _puTTY_OverrideEnableLog;
@@ -1156,6 +1248,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _puTTY_EnableLog;
+
     public bool PuTTY_EnableLog
     {
         get => _puTTY_EnableLog;
@@ -1170,6 +1263,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _puTTY_OverrideLogMode;
+
     public bool PuTTY_OverrideLogMode
     {
         get => _puTTY_OverrideLogMode;
@@ -1186,6 +1280,7 @@ public class GroupViewModel : ViewModelBase
     public IEnumerable<LogMode> PuTTY_LogModes => Enum.GetValues(typeof(LogMode)).Cast<LogMode>();
 
     private LogMode _puTTY_LogMode;
+
     public LogMode PuTTY_LogMode
     {
         get => _puTTY_LogMode;
@@ -1200,6 +1295,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _puTTY_OverrideLogPath;
+
     public bool PuTTY_OverrideLogPath
     {
         get => _puTTY_OverrideLogPath;
@@ -1214,6 +1310,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private string _puTTY_LogPath;
+
     public string PuTTY_LogPath
     {
         get => _puTTY_LogPath;
@@ -1228,6 +1325,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _puTTY_OverrideLogFileName;
+
     public bool PuTTY_OverrideLogFileName
     {
         get => _puTTY_OverrideLogFileName;
@@ -1242,6 +1340,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private string _puTTY_LogFileName;
+
     public string PuTTY_LogFileName
     {
         get => _puTTY_LogFileName;
@@ -1256,6 +1355,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _puTTY_OverrideAdditionalCommandLine;
+
     public bool PuTTY_OverrideAdditionalCommandLine
     {
         get => _puTTY_OverrideAdditionalCommandLine;
@@ -1270,6 +1370,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private string _puTTY_AdditionalCommandLine;
+
     public string PuTTY_AdditionalCommandLine
     {
         get => _puTTY_AdditionalCommandLine;
@@ -1284,6 +1385,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private ConnectionMode _puTTY_ConnectionMode;
+
     public ConnectionMode PuTTY_ConnectionMode
     {
         get => _puTTY_ConnectionMode;
@@ -1296,10 +1398,13 @@ public class GroupViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region AWS Session Manager
+
     private bool _awsSessionManager_OverrideProfile;
+
     public bool AWSSessionManager_OverrideProfile
     {
         get => _awsSessionManager_OverrideProfile;
@@ -1314,6 +1419,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private string _awsSessionManager_Profile;
+
     public string AWSSessionManager_Profile
     {
         get => _awsSessionManager_Profile;
@@ -1328,6 +1434,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _awsSessionManager_OverrideRegion;
+
     public bool AWSSessionManager_OverrideRegion
     {
         get => _awsSessionManager_OverrideRegion;
@@ -1342,6 +1449,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private string _awsSessionManager_Region;
+
     public string AWSSessionManager_Region
     {
         get => _awsSessionManager_Region;
@@ -1354,10 +1462,13 @@ public class GroupViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region TigerVNC
+
     private bool _tigerVNC_OverridePort;
+
     public bool TigerVNC_OverridePort
     {
         get => _tigerVNC_OverridePort;
@@ -1372,6 +1483,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private int _tigerVNC_Port;
+
     public int TigerVNC_Port
     {
         get => _tigerVNC_Port;
@@ -1384,10 +1496,13 @@ public class GroupViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region SNMP
+
     private bool _snmp_OverrideOIDAndMode;
+
     public bool SNMP_OverrideOIDAndMode
     {
         get => _snmp_OverrideOIDAndMode;
@@ -1402,6 +1517,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private string _snmp_OID;
+
     public string SNMP_OID
     {
         get => _snmp_OID;
@@ -1418,6 +1534,7 @@ public class GroupViewModel : ViewModelBase
     public IEnumerable<SNMPMode> SNMP_Modes { get; set; }
 
     private SNMPMode _snmp_Mode;
+
     public SNMPMode SNMP_Mode
     {
         get => _snmp_Mode;
@@ -1435,6 +1552,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _snmp_OverrideVersionAndAuth;
+
     public bool SNMP_OverrideVersionAndAuth
     {
         get => _snmp_OverrideVersionAndAuth;
@@ -1451,6 +1569,7 @@ public class GroupViewModel : ViewModelBase
     public IEnumerable<SNMPVersion> SNMP_Versions { get; }
 
     private SNMPVersion _snmp_Version;
+
     public SNMPVersion SNMP_Version
     {
         get => _snmp_Version;
@@ -1465,6 +1584,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _snmp_IsCommunityEmpty = true; // Initial it's empty
+
     public bool SNMP_IsCommunityEmpty
     {
         get => _snmp_IsCommunityEmpty;
@@ -1479,6 +1599,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private SecureString _snmp_Community;
+
     public SecureString SNMP_Community
     {
         get => _snmp_Community;
@@ -1498,6 +1619,7 @@ public class GroupViewModel : ViewModelBase
     public IEnumerable<SNMPV3Security> SNMP_Securities { get; }
 
     private SNMPV3Security _snmp_Security;
+
     public SNMPV3Security SNMP_Security
     {
         get => _snmp_Security;
@@ -1512,6 +1634,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private string _snmp_Username;
+
     public string SNMP_Username
     {
         get => _snmp_Username;
@@ -1528,6 +1651,7 @@ public class GroupViewModel : ViewModelBase
     public IEnumerable<SNMPV3AuthenticationProvider> SNMP_AuthenticationProviders { get; }
 
     private SNMPV3AuthenticationProvider _snmp_AuthenticationProvider;
+
     public SNMPV3AuthenticationProvider SNMP_AuthenticationProvider
     {
         get => _snmp_AuthenticationProvider;
@@ -1542,6 +1666,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _snmp_IsAuthEmpty = true; // Initial it's empty
+
     public bool SNMP_IsAuthEmpty
     {
         get => _snmp_IsAuthEmpty;
@@ -1556,6 +1681,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private SecureString _snmp_Auth;
+
     public SecureString SNMP_Auth
     {
         get => _snmp_Auth;
@@ -1575,6 +1701,7 @@ public class GroupViewModel : ViewModelBase
     public IEnumerable<SNMPV3PrivacyProvider> SNMP_PrivacyProviders { get; }
 
     private SNMPV3PrivacyProvider _snmp_PrivacyProvider;
+
     public SNMPV3PrivacyProvider SNMP_PrivacyProvider
     {
         get => _snmp_PrivacyProvider;
@@ -1589,6 +1716,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private bool _snmp_IsPrivEmpty = true; // Initial it's empty
+
     public bool SNMP_IsPrivEmpty
     {
         get => _snmp_IsPrivEmpty;
@@ -1603,6 +1731,7 @@ public class GroupViewModel : ViewModelBase
     }
 
     private SecureString _snmp_Priv;
+
     public SecureString SNMP_Priv
     {
         get => _snmp_Priv;
@@ -1618,9 +1747,11 @@ public class GroupViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
-    public GroupViewModel(Action<GroupViewModel> saveCommand, Action<GroupViewModel> cancelHandler, IReadOnlyCollection<string> groups, GroupEditMode editMode = GroupEditMode.Add, GroupInfo group = null)
+    public GroupViewModel(Action<GroupViewModel> saveCommand, Action<GroupViewModel> cancelHandler,
+        IReadOnlyCollection<string> groups, GroupEditMode editMode = GroupEditMode.Add, GroupInfo group = null)
     {
         // Load the view
         GroupViews = new CollectionViewSource { Source = GroupViewManager.List }.View;
@@ -1646,12 +1777,14 @@ public class GroupViewModel : ViewModelBase
         RemoteDesktop_AdjustScreenAutomatically = groupInfo.RemoteDesktop_AdjustScreenAutomatically;
         RemoteDesktop_UseCurrentViewSize = groupInfo.RemoteDesktop_UseCurrentViewSize;
         RemoteDesktop_UseFixedScreenSize = groupInfo.RemoteDesktop_UseFixedScreenSize;
-        RemoteDesktop_SelectedScreenResolution = RemoteDesktop_ScreenResolutions.FirstOrDefault(x => x == $"{groupInfo.RemoteDesktop_ScreenWidth}x{groupInfo.RemoteDesktop_ScreenHeight}");
+        RemoteDesktop_SelectedScreenResolution = RemoteDesktop_ScreenResolutions.FirstOrDefault(x =>
+            x == $"{groupInfo.RemoteDesktop_ScreenWidth}x{groupInfo.RemoteDesktop_ScreenHeight}");
         RemoteDesktop_UseCustomScreenSize = groupInfo.RemoteDesktop_UseCustomScreenSize;
         RemoteDesktop_CustomScreenWidth = groupInfo.RemoteDesktop_CustomScreenWidth.ToString();
         RemoteDesktop_CustomScreenHeight = groupInfo.RemoteDesktop_CustomScreenHeight.ToString();
         RemoteDesktop_OverrideColorDepth = groupInfo.RemoteDesktop_OverrideColorDepth;
-        RemoteDesktop_SelectedColorDepth = RemoteDesktop_ColorDepths.FirstOrDefault(x => x == groupInfo.RemoteDesktop_ColorDepth);
+        RemoteDesktop_SelectedColorDepth =
+            RemoteDesktop_ColorDepths.FirstOrDefault(x => x == groupInfo.RemoteDesktop_ColorDepth);
         RemoteDesktop_OverridePort = groupInfo.RemoteDesktop_OverridePort;
         RemoteDesktop_Port = groupInfo.RemoteDesktop_Port;
         RemoteDesktop_OverrideCredSspSupport = groupInfo.RemoteDesktop_OverrideCredSspSupport;
@@ -1663,17 +1796,22 @@ public class GroupViewModel : ViewModelBase
         RemoteDesktop_GatewayServerHostname = groupInfo.RemoteDesktop_GatewayServerHostname;
         RemoteDesktop_GatewayServerBypassLocalAddresses = groupInfo.RemoteDesktop_GatewayServerBypassLocalAddresses;
         RemoteDesktop_GatewayServerLogonMethod = groupInfo.RemoteDesktop_GatewayServerLogonMethod;
-        RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer = groupInfo.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+        RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer =
+            groupInfo.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
         RemoteDesktop_UseGatewayServerCredentials = groupInfo.RemoteDesktop_UseGatewayServerCredentials;
         RemoteDesktop_GatewayServerUsername = groupInfo.RemoteDesktop_GatewayServerUsername;
         RemoteDesktop_GatewayServerDomain = groupInfo.RemoteDesktop_GatewayServerDomain;
         RemoteDesktop_GatewayServerPassword = groupInfo.RemoteDesktop_GatewayServerPassword;
         RemoteDesktop_OverrideAudioRedirectionMode = groupInfo.RemoteDesktop_OverrideAudioRedirectionMode;
-        RemoteDesktop_AudioRedirectionMode = RemoteDesktop_AudioRedirectionModes.FirstOrDefault(x => x == groupInfo.RemoteDesktop_AudioRedirectionMode);
+        RemoteDesktop_AudioRedirectionMode =
+            RemoteDesktop_AudioRedirectionModes.FirstOrDefault(x => x == groupInfo.RemoteDesktop_AudioRedirectionMode);
         RemoteDesktop_OverrideAudioCaptureRedirectionMode = groupInfo.RemoteDesktop_OverrideAudioCaptureRedirectionMode;
-        RemoteDesktop_AudioCaptureRedirectionMode = RemoteDesktop_AudioCaptureRedirectionModes.FirstOrDefault(x => x == groupInfo.RemoteDesktop_AudioCaptureRedirectionMode);
+        RemoteDesktop_AudioCaptureRedirectionMode =
+            RemoteDesktop_AudioCaptureRedirectionModes.FirstOrDefault(x =>
+                x == groupInfo.RemoteDesktop_AudioCaptureRedirectionMode);
         RemoteDesktop_OverrideApplyWindowsKeyCombinations = groupInfo.RemoteDesktop_OverrideApplyWindowsKeyCombinations;
-        RemoteDesktop_KeyboardHookMode = RemoteDesktop_KeyboardHookModes.FirstOrDefault(x => x == groupInfo.RemoteDesktop_KeyboardHookMode);
+        RemoteDesktop_KeyboardHookMode =
+            RemoteDesktop_KeyboardHookModes.FirstOrDefault(x => x == groupInfo.RemoteDesktop_KeyboardHookMode);
         RemoteDesktop_OverrideRedirectClipboard = groupInfo.RemoteDesktop_OverrideRedirectClipboard;
         RemoteDesktop_RedirectClipboard = groupInfo.RemoteDesktop_RedirectClipboard;
         RemoteDesktop_OverrideRedirectDevices = groupInfo.RemoteDesktop_OverrideRedirectDevices;
@@ -1688,9 +1826,12 @@ public class GroupViewModel : ViewModelBase
         RemoteDesktop_RedirectPrinters = groupInfo.RemoteDesktop_RedirectPrinters;
         RemoteDesktop_OverridePersistentBitmapCaching = groupInfo.RemoteDesktop_OverridePersistentBitmapCaching;
         RemoteDesktop_PersistentBitmapCaching = groupInfo.RemoteDesktop_PersistentBitmapCaching;
-        RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped = groupInfo.RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped;
+        RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped =
+            groupInfo.RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped;
         RemoteDesktop_ReconnectIfTheConnectionIsDropped = groupInfo.RemoteDesktop_ReconnectIfTheConnectionIsDropped;
-        RemoteDesktop_NetworkConnectionType = RemoteDesktop_NetworkConnectionTypes.FirstOrDefault(x => x == groupInfo.RemoteDesktop_NetworkConnectionType);
+        RemoteDesktop_NetworkConnectionType =
+            RemoteDesktop_NetworkConnectionTypes.FirstOrDefault(x =>
+                x == groupInfo.RemoteDesktop_NetworkConnectionType);
         RemoteDesktop_DesktopBackground = groupInfo.RemoteDesktop_DesktopBackground;
         RemoteDesktop_FontSmoothing = groupInfo.RemoteDesktop_FontSmoothing;
         RemoteDesktop_DesktopComposition = groupInfo.RemoteDesktop_DesktopComposition;
@@ -1705,7 +1846,8 @@ public class GroupViewModel : ViewModelBase
         PowerShell_AdditionalCommandLine = groupInfo.PowerShell_AdditionalCommandLine;
         PowerShell_OverrideExecutionPolicy = groupInfo.PowerShell_OverrideExecutionPolicy;
         PowerShell_ExecutionPolicies = Enum.GetValues(typeof(ExecutionPolicy)).Cast<ExecutionPolicy>().ToList();
-        PowerShell_ExecutionPolicy = PowerShell_ExecutionPolicies.FirstOrDefault(x => x == groupInfo.PowerShell_ExecutionPolicy);
+        PowerShell_ExecutionPolicy =
+            PowerShell_ExecutionPolicies.FirstOrDefault(x => x == groupInfo.PowerShell_ExecutionPolicy);
 
         // PuTTY
         PuTTY_OverrideUsername = groupInfo.PuTTY_OverrideUsername;
@@ -1744,11 +1886,14 @@ public class GroupViewModel : ViewModelBase
         SNMP_Versions = Enum.GetValues(typeof(SNMPVersion)).Cast<SNMPVersion>().ToList();
         SNMP_Version = SNMP_Versions.FirstOrDefault(x => x == groupInfo.SNMP_Version);
         SNMP_Community = groupInfo.SNMP_Community;
-        SNMP_Securities = new List<SNMPV3Security> { SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv };
+        SNMP_Securities = new List<SNMPV3Security>
+            { SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv };
         SNMP_Security = SNMP_Securities.FirstOrDefault(x => x == groupInfo.SNMP_Security);
         SNMP_Username = groupInfo.SNMP_Username;
-        SNMP_AuthenticationProviders = Enum.GetValues(typeof(SNMPV3AuthenticationProvider)).Cast<SNMPV3AuthenticationProvider>().ToList();
-        SNMP_AuthenticationProvider = SNMP_AuthenticationProviders.FirstOrDefault(x => x == groupInfo.SNMP_AuthenticationProvider);
+        SNMP_AuthenticationProviders = Enum.GetValues(typeof(SNMPV3AuthenticationProvider))
+            .Cast<SNMPV3AuthenticationProvider>().ToList();
+        SNMP_AuthenticationProvider =
+            SNMP_AuthenticationProviders.FirstOrDefault(x => x == groupInfo.SNMP_AuthenticationProvider);
         SNMP_Auth = groupInfo.SNMP_Auth;
         SNMP_PrivacyProviders = Enum.GetValues(typeof(SNMPV3PrivacyProvider)).Cast<SNMPV3PrivacyProvider>().ToList();
         SNMP_PrivacyProvider = SNMP_PrivacyProviders.FirstOrDefault(x => x == groupInfo.SNMP_PrivacyProvider);
@@ -1758,12 +1903,15 @@ public class GroupViewModel : ViewModelBase
     }
 
     #region ICommand & Actions
+
     public ICommand SaveCommand { get; }
 
     public ICommand CancelCommand { get; }
+
     #endregion
 
-    #region Methods      
+    #region Methods
+
     private void ChangeNetworkConnectionTypeSettings(NetworkConnectionType connectionSpeed)
     {
         switch (connectionSpeed)
@@ -1804,5 +1952,6 @@ public class GroupViewModel : ViewModelBase
                 break;
         }
     }
+
     #endregion
 }

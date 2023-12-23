@@ -10,6 +10,7 @@ public class WelcomeViewModel : ViewModelBase
     public ICommand ContinueCommand { get; }
 
     private bool _checkForUpdatesAtStartup = GlobalStaticConfiguration.Update_CheckForUpdatesAtStartup;
+
     public bool CheckForUpdatesAtStartup
     {
         get => _checkForUpdatesAtStartup;
@@ -24,6 +25,7 @@ public class WelcomeViewModel : ViewModelBase
     }
 
     private bool _checkPublicIPAddress = GlobalStaticConfiguration.Dashboard_CheckPublicIPAddress;
+
     public bool CheckPublicIPAddress
     {
         get => _checkPublicIPAddress;
@@ -38,6 +40,7 @@ public class WelcomeViewModel : ViewModelBase
     }
 
     private bool _checkIPApiIPGeolocation = GlobalStaticConfiguration.Dashboard_CheckIPApiIPGeolocation;
+
     public bool CheckIPApiIPGeolocation
     {
         get => _checkIPApiIPGeolocation;
@@ -52,6 +55,7 @@ public class WelcomeViewModel : ViewModelBase
     }
 
     private bool _checkIPApiDNSResolver = GlobalStaticConfiguration.Dashboard_CheckIPApiDNSResolver;
+
     public bool CheckIPApiDNSResolver
     {
         get => _checkIPApiDNSResolver;
@@ -66,6 +70,7 @@ public class WelcomeViewModel : ViewModelBase
     }
 
     private bool _powerShellModifyGlobalProfile;
+
     public bool PowerShellModifyGlobalProfile
     {
         get => _powerShellModifyGlobalProfile;

@@ -311,10 +311,7 @@ public class DNSLookupViewModel : ViewModelBase
 
                 SettingsManager.Current.DNSLookup_ExportFileType = instance.FileType;
                 SettingsManager.Current.DNSLookup_ExportFilePath = instance.FilePath;
-            }, _ =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            },
+            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
             new[]
             {
                 ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
@@ -374,7 +371,9 @@ public class DNSLookupViewModel : ViewModelBase
             dnsSettings.CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix?.TrimStart('.');
         }
 
-        var dnsLookup = DNSServer.UseWindowsDNSServer ? new DNSLookup(dnsSettings) : new DNSLookup(dnsSettings, DNSServer.Servers);
+        var dnsLookup = DNSServer.UseWindowsDNSServer
+            ? new DNSLookup(dnsSettings)
+            : new DNSLookup(dnsSettings, DNSServer.Servers);
 
         dnsLookup.RecordReceived += DNSLookup_RecordReceived;
         dnsLookup.LookupError += DNSLookup_LookupError;
@@ -401,6 +400,7 @@ public class DNSLookupViewModel : ViewModelBase
         // Fill with the new items
         list.ForEach(x => SettingsManager.Current.DNSLookup_HostHistory.Add(x));
     }
+
     #endregion
 
     #region Events
@@ -446,5 +446,6 @@ public class DNSLookupViewModel : ViewModelBase
                 break;
         }
     }
+
     #endregion
 }

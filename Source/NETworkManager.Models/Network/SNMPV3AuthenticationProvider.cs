@@ -14,7 +14,7 @@ public enum SNMPV3AuthenticationProvider
     /// SHA 1.
     /// </summary>
     SHA1,
-    
+
     /// <summary>
     /// SHA 256.
     /// </summary>

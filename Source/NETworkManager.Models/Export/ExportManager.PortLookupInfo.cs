@@ -34,7 +34,7 @@ public static partial class ExportManager
                 throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
         }
     }
-    
+
     /// <summary>
     /// Creates a CSV file from the given <see cref="PortLookupInfo"/> collection.
     /// </summary>

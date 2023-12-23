@@ -9,12 +9,11 @@ public class WebConsoleSessionInfo
     /// URL to connect to.
     /// </summary>
     public string Url { get; set; }
-    
+
     /// <summary>
     /// Creates a new instance of the <see cref="WebConsoleSessionInfo"/> class.
     /// </summary>
     public WebConsoleSessionInfo()
     {
-
     }
 }

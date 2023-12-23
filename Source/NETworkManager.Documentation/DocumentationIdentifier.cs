@@ -109,7 +109,7 @@ public enum DocumentationIdentifier
     /// IP geolocation documentation page.
     /// </summary>
     ApplicationIPGeolocation,
-    
+
     /// <summary>
     /// Subnet Calculator documentation page.
     /// </summary>
@@ -203,5 +203,5 @@ public enum DocumentationIdentifier
     /// <summary>
     /// Command line arguments.
     /// </summary>
-    CommandLineArguments            
+    CommandLineArguments
 }

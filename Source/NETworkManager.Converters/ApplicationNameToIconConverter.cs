@@ -23,7 +23,7 @@ public sealed class ApplicationNameToIconConverter : IValueConverter
     {
         return value is not ApplicationName name ? null : ApplicationManager.GetIcon(name);
     }
-    
+
     /// <summary>
     /// !!! Method not implemented !!!
     /// </summary>

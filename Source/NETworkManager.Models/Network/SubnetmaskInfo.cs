@@ -7,7 +7,6 @@ public class SubnetmaskInfo
 
     public SubnetmaskInfo()
     {
-
     }
 
     public SubnetmaskInfo(int cidr, string subnetmask)

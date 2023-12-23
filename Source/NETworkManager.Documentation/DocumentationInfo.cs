@@ -9,7 +9,7 @@ public class DocumentationInfo
     /// Identifier for identifying a documentation entry.
     /// </summary>
     public DocumentationIdentifier Identifier { get; set; }
-    
+
     /// <summary>
     /// Path to the documentation, which is combined with the base path of the documentation.
     /// </summary>

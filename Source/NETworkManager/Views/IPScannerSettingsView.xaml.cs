@@ -15,6 +15,7 @@ public partial class IPScannerSettingsView
         InitializeComponent();
         DataContext = _viewModel;
     }
+
     private void RowContextMenu_OnOpened(object sender, RoutedEventArgs e)
     {
         if (sender is ContextMenu menu) menu.DataContext = _viewModel;

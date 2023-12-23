@@ -65,7 +65,8 @@ public sealed class IPScanner
 
     #region Methods
 
-    public void ScanAsync(IEnumerable<(IPAddress ipAddress, string hostname)> hosts, CancellationToken cancellationToken)
+    public void ScanAsync(IEnumerable<(IPAddress ipAddress, string hostname)> hosts,
+        CancellationToken cancellationToken)
     {
         // Start the scan in a separate task
         Task.Run(() =>
@@ -135,7 +136,7 @@ public sealed class IPScanner
 
                     // Get ping result
                     pingTask.Wait();
-                    
+
                     cancellationToken.ThrowIfCancellationRequested();
 
                     var pingInfo = pingTask.Result;
@@ -231,7 +232,7 @@ public sealed class IPScanner
                 {
                     // Get timestamp 
                     var timestamp = DateTime.Now;
-                    
+
                     var pingReply = ping.Send(ipAddress, _options.ICMPTimeout, _options.ICMPBuffer);
 
                     // Success
@@ -239,11 +240,13 @@ public sealed class IPScanner
                     {
                         // IPv4
                         if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
-                            return new PingInfo(timestamp, pingReply.Address, pingReply.Buffer.Length, pingReply.RoundtripTime,
+                            return new PingInfo(timestamp, pingReply.Address, pingReply.Buffer.Length,
+                                pingReply.RoundtripTime,
                                 pingReply.Options!.Ttl, pingReply.Status);
-                        
+
                         // IPv6
-                        return new PingInfo(timestamp, pingReply.Address, pingReply.Buffer.Length, pingReply.RoundtripTime,
+                        return new PingInfo(timestamp, pingReply.Address, pingReply.Buffer.Length,
+                            pingReply.RoundtripTime,
                             pingReply.Status);
                     }
 
@@ -253,7 +256,6 @@ public sealed class IPScanner
                 }
                 catch (PingException)
                 {
-                    
                 }
 
                 // Don't scan again, if the user has canceled (when more than 1 attempt)

@@ -11,6 +11,7 @@ public class ConfirmDeleteViewModel : ViewModelBase
     public ICommand CancelCommand { get; }
 
     private readonly string _message;
+
     public string Message
     {
         get => _message;
@@ -23,8 +24,9 @@ public class ConfirmDeleteViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
-    public ConfirmDeleteViewModel(Action<ConfirmDeleteViewModel> deleteCommand, Action<ConfirmDeleteViewModel> cancelHandler, string message)
+
+    public ConfirmDeleteViewModel(Action<ConfirmDeleteViewModel> deleteCommand,
+        Action<ConfirmDeleteViewModel> cancelHandler, string message)
     {
         DeleteCommand = new RelayCommand(_ => deleteCommand(this));
         CancelCommand = new RelayCommand(_ => cancelHandler(this));

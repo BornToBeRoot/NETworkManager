@@ -70,7 +70,7 @@ public partial class ConnectionsView
         // Sort the view
         view.CustomSort = new DataGridComparer(direction, selectedComparer);
     }
-    
+
     public class DataGridComparer(ListSortDirection direction, int comparer = -1) : IComparer
     {
         public int Compare(object x, object y)

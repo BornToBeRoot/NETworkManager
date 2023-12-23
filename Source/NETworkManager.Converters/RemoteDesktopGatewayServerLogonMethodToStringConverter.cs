@@ -21,7 +21,10 @@ public sealed class RemoteDesktopGatewayServerLogonMethodToStringConverter : IVa
     /// <returns>Translated <see cref="GatewayUserSelectedCredsSource"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value is not GatewayUserSelectedCredsSource gatewayUserSelectedCredsSource ? "-/-" : ResourceTranslator.Translate(ResourceIdentifier.RemoteDesktopGatewayServerLogonMethod, gatewayUserSelectedCredsSource);
+        return value is not GatewayUserSelectedCredsSource gatewayUserSelectedCredsSource
+            ? "-/-"
+            : ResourceTranslator.Translate(ResourceIdentifier.RemoteDesktopGatewayServerLogonMethod,
+                gatewayUserSelectedCredsSource);
     }
 
     /// <summary>

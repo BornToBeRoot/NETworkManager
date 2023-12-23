@@ -5,6 +5,7 @@ using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
 using System.Security;
 using System.Xml.Serialization;
+
 // ReSharper disable InconsistentNaming
 // ReSharper disable PropertyCanBeMadeInitOnly.Global
 // ReSharper disable UnusedAutoPropertyAccessor.Global
@@ -254,7 +255,7 @@ public class ProfileInfo
     public bool IPGeolocation_Enabled { get; set; }
     public bool IPGeolocation_InheritHost { get; set; } = true;
     public string IPGeolocation_Host { get; set; }
-    
+
     /// <summary>
     /// Initializes a new instance of the<see cref="ProfileInfo"/> class.
     /// </summary>
@@ -469,7 +470,7 @@ public class ProfileInfo
         Whois_Enabled = profile.Whois_Enabled;
         Whois_InheritHost = profile.Whois_InheritHost;
         Whois_Domain = profile.Whois_Domain;
-        
+
         // IP Geolocation
         IPGeolocation_Enabled = profile.IPGeolocation_Enabled;
         IPGeolocation_InheritHost = profile.IPGeolocation_InheritHost;

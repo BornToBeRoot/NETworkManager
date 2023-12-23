@@ -7,7 +7,6 @@ public class RemoteDesktopKeystrokeInfo
 
     public RemoteDesktopKeystrokeInfo()
     {
-
     }
 
     public RemoteDesktopKeystrokeInfo(bool[] arrayKeyUp, int[] keyData)

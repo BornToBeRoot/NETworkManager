@@ -31,7 +31,8 @@ public partial class ProfileDialog
         _oldName = TextBoxName.Text;
     }
 
-    private void ScrollViewer_ManipulationBoundaryFeedback(object sender, System.Windows.Input.ManipulationBoundaryFeedbackEventArgs e)
+    private void ScrollViewer_ManipulationBoundaryFeedback(object sender,
+        System.Windows.Input.ManipulationBoundaryFeedbackEventArgs e)
     {
         e.Handled = true;
     }

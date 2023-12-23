@@ -44,7 +44,8 @@ public static class IPv4Address
     /// <returns>Converted IPv4-Address as binary string ("11000000.10101000.00000001.00000001").</returns>
     public static string ToBinaryString(string humanString)
     {
-        return string.Join(".", humanString.Split('.').Select(x => Convert.ToString(int.Parse(x), 2).PadLeft(8, '0')).ToArray());
+        return string.Join(".",
+            humanString.Split('.').Select(x => Convert.ToString(int.Parse(x), 2).PadLeft(8, '0')).ToArray());
     }
 
     /// <summary>
@@ -52,7 +53,6 @@ public static class IPv4Address
     /// </summary>
     /// <param name="ipAddress"><see cref="IPAddress"/>.</param>
     /// <returns>IP address as <see cref="int"/></returns>
-
     public static int ToInt32(IPAddress ipAddress)
     {
         var bytes = ipAddress.GetAddressBytes();
@@ -77,7 +77,7 @@ public static class IPv4Address
 
         return new IPAddress(bytes);
     }
-            
+
     /// <summary>
     /// Method to check if an IPv4 address is a multicast address.
     /// </summary>

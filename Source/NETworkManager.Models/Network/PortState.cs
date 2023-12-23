@@ -9,7 +9,7 @@ public enum PortState
     /// Port is not defined.
     /// </summary>
     None,
-    
+
     /// <summary>
     /// Port is open.
     /// </summary>

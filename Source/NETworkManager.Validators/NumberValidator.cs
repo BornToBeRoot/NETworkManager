@@ -10,6 +10,8 @@ public class NumberValidator : ValidationRule
 {
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
-        return Regex.IsMatch(((string)value).Trim(), RegexHelper.NumberRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Strings.OnlyNumbersCanBeEntered);
+        return Regex.IsMatch(((string)value).Trim(), RegexHelper.NumberRegex)
+            ? ValidationResult.ValidResult
+            : new ValidationResult(false, Strings.OnlyNumbersCanBeEntered);
     }
 }

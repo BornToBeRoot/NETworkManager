@@ -38,7 +38,8 @@ public class PortScannerOptions
     /// <param name="timeout">Timeout in ms after which the port is considered closed.</param>
     /// <param name="resolveHostname">Resolve the hostname for an IP address.</param>
     /// <param name="showAllResults">Include closed ports in the result.</param>
-    public PortScannerOptions(int maxHostThreads, int maxPortThreads, int timeout, bool resolveHostname, bool showAllResults)
+    public PortScannerOptions(int maxHostThreads, int maxPortThreads, int timeout, bool resolveHostname,
+        bool showAllResults)
     {
         MaxHostThreads = maxHostThreads;
         MaxPortThreads = maxPortThreads;

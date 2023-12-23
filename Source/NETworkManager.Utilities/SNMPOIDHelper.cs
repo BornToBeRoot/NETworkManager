@@ -14,11 +14,11 @@ public static class SNMPOIDHelper
     {
         var xArray = Array.ConvertAll(x.Split('.'), int.Parse);
         var yArray = Array.ConvertAll(y.Split('.'), int.Parse);
-        
+
         // Compare each element of the OIDs and return the first non-equal element.
         for (var i = 0; i < Math.Min(xArray.Length, yArray.Length); i++)
         {
-            if(xArray[i] != yArray[i])
+            if (xArray[i] != yArray[i])
                 return xArray[i] - yArray[i];
         }
 

@@ -12,7 +12,8 @@ public static class ResourceTranslator
     /// <returns>Localized value of the resource. Returns the value if no translation is found.</returns>
     public static string Translate(ResourceIdentifier identifier, object value)
     {
-        return Resources.Strings.ResourceManager.GetString($"{identifier}_{value}", LocalizationManager.GetInstance().Culture) ?? value.ToString();
+        return Resources.Strings.ResourceManager.GetString($"{identifier}_{value}",
+            LocalizationManager.GetInstance().Culture) ?? value.ToString();
     }
 
     /// <summary>
@@ -23,7 +24,7 @@ public static class ResourceTranslator
     /// <returns>Localized value of the resource. Returns the value if no translation is found.</returns>
     public static string Translate(IEnumerable<ResourceIdentifier> identifiers, object value)
     {
-        foreach(var identifier in identifiers)
+        foreach (var identifier in identifiers)
         {
             var foundResource = Resources.Strings.ResourceManager.GetString($"{identifier}_{value}",
                 LocalizationManager.GetInstance().Culture);
@@ -31,7 +32,7 @@ public static class ResourceTranslator
             if (foundResource != null)
                 return foundResource;
         }
-        
+
         return value.ToString();
     }
 }

@@ -518,9 +518,9 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         using var key =
             Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall");
 
-        if (key == null) 
+        if (key == null)
             return;
-        
+
         foreach (var subKeyName in key.GetSubKeyNames())
         {
             using var subKey = key.OpenSubKey(subKeyName);
@@ -605,7 +605,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         Log.Info($"Sync group \"{group}\"...");
 
         IsSyncing = true;
-        
+
         // Extract "profile\region" from "~ [profile\region]"
         Regex regex = new(@"\[(.*?)\]");
         var result = regex.Match(group);

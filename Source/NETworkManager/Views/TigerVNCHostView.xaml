@@ -237,7 +237,7 @@
                                 <ColumnDefinition Width="10" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <ToggleButton Grid.Column="0" Grid.Row="0" 
+                            <ToggleButton Grid.Column="0" Grid.Row="0"
                                           IsChecked="{Binding ExpandProfileView}"
                                           Focusable="False">
                                 <ToggleButton.Style>
@@ -278,7 +278,7 @@
                                     <KeyBinding Command="{Binding ConnectProfileCommand}" Key="Enter" />
                                 </TextBox.InputBindings>
                             </TextBox>
-                            <Button Grid.Column="4" Grid.Row="0" 
+                            <Button Grid.Column="4" Grid.Row="0"
                                     Focusable="False"
                                     Style="{StaticResource CleanButton}"
                                     Command="{Binding AddProfileCommand}"

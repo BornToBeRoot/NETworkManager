@@ -25,7 +25,7 @@ public sealed class ApplicationNameToTranslatedStringConverter : IValueConverter
             ? "-/-"
             : ResourceTranslator.Translate(ResourceIdentifier.ApplicationName, name);
     }
-    
+
     /// <summary>
     /// !!! Method not implemented !!!
     /// </summary>

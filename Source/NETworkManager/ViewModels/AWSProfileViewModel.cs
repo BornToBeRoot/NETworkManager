@@ -14,6 +14,7 @@ public class AWSProfileViewModel : ViewModelBase
     public ICommand CancelCommand { get; }
 
     private bool _isEnabled;
+
     public bool IsEnabled
     {
         get => _isEnabled;
@@ -32,6 +33,7 @@ public class AWSProfileViewModel : ViewModelBase
     }
 
     private string _profile;
+
     public string Profile
     {
         get => _profile;
@@ -50,6 +52,7 @@ public class AWSProfileViewModel : ViewModelBase
     }
 
     private string _region;
+
     public string Region
     {
         get => _region;
@@ -70,6 +73,7 @@ public class AWSProfileViewModel : ViewModelBase
     private readonly AWSProfileInfo _info;
 
     private bool _infoChanged;
+
     public bool InfoChanged
     {
         get => _infoChanged;
@@ -84,6 +88,7 @@ public class AWSProfileViewModel : ViewModelBase
     }
 
     private bool _isEdited;
+
     public bool IsEdited
     {
         get => _isEdited;
@@ -97,7 +102,8 @@ public class AWSProfileViewModel : ViewModelBase
         }
     }
 
-    public AWSProfileViewModel(Action<AWSProfileViewModel> saveCommand, Action<AWSProfileViewModel> cancelHandler, bool isEdited = false, AWSProfileInfo info = null)
+    public AWSProfileViewModel(Action<AWSProfileViewModel> saveCommand, Action<AWSProfileViewModel> cancelHandler,
+        bool isEdited = false, AWSProfileInfo info = null)
     {
         _isLoading = true;
 
@@ -107,7 +113,7 @@ public class AWSProfileViewModel : ViewModelBase
         IsEdited = isEdited;
 
         _info = info ?? new AWSProfileInfo();
-        
+
         IsEnabled = _info.IsEnabled;
         Profile = _info.Profile;
         Region = _info.Region;

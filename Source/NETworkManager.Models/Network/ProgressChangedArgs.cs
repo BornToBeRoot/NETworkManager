@@ -6,11 +6,10 @@ public class ProgressChangedArgs : System.EventArgs
 
     public ProgressChangedArgs()
     {
-
     }
 
     public ProgressChangedArgs(int value)
-    {            
+    {
         Value = value;
-    }       
+    }
 }

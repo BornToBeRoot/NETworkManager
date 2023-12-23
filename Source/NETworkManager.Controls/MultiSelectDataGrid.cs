@@ -22,5 +22,7 @@ public class MultiSelectDataGrid : DataGrid
         set => SetValue(SelectedItemsListProperty, value);
     }
 
-    public static readonly DependencyProperty SelectedItemsListProperty = DependencyProperty.Register("SelectedItemsList", typeof(IList), typeof(MultiSelectDataGrid), new PropertyMetadata(null));
+    public static readonly DependencyProperty SelectedItemsListProperty =
+        DependencyProperty.Register("SelectedItemsList", typeof(IList), typeof(MultiSelectDataGrid),
+            new PropertyMetadata(null));
 }

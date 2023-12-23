@@ -9,7 +9,7 @@ public enum IPConfigReleaseRenewMode
     /// Release and renew IPv4.
     /// </summary>
     ReleaseRenew,
-    
+
     /// <summary>
     /// Release and renew IPv6.
     /// </summary>
@@ -33,5 +33,5 @@ public enum IPConfigReleaseRenewMode
     /// <summary>
     /// Renew IPv6.
     /// </summary>
-    Renew6        
+    Renew6
 }

@@ -16,7 +16,8 @@ public class MultipleIPAddressesValidator : ValidationRule
         {
             var ipAddress = ((string)value).Split(';')[index];
 
-            if (!Regex.IsMatch(ipAddress.Trim(), RegexHelper.IPv4AddressRegex) && !Regex.IsMatch(ipAddress.Trim(), RegexHelper.IPv6AddressRegex))
+            if (!Regex.IsMatch(ipAddress.Trim(), RegexHelper.IPv4AddressRegex) &&
+                !Regex.IsMatch(ipAddress.Trim(), RegexHelper.IPv6AddressRegex))
                 return new ValidationResult(false, Localization.Resources.Strings.EnterOneOrMoreValidIPAddresses);
         }
 

@@ -19,6 +19,8 @@ public class FilePathValidator : ValidationRule
     /// <returns>True if the file path is valid.</returns>
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
-        return new Regex(RegexHelper.FullNameRegex, RegexOptions.IgnoreCase).IsMatch((string)value) ? ValidationResult.ValidResult : new ValidationResult(false, Strings.EnterValidFilePath);
+        return new Regex(RegexHelper.FullNameRegex, RegexOptions.IgnoreCase).IsMatch((string)value)
+            ? ValidationResult.ValidResult
+            : new ValidationResult(false, Strings.EnterValidFilePath);
     }
 }

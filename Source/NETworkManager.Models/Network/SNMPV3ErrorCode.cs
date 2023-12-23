@@ -9,12 +9,12 @@ public enum SNMPV3ErrorCode
     /// No error.
     /// </summary>
     None,
-    
+
     /// <summary>
     /// Unknown user name.
     /// </summary>
     UnknownUserName,
-    
+
     /// <summary>
     ///  Authentication failed.
     /// </summary>

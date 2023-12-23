@@ -80,7 +80,7 @@ public static class ProfileDialogManager
         };
 
         viewModel.OnProfileManagerDialogOpen();
-        
+
         return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
 
@@ -111,7 +111,7 @@ public static class ProfileDialogManager
         };
 
         viewModel.OnProfileManagerDialogOpen();
-        
+
         return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
 
@@ -146,7 +146,7 @@ public static class ProfileDialogManager
         };
 
         viewModel.OnProfileManagerDialogOpen();
-        
+
         return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
 
@@ -180,7 +180,7 @@ public static class ProfileDialogManager
         };
 
         viewModel.OnProfileManagerDialogOpen();
-        
+
         return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
 
@@ -211,7 +211,7 @@ public static class ProfileDialogManager
         };
 
         viewModel.OnProfileManagerDialogOpen();
-        
+
         return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
 
@@ -241,7 +241,7 @@ public static class ProfileDialogManager
         };
 
         viewModel.OnProfileManagerDialogOpen();
-        
+
         return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
 
@@ -495,7 +495,7 @@ public static class ProfileDialogManager
             Whois_Enabled = instance.Whois_Enabled,
             Whois_InheritHost = instance.Whois_InheritHost,
             Whois_Domain = instance.Whois_InheritHost ? instance.Host?.Trim() : instance.Whois_Domain?.Trim(),
-            
+
             // IP Geolocation
             IPGeolocation_Enabled = instance.IPGeolocation_Enabled,
             IPGeolocation_InheritHost = instance.IPGeolocation_InheritHost,

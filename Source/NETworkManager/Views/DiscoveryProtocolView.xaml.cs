@@ -14,7 +14,7 @@ public partial class DiscoveryProtocolView
         InitializeComponent();
         DataContext = _viewModel;
     }
-   
+
     public void OnViewHide()
     {
         _viewModel.OnViewHide();

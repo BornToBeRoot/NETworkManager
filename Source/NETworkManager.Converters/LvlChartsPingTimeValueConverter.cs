@@ -7,7 +7,6 @@ namespace NETworkManager.Converters;
 
 public sealed class LvlChartsPingTimeValueConverter : IValueConverter
 {
-
     /// <summary>
     /// 
     /// </summary>

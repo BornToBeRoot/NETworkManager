@@ -12,10 +12,11 @@ public class EmptyOrAWSRegionExistsValidator : ValidationRule
 
         if (string.IsNullOrEmpty(region))
             return ValidationResult.ValidResult;
-                    
+
         if (AWSRegion.GetInstance().RegionExists(region))
             return ValidationResult.ValidResult;
 
-        return new ValidationResult(false, string.Format(Localization.Resources.Strings.AnAWSRegionNamedXDoesNotExist, region));
+        return new ValidationResult(false,
+            string.Format(Localization.Resources.Strings.AnAWSRegionNamedXDoesNotExist, region));
     }
 }

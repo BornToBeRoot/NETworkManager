@@ -11,7 +11,7 @@ public class IPv4SubnetValidator : ValidationRule
     {
         var subnet = (value as string)?.Trim();
 
-        if(string.IsNullOrEmpty(subnet))
+        if (string.IsNullOrEmpty(subnet))
             return new ValidationResult(false, Localization.Resources.Strings.EnterValidSubnet);
 
         if (Regex.IsMatch(subnet, RegexHelper.IPv4AddressCidrRegex))

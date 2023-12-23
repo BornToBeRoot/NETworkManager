@@ -16,6 +16,7 @@ namespace NETworkManager.ViewModels;
 public class DNSLookupSettingsViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly bool _isLoading;
     private readonly ServerConnectionInfo _profileDialogDefaultValues = new("10.0.0.1", 53, TransportProtocol.Udp);
 
@@ -24,6 +25,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     public ICollectionView DNSServers { get; }
 
     private DNSServerConnectionInfoProfile _selectedDNSServer = new();
+
     public DNSServerConnectionInfoProfile SelectedDNSServer
     {
         get => _selectedDNSServer;
@@ -37,9 +39,11 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         }
     }
 
-    private List<string> ServerInfoProfileNames => SettingsManager.Current.DNSLookup_DNSServers.Where(x => !x.UseWindowsDNSServer).Select(x => x.Name).ToList();
+    private List<string> ServerInfoProfileNames => SettingsManager.Current.DNSLookup_DNSServers
+        .Where(x => !x.UseWindowsDNSServer).Select(x => x.Name).ToList();
 
     private bool _addDNSSuffix;
+
     public bool AddDNSSuffix
     {
         get => _addDNSSuffix;
@@ -57,6 +61,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     }
 
     private bool _useCustomDNSSuffix;
+
     public bool UseCustomDNSSuffix
     {
         get => _useCustomDNSSuffix;
@@ -74,6 +79,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     }
 
     private string _customDNSSuffix;
+
     public string CustomDNSSuffix
     {
         get => _customDNSSuffix;
@@ -91,6 +97,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     }
 
     private bool _recursion;
+
     public bool Recursion
     {
         get => _recursion;
@@ -108,6 +115,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     }
 
     private bool _useCache;
+
     public bool UseCache
     {
         get => _useCache;
@@ -127,6 +135,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     public List<QueryClass> QueryClasses { get; private set; }
 
     private QueryClass _queryClass;
+
     public QueryClass QueryClass
     {
         get => _queryClass;
@@ -144,6 +153,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     }
 
     private bool _showOnlyMostCommonQueryTypes;
+
     public bool ShowOnlyMostCommonQueryTypes
     {
         get => _showOnlyMostCommonQueryTypes;
@@ -161,6 +171,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     }
 
     private bool _useTCPOnly;
+
     public bool UseTCPOnly
     {
         get => _useTCPOnly;
@@ -178,6 +189,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     }
 
     private int _retries;
+
     public int Retries
     {
         get => _retries;
@@ -195,6 +207,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     }
 
     private int _timeout;
+
     public int Timeout
     {
         get => _timeout;
@@ -210,9 +223,11 @@ public class DNSLookupSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, load settings
+
     public DNSLookupSettingsViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
@@ -220,7 +235,8 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         _dialogCoordinator = instance;
 
         DNSServers = CollectionViewSource.GetDefaultView(SettingsManager.Current.DNSLookup_DNSServers);
-        DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerConnectionInfoProfile.Name), ListSortDirection.Ascending));
+        DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerConnectionInfoProfile.Name),
+            ListSortDirection.Ascending));
         DNSServers.Filter = o =>
         {
             if (o is not DNSServerConnectionInfoProfile info)
@@ -248,9 +264,11 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         Retries = SettingsManager.Current.DNSLookup_Retries;
         Timeout = SettingsManager.Current.DNSLookup_Timeout;
     }
+
     #endregion
 
     #region ICommand & Actions
+
     public ICommand AddDNSServerCommand => new RelayCommand(_ => AddDNSServerAction());
 
     private void AddDNSServerAction()
@@ -271,6 +289,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     {
         DeleteDNSServer().ConfigureAwait(false);
     }
+
     #endregion
 
     #region Methods
@@ -283,14 +302,14 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         };
 
         var viewModel = new ServerConnectionInfoProfileViewModel(instance =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            SettingsManager.Current.DNSLookup_DNSServers.Add(new DNSServerConnectionInfoProfile(instance.Name, instance.Servers.ToList()));
-        }, _ =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, (ServerInfoProfileNames, false, true), _profileDialogDefaultValues);
+                SettingsManager.Current.DNSLookup_DNSServers.Add(
+                    new DNSServerConnectionInfoProfile(instance.Name, instance.Servers.ToList()));
+            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
+            (ServerInfoProfileNames, false, true),
+            _profileDialogDefaultValues);
 
         customDialog.Content = new ServerConnectionInfoProfileDialog()
         {
@@ -308,15 +327,15 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         };
 
         var viewModel = new ServerConnectionInfoProfileViewModel(instance =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            SettingsManager.Current.DNSLookup_DNSServers.Remove(SelectedDNSServer);
-            SettingsManager.Current.DNSLookup_DNSServers.Add(new DNSServerConnectionInfoProfile(instance.Name, instance.Servers.ToList()));
-        }, _ =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, (ServerInfoProfileNames, true, true), _profileDialogDefaultValues, SelectedDNSServer);
+                SettingsManager.Current.DNSLookup_DNSServers.Remove(SelectedDNSServer);
+                SettingsManager.Current.DNSLookup_DNSServers.Add(
+                    new DNSServerConnectionInfoProfile(instance.Name, instance.Servers.ToList()));
+            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
+            (ServerInfoProfileNames, true, true),
+            _profileDialogDefaultValues, SelectedDNSServer);
 
         customDialog.Content = new ServerConnectionInfoProfileDialog()
         {
@@ -334,14 +353,12 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         };
 
         var viewModel = new ConfirmDeleteViewModel(_ =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            SettingsManager.Current.DNSLookup_DNSServers.Remove(SelectedDNSServer);
-        }, _ =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, Localization.Resources.Strings.DeleteDNSServerMessage);
+                SettingsManager.Current.DNSLookup_DNSServers.Remove(SelectedDNSServer);
+            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
+            Localization.Resources.Strings.DeleteDNSServerMessage);
 
         customDialog.Content = new ConfirmDeleteDialog
         {
@@ -350,5 +367,6 @@ public class DNSLookupSettingsViewModel : ViewModelBase
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
+
     #endregion
 }

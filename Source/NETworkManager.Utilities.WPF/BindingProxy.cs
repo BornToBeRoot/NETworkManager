@@ -15,5 +15,6 @@ public class BindingProxy : Freezable
         set => SetValue(DataProperty, value);
     }
 
-    public static readonly DependencyProperty DataProperty = DependencyProperty.Register("Data", typeof(object), typeof(BindingProxy));
+    public static readonly DependencyProperty DataProperty =
+        DependencyProperty.Register("Data", typeof(object), typeof(BindingProxy));
 }

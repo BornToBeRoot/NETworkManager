@@ -1,6 +1,5 @@
 ﻿namespace NETworkManager.Models.IPApi;
 
-
 /// <summary>
 /// Class contains the result of the IP geolocation information retrieval.
 /// </summary>
@@ -15,12 +14,12 @@ public class IPGeolocationResult
     /// Indicates if the rate limit of the API is reached.
     /// </summary>
     public bool RateLimitIsReached { get; set; }
-    
+
     /// <summary>
     /// Remaining time in seconds until the rate limit window resets.
     /// </summary>
     public int RateLimitRemainingTime { get; set; }
-    
+
     /// <summary>
     /// Indicates if the IP geolocation information retrieval has failed.
     /// </summary>
@@ -41,9 +40,8 @@ public class IPGeolocationResult
     /// </summary>
     public IPGeolocationResult()
     {
-        
     }
-    
+
     /// <summary>
     /// Creates a new instance of <see cref="IPGeolocationResult"/> with the IP geolocation information.
     /// </summary>

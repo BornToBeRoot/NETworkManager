@@ -37,6 +37,5 @@ public class SNTPDateTime
     /// </summary>
     public SNTPDateTime()
     {
-
     }
 }

@@ -42,5 +42,5 @@ public static class AutoRefreshTime
             default:
                 throw new Exception("Wrong time unit.");
         }
-    }              
+    }
 }

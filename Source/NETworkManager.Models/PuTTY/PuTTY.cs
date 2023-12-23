@@ -67,10 +67,11 @@ public partial class PuTTY
     private static List<Tuple<string, string>> GetProfileRegkeysSZDark()
     {
         return DefaultProfileRegkeysSZBase.Concat(
-            new[] {
+            new[]
+            {
                 // new Tuple<string, string>("Colour0", "255,255,255"),
-                new Tuple<string, string>("Colour0", "187,187,187"),    // Foreground
-                new Tuple<string, string>("Colour2", "37,37,37")        // Background
+                new Tuple<string, string>("Colour0", "187,187,187"), // Foreground
+                new Tuple<string, string>("Colour2", "37,37,37") // Background
             }).ToList();
     }
 
@@ -81,10 +82,11 @@ public partial class PuTTY
     private static List<Tuple<string, string>> GetProfileRegkeysSZWhite()
     {
         return DefaultProfileRegkeysSZBase.Concat(
-            new[] {
+            new[]
+            {
                 // new Tuple<string, string>("Colour0", "68,68,68"),
-                new Tuple<string, string>("Colour0", "0,0,0"),          // Foreground
-                new Tuple<string, string>("Colour2", "255,255,255")     // Background
+                new Tuple<string, string>("Colour0", "0,0,0"), // Foreground
+                new Tuple<string, string>("Colour2", "255,255,255") // Background
             }).ToList();
     }
 
@@ -158,7 +160,8 @@ public partial class PuTTY
         }
 
         // Username
-        if (new []{ ConnectionMode.SSH, ConnectionMode.Telnet, ConnectionMode.Rlogin}.Contains(sessionInfo.Mode) && !string.IsNullOrEmpty(sessionInfo.Username))
+        if (new[] { ConnectionMode.SSH, ConnectionMode.Telnet, ConnectionMode.Rlogin }.Contains(sessionInfo.Mode) &&
+            !string.IsNullOrEmpty(sessionInfo.Username))
             command += $" -l {sessionInfo.Username}";
 
         // SSH specific settings
@@ -170,8 +173,9 @@ public partial class PuTTY
 
             // Hostkey(s)
             if (sessionInfo.Mode == ConnectionMode.SSH && !string.IsNullOrEmpty(sessionInfo.Hostkey))
-            {                
-                var hostkeys = StringHelper.RemoveWhitespace(sessionInfo.Hostkey).Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            {
+                var hostkeys = StringHelper.RemoveWhitespace(sessionInfo.Hostkey)
+                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
                 foreach (var hostkey in hostkeys)
                     command += $" -hostkey \"{hostkey}\"";
@@ -194,7 +198,8 @@ public partial class PuTTY
                     break;
             }
 
-            command += $" \"{Environment.ExpandEnvironmentVariables(Path.Combine(sessionInfo.LogPath, sessionInfo.LogFileName))}\"";
+            command +=
+                $" \"{Environment.ExpandEnvironmentVariables(Path.Combine(sessionInfo.LogPath, sessionInfo.LogFileName))}\"";
         }
 
         // Additional command line

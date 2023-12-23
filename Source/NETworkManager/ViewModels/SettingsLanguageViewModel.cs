@@ -12,11 +12,13 @@ namespace NETworkManager.ViewModels;
 public class SettingsLanguageViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly bool _isLoading;
 
     public ICollectionView Languages { get; }
 
     private LocalizationInfo _selectedLanguage;
+
     public LocalizationInfo SelectedLanguage
     {
         get => _selectedLanguage;
@@ -25,7 +27,8 @@ public class SettingsLanguageViewModel : ViewModelBase
             if (value == _selectedLanguage)
                 return;
 
-            if (!_isLoading && value != null) // Don't change if the value is null (can happen when a user search for a language....)
+            if (!_isLoading &&
+                value != null) // Don't change if the value is null (can happen when a user search for a language....)
             {
                 LocalizationManager.GetInstance().Change(value);
 
@@ -38,6 +41,7 @@ public class SettingsLanguageViewModel : ViewModelBase
     }
 
     private string _search;
+
     public string Search
     {
         get => _search;
@@ -53,15 +57,18 @@ public class SettingsLanguageViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Construtor, LoadSettings
+
     public SettingsLanguageViewModel()
     {
         _isLoading = true;
 
         Languages = CollectionViewSource.GetDefaultView(LocalizationManager.List);
-        Languages.SortDescriptions.Add(new SortDescription(nameof(LocalizationInfo.IsOfficial), ListSortDirection.Descending));            
+        Languages.SortDescriptions.Add(new SortDescription(nameof(LocalizationInfo.IsOfficial),
+            ListSortDirection.Descending));
         Languages.SortDescriptions.Add(new SortDescription(nameof(LocalizationInfo.Name), ListSortDirection.Ascending));
 
         Languages.Filter = o =>
@@ -75,21 +82,26 @@ public class SettingsLanguageViewModel : ViewModelBase
             var search = Search.Trim();
 
             // Search by: Name, NativeName
-            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.NativeName.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
+            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.NativeName.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
-        SelectedLanguage = Languages.Cast<LocalizationInfo>().FirstOrDefault(x => x.Code == LocalizationManager.GetInstance().Current.Code);
+        SelectedLanguage = Languages.Cast<LocalizationInfo>()
+            .FirstOrDefault(x => x.Code == LocalizationManager.GetInstance().Current.Code);
 
         _isLoading = false;
     }
+
     #endregion
 
     #region ICommands & Actions
+
     public ICommand ClearSearchCommand => new RelayCommand(_ => ClearSearchAction());
 
     private void ClearSearchAction()
     {
         Search = string.Empty;
-    }                
+    }
+
     #endregion
 }

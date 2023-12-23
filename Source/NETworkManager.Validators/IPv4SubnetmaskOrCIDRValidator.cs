@@ -11,7 +11,7 @@ public class IPv4SubnetmaskOrCIDRValidator : ValidationRule
     {
         var subnetmaskOrCidr = (value as string)?.Trim();
 
-        if(string.IsNullOrEmpty(subnetmaskOrCidr))
+        if (string.IsNullOrEmpty(subnetmaskOrCidr))
             return new ValidationResult(false, Localization.Resources.Strings.EnterValidSubnetmaskOrCIDR);
 
 

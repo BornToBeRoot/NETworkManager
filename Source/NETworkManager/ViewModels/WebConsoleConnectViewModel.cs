@@ -13,6 +13,7 @@ public class WebConsoleConnectViewModel : ViewModelBase
     public ICommand CancelCommand { get; }
 
     private string _url;
+
     public string Url
     {
         get => _url;
@@ -25,10 +26,11 @@ public class WebConsoleConnectViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+
     public ICollectionView UrlHistoryView { get; }
 
-    public WebConsoleConnectViewModel(Action<WebConsoleConnectViewModel> connectCommand, Action<WebConsoleConnectViewModel> cancelHandler)
+    public WebConsoleConnectViewModel(Action<WebConsoleConnectViewModel> connectCommand,
+        Action<WebConsoleConnectViewModel> cancelHandler)
     {
         ConnectCommand = new RelayCommand(_ => connectCommand(this));
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
@@ -40,6 +42,5 @@ public class WebConsoleConnectViewModel : ViewModelBase
 
     private void LoadSettings()
     {
-
     }
 }

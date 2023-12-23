@@ -14,6 +14,8 @@ public class IPv6AddressValidator : ValidationRule
         if (string.IsNullOrEmpty(ipAddress))
             return new ValidationResult(false, Localization.Resources.Strings.EnterValidIPv6Address);
 
-        return Regex.IsMatch(ipAddress, RegexHelper.IPv6AddressRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Localization.Resources.Strings.EnterValidIPv6Address);
+        return Regex.IsMatch(ipAddress, RegexHelper.IPv6AddressRegex)
+            ? ValidationResult.ValidResult
+            : new ValidationResult(false, Localization.Resources.Strings.EnterValidIPv6Address);
     }
 }

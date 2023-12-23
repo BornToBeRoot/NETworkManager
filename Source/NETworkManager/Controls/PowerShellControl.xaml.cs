@@ -16,8 +16,9 @@ namespace NETworkManager.Controls;
 public partial class PowerShellControl : UserControlBase
 {
     #region Variables
+
     private bool _initialized;
-    private bool _closing;      // When the tab is closed --> OnClose()
+    private bool _closing; // When the tab is closed --> OnClose()
 
     private readonly IDialogCoordinator _dialogCoordinator;
 
@@ -27,6 +28,7 @@ public partial class PowerShellControl : UserControlBase
     private IntPtr _appWin;
 
     private bool _isConnected;
+
     public bool IsConnected
     {
         get => _isConnected;
@@ -41,6 +43,7 @@ public partial class PowerShellControl : UserControlBase
     }
 
     private bool _isConnecting;
+
     public bool IsConnecting
     {
         get => _isConnecting;
@@ -53,9 +56,11 @@ public partial class PowerShellControl : UserControlBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, load
+
     public PowerShellControl(PowerShellSessionInfo sessionInfo)
     {
         InitializeComponent();
@@ -86,9 +91,11 @@ public partial class PowerShellControl : UserControlBase
     {
         CloseTab();
     }
+
     #endregion
 
     #region ICommands & Actions
+
     public ICommand ReconnectCommand
     {
         get { return new RelayCommand(p => ReconnectAction()); }
@@ -98,9 +105,11 @@ public partial class PowerShellControl : UserControlBase
     {
         Reconnect();
     }
+
     #endregion
 
-    #region Methods       
+    #region Methods
+
     private async Task Connect()
     {
         IsConnecting = true;
@@ -134,7 +143,7 @@ public partial class PowerShellControl : UserControlBase
 
                         if (_process.HasExited)
                             break;
-                        
+
 
                         _appWin = _process.MainWindowHandle;
 
@@ -156,7 +165,7 @@ public partial class PowerShellControl : UserControlBase
                     long style = (int)NativeMethods.GetWindowLong(_appWin, NativeMethods.GWL_STYLE);
                     style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP | NativeMethods.WS_THICKFRAME);
                     NativeMethods.SetWindowLongPtr(_appWin, NativeMethods.GWL_STYLE, new IntPtr(style));
-                    
+
                     IsConnected = true;
 
                     // Resize embedded application & refresh
@@ -204,7 +213,8 @@ public partial class PowerShellControl : UserControlBase
     public void ResizeEmbeddedWindow()
     {
         if (IsConnected)
-            NativeMethods.SetWindowPos(_process.MainWindowHandle, IntPtr.Zero, 0, 0, WindowHost.ClientSize.Width, WindowHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
+            NativeMethods.SetWindowPos(_process.MainWindowHandle, IntPtr.Zero, 0, 0, WindowHost.ClientSize.Width,
+                WindowHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
     }
 
     public void Disconnect()
@@ -227,13 +237,16 @@ public partial class PowerShellControl : UserControlBase
 
         Disconnect();
     }
+
     #endregion
 
     #region Events
+
     private void WindowGrid_SizeChanged(object sender, SizeChangedEventArgs e)
     {
         if (IsConnected)
             ResizeEmbeddedWindow();
     }
+
     #endregion
 }

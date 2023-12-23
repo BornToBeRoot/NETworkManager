@@ -2,8 +2,11 @@
 using System.Threading.Tasks;
 
 namespace NETworkManager.Models.Network;
+
 public static class BitCaluclator
-{        public static Task<BitCaluclatorInfo> CalculateAsync(double input, BitCaluclatorUnit unit, BitCaluclatorNotation notation)
+{
+    public static Task<BitCaluclatorInfo> CalculateAsync(double input, BitCaluclatorUnit unit,
+        BitCaluclatorNotation notation)
     {
         return Task.Run(() => Calculate(input, unit, notation));
     }

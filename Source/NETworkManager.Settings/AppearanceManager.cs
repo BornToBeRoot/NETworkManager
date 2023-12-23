@@ -49,7 +49,8 @@ public static class AppearanceManager
         Themes = ThemeManager.Current.Themes
             .GroupBy(x => x.BaseColorScheme)
             .Select(x => x.First())
-            .Select(x => new ThemeColorInfo { Name = x.BaseColorScheme, Color = x.Resources["MahApps.Brushes.ThemeBackground"] as Brush })
+            .Select(x => new ThemeColorInfo
+                { Name = x.BaseColorScheme, Color = x.Resources["MahApps.Brushes.ThemeBackground"] as Brush })
             .ToList();
 
         Accents = ThemeManager.Current.Themes
@@ -62,7 +63,8 @@ public static class AppearanceManager
 
         MetroDialog.CustomResourceDictionary = new ResourceDictionary
         {
-            Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute),
+            Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml",
+                UriKind.RelativeOrAbsolute),
         };
 
         MetroDialog.DialogButtonFontSize = 14;
@@ -76,13 +78,15 @@ public static class AppearanceManager
     {
         if (SettingsManager.Current.Appearance_UseCustomTheme && CustomThemes.Count > 0)
         {
-            ChangeTheme(CustomThemes.FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_CustomThemeName) ?? CustomThemes.First());
+            ChangeTheme(
+                CustomThemes.FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_CustomThemeName) ??
+                CustomThemes.First());
         }
         else
         {
             ChangeTheme(SettingsManager.Current.Appearance_Theme);
             ChangeAccent(SettingsManager.Current.Appearance_Accent);
-        }        
+        }
     }
 
     /// <summary>
@@ -92,7 +96,8 @@ public static class AppearanceManager
     {
         List<ThemeInfo> customThemes = new();
 
-        foreach (var file in Directory.GetFiles(Path.Combine(ConfigurationManager.Current.ExecutionPath, ThemeFolderName)))
+        foreach (var file in Directory.GetFiles(Path.Combine(ConfigurationManager.Current.ExecutionPath,
+                     ThemeFolderName)))
         {
             LibraryTheme libraryTheme = new(new Uri(file), MahAppsLibraryThemeProvider.DefaultInstance);
 

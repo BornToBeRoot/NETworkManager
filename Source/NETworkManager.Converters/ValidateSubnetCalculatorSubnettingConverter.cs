@@ -31,13 +31,17 @@ public sealed class ValidateSubnetCalculatorSubnettingConverter : IMultiValueCon
 
         var cidr = ipAddress.AddressFamily switch
         {
-            System.Net.Sockets.AddressFamily.InterNetwork when subnetmaskOrCidr.Length < 3 => int.Parse(subnetmaskOrCidr),
-            System.Net.Sockets.AddressFamily.InterNetwork => Subnetmask.ConvertSubnetmaskToCidr(IPAddress.Parse(subnetmaskOrCidr)),
+            System.Net.Sockets.AddressFamily.InterNetwork when subnetmaskOrCidr.Length < 3 => int.Parse(
+                subnetmaskOrCidr),
+            System.Net.Sockets.AddressFamily.InterNetwork => Subnetmask.ConvertSubnetmaskToCidr(
+                IPAddress.Parse(subnetmaskOrCidr)),
             _ => int.Parse(subnetmaskOrCidr),
         };
 
         // Support subnetmask like 255.255.255.0
-        int newCidr = Regex.IsMatch(newSubnetmaskOrCidr, RegexHelper.SubnetmaskRegex) ? System.Convert.ToByte(Subnetmask.ConvertSubnetmaskToCidr(IPAddress.Parse(newSubnetmaskOrCidr))) : System.Convert.ToByte(newSubnetmaskOrCidr.TrimStart('/'));
+        int newCidr = Regex.IsMatch(newSubnetmaskOrCidr, RegexHelper.SubnetmaskRegex)
+            ? System.Convert.ToByte(Subnetmask.ConvertSubnetmaskToCidr(IPAddress.Parse(newSubnetmaskOrCidr)))
+            : System.Convert.ToByte(newSubnetmaskOrCidr.TrimStart('/'));
 
         // Compare
         return newCidr > cidr;

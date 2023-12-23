@@ -16,10 +16,12 @@ namespace NETworkManager.ViewModels;
 
 public class NetworkConnectionWidgetViewModel : ViewModelBase
 {
-    #region  Variables 
+    #region Variables
+
     private bool _isChecking;
-   
+
     #region Computer
+
     private bool _isComputerIPv4Checking;
 
     public bool IsComputerIPv4Checking
@@ -36,6 +38,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     private string _computerIPv4;
+
     public string ComputerIPv4
     {
         get => _computerIPv4;
@@ -50,6 +53,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     private ConnectionState _computerIPv4State = ConnectionState.None;
+
     public ConnectionState ComputerIPv4State
     {
         get => _computerIPv4State;
@@ -64,6 +68,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     private bool _isComputerIPv6Checking;
+
     public bool IsComputerIPv6Checking
     {
         get => _isComputerIPv6Checking;
@@ -78,6 +83,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     private string _computerIPv6;
+
     public string ComputerIPv6
     {
         get => _computerIPv6;
@@ -92,6 +98,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     private ConnectionState _computerIPv6State = ConnectionState.None;
+
     public ConnectionState ComputerIPv6State
     {
         get => _computerIPv6State;
@@ -106,6 +113,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     private bool _isComputerDNSChecking;
+
     public bool IsComputerDNSChecking
     {
         get => _isComputerDNSChecking;
@@ -120,6 +128,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     private string _computerDNS;
+
     public string ComputerDNS
     {
         get => _computerDNS;
@@ -134,6 +143,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     private ConnectionState _computerDNSState = ConnectionState.None;
+
     public ConnectionState ComputerDNSState
     {
         get => _computerDNSState;
@@ -146,10 +156,13 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Router
+
     private bool _isRouterIPv4Checking;
+
     public bool IsRouterIPv4Checking
     {
         get => _isRouterIPv4Checking;
@@ -164,6 +177,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     private string _routerIPv4;
+
     public string RouterIPv4
     {
         get => _routerIPv4;
@@ -178,6 +192,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     private ConnectionState _routerIPv4State = ConnectionState.None;
+
     public ConnectionState RouterIPv4State
     {
         get => _routerIPv4State;
@@ -192,6 +207,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     private bool _isRouterIPv6Checking;
+
     public bool IsRouterIPv6Checking
     {
         get => _isRouterIPv6Checking;
@@ -206,6 +222,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     private string _routerIPv6;
+
     public string RouterIPv6
     {
         get => _routerIPv6;
@@ -220,6 +237,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     private ConnectionState _routerIPv6State = ConnectionState.None;
+
     public ConnectionState RouterIPv6State
     {
         get => _routerIPv6State;
@@ -234,6 +252,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     private bool _isRouterDNSChecking;
+
     public bool IsRouterDNSChecking
     {
         get => _isRouterDNSChecking;
@@ -248,6 +267,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     private string _routerDNS;
+
     public string RouterDNS
     {
         get => _routerDNS;
@@ -262,6 +282,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     private ConnectionState _routerDNSState = ConnectionState.None;
+
     public ConnectionState RouterDNSState
     {
         get => _routerDNSState;
@@ -274,10 +295,13 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Internet
+
     private bool _isInternetIPv4Checking;
+
     public bool IsInternetIPv4Checking
     {
         get => _isInternetIPv4Checking;
@@ -292,6 +316,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     private string _internetIPv4;
+
     public string InternetIPv4
     {
         get => _internetIPv4;
@@ -306,6 +331,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     private ConnectionState _internetIPv4State = ConnectionState.None;
+
     public ConnectionState InternetIPv4State
     {
         get => _internetIPv4State;
@@ -320,6 +346,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     private bool _isInternetIPv6Checking;
+
     public bool IsInternetIPv6Checking
     {
         get => _isInternetIPv6Checking;
@@ -334,6 +361,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     private string _internetIPv6;
+
     public string InternetIPv6
     {
         get => _internetIPv6;
@@ -348,6 +376,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     private ConnectionState _internetIPv6State = ConnectionState.None;
+
     public ConnectionState InternetIPv6State
     {
         get => _internetIPv6State;
@@ -362,6 +391,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     private bool _isInternetDNSChecking;
+
     public bool IsInternetDNSChecking
     {
         get => _isInternetDNSChecking;
@@ -376,6 +406,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     private string _internetDNS;
+
     public string InternetDNS
     {
         get => _internetDNS;
@@ -390,6 +421,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     private ConnectionState _internetDNSState = ConnectionState.None;
+
     public ConnectionState InternetDNSState
     {
         get => _internetDNSState;
@@ -402,9 +434,11 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     public bool CheckPublicIPAddressEnabled => SettingsManager.Current.Dashboard_CheckPublicIPAddress;
+
     #endregion
 
     #region Constructor, load settings
@@ -423,20 +457,23 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
 
     private void LoadSettings()
     {
-
     }
+
     #endregion
 
     #region ICommands & Actions
+
     public ICommand CheckConnectionViaHotkeyCommand => new RelayCommand(_ => CheckConnectionViaHotkeyAction());
 
     private void CheckConnectionViaHotkeyAction()
     {
         CheckConnection();
     }
+
     #endregion
 
     #region Methods
+
     public void CheckConnection()
     {
         CheckConnectionAsync().ConfigureAwait(false);
@@ -471,20 +508,19 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         try
         {
             await Task.Run(async () =>
-             {
-                 List<Task> tasks = new()
-                 {
-                     CheckConnectionComputerAsync(_ct),
-                     CheckConnectionRouterAsync(_ct),
-                     CheckConnectionInternetAsync(_ct)
-                 };
+            {
+                List<Task> tasks = new()
+                {
+                    CheckConnectionComputerAsync(_ct),
+                    CheckConnectionRouterAsync(_ct),
+                    CheckConnectionInternetAsync(_ct)
+                };
 
-                 await Task.WhenAll(tasks);
-             }, _tokenSource.Token);
+                await Task.WhenAll(tasks);
+            }, _tokenSource.Token);
         }
         catch (OperationCanceledException)
         {
-
         }
         finally
         {
@@ -509,7 +545,9 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             ComputerDNSState = ConnectionState.None;
 
             // Detect local IPv4 address
-            var detectedLocalIPv4Address = await Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv4Address));
+            var detectedLocalIPv4Address =
+                await Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(
+                    IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv4Address));
 
             if (detectedLocalIPv4Address != null)
             {
@@ -528,7 +566,9 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
                 ct.ThrowIfCancellationRequested();
 
             // Detect local IPv6 address
-            var detectedLocalIPv6Address = await Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv6Address));
+            var detectedLocalIPv6Address =
+                await Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(
+                    IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv6Address));
 
             if (detectedLocalIPv6Address != null)
             {
@@ -596,11 +636,15 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             RouterDNSState = ConnectionState.None;
 
             // Detect router IPv4 and if it is reachable
-            var detectedLocalIPv4Address = await Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv4Address));
+            var detectedLocalIPv4Address =
+                await Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(
+                    IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv4Address));
 
             if (detectedLocalIPv4Address != null)
             {
-                var detectedRouterIPv4 = await Models.Network.NetworkInterface.DetectGatewayBasedOnLocalIPAddressAsync(detectedLocalIPv4Address);
+                var detectedRouterIPv4 =
+                    await Models.Network.NetworkInterface.DetectGatewayBasedOnLocalIPAddressAsync(
+                        detectedLocalIPv4Address);
 
                 if (detectedRouterIPv4 != null)
                 {
@@ -625,11 +669,14 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
                 ct.ThrowIfCancellationRequested();
 
             // Detect router IPv6 and if it is reachable
-            var detectedComputerIPv6 = await Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv6Address));
+            var detectedComputerIPv6 =
+                await Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(
+                    IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv6Address));
 
             if (detectedComputerIPv6 != null)
             {
-                var detectedRouterIPv6 = await Models.Network.NetworkInterface.DetectGatewayBasedOnLocalIPAddressAsync(detectedComputerIPv6);
+                var detectedRouterIPv6 =
+                    await Models.Network.NetworkInterface.DetectGatewayBasedOnLocalIPAddressAsync(detectedComputerIPv6);
 
                 if (detectedRouterIPv6 != null)
                 {
@@ -690,126 +737,132 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     private Task CheckConnectionInternetAsync(CancellationToken ct)
     {
         return Task.Run(async () =>
+        {
+            // If public IP address check is disabled
+            if (!CheckPublicIPAddressEnabled)
+                return;
+
+            // Init variables
+            IsInternetIPv4Checking = true;
+            InternetIPv4 = "";
+            InternetIPv4State = ConnectionState.None;
+            IsInternetIPv6Checking = true;
+            InternetIPv6 = "";
+            InternetIPv6State = ConnectionState.None;
+            IsInternetDNSChecking = true;
+            InternetDNS = "";
+            InternetDNSState = ConnectionState.None;
+
+            // Detect public IPv4 and if it is reachable
+            var publicIPv4AddressAPI = SettingsManager.Current.Dashboard_UseCustomPublicIPv4AddressAPI
+                ? SettingsManager.Current.Dashboard_CustomPublicIPv4AddressAPI
+                : GlobalStaticConfiguration.Dashboard_PublicIPv4AddressAPI;
+
+            try
             {
-                // If public IP address check is disabled
-                if (!CheckPublicIPAddressEnabled)
-                    return;
+                HttpClient httpClient = new();
+                var httpResponse = await httpClient.GetAsync(publicIPv4AddressAPI, ct);
 
-                // Init variables
-                IsInternetIPv4Checking = true;
-                InternetIPv4 = "";
-                InternetIPv4State = ConnectionState.None;
-                IsInternetIPv6Checking = true;
-                InternetIPv6 = "";
-                InternetIPv6State = ConnectionState.None;
-                IsInternetDNSChecking = true;
-                InternetDNS = "";
-                InternetDNSState = ConnectionState.None;
+                var result = await httpResponse.Content.ReadAsStringAsync(ct);
 
-                // Detect public IPv4 and if it is reachable
-                var publicIPv4AddressAPI = SettingsManager.Current.Dashboard_UseCustomPublicIPv4AddressAPI ? SettingsManager.Current.Dashboard_CustomPublicIPv4AddressAPI : GlobalStaticConfiguration.Dashboard_PublicIPv4AddressAPI;
+                var match = Regex.Match(result, RegexHelper.IPv4AddressExtractRegex);
 
-                try
+                if (match.Success)
                 {
-                    HttpClient httpClient = new();
-                    var httpResponse = await httpClient.GetAsync(publicIPv4AddressAPI, ct);
-
-                    var result = await httpResponse.Content.ReadAsStringAsync(ct);
-
-                    var match = Regex.Match(result, RegexHelper.IPv4AddressExtractRegex);
-
-                    if (match.Success)
-                    {
-                        InternetIPv4 = match.Value;
-                        InternetIPv4State = ConnectionState.OK;
-                    }
-                    else
-                    {
-                        InternetIPv4 = "-/-";
-                        InternetIPv4State = ConnectionState.Critical;
-                    }
+                    InternetIPv4 = match.Value;
+                    InternetIPv4State = ConnectionState.OK;
                 }
-                catch
+                else
                 {
                     InternetIPv4 = "-/-";
                     InternetIPv4State = ConnectionState.Critical;
                 }
+            }
+            catch
+            {
+                InternetIPv4 = "-/-";
+                InternetIPv4State = ConnectionState.Critical;
+            }
 
-                IsInternetIPv4Checking = false;
+            IsInternetIPv4Checking = false;
 
-                if (ct.IsCancellationRequested)
-                    ct.ThrowIfCancellationRequested();
+            if (ct.IsCancellationRequested)
+                ct.ThrowIfCancellationRequested();
 
-                // Detect public IPv6 and if it is reachable
-                var publicIPv6AddressAPI = SettingsManager.Current.Dashboard_UseCustomPublicIPv6AddressAPI ? SettingsManager.Current.Dashboard_CustomPublicIPv6AddressAPI : GlobalStaticConfiguration.Dashboard_PublicIPv6AddressAPI;
+            // Detect public IPv6 and if it is reachable
+            var publicIPv6AddressAPI = SettingsManager.Current.Dashboard_UseCustomPublicIPv6AddressAPI
+                ? SettingsManager.Current.Dashboard_CustomPublicIPv6AddressAPI
+                : GlobalStaticConfiguration.Dashboard_PublicIPv6AddressAPI;
 
-                try
+            try
+            {
+                HttpClient httpClient = new();
+                var httpResponse = await httpClient.GetAsync(publicIPv6AddressAPI, ct);
+
+                var result = await httpResponse.Content.ReadAsStringAsync(ct);
+
+                var match = Regex.Match(result, RegexHelper.IPv6AddressRegex);
+
+                if (match.Success)
                 {
-                    HttpClient httpClient = new();
-                    var httpResponse = await httpClient.GetAsync(publicIPv6AddressAPI, ct);
-
-                    var result = await httpResponse.Content.ReadAsStringAsync(ct);
-
-                    var match = Regex.Match(result, RegexHelper.IPv6AddressRegex);
-
-                    if (match.Success)
-                    {
-                        InternetIPv6 = match.Value;
-                        InternetIPv6State = ConnectionState.OK;
-                    }
-                    else
-                    {
-                        InternetIPv6 = "-/-";
-                        InternetIPv6State = ConnectionState.Critical;
-                    }
+                    InternetIPv6 = match.Value;
+                    InternetIPv6State = ConnectionState.OK;
                 }
-                catch
+                else
                 {
                     InternetIPv6 = "-/-";
                     InternetIPv6State = ConnectionState.Critical;
                 }
+            }
+            catch
+            {
+                InternetIPv6 = "-/-";
+                InternetIPv6State = ConnectionState.Critical;
+            }
 
-                IsInternetIPv6Checking = false;
+            IsInternetIPv6Checking = false;
 
-                if (ct.IsCancellationRequested)
-                    ct.ThrowIfCancellationRequested();
+            if (ct.IsCancellationRequested)
+                ct.ThrowIfCancellationRequested();
 
-                // Try to resolve public DNS based on IPv4
-                if (InternetIPv4State == ConnectionState.OK)
+            // Try to resolve public DNS based on IPv4
+            if (InternetIPv4State == ConnectionState.OK)
+            {
+                var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(IPAddress.Parse(InternetIPv4));
+
+                if (!dnsResult.HasError)
                 {
-                    var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(IPAddress.Parse(InternetIPv4));
-
-                    if (!dnsResult.HasError)
-                    {
-                        InternetDNS = dnsResult.Value;
-                        InternetDNSState = ConnectionState.OK;
-                    }
+                    InternetDNS = dnsResult.Value;
+                    InternetDNSState = ConnectionState.OK;
                 }
+            }
 
-                // Try to resolve public DNS based on IPv6 if IPv4 failed
-                if (string.IsNullOrEmpty(InternetDNS) && InternetIPv6State == ConnectionState.OK)
+            // Try to resolve public DNS based on IPv6 if IPv4 failed
+            if (string.IsNullOrEmpty(InternetDNS) && InternetIPv6State == ConnectionState.OK)
+            {
+                var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(IPAddress.Parse(InternetIPv6));
+
+                if (!dnsResult.HasError)
                 {
-                    var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(IPAddress.Parse(InternetIPv6));
-
-                    if (!dnsResult.HasError)
-                    {
-                        InternetDNS = dnsResult.Value;
-                        InternetDNSState = ConnectionState.OK;
-                    }
+                    InternetDNS = dnsResult.Value;
+                    InternetDNSState = ConnectionState.OK;
                 }
+            }
 
-                if (string.IsNullOrEmpty(InternetDNS))
-                {
-                    InternetDNS = "-/-";
-                    InternetDNSState = ConnectionState.Critical;
-                }
+            if (string.IsNullOrEmpty(InternetDNS))
+            {
+                InternetDNS = "-/-";
+                InternetDNSState = ConnectionState.Critical;
+            }
 
-                IsInternetDNSChecking = false;
-            }, ct);
+            IsInternetDNSChecking = false;
+        }, ct);
     }
+
     #endregion
 
     #region Events
+
     private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
         switch (e.PropertyName)
@@ -824,5 +877,6 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
                 break;
         }
     }
+
     #endregion
 }

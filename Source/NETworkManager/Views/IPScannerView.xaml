@@ -1,30 +1,30 @@
 ﻿<UserControl x:Class="NETworkManager.Views.IPScannerView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"        
-        xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
-        xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
-        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
-        xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
-        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-        xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
-        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-        xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
-        xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
-        xmlns:models="clr-namespace:NETworkManager.Models;assembly=NETworkManager.Models"
-        xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-        dialogs:DialogParticipation.Register="{Binding}"
-        Loaded="UserControl_Loaded"
-        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:IPScannerViewModel}">
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
+             xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+             xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
+             xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
+             xmlns:models="clr-namespace:NETworkManager.Models;assembly=NETworkManager.Models"
+             xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             dialogs:DialogParticipation.Register="{Binding}"
+             Loaded="UserControl_Loaded"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:IPScannerViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
-        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter"/>
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:HostUpStyleConverter x:Key="HostUpStyleConverter" />
-        <converters:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />        
+        <converters:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:IntToStringConverter x:Key="IntToStringConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
@@ -41,7 +41,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Style="{StaticResource ResourceKey=HeaderTextBlock}" Text="{x:Static Member=localization:Strings.Scan}" />
+        <TextBlock Grid.Row="0" Style="{StaticResource ResourceKey=HeaderTextBlock}"
+                   Text="{x:Static Member=localization:Strings.Scan}" />
         <Grid Grid.Row="1" Margin="0,0,0,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -58,15 +59,15 @@
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" 
-                           Text="{x:Static Member=localization:Strings.Host}" 
-                           Style="{DynamicResource ResourceKey=DefaultTextBlock}" 
+                <TextBlock Grid.Column="0" Grid.Row="0"
+                           Text="{x:Static Member=localization:Strings.Host}"
+                           Style="{DynamicResource ResourceKey=DefaultTextBlock}"
                            VerticalAlignment="Center" />
-                <ComboBox Grid.Column="2" Grid.Row="0" 
-                          x:Name="ComboBoxHost" 
+                <ComboBox Grid.Column="2" Grid.Row="0"
+                          x:Name="ComboBoxHost"
                           ItemsSource="{Binding Path=HostHistoryView}"
-                          mah:TextBoxHelper.Watermark="{x:Static Member=localization:StaticStrings.ExampleHostRange}" 
-                          IsReadOnly="{Binding Path=IsRunning}" 
+                          mah:TextBoxHelper.Watermark="{x:Static Member=localization:StaticStrings.ExampleHostRange}"
+                          IsReadOnly="{Binding Path=IsRunning}"
                           Style="{StaticResource ResourceKey=HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -77,8 +78,8 @@
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
-                <Button Grid.Column="4" 
-                        Command="{Binding Path=DetectSubnetCommand}" 
+                <Button Grid.Column="4"
+                        Command="{Binding Path=DetectSubnetCommand}"
                         ToolTip="{x:Static Member=localization:Strings.DetectLocalIPAddressAndSubnetmask}">
                     <Button.Resources>
                         <Style TargetType="{x:Type TypeName=Button}" BasedOn="{StaticResource ResourceKey=ImageButton}">
@@ -100,13 +101,14 @@
                 </Button>
                 <Button Grid.Column="6" Grid.Row="0"
                         Command="{Binding ScanCommand}"
-                        IsDefault="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" 
+                        IsDefault="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}"
                         IsCancel="{Binding IsRunning}">
                     <Button.Resources>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Setter Property="IsEnabled" Value="True" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxHost}" Value="True" >
+                                <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxHost}"
+                                             Value="True">
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding IsCanceling}" Value="True">
@@ -123,12 +125,15 @@
                             </Grid.ColumnDefinitions>
                             <Rectangle Grid.Column="0" Grid.Row="0">
                                 <Rectangle.Resources>
-                                    <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{iconPacks:Material Kind=Play}"/>
-                                    <VisualBrush x:Key="VisualClose" Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
+                                    <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform"
+                                                 Visual="{iconPacks:Material Kind=Play}" />
+                                    <VisualBrush x:Key="VisualClose" Stretch="Uniform"
+                                                 Visual="{iconPacks:Material Kind=Close}" />
                                 </Rectangle.Resources>
                                 <Rectangle.Style>
-                                    <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ButtonWithImageRectangle}">
-                                        <Setter Property="OpacityMask" Value="{StaticResource VisualControlPlay}" />                                      
+                                    <Style TargetType="{x:Type Rectangle}"
+                                           BasedOn="{StaticResource ButtonWithImageRectangle}">
+                                        <Setter Property="OpacityMask" Value="{StaticResource VisualControlPlay}" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsRunning}" Value="True">
                                                 <Setter Property="OpacityMask" Value="{StaticResource VisualClose}" />
@@ -139,11 +144,12 @@
                             </Rectangle>
                             <TextBlock Grid.Column="1" Grid.Row="0">
                                 <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ButtonWithImageTextBlock}">
-                                        <Setter Property="Text" Value="{x:Static localization:Strings.Scan}"/>
+                                    <Style TargetType="{x:Type TextBlock}"
+                                           BasedOn="{StaticResource ButtonWithImageTextBlock}">
+                                        <Setter Property="Text" Value="{x:Static localization:Strings.Scan}" />
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsRunning}" Value="True" >
-                                                <Setter Property="Text" Value="{x:Static localization:Strings.Cancel}"/>
+                                            <DataTrigger Binding="{Binding IsRunning}" Value="True">
+                                                <Setter Property="Text" Value="{x:Static localization:Strings.Cancel}" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -163,9 +169,11 @@
                         </Style.Triggers>
                     </Style>
                 </StackPanel.Style>
-                <mahAppsControls:MetroProgressBar Maximum="{Binding HostsToScan}" Foreground="{DynamicResource MahApps.Brushes.Accent}"  Value="{Binding HostsScanned}">
+                <mahAppsControls:MetroProgressBar Maximum="{Binding HostsToScan}"
+                                                  Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                                                  Value="{Binding HostsScanned}">
                     <mahAppsControls:MetroProgressBar.Style>
-                        <Style TargetType="{x:Type mahAppsControls:MetroProgressBar}" >
+                        <Style TargetType="{x:Type mahAppsControls:MetroProgressBar}">
                             <Setter Property="IsIndeterminate" Value="False" />
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding PreparingScan}" Value="True">
@@ -181,7 +189,7 @@
                 <TextBlock HorizontalAlignment="Center">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
-                            <Setter Property="Visibility" Value="Visible"/>
+                            <Setter Property="Visibility" Value="Visible" />
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding PreparingScan}" Value="True">
                                     <Setter Property="Visibility" Value="Hidden" />
@@ -200,26 +208,26 @@
                     </TextBlock.Text>
                 </TextBlock>
             </StackPanel>
-            <TextBlock Grid.Column="0" Grid.Row="2" 
-                       Foreground="{DynamicResource MahApps.Brushes.Accent}" 
-                       Text="{Binding StatusMessage}" 
-                       Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" 
-                       Style="{DynamicResource StatusMessageTextBlock}" 
+            <TextBlock Grid.Column="0" Grid.Row="2"
+                       Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                       Text="{Binding StatusMessage}"
+                       Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
+                       Style="{DynamicResource StatusMessageTextBlock}"
                        Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Column="0" Grid.Row="2"
                    Style="{StaticResource HeaderTextBlock}"
                    Text="{x:Static localization:Strings.Result}" />
         <controls:MultiSelectDataGrid Grid.Column="0" Grid.Row="3"
-                                      ItemsSource="{Binding Path=ResultsView}" 
-                                      SelectedItem="{Binding Path=SelectedResult}" 
+                                      ItemsSource="{Binding Path=ResultsView}"
+                                      SelectedItem="{Binding Path=SelectedResult}"
                                       SelectedItemsList="{Binding Path=SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       Sorting="DataGrid_OnSorting"
                                       RowDetailsVisibilityMode="Collapsed"
                                       EnableRowVirtualization="True"
                                       ScrollViewer.CanContentScroll="True"
                                       VirtualizingPanel.IsVirtualizing="True"
-                                      VirtualizingPanel.IsVirtualizingWhenGrouping="True"    
+                                      VirtualizingPanel.IsVirtualizingWhenGrouping="True"
                                       VirtualizingPanel.IsContainerVirtualizable="True"
                                       VirtualizingPanel.VirtualizationMode="Recycling"
                                       VirtualizingPanel.ScrollUnit="Item">
@@ -227,7 +235,9 @@
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                    <MenuItem Header="{x:Static localization:Strings.PortScanner}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="{x:Static models:ApplicationName.PortScanner}">
+                    <MenuItem Header="{x:Static localization:Strings.PortScanner}"
+                              Command="{Binding RedirectDataToApplicationCommand}"
+                              CommandParameter="{x:Static models:ApplicationName.PortScanner}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
@@ -236,7 +246,9 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.PingMonitor}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="{x:Static models:ApplicationName.PingMonitor}">
+                    <MenuItem Header="{x:Static localization:Strings.PingMonitor}"
+                              Command="{Binding RedirectDataToApplicationCommand}"
+                              CommandParameter="{x:Static models:ApplicationName.PingMonitor}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
@@ -245,7 +257,9 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.Traceroute}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="{x:Static models:ApplicationName.Traceroute}">
+                    <MenuItem Header="{x:Static localization:Strings.Traceroute}"
+                              Command="{Binding RedirectDataToApplicationCommand}"
+                              CommandParameter="{x:Static models:ApplicationName.Traceroute}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
@@ -262,7 +276,8 @@
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
-                        <MenuItem Header="{x:Static localization:Strings.IPAddress}" Command="{Binding PerformDNSLookupIPAddressCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.IPAddress}"
+                                  Command="{Binding PerformDNSLookupIPAddressCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
@@ -271,7 +286,9 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.Hostname}" Command="{Binding PerformDNSLookupHostnameCommand}" IsEnabled="{Binding Path=Data.(viewModels:IPScannerViewModel.SelectedResult).Hostname, Source={StaticResource BindingProxy}, Converter={StaticResource StringIsNotNullOrEmptyToBooleanConverter}}">
+                        <MenuItem Header="{x:Static localization:Strings.Hostname}"
+                                  Command="{Binding PerformDNSLookupHostnameCommand}"
+                                  IsEnabled="{Binding Path=Data.(viewModels:IPScannerViewModel.SelectedResult).Hostname, Source={StaticResource BindingProxy}, Converter={StaticResource StringIsNotNullOrEmptyToBooleanConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
@@ -281,7 +298,9 @@
                             </MenuItem.Icon>
                         </MenuItem>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.RemoteDesktop}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="{x:Static models:ApplicationName.RemoteDesktop}">
+                    <MenuItem Header="{x:Static localization:Strings.RemoteDesktop}"
+                              Command="{Binding RedirectDataToApplicationCommand}"
+                              CommandParameter="{x:Static models:ApplicationName.RemoteDesktop}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
@@ -290,7 +309,9 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.PowerShell}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="{x:Static models:ApplicationName.PowerShell}">
+                    <MenuItem Header="{x:Static localization:Strings.PowerShell}"
+                              Command="{Binding RedirectDataToApplicationCommand}"
+                              CommandParameter="{x:Static models:ApplicationName.PowerShell}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
@@ -299,7 +320,9 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.PuTTY}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="{x:Static models:ApplicationName.PuTTY}">
+                    <MenuItem Header="{x:Static localization:Strings.PuTTY}"
+                              Command="{Binding RedirectDataToApplicationCommand}"
+                              CommandParameter="{x:Static models:ApplicationName.PuTTY}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
@@ -308,7 +331,9 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.TigerVNC}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="{x:Static models:ApplicationName.TigerVNC}">
+                    <MenuItem Header="{x:Static localization:Strings.TigerVNC}"
+                              Command="{Binding RedirectDataToApplicationCommand}"
+                              CommandParameter="{x:Static models:ApplicationName.TigerVNC}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
@@ -317,7 +342,9 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.SNMP}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="{x:Static models:ApplicationName.SNMP}">
+                    <MenuItem Header="{x:Static localization:Strings.SNMP}"
+                              Command="{Binding RedirectDataToApplicationCommand}"
+                              CommandParameter="{x:Static models:ApplicationName.SNMP}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
@@ -337,7 +364,8 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="{x:Static localization:Strings.AddProfileDots}" Command="{Binding AddProfileSelectedHostCommand}">
+                    <MenuItem Header="{x:Static localization:Strings.AddProfileDots}"
+                              Command="{Binding AddProfileSelectedHostCommand}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
@@ -355,54 +383,54 @@
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
-                        <MenuItem Header="{x:Static localization:Strings.Status}" 
+                        <MenuItem Header="{x:Static localization:Strings.Status}"
                                   Command="{Binding CopyDataToClipboardCommand}"
-                                  CommandParameter="{Binding Path=SelectedResult.IsReachable}" 
+                                  CommandParameter="{Binding Path=SelectedResult.IsReachable}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
-                        <MenuItem Header="{x:Static localization:Strings.IPAddress}" 
+                        <MenuItem Header="{x:Static localization:Strings.IPAddress}"
                                   Command="{Binding CopyDataToClipboardCommand}"
-                                  CommandParameter="{Binding Path=SelectedResult.PingInfo.IPAddress}" 
+                                  CommandParameter="{Binding Path=SelectedResult.PingInfo.IPAddress}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
-                        <MenuItem Header="{x:Static localization:Strings.Hostname}" 
+                        <MenuItem Header="{x:Static localization:Strings.Hostname}"
                                   Command="{Binding CopyDataToClipboardCommand}"
-                                  CommandParameter="{Binding Path=SelectedResult.Hostname}" 
+                                  CommandParameter="{Binding Path=SelectedResult.Hostname}"
                                   Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_ResolveHostname, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
-                        <MenuItem Header="{x:Static localization:Strings.PortStatus}" 
+                        <MenuItem Header="{x:Static localization:Strings.PortStatus}"
                                   Command="{Binding CopyDataToClipboardCommand}"
-                                  CommandParameter="{Binding Path=SelectedResult.IsAnyPortOpen, Converter={StaticResource PortOpenToStringConverter}}" 
+                                  CommandParameter="{Binding Path=SelectedResult.IsAnyPortOpen, Converter={StaticResource PortOpenToStringConverter}}"
                                   Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_PortScanEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
-                        <MenuItem Header="{x:Static localization:Strings.PingStatus}" 
+                        <MenuItem Header="{x:Static localization:Strings.PingStatus}"
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.PingInfo.Status, Converter={StaticResource IPStatusToStringConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
-                        <MenuItem Header="{x:Static localization:Strings.MACAddress}" 
+                        <MenuItem Header="{x:Static localization:Strings.MACAddress}"
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.MACAddress, Converter={StaticResource PhysicalAddressToStringConverter}}"
                                   Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_ResolveMACAddress, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
-                        <MenuItem Header="{x:Static localization:Strings.Vendor}" 
+                        <MenuItem Header="{x:Static localization:Strings.Vendor}"
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.Vendor}"
                                   Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_ResolveMACAddress, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
-                        <MenuItem Header="{x:Static localization:Strings.Ports}" 
-                                  Command="{Binding CopySelectedPortsCommand}" 
+                        <MenuItem Header="{x:Static localization:Strings.Ports}"
+                                  Command="{Binding CopySelectedPortsCommand}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
-                        <MenuItem Header="{x:Static localization:Strings.Timestamp}" 
+                        <MenuItem Header="{x:Static localization:Strings.Timestamp}"
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.PingInfo.Timestamp}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
-                        <MenuItem Header="{x:Static localization:Strings.Time}" 
+                        <MenuItem Header="{x:Static localization:Strings.Time}"
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.PingInfo.Time}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
-                        <MenuItem Header="{x:Static localization:Strings.TTL}" 
+                        <MenuItem Header="{x:Static localization:Strings.TTL}"
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.PingInfo.TTL}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
-                        <MenuItem Header="{x:Static localization:Strings.Bytes}" 
+                        <MenuItem Header="{x:Static localization:Strings.Bytes}"
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.PingInfo.Bytes}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
@@ -431,10 +459,12 @@
             </controls:MultiSelectDataGrid.Resources>
             <controls:MultiSelectDataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
-                    <Setter Property="ContextMenu" Value="{StaticResource MultiRowContextMenu}"/>
+                    <Setter Property="ContextMenu" Value="{StaticResource MultiRowContextMenu}" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="1" >
-                            <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>
+                        <DataTrigger
+                            Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
+                            Value="1">
+                            <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -444,23 +474,27 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Click="ButtonBase_OnClick" Style="{StaticResource CleanButton}">
-                                <Rectangle x:Name="ExpandRowDetails" Height="16" Width="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                <Rectangle x:Name="ExpandRowDetails" Height="16" Width="16"
+                                           Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronUp}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </Button>
                             <DataTemplate.Triggers>
-                                <DataTrigger Binding="{Binding Path=DetailsVisibility, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGridRow}}" Value="Visible">
+                                <DataTrigger
+                                    Binding="{Binding Path=DetailsVisibility, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGridRow}}"
+                                    Value="Visible">
                                     <Setter TargetName="ExpandRowDetails" Property="OpacityMask">
                                         <Setter.Value>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronDown}" />
+                                            <VisualBrush Stretch="Uniform"
+                                                         Visual="{iconPacks:Material Kind=ChevronDown}" />
                                         </Setter.Value>
                                     </Setter>
                                 </DataTrigger>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="ExpandRowDetails" Property="Fill" 
-                                            Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}"/>
+                                    <Setter TargetName="ExpandRowDetails" Property="Fill"
+                                            Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}" />
                                 </Trigger>
                             </DataTemplate.Triggers>
                         </DataTemplate>
@@ -469,37 +503,38 @@
                 <DataGridTemplateColumn Header="" SortMemberPath="IsReachable" CanUserResize="False">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Rectangle Width="24" Height="24" Style="{Binding (network:IPScannerHostInfo.IsReachable), Converter={StaticResource HostUpStyleConverter}}" />
+                            <Rectangle Width="24" Height="24"
+                                       Style="{Binding (network:IPScannerHostInfo.IsReachable), Converter={StaticResource HostUpStyleConverter}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}" 
-                                    Binding="{Binding (network:IPScannerHostInfo.PingInfo).IPAddress}" 
+                <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}"
+                                    Binding="{Binding (network:IPScannerHostInfo.PingInfo).IPAddress}"
                                     SortMemberPath="PingInfo.IPAddress"
                                     MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}"
-                                    Binding="{Binding (network:IPScannerHostInfo.Hostname)}" 
-                                    SortMemberPath="Hostname" 
+                                    Binding="{Binding (network:IPScannerHostInfo.Hostname)}"
+                                    SortMemberPath="Hostname"
                                     Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_ResolveHostname, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                     MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.PortStatus}"
                                     Binding="{Binding (network:IPScannerHostInfo.IsAnyPortOpen),Converter={StaticResource PortOpenToStringConverter}}"
-                                    SortMemberPath="IsAnyPortOpen" 
+                                    SortMemberPath="IsAnyPortOpen"
                                     Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_PortScanEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                     MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.PingStatus}"
                                     Binding="{Binding (network:IPScannerHostInfo.PingInfo).Status, Converter={StaticResource IPStatusToStringConverter}}"
                                     SortMemberPath="PingInfo.Status"
                                     MinWidth="150" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}" 
-                                    Binding="{Binding (network:IPScannerHostInfo.MACAddress), Converter={StaticResource PhysicalAddressToStringConverter}}" 
+                <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}"
+                                    Binding="{Binding (network:IPScannerHostInfo.MACAddress), Converter={StaticResource PhysicalAddressToStringConverter}}"
                                     SortMemberPath="MACAddress"
-                                    Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_ResolveMACAddress, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" 
+                                    Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_ResolveMACAddress, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                     MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Vendor}"
                                     Binding="{Binding (network:IPScannerHostInfo.Vendor)}"
-                                    SortMemberPath="Vendor" 
-                                    Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_ResolveMACAddress, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" 
+                                    SortMemberPath="Vendor"
+                                    Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_ResolveMACAddress, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                     MinWidth="200" />
             </controls:MultiSelectDataGrid.Columns>
             <controls:MultiSelectDataGrid.RowDetailsTemplate>
@@ -509,7 +544,9 @@
                         <Border.Style>
                             <Style TargetType="{x:Type TypeName=Border}">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGridRow}}" Value="False">
+                                    <DataTrigger
+                                        Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGridRow}}"
+                                        Value="False">
                                         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -527,28 +564,34 @@
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" 
-                                           Text="{x:Static localization:Strings.Ports}" 
+                                <TextBlock Grid.Column="0" Grid.Row="0"
+                                           Text="{x:Static localization:Strings.Ports}"
                                            Style="{StaticResource BoldTextBlock}" />
-                                <StackPanel Grid.Column="0" Grid.Row="2" 
-                                            VerticalAlignment="Top" 
-                                            Orientation="Horizontal" 
+                                <StackPanel Grid.Column="0" Grid.Row="2"
+                                            VerticalAlignment="Top"
+                                            Orientation="Horizontal"
                                             Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_PortScanEnabled, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
                                     <Rectangle Width="16" Height="16" Style="{StaticResource InfoImageRectangle}" />
-                                    <TextBlock Text="{x:Static localization:Strings.PortScanIsDisabled}" Style="{StaticResource InfoTextBlock}" Margin="10,0,0,0" />
+                                    <TextBlock Text="{x:Static localization:Strings.PortScanIsDisabled}"
+                                               Style="{StaticResource InfoTextBlock}" Margin="10,0,0,0" />
                                 </StackPanel>
-                                <Grid Grid.Column="0" Grid.Row="2" 
+                                <Grid Grid.Column="0" Grid.Row="2"
                                       Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_PortScanEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                                     <ListView Background="Transparent"
-                                              ScrollViewer.VerticalScrollBarVisibility="Disabled" 
-                                              ItemsSource="{Binding Path=(network:IPScannerHostInfo.Ports)}" 
+                                              ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                              ItemsSource="{Binding Path=(network:IPScannerHostInfo.Ports)}"
                                               Visibility="{Binding Path=(network:IPScannerHostInfo.Ports).Count, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}">
                                         <ListView.ItemContainerStyle>
-                                            <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
-                                                <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
-                                                <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
-                                                <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
-                                                <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
+                                            <Style TargetType="{x:Type ListViewItem}"
+                                                   BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
+                                                <Setter Property="mah:ItemHelper.HoverBackgroundBrush"
+                                                        Value="Transparent" />
+                                                <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush"
+                                                        Value="Transparent" />
+                                                <Setter Property="mah:ItemHelper.SelectedBackgroundBrush"
+                                                        Value="Transparent" />
+                                                <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush"
+                                                        Value="Transparent" />
                                                 <Setter Property="Background" Value="Transparent" />
                                             </Style>
                                         </ListView.ItemContainerStyle>
@@ -569,7 +612,8 @@
                                                         <ColumnDefinition Width="10" />
                                                         <ColumnDefinition Width="*" />
                                                     </Grid.ColumnDefinitions>
-                                                    <Rectangle Grid.Column="0" Width="16" Height="16" Style="{Binding State, Converter={StaticResource PortOpenStyleConverter}}" />
+                                                    <Rectangle Grid.Column="0" Width="16" Height="16"
+                                                               Style="{Binding State, Converter={StaticResource PortOpenStyleConverter}}" />
                                                     <TextBlock Grid.Column="2">
                                                         <TextBlock.Text>
                                                             <MultiBinding StringFormat="{}{0}/{1}">
@@ -588,7 +632,7 @@
                                                 Orientation="Horizontal"
                                                 Visibility="{Binding Path=(network:IPScannerHostInfo.Ports).Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}">
                                         <Rectangle Width="16" Height="16" Style="{StaticResource InfoImageRectangle}" />
-                                        <TextBlock Text="{x:Static localization:Strings.NoOpenPortsFound}" 
+                                        <TextBlock Text="{x:Static localization:Strings.NoOpenPortsFound}"
                                                    Style="{StaticResource InfoTextBlock}"
                                                    Margin="10,0,0,0" />
                                     </StackPanel>
@@ -600,18 +644,21 @@
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" 
-                                           Text="{x:Static localization:Strings.PingDetails}" 
+                                <TextBlock Grid.Column="0" Grid.Row="0"
+                                           Text="{x:Static localization:Strings.PingDetails}"
                                            Style="{StaticResource BoldTextBlock}" />
-                                <ListView Grid.Column="0" Grid.Row="2" 
+                                <ListView Grid.Column="0" Grid.Row="2"
                                           Background="Transparent">
                                     <ListView.ItemContainerStyle>
-                                        <Style TargetType="{x:Type ListViewItem}" 
+                                        <Style TargetType="{x:Type ListViewItem}"
                                                BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
                                             <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush"
+                                                    Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.SelectedBackgroundBrush"
+                                                    Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush"
+                                                    Value="Transparent" />
                                             <Setter Property="Background" Value="Transparent" />
                                         </Style>
                                     </ListView.ItemContainerStyle>
@@ -627,8 +674,10 @@
                                                 <ColumnDefinition Width="10" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0" Text="{x:Static Member=localization:Strings.Timestamp}" />
-                                            <TextBlock Grid.Column="2" Text="{Binding Path=(network:IPScannerHostInfo.PingInfo).Timestamp}" />
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static Member=localization:Strings.Timestamp}" />
+                                            <TextBlock Grid.Column="2"
+                                                       Text="{Binding Path=(network:IPScannerHostInfo.PingInfo).Timestamp}" />
                                         </Grid>
                                     </ListViewItem>
                                     <ListViewItem>
@@ -641,7 +690,8 @@
                                             <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.Time}" />
                                             <TextBlock Grid.Column="2">
                                                 <TextBlock.Text>
-                                                    <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
+                                                    <MultiBinding
+                                                        Converter="{StaticResource PingTimeToStringConverter}">
                                                         <Binding Path="(network:IPScannerHostInfo.PingInfo).Status" />
                                                         <Binding Path="(network:IPScannerHostInfo.PingInfo).Time" />
                                                     </MultiBinding>
@@ -657,7 +707,8 @@
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
                                             <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.TTL}" />
-                                            <TextBlock Grid.Column="2" Text="{Binding (network:IPScannerHostInfo.PingInfo).TTL, Converter={StaticResource IntToStringConverter}}" />
+                                            <TextBlock Grid.Column="2"
+                                                       Text="{Binding (network:IPScannerHostInfo.PingInfo).TTL, Converter={StaticResource IntToStringConverter}}" />
                                         </Grid>
                                     </ListViewItem>
                                     <ListViewItem>
@@ -668,7 +719,8 @@
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
                                             <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.Bytes}" />
-                                            <TextBlock Grid.Column="2" Text="{Binding (network:IPScannerHostInfo.PingInfo).Bytes, Converter={StaticResource IntToStringConverter}}" />
+                                            <TextBlock Grid.Column="2"
+                                                       Text="{Binding (network:IPScannerHostInfo.PingInfo).Bytes, Converter={StaticResource IntToStringConverter}}" />
                                         </Grid>
                                     </ListViewItem>
                                 </ListView>

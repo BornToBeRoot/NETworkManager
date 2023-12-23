@@ -18,7 +18,7 @@ public partial class SNTPLookupView
 
         DataContext = _viewModel;
     }
-    
+
     public void CloseTab()
     {
         _viewModel.OnClose();

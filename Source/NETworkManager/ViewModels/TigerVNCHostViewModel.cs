@@ -26,6 +26,7 @@ namespace NETworkManager.ViewModels;
 public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
@@ -36,6 +37,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
     private bool _isViewActive = true;
 
     private bool _isConfigured;
+
     public bool IsConfigured
     {
         get => _isConfigured;
@@ -50,6 +52,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
     }
 
     private int _selectedTabIndex;
+
     public int SelectedTabIndex
     {
         get => _selectedTabIndex;
@@ -64,7 +67,9 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
     }
 
     #region Profiles
+
     private ICollectionView _profiles;
+
     public ICollectionView Profiles
     {
         get => _profiles;
@@ -79,6 +84,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
     }
 
     private ProfileInfo _selectedProfile = new();
+
     public ProfileInfo SelectedProfile
     {
         get => _selectedProfile;
@@ -93,6 +99,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
     }
 
     private string _search;
+
     public string Search
     {
         get => _search;
@@ -112,6 +119,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
     }
 
     private bool _isSearching;
+
     public bool IsSearching
     {
         get => _isSearching;
@@ -129,6 +137,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
     private double _tempProfileWidth;
 
     private bool _expandProfileView;
+
     public bool ExpandProfileView
     {
         get => _expandProfileView;
@@ -150,6 +159,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
     }
 
     private GridLength _profileWidth;
+
     public GridLength ProfileWidth
     {
         get => _profileWidth;
@@ -158,7 +168,8 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
             if (value == _profileWidth)
                 return;
 
-            if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.Profile_FloatPointFix) // Do not save the size when collapsed
+            if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
+                GlobalStaticConfiguration.Profile_FloatPointFix) // Do not save the size when collapsed
                 SettingsManager.Current.TigerVNC_ProfileWidth = value.Value;
 
             _profileWidth = value;
@@ -169,14 +180,17 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
+
     #endregion
+
     #endregion
 
     #region Constructor, load settings
+
     public TigerVNCHostViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
-        
+
         _dialogCoordinator = instance;
 
         CheckSettings();
@@ -205,13 +219,17 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
     {
         ExpandProfileView = SettingsManager.Current.TigerVNC_ExpandProfileView;
 
-        ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.TigerVNC_ProfileWidth) : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
+        ProfileWidth = ExpandProfileView
+            ? new GridLength(SettingsManager.Current.TigerVNC_ProfileWidth)
+            : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
 
         _tempProfileWidth = SettingsManager.Current.TigerVNC_ProfileWidth;
     }
+
     #endregion
 
     #region ICommand & Actions
+
     public ItemActionCallback CloseItemCommand => CloseItemAction;
 
     private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
@@ -262,7 +280,8 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.TigerVNC).ConfigureAwait(false);
+        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.TigerVNC)
+            .ConfigureAwait(false);
     }
 
     private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
@@ -285,14 +304,17 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 
     private void DeleteProfileAction()
     {
-        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile }).ConfigureAwait(false);
+        ProfileDialogManager
+            .ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile })
+            .ConfigureAwait(false);
     }
 
     public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString())).ConfigureAwait(false);
+        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()))
+            .ConfigureAwait(false);
     }
 
     public ICommand ClearSearchCommand => new RelayCommand(_ => ClearSearchAction());
@@ -308,12 +330,15 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
     {
         EventSystem.RedirectToSettings();
     }
+
     #endregion
 
     #region Methods
+
     private void CheckSettings()
     {
-        IsConfigured = !string.IsNullOrEmpty(SettingsManager.Current.TigerVNC_ApplicationFilePath) && File.Exists(SettingsManager.Current.TigerVNC_ApplicationFilePath);
+        IsConfigured = !string.IsNullOrEmpty(SettingsManager.Current.TigerVNC_ApplicationFilePath) &&
+                       File.Exists(SettingsManager.Current.TigerVNC_ApplicationFilePath);
     }
 
     private async Task Connect(string host = null)
@@ -344,10 +369,10 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
             // Connect
             Connect(sessionInfo);
         }, async _ =>
-         {
-             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-             ConfigurationManager.OnDialogClose();
-         }, host);
+        {
+            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            ConfigurationManager.OnDialogClose();
+        }, host);
 
         customDialog.Content = new TigerVNCConnectDialog
         {
@@ -394,7 +419,9 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
         if (string.IsNullOrEmpty(host))
             return;
 
-        SettingsManager.Current.TigerVNC_HostHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.TigerVNC_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries));
+        SettingsManager.Current.TigerVNC_HostHistory = new ObservableCollection<string>(
+            ListHelper.Modify(SettingsManager.Current.TigerVNC_HostHistory.ToList(), host,
+                SettingsManager.Current.General_HistoryListEntries));
     }
 
     private static void AddPortToHistory(int port)
@@ -402,7 +429,9 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
         if (port == 0)
             return;
 
-        SettingsManager.Current.TigerVNC_PortHistory = new ObservableCollection<int>(ListHelper.Modify(SettingsManager.Current.TigerVNC_PortHistory.ToList(), port, SettingsManager.Current.General_HistoryListEntries));
+        SettingsManager.Current.TigerVNC_PortHistory = new ObservableCollection<int>(
+            ListHelper.Modify(SettingsManager.Current.TigerVNC_PortHistory.ToList(), port,
+                SettingsManager.Current.General_HistoryListEntries));
     }
 
     private void ResizeProfile(bool dueToChangedSize)
@@ -411,13 +440,18 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 
         if (dueToChangedSize)
         {
-            ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.Profile_FloatPointFix;
+            ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
+                                GlobalStaticConfiguration.Profile_FloatPointFix;
         }
         else
         {
             if (ExpandProfileView)
             {
-                ProfileWidth = Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.Profile_WidthCollapsed) < GlobalStaticConfiguration.Profile_FloatPointFix ? new GridLength(GlobalStaticConfiguration.Profile_DefaultWidthExpanded) : new GridLength(_tempProfileWidth);
+                ProfileWidth =
+                    Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.Profile_WidthCollapsed) <
+                    GlobalStaticConfiguration.Profile_FloatPointFix
+                        ? new GridLength(GlobalStaticConfiguration.Profile_DefaultWidthExpanded)
+                        : new GridLength(_tempProfileWidth);
             }
             else
             {
@@ -443,7 +477,11 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 
     private void SetProfilesView(ProfileInfo profile = null)
     {
-        Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.TigerVNC_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name) }.View;
+        Profiles = new CollectionViewSource
+        {
+            Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.TigerVNC_Enabled)
+                .OrderBy(x => x.Group).ThenBy(x => x.Name)
+        }.View;
 
         Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
 
@@ -464,7 +502,8 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
             */
 
             // Search by: Name, TigerVNC_Host
-            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.TigerVNC_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
+            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.TigerVNC_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
         // Set specific profile or first if null
@@ -472,7 +511,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 
         if (profile != null)
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault(x => x.Equals(profile)) ??
-                Profiles.Cast<ProfileInfo>().FirstOrDefault();
+                              Profiles.Cast<ProfileInfo>().FirstOrDefault();
         else
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
     }
@@ -494,9 +533,11 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
     {
         ConfigurationManager.OnDialogClose();
     }
+
     #endregion
 
     #region Event
+
     private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
     {
         RefreshProfiles();
@@ -511,7 +552,8 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
         IsSearching = false;
     }
 
-    private void TabItems_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    private void TabItems_CollectionChanged(object sender,
+        System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
         ConfigurationManager.Current.TigerVNCHasTabs = TabItems.Count > 0;
     }
@@ -521,5 +563,6 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
         if (e.PropertyName == nameof(SettingsInfo.TigerVNC_ApplicationFilePath))
             CheckSettings();
     }
+
     #endregion
 }

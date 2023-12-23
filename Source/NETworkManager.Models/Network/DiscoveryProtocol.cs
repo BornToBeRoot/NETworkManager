@@ -78,14 +78,17 @@ public class DiscoveryProtocolCapture
     /// </summary>
     public DiscoveryProtocolCapture()
     {
-        using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("NETworkManager.Models.Resources.PSDiscoveryProtocol.psm1");
+        using var stream = Assembly.GetExecutingAssembly()
+            .GetManifestResourceStream("NETworkManager.Models.Resources.PSDiscoveryProtocol.psm1");
 
-        using StreamReader reader = new(stream ?? throw new InvalidOperationException("Could not load PSDiscoveryProtocol.psm1"));
+        using StreamReader reader =
+            new(stream ?? throw new InvalidOperationException("Could not load PSDiscoveryProtocol.psm1"));
 
         _psDiscoveryProtocolModule = reader.ReadToEnd();
     }
 
     #region Methods
+
     /// <summary>
     /// Captures the network packets on the network adapter asynchronously for a certain period of time and filters the packets according to the protocol.
     /// </summary>
@@ -97,11 +100,13 @@ public class DiscoveryProtocolCapture
         {
             using (var powerShell = System.Management.Automation.PowerShell.Create())
             {
-
                 powerShell.AddScript("Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process");
                 powerShell.AddScript("Import-Module NetAdapter");
                 powerShell.AddScript(_psDiscoveryProtocolModule);
-                powerShell.AddScript($"Invoke-DiscoveryProtocolCapture -Duration {duration}" + (protocol != DiscoveryProtocol.LldpCdp ? $" -Type {protocol.ToString().ToUpper()}" : "") + " -Force | Get-DiscoveryProtocolData");
+                powerShell.AddScript($"Invoke-DiscoveryProtocolCapture -Duration {duration}" +
+                                     (protocol != DiscoveryProtocol.LldpCdp
+                                         ? $" -Type {protocol.ToString().ToUpper()}"
+                                         : "") + " -Force | Get-DiscoveryProtocolData");
 
                 var psOutputs = powerShell.Invoke();
 
@@ -119,6 +124,7 @@ public class DiscoveryProtocolCapture
 
                     OnErrorReceived(new DiscoveryProtocolErrorArgs(stringBuilder.ToString()));
                 }
+
                 if (powerShell.Streams.Warning.Count > 0)
                 {
                     StringBuilder stringBuilder = new();
@@ -173,5 +179,6 @@ public class DiscoveryProtocolCapture
             OnComplete();
         });
     }
+
     #endregion
 }

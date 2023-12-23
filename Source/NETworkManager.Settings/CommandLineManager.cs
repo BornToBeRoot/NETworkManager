@@ -18,7 +18,7 @@ public static class CommandLineManager
     public static string ParameterRestartPid => $"{ParameterIdentifier}restart-pid";
 
     public static CommandLineInfo Current { get; set; }
-            
+
     static CommandLineManager()
     {
         Current = new CommandLineInfo();
@@ -35,7 +35,7 @@ public static class CommandLineManager
                 if (param[0].Equals(ParameterHelp, StringComparison.InvariantCultureIgnoreCase))
                 {
                     Current.Help = true;
-                }// Autostart
+                } // Autostart
                 else if (param[0].Equals(ParameterAutostart, StringComparison.InvariantCultureIgnoreCase))
                 {
                     Current.Autostart = true;

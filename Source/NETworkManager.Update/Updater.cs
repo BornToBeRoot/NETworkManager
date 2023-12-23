@@ -13,6 +13,7 @@ public sealed class Updater
     private static readonly ILog Log = LogManager.GetLogger(typeof(Updater));
 
     #region Events
+
     /// <summary>
     /// Is triggered when update check is complete and an update is available.
     /// </summary>
@@ -52,6 +53,7 @@ public sealed class Updater
     {
         Error?.Invoke(this, EventArgs.Empty);
     }
+
     #endregion
 
     #region Methods
@@ -70,12 +72,14 @@ public sealed class Updater
             try
             {
                 Log.Info("Checking for new version on GitHub...");
-                
+
                 // Create GitHub client
                 var client = new GitHubClient(new ProductHeaderValue(userName + "_" + projectName));
 
                 // Get latest or pre-release version
-                var release = includePreRelease ? client.Repository.Release.GetAll(userName, projectName).Result[0] : client.Repository.Release.GetLatest(userName, projectName).Result;
+                var release = includePreRelease
+                    ? client.Repository.Release.GetAll(userName, projectName).Result[0]
+                    : client.Repository.Release.GetLatest(userName, projectName).Result;
 
                 // Compare versions (tag=2021.2.15.0, version=2021.2.15.0)
                 if (new Version(release.TagName) > currentVersion)
@@ -96,5 +100,6 @@ public sealed class Updater
             }
         });
     }
+
     #endregion
 }

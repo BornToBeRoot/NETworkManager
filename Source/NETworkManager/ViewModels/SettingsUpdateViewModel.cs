@@ -5,9 +5,11 @@ namespace NETworkManager.ViewModels;
 public class SettingsUpdateViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly bool _isLoading;
 
     private bool _checkForUpdatesAtStartup;
+
     public bool CheckForUpdatesAtStartup
     {
         get => _checkForUpdatesAtStartup;
@@ -25,6 +27,7 @@ public class SettingsUpdateViewModel : ViewModelBase
     }
 
     private bool _checkForPreReleases;
+
     public bool CheckForPreReleases
     {
         get => _checkForPreReleases;
@@ -40,10 +43,10 @@ public class SettingsUpdateViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
-    
-        
+
+
     private bool _enableExperimentalFeatures;
+
     public bool EnableExperimentalFeatures
     {
         get => _enableExperimentalFeatures;
@@ -59,9 +62,11 @@ public class SettingsUpdateViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, LoadSettings
+
     public SettingsUpdateViewModel()
     {
         _isLoading = true;
@@ -77,5 +82,6 @@ public class SettingsUpdateViewModel : ViewModelBase
         CheckForPreReleases = SettingsManager.Current.Update_CheckForPreReleases;
         EnableExperimentalFeatures = SettingsManager.Current.Experimental_EnableExperimentalFeatures;
     }
+
     #endregion
 }

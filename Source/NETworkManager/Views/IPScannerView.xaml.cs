@@ -97,7 +97,8 @@ public partial class IPScannerView
             if (visual is not DataGridRow row)
                 continue;
 
-            row.DetailsVisibility = row.DetailsVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+            row.DetailsVisibility =
+                row.DetailsVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
 
             break;
         }

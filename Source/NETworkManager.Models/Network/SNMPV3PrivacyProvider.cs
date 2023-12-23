@@ -4,12 +4,12 @@
 /// Enum for the SNMP v3 privacy provider.
 /// </summary>
 public enum SNMPV3PrivacyProvider
-{   
+{
     /// <summary>
     /// DES.
     /// </summary>
     DES,
-    
+
     /// <summary>
     /// AES with 128 bit.
     /// </summary>

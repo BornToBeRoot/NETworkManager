@@ -25,7 +25,7 @@ public sealed class ProfileGroupToTranslatedStringConverter : IValueConverter
             ? "-/-"
             : ResourceTranslator.Translate(ResourceIdentifier.ProfileGroup, name);
     }
-    
+
     /// <summary>
     /// !!! Method not implemented !!!
     /// </summary>

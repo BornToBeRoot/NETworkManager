@@ -40,7 +40,6 @@ public class DNSResolverService : SingletonBase<DNSResolverService>
             {
                 return new DNSResolverResult(hasError: true, response.ReasonPhrase, (int)response.StatusCode);
             }
-
         }
         catch (Exception ex)
         {

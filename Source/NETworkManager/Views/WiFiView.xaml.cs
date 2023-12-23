@@ -6,11 +6,11 @@ namespace NETworkManager.Views;
 
 public partial class WiFiView
 {
-    private readonly WiFiViewModel _viewModel; 
+    private readonly WiFiViewModel _viewModel;
 
     public WiFiView()
     {
-        _viewModel= new WiFiViewModel(DialogCoordinator.Instance);
+        _viewModel = new WiFiViewModel(DialogCoordinator.Instance);
         InitializeComponent();
         DataContext = _viewModel;
     }

@@ -28,11 +28,12 @@ namespace NETworkManager.ViewModels;
 public class TracerouteViewModel : ViewModelBase
 {
     #region Variables
+
     private static readonly ILog Log = LogManager.GetLogger(typeof(TracerouteViewModel));
-    
+
     private readonly IDialogCoordinator _dialogCoordinator;
     private CancellationTokenSource _cancellationTokenSource;
-    
+
     private readonly Guid _tabId;
     private bool _firstLoad = true;
 
@@ -196,7 +197,6 @@ public class TracerouteViewModel : ViewModelBase
 
     private void LoadSettings()
     {
-        
     }
 
     #endregion
@@ -414,8 +414,9 @@ public class TracerouteViewModel : ViewModelBase
             // Check error
             if (e.Args.IPGeolocationResult.HasError)
             {
-                Log.Error($"ip-api.com error: {e.Args.IPGeolocationResult.ErrorMessage}, error code: {e.Args.IPGeolocationResult.ErrorCode}");
-                
+                Log.Error(
+                    $"ip-api.com error: {e.Args.IPGeolocationResult.ErrorMessage}, error code: {e.Args.IPGeolocationResult.ErrorCode}");
+
                 DisplayStatusMessage($"ip-api.com: {e.Args.IPGeolocationResult.ErrorMessage}");
             }
 
@@ -423,12 +424,14 @@ public class TracerouteViewModel : ViewModelBase
             if (!_ipGeolocationRateLimitIsReached && e.Args.IPGeolocationResult.RateLimitIsReached)
             {
                 _ipGeolocationRateLimitIsReached = true;
-                
-                Log.Warn($"ip-api.com rate limit reached. Try again in {e.Args.IPGeolocationResult.RateLimitRemainingTime} seconds.");
-                
-                DisplayStatusMessage($"ip-api.com {string.Format(Localization.Resources.Strings.RateLimitReachedTryAgainInXSeconds, e.Args.IPGeolocationResult.RateLimitRemainingTime)}");
+
+                Log.Warn(
+                    $"ip-api.com rate limit reached. Try again in {e.Args.IPGeolocationResult.RateLimitRemainingTime} seconds.");
+
+                DisplayStatusMessage(
+                    $"ip-api.com {string.Format(Localization.Resources.Strings.RateLimitReachedTryAgainInXSeconds, e.Args.IPGeolocationResult.RateLimitRemainingTime)}");
             }
-            
+
             Results.Add(e.Args);
         }));
     }

@@ -9,6 +9,5 @@ public class AWSSessionManagerSessionInfo
 
     public AWSSessionManagerSessionInfo()
     {
-
     }
 }

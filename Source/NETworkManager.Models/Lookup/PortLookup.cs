@@ -63,6 +63,7 @@ public static class PortLookup
     #endregion
 
     #region Methods
+
     /// <summary>
     /// Get <see cref="PortLookupInfo"/> by port number async.
     /// For e.g. port 22 will return 22/tcp, 22/udp and 22/sctp.

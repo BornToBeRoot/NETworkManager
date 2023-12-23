@@ -26,6 +26,7 @@ public partial class PingMonitorView
     {
         _viewModel.Start();
     }
+
     public void Stop()
     {
         _viewModel.Stop();

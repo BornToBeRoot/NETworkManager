@@ -28,7 +28,7 @@ public partial class SNMPHostView
         if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
             _viewModel.AddTabProfileCommand.Execute(null);
     }
-    
+
     public void AddTab(string host)
     {
         _viewModel.AddTab(host);

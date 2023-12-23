@@ -12,11 +12,13 @@ namespace NETworkManager.ViewModels;
 public class TigerVNCSettingsViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
-    
+
     private readonly bool _isLoading;
 
     private string _applicationFilePath;
+
     public string ApplicationFilePath
     {
         get => _applicationFilePath;
@@ -30,12 +32,13 @@ public class TigerVNCSettingsViewModel : ViewModelBase
 
             IsConfigured = !string.IsNullOrEmpty(value);
 
-            _applicationFilePath = value;                               
+            _applicationFilePath = value;
             OnPropertyChanged();
         }
     }
 
     private bool _isConfigured;
+
     public bool IsConfigured
     {
         get => _isConfigured;
@@ -48,8 +51,9 @@ public class TigerVNCSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+
     private int _port;
+
     public int Port
     {
         get => _port;
@@ -65,9 +69,11 @@ public class TigerVNCSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Contructor, load settings
+
     public TigerVNCSettingsViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
@@ -85,9 +91,11 @@ public class TigerVNCSettingsViewModel : ViewModelBase
         IsConfigured = File.Exists(ApplicationFilePath);
         Port = SettingsManager.Current.TigerVNC_Port;
     }
+
     #endregion
 
     #region ICommands & Actions
+
     public ICommand BrowseFileCommand => new RelayCommand(_ => BrowseFileAction());
 
     private void BrowseFileAction()
@@ -107,9 +115,11 @@ public class TigerVNCSettingsViewModel : ViewModelBase
     {
         Configure().ConfigureAwait(false);
     }
+
     #endregion
 
     #region Methods
+
     private async Task Configure()
     {
         try
@@ -122,7 +132,8 @@ public class TigerVNCSettingsViewModel : ViewModelBase
 
             settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-            await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, settings);
+            await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message,
+                MessageDialogStyle.Affirmative, settings);
         }
     }
 
@@ -132,5 +143,6 @@ public class TigerVNCSettingsViewModel : ViewModelBase
 
         OnPropertyChanged(nameof(ApplicationFilePath));
     }
+
     #endregion
 }

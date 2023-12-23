@@ -10,7 +10,6 @@ public class WakeOnLANInfo
 
     public WakeOnLANInfo()
     {
-
     }
 
     public WakeOnLANInfo(byte[] magicPacket, IPAddress broadcast, int port)

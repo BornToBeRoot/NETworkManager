@@ -165,7 +165,7 @@ public class LookupPortLookupViewModel : ViewModelBase
         Results.Clear();
 
         var ports = new HashSet<int>();
-        var portsAndProtocols = new HashSet<Tuple<int,string>>();
+        var portsAndProtocols = new HashSet<Tuple<int, string>>();
         var services = new HashSet<string>();
 
         foreach (var search in Search.Split(';'))
@@ -173,7 +173,7 @@ public class LookupPortLookupViewModel : ViewModelBase
             var searchTrim = search.Trim();
 
             // Check if the search is a port number like 22
-            if (Regex.IsMatch( searchTrim, "^[0-9]{1,5}$"))
+            if (Regex.IsMatch(searchTrim, "^[0-9]{1,5}$"))
             {
                 if (int.TryParse(searchTrim, out var port))
                 {
@@ -184,7 +184,7 @@ public class LookupPortLookupViewModel : ViewModelBase
                     }
                 }
             }
-            
+
             // Check if the search is a port number with protocol like 22/tcp
             if (Regex.IsMatch(searchTrim, "^[0-9]{1,5}/(tcp|udp|sctp)$"))
             {
@@ -201,7 +201,7 @@ public class LookupPortLookupViewModel : ViewModelBase
             }
 
             // Check if the search is a port range like 1-100
-            if (Regex.IsMatch(searchTrim,"^[0-9]{1,5}-[0-9]{1,5}$"))
+            if (Regex.IsMatch(searchTrim, "^[0-9]{1,5}-[0-9]{1,5}$"))
             {
                 var portRange = searchTrim.Split('-');
 
@@ -216,9 +216,9 @@ public class LookupPortLookupViewModel : ViewModelBase
                     }
                 }
             }
-            
+
             // Check if the search is a port range with protocol like 1-100/tcp
-            if (Regex.IsMatch(searchTrim,"^[0-9]{1,5}-[0-9]{1,5}/(tcp|udp|sctp)$"))
+            if (Regex.IsMatch(searchTrim, "^[0-9]{1,5}-[0-9]{1,5}/(tcp|udp|sctp)$"))
             {
                 var portRangeAndProtocol = searchTrim.Split('/');
 
@@ -242,7 +242,7 @@ public class LookupPortLookupViewModel : ViewModelBase
 
         // Temporary collection to avoid duplicate entries
         var results = new HashSet<PortLookupInfo>();
-        
+
         // Get Port information's by port number
         // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator (Doesn't work with async/await)
         foreach (var port in ports)
@@ -250,10 +250,10 @@ public class LookupPortLookupViewModel : ViewModelBase
             foreach (var info in await PortLookup.LookupByPortAsync(port))
                 results.Add(info);
         }
-        
+
         // Get Port information's by port number and protocol
         // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator (Doesn't work with async/await)
-        foreach(var portAndProtocol in portsAndProtocols)
+        foreach (var portAndProtocol in portsAndProtocols)
         {
             results.Add(
                 await PortLookup.LookupByPortAndProtocolAsync(
@@ -271,9 +271,9 @@ public class LookupPortLookupViewModel : ViewModelBase
         }
 
         // Add the results to the collection
-        foreach(var result in results)
+        foreach (var result in results)
             Results.Add(result);
-        
+
         // Show a message if no vendor was found
         NothingFound = Results.Count == 0;
 

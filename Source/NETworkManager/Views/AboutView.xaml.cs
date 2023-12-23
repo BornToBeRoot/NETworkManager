@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Views;
 
-public partial class AboutView 
+public partial class AboutView
 {
     private readonly AboutViewModel _viewModel = new();
 

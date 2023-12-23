@@ -4,7 +4,6 @@ namespace NETworkManager.Utilities;
 
 public static class IPAddressHelper
 {
-
     /// <summary>
     /// Test if an IP address is a private address.
     /// </summary>

@@ -22,6 +22,8 @@ public class FileNameValidator : ValidationRule
         var filename = (string)value;
 
         // Check if the filename has valid chars and a dot.
-        return filename.IndexOfAny(Path.GetInvalidFileNameChars()) < 0 && new Regex(@"^.+\..+$").IsMatch(filename) ? ValidationResult.ValidResult : new ValidationResult(false, Strings.EnterValidFileName);
+        return filename.IndexOfAny(Path.GetInvalidFileNameChars()) < 0 && new Regex(@"^.+\..+$").IsMatch(filename)
+            ? ValidationResult.ValidResult
+            : new ValidationResult(false, Strings.EnterValidFileName);
     }
 }

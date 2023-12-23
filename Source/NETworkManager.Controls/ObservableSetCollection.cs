@@ -5,20 +5,17 @@ using System.Collections.ObjectModel;
 namespace NETworkManager.Controls;
 
 public class ObservableSetCollection<T> : ObservableCollection<T>
-{ 
+{
     public ObservableSetCollection()
     {
-
     }
 
-    public ObservableSetCollection(List<T> list) :  base(list)
+    public ObservableSetCollection(List<T> list) : base(list)
     {
-
     }
 
     public ObservableSetCollection(IEnumerable<T> collection) : base(collection)
     {
-
     }
 
     protected override void InsertItem(int index, T item)

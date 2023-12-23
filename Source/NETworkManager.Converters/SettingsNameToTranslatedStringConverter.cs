@@ -21,9 +21,12 @@ public sealed class SettingsNameToTranslatedStringConverter : IValueConverter
     /// <returns>Translated <see cref="SettingsName"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value is not SettingsName name ? "-/-" : ResourceTranslator.Translate( new [] {ResourceIdentifier.SettingsName, ResourceIdentifier.ApplicationName}, name);
+        return value is not SettingsName name
+            ? "-/-"
+            : ResourceTranslator.Translate(
+                new[] { ResourceIdentifier.SettingsName, ResourceIdentifier.ApplicationName }, name);
     }
-    
+
     /// <summary>
     /// !!! Method not implemented !!!
     /// </summary>

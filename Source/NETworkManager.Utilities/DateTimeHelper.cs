@@ -16,7 +16,7 @@ public static class DateTimeHelper
     {
         return dateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
     }
-    
+
     /// <summary>
     /// Convert a DateTime to a string with the format "HH:mm:ss".
     /// </summary>

@@ -68,7 +68,8 @@ public static partial class ExportManager
                     from info in collection
                     select
                         new XElement(nameof(PingInfo),
-                            new XElement(nameof(PingInfo.Timestamp), DateTimeHelper.DateTimeToFullDateTimeString(info.Timestamp)),
+                            new XElement(nameof(PingInfo.Timestamp),
+                                DateTimeHelper.DateTimeToFullDateTimeString(info.Timestamp)),
                             new XElement(nameof(PingInfo.IPAddress), info.IPAddress),
                             new XElement(nameof(PingInfo.Hostname), info.Hostname),
                             new XElement(nameof(PingInfo.Bytes), info.Bytes),

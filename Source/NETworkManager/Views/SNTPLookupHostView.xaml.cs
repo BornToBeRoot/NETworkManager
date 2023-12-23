@@ -5,7 +5,7 @@ namespace NETworkManager.Views;
 
 public partial class SNTPLookupHostView
 {
-    private readonly SNTPLookupHostViewModel _viewModel = new ();
+    private readonly SNTPLookupHostViewModel _viewModel = new();
 
     public SNTPLookupHostView()
     {

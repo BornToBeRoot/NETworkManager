@@ -11,7 +11,6 @@ namespace NETworkManager.Converters;
 /// </summary>
 public sealed class TcpStateToStringConverter : IValueConverter
 {
-
     /// <summary>
     /// Convert <see cref="TcpState"/> to translated <see cref="string"/>. 
     /// </summary>
@@ -22,7 +21,9 @@ public sealed class TcpStateToStringConverter : IValueConverter
     /// <returns>Translated <see cref="TcpState"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value is not TcpState tcpState ? "-/-" : ResourceTranslator.Translate(ResourceIdentifier.TcpState, tcpState);
+        return value is not TcpState tcpState
+            ? "-/-"
+            : ResourceTranslator.Translate(ResourceIdentifier.TcpState, tcpState);
     }
 
     /// <summary>

@@ -30,6 +30,7 @@ public partial class ProfilesView
                 _viewModel.EditGroupCommand.Execute(null);
         }
     }
+
     private void DataGridProfilesRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
         if (e.ChangedButton == MouseButton.Left)

@@ -9,17 +9,13 @@ public class DashboardViewModel : ViewModelBase
 
     private void LoadSettings()
     {
-
     }
 
     public void OnViewVisible()
     {
-
     }
 
     public void OnViewHide()
     {
-
     }
 }
-

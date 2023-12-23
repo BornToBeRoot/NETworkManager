@@ -11,6 +11,8 @@ public class EmptyOrFileExistsValidator : ValidationRule
         if (string.IsNullOrEmpty(value as string))
             return ValidationResult.ValidResult;
 
-        return File.Exists((string)value) ? ValidationResult.ValidResult : new ValidationResult(false, Localization.Resources.Strings.FileDoesNotExist);
+        return File.Exists((string)value)
+            ? ValidationResult.ValidResult
+            : new ValidationResult(false, Localization.Resources.Strings.FileDoesNotExist);
     }
 }

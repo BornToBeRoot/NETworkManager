@@ -11,7 +11,6 @@ namespace NETworkManager.Converters;
 /// </summary>
 public sealed class ThemeToStringConverter : IValueConverter
 {
-
     /// <summary>
     /// Convert <see cref="ThemeColorInfo"/> to translated <see cref="string"/>. 
     /// </summary>

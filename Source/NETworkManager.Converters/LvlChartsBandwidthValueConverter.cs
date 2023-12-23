@@ -7,7 +7,6 @@ namespace NETworkManager.Converters;
 
 public sealed class LvlChartsBandwidthValueConverter : IValueConverter
 {
-
     /// <summary>
     /// 
     /// </summary>

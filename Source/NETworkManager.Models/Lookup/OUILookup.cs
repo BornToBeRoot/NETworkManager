@@ -106,7 +106,7 @@ public static class OUILookup
                 select info
             ).ToList();
     }
-    
+
     /// <summary>
     /// Search <see cref="OUIInfo"/> by the given vendors async.
     /// </summary>

@@ -7,7 +7,9 @@ public static class PuTTY
 {
     public static string PortableLogPath => Path.Combine(ConfigurationManager.Current.ExecutionPath, "PuTTY_LogFiles");
 
-    public static string LogPath => ConfigurationManager.Current.IsPortable ? PortableLogPath : SettingsManager.Current.PuTTY_LogPath;
+    public static string LogPath => ConfigurationManager.Current.IsPortable
+        ? PortableLogPath
+        : SettingsManager.Current.PuTTY_LogPath;
 
     public static int GetPortOrBaudByConnectionMode(ConnectionMode mode)
     {

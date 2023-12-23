@@ -119,7 +119,7 @@
                       Focusable="False"
                       Style="{StaticResource ProfileGridSplitter}" />
         <Expander Grid.Column="2" Grid.Row="0"
-                  x:Name="ExpanderProfiles" 
+                  x:Name="ExpanderProfiles"
                   Header="{x:Static localization:Strings.Profiles}"
                   Style="{StaticResource ProfileExpander}"
                   IsExpanded="{Binding ExpandProfileView}">
@@ -178,7 +178,7 @@
                                 <KeyBinding Command="{Binding QueryProfileCommand}" Key="Enter" />
                             </TextBox.InputBindings>
                         </TextBox>
-                        <Button Grid.Column="4" Grid.Row="0" 
+                        <Button Grid.Column="4" Grid.Row="0"
                                 Focusable="False"
                                 Style="{StaticResource CleanButton}"
                                 Command="{Binding AddProfileCommand}"

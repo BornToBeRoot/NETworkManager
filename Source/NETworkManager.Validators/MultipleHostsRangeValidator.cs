@@ -87,6 +87,8 @@ public class MultipleHostsRangeValidator : ValidationRule
             isValid = false;
         }
 
-        return isValid ? ValidationResult.ValidResult : new ValidationResult(false, Localization.Resources.Strings.EnterValidIPScanRange);
+        return isValid
+            ? ValidationResult.ValidResult
+            : new ValidationResult(false, Localization.Resources.Strings.EnterValidIPScanRange);
     }
 }

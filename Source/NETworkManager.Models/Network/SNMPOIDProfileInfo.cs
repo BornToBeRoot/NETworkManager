@@ -1,5 +1,4 @@
-﻿
-namespace NETworkManager.Models.Network;
+﻿namespace NETworkManager.Models.Network;
 
 /// <summary>
 /// Class represents a SNMP MIB profile.
@@ -26,7 +25,6 @@ public class SNMPOIDProfileInfo
     /// </summary>
     public SNMPOIDProfileInfo()
     {
-
     }
 
     /// <summary>

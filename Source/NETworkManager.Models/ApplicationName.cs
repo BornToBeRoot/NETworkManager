@@ -79,17 +79,17 @@ public enum ApplicationName
     /// WebConsole application.
     /// </summary>
     WebConsole,
-                  
+
     /// <summary>
     /// SNMP application.
     /// </summary>
     SNMP,
-    
+
     /// <summary>
     /// SNTP lookup application.
     /// </summary>
     SNTPLookup,
-    
+
     /// <summary>
     /// Discovery protocol application.
     /// </summary>
@@ -109,7 +109,7 @@ public enum ApplicationName
     /// IP geolocation application.
     /// </summary>
     IPGeolocation,
-    
+
     /// <summary>
     /// Subnet calculator application.
     /// </summary>

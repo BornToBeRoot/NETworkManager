@@ -9,11 +9,13 @@ namespace NETworkManager.ViewModels;
 public class SettingsAppearanceViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly bool _isLoading;
 
     public ICollectionView Themes { get; private set; }
 
     private ThemeColorInfo _selectedTheme;
+
     public ThemeColorInfo SelectedTheme
     {
         get => _selectedTheme;
@@ -37,6 +39,7 @@ public class SettingsAppearanceViewModel : ViewModelBase
     public ICollectionView Accents { get; private set; }
 
     private AccentColorInfo _selectedAccent;
+
     public AccentColorInfo SelectedAccent
     {
         get => _selectedAccent;
@@ -57,6 +60,7 @@ public class SettingsAppearanceViewModel : ViewModelBase
     }
 
     private bool _useCustomTheme;
+
     public bool UseCustomTheme
     {
         get => _useCustomTheme;
@@ -80,6 +84,7 @@ public class SettingsAppearanceViewModel : ViewModelBase
 
 
     private ThemeInfo _selectedCustomTheme;
+
     public ThemeInfo SelectedCustomTheme
     {
         get => _selectedCustomTheme;
@@ -100,6 +105,7 @@ public class SettingsAppearanceViewModel : ViewModelBase
     }
 
     private bool _powerShellModifyGlobalProfile;
+
     public bool PowerShellModifyGlobalProfile
     {
         get => _powerShellModifyGlobalProfile;
@@ -115,9 +121,11 @@ public class SettingsAppearanceViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, LoadSettings
+
     public SettingsAppearanceViewModel()
     {
         _isLoading = true;
@@ -133,11 +141,17 @@ public class SettingsAppearanceViewModel : ViewModelBase
 
     private void LoadSettings()
     {
-        SelectedTheme = Themes.Cast<ThemeColorInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_Theme);
-        SelectedAccent = Accents.Cast<AccentColorInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_Accent);            
-        UseCustomTheme = SettingsManager.Current.Appearance_UseCustomTheme;            
-        SelectedCustomTheme = CustomThemes.Cast<ThemeInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_CustomThemeName) ?? CustomThemes.Cast<ThemeInfo>().FirstOrDefault();
+        SelectedTheme = Themes.Cast<ThemeColorInfo>()
+            .FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_Theme);
+        SelectedAccent = Accents.Cast<AccentColorInfo>()
+            .FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_Accent);
+        UseCustomTheme = SettingsManager.Current.Appearance_UseCustomTheme;
+        SelectedCustomTheme =
+            CustomThemes.Cast<ThemeInfo>()
+                .FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_CustomThemeName) ??
+            CustomThemes.Cast<ThemeInfo>().FirstOrDefault();
         PowerShellModifyGlobalProfile = SettingsManager.Current.Appearance_PowerShellModifyGlobalProfile;
     }
+
     #endregion
 }

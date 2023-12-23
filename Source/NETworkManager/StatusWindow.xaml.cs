@@ -9,7 +9,7 @@ using System.Windows.Threading;
 
 namespace NETworkManager;
 
-public partial class StatusWindow : INotifyPropertyChanged  
+public partial class StatusWindow : INotifyPropertyChanged
 {
     #region PropertyChangedEventHandler
 
@@ -21,7 +21,7 @@ public partial class StatusWindow : INotifyPropertyChanged
     }
 
     #endregion
-    
+
     #region Variables
 
     // Set priority to make the ui smoother
@@ -140,7 +140,7 @@ public partial class StatusWindow : INotifyPropertyChanged
         // ToDo: User setting...
         Left = Screen.PrimaryScreen.WorkingArea.Right - Width - 10;
         Top = Screen.PrimaryScreen.WorkingArea.Bottom - Height - 10;
-        
+
         Show();
 
         if (enableCloseTimer)
@@ -148,7 +148,7 @@ public partial class StatusWindow : INotifyPropertyChanged
             SetupCloseTimer();
             return;
         }
-        
+
         Activate();
     }
 

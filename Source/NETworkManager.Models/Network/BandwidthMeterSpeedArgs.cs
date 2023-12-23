@@ -10,7 +10,8 @@ public class BandwidthMeterSpeedArgs : EventArgs
     public long ByteReceivedSpeed { get; }
     public long ByteSentSpeed { get; }
 
-    public BandwidthMeterSpeedArgs(DateTime dateTime, long totoTotalBytesReceived, long totalBytesSent, long byteReceivedSpeed, long byteSentSpeed)
+    public BandwidthMeterSpeedArgs(DateTime dateTime, long totoTotalBytesReceived, long totalBytesSent,
+        long byteReceivedSpeed, long byteSentSpeed)
     {
         DateTime = dateTime;
         TotalBytesReceived = totoTotalBytesReceived;

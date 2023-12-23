@@ -88,12 +88,14 @@ public class DNSClient : SingletonBase<DNSClient>
             // Validate result because of https://github.com/BornToBeRoot/NETworkManager/issues/1934
             var record = result.Answers.ARecords().FirstOrDefault();
 
-            return record != null ?
-                new DNSClientResultIPAddress(record.Address, $"{result.NameServer}") : 
-                new DNSClientResultIPAddress(true, $"IP address for \"{query}\" could not be resolved and the DNS server did not return an error. Try to check your DNS server with: dig @{result.NameServer.Address} {query}", $"{result.NameServer}");
+            return record != null
+                ? new DNSClientResultIPAddress(record.Address, $"{result.NameServer}")
+                : new DNSClientResultIPAddress(true,
+                    $"IP address for \"{query}\" could not be resolved and the DNS server did not return an error. Try to check your DNS server with: dig @{result.NameServer.Address} {query}",
+                    $"{result.NameServer}");
         }
         catch (DnsResponseException ex)
-        {            
+        {
             return new DNSClientResultIPAddress(true, ex.Message);
         }
     }
@@ -115,13 +117,15 @@ public class DNSClient : SingletonBase<DNSClient>
             // Pass the error we got from the lookup client (dns server).
             if (result.HasError)
                 return new DNSClientResultIPAddress(result.HasError, result.ErrorMessage, $"{result.NameServer}");
-            
+
             // Validate result because of https://github.com/BornToBeRoot/NETworkManager/issues/1934
             var record = result.Answers.AaaaRecords().FirstOrDefault();
-            
-            return record != null ?
-                new DNSClientResultIPAddress(record.Address, $"{result.NameServer}") : 
-                new DNSClientResultIPAddress(true, $"IP address for \"{query}\" could not be resolved and the DNS server did not return an error. Try to check your DNS server with: dig @{result.NameServer.Address} {query}", $"{result.NameServer}");
+
+            return record != null
+                ? new DNSClientResultIPAddress(record.Address, $"{result.NameServer}")
+                : new DNSClientResultIPAddress(true,
+                    $"IP address for \"{query}\" could not be resolved and the DNS server did not return an error. Try to check your DNS server with: dig @{result.NameServer.Address} {query}",
+                    $"{result.NameServer}");
         }
         catch (DnsResponseException ex)
         {
@@ -150,9 +154,11 @@ public class DNSClient : SingletonBase<DNSClient>
             // Validate result because of https://github.com/BornToBeRoot/NETworkManager/issues/1934
             var record = result.Answers.CnameRecords().FirstOrDefault();
 
-            return record != null ?
-                new DNSClientResultString(record.CanonicalName, $"{result.NameServer}") : 
-                new DNSClientResultString(true, $"CNAME for \"{query}\" could not be resolved and the DNS server did not return an error. Try to check your DNS server with: dig @{result.NameServer.Address} {query}", $"{result.NameServer}");
+            return record != null
+                ? new DNSClientResultString(record.CanonicalName, $"{result.NameServer}")
+                : new DNSClientResultString(true,
+                    $"CNAME for \"{query}\" could not be resolved and the DNS server did not return an error. Try to check your DNS server with: dig @{result.NameServer.Address} {query}",
+                    $"{result.NameServer}");
         }
         catch (DnsResponseException ex)
         {
@@ -180,10 +186,12 @@ public class DNSClient : SingletonBase<DNSClient>
 
             // Validate result because of https://github.com/BornToBeRoot/NETworkManager/issues/1934
             var record = result.Answers.PtrRecords().FirstOrDefault();
-            
-            return record != null ? 
-                new DNSClientResultString(record.PtrDomainName, $"{result.NameServer}"):
-                    new DNSClientResultString(true, $"PTR for \"{ipAddress}\" could not be resolved and the DNS server did not return an error. Try to check your DNS server with: dig @{result.NameServer.Address} -x {ipAddress}", $"{result.NameServer}");
+
+            return record != null
+                ? new DNSClientResultString(record.PtrDomainName, $"{result.NameServer}")
+                : new DNSClientResultString(true,
+                    $"PTR for \"{ipAddress}\" could not be resolved and the DNS server did not return an error. Try to check your DNS server with: dig @{result.NameServer.Address} -x {ipAddress}",
+                    $"{result.NameServer}");
         }
         catch (DnsResponseException ex)
         {

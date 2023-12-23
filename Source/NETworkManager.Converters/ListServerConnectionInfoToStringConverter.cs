@@ -15,12 +15,12 @@ public sealed class ListServerConnectionInfoToStringConverter : IValueConverter
             return string.Empty;
 
         StringBuilder stringBuilder = new();
-        
+
         foreach (var server in (List<ServerConnectionInfo>)value)
         {
             if (stringBuilder.Length > 0)
                 stringBuilder.Append("; ");
-            
+
             stringBuilder.Append(server);
         }
 

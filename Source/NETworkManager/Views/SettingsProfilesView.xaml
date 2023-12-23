@@ -1,48 +1,58 @@
 ﻿<UserControl x:Class="NETworkManager.Views.SettingsProfilesView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
-        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
-        xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-        xmlns:profiles="clr-namespace:NETworkManager.Profiles;assembly=NETworkManager.Profiles"
-        dialogs:DialogParticipation.Register="{Binding}"
-        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsProfilesViewModel}" Loaded="UserControl_Loaded">
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
+             xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+             xmlns:profiles="clr-namespace:NETworkManager.Profiles;assembly=NETworkManager.Profiles"
+             dialogs:DialogParticipation.Register="{Binding}"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsProfilesViewModel}"
+             Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
     </UserControl.Resources>
-    <StackPanel >
-        <TextBlock Style="{StaticResource ResourceKey=HeaderTextBlock}" Text="{x:Static Member=localization:Strings.Location}" />
-        <TextBox x:Name="TextBoxLocation" Text="{Binding Location}" Style="{StaticResource ResourceKey=ReadOnlyTextBox}" IsEnabled="False" Margin="0,0,0,10" />
-        <Button Command="{Binding OpenLocationCommand}" Style="{StaticResource ResourceKey=ImageWithTextButton}" HorizontalAlignment="Right" Margin="0,0,0,20">
+    <StackPanel>
+        <TextBlock Style="{StaticResource ResourceKey=HeaderTextBlock}"
+                   Text="{x:Static Member=localization:Strings.Location}" />
+        <TextBox x:Name="TextBoxLocation" Text="{Binding Location}"
+                 Style="{StaticResource ResourceKey=ReadOnlyTextBox}" IsEnabled="False" Margin="0,0,0,10" />
+        <Button Command="{Binding OpenLocationCommand}" Style="{StaticResource ResourceKey=ImageWithTextButton}"
+                HorizontalAlignment="Right" Margin="0,0,0,20">
             <Button.Content>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Rectangle Grid.Column="0" Grid.Row="0" Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
+                    <Rectangle Grid.Column="0" Grid.Row="0"
+                               Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FolderOpen}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
-                    <TextBlock Grid.Column="1" Text="{x:Static Member=localization:Strings.OpenLocation}" Style="{StaticResource ResourceKey=ButtonWithImageTextBlock}" />
+                    <TextBlock Grid.Column="1" Text="{x:Static Member=localization:Strings.OpenLocation}"
+                               Style="{StaticResource ResourceKey=ButtonWithImageTextBlock}" />
                 </Grid>
             </Button.Content>
         </Button>
-        <DataGrid x:Name="DataGridProfileLocations" ItemsSource="{Binding ProfileFiles}" SelectionMode="Single" SelectedItem="{Binding SelectedProfileFile}" Height="200" Margin="0,0,0,10">
+        <DataGrid x:Name="DataGridProfileLocations" ItemsSource="{Binding ProfileFiles}" SelectionMode="Single"
+                  SelectedItem="{Binding SelectedProfileFile}" Height="200" Margin="0,0,0,10">
             <DataGrid.Resources>
-                <Style TargetType="{x:Type TypeName=ScrollBar}" BasedOn="{StaticResource ResourceKey=DataGridScrollBar}" />
+                <Style TargetType="{x:Type TypeName=ScrollBar}"
+                       BasedOn="{StaticResource ResourceKey=DataGridScrollBar}" />
                 <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
-                <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"  MinWidth="150">
-                    <MenuItem Header="{x:Static Member=localization:Strings.EditDots}" Command="{Binding EditProfileFileCommand}">
+                <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                    <MenuItem Header="{x:Static Member=localization:Strings.EditDots}"
+                              Command="{Binding EditProfileFileCommand}">
                         <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
+                            <Rectangle Width="16" Height="16"
+                                       Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
                                 </Rectangle.OpacityMask>
@@ -51,33 +61,43 @@
                     </MenuItem>
                     <MenuItem Header="{x:Static Member=localization:Strings.EncryptionDots}">
                         <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
+                            <Rectangle Width="16" Height="16"
+                                       Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=KeyVariant}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
-                        <MenuItem Header="{x:Static Member=localization:Strings.EnableEncryptionDots}" Command="{Binding EnableEncryptionCommand}" Visibility="{Binding Data.SelectedProfileFile.IsEncrypted, Source={StaticResource ResourceKey=BindingProxy}, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
+                        <MenuItem Header="{x:Static Member=localization:Strings.EnableEncryptionDots}"
+                                  Command="{Binding EnableEncryptionCommand}"
+                                  Visibility="{Binding Data.SelectedProfileFile.IsEncrypted, Source={StaticResource ResourceKey=BindingProxy}, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
                             <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
+                                <Rectangle Width="16" Height="16"
+                                           Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=KeyVariant}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{x:Static Member=localization:Strings.ChangeMasterPasswordDots}" Command="{Binding ChangeMasterPasswordCommand}" Visibility="{Binding Data.SelectedProfileFile.IsEncrypted, Source={StaticResource ResourceKey=BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                        <MenuItem Header="{x:Static Member=localization:Strings.ChangeMasterPasswordDots}"
+                                  Command="{Binding ChangeMasterPasswordCommand}"
+                                  Visibility="{Binding Data.SelectedProfileFile.IsEncrypted, Source={StaticResource ResourceKey=BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                             <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
+                                <Rectangle Width="16" Height="16"
+                                           Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=KeyVariant}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{x:Static Member=localization:Strings.DisableEncryptionDots}" Command="{Binding DisableEncryptionCommand}" Visibility="{Binding Data.SelectedProfileFile.IsEncrypted, Source={StaticResource ResourceKey=BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                        <MenuItem Header="{x:Static Member=localization:Strings.DisableEncryptionDots}"
+                                  Command="{Binding DisableEncryptionCommand}"
+                                  Visibility="{Binding Data.SelectedProfileFile.IsEncrypted, Source={StaticResource ResourceKey=BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                             <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
+                                <Rectangle Width="16" Height="16"
+                                           Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=KeyVariant}" />
                                     </Rectangle.OpacityMask>
@@ -85,9 +105,11 @@
                             </MenuItem.Icon>
                         </MenuItem>
                     </MenuItem>
-                    <MenuItem Header="{x:Static Member=localization:Strings.Delete}" Command="{Binding DeleteProfileFileCommand}">
+                    <MenuItem Header="{x:Static Member=localization:Strings.Delete}"
+                              Command="{Binding DeleteProfileFileCommand}">
                         <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
+                            <Rectangle Width="16" Height="16"
+                                       Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
                                 </Rectangle.OpacityMask>
@@ -97,19 +119,26 @@
                 </ContextMenu>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static Member=localization:Strings.Name}" Binding="{Binding Path=(profiles:ProfileFileInfo.Name)}" MinWidth="150" Width="Auto" />
-                <DataGridCheckBoxColumn ElementStyle="{StaticResource ResourceKey=MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static Member=localization:Strings.IsEncrypted}" Binding="{Binding Path=(profiles:ProfileFileInfo.IsEncrypted)}" Width="Auto"  />
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.Name}"
+                                    Binding="{Binding Path=(profiles:ProfileFileInfo.Name)}" MinWidth="150"
+                                    Width="Auto" />
+                <DataGridCheckBoxColumn ElementStyle="{StaticResource ResourceKey=MahApps.Styles.CheckBox.DataGrid}"
+                                        Header="{x:Static Member=localization:Strings.IsEncrypted}"
+                                        Binding="{Binding Path=(profiles:ProfileFileInfo.IsEncrypted)}" Width="Auto" />
             </DataGrid.Columns>
             <DataGrid.InputBindings>
                 <KeyBinding Command="{Binding EditProfileFileCommand}" Key="F2" />
                 <KeyBinding Command="{Binding DeleteProfileFileCommand}" Key="Delete" />
             </DataGrid.InputBindings>
             <DataGrid.RowStyle>
-                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource ResourceKey=MahApps.Styles.DataGridRow}">
-                    <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick"     />
+                <Style TargetType="{x:Type DataGridRow}"
+                       BasedOn="{StaticResource ResourceKey=MahApps.Styles.DataGridRow}">
+                    <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TypeName=DataGrid}}}" Value="1" >
-                            <Setter Property="ContextMenu" Value="{StaticResource ResourceKey=RowContextMenu}"/>
+                        <DataTrigger
+                            Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TypeName=DataGrid}}}"
+                            Value="1">
+                            <Setter Property="ContextMenu" Value="{StaticResource ResourceKey=RowContextMenu}" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -118,12 +147,15 @@
         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,0,0,10">
             <Button Command="{Binding DeleteProfileFileCommand}">
                 <Button.Style>
-                    <Style TargetType="{x:Type TypeName=Button}" BasedOn="{StaticResource ResourceKey=ImageWithTextButton}">
-                        <Setter Property="IsEnabled" Value="False"/>
+                    <Style TargetType="{x:Type TypeName=Button}"
+                           BasedOn="{StaticResource ResourceKey=ImageWithTextButton}">
+                        <Setter Property="IsEnabled" Value="False" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=DataGridProfileLocations, Path=SelectedItems.Count}" Value="1">
+                            <DataTrigger
+                                Binding="{Binding ElementName=DataGridProfileLocations, Path=SelectedItems.Count}"
+                                Value="1">
                                 <DataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="True"/>
+                                    <Setter Property="IsEnabled" Value="True" />
                                 </DataTrigger.Setters>
                             </DataTrigger>
                         </Style.Triggers>
@@ -135,26 +167,31 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Rectangle Grid.Column="0" Grid.Row="0" Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
+                        <Rectangle Grid.Column="0" Grid.Row="0"
+                                   Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
                             <Rectangle.OpacityMask>
                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{x:Static Member=localization:Strings.DeleteDots}" Style="{StaticResource ResourceKey=ButtonWithImageTextBlock}" />
+                        <TextBlock Grid.Column="1" Text="{x:Static Member=localization:Strings.DeleteDots}"
+                                   Style="{StaticResource ResourceKey=ButtonWithImageTextBlock}" />
                     </Grid>
                 </Button.Content>
             </Button>
             <Button Command="{Binding EditProfileFileCommand}" Margin="10,0,0,0">
                 <Button.Style>
-                    <Style TargetType="{x:Type TypeName=Button}" BasedOn="{StaticResource ResourceKey=ImageWithTextButton}">
-                        <Setter Property="IsEnabled" Value="False"/>
+                    <Style TargetType="{x:Type TypeName=Button}"
+                           BasedOn="{StaticResource ResourceKey=ImageWithTextButton}">
+                        <Setter Property="IsEnabled" Value="False" />
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding ElementName=DataGridProfileLocations, Path=SelectedItems.Count}" Value="1" />
+                                    <Condition
+                                        Binding="{Binding ElementName=DataGridProfileLocations, Path=SelectedItems.Count}"
+                                        Value="1" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="True"/>
+                                    <Setter Property="IsEnabled" Value="True" />
                                 </MultiDataTrigger.Setters>
                             </MultiDataTrigger>
                         </Style.Triggers>
@@ -166,31 +203,36 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Rectangle Grid.Column="0" Grid.Row="0" Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
+                        <Rectangle Grid.Column="0" Grid.Row="0"
+                                   Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
                             <Rectangle.OpacityMask>
                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{x:Static Member=localization:Strings.EditDots}" Style="{StaticResource ResourceKey=ButtonWithImageTextBlock}" />
+                        <TextBlock Grid.Column="1" Text="{x:Static Member=localization:Strings.EditDots}"
+                                   Style="{StaticResource ResourceKey=ButtonWithImageTextBlock}" />
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button Command="{Binding AddProfileFileCommand}" Style="{StaticResource ResourceKey=ImageWithTextButton}" Margin="10,0,0,0">
+            <Button Command="{Binding AddProfileFileCommand}" Style="{StaticResource ResourceKey=ImageWithTextButton}"
+                    Margin="10,0,0,0">
                 <Button.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Rectangle Grid.Column="0" Grid.Row="0" Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
+                        <Rectangle Grid.Column="0" Grid.Row="0"
+                                   Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
                             <Rectangle.OpacityMask>
                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{x:Static Member=localization:Strings.AddDots}" Style="{StaticResource ResourceKey=ButtonWithImageTextBlock}" />
+                        <TextBlock Grid.Column="1" Text="{x:Static Member=localization:Strings.AddDots}"
+                                   Style="{StaticResource ResourceKey=ButtonWithImageTextBlock}" />
                     </Grid>
                 </Button.Content>
             </Button>
-        </StackPanel>       
+        </StackPanel>
     </StackPanel>
 </UserControl>

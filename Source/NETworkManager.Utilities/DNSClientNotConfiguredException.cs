@@ -12,7 +12,6 @@ public class DNSClientNotConfiguredException : Exception
     /// </summary>
     public DNSClientNotConfiguredException()
     {
-
     }
 
     /// <summary>
@@ -21,6 +20,5 @@ public class DNSClientNotConfiguredException : Exception
     /// <param name="message">Message that is shown, if the <see cref="DNSClient"/> is not configured.</param>
     public DNSClientNotConfiguredException(string message) : base(message)
     {
-
     }
 }

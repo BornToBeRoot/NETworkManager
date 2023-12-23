@@ -17,7 +17,7 @@ public static class ByteHelper
             if (x[i] != y[i])
                 return x[i] - y[i];
         }
-        
+
         return x.Length - y.Length;
     }
 }

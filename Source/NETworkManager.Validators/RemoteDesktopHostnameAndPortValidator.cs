@@ -12,18 +12,22 @@ public class RemoteDesktopHostnameAndPortValidator : ValidationRule
     {
         string hostnameAndPort = (string)value;
 
-        if(hostnameAndPort.Contains(':'))
+        if (hostnameAndPort.Contains(':'))
         {
             string[] hostnameAndPortValues = hostnameAndPort.Split(':');
 
-            if (Regex.IsMatch(hostnameAndPortValues[0], RegexHelper.HostnameOrDomainRegex) && !string.IsNullOrEmpty(hostnameAndPortValues[1]) && Regex.IsMatch(hostnameAndPortValues[1], RegexHelper.PortRegex))
+            if (Regex.IsMatch(hostnameAndPortValues[0], RegexHelper.HostnameOrDomainRegex) &&
+                !string.IsNullOrEmpty(hostnameAndPortValues[1]) &&
+                Regex.IsMatch(hostnameAndPortValues[1], RegexHelper.PortRegex))
                 return ValidationResult.ValidResult;
-            
+
             return new ValidationResult(false, Strings.EnterValidHostnameAndPort);
         }
         else
         {
-            return Regex.IsMatch((string)value, RegexHelper.HostnameOrDomainRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Strings.EnterValidHostname);
+            return Regex.IsMatch((string)value, RegexHelper.HostnameOrDomainRegex)
+                ? ValidationResult.ValidResult
+                : new ValidationResult(false, Strings.EnterValidHostname);
         }
     }
 }

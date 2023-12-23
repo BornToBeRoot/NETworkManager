@@ -9,7 +9,9 @@ public sealed class WiFiChannelCenterFrequencyToFrequencyStringConverter : IValu
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value is not int channelCenterFrequencyInKilohertz ? "-/-" : $"{WiFi.ConvertChannelFrequencyToGigahertz(channelCenterFrequencyInKilohertz)} GHz";
+        return value is not int channelCenterFrequencyInKilohertz
+            ? "-/-"
+            : $"{WiFi.ConvertChannelFrequencyToGigahertz(channelCenterFrequencyInKilohertz)} GHz";
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -12,12 +12,12 @@ public class ARPInfo
     /// IP address of the ARP entry.
     /// </summary>
     public IPAddress IPAddress { get; set; }
-    
+
     /// <summary>
     /// Physical address of the ARP entry.
     /// </summary>
     public PhysicalAddress MACAddress { get; set; }
-    
+
     /// <summary>
     /// Indicates if the ARP entry is a multicast address.
     /// </summary>

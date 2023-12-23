@@ -13,6 +13,7 @@ namespace NETworkManager.ViewModels;
 public class PortScannerSettingsViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly bool _isLoading;
 
     private readonly IDialogCoordinator _dialogCoordinator;
@@ -20,6 +21,7 @@ public class PortScannerSettingsViewModel : ViewModelBase
     public ICollectionView PortProfiles { get; }
 
     private PortProfileInfo _selectedPortProfile = new();
+
     public PortProfileInfo SelectedPortProfile
     {
         get => _selectedPortProfile;
@@ -31,10 +33,10 @@ public class PortScannerSettingsViewModel : ViewModelBase
             _selectedPortProfile = value;
             OnPropertyChanged();
         }
-
     }
 
     private bool _showAllResults;
+
     public bool ShowAllResults
     {
         get => _showAllResults;
@@ -52,6 +54,7 @@ public class PortScannerSettingsViewModel : ViewModelBase
     }
 
     private int _timeout;
+
     public int Timeout
     {
         get => _timeout;
@@ -69,6 +72,7 @@ public class PortScannerSettingsViewModel : ViewModelBase
     }
 
     private bool _resolveHostname;
+
     public bool ResolveHostname
     {
         get => _resolveHostname;
@@ -86,6 +90,7 @@ public class PortScannerSettingsViewModel : ViewModelBase
     }
 
     private int _maxHostThreads;
+
     public int MaxHostThreads
     {
         get => _maxHostThreads;
@@ -103,6 +108,7 @@ public class PortScannerSettingsViewModel : ViewModelBase
     }
 
     private int _maxPortThreads;
+
     public int MaxPortThreads
     {
         get => _maxPortThreads;
@@ -118,9 +124,11 @@ public class PortScannerSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, load settings
+
     public PortScannerSettingsViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
@@ -128,7 +136,8 @@ public class PortScannerSettingsViewModel : ViewModelBase
         _dialogCoordinator = instance;
 
         PortProfiles = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_PortProfiles);
-        PortProfiles.SortDescriptions.Add(new SortDescription(nameof(PortProfileInfo.Name), ListSortDirection.Ascending));
+        PortProfiles.SortDescriptions.Add(
+            new SortDescription(nameof(PortProfileInfo.Name), ListSortDirection.Ascending));
 
         LoadSettings();
 
@@ -143,9 +152,11 @@ public class PortScannerSettingsViewModel : ViewModelBase
         MaxHostThreads = SettingsManager.Current.PortScanner_MaxHostThreads;
         MaxPortThreads = SettingsManager.Current.PortScanner_MaxPortThreads;
     }
+
     #endregion
 
     #region ICommand & Actions
+
     public ICommand AddPortProfileCommand => new RelayCommand(_ => AddPortProfileAction());
 
     private void AddPortProfileAction()
@@ -166,6 +177,7 @@ public class PortScannerSettingsViewModel : ViewModelBase
     {
         DeletePortProfile().ConfigureAwait(false);
     }
+
     #endregion
 
     #region Methods
@@ -182,10 +194,7 @@ public class PortScannerSettingsViewModel : ViewModelBase
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
             SettingsManager.Current.PortScanner_PortProfiles.Add(new PortProfileInfo(instance.Name, instance.Ports));
-        }, async _ =>
-        {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        });
+        }, async _ => { await _dialogCoordinator.HideMetroDialogAsync(this, customDialog); });
 
         customDialog.Content = new PortProfileDialog
         {
@@ -203,15 +212,14 @@ public class PortScannerSettingsViewModel : ViewModelBase
         };
 
         var viewModel = new PortProfileViewModel(async instance =>
-        {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            SettingsManager.Current.PortScanner_PortProfiles.Remove(SelectedPortProfile);
-            SettingsManager.Current.PortScanner_PortProfiles.Add(new PortProfileInfo(instance.Name, instance.Ports));
-        }, async _ =>
-        {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, true, SelectedPortProfile);
+                SettingsManager.Current.PortScanner_PortProfiles.Remove(SelectedPortProfile);
+                SettingsManager.Current.PortScanner_PortProfiles.Add(new PortProfileInfo(instance.Name,
+                    instance.Ports));
+            }, async _ => { await _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, true,
+            SelectedPortProfile);
 
         customDialog.Content = new PortProfileDialog
         {
@@ -229,14 +237,12 @@ public class PortScannerSettingsViewModel : ViewModelBase
         };
 
         var confirmDeleteViewModel = new ConfirmDeleteViewModel(async _ =>
-        {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-            SettingsManager.Current.PortScanner_PortProfiles.Remove(SelectedPortProfile);
-        }, async _ =>
-        {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, Localization.Resources.Strings.DeletePortProfileMessage);
+                SettingsManager.Current.PortScanner_PortProfiles.Remove(SelectedPortProfile);
+            }, async _ => { await _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
+            Localization.Resources.Strings.DeletePortProfileMessage);
 
         customDialog.Content = new ConfirmDeleteDialog
         {
@@ -245,5 +251,6 @@ public class PortScannerSettingsViewModel : ViewModelBase
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
+
     #endregion
 }

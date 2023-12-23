@@ -11,17 +11,22 @@ namespace NETworkManager.Models.Network;
 public sealed class SNTPLookup
 {
     #region Variables
+
     private readonly SNTPLookupSettings _settings;
+
     #endregion
 
     #region Constructor
+
     public SNTPLookup(SNTPLookupSettings settings)
     {
         _settings = settings;
     }
+
     #endregion
 
     #region Events
+
     public event EventHandler<SNTPLookupResultArgs> ResultReceived;
 
     private void OnResultReceived(SNTPLookupResultArgs e)
@@ -42,6 +47,7 @@ public sealed class SNTPLookup
     {
         LookupComplete?.Invoke(this, EventArgs.Empty);
     }
+
     #endregion
 
     #region Methods
@@ -73,7 +79,8 @@ public sealed class SNTPLookup
 
         // Calculate local offset with local start/end time and network time in seconds            
         var roundTripDelayTicks = localEndTime.Ticks - localStartTime.Ticks;
-        var offsetInSeconds = (localStartTime.Ticks + (roundTripDelayTicks / 2) - networkTime.Ticks) / TimeSpan.TicksPerSecond;
+        var offsetInSeconds = (localStartTime.Ticks + (roundTripDelayTicks / 2) - networkTime.Ticks) /
+                              TimeSpan.TicksPerSecond;
 
         return new SNTPDateTime
         {
@@ -94,20 +101,23 @@ public sealed class SNTPLookup
                 // NTP requires an IP address to connect to
                 IPAddress serverIP = null;
 
-                if (Regex.IsMatch(server.Server, RegexHelper.IPv4AddressRegex) || Regex.IsMatch(server.Server, RegexHelper.IPv6AddressRegex))
+                if (Regex.IsMatch(server.Server, RegexHelper.IPv4AddressRegex) ||
+                    Regex.IsMatch(server.Server, RegexHelper.IPv6AddressRegex))
                 {
                     serverIP = IPAddress.Parse(server.Server);
                 }
                 else
                 {
-                    using var dnsResolverTask = DNSClientHelper.ResolveAorAaaaAsync(server.Server, dnsResolveHostnamePreferIPv4);
+                    using var dnsResolverTask =
+                        DNSClientHelper.ResolveAorAaaaAsync(server.Server, dnsResolveHostnamePreferIPv4);
 
                     // Wait for task inside a Parallel.Foreach
                     dnsResolverTask.Wait();
 
                     if (dnsResolverTask.Result.HasError)
                     {
-                        OnLookupError(new SNTPLookupErrorArgs(DNSClientHelper.FormatDNSClientResultError(server.Server, dnsResolverTask.Result), true));
+                        OnLookupError(new SNTPLookupErrorArgs(
+                            DNSClientHelper.FormatDNSClientResultError(server.Server, dnsResolverTask.Result), true));
                         return;
                     }
 
@@ -130,5 +140,6 @@ public sealed class SNTPLookup
             OnLookupComplete();
         });
     }
-    #endregion                
+
+    #endregion
 }

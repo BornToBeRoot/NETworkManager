@@ -5,9 +5,11 @@ namespace NETworkManager.ViewModels;
 public class SettingsNetworkViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly bool _isLoading;
 
     private bool _useCustomDNSServer;
+
     public bool UseCustomDNSServer
     {
         get => _useCustomDNSServer;
@@ -26,6 +28,7 @@ public class SettingsNetworkViewModel : ViewModelBase
 
 
     private string _customDNSServer;
+
     public string CustomDNSServer
     {
         get => _customDNSServer;
@@ -43,6 +46,7 @@ public class SettingsNetworkViewModel : ViewModelBase
     }
 
     private bool _resolveHostnamePreferIPv4;
+
     public bool ResolveHostnamePreferIPv4
     {
         get => _resolveHostnamePreferIPv4;
@@ -60,6 +64,7 @@ public class SettingsNetworkViewModel : ViewModelBase
     }
 
     private bool _resolveHostnamePreferIPv6;
+
     public bool ResolveHostnamePreferIPv6
     {
         get => _resolveHostnamePreferIPv6;
@@ -72,9 +77,11 @@ public class SettingsNetworkViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, LoadSettings
+
     public SettingsNetworkViewModel()
     {
         _isLoading = true;
@@ -96,5 +103,6 @@ public class SettingsNetworkViewModel : ViewModelBase
         else
             ResolveHostnamePreferIPv6 = true;
     }
+
     #endregion
 }

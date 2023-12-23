@@ -24,7 +24,7 @@ public class DiscoveryProtocolPackageInfo
     /// Port description.
     /// </summary>
     public string PortDescription { get; init; }
-    
+
     /// <summary>
     /// Device model.
     /// </summary>
@@ -75,6 +75,5 @@ public class DiscoveryProtocolPackageInfo
     /// </summary>
     public DiscoveryProtocolPackageInfo()
     {
-
     }
 }

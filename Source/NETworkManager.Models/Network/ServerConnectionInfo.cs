@@ -27,7 +27,6 @@ public class ServerConnectionInfo
     /// </summary>
     public ServerConnectionInfo()
     {
-        
     }
 
     /// <summary>

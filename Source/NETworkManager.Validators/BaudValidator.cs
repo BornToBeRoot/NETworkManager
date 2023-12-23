@@ -9,7 +9,8 @@ public class BaudValidator : ValidationRule
     /// <summary>
     /// Possible baud rates.
     /// </summary>
-    private readonly int[] _bauds = { 300, 600, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200, 128000, 256000, 512000, 921600 };
+    private readonly int[] _bauds =
+        { 300, 600, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200, 128000, 256000, 512000, 921600 };
 
     /// <summary>
     /// Check if the int is a valid baud rate.
@@ -22,6 +23,8 @@ public class BaudValidator : ValidationRule
         if (!int.TryParse(value as string, out var baud))
             return new ValidationResult(false, Localization.Resources.Strings.EnterValidBaud);
 
-        return _bauds.Contains(baud) ? ValidationResult.ValidResult : new ValidationResult(false, Localization.Resources.Strings.EnterValidBaud);
+        return _bauds.Contains(baud)
+            ? ValidationResult.ValidResult
+            : new ValidationResult(false, Localization.Resources.Strings.EnterValidBaud);
     }
 }

@@ -14,7 +14,7 @@ public partial class LvlChartsPingTimeTooltip : IChartTooltip
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
-  
+
     private TooltipData _data;
 
     public TooltipData Data
@@ -22,17 +22,17 @@ public partial class LvlChartsPingTimeTooltip : IChartTooltip
         get { return _data; }
         set
         {
-            _data = value;                                
+            _data = value;
             OnPropertyChanged();
         }
     }
 
     public TooltipSelectionMode? SelectionMode { get; set; }
-            
+
     public LvlChartsPingTimeTooltip()
     {
         InitializeComponent();
-        
+
         DataContext = this;
-    }        
+    }
 }

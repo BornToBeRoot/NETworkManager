@@ -14,6 +14,7 @@ public class SNMPOIDProfilesViewModel : ViewModelBase
     public ICommand CancelCommand { get; }
 
     private string _search;
+
     public string Search
     {
         get => _search;
@@ -33,6 +34,7 @@ public class SNMPOIDProfilesViewModel : ViewModelBase
     public ICollectionView OIDProfiles { get; }
 
     private SNMPOIDProfileInfo _selectedOIDProfile;
+
     public SNMPOIDProfileInfo SelectedOIDProfile
     {
         get => _selectedOIDProfile;
@@ -46,13 +48,15 @@ public class SNMPOIDProfilesViewModel : ViewModelBase
         }
     }
 
-    public SNMPOIDProfilesViewModel(Action<SNMPOIDProfilesViewModel> okCommand, Action<SNMPOIDProfilesViewModel> cancelHandler)
+    public SNMPOIDProfilesViewModel(Action<SNMPOIDProfilesViewModel> okCommand,
+        Action<SNMPOIDProfilesViewModel> cancelHandler)
     {
         OKCommand = new RelayCommand(_ => okCommand(this));
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
         OIDProfiles = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_OidProfiles);
-        OIDProfiles.SortDescriptions.Add(new SortDescription(nameof(SNMPOIDProfileInfo.Name), ListSortDirection.Ascending));
+        OIDProfiles.SortDescriptions.Add(new SortDescription(nameof(SNMPOIDProfileInfo.Name),
+            ListSortDirection.Ascending));
         OIDProfiles.Filter = o =>
         {
             if (string.IsNullOrEmpty(Search))
@@ -64,7 +68,8 @@ public class SNMPOIDProfilesViewModel : ViewModelBase
             var search = Search.Trim();
 
             // Search: Name, OID
-            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.OID.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
+            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.OID.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
     }
 }

@@ -13,6 +13,5 @@ public class NetworkInterfaceConfig
 
     public NetworkInterfaceConfig()
     {
-
-    }        
+    }
 }

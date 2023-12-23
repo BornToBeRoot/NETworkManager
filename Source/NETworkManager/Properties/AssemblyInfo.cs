@@ -7,6 +7,6 @@ using System.Windows;
 [assembly: AssemblyProduct("NETworkManager")]
 [assembly: ComVisible(false)]
 [assembly: ThemeInfo(
-    ResourceDictionaryLocation.None, 
+    ResourceDictionaryLocation.None,
     ResourceDictionaryLocation.SourceAssembly
 )]

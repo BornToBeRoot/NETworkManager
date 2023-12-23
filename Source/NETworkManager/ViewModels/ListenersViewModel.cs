@@ -22,12 +22,14 @@ namespace NETworkManager.ViewModels;
 public class ListenersViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly bool _isLoading;
     private readonly DispatcherTimer _autoRefreshTimer = new();
 
     private string _search;
+
     public string Search
     {
         get => _search;
@@ -45,6 +47,7 @@ public class ListenersViewModel : ViewModelBase
     }
 
     private ObservableCollection<ListenerInfo> _results = new();
+
     public ObservableCollection<ListenerInfo> Results
     {
         get => _results;
@@ -61,6 +64,7 @@ public class ListenersViewModel : ViewModelBase
     public ICollectionView ResultsView { get; }
 
     private ListenerInfo _selectedResult;
+
     public ListenerInfo SelectedResult
     {
         get => _selectedResult;
@@ -75,6 +79,7 @@ public class ListenersViewModel : ViewModelBase
     }
 
     private IList _selectedResults = new ArrayList();
+
     public IList SelectedResults
     {
         get => _selectedResults;
@@ -89,6 +94,7 @@ public class ListenersViewModel : ViewModelBase
     }
 
     private bool _autoRefreshEnabled;
+
     public bool AutoRefreshEnabled
     {
         get => _autoRefreshEnabled;
@@ -120,6 +126,7 @@ public class ListenersViewModel : ViewModelBase
     public ICollectionView AutoRefreshTimes { get; }
 
     private AutoRefreshTimeInfo _selectedAutoRefreshTime;
+
     public AutoRefreshTimeInfo SelectedAutoRefreshTime
     {
         get => _selectedAutoRefreshTime;
@@ -144,6 +151,7 @@ public class ListenersViewModel : ViewModelBase
     }
 
     private bool _isRefreshing;
+
     public bool IsRefreshing
     {
         get => _isRefreshing;
@@ -158,6 +166,7 @@ public class ListenersViewModel : ViewModelBase
     }
 
     private bool _isStatusMessageDisplayed;
+
     public bool IsStatusMessageDisplayed
     {
         get => _isStatusMessageDisplayed;
@@ -172,6 +181,7 @@ public class ListenersViewModel : ViewModelBase
     }
 
     private string _statusMessage;
+
     public string StatusMessage
     {
         get => _statusMessage;
@@ -184,9 +194,11 @@ public class ListenersViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Contructor, load settings
+
     public ListenersViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
@@ -195,10 +207,10 @@ public class ListenersViewModel : ViewModelBase
 
         // Result view + search
         ResultsView = CollectionViewSource.GetDefaultView(Results);
-        
+
         ((ListCollectionView)ResultsView).CustomSort = Comparer<ListenerInfo>.Create((x, y) =>
             IPAddressHelper.CompareIPAddresses(x.IPAddress, y.IPAddress));
-        
+
         ResultsView.Filter = o =>
         {
             if (o is not ListenerInfo info)
@@ -208,7 +220,9 @@ public class ListenersViewModel : ViewModelBase
                 return true;
 
             // Search by IP Address, Port and Protocol
-            return info.IPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.Port.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.Protocol.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
+            return info.IPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.Port.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.Protocol.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
         // Get listeners
@@ -218,17 +232,22 @@ public class ListenersViewModel : ViewModelBase
         _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
 
         AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
-        SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => x.Value == SettingsManager.Current.Listeners_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.Listeners_AutoRefreshTime.TimeUnit);
+        SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x =>
+            x.Value == SettingsManager.Current.Listeners_AutoRefreshTime.Value &&
+            x.TimeUnit == SettingsManager.Current.Listeners_AutoRefreshTime.TimeUnit);
         AutoRefreshEnabled = SettingsManager.Current.Listeners_AutoRefreshEnabled;
 
         _isLoading = false;
     }
+
     #endregion
 
     #region ICommands & Actions
+
     public ICommand RefreshCommand => new RelayCommand(_ => RefreshAction().ConfigureAwait(false), Refresh_CanExecute);
 
-    private bool Refresh_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool Refresh_CanExecute(object parameter) => Application.Current.MainWindow != null &&
+                                                         !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
     private async Task RefreshAction()
     {
@@ -252,22 +271,24 @@ public class ListenersViewModel : ViewModelBase
 
             try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? Results : new ObservableCollection<ListenerInfo>(SelectedResults.Cast<ListenerInfo>().ToArray()));
+                ExportManager.Export(instance.FilePath, instance.FileType,
+                    instance.ExportAll
+                        ? Results
+                        : new ObservableCollection<ListenerInfo>(SelectedResults.Cast<ListenerInfo>().ToArray()));
             }
             catch (Exception ex)
             {
                 var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error,
+                    Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
             }
 
             SettingsManager.Current.Listeners_ExportFileType = instance.FileType;
             SettingsManager.Current.Listeners_ExportFilePath = instance.FilePath;
-        }, _ =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, new[]
+        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new[]
         {
             ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
         }, true, SettingsManager.Current.Listeners_ExportFileType, SettingsManager.Current.Listeners_ExportFilePath);
@@ -279,9 +300,11 @@ public class ListenersViewModel : ViewModelBase
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
+
     #endregion
 
     #region Methods
+
     private async Task Refresh()
     {
         IsRefreshing = true;
@@ -306,9 +329,11 @@ public class ListenersViewModel : ViewModelBase
         if (AutoRefreshEnabled)
             _autoRefreshTimer.Stop();
     }
+
     #endregion
 
     #region Events
+
     private async void AutoRefreshTimer_Tick(object sender, EventArgs e)
     {
         // Stop timer...
@@ -320,5 +345,6 @@ public class ListenersViewModel : ViewModelBase
         // Restart timer...
         _autoRefreshTimer.Start();
     }
+
     #endregion
 }

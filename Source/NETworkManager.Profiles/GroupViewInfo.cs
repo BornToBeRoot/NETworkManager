@@ -11,7 +11,6 @@ public class GroupViewInfo
 
     public GroupViewInfo()
     {
-        
     }
 
     public GroupViewInfo(GroupViewName name, Canvas icon)

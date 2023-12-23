@@ -8,10 +8,10 @@ namespace NETworkManager.Models.Network;
 public partial class Listener
 {
     #region Methods
+
     public static Task<List<ListenerInfo>> GetAllActiveListenersAsync()
     {
         return Task.Run(() => GetAllActiveListeners());
-
     }
 
     public static List<ListenerInfo> GetAllActiveListeners()

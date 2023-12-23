@@ -10,23 +10,23 @@ public enum ExecutionPolicy
     /// interactive mode.
     /// </summary>
     Restricted,
-    
+
     /// <summary>
     /// AllSigned execution policy. Scripts can be run only if they are signed by a trusted publisher.
     /// </summary>
     AllSigned,
-    
+
     /// <summary>
     /// RemoteSigned execution policy. Scripts can be run only if they are signed by a trusted publisher
     /// or if they were written on the local computer.
     /// </summary>
     RemoteSigned,
-    
+
     /// <summary>
     /// Unrestricted execution policy. No restrictions; all Windows PowerShell scripts can be run.
     /// </summary>
     Unrestricted,
-    
+
     /// <summary>
     /// Bypass execution policy. Nothing is blocked and there are no warnings or prompts.
     /// </summary>

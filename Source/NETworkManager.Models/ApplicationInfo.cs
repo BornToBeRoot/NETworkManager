@@ -20,7 +20,6 @@ public class ApplicationInfo
     /// </summary>
     public ApplicationInfo()
     {
-
     }
 
     /// <summary>

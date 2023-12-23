@@ -21,9 +21,11 @@ public sealed class PortOpenToStringConverter : IValueConverter
     /// <returns>Translated <see cref="PortState"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value is not bool portState ? "-/-" : ResourceTranslator.Translate(ResourceIdentifier.PortState, portState ? PortState.Open : PortState.Closed);
+        return value is not bool portState
+            ? "-/-"
+            : ResourceTranslator.Translate(ResourceIdentifier.PortState, portState ? PortState.Open : PortState.Closed);
     }
-    
+
     /// <summary>
     /// !!! Method not implemented !!!
     /// </summary>

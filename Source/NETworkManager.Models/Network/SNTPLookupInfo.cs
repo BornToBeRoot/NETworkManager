@@ -6,12 +6,12 @@ public class SNTPLookupInfo
     /// SNTP server used for the lookup.
     /// </summary>
     public string Server { get; set; }
-    
+
     /// <summary>
     /// IP endpoint (IP address:port) of the SNTP server.
     /// </summary>
     public string IPEndPoint { get; set; }
-    
+
     /// <summary>
     /// Date and time received from the SNTP server.
     /// </summary>
@@ -27,6 +27,6 @@ public class SNTPLookupInfo
     {
         Server = server;
         IPEndPoint = ipEndPoint;
-        DateTime = dateTime;            
+        DateTime = dateTime;
     }
 }

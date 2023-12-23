@@ -15,6 +15,7 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
     public ICommand CancelCommand { get; }
 
     private bool _connectAs;
+
     public bool ConnectAs
     {
         get => _connectAs;
@@ -29,6 +30,7 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
     }
 
     private string _name;
+
     public string Name
     {
         get => _name;
@@ -43,6 +45,7 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
     }
 
     private string _host;
+
     public string Host
     {
         get => _host;
@@ -59,6 +62,7 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
     public ICollectionView HostHistoryView { get; }
 
     private bool _useCredentials;
+
     public bool UseCredentials
     {
         get => _useCredentials;
@@ -73,6 +77,7 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
     }
 
     private string _username;
+
     public string Username
     {
         get => _username;
@@ -87,6 +92,7 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
     }
 
     private string _domain;
+
     public string Domain
     {
         get => _domain;
@@ -101,6 +107,7 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
     }
 
     private SecureString _password = new();
+
     public SecureString Password
     {
         get => _password;
@@ -118,6 +125,7 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
     }
 
     private bool _isPasswordEmpty = true;
+
     public bool IsPasswordEmpty
     {
         get => _isPasswordEmpty;
@@ -131,7 +139,8 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
         }
     }
 
-    public RemoteDesktopConnectViewModel(Action<RemoteDesktopConnectViewModel> connectCommand, Action<RemoteDesktopConnectViewModel> cancelHandler,(string Name, string Host)? connectAsOptions = null)
+    public RemoteDesktopConnectViewModel(Action<RemoteDesktopConnectViewModel> connectCommand,
+        Action<RemoteDesktopConnectViewModel> cancelHandler, (string Name, string Host)? connectAsOptions = null)
     {
         ConnectCommand = new RelayCommand(_ => connectCommand(this));
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
@@ -145,7 +154,7 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
             ConnectAs = true;
 
             UseCredentials = true;
-            
+
             Name = connectAsOptions.Value.Name;
             Host = connectAsOptions.Value.Host;
         }

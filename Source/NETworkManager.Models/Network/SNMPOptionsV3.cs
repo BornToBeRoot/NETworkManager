@@ -51,14 +51,16 @@ namespace NETworkManager.Models.Network
         /// <param name="port">Port to use for SNMP requests.</param>
         /// <param name="walkMode">Walk mode.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
-        public SNMPOptionsV3(SNMPV3Security security, string username, SNMPV3AuthenticationProvider authProvider, SecureString auth, SNMPV3PrivacyProvider privProvider, SecureString priv, int port, WalkMode walkMode, CancellationToken cancellationToken) : base(SNMPVersion.V3, port, walkMode, cancellationToken)
-        {            
+        public SNMPOptionsV3(SNMPV3Security security, string username, SNMPV3AuthenticationProvider authProvider,
+            SecureString auth, SNMPV3PrivacyProvider privProvider, SecureString priv, int port, WalkMode walkMode,
+            CancellationToken cancellationToken) : base(SNMPVersion.V3, port, walkMode, cancellationToken)
+        {
             Security = security;
             Username = username;
             AuthProvider = authProvider;
             Auth = auth;
             PrivProvider = privProvider;
-            Priv = priv;            
+            Priv = priv;
         }
     }
 }

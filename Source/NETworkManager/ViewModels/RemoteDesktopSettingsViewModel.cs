@@ -8,9 +8,11 @@ namespace NETworkManager.ViewModels;
 public class RemoteDesktopSettingsViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly bool _isLoading;
 
     private bool _adjustScreenAutomatically;
+
     public bool AdjustScreenAutomatically
     {
         get => _adjustScreenAutomatically;
@@ -28,6 +30,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     private bool _useCurrentViewSize;
+
     public bool UseCurrentViewSize
     {
         get => _useCurrentViewSize;
@@ -45,6 +48,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     private bool _useFixedScreenSize;
+
     public bool UseFixedScreenSize
     {
         get => _useFixedScreenSize;
@@ -64,6 +68,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     public List<string> ScreenResolutions => RemoteDesktop.ScreenResolutions;
 
     private string _selectedScreenResolution;
+
     public string SelectedScreenResolution
     {
         get => _selectedScreenResolution;
@@ -86,6 +91,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     private bool _useCustomScreenSize;
+
     public bool UseCustomScreenSize
     {
         get => _useCustomScreenSize;
@@ -103,6 +109,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     private string _customScreenWidth;
+
     public string CustomScreenWidth
     {
         get => _customScreenWidth;
@@ -120,6 +127,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     private string _customScreenHeight;
+
     public string CustomScreenHeight
     {
         get => _customScreenHeight;
@@ -139,6 +147,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     public List<int> ColorDepths => RemoteDesktop.ColorDepths;
 
     private int _selectedColorDepth;
+
     public int SelectedColorDepth
     {
         get => _selectedColorDepth;
@@ -156,6 +165,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     private int _port;
+
     public int Port
     {
         get => _port;
@@ -173,6 +183,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     private bool _enableCredSspSupport;
+
     public bool EnableCredSspSupport
     {
         get => _enableCredSspSupport;
@@ -190,6 +201,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     private uint _authenticationLevel;
+
     public uint AuthenticationLevel
     {
         get => _authenticationLevel;
@@ -207,6 +219,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     private bool _enableGatewayServer;
+
     public bool EnableGatewayServer
     {
         get => _enableGatewayServer;
@@ -224,6 +237,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     private string _gatewayServerHostname;
+
     public string GatewayServerHostname
     {
         get => _gatewayServerHostname;
@@ -241,6 +255,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     private bool _gatewayServerBypassLocalAddresses;
+
     public bool GatewayServerBypassLocalAddresses
     {
         get => _gatewayServerBypassLocalAddresses;
@@ -257,7 +272,8 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
         }
     }
 
-    public IEnumerable<GatewayUserSelectedCredsSource> GatewayServerLogonMethods => System.Enum.GetValues(typeof(GatewayUserSelectedCredsSource)).Cast<GatewayUserSelectedCredsSource>();
+    public IEnumerable<GatewayUserSelectedCredsSource> GatewayServerLogonMethods => System.Enum
+        .GetValues(typeof(GatewayUserSelectedCredsSource)).Cast<GatewayUserSelectedCredsSource>();
 
     private GatewayUserSelectedCredsSource _gatewayServerLogonMethod;
 
@@ -266,7 +282,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
         get => _gatewayServerLogonMethod;
         set
         {
-            if (Equals(value, _gatewayServerLogonMethod))                
+            if (Equals(value, _gatewayServerLogonMethod))
                 return;
 
             if (!_isLoading)
@@ -278,6 +294,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     private bool _gatewayServerShareCredentialsWithRemoteComputer;
+
     public bool GatewayServerShareCredentialsWithRemoteComputer
     {
         get => _gatewayServerShareCredentialsWithRemoteComputer;
@@ -294,9 +311,11 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
         }
     }
 
-    public IEnumerable<AudioRedirectionMode> AudioRedirectionModes => System.Enum.GetValues(typeof(AudioRedirectionMode)).Cast<AudioRedirectionMode>();
+    public IEnumerable<AudioRedirectionMode> AudioRedirectionModes =>
+        System.Enum.GetValues(typeof(AudioRedirectionMode)).Cast<AudioRedirectionMode>();
 
     private AudioRedirectionMode _audioRedirectionMode;
+
     public AudioRedirectionMode AudioRedirectionMode
     {
         get => _audioRedirectionMode;
@@ -313,9 +332,11 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
         }
     }
 
-    public IEnumerable<AudioCaptureRedirectionMode> AudioCaptureRedirectionModes => System.Enum.GetValues(typeof(AudioCaptureRedirectionMode)).Cast<AudioCaptureRedirectionMode>();
+    public IEnumerable<AudioCaptureRedirectionMode> AudioCaptureRedirectionModes => System.Enum
+        .GetValues(typeof(AudioCaptureRedirectionMode)).Cast<AudioCaptureRedirectionMode>();
 
     private AudioCaptureRedirectionMode _audioCaptureRedirectionMode;
+
     public AudioCaptureRedirectionMode AudioCaptureRedirectionMode
     {
         get => _audioCaptureRedirectionMode;
@@ -332,9 +353,11 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
         }
     }
 
-    public IEnumerable<KeyboardHookMode> KeyboardHookModes => System.Enum.GetValues(typeof(KeyboardHookMode)).Cast<KeyboardHookMode>();
+    public IEnumerable<KeyboardHookMode> KeyboardHookModes =>
+        System.Enum.GetValues(typeof(KeyboardHookMode)).Cast<KeyboardHookMode>();
 
     private KeyboardHookMode _keyboardHookMode;
+
     public KeyboardHookMode KeyboardHookMode
     {
         get => _keyboardHookMode;
@@ -352,6 +375,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     private bool _redirectClipboard;
+
     public bool RedirectClipboard
     {
         get => _redirectClipboard;
@@ -369,6 +393,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     private bool _redirectDevices;
+
     public bool RedirectDevices
     {
         get => _redirectDevices;
@@ -386,6 +411,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     private bool _redirectDrives;
+
     public bool RedirectDrives
     {
         get => _redirectDrives;
@@ -403,6 +429,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     private bool _redirectPorts;
+
     public bool RedirectPorts
     {
         get => _redirectPorts;
@@ -420,6 +447,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     private bool _redirectSmartCards;
+
     public bool RedirectSmartCards
     {
         get => _redirectSmartCards;
@@ -437,6 +465,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     private bool _redirectPrinters;
+
     public bool RedirectPrinters
     {
         get => _redirectPrinters;
@@ -454,6 +483,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     private bool _persistentBitmapCaching;
+
     public bool PersistentBitmapCaching
     {
         get => _persistentBitmapCaching;
@@ -471,6 +501,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     private bool _reconnectIfTheConnectionIsDropped;
+
     public bool ReconnectIfTheConnectionIsDropped
     {
         get => _reconnectIfTheConnectionIsDropped;
@@ -486,9 +517,12 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    public IEnumerable<NetworkConnectionType> NetworkConnectionTypes => System.Enum.GetValues(typeof(NetworkConnectionType)).Cast<NetworkConnectionType>();
+
+    public IEnumerable<NetworkConnectionType> NetworkConnectionTypes =>
+        System.Enum.GetValues(typeof(NetworkConnectionType)).Cast<NetworkConnectionType>();
 
     private NetworkConnectionType _networkConnectionType;
+
     public NetworkConnectionType NetworkConnectionType
     {
         get => _networkConnectionType;
@@ -509,6 +543,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     private bool _desktopBackground;
+
     public bool DesktopBackground
     {
         get => _desktopBackground;
@@ -526,6 +561,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     private bool _fontSmoothing;
+
     public bool FontSmoothing
     {
         get => _fontSmoothing;
@@ -543,6 +579,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     private bool _desktopComposition;
+
     public bool DesktopComposition
     {
         get => _desktopComposition;
@@ -560,6 +597,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     private bool _showWindowContentsWhileDragging;
+
     public bool ShowWindowContentsWhileDragging
     {
         get => _showWindowContentsWhileDragging;
@@ -577,6 +615,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     private bool _menuAndWindowAnimation;
+
     public bool MenuAndWindowAnimation
     {
         get => _menuAndWindowAnimation;
@@ -594,6 +633,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     }
 
     private bool _visualStyles;
+
     public bool VisualStyles
     {
         get => _visualStyles;
@@ -609,9 +649,11 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, load settings
+
     public RemoteDesktopSettingsViewModel()
     {
         _isLoading = true;
@@ -626,7 +668,9 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
         AdjustScreenAutomatically = SettingsManager.Current.RemoteDesktop_AdjustScreenAutomatically;
         UseCurrentViewSize = SettingsManager.Current.RemoteDesktop_UseCurrentViewSize;
         UseFixedScreenSize = SettingsManager.Current.RemoteDesktop_UseFixedScreenSize;
-        SelectedScreenResolution = ScreenResolutions.FirstOrDefault(x => x == $"{SettingsManager.Current.RemoteDesktop_ScreenWidth}x{SettingsManager.Current.RemoteDesktop_ScreenHeight}");
+        SelectedScreenResolution = ScreenResolutions.FirstOrDefault(x =>
+            x ==
+            $"{SettingsManager.Current.RemoteDesktop_ScreenWidth}x{SettingsManager.Current.RemoteDesktop_ScreenHeight}");
         UseCustomScreenSize = SettingsManager.Current.RemoteDesktop_UseCustomScreenSize;
         CustomScreenWidth = SettingsManager.Current.RemoteDesktop_CustomScreenWidth.ToString();
         CustomScreenHeight = SettingsManager.Current.RemoteDesktop_CustomScreenHeight.ToString();
@@ -637,11 +681,17 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
         EnableGatewayServer = SettingsManager.Current.RemoteDesktop_EnableGatewayServer;
         GatewayServerHostname = SettingsManager.Current.RemoteDesktop_GatewayServerHostname;
         GatewayServerBypassLocalAddresses = SettingsManager.Current.RemoteDesktop_GatewayServerBypassLocalAddresses;
-        GatewayServerLogonMethod = GatewayServerLogonMethods.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_GatewayServerLogonMethod);
-        GatewayServerShareCredentialsWithRemoteComputer = SettingsManager.Current.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
-        AudioRedirectionMode = AudioRedirectionModes.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_AudioRedirectionMode);
-        AudioCaptureRedirectionMode = AudioCaptureRedirectionModes.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_AudioCaptureRedirectionMode);
-        KeyboardHookMode = KeyboardHookModes.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_KeyboardHookMode);
+        GatewayServerLogonMethod =
+            GatewayServerLogonMethods.FirstOrDefault(x =>
+                x == SettingsManager.Current.RemoteDesktop_GatewayServerLogonMethod);
+        GatewayServerShareCredentialsWithRemoteComputer =
+            SettingsManager.Current.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+        AudioRedirectionMode =
+            AudioRedirectionModes.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_AudioRedirectionMode);
+        AudioCaptureRedirectionMode = AudioCaptureRedirectionModes.FirstOrDefault(x =>
+            x == SettingsManager.Current.RemoteDesktop_AudioCaptureRedirectionMode);
+        KeyboardHookMode =
+            KeyboardHookModes.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_KeyboardHookMode);
         RedirectClipboard = SettingsManager.Current.RemoteDesktop_RedirectClipboard;
         RedirectDevices = SettingsManager.Current.RemoteDesktop_RedirectDevices;
         RedirectDrives = SettingsManager.Current.RemoteDesktop_RedirectDrives;
@@ -650,7 +700,9 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
         RedirectPrinters = SettingsManager.Current.RemoteDesktop_RedirectPrinters;
         PersistentBitmapCaching = SettingsManager.Current.RemoteDesktop_PersistentBitmapCaching;
         ReconnectIfTheConnectionIsDropped = SettingsManager.Current.RemoteDesktop_ReconnectIfTheConnectionIsDropped;
-        NetworkConnectionType = NetworkConnectionTypes.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_NetworkConnectionType);
+        NetworkConnectionType =
+            NetworkConnectionTypes.FirstOrDefault(x =>
+                x == SettingsManager.Current.RemoteDesktop_NetworkConnectionType);
         DesktopBackground = SettingsManager.Current.RemoteDesktop_DesktopBackground;
         FontSmoothing = SettingsManager.Current.RemoteDesktop_FontSmoothing;
         DesktopComposition = SettingsManager.Current.RemoteDesktop_DesktopComposition;
@@ -658,9 +710,11 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
         MenuAndWindowAnimation = SettingsManager.Current.RemoteDesktop_MenuAndWindowAnimation;
         VisualStyles = SettingsManager.Current.RemoteDesktop_VisualStyles;
     }
+
     #endregion
 
     #region Methods
+
     private void ChangeNetworkConnectionTypeSettings(NetworkConnectionType networkConnectionType)
     {
         switch (networkConnectionType)
@@ -701,5 +755,6 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
                 break;
         }
     }
+
     #endregion
 }

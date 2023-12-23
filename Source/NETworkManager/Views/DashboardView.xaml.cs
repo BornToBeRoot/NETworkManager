@@ -13,8 +13,8 @@ public partial class DashboardView
 
         // Load views
         ContentControlNetworkConnection.Content = new NetworkConnectionWidgetView();
-        ContentControlIPApiIPGeolocation.Content =  new IPApiIPGeolocationWidgetView();
-        ContentControlIPApiDNSResolver.Content =  new IPApiDNSResolverWidgetView();
+        ContentControlIPApiIPGeolocation.Content = new IPApiIPGeolocationWidgetView();
+        ContentControlIPApiDNSResolver.Content = new IPApiDNSResolverWidgetView();
     }
 
     public void OnViewHide()

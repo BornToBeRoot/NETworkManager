@@ -19,6 +19,7 @@ public class PortProfilesViewModel : ViewModelBase
 
 
     private string _search;
+
     public string Search
     {
         get => _search;
@@ -38,6 +39,7 @@ public class PortProfilesViewModel : ViewModelBase
     public ICollectionView PortProfiles { get; }
 
     private IList _selectedPortProfiles = new ArrayList();
+
     public IList SelectedPortProfiles
     {
         get => _selectedPortProfiles;
@@ -57,7 +59,8 @@ public class PortProfilesViewModel : ViewModelBase
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
         PortProfiles = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_PortProfiles);
-        PortProfiles.SortDescriptions.Add(new SortDescription(nameof(PortProfileInfo.Name), ListSortDirection.Ascending));
+        PortProfiles.SortDescriptions.Add(
+            new SortDescription(nameof(PortProfileInfo.Name), ListSortDirection.Ascending));
         PortProfiles.Filter = o =>
         {
             if (string.IsNullOrEmpty(Search))
@@ -69,7 +72,8 @@ public class PortProfilesViewModel : ViewModelBase
             var search = Search.Trim();
 
             // Search: Name, Ports
-            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.Ports.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
+            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.Ports.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
     }
 

@@ -18,6 +18,5 @@ public class SNMPSessionInfo
 
     public SNMPSessionInfo()
     {
-
     }
 }

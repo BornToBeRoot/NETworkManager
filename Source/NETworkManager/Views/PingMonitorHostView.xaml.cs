@@ -14,7 +14,7 @@ public partial class PingMonitorHostView
         InitializeComponent();
         DataContext = _viewModel;
     }
-  
+
     private void ContextMenu_Opened(object sender, RoutedEventArgs e)
     {
         if (sender is ContextMenu menu)
@@ -41,5 +41,5 @@ public partial class PingMonitorHostView
     public void OnViewVisible()
     {
         _viewModel.OnViewVisible();
-    }      
+    }
 }

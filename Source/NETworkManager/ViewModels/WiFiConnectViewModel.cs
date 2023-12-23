@@ -317,7 +317,9 @@ public class WiFiConnectViewModel : ViewModelBase
     /// <param name="cancelHandler"><see cref="CancelCommand"/> which is executed on cancel click.</param>
     /// <param name="options">Current WiFi adapter info and network info.</param>
     /// <param name="connectMode">WiFi connect mode like <see cref="WiFiConnectMode.Open"/>, <see cref="WiFiConnectMode.Psk"/> or <see cref="WiFiConnectMode.Eap"/>.</param>
-    public WiFiConnectViewModel(Action<WiFiConnectViewModel> okCommand, Action<WiFiConnectViewModel> connectWpsCommand, Action<WiFiConnectViewModel> cancelHandler, (WiFiAdapterInfo AdapterInfo, WiFiNetworkInfo NetworkInfo) options, WiFiConnectMode connectMode)
+    public WiFiConnectViewModel(Action<WiFiConnectViewModel> okCommand, Action<WiFiConnectViewModel> connectWpsCommand,
+        Action<WiFiConnectViewModel> cancelHandler, (WiFiAdapterInfo AdapterInfo, WiFiNetworkInfo NetworkInfo) options,
+        WiFiConnectMode connectMode)
     {
         ConnectCommand = new RelayCommand(_ => okCommand(this));
         ConnectWpsCommand = new RelayCommand(_ => connectWpsCommand(this));
@@ -336,17 +338,18 @@ public class WiFiConnectViewModel : ViewModelBase
         if (ConnectMode != WiFiConnectMode.Psk || Options.NetworkInfo.IsHidden)
             return;
 
-        IsWpsChecking = true;        
+        IsWpsChecking = true;
         // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
         await Task.Delay(1000);
 
-        IsWpsAvailable = await WiFi.IsWpsAvailable(Options.AdapterInfo.WiFiAdapter, Options.NetworkInfo.AvailableNetwork);
+        IsWpsAvailable =
+            await WiFi.IsWpsAvailable(Options.AdapterInfo.WiFiAdapter, Options.NetworkInfo.AvailableNetwork);
 
         // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
         await Task.Delay(1000);
         IsWpsChecking = false;
     }
-    
+
     /// <summary>
     /// Check if the Pre-shared key is valid.
     /// </summary>

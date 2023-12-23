@@ -249,14 +249,14 @@ public sealed class SNMPClient
                     {
                         new(seed.Id)
                     };
-                    
+
                     var message = new GetNextRequestMessage(Messenger.NextRequestId, version, community, variables);
 
                     var response = await message.GetResponseAsync(ipEndPoint, options.CancellationToken)
                         .ConfigureAwait(false);
 
                     var pdu = response.Pdu();
-                    
+
                     // No more objects
                     if (pdu.ErrorStatus.ToErrorCode() == ErrorCode.NoSuchName)
                         break;
@@ -330,16 +330,16 @@ public sealed class SNMPClient
 
                 var seed = new Variable(table);
                 var subTreeMask = string.Format(CultureInfo.InvariantCulture, "{0}.", table);
-                
+
                 var breakLoop = false;
-                
+
                 do
                 {
                     var variables = new List<Variable>
                     {
                         new(seed.Id)
                     };
-                    
+
                     var request = new GetBulkRequestMessage(VersionCode.V3, Messenger.NextMessageId,
                         Messenger.NextRequestId, username, OctetString.Empty, 0, 10, variables, privacy,
                         Messenger.MaxMessageSize, message);
@@ -348,7 +348,7 @@ public sealed class SNMPClient
                         .ConfigureAwait(false);
 
                     var pdu = response.Pdu();
-                    
+
                     // Check for errors
                     if (pdu.ErrorStatus.ToInt32() != 0)
                     {
@@ -378,11 +378,12 @@ public sealed class SNMPClient
                             request = new GetBulkRequestMessage(VersionCode.V3, Messenger.NextMessageId,
                                 Messenger.NextRequestId, username, OctetString.Empty, 0, 10, variables, privacy,
                                 Messenger.MaxMessageSize, response);
-                            
-                            response = await request.GetResponseAsync(ipEndPoint, options.CancellationToken).ConfigureAwait(false);
-                            
+
+                            response = await request.GetResponseAsync(ipEndPoint, options.CancellationToken)
+                                .ConfigureAwait(false);
+
                             pdu = response.Pdu();
-                            
+
                             // Check for errors
                             if (pdu.ErrorStatus.ToInt32() != 0)
                             {
@@ -390,7 +391,7 @@ public sealed class SNMPClient
 
                                 return;
                             }
-                            
+
                             // Check if the response is a report message
                             if (response is ReportMessage)
                             {
@@ -414,23 +415,23 @@ public sealed class SNMPClient
                             breakLoop = true;
 
                         // Not in subtree
-                        if (options.WalkMode == WalkMode.WithinSubtree && !variable.Id.ToString().StartsWith(subTreeMask, StringComparison.Ordinal))
+                        if (options.WalkMode == WalkMode.WithinSubtree &&
+                            !variable.Id.ToString().StartsWith(subTreeMask, StringComparison.Ordinal))
                             breakLoop = true;
 
-                        if(breakLoop)
+                        if (breakLoop)
                             break;
-                        
+
                         results.Add(variable);
                     }
-                    
-                    if(breakLoop)
+
+                    if (breakLoop)
                         break;
-                    
+
                     seed = pdu.Variables[^1];
                     message = response;
-                    
                 } while (!options.CancellationToken.IsCancellationRequested);
-                    
+
                 // Return the SNMP information
                 foreach (var result in results)
                     OnReceived(new SNMPReceivedArgs(new SNMPInfo(result.Id, result.Data)));
@@ -466,15 +467,15 @@ public sealed class SNMPClient
                 var version = options.Version == SNMPVersion.V1 ? VersionCode.V1 : VersionCode.V2;
                 var ipEndPoint = new IPEndPoint(ipAddress, options.Port);
                 var community = new OctetString(SecureStringHelper.ConvertToString(options.Community));
-                
+
                 var variables = new List<Variable> { new(new ObjectIdentifier(oid), new OctetString(data)) };
 
                 var message = new SetRequestMessage(Messenger.NextMessageId, version, community, variables);
-                
+
                 var response = await message.GetResponseAsync(ipEndPoint, options.CancellationToken);
-                
+
                 var pdu = response.Pdu();
-                
+
                 // Check for errors
                 if (pdu.ErrorStatus.ToInt32() != 0)
                 {
@@ -482,7 +483,7 @@ public sealed class SNMPClient
 
                     return;
                 }
-                
+
                 OnDataUpdated();
             }
             catch (OperationCanceledException)
@@ -528,7 +529,7 @@ public sealed class SNMPClient
                 var response = await message.GetResponseAsync(ipEndpoint, options.CancellationToken);
 
                 var pdu = response.Pdu();
-                
+
                 // Check for errors
                 if (pdu.ErrorStatus.ToInt32() != 0)
                 {
@@ -536,7 +537,7 @@ public sealed class SNMPClient
 
                     return;
                 }
-                
+
                 // Check if the response is a report message
                 if (response is ReportMessage)
                 {

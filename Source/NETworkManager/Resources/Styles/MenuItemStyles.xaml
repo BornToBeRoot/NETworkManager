@@ -5,7 +5,8 @@
     Set x:Shared="False" to avoid that only the MenuItem has an icon. 
     See: https://stackoverflow.com/questions/6177550/menuitem-style-with-icon-creates-only-one-icon
     -->
-    <Style x:Key="CopyMenuItem" TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MahApps.Styles.MenuItem}" x:Shared="False">
+    <Style x:Key="CopyMenuItem" TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MahApps.Styles.MenuItem}"
+           x:Shared="False">
         <Setter Property="Icon">
             <Setter.Value>
                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
@@ -14,6 +15,6 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Setter.Value>
-        </Setter>        
+        </Setter>
     </Style>
 </ResourceDictionary>

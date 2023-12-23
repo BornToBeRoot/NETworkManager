@@ -23,9 +23,10 @@ public sealed class ProfileNameToTranslatedStringConverter : IValueConverter
     {
         return value is not ProfileName name
             ? "-/-"
-            : ResourceTranslator.Translate(new [] {ResourceIdentifier.ProfileName , ResourceIdentifier.ApplicationName}, name);
+            : ResourceTranslator.Translate(new[] { ResourceIdentifier.ProfileName, ResourceIdentifier.ApplicationName },
+                name);
     }
-    
+
     /// <summary>
     /// !!! Method not implemented !!!
     /// </summary>

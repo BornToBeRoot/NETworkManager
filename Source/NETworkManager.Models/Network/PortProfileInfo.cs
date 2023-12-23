@@ -7,7 +7,6 @@ public class PortProfileInfo
 
     public PortProfileInfo()
     {
-
     }
 
     public PortProfileInfo(string name, string ports)

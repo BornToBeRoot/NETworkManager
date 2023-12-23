@@ -29,7 +29,7 @@ public partial class WebConsoleHostView
         if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
             _viewModel.ConnectProfileCommand.Execute(null);
     }
-  
+
     public void OnViewHide()
     {
         _viewModel.OnViewHide();

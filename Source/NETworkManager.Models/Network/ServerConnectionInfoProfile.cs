@@ -23,7 +23,6 @@ public class ServerConnectionInfoProfile
     /// </summary>
     public ServerConnectionInfoProfile()
     {
-
     }
 
     /// <summary>
@@ -35,5 +34,5 @@ public class ServerConnectionInfoProfile
     {
         Name = name;
         Servers = servers;
-    }        
+    }
 }

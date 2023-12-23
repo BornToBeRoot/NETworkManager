@@ -112,9 +112,11 @@ public class CredentialsSetPasswordViewModel : ViewModelBase
     /// </summary>
     private void ValidatePassword()
     {
-        IsPasswordEmpty = Password == null || Password.Length == 0 || PasswordRepeat == null || PasswordRepeat.Length == 0;
+        IsPasswordEmpty = Password == null || Password.Length == 0 || PasswordRepeat == null ||
+                          PasswordRepeat.Length == 0;
 
-        IsRepeatedPasswordEqual = !IsPasswordEmpty && SecureStringHelper.ConvertToString(Password).Equals(SecureStringHelper.ConvertToString(PasswordRepeat));
+        IsRepeatedPasswordEqual = !IsPasswordEmpty && SecureStringHelper.ConvertToString(Password)
+            .Equals(SecureStringHelper.ConvertToString(PasswordRepeat));
     }
 
     /// <summary>
@@ -122,7 +124,8 @@ public class CredentialsSetPasswordViewModel : ViewModelBase
     /// </summary>
     /// <param name="okCommand"><see cref="OKCommand"/> which is executed on OK click.</param>
     /// <param name="cancelHandler"><see cref="CancelCommand"/> which is executed on cancel click.</param>
-    public CredentialsSetPasswordViewModel(Action<CredentialsSetPasswordViewModel> okCommand, Action<CredentialsSetPasswordViewModel> cancelHandler)
+    public CredentialsSetPasswordViewModel(Action<CredentialsSetPasswordViewModel> okCommand,
+        Action<CredentialsSetPasswordViewModel> cancelHandler)
     {
         OKCommand = new RelayCommand(_ => okCommand(this));
         CancelCommand = new RelayCommand(_ => cancelHandler(this));

@@ -23,7 +23,7 @@ public partial class DNSLookupView
     {
         _viewModel.OnLoaded();
     }
-    
+
     public void CloseTab()
     {
         _viewModel.OnClose();

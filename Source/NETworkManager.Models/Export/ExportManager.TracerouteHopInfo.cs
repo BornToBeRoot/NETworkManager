@@ -80,18 +80,30 @@ public static partial class ExportManager
                                 Ping.TimeToString(info.Status3, info.Time3, true)),
                             new XElement(nameof(TracerouteHopInfo.IPAddress), info.IPAddress),
                             new XElement(nameof(TracerouteHopInfo.Hostname), info.Hostname),
-                            new XElement(nameof(TracerouteHopInfo.IPGeolocationResult.Info.Continent), info.IPGeolocationResult.Info.Continent),
-                            new XElement(nameof(TracerouteHopInfo.IPGeolocationResult.Info.Country), info.IPGeolocationResult.Info.Country),
-                            new XElement(nameof(TracerouteHopInfo.IPGeolocationResult.Info.Region), info.IPGeolocationResult.Info.Region),
-                            new XElement(nameof(TracerouteHopInfo.IPGeolocationResult.Info.City), info.IPGeolocationResult.Info.City),
-                            new XElement(nameof(TracerouteHopInfo.IPGeolocationResult.Info.District), info.IPGeolocationResult.Info.District),
-                            new XElement(nameof(TracerouteHopInfo.IPGeolocationResult.Info.Isp), info.IPGeolocationResult.Info.Isp),
-                            new XElement(nameof(TracerouteHopInfo.IPGeolocationResult.Info.Org), info.IPGeolocationResult.Info.Org),
-                            new XElement(nameof(TracerouteHopInfo.IPGeolocationResult.Info.As), info.IPGeolocationResult.Info.As),
-                            new XElement(nameof(TracerouteHopInfo.IPGeolocationResult.Info.Asname), info.IPGeolocationResult.Info.Asname),
-                            new XElement(nameof(TracerouteHopInfo.IPGeolocationResult.Info.Hosting), info.IPGeolocationResult.Info.Hosting),
-                            new XElement(nameof(TracerouteHopInfo.IPGeolocationResult.Info.Proxy), info.IPGeolocationResult.Info.Proxy),
-                            new XElement(nameof(TracerouteHopInfo.IPGeolocationResult.Info.Mobile), info.IPGeolocationResult.Info.Mobile)))));
+                            new XElement(nameof(TracerouteHopInfo.IPGeolocationResult.Info.Continent),
+                                info.IPGeolocationResult.Info.Continent),
+                            new XElement(nameof(TracerouteHopInfo.IPGeolocationResult.Info.Country),
+                                info.IPGeolocationResult.Info.Country),
+                            new XElement(nameof(TracerouteHopInfo.IPGeolocationResult.Info.Region),
+                                info.IPGeolocationResult.Info.Region),
+                            new XElement(nameof(TracerouteHopInfo.IPGeolocationResult.Info.City),
+                                info.IPGeolocationResult.Info.City),
+                            new XElement(nameof(TracerouteHopInfo.IPGeolocationResult.Info.District),
+                                info.IPGeolocationResult.Info.District),
+                            new XElement(nameof(TracerouteHopInfo.IPGeolocationResult.Info.Isp),
+                                info.IPGeolocationResult.Info.Isp),
+                            new XElement(nameof(TracerouteHopInfo.IPGeolocationResult.Info.Org),
+                                info.IPGeolocationResult.Info.Org),
+                            new XElement(nameof(TracerouteHopInfo.IPGeolocationResult.Info.As),
+                                info.IPGeolocationResult.Info.As),
+                            new XElement(nameof(TracerouteHopInfo.IPGeolocationResult.Info.Asname),
+                                info.IPGeolocationResult.Info.Asname),
+                            new XElement(nameof(TracerouteHopInfo.IPGeolocationResult.Info.Hosting),
+                                info.IPGeolocationResult.Info.Hosting),
+                            new XElement(nameof(TracerouteHopInfo.IPGeolocationResult.Info.Proxy),
+                                info.IPGeolocationResult.Info.Proxy),
+                            new XElement(nameof(TracerouteHopInfo.IPGeolocationResult.Info.Mobile),
+                                info.IPGeolocationResult.Info.Mobile)))));
 
         document.Save(filePath);
     }
@@ -104,7 +116,7 @@ public static partial class ExportManager
     private static void CreateJson(IReadOnlyList<TracerouteHopInfo> collection, string filePath)
     {
         var jsonData = new object[collection.Count];
-        
+
         for (var i = 0; i < collection.Count; i++)
         {
             jsonData[i] = new

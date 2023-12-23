@@ -14,6 +14,7 @@ namespace NETworkManager.Profiles;
 public static class ProfileManager
 {
     #region Variables
+
     /// <summary>
     /// Profiles directory name.
     /// </summary>
@@ -68,9 +69,11 @@ public static class ProfileManager
     /// Indicates if profiles have changed.
     /// </summary>
     public static bool ProfilesChanged { get; set; }
+
     #endregion
 
     #region Events
+
     /// <summary>
     /// Event is fired if the currently loaded <see cref="ProfileFileInfo"/> is changed. 
     /// The <see cref="ProfileFileInfo"/> with the current loaded profile file is passed 
@@ -86,7 +89,7 @@ public static class ProfileManager
     private static void LoadedProfileFileChanged(ProfileFileInfo profileFileInfo, bool profileFileUpdating = false)
     {
         OnLoadedProfileFileChangedEvent?.Invoke(null, new ProfileFileInfoArgs(profileFileInfo, profileFileUpdating));
-    }    
+    }
 
     /// <summary>
     /// Event is fired if the profiles have changed.
@@ -102,9 +105,11 @@ public static class ProfileManager
 
         OnProfilesUpdated?.Invoke(null, EventArgs.Empty);
     }
+
     #endregion
 
     #region Constructor
+
     /// <summary>
     /// Static constructor. Load all profile files on startup.
     /// </summary>
@@ -112,18 +117,21 @@ public static class ProfileManager
     {
         LoadProfileFiles();
     }
+
     #endregion
 
     #region Profiles locations, default paths and file names
+
     /// <summary>
     /// Method to get the path of the profiles folder.
     /// </summary>
     /// <returns>Path to the profiles folder.</returns>
     public static string GetProfilesFolderLocation()
     {
-        return ConfigurationManager.Current.IsPortable ?
-            Path.Combine(AssemblyManager.Current.Location, ProfilesFolderName) :
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), AssemblyManager.Current.Name, ProfilesFolderName);
+        return ConfigurationManager.Current.IsPortable
+            ? Path.Combine(AssemblyManager.Current.Location, ProfilesFolderName)
+            : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                AssemblyManager.Current.Name, ProfilesFolderName);
     }
 
     /// <summary>
@@ -143,9 +151,11 @@ public static class ProfileManager
     {
         return Path.Combine(GetProfilesFolderLocation(), GetProfilesDefaultFileName());
     }
+
     #endregion
 
     #region Get and load profile files
+
     /// <summary>
     /// Get all files in the folder with the extension <see cref="ProfileFileExtension" /> or <see cref="ProfileFileExtensionEncrypted"/>.
     /// </summary>
@@ -153,7 +163,8 @@ public static class ProfileManager
     /// <returns>List of profile files.</returns>
     private static IEnumerable<string> GetProfileFiles(string location)
     {
-        return Directory.GetFiles(location).Where(x => Path.GetExtension(x) == ProfileFileExtension || Path.GetExtension(x) == ProfileFileExtensionEncrypted);
+        return Directory.GetFiles(location).Where(x =>
+            Path.GetExtension(x) == ProfileFileExtension || Path.GetExtension(x) == ProfileFileExtensionEncrypted);
     }
 
     /// <summary>
@@ -169,7 +180,8 @@ public static class ProfileManager
             foreach (var file in GetProfileFiles(location))
             {
                 // Gets the filename, path and if the file is encrypted.
-                ProfileFiles.Add(new ProfileFileInfo(Path.GetFileNameWithoutExtension(file), file, Path.GetFileName(file).EndsWith(ProfileFileExtensionEncrypted)));
+                ProfileFiles.Add(new ProfileFileInfo(Path.GetFileNameWithoutExtension(file), file,
+                    Path.GetFileName(file).EndsWith(ProfileFileExtensionEncrypted)));
             }
         }
 
@@ -177,16 +189,19 @@ public static class ProfileManager
         if (ProfileFiles.Count == 0)
             ProfileFiles.Add(new ProfileFileInfo(ProfilesDefaultFileName, GetProfilesDefaultFilePath()));
     }
+
     #endregion
 
     #region Create, rename and delete profile file
+
     /// <summary>
     /// Method to create a profile file.
     /// </summary>
     /// <param name="profileName"></param>
     public static void CreateEmptyProfileFile(string profileName)
     {
-        ProfileFileInfo profileFileInfo = new(profileName, Path.Combine(GetProfilesFolderLocation(), $"{profileName}{ProfileFileExtension}"));
+        ProfileFileInfo profileFileInfo = new(profileName,
+            Path.Combine(GetProfilesFolderLocation(), $"{profileName}{ProfileFileExtension}"));
 
         Directory.CreateDirectory(GetProfilesFolderLocation());
 
@@ -211,7 +226,9 @@ public static class ProfileManager
             switchProfile = true;
         }
 
-        ProfileFileInfo newProfileFileInfo = new(newProfileName, Path.Combine(GetProfilesFolderLocation(), $"{newProfileName}{Path.GetExtension(profileFileInfo.Path)}"), profileFileInfo.IsEncrypted)
+        ProfileFileInfo newProfileFileInfo = new(newProfileName,
+            Path.Combine(GetProfilesFolderLocation(), $"{newProfileName}{Path.GetExtension(profileFileInfo.Path)}"),
+            profileFileInfo.IsEncrypted)
         {
             Password = profileFileInfo.Password,
             IsPasswordValid = profileFileInfo.IsPasswordValid
@@ -243,9 +260,11 @@ public static class ProfileManager
         File.Delete(profileFileInfo.Path);
         ProfileFiles.Remove(profileFileInfo);
     }
+
     #endregion
 
     #region Enable, disable encryption and change master password
+
     /// <summary>
     /// Method to enable encryption for a profile file.
     /// </summary>
@@ -263,7 +282,8 @@ public static class ProfileManager
         }
 
         // Create a new profile info with the encryption infos
-        var newProfileFileInfo = new ProfileFileInfo(profileFileInfo.Name, Path.ChangeExtension(profileFileInfo.Path, ProfileFileExtensionEncrypted), true)
+        var newProfileFileInfo = new ProfileFileInfo(profileFileInfo.Name,
+            Path.ChangeExtension(profileFileInfo.Path, ProfileFileExtensionEncrypted), true)
         {
             Password = password,
             IsPasswordValid = true
@@ -274,7 +294,10 @@ public static class ProfileManager
 
         // Save the encrypted file
         var decryptedBytes = SerializeToByteArray(profiles);
-        var encryptedBytes = CryptoHelper.Encrypt(decryptedBytes, SecureStringHelper.ConvertToString(newProfileFileInfo.Password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionIterations);
+        var encryptedBytes = CryptoHelper.Encrypt(decryptedBytes,
+            SecureStringHelper.ConvertToString(newProfileFileInfo.Password),
+            GlobalStaticConfiguration.Profile_EncryptionKeySize,
+            GlobalStaticConfiguration.Profile_EncryptionIterations);
 
         File.WriteAllBytes(newProfileFileInfo.Path, encryptedBytes);
 
@@ -289,9 +312,9 @@ public static class ProfileManager
         }
 
         // Remove the old profile file
-        if (profileFileInfo.Path != null) 
+        if (profileFileInfo.Path != null)
             File.Delete(profileFileInfo.Path);
-        
+
         ProfileFiles.Remove(profileFileInfo);
     }
 
@@ -301,7 +324,8 @@ public static class ProfileManager
     /// <param name="profileFileInfo"><see cref="ProfileFileInfo"/> which should be changed.</param>
     /// <param name="password">Password to decrypt the profile file.</param>
     /// <param name="newPassword">Password to encrypt the profile file.</param>
-    public static void ChangeMasterPassword(ProfileFileInfo profileFileInfo, SecureString password, SecureString newPassword)
+    public static void ChangeMasterPassword(ProfileFileInfo profileFileInfo, SecureString password,
+        SecureString newPassword)
     {
         // Check if the profile is currently in use
         var switchProfile = false;
@@ -313,7 +337,8 @@ public static class ProfileManager
         }
 
         // Create a new profile info with the encryption infos
-        var newProfileFileInfo = new ProfileFileInfo(profileFileInfo.Name, Path.ChangeExtension(profileFileInfo.Path, ProfileFileExtensionEncrypted), true)
+        var newProfileFileInfo = new ProfileFileInfo(profileFileInfo.Name,
+            Path.ChangeExtension(profileFileInfo.Path, ProfileFileExtensionEncrypted), true)
         {
             Password = newPassword,
             IsPasswordValid = true
@@ -321,12 +346,17 @@ public static class ProfileManager
 
         // Load and decrypt the profiles from the profile file
         var encryptedBytes = File.ReadAllBytes(profileFileInfo.Path);
-        var decryptedBytes = CryptoHelper.Decrypt(encryptedBytes, SecureStringHelper.ConvertToString(password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionIterations);
+        var decryptedBytes = CryptoHelper.Decrypt(encryptedBytes, SecureStringHelper.ConvertToString(password),
+            GlobalStaticConfiguration.Profile_EncryptionKeySize,
+            GlobalStaticConfiguration.Profile_EncryptionIterations);
         var profiles = DeserializeFromByteArray(decryptedBytes);
 
         // Save the encrypted file
         decryptedBytes = SerializeToByteArray(profiles);
-        encryptedBytes = CryptoHelper.Encrypt(decryptedBytes, SecureStringHelper.ConvertToString(newProfileFileInfo.Password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionIterations);
+        encryptedBytes = CryptoHelper.Encrypt(decryptedBytes,
+            SecureStringHelper.ConvertToString(newProfileFileInfo.Password),
+            GlobalStaticConfiguration.Profile_EncryptionKeySize,
+            GlobalStaticConfiguration.Profile_EncryptionIterations);
 
         File.WriteAllBytes(newProfileFileInfo.Path, encryptedBytes);
 
@@ -362,11 +392,14 @@ public static class ProfileManager
         }
 
         // Create a new profile info
-        var newProfileFileInfo = new ProfileFileInfo(profileFileInfo.Name, Path.ChangeExtension(profileFileInfo.Path, ProfileFileExtension));
+        var newProfileFileInfo = new ProfileFileInfo(profileFileInfo.Name,
+            Path.ChangeExtension(profileFileInfo.Path, ProfileFileExtension));
 
         // Load and decrypt the profiles from the profile file
         var encryptedBytes = File.ReadAllBytes(profileFileInfo.Path);
-        var decryptedBytes = CryptoHelper.Decrypt(encryptedBytes, SecureStringHelper.ConvertToString(password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionIterations);
+        var decryptedBytes = CryptoHelper.Decrypt(encryptedBytes, SecureStringHelper.ConvertToString(password),
+            GlobalStaticConfiguration.Profile_EncryptionKeySize,
+            GlobalStaticConfiguration.Profile_EncryptionIterations);
         var profiles = DeserializeFromByteArray(decryptedBytes);
 
         // Save the decrypted profiles to the profile file
@@ -386,9 +419,11 @@ public static class ProfileManager
         File.Delete(profileFileInfo.Path);
         ProfileFiles.Remove(profileFileInfo);
     }
+
     #endregion
 
     #region Load, save and switch profile
+
     /// <summary>
     /// Method to load profiles based on the infos provided in the <see cref="ProfileFileInfo"/>.
     /// </summary>
@@ -402,7 +437,10 @@ public static class ProfileManager
             if (profileFileInfo.IsEncrypted)
             {
                 var encryptedBytes = File.ReadAllBytes(profileFileInfo.Path);
-                var decryptedBytes = CryptoHelper.Decrypt(encryptedBytes, SecureStringHelper.ConvertToString(profileFileInfo.Password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionIterations);
+                var decryptedBytes = CryptoHelper.Decrypt(encryptedBytes,
+                    SecureStringHelper.ConvertToString(profileFileInfo.Password),
+                    GlobalStaticConfiguration.Profile_EncryptionKeySize,
+                    GlobalStaticConfiguration.Profile_EncryptionIterations);
 
                 AddGroups(DeserializeFromByteArray(decryptedBytes));
 
@@ -448,7 +486,10 @@ public static class ProfileManager
             if (LoadedProfileFile.IsPasswordValid)
             {
                 var decryptedBytes = SerializeToByteArray(new List<GroupInfo>(Groups));
-                var encryptedBytes = CryptoHelper.Encrypt(decryptedBytes, SecureStringHelper.ConvertToString(LoadedProfileFile.Password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionIterations);
+                var encryptedBytes = CryptoHelper.Encrypt(decryptedBytes,
+                    SecureStringHelper.ConvertToString(LoadedProfileFile.Password),
+                    GlobalStaticConfiguration.Profile_EncryptionKeySize,
+                    GlobalStaticConfiguration.Profile_EncryptionIterations);
 
                 File.WriteAllBytes(LoadedProfileFile.Path, encryptedBytes);
             }
@@ -488,9 +529,11 @@ public static class ProfileManager
 
         Load(info);
     }
+
     #endregion
 
     #region Serialize and deserialize
+
     /// <summary>
     /// Method to serialize a list of groups as <see cref="GroupInfo"/> to an xml file.
     /// </summary>
@@ -538,23 +581,43 @@ public static class ProfileManager
             if (group.IsDynamic)
                 continue;
 
-            var profilesSerializable = (from profile in @group.Profiles where !profile.IsDynamic select new ProfileInfoSerializable(profile)
-            {
-                RemoteDesktop_Password = profile.RemoteDesktop_Password != null ? SecureStringHelper.ConvertToString(profile.RemoteDesktop_Password) : string.Empty,
-                RemoteDesktop_GatewayServerPassword = profile.RemoteDesktop_GatewayServerPassword != null ? SecureStringHelper.ConvertToString(profile.RemoteDesktop_GatewayServerPassword) : string.Empty,
-                SNMP_Community = profile.SNMP_Community != null ? SecureStringHelper.ConvertToString(profile.SNMP_Community) : string.Empty,
-                SNMP_Auth = profile.SNMP_Auth != null ? SecureStringHelper.ConvertToString(profile.SNMP_Auth) : string.Empty,
-                SNMP_Priv = profile.SNMP_Priv != null ? SecureStringHelper.ConvertToString(profile.SNMP_Priv) : string.Empty,
-            }).ToList();
+            var profilesSerializable = (from profile in @group.Profiles
+                where !profile.IsDynamic
+                select new ProfileInfoSerializable(profile)
+                {
+                    RemoteDesktop_Password = profile.RemoteDesktop_Password != null
+                        ? SecureStringHelper.ConvertToString(profile.RemoteDesktop_Password)
+                        : string.Empty,
+                    RemoteDesktop_GatewayServerPassword = profile.RemoteDesktop_GatewayServerPassword != null
+                        ? SecureStringHelper.ConvertToString(profile.RemoteDesktop_GatewayServerPassword)
+                        : string.Empty,
+                    SNMP_Community = profile.SNMP_Community != null
+                        ? SecureStringHelper.ConvertToString(profile.SNMP_Community)
+                        : string.Empty,
+                    SNMP_Auth = profile.SNMP_Auth != null
+                        ? SecureStringHelper.ConvertToString(profile.SNMP_Auth)
+                        : string.Empty,
+                    SNMP_Priv = profile.SNMP_Priv != null
+                        ? SecureStringHelper.ConvertToString(profile.SNMP_Priv)
+                        : string.Empty,
+                }).ToList();
 
             groupsSerializable.Add(new GroupInfoSerializable(group)
             {
                 Profiles = profilesSerializable,
-                RemoteDesktop_Password = group.RemoteDesktop_Password != null ? SecureStringHelper.ConvertToString(group.RemoteDesktop_Password) : string.Empty,
-                RemoteDesktop_GatewayServerPassword = group.RemoteDesktop_GatewayServerPassword != null ? SecureStringHelper.ConvertToString(group.RemoteDesktop_GatewayServerPassword) : string.Empty,
-                SNMP_Community = group.SNMP_Community != null ? SecureStringHelper.ConvertToString(group.SNMP_Community) : string.Empty,
-                SNMP_Auth = group.SNMP_Auth != null ? SecureStringHelper.ConvertToString(group.SNMP_Auth) : string.Empty,
-                SNMP_Priv = group.SNMP_Priv != null ? SecureStringHelper.ConvertToString(group.SNMP_Priv) : string.Empty,
+                RemoteDesktop_Password = group.RemoteDesktop_Password != null
+                    ? SecureStringHelper.ConvertToString(group.RemoteDesktop_Password)
+                    : string.Empty,
+                RemoteDesktop_GatewayServerPassword = group.RemoteDesktop_GatewayServerPassword != null
+                    ? SecureStringHelper.ConvertToString(group.RemoteDesktop_GatewayServerPassword)
+                    : string.Empty,
+                SNMP_Community = group.SNMP_Community != null
+                    ? SecureStringHelper.ConvertToString(group.SNMP_Community)
+                    : string.Empty,
+                SNMP_Auth =
+                    group.SNMP_Auth != null ? SecureStringHelper.ConvertToString(group.SNMP_Auth) : string.Empty,
+                SNMP_Priv =
+                    group.SNMP_Priv != null ? SecureStringHelper.ConvertToString(group.SNMP_Priv) : string.Empty,
             });
         }
 
@@ -598,14 +661,30 @@ public static class ProfileManager
             let profiles = groupSerializable.Profiles.Select(profileSerializable => new ProfileInfo(profileSerializable)
                 {
                     // Migrate old data
-                    NetworkInterface_Subnetmask = string.IsNullOrEmpty(profileSerializable.NetworkInterface_Subnetmask) && !string.IsNullOrEmpty(profileSerializable.NetworkInterface_SubnetmaskOrCidr) ? profileSerializable.NetworkInterface_SubnetmaskOrCidr : profileSerializable.NetworkInterface_Subnetmask,
+                    NetworkInterface_Subnetmask =
+                        string.IsNullOrEmpty(profileSerializable.NetworkInterface_Subnetmask) &&
+                        !string.IsNullOrEmpty(profileSerializable.NetworkInterface_SubnetmaskOrCidr)
+                            ? profileSerializable.NetworkInterface_SubnetmaskOrCidr
+                            : profileSerializable.NetworkInterface_Subnetmask,
 
                     // Convert passwords to secure strings
-                    RemoteDesktop_Password = !string.IsNullOrEmpty(profileSerializable.RemoteDesktop_Password) ? SecureStringHelper.ConvertToSecureString(profileSerializable.RemoteDesktop_Password) : null,
-                    RemoteDesktop_GatewayServerPassword = !string.IsNullOrEmpty(profileSerializable.RemoteDesktop_GatewayServerPassword) ? SecureStringHelper.ConvertToSecureString(profileSerializable.RemoteDesktop_GatewayServerPassword) : null,
-                    SNMP_Community = !string.IsNullOrEmpty(profileSerializable.SNMP_Community) ? SecureStringHelper.ConvertToSecureString(profileSerializable.SNMP_Community) : null,
-                    SNMP_Auth = !string.IsNullOrEmpty(profileSerializable.SNMP_Auth) ? SecureStringHelper.ConvertToSecureString(profileSerializable.SNMP_Auth) : null,
-                    SNMP_Priv = !string.IsNullOrEmpty(profileSerializable.SNMP_Priv) ? SecureStringHelper.ConvertToSecureString(profileSerializable.SNMP_Priv) : null,
+                    RemoteDesktop_Password = !string.IsNullOrEmpty(profileSerializable.RemoteDesktop_Password)
+                        ? SecureStringHelper.ConvertToSecureString(profileSerializable.RemoteDesktop_Password)
+                        : null,
+                    RemoteDesktop_GatewayServerPassword =
+                        !string.IsNullOrEmpty(profileSerializable.RemoteDesktop_GatewayServerPassword)
+                            ? SecureStringHelper.ConvertToSecureString(profileSerializable
+                                .RemoteDesktop_GatewayServerPassword)
+                            : null,
+                    SNMP_Community = !string.IsNullOrEmpty(profileSerializable.SNMP_Community)
+                        ? SecureStringHelper.ConvertToSecureString(profileSerializable.SNMP_Community)
+                        : null,
+                    SNMP_Auth = !string.IsNullOrEmpty(profileSerializable.SNMP_Auth)
+                        ? SecureStringHelper.ConvertToSecureString(profileSerializable.SNMP_Auth)
+                        : null,
+                    SNMP_Priv = !string.IsNullOrEmpty(profileSerializable.SNMP_Priv)
+                        ? SecureStringHelper.ConvertToSecureString(profileSerializable.SNMP_Priv)
+                        : null,
                 })
                 .ToList()
             select new GroupInfo(groupSerializable)
@@ -613,16 +692,30 @@ public static class ProfileManager
                 Profiles = profiles,
 
                 // Convert passwords to secure strings
-                RemoteDesktop_Password = !string.IsNullOrEmpty(groupSerializable.RemoteDesktop_Password) ? SecureStringHelper.ConvertToSecureString(groupSerializable.RemoteDesktop_Password) : null,
-                RemoteDesktop_GatewayServerPassword = !string.IsNullOrEmpty(groupSerializable.RemoteDesktop_GatewayServerPassword) ? SecureStringHelper.ConvertToSecureString(groupSerializable.RemoteDesktop_GatewayServerPassword) : null,
-                SNMP_Community = !string.IsNullOrEmpty(groupSerializable.SNMP_Community) ? SecureStringHelper.ConvertToSecureString(groupSerializable.SNMP_Community) : null,
-                SNMP_Auth = !string.IsNullOrEmpty(groupSerializable.SNMP_Auth) ? SecureStringHelper.ConvertToSecureString(groupSerializable.SNMP_Auth) : null,
-                SNMP_Priv = !string.IsNullOrEmpty(groupSerializable.SNMP_Priv) ? SecureStringHelper.ConvertToSecureString(groupSerializable.SNMP_Priv) : null,
+                RemoteDesktop_Password = !string.IsNullOrEmpty(groupSerializable.RemoteDesktop_Password)
+                    ? SecureStringHelper.ConvertToSecureString(groupSerializable.RemoteDesktop_Password)
+                    : null,
+                RemoteDesktop_GatewayServerPassword =
+                    !string.IsNullOrEmpty(groupSerializable.RemoteDesktop_GatewayServerPassword)
+                        ? SecureStringHelper.ConvertToSecureString(
+                            groupSerializable.RemoteDesktop_GatewayServerPassword)
+                        : null,
+                SNMP_Community = !string.IsNullOrEmpty(groupSerializable.SNMP_Community)
+                    ? SecureStringHelper.ConvertToSecureString(groupSerializable.SNMP_Community)
+                    : null,
+                SNMP_Auth = !string.IsNullOrEmpty(groupSerializable.SNMP_Auth)
+                    ? SecureStringHelper.ConvertToSecureString(groupSerializable.SNMP_Auth)
+                    : null,
+                SNMP_Priv = !string.IsNullOrEmpty(groupSerializable.SNMP_Priv)
+                    ? SecureStringHelper.ConvertToSecureString(groupSerializable.SNMP_Priv)
+                    : null,
             }).ToList();
     }
-    #endregion               
+
+    #endregion
 
     #region Add, remove, replace group(s) and more.
+
     /// <summary>
     /// Method to add a list of <see cref="GroupInfo"/> to the <see cref="Groups"/> list.
     /// </summary>
@@ -708,9 +801,11 @@ public static class ProfileManager
     {
         return Groups.FirstOrDefault(x => x.Name == name)!.Profiles.Count == 0;
     }
+
     #endregion
 
     #region Add, replace and remove profile(s)
+
     /// <summary>
     /// Method to add a profile to a group.
     /// </summary>
@@ -766,5 +861,6 @@ public static class ProfileManager
 
         ProfilesUpdated();
     }
+
     #endregion
 }

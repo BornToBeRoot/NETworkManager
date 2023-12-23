@@ -19,7 +19,7 @@ namespace NETworkManager.Models.Network;
 public static class WiFi
 {
     private static readonly ILog Log = LogManager.GetLogger(typeof(WiFi));
-    
+
     /// <summary>
     /// Get all WiFi adapters async with additional information from <see cref="NetworkInterface"/>.
     /// </summary>
@@ -30,15 +30,15 @@ public static class WiFi
 
         var wifiAdapters = await WiFiAdapter.FindAllAdaptersAsync();
 
-        if (wifiAdapters.Count <= 0) 
+        if (wifiAdapters.Count <= 0)
             return wifiAdapterInfos;
-        
+
         var networkInterfaces = await NetworkInterface.GetNetworkInterfacesAsync();
 
         foreach (var wiFiAdapter in wifiAdapters)
         {
             var wiFiAdapterId = wiFiAdapter.NetworkAdapter.NetworkAdapterId.ToString();
-                
+
             var networkInterface = networkInterfaces.FirstOrDefault(x => x.Id.TrimStart('{').TrimEnd('}')
                 .Equals(wiFiAdapterId, StringComparison.OrdinalIgnoreCase));
 
@@ -74,8 +74,8 @@ public static class WiFi
 
         var wifiNetworkInfos = adapter.NetworkReport.AvailableNetworks.Select(availableNetwork => new WiFiNetworkInfo
         {
-            AvailableNetwork = availableNetwork, 
-            IsHidden = string.IsNullOrEmpty(availableNetwork.Ssid), 
+            AvailableNetwork = availableNetwork,
+            IsHidden = string.IsNullOrEmpty(availableNetwork.Ssid),
             IsConnected = availableNetwork.Bssid.Equals(bssid, StringComparison.OrdinalIgnoreCase)
         }).ToList();
 
@@ -115,13 +115,13 @@ public static class WiFi
             */
 
             /* Each object looks like this:
-            * 
-            * Name : Wireless
-            * Description : Intel ...
-            * GUID : 90d8...
-            * SSID : Devices
-            * BSSID : 6a:d7:...
-            */
+             *
+             * Name : Wireless
+             * Description : Intel ...
+             * GUID : 90d8...
+             * SSID : Devices
+             * BSSID : 6a:d7:...
+             */
 
             var foundAdapter = false;
 
@@ -132,9 +132,9 @@ public static class WiFi
                     foundAdapter = true;
 
                 // ...and skip all lines until we found it.
-                if (!foundAdapter) 
+                if (!foundAdapter)
                     continue;
-                
+
                 // Extract SSID from the line
                 if (outputItem.ToString().Contains(" SSID ", StringComparison.OrdinalIgnoreCase))
                     ssid = outputItem.ToString().Split(':')[1].Trim();
@@ -162,7 +162,8 @@ public static class WiFi
     /// <param name="credential">Credentials for EAP or PSK. Empty for open networks.</param>
     /// <param name="ssid">SSID for hidden networks.</param>
     /// <returns></returns>
-    public static async Task<WiFiConnectionStatus> ConnectAsync(WiFiAdapter adapter, WiFiAvailableNetwork network, WiFiReconnectionKind reconnectionKind, PasswordCredential credential, string ssid = null)
+    public static async Task<WiFiConnectionStatus> ConnectAsync(WiFiAdapter adapter, WiFiAvailableNetwork network,
+        WiFiReconnectionKind reconnectionKind, PasswordCredential credential, string ssid = null)
     {
         WiFiConnectionResult connectionResult;
 
@@ -186,9 +187,11 @@ public static class WiFi
     /// <param name="network">WiFi network to connect to.</param>
     /// <param name="reconnectionKind">Reconnection type to automatically or manuel reconnect.</param>
     /// <returns></returns>
-    public static async Task<WiFiConnectionStatus> ConnectWpsAsync(WiFiAdapter adapter, WiFiAvailableNetwork network, WiFiReconnectionKind reconnectionKind)
+    public static async Task<WiFiConnectionStatus> ConnectWpsAsync(WiFiAdapter adapter, WiFiAvailableNetwork network,
+        WiFiReconnectionKind reconnectionKind)
     {
-        WiFiConnectionResult connectionResult = await adapter.ConnectAsync(network, reconnectionKind, null, string.Empty, WiFiConnectionMethod.WpsPushButton);
+        WiFiConnectionResult connectionResult = await adapter.ConnectAsync(network, reconnectionKind, null,
+            string.Empty, WiFiConnectionMethod.WpsPushButton);
 
         // Wrong password may cause connection to timeout.
         // Disconnect any network from the adapter to return it to a non-busy state.
@@ -222,7 +225,7 @@ public static class WiFi
 
         // Open
         if (network.SecuritySettings.NetworkAuthenticationType == NetworkAuthenticationType.Open80211 ||
-             network.SecuritySettings.NetworkEncryptionType == NetworkEncryptionType.None)
+            network.SecuritySettings.NetworkEncryptionType == NetworkEncryptionType.None)
             return WiFiConnectMode.Open;
 
         // Pre-Shared-Key

@@ -5,7 +5,6 @@
 /// </summary>
 public class AWSProfileInfo
 {
-
     /// <summary>
     /// Indicates if the AWS profile is enabled.
     /// </summary>
@@ -27,7 +26,6 @@ public class AWSProfileInfo
     /// </summary>
     public AWSProfileInfo()
     {
-
     }
 
     /// <summary>

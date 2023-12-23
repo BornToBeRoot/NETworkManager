@@ -26,7 +26,7 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:ApplicationNameToTranslatedStringConverter x:Key="ApplicationNameToTranslatedStringConverter" />
         <converters:ApplicationNameToIconConverter x:Key="ApplicationNameToIconConverter" />
-        <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter"/>
+        <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
         <ContextMenu x:Key="ContextMenuNotifyIcon" MinWidth="200" Opened="ContextMenu_Opened" x:Shared="False">
             <MenuItem Header="{x:Static localization:Strings.Show}" Command="{Binding ShowWindowCommand}">
                 <MenuItem.Icon>
@@ -156,15 +156,17 @@
                 </Rectangle>
             </Button>
             <Button Command="{Binding UnlockProfileCommand}"
-                        Opacity="1"
-                        Cursor="Hand"
-                        Focusable="False">
+                    Opacity="1"
+                    Cursor="Hand"
+                    Focusable="False">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}"
-                               BasedOn="{StaticResource MahApps.Styles.Button.WindowCommands}">
+                           BasedOn="{StaticResource MahApps.Styles.Button.WindowCommands}">
                         <Setter Property="Visibility" Value="Collapsed" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=ProfileManagerShowUnlock}" Value="True">
+                            <DataTrigger
+                                Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=ProfileManagerShowUnlock}"
+                                Value="True">
                                 <Setter Property="Visibility" Value="Visible" />
                             </DataTrigger>
                         </Style.Triggers>
@@ -186,7 +188,7 @@
                         </Rectangle.OpacityMask>
                     </Rectangle>
                     <TextBlock Text="{x:Static localization:Strings.UnlockProfile}"
-                                   Style="{StaticResource LinkTextBlock}" Margin="5,0" />
+                               Style="{StaticResource LinkTextBlock}" Margin="5,0" />
                 </StackPanel>
             </Button>
             <ComboBox ItemsSource="{Binding ProfileFiles}"
@@ -323,8 +325,8 @@
                                 </Style>
                             </TextBox.Style>
                         </TextBox>
-                        </Grid>
-                    <ListView Grid.Column="0" Grid.Row="2" 
+                    </Grid>
+                    <ListView Grid.Column="0" Grid.Row="2"
                               x:Name="ListViewRunCommand"
                               ItemsSource="{Binding RunCommands}"
                               SelectedItem="{Binding SelectedRunCommand, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -369,7 +371,8 @@
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding RunCommands.Count}" Value="0">
                                         <Setter Property="Visibility" Value="Visible" />
-                                        <Setter Property="Text" Value="{x:Static localization:Strings.NoMatchingCommands}" />
+                                        <Setter Property="Text"
+                                                Value="{x:Static localization:Strings.NoMatchingCommands}" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
@@ -455,7 +458,8 @@
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition Binding="{Binding ApplicationViewIsOpen}" Value="False" />
-                                                    <Condition Binding="{Binding TextBoxApplicationSearchIsFocused}" Value="False" />
+                                                    <Condition Binding="{Binding TextBoxApplicationSearchIsFocused}"
+                                                               Value="False" />
                                                 </MultiDataTrigger.Conditions>
                                                 <MultiDataTrigger.Setters>
                                                     <Setter Property="Visibility" Value="Visible" />
@@ -494,8 +498,10 @@
                                     </Rectangle.Style>
                                 </Rectangle>
                             </Button>
-                            <TextBox x:Name="TextBoxApplicationSearch" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"
-                                     BorderThickness="0" Text="{Binding ApplicationSearch, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBox x:Name="TextBoxApplicationSearch" Grid.Column="0" Grid.Row="0"
+                                     VerticalAlignment="Center"
+                                     BorderThickness="0"
+                                     Text="{Binding ApplicationSearch, UpdateSourceTrigger=PropertyChanged}"
                                      mah:TextBoxHelper.Watermark="{x:Static localization:Strings.SearchDots}"
                                      mah:TextBoxHelper.ClearTextButton="True"
                                      CommandManager.PreviewExecuted="TextBoxApplicationSearch_OnPreviewExecuted"
@@ -516,7 +522,8 @@
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition Binding="{Binding ApplicationViewIsOpen}" Value="True" />
-                                                    <Condition Binding="{Binding TextBoxApplicationSearchIsFocused}" Value="True" />
+                                                    <Condition Binding="{Binding TextBoxApplicationSearchIsFocused}"
+                                                               Value="True" />
                                                 </MultiDataTrigger.Conditions>
                                                 <MultiDataTrigger.Setters>
                                                     <Setter Property="Visibility" Value="Visible" />
@@ -576,7 +583,8 @@
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition Binding="{Binding ApplicationViewIsOpen}" Value="True" />
-                                                    <Condition Binding="{Binding TextBoxApplicationSearchIsFocused}" Value="True" />
+                                                    <Condition Binding="{Binding TextBoxApplicationSearchIsFocused}"
+                                                               Value="True" />
                                                 </MultiDataTrigger.Conditions>
                                                 <MultiDataTrigger.Setters>
                                                     <Setter Property="Visibility" Value="Visible" />

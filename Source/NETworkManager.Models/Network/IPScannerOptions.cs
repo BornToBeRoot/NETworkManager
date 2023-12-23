@@ -82,7 +82,9 @@ public class IPScannerOptions
     /// <param name="dnsShowErrorMessage">Show the error message if the hostname could not be resolved.</param>
     /// <param name="resolveMACAddress">Resolve the MAC address for the host from ARP.</param>
     /// <param name="showAllResults">Include unreachable IP addresses in the result.</param>
-    public IPScannerOptions(int maxHostThreads, int maxPortThreads, int icmpAttempts, int icmpTimeout, byte[] icmpBuffer, bool portScanEnabled, int[] portScanPorts, int portScanTimeout, bool resolveHostname, bool dnsShowErrorMessage, bool resolveMACAddress, bool showAllResults)
+    public IPScannerOptions(int maxHostThreads, int maxPortThreads, int icmpAttempts, int icmpTimeout,
+        byte[] icmpBuffer, bool portScanEnabled, int[] portScanPorts, int portScanTimeout, bool resolveHostname,
+        bool dnsShowErrorMessage, bool resolveMACAddress, bool showAllResults)
     {
         MaxHostThreads = maxHostThreads;
         MaxPortThreads = maxPortThreads;

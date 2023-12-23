@@ -143,7 +143,7 @@ public class LookupOUILookupViewModel : ViewModelBase
 
         // Search history
         SearchHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Lookup_OUI_SearchHistory);
-        
+
         // Result view
         ResultsView = CollectionViewSource.GetDefaultView(Results);
         ResultsView.SortDescriptions.Add(new SortDescription(nameof(OUIInfo.MACAddress), ListSortDirection.Ascending));
@@ -171,8 +171,8 @@ public class LookupOUILookupViewModel : ViewModelBase
         // Parse the input
         foreach (var search in Search.Split(';'))
         {
-            var searchTrim  = search.Trim();
-            
+            var searchTrim = search.Trim();
+
             if (Regex.IsMatch(searchTrim, RegexHelper.MACAddressRegex) ||
                 Regex.IsMatch(searchTrim, RegexHelper.MACAddressFirst3BytesRegex))
                 macAddresses.Add(searchTrim);
@@ -182,7 +182,7 @@ public class LookupOUILookupViewModel : ViewModelBase
 
         // Temporary collection to avoid duplicate entries
         var results = new HashSet<OUIInfo>();
-        
+
         // Get OUI information's by MAC-Address
         // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator (Doesn't work with async/await)
         foreach (var macAddress in macAddresses)
@@ -200,7 +200,7 @@ public class LookupOUILookupViewModel : ViewModelBase
         // Add the results to the collection
         foreach (var result in results)
             Results.Add(result);
-        
+
         // Show a message if no vendor was found
         NothingFound = Results.Count == 0;
 

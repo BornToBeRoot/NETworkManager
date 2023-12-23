@@ -16,6 +16,7 @@ namespace NETworkManager.ViewModels;
 public class DiscoveryProtocolViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly DiscoveryProtocolCapture _discoveryProtocolCapture = new();
@@ -24,6 +25,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     private int _secondsRemaining;
 
     private bool _firstRun = true;
+
     public bool FirstRun
     {
         get => _firstRun;
@@ -38,6 +40,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     }
 
     private List<DiscoveryProtocol> _protocols = new();
+
     public List<DiscoveryProtocol> Protocols
     {
         get => _protocols;
@@ -52,6 +55,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     }
 
     private DiscoveryProtocol _selectedProtocol;
+
     public DiscoveryProtocol SelectedProtocol
     {
         get => _selectedProtocol;
@@ -69,6 +73,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     }
 
     private List<int> _durations;
+
     public List<int> Durations
     {
         get => _durations;
@@ -83,6 +88,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     }
 
     private int _selectedDuration;
+
     public int SelectedDuration
     {
         get => _selectedDuration;
@@ -100,6 +106,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     }
 
     private bool _isCapturing;
+
     public bool IsCapturing
     {
         get => _isCapturing;
@@ -114,6 +121,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     }
 
     private string _timeRemainingMessage;
+
     public string TimeRemainingMessage
     {
         get => _timeRemainingMessage;
@@ -126,8 +134,9 @@ public class DiscoveryProtocolViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-            
+
     private bool _isStatusMessageDisplayed;
+
     public bool IsStatusMessageDisplayed
     {
         get => _isStatusMessageDisplayed;
@@ -142,6 +151,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     }
 
     private string _statusMessage;
+
     public string StatusMessage
     {
         get => _statusMessage;
@@ -156,6 +166,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     }
 
     private bool _discoveryPackageReceived;
+
     public bool DiscoveryPackageReceived
     {
         get => _discoveryPackageReceived;
@@ -170,6 +181,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     }
 
     private DiscoveryProtocolPackageInfo _discoveryPackage;
+
     public DiscoveryProtocolPackageInfo DiscoveryPackage
     {
         get => _discoveryPackage;
@@ -182,9 +194,11 @@ public class DiscoveryProtocolViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, LoadSettings
+
     public DiscoveryProtocolViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
@@ -210,14 +224,17 @@ public class DiscoveryProtocolViewModel : ViewModelBase
 
     private void LoadSettings()
     {
-        Protocols = Enum.GetValues(typeof(DiscoveryProtocol)).Cast<DiscoveryProtocol>().OrderBy(x => x.ToString()).ToList();
+        Protocols = Enum.GetValues(typeof(DiscoveryProtocol)).Cast<DiscoveryProtocol>().OrderBy(x => x.ToString())
+            .ToList();
         SelectedProtocol = Protocols.FirstOrDefault(x => x == SettingsManager.Current.DiscoveryProtocol_Protocol);
         Durations = new List<int> { 15, 30, 60, 90, 120 };
         SelectedDuration = Durations.FirstOrDefault(x => x == SettingsManager.Current.DiscoveryProtocol_Duration);
     }
+
     #endregion
 
     #region ICommands & Actions
+
     public ICommand RestartAsAdminCommand => new RelayCommand(_ => RestartAsAdminAction().ConfigureAwait(false));
 
     private async Task RestartAsAdminAction()
@@ -228,7 +245,8 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+            await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message,
+                MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
         }
     }
 
@@ -260,35 +278,39 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
-        }            
+            await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message,
+                MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+        }
     }
 
     private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
     {
         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
         {
-            TimeRemainingMessage = string.Format(Localization.Resources.Strings.XXSecondsRemainingDots, _secondsRemaining);
+            TimeRemainingMessage =
+                string.Format(Localization.Resources.Strings.XXSecondsRemainingDots, _secondsRemaining);
 
             if (_secondsRemaining > 0)
                 _secondsRemaining--;
         }));
     }
+
     #endregion
 
-    #region Methods   
+    #region Methods
+
     public void OnViewVisible()
     {
-
     }
 
     public void OnViewHide()
     {
-
     }
+
     #endregion
 
     #region Events
+
     private void DiscoveryProtocol_PackageReceived(object sender, DiscoveryProtocolPackageArgs e)
     {
         DiscoveryPackage = e.PackageInfo;
@@ -307,7 +329,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     }
 
     private void DiscoveryProtocol_ErrorReceived(object sender, DiscoveryProtocolErrorArgs e)
-    {            
+    {
         if (!string.IsNullOrEmpty(StatusMessage))
             StatusMessage += Environment.NewLine;
 
@@ -321,5 +343,6 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         _remainingTimer.Stop();
         IsCapturing = false;
     }
+
     #endregion
 }

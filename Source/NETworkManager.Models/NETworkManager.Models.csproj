@@ -1,66 +1,66 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<ProjectGuid>{8A2859DC-38B6-4E9D-A6B2-1828DC6641B3}</ProjectGuid>
-		<OutputType>Library</OutputType>
-		<RootNamespace>NETworkManager.Models</RootNamespace>
-		<AssemblyName>NETworkManager.Models</AssemblyName>
-		<TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
-		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
-		<PlatformTarget>x64</PlatformTarget>
-		<SelfContained>false</SelfContained>
-		<CsWinRTWindowsMetadata>sdk</CsWinRTWindowsMetadata>
-		<UseWPF>true</UseWPF>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-		<ProduceReferenceAssembly>false</ProduceReferenceAssembly>
-	</PropertyGroup>
-	<ItemGroup>
-		<None Remove="Resources\OUI.xml" />
-		<None Remove="Resources\Ports.xml" />
-		<None Remove="Resources\PSDiscoveryProtocol.psm1" />
-		<None Remove="Resources\WhoisServers.xml" />
-	</ItemGroup>
-	<ItemGroup>
-		<Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
-	</ItemGroup>
-	<ItemGroup>
-		<EmbeddedResource Include="Resources\PSDiscoveryProtocol.psm1" />
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="AWSSDK.Core" Version="3.7.300.8" />
-		<PackageReference Include="DnsClient" Version="1.7.0" />
-		<PackageReference Include="IPNetwork2" Version="2.6.618">
-			<Aliases>IPNetwork2</Aliases>
-		</PackageReference>
-		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.2" />
-		<PackageReference Include="log4net" Version="2.0.15" />
-		<PackageReference Include="MahApps.Metro" Version="2.4.10" />
-		<PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="4.11.0" />
-		<PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
-		<PackageReference Include="MahApps.Metro.IconPacks.MaterialLight" Version="4.11.0" />
-		<PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="4.11.0" />
-		<PackageReference Include="MahApps.Metro.IconPacks.Octicons" Version="4.11.0" />
-		<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2151.40" />
-		<PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.4" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-		<PackageReference Include="Microsoft.PowerShell.SDK" Version="7.4.0" />
-	</ItemGroup>
+    <PropertyGroup>
+        <ProjectGuid>{8A2859DC-38B6-4E9D-A6B2-1828DC6641B3}</ProjectGuid>
+        <OutputType>Library</OutputType>
+        <RootNamespace>NETworkManager.Models</RootNamespace>
+        <AssemblyName>NETworkManager.Models</AssemblyName>
+        <TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+        <PlatformTarget>x64</PlatformTarget>
+        <SelfContained>false</SelfContained>
+        <CsWinRTWindowsMetadata>sdk</CsWinRTWindowsMetadata>
+        <UseWPF>true</UseWPF>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Remove="Resources\OUI.xml"/>
+        <None Remove="Resources\Ports.xml"/>
+        <None Remove="Resources\PSDiscoveryProtocol.psm1"/>
+        <None Remove="Resources\WhoisServers.xml"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs"/>
+    </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Include="Resources\PSDiscoveryProtocol.psm1"/>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="AWSSDK.Core" Version="3.7.300.8"/>
+        <PackageReference Include="DnsClient" Version="1.7.0"/>
+        <PackageReference Include="IPNetwork2" Version="2.6.618">
+            <Aliases>IPNetwork2</Aliases>
+        </PackageReference>
+        <PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.2"/>
+        <PackageReference Include="log4net" Version="2.0.15"/>
+        <PackageReference Include="MahApps.Metro" Version="2.4.10"/>
+        <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="4.11.0"/>
+        <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0"/>
+        <PackageReference Include="MahApps.Metro.IconPacks.MaterialLight" Version="4.11.0"/>
+        <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="4.11.0"/>
+        <PackageReference Include="MahApps.Metro.IconPacks.Octicons" Version="4.11.0"/>
+        <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2151.40"/>
+        <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.4"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
+        <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.4.0"/>
+    </ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj" />
-	</ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj"/>
+    </ItemGroup>
 
-	<ItemGroup>
-		<Content Include="Resources\OUI.xml">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>
+    <ItemGroup>
+        <Content Include="Resources\OUI.xml">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
 
-	<ItemGroup>
-		<Content Include="Resources\Ports.xml">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-		<Content Include="Resources\WhoisServers.xml">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>
+    <ItemGroup>
+        <Content Include="Resources\Ports.xml">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="Resources\WhoisServers.xml">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
 </Project>

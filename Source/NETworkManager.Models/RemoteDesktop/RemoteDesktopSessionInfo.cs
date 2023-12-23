@@ -47,6 +47,5 @@ public class RemoteDesktopSessionInfo
 
     public RemoteDesktopSessionInfo()
     {
-
     }
 }

@@ -10,7 +10,8 @@ public static class PowerShellHelper
     /// <param name="command">Command to execute.</param>
     /// <param name="asAdmin">Start PowerShell as administrator. Error code 1223 is returned when UAC dialog is canceled by user.</param>
     /// <param name="windowStyle">Window style of the PowerShell console (Default: Hidden)</param>
-    public static void ExecuteCommand(string command, bool asAdmin = false, ProcessWindowStyle windowStyle = ProcessWindowStyle.Hidden)
+    public static void ExecuteCommand(string command, bool asAdmin = false,
+        ProcessWindowStyle windowStyle = ProcessWindowStyle.Hidden)
     {
         var info = new ProcessStartInfo
         {

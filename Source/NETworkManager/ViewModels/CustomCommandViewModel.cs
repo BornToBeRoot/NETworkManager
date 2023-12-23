@@ -13,6 +13,7 @@ public class CustomCommandViewModel : ViewModelBase
     public ICommand CancelCommand { get; }
 
     private readonly Guid _id;
+
     public Guid ID
     {
         get => _id;
@@ -27,6 +28,7 @@ public class CustomCommandViewModel : ViewModelBase
     }
 
     private string _name;
+
     public string Name
     {
         get => _name;
@@ -45,6 +47,7 @@ public class CustomCommandViewModel : ViewModelBase
     }
 
     private string _filePath;
+
     public string FilePath
     {
         get => _filePath;
@@ -63,6 +66,7 @@ public class CustomCommandViewModel : ViewModelBase
     }
 
     private string _arguments;
+
     public string Arguments
     {
         get => _arguments;
@@ -81,8 +85,9 @@ public class CustomCommandViewModel : ViewModelBase
     }
 
     private readonly CustomCommandInfo _info;
-    
+
     private bool _infoChanged;
+
     public bool InfoChanged
     {
         get => _infoChanged;
@@ -97,6 +102,7 @@ public class CustomCommandViewModel : ViewModelBase
     }
 
     private bool _isEdited;
+
     public bool IsEdited
     {
         get => _isEdited;
@@ -110,7 +116,8 @@ public class CustomCommandViewModel : ViewModelBase
         }
     }
 
-    public CustomCommandViewModel(Action<CustomCommandViewModel> saveCommand, Action<CustomCommandViewModel> cancelHandler, bool isEdited = false, CustomCommandInfo info = null)
+    public CustomCommandViewModel(Action<CustomCommandViewModel> saveCommand,
+        Action<CustomCommandViewModel> cancelHandler, bool isEdited = false, CustomCommandInfo info = null)
     {
         _isLoading = true;
 
@@ -130,5 +137,6 @@ public class CustomCommandViewModel : ViewModelBase
         _isLoading = false;
     }
 
-    private void CheckInfoChanged() => InfoChanged = _info.Name != null || _info.FilePath != FilePath || _info.Arguments != Arguments;
+    private void CheckInfoChanged() =>
+        InfoChanged = _info.Name != null || _info.FilePath != FilePath || _info.Arguments != Arguments;
 }

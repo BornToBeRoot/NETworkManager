@@ -9,7 +9,7 @@ public class OUIInfo
     /// MAC address.
     /// </summary>
     public string MACAddress { get; set; }
-    
+
     /// <summary>
     /// Name of the vendor.
     /// </summary>

@@ -11,6 +11,8 @@ public class PowerShellPathValidator : ValidationRule
 
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
-        return fileNames.Contains(Path.GetFileName((string)value).ToLower()) ? ValidationResult.ValidResult : new ValidationResult(false, Localization.Resources.Strings.NoValidPowerShellPath);
+        return fileNames.Contains(Path.GetFileName((string)value).ToLower())
+            ? ValidationResult.ValidResult
+            : new ValidationResult(false, Localization.Resources.Strings.NoValidPowerShellPath);
     }
 }

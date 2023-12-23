@@ -11,6 +11,7 @@ namespace NETworkManager.Settings;
 public class ConfigurationInfo : PropertyChangedBase
 {
     #region Static properties set at startup
+
     /// <summary>
     /// Indicates that the application is running as administrator.
     /// </summary>
@@ -35,9 +36,11 @@ public class ConfigurationInfo : PropertyChangedBase
     /// Indicates if the application is running in portable mode.
     /// </summary>
     public bool IsPortable { get; set; }
+
     #endregion
 
-    #region Dynamic properties set at runtime        
+    #region Dynamic properties set at runtime
+
     /// <summary>
     /// Shows a reset notice if the settings were corrupted and reset.
     /// </summary>
@@ -77,12 +80,12 @@ public class ConfigurationInfo : PropertyChangedBase
     /// Indicates if WebConsole has tabs.
     /// </summary>
     public bool WebConsoleHasTabs { get; set; }
-    
+
     /// <summary>
     /// Private variable for <see cref="ProfileManagerIsEnabled"/>.
     /// </summary>
     private bool _profileManagerIsEnabled;
-    
+
     /// <summary>
     /// Indicates if the profile manager is enabled.
     /// </summary>
@@ -103,7 +106,7 @@ public class ConfigurationInfo : PropertyChangedBase
     /// Private variable for <see cref="ProfileManagerShowUnlock"/>.
     /// </summary>
     private bool _profileManagerShowUnlock;
-    
+
     /// <summary>
     /// Indicates if the profile manager should show an unlock option.
     /// </summary>
@@ -119,16 +122,16 @@ public class ConfigurationInfo : PropertyChangedBase
             OnPropertyChanged();
         }
     }
-    
+
     /// <summary>
     /// Private variable for <see cref="ProfileManagerErrorMessage"/>.
     /// </summary>
     private string _profileManagerErrorMessage = string.Empty;
-    
+
     /// <summary>
     /// Error message if the profile manager is not enabled.
     /// </summary>
-    public string ProfileManagerErrorMessage 
+    public string ProfileManagerErrorMessage
     {
         get => _profileManagerErrorMessage;
         set
@@ -161,13 +164,16 @@ public class ConfigurationInfo : PropertyChangedBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor
+
     /// <summary>
     /// Create a new instance of <see cref="ConfigurationInfo"/> with static configuration.
     /// </summary>
-    public ConfigurationInfo(bool isAdmin, string executionPath, string applicationFullName, string applicationName, bool isPortable)
+    public ConfigurationInfo(bool isAdmin, string executionPath, string applicationFullName, string applicationName,
+        bool isPortable)
     {
         IsAdmin = isAdmin;
         ExecutionPath = executionPath;
@@ -175,5 +181,6 @@ public class ConfigurationInfo : PropertyChangedBase
         ApplicationName = applicationName;
         IsPortable = isPortable;
     }
+
     #endregion
 }

@@ -1,5 +1,4 @@
 ﻿extern alias IPNetwork2;
-
 using NETworkManager.Settings;
 using System.Windows.Input;
 using NETworkManager.Utilities;
@@ -15,7 +14,9 @@ namespace NETworkManager.ViewModels;
 public class SubnetCalculatorWideSubnetViewModel : ViewModelBase
 {
     #region Variables
+
     private string _subnet1;
+
     public string Subnet1
     {
         get => _subnet1;
@@ -32,6 +33,7 @@ public class SubnetCalculatorWideSubnetViewModel : ViewModelBase
     public ICollectionView Subnet1HistoryView { get; }
 
     private string _subnet2;
+
     public string Subnet2
     {
         get => _subnet2;
@@ -48,6 +50,7 @@ public class SubnetCalculatorWideSubnetViewModel : ViewModelBase
     public ICollectionView Subnet2HistoryView { get; }
 
     private bool _isRunning;
+
     public bool IsRunning
     {
         get => _isRunning;
@@ -62,6 +65,7 @@ public class SubnetCalculatorWideSubnetViewModel : ViewModelBase
     }
 
     private bool _isResultVisible;
+
     public bool IsResultVisible
     {
         get => _isResultVisible;
@@ -77,6 +81,7 @@ public class SubnetCalculatorWideSubnetViewModel : ViewModelBase
     }
 
     private IPNetworkInfo _result;
+
     public IPNetworkInfo Result
     {
         get => _result;
@@ -89,29 +94,39 @@ public class SubnetCalculatorWideSubnetViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, load settings
+
     public SubnetCalculatorWideSubnetViewModel()
     {
         // Set collection view
-        Subnet1HistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet1);
-        Subnet2HistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet2);
+        Subnet1HistoryView =
+            CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet1);
+        Subnet2HistoryView =
+            CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet2);
     }
+
     #endregion
 
     #region ICommands & Actions
+
     public ICommand CalculateCommand => new RelayCommand(_ => CalculateAction(), Calculate_CanExecute);
 
-    private bool Calculate_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool Calculate_CanExecute(object parameter) => Application.Current.MainWindow != null &&
+                                                           !((MetroWindow)Application.Current.MainWindow)
+                                                               .IsAnyDialogOpen;
 
     private void CalculateAction()
     {
         Calculate();
     }
+
     #endregion
 
     #region Methods
+
     private void Calculate()
     {
         IsRunning = true;
@@ -135,7 +150,8 @@ public class SubnetCalculatorWideSubnetViewModel : ViewModelBase
     private void AddSubnet1ToHistory(string subnet)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet1.ToList(), subnet, SettingsManager.Current.General_HistoryListEntries);
+        var list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet1.ToList(), subnet,
+            SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items
         SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet1.Clear();
@@ -148,7 +164,8 @@ public class SubnetCalculatorWideSubnetViewModel : ViewModelBase
     private void AddSubnet2ToHistory(string subnet)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet2.ToList(), subnet, SettingsManager.Current.General_HistoryListEntries);
+        var list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet2.ToList(), subnet,
+            SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items
         SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet2.Clear();
@@ -160,7 +177,7 @@ public class SubnetCalculatorWideSubnetViewModel : ViewModelBase
 
     public void OnShutdown()
     {
-
     }
+
     #endregion
 }

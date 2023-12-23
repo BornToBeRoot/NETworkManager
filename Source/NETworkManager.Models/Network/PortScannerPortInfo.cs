@@ -12,17 +12,17 @@ public class PortScannerPortInfo : PortInfo
     /// IP address of the host.
     /// </summary>
     public IPAddress IPAddress { get; set; }
-    
+
     /// <summary>
     /// Hostname of the host.
     /// </summary>
     public string Hostname { get; set; }
-    
+
     /// <summary>
     /// Hostname (if available) or IP address of the host.
     /// </summary>
     public string HostAsString => string.IsNullOrEmpty(Hostname) ? IPAddress.ToString() : Hostname;
-    
+
     /// <summary>
     /// Creates a new instance of <see cref="PortScannerPortInfo"/> with the specified parameters.
     /// </summary>

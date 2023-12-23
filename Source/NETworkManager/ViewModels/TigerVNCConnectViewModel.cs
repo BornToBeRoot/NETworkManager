@@ -13,6 +13,7 @@ public class TigerVNCConnectViewModel : ViewModelBase
     public ICommand CancelCommand { get; }
 
     private string _host;
+
     public string Host
     {
         get => _host;
@@ -25,10 +26,11 @@ public class TigerVNCConnectViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+
     public ICollectionView HostHistoryView { get; }
 
     private int _port;
+
     public int Port
     {
         get => _port;
@@ -43,15 +45,16 @@ public class TigerVNCConnectViewModel : ViewModelBase
     }
 
     public ICollectionView PortHistoryView { get; }
-    
-    public TigerVNCConnectViewModel(Action<TigerVNCConnectViewModel> connectCommand, Action<TigerVNCConnectViewModel> cancelHandler, string host = null)
+
+    public TigerVNCConnectViewModel(Action<TigerVNCConnectViewModel> connectCommand,
+        Action<TigerVNCConnectViewModel> cancelHandler, string host = null)
     {
         ConnectCommand = new RelayCommand(_ => connectCommand(this));
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
         if (!string.IsNullOrEmpty(host))
             Host = host;
-        
+
         HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.TigerVNC_HostHistory);
         PortHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.TigerVNC_PortHistory);
 

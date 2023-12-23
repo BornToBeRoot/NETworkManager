@@ -12,7 +12,7 @@ public partial class PuTTYHostView
     private readonly PuTTYHostViewModel _viewModel = new(DialogCoordinator.Instance);
 
     private bool _loaded;
-    
+
     public PuTTYHostView()
     {
         InitializeComponent();

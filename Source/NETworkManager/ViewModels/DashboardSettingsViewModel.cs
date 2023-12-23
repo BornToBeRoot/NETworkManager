@@ -5,9 +5,11 @@ namespace NETworkManager.ViewModels;
 public class DashboardSettingsViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly bool _isLoading;
 
     private string _publicIPv4Address;
+
     public string PublicIPv4Address
     {
         get => _publicIPv4Address;
@@ -25,6 +27,7 @@ public class DashboardSettingsViewModel : ViewModelBase
     }
 
     private string _publicIPv6Address;
+
     public string PublicIPv6Address
     {
         get => _publicIPv6Address;
@@ -42,6 +45,7 @@ public class DashboardSettingsViewModel : ViewModelBase
     }
 
     private bool _checkPublicIPAddressEnabled;
+
     public bool CheckPublicIPAddressEnabled
     {
         get => _checkPublicIPAddressEnabled;
@@ -59,6 +63,7 @@ public class DashboardSettingsViewModel : ViewModelBase
     }
 
     private bool _usePublicIPv4AddressCustomAPI;
+
     public bool UsePublicIPv4AddressCustomAPI
     {
         get => _usePublicIPv4AddressCustomAPI;
@@ -76,6 +81,7 @@ public class DashboardSettingsViewModel : ViewModelBase
     }
 
     private string _customPublicIPv4AddressAPI;
+
     public string CustomPublicIPv4AddressAPI
     {
         get => _customPublicIPv4AddressAPI;
@@ -93,6 +99,7 @@ public class DashboardSettingsViewModel : ViewModelBase
     }
 
     private bool _usePublicIPv6AddressCustomAPI;
+
     public bool UsePublicIPv6AddressCustomAPI
     {
         get => _usePublicIPv6AddressCustomAPI;
@@ -110,6 +117,7 @@ public class DashboardSettingsViewModel : ViewModelBase
     }
 
     private string _customPublicIPv6AddressAPI;
+
     public string CustomPublicIPv6AddressAPI
     {
         get => _customPublicIPv6AddressAPI;
@@ -127,6 +135,7 @@ public class DashboardSettingsViewModel : ViewModelBase
     }
 
     private bool _checkIPApiIPGeolocationEnabled;
+
     public bool CheckIPApiIPGeolocationEnabled
     {
         get => _checkIPApiIPGeolocationEnabled;
@@ -144,6 +153,7 @@ public class DashboardSettingsViewModel : ViewModelBase
     }
 
     private bool _checkIPApiDNSResolverEnabled;
+
     public bool CheckIPApiDNSResolverEnabled
     {
         get => _checkIPApiDNSResolverEnabled;
@@ -159,9 +169,11 @@ public class DashboardSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Contructor, load settings
+
     public DashboardSettingsViewModel()
     {
         _isLoading = true;
@@ -183,5 +195,6 @@ public class DashboardSettingsViewModel : ViewModelBase
         CheckIPApiIPGeolocationEnabled = SettingsManager.Current.Dashboard_CheckIPApiIPGeolocation;
         CheckIPApiDNSResolverEnabled = SettingsManager.Current.Dashboard_CheckIPApiDNSResolver;
     }
+
     #endregion
 }

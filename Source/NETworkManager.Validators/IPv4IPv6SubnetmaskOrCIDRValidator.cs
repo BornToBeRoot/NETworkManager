@@ -8,10 +8,10 @@ namespace NETworkManager.Validators;
 public class IPv4IPv6SubnetmaskOrCIDRValidator : ValidationRule
 {
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
-    {   
+    {
         var subnetmaskOrCidr = (value as string)?.Trim();
 
-        if(string.IsNullOrEmpty(subnetmaskOrCidr))
+        if (string.IsNullOrEmpty(subnetmaskOrCidr))
             return new ValidationResult(false, Localization.Resources.Strings.EnterValidSubnetmaskOrCIDR);
 
         // Check if it is a subnetmask like 255.255.255.0
@@ -23,8 +23,8 @@ public class IPv4IPv6SubnetmaskOrCIDRValidator : ValidationRule
         {
             if (cidr >= 0 && cidr < 129)
                 return ValidationResult.ValidResult;
-        }           
-        
+        }
+
         return new ValidationResult(false, Localization.Resources.Strings.EnterValidSubnetmaskOrCIDR);
     }
 }

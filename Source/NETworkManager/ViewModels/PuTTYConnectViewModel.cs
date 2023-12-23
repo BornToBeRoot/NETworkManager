@@ -8,7 +8,6 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
-
 public class PuTTYConnectViewModel : ViewModelBase
 {
     public ICommand ConnectCommand { get; }
@@ -16,12 +15,13 @@ public class PuTTYConnectViewModel : ViewModelBase
     public ICommand CancelCommand { get; }
 
     private ConnectionMode _connectionMode;
+
     public ConnectionMode ConnectionMode
     {
         get => _connectionMode;
         set
         {
-            if(value == _connectionMode) 
+            if (value == _connectionMode)
                 return;
 
             _connectionMode = value;
@@ -30,6 +30,7 @@ public class PuTTYConnectViewModel : ViewModelBase
     }
 
     private bool _useSSH;
+
     public bool UseSSH
     {
         get => _useSSH;
@@ -50,6 +51,7 @@ public class PuTTYConnectViewModel : ViewModelBase
     }
 
     private bool _useTelnet;
+
     public bool UseTelnet
     {
         get => _useTelnet;
@@ -70,6 +72,7 @@ public class PuTTYConnectViewModel : ViewModelBase
     }
 
     private bool _useSerial;
+
     public bool UseSerial
     {
         get => _useSerial;
@@ -90,6 +93,7 @@ public class PuTTYConnectViewModel : ViewModelBase
     }
 
     private bool _useRlogin;
+
     public bool UseRlogin
     {
         get => _useRlogin;
@@ -110,6 +114,7 @@ public class PuTTYConnectViewModel : ViewModelBase
     }
 
     private bool _useRAW;
+
     public bool UseRAW
     {
         get => _useRAW;
@@ -130,6 +135,7 @@ public class PuTTYConnectViewModel : ViewModelBase
     }
 
     private string _host;
+
     public string Host
     {
         get => _host;
@@ -144,6 +150,7 @@ public class PuTTYConnectViewModel : ViewModelBase
     }
 
     private string _serialLine;
+
     public string SerialLine
     {
         get => _serialLine;
@@ -158,6 +165,7 @@ public class PuTTYConnectViewModel : ViewModelBase
     }
 
     private int _port;
+
     public int Port
     {
         get => _port;
@@ -172,6 +180,7 @@ public class PuTTYConnectViewModel : ViewModelBase
     }
 
     private int _baud;
+
     public int Baud
     {
         get => _baud;
@@ -186,6 +195,7 @@ public class PuTTYConnectViewModel : ViewModelBase
     }
 
     private string _username;
+
     public string Username
     {
         get => _username;
@@ -200,6 +210,7 @@ public class PuTTYConnectViewModel : ViewModelBase
     }
 
     private string _privateKeyFile;
+
     public string PrivateKeyFile
     {
         get => _privateKeyFile;
@@ -215,6 +226,7 @@ public class PuTTYConnectViewModel : ViewModelBase
 
 
     private string _profile;
+
     public string Profile
     {
         get => _profile;
@@ -229,6 +241,7 @@ public class PuTTYConnectViewModel : ViewModelBase
     }
 
     private string _additionalCommandLine;
+
     public string AdditionalCommandLine
     {
         get => _additionalCommandLine;
@@ -256,7 +269,8 @@ public class PuTTYConnectViewModel : ViewModelBase
 
     public ICollectionView ProfileHistoryView { get; }
 
-    public PuTTYConnectViewModel(Action<PuTTYConnectViewModel> connectCommand, Action<PuTTYConnectViewModel> cancelHandler, string host = null)
+    public PuTTYConnectViewModel(Action<PuTTYConnectViewModel> connectCommand,
+        Action<PuTTYConnectViewModel> cancelHandler, string host = null)
     {
         ConnectCommand = new RelayCommand(_ => connectCommand(this));
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
@@ -269,7 +283,8 @@ public class PuTTYConnectViewModel : ViewModelBase
         PortHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_PortHistory);
         BaudHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_BaudHistory);
         UsernameHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_UsernameHistory);
-        PrivateKeyFileHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_PrivateKeyFileHistory);
+        PrivateKeyFileHistoryView =
+            CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_PrivateKeyFileHistory);
         ProfileHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_ProfileHistory);
 
         LoadSettings();
@@ -277,7 +292,6 @@ public class PuTTYConnectViewModel : ViewModelBase
 
     private void LoadSettings()
     {
-
         ConnectionMode = SettingsManager.Current.PuTTY_DefaultConnectionMode;
 
         switch (ConnectionMode)

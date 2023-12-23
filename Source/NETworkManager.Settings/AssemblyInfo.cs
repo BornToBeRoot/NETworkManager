@@ -30,6 +30,5 @@ public class AssemblyInfo
     /// </summary>
     public AssemblyInfo()
     {
-
     }
 }

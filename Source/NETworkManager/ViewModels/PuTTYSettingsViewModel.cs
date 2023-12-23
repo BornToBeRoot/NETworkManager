@@ -15,6 +15,7 @@ namespace NETworkManager.ViewModels;
 public class PuTTYSettingsViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
     public bool IsPortable => ConfigurationManager.Current.IsPortable;
@@ -24,6 +25,7 @@ public class PuTTYSettingsViewModel : ViewModelBase
     private readonly bool _isLoading;
 
     private string _applicationFilePath;
+
     public string ApplicationFilePath
     {
         get => _applicationFilePath;
@@ -43,6 +45,7 @@ public class PuTTYSettingsViewModel : ViewModelBase
     }
 
     private bool _isConfigured;
+
     public bool IsConfigured
     {
         get => _isConfigured;
@@ -57,6 +60,7 @@ public class PuTTYSettingsViewModel : ViewModelBase
     }
 
     private bool _useSSH;
+
     public bool UseSSH
     {
         get => _useSSH;
@@ -74,6 +78,7 @@ public class PuTTYSettingsViewModel : ViewModelBase
     }
 
     private bool _useTelnet;
+
     public bool UseTelnet
     {
         get => _useTelnet;
@@ -91,6 +96,7 @@ public class PuTTYSettingsViewModel : ViewModelBase
     }
 
     private bool _useSerial;
+
     public bool UseSerial
     {
         get => _useSerial;
@@ -108,6 +114,7 @@ public class PuTTYSettingsViewModel : ViewModelBase
     }
 
     private bool _useRlogin;
+
     public bool UseRlogin
     {
         get => _useRlogin;
@@ -125,6 +132,7 @@ public class PuTTYSettingsViewModel : ViewModelBase
     }
 
     private bool _useRAW;
+
     public bool UseRAW
     {
         get => _useRAW;
@@ -142,6 +150,7 @@ public class PuTTYSettingsViewModel : ViewModelBase
     }
 
     private string _username;
+
     public string Username
     {
         get => _username;
@@ -159,6 +168,7 @@ public class PuTTYSettingsViewModel : ViewModelBase
     }
 
     private string _privateKeyFile;
+
     public string PrivateKeyFile
     {
         get => _privateKeyFile;
@@ -176,6 +186,7 @@ public class PuTTYSettingsViewModel : ViewModelBase
     }
 
     private string _profile;
+
     public string Profile
     {
         get => _profile;
@@ -193,6 +204,7 @@ public class PuTTYSettingsViewModel : ViewModelBase
     }
 
     private bool _enableLog;
+
     public bool EnableLog
     {
         get => _enableLog;
@@ -212,6 +224,7 @@ public class PuTTYSettingsViewModel : ViewModelBase
     public IEnumerable<LogMode> LogModes => Enum.GetValues(typeof(LogMode)).Cast<LogMode>();
 
     private LogMode _logMode;
+
     public LogMode LogMode
     {
         get => _logMode;
@@ -229,6 +242,7 @@ public class PuTTYSettingsViewModel : ViewModelBase
     }
 
     private string _logPath;
+
     public string LogPath
     {
         get => _logPath;
@@ -246,6 +260,7 @@ public class PuTTYSettingsViewModel : ViewModelBase
     }
 
     private string _logFileName;
+
     public string LogFileName
     {
         get => _logFileName;
@@ -263,6 +278,7 @@ public class PuTTYSettingsViewModel : ViewModelBase
     }
 
     private string _additionalCommandLine;
+
     public string AdditionalCommandLine
     {
         get => _additionalCommandLine;
@@ -281,6 +297,7 @@ public class PuTTYSettingsViewModel : ViewModelBase
 
 
     private string _serialLine;
+
     public string SerialLine
     {
         get => _serialLine;
@@ -298,6 +315,7 @@ public class PuTTYSettingsViewModel : ViewModelBase
     }
 
     private int _sshPort;
+
     public int SSHPort
     {
         get => _sshPort;
@@ -315,6 +333,7 @@ public class PuTTYSettingsViewModel : ViewModelBase
     }
 
     private int _telnetPort;
+
     public int TelnetPort
     {
         get => _telnetPort;
@@ -332,6 +351,7 @@ public class PuTTYSettingsViewModel : ViewModelBase
     }
 
     private int _baudRate;
+
     public int BaudRate
     {
         get => _baudRate;
@@ -349,6 +369,7 @@ public class PuTTYSettingsViewModel : ViewModelBase
     }
 
     private int _rloginPort;
+
     public int RloginPort
     {
         get => _rloginPort;
@@ -364,9 +385,11 @@ public class PuTTYSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Contructor, load settings
+
     public PuTTYSettingsViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
@@ -416,9 +439,11 @@ public class PuTTYSettingsViewModel : ViewModelBase
         BaudRate = SettingsManager.Current.PuTTY_BaudRate;
         RloginPort = SettingsManager.Current.PuTTY_RloginPort;
     }
+
     #endregion
 
     #region ICommands & Actions
+
     public ICommand ApplicationBrowseFileCommand => new RelayCommand(_ => ApplicationBrowseFileAction());
 
     private void ApplicationBrowseFileAction()
@@ -464,9 +489,11 @@ public class PuTTYSettingsViewModel : ViewModelBase
         if (openFolderDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             LogPath = openFolderDialog.SelectedPath;
     }
+
     #endregion
 
     #region Methods
+
     private async Task Configure()
     {
         try
@@ -479,7 +506,8 @@ public class PuTTYSettingsViewModel : ViewModelBase
 
             settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-            await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, settings);
+            await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message,
+                MessageDialogStyle.Affirmative, settings);
         }
     }
 
@@ -515,5 +543,6 @@ public class PuTTYSettingsViewModel : ViewModelBase
 
         OnPropertyChanged(nameof(LogPath));
     }
+
     #endregion
 }

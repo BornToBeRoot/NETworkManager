@@ -5,9 +5,11 @@ namespace NETworkManager.ViewModels;
 public class PingMonitorSettingsViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly bool _isLoading;
-    
+
     private int _timeout;
+
     public int Timeout
     {
         get => _timeout;
@@ -25,6 +27,7 @@ public class PingMonitorSettingsViewModel : ViewModelBase
     }
 
     private int _buffer;
+
     public int Buffer
     {
         get => _buffer;
@@ -42,6 +45,7 @@ public class PingMonitorSettingsViewModel : ViewModelBase
     }
 
     private int _ttl;
+
     public int TTL
     {
         get => _ttl;
@@ -59,6 +63,7 @@ public class PingMonitorSettingsViewModel : ViewModelBase
     }
 
     private bool _dontFragment;
+
     public bool DontFragment
     {
         get => _dontFragment;
@@ -76,6 +81,7 @@ public class PingMonitorSettingsViewModel : ViewModelBase
     }
 
     private int _waitTime;
+
     public int WaitTime
     {
         get => _waitTime;
@@ -93,6 +99,7 @@ public class PingMonitorSettingsViewModel : ViewModelBase
     }
 
     private bool _expandHostView;
+
     public bool ExpandHostView
     {
         get => _expandHostView;
@@ -108,9 +115,11 @@ public class PingMonitorSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Contructor, load settings
+
     public PingMonitorSettingsViewModel()
     {
         _isLoading = true;
@@ -121,7 +130,7 @@ public class PingMonitorSettingsViewModel : ViewModelBase
     }
 
     private void LoadSettings()
-    {            
+    {
         Timeout = SettingsManager.Current.PingMonitor_Timeout;
         Buffer = SettingsManager.Current.PingMonitor_Buffer;
         TTL = SettingsManager.Current.PingMonitor_TTL;
@@ -129,5 +138,6 @@ public class PingMonitorSettingsViewModel : ViewModelBase
         WaitTime = SettingsManager.Current.PingMonitor_WaitTime;
         ExpandHostView = SettingsManager.Current.PingMonitor_ExpandHostView;
     }
+
     #endregion
 }

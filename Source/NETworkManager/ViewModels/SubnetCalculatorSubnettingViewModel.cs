@@ -1,5 +1,4 @@
 ﻿extern alias IPNetwork2;
-
 using NETworkManager.Settings;
 using System.Windows.Input;
 using NETworkManager.Utilities;
@@ -25,9 +24,11 @@ namespace NETworkManager.ViewModels;
 public class SubnetCalculatorSubnettingViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private string _subnet;
+
     public string Subnet
     {
         get => _subnet;
@@ -44,6 +45,7 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
     public ICollectionView SubnetHistoryView { get; }
 
     private string _newSubnetmask;
+
     public string NewSubnetmask
     {
         get => _newSubnetmask;
@@ -60,6 +62,7 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
     public ICollectionView NewSubnetmaskHistoryView { get; }
 
     private bool _isRunning;
+
     public bool IsRunning
     {
         get => _isRunning;
@@ -74,6 +77,7 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
     }
 
     private bool _isResultVisible;
+
     public bool IsResultVisible
     {
         get => _isResultVisible;
@@ -89,6 +93,7 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
     }
 
     private ObservableCollection<IPNetworkInfo> _results = new();
+
     public ObservableCollection<IPNetworkInfo> Results
     {
         get => _results;
@@ -105,6 +110,7 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
     public ICollectionView ResultsView { get; }
 
     private IPNetworkInfo _selectedResult;
+
     public IPNetworkInfo SelectedResult
     {
         get => _selectedResult;
@@ -120,6 +126,7 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
 
 
     private IList _selectedResults = new ArrayList();
+
     public IList SelectedResults
     {
         get => _selectedResults;
@@ -132,26 +139,35 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, load settings
+
     public SubnetCalculatorSubnettingViewModel(IDialogCoordinator instance)
     {
         _dialogCoordinator = instance;
 
         // Set collection view
-        SubnetHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Subnetting_SubnetHistory);
-        NewSubnetmaskHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskHistory);
+        SubnetHistoryView =
+            CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Subnetting_SubnetHistory);
+        NewSubnetmaskHistoryView =
+            CollectionViewSource.GetDefaultView(
+                SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskHistory);
 
         // Result view
         ResultsView = CollectionViewSource.GetDefaultView(Results);
     }
+
     #endregion
 
     #region ICommands & Actions
+
     public ICommand CalculateCommand => new RelayCommand(_ => CalculateAction(), Calculate_CanExecute);
 
-    private bool Calculate_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+    private bool Calculate_CanExecute(object parameter) => Application.Current.MainWindow != null &&
+                                                           !((MetroWindow)Application.Current.MainWindow)
+                                                               .IsAnyDialogOpen;
 
     private void CalculateAction()
     {
@@ -168,30 +184,33 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
         };
 
         var exportViewModel = new ExportViewModel(async instance =>
-        {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-            try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? Results : new ObservableCollection<IPNetworkInfo>(SelectedResults.Cast<IPNetworkInfo>().ToArray()));
-            }
-            catch (Exception ex)
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType,
+                        instance.ExportAll
+                            ? Results
+                            : new ObservableCollection<IPNetworkInfo>(SelectedResults.Cast<IPNetworkInfo>().ToArray()));
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error,
+                        Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                        Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.SubnetCalculator_Subnetting_ExportFileType = instance.FileType;
+                SettingsManager.Current.SubnetCalculator_Subnetting_ExportFilePath = instance.FilePath;
+            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new[]
             {
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
-
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
-            }
-
-            SettingsManager.Current.SubnetCalculator_Subnetting_ExportFileType = instance.FileType;
-            SettingsManager.Current.SubnetCalculator_Subnetting_ExportFilePath = instance.FilePath;
-        }, _ =>
-        {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-        }, new[]
-        {
-            ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
-        }, true, SettingsManager.Current.SubnetCalculator_Subnetting_ExportFileType, SettingsManager.Current.SubnetCalculator_Subnetting_ExportFilePath);
+                ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
+            }, true, SettingsManager.Current.SubnetCalculator_Subnetting_ExportFileType,
+            SettingsManager.Current.SubnetCalculator_Subnetting_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {
@@ -200,25 +219,27 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
+
     #endregion
 
     #region Methods
+
     private async Task Calculate()
-    {            
+    {
         IsRunning = true;
 
         Results.Clear();
 
         var subnet = Subnet.Trim();
-        var newSubnetmaskOrCidr = NewSubnetmask.Trim();                
+        var newSubnetmaskOrCidr = NewSubnetmask.Trim();
 
         var ipNetwork = IPNetwork2.System.Net.IPNetwork.Parse(Subnet.Trim());
 
         var newCidr =
             // Support subnetmask like 255.255.255.0
-            Regex.IsMatch(newSubnetmaskOrCidr, RegexHelper.SubnetmaskRegex) ?
-            Convert.ToByte(Subnetmask.ConvertSubnetmaskToCidr(IPAddress.Parse(newSubnetmaskOrCidr))) :
-            Convert.ToByte(newSubnetmaskOrCidr.TrimStart('/'));
+            Regex.IsMatch(newSubnetmaskOrCidr, RegexHelper.SubnetmaskRegex)
+                ? Convert.ToByte(Subnetmask.ConvertSubnetmaskToCidr(IPAddress.Parse(newSubnetmaskOrCidr)))
+                : Convert.ToByte(newSubnetmaskOrCidr.TrimStart('/'));
 
         // Ask the user if there is a large calculation...
         var baseCidr = ipNetwork.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? 32 : 128;
@@ -232,7 +253,9 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
 
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-            if (await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.AreYouSure, Localization.Resources.Strings.TheProcessCanTakeUpSomeTimeAndResources, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
+            if (await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.AreYouSure,
+                    Localization.Resources.Strings.TheProcessCanTakeUpSomeTimeAndResources,
+                    MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
             {
                 IsRunning = false;
 
@@ -245,10 +268,8 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
         {
             foreach (var network in ipNetwork.Subnet(newCidr))
             {
-                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-                {                        
-                    Results.Add(new IPNetworkInfo(network));
-                }));
+                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
+                    new Action(delegate { Results.Add(new IPNetworkInfo(network)); }));
             }
         });
 
@@ -263,7 +284,8 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
     private void AddSubnetToHistory(string subnet)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Subnetting_SubnetHistory.ToList(), subnet, SettingsManager.Current.General_HistoryListEntries);
+        var list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Subnetting_SubnetHistory.ToList(), subnet,
+            SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items
         SettingsManager.Current.SubnetCalculator_Subnetting_SubnetHistory.Clear();
@@ -276,7 +298,8 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
     private void AddNewSubnetmaskOrCidrToHistory(string newSubnetmaskOrCidr)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskHistory.ToList(), newSubnetmaskOrCidr, SettingsManager.Current.General_HistoryListEntries);
+        var list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskHistory.ToList(),
+            newSubnetmaskOrCidr, SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items
         SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskHistory.Clear();
@@ -288,7 +311,7 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
 
     public void OnShutdown()
     {
-
     }
+
     #endregion
 }

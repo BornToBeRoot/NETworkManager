@@ -25,7 +25,6 @@ public abstract class DNSClientResult
     /// </summary>
     public DNSClientResult()
     {
-        
     }
 
     /// <summary>
@@ -47,15 +46,15 @@ public abstract class DNSClientResult
         HasError = hasError;
         ErrorMessage = errorMessage;
     }
-    
+
     /// <summary>
     /// Create an instance of <see cref="DNSClientResult"/> with parameters if an error has occurred.
     /// </summary>    
     /// <param name="hasError">Indicates if an error has occurred.</param>
     /// <param name="errorMessage">Error message when an error has occurred.</param>
     /// <param name="dnsServer">DNS server which was used for resolving the query.</param>
-    public DNSClientResult(bool hasError, string errorMessage, string dnsServer) : this (dnsServer)
-    {            
+    public DNSClientResult(bool hasError, string errorMessage, string dnsServer) : this(dnsServer)
+    {
         HasError = hasError;
         ErrorMessage = errorMessage;
     }

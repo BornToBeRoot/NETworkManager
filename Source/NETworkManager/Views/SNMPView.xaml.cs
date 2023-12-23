@@ -38,21 +38,21 @@ public partial class SNMPView
     private void DataGrid_OnSorting(object sender, DataGridSortingEventArgs e)
     {
         var column = e.Column;
-     
-        if(column.SortMemberPath != nameof(SNMPInfo.OID))
+
+        if (column.SortMemberPath != nameof(SNMPInfo.OID))
             return;
-        
+
         // Prevent the built-in sort from sorting
         e.Handled = true;
-        
+
         // Get the direction
         var direction = column.SortDirection == ListSortDirection.Ascending
             ? ListSortDirection.Descending
             : ListSortDirection.Ascending;
-        
+
         // Update the sort direction
         column.SortDirection = direction;
-        
+
         // Get the view
         var view = (ListCollectionView)CollectionViewSource.GetDefaultView(((DataGrid)sender).ItemsSource);
 
@@ -65,9 +65,9 @@ public partial class SNMPView
         public int Compare(object x, object y)
         {
             // Get data from objects
-            if(x is not SNMPInfo first || y is not SNMPInfo second)
+            if (x is not SNMPInfo first || y is not SNMPInfo second)
                 return 0;
-            
+
             // Compare the data
             return direction == ListSortDirection.Ascending
                 ? SNMPOIDHelper.CompareOIDs(first.OID, second.OID)

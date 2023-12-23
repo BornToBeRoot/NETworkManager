@@ -8,7 +8,7 @@ public class ProfileViewInfo
     public ProfileName Name { get; set; }
 
     public Canvas Icon { get; set; }
-    
+
     public ProfileGroup Group { get; set; }
 
     public ProfileViewInfo(ProfileName name, Canvas icon, ProfileGroup group)

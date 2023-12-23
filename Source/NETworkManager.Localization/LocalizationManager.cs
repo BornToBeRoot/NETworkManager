@@ -18,7 +18,8 @@ public class LocalizationManager
     /// <summary>
     /// Constant with the path to the flag images.
     /// </summary>
-    private const string BaseFlagImageUri = @"pack://application:,,,/NETworkManager.Localization;component/Resources/Flags/";
+    private const string BaseFlagImageUri =
+        @"pack://application:,,,/NETworkManager.Localization;component/Resources/Flags/";
 
     /// <summary>
     /// Variable for the instance of the class.
@@ -56,7 +57,7 @@ public class LocalizationManager
     {
         // Official
         new LocalizationInfo("English", "English", GetImageUri("en-US"), "en-US", true),
-        new LocalizationInfo("German (Germany)", "Deutsch",  GetImageUri("de-DE"), "de-DE", true),
+        new LocalizationInfo("German (Germany)", "Deutsch", GetImageUri("de-DE"), "de-DE", true),
 
         // Community            
         new LocalizationInfo("Chinese (China)", "大陆简体", GetImageUri("zh-CN"), "zh-CN"),
@@ -66,7 +67,7 @@ public class LocalizationManager
         new LocalizationInfo("French (France)", "Français", GetImageUri("fr-FR"), "fr-FR"),
         new LocalizationInfo("Hungarian (Hungary)", "Magyar", GetImageUri("hu-HU"), "hu-HU"),
         new LocalizationInfo("Italian (Italy)", "Italiano", GetImageUri("it-IT"), "it-IT"),
-        new LocalizationInfo("Korean (Korea)", "한국어",GetImageUri("ko-KR"),"ko-KR"),
+        new LocalizationInfo("Korean (Korea)", "한국어", GetImageUri("ko-KR"), "ko-KR"),
         new LocalizationInfo("Polish (Poland)", "Język polski", GetImageUri("pl-PL"), "pl-PL"),
         new LocalizationInfo("Portuguese (Brazil)", "português brasileiro", GetImageUri("pt-BR"), "pt-BR"),
         new LocalizationInfo("Russian (Russia)", "Русский", GetImageUri("ru-RU"), "ru-RU"),
@@ -126,6 +127,4 @@ public class LocalizationManager
 
         Culture = new CultureInfo(info.Code);
     }
-    
-
 }

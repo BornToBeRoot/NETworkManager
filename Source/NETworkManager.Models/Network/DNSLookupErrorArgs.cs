@@ -14,7 +14,6 @@ public class DNSLookupErrorArgs : System.EventArgs
 
     public DNSLookupErrorArgs()
     {
-
     }
 
     public DNSLookupErrorArgs(string query, string server, string ipEndPoint, string errorMessage)

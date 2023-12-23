@@ -1,5 +1,4 @@
-﻿
-namespace NETworkManager.Models.Appearance;
+﻿namespace NETworkManager.Models.Appearance;
 
 /// <summary>
 /// Class contains information's about MahApps.Metro custom theme.

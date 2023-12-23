@@ -25,6 +25,7 @@ namespace NETworkManager.ViewModels;
 public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
@@ -56,6 +57,7 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
     }
 
     private int _selectedTabIndex;
+
     public int SelectedTabIndex
     {
         get => _selectedTabIndex;
@@ -70,7 +72,9 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
     }
 
     #region Profiles
+
     private ICollectionView _profiles;
+
     public ICollectionView Profiles
     {
         get => _profiles;
@@ -85,6 +89,7 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
     }
 
     private ProfileInfo _selectedProfile = new();
+
     public ProfileInfo SelectedProfile
     {
         get => _selectedProfile;
@@ -99,6 +104,7 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
     }
 
     private string _search;
+
     public string Search
     {
         get => _search;
@@ -118,6 +124,7 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
     }
 
     private bool _isSearching;
+
     public bool IsSearching
     {
         get => _isSearching;
@@ -135,6 +142,7 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
     private double _tempProfileWidth;
 
     private bool _expandProfileView;
+
     public bool ExpandProfileView
     {
         get => _expandProfileView;
@@ -156,6 +164,7 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
     }
 
     private GridLength _profileWidth;
+
     public GridLength ProfileWidth
     {
         get => _profileWidth;
@@ -164,7 +173,8 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
             if (value == _profileWidth)
                 return;
 
-            if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.Profile_FloatPointFix) // Do not save the size when collapsed
+            if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
+                GlobalStaticConfiguration.Profile_FloatPointFix) // Do not save the size when collapsed
                 SettingsManager.Current.WebConsole_ProfileWidth = value.Value;
 
             _profileWidth = value;
@@ -175,14 +185,17 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
+
     #endregion
+
     #endregion
 
     #region Constructor, load settings
+
     public WebConsoleHostViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
-        
+
         _dialogCoordinator = instance;
 
         try
@@ -212,18 +225,22 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
 
         _isLoading = false;
     }
-    
+
     private void LoadSettings()
     {
         ExpandProfileView = SettingsManager.Current.WebConsole_ExpandProfileView;
 
-        ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.WebConsole_ProfileWidth) : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
+        ProfileWidth = ExpandProfileView
+            ? new GridLength(SettingsManager.Current.WebConsole_ProfileWidth)
+            : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
 
         _tempProfileWidth = SettingsManager.Current.WebConsole_ProfileWidth;
     }
+
     #endregion
 
     #region ICommand & Actions
+
     public ItemActionCallback CloseItemCommand => CloseItemAction;
 
     private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
@@ -248,7 +265,7 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
                 control.ReloadCommand.Execute(null);
         }
     }
-    
+
     public ICommand ConnectProfileCommand => new RelayCommand(_ => ConnectProfileAction(), ConnectProfile_CanExecute);
 
     private bool ConnectProfile_CanExecute(object obj)
@@ -265,7 +282,8 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.WebConsole).ConfigureAwait(false);
+        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.WebConsole)
+            .ConfigureAwait(false);
     }
 
     private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
@@ -288,14 +306,17 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
 
     private void DeleteProfileAction()
     {
-        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile }).ConfigureAwait(false);
+        ProfileDialogManager
+            .ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile })
+            .ConfigureAwait(false);
     }
 
     public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString())).ConfigureAwait(false);
+        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()))
+            .ConfigureAwait(false);
     }
 
     public ICommand ClearSearchCommand => new RelayCommand(_ => ClearSearchAction());
@@ -318,9 +339,11 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
     {
         ExternalProcessStarter.OpenUrl((string)url);
     }
+
     #endregion
 
     #region Methods
+
     private async Task Connect()
     {
         var customDialog = new CustomDialog
@@ -346,10 +369,10 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
 
             Connect(info);
         }, async _ =>
-         {
-             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-             ConfigurationManager.OnDialogClose();
-         });
+        {
+            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            ConfigurationManager.OnDialogClose();
+        });
 
         customDialog.Content = new WebConsoleConnectDialog
         {
@@ -362,7 +385,8 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
 
     private void ConnectProfile()
     {
-        Connect(NETworkManager.Profiles.Application.WebConsole.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
+        Connect(NETworkManager.Profiles.Application.WebConsole.CreateSessionInfo(SelectedProfile),
+            SelectedProfile.Name);
     }
 
     private void Connect(WebConsoleSessionInfo sessionInfo, string header = null)
@@ -378,7 +402,9 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         if (string.IsNullOrEmpty(url))
             return;
 
-        SettingsManager.Current.WebConsole_UrlHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.WebConsole_UrlHistory.ToList(), url, SettingsManager.Current.General_HistoryListEntries));
+        SettingsManager.Current.WebConsole_UrlHistory = new ObservableCollection<string>(
+            ListHelper.Modify(SettingsManager.Current.WebConsole_UrlHistory.ToList(), url,
+                SettingsManager.Current.General_HistoryListEntries));
     }
 
     private void ResizeProfile(bool dueToChangedSize)
@@ -387,13 +413,18 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
 
         if (dueToChangedSize)
         {
-            ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.Profile_FloatPointFix;
+            ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
+                                GlobalStaticConfiguration.Profile_FloatPointFix;
         }
         else
         {
             if (ExpandProfileView)
             {
-                ProfileWidth = Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.Profile_WidthCollapsed) < GlobalStaticConfiguration.Profile_FloatPointFix ? new GridLength(GlobalStaticConfiguration.Profile_DefaultWidthExpanded) : new GridLength(_tempProfileWidth);
+                ProfileWidth =
+                    Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.Profile_WidthCollapsed) <
+                    GlobalStaticConfiguration.Profile_FloatPointFix
+                        ? new GridLength(GlobalStaticConfiguration.Profile_DefaultWidthExpanded)
+                        : new GridLength(_tempProfileWidth);
             }
             else
             {
@@ -419,7 +450,11 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
 
     private void SetProfilesView(ProfileInfo profile = null)
     {
-        Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.WebConsole_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name) }.View;
+        Profiles = new CollectionViewSource
+        {
+            Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.WebConsole_Enabled)
+                .OrderBy(x => x.Group).ThenBy(x => x.Name)
+        }.View;
 
         Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
 
@@ -440,7 +475,8 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
             */
 
             // Search by: Name, WebConsole_Url
-            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.WebConsole_Url.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
+            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.WebConsole_Url.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
         // Set specific profile or first if null
@@ -448,7 +484,7 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
 
         if (profile != null)
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault(x => x.Equals(profile)) ??
-                Profiles.Cast<ProfileInfo>().FirstOrDefault();
+                              Profiles.Cast<ProfileInfo>().FirstOrDefault();
         else
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
     }
@@ -470,9 +506,11 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
     {
         ConfigurationManager.OnDialogClose();
     }
+
     #endregion
 
     #region Event
+
     private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
     {
         RefreshProfiles();
@@ -487,9 +525,11 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         IsSearching = false;
     }
 
-    private void TabItems_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    private void TabItems_CollectionChanged(object sender,
+        System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
         ConfigurationManager.Current.WebConsoleHasTabs = TabItems.Count > 0;
     }
+
     #endregion
 }

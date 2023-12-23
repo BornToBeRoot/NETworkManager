@@ -14,7 +14,7 @@ public sealed class BigIntegerToStringConverter : IValueConverter
         if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             return "-/-";
 
-        return value != null ? ((BigInteger) value).ToString() : "-/-";
+        return value != null ? ((BigInteger)value).ToString() : "-/-";
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

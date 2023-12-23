@@ -21,7 +21,6 @@ public class AutoRefreshTimeInfo
     /// </summary>
     public AutoRefreshTimeInfo()
     {
-
     }
 
     /// <summary>

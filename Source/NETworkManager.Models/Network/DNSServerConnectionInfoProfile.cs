@@ -28,6 +28,5 @@ public class DNSServerConnectionInfoProfile : ServerConnectionInfoProfile
     /// <param name="servers">List of servers as <see cref="ServerConnectionInfo"/>.</param>   
     public DNSServerConnectionInfoProfile(string name, List<ServerConnectionInfo> servers) : base(name, servers)
     {
-
     }
 }

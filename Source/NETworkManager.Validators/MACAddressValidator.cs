@@ -9,6 +9,8 @@ public class MACAddressValidator : ValidationRule
 {
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
-        return value != null && Regex.IsMatch((string) value, RegexHelper.MACAddressRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Localization.Resources.Strings.EnterValidMACAddress);
+        return value != null && Regex.IsMatch((string)value, RegexHelper.MACAddressRegex)
+            ? ValidationResult.ValidResult
+            : new ValidationResult(false, Localization.Resources.Strings.EnterValidMACAddress);
     }
 }

@@ -13,6 +13,7 @@ using NETworkManager.Models.PuTTY;
 using System.Security;
 using NETworkManager.Models;
 using NETworkManager.Models.Network;
+
 // ReSharper disable InconsistentNaming
 
 namespace NETworkManager.ViewModels;
@@ -20,6 +21,7 @@ namespace NETworkManager.ViewModels;
 public class ProfileViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly bool _isLoading = true;
 
     public bool IsProfileFileEncrypted => ProfileManager.LoadedProfileFile.IsEncrypted;
@@ -27,7 +29,9 @@ public class ProfileViewModel : ViewModelBase
     public ICollectionView ProfileViews { get; }
 
     #region General
+
     private string _name;
+
     public string Name
     {
         get => _name;
@@ -42,6 +46,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _host;
+
     public string Host
     {
         get => _host;
@@ -60,6 +65,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _isResolveHostnameRunning;
+
     public bool IsResolveHostnameRunning
     {
         get => _isResolveHostnameRunning;
@@ -74,6 +80,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _showCouldNotResolveHostnameWarning;
+
     public bool ShowCouldNotResolveHostnameWarning
     {
         get => _showCouldNotResolveHostnameWarning;
@@ -88,6 +95,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _group;
+
     public string Group
     {
         get => _group;
@@ -104,6 +112,7 @@ public class ProfileViewModel : ViewModelBase
     public ICollectionView Groups { get; }
 
     private string _tags;
+
     public string Tags
     {
         get => _tags;
@@ -116,10 +125,13 @@ public class ProfileViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Network Interface
+
     private bool _networkInterface_Enabled;
+
     public bool NetworkInterface_Enabled
     {
         get => _networkInterface_Enabled;
@@ -135,6 +147,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _networkInterface_EnableDynamicIPAddress = true;
+
     public bool NetworkInterface_EnableDynamicIPAddress
     {
         get => _networkInterface_EnableDynamicIPAddress;
@@ -149,6 +162,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _networkInterface_EnableStaticIPAddress;
+
     public bool NetworkInterface_EnableStaticIPAddress
     {
         get => _networkInterface_EnableStaticIPAddress;
@@ -166,6 +180,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _networkInterface_IPAddress;
+
     public string NetworkInterface_IPAddress
     {
         get => _networkInterface_IPAddress;
@@ -180,6 +195,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _networkInterface_Subnetmask;
+
     public string NetworkInterface_Subnetmask
     {
         get => _networkInterface_Subnetmask;
@@ -194,6 +210,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _networkInterface_Gateway;
+
     public string NetworkInterface_Gateway
     {
         get => _networkInterface_Gateway;
@@ -208,6 +225,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _networkInterface_EnableDynamicDNS = true;
+
     public bool NetworkInterface_EnableDynamicDNS
     {
         get => _networkInterface_EnableDynamicDNS;
@@ -222,6 +240,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _networkInterface_EnableStaticDNS;
+
     public bool NetworkInterface_EnableStaticDNS
     {
         get => _networkInterface_EnableStaticDNS;
@@ -236,6 +255,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _networkInterface_PrimaryDNSServer;
+
     public string NetworkInterface_PrimaryDNSServer
     {
         get => _networkInterface_PrimaryDNSServer;
@@ -250,6 +270,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _networkInterface_SecondaryDNSServer;
+
     public string NetworkInterface_SecondaryDNSServer
     {
         get => _networkInterface_SecondaryDNSServer;
@@ -262,10 +283,13 @@ public class ProfileViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region IP Scanner
+
     private bool _ipScanner_Enabled;
+
     public bool IPScanner_Enabled
     {
         get => _ipScanner_Enabled;
@@ -281,6 +305,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _ipScanner_InheritHost;
+
     public bool IPScanner_InheritHost
     {
         get => _ipScanner_InheritHost;
@@ -295,6 +320,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _ipScanner_HostOrIPRange;
+
     public string IPScanner_HostOrIPRange
     {
         get => _ipScanner_HostOrIPRange;
@@ -311,7 +337,9 @@ public class ProfileViewModel : ViewModelBase
     #endregion
 
     #region Port Scanner
+
     private bool _portScanner_Enabled;
+
     public bool PortScanner_Enabled
     {
         get => _portScanner_Enabled;
@@ -327,6 +355,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _portScanner_InheritHost;
+
     public bool PortScanner_InheritHost
     {
         get => _portScanner_InheritHost;
@@ -341,6 +370,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _portScanner_Host;
+
     public string PortScanner_Host
     {
         get => _portScanner_Host;
@@ -355,6 +385,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _portScanner_Ports;
+
     public string PortScanner_Ports
     {
         get => _portScanner_Ports;
@@ -371,7 +402,9 @@ public class ProfileViewModel : ViewModelBase
     #endregion
 
     #region Ping Monitor
+
     private bool _pingMonitor_Enabled;
+
     public bool PingMonitor_Enabled
     {
         get => _pingMonitor_Enabled;
@@ -387,6 +420,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _pingMonitor_InheritHost;
+
     public bool PingMonitor_InheritHost
     {
         get => _pingMonitor_InheritHost;
@@ -401,6 +435,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _pingMonitor_Host;
+
     public string PingMonitor_Host
     {
         get => _pingMonitor_Host;
@@ -413,10 +448,13 @@ public class ProfileViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Traceroute
+
     private bool _traceroute_Enabled;
+
     public bool Traceroute_Enabled
     {
         get => _traceroute_Enabled;
@@ -432,6 +470,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _traceroute_InheritHost;
+
     public bool Traceroute_InheritHost
     {
         get => _traceroute_InheritHost;
@@ -446,6 +485,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _traceroute_Host;
+
     public string Traceroute_Host
     {
         get => _traceroute_Host;
@@ -462,7 +502,9 @@ public class ProfileViewModel : ViewModelBase
     #endregion
 
     #region DNS Lookup
+
     private bool _dnsLookup_Enabled;
+
     public bool DNSLookup_Enabled
     {
         get => _dnsLookup_Enabled;
@@ -478,6 +520,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _dnsLookup_InheritHost;
+
     public bool DNSLookup_InheritHost
     {
         get => _dnsLookup_InheritHost;
@@ -492,6 +535,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _dnsLookup_Host;
+
     public string DNSLookup_Host
     {
         get => _dnsLookup_Host;
@@ -504,10 +548,13 @@ public class ProfileViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Remote Desktop
+
     private bool _remoteDesktop_Enabled;
+
     public bool RemoteDesktop_Enabled
     {
         get => _remoteDesktop_Enabled;
@@ -523,6 +570,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_InheritHost;
+
     public bool RemoteDesktop_InheritHost
     {
         get => _remoteDesktop_InheritHost;
@@ -537,6 +585,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _remoteDesktop_Host;
+
     public string RemoteDesktop_Host
     {
         get => _remoteDesktop_Host;
@@ -551,6 +600,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_UseCredentials;
+
     public bool RemoteDesktop_UseCredentials
     {
         get => _remoteDesktop_UseCredentials;
@@ -565,6 +615,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _remoteDesktop_Username;
+
     public string RemoteDesktop_Username
     {
         get => _remoteDesktop_Username;
@@ -579,6 +630,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _remoteDesktop_Domain;
+
     public string RemoteDesktop_Domain
     {
         get => _remoteDesktop_Domain;
@@ -593,6 +645,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_IsPasswordEmpty = true; // Initial it's empty
+
     public bool RemoteDesktop_IsPasswordEmpty
     {
         get => _remoteDesktop_IsPasswordEmpty;
@@ -607,6 +660,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private SecureString _remoteDesktop_Password;
+
     public SecureString RemoteDesktop_Password
     {
         get => _remoteDesktop_Password;
@@ -616,7 +670,8 @@ public class ProfileViewModel : ViewModelBase
                 return;
 
             // Validate the password string
-            RemoteDesktop_IsPasswordEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
+            RemoteDesktop_IsPasswordEmpty =
+                value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
 
             _remoteDesktop_Password = value;
             OnPropertyChanged();
@@ -624,6 +679,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverrideDisplay;
+
     public bool RemoteDesktop_OverrideDisplay
     {
         get => _remoteDesktop_OverrideDisplay;
@@ -638,6 +694,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_AdjustScreenAutomatically;
+
     public bool RemoteDesktop_AdjustScreenAutomatically
     {
         get => _remoteDesktop_AdjustScreenAutomatically;
@@ -652,6 +709,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_UseCurrentViewSize;
+
     public bool RemoteDesktop_UseCurrentViewSize
     {
         get => _remoteDesktop_UseCurrentViewSize;
@@ -666,6 +724,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_UseFixedScreenSize;
+
     public bool RemoteDesktop_UseFixedScreenSize
     {
         get => _remoteDesktop_UseFixedScreenSize;
@@ -685,6 +744,7 @@ public class ProfileViewModel : ViewModelBase
     public int RemoteDesktop_ScreenHeight;
 
     private string _remoteDesktop_SelectedScreenResolution;
+
     public string RemoteDesktop_SelectedScreenResolution
     {
         get => _remoteDesktop_SelectedScreenResolution;
@@ -704,6 +764,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_UseCustomScreenSize;
+
     public bool RemoteDesktop_UseCustomScreenSize
     {
         get => _remoteDesktop_UseCustomScreenSize;
@@ -718,6 +779,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _remoteDesktop_CustomScreenWidth;
+
     public string RemoteDesktop_CustomScreenWidth
     {
         get => _remoteDesktop_CustomScreenWidth;
@@ -732,6 +794,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _remoteDesktop_CustomScreenHeight;
+
     public string RemoteDesktop_CustomScreenHeight
     {
         get => _remoteDesktop_CustomScreenHeight;
@@ -746,6 +809,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverrideColorDepth;
+
     public bool RemoteDesktop_OverrideColorDepth
     {
         get => _remoteDesktop_OverrideColorDepth;
@@ -762,6 +826,7 @@ public class ProfileViewModel : ViewModelBase
     public List<int> RemoteDesktop_ColorDepths => RemoteDesktop.ColorDepths;
 
     private int _remoteDesktop_SelectedColorDepth;
+
     public int RemoteDesktop_SelectedColorDepth
     {
         get => _remoteDesktop_SelectedColorDepth;
@@ -776,6 +841,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverridePort;
+
     public bool RemoteDesktop_OverridePort
     {
         get => _remoteDesktop_OverridePort;
@@ -790,6 +856,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private int _remoteDesktop_Port;
+
     public int RemoteDesktop_Port
     {
         get => _remoteDesktop_Port;
@@ -804,6 +871,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverrideCredSspSupport;
+
     public bool RemoteDesktop_OverrideCredSspSupport
     {
         get => _remoteDesktop_OverrideCredSspSupport;
@@ -818,6 +886,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_EnableCredSspSupport;
+
     public bool RemoteDesktop_EnableCredSspSupport
     {
         get => _remoteDesktop_EnableCredSspSupport;
@@ -832,6 +901,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverrideAuthenticationLevel;
+
     public bool RemoteDesktop_OverrideAuthenticationLevel
     {
         get => _remoteDesktop_OverrideAuthenticationLevel;
@@ -846,6 +916,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private uint _remoteDesktop_AuthenticationLevel;
+
     public uint RemoteDesktop_AuthenticationLevel
     {
         get => _remoteDesktop_AuthenticationLevel;
@@ -860,6 +931,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverrideGatewayServer;
+
     public bool RemoteDesktop_OverrideGatewayServer
     {
         get => _remoteDesktop_OverrideGatewayServer;
@@ -874,6 +946,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_EnableGatewayServer;
+
     public bool RemoteDesktop_EnableGatewayServer
     {
         get => _remoteDesktop_EnableGatewayServer;
@@ -888,6 +961,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _remoteDesktop_GatewayServerHostname;
+
     public string RemoteDesktop_GatewayServerHostname
     {
         get => _remoteDesktop_GatewayServerHostname;
@@ -902,6 +976,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_GatewayServerBypassLocalAddresses;
+
     public bool RemoteDesktop_GatewayServerBypassLocalAddresses
     {
         get => _remoteDesktop_GatewayServerBypassLocalAddresses;
@@ -915,7 +990,8 @@ public class ProfileViewModel : ViewModelBase
         }
     }
 
-    public IEnumerable<GatewayUserSelectedCredsSource> RemoteDesktop_GatewayServerLogonMethods => Enum.GetValues(typeof(GatewayUserSelectedCredsSource)).Cast<GatewayUserSelectedCredsSource>();
+    public IEnumerable<GatewayUserSelectedCredsSource> RemoteDesktop_GatewayServerLogonMethods =>
+        Enum.GetValues(typeof(GatewayUserSelectedCredsSource)).Cast<GatewayUserSelectedCredsSource>();
 
     private GatewayUserSelectedCredsSource _remoteDesktop_GatewayServerLogonMethod;
 
@@ -933,6 +1009,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+
     public bool RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer
     {
         get => _remoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
@@ -947,6 +1024,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_UseGatewayServerCredentials;
+
     public bool RemoteDesktop_UseGatewayServerCredentials
     {
         get => _remoteDesktop_UseGatewayServerCredentials;
@@ -961,6 +1039,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _remoteDesktop_GatewayServerUsername;
+
     public string RemoteDesktop_GatewayServerUsername
     {
         get => _remoteDesktop_GatewayServerUsername;
@@ -975,6 +1054,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _remoteDesktop_GatewayServerDomain;
+
     public string RemoteDesktop_GatewayServerDomain
     {
         get => _remoteDesktop_GatewayServerDomain;
@@ -989,6 +1069,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_IsGatewayServerPasswordEmpty = true; // Initial it's empty
+
     public bool RemoteDesktop_IsGatewayServerPasswordEmpty
     {
         get => _remoteDesktop_IsGatewayServerPasswordEmpty;
@@ -1003,6 +1084,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private SecureString _remoteDesktop_GatewayServerPassword;
+
     public SecureString RemoteDesktop_GatewayServerPassword
     {
         get => _remoteDesktop_GatewayServerPassword;
@@ -1012,7 +1094,8 @@ public class ProfileViewModel : ViewModelBase
                 return;
 
             // Validate the password string
-            RemoteDesktop_IsGatewayServerPasswordEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
+            RemoteDesktop_IsGatewayServerPasswordEmpty =
+                value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
 
             _remoteDesktop_GatewayServerPassword = value;
             OnPropertyChanged();
@@ -1020,6 +1103,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverrideAudioRedirectionMode;
+
     public bool RemoteDesktop_OverrideAudioRedirectionMode
     {
         get => _remoteDesktop_OverrideAudioRedirectionMode;
@@ -1033,9 +1117,11 @@ public class ProfileViewModel : ViewModelBase
         }
     }
 
-    public IEnumerable<AudioRedirectionMode> RemoteDesktop_AudioRedirectionModes => Enum.GetValues(typeof(AudioRedirectionMode)).Cast<AudioRedirectionMode>();
+    public IEnumerable<AudioRedirectionMode> RemoteDesktop_AudioRedirectionModes =>
+        Enum.GetValues(typeof(AudioRedirectionMode)).Cast<AudioRedirectionMode>();
 
     private AudioRedirectionMode _remoteDesktop_AudioRedirectionMode;
+
     public AudioRedirectionMode RemoteDesktop_AudioRedirectionMode
     {
         get => _remoteDesktop_AudioRedirectionMode;
@@ -1051,6 +1137,7 @@ public class ProfileViewModel : ViewModelBase
 
 
     private bool _remoteDesktop_OverrideAudioCaptureRedirectionMode;
+
     public bool RemoteDesktop_OverrideAudioCaptureRedirectionMode
     {
         get => _remoteDesktop_OverrideAudioCaptureRedirectionMode;
@@ -1064,9 +1151,11 @@ public class ProfileViewModel : ViewModelBase
         }
     }
 
-    public IEnumerable<AudioCaptureRedirectionMode> RemoteDesktop_AudioCaptureRedirectionModes => Enum.GetValues(typeof(AudioCaptureRedirectionMode)).Cast<AudioCaptureRedirectionMode>();
+    public IEnumerable<AudioCaptureRedirectionMode> RemoteDesktop_AudioCaptureRedirectionModes =>
+        Enum.GetValues(typeof(AudioCaptureRedirectionMode)).Cast<AudioCaptureRedirectionMode>();
 
     private AudioCaptureRedirectionMode _remoteDesktop_AudioCaptureRedirectionMode;
+
     public AudioCaptureRedirectionMode RemoteDesktop_AudioCaptureRedirectionMode
     {
         get => _remoteDesktop_AudioCaptureRedirectionMode;
@@ -1082,6 +1171,7 @@ public class ProfileViewModel : ViewModelBase
 
 
     private bool _remoteDesktop_OverrideApplyWindowsKeyCombinations;
+
     public bool RemoteDesktop_OverrideApplyWindowsKeyCombinations
     {
         get => _remoteDesktop_OverrideApplyWindowsKeyCombinations;
@@ -1095,9 +1185,11 @@ public class ProfileViewModel : ViewModelBase
         }
     }
 
-    public IEnumerable<KeyboardHookMode> RemoteDesktop_KeyboardHookModes => Enum.GetValues(typeof(KeyboardHookMode)).Cast<KeyboardHookMode>();
+    public IEnumerable<KeyboardHookMode> RemoteDesktop_KeyboardHookModes =>
+        Enum.GetValues(typeof(KeyboardHookMode)).Cast<KeyboardHookMode>();
 
     private KeyboardHookMode _remoteDesktop_KeyboardHookMode;
+
     public KeyboardHookMode RemoteDesktop_KeyboardHookMode
     {
         get => _remoteDesktop_KeyboardHookMode;
@@ -1112,6 +1204,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverrideRedirectClipboard;
+
     public bool RemoteDesktop_OverrideRedirectClipboard
     {
         get => _remoteDesktop_OverrideRedirectClipboard;
@@ -1126,6 +1219,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_RedirectClipboard;
+
     public bool RemoteDesktop_RedirectClipboard
     {
         get => _remoteDesktop_RedirectClipboard;
@@ -1140,6 +1234,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverrideRedirectDevices;
+
     public bool RemoteDesktop_OverrideRedirectDevices
     {
         get => _remoteDesktop_OverrideRedirectDevices;
@@ -1154,6 +1249,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_RedirectDevices;
+
     public bool RemoteDesktop_RedirectDevices
     {
         get => _remoteDesktop_RedirectDevices;
@@ -1168,6 +1264,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverrideRedirectDrives;
+
     public bool RemoteDesktop_OverrideRedirectDrives
     {
         get => _remoteDesktop_OverrideRedirectDrives;
@@ -1182,6 +1279,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_RedirectDrives;
+
     public bool RemoteDesktop_RedirectDrives
     {
         get => _remoteDesktop_RedirectDrives;
@@ -1196,6 +1294,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverrideRedirectPorts;
+
     public bool RemoteDesktop_OverrideRedirectPorts
     {
         get => _remoteDesktop_OverrideRedirectPorts;
@@ -1210,6 +1309,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_RedirectPorts;
+
     public bool RemoteDesktop_RedirectPorts
     {
         get => _remoteDesktop_RedirectPorts;
@@ -1224,6 +1324,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverrideRedirectSmartcards;
+
     public bool RemoteDesktop_OverrideRedirectSmartcards
     {
         get => _remoteDesktop_OverrideRedirectSmartcards;
@@ -1238,6 +1339,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_RedirectSmartCards;
+
     public bool RemoteDesktop_RedirectSmartCards
     {
         get => _remoteDesktop_RedirectSmartCards;
@@ -1252,6 +1354,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverrideRedirectPrinters;
+
     public bool RemoteDesktop_OverrideRedirectPrinters
     {
         get => _remoteDesktop_OverrideRedirectPrinters;
@@ -1266,6 +1369,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_RedirectPrinters;
+
     public bool RemoteDesktop_RedirectPrinters
     {
         get => _remoteDesktop_RedirectPrinters;
@@ -1280,6 +1384,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverridePersistentBitmapCaching;
+
     public bool RemoteDesktop_OverridePersistentBitmapCaching
     {
         get => _remoteDesktop_OverridePersistentBitmapCaching;
@@ -1294,6 +1399,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_PersistentBitmapCaching;
+
     public bool RemoteDesktop_PersistentBitmapCaching
     {
         get => _remoteDesktop_PersistentBitmapCaching;
@@ -1308,6 +1414,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverrideReconnectIfTheConnectionIsDropped;
+
     public bool RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped
     {
         get => _remoteDesktop_OverrideReconnectIfTheConnectionIsDropped;
@@ -1322,6 +1429,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_ReconnectIfTheConnectionIsDropped;
+
     public bool RemoteDesktop_ReconnectIfTheConnectionIsDropped
     {
         get => _remoteDesktop_ReconnectIfTheConnectionIsDropped;
@@ -1336,6 +1444,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_OverrideNetworkConnectionType;
+
     public bool RemoteDesktop_OverrideNetworkConnectionType
     {
         get => _remoteDesktop_OverrideNetworkConnectionType;
@@ -1349,9 +1458,11 @@ public class ProfileViewModel : ViewModelBase
         }
     }
 
-    public IEnumerable<NetworkConnectionType> RemoteDesktop_NetworkConnectionTypes => Enum.GetValues(typeof(NetworkConnectionType)).Cast<NetworkConnectionType>();
+    public IEnumerable<NetworkConnectionType> RemoteDesktop_NetworkConnectionTypes =>
+        Enum.GetValues(typeof(NetworkConnectionType)).Cast<NetworkConnectionType>();
 
     private NetworkConnectionType _remoteDesktop_NetworkConnectionType;
+
     public NetworkConnectionType RemoteDesktop_NetworkConnectionType
     {
         get => _remoteDesktop_NetworkConnectionType;
@@ -1369,6 +1480,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_DesktopBackground;
+
     public bool RemoteDesktop_DesktopBackground
     {
         get => _remoteDesktop_DesktopBackground;
@@ -1383,6 +1495,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_FontSmoothing;
+
     public bool RemoteDesktop_FontSmoothing
     {
         get => _remoteDesktop_FontSmoothing;
@@ -1397,6 +1510,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_DesktopComposition;
+
     public bool RemoteDesktop_DesktopComposition
     {
         get => _remoteDesktop_DesktopComposition;
@@ -1411,6 +1525,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_ShowWindowContentsWhileDragging;
+
     public bool RemoteDesktop_ShowWindowContentsWhileDragging
     {
         get => _remoteDesktop_ShowWindowContentsWhileDragging;
@@ -1425,6 +1540,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_MenuAndWindowAnimation;
+
     public bool RemoteDesktop_MenuAndWindowAnimation
     {
         get => _remoteDesktop_MenuAndWindowAnimation;
@@ -1439,6 +1555,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _remoteDesktop_VisualStyles;
+
     public bool RemoteDesktop_VisualStyles
     {
         get => _remoteDesktop_VisualStyles;
@@ -1451,10 +1568,13 @@ public class ProfileViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region PowerShell
+
     private bool _powerShell_Enabled;
+
     public bool PowerShell_Enabled
     {
         get => _powerShell_Enabled;
@@ -1470,6 +1590,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _powerShell_EnableRemoteConsole;
+
     public bool PowerShell_EnableRemoteConsole
     {
         get => _powerShell_EnableRemoteConsole;
@@ -1484,6 +1605,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _powerShell_InheritHost;
+
     public bool PowerShell_InheritHost
     {
         get => _powerShell_InheritHost;
@@ -1498,6 +1620,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _powerShell_Host;
+
     public string PowerShell_Host
     {
         get => _powerShell_Host;
@@ -1512,6 +1635,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _powerShell_OverrideCommand;
+
     public bool PowerShell_OverrideCommand
     {
         get => _powerShell_OverrideCommand;
@@ -1526,6 +1650,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _powerShell_Command;
+
     public string PowerShell_Command
     {
         get => _powerShell_Command;
@@ -1540,6 +1665,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _powerShell_OverrideAdditionalCommandLine;
+
     public bool PowerShell_OverrideAdditionalCommandLine
     {
         get => _powerShell_OverrideAdditionalCommandLine;
@@ -1554,6 +1680,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _powerShell_AdditionalCommandLine;
+
     public string PowerShell_AdditionalCommandLine
     {
         get => _powerShell_AdditionalCommandLine;
@@ -1568,6 +1695,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private readonly List<ExecutionPolicy> _powerShell_ExecutionPolicies = new();
+
     public List<ExecutionPolicy> PowerShell_ExecutionPolicies
     {
         get => _powerShell_ExecutionPolicies;
@@ -1582,6 +1710,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _powerShell_OverrideExecutionPolicy;
+
     public bool PowerShell_OverrideExecutionPolicy
     {
         get => _powerShell_OverrideExecutionPolicy;
@@ -1596,6 +1725,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private ExecutionPolicy _powerShell_ExecutionPolicy;
+
     public ExecutionPolicy PowerShell_ExecutionPolicy
     {
         get => _powerShell_ExecutionPolicy;
@@ -1608,10 +1738,13 @@ public class ProfileViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region PuTTY
+
     private bool _puTTY_Enabled;
+
     public bool PuTTY_Enabled
     {
         get => _puTTY_Enabled;
@@ -1627,6 +1760,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _puTTY_InheritHost;
+
     public bool PuTTY_InheritHost
     {
         get => _puTTY_InheritHost;
@@ -1641,6 +1775,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _puTTY_UseSSH; // Default is SSH
+
     public bool PuTTY_UseSSH
     {
         get => _puTTY_UseSSH;
@@ -1661,6 +1796,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _puTTY_UseTelnet;
+
     public bool PuTTY_UseTelnet
     {
         get => _puTTY_UseTelnet;
@@ -1681,6 +1817,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _puTTY_UseSerial;
+
     public bool PuTTY_UseSerial
     {
         get => _puTTY_UseSerial;
@@ -1701,6 +1838,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _puTTY_UseRlogin;
+
     public bool PuTTY_UseRlogin
     {
         get => _puTTY_UseRlogin;
@@ -1721,6 +1859,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _puTTY_UseRAW;
+
     public bool PuTTY_UseRAW
     {
         get => _puTTY_UseRAW;
@@ -1741,6 +1880,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _puTTY_Host;
+
     public string PuTTY_Host
     {
         get => _puTTY_Host;
@@ -1755,6 +1895,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _puTTY_SerialLine;
+
     public string PuTTY_SerialLine
     {
         get => _puTTY_SerialLine;
@@ -1769,6 +1910,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _puTTY_OverridePortOrBaud;
+
     public bool PuTTY_OverridePortOrBaud
     {
         get => _puTTY_OverridePortOrBaud;
@@ -1783,6 +1925,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private int _puTTY_Port;
+
     public int PuTTY_Port
     {
         get => _puTTY_Port;
@@ -1797,6 +1940,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private int _puTTY_Baud;
+
     public int PuTTY_Baud
     {
         get => _puTTY_Baud;
@@ -1811,6 +1955,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _puTTY_OverrideUsername;
+
     public bool PuTTY_OverrideUsername
     {
         get => _puTTY_OverrideUsername;
@@ -1825,6 +1970,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _puTTY__Username;
+
     public string PuTTY_Username
     {
         get => _puTTY__Username;
@@ -1839,6 +1985,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _puTTY_OverridePrivateKeyFile;
+
     public bool PuTTY_OverridePrivateKeyFile
     {
         get => _puTTY_OverridePrivateKeyFile;
@@ -1853,6 +2000,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _puTTY__PrivateKeyFile;
+
     public string PuTTY_PrivateKeyFile
     {
         get => _puTTY__PrivateKeyFile;
@@ -1867,6 +2015,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _puTTY_OverrideProfile;
+
     public bool PuTTY_OverrideProfile
     {
         get => _puTTY_OverrideProfile;
@@ -1881,6 +2030,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _puTTY_Profile;
+
     public string PuTTY_Profile
     {
         get => _puTTY_Profile;
@@ -1895,6 +2045,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _puTTY_OverrideHostkey;
+
     public bool PuTTY_OverrideHostkey
     {
         get => _puTTY_OverrideHostkey;
@@ -1909,6 +2060,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _puTTY_Hostkey;
+
     public string PuTTY_Hostkey
     {
         get => _puTTY_Hostkey;
@@ -1923,6 +2075,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _puTTY_OverrideEnableLog;
+
     public bool PuTTY_OverrideEnableLog
     {
         get => _puTTY_OverrideEnableLog;
@@ -1937,6 +2090,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _puTTY_EnableLog;
+
     public bool PuTTY_EnableLog
     {
         get => _puTTY_EnableLog;
@@ -1951,6 +2105,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _puTTY_OverrideLogMode;
+
     public bool PuTTY_OverrideLogMode
     {
         get => _puTTY_OverrideLogMode;
@@ -1967,6 +2122,7 @@ public class ProfileViewModel : ViewModelBase
     public IEnumerable<LogMode> PuTTY_LogModes => Enum.GetValues(typeof(LogMode)).Cast<LogMode>();
 
     private LogMode _puTTY_LogMode;
+
     public LogMode PuTTY_LogMode
     {
         get => _puTTY_LogMode;
@@ -1981,6 +2137,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _puTTY_OverrideLogPath;
+
     public bool PuTTY_OverrideLogPath
     {
         get => _puTTY_OverrideLogPath;
@@ -1995,6 +2152,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _puTTY_LogPath;
+
     public string PuTTY_LogPath
     {
         get => _puTTY_LogPath;
@@ -2009,6 +2167,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _puTTY_OverrideLogFileName;
+
     public bool PuTTY_OverrideLogFileName
     {
         get => _puTTY_OverrideLogFileName;
@@ -2023,6 +2182,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _puTTY_LogFileName;
+
     public string PuTTY_LogFileName
     {
         get => _puTTY_LogFileName;
@@ -2037,6 +2197,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _puTTY_OverrideAdditionalCommandLine;
+
     public bool PuTTY_OverrideAdditionalCommandLine
     {
         get => _puTTY_OverrideAdditionalCommandLine;
@@ -2051,6 +2212,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _puTTY_AdditionalCommandLine;
+
     public string PuTTY_AdditionalCommandLine
     {
         get => _puTTY_AdditionalCommandLine;
@@ -2065,6 +2227,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private ConnectionMode _puTTY_ConnectionMode;
+
     public ConnectionMode PuTTY_ConnectionMode
     {
         get => _puTTY_ConnectionMode;
@@ -2077,10 +2240,13 @@ public class ProfileViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region AWS Session Manager
+
     private bool _awsSessionManager_Enabled;
+
     public bool AWSSessionManager_Enabled
     {
         get => _awsSessionManager_Enabled;
@@ -2095,6 +2261,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _awsSessionManager_InstanceID;
+
     public string AWSSessionManager_InstanceID
     {
         get => _awsSessionManager_InstanceID;
@@ -2109,6 +2276,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _awsSessionManager_OverrideProfile;
+
     public bool AWSSessionManager_OverrideProfile
     {
         get => _awsSessionManager_OverrideProfile;
@@ -2123,6 +2291,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _awsSessionManager_Profile;
+
     public string AWSSessionManager_Profile
     {
         get => _awsSessionManager_Profile;
@@ -2137,6 +2306,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _awsSessionManager_OverrideRegion;
+
     public bool AWSSessionManager_OverrideRegion
     {
         get => _awsSessionManager_OverrideRegion;
@@ -2151,6 +2321,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _awsSessionManager_Region;
+
     public string AWSSessionManager_Region
     {
         get => _awsSessionManager_Region;
@@ -2163,10 +2334,13 @@ public class ProfileViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region TigerVNC
+
     private bool _tigerVNC_Enabled;
+
     public bool TigerVNC_Enabled
     {
         get => _tigerVNC_Enabled;
@@ -2181,6 +2355,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _tigerVNC_InheritHost;
+
     public bool TigerVNC_InheritHost
     {
         get => _tigerVNC_InheritHost;
@@ -2195,6 +2370,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _tigerVNC_Host;
+
     public string TigerVNC_Host
     {
         get => _tigerVNC_Host;
@@ -2210,6 +2386,7 @@ public class ProfileViewModel : ViewModelBase
 
 
     private bool _tigerVNC_OverridePort;
+
     public bool TigerVNC_OverridePort
     {
         get => _tigerVNC_OverridePort;
@@ -2224,6 +2401,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private int _tigerVNC_Port;
+
     public int TigerVNC_Port
     {
         get => _tigerVNC_Port;
@@ -2236,10 +2414,13 @@ public class ProfileViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Web Console
+
     private bool _webConsole_Enabled;
+
     public bool WebConsole_Enabled
     {
         get => _webConsole_Enabled;
@@ -2254,6 +2435,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _webConsole_Url;
+
     public string WebConsole_Url
     {
         get => _webConsole_Url;
@@ -2266,10 +2448,13 @@ public class ProfileViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region SNMP
+
     private bool _snmp_Enabled;
+
     public bool SNMP_Enabled
     {
         get => _snmp_Enabled;
@@ -2285,6 +2470,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _snmp_InheritHost;
+
     public bool SNMP_InheritHost
     {
         get => _snmp_InheritHost;
@@ -2299,6 +2485,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _snmp_Host;
+
     public string SNMP_Host
     {
         get => _snmp_Host;
@@ -2313,6 +2500,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _snmp_OverrideOIDAndMode;
+
     public bool SNMP_OverrideOIDAndMode
     {
         get => _snmp_OverrideOIDAndMode;
@@ -2327,6 +2515,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _snmp_OID;
+
     public string SNMP_OID
     {
         get => _snmp_OID;
@@ -2343,6 +2532,7 @@ public class ProfileViewModel : ViewModelBase
     public IEnumerable<SNMPMode> SNMP_Modes { get; set; }
 
     private SNMPMode _snmp_Mode;
+
     public SNMPMode SNMP_Mode
     {
         get => _snmp_Mode;
@@ -2360,6 +2550,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _snmp_OverrideVersionAndAuth;
+
     public bool SNMP_OverrideVersionAndAuth
     {
         get => _snmp_OverrideVersionAndAuth;
@@ -2376,6 +2567,7 @@ public class ProfileViewModel : ViewModelBase
     public IEnumerable<SNMPVersion> SNMP_Versions { get; }
 
     private SNMPVersion _snmp_Version;
+
     public SNMPVersion SNMP_Version
     {
         get => _snmp_Version;
@@ -2390,6 +2582,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _snmp_IsCommunityEmpty = true; // Initial it's empty
+
     public bool SNMP_IsCommunityEmpty
     {
         get => _snmp_IsCommunityEmpty;
@@ -2404,6 +2597,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private SecureString _snmp_Community;
+
     public SecureString SNMP_Community
     {
         get => _snmp_Community;
@@ -2423,6 +2617,7 @@ public class ProfileViewModel : ViewModelBase
     public IEnumerable<SNMPV3Security> SNMP_Securities { get; }
 
     private SNMPV3Security _snmp_Security;
+
     public SNMPV3Security SNMP_Security
     {
         get => _snmp_Security;
@@ -2437,6 +2632,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _snmp_Username;
+
     public string SNMP_Username
     {
         get => _snmp_Username;
@@ -2453,6 +2649,7 @@ public class ProfileViewModel : ViewModelBase
     public IEnumerable<SNMPV3AuthenticationProvider> SNMP_AuthenticationProviders { get; }
 
     private SNMPV3AuthenticationProvider _snmp_AuthenticationProvider;
+
     public SNMPV3AuthenticationProvider SNMP_AuthenticationProvider
     {
         get => _snmp_AuthenticationProvider;
@@ -2467,6 +2664,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _snmp_IsAuthEmpty = true; // Initial it's empty
+
     public bool SNMP_IsAuthEmpty
     {
         get => _snmp_IsAuthEmpty;
@@ -2481,6 +2679,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private SecureString _snmp_Auth;
+
     public SecureString SNMP_Auth
     {
         get => _snmp_Auth;
@@ -2500,6 +2699,7 @@ public class ProfileViewModel : ViewModelBase
     public IEnumerable<SNMPV3PrivacyProvider> SNMP_PrivacyProviders { get; }
 
     private SNMPV3PrivacyProvider _snmp_PrivacyProvider;
+
     public SNMPV3PrivacyProvider SNMP_PrivacyProvider
     {
         get => _snmp_PrivacyProvider;
@@ -2514,6 +2714,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _snmp_IsPrivEmpty = true; // Initial it's empty
+
     public bool SNMP_IsPrivEmpty
     {
         get => _snmp_IsPrivEmpty;
@@ -2528,6 +2729,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private SecureString _snmp_Priv;
+
     public SecureString SNMP_Priv
     {
         get => _snmp_Priv;
@@ -2543,10 +2745,13 @@ public class ProfileViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Wake on LAN
+
     private bool _wakeOnLAN_Enabled;
+
     public bool WakeOnLAN_Enabled
     {
         get => _wakeOnLAN_Enabled;
@@ -2562,6 +2767,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _wakeOnLAN_MACAddress;
+
     public string WakeOnLAN_MACAddress
     {
         get => _wakeOnLAN_MACAddress;
@@ -2576,6 +2782,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _wakeOnLAN_Broadcast;
+
     public string WakeOnLAN_Broadcast
     {
         get => _wakeOnLAN_Broadcast;
@@ -2588,10 +2795,13 @@ public class ProfileViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Whois
+
     private bool _whois_Enabled;
+
     public bool Whois_Enabled
     {
         get => _whois_Enabled;
@@ -2607,6 +2817,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _whois_InheritHost;
+
     public bool Whois_InheritHost
     {
         get => _whois_InheritHost;
@@ -2621,6 +2832,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _whois_Domain;
+
     public string Whois_Domain
     {
         get => _whois_Domain;
@@ -2633,10 +2845,13 @@ public class ProfileViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
-    
+
     #region IP Geolocation
+
     private bool _ipGeolocation_Enabled;
+
     public bool IPGeolocation_Enabled
     {
         get => _ipGeolocation_Enabled;
@@ -2652,6 +2867,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private bool _ipGeolocation_InheritHost;
+
     public bool IPGeolocation_InheritHost
     {
         get => _ipGeolocation_InheritHost;
@@ -2666,6 +2882,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     private string _ipGeolocation_Host;
+
     public string IPGeolocation_Host
     {
         get => _ipGeolocation_Host;
@@ -2678,14 +2895,19 @@ public class ProfileViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #endregion
-    public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler, IReadOnlyCollection<string> groups, string group = null, ProfileEditMode editMode = ProfileEditMode.Add, ProfileInfo profile = null, ApplicationName applicationName = ApplicationName.None)
+
+    public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler,
+        IReadOnlyCollection<string> groups, string group = null, ProfileEditMode editMode = ProfileEditMode.Add,
+        ProfileInfo profile = null, ApplicationName applicationName = ApplicationName.None)
     {
         // Load the view
         ProfileViews = new CollectionViewSource { Source = ProfileViewManager.List }.View;
-        ProfileViews.SortDescriptions.Add(new SortDescription(nameof(ProfileViewInfo.Name), ListSortDirection.Ascending));
+        ProfileViews.SortDescriptions.Add(
+            new SortDescription(nameof(ProfileViewInfo.Name), ListSortDirection.Ascending));
 
         SaveCommand = new RelayCommand(_ => saveCommand(this));
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
@@ -2700,7 +2922,9 @@ public class ProfileViewModel : ViewModelBase
         Host = profileInfo.Host;
 
         // Try to get group (name) as parameter, then from profile, then the first in the list of groups, then the default group            
-        Group = group ?? (string.IsNullOrEmpty(profileInfo.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : Localization.Resources.Strings.Default) : profileInfo.Group);
+        Group = group ?? (string.IsNullOrEmpty(profileInfo.Group)
+            ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : Localization.Resources.Strings.Default)
+            : profileInfo.Group);
 
         Tags = profileInfo.Tags;
 
@@ -2708,7 +2932,9 @@ public class ProfileViewModel : ViewModelBase
         Groups.SortDescriptions.Add(new SortDescription());
 
         // Network Interface
-        NetworkInterface_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.NetworkInterface : profileInfo.NetworkInterface_Enabled;
+        NetworkInterface_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.NetworkInterface
+            : profileInfo.NetworkInterface_Enabled;
         NetworkInterface_EnableDynamicIPAddress = !profileInfo.NetworkInterface_EnableStaticIPAddress;
         NetworkInterface_EnableStaticIPAddress = profileInfo.NetworkInterface_EnableStaticIPAddress;
         NetworkInterface_IPAddress = profileInfo.NetworkInterface_IPAddress;
@@ -2720,33 +2946,45 @@ public class ProfileViewModel : ViewModelBase
         NetworkInterface_SecondaryDNSServer = profileInfo.NetworkInterface_SecondaryDNSServer;
 
         // IP Scanner
-        IPScanner_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.IPScanner : profileInfo.IPScanner_Enabled;
+        IPScanner_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.IPScanner
+            : profileInfo.IPScanner_Enabled;
         IPScanner_InheritHost = profileInfo.IPScanner_InheritHost;
         IPScanner_HostOrIPRange = profileInfo.IPScanner_HostOrIPRange;
 
         // Port Scanner
-        PortScanner_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.PortScanner : profileInfo.PortScanner_Enabled;
+        PortScanner_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.PortScanner
+            : profileInfo.PortScanner_Enabled;
         PortScanner_InheritHost = profileInfo.PortScanner_InheritHost;
         PortScanner_Host = profileInfo.PortScanner_Host;
         PortScanner_Ports = profileInfo.PortScanner_Ports;
 
         // Ping Monitor
-        PingMonitor_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.PingMonitor : profileInfo.PingMonitor_Enabled;
+        PingMonitor_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.PingMonitor
+            : profileInfo.PingMonitor_Enabled;
         PingMonitor_InheritHost = profileInfo.PingMonitor_InheritHost;
         PingMonitor_Host = profileInfo.PingMonitor_Host;
 
         // Traceroute
-        Traceroute_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.Traceroute : profileInfo.Traceroute_Enabled;
+        Traceroute_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.Traceroute
+            : profileInfo.Traceroute_Enabled;
         Traceroute_InheritHost = profileInfo.Traceroute_InheritHost;
         Traceroute_Host = profileInfo.Traceroute_Host;
 
         // DNS Lookup
-        DNSLookup_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.DNSLookup : profileInfo.DNSLookup_Enabled;
+        DNSLookup_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.DNSLookup
+            : profileInfo.DNSLookup_Enabled;
         DNSLookup_InheritHost = profileInfo.DNSLookup_InheritHost;
         DNSLookup_Host = profileInfo.DNSLookup_Host;
 
         // Remote Desktop
-        RemoteDesktop_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.RemoteDesktop : profileInfo.RemoteDesktop_Enabled;
+        RemoteDesktop_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.RemoteDesktop
+            : profileInfo.RemoteDesktop_Enabled;
         RemoteDesktop_InheritHost = profileInfo.RemoteDesktop_InheritHost;
         RemoteDesktop_Host = profileInfo.RemoteDesktop_Host;
         RemoteDesktop_UseCredentials = profileInfo.RemoteDesktop_UseCredentials;
@@ -2757,12 +2995,14 @@ public class ProfileViewModel : ViewModelBase
         RemoteDesktop_AdjustScreenAutomatically = profileInfo.RemoteDesktop_AdjustScreenAutomatically;
         RemoteDesktop_UseCurrentViewSize = profileInfo.RemoteDesktop_UseCurrentViewSize;
         RemoteDesktop_UseFixedScreenSize = profileInfo.RemoteDesktop_UseFixedScreenSize;
-        RemoteDesktop_SelectedScreenResolution = RemoteDesktop_ScreenResolutions.FirstOrDefault(x => x == $"{profileInfo.RemoteDesktop_ScreenWidth}x{profileInfo.RemoteDesktop_ScreenHeight}");
+        RemoteDesktop_SelectedScreenResolution = RemoteDesktop_ScreenResolutions.FirstOrDefault(x =>
+            x == $"{profileInfo.RemoteDesktop_ScreenWidth}x{profileInfo.RemoteDesktop_ScreenHeight}");
         RemoteDesktop_UseCustomScreenSize = profileInfo.RemoteDesktop_UseCustomScreenSize;
         RemoteDesktop_CustomScreenWidth = profileInfo.RemoteDesktop_CustomScreenWidth.ToString();
         RemoteDesktop_CustomScreenHeight = profileInfo.RemoteDesktop_CustomScreenHeight.ToString();
         RemoteDesktop_OverrideColorDepth = profileInfo.RemoteDesktop_OverrideColorDepth;
-        RemoteDesktop_SelectedColorDepth = RemoteDesktop_ColorDepths.FirstOrDefault(x => x == profileInfo.RemoteDesktop_ColorDepth);
+        RemoteDesktop_SelectedColorDepth =
+            RemoteDesktop_ColorDepths.FirstOrDefault(x => x == profileInfo.RemoteDesktop_ColorDepth);
         RemoteDesktop_OverridePort = profileInfo.RemoteDesktop_OverridePort;
         RemoteDesktop_Port = profileInfo.RemoteDesktop_Port;
         RemoteDesktop_OverrideCredSspSupport = profileInfo.RemoteDesktop_OverrideCredSspSupport;
@@ -2774,17 +3014,25 @@ public class ProfileViewModel : ViewModelBase
         RemoteDesktop_GatewayServerHostname = profileInfo.RemoteDesktop_GatewayServerHostname;
         RemoteDesktop_GatewayServerBypassLocalAddresses = profileInfo.RemoteDesktop_GatewayServerBypassLocalAddresses;
         RemoteDesktop_GatewayServerLogonMethod = profileInfo.RemoteDesktop_GatewayServerLogonMethod;
-        RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer = profileInfo.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+        RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer =
+            profileInfo.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
         RemoteDesktop_UseGatewayServerCredentials = profileInfo.RemoteDesktop_UseGatewayServerCredentials;
         RemoteDesktop_GatewayServerUsername = profileInfo.RemoteDesktop_GatewayServerUsername;
         RemoteDesktop_GatewayServerDomain = profileInfo.RemoteDesktop_GatewayServerDomain;
         RemoteDesktop_GatewayServerPassword = profileInfo.RemoteDesktop_GatewayServerPassword;
         RemoteDesktop_OverrideAudioRedirectionMode = profileInfo.RemoteDesktop_OverrideAudioRedirectionMode;
-        RemoteDesktop_AudioRedirectionMode = RemoteDesktop_AudioRedirectionModes.FirstOrDefault(x => x == profileInfo.RemoteDesktop_AudioRedirectionMode);
-        RemoteDesktop_OverrideAudioCaptureRedirectionMode = profileInfo.RemoteDesktop_OverrideAudioCaptureRedirectionMode;
-        RemoteDesktop_AudioCaptureRedirectionMode = RemoteDesktop_AudioCaptureRedirectionModes.FirstOrDefault(x => x == profileInfo.RemoteDesktop_AudioCaptureRedirectionMode);
-        RemoteDesktop_OverrideApplyWindowsKeyCombinations = profileInfo.RemoteDesktop_OverrideApplyWindowsKeyCombinations;
-        RemoteDesktop_KeyboardHookMode = RemoteDesktop_KeyboardHookModes.FirstOrDefault(x => x == profileInfo.RemoteDesktop_KeyboardHookMode);
+        RemoteDesktop_AudioRedirectionMode =
+            RemoteDesktop_AudioRedirectionModes.FirstOrDefault(x =>
+                x == profileInfo.RemoteDesktop_AudioRedirectionMode);
+        RemoteDesktop_OverrideAudioCaptureRedirectionMode =
+            profileInfo.RemoteDesktop_OverrideAudioCaptureRedirectionMode;
+        RemoteDesktop_AudioCaptureRedirectionMode =
+            RemoteDesktop_AudioCaptureRedirectionModes.FirstOrDefault(x =>
+                x == profileInfo.RemoteDesktop_AudioCaptureRedirectionMode);
+        RemoteDesktop_OverrideApplyWindowsKeyCombinations =
+            profileInfo.RemoteDesktop_OverrideApplyWindowsKeyCombinations;
+        RemoteDesktop_KeyboardHookMode =
+            RemoteDesktop_KeyboardHookModes.FirstOrDefault(x => x == profileInfo.RemoteDesktop_KeyboardHookMode);
         RemoteDesktop_OverrideRedirectClipboard = profileInfo.RemoteDesktop_OverrideRedirectClipboard;
         RemoteDesktop_RedirectClipboard = profileInfo.RemoteDesktop_RedirectClipboard;
         RemoteDesktop_OverrideRedirectDevices = profileInfo.RemoteDesktop_OverrideRedirectDevices;
@@ -2799,9 +3047,12 @@ public class ProfileViewModel : ViewModelBase
         RemoteDesktop_RedirectPrinters = profileInfo.RemoteDesktop_RedirectPrinters;
         RemoteDesktop_OverridePersistentBitmapCaching = profileInfo.RemoteDesktop_OverridePersistentBitmapCaching;
         RemoteDesktop_PersistentBitmapCaching = profileInfo.RemoteDesktop_PersistentBitmapCaching;
-        RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped = profileInfo.RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped;
+        RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped =
+            profileInfo.RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped;
         RemoteDesktop_ReconnectIfTheConnectionIsDropped = profileInfo.RemoteDesktop_ReconnectIfTheConnectionIsDropped;
-        RemoteDesktop_NetworkConnectionType = RemoteDesktop_NetworkConnectionTypes.FirstOrDefault(x => x == profileInfo.RemoteDesktop_NetworkConnectionType);
+        RemoteDesktop_NetworkConnectionType =
+            RemoteDesktop_NetworkConnectionTypes.FirstOrDefault(x =>
+                x == profileInfo.RemoteDesktop_NetworkConnectionType);
         RemoteDesktop_DesktopBackground = profileInfo.RemoteDesktop_DesktopBackground;
         RemoteDesktop_FontSmoothing = profileInfo.RemoteDesktop_FontSmoothing;
         RemoteDesktop_DesktopComposition = profileInfo.RemoteDesktop_DesktopComposition;
@@ -2810,7 +3061,9 @@ public class ProfileViewModel : ViewModelBase
         RemoteDesktop_VisualStyles = profileInfo.RemoteDesktop_VisualStyles;
 
         // PowerShell
-        PowerShell_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.PowerShell : profileInfo.PowerShell_Enabled;
+        PowerShell_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.PowerShell
+            : profileInfo.PowerShell_Enabled;
         PowerShell_EnableRemoteConsole = profileInfo.PowerShell_EnableRemoteConsole;
         PowerShell_InheritHost = profileInfo.PowerShell_InheritHost;
         PowerShell_Host = profileInfo.PowerShell_Host;
@@ -2823,7 +3076,9 @@ public class ProfileViewModel : ViewModelBase
         PowerShell_ExecutionPolicy = profileInfo.PowerShell_ExecutionPolicy;
 
         // PuTTY
-        PuTTY_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.PuTTY : profileInfo.PuTTY_Enabled;
+        PuTTY_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.PuTTY
+            : profileInfo.PuTTY_Enabled;
 
         switch (profileInfo.PuTTY_ConnectionMode)
         {
@@ -2858,7 +3113,7 @@ public class ProfileViewModel : ViewModelBase
             PuTTY_Port = profileInfo.PuTTY_PortOrBaud;
         else
             PuTTY_Baud = profileInfo.PuTTY_PortOrBaud;
-        
+
         PuTTY_OverrideUsername = profileInfo.PuTTY_OverrideUsername;
         PuTTY_Username = profileInfo.PuTTY_Username;
         PuTTY_OverridePrivateKeyFile = profileInfo.PuTTY_OverridePrivateKeyFile;
@@ -2879,7 +3134,9 @@ public class ProfileViewModel : ViewModelBase
         PuTTY_AdditionalCommandLine = profileInfo.PuTTY_AdditionalCommandLine;
 
         // AWS Session Manager
-        AWSSessionManager_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.AWSSessionManager : profileInfo.AWSSessionManager_Enabled;
+        AWSSessionManager_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.AWSSessionManager
+            : profileInfo.AWSSessionManager_Enabled;
         AWSSessionManager_InstanceID = profileInfo.AWSSessionManager_InstanceID;
         AWSSessionManager_OverrideProfile = profileInfo.AWSSessionManager_OverrideProfile;
         AWSSessionManager_Profile = profileInfo.AWSSessionManager_Profile;
@@ -2887,18 +3144,24 @@ public class ProfileViewModel : ViewModelBase
         AWSSessionManager_Region = profileInfo.AWSSessionManager_Region;
 
         // TigerVNC
-        TigerVNC_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.TigerVNC : profileInfo.TigerVNC_Enabled;
+        TigerVNC_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.TigerVNC
+            : profileInfo.TigerVNC_Enabled;
         TigerVNC_InheritHost = profileInfo.TigerVNC_InheritHost;
         TigerVNC_Host = profileInfo.TigerVNC_Host;
         TigerVNC_OverridePort = profileInfo.TigerVNC_OverridePort;
         TigerVNC_Port = profileInfo.TigerVNC_Port;
 
         // Web Console
-        WebConsole_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.WebConsole : profileInfo.WebConsole_Enabled;
+        WebConsole_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.WebConsole
+            : profileInfo.WebConsole_Enabled;
         WebConsole_Url = profileInfo.WebConsole_Url;
 
         // SNMP
-        SNMP_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.SNMP : profileInfo.SNMP_Enabled;
+        SNMP_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.SNMP
+            : profileInfo.SNMP_Enabled;
         SNMP_InheritHost = profileInfo.SNMP_InheritHost;
         SNMP_Host = profileInfo.SNMP_Host;
         SNMP_OverrideOIDAndMode = profileInfo.SNMP_OverrideOIDAndMode;
@@ -2909,35 +3172,45 @@ public class ProfileViewModel : ViewModelBase
         SNMP_Versions = Enum.GetValues(typeof(SNMPVersion)).Cast<SNMPVersion>().ToList();
         SNMP_Version = SNMP_Versions.FirstOrDefault(x => x == profileInfo.SNMP_Version);
         SNMP_Community = profileInfo.SNMP_Community;
-        SNMP_Securities = new List<SNMPV3Security> { SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv };
+        SNMP_Securities = new List<SNMPV3Security>
+            { SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv };
         SNMP_Security = SNMP_Securities.FirstOrDefault(x => x == profileInfo.SNMP_Security);
         SNMP_Username = profileInfo.SNMP_Username;
-        SNMP_AuthenticationProviders = Enum.GetValues(typeof(SNMPV3AuthenticationProvider)).Cast<SNMPV3AuthenticationProvider>().ToList();
-        SNMP_AuthenticationProvider = SNMP_AuthenticationProviders.FirstOrDefault(x => x == profileInfo.SNMP_AuthenticationProvider);
+        SNMP_AuthenticationProviders = Enum.GetValues(typeof(SNMPV3AuthenticationProvider))
+            .Cast<SNMPV3AuthenticationProvider>().ToList();
+        SNMP_AuthenticationProvider =
+            SNMP_AuthenticationProviders.FirstOrDefault(x => x == profileInfo.SNMP_AuthenticationProvider);
         SNMP_Auth = profileInfo.SNMP_Auth;
         SNMP_PrivacyProviders = Enum.GetValues(typeof(SNMPV3PrivacyProvider)).Cast<SNMPV3PrivacyProvider>().ToList();
         SNMP_PrivacyProvider = SNMP_PrivacyProviders.FirstOrDefault(x => x == profileInfo.SNMP_PrivacyProvider);
         SNMP_Priv = profileInfo.SNMP_Priv;
 
         // Wake on LAN
-        WakeOnLAN_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.WakeOnLAN : profileInfo.WakeOnLAN_Enabled;
+        WakeOnLAN_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.WakeOnLAN
+            : profileInfo.WakeOnLAN_Enabled;
         WakeOnLAN_MACAddress = profileInfo.WakeOnLAN_MACAddress;
         WakeOnLAN_Broadcast = profileInfo.WakeOnLAN_Broadcast;
 
         // Whois
-        Whois_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.Whois : profileInfo.Whois_Enabled;
+        Whois_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.Whois
+            : profileInfo.Whois_Enabled;
         Whois_InheritHost = profileInfo.Whois_InheritHost;
         Whois_Domain = profileInfo.Whois_Domain;
 
         // IP Geolocation
-        IPGeolocation_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.IPGeolocation : profileInfo.IPGeolocation_Enabled;
+        IPGeolocation_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.IPGeolocation
+            : profileInfo.IPGeolocation_Enabled;
         IPGeolocation_InheritHost = profileInfo.IPGeolocation_InheritHost;
         IPGeolocation_Host = profileInfo.IPGeolocation_Host;
-        
+
         _isLoading = false;
     }
 
     #region ICommands & Actions
+
     public ICommand SaveCommand { get; }
 
     public ICommand CancelCommand { get; }
@@ -2948,7 +3221,8 @@ public class ProfileViewModel : ViewModelBase
     {
         IsResolveHostnameRunning = true;
 
-        var dnsResult = await DNSClientHelper.ResolveAorAaaaAsync(Host, SettingsManager.Current.Network_ResolveHostnamePreferIPv4);
+        var dnsResult =
+            await DNSClientHelper.ResolveAorAaaaAsync(Host, SettingsManager.Current.Network_ResolveHostnamePreferIPv4);
 
         if (!dnsResult.HasError)
             Host = dnsResult.Value.ToString();
@@ -2957,9 +3231,11 @@ public class ProfileViewModel : ViewModelBase
 
         IsResolveHostnameRunning = false;
     }
+
     #endregion
 
-    #region Methods      
+    #region Methods
+
     private void ChangeNetworkConnectionTypeSettings(NetworkConnectionType connectionSpeed)
     {
         switch (connectionSpeed)
@@ -3000,5 +3276,6 @@ public class ProfileViewModel : ViewModelBase
                 break;
         }
     }
+
     #endregion
 }

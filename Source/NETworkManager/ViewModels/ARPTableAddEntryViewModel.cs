@@ -11,6 +11,7 @@ public class ArpTableAddEntryViewModel : ViewModelBase
     public ICommand CancelCommand { get; }
 
     private string _ipAddress;
+
     public string IPAddress
     {
         get => _ipAddress;
@@ -25,6 +26,7 @@ public class ArpTableAddEntryViewModel : ViewModelBase
     }
 
     private string _macAddress;
+
     public string MACAddress
     {
         get => _macAddress;
@@ -38,9 +40,10 @@ public class ArpTableAddEntryViewModel : ViewModelBase
         }
     }
 
-    public ArpTableAddEntryViewModel(Action<ArpTableAddEntryViewModel> addCommand, Action<ArpTableAddEntryViewModel> cancelHandler)
+    public ArpTableAddEntryViewModel(Action<ArpTableAddEntryViewModel> addCommand,
+        Action<ArpTableAddEntryViewModel> cancelHandler)
     {
         AddCommand = new RelayCommand(_ => addCommand(this));
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
-    }        
+    }
 }

@@ -55,7 +55,7 @@ public static partial class ExportManager
 
         System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
     }
- 
+
     /// <summary>
     /// Creates a XML file from the given <see cref="PortScannerPortInfo"/> collection.
     /// </summary>
@@ -64,10 +64,8 @@ public static partial class ExportManager
     private static void CreateXml(IEnumerable<PortScannerPortInfo> collection, string filePath)
     {
         var document = new XDocument(DefaultXDeclaration,
-
             new XElement(ApplicationName.PortScanner.ToString(),
                 new XElement(nameof(PortScannerPortInfo) + "s",
-
                     from info in collection
                     select
                         new XElement(nameof(PortScannerPortInfo),

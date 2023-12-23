@@ -10,7 +10,9 @@ namespace NETworkManager.ViewModels;
 public class CommandLineViewModel : ViewModelBase
 {
     #region Variables
+
     private bool _displayWrongParameter;
+
     public bool DisplayWrongParameter
     {
         get => _displayWrongParameter;
@@ -25,6 +27,7 @@ public class CommandLineViewModel : ViewModelBase
     }
 
     private string _wrongParameter;
+
     public string WrongParameter
     {
         get => _wrongParameter;
@@ -39,6 +42,7 @@ public class CommandLineViewModel : ViewModelBase
     }
 
     private string _parameterHelp;
+
     public string ParameterHelp
     {
         get => _parameterHelp;
@@ -53,6 +57,7 @@ public class CommandLineViewModel : ViewModelBase
     }
 
     private string _parameterResetSettings;
+
     public string ParameterResetSettings
     {
         get => _parameterResetSettings;
@@ -67,6 +72,7 @@ public class CommandLineViewModel : ViewModelBase
     }
 
     private string _parameterApplication;
+
     public string ParameterApplication
     {
         get => _parameterApplication;
@@ -81,6 +87,7 @@ public class CommandLineViewModel : ViewModelBase
     }
 
     private string _parameterApplicationValues;
+
     public string ParameterApplicationValues
     {
         get => _parameterApplicationValues;
@@ -97,6 +104,7 @@ public class CommandLineViewModel : ViewModelBase
     #endregion
 
     #region Constructor, load settings
+
     public CommandLineViewModel()
     {
         if (!string.IsNullOrEmpty(CommandLineManager.Current.WrongParameter))
@@ -107,12 +115,16 @@ public class CommandLineViewModel : ViewModelBase
 
         ParameterHelp = CommandLineManager.ParameterHelp;
         ParameterResetSettings = CommandLineManager.ParameterResetSettings;
-        ParameterApplication = CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterApplication);
-        ParameterApplicationValues = string.Join(", ", System.Enum.GetValues(typeof(ApplicationName)).Cast<ApplicationName>().ToList());
+        ParameterApplication =
+            CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterApplication);
+        ParameterApplicationValues = string.Join(", ",
+            System.Enum.GetValues(typeof(ApplicationName)).Cast<ApplicationName>().ToList());
     }
+
     #endregion
 
     #region ICommand & Actions
+
     public ICommand OpenDocumentationCommand
     {
         get { return new RelayCommand(_ => OpenDocumentationAction()); }
@@ -122,5 +134,6 @@ public class CommandLineViewModel : ViewModelBase
     {
         DocumentationManager.OpenDocumentation(DocumentationIdentifier.CommandLineArguments);
     }
+
     #endregion
 }

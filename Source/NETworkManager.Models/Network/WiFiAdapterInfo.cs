@@ -9,6 +9,5 @@ public class WiFiAdapterInfo
 
     public WiFiAdapterInfo()
     {
-        
     }
 }

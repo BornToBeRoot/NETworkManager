@@ -15,13 +15,13 @@ public partial class SettingsSettingsView
     }
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e)
-    {            
+    {
         if (_viewModel.CloseAction != null)
             return;
 
         var window = Window.GetWindow(this);
 
         if (window != null)
-            _viewModel.CloseAction = window.Close;      
+            _viewModel.CloseAction = window.Close;
     }
 }

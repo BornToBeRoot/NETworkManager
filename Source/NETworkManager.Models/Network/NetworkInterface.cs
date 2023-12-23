@@ -14,15 +14,18 @@ namespace NETworkManager.Models.Network;
 public partial class NetworkInterface
 {
     #region Events
+
     public event EventHandler UserHasCanceled;
 
     protected virtual void OnUserHasCanceled()
     {
         UserHasCanceled?.Invoke(this, EventArgs.Empty);
     }
+
     #endregion
 
     #region Methods
+
     public static Task<List<NetworkInterfaceInfo>> GetNetworkInterfacesAsync()
     {
         return Task.Run(() => GetNetworkInterfaces());
@@ -36,7 +39,9 @@ public partial class NetworkInterface
         {
             // NetworkInterfaceType 53 is proprietary virtual/internal interface
             // https://docs.microsoft.com/en-us/windows-hardware/drivers/network/ndis-interface-types
-            if (networkInterface.NetworkInterfaceType != NetworkInterfaceType.Ethernet && networkInterface.NetworkInterfaceType != NetworkInterfaceType.Wireless80211 && (int)networkInterface.NetworkInterfaceType != 53)
+            if (networkInterface.NetworkInterfaceType != NetworkInterfaceType.Ethernet &&
+                networkInterface.NetworkInterfaceType != NetworkInterfaceType.Wireless80211 &&
+                (int)networkInterface.NetworkInterfaceType != 53)
                 continue;
 
             var listIPv4Address = new List<Tuple<IPAddress, IPAddress>>();
@@ -54,9 +59,14 @@ public partial class NetworkInterface
                 {
                     case AddressFamily.InterNetwork:
 
-                        listIPv4Address.Add(new Tuple<IPAddress, IPAddress>(unicastIPAddrInfo.Address, unicastIPAddrInfo.IPv4Mask));
-                        dhcpLeaseExpires = (DateTime.UtcNow + TimeSpan.FromSeconds(unicastIPAddrInfo.AddressPreferredLifetime)).ToLocalTime();
-                        dhcpLeaseObtained = (DateTime.UtcNow + TimeSpan.FromSeconds(unicastIPAddrInfo.AddressValidLifetime) - TimeSpan.FromSeconds(unicastIPAddrInfo.DhcpLeaseLifetime)).ToLocalTime();
+                        listIPv4Address.Add(new Tuple<IPAddress, IPAddress>(unicastIPAddrInfo.Address,
+                            unicastIPAddrInfo.IPv4Mask));
+                        dhcpLeaseExpires =
+                            (DateTime.UtcNow + TimeSpan.FromSeconds(unicastIPAddrInfo.AddressPreferredLifetime))
+                            .ToLocalTime();
+                        dhcpLeaseObtained =
+                            (DateTime.UtcNow + TimeSpan.FromSeconds(unicastIPAddrInfo.AddressValidLifetime) -
+                             TimeSpan.FromSeconds(unicastIPAddrInfo.DhcpLeaseLifetime)).ToLocalTime();
                         break;
                     case AddressFamily.InterNetworkV6 when unicastIPAddrInfo.Address.IsIPv6LinkLocal:
                         listIPv6AddressLinkLocal.Add(unicastIPAddrInfo.Address);
@@ -92,8 +102,11 @@ public partial class NetworkInterface
             }
 
             // Check if autoconfiguration for DNS is enabled (only via registry key)
-            var nameServerKey = Registry.LocalMachine.OpenSubKey($@"SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Interfaces\{networkInterface.Id}");
-            var dnsAutoconfigurationEnabled = nameServerKey?.GetValue("NameServer") != null && string.IsNullOrEmpty(nameServerKey.GetValue("NameServer").ToString());
+            var nameServerKey =
+                Registry.LocalMachine.OpenSubKey(
+                    $@"SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Interfaces\{networkInterface.Id}");
+            var dnsAutoconfigurationEnabled = nameServerKey?.GetValue("NameServer") != null &&
+                                              string.IsNullOrEmpty(nameServerKey.GetValue("NameServer").ToString());
 
             var listDNSServer = new List<IPAddress>();
 
@@ -167,7 +180,8 @@ public partial class NetworkInterface
     {
         bool isIPv4 = remoteIPAddress.AddressFamily == AddressFamily.InterNetwork;
 
-        using var socket = new Socket(isIPv4 ? AddressFamily.InterNetwork : AddressFamily.InterNetworkV6, SocketType.Dgram, ProtocolType.Udp);
+        using var socket = new Socket(isIPv4 ? AddressFamily.InterNetwork : AddressFamily.InterNetworkV6,
+            SocketType.Dgram, ProtocolType.Udp);
 
         // return null on error...
         try
@@ -178,7 +192,9 @@ public partial class NetworkInterface
             if (socket.LocalEndPoint is IPEndPoint ipAddress)
                 return ipAddress.Address;
         }
-        catch (SocketException) { }
+        catch (SocketException)
+        {
+        }
 
         return null;
     }
@@ -224,12 +240,20 @@ public partial class NetworkInterface
     {
         // IP
         var command = @"netsh interface ipv4 set address name='" + config.Name + @"'";
-        command += config.EnableStaticIPAddress ? @" source=static address=" + config.IPAddress + @" mask=" + config.Subnetmask + @" gateway=" + config.Gateway : @" source=dhcp";
+        command += config.EnableStaticIPAddress
+            ? @" source=static address=" + config.IPAddress + @" mask=" + config.Subnetmask + @" gateway=" +
+              config.Gateway
+            : @" source=dhcp";
 
         // DNS
         command += @";netsh interface ipv4 set DNSservers name='" + config.Name + @"'";
-        command += config.EnableStaticDNS ? @" source=static address=" + config.PrimaryDNSServer + @" register=primary validate=no" : @" source=dhcp";
-        command += (config.EnableStaticDNS && !string.IsNullOrEmpty(config.SecondaryDNSServer)) ? @";netsh interface ipv4 add DNSservers name='" + config.Name + @"' address=" + config.SecondaryDNSServer + @" index=2 validate=no" : "";
+        command += config.EnableStaticDNS
+            ? @" source=static address=" + config.PrimaryDNSServer + @" register=primary validate=no"
+            : @" source=dhcp";
+        command += (config.EnableStaticDNS && !string.IsNullOrEmpty(config.SecondaryDNSServer))
+            ? @";netsh interface ipv4 add DNSservers name='" + config.Name + @"' address=" + config.SecondaryDNSServer +
+              @" index=2 validate=no"
+            : "";
 
         try
         {
@@ -318,7 +342,8 @@ public partial class NetworkInterface
     /// <param name="config">Ethernet adapter name, IP address and subnetmask.</param>
     public static void AddIPAddressToNetworkInterface(NetworkInterfaceConfig config)
     {
-        var command = @"netsh interface ipv4 add address '" + config.Name + @"' " + config.IPAddress + @" " + config.Subnetmask;
+        var command = @"netsh interface ipv4 add address '" + config.Name + @"' " + config.IPAddress + @" " +
+                      config.Subnetmask;
 
         PowerShellHelper.ExecuteCommand(command, true);
     }
@@ -343,5 +368,6 @@ public partial class NetworkInterface
 
         PowerShellHelper.ExecuteCommand(command, true);
     }
+
     #endregion
 }

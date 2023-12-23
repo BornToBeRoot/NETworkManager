@@ -8,7 +8,7 @@ public class IPScannerHostScannedArgs : System.EventArgs
     /// <summary>
     /// IP Scanner host information.
     /// </summary>
-    public IPScannerHostInfo Args { get; } 
+    public IPScannerHostInfo Args { get; }
 
     /// <summary>
     /// Creates a new instance of <see cref="IPScannerHostScannedArgs"/> with the given <see cref="IPScannerHostInfo"/>.

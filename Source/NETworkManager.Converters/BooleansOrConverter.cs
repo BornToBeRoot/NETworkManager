@@ -9,7 +9,7 @@ public sealed class BooleansOrConverter : IMultiValueConverter
 {
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
-        return values.Any(value => (bool) value);
+        return values.Any(value => (bool)value);
     }
 
     public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

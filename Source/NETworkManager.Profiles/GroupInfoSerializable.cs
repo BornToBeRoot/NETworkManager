@@ -36,11 +36,9 @@ public class GroupInfoSerializable : GroupInfo
 
     public GroupInfoSerializable()
     {
-
     }
 
     public GroupInfoSerializable(GroupInfo profileGroup) : base(profileGroup)
     {
-
     }
 }

@@ -22,6 +22,5 @@ public class DNSClientSettings
     /// </summary>
     public DNSClientSettings()
     {
-
     }
 }

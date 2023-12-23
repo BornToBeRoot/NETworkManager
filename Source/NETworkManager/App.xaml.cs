@@ -13,17 +13,17 @@ using log4net;
 
 namespace NETworkManager;
 
-/* 
+/*
  * Class: App
  * 1) Get command line args
  * 2) Detect current configuration
  * 3) Get assembly info
  * 4) Load settings
  * 5) Load localization / language
- * 
+ *
  * Class: MainWindow
  * 6) Load appearance
- * 7) Load profiles                 
+ * 7) Load profiles
  */
 
 public partial class App
@@ -70,7 +70,8 @@ public partial class App
         // Wait until the previous instance has been closed (restart from ui)
         if (CommandLineManager.Current.RestartPid != -1)
         {
-            Log.Info($"Waiting for another NETworkManager process with Pid {CommandLineManager.Current.RestartPid} to exit...");
+            Log.Info(
+                $"Waiting for another NETworkManager process with Pid {CommandLineManager.Current.RestartPid} to exit...");
 
             var processList = Process.GetProcesses();
             var process = processList.FirstOrDefault(x => x.Id == CommandLineManager.Current.RestartPid);
@@ -95,8 +96,10 @@ public partial class App
             Log.Error(ex.Message + "-" + ex.StackTrace);
 
             // Create backup of corrupted file
-            var destinationFile = $"{TimestampHelper.GetTimestamp()}_corrupted_" + SettingsManager.GetSettingsFileName();
-            File.Copy(SettingsManager.GetSettingsFilePath(), Path.Combine(SettingsManager.GetSettingsFolderLocation(), destinationFile));
+            var destinationFile =
+                $"{TimestampHelper.GetTimestamp()}_corrupted_" + SettingsManager.GetSettingsFileName();
+            File.Copy(SettingsManager.GetSettingsFilePath(),
+                Path.Combine(SettingsManager.GetSettingsFolderLocation(), destinationFile));
             Log.Info($"A backup of the corrupted settings file has been saved under {destinationFile}");
 
             // Initialize default application settings
@@ -111,7 +114,8 @@ public partial class App
 
         if (settingsVersion < AssemblyManager.Current.Version)
         {
-            Log.Info($"Application settings are on version {settingsVersion} and will be upgraded to {AssemblyManager.Current.Version}");
+            Log.Info(
+                $"Application settings are on version {settingsVersion} and will be upgraded to {AssemblyManager.Current.Version}");
 
             SettingsManager.Upgrade(settingsVersion, AssemblyManager.Current.Version);
 
@@ -126,7 +130,8 @@ public partial class App
         var localizationManager = LocalizationManager.GetInstance(SettingsManager.Current.Localization_CultureCode);
         Localization.Resources.Strings.Culture = localizationManager.Culture;
 
-        Log.Info($"Application localization culture has been set to {localizationManager.Current.Code} (Settings value is \"{SettingsManager.Current.Localization_CultureCode}\").");
+        Log.Info(
+            $"Application localization culture has been set to {localizationManager.Current.Code} (Settings value is \"{SettingsManager.Current.Localization_CultureCode}\").");
 
         // Show (localized) help window
         if (CommandLineManager.Current.Help)
@@ -154,7 +159,8 @@ public partial class App
             // Setup background job
             if (SettingsManager.Current.General_BackgroundJobInterval != 0)
             {
-                Log.Info($"Setup background job with interval {SettingsManager.Current.General_BackgroundJobInterval} minute(s)...");
+                Log.Info(
+                    $"Setup background job with interval {SettingsManager.Current.General_BackgroundJobInterval} minute(s)...");
 
                 _dispatcherTimer = new DispatcherTimer
                 {
@@ -173,7 +179,8 @@ public partial class App
             ThreadPool.GetMinThreads(out var workerThreadsMin, out var completionPortThreadsMin);
 
             var workerThreadsMinNew = workerThreadsMin + SettingsManager.Current.General_ThreadPoolAdditionalMinThreads;
-            var completionPortThreadsMinNew = completionPortThreadsMin + SettingsManager.Current.General_ThreadPoolAdditionalMinThreads;
+            var completionPortThreadsMinNew = completionPortThreadsMin +
+                                              SettingsManager.Current.General_ThreadPoolAdditionalMinThreads;
 
             if (workerThreadsMinNew > workerThreadsMax)
                 workerThreadsMinNew = workerThreadsMax;
@@ -182,9 +189,11 @@ public partial class App
                 completionPortThreadsMinNew = completionPortThreadsMax;
 
             if (ThreadPool.SetMinThreads(workerThreadsMinNew, completionPortThreadsMinNew))
-                Log.Info($"ThreadPool min threads set to: workerThreads: {workerThreadsMinNew}, completionPortThreads: {completionPortThreadsMinNew}");
+                Log.Info(
+                    $"ThreadPool min threads set to: workerThreads: {workerThreadsMinNew}, completionPortThreads: {completionPortThreadsMinNew}");
             else
-                Log.Warn($"ThreadPool min threads could not be set to workerThreads: {workerThreadsMinNew}, completionPortThreads: {completionPortThreadsMinNew}");
+                Log.Warn(
+                    $"ThreadPool min threads could not be set to workerThreads: {workerThreadsMinNew}, completionPortThreads: {completionPortThreadsMinNew}");
 
             // Show splash screen
             if (SettingsManager.Current.SplashScreen_Enabled)
@@ -200,8 +209,10 @@ public partial class App
         else
         {
             // Bring the already running application into the foreground
-            Log.Info("Another NETworkManager process is already running. Trying to bring the window to the foreground...");
-            SingleInstance.PostMessage((IntPtr)SingleInstance.HWND_BROADCAST, SingleInstance.WM_SHOWME, IntPtr.Zero, IntPtr.Zero);
+            Log.Info(
+                "Another NETworkManager process is already running. Trying to bring the window to the foreground...");
+            SingleInstance.PostMessage((IntPtr)SingleInstance.HWND_BROADCAST, SingleInstance.WM_SHOWME, IntPtr.Zero,
+                IntPtr.Zero);
 
             // Close the application                
             _singleInstanceClose = true;

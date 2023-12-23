@@ -19,7 +19,7 @@ public class TracerouteOptions
     /// Maximum number of hops between the local and remote computer.
     /// </summary>
     public int MaximumHops { get; }
-    
+
     /// <summary>
     /// Do not fragment the ping packet.    
     /// </summary>
@@ -29,12 +29,12 @@ public class TracerouteOptions
     /// Resolve the hostname for an IP address.
     /// </summary>
     public bool ResolveHostname { get; }
-    
+
     /// <summary>
     /// Check IP geolocation via ip-api.com.
     /// </summary>
     public bool CheckIPApiIPGeolocation { get; }
-    
+
     /// <summary>
     /// Create an instance of <see cref="TracerouteOptions"/> with parameters.
     /// </summary>
@@ -44,7 +44,8 @@ public class TracerouteOptions
     /// <param name="dontFragment">Do not fragment the ping packet.</param>
     /// <param name="resolveHostname">Resolve the hostname for an IP address.</param>
     /// <param name="checkIPApiIPGeolocation">Check IP geolocation via ip-api.com.</param>
-    public TracerouteOptions(int timeout, byte[] buffer, int maximumHops, bool dontFragment, bool resolveHostname, bool checkIPApiIPGeolocation)
+    public TracerouteOptions(int timeout, byte[] buffer, int maximumHops, bool dontFragment, bool resolveHostname,
+        bool checkIPApiIPGeolocation)
     {
         Timeout = timeout;
         Buffer = buffer;

@@ -31,7 +31,7 @@ public static partial class ExportManager
     {
         System.IO.File.WriteAllText(filePath, content);
     }
-   
+
     /// <summary>
     /// Get the file extension as string from the given <see cref="ExportFileType"/>.
     /// </summary>

@@ -15,10 +15,14 @@ namespace NETworkManager.ViewModels;
 public class AboutViewModel : ViewModelBase
 {
     #region Variables
+
     public string Version => $"{Strings.Version} {AssemblyManager.Current.Version}";
-    public string DevelopedByText => string.Format(Strings.DevelopedAndMaintainedByX + " ", Resources.NETworkManager_GitHub_User);
+
+    public string DevelopedByText =>
+        string.Format(Strings.DevelopedAndMaintainedByX + " ", Resources.NETworkManager_GitHub_User);
 
     private bool _isUpdateCheckRunning;
+
     public bool IsUpdateCheckRunning
     {
         get => _isUpdateCheckRunning;
@@ -33,6 +37,7 @@ public class AboutViewModel : ViewModelBase
     }
 
     private bool _isUpdateAvailable;
+
     public bool IsUpdateAvailable
     {
         get => _isUpdateAvailable;
@@ -47,6 +52,7 @@ public class AboutViewModel : ViewModelBase
     }
 
     private string _updateText;
+
     public string UpdateText
     {
         get => _updateText;
@@ -61,6 +67,7 @@ public class AboutViewModel : ViewModelBase
     }
 
     private string _updateReleaseUrl;
+
     public string UpdateReleaseUrl
     {
         get => _updateReleaseUrl;
@@ -75,6 +82,7 @@ public class AboutViewModel : ViewModelBase
     }
 
     private bool _showUpdaterMessage;
+
     public bool ShowUpdaterMessage
     {
         get => _showUpdaterMessage;
@@ -89,6 +97,7 @@ public class AboutViewModel : ViewModelBase
     }
 
     private string _updaterMessage;
+
     public string UpdaterMessage
     {
         get => _updaterMessage;
@@ -105,6 +114,7 @@ public class AboutViewModel : ViewModelBase
     public ICollectionView LibrariesView { get; }
 
     private LibraryInfo _selectedLibraryInfo;
+
     public LibraryInfo SelectedLibraryInfo
     {
         get => _selectedLibraryInfo;
@@ -121,6 +131,7 @@ public class AboutViewModel : ViewModelBase
     public ICollectionView ExternalServicesView { get; }
 
     private ExternalServicesInfo _selectedExternalServicesInfo;
+
     public ExternalServicesInfo SelectedExternalServicesInfo
     {
         get => _selectedExternalServicesInfo;
@@ -137,6 +148,7 @@ public class AboutViewModel : ViewModelBase
     public ICollectionView ResourcesView { get; }
 
     private ResourceInfo _selectedResourceInfo;
+
     public ResourceInfo SelectedResourceInfo
     {
         get => _selectedResourceInfo;
@@ -149,23 +161,28 @@ public class AboutViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor
+
     public AboutViewModel()
     {
         LibrariesView = CollectionViewSource.GetDefaultView(LibraryManager.List);
         LibrariesView.SortDescriptions.Add(new SortDescription(nameof(LibraryInfo.Name), ListSortDirection.Ascending));
 
         ExternalServicesView = CollectionViewSource.GetDefaultView(ExternalServicesManager.List);
-        ExternalServicesView.SortDescriptions.Add(new SortDescription(nameof(ExternalServicesInfo.Name), ListSortDirection.Ascending));
+        ExternalServicesView.SortDescriptions.Add(new SortDescription(nameof(ExternalServicesInfo.Name),
+            ListSortDirection.Ascending));
 
         ResourcesView = CollectionViewSource.GetDefaultView(ResourceManager.List);
         ResourcesView.SortDescriptions.Add(new SortDescription(nameof(ResourceInfo.Name), ListSortDirection.Ascending));
     }
+
     #endregion
 
     #region Commands & Actions
+
     public ICommand CheckForUpdatesCommand => new RelayCommand(_ => CheckForUpdatesAction());
 
     private void CheckForUpdatesAction()
@@ -196,9 +213,11 @@ public class AboutViewModel : ViewModelBase
     {
         Process.Start("explorer.exe", LibraryManager.GetLicenseLocation());
     }
+
     #endregion
 
     #region Methods
+
     private void CheckForUpdates()
     {
         IsUpdateAvailable = false;
@@ -212,11 +231,14 @@ public class AboutViewModel : ViewModelBase
         updater.NoUpdateAvailable += Updater_NoUpdateAvailable;
         updater.Error += Updater_Error;
 
-        updater.CheckOnGitHub(Resources.NETworkManager_GitHub_User, Resources.NETworkManager_GitHub_Repo, AssemblyManager.Current.Version, SettingsManager.Current.Update_CheckForPreReleases);
+        updater.CheckOnGitHub(Resources.NETworkManager_GitHub_User, Resources.NETworkManager_GitHub_Repo,
+            AssemblyManager.Current.Version, SettingsManager.Current.Update_CheckForPreReleases);
     }
+
     #endregion
 
     #region Events
+
     private void Updater_UpdateAvailable(object sender, UpdateAvailableArgs e)
     {
         UpdateText = string.Format(Strings.VersionxxIsAvailable, e.Release.TagName);
@@ -241,5 +263,6 @@ public class AboutViewModel : ViewModelBase
         IsUpdateCheckRunning = false;
         ShowUpdaterMessage = true;
     }
+
     #endregion
 }

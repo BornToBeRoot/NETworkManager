@@ -3941,14 +3941,17 @@
                                                         </Setter.Value>
                                                     </Setter>
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding IPGeolocation_InheritHost}" Value="False">
+                                                <DataTrigger Binding="{Binding IPGeolocation_InheritHost}"
+                                                             Value="False">
                                                     <Setter Property="TextBox.Text">
                                                         <Setter.Value>
                                                             <Binding Path="IPGeolocation_Host" Mode="TwoWay"
                                                                      UpdateSourceTrigger="PropertyChanged">
                                                                 <Binding.ValidationRules>
-                                                                    <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                                    <validators:IPAddressOrHostnameValidator ValidatesOnTargetUpdated="True" />
+                                                                    <validators:EmptyValidator
+                                                                        ValidatesOnTargetUpdated="True" />
+                                                                    <validators:IPAddressOrHostnameValidator
+                                                                        ValidatesOnTargetUpdated="True" />
                                                                 </Binding.ValidationRules>
                                                             </Binding>
                                                         </Setter.Value>

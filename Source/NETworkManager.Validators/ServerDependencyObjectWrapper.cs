@@ -4,7 +4,8 @@ namespace NETworkManager.Validators;
 
 public class ServerDependencyObjectWrapper : DependencyObject
 {
-    public static readonly DependencyProperty AllowOnlyIPAddressProperty = DependencyProperty.Register("AllowOnlyIPAddress",
+    public static readonly DependencyProperty AllowOnlyIPAddressProperty = DependencyProperty.Register(
+        "AllowOnlyIPAddress",
         typeof(bool),
         typeof(ServerDependencyObjectWrapper));
 

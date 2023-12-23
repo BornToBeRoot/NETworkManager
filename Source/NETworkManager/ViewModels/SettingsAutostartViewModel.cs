@@ -8,11 +8,13 @@ namespace NETworkManager.ViewModels;
 public class SettingsAutostartViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly bool _isLoading;
 
     private bool _startWithWindows;
+
     public bool StartWithWindows
     {
         get => _startWithWindows;
@@ -30,6 +32,7 @@ public class SettingsAutostartViewModel : ViewModelBase
     }
 
     private bool _configuringAutostart;
+
     public bool ConfiguringAutostart
     {
         get => _configuringAutostart;
@@ -44,6 +47,7 @@ public class SettingsAutostartViewModel : ViewModelBase
     }
 
     private bool _startMinimizedInTray;
+
     public bool StartMinimizedInTray
     {
         get => _startMinimizedInTray;
@@ -59,9 +63,11 @@ public class SettingsAutostartViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    #endregion       
+
+    #endregion
 
     #region Constructor
+
     public SettingsAutostartViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
@@ -72,17 +78,21 @@ public class SettingsAutostartViewModel : ViewModelBase
 
         _isLoading = false;
     }
+
     #endregion
 
     #region Load settings
+
     private void LoadSettings()
     {
         StartWithWindows = AutostartManager.IsEnabled;
         StartMinimizedInTray = SettingsManager.Current.Autostart_StartMinimizedInTray;
     }
+
     #endregion
 
     #region Methods
+
     private async Task EnableDisableAutostart(bool enable)
     {
         ConfiguringAutostart = true;
@@ -99,10 +109,12 @@ public class SettingsAutostartViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+            await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message,
+                MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
         }
 
         ConfiguringAutostart = false;
     }
+
     #endregion
 }

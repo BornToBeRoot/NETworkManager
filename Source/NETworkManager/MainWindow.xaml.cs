@@ -1088,7 +1088,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     #endregion
 
     #region Run Command
-    
+
     #region Variables
 
     private ICollectionView _runCommands;
@@ -1138,15 +1138,17 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+
     #endregion
-    
+
     #region ICommands & Actions
+
     public ICommand OpenRunCommand => new RelayCommand(_ => OpenRunAction());
 
     private void OpenRunAction()
     {
         ConfigurationManager.OnDialogOpen();
-        
+
         FlyoutRunCommand.IsOpen = true;
     }
 
@@ -1163,9 +1165,11 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     {
         RunCommandFlyoutClose();
     }
+
     #endregion
-    
+
     #region Methods
+
     private void SetRunCommandsView(RunCommandInfo selectedRunCommand = null)
     {
         RunCommands = new CollectionViewSource { Source = RunCommandManager.GetList() }.View;
@@ -1193,7 +1197,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     {
         SetRunCommandsView(SelectedRunCommand);
     }
-    
+
     /// <summary>
     /// Execute the selected run command.
     /// </summary>
@@ -1223,7 +1227,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         // Close the flyout
         RunCommandFlyoutClose();
     }
-    
+
     /// <summary>
     /// Close the run command flyout and clear the search.
     /// </summary>
@@ -1231,18 +1235,20 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     {
         if (!FlyoutRunCommand.IsOpen)
             return;
-        
+
         FlyoutRunCommand.AreAnimationsEnabled = false;
         FlyoutRunCommand.IsOpen = false;
-        
+
         ConfigurationManager.OnDialogClose();
-        
+
         // Clear the search
         RunCommandSearch = string.Empty;
     }
+
     #endregion
-    
-    #region  Events
+
+    #region Events
+
     private void ListViewRunCommand_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
     {
         RunCommandDo();
@@ -1256,6 +1262,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         RunCommandFlyoutClose();
     }
+
     #endregion
 
     #endregion

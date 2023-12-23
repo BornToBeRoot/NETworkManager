@@ -11,13 +11,13 @@ public class ConnectionInfo
     public IPAddress RemoteIPAddress { get; set; }
     public int RemotePort { get; set; }
     public TcpState TcpState { get; set; }
-    
+
     public ConnectionInfo()
     {
-
     }
 
-    public ConnectionInfo(TransportProtocol protocol, IPAddress localIPAddress, int localPort, IPAddress remoteIPAddress, int remotePort, TcpState tcpState)
+    public ConnectionInfo(TransportProtocol protocol, IPAddress localIPAddress, int localPort,
+        IPAddress remoteIPAddress, int remotePort, TcpState tcpState)
     {
         Protocol = protocol;
         LocalIPAddress = localIPAddress;

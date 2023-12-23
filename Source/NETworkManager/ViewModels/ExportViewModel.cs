@@ -67,6 +67,7 @@ public class ExportViewModel : ViewModelBase
     }
 
     private bool _exportSelected;
+
     public bool ExportSelected
     {
         get => _exportSelected;
@@ -83,6 +84,7 @@ public class ExportViewModel : ViewModelBase
     public ExportFileType FileType { get; private set; }
 
     private bool _showCsv;
+
     public bool ShowCsv
     {
         get => _showCsv;
@@ -97,6 +99,7 @@ public class ExportViewModel : ViewModelBase
     }
 
     private bool _useCsv;
+
     public bool UseCsv
     {
         get => _useCsv;
@@ -117,6 +120,7 @@ public class ExportViewModel : ViewModelBase
     }
 
     private bool _showXml;
+
     public bool ShowXml
     {
         get => _showXml;
@@ -131,6 +135,7 @@ public class ExportViewModel : ViewModelBase
     }
 
     private bool _useXml;
+
     public bool UseXml
     {
         get => _useXml;
@@ -152,6 +157,7 @@ public class ExportViewModel : ViewModelBase
 
 
     private bool _showJson;
+
     public bool ShowJson
     {
         get => _showJson;
@@ -166,6 +172,7 @@ public class ExportViewModel : ViewModelBase
     }
 
     private bool _useJson;
+
     public bool UseJson
     {
         get => _useJson;
@@ -186,6 +193,7 @@ public class ExportViewModel : ViewModelBase
     }
 
     private bool _showTxt;
+
     public bool ShowTxt
     {
         get => _showTxt;
@@ -200,6 +208,7 @@ public class ExportViewModel : ViewModelBase
     }
 
     private bool _useTxt;
+
     public bool UseTxt
     {
         get => _useTxt;
@@ -220,6 +229,7 @@ public class ExportViewModel : ViewModelBase
     }
 
     private string _filePath;
+
     public string FilePath
     {
         get => _filePath;
@@ -233,7 +243,8 @@ public class ExportViewModel : ViewModelBase
         }
     }
 
-    private ExportViewModel(Action<ExportViewModel> deleteCommand, Action<ExportViewModel> cancelHandler, ExportFileType[] showFilesTypes, bool showExportSelected)
+    private ExportViewModel(Action<ExportViewModel> deleteCommand, Action<ExportViewModel> cancelHandler,
+        ExportFileType[] showFilesTypes, bool showExportSelected)
     {
         ExportCommand = new RelayCommand(_ => deleteCommand(this));
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
@@ -246,7 +257,8 @@ public class ExportViewModel : ViewModelBase
         ShowExportSelected = showExportSelected;
     }
 
-    public ExportViewModel(Action<ExportViewModel> deleteCommand, Action<ExportViewModel> cancelHandler, ExportFileType[] showFilesTypes, bool showExportSelected, ExportFileType fileType, string filePath) :
+    public ExportViewModel(Action<ExportViewModel> deleteCommand, Action<ExportViewModel> cancelHandler,
+        ExportFileType[] showFilesTypes, bool showExportSelected, ExportFileType fileType, string filePath) :
         this(deleteCommand, cancelHandler, showFilesTypes, showExportSelected)
     {
         FilePath = filePath;
@@ -263,7 +275,7 @@ public class ExportViewModel : ViewModelBase
                 UseJson = true;
                 break;
             case ExportFileType.Txt:
-                UseTxt = true;                    
+                UseTxt = true;
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
@@ -295,9 +307,9 @@ public class ExportViewModel : ViewModelBase
 
         var newExtension = ExportManager.GetFileExtensionAsString(fileType);
 
-        if(newExtension == null)
+        if (newExtension == null)
             return;
-            
+
         if (extension.Equals(newExtension, StringComparison.OrdinalIgnoreCase))
             return;
 

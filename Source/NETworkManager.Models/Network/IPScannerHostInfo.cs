@@ -32,7 +32,7 @@ public class IPScannerHostInfo
     /// Hostname of the host.
     /// </summary>
     public string Hostname { get; set; }
-    
+
     /// <summary>
     /// MAC address of the host.
     /// </summary>
@@ -58,7 +58,8 @@ public class IPScannerHostInfo
     /// <param name="hostname">Hostname of the host.</param>
     /// <param name="macAddress">MAC address of the host.</param>
     /// <param name="vendor">Vendor of the host based on the MAC address.</param>
-    public IPScannerHostInfo(bool isReachable, PingInfo pingInfo, bool isAnyPortOpen, List<PortInfo> ports, string hostname, PhysicalAddress macAddress, string vendor)
+    public IPScannerHostInfo(bool isReachable, PingInfo pingInfo, bool isAnyPortOpen, List<PortInfo> ports,
+        string hostname, PhysicalAddress macAddress, string vendor)
     {
         IsReachable = isReachable;
         PingInfo = pingInfo;

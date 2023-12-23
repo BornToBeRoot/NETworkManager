@@ -21,6 +21,7 @@ namespace NETworkManager.ViewModels;
 public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
@@ -31,6 +32,7 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
     private bool _isViewActive = true;
 
     private int _selectedTabIndex;
+
     public int SelectedTabIndex
     {
         get => _selectedTabIndex;
@@ -47,6 +49,7 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
     #region Profiles
 
     private ICollectionView _profiles;
+
     public ICollectionView Profiles
     {
         get => _profiles;
@@ -61,6 +64,7 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
     }
 
     private ProfileInfo _selectedProfile = new();
+
     public ProfileInfo SelectedProfile
     {
         get => _selectedProfile;
@@ -75,6 +79,7 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
     }
 
     private string _search;
+
     public string Search
     {
         get => _search;
@@ -94,6 +99,7 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
     }
 
     private bool _isSearching;
+
     public bool IsSearching
     {
         get => _isSearching;
@@ -111,6 +117,7 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
     private double _tempProfileWidth;
 
     private bool _expandProfileView;
+
     public bool ExpandProfileView
     {
         get => _expandProfileView;
@@ -132,6 +139,7 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
     }
 
     private GridLength _profileWidth;
+
     public GridLength ProfileWidth
     {
         get => _profileWidth;
@@ -140,7 +148,8 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
             if (value == _profileWidth)
                 return;
 
-            if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.Profile_FloatPointFix) // Do not save the size when collapsed
+            if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
+                GlobalStaticConfiguration.Profile_FloatPointFix) // Do not save the size when collapsed
                 SettingsManager.Current.IPGeolocation_ProfileWidth = value.Value;
 
             _profileWidth = value;
@@ -151,23 +160,26 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
+
     #endregion
+
     #endregion
 
     #region Constructor
+
     public IPGeolocationHostViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
-        
+
         _dialogCoordinator = instance;
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.IPGeolocation);
 
         var tabId = Guid.NewGuid();
-        
+
         TabItems = new ObservableCollection<DragablzTabItem>
         {
-            new(Localization.Resources.Strings.NewTab, new IPGeolocationView (tabId), tabId)
+            new(Localization.Resources.Strings.NewTab, new IPGeolocationView(tabId), tabId)
         };
 
         // Profiles
@@ -187,7 +199,9 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
     {
         ExpandProfileView = SettingsManager.Current.IPGeolocation_ExpandProfileView;
 
-        ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.IPGeolocation_ProfileWidth) : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
+        ProfileWidth = ExpandProfileView
+            ? new GridLength(SettingsManager.Current.IPGeolocation_ProfileWidth)
+            : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
 
         _tempProfileWidth = SettingsManager.Current.IPGeolocation_ProfileWidth;
     }
@@ -195,6 +209,7 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #region ICommand & Actions
+
     public ICommand AddTabCommand => new RelayCommand(_ => AddTabAction());
 
     private void AddTabAction()
@@ -213,12 +228,13 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
     {
         AddTab(SelectedProfile.IPGeolocation_Host);
     }
-    
+
     public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.IPGeolocation).ConfigureAwait(false);
+        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.IPGeolocation)
+            .ConfigureAwait(false);
     }
 
     private bool ModifyProfile_CanExecute(object obj) => SelectedProfile is { IsDynamic: false };
@@ -241,14 +257,17 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
 
     private void DeleteProfileAction()
     {
-        ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile }).ConfigureAwait(false);
+        ProfileDialogManager
+            .ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile })
+            .ConfigureAwait(false);
     }
 
     public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString())).ConfigureAwait(false);
+        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()))
+            .ConfigureAwait(false);
     }
 
     public ICommand ClearSearchCommand => new RelayCommand(_ => ClearSearchAction());
@@ -264,22 +283,29 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
     {
         ((args.DragablzItem.Content as DragablzTabItem)?.View as IPGeolocationView)?.CloseTab();
     }
+
     #endregion
 
-    #region Methods    
+    #region Methods
+
     private void ResizeProfile(bool dueToChangedSize)
     {
         _canProfileWidthChange = false;
 
         if (dueToChangedSize)
         {
-            ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.Profile_FloatPointFix;
+            ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
+                                GlobalStaticConfiguration.Profile_FloatPointFix;
         }
         else
         {
             if (ExpandProfileView)
             {
-                ProfileWidth = Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.Profile_WidthCollapsed) < GlobalStaticConfiguration.Profile_FloatPointFix ? new GridLength(GlobalStaticConfiguration.Profile_DefaultWidthExpanded) : new GridLength(_tempProfileWidth);
+                ProfileWidth =
+                    Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.Profile_WidthCollapsed) <
+                    GlobalStaticConfiguration.Profile_FloatPointFix
+                        ? new GridLength(GlobalStaticConfiguration.Profile_DefaultWidthExpanded)
+                        : new GridLength(_tempProfileWidth);
             }
             else
             {
@@ -295,7 +321,8 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
     {
         var _tabId = Guid.NewGuid();
 
-        TabItems.Add(new DragablzTabItem(domain ?? Localization.Resources.Strings.NewTab, new IPGeolocationView(_tabId, domain), _tabId));
+        TabItems.Add(new DragablzTabItem(domain ?? Localization.Resources.Strings.NewTab,
+            new IPGeolocationView(_tabId, domain), _tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }
@@ -314,7 +341,11 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
 
     private void SetProfilesView(ProfileInfo profile = null)
     {
-        Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.IPGeolocation_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name) }.View;
+        Profiles = new CollectionViewSource
+        {
+            Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.IPGeolocation_Enabled)
+                .OrderBy(x => x.Group).ThenBy(x => x.Name)
+        }.View;
 
         Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
 
@@ -335,7 +366,8 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
             */
 
             // Search by: Name, IPGeolocation_Host
-            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.IPGeolocation_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
+            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.IPGeolocation_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
         // Set specific profile or first if null
@@ -343,7 +375,7 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
 
         if (profile != null)
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault(x => x.Equals(profile)) ??
-                Profiles.Cast<ProfileInfo>().FirstOrDefault();
+                              Profiles.Cast<ProfileInfo>().FirstOrDefault();
         else
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
     }
@@ -354,10 +386,12 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
             return;
 
         SetProfilesView(SelectedProfile);
-    }    
+    }
+
     #endregion
 
     #region Event
+
     private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
     {
         RefreshProfiles();
@@ -371,5 +405,6 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
 
         IsSearching = false;
     }
+
     #endregion
 }

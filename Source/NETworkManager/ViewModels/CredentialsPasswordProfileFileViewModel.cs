@@ -58,7 +58,7 @@ public class CredentialsPasswordProfileFileViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+
     /// <summary>
     /// Private variable for <see cref="Password"/>.
     /// </summary>
@@ -112,7 +112,9 @@ public class CredentialsPasswordProfileFileViewModel : ViewModelBase
     /// <param name="cancelHandler"><see cref="CancelCommand"/> which is executed on cancel click.</param>
     /// <param name="profileName">Name of the profile file.</param>
     /// <param name="showWrongPassword">Show note that the password is wrong.</param>
-    public CredentialsPasswordProfileFileViewModel(Action<CredentialsPasswordProfileFileViewModel> okCommand, Action<CredentialsPasswordProfileFileViewModel> cancelHandler, string profileName, bool showWrongPassword = false)
+    public CredentialsPasswordProfileFileViewModel(Action<CredentialsPasswordProfileFileViewModel> okCommand,
+        Action<CredentialsPasswordProfileFileViewModel> cancelHandler, string profileName,
+        bool showWrongPassword = false)
     {
         OKCommand = new RelayCommand(_ => okCommand(this));
         CancelCommand = new RelayCommand(_ => cancelHandler(this));

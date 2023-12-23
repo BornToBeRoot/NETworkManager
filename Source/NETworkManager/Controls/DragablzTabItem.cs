@@ -7,6 +7,7 @@ namespace NETworkManager.Controls;
 public class DragablzTabItem : ViewModelBase
 {
     private string _header;
+
     public string Header
     {
         get => _header;
@@ -26,7 +27,7 @@ public class DragablzTabItem : ViewModelBase
     public DragablzTabItem(string header, UserControl view)
     {
         Header = header;
-        View = view;         
+        View = view;
     }
 
     public DragablzTabItem(string header, UserControl view, Guid id)

@@ -16,7 +16,7 @@ public class NetworkInterfaceInfo
     public bool IsOperational { get; set; }
     public long Speed { get; set; }
     public bool IPv4ProtocolAvailable { get; set; }
-    public Tuple<IPAddress, IPAddress>[] IPv4Address {get;set;}
+    public Tuple<IPAddress, IPAddress>[] IPv4Address { get; set; }
     public IPAddress[] IPv4Gateway { get; set; }
     public bool DhcpEnabled { get; set; }
     public IPAddress[] DhcpServer { get; set; }
@@ -32,6 +32,5 @@ public class NetworkInterfaceInfo
 
     public NetworkInterfaceInfo()
     {
-            
     }
 }

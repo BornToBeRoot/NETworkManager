@@ -8,6 +8,7 @@ namespace NETworkManager.Models.Network;
 public class WiFiNetworkInfo
 {
     #region Variables
+
     /// <summary>
     /// Information's about an available WiFi network.
     /// </summary>
@@ -22,6 +23,7 @@ public class WiFiNetworkInfo
     /// Indicates if the WiFi network is connected to the current WiFi adapter.
     /// </summary>
     public bool IsConnected { get; set; }
+
     #endregion
 
     /// <summary>
@@ -29,6 +31,5 @@ public class WiFiNetworkInfo
     /// </summary>
     public WiFiNetworkInfo()
     {
-        
     }
 }

@@ -23,7 +23,8 @@ public class EmptyOrPortRangeValidator : ValidationRule
 
                 if (int.TryParse(portRange[0], out var startPort) && int.TryParse(portRange[1], out var endPort))
                 {
-                    if (!((startPort > 0) && (startPort < 65536) && (endPort > 0) && (endPort < 65536) && (startPort < endPort)))
+                    if (!((startPort > 0) && (startPort < 65536) && (endPort > 0) && (endPort < 65536) &&
+                          (startPort < endPort)))
                         isValid = false;
                 }
                 else
@@ -45,6 +46,8 @@ public class EmptyOrPortRangeValidator : ValidationRule
             }
         }
 
-        return isValid ? ValidationResult.ValidResult : new ValidationResult(false, Localization.Resources.Strings.EnterValidPortOrPortRange);
+        return isValid
+            ? ValidationResult.ValidResult
+            : new ValidationResult(false, Localization.Resources.Strings.EnterValidPortOrPortRange);
     }
 }

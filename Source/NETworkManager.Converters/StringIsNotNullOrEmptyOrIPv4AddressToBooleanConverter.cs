@@ -10,7 +10,7 @@ public sealed class StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter : IVal
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return !string.IsNullOrEmpty(value as string) && !Regex.IsMatch((string) value, RegexHelper.IPv4AddressRegex);
+        return !string.IsNullOrEmpty(value as string) && !Regex.IsMatch((string)value, RegexHelper.IPv4AddressRegex);
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

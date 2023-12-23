@@ -18,15 +18,18 @@ namespace NETworkManager.Controls;
 public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
 {
     #region PropertyChangedEventHandler
+
     public event PropertyChangedEventHandler PropertyChanged;
 
     private void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
+
     #endregion
 
     #region Variables
+
     public IInterTabClient InterTabClient { get; }
     private ApplicationName _applicationName;
 
@@ -44,6 +47,7 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
     }
 
     private bool _headerContextMenuIsOpen;
+
     public bool HeaderContextMenuIsOpen
     {
         get => _headerContextMenuIsOpen;
@@ -56,9 +60,11 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor
+
     public DragablzTabHostWindow(ApplicationName applicationName)
     {
         InitializeComponent();
@@ -70,11 +76,14 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
 
         InterTabController.Partition = applicationName.ToString();
 
-        Title = $"NETworkManager {AssemblyManager.Current.Version} - {ResourceTranslator.Translate(ResourceIdentifier.ApplicationName, applicationName)}";
+        Title =
+            $"NETworkManager {AssemblyManager.Current.Version} - {ResourceTranslator.Translate(ResourceIdentifier.ApplicationName, applicationName)}";
     }
+
     #endregion
 
     #region ICommand & Actions
+
     public ItemActionCallback CloseItemCommand => CloseItemAction;
 
     private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
@@ -140,7 +149,8 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
         }
     }
 
-    #region RemoteDesktop commands  
+    #region RemoteDesktop commands
+
     private bool RemoteDesktop_IsConnected_CanExecute(object view)
     {
         if (view is RemoteDesktopControl control)
@@ -157,7 +167,8 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
         return false;
     }
 
-    public ICommand RemoteDesktop_DisconnectCommand => new RelayCommand(RemoteDesktop_DisconnectAction, RemoteDesktop_IsConnected_CanExecute);
+    public ICommand RemoteDesktop_DisconnectCommand =>
+        new RelayCommand(RemoteDesktop_DisconnectAction, RemoteDesktop_IsConnected_CanExecute);
 
     private void RemoteDesktop_DisconnectAction(object view)
     {
@@ -168,7 +179,8 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
         }
     }
 
-    public ICommand RemoteDesktop_ReconnectCommand => new RelayCommand(RemoteDesktop_ReconnectAction, RemoteDesktop_IsDisconnected_CanExecute);
+    public ICommand RemoteDesktop_ReconnectCommand =>
+        new RelayCommand(RemoteDesktop_ReconnectAction, RemoteDesktop_IsDisconnected_CanExecute);
 
     private void RemoteDesktop_ReconnectAction(object view)
     {
@@ -179,7 +191,8 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
         }
     }
 
-    public ICommand RemoteDesktop_FullscreenCommand => new RelayCommand(RemoteDesktop_FullscreenAction, RemoteDesktop_IsConnected_CanExecute);
+    public ICommand RemoteDesktop_FullscreenCommand =>
+        new RelayCommand(RemoteDesktop_FullscreenAction, RemoteDesktop_IsConnected_CanExecute);
 
     private void RemoteDesktop_FullscreenAction(object view)
     {
@@ -187,7 +200,8 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
             control.FullScreen();
     }
 
-    public ICommand RemoteDesktop_AdjustScreenCommand => new RelayCommand(RemoteDesktop_AdjustScreenAction, RemoteDesktop_IsConnected_CanExecute);
+    public ICommand RemoteDesktop_AdjustScreenCommand =>
+        new RelayCommand(RemoteDesktop_AdjustScreenAction, RemoteDesktop_IsConnected_CanExecute);
 
     private void RemoteDesktop_AdjustScreenAction(object view)
     {
@@ -195,7 +209,8 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
             control.AdjustScreen();
     }
 
-    public ICommand RemoteDesktop_SendCtrlAltDelCommand => new RelayCommand(RemoteDesktop_SendCtrlAltDelAction, RemoteDesktop_IsConnected_CanExecute);
+    public ICommand RemoteDesktop_SendCtrlAltDelCommand =>
+        new RelayCommand(RemoteDesktop_SendCtrlAltDelAction, RemoteDesktop_IsConnected_CanExecute);
 
     private async void RemoteDesktop_SendCtrlAltDelAction(object view)
     {
@@ -209,15 +224,20 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
             {
                 ConfigurationManager.OnDialogOpen();
 
-                await this.ShowMessageAsync(Localization.Resources.Strings.Error, string.Format("{0}\n\nMessage:\n{1}", NETworkManager.Localization.Resources.Strings.CouldNotSendKeystroke, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog));
+                await this.ShowMessageAsync(Localization.Resources.Strings.Error,
+                    string.Format("{0}\n\nMessage:\n{1}",
+                        NETworkManager.Localization.Resources.Strings.CouldNotSendKeystroke, ex.Message,
+                        MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog));
 
                 ConfigurationManager.OnDialogClose();
             }
         }
     }
+
     #endregion
 
     #region PowerShell commands
+
     private bool PowerShell_IsConnected_CanExecute(object view)
     {
         if (view is PowerShellControl control)
@@ -237,16 +257,19 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
         }
     }
 
-    public ICommand PowerShell_ResizeWindowCommand => new RelayCommand(PowerShell_ResizeWindowAction, PowerShell_IsConnected_CanExecute);
+    public ICommand PowerShell_ResizeWindowCommand =>
+        new RelayCommand(PowerShell_ResizeWindowAction, PowerShell_IsConnected_CanExecute);
 
     private void PowerShell_ResizeWindowAction(object view)
     {
         if (view is PowerShellControl control)
             control.ResizeEmbeddedWindow();
     }
+
     #endregion
 
     #region PuTTY commands
+
     private bool PuTTY_IsConnected_CanExecute(object view)
     {
         if (view is PuTTYControl control)
@@ -266,7 +289,8 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
         }
     }
 
-    public ICommand PuTTY_ResizeWindowCommand => new RelayCommand(PuTTY_ResizeWindowAction, PuTTY_IsConnected_CanExecute);
+    public ICommand PuTTY_ResizeWindowCommand =>
+        new RelayCommand(PuTTY_ResizeWindowAction, PuTTY_IsConnected_CanExecute);
 
     private void PuTTY_ResizeWindowAction(object view)
     {
@@ -274,16 +298,19 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
             control.ResizeEmbeddedWindow();
     }
 
-    public ICommand PuTTY_RestartSessionCommand => new RelayCommand(PuTTY_RestartSessionAction, PuTTY_IsConnected_CanExecute);
+    public ICommand PuTTY_RestartSessionCommand =>
+        new RelayCommand(PuTTY_RestartSessionAction, PuTTY_IsConnected_CanExecute);
 
     private void PuTTY_RestartSessionAction(object view)
     {
         if (view is PuTTYControl control)
             control.RestartSession();
     }
+
     #endregion
 
     #region AWSSessionManager commands
+
     private bool AWSSessionManager_IsConnected_CanExecute(object view)
     {
         if (view is AWSSessionManagerControl control)
@@ -303,16 +330,19 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
         }
     }
 
-    public ICommand AWSSessionManager_ResizeWindowCommand => new RelayCommand(AWSSessionManager_ResizeWindowAction, AWSSessionManager_IsConnected_CanExecute);
+    public ICommand AWSSessionManager_ResizeWindowCommand => new RelayCommand(AWSSessionManager_ResizeWindowAction,
+        AWSSessionManager_IsConnected_CanExecute);
 
     private void AWSSessionManager_ResizeWindowAction(object view)
     {
         if (view is AWSSessionManagerControl control)
             control.ResizeEmbeddedWindow();
     }
+
     #endregion
 
     #region TigerVNC commands
+
     public ICommand TigerVNC_ReconnectCommand => new RelayCommand(TigerVNC_ReconnectAction);
 
     private void TigerVNC_ReconnectAction(object view)
@@ -323,9 +353,11 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
                 control.ReconnectCommand.Execute(null);
         }
     }
+
     #endregion
 
     #region WebConsole commands
+
     public ICommand WebConsole_ReloadCommand => new RelayCommand(WebConsole_RefreshAction);
 
     private void WebConsole_RefreshAction(object view)
@@ -336,10 +368,13 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
                 control.ReloadCommand.Execute(null);
         }
     }
+
     #endregion
+
     #endregion
 
     #region Methods
+
     private async void FocusEmbeddedWindow()
     {
         // Delay the focus to prevent blocking the ui
@@ -350,7 +385,7 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
         } while (Control.MouseButtons == MouseButtons.Left);
 
         /* Don't continue if
-           - Header ContextMenu is opened        
+           - Header ContextMenu is opened
         */
         if (HeaderContextMenuIsOpen)
             return;
@@ -369,13 +404,15 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
                 break;
         }
     }
+
     #endregion
 
     #region Events
-    
+
     private void MetroWindow_Activated(object sender, EventArgs e)
     {
         FocusEmbeddedWindow();
     }
+
     #endregion
 }

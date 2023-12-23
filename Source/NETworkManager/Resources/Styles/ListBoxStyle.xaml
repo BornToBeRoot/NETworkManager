@@ -4,14 +4,14 @@
         <Style.Resources>
             <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaultScrollViewer}" />
         </Style.Resources>
-        <Setter Property="FontSize" Value="14" />        
+        <Setter Property="FontSize" Value="14" />
     </Style>
 
     <Style TargetType="{x:Type ListBox}" BasedOn="{StaticResource DefaultListBox}" />
 
     <Style x:Key="ProfileListBox" TargetType="{x:Type ListBox}" BasedOn="{StaticResource DefaultListBox}">
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
-        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
     </Style>
-    
+
 </ResourceDictionary>

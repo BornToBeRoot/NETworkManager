@@ -1,23 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<ProjectGuid>{008467AF-D83F-4B1E-8733-B65136F595F2}</ProjectGuid>
-		<OutputType>Library</OutputType>
-		<AppDesignerFolder>Properties</AppDesignerFolder>
-		<RootNamespace>NETworkManager.Update</RootNamespace>
-		<AssemblyName>NETworkManager.Update</AssemblyName>
-		<TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
-		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
-		<PlatformTarget>x64</PlatformTarget>
-		<SelfContained>false</SelfContained>
-		<UseWPF>true</UseWPF>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-		<ProduceReferenceAssembly>false</ProduceReferenceAssembly>
-	</PropertyGroup>
-	<ItemGroup>
-		<Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="log4net" Version="2.0.15" />
-		<PackageReference Include="Octokit" Version="9.0.0" />
-	</ItemGroup>
+    <PropertyGroup>
+        <ProjectGuid>{008467AF-D83F-4B1E-8733-B65136F595F2}</ProjectGuid>
+        <OutputType>Library</OutputType>
+        <AppDesignerFolder>Properties</AppDesignerFolder>
+        <RootNamespace>NETworkManager.Update</RootNamespace>
+        <AssemblyName>NETworkManager.Update</AssemblyName>
+        <TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+        <PlatformTarget>x64</PlatformTarget>
+        <SelfContained>false</SelfContained>
+        <UseWPF>true</UseWPF>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+    </PropertyGroup>
+    <ItemGroup>
+        <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs"/>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="log4net" Version="2.0.15"/>
+        <PackageReference Include="Octokit" Version="9.0.0"/>
+    </ItemGroup>
 </Project>

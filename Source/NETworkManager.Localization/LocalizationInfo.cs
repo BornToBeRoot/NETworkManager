@@ -31,15 +31,14 @@ public class LocalizationInfo
     /// Indicates whether the language has been translated by the maintainer or the community 
     /// </summary>
     public bool IsOfficial { get; set; }
-            
+
     /// <summary>
     /// Create an empty instance of <see cref="LocalizationInfo"/>.
     /// </summary>
     public LocalizationInfo()
     {
-
     }
-    
+
     /// <summary>
     /// Create an instance of <see cref="LocalizationInfo"/> with all parameters.
     /// </summary>
@@ -52,7 +51,7 @@ public class LocalizationInfo
     {
         Name = name;
         NativeName = nativeName;
-        FlagUri = flagUri;            
+        FlagUri = flagUri;
         Code = code;
         IsOfficial = isOfficial;
     }

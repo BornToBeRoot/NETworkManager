@@ -23,7 +23,9 @@ public class MultiSelectScrollingDataGrid : DataGrid
         set => SetValue(SelectedItemsListProperty, value);
     }
 
-    public static readonly DependencyProperty SelectedItemsListProperty = DependencyProperty.Register("SelectedItemsList", typeof(IList), typeof(MultiSelectScrollingDataGrid), new PropertyMetadata(null));
+    public static readonly DependencyProperty SelectedItemsListProperty =
+        DependencyProperty.Register("SelectedItemsList", typeof(IList), typeof(MultiSelectScrollingDataGrid),
+            new PropertyMetadata(null));
 
     protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
     {

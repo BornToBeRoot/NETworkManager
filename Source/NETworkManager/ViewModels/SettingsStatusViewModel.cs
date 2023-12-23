@@ -5,9 +5,11 @@ namespace NETworkManager.ViewModels;
 public class SettingsStatusViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly bool _isLoading;
 
     private bool _showWindowOnNetworkChange;
+
     public bool ShowWindowOnNetworkChange
     {
         get => _showWindowOnNetworkChange;
@@ -25,6 +27,7 @@ public class SettingsStatusViewModel : ViewModelBase
     }
 
     private int _windowCloseTime;
+
     public int WindowCloseTime
     {
         get => _windowCloseTime;
@@ -44,6 +47,7 @@ public class SettingsStatusViewModel : ViewModelBase
     #endregion
 
     #region Contructor, load settings
+
     public SettingsStatusViewModel()
     {
         _isLoading = true;
@@ -58,5 +62,6 @@ public class SettingsStatusViewModel : ViewModelBase
         ShowWindowOnNetworkChange = SettingsManager.Current.Status_ShowWindowOnNetworkChange;
         WindowCloseTime = SettingsManager.Current.Status_WindowCloseTime;
     }
+
     #endregion
 }

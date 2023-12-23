@@ -22,8 +22,9 @@ public class PasswordBoxBindingBehavior : Behavior<PasswordBox>
         set => SetValue(PasswordProperty, value);
     }
 
-    public static readonly DependencyProperty PasswordProperty = DependencyProperty.Register("Password", typeof(SecureString), typeof(PasswordBoxBindingBehavior), new PropertyMetadata(null));
-    
+    public static readonly DependencyProperty PasswordProperty = DependencyProperty.Register("Password",
+        typeof(SecureString), typeof(PasswordBoxBindingBehavior), new PropertyMetadata(null));
+
     private void OnPasswordBoxValueChanged(object sender, RoutedEventArgs e)
     {
         var binding = BindingOperations.GetBindingExpression(this, PasswordProperty);

@@ -13,7 +13,9 @@ public sealed class PortOpenStyleConverter : IValueConverter
         if (value is not PortState portState)
             return null;
 
-        return portState == PortState.Open ? Application.Current.FindResource("PortOpenRectangle") : Application.Current.FindResource("PortClosedRectangle");   
+        return portState == PortState.Open
+            ? Application.Current.FindResource("PortOpenRectangle")
+            : Application.Current.FindResource("PortClosedRectangle");
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

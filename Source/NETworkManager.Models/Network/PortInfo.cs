@@ -29,7 +29,7 @@ public class PortInfo
     /// <param name="lookupInfo"></param>
     /// <param name="state"></param>            
     public PortInfo(int port, PortLookupInfo lookupInfo, PortState state)
-    {   
+    {
         Port = port;
         LookupInfo = lookupInfo;
         State = state;

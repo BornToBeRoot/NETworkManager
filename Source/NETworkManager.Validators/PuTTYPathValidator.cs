@@ -11,6 +11,8 @@ public class PuTTYPathValidator : ValidationRule
 
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
-        return fileNames.Contains(Path.GetFileName((string)value).ToLower()) ? ValidationResult.ValidResult : new ValidationResult(false, Localization.Resources.Strings.NoValidPuTTYPath);
+        return fileNames.Contains(Path.GetFileName((string)value).ToLower())
+            ? ValidationResult.ValidResult
+            : new ValidationResult(false, Localization.Resources.Strings.NoValidPuTTYPath);
     }
 }

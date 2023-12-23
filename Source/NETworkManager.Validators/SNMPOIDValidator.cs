@@ -18,9 +18,9 @@ public class SNMPOIDValidator : ValidationRule
             return Regex.IsMatch(oidValue, RegexHelper.SnmpOidRegex)
                 ? ValidationResult.ValidResult
                 : new ValidationResult(false, Localization.Resources.Strings.EnterValidOID);
-        
-        return oidValue.Split(';').Any(oid => !Regex.IsMatch(oid, RegexHelper.SnmpOidRegex)) ? 
-            new ValidationResult(false, Localization.Resources.Strings.EnterValidOID) : 
-            ValidationResult.ValidResult;
+
+        return oidValue.Split(';').Any(oid => !Regex.IsMatch(oid, RegexHelper.SnmpOidRegex))
+            ? new ValidationResult(false, Localization.Resources.Strings.EnterValidOID)
+            : ValidationResult.ValidResult;
     }
 }

@@ -1,61 +1,62 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<ProjectGuid>{954E8703-3E6E-42BF-BD28-F0B19BE10E0C}</ProjectGuid>
-		<OutputType>Library</OutputType>
-		<RootNamespace>NETworkManager.Settings</RootNamespace>
-		<AssemblyName>NETworkManager.Settings</AssemblyName>
-		<TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
-		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
-		<PlatformTarget>x64</PlatformTarget>
-		<SelfContained>false</SelfContained>
-		<UseWPF>true</UseWPF>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-		<ProduceReferenceAssembly>false</ProduceReferenceAssembly>	</PropertyGroup>
-	<ItemGroup>
-	  <Page Remove="Themes\Dark.Accent1.xaml" />
-	  <Page Remove="Themes\Dark.Accent2.xaml" />
-	  <Page Remove="Themes\Light.Accent1.xaml" />
-	  <Page Remove="Themes\Light.Accent2.xaml" />
-	</ItemGroup>
-	<ItemGroup>
-		<Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Content Include="Themes\Dark.Accent1.xaml">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	    <SubType>Designer</SubType>
-	    <Generator></Generator>
-	  </Content>
-	  <Content Include="Themes\Dark.Accent2.xaml">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	    <SubType>Designer</SubType>
-	    <Generator></Generator>
-	  </Content>
-	  <Content Include="Themes\Light.Accent1.xaml">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	    <SubType>Designer</SubType>
-	    <Generator></Generator>
-	  </Content>
-	  <Content Include="Themes\Light.Accent2.xaml">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	    <SubType>Designer</SubType>
-	    <Generator></Generator>
-	  </Content>
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="DnsClient" Version="1.7.0" />
-		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.2" />
-		<PackageReference Include="log4net" Version="2.0.15" />
-		<PackageReference Include="MahApps.Metro" Version="2.4.10" />
-		<PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="4.11.0" />
-		<PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
-		<PackageReference Include="MahApps.Metro.IconPacks.MaterialLight" Version="4.11.0" />
-		<PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="4.11.0" />
-		<PackageReference Include="MahApps.Metro.IconPacks.Octicons" Version="4.11.0" />
-	</ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\NETworkManager.Controls\NETworkManager.Controls.csproj" />
-		<ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj" />
-		<ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj" />
-	</ItemGroup>
+    <PropertyGroup>
+        <ProjectGuid>{954E8703-3E6E-42BF-BD28-F0B19BE10E0C}</ProjectGuid>
+        <OutputType>Library</OutputType>
+        <RootNamespace>NETworkManager.Settings</RootNamespace>
+        <AssemblyName>NETworkManager.Settings</AssemblyName>
+        <TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+        <PlatformTarget>x64</PlatformTarget>
+        <SelfContained>false</SelfContained>
+        <UseWPF>true</UseWPF>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+    </PropertyGroup>
+    <ItemGroup>
+        <Page Remove="Themes\Dark.Accent1.xaml"/>
+        <Page Remove="Themes\Dark.Accent2.xaml"/>
+        <Page Remove="Themes\Light.Accent1.xaml"/>
+        <Page Remove="Themes\Light.Accent2.xaml"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="Themes\Dark.Accent1.xaml">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <SubType>Designer</SubType>
+            <Generator></Generator>
+        </Content>
+        <Content Include="Themes\Dark.Accent2.xaml">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <SubType>Designer</SubType>
+            <Generator></Generator>
+        </Content>
+        <Content Include="Themes\Light.Accent1.xaml">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <SubType>Designer</SubType>
+            <Generator></Generator>
+        </Content>
+        <Content Include="Themes\Light.Accent2.xaml">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <SubType>Designer</SubType>
+            <Generator></Generator>
+        </Content>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="DnsClient" Version="1.7.0"/>
+        <PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.2"/>
+        <PackageReference Include="log4net" Version="2.0.15"/>
+        <PackageReference Include="MahApps.Metro" Version="2.4.10"/>
+        <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="4.11.0"/>
+        <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0"/>
+        <PackageReference Include="MahApps.Metro.IconPacks.MaterialLight" Version="4.11.0"/>
+        <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="4.11.0"/>
+        <PackageReference Include="MahApps.Metro.IconPacks.Octicons" Version="4.11.0"/>
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\NETworkManager.Controls\NETworkManager.Controls.csproj"/>
+        <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj"/>
+        <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj"/>
+    </ItemGroup>
 </Project>

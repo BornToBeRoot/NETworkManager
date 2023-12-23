@@ -9,6 +9,8 @@ public class ContainsTextValidator : ValidationRule
 {
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
-        return ((string)value).All(char.IsWhiteSpace) ? new ValidationResult(false, Strings.InputDoesNotContainAnyText) : ValidationResult.ValidResult;
+        return ((string)value).All(char.IsWhiteSpace)
+            ? new ValidationResult(false, Strings.InputDoesNotContainAnyText)
+            : ValidationResult.ValidResult;
     }
 }

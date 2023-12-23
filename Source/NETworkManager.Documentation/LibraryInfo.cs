@@ -23,7 +23,8 @@ public class LibraryInfo : BaseInfo
     /// <param name="description">Description of the library.</param>
     /// <param name="license">License which is used by the library.</param>
     /// <param name="licenseUrl">Url of the license which is used by the library.</param>
-    public LibraryInfo(string name, string websiteUrl, string description, string license, string licenseUrl) : base(name, websiteUrl, description)
+    public LibraryInfo(string name, string websiteUrl, string description, string license, string licenseUrl) : base(
+        name, websiteUrl, description)
     {
         License = license;
         LicenseUrl = licenseUrl;

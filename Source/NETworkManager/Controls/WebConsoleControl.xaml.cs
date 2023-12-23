@@ -13,11 +13,13 @@ namespace NETworkManager.Controls;
 public partial class WebConsoleControl : UserControlBase
 {
     #region Variables
+
     private bool _initialized;
 
     private readonly WebConsoleSessionInfo _sessionInfo;
 
     private bool _isLoading;
+
     public bool IsLoading
     {
         get => _isLoading;
@@ -32,6 +34,7 @@ public partial class WebConsoleControl : UserControlBase
     }
 
     private bool _firstLoad = true;
+
     public bool FirstLoad
     {
         get => _firstLoad;
@@ -46,6 +49,7 @@ public partial class WebConsoleControl : UserControlBase
     }
 
     private string _url;
+
     public string Url
     {
         get => _url;
@@ -62,6 +66,7 @@ public partial class WebConsoleControl : UserControlBase
     #endregion
 
     #region Constructor, load
+
     public WebConsoleControl(WebConsoleSessionInfo sessionInfo)
     {
         InitializeComponent();
@@ -70,12 +75,12 @@ public partial class WebConsoleControl : UserControlBase
         _sessionInfo = sessionInfo;
 
         Browser2.NavigationStarting += Browser2_NavigationStarting;
-        Browser2.NavigationCompleted += Browser2_NavigationCompleted;        
+        Browser2.NavigationCompleted += Browser2_NavigationCompleted;
         Browser2.SourceChanged += Browser2_SourceChanged;
 
         Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
     }
-    
+
     private void Browser2_SourceChanged(object sender, CoreWebView2SourceChangedEventArgs e)
     {
         Url = Browser2.Source.ToString();
@@ -88,15 +93,17 @@ public partial class WebConsoleControl : UserControlBase
             return;
 
         // Set user data folder - Fix #382            
-        var webView2Environment = await CoreWebView2Environment.CreateAsync(null, GlobalStaticConfiguration.WebConsole_Cache);
+        var webView2Environment =
+            await CoreWebView2Environment.CreateAsync(null, GlobalStaticConfiguration.WebConsole_Cache);
         await Browser2.EnsureCoreWebView2Async(webView2Environment);
 
         Navigate(_sessionInfo.Url);
 
         _initialized = true;
     }
+
     #endregion
-    
+
     #region ICommands & Actions
 
     private bool NavigateCommand_CanExecute(object obj) => !IsLoading;
@@ -105,7 +112,7 @@ public partial class WebConsoleControl : UserControlBase
 
     private void NavigateAction()
     {
-        Navigate(Url);        
+        Navigate(Url);
     }
 
     private bool StopCommand_CanExecute(object obj) => IsLoading;
@@ -120,10 +127,10 @@ public partial class WebConsoleControl : UserControlBase
     private bool ReloadCommand_CanExecute(object obj) => !IsLoading;
 
     public ICommand ReloadCommand => new RelayCommand(p => ReloadAction(), ReloadCommand_CanExecute);
-    
+
     private void ReloadAction()
     {
-        Browser2.Reload();        
+        Browser2.Reload();
     }
 
     private bool GoBackCommand_CanExecute(object obj) => !IsLoading && Browser2.CanGoBack;
@@ -143,9 +150,11 @@ public partial class WebConsoleControl : UserControlBase
     {
         Browser2.GoForward();
     }
+
     #endregion
 
-    #region Methods       
+    #region Methods
+
     private void Navigate(string url)
     {
         Browser2.Source = new Uri(url);
@@ -158,16 +167,17 @@ public partial class WebConsoleControl : UserControlBase
 
     public void CloseTab()
     {
-
     }
+
     #endregion
 
     #region Events
+
     private void Browser2_NavigationStarting(object sender, CoreWebView2NavigationStartingEventArgs e)
     {
         IsLoading = true;
     }
-    
+
     private void Browser2_NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
     {
         if (FirstLoad)
@@ -180,5 +190,6 @@ public partial class WebConsoleControl : UserControlBase
     {
         CloseTab();
     }
+
     #endregion
 }

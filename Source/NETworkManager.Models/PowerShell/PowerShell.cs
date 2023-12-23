@@ -17,8 +17,10 @@ public static class PowerShell
     public static readonly List<string> GetDefaultInstallationPaths = new()
     {
         Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "PowerShell", "7", "pwsh.exe"),
-        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "PowerShell", "7", "pwsh.exe"),
-        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), @"System32\WindowsPowerShell\v1.0\powershell.exe")
+        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "PowerShell", "7",
+            "pwsh.exe"),
+        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows),
+            @"System32\WindowsPowerShell\v1.0\powershell.exe")
     };
 
     /// <summary>
@@ -27,7 +29,6 @@ public static class PowerShell
     private static readonly List<Tuple<string, string>> DefaultProfileRegkeysSzBase = new()
     {
         new Tuple<string, string>("FaceName", "Consolas"),
-
     };
 
     /// <summary>
@@ -48,13 +49,14 @@ public static class PowerShell
     private static List<Tuple<string, int>> GetProfileRegkeysDwordDark()
     {
         return DefaultProfileRegkeysDwordBase.Concat(
-            new[] {
-                new Tuple<string, int>("DefaultBackground", 2434341 ), // HEX: 252525
+            new[]
+            {
+                new Tuple<string, int>("DefaultBackground", 2434341), // HEX: 252525
                 new Tuple<string, int>("ColorTable00", 2434341), // HEX: 252525
                 new Tuple<string, int>("ColorTable07", 13421772), // HEX: cccccc
             }).ToList();
     }
-    
+
     /// <summary>
     /// Default DWORD registry keys for the global PowerShell profile with white theme.
     /// </summary>
@@ -62,8 +64,9 @@ public static class PowerShell
     private static List<Tuple<string, int>> GetProfileRegkeysDwordWhite()
     {
         return DefaultProfileRegkeysDwordBase.Concat(
-            new[] {
-                new Tuple<string, int>("DefaultBackground", 16777215 ), // HEX: FFFFFF
+            new[]
+            {
+                new Tuple<string, int>("DefaultBackground", 16777215), // HEX: FFFFFF
                 new Tuple<string, int>("ColorTable00", 16777215), // HEX: FFFFFF
                 new Tuple<string, int>("ColorTable07", 2434341), // HEX: 252525
             }).ToList();
@@ -90,7 +93,8 @@ public static class PowerShell
 
         // Windows PowerShell --> HKCU:\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe
         if (powerShellPath.StartsWith(systemRoot))
-            registryPath += "%SystemRoot%" + powerShellPath.Substring(systemRoot.Length, powerShellPath.Length - systemRoot.Length).Replace(@"\", "_");
+            registryPath += "%SystemRoot%" + powerShellPath
+                .Substring(systemRoot.Length, powerShellPath.Length - systemRoot.Length).Replace(@"\", "_");
         // PWSH -->  HKCU:\Console\C:_Program Files_PowerShell_7_pwsh.exe
         else
             registryPath += powerShellPath.Replace(@"\", "_");
