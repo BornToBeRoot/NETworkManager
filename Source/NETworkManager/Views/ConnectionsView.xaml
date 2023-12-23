@@ -70,10 +70,26 @@
                                           Command="{Binding Path=CopyDataToClipboardCommand}"
                                           CommandParameter="{Binding Path=SelectedResult.RemotePort}"
                                           Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                                <MenuItem Header="{x:Static Member=localization:Strings.RemoteHostname}"
+                                            Command="{Binding Path=CopyDataToClipboardCommand}"
+                                            CommandParameter="{Binding Path=SelectedResult.RemoteHostname}"
+                                            Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                 <MenuItem Header="{x:Static Member=localization:Strings.State}"
                                           Command="{Binding Path=CopyDataToClipboardCommand}"
                                           CommandParameter="{Binding Path=SelectedResult.TcpState, Converter={StaticResource TcpStateToStringConverter}}"
                                           Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                                <MenuItem Header="{x:Static Member=localization:Strings.ProcessID}"
+                                            Command="{Binding Path=CopyDataToClipboardCommand}"
+                                            CommandParameter="{Binding Path=SelectedResult.ProcessId}"
+                                            Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                                <MenuItem Header="{x:Static Member=localization:Strings.ProcessName}"
+                                            Command="{Binding Path=CopyDataToClipboardCommand}"
+                                            CommandParameter="{Binding Path=SelectedResult.ProcessName}"
+                                            Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                                <MenuItem Header="{x:Static Member=localization:Strings.ProcessPath}"
+                                            Command="{Binding Path=CopyDataToClipboardCommand}"
+                                            CommandParameter="{Binding Path=SelectedResult.ProcessPath}"
+                                            Style="{StaticResource ResourceKey=CopyMenuItem}" />
                             </MenuItem>
                             <MenuItem Header="{x:Static localization:Strings.ExportDots}"
                                       Command="{Binding ExportCommand}">
@@ -112,24 +128,36 @@
                         </Style>
                     </DataGrid.RowStyle>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="{x:Static localization:Strings.Protocol}"
-                                            Binding="{Binding (network:ConnectionInfo.Protocol)}"
+                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.Protocol}"
+                                            Binding="{Binding Path=(network:ConnectionInfo.Protocol)}"
                                             SortMemberPath="Protocol" MinWidth="100" />
-                        <DataGridTextColumn Header="{x:Static localization:Strings.LocalIPAddress}"
-                                            Binding="{Binding (network:ConnectionInfo.LocalIPAddress)}"
+                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.LocalIPAddress}"
+                                            Binding="{Binding Path=(network:ConnectionInfo.LocalIPAddress)}"
                                             SortMemberPath="LocalIPAddress" MinWidth="150" />
-                        <DataGridTextColumn Header="{x:Static localization:Strings.LocalPort}"
-                                            Binding="{Binding (network:ConnectionInfo.LocalPort)}"
+                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.LocalPort}"
+                                            Binding="{Binding Path=(network:ConnectionInfo.LocalPort)}"
                                             SortMemberPath="LocalPort" MinWidth="100" />
-                        <DataGridTextColumn Header="{x:Static localization:Strings.RemoteIPAddress}"
-                                            Binding="{Binding (network:ConnectionInfo.RemoteIPAddress)}"
+                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.RemoteIPAddress}"
+                                            Binding="{Binding Path=(network:ConnectionInfo.RemoteIPAddress)}"
                                             SortMemberPath="RemoteIPAddress" MinWidth="150" />
-                        <DataGridTextColumn Header="{x:Static localization:Strings.RemotePort}"
-                                            Binding="{Binding (network:ConnectionInfo.RemotePort)}"
+                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.RemotePort}"
+                                            Binding="{Binding Path=(network:ConnectionInfo.RemotePort)}"
                                             SortMemberPath="RemotePort" MinWidth="100" />
-                        <DataGridTextColumn Header="{x:Static localization:Strings.State}"
-                                            Binding="{Binding (network:ConnectionInfo.TcpState), Converter={StaticResource TcpStateToStringConverter}}"
+                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.RemoteHostname}"
+                                            Binding="{Binding Path=(network:ConnectionInfo.RemoteHostname)}"
+                                            SortMemberPath="RemoteHostname" MinWidth="100" />
+                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.State}"
+                                            Binding="{Binding Path=(network:ConnectionInfo.TcpState), Converter={StaticResource ResourceKey=TcpStateToStringConverter}}"
                                             SortMemberPath="TcpState" MinWidth="150" />
+                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.ProcessID}"
+                                            Binding="{Binding Path=(network:ConnectionInfo.ProcessId)}"
+                                            SortMemberPath="ProcessId" MinWidth="150" />
+                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.ProcessName}"
+                                            Binding="{Binding Path=(network:ConnectionInfo.ProcessName)}"
+                                            SortMemberPath="ProcessName" MinWidth="150" />
+                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.ProcessPath}"
+                                            Binding="{Binding Path=(network:ConnectionInfo.ProcessPath)}"
+                                            SortMemberPath="ProcessPath" MinWidth="150" />
                     </DataGrid.Columns>
                 </controls:MultiSelectDataGrid>
                 <TextBlock Grid.Row="3" Foreground="{DynamicResource MahApps.Brushes.Accent}"

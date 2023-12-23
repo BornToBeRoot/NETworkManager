@@ -3763,4 +3763,16 @@ Try again in a few seconds.</value>
   <data name="NoMatchingCommands" xml:space="preserve">
     <value>No matching commands!</value>
   </data>
+  <data name="RemoteHostname" xml:space="preserve">
+    <value>Remote hostname</value>
+  </data>
+  <data name="ProcessID" xml:space="preserve">
+    <value>Process ID</value>
+  </data>
+  <data name="ProcessPath" xml:space="preserve">
+    <value>Process path</value>
+  </data>
+  <data name="ProcessName" xml:space="preserve">
+    <value>Process name</value>
+  </data>
 </root>

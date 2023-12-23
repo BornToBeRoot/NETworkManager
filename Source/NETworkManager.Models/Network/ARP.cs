@@ -66,7 +66,7 @@ public class ARP
 
     public static Task<List<ARPInfo>> GetTableAsync()
     {
-        return Task.Run(() => GetTable());
+        return Task.Run(GetTable);
     }
 
     public static List<ARPInfo> GetTable()

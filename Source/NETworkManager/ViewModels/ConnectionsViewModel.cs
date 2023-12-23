@@ -49,10 +49,14 @@ public class ConnectionsViewModel : ViewModelBase
             return info.LocalIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    info.LocalPort.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    info.RemoteIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.RemoteHostname.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    info.RemotePort.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    info.Protocol.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    ResourceTranslator.Translate(ResourceIdentifier.TcpState, info.TcpState)
-                       .IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
+                       .IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.ProcessId.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.ProcessName.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.ProcessPath.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
         // Get connections

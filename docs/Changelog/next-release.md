@@ -23,19 +23,12 @@ New Feature
 ## What's new?
 
 - Run Command
-
   - Run command (HotKey: Ctrl+Shift+P) added. This feature allows you to open a command field to switch between applications (and pass parameters to them _in the future_) [#2577](https://github.com/BornToBeRoot/NETworkManager/pull/2577){:target="\_blank"}
-
 - Ping Monitor
   - UI redesigned [#2573](https://github.com/BornToBeRoot/NETworkManager/pull/2573){:target="\_blank"}
   - Allow ranges like `192.168.0.0/24` or `10.0.[0-255].1` [#2573](https://github.com/BornToBeRoot/NETworkManager/pull/2573){:target="\_blank"}
-
-## Experimental features
-
-- Run command (HotKey: Ctrl+Shift+P) added. This feature allows you to open a command field to switch between applications and pass parameters to them.
-
-{: .note}
-Experimental features can be enabled in the settings under [`Settings > Update`](https://borntoberoot.net/NETworkManager/Documentation/Settings/Update#experimental-features){:target="\_blank"}.
+- Connections
+  - Resolve remote hostname, process id, process name and process path (similar to `netstat`) [#2587](https://github.com/BornToBeRoot/NETworkManager/pull/2587){:target="\_blank"}
 
 ## Improvements
 

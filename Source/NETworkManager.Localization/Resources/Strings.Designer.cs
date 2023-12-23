@@ -6666,6 +6666,33 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Process ID.
+        /// </summary>
+        public static string ProcessID {
+            get {
+                return ResourceManager.GetString("ProcessID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Process name.
+        /// </summary>
+        public static string ProcessName {
+            get {
+                return ResourceManager.GetString("ProcessName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Process path.
+        /// </summary>
+        public static string ProcessPath {
+            get {
+                return ResourceManager.GetString("ProcessPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profile.
         /// </summary>
         public static string Profile {
@@ -8030,6 +8057,15 @@ namespace NETworkManager.Localization.Resources {
         public static string RemoteDesktopNetworkConnectionType_WAN {
             get {
                 return ResourceManager.GetString("RemoteDesktopNetworkConnectionType_WAN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remote hostname.
+        /// </summary>
+        public static string RemoteHostname {
+            get {
+                return ResourceManager.GetString("RemoteHostname", resourceCulture);
             }
         }
         

@@ -46,11 +46,12 @@ public static partial class ExportManager
         var stringBuilder = new StringBuilder();
 
         stringBuilder.AppendLine(
-            $"{nameof(ConnectionInfo.Protocol)},{nameof(ConnectionInfo.LocalIPAddress)},{nameof(ConnectionInfo.LocalPort)},{nameof(ConnectionInfo.RemoteIPAddress)},{nameof(ConnectionInfo.RemotePort)},{nameof(ConnectionInfo.TcpState)}");
+            $"{nameof(ConnectionInfo.Protocol)},{nameof(ConnectionInfo.LocalIPAddress)},{nameof(ConnectionInfo.LocalPort)},{nameof(ConnectionInfo.RemoteIPAddress)},{nameof(ConnectionInfo.RemotePort)},{nameof(ConnectionInfo.RemoteHostname)},{nameof(ConnectionInfo.TcpState)},{nameof(ConnectionInfo.ProcessId)},{nameof(ConnectionInfo.ProcessName)},{nameof(ConnectionInfo.ProcessPath)}"
+        );
 
         foreach (var info in collection)
             stringBuilder.AppendLine(
-                $"{info.Protocol},{info.LocalIPAddress},{info.LocalPort},{info.RemoteIPAddress},{info.RemotePort},{info.TcpState}");
+                $"{info.Protocol},{info.LocalIPAddress},{info.LocalPort},{info.RemoteIPAddress},{info.RemotePort},{info.RemoteHostname},{info.TcpState},{info.ProcessId},{info.ProcessName},{info.ProcessPath}");
 
         File.WriteAllText(filePath, stringBuilder.ToString());
     }
@@ -73,7 +74,12 @@ public static partial class ExportManager
                             new XElement(nameof(ConnectionInfo.LocalPort), info.LocalPort),
                             new XElement(nameof(ConnectionInfo.RemoteIPAddress), info.RemoteIPAddress),
                             new XElement(nameof(ConnectionInfo.RemotePort), info.RemotePort),
-                            new XElement(nameof(ConnectionInfo.TcpState), info.TcpState)))));
+                            new XElement(nameof(ConnectionInfo.RemoteHostname), info.RemoteHostname),
+                            new XElement(nameof(ConnectionInfo.TcpState), info.TcpState),
+                            new XElement(nameof(ConnectionInfo.ProcessId), info.ProcessId),
+                            new XElement(nameof(ConnectionInfo.ProcessName), info.ProcessName),
+                            new XElement(nameof(ConnectionInfo.ProcessPath), info.ProcessPath)
+                        ))));
 
         document.Save(filePath);
     }
@@ -95,7 +101,11 @@ public static partial class ExportManager
                 collection[i].LocalPort,
                 RemoteIPAddress = collection[i].RemoteIPAddress.ToString(),
                 collection[i].RemotePort,
-                TcpState = collection[i].TcpState.ToString()
+                collection[i].RemoteHostname,
+                TcpState = collection[i].TcpState.ToString(),
+                collection[i].ProcessId,
+                collection[i].ProcessName,
+                collection[i].ProcessPath
             };
 
         File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
