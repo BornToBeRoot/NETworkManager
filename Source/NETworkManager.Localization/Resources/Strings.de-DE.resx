@@ -3671,7 +3671,7 @@ Versuchen Sie es in einigen Sekunden erneut.</value>
     <value>Experimental</value>
   </data>
   <data name="Watermark_RunCommand" xml:space="preserve">
-    <value>Befehl ausführen... (Strg+Shift+P)</value>
+    <value>Befehl ausführen...</value>
   </data>
   <data name="ApplicationName_IPGeolocation" xml:space="preserve">
     <value>IP-Geolokation</value>
@@ -3756,5 +3756,23 @@ Versuchen Sie es in einigen Sekunden erneut.</value>
   </data>
   <data name="CannotSetHostWhileRunningMessage" xml:space="preserve">
     <value>Host kann nicht gesetzt werden, während andere Hosts hinzugefügt werden. Bitte warten Sie, bis der Vorgang abgeschlossen ist, und versuchen Sie es erneut.</value>
+  </data>
+  <data name="Watermark_RunCommandWithHotKey" xml:space="preserve">
+    <value>Befehl ausführen... (Strg+Umschalt+P)</value>
+  </data>
+  <data name="NoMatchingCommands" xml:space="preserve">
+    <value>Keine übereinstimmenden Befehle!</value>
+  </data>
+  <data name="RemoteHostname" xml:space="preserve">
+    <value>Remote Hostname</value>
+  </data>
+  <data name="ProcessID" xml:space="preserve">
+    <value>Prozess-ID</value>
+  </data>
+  <data name="ProcessPath" xml:space="preserve">
+    <value>Prozesspfad</value>
+  </data>
+  <data name="ProcessName" xml:space="preserve">
+    <value>Prozessname</value>
   </data>
 </root>
