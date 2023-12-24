@@ -3858,4 +3858,16 @@ Attendi il completamento del processo e riprova.</value>
   <data name="NoMatchingCommands" xml:space="preserve">
     <value>Nessun comando corrispondente!</value>
   </data>
+  <data name="RemoteHostname" xml:space="preserve">
+    <value>Nome host remoto</value>
+  </data>
+  <data name="ProcessID" xml:space="preserve">
+    <value>ID processo</value>
+  </data>
+  <data name="ProcessPath" xml:space="preserve">
+    <value>Percorso processo</value>
+  </data>
+  <data name="ProcessName" xml:space="preserve">
+    <value>Nome processo</value>
+  </data>
 </root>
