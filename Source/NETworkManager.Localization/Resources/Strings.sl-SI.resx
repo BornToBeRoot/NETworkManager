@@ -1147,7 +1147,7 @@ Ustvarite enega...</value>
     <value>Nastavitev lokacije ni prizadeta!</value>
   </data>
   <data name="TimeoutOnSNMPQuery" xml:space="preserve">
-    <value>Časovna omejitev poizvedbe SNMP.</value>
+    <value>Časovna omejitev pri poizvedbi SNMP. Morda gostitelj ni dosegljiv ali pa je skupnost/geslo napačno.</value>
   </data>
   <data name="TimeoutWhenQueryingDNSServerMessage" xml:space="preserve">
     <value>Časovna omejitev pri poizvedbi strežnika DNS z naslovom IP "{0}"!</value>
@@ -3653,7 +3653,7 @@ URL: https://edns.ip-api.com/</value>
     <value>Experimentalno</value>
   </data>
   <data name="Watermark_RunCommand" xml:space="preserve">
-    <value>Zaženi ukaz... (Ctrl+Shift+P)</value>
+    <value>Zaženi ukaz</value>
   </data>
   <data name="ApplicationName_IPGeolocation" xml:space="preserve">
     <value>Geolokacija naslova IP</value>
@@ -3666,5 +3666,95 @@ URL: https://edns.ip-api.com/</value>
   </data>
   <data name="EnterHostToQueryIPGeolocationDots" xml:space="preserve">
     <value>Vnesi gostitelja za poizvedbo o geolokaciji naslova IP...</value>
+  </data>
+  <data name="SNMPV3ErrorCode_UnknownUserName" xml:space="preserve">
+    <value>Neznano uporabniško ime.Neznano uporabniško ime.</value>
+  </data>
+  <data name="SNMPV3ErrorCode_AuthenticationFailed" xml:space="preserve">
+    <value>Napaka pri preverjanju pristnosti (nepravilno geslo, skupnost ali ključ).</value>
+  </data>
+  <data name="SNMPErrorCode_NoError" xml:space="preserve">
+    <value>Operacija je bila uspešna brez napak.</value>
+  </data>
+  <data name="SNMPErrorCode_TooBig" xml:space="preserve">
+    <value>Odgovor na vašo zahtevo je bil predolg, da bi ga vključili v en odgovor!</value>
+  </data>
+  <data name="SNMPErrorCode_NoSuchName" xml:space="preserve">
+    <value>Zahtevanega OID-ja ni bilo mogoče najti!</value>
+  </data>
+  <data name="SNMPErrorCode_BadValue" xml:space="preserve">
+    <value>Predmet 'branje-pisanje' ali 'samo-pisanje' je bil nastavljen na nedosledno vrednost!</value>
+  </data>
+  <data name="SNMPErrorCode_ReadOnly" xml:space="preserve">
+    <value>Zahtevani OID ne obstaja in ni zapisljiv!</value>
+  </data>
+  <data name="SNMPErrorCode_GenError" xml:space="preserve">
+    <value>Prišlo je do napake, za katero ni na voljo nobenega posebnega sporočila!</value>
+  </data>
+  <data name="SNMPErrorCode_NoAccess" xml:space="preserve">
+    <value>Zahtevani predmet ni dostopen za spreminjanje!</value>
+  </data>
+  <data name="SNMPErrorCode_WrongType" xml:space="preserve">
+    <value>Predmet je bil nastavljen na nezdružljio vrsto podatov!</value>
+  </data>
+  <data name="SNMPErrorCode_WrongLength" xml:space="preserve">
+    <value>Dodeljena vrednost predmeta presega njegovo največjo dovoljeno dolžino!</value>
+  </data>
+  <data name="SNMPErrorCode_WrongEncoding" xml:space="preserve">
+    <value>Uporabljeno kodiranje predmeta ni pravilno!</value>
+  </data>
+  <data name="SNMPErrorCode_WrongValue" xml:space="preserve">
+    <value>Dodeljena vrednost predmeta ni veljavna izbira!</value>
+  </data>
+  <data name="SNMPErrorCode_NoCreation" xml:space="preserve">
+    <value>Zahtevani predmet ne obstaja in ga ni mogoče ustvariti!</value>
+  </data>
+  <data name="SNMPErrorCode_InconsistentValue" xml:space="preserve">
+    <value>Spremenljivka MIB je trenutno v nedoslednem stanju in je ni mogoče spreminjati!</value>
+  </data>
+  <data name="SNMPErrorCode_ResourceUnavailable" xml:space="preserve">
+    <value>Za izvedbo zahtevane operacije ni razpoložljivih sistemskih virov</value>
+  </data>
+  <data name="SNMPErrorCode_CommitFailed" xml:space="preserve">
+    <value>Pri nastavljeni operaciji je prišlo do napake!</value>
+  </data>
+  <data name="SNMPErrorCode_UndoFailed" xml:space="preserve">
+    <value>Nastavljena operacija ni uspela in prejšnjih sprememb ni bilo mogoče razveljaviti!</value>
+  </data>
+  <data name="SNMPErrorCode_AuthorizationError" xml:space="preserve">
+    <value>Preverjanje pristnosti ni uspelo. Preverite niz skupnosti!</value>
+  </data>
+  <data name="SNMPErrorCode_NotWritable" xml:space="preserve">
+    <value>Zahtevani predmet ni zapisljiv in ga ni mogoče spreminjati!</value>
+  </data>
+  <data name="SNMPErrorCode_InconsistentName" xml:space="preserve">
+    <value>Stanje predmeta je nedosledno, kar preprečuje nastavljeno operacijo!</value>
+  </data>
+  <data name="CloseAll" xml:space="preserve">
+    <value>Izberi vse</value>
+  </data>
+  <data name="ExpandHostView" xml:space="preserve">
+    <value>Razširi prikaz gostitelja</value>
+  </data>
+  <data name="CannotSetHostWhileRunningMessage" xml:space="preserve">
+    <value>Gostitelja ni mogoče nastaviti, medtem ko se dodajajo drugi gostitelji. Počakajte, da se proces konča, in poskusite znova.</value>
+  </data>
+  <data name="Watermark_RunCommandWithHotKey" xml:space="preserve">
+    <value>Zaženi ukaz... (Ctrl+Shift+P)</value>
+  </data>
+  <data name="NoMatchingCommands" xml:space="preserve">
+    <value>Ni ujemajočega se ukaza!</value>
+  </data>
+  <data name="RemoteHostname" xml:space="preserve">
+    <value>Ime oddaljenega gostitelja</value>
+  </data>
+  <data name="ProcessID" xml:space="preserve">
+    <value>ID procesa</value>
+  </data>
+  <data name="ProcessPath" xml:space="preserve">
+    <value>Pot procesa</value>
+  </data>
+  <data name="ProcessName" xml:space="preserve">
+    <value>Ime procesa</value>
   </data>
 </root>
