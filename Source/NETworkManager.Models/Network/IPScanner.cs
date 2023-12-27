@@ -7,7 +7,6 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.PowerShell.Commands;
 using NETworkManager.Models.Lookup;
 using NETworkManager.Utilities;
 
@@ -85,37 +84,37 @@ public sealed class IPScanner(IPScannerOptions options)
                 {
                     // Start ping async
                     var pingTask = PingAsync(host.ipAddress, cancellationToken);
-    
+
                     // Start port scan async (if enabled)
                     var portScanTask = options.PortScanEnabled
                         ? PortScanAsync(host.ipAddress, portScanParallelOptions, cancellationToken)
                         : Task.FromResult(Enumerable.Empty<PortInfo>());
-                    
+
                     // Start netbios lookup async (if enabled)
                     var netbiosTask = options.NetBIOSEnabled
                         ? NetBIOSResolver.ResolveAsync(host.ipAddress, options.NetBIOSTimeout, cancellationToken)
                         : Task.FromResult(new NetBIOSInfo());
-                    
+
                     // Get ping result
                     pingTask.Wait(cancellationToken);
                     var pingInfo = pingTask.Result;
-                    
+
                     // Get port scan result
                     portScanTask.Wait(cancellationToken);
                     var portScanResults = portScanTask.Result.ToList();
-                    
+
                     // Get netbios result
                     netbiosTask.Wait(cancellationToken);
                     var netBIOSInfo = netbiosTask.Result;
-                    
+
                     // Cancel if the user has canceled
                     cancellationToken.ThrowIfCancellationRequested();
 
                     // Check if host is up
                     var isAnyPortOpen = portScanResults.Any(x => x.State == PortState.Open);
-                    var isReachable = pingInfo.Status == IPStatus.Success ||    // ICMP response
-                                      isAnyPortOpen ||                          // Any port is open   
-                                      netBIOSInfo.IsReachable;                  // NetBIOS response
+                    var isReachable = pingInfo.Status == IPStatus.Success || // ICMP response
+                                      isAnyPortOpen || // Any port is open   
+                                      netBIOSInfo.IsReachable; // NetBIOS response
 
                     // DNS & ARP
                     if (isReachable || options.ShowAllResults)
@@ -143,7 +142,7 @@ public sealed class IPScanner(IPScannerOptions options)
                         {
                             // Get info from arp table
                             arpMACAddress = ARP.GetMACAddress(host.ipAddress);
-                            
+
                             // Check if it is the local mac
                             if (string.IsNullOrEmpty(arpMACAddress))
                             {
@@ -153,7 +152,7 @@ public sealed class IPScanner(IPScannerOptions options)
                                 if (networkInterfaceInfo != null)
                                     arpMACAddress = networkInterfaceInfo.PhysicalAddress.ToString();
                             }
-                            
+
                             // Vendor lookup & default format
                             if (!string.IsNullOrEmpty(arpMACAddress))
                             {
@@ -161,27 +160,33 @@ public sealed class IPScanner(IPScannerOptions options)
 
                                 if (info != null)
                                     arpVendor = info.Vendor;
-                                
+
                                 // Apply default format
                                 arpMACAddress = MACAddressHelper.GetDefaultFormat(arpMACAddress);
                             }
                         }
 
                         OnHostScanned(new IPScannerHostScannedArgs(
-                            new IPScannerHostInfo(
-                                isReachable, 
-                                pingInfo,
-                                // DNS is default, fallback to netbios
-                                !string.IsNullOrEmpty(dnsHostname) ? dnsHostname : netBIOSInfo?.ComputerName ?? string.Empty,
-                                dnsHostname,
-                                isAnyPortOpen,
-                                portScanResults.OrderBy(x => x.Port).ToList(),
-                                netBIOSInfo,
-                                // ARP is default, fallback to netbios
-                                !string.IsNullOrEmpty(arpMACAddress) ? arpMACAddress : netBIOSInfo?.MACAddress ?? string.Empty,
-                                !string.IsNullOrEmpty(arpMACAddress) ? arpVendor : netBIOSInfo?.Vendor ?? string.Empty,
-                                arpMACAddress,
-                                arpVendor
+                                new IPScannerHostInfo(
+                                    isReachable,
+                                    pingInfo,
+                                    // DNS is default, fallback to netbios
+                                    !string.IsNullOrEmpty(dnsHostname)
+                                        ? dnsHostname
+                                        : netBIOSInfo?.ComputerName ?? string.Empty,
+                                    dnsHostname,
+                                    isAnyPortOpen,
+                                    portScanResults.OrderBy(x => x.Port).ToList(),
+                                    netBIOSInfo,
+                                    // ARP is default, fallback to netbios
+                                    !string.IsNullOrEmpty(arpMACAddress)
+                                        ? arpMACAddress
+                                        : netBIOSInfo?.MACAddress ?? string.Empty,
+                                    !string.IsNullOrEmpty(arpMACAddress)
+                                        ? arpVendor
+                                        : netBIOSInfo?.Vendor ?? string.Empty,
+                                    arpMACAddress,
+                                    arpVendor
                                 )
                             )
                         );
@@ -248,10 +253,11 @@ public sealed class IPScanner(IPScannerOptions options)
         }, cancellationToken);
     }
 
-    private Task<IEnumerable<PortInfo>> PortScanAsync(IPAddress ipAddress, ParallelOptions parallelOptions, CancellationToken cancellationToken)
+    private Task<IEnumerable<PortInfo>> PortScanAsync(IPAddress ipAddress, ParallelOptions parallelOptions,
+        CancellationToken cancellationToken)
     {
         ConcurrentBag<PortInfo> results = [];
-        
+
         Parallel.ForEach(options.PortScanPorts, parallelOptions, port =>
         {
             // Test if port is open
@@ -282,10 +288,10 @@ public sealed class IPScanner(IPScannerOptions options)
                         new PortInfo(port, PortLookup.LookupByPortAndProtocol(port), portState));
             }
         });
-        
+
         return Task.FromResult(results.AsEnumerable());
     }
-        
+
     private void IncreaseProgress()
     {
         // Increase the progress                        

@@ -22,7 +22,7 @@ public class IPScannerOptions
     /// <param name="resolveMACAddress">Resolve the MAC address for the host from ARP.</param>
     /// <param name="showAllResults">Include unreachable IP addresses in the result.</param>
     public IPScannerOptions(int maxHostThreads, int maxPortThreads, int icmpAttempts, int icmpTimeout,
-        byte[] icmpBuffer, bool resolveHostname, bool portScanEnabled, int[] portScanPorts, int portScanTimeout, 
+        byte[] icmpBuffer, bool resolveHostname, bool portScanEnabled, int[] portScanPorts, int portScanTimeout,
         bool netBIOSEnabled, int netBIOSTimeout, bool resolveMACAddress, bool showAllResults)
     {
         MaxHostThreads = maxHostThreads;
@@ -69,7 +69,7 @@ public class IPScannerOptions
     ///     Resolve the hostname for an IP address.
     /// </summary>
     public bool ResolveHostname { get; }
-    
+
     /// <summary>
     ///     Scan the ports of the host.
     /// </summary>
@@ -89,17 +89,17 @@ public class IPScannerOptions
     ///     Resolve the NetBIOS name for an IP address.
     /// </summary>
     public bool NetBIOSEnabled { get; }
-    
+
     /// <summary>
     ///     Timeout in milliseconds after which a NetBIOS request is considered lost.
     /// </summary>
     public int NetBIOSTimeout { get; }
-    
+
     /// <summary>
     ///     Resolve the MAC address for the host from ARP.
     /// </summary>
     public bool ResolveMACAddress { get; }
-    
+
     /// <summary>
     ///     Include unreachable IP addresses in the result.
     /// </summary>

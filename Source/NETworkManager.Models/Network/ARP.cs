@@ -153,7 +153,7 @@ public class ARP
 
         return arpInfo?.MACAddress.ToString();
     }
-    
+
     private void RunPowerShellCommand(string command)
     {
         try

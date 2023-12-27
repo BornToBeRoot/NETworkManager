@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Threading.Tasks;
-using System.Runtime.InteropServices;
 using System.Net;
+using System.Net.NetworkInformation;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
@@ -53,7 +52,7 @@ public static class Connection
     }
 
     // Cache for remote host names with some default values
-    private static Dictionary<IPAddress, string> _remoteHostNames = new()
+    private static readonly Dictionary<IPAddress, string> _remoteHostNames = new()
     {
         { IPAddress.Parse("127.0.0.1"), "localhost" },
         { IPAddress.Parse("::1"), "localhost" },
@@ -124,9 +123,11 @@ public static class Connection
                     dnsResolverTask.Wait();
 
                     // Cache the result
-                    _remoteHostNames.Add(remoteAddress, !dnsResolverTask.Result.HasError ? dnsResolverTask.Result.Value : "-/-");
-                    
-                    Debug.WriteLine("Cache: Added " + remoteAddress + " -> " + (!dnsResolverTask.Result.HasError ? dnsResolverTask.Result.Value : "-/-"));
+                    _remoteHostNames.Add(remoteAddress,
+                        !dnsResolverTask.Result.HasError ? dnsResolverTask.Result.Value : "-/-");
+
+                    Debug.WriteLine("Cache: Added " + remoteAddress + " -> " +
+                                    (!dnsResolverTask.Result.HasError ? dnsResolverTask.Result.Value : "-/-"));
                 }
 
                 result.Add(new ConnectionInfo(

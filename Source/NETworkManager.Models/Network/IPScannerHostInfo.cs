@@ -20,9 +20,10 @@ public class IPScannerHostInfo
     /// <param name="macAddress">MAC address of the host (ARP or netbios).</param>
     /// <param name="vendor">Vendor of the host based on the MAC address.</param>
     /// <param name="arpMacAddress">MAC address of the host received from ARP.</param>
-    /// <param name= "arpVendor">Vendor of the host based on the MAC address received from ARP.</param>
-    public IPScannerHostInfo(bool isReachable, PingInfo pingInfo, string hostname, string dnsHostname, bool isAnyPortOpen, List<PortInfo> ports,
-        NetBIOSInfo netBIOSInfo,  string macAddress, string vendor, string arpMacAddress, string arpVendor)
+    /// <param name="arpVendor">Vendor of the host based on the MAC address received from ARP.</param>
+    public IPScannerHostInfo(bool isReachable, PingInfo pingInfo, string hostname, string dnsHostname,
+        bool isAnyPortOpen, List<PortInfo> ports,
+        NetBIOSInfo netBIOSInfo, string macAddress, string vendor, string arpMacAddress, string arpVendor)
     {
         IsReachable = isReachable;
         PingInfo = pingInfo;
@@ -51,12 +52,12 @@ public class IPScannerHostInfo
     ///     Hostname of the host (dns or netbios).
     /// </summary>
     public string Hostname { get; set; }
-    
+
     /// <summary>
     ///     DNS hostname of the host.
     /// </summary>
     public string DNSHostname { get; set; }
-    
+
     /// <summary>
     ///     Indicates whether any port is open.
     /// </summary>
@@ -71,7 +72,7 @@ public class IPScannerHostInfo
     ///     NetBIOS information about the host.
     /// </summary>
     public NetBIOSInfo NetBIOSInfo { get; set; }
-    
+
     /// <summary>
     ///     MAC address of the host (ARP or netbios).
     /// </summary>
@@ -81,12 +82,12 @@ public class IPScannerHostInfo
     ///     Vendor of the host based on the MAC address.
     /// </summary>
     public string Vendor { get; set; }
-    
+
     /// <summary>
     ///     MAC address of the host received from ARP.
     /// </summary>
     public string ARPMACAddress { get; set; }
-    
+
     /// <summary>
     ///     Vendor of the host based on the MAC address received from ARP.
     /// </summary>

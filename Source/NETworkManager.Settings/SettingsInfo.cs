@@ -988,9 +988,9 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    
+
     private bool _ipScanner_NetBIOSEnabled = GlobalStaticConfiguration.IPScanner_NetBIOSEnabled;
-    
+
     public bool IPScanner_NetBIOSEnabled
     {
         get => _ipScanner_NetBIOSEnabled;
@@ -1003,9 +1003,9 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    
+
     private int _ipScanner_NetBIOSTimeout = GlobalStaticConfiguration.IPScanner_NetBIOSTimeout;
-    
+
     public int IPScanner_NetBIOSTimeout
     {
         get => _ipScanner_NetBIOSTimeout;

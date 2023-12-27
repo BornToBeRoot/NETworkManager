@@ -333,7 +333,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             Host = SelectedResult.PingInfo.IPAddress.ToString(),
 
             // Additional data
-            WakeOnLAN_MACAddress = SelectedResult.MACAddress.ToString()
+            WakeOnLAN_MACAddress = SelectedResult.MACAddress
         };
 
         await ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, profileInfo);

@@ -46,7 +46,7 @@ public static partial class ExportManager
     private static void CreateCsv(IEnumerable<IPScannerHostInfo> collection, string filePath)
     {
         var stringBuilder = new StringBuilder();
-        
+
         stringBuilder.AppendLine(
             $"{nameof(IPScannerHostInfo.IsReachable)}," +
             $"{nameof(PingInfo.IPAddress)}," +
@@ -87,7 +87,7 @@ public static partial class ExportManager
                 $"{DateTimeHelper.DateTimeToFullDateTimeString(info.PingInfo.Timestamp)}," +
                 $"{Ping.TimeToString(info.PingInfo.Status, info.PingInfo.Time, true)}," +
                 $"{info.PingInfo.TTL}," +
-                $"{info.PingInfo.Bytes}" + 
+                $"{info.PingInfo.Bytes}" +
                 $"{(info.IsAnyPortOpen ? PortState.Open : PortState.Closed)}," +
                 $"\"{stringBuilderPorts.ToString().TrimEnd(';')}\"," +
                 $"{info.NetBIOSInfo.IsReachable}," +
@@ -150,9 +150,9 @@ public static partial class ExportManager
                             new XElement(nameof(IPScannerHostInfo.ARPMACAddress), info.ARPMACAddress),
                             new XElement(nameof(IPScannerHostInfo.ARPVendor), info.ARPVendor)
                         )
-                    )
                 )
-            );
+            )
+        );
 
         document.Save(filePath);
     }

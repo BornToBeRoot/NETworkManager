@@ -164,7 +164,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
     }
 
     private bool _netBIOSEnabled;
-    
+
     public bool NetBIOSEnabled
     {
         get => _netBIOSEnabled;
@@ -180,9 +180,9 @@ public class IPScannerSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+
     private int _netBIOSTimeout;
-    
+
     public int NetBIOSTimeout
     {
         get => _netBIOSTimeout;
@@ -198,7 +198,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+
     private bool _resolveMACAddress;
 
     public bool ResolveMACAddress
