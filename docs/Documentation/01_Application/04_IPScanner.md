@@ -109,14 +109,6 @@ Resolve the hostname (PTR) for each IP address.
 
 **Default:** `Enabled`
 
-### Show error message
-
-Show a detailed error message if the DNS resolution fails for an IP address.
-
-**Type:** `Boolean`
-
-**Default:** `Disabled`
-
 ### Scan ports
 
 Scan each IP address for open `tcp` ports.
@@ -139,6 +131,22 @@ Multiple ports and port ranges can be combined with a semicolon (e.g. `22; 80; 4
 ### Timeout (ms)
 
 Timeout in milliseconds after which a port is considered closed / timed out.
+
+**Type:** `Integer` [Min `100`, Max `15000`]
+
+**Default:** `4000`
+
+### Scan for NetBIOS
+
+Scan each IP address for NetBIOS information.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
+### Timeout (ms)
+
+Timeout in milliseconds after which a NetBIOS request is considered lost.
 
 **Type:** `Integer` [Min `100`, Max `15000`]
 
