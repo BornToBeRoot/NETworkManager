@@ -5702,6 +5702,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to NetBIOS scan is disabled!.
+        /// </summary>
+        public static string NetBIOSIsDisabled {
+            get {
+                return ResourceManager.GetString("NetBIOSIsDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to NetBIOS reachable.
         /// </summary>
         public static string NetBIOSReachable {
@@ -8277,6 +8286,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Resolve Hostname is disabled!.
+        /// </summary>
+        public static string ResolveHostnameIsDisabled {
+            get {
+                return ResourceManager.GetString("ResolveHostnameIsDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resolve IP address for this host (IPv4 is preferred).
         /// </summary>
         public static string ResolveIPAddressForThisHost {
@@ -8300,6 +8318,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ResolveMACAddressAndVendor {
             get {
                 return ResourceManager.GetString("ResolveMACAddressAndVendor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resolve MAC address is disabled!.
+        /// </summary>
+        public static string ResolveMACAddressIsDisabled {
+            get {
+                return ResourceManager.GetString("ResolveMACAddressIsDisabled", resourceCulture);
             }
         }
         
