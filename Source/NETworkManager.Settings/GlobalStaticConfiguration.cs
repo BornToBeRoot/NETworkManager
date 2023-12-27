@@ -99,12 +99,14 @@ public static class GlobalStaticConfiguration
     public static int IPScanner_ICMPAttempts => 2;
     public static int IPScanner_ICMPTimeout => 4000;
     public static int IPScanner_ICMPBuffer => 32;
-    public static bool IPScanner_DNSShowErrorMessage => false;
+    public static bool IPScanner_ResolveHostname => true;
     public static bool IPScanner_PortScanEnabled => true;
     public static string IPScanner_PortScanPorts => "22; 53; 80; 139; 389; 636; 443; 445; 3389";
     public static int IPScanner_PortScanTimeout => 4000;
     public static int IPScanner_MaxHostThreads => 256;
     public static int IPScanner_MaxPortThreads => 5;
+    public static bool IPScanner_NetBIOSEnabled => true;
+    public static int IPScanner_NetBIOSTimeout => 4000;
     public static ExportFileType IPScanner_ExportFileType => ExportFileType.Csv;
 
     // Application: Port Scanner 

@@ -1770,6 +1770,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Computer name.
+        /// </summary>
+        public static string ComputerName {
+            get {
+                return ResourceManager.GetString("ComputerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configure.
         /// </summary>
         public static string Configure {
@@ -1928,6 +1937,33 @@ namespace NETworkManager.Localization.Resources {
         public static string Connections {
             get {
                 return ResourceManager.GetString("Connections", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string ConnectionState_Error {
+            get {
+                return ResourceManager.GetString("ConnectionState_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        public static string ConnectionState_OK {
+            get {
+                return ResourceManager.GetString("ConnectionState_OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        public static string ConnectionState_Warning {
+            get {
+                return ResourceManager.GetString("ConnectionState_Warning", resourceCulture);
             }
         }
         
@@ -3986,6 +4022,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Group / domain name.
+        /// </summary>
+        public static string GroupDomainName {
+            get {
+                return ResourceManager.GetString("GroupDomainName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Group name cannot start with &quot;{0}&quot;!.
         /// </summary>
         public static string GroupNameCannotStartWithX {
@@ -5644,6 +5689,24 @@ namespace NETworkManager.Localization.Resources {
         public static string Name {
             get {
                 return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NetBIOS.
+        /// </summary>
+        public static string NetBIOS {
+            get {
+                return ResourceManager.GetString("NetBIOS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NetBIOS reachable.
+        /// </summary>
+        public static string NetBIOSReachable {
+            get {
+                return ResourceManager.GetString("NetBIOSReachable", resourceCulture);
             }
         }
         
@@ -8462,6 +8525,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Scan {
             get {
                 return ResourceManager.GetString("Scan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scan for NetBIOS.
+        /// </summary>
+        public static string ScanForNetBIOS {
+            get {
+                return ResourceManager.GetString("ScanForNetBIOS", resourceCulture);
             }
         }
         

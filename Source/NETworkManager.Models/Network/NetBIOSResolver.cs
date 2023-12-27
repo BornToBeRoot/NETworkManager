@@ -1,19 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using NETworkManager.Models.Lookup;
+using NETworkManager.Utilities;
 
-namespace NETworkManager.Utilities;
+namespace NETworkManager.Models.Network;
 
 /// <summary>
 /// NetBIOS resolver written in C# based on the following sources:
 /// https://web.archive.org/web/20100409111218/http://msdn.microsoft.com/en-us/library/system.net.sockets.socket.aspx
 /// https://github.com/angryip/ipscan (GPLv2) 
 /// </summary>
- public static class NetBiosResolver
+ public static class NetBIOSResolver
     {
-        private const int NetBiosUdpPort = 137;
+        private const int NetBIOSUdpPort = 137;
         
         private static readonly byte[] RequestData =
         {
@@ -37,30 +42,56 @@ namespace NETworkManager.Utilities;
         
         private const int NameTypeDomain = 0x00;
         private const int NameTypeMessenger = 0x03;
-
-        public static (string ComputerName, string UserName, string GroupName, string MacAddress)? Resolve(IPAddress ipAddress, int timeout)
+ 
+        public static async Task<NetBIOSInfo> ResolveAsync(IPAddress ipAddress, int timeout, CancellationToken cancellationToken)
         {
             var udpClient = new UdpClient();
             udpClient.Client.ReceiveTimeout = timeout;
 
-            var remoteEndPoint = new IPEndPoint(ipAddress, NetBiosUdpPort);
-            var localEndPoint = new IPEndPoint(IPAddress.Any, 0);
+            var remoteEndPoint = new IPEndPoint(ipAddress, NetBIOSUdpPort);
 
             try
             {
-                udpClient.Send(RequestData, RequestData.Length, remoteEndPoint);
+                await udpClient.SendAsync(RequestData, RequestData.Length, remoteEndPoint);
 
-                var response = udpClient.Receive(ref localEndPoint);
+                // ReSharper disable once MethodSupportsCancellation - cancellation is handled below by Task.WhenAny
+                var receiveTask = udpClient.ReceiveAsync();
+                
+                if(!receiveTask.Wait(timeout, cancellationToken))
+                    return new NetBIOSInfo();
+                
+                var response = receiveTask.Result;
 
-                if (response.Length < ResponseBaseLen || response[ResponseTypePos] != ResponseTypeNbstat)
-                    return null; // response was too short
+                if (response.Buffer.Length < ResponseBaseLen || response.Buffer[ResponseTypePos] != ResponseTypeNbstat)
+                    return new NetBIOSInfo();// response was too short
 
-                var count = response[ResponseBaseLen - 1] & 0xFF;
+                var count = response.Buffer[ResponseBaseLen - 1] & 0xFF;
 
-                if (response.Length < ResponseBaseLen + ResponseBlockLen * count)
-                    return null; // data was truncated or something is wrong
+                if (response.Buffer.Length < ResponseBaseLen + ResponseBlockLen * count)
+                    return new NetBIOSInfo(); // data was truncated or something is wrong
 
-                return ExtractNames(response, count);
+                var result = ExtractNames(response.Buffer, count);
+
+                var vendor = string.Empty;
+
+                // ReSharper disable once InvertIf - readability
+                if (!string.IsNullOrEmpty(result.MacAddress))
+                {
+                    // ReSharper disable once MethodHasAsyncOverload - Parent method is async
+                    var info = OUILookup.LookupByMacAddress(result.MacAddress).FirstOrDefault();
+
+                    if (info != null)
+                        vendor = info.Vendor;
+                }
+                
+                return new NetBIOSInfo(
+                    ipAddress,
+                    result.ComputerName, 
+                    result.UserName,
+                    result.GroupName, 
+                    MACAddressHelper.GetDefaultFormat(result.MacAddress), 
+                    vendor
+                );
             }
             catch (Exception)
             {
@@ -68,10 +99,10 @@ namespace NETworkManager.Utilities;
             }
             finally
             {
-                udpClient.Close();    
+                udpClient.Close();
             }
         }
-
+       
         private static (string ComputerName, string UserName, string GroupName, string MacAddress) ExtractNames(byte[] response, int count)
         {
             // Computer name
@@ -105,9 +136,9 @@ namespace NETworkManager.Utilities;
 
             // MAC address
             var macAddress =
-                $"{GetByte(response, count, 0):X2}-{GetByte(response, count, 1):X2}-" +
-                $"{GetByte(response, count, 2):X2}-{GetByte(response, count, 3):X2}-" +
-                $"{GetByte(response, count, 4):X2}-{GetByte(response, count, 5):X2}";
+                $"{GetByte(response, count, 0):X2}{GetByte(response, count, 1):X2}" +
+                $"{GetByte(response, count, 2):X2}{GetByte(response, count, 3):X2}" +
+                $"{GetByte(response, count, 4):X2}{GetByte(response, count, 5):X2}";
             
             return (computerName, userName, groupName, macAddress);
         }

@@ -178,7 +178,9 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" Grid.Row="0">
                 <Grid.Resources>
-                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
+                        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                    </Style>
                     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
                         <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
                         <Setter Property="TextWrapping" Value="NoWrap" />
