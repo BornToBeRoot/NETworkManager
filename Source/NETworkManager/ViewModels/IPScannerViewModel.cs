@@ -333,7 +333,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             Host = SelectedResult.PingInfo.IPAddress.ToString(),
 
             // Additional data
-            WakeOnLAN_MACAddress = SelectedResult.MACAddressString
+            WakeOnLAN_MACAddress = SelectedResult.MACAddress
         };
 
         await ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, profileInfo);
@@ -416,11 +416,12 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             SettingsManager.Current.IPScanner_ICMPAttempts,
             SettingsManager.Current.IPScanner_ICMPTimeout,
             new byte[SettingsManager.Current.IPScanner_ICMPBuffer],
+            SettingsManager.Current.IPScanner_ResolveHostname,
             SettingsManager.Current.IPScanner_PortScanEnabled,
             await PortRangeHelper.ConvertPortRangeToIntArrayAsync(SettingsManager.Current.IPScanner_PortScanPorts),
             SettingsManager.Current.IPScanner_PortScanTimeout,
-            SettingsManager.Current.IPScanner_ResolveHostname,
-            SettingsManager.Current.IPScanner_DNSShowErrorMessage,
+            SettingsManager.Current.IPScanner_NetBIOSEnabled,
+            SettingsManager.Current.IPScanner_NetBIOSTimeout,
             SettingsManager.Current.IPScanner_ResolveMACAddress,
             SettingsManager.Current.IPScanner_ShowAllResults
         ));

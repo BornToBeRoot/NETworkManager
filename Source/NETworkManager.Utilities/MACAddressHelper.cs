@@ -65,6 +65,16 @@ public static class MACAddressHelper
         };
     }
 
+    /// <summary>
+    ///     Compare two MAC-Addresses.
+    /// </summary>
+    /// <param name="x">First MAC-Address.</param>
+    /// <param name="y">Second MAC-Address.</param>
+    /// <returns>0 if the MAC-Addresses are equal, otherwise a negative or positive value.</returns>
+    public static int CompareMACAddresses(string x, string y)
+    {
+        return ByteHelper.Compare(ConvertStringToByteArray(x), ConvertStringToByteArray(y));
+    }
 
     /// <summary>
     ///     Compare two MAC-Addresses.

@@ -48,7 +48,28 @@ public static partial class ExportManager
         var stringBuilder = new StringBuilder();
 
         stringBuilder.AppendLine(
-            $"{nameof(IPScannerHostInfo.IsReachable)},{nameof(PingInfo.IPAddress)},{nameof(IPScannerHostInfo.Hostname)},PortStatus,PingStatus,{nameof(IPScannerHostInfo.MACAddress)},{nameof(IPScannerHostInfo.Vendor)},{nameof(IPScannerHostInfo.Ports)},{nameof(PingInfo.Timestamp)},{nameof(PingInfo.Time)},{nameof(PingInfo.TTL)},{nameof(PingInfo.Bytes)}");
+            $"{nameof(IPScannerHostInfo.IsReachable)}," +
+            $"{nameof(PingInfo.IPAddress)}," +
+            $"{nameof(IPScannerHostInfo.Hostname)}," +
+            $"PingStatus," +
+            $"{nameof(PingInfo.Timestamp)}," +
+            $"{nameof(PingInfo.Time)}," +
+            $"{nameof(PingInfo.TTL)}," +
+            $"{nameof(PingInfo.Bytes)}" +
+            $"PortStatus," +
+            $"{nameof(IPScannerHostInfo.Ports)}," +
+            $"NetBIOSIsReachable," +
+            $"NetBIOSIPAddress," +
+            $"NetBIOSComputerName," +
+            $"NetBIOSUserName," +
+            $"NetBIOSGroupName," +
+            $"NetBIOSMACAddress," +
+            $"NetBIOSVendor," +
+            $"{nameof(IPScannerHostInfo.MACAddress)}," +
+            $"{nameof(IPScannerHostInfo.Vendor)}," +
+            $"{nameof(IPScannerHostInfo.ARPMACAddress)}," +
+            $"{nameof(IPScannerHostInfo.ARPVendor)}"
+        );
 
         foreach (var info in collection)
         {
@@ -59,7 +80,28 @@ public static partial class ExportManager
                     $"{port.Port}/{port.LookupInfo.Protocol}/{port.LookupInfo.Service}/{port.LookupInfo.Description}/{port.State};");
 
             stringBuilder.AppendLine(
-                $"{info.IsReachable},{info.PingInfo.IPAddress},{info.Hostname},{(info.IsAnyPortOpen ? PortState.Open : PortState.Closed)},{info.PingInfo.Status},{info.MACAddress},\"{info.Vendor}\",\"{stringBuilderPorts.ToString().TrimEnd(';')}\",{DateTimeHelper.DateTimeToFullDateTimeString(info.PingInfo.Timestamp)},{Ping.TimeToString(info.PingInfo.Status, info.PingInfo.Time, true)},{info.PingInfo.TTL},{info.PingInfo.Bytes}");
+                $"{info.IsReachable}," +
+                $"{info.PingInfo.IPAddress}," +
+                $"{info.Hostname}," +
+                $"{info.PingInfo.Status}," +
+                $"{DateTimeHelper.DateTimeToFullDateTimeString(info.PingInfo.Timestamp)}," +
+                $"{Ping.TimeToString(info.PingInfo.Status, info.PingInfo.Time, true)}," +
+                $"{info.PingInfo.TTL}," +
+                $"{info.PingInfo.Bytes}" +
+                $"{(info.IsAnyPortOpen ? PortState.Open : PortState.Closed)}," +
+                $"\"{stringBuilderPorts.ToString().TrimEnd(';')}\"," +
+                $"{info.NetBIOSInfo.IsReachable}," +
+                $"{info.NetBIOSInfo.IPAddress}," +
+                $"{info.NetBIOSInfo.ComputerName}," +
+                $"{info.NetBIOSInfo.UserName}," +
+                $"{info.NetBIOSInfo.GroupName}," +
+                $"{info.NetBIOSInfo.MACAddress}," +
+                $"{info.NetBIOSInfo.Vendor}," +
+                $"{info.MACAddress}," +
+                $"\"{info.Vendor}\"," +
+                $"{info.ARPMACAddress}," +
+                $"\"{info.ARPVendor}\""
+            );
         }
 
         File.WriteAllText(filePath, stringBuilder.ToString());
@@ -81,10 +123,14 @@ public static partial class ExportManager
                             new XElement(nameof(IPScannerHostInfo.IsReachable), info.IsReachable),
                             new XElement(nameof(PingInfo.IPAddress), info.PingInfo.IPAddress),
                             new XElement(nameof(IPScannerHostInfo.Hostname), info.Hostname),
-                            new XElement("PortStatus", info.IsAnyPortOpen ? PortState.Open : PortState.Closed),
                             new XElement("PingStatus", info.PingInfo.Status),
-                            new XElement(nameof(IPScannerHostInfo.MACAddress), info.MACAddress),
-                            new XElement(nameof(IPScannerHostInfo.Vendor), info.Vendor),
+                            new XElement(nameof(PingInfo.Timestamp),
+                                DateTimeHelper.DateTimeToFullDateTimeString(info.PingInfo.Timestamp)),
+                            new XElement(nameof(PingInfo.Time),
+                                Ping.TimeToString(info.PingInfo.Status, info.PingInfo.Time, true)),
+                            new XElement(nameof(PingInfo.TTL), info.PingInfo.TTL),
+                            new XElement(nameof(PingInfo.Bytes), info.PingInfo.Bytes),
+                            new XElement("PortStatus", info.IsAnyPortOpen ? PortState.Open : PortState.Closed),
                             from port in info.Ports
                             select new XElement(nameof(PortInfo),
                                 new XElement(nameof(PortInfo.Port), port.Port),
@@ -92,12 +138,21 @@ public static partial class ExportManager
                                 new XElement(nameof(PortInfo.LookupInfo.Service), port.LookupInfo.Service),
                                 new XElement(nameof(PortInfo.LookupInfo.Description), port.LookupInfo.Description),
                                 new XElement(nameof(PortInfo.State), port.State)),
-                            new XElement(nameof(PingInfo.Timestamp),
-                                DateTimeHelper.DateTimeToFullDateTimeString(info.PingInfo.Timestamp)),
-                            new XElement(nameof(PingInfo.Time),
-                                Ping.TimeToString(info.PingInfo.Status, info.PingInfo.Time, true)),
-                            new XElement(nameof(PingInfo.TTL), info.PingInfo.TTL),
-                            new XElement(nameof(PingInfo.Bytes), info.PingInfo.Bytes)))));
+                            new XElement("NetBIOSIsReachable", info.NetBIOSInfo.IsReachable),
+                            new XElement("NetBIOSIPAddress", info.NetBIOSInfo.IPAddress),
+                            new XElement("NetBIOSComputerName", info.NetBIOSInfo.ComputerName),
+                            new XElement("NetBIOSUserName", info.NetBIOSInfo.UserName),
+                            new XElement("NetBIOSGroupName", info.NetBIOSInfo.GroupName),
+                            new XElement("NetBIOSMACAddress", info.NetBIOSInfo.MACAddress),
+                            new XElement("NetBIOSVendor", info.NetBIOSInfo.Vendor),
+                            new XElement(nameof(IPScannerHostInfo.MACAddress), info.MACAddress),
+                            new XElement(nameof(IPScannerHostInfo.Vendor), info.Vendor),
+                            new XElement(nameof(IPScannerHostInfo.ARPMACAddress), info.ARPMACAddress),
+                            new XElement(nameof(IPScannerHostInfo.ARPVendor), info.ARPVendor)
+                        )
+                )
+            )
+        );
 
         document.Save(filePath);
     }
@@ -130,15 +185,25 @@ public static partial class ExportManager
                 collection[i].IsReachable,
                 IPAddress = collection[i].PingInfo.IPAddress.ToString(),
                 collection[i].Hostname,
-                PortStatus = collection[i].IsAnyPortOpen ? PortState.Open.ToString() : PortState.Closed.ToString(),
                 PingStatus = collection[i].PingInfo.Status.ToString(),
-                MACAddress = collection[i].MACAddress?.ToString(),
-                collection[i].Vendor,
-                Ports = jsonDataPorts,
                 Timestamp = DateTimeHelper.DateTimeToFullDateTimeString(collection[i].PingInfo.Timestamp),
                 Time = Ping.TimeToString(collection[i].PingInfo.Status, collection[i].PingInfo.Time, true),
                 collection[i].PingInfo.TTL,
-                collection[i].PingInfo.Bytes
+                collection[i].PingInfo.Bytes,
+                collection[i].DNSHostname,
+                PortStatus = collection[i].IsAnyPortOpen ? PortState.Open.ToString() : PortState.Closed.ToString(),
+                Ports = jsonDataPorts,
+                NetBIOSIsReachable = collection[i].NetBIOSInfo.IsReachable,
+                NetBIOSIPAddress = collection[i].NetBIOSInfo.IPAddress?.ToString(),
+                NetBIOSComputerName = collection[i].NetBIOSInfo.ComputerName,
+                NetBIOSUserName = collection[i].NetBIOSInfo.UserName,
+                NetBIOSGroupName = collection[i].NetBIOSInfo.GroupName,
+                NetBIOSMACAddress = collection[i].NetBIOSInfo.MACAddress,
+                NetBIOSVendor = collection[i].NetBIOSInfo.Vendor,
+                collection[i].MACAddress,
+                collection[i].Vendor,
+                collection[i].ARPMACAddress,
+                collection[i].ARPVendor
             };
         }
 

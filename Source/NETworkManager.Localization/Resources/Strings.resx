@@ -3775,4 +3775,37 @@ Try again in a few seconds.</value>
   <data name="ProcessName" xml:space="preserve">
     <value>Process name</value>
   </data>
+  <data name="NetBIOS" xml:space="preserve">
+    <value>NetBIOS</value>
+  </data>
+  <data name="ComputerName" xml:space="preserve">
+    <value>Computer name</value>
+  </data>
+  <data name="ConnectionState_Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ConnectionState_OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="ConnectionState_Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="GroupDomainName" xml:space="preserve">
+    <value>Group / domain name</value>
+  </data>
+  <data name="NetBIOSReachable" xml:space="preserve">
+    <value>NetBIOS reachable</value>
+  </data>
+  <data name="ScanForNetBIOS" xml:space="preserve">
+    <value>Scan for NetBIOS</value>
+  </data>
+  <data name="NetBIOSIsDisabled" xml:space="preserve">
+    <value>NetBIOS scan is disabled!</value>
+  </data>
+  <data name="ResolveHostnameIsDisabled" xml:space="preserve">
+    <value>Resolve Hostname is disabled!</value>
+  </data>
+  <data name="ResolveMACAddressIsDisabled" xml:space="preserve">
+    <value>Resolve MAC address is disabled!</value>
+  </data>
 </root>

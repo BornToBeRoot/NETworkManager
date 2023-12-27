@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
@@ -69,7 +70,7 @@ public class ARP
         return Task.Run(GetTable);
     }
 
-    public static List<ARPInfo> GetTable()
+    private static List<ARPInfo> GetTable()
     {
         var list = new List<ARPInfo>();
 
@@ -144,6 +145,13 @@ public class ARP
             // Release the memory.
             FreeMibTable(buffer);
         }
+    }
+
+    public static string GetMACAddress(IPAddress ipAddress)
+    {
+        var arpInfo = GetTable().FirstOrDefault(x => x.IPAddress.Equals(ipAddress));
+
+        return arpInfo?.MACAddress.ToString();
     }
 
     private void RunPowerShellCommand(string command)

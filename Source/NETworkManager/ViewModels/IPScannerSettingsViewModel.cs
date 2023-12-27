@@ -107,24 +107,6 @@ public class IPScannerSettingsViewModel : ViewModelBase
         }
     }
 
-    private bool _dnsShowErrorMessage;
-
-    public bool DNSShowErrorMessage
-    {
-        get => _dnsShowErrorMessage;
-        set
-        {
-            if (value == _dnsShowErrorMessage)
-                return;
-
-            if (!_isLoading)
-                SettingsManager.Current.IPScanner_DNSShowErrorMessage = value;
-
-            _dnsShowErrorMessage = value;
-            OnPropertyChanged();
-        }
-    }
-
     private bool _portScanEnabled;
 
     public bool PortScanEnabled
@@ -177,6 +159,42 @@ public class IPScannerSettingsViewModel : ViewModelBase
                 SettingsManager.Current.IPScanner_PortScanTimeout = value;
 
             _portScanTimeout = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _netBIOSEnabled;
+
+    public bool NetBIOSEnabled
+    {
+        get => _netBIOSEnabled;
+        set
+        {
+            if (value == _netBIOSEnabled)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_NetBIOSEnabled = value;
+
+            _netBIOSEnabled = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private int _netBIOSTimeout;
+
+    public int NetBIOSTimeout
+    {
+        get => _netBIOSTimeout;
+        set
+        {
+            if (value == _netBIOSTimeout)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_NetBIOSTimeout = value;
+
+            _netBIOSTimeout = value;
             OnPropertyChanged();
         }
     }
@@ -278,10 +296,11 @@ public class IPScannerSettingsViewModel : ViewModelBase
         ICMPTimeout = SettingsManager.Current.IPScanner_ICMPTimeout;
         ICMPBuffer = SettingsManager.Current.IPScanner_ICMPBuffer;
         ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname;
-        DNSShowErrorMessage = SettingsManager.Current.IPScanner_DNSShowErrorMessage;
         PortScanEnabled = SettingsManager.Current.IPScanner_PortScanEnabled;
         PortScanPorts = SettingsManager.Current.IPScanner_PortScanPorts;
         PortScanTimeout = SettingsManager.Current.IPScanner_PortScanTimeout;
+        NetBIOSEnabled = SettingsManager.Current.IPScanner_NetBIOSEnabled;
+        NetBIOSTimeout = SettingsManager.Current.IPScanner_NetBIOSTimeout;
         ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress;
         MaxHostThreads = SettingsManager.Current.IPScanner_MaxHostThreads;
         MaxPortThreads = SettingsManager.Current.IPScanner_MaxPortThreads;

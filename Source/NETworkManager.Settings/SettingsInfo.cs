@@ -914,7 +914,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ObservableCollection<string> _ipScanner_HostHistory = new();
+    private ObservableCollection<string> _ipScanner_HostHistory = [];
 
     public ObservableCollection<string> IPScanner_HostHistory
     {
@@ -929,7 +929,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private bool _ipScanner_ResolveHostname = true;
+    private bool _ipScanner_ResolveHostname = GlobalStaticConfiguration.IPScanner_ResolveHostname;
 
     public bool IPScanner_ResolveHostname
     {
@@ -940,21 +940,6 @@ public class SettingsInfo : INotifyPropertyChanged
                 return;
 
             _ipScanner_ResolveHostname = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private bool _ipScanner_DNSShowErrorMessage = GlobalStaticConfiguration.IPScanner_DNSShowErrorMessage;
-
-    public bool IPScanner_DNSShowErrorMessage
-    {
-        get => _ipScanner_DNSShowErrorMessage;
-        set
-        {
-            if (value == _ipScanner_DNSShowErrorMessage)
-                return;
-
-            _ipScanner_DNSShowErrorMessage = value;
             OnPropertyChanged();
         }
     }
@@ -1004,6 +989,36 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
+    private bool _ipScanner_NetBIOSEnabled = GlobalStaticConfiguration.IPScanner_NetBIOSEnabled;
+
+    public bool IPScanner_NetBIOSEnabled
+    {
+        get => _ipScanner_NetBIOSEnabled;
+        set
+        {
+            if (value == _ipScanner_NetBIOSEnabled)
+                return;
+
+            _ipScanner_NetBIOSEnabled = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private int _ipScanner_NetBIOSTimeout = GlobalStaticConfiguration.IPScanner_NetBIOSTimeout;
+
+    public int IPScanner_NetBIOSTimeout
+    {
+        get => _ipScanner_NetBIOSTimeout;
+        set
+        {
+            if (value == _ipScanner_NetBIOSTimeout)
+                return;
+
+            _ipScanner_NetBIOSTimeout = value;
+            OnPropertyChanged();
+        }
+    }
+
     private bool _ipScanner_ResolveMACAddress;
 
     public bool IPScanner_ResolveMACAddress
@@ -1019,7 +1034,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ObservableCollection<CustomCommandInfo> _ipScanner_CustomCommands = new();
+    private ObservableCollection<CustomCommandInfo> _ipScanner_CustomCommands = [];
 
     public ObservableCollection<CustomCommandInfo> IPScanner_CustomCommands
     {
@@ -3888,7 +3903,6 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #endregion
 
-
     #region Subnet Calculator
 
     #region Calculator
@@ -4154,7 +4168,6 @@ public class SettingsInfo : INotifyPropertyChanged
     }
 
     #endregion
-
 
     #region Connections
 

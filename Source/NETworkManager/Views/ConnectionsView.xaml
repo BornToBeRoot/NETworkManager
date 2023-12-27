@@ -71,25 +71,25 @@
                                           CommandParameter="{Binding Path=SelectedResult.RemotePort}"
                                           Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                 <MenuItem Header="{x:Static Member=localization:Strings.RemoteHostname}"
-                                            Command="{Binding Path=CopyDataToClipboardCommand}"
-                                            CommandParameter="{Binding Path=SelectedResult.RemoteHostname}"
-                                            Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                                          Command="{Binding Path=CopyDataToClipboardCommand}"
+                                          CommandParameter="{Binding Path=SelectedResult.RemoteHostname}"
+                                          Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                 <MenuItem Header="{x:Static Member=localization:Strings.State}"
                                           Command="{Binding Path=CopyDataToClipboardCommand}"
                                           CommandParameter="{Binding Path=SelectedResult.TcpState, Converter={StaticResource TcpStateToStringConverter}}"
                                           Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                 <MenuItem Header="{x:Static Member=localization:Strings.ProcessID}"
-                                            Command="{Binding Path=CopyDataToClipboardCommand}"
-                                            CommandParameter="{Binding Path=SelectedResult.ProcessId}"
-                                            Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                                          Command="{Binding Path=CopyDataToClipboardCommand}"
+                                          CommandParameter="{Binding Path=SelectedResult.ProcessId}"
+                                          Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                 <MenuItem Header="{x:Static Member=localization:Strings.ProcessName}"
-                                            Command="{Binding Path=CopyDataToClipboardCommand}"
-                                            CommandParameter="{Binding Path=SelectedResult.ProcessName}"
-                                            Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                                          Command="{Binding Path=CopyDataToClipboardCommand}"
+                                          CommandParameter="{Binding Path=SelectedResult.ProcessName}"
+                                          Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                 <MenuItem Header="{x:Static Member=localization:Strings.ProcessPath}"
-                                            Command="{Binding Path=CopyDataToClipboardCommand}"
-                                            CommandParameter="{Binding Path=SelectedResult.ProcessPath}"
-                                            Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                                          Command="{Binding Path=CopyDataToClipboardCommand}"
+                                          CommandParameter="{Binding Path=SelectedResult.ProcessPath}"
+                                          Style="{StaticResource ResourceKey=CopyMenuItem}" />
                             </MenuItem>
                             <MenuItem Header="{x:Static localization:Strings.ExportDots}"
                                       Command="{Binding ExportCommand}">

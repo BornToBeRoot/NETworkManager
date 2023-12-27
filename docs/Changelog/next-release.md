@@ -24,6 +24,8 @@ New Feature
 
 - Run Command
   - Run command (HotKey: Ctrl+Shift+P) added. This feature allows you to open a command field to switch between applications (and pass parameters to them _in the future_) [#2577](https://github.com/BornToBeRoot/NETworkManager/pull/2577){:target="\_blank"}
+- IP Scanner
+  - NetBIOS resolver added to enhance the detection of hosts (e.g. if there is no ICMP response or TCP port is open) but netbios responds. It will also display the Computername if no DNS hostname is available. [#2590](https://github.com/BornToBeRoot/NETworkManager/pull/2590){:target="\_blank"}
 - Ping Monitor
   - UI redesigned [#2573](https://github.com/BornToBeRoot/NETworkManager/pull/2573){:target="\_blank"}
   - Allow ranges like `192.168.0.0/24` or `10.0.[0-255].1` [#2573](https://github.com/BornToBeRoot/NETworkManager/pull/2573){:target="\_blank"}
