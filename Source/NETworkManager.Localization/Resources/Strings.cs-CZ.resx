@@ -830,6 +830,9 @@ First make a backup copy of your profile files before enabling encryption!</valu
   <data name="EndTime" xml:space="preserve">
     <value>Čas ukončení</value>
   </data>
+  <data name="EnterASubnetToCalculateItDots" xml:space="preserve">
+    <value>Enter a subnet to calculate it...</value>
+  </data>
   <data name="EnterSubnetAndANewSubnetmaskToCreateSubnets" xml:space="preserve">
     <value>Vložit podsíť a novou masku k vytvoření podsítě...</value>
   </data>
@@ -870,7 +873,7 @@ First make a backup copy of your profile files before enabling encryption!</valu
     <value>Název hosta nebo IP adresa</value>
   </data>
   <data name="Hosts" xml:space="preserve">
-    <value>Host(s)</value>
+    <value>Hosts</value>
   </data>
   <data name="ID" xml:space="preserve">
     <value>ID</value>
@@ -1148,7 +1151,7 @@ Profile files are not affected!</value>
     <value>The settings location is not affected!</value>
   </data>
   <data name="TimeoutOnSNMPQuery" xml:space="preserve">
-    <value>Časový limit SNMP dotazu.</value>
+    <value>Timeout on SNMP query. Maybe the host is not reachable or the community / password is wrong.</value>
   </data>
   <data name="TimeoutWhenQueryingDNSServerMessage" xml:space="preserve">
     <value>Došlo k časovému limitu dotazu DNS serveru "{0}"!</value>
@@ -1934,7 +1937,7 @@ Changes to this value will take effect after restarting the application.</value>
   <data name="WelcomeMessage" xml:space="preserve">
     <value>Thank you for using NETworkManager!
 
-In order to provide additional features, services on the Internet are used that are not operated by me. You can deselect them below in the privacy section. No data is transmitted to me at any time.</value>
+If you like this tool, please leave a star on GitHub and recommend it to others.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Během spouštění aplikace kontroluje, zda-li není k dispozici novější verze na GitHubu.
@@ -1981,15 +1984,6 @@ URL: https://api.ipify.org/</value>
   </data>
   <data name="CheckNetworkAdapterConfigurationAndNetworkConnectionMessage" xml:space="preserve">
     <value>Zkontroluj nastavení síťového adaptéru (DHCP, pevnou IP) a zda-li je správně připojen k síti.</value>
-  </data>
-  <data name="ConnectionState_Error" xml:space="preserve">
-    <value>Chyba</value>
-  </data>
-  <data name="ConnectionState_OK" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="ConnectionState_Warning" xml:space="preserve">
-    <value>Varování</value>
   </data>
   <data name="CouldNotDetectGatewayIPAddressMessage" xml:space="preserve">
     <value>Nelze detekovat IP adresu síťové brány!</value>
@@ -2435,13 +2429,13 @@ $$hostname$$	--&gt;	Název hosta</value>
   <data name="DiscoveryProtocol" xml:space="preserve">
     <value>Discovery protokol</value>
   </data>
-  <data name="DiscoveryProtocolIdentifier_CDP" xml:space="preserve">
+  <data name="DiscoveryProtocol_Cdp" xml:space="preserve">
     <value>CDP</value>
   </data>
-  <data name="DiscoveryProtocolIdentifier_LLDP" xml:space="preserve">
+  <data name="DiscoveryProtocol_Lldp" xml:space="preserve">
     <value>LLDP</value>
   </data>
-  <data name="DiscoveryProtocolIdentifier_LLDP_CDP" xml:space="preserve">
+  <data name="DiscoveryProtocol_LldpCdp" xml:space="preserve">
     <value>LLDP / CDP</value>
   </data>
   <data name="XXSecondsRemainingDots" xml:space="preserve">
@@ -2612,47 +2606,47 @@ $$hostname$$	--&gt;	Název hosta</value>
   <data name="Accent_Yellow" xml:space="preserve">
     <value>Žlutý</value>
   </data>
-  <data name="Accen_Steel" xml:space="preserve">
-    <value>Ocelový</value>
+  <data name="Accent_Steel" xml:space="preserve">
+    <value>Steel</value>
   </data>
   <data name="ProfileName_General" xml:space="preserve">
-    <value>Obecné</value>
+    <value>General</value>
   </data>
   <data name="SettingsGroup_Application" xml:space="preserve">
-    <value>Aplikace</value>
+    <value>Applications</value>
   </data>
   <data name="SettingsGroup_General" xml:space="preserve">
-    <value>Obecné</value>
+    <value>General</value>
   </data>
   <data name="SettingsName_Appearance" xml:space="preserve">
-    <value>Vzhled</value>
+    <value>Appearance</value>
   </data>
   <data name="SettingsName_Autostart" xml:space="preserve">
     <value>Autostart</value>
   </data>
   <data name="SettingsName_General" xml:space="preserve">
-    <value>Obecné</value>
+    <value>General</value>
   </data>
   <data name="SettingsName_HotKeys" xml:space="preserve">
-    <value>Klávesové zkratky</value>
+    <value>HotKeys</value>
   </data>
   <data name="SettingsName_Language" xml:space="preserve">
-    <value>Jazyk</value>
+    <value>Language</value>
   </data>
   <data name="SettingsName_Profiles" xml:space="preserve">
-    <value>Profily</value>
+    <value>Profiles</value>
   </data>
   <data name="SettingsName_Settings" xml:space="preserve">
-    <value>Nastavení</value>
+    <value>Settings</value>
   </data>
   <data name="SettingsName_Status" xml:space="preserve">
-    <value>Stav</value>
+    <value>Status</value>
   </data>
   <data name="SettingsName_Update" xml:space="preserve">
-    <value>Aktualizace</value>
+    <value>Update</value>
   </data>
   <data name="SettingsName_Window" xml:space="preserve">
-    <value>Okno</value>
+    <value>Window</value>
   </data>
   <data name="EnableLog" xml:space="preserve">
     <value>Povolit protokolování</value>
@@ -2743,6 +2737,18 @@ $$hostname$$	--&gt;	Název hosta</value>
   </data>
   <data name="SSID" xml:space="preserve">
     <value>SSID</value>
+  </data>
+  <data name="ProfileFileCouldNotBeLoaded" xml:space="preserve">
+    <value>Profile file could not be loaded!</value>
+  </data>
+  <data name="ProfileFileCouldNotBeLoadedMessage" xml:space="preserve">
+    <value>The profile file could not be loaded and may be corrupted. You can try to restore the file from a backup or delete it.
+
+If this happens unexpectedly or after an update, please report the error on GitHub.
+
+
+Error message:
+"{0}"</value>
   </data>
   <data name="EditGroupDots" xml:space="preserve">
     <value>Upravit skupinu...</value>
@@ -3161,6 +3167,9 @@ If the option is disabled again, the values are no longer modified. However, the
   <data name="Terabytes" xml:space="preserve">
     <value>Terabytes</value>
   </data>
+  <data name="EnterANumberAndSelectAUnitToCalculateTheUnitsDots" xml:space="preserve">
+    <value>Enter a number and select a unit to calculate the units...</value>
+  </data>
   <data name="SettingsName_Network" xml:space="preserve">
     <value>Network</value>
   </data>
@@ -3535,5 +3544,268 @@ Changes to this value will take effect after the application is restarted. Wheth
   </data>
   <data name="HelpMessage_PuTTYUsername" xml:space="preserve">
     <value>Username that will be passed into the PuTTY session. Only available if the mode is "SSH", "Telnet" or "Rlogin".</value>
+  </data>
+  <data name="ASN" xml:space="preserve">
+    <value>ASN</value>
+  </data>
+  <data name="ASName" xml:space="preserve">
+    <value>AS Name</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="Continent" xml:space="preserve">
+    <value>Continent</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="District" xml:space="preserve">
+    <value>District</value>
+  </data>
+  <data name="DNSResolver" xml:space="preserve">
+    <value>DNS resolver</value>
+  </data>
+  <data name="EDNS" xml:space="preserve">
+    <value>EDNS</value>
+  </data>
+  <data name="Geolocation" xml:space="preserve">
+    <value>Geolocation</value>
+  </data>
+  <data name="Hosting" xml:space="preserve">
+    <value>Hosting</value>
+  </data>
+  <data name="IPGeolocation" xml:space="preserve">
+    <value>IP geolocation</value>
+  </data>
+  <data name="ISP" xml:space="preserve">
+    <value>ISP</value>
+  </data>
+  <data name="Latitude" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="Mobile" xml:space="preserve">
+    <value>Mobile</value>
+  </data>
+  <data name="Organization" xml:space="preserve">
+    <value>Organization</value>
+  </data>
+  <data name="PTRRecord" xml:space="preserve">
+    <value>PTR record</value>
+  </data>
+  <data name="Timezone" xml:space="preserve">
+    <value>Timezone</value>
+  </data>
+  <data name="ZipCode" xml:space="preserve">
+    <value>Zip</value>
+  </data>
+  <data name="ExternalService_ip_api_Description" xml:space="preserve">
+    <value>IP Geolocation API - Fast, accurate, reliable</value>
+  </data>
+  <data name="CheckDNSResolver" xml:space="preserve">
+    <value>Check DNS resolver</value>
+  </data>
+  <data name="CheckIPGeolocation" xml:space="preserve">
+    <value>Check IP geolocation</value>
+  </data>
+  <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
+    <value>The DNS resolver is determined via ip-api.com.
+
+URL: https://edns.ip-api.com/</value>
+  </data>
+  <data name="HelpMessage_CheckIPGeolocation" xml:space="preserve">
+    <value>The IP geolocation is determined via ip-api.com.
+
+URL: http://ip-api.com/</value>
+  </data>
+  <data name="WelcomePrivacyMessage" xml:space="preserve">
+    <value>To provide additional features, third party services are used that are not operated by me. You can deselect them below. No data is transferred to me at any time.</value>
+  </data>
+  <data name="CheckingDNSResolverDots" xml:space="preserve">
+    <value>Checking DNS resolver...</value>
+  </data>
+  <data name="CheckingIPGeolocationDots" xml:space="preserve">
+    <value>Checking IP geolocation...</value>
+  </data>
+  <data name="CheckNetworkConnectionTryAgainMessage" xml:space="preserve">
+    <value>Check your network connection and try again in a few seconds.</value>
+  </data>
+  <data name="IPApiRateLimitMessage" xml:space="preserve">
+    <value>ip-api.com rate limit reached (too many requests from your network)!
+Try again in a few seconds.</value>
+  </data>
+  <data name="HTTPStatusCode" xml:space="preserve">
+    <value>HTTP status code</value>
+  </data>
+  <data name="Accen_Steel" xml:space="preserve">
+    <value>Steel</value>
+  </data>
+  <data name="RateLimitReachedTryAgainInXSeconds" xml:space="preserve">
+    <value>Rate limit reached! Try again in {0} seconds...</value>
+  </data>
+  <data name="ProfileGroup_General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="BSSID" xml:space="preserve">
+    <value>BSSID</value>
+  </data>
+  <data name="NoReachableHostsFound" xml:space="preserve">
+    <value>No reachable hosts found!</value>
+  </data>
+  <data name="ProfileGroup_Application" xml:space="preserve">
+    <value>Application</value>
+  </data>
+  <data name="HelpMessage_ExperimentalFeatures" xml:space="preserve">
+    <value>Enable experimental features to test new functions. These are not yet complete, contain bugs, can crash the application and may change again until release.</value>
+  </data>
+  <data name="ExperimentalFeatures" xml:space="preserve">
+    <value>Experimental features</value>
+  </data>
+  <data name="Experimental" xml:space="preserve">
+    <value>Experimental</value>
+  </data>
+  <data name="Watermark_RunCommand" xml:space="preserve">
+    <value>Run command...</value>
+  </data>
+  <data name="ApplicationName_IPGeolocation" xml:space="preserve">
+    <value>IP Geolocation</value>
+  </data>
+  <data name="AddATabToQueryTheIPGeolocation" xml:space="preserve">
+    <value>Add a tab to query the IP geolocation...</value>
+  </data>
+  <data name="EnterADomainToQueryWhoisDots" xml:space="preserve">
+    <value>Enter a domain to query whois...</value>
+  </data>
+  <data name="EnterHostToQueryIPGeolocationDots" xml:space="preserve">
+    <value>Enter host to query IP geolocation...</value>
+  </data>
+  <data name="SNMPV3ErrorCode_UnknownUserName" xml:space="preserve">
+    <value>Unknown user name.</value>
+  </data>
+  <data name="SNMPV3ErrorCode_AuthenticationFailed" xml:space="preserve">
+    <value>Authentication failure (incorrect password, community or key).</value>
+  </data>
+  <data name="SNMPErrorCode_NoError" xml:space="preserve">
+    <value>The operation was successful without any errors.</value>
+  </data>
+  <data name="SNMPErrorCode_TooBig" xml:space="preserve">
+    <value>The response to your request was too large to fit into a single response!</value>
+  </data>
+  <data name="SNMPErrorCode_NoSuchName" xml:space="preserve">
+    <value>The requested OID could not be found!</value>
+  </data>
+  <data name="SNMPErrorCode_BadValue" xml:space="preserve">
+    <value>A read-write or write-only object was set to an inconsistent value!</value>
+  </data>
+  <data name="SNMPErrorCode_ReadOnly" xml:space="preserve">
+    <value>The requested OID does not exist and is not writable!</value>
+  </data>
+  <data name="SNMPErrorCode_GenError" xml:space="preserve">
+    <value>An error occurred for which no specific message is available!</value>
+  </data>
+  <data name="SNMPErrorCode_NoAccess" xml:space="preserve">
+    <value>The requested object is not accessible for modification!</value>
+  </data>
+  <data name="SNMPErrorCode_WrongType" xml:space="preserve">
+    <value>The object was set to an incompatible data type!</value>
+  </data>
+  <data name="SNMPErrorCode_WrongLength" xml:space="preserve">
+    <value>The value assigned to the object exceeds its maximum length!</value>
+  </data>
+  <data name="SNMPErrorCode_WrongEncoding" xml:space="preserve">
+    <value>The encoding used for the object is incorrect!</value>
+  </data>
+  <data name="SNMPErrorCode_WrongValue" xml:space="preserve">
+    <value>The value assigned to the object is not a valid choice!</value>
+  </data>
+  <data name="SNMPErrorCode_NoCreation" xml:space="preserve">
+    <value>The requested object does not exist and cannot be created!</value>
+  </data>
+  <data name="SNMPErrorCode_InconsistentValue" xml:space="preserve">
+    <value>The MIB variable is currently in an inconsistent state and cannot be modified!</value>
+  </data>
+  <data name="SNMPErrorCode_ResourceUnavailable" xml:space="preserve">
+    <value>There are no available system resources to perform the requested operation!</value>
+  </data>
+  <data name="SNMPErrorCode_CommitFailed" xml:space="preserve">
+    <value>An error occurred during the set operation!</value>
+  </data>
+  <data name="SNMPErrorCode_UndoFailed" xml:space="preserve">
+    <value>A set operation failed, and previous changes could not be rolled back!</value>
+  </data>
+  <data name="SNMPErrorCode_AuthorizationError" xml:space="preserve">
+    <value>Authentication failed. Please check the community string!</value>
+  </data>
+  <data name="SNMPErrorCode_NotWritable" xml:space="preserve">
+    <value>The requested object is not writable and cannot be modified!</value>
+  </data>
+  <data name="SNMPErrorCode_InconsistentName" xml:space="preserve">
+    <value>The object's state is inconsistent, preventing the set operation!</value>
+  </data>
+  <data name="CloseAll" xml:space="preserve">
+    <value>Close all</value>
+  </data>
+  <data name="ExpandHostView" xml:space="preserve">
+    <value>Expand host view</value>
+  </data>
+  <data name="CannotSetHostWhileRunningMessage" xml:space="preserve">
+    <value>Host cannot be set while other hosts are being added. Please wait until the process is complete and try again.</value>
+  </data>
+  <data name="Watermark_RunCommandWithHotKey" xml:space="preserve">
+    <value>Run command... (Ctrl+Shift+P)</value>
+  </data>
+  <data name="NoMatchingCommands" xml:space="preserve">
+    <value>No matching commands!</value>
+  </data>
+  <data name="RemoteHostname" xml:space="preserve">
+    <value>Remote hostname</value>
+  </data>
+  <data name="ProcessID" xml:space="preserve">
+    <value>Process ID</value>
+  </data>
+  <data name="ProcessPath" xml:space="preserve">
+    <value>Process path</value>
+  </data>
+  <data name="ProcessName" xml:space="preserve">
+    <value>Process name</value>
+  </data>
+  <data name="NetBIOS" xml:space="preserve">
+    <value>NetBIOS</value>
+  </data>
+  <data name="ComputerName" xml:space="preserve">
+    <value>Computer name</value>
+  </data>
+  <data name="ConnectionState_Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ConnectionState_OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="ConnectionState_Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="GroupDomainName" xml:space="preserve">
+    <value>Group / domain name</value>
+  </data>
+  <data name="NetBIOSReachable" xml:space="preserve">
+    <value>NetBIOS reachable</value>
+  </data>
+  <data name="ScanForNetBIOS" xml:space="preserve">
+    <value>Scan for NetBIOS</value>
+  </data>
+  <data name="NetBIOSIsDisabled" xml:space="preserve">
+    <value>NetBIOS scan is disabled!</value>
+  </data>
+  <data name="ResolveHostnameIsDisabled" xml:space="preserve">
+    <value>Resolve Hostname is disabled!</value>
+  </data>
+  <data name="ResolveMACAddressIsDisabled" xml:space="preserve">
+    <value>Resolve MAC address is disabled!</value>
   </data>
 </root>
