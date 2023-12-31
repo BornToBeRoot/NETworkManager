@@ -1,8 +1,8 @@
 pull_request_rules:  
   - name: automatic merge for pull request based on label and ci success
     conditions:
-      - label~=LGTM$      
-      - check-success=continuous-integration/appveyor/pr      
+      - label~=LGTM$
+      - check-success=continuous-integration/appveyor/pr
     actions:
       merge:
         method: squash
@@ -22,7 +22,7 @@ pull_request_rules:
         method: squash
   - name: automatic merge for ImgBot pull requests based on ci success
     conditions:
-      - author=imgbot[bot]      
+      - author=imgbot[bot]
       - check-success=continuous-integration/appveyor/pr
     actions:
       merge:
