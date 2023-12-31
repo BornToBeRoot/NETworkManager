@@ -10,7 +10,7 @@ on:
   pull_request:
 
 jobs:
-  deploy-website:
+  deploy:
     runs-on: ubuntu-22.04
     permissions:
       contents: write
