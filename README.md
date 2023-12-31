@@ -5,9 +5,9 @@
     <b>A powerful open source tool for managing networks and troubleshooting network problems!</b>
   </p>
   <p>
-    Connect and manage remote systems with Remote Desktop, PowerShell, PuTTY, TigerVNC or AWS (Systems Manager) Session Manager. Analyze and troubleshoot your network and systems with features such as the WiFi Analyzer, IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS lookup or LLDP/CDP capture (and many <a href="https://borntoberoot.net/NETworkManager/Features">more</a>) in a unfied interface. Hosts (or networks) can be saved in (encrypted) profiles and used across all features.  
+    Connect and manage remote systems with Remote Desktop, PowerShell, PuTTY, TigerVNC or AWS (Systems Manager) Session Manager. Analyze and troubleshoot your network and systems with features such as the WiFi Analyzer, IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS lookup or LLDP/CDP capture (and many <a href="https://borntoberoot.net/NETworkManager/docs/features">more</a>) in a unfied interface. Hosts (or networks) can be saved in (encrypted) profiles and used across all features.  
   <p>
-     <a href="https://borntoberoot.net/NETworkManager/Download" target="_blank">
+     <a href="https://borntoberoot.net/NETworkManager/download" target="_blank">
       <img alt="All releases" src="https://img.shields.io/badge/>>_download_now_<<-00abbd?style=for-the-badge" height="48" />
     </a>
   </p>
