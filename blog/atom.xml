@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://borntoberoot.net/NETworkManager/blog</id>
+    <title>NETworkManager Blog</title>
+    <updated>2024-01-01T00:00:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://borntoberoot.net/NETworkManager/blog"/>
+    <subtitle>NETworkManager Blog</subtitle>
+    <icon>https://borntoberoot.net/NETworkManager/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Welcome]]></title>
+        <id>https://borntoberoot.net/NETworkManager/blog/welcome</id>
+        <link href="https://borntoberoot.net/NETworkManager/blog/welcome"/>
+        <updated>2024-01-01T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Welcome to the new NETworkManager website and documentation.]]></summary>
+        <content type="html"><![CDATA[<p>Welcome to the new NETworkManager website and documentation.</p>
+<p>It's build with <a href="https://docusaurus.io/" target="_blank" rel="noopener noreferrer">Docusaurus</a>, a static website generator, and hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a>.</p>
+<p>You can help to improve the documentation by submitting a <a href="https://github.com/BornToBeRoot/NETworkManager-docs" target="_blank" rel="noopener noreferrer">pull request</a>.</p>]]></content>
+        <author>
+            <name>BornToBeRoot</name>
+            <uri>https://github.com/BornToBeRoot</uri>
+        </author>
+        <category label="welcome" term="welcome"/>
+        <category label="networkmanager" term="networkmanager"/>
+        <category label="docusaurus" term="docusaurus"/>
+    </entry>
+</feed>

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunknetworkmanager_docs=self.webpackChunknetworkmanager_docs||[]).push([[1712],{7533:a=>{a.exports=JSON.parse('{"label":"docusaurus","permalink":"/NETworkManager/blog/tags/docusaurus","allTagsPath":"/NETworkManager/blog/tags","count":1,"unlisted":false}')}}]);

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title>NETworkManager Blog</title>
+        <link>https://borntoberoot.net/NETworkManager/blog</link>
+        <description>NETworkManager Blog</description>
+        <lastBuildDate>Mon, 01 Jan 2024 00:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <language>en</language>
+        <item>
+            <title><![CDATA[Welcome]]></title>
+            <link>https://borntoberoot.net/NETworkManager/blog/welcome</link>
+            <guid>https://borntoberoot.net/NETworkManager/blog/welcome</guid>
+            <pubDate>Mon, 01 Jan 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Welcome to the new NETworkManager website and documentation.]]></description>
+            <content:encoded><![CDATA[<p>Welcome to the new NETworkManager website and documentation.</p>
+<p>It's build with <a href="https://docusaurus.io/" target="_blank" rel="noopener noreferrer">Docusaurus</a>, a static website generator, and hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a>.</p>
+<p>You can help to improve the documentation by submitting a <a href="https://github.com/BornToBeRoot/NETworkManager-docs" target="_blank" rel="noopener noreferrer">pull request</a>.</p>]]></content:encoded>
+            <category>welcome</category>
+            <category>networkmanager</category>
+            <category>docusaurus</category>
+        </item>
+    </channel>
+</rss>
