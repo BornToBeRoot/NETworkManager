@@ -10,7 +10,7 @@ on:
   pull_request:
 
 jobs:
-  deploy:
+  deploy-website:
     runs-on: ubuntu-22.04
     permissions:
       contents: write
@@ -42,10 +42,10 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Build
+      - name: Build website
         run: yarn build
 
-      - name: Deploy
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         if: github.ref == 'refs/heads/main'
         with:
