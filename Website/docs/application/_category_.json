@@ -1,7 +1,8 @@
 {
   "label": "Application",
-  "position": 4,
+  "position": 3,
   "link": {
-    "type": "generated-index"
+    "type": "generated-index",
+    "description": "Features included in NETworkManager"
   }
 }
