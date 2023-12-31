@@ -10,7 +10,8 @@ import styles from "./index.module.css";
 
 ## Latest
 
-Version: **2023.11.28.0** | Released: **28.11.2023**
+Version: **2023.11.28.0**<br />
+Release date: **28.11.2023**
 
 Download the latest binaries via GitHub Releases:
 
@@ -28,7 +29,7 @@ Download the latest binaries via GitHub Releases:
     Portable
   </Link>
   <Link
-    className={`button button--secondary ${styles.downloadButton}`}
+    className={`button button--info ${styles.downloadButton}`}
     to="https://github.com/BornToBeRoot/NETworkManager/releases/download/2023.11.28.0/NETworkManager_2023.11.28.0_Archive.zip"
   >
     Archive
@@ -37,27 +38,31 @@ Download the latest binaries via GitHub Releases:
 
 :::info
 
-**Setup**
-Installs NETworkManager on your system for all users (requires administrator privileges).
-Profiles and settings are stored in the user profile under `Documents\NETworkManager`.
-> Recommended for most users.
+**Setup** [Recommended]<br />
+Installs NETworkManager on your system for all users (requires administrator privileges).<br />
+Profiles and settings are stored in the user profile under `Documents\NETworkManager`.<br />
 
-**Portable**
-Run NETworkManager anywhere without installation (e.g. USB stick, network share).
-Profiles and settings are stored in the same directory as the executable.
+**Portable**<br />
+Run NETworkManager anywhere without installation (e.g. USB stick, network share).<br />
+Profiles and settings are stored in the same directory as the executable. Upgrades are supported by copying the `Profiles` and `Settings` directories to the newly downloaded version.
 
-**Archive**
-Run NETworkManager anywhere without installation (e.g. USB stick, network share).
-Profiles and settings are stored in the user profile under `Documents\NETworkManager`.
-> Might be useful for some custom deployment scenarios (e.g. Terminal Server, SCCM / Intune).
+**Archive**<br />
+Run NETworkManager anywhere without installation (e.g. USB stick, network share).<br />
+Profiles and settings are stored in the user profile under `Documents\NETworkManager`. Might be useful for custom deployment senarios (e.g. Terminal Server, Intune, etc.).
+
+See also the [system requirements](#system-requirements).
 
 :::
 
-### File hashes
+### Changelog
+
+New features, improvements and fixes can be found in the [changelog](/docs/changelog/2023-11-28-0).
+
+### Hashes
 
 File hashes of the above downloads:
 
-| File     | Checksum `SHA-256`                                                 |
+| File     | Hash `SHA-256`                                                     |
 | :------- | :----------------------------------------------------------------- |
 | Setup    | `AD9D6E569BFA61F9657A6C823409E4D4B4B67CA4BD0CC5129CCBB0B673D5DF24` |
 | Portable | `8D15ECE18013C07D806173E051FFA79406A6B5D6D00D1CD48F403C8BDBF7136F` |
