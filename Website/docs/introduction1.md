@@ -16,7 +16,7 @@ Documentation is currently migrated... You can find the old documentation [here]
 
 Connect and manage remote systems with Remote Desktop, PowerShell, PuTTY, TigerVNC or AWS (Systems Manager) Session Manager. Analyze and troubleshoot your network and systems with features such as the WiFi Analyzer, IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS lookup or LLDP/CDP capture (and many [more](./Features)) in a unfied interface. Hosts (or networks) can be saved in (encrypted) profiles and used across all features.
 
-![NETworkManager Preview](/img/Preview.gif)
+![NETworkManager Preview](/img/preview.gif)
 
 <div>
   <p>
