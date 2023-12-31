@@ -19,6 +19,8 @@ const config = {
   organizationName: 'BornToBeRoot',
   projectName: 'NETworkManager',
 
+  trailingSlash: false,
+  
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   
@@ -35,12 +37,12 @@ const config = {
         docs: {
           sidebarPath: './sidebars.js',          
           editUrl:
-            'https://github.com/bornToBeRoot/NETworkManager-docs/tree/main/',
+            'https://github.com/bornToBeRoot/NETworkManager/tree/main/Website/',
         },
         blog: {
           showReadingTime: true,          
           editUrl:
-            'https://github.com/bornToBeRoot/NETworkManager-docs/tree/main/',
+            'https://github.com/bornToBeRoot/NETworkManager/tree/main/Website/',
         },
         theme: {
           customCss: './src/css/custom.css',
