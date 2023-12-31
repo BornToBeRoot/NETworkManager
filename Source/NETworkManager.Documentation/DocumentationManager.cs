@@ -20,55 +20,125 @@ public static class DocumentationManager
     /// <summary>
     ///     List with all known documentation entries.
     /// </summary>
-    private static List<DocumentationInfo> List => new()
-    {
-        new DocumentationInfo(DocumentationIdentifier.ApplicationDashboard, @"Documentation/Application/Dashboard"),
+    private static IEnumerable<DocumentationInfo> List =>
+    [
+        new DocumentationInfo(DocumentationIdentifier.ApplicationDashboard, 
+            @"docs/application/dashboard"),
+        
         new DocumentationInfo(DocumentationIdentifier.ApplicationNetworkInterface,
-            @"Documentation/Application/NetworkInterface"),
-        new DocumentationInfo(DocumentationIdentifier.ApplicationWiFi, @"Documentation/Application/WiFi"),
-        new DocumentationInfo(DocumentationIdentifier.ApplicationIPScanner, @"Documentation/Application/IPScanner"),
-        new DocumentationInfo(DocumentationIdentifier.ApplicationPortScanner, @"Documentation/Application/PortScanner"),
-        new DocumentationInfo(DocumentationIdentifier.ApplicationPingMonitor, @"Documentation/Application/PingMonitor"),
-        new DocumentationInfo(DocumentationIdentifier.ApplicationTraceroute, @"Documentation/Application/Traceroute"),
-        new DocumentationInfo(DocumentationIdentifier.ApplicationDnsLookup, @"Documentation/Application/DNSLookup"),
+            @"docs/application/network-interface"),
+
+        new DocumentationInfo(DocumentationIdentifier.ApplicationWiFi, 
+            @"docs/application/wifi"),
+        
+        new DocumentationInfo(DocumentationIdentifier.ApplicationIPScanner, 
+            @"docs/application/ip-scanner"),
+        
+        new DocumentationInfo(DocumentationIdentifier.ApplicationPortScanner, 
+            @"docs/application/port-scanner"),
+        
+        new DocumentationInfo(DocumentationIdentifier.ApplicationPingMonitor, 
+            @"docs/application/ping-monitor"),
+        
+        new DocumentationInfo(DocumentationIdentifier.ApplicationTraceroute, 
+            @"docs/application/traceroute"),
+        
+        new DocumentationInfo(DocumentationIdentifier.ApplicationDnsLookup, 
+            @"docs/application/dns-lookup"),
+        
         new DocumentationInfo(DocumentationIdentifier.ApplicationRemoteDesktop,
-            @"Documentation/Application/RemoteDesktop"),
-        new DocumentationInfo(DocumentationIdentifier.ApplicationPowerShell, @"Documentation/Application/PowerShell"),
-        new DocumentationInfo(DocumentationIdentifier.ApplicationPutty, @"Documentation/Application/PuTTY"),
+            @"docs/application/remote-desktop"),
+
+        new DocumentationInfo(DocumentationIdentifier.ApplicationPowerShell, 
+            @"docs/application/powershell"),
+        
+        new DocumentationInfo(DocumentationIdentifier.ApplicationPutty, 
+            @"docs/application/putty"),
+        
         new DocumentationInfo(DocumentationIdentifier.ApplicationAWSSessionManager,
-            @"Documentation/Application/AWSSessionManager"),
-        new DocumentationInfo(DocumentationIdentifier.ApplicationTigerVNC, @"Documentation/Application/TigerVNC"),
-        new DocumentationInfo(DocumentationIdentifier.ApplicationWebConsole, @"Documentation/Application/WebConsole"),
-        new DocumentationInfo(DocumentationIdentifier.ApplicationSnmp, @"Documentation/Application/SNMP"),
-        new DocumentationInfo(DocumentationIdentifier.ApplicationSntpLookup, @"Documentation/Application/SNTPLookup"),
+            @"docs/application/aws-session-manager"),
+
+        new DocumentationInfo(DocumentationIdentifier.ApplicationTigerVNC, 
+            @"docs/application/tigervnc"),
+        
+        new DocumentationInfo(DocumentationIdentifier.ApplicationWebConsole, 
+            @"docs/application/web-console"),
+        
+        new DocumentationInfo(DocumentationIdentifier.ApplicationSnmp, 
+            @"docs/application/snmp"),
+        
+        new DocumentationInfo(DocumentationIdentifier.ApplicationSntpLookup,
+            @"docs/application/sntp-lookup"),
+        
         new DocumentationInfo(DocumentationIdentifier.ApplicationDiscoveryProtocol,
-            @"Documentation/Application/DiscoveryProtocol"),
-        new DocumentationInfo(DocumentationIdentifier.ApplicationWakeOnLan, @"Documentation/Application/WakeOnLAN"),
-        new DocumentationInfo(DocumentationIdentifier.ApplicationWhois, @"Documentation/Application/Whois"),
+            @"docs/application/discovery-protocol"),
+
+        new DocumentationInfo(DocumentationIdentifier.ApplicationWakeOnLan, 
+            @"docs/application/wake-on-lan"),
+        
+        new DocumentationInfo(DocumentationIdentifier.ApplicationWhois, 
+            @"docs/application/whois"),
+        
         new DocumentationInfo(DocumentationIdentifier.ApplicationIPGeolocation,
-            @"Documentation/Application/IPGeolocation"),
+            @"docs/application/ip-geolocation"),
+
         new DocumentationInfo(DocumentationIdentifier.ApplicationSubnetCalculator,
-            @"Documentation/Application/SubnetCalculator"),
+            @"docs/application/subnet-calculator"),
+
         new DocumentationInfo(DocumentationIdentifier.ApplicationBitCalculator,
-            @"Documentation/Application/BitCalculator"),
-        new DocumentationInfo(DocumentationIdentifier.ApplicationLookup, @"Documentation/Application/Lookup"),
-        new DocumentationInfo(DocumentationIdentifier.ApplicationConnections, @"Documentation/Application/Connection"),
-        new DocumentationInfo(DocumentationIdentifier.ApplicationListeners, @"Documentation/Application/Listeners"),
-        new DocumentationInfo(DocumentationIdentifier.ApplicationArpTable, @"Documentation/Application/ARPTable"),
-        new DocumentationInfo(DocumentationIdentifier.SettingsGeneral, @"Documentation/Settings/General"),
-        new DocumentationInfo(DocumentationIdentifier.SettingsWindow, @"Documentation/Settings/Window"),
-        new DocumentationInfo(DocumentationIdentifier.SettingsAppearance, @"Documentation/Settings/Appearance"),
-        new DocumentationInfo(DocumentationIdentifier.SettingsLanguage, @"Documentation/Settings/Language"),
-        new DocumentationInfo(DocumentationIdentifier.SettingsNetwork, @"Documentation/Settings/Network"),
-        new DocumentationInfo(DocumentationIdentifier.SettingsStatus, @"Documentation/Settings/Status"),
-        new DocumentationInfo(DocumentationIdentifier.SettingsHotKeys, @"Documentation/Settings/HotKeys"),
-        new DocumentationInfo(DocumentationIdentifier.SettingsAutostart, @"Documentation/Settings/Autostart"),
-        new DocumentationInfo(DocumentationIdentifier.SettingsUpdate, @"Documentation/Settings/Update"),
-        new DocumentationInfo(DocumentationIdentifier.SettingsProfiles, @"Documentation/Settings/Profiles"),
-        new DocumentationInfo(DocumentationIdentifier.SettingsSettings, @"Documentation/Settings/Settings"),
-        new DocumentationInfo(DocumentationIdentifier.Profiles, @"Documentation/Profiles"),
-        new DocumentationInfo(DocumentationIdentifier.CommandLineArguments, @"Documentation/CommandLineArguments")
-    };
+            @"docs/application/bit-calculator"),
+
+        new DocumentationInfo(DocumentationIdentifier.ApplicationLookup, 
+            @"docs/application/lookup"),
+        
+        new DocumentationInfo(DocumentationIdentifier.ApplicationConnections, 
+            @"docs/application/connection"),
+        
+        new DocumentationInfo(DocumentationIdentifier.ApplicationListeners, 
+            @"docs/application/listeners"),
+        
+        new DocumentationInfo(DocumentationIdentifier.ApplicationArpTable, 
+            @"docs/application/arp-table"),
+        
+        new DocumentationInfo(DocumentationIdentifier.SettingsGeneral, 
+            @"docs/settings/general"),
+        
+        new DocumentationInfo(DocumentationIdentifier.SettingsWindow, 
+            @"docs/settings/window"),
+        
+        new DocumentationInfo(DocumentationIdentifier.SettingsAppearance, 
+            @"docs/settings/appearance"),
+        
+        new DocumentationInfo(DocumentationIdentifier.SettingsLanguage, 
+            @"docs/settings/language"),
+        
+        new DocumentationInfo(DocumentationIdentifier.SettingsNetwork, 
+            @"docs/settings/network"),
+        
+        new DocumentationInfo(DocumentationIdentifier.SettingsStatus, 
+            @"docs/settings/status"),
+        
+        new DocumentationInfo(DocumentationIdentifier.SettingsHotKeys, 
+            @"docs/settings/hotkeys"),
+        
+        new DocumentationInfo(DocumentationIdentifier.SettingsAutostart, 
+            @"docs/settings/autostart"),
+        
+        new DocumentationInfo(DocumentationIdentifier.SettingsUpdate, 
+            @"docs/settings/update"),
+        
+        new DocumentationInfo(DocumentationIdentifier.SettingsProfiles, 
+            @"docs/settings/profiles"),
+        
+        new DocumentationInfo(DocumentationIdentifier.SettingsSettings, 
+            @"docs/settings/settings"),
+        
+        new DocumentationInfo(DocumentationIdentifier.Profiles, 
+            @"Documentation/profiles"),
+        
+        new DocumentationInfo(DocumentationIdentifier.CommandLineArguments, 
+            @"docs/commandline-arguments")
+    ];
 
     /// <summary>
     ///     Command to open a documentation page based on <see cref="DocumentationIdentifier" />.

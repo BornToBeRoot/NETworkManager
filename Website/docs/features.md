@@ -6,31 +6,31 @@ sidebar_position: 2
 
 The following features are currently available:
 
-- [Dashboard](./Application/Dashboard)
-- [Network Interface](./Application/NetworkInterface) - Information, Bandwidth, Configure
-- [WiFi](./Application/WiFi) - Networks, Channels
-- [IP Scanner](./Application/IPScanner)
-- [Port Scanner](./Application/PortScanner)
-- [Ping Monitor](./Application/PingMonitor)
-- [Traceroute](./Application/Traceroute)
-- [DNS Lookup](./Application/DNSLookup)
-- [Remote Desktop](./Application/RemoteDesktop)
-- [PowerShell](./Application/PowerShell)
-- [PuTTY](./Application/PuTTY) (requires [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html))
-- [AWS Session Manager](./Application/AWSSessionManager) (requires [AWS CLI](https://aws.amazon.com/cli/) and [AWS Session Manager plugin](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html))
-- [TigerVNC](./Application/TigerVNC) (requires [TigerVNC](https://tigervnc.org/))
-- [Web Console](./Application/WebConsole) (requires [Microsoft Edge - WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/))
-- [SNMP](./Application/SNMP) - Get, Walk, Set
-- [SNTP Lookup](./Application/SNTPLookup)
-- [Discovery Protocol](./Application/DiscoveryProtocol) - LLDP, CDP
-- [Wake on LAN](./Application/WakeOnLAN)
-- [Whois](./Application/Whois)
-- [Subnet Calculator](./Application/SubnetCalculator) - Calculator, Subnetting, Supernetting
-- [Bit Calculator](./Application/BitCalculator)
-- [Lookup](./Application/Lookup) - OUI, Port
-- [Connections](./Application/Connections)
-- [Listeners](./Application/Listeners)
-- [ARP Table](./Application/ARPTable)
+- [Dashboard](./application/dashboard)
+- [Network Interface](./application/network-interface) - Information, Bandwidth, Configure
+- [WiFi](./application/wifi) - Networks, Channels
+- [IP Scanner](./application/ip-scanner)
+- [Port Scanner](./application/port-scanner)
+- [Ping Monitor](./application/ping-monitor)
+- [Traceroute](./application/traceroute)
+- [DNS Lookup](./application/dns-lookup)
+- [Remote Desktop](./application/remote-desktop)
+- [PowerShell](./application/powershell)
+- [PuTTY](./application/putty) (requires [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html))
+- [AWS Session Manager](./application/aws-session-manager) (requires [AWS CLI](https://aws.amazon.com/cli/) and [AWS Session Manager plugin](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html))
+- [TigerVNC](./application/tigervnc) (requires [TigerVNC](https://tigervnc.org/))
+- [Web Console](./application/web-console) (requires [Microsoft Edge - WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/))
+- [SNMP](./application/snmp) - Get, Walk, Set
+- [SNTP Lookup](./application/sntp-lookup)
+- [Discovery Protocol](./application/discovery-protocol) - LLDP, CDP
+- [Wake on LAN](./application/wake-on-lan)
+- [Whois](./application/whois)
+- [Subnet Calculator](./application/subnet-calculator) - Calculator, Subnetting, Supernetting
+- [Bit Calculator](./application/bit-calculator)
+- [Lookup](./application/lookup) - OUI, Port
+- [Connections](./application/connections)
+- [Listeners](./application/listeners)
+- [ARP Table](./application/arp-table)
 
 If you have any suggestions for new features, please submit a [feature request](https://github.com/BornToBeRoot/NETworkManager/issues/new/choose) on GitHub.
 
