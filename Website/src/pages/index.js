@@ -1,22 +1,22 @@
-import clsx from 'clsx';
-import Link from '@docusaurus/Link';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import Layout from '@theme/Layout';
-import HomepageFeatures from '@site/src/components/HomepageFeatures';
+import clsx from "clsx";
+import Link from "@docusaurus/Link";
+import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+import Layout from "@theme/Layout";
+import HomepageFeatures from "@site/src/components/HomepageFeatures";
 
-import Heading from '@theme/Heading';
-import styles from './index.module.css';
+import Heading from "@theme/Heading";
+import styles from "./index.module.css";
 
 function HomepageHeader() {
-  const {siteConfig} = useDocusaurusContext();
+  const { siteConfig } = useDocusaurusContext();
   return (
     <div className={styles.hero} data-theme="dark">
       <div className={styles.heroInner}>
         <Heading as="h1">
           <img
-            alt='NETworkManager Logo'
+            alt="NETworkManager Logo"
             className={styles.heroLogo}
-            src='./img/logo.svg'
+            src="./img/logo.svg"
             width="200"
             height="200"
           />
@@ -25,15 +25,19 @@ function HomepageHeader() {
               <b>NETworkManager</b>
             </p>
             <p className={styles.heroProjectTagline}>
-              A powerful tool for <b>managing</b> networks and <b>troubleshoot</b> network problems!
+              A powerful tool for <b>managing</b> networks and{" "}
+              <b>troubleshoot</b> network problems!
             </p>
           </span>
-        </Heading>        
+        </Heading>
         <div className={styles.indexCtas}>
           <Link className="button button--primary" to="/download">
             Download
           </Link>
-          <Link className="button button--info" to="https://github.com/BornToBeRoot/NETworkManager">
+          <Link
+            className="button button--info"
+            to="https://github.com/BornToBeRoot/NETworkManager"
+          >
             GitHub
           </Link>
           <span className={styles.indexCtasGitHubButtonWrapper}>
@@ -41,7 +45,7 @@ function HomepageHeader() {
               alt="GitHub Downloads"
               className={styles.indexCtasGitHubButton}
               src="https://img.shields.io/github/downloads/BornToBeroot/NETworkManager/total.svg?style=social"
-              height={24}              
+              height={24}
               title="GitHub Downloads"
             />
             <img
@@ -62,17 +66,23 @@ function HomepagePreview() {
   return (
     <div className="container text--center margin-top--xl margin-bottom--xl">
       <Heading as="h2">Check out the preview</Heading>
-      <img src='./img/preview.gif' alt='NETworkManager Preview' width="100%" height="100%"/>
-    </div>    
+      <img
+        src="./img/preview.gif"
+        alt="NETworkManager Preview"
+        width="100%"
+        height="100%"
+      />
+    </div>
   );
 }
 
 export default function Home() {
-  const {siteConfig} = useDocusaurusContext();
+  const { siteConfig } = useDocusaurusContext();
   return (
     <Layout
       title={`${siteConfig.title}`}
-      description={`${siteConfig.title} - ${siteConfig.tagline}`}>
+      description={`${siteConfig.title} - ${siteConfig.tagline}`}
+    >
       <HomepageHeader />
       <main>
         <HomepageFeatures />

@@ -6,7 +6,6 @@ It's build with [Docusaurus](https://docusaurus.io/), a static website generator
 
 You can help to improve the documentation by submitting a pull request.
 
-
 ## Software, services and images used
 
 - [Docusaurus](https://docusaurus.io/)

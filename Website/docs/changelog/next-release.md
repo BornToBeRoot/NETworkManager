@@ -4,11 +4,11 @@ sidebar_position: 0
 
 # Next Release
 
-Version: **Next release**<br />
+Version: **Next release** <br />
 Release date: **xx.xx.2023**
 
-| File | Checksum [SHA256] |
-| ---- | ----------------- |
+| File | `SHA256` |
+| ---- | -------- |
 
 **System requirements**
 
@@ -60,7 +60,7 @@ Release date: **xx.xx.2023**
 - Lookup
   - Fix sort by MAC address [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583)
 
-## Cleanup, Refactoring & Dependencies
+## Dependencies, Refactoring & Documentation
 
 - Code cleanup & Refactoring [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583) [#2586](https://github.com/BornToBeRoot/NETworkManager/pull/2586)
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration)

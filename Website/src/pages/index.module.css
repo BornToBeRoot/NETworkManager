@@ -3,17 +3,17 @@
  * and scoped locally.
  */
 
- table {
+table {
   width: 100%;
   display: table;
- }
+}
 
 .heroBanner {
   padding: 4rem 0;
   text-align: center;
   position: relative;
   overflow: hidden;
-  
+
   background-color: #2b3137;
 }
 
@@ -122,7 +122,7 @@
   height: 56px;
   width: 200px;
   font-size: 24px;
-} 
+}
 
 @media only screen and (max-width: 768px) {
   .hero {
@@ -142,7 +142,7 @@
   .heroProjectTagline {
     font-size: 24px;
     text-align: center;
-  }    
+  }
 
   .heroLogo {
     display: block;
