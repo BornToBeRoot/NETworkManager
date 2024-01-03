@@ -12,7 +12,7 @@ Follow these steps to enable profile file encryption:
 2. Right click on the profile file you want to encrypt.
 3. Select `Encryption...` > `Enable encryption...` and set your master password.
 
-![Profile file encryption - Enable encryption](./img/profilefile-encryption-enableencryption.gif)
+![Profile file encryption - Enable encryption](./img/profile-file-encryption--enable-encryption.gif)
 
 ### How to change the master password of an encrypted profile file?
 
@@ -22,7 +22,7 @@ Follow these steps to change the master password of an encrypted profile file:
 2. Right click on an encrypted profile file.
 3. Select `Encryption...` > `Change Master Password...` and enter the current master password and a new master password.
 
-![Profile file encryption - Change master password](./img/profilefile-encryption-changemasterpassword.gif)
+![Profile file encryption - Change master password](./img/profile-file-encryption--change-master-password.gif)
 
 ### How to disable profile file encryption?
 
@@ -32,4 +32,4 @@ Follow these steps to disable profile file encryption:
 2. Right click on an encrypted profile file.
 3. Select `Encryption...` > `Disable encryption...` and enter your master password.
 
-![Profile file encryption - Enable encryption](./img/profilefile-encryption-disableencryption.gif)
+![Profile file encryption - Enable encryption](./img/profile-file-encryption--disable-encryption.gif)
