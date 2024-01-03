@@ -4,7 +4,7 @@
 
 The setup installs the application by default in the following path: `%ProgramFiles%\NETworkManager`
 
-You can run the archive and portable version from anywhere.
+You can run the archive and portable version from anywhere (e.g. USB stick, network share, etc.).
 
 Profiles, settings and themes are stored in the following folders:
 
@@ -22,7 +22,7 @@ It is recommended to backup the above files on a regular basis.
 
 :::tip
 
-You can also roam the files with a cloud service like OneDrive or Nextcloud to use them on multiple devices.
+Use a cloud service like OneDrive or Nextcloud to sync the above folders with multiple devices or to use them as a backup.
 
 :::
 
