@@ -6,18 +6,30 @@ Profile files are encrypted on disk using [AES](https://docs.microsoft.com/de-de
 
 ### How to enable profile file encryption?
 
-Open the settings and go to the profile section. Right click on the profile file you want to encrypt. Select `Encryption...` > `Enable encryption...` and set your master password.
+Follow these steps to enable profile file encryption:
+
+1. Open the settings and go to the profile section. 
+2. Right click on the profile file you want to encrypt.
+3. Select `Encryption...` > `Enable encryption...` and set your master password.
 
 ![Profile file encryption - Enable encryption](./img/profilefile-encryption-enableencryption.gif)
 
 ### How to change the master password of an encrypted profile file?
 
-Open the settings and go to the profile section. Right click on an encrypted profile file. Select `Encryption...` > `Change Master Password...` and enter the current master password and a new master password.
+Follow these steps to change the master password of an encrypted profile file:
+
+1. Open the settings and go to the profile section.
+2. Right click on an encrypted profile file.
+3. Select `Encryption...` > `Change Master Password...` and enter the current master password and a new master password.
 
 ![Profile file encryption - Change master password](./img/profilefile-encryption-changemasterpassword.gif)
 
 ### How to disable profile file encryption?
 
-Open the settings and go to the profile section. Right click on an encrypted profile file. Select `Encryption...` > `Disable encryption...` and enter your master password.
+Follow these steps to disable profile file encryption:
+
+1. Open the settings and go to the profile section.
+2. Right click on an encrypted profile file.
+3. Select `Encryption...` > `Disable encryption...` and enter your master password.
 
 ![Profile file encryption - Enable encryption](./img/profilefile-encryption-disableencryption.gif)
