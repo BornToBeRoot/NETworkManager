@@ -161,7 +161,7 @@ Too many threads can also cause performance problems on the device.
 
 :::note
 
-This setting only change the maximum number of concurrently executed threads per host scan. See also the [General](../settings/generalthreadpool-additional-min-threads) settings to configure the application wide thread pool.
+This setting only change the maximum number of concurrently executed threads per host scan. See also the [General](../settings/general#threadpool-additional-min-threads) settings to configure the application wide thread pool.
 
 :::
 
@@ -183,6 +183,6 @@ Too many threads can also cause performance problems on the device.
 
 :::note
 
-This setting only change the maximum number of concurrently executed threads per host scan. See also the [General](../settings/generalthreadpool-additional-min-threads) settings to configure the application wide thread pool.
+This setting only change the maximum number of concurrently executed threads per host scan. See also the [General](../settings/general#threadpool-additional-min-threads) settings to configure the application wide thread pool.
 
 :::
