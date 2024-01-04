@@ -124,6 +124,15 @@ table {
   font-size: 24px;
 }
 
+.shieldsContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.shieldsLink {
+  margin: 0rem 2.5rem;
+}
+
 @media only screen and (max-width: 768px) {
   .hero {
     padding-left: 20px;
