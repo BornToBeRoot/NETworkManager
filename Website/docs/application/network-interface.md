@@ -10,6 +10,10 @@ In **Network Interface** you can see all network adapters of the computer with t
 
 On the **Information** tab, you can see all the important details of the selected network adapter such as the configured IP addresses, DNS servers, MAC address, and more. If information such as IPv6 configuration is not available, it is hidden in the view.
 
+![Network Interface - Information](./img/network-interface--information.png)
+
+:::note
+
 In addition, further actions can be performed using the buttons at the bottom left:
 
 - **Network connections...** - Opens the `Control Panel > Network and Internet > Network Connections` window.
@@ -25,7 +29,7 @@ In addition, further actions can be performed using the buttons at the bottom le
     - **Release** - Releases the current IPv6 addresses obtained via DHCPv6 for the _selected_ network adapter that is configured to automatically obtain an IPv6 address (`ipconfig /release6 <ADAPTER>`).
     - **Renew** - Renews the current IPv6 address via DHCPv6 for the _selected_ network adapter that is configured to automatically obtain an IPv6 address (`ipconfig /renew6 <ADAPTER>`).
 
-![Network Interface - Information](./img/network-interface--information.png)
+:::
 
 :::note
 
