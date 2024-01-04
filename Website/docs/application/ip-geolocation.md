@@ -17,7 +17,7 @@ Example inputs:
 - `borntoberoot.net`
 - `1.1.1.1`
 
-![IPGeolocation](20_IPGeolocation.png)
+![IPGeolocation](./img/ip-geolocation.png)
 
 :::note
 
