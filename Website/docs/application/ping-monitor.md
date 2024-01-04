@@ -27,7 +27,7 @@ Example: `10.0.0.0/24; 10.0.[10-20]1`
 
 :::
 
-![PingMonitor](06_PingMonitor.png)
+![Ping Monitor](./img/ping-monitor.png)
 
 :::note
 
