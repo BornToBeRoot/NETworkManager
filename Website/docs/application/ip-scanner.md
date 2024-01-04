@@ -68,6 +68,13 @@ Hostname or IP range to scan for active devices.
 - `10.0.0.0/24; 10.0.[10-20].1`
 - `server-01.borntoberoot.net`
 
+:::note
+
+See also the [IP Scanner](#ip-scanner) example inputs for more information about the supported host formats.
+
+:::
+
+
 ## Settings
 
 ### Show unreachable IP addresses and ports
@@ -128,7 +135,7 @@ List of `tcp` ports to scan for each IP address.
 
 :::note
 
-Multiple ports and port ranges can be combined with a semicolon (e.g. `22; 80; 443`). Only common and known ports should be scanned to check if a host is reachable. Use the [Port Scanner](/NETworkManager/Documentation/Application/PortScanner) for a detailed port scan.
+Multiple ports and port ranges can be combined with a semicolon (e.g. `22; 80; 443`). Only common and known ports should be scanned to check if a host is reachable. Use the [Port Scanner](./port-scanner) for a detailed port scan.
 
 :::
 
@@ -209,7 +216,7 @@ Too many threads can also cause performance problems on the device.
 
 :::note
 
-This setting only change the maximum number of concurrently executed threads per host scan. See also the [General](/NETworkManager/Documentation/Settings/General) settings to configure the application wide thread pool.
+This setting only change the maximum number of concurrently executed threads per host scan. See also the [General](../settings/generalthreadpool-additional-min-threads) settings to configure the application wide thread pool.
 
 :::
 
@@ -231,6 +238,6 @@ Too many threads can also cause performance problems on the device.
 
 :::note
 
-This setting only change the maximum number of concurrently executed threads per port scan. See also the [General](/NETworkManager/Documentation/Settings/General) settings to configure the application wide thread pool.
+This setting only change the maximum number of concurrently executed threads per port scan. See also the [General](../settings/generalthreadpool-additional-min-threads) settings to configure the application wide thread pool.
 
 :::

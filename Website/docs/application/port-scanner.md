@@ -72,7 +72,7 @@ Hostname or IP range to scan for open ports.
 
 :::note
 
-See also the [Port Scanner](/NETworkManager/Documentation/Application/PortScanner) example inputs for more information about the supported host formats.
+See also the [Port Scanner](#port-scanner) example inputs for more information about the supported host formats.
 
 :::
 
@@ -91,7 +91,7 @@ TCP ports to scan each host for.
 
 :::note
 
-See also the [Port Scanner](/NETworkManager/Documentation/Application/PortScanner) example inputs for more information about the supported host formats.
+See also the [Port Scanner](#port-scanner) example inputs for more information about the supported port formats.
 
 :::
 
@@ -161,7 +161,7 @@ Too many threads can also cause performance problems on the device.
 
 :::note
 
-This setting only change the maximum number of concurrently executed threads per host scan. See also the [General](/NETworkManager/Documentation/Settings/General) settings to configure the application wide thread pool.
+This setting only change the maximum number of concurrently executed threads per host scan. See also the [General](../settings/generalthreadpool-additional-min-threads) settings to configure the application wide thread pool.
 
 :::
 
@@ -183,6 +183,6 @@ Too many threads can also cause performance problems on the device.
 
 :::note
 
-This setting only change the maximum number of concurrently executed threads per host scan. See also the [General](/NETworkManager/Documentation/Settings/General) settings to configure the application wide thread pool.
+This setting only change the maximum number of concurrently executed threads per host scan. See also the [General](../settings/generalthreadpool-additional-min-threads) settings to configure the application wide thread pool.
 
 :::
