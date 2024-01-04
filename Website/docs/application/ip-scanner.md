@@ -74,7 +74,6 @@ See also the [IP Scanner](#ip-scanner) example inputs for more information about
 
 :::
 
-
 ## Settings
 
 ### Show unreachable IP addresses and ports

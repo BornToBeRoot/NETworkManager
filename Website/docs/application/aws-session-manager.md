@@ -356,7 +356,6 @@ AWS region where the instance is located.
 
 **Example:** `eu-central-1`
 
-
 ## Group
 
 ### Profile
@@ -378,7 +377,6 @@ AWS region where the instance is located.
 **Default:** `Empty`
 
 **Example:** `eu-central-1`
-
 
 ## Settings
 
