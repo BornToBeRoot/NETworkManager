@@ -8,7 +8,7 @@ Profile files are encrypted on disk using [AES](https://docs.microsoft.com/de-de
 
 Follow these steps to enable profile file encryption:
 
-1. Open the settings and go to the profile section. 
+1. Open the settings and go to the profile section.
 2. Right click on the profile file you want to encrypt.
 3. Select `Encryption...` > `Enable encryption...` and set your master password.
 
