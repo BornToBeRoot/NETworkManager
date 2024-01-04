@@ -6,11 +6,6 @@ sidebar_position: 9
 
 With **PowerShell** you can start PowerShell consoles on the local computer or connect to remote computers via [PowerShell Remoting](https://learn.microsoft.com/en-us/powershell/scripting/learn/ps101/08-powershell-remoting). The integration of PowerShell with NETworkManger supports tabs and profiles for hosts. The connection can be established via a profile (double-click, Enter key or right-click `Connect`) or directly via the [connection](#connect) dialog.
 
-Right-click on the tab will open the context menu with the following options:
-
-- **Reconnect** - Restart the PowerShell console (and reconnect to the remote computer).
-- **Resize** - Resize the PowerShell console to the current view size (if connected).
-
 :::info
 
 PowerShell is a command-line shell and scripting language developed by Microsoft for automating administrative tasks and managing system configurations. It provides a robust set of built-in commands and access to .NET Framework objects, allowing for efficient system administration and automation. PowerShell uses a verb-noun syntax, allowing users to perform a wide range of operations by executing simple and powerful commands.
@@ -25,7 +20,13 @@ Windows PowerShell and PowerShell Core are supported. Indructions for installing
 
 :::tip
 
-To use Windows Subsystem for Linux (WSL) in PowerShell, you can pass the following [command](#command) to the PowerShell console: `wsl -d <DISTRIBUTION>`. See [FAQ > How to use Windows Subsystem for Linux (WSL) in PowerShell?](../faq/powershell-wsl) for more information.
+Windows Subsystem for Linux (WSL) can be used in PowerShell by passing the following [command](#command) to the PowerShell console:
+
+```powershell
+wsl -d <DISTRIBUTION>
+```
+
+See [FAQ > How to use Windows Subsystem for Linux (WSL) in PowerShell?](../faq/powershell-wsl) for more information.
 
 :::
 
@@ -36,6 +37,15 @@ If Windows Terminal is installed, change the `Default terminal application` in t
 :::
 
 ![PowerShell](./img/powershell.png)
+
+:::note
+
+Right-click on the tab will open the context menu with the following options:
+
+- **Reconnect** - Restart the PowerShell console (and reconnect to the remote computer).
+- **Resize** - Resize the PowerShell console to the current view size (if connected).
+
+:::
 
 ## Connect
 

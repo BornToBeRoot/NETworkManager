@@ -6,6 +6,16 @@ sidebar_position: 8
 
 With **Remote Desktop** you can connect to a remote computer using the Remote Desktop Protocol (RDP).
 
+:::info
+
+Remote Desktop Protocol (RDP) is a proprietary protocol developed by Microsoft that allows users to remotely access and control a computer or virtual machine (VM) over a network connection. It provides a secure communication channel by encrypting the data transmitted between the client and the remote computer, protecting it from unauthorized access.
+
+:::
+
+![Remote Desktop](./img/remote-desktop.png)
+
+:::note
+
 Right-click on the tab will open the context menu with the following options:
 
 - **Reconnect** - Reconnect to the remote computer (if disconnected).
@@ -15,13 +25,7 @@ Right-click on the tab will open the context menu with the following options:
 - **Keyboard shortcuts**
   - **Ctrl+Alt+Del** - Send Ctrl+Alt+Del to the remote computer (if connected).
 
-:::info
-
-Remote Desktop Protocol (RDP) is a proprietary protocol developed by Microsoft that allows users to remotely access and control a computer or virtual machine (VM) over a network connection. It provides a secure communication channel by encrypting the data transmitted between the client and the remote computer, protecting it from unauthorized access.
-
 :::
-
-![Remote Desktop](./img/remote-desktop.png)
 
 ## Connect
 
