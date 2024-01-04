@@ -19,7 +19,7 @@ Example: `server-01.borntoberoot.net; 10.0.0.1`
 
 :::
 
-![DNSLookup](08_DNSLookup.png)
+![DNS Lookup](./img/dns-lookup.png)
 
 :::note
 
