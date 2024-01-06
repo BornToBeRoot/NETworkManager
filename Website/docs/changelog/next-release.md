@@ -43,6 +43,7 @@ Release date: **xx.xx.2023**
   - Scan is no longer aborted if the IP of a single host in a series of hosts cannot be resolved (the host is skipped and an error is displayed) [#2573](https://github.com/BornToBeRoot/NETworkManager/pull/2573)
 - DNS Lookup
   - Hostname of the nameserver added to group [#2573](https://github.com/BornToBeRoot/NETworkManager/pull/2573)
+  - Resolve was finished too early if a request timed [#2612](https://github.com/BornToBeRoot/NETworkManager/pull/2612)
   - Sort improved [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583)
 - SNMP
   OID profile column sort fixed [#2583](https://github.com/BornToBeRoot/NETworkManager/pull/2583)
