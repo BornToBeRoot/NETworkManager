@@ -6,7 +6,6 @@ using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using DnsClient;
 using DnsClient.Protocol;
-using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
@@ -90,7 +89,7 @@ public sealed class DNSLookup
     /// <returns>List of DNS servers as <see cref="IPEndPoint" />.</returns>
     private IEnumerable<IPEndPoint> GetDnsServer(IEnumerable<ServerConnectionInfo> dnsServers = null)
     {
-        List<IPEndPoint> servers = new();
+        List<IPEndPoint> servers = [];
 
         // Use windows dns servers
         servers.AddRange(dnsServers == null
@@ -122,16 +121,9 @@ public sealed class DNSLookup
             // Append dns suffix to hostname, if option is set, otherwise just copy the list
             var queries = _addSuffix && _settings.QueryType != QueryType.PTR ? GetHostWithSuffix(hosts) : hosts;
 
-            // Foreach dns server
-            Parallel.ForEach(_servers, async dnsServer =>
+            // For each dns server
+            Parallel.ForEach(_servers, dnsServer =>
             {
-                // Get the dns server hostname for some additional information
-                var dnsServerHostName = string.Empty;
-
-                var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(dnsServer.Address);
-                if (!dnsResult.HasError)
-                    dnsServerHostName = dnsResult.Value;
-
                 // Init each dns server once
                 LookupClientOptions lookupClientOptions = new(dnsServer)
                 {
@@ -143,8 +135,27 @@ public sealed class DNSLookup
                 };
 
                 LookupClient lookupClient = new(lookupClientOptions);
+                
+                // Get the dns server hostname for some additional information
+                var dnsServerHostName = string.Empty;
 
-                // Foreach host
+                try
+                {
+                    var result = lookupClient.QueryReverse(dnsServer.Address);
+
+                    if (!result.HasError)
+                    {
+                        var record = result.Answers.PtrRecords().FirstOrDefault();
+                        
+                        if (record != null)
+                            dnsServerHostName = record.PtrDomainName;
+                    }
+                }
+                catch { 
+                    // ignored
+                }
+
+                // For each host
                 Parallel.ForEach(queries, query =>
                 {
                     try
@@ -159,15 +170,18 @@ public sealed class DNSLookup
                         {
                             OnLookupError(new DNSLookupErrorArgs(query, $"{dnsServer.Address}",
                                 $"{dnsServer.Address}:{dnsServer.Port}", dnsResponse.ErrorMessage));
+                            
                             return; // continue
                         }
 
                         if (dnsResponse.Answers.Count == 0)
                         {
                             var digAdditionalCommand = _settings.QueryType == QueryType.PTR ? " -x " : " ";
+                            
                             OnLookupError(new DNSLookupErrorArgs(query, $"{dnsServer.Address}",
                                 $"{dnsServer.Address}:{dnsServer.Port}",
                                 $"No DNS resource records received for query \"{query}\" (Query type: \"{_settings.QueryType}\") and the DNS server did not return an error. Try to check your DNS server with: dig @{dnsServer.Address}{digAdditionalCommand}{query}"));
+                           
                             return; // continue
                         }
 
@@ -191,6 +205,7 @@ public sealed class DNSLookup
     /// </summary>
     /// <param name="answers">List of DNS resource records.</param>
     /// <param name="nameServer">DNS name server that answered the query.</param>
+    /// <param name="nameServerHostname">DNS name server hostname.</param>
     private void ProcessDnsAnswers(IEnumerable<DnsResourceRecord> answers, NameServer nameServer,
         string nameServerHostname = null)
     {
