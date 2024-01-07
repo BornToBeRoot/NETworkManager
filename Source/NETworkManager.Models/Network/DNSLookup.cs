@@ -135,7 +135,7 @@ public sealed class DNSLookup
                 };
 
                 LookupClient lookupClient = new(lookupClientOptions);
-                
+
                 // Get the dns server hostname for some additional information
                 var dnsServerHostName = string.Empty;
 
@@ -146,12 +146,13 @@ public sealed class DNSLookup
                     if (!result.HasError)
                     {
                         var record = result.Answers.PtrRecords().FirstOrDefault();
-                        
+
                         if (record != null)
                             dnsServerHostName = record.PtrDomainName;
                     }
                 }
-                catch { 
+                catch
+                {
                     // ignored
                 }
 
@@ -170,18 +171,18 @@ public sealed class DNSLookup
                         {
                             OnLookupError(new DNSLookupErrorArgs(query, $"{dnsServer.Address}",
                                 $"{dnsServer.Address}:{dnsServer.Port}", dnsResponse.ErrorMessage));
-                            
+
                             return; // continue
                         }
 
                         if (dnsResponse.Answers.Count == 0)
                         {
                             var digAdditionalCommand = _settings.QueryType == QueryType.PTR ? " -x " : " ";
-                            
+
                             OnLookupError(new DNSLookupErrorArgs(query, $"{dnsServer.Address}",
                                 $"{dnsServer.Address}:{dnsServer.Port}",
                                 $"No DNS resource records received for query \"{query}\" (Query type: \"{_settings.QueryType}\") and the DNS server did not return an error. Try to check your DNS server with: dig @{dnsServer.Address}{digAdditionalCommand}{query}"));
-                           
+
                             return; // continue
                         }
 
