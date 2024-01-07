@@ -12,11 +12,17 @@
     <licenseUrl>https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectSourceUrl>https://github.com/BornToBeRoot/NETworkManager</projectSourceUrl>
+    <packageSourceUrl>https://github.com/BornToBeRoot/NETworkManager/tree/main/Chocolatey</packageSourceUrl>
     <docsUrl>https://borntoberoot.net/NETworkManager/docs/introduction</docsUrl>
     <bugTrackerUrl>https://github.com/BornToBeRoot/NETworkManager/issues</bugTrackerUrl>
+    <releaseNotes>https://borntoberoot.net/NETworkManager/docs/changelog/2024-1-7-0</releaseNotes>
     <tags>wifi ipscanner portscanner traceroute pingmonitor dns remotedesktop putty lldp</tags>
     <summary>A powerful tool for managing networks and troubleshoot network problems!</summary>
-    <description>A powerful tool for managing networks and troubleshoot network problems!</description>
+    <description>
+      A powerful tool for managing networks and troubleshoot network problems!
+      
+      More infos: https://borntoberoot.net/NETworkManager/
+    </description>
     <dependencies>
       <dependency id="dotnet-8.0-desktopruntime" />      
     </dependencies>    
