@@ -12,7 +12,7 @@
     <licenseUrl>https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectSourceUrl>https://github.com/BornToBeRoot/NETworkManager</projectSourceUrl>
-    <docsUrl>https://borntoberoot.net/NETworkManager/Documentation</docsUrl>
+    <docsUrl>https://borntoberoot.net/NETworkManager/docs/introduction</docsUrl>
     <bugTrackerUrl>https://github.com/BornToBeRoot/NETworkManager/issues</bugTrackerUrl>
     <tags>wifi ipscanner portscanner traceroute pingmonitor dns remotedesktop putty lldp</tags>
     <summary>A powerful tool for managing networks and troubleshoot network problems!</summary>
