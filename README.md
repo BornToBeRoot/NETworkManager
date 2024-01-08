@@ -79,7 +79,7 @@ You can find the changelog for each version [here](https://borntoberoot.net/NETw
 
 ## 📖 Documentation
 
-The documentation is provided via GitHub pages and can be found [here](https://borntoberoot.net/NETworkManager/Documentation).
+The documentation is provided via GitHub pages and can be found [here](https://borntoberoot.net/NETworkManager/docs/introduction).
 
 ## ✨ Contributing
 
