@@ -36,6 +36,31 @@ Download the latest binaries via GitHub Releases:
   </Link>
 </div>
 
+<div className={`${styles.shieldsContainer}`}>
+  <p>
+    <a
+      className={`${styles.shields}`}
+      href="https://github.com/BornToBeroot/NETworkManager/releases"
+      target="_blank"
+    >
+      <img
+        alt="All releases"
+        src="https://img.shields.io/github/downloads/BornToBeroot/NETworkManager/total.svg?style=for-the-badge&logo=github"
+      />
+    </a>
+    <a
+      className={`${styles.shields}`}
+      href="https://github.com/BornToBeroot/NETworkManager/releases/latest"
+      target="_blank"
+    >
+      <img
+        alt="Latest release"
+        src="https://img.shields.io/github/downloads/BornToBeroot/NETworkManager/latest/total.svg?style=for-the-badge&logo=github"
+      />
+    </a>  
+  </p>  
+</div>
+
 Here you can find the [changelog](/docs/changelog/2024-1-7-0).
 
 :::info
@@ -95,26 +120,52 @@ Please note that pre-release versions are not as stable as regular versions and 
 
 ## Package Manager
 
-NETworkManager is available through the package managers [Chocolatey](https://chocolatey.org/packages/NETworkManager) and [WinGet](https://github.com/microsoft/winget-pkgs/tree/master/manifests/b/BornToBeRoot/NETworkManager/) and the PowerShell module [Evergreen](https://github.com/aaronparker/evergreen):
+NETworkManager is available through the following package managers.
 
-```
-# Chocolatey
+### Chocolatey
+
+Install NETworkManager via Chocolatey:
+
+```PowerShell
 choco install networkmanager
+```
 
-# WinGet
+Chocolatey package: [chocolatey.org/packages/NETworkManager](https://chocolatey.org/packages/NETworkManager)
+
+### WinGet
+
+Install NETworkManager via WinGet:
+
+```PowerShell
 winget install BornToBeRoot.NETworkManager
+```
 
-# Evergreen
+WinGet source: [github.com/microsoft/winget-pkgs](https://github.com/microsoft/winget-pkgs/tree/master/manifests/b/BornToBeRoot/NETworkManager/)
+
+### Evergreen
+
+Get the latest NETworkManager release via Evergreen:
+
+```PowerShell
+# Get release via Evergreen
 Get-EvergreenApp -Name NETworkManager
 
-# Evergreen (save to disk)
+# Get release via Evergreen and save the setup file to disk
 Get-EvergreenApp -Name NETworkManager | Save-EvergreenApp -Path C:\Users\$env:Username\Downloads\
 ```
 
+Evergreen PowerShell module: [github.com/aaronparker/evergreen](https://github.com/aaronparker/evergreen)
+
 ## Silent install
 
-The Setup is based on [InnoSetup](https://jrsoftware.org/isinfo.php) and you can use all available [command line parameters](https://jrsoftware.org/ishelp/index.php?topic=setupcmdline). Use the following parameters to perform a silent installation and create a desktop icon:
+Install NETworkManager silent with the following command:
 
 ```
 .\NETworkManager_{VERSION}_Setup.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /TASKS="desktopicon" /SP-
 ```
+
+:::info
+
+The setup is based on [InnoSetup](https://jrsoftware.org/isinfo.php) and the common [command line parameters](https://jrsoftware.org/ishelp/index.php?topic=setupcmdline) are supported.
+
+:::

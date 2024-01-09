@@ -56,6 +56,14 @@ table {
   color: var(--ifm-color-primary);
 }
 
+.shieldsContainer {
+  text-align: center;
+}
+
+.shields {
+  margin: 0rem 0.25rem;
+}
+
 @keyframes jack-in-the-box {
   0% {
     opacity: 0;
