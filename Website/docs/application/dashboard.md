@@ -8,7 +8,7 @@ The **Dashboard** shows the status of your computer's current network connection
 
 As soon as the status of the local network adapter changes (e.g. Ethernet cable is plugged in, WLAN or VPN is connected, etc.), the connection to the router and Internet is checked.
 
-![Dashboard](./img/dashboard.png)
+![Dashboard](../img/dashboard.png)
 
 :::note
 

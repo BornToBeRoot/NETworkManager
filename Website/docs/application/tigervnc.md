@@ -24,7 +24,7 @@ TigerVNC must be installed on the local computer in order to use this feature. Y
 
 :::
 
-![TigerVNC](./img/tigervnc.png)
+![TigerVNC](../img/tigervnc.png)
 
 :::note
 

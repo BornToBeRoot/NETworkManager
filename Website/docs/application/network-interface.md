@@ -10,7 +10,7 @@ In **Network Interface** you can see all network adapters of the computer with t
 
 On the **Information** tab, you can see all the important details of the selected network adapter such as the configured IP addresses, DNS servers, MAC address, and more. If information such as IPv6 configuration is not available, it is hidden in the view.
 
-![Network Interface - Information](./img/network-interface--information.png)
+![Network Interface - Information](../img/network-interface--information.png)
 
 :::note
 
@@ -49,7 +49,7 @@ If you switch to another tool, monitoring will stop and when you switch back, th
 
 :::
 
-![Network Interface - Bandwidth](./img/network-interface--bandwidth.png)
+![Network Interface - Bandwidth](../img/network-interface--bandwidth.png)
 
 ## Configure
 
@@ -69,7 +69,7 @@ You may need to confirm a Windows UAC dialog to make changes to the network inte
 
 :::
 
-![Network Interface - Configure](./img/network-interface--configure.png)
+![Network Interface - Configure](../img/network-interface--configure.png)
 
 ## Profile
 

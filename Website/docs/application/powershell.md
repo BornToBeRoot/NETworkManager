@@ -36,7 +36,7 @@ If Windows Terminal is installed, change the `Default terminal application` in t
 
 :::
 
-![PowerShell](./img/powershell.png)
+![PowerShell](../img/powershell.png)
 
 :::note
 

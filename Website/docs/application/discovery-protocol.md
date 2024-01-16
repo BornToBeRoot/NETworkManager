@@ -20,7 +20,7 @@ If you are using a hypervisor like Hyper-V with a virtual switch configured as "
 
 :::
 
-![Discovery Protocol](./img/discovery-protocol.png)
+![Discovery Protocol](../img/discovery-protocol.png)
 
 :::note
 

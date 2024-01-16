@@ -18,7 +18,7 @@ PuTTY must be installed on the local computer in order to use this feature. You 
 
 :::
 
-![PuTTY](./img/putty.png)
+![PuTTY](../img/putty.png)
 
 :::note
 

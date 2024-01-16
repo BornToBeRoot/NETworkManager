@@ -6,7 +6,7 @@ sidebar_position: 21
 
 With the **Bit Calculator** different data units can be converted. Based on the input number and the selected unit the different units like bits, bytes, kilobits, kilobytes, megabits, megabytes, etc. are calculated.
 
-![Bit Calculator](./img/bit-calculator.png)
+![Bit Calculator](../img/bit-calculator.png)
 
 :::note
 

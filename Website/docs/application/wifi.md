@@ -26,7 +26,7 @@ Due to limitations of the `Windows.Devices.WiFi` API the channel bandwidth canno
 
 :::
 
-![WiFi](./img/wifi.png)
+![WiFi](../img/wifi.png)
 
 :::note
 
@@ -44,4 +44,4 @@ You can move the mouse over the channel to display all wireless networks in a To
 
 :::note
 
-![WiFi - Channel](./img/wifi--channel.png)
+![WiFi - Channel](../img/wifi--channel.png)

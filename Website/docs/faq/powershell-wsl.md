@@ -7,7 +7,7 @@ Create a new connection or profile with the following settings:
 - Remote console: `False`
 - Command: `wsl -d <DISTRIBUTION>`
 
-![PowerShell with WSL](./img/powershell-wsl.gif)
+![PowerShell with WSL](../img/powershell-wsl.gif)
 
 :::note
 

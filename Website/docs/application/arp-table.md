@@ -12,7 +12,7 @@ ARP (Address Resolution Protocol) is a layer 2 protocol for mapping IP addresses
 
 :::
 
-![ARP Table](./img/arp-table.png)
+![ARP Table](../img/arp-table.png)
 
 :::note
 
