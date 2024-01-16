@@ -16,7 +16,7 @@ Here you can find more information about [AWS Systems Manager](https://aws.amazo
 
 :::
 
-![AWS Session Manager](./img/aws-session-manager.png)
+![AWS Session Manager](../img/aws-session-manager.png)
 
 :::note
 

@@ -31,7 +31,7 @@ The button to the left of the `Scan` button determines the IP address and subnet
 
 If you right-click on a selected result, you can forward the device information to other applications (e.g. Port Scanner, Remote Desktop, etc), create a new profile with this information or execute a [custom command](#custom-commands).
 
-![IP Scanner](./img/ip-scanner.png)
+![IP Scanner](../img/ip-scanner.png)
 
 :::note
 

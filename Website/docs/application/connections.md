@@ -12,7 +12,7 @@ The data shown is similar to the output of the `netstat` command.
 
 :::
 
-![Connections](./img/connections.png)
+![Connections](../img/connections.png)
 
 :::note
 

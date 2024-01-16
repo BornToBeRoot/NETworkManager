@@ -24,7 +24,7 @@ Possible inputs:
 | ------------------- | ----------------- | ----------------------------------------------- |
 | `00:11:22:33:44:55` | `192.168.0.255`   | Broadcast address of a `192.168.0.0/24` network |
 
-![Wake on LAN](./img/wake-on-lan.png)
+![Wake on LAN](../img/wake-on-lan.png)
 
 ## Profile
 

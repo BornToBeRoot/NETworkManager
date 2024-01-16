@@ -13,7 +13,7 @@ SNTP (Simple Network Time Protocol) is a protocol used for synchronizing time be
 
 :::
 
-![SNTP Lookup](./img/sntp-lookup.png)
+![SNTP Lookup](../img/sntp-lookup.png)
 
 :::note
 

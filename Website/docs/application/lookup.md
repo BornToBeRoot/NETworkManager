@@ -16,7 +16,7 @@ The OUI (Organizationally Unique Identifier) is a 24-bit number that is assigned
 
 :::
 
-![Lookup - OUI](./img/lookup--oui.png)
+![Lookup - OUI](../img/lookup--oui.png)
 
 :::note
 
@@ -34,7 +34,7 @@ A port is a logical construct that identifies a specific process to which networ
 
 :::
 
-![Lookup - Port](./img/lookup--port.png)
+![Lookup - Port](../img/lookup--port.png)
 
 :::note
 

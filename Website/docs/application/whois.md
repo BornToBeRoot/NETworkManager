@@ -28,7 +28,7 @@ Example inputs:
 
 - `borntoberoot.net`
 
-![Whois](./img/whois.png)
+![Whois](../img/whois.png)
 
 :::note
 

@@ -12,7 +12,7 @@ Remote Desktop Protocol (RDP) is a proprietary protocol developed by Microsoft t
 
 :::
 
-![Remote Desktop](./img/remote-desktop.png)
+![Remote Desktop](../img/remote-desktop.png)
 
 :::note
 

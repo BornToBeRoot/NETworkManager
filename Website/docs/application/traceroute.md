@@ -11,7 +11,7 @@ Example inputs:
 - `server-01.borntoberoot.net`
 - `10.0.0.1`
 
-![Traceroute](./img/traceroute.png)
+![Traceroute](../img/traceroute.png)
 
 :::note
 

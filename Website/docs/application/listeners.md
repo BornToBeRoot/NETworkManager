@@ -6,7 +6,7 @@ sidebar_position: 24
 
 In **Listeners** you can see all the listeners with IP addresses and port that are currently running on your computer.
 
-![Listeners](./img/listeners.png)
+![Listeners](../img/listeners.png)
 
 :::note
 

@@ -21,7 +21,7 @@ Multiple OIDs (`.1.3.6.1.2.1.1; .1.3.6.1.2.1.2`) can be specified when using the
 
 :::
 
-![SNMP](./img/snmp.png)
+![SNMP](../img/snmp.png)
 
 :::note
 

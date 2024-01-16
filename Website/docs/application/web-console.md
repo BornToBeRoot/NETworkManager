@@ -12,7 +12,7 @@ WebView2 must be installed on the local computer in order to use this feature. Y
 
 :::
 
-![WebConsole](./img/web-console.png)
+![WebConsole](../img/web-console.png)
 
 :::note
 

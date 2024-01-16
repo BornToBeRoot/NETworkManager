@@ -16,7 +16,7 @@ Example inputs:
 - `192.168.0.0/255.255.255.0`
 - `2001:db8::/32`
 
-![Subnet Calculator - Calculator](./img/subnet-calculator--calculator.png)
+![Subnet Calculator - Calculator](../img/subnet-calculator--calculator.png)
 
 :::note
 
@@ -36,7 +36,7 @@ Example inputs:
 | `192.168.0.0/255.255.255.0` | `255.255.255.128` |
 | `2001:db8::/32`             | `/48`             |
 
-![Subnet Calculator - Subnetting](./img/subnet-calculator--subnetting.png)
+![Subnet Calculator - Subnetting](../img/subnet-calculator--subnetting.png)
 
 :::note
 
@@ -61,7 +61,7 @@ IPv6 is not supported.
 
 :::
 
-![Subnet Calculator - Wide Subnet](./img/subnet-calculator--wide-subnet.png)
+![Subnet Calculator - Wide Subnet](../img/subnet-calculator--wide-subnet.png)
 
 :::note
 

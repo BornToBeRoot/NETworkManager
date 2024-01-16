@@ -32,7 +32,7 @@ Example: `10.0.0.0/24; 10.0.[10-20]1` or `1-1024; 8080; 8443`
 
 :::
 
-![Port Scanner](./img/port-scanner.png)
+![Port Scanner](../img/port-scanner.png)
 
 :::note
 
