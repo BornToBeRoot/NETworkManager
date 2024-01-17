@@ -38,4 +38,8 @@ You can also use the Hotkeys `F2` (`edit`) or `Del` (`delete`) on a selected pro
 
 ## Group
 
+![Profiles - Group settings](./img/profiles--group-settings.png)
+
 ## Profile
+
+![Profiles - Profile settings](./img/profiles--profile-settings.png)
