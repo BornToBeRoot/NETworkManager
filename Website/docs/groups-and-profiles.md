@@ -38,8 +38,20 @@ You can also use the Hotkeys `F2` (`edit`) or `Del` (`delete`) on a selected pro
 
 ## Group
 
+In the group settings you can define general settings and feature specific settings.
+
 ![Profiles - Group settings](./img/profiles--group-settings.png)
 
 ## Profile
+
+In the profile settings you can define general settings and feature specific settings.
+
+:::tip
+
+Some settings like the `host` can be inherited from the general settings in the feature specific settings.
+
+See also the profile section in the specific [feature documentation](./application/) for more information.
+
+:::
 
 ![Profiles - Profile settings](./img/profiles--profile-settings.png)
