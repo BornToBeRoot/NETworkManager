@@ -50,7 +50,7 @@ In the profile settings you can define general settings and feature specific set
 
 Some settings like the `host` can be inherited from the general settings in the feature specific settings.
 
-See also the profile section in the specific [feature documentation](./application/) for more information.
+See also the profile section in the specific [feature documentation](./features.md) for more information.
 
 :::
 
