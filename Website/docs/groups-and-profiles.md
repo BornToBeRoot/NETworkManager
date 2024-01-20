@@ -10,7 +10,7 @@ In groups you can define settings that are applied to all profiles in this group
 
 ## Overview
 
-You can manage your groups and profiles in the "Settings" on the "Profile" tab for all features.
+You can manage your groups and profiles in the `Settings` on the `Profiles` tab for all features.
 
 ![Profiles - Overview](./img/profiles--overview.png)
 
@@ -45,6 +45,12 @@ In the group settings you can define general settings and feature specific setti
 ## Profile
 
 In the profile settings you can define general settings and feature specific settings.
+
+:::note
+
+Profiles are only displayed in the specific features if they have been enabled via the checkbox. The [`Profiles` tab in the `Settings`](#overview) will show all profiles.
+
+:::
 
 :::tip
 
