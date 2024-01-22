@@ -41,7 +41,7 @@ const FeatureList = [
     description: (
       <>
         Save your hosts with specific configurations in profiles and use them
-        across all features. Seperate them by environments and encrypt them to
+        across all features. Separate them by environments and encrypt them to
         protect your sensitive data.
       </>
     ),

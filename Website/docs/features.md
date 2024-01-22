@@ -36,7 +36,7 @@ If you have any suggestions for new features, please submit a [feature request](
 
 ## Profiles
 
-Save your hosts with specific configurations in profiles and use them across all features. You can seperate them in different profile files for each environment (e.g. work, home, customer, etc.) and encrypt them with a master password to protect your sensitive data.
+Save your hosts with specific configurations in profiles and use them across all features. You can separate them in different profile files for each environment (e.g. work, home, customer, etc.) and encrypt them with a master password to protect your sensitive data.
 
 ## Languages
 
