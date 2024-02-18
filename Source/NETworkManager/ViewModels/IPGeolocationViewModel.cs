@@ -175,6 +175,7 @@ public class IPGeolocationViewModel : ViewModelBase
 
     private async Task ExportAction()
     {
+        /*
         var customDialog = new CustomDialog
         {
             Title = Strings.Export
@@ -211,6 +212,7 @@ public class IPGeolocationViewModel : ViewModelBase
         };
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        */
     }
 
     #endregion
