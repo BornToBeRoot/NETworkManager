@@ -402,7 +402,7 @@
                                     </Grid>
                                 </Button.Content>
                             </Button>
-                            <mah:DropDownButton Style="{StaticResource ImageDropDrownButton}">
+                            <mah:DropDownButton Style="{StaticResource ImageDropDrownButton}" Margin="0,0,10,0">
                                 <mah:DropDownButton.Content>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -445,6 +445,32 @@
                                     </MenuItem>
                                 </mah:DropDownButton.Items>
                             </mah:DropDownButton>
+                            <Button Command="{Binding Path=ExportCommand}"
+                                    HorizontalAlignment="Left"
+                                    >
+                                <Button.Style>
+                                    <Style TargetType="{x:Type TypeName=Button}"
+                                           BasedOn="{StaticResource ResourceKey=ImageWithTextButton}">
+                                    </Style>
+                                </Button.Style>
+                                <Button.Content>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Rectangle Grid.Column="0" Grid.Row="0"
+                                                   Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                        <TextBlock Grid.Column="1" Grid.Row="0"
+                                                   Text="{x:Static Member=localization:Strings.ExportDots}"
+                                                   Style="{StaticResource ResourceKey=ButtonWithImageTextBlock}" />
+                                    </Grid>
+                                </Button.Content>
+                            </Button>
                         </WrapPanel>
                     </Grid>
                 </TabItem>
