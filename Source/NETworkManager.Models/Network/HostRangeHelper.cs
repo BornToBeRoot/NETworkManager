@@ -1,5 +1,4 @@
-﻿extern alias IPNetwork2;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -8,7 +7,6 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using NETworkManager.Utilities;
-using IPNetwork = IPNetwork2::System.Net.IPNetwork;
 
 namespace NETworkManager.Models.Network;
 
@@ -59,7 +57,7 @@ public static class HostRangeHelper
                 case var _ when Regex.IsMatch(host, RegexHelper.IPv4AddressCidrRegex):
                 // 192.168.0.0/255.255.255.0
                 case var _ when Regex.IsMatch(host, RegexHelper.IPv4AddressSubnetmaskRegex):
-                    var network = IPNetwork.Parse(host);
+                    var network = IPNetwork2.Parse(host);
 
                     Parallel.For(IPv4Address.ToInt32(network.Network), IPv4Address.ToInt32(network.Broadcast) + 1,
                         (i, state) =>
@@ -180,7 +178,7 @@ public static class HostRangeHelper
                             // Only support IPv4 for ranges for now
                             if (dnsResolverTask.Result.Value.AddressFamily == AddressFamily.InterNetwork)
                             {
-                                network = IPNetwork.Parse(
+                                network = IPNetwork2.Parse(
                                     $"{dnsResolverTask.Result.Value}/{hostAndSubnet[1]}");
 
                                 Parallel.For(IPv4Address.ToInt32(network.Network),

@@ -1,9 +1,9 @@
-﻿extern alias IPNetwork2;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -11,7 +11,6 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using IPNetwork2::System.Net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Localization.Resources;
@@ -239,7 +238,7 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
         var subnet = Subnet.Trim();
         var newSubnetmaskOrCidr = NewSubnetmask.Trim();
 
-        var ipNetwork = IPNetwork.Parse(Subnet.Trim());
+        var ipNetwork = IPNetwork2.Parse(Subnet.Trim());
 
         var newCidr =
             // Support subnetmask like 255.255.255.0
