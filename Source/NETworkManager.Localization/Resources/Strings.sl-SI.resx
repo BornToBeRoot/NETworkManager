@@ -292,7 +292,7 @@
     <value>OUI</value>
   </data>
   <data name="OverwriteQuestion" xml:space="preserve">
-    <value>Prepišem?</value>
+    <value>Želite prepisati?</value>
   </data>
   <data name="Ping" xml:space="preserve">
     <value>Ping</value>
