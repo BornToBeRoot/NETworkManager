@@ -27,7 +27,7 @@ public class PingMonitorViewModel : ViewModelBase
     #region Contructor, load settings
 
     public PingMonitorViewModel(IDialogCoordinator instance, Guid hostId, Action<Guid> removeHostByGuid,
-        (IPAddress ipAddress, string hostname) host)
+        (IPAddress ipAddress, string hostname) host, string group)
     {
         _dialogCoordinator = instance;
 
@@ -38,7 +38,8 @@ public class PingMonitorViewModel : ViewModelBase
 
         IPAddress = host.ipAddress;
         Hostname = host.hostname;
-
+        Group = group;
+        
         InitialTimeChart();
 
         ExpandHostView = SettingsManager.Current.PingMonitor_ExpandHostView;
@@ -97,6 +98,21 @@ public class PingMonitorViewModel : ViewModelBase
                 return;
 
             _ipAddress = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    private string _group;
+
+    public string Group
+    {
+        get => _group;
+        set
+        {
+            if (value == _group)
+                return;
+
+            _group = value;
             OnPropertyChanged();
         }
     }

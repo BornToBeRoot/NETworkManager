@@ -1689,6 +1689,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close group.
+        /// </summary>
+        public static string CloseGroup {
+            get {
+                return ResourceManager.GetString("CloseGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Closing in {0} seconds....
         /// </summary>
         public static string ClosingInXSecondsDots {
