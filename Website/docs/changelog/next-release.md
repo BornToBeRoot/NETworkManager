@@ -21,6 +21,9 @@ Release date: **xx.xx.2023**
 
 ## Improvements
 
+- **Ping Monitor**
+  - Grouping of hosts added. Hosts are now grouped based on the profile or added to the default group [#2645](https://github.com/BornToBeRoot/NETworkManager/pull/2645)
+
 ## Bugfixes
 
 - **IP Scanner**
