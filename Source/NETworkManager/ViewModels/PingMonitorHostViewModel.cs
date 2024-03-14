@@ -34,7 +34,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private readonly bool _isLoading;
     private bool _isViewActive = true;
-
+    
+    private string _group = Strings.Hosts; // Default group name
+    
     private string _host;
 
     public string Host
@@ -275,6 +277,8 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
         // Hosts
         HostsView = CollectionViewSource.GetDefaultView(Hosts);
+        HostsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PingMonitorView.Group)));
+        HostsView.SortDescriptions.Add(new SortDescription(nameof(PingMonitorView.Group), ListSortDirection.Ascending));
 
         // Profiles
         SetProfilesView();
@@ -328,15 +332,15 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private void PingProfileAction()
     {
-        if (SetHost(SelectedProfile.PingMonitor_Host))
+        if (SetHost(SelectedProfile.PingMonitor_Host, SelectedProfile.Group))
             Start().ConfigureAwait(false);
     }
 
-    public ICommand CloseAllCommand => new RelayCommand(_ => CloseAllAction());
+    public ICommand CloseGroupCommand => new RelayCommand(CloseGroupAction);
 
-    private void CloseAllAction()
+    private void CloseGroupAction(object group)
     {
-        RemoveAllHosts();
+        RemoveGroup(group.ToString());
     }
 
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
@@ -405,8 +409,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     ///     Set the host to ping.
     /// </summary>
     /// <param name="host">Host to ping</param>
+    /// <param name="group">Group to add the host to</param>
     /// <returns>True if the host was set successfully, otherwise false</returns>
-    public bool SetHost(string host)
+    public bool SetHost(string host, string group = null)
     {
         // Check if it is already running or canceling
         if (IsRunning || IsCanceling)
@@ -417,8 +422,11 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
             return false;
         }
 
+        if (group != null)
+            _group = group;
+        
         Host = host;
-
+        
         return true;
     }
 
@@ -457,7 +465,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
         // Add host(s) to list and start the ping
         foreach (var hostView in hosts.hosts.Select(currentHost =>
-                     new PingMonitorView(Guid.NewGuid(), RemoveHostByGuid, currentHost)))
+                     new PingMonitorView(Guid.NewGuid(), RemoveHostByGuid, currentHost, _group)))
         {
             // Check if the user has canceled the operation
             if (_cancellationTokenSource.IsCancellationRequested)
@@ -477,6 +485,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         }
 
         Host = string.Empty;
+        _group = Strings.Hosts; // Reset the group
 
         IsCanceling = false;
         IsRunning = false;
@@ -488,10 +497,13 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         _cancellationTokenSource.Cancel();
     }
 
-    private void RemoveAllHosts()
+    private void RemoveGroup(string group)
     {
         for (var i = Hosts.Count - 1; i >= 0; i--)
         {
+            if (!Hosts[i].Group.Equals(group)) 
+                continue;
+            
             Hosts[i].Stop();
             Hosts.RemoveAt(i);
         }
