@@ -23,6 +23,9 @@ Release date: **xx.xx.2023**
 
 ## Bugfixes
 
+- **IP Scanner**
+  - Copy MAC address to clipboard fixed [#2644](https://github.com/BornToBeRoot/NETworkManager/pull/2644)
+
 ## Dependencies, Refactoring & Documentation
 
 - Code cleanup & Refactoring
