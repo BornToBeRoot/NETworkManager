@@ -410,7 +410,7 @@
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         <MenuItem Header="{x:Static localization:Strings.MACAddress}"
                                   Command="{Binding CopyDataToClipboardCommand}"
-                                  CommandParameter="{Binding Path=SelectedResult.MACAddress, Converter={StaticResource PhysicalAddressToStringConverter}}"
+                                  CommandParameter="{Binding Path=SelectedResult.MACAddress}"
                                   Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_ResolveMACAddress, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         <MenuItem Header="{x:Static localization:Strings.Vendor}"
