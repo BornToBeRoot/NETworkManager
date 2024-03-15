@@ -3808,4 +3808,7 @@ Versuchen Sie es in einigen Sekunden erneut.</value>
   <data name="ResolveMACAddressIsDisabled" xml:space="preserve">
     <value>MAC-Adresse auflösen ist deaktiviert!</value>
   </data>
+  <data name="CloseGroup" xml:space="preserve">
+    <value>Gruppe schließen</value>
+  </data>
 </root>
