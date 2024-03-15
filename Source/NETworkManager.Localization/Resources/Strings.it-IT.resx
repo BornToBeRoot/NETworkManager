@@ -3898,7 +3898,7 @@ Attendi il completamento del processo e riprova.</value>
     <value>La scansione NetBIOS è disabilitata!</value>
   </data>
   <data name="ResolveHostnameIsDisabled" xml:space="preserve">
-    <value>La risoluzione nomi host è disabilitata!</value>
+    <value>La risoluzione dei nomi host è disabilitata!</value>
   </data>
   <data name="ResolveMACAddressIsDisabled" xml:space="preserve">
     <value>La risoluzione degli indirizzi MAC è disabilitata!</value>
