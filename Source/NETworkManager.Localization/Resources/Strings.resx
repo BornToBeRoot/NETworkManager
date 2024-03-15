@@ -3808,4 +3808,7 @@ Try again in a few seconds.</value>
   <data name="ResolveMACAddressIsDisabled" xml:space="preserve">
     <value>Resolve MAC address is disabled!</value>
   </data>
+  <data name="CloseGroup" xml:space="preserve">
+    <value>Close group</value>
+  </data>
 </root>

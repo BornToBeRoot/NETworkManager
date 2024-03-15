@@ -1,7 +1,6 @@
-﻿extern alias IPNetwork2;
+﻿using System.Net;
 using System.Net.Sockets;
 using System.Numerics;
-using IPNetwork2::System.Net;
 using IPAddress = System.Net.IPAddress;
 
 namespace NETworkManager.Models.Network;
@@ -12,7 +11,7 @@ public class IPNetworkInfo
     {
     }
 
-    public IPNetworkInfo(IPNetwork ipNetwork)
+    public IPNetworkInfo(IPNetwork2 ipNetwork)
     {
         Network = ipNetwork.Network;
         Broadcast = ipNetwork.Broadcast;

@@ -1,10 +1,9 @@
-﻿extern alias IPNetwork2;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using IPNetwork2::System.Net;
 using MahApps.Metro.Controls;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
@@ -117,7 +116,7 @@ public class SubnetCalculatorCalculatorViewModel : ViewModelBase
 
         var subnet = Subnet.Trim();
 
-        Result = new IPNetworkInfo(IPNetwork.Parse(subnet));
+        Result = new IPNetworkInfo(IPNetwork2.Parse(subnet));
 
         IsResultVisible = true;
 
