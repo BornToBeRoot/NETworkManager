@@ -741,6 +741,35 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
+    private string _networkInterface_ExportFilePath;
+
+    public string NetworkInterface_ExportFilePath
+    {
+        get => _networkInterface_ExportFilePath;
+        set
+        {
+            if (value == _networkInterface_ExportFilePath)
+                return;
+
+            _networkInterface_ExportFilePath = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private ExportFileType _networkInterface_ExportFileType = GlobalStaticConfiguration.NetworkInterface_ExportFileType;
+
+    public ExportFileType NetworkInterface_ExportFileType
+    {
+        get => _networkInterface_ExportFileType;
+        set
+        {
+            if (value == _networkInterface_ExportFileType)
+                return;
+
+            _networkInterface_ExportFileType = value;
+            OnPropertyChanged();
+        }
+    }
     #endregion
 
     #region WiFi
@@ -3664,6 +3693,35 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
+    private string _discoveryProtocol_ExportFilePath;
+
+    public string DiscoveryProtocol_ExportFilePath
+    {
+        get => _discoveryProtocol_ExportFilePath;
+        set
+        {
+            if (value == _discoveryProtocol_ExportFilePath)
+                return;
+
+            _discoveryProtocol_ExportFilePath = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private ExportFileType _discoveryProtocol_ExportFileType = GlobalStaticConfiguration.DiscoveryProtocol_ExportFileType;
+
+    public ExportFileType DiscoveryProtocol_ExportFileType
+    {
+        get => _discoveryProtocol_ExportFileType;
+        set
+        {
+            if (value == _discoveryProtocol_ExportFileType)
+                return;
+
+            _discoveryProtocol_ExportFileType = value;
+            OnPropertyChanged();
+        }
+    }
     #endregion
 
     #region WakeOnLAN
@@ -3900,7 +3958,6 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-
     #endregion
 
     #region Subnet Calculator
@@ -4073,6 +4130,35 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
+    private string _bitCalculator_ExportFilePath;
+
+    public string BitCalculator_ExportFilePath
+    {
+        get => _bitCalculator_ExportFilePath;
+        set
+        {
+            if (value == _bitCalculator_ExportFilePath)
+                return;
+
+            _bitCalculator_ExportFilePath = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private ExportFileType _bitCalculator_ExportFileType = GlobalStaticConfiguration.BitCalculator_ExportFileType;
+
+    public ExportFileType BitCalculator_ExportFileType
+    {
+        get => _bitCalculator_ExportFileType;
+        set
+        {
+            if (value == _bitCalculator_ExportFileType)
+                return;
+
+            _bitCalculator_ExportFileType = value;
+            OnPropertyChanged();
+        }
+    }
     #endregion
 
     #region Lookup
