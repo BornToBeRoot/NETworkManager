@@ -400,10 +400,9 @@ public class ARPTableViewModel : ViewModelBase
 
             SettingsManager.Current.ARPTable_ExportFileType = instance.FileType;
             SettingsManager.Current.ARPTable_ExportFilePath = instance.FilePath;
-        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new[]
-        {
+        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, [
             ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
-        }, true, SettingsManager.Current.ARPTable_ExportFileType, SettingsManager.Current.ARPTable_ExportFilePath);
+        ], true, SettingsManager.Current.ARPTable_ExportFileType, SettingsManager.Current.ARPTable_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {

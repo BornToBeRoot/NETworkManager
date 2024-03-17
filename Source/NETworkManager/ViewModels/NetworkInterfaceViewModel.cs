@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -18,6 +19,7 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
+using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
@@ -671,6 +673,50 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         ReloadNetworkInterfaces();
     }
 
+    public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
+
+    private async Task ExportAction()
+    {
+        var customDialog = new CustomDialog
+        {
+            Title = Strings.Export
+        };
+
+        var exportViewModel = new ExportViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType,
+                        instance.ExportAll ? NetworkInterfaces : [SelectedNetworkInterface]);
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                        Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                        Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.NetworkInterface_ExportFileType = instance.FileType;
+                SettingsManager.Current.NetworkInterface_ExportFilePath = instance.FilePath;
+            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
+            [
+                ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
+            ], true,
+            SettingsManager.Current.NetworkInterface_ExportFileType, SettingsManager.Current.NetworkInterface_ExportFilePath);
+
+        customDialog.Content = new ExportDialog
+        {
+            DataContext = exportViewModel
+        };
+
+        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+    }
+    
     public ICommand ApplyConfigurationCommand =>
         new RelayCommand(_ => ApplyConfigurationAction(), ApplyConfiguration_CanExecute);
 
