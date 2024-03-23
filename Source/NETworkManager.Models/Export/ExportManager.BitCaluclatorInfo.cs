@@ -45,15 +45,13 @@ public static partial class ExportManager
     {
         var stringBuilder = new StringBuilder();
 
-        /*
         stringBuilder.AppendLine(
-            $"{nameof(NetworkInterfaceInfo.Id)},{nameof(NetworkInterfaceInfo.Name)},{nameof(NetworkInterfaceInfo.Description)},{nameof(NetworkInterfaceInfo.Type)},{nameof(NetworkInterfaceInfo.PhysicalAddress)},{nameof(NetworkInterfaceInfo.Status)},{nameof(NetworkInterfaceInfo.IsOperational)},{nameof(NetworkInterfaceInfo.Speed)},{nameof(NetworkInterfaceInfo.IPv4ProtocolAvailable)},{nameof(NetworkInterfaceInfo.IPv4Address)},{nameof(NetworkInterfaceInfo.IPv4Gateway)},{nameof(NetworkInterfaceInfo.DhcpEnabled)},{nameof(NetworkInterfaceInfo.DhcpServer)},{nameof(NetworkInterfaceInfo.DhcpLeaseObtained)},{nameof(NetworkInterfaceInfo.DhcpLeaseExpires)},{nameof(NetworkInterfaceInfo.IPv6ProtocolAvailable)},{nameof(NetworkInterfaceInfo.IPv6Address)},{nameof(NetworkInterfaceInfo.IPv6AddressLinkLocal)},{nameof(NetworkInterfaceInfo.IPv6Gateway)},{nameof(NetworkInterfaceInfo.DNSAutoconfigurationEnabled)},{nameof(NetworkInterfaceInfo.DNSSuffix)},{nameof(NetworkInterfaceInfo.DNSServer)}");
-        
+            $"{nameof(BitCaluclatorInfo.Bits)},{nameof(BitCaluclatorInfo.Bytes)},{nameof(BitCaluclatorInfo.Kilobits)},{nameof(BitCaluclatorInfo.Kilobytes)},{nameof(BitCaluclatorInfo.Megabits)},{nameof(BitCaluclatorInfo.Megabytes)},{nameof(BitCaluclatorInfo.Gigabits)},{nameof(BitCaluclatorInfo.Gigabytes)},{nameof(BitCaluclatorInfo.Terabits)},{nameof(BitCaluclatorInfo.Terabytes)},{nameof(BitCaluclatorInfo.Petabits)},{nameof(BitCaluclatorInfo.Petabytes)}");
+
         foreach (var info in collection)
             stringBuilder.AppendLine(
-                $"{info.Id},{info.Name},{info.Description},{info.Type},{info.PhysicalAddress},{info.Status},{info.IsOperational},{info.Speed},{info.IPv4ProtocolAvailable},{info.IPv4Address},{info.IPv4Gateway},{info.DhcpEnabled},{info.DhcpServer},{info.DhcpLeaseObtained},{info.DhcpLeaseExpires},{info.IPv6ProtocolAvailable},{info.IPv6Address},{info.IPv6AddressLinkLocal},{info.IPv6Gateway},{info.DNSAutoconfigurationEnabled},{info.DNSSuffix},{info.DNSServer}");
-        */
-        
+                $"{info.Bits},{info.Bytes},{info.Kilobits},{info.Kilobytes},{info.Megabits},{info.Megabytes},{info.Gigabits},{info.Gigabytes},{info.Terabits},{info.Terabytes},{info.Petabits},{info.Petabytes}");
+
         File.WriteAllText(filePath, stringBuilder.ToString());
     }
 
@@ -64,19 +62,26 @@ public static partial class ExportManager
     /// <param name="filePath">Path to the export file.</param>
     private static void CreateXml(IEnumerable<BitCaluclatorInfo> collection, string filePath)
     {
-        /*
         var document = new XDocument(DefaultXDeclaration,
-            new XElement(ApplicationName.ARPTable.ToString(),
-                new XElement(nameof(ARPInfo) + "s",
+            new XElement(ApplicationName.BitCalculator.ToString(),
+                new XElement(nameof(BitCaluclatorInfo) + "s",
                     from info in collection
                     select
-                        new XElement(nameof(ARPInfo),
-                            new XElement(nameof(ARPInfo.IPAddress), info.IPAddress),
-                            new XElement(nameof(ARPInfo.MACAddress), info.MACAddress),
-                            new XElement(nameof(ARPInfo.IsMulticast), info.IsMulticast)))));
+                        new XElement(nameof(BitCaluclatorInfo),
+                            new XElement(nameof(BitCaluclatorInfo.Bits), info.Bits),
+                            new XElement(nameof(BitCaluclatorInfo.Bytes), info.Bytes),
+                            new XElement(nameof(BitCaluclatorInfo.Kilobits), info.Kilobits),
+                            new XElement(nameof(BitCaluclatorInfo.Kilobytes), info.Kilobytes),
+                            new XElement(nameof(BitCaluclatorInfo.Megabits), info.Megabits),
+                            new XElement(nameof(BitCaluclatorInfo.Megabytes), info.Megabytes),
+                            new XElement(nameof(BitCaluclatorInfo.Gigabits), info.Gigabits),
+                            new XElement(nameof(BitCaluclatorInfo.Gigabytes), info.Gigabytes),
+                            new XElement(nameof(BitCaluclatorInfo.Terabits), info.Terabits),
+                            new XElement(nameof(BitCaluclatorInfo.Terabytes), info.Terabytes),
+                            new XElement(nameof(BitCaluclatorInfo.Petabits), info.Petabits),
+                            new XElement(nameof(BitCaluclatorInfo.Petabytes), info.Petabytes)))));
 
         document.Save(filePath);
-        */
     }
 
     /// <summary>
@@ -88,15 +93,23 @@ public static partial class ExportManager
     {
         var jsonData = new object[collection.Count];
 
-        /*
         for (var i = 0; i < collection.Count; i++)
             jsonData[i] = new
             {
-                IPAddress = collection[i].IPAddress.ToString(),
-                MACAddress = collection[i].MACAddress.ToString(),
-                collection[i].IsMulticast
+                collection[i].Bits,
+                collection[i].Bytes,
+                collection[i].Kilobits,
+                collection[i].Kilobytes,
+                collection[i].Megabits,
+                collection[i].Megabytes,
+                collection[i].Gigabits,
+                collection[i].Gigabytes,
+                collection[i].Terabits,
+                collection[i].Terabytes,
+                collection[i].Petabits,
+                collection[i].Petabytes
             };
-*/
+
         File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
     }
 }
