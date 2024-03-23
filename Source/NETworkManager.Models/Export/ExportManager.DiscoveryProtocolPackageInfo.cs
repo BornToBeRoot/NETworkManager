@@ -17,7 +17,8 @@ public static partial class ExportManager
     /// <param name="filePath">Path to the export file.</param>
     /// <param name="fileType">Allowed <see cref="ExportFileType" /> are CSV, XML or JSON.</param>
     /// <param name="collection">Objects as <see cref="IReadOnlyList{DiscoveryProtocolPackageInfo}" /> to export.</param>
-    public static void Export(string filePath, ExportFileType fileType, IReadOnlyList<DiscoveryProtocolPackageInfo> collection)
+    public static void Export(string filePath, ExportFileType fileType,
+        IReadOnlyList<DiscoveryProtocolPackageInfo> collection)
     {
         switch (fileType)
         {
@@ -45,15 +46,14 @@ public static partial class ExportManager
     {
         var stringBuilder = new StringBuilder();
 
-        /*
+
         stringBuilder.AppendLine(
-            $"{nameof(NetworkInterfaceInfo.Id)},{nameof(NetworkInterfaceInfo.Name)},{nameof(NetworkInterfaceInfo.Description)},{nameof(NetworkInterfaceInfo.Type)},{nameof(NetworkInterfaceInfo.PhysicalAddress)},{nameof(NetworkInterfaceInfo.Status)},{nameof(NetworkInterfaceInfo.IsOperational)},{nameof(NetworkInterfaceInfo.Speed)},{nameof(NetworkInterfaceInfo.IPv4ProtocolAvailable)},{nameof(NetworkInterfaceInfo.IPv4Address)},{nameof(NetworkInterfaceInfo.IPv4Gateway)},{nameof(NetworkInterfaceInfo.DhcpEnabled)},{nameof(NetworkInterfaceInfo.DhcpServer)},{nameof(NetworkInterfaceInfo.DhcpLeaseObtained)},{nameof(NetworkInterfaceInfo.DhcpLeaseExpires)},{nameof(NetworkInterfaceInfo.IPv6ProtocolAvailable)},{nameof(NetworkInterfaceInfo.IPv6Address)},{nameof(NetworkInterfaceInfo.IPv6AddressLinkLocal)},{nameof(NetworkInterfaceInfo.IPv6Gateway)},{nameof(NetworkInterfaceInfo.DNSAutoconfigurationEnabled)},{nameof(NetworkInterfaceInfo.DNSSuffix)},{nameof(NetworkInterfaceInfo.DNSServer)}");
-        
+            $"{nameof(DiscoveryProtocolPackageInfo.Device)},{nameof(DiscoveryProtocolPackageInfo.DeviceDescription)},{nameof(DiscoveryProtocolPackageInfo.Port)},{nameof(DiscoveryProtocolPackageInfo.PortDescription)},{nameof(DiscoveryProtocolPackageInfo.Model)},{nameof(DiscoveryProtocolPackageInfo.VLAN)},{nameof(DiscoveryProtocolPackageInfo.IPAddress)},{nameof(DiscoveryProtocolPackageInfo.Protocol)},{nameof(DiscoveryProtocolPackageInfo.TimeToLive)}");
+
         foreach (var info in collection)
             stringBuilder.AppendLine(
-                $"{info.Id},{info.Name},{info.Description},{info.Type},{info.PhysicalAddress},{info.Status},{info.IsOperational},{info.Speed},{info.IPv4ProtocolAvailable},{info.IPv4Address},{info.IPv4Gateway},{info.DhcpEnabled},{info.DhcpServer},{info.DhcpLeaseObtained},{info.DhcpLeaseExpires},{info.IPv6ProtocolAvailable},{info.IPv6Address},{info.IPv6AddressLinkLocal},{info.IPv6Gateway},{info.DNSAutoconfigurationEnabled},{info.DNSSuffix},{info.DNSServer}");
-        */
-        
+                $"{info.Device},{info.DeviceDescription},{info.Port},{info.PortDescription},{info.Model},{info.VLAN},{info.IPAddress},{info.Protocol},{info.TimeToLive}");
+
         File.WriteAllText(filePath, stringBuilder.ToString());
     }
 
@@ -64,19 +64,24 @@ public static partial class ExportManager
     /// <param name="filePath">Path to the export file.</param>
     private static void CreateXml(IEnumerable<DiscoveryProtocolPackageInfo> collection, string filePath)
     {
-        /*
         var document = new XDocument(DefaultXDeclaration,
-            new XElement(ApplicationName.ARPTable.ToString(),
-                new XElement(nameof(ARPInfo) + "s",
+            new XElement(ApplicationName.DiscoveryProtocol.ToString(),
+                new XElement(nameof(DiscoveryProtocolPackageInfo) + "s",
                     from info in collection
                     select
-                        new XElement(nameof(ARPInfo),
-                            new XElement(nameof(ARPInfo.IPAddress), info.IPAddress),
-                            new XElement(nameof(ARPInfo.MACAddress), info.MACAddress),
-                            new XElement(nameof(ARPInfo.IsMulticast), info.IsMulticast)))));
+                        new XElement(nameof(DiscoveryProtocolPackageInfo),
+                            new XElement(nameof(DiscoveryProtocolPackageInfo.Device), info.Device),
+                            new XElement(nameof(DiscoveryProtocolPackageInfo.DeviceDescription),
+                                info.DeviceDescription),
+                            new XElement(nameof(DiscoveryProtocolPackageInfo.Port), info.Port),
+                            new XElement(nameof(DiscoveryProtocolPackageInfo.PortDescription), info.PortDescription),
+                            new XElement(nameof(DiscoveryProtocolPackageInfo.Model), info.Model),
+                            new XElement(nameof(DiscoveryProtocolPackageInfo.VLAN), info.VLAN),
+                            new XElement(nameof(DiscoveryProtocolPackageInfo.IPAddress), info.IPAddress),
+                            new XElement(nameof(DiscoveryProtocolPackageInfo.Protocol), info.Protocol),
+                            new XElement(nameof(DiscoveryProtocolPackageInfo.TimeToLive), info.TimeToLive)))));
 
         document.Save(filePath);
-        */
     }
 
     /// <summary>
@@ -88,15 +93,20 @@ public static partial class ExportManager
     {
         var jsonData = new object[collection.Count];
 
-        /*
         for (var i = 0; i < collection.Count; i++)
             jsonData[i] = new
             {
-                IPAddress = collection[i].IPAddress.ToString(),
-                MACAddress = collection[i].MACAddress.ToString(),
-                collection[i].IsMulticast
+                collection[i].Device,
+                collection[i].DeviceDescription,
+                collection[i].Port,
+                collection[i].PortDescription,
+                collection[i].Model,
+                collection[i].VLAN,
+                collection[i].IPAddress,
+                collection[i].Protocol,
+                collection[i].TimeToLive
             };
-*/
+
         File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
     }
 }
