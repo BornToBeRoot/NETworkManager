@@ -54,7 +54,7 @@
   </p>
 </div>
 
-<img alt="NETworkManager Preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/docs/Preview.gif?raw=true" />
+<img alt="NETworkManager Preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Website/static/img/preview.gif?raw=true" />
 
 ## 📦 Download
 
