@@ -16,7 +16,7 @@
             <description><![CDATA[Welcome to the new NETworkManager website and documentation.]]></description>
             <content:encoded><![CDATA[<p>Welcome to the new NETworkManager website and documentation.</p>
 <p>It's build with <a href="https://docusaurus.io/" target="_blank" rel="noopener noreferrer">Docusaurus</a>, a static website generator, and hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a>.</p>
-<p>You can help to improve the documentation by submitting a <a href="https://github.com/BornToBeRoot/NETworkManager-docs" target="_blank" rel="noopener noreferrer">pull request</a>.</p>]]></content:encoded>
+<p>You can help to improve the documentation by submitting a <a href="https://github.com/BornToBeRoot/NETworkManager" target="_blank" rel="noopener noreferrer">pull request</a>.</p>]]></content:encoded>
             <category>welcome</category>
             <category>networkmanager</category>
             <category>docusaurus</category>
