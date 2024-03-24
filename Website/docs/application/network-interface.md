@@ -61,8 +61,40 @@ The options you can set correspond to the network adapter properties `Internetpr
 In addition, further actions can be performed using the buttons at the bottom left:
 
 - **Additional config...**
+
   - **Add IPv4 address...** - Opens a dialog to add an IPv4 address with a subnet mask or CIDR to the selected network adapter.
+
+    :::note
+
+    If a static IP address is added to a network adapter that is configured for DHCP, the `netsh` option `dhcpstaticipcoexistence` is also activated.
+
+    The following command is executed in an elevated PowerShell to enable the `dhcpstaticipcoexistence` option:
+
+    ```PowerShell
+    netsh interface ipv4 set interface interface="Ethernet" dhcpstaticipcoexistence=enabled
+    ```
+
+    :::
+
+    :::info
+
+    `dhcpstaticipcoexistence` allows the network adapter to use a static IP address and still receive DHCP options (e.g. DNS server) from the DHCP server. This is useful if you want to use a static IP address but still want to receive DNS server addresses from the DHCP server. This feature is available since Windows 10 version 1703 (Creators Update).
+
+    :::
+
   - **Remove IPv4 addres...** - Opens a dialog where you can select an IPv4 address to remove from the selected network adapter.
+
+    :::note
+
+    You can only remove IPv4 addresses that are not assigned via DHCP.
+
+    The `netsh` option `dhcpstaticipcoexistence` remains active. You can disable it by executing the following command in an elevated PowerShell:
+
+    ```PowerShell
+    netsh interface ipv4 set interface interface="Ethernet" dhcpstaticipcoexistence=disabled
+    ```
+
+    :::
 
 :::note
 
