@@ -78,7 +78,7 @@ In addition, further actions can be performed using the buttons at the bottom le
 
     :::info
 
-    `dhcpstaticipcoexistence` allows the network adapter to use a static IP address and still receive DHCP options (e.g. DNS server) from the DHCP server. This is useful if you want to use a static IP address but still want to receive DNS server addresses from the DHCP server. This feature is available since Windows 10 version 1703 (Creators Update).
+    The `netsh` option `dhcpstaticipcoexistence` allows the network adapter to use a static IP address and still receive DHCP options (e.g. DNS server) from the DHCP server. This is useful if you want to use a static IP address but still want to receive DNS server addresses from the DHCP server. This feature is available since Windows 10 version 1703 (Creators Update).
 
     :::
 
@@ -86,9 +86,9 @@ In addition, further actions can be performed using the buttons at the bottom le
 
     :::note
 
-    You can only remove IPv4 addresses that are not assigned via DHCP.
+    Only IPv4 addresses that are not assigned via DHCP can be removed.
 
-    The `netsh` option `dhcpstaticipcoexistence` remains active. You can disable it by executing the following command in an elevated PowerShell:
+    If you have previously added an additional IPv4 address to a network adapter that is configured for DHCP, the `netsh` option `dhcpstaticipcoexistence` remains active. To disable it, run the following command in an elevated PowerShell:
 
     ```PowerShell
     netsh interface ipv4 set interface interface="Ethernet" dhcpstaticipcoexistence=disabled
