@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Net;
 using System.Windows;
 using System.Windows.Data;
+using NETworkManager.Models.Network;
 
 namespace NETworkManager.Converters;
 
@@ -14,20 +15,10 @@ public sealed class IPAddressArrayToStringConverter : IValueConverter
         if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             return "-/-";
 
-        if (value is not IPAddress[] ipAddresses)
+        if (value is not IPAddress[] ipAddresses) 
             return "-/-";
-
-        var result = string.Empty;
-
-        foreach (var ipAddr in ipAddresses)
-        {
-            if (!string.IsNullOrEmpty(result))
-                result += Environment.NewLine;
-
-            result += ipAddr.ToString();
-        }
-
-        return result;
+        
+        return IPv4Address.ConvertIPAddressListToString(ipAddresses);
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

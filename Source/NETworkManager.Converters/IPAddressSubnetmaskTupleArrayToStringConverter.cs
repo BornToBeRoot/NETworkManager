@@ -18,17 +18,7 @@ public sealed class IPAddressSubnetmaskTupleArrayToStringConverter : IValueConve
         if (value is not Tuple<IPAddress, IPAddress>[] ipAddresses)
             return "-/-";
 
-        var result = string.Empty;
-
-        foreach (var ipAddr in ipAddresses)
-        {
-            if (!string.IsNullOrEmpty(result))
-                result += Environment.NewLine;
-
-            result += ipAddr.Item1 + "/" + Subnetmask.ConvertSubnetmaskToCidr(ipAddr.Item2);
-        }
-
-        return result;
+        return IPv4Address.ConvertIPAddressWithSubnetmaskListToString(ipAddresses);
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
