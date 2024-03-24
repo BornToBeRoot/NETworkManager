@@ -22,6 +22,10 @@ If you are using a hypervisor like Hyper-V with a virtual switch configured as "
 
 ![Discovery Protocol](../img/discovery-protocol.png)
 
+In addition, further actions can be performed using the buttons at the bottom right:
+
+- **Export...** - Export the information to a CSV, XML or JSON file.
+
 :::note
 
 Right-click on the result to copy the information.

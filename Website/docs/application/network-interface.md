@@ -28,12 +28,13 @@ In addition, further actions can be performed using the buttons at the bottom le
     - **Release & Renew** - Releases the current IPv6 addresses obtained via DHCPv6 and renews them via DHCPv6 for the _selected_ adapter that ist configured to automatically obtain an IPv6 address (`ipconfig /release6 && ipconfig /renew6 <ADAPTER>`).
     - **Release** - Releases the current IPv6 addresses obtained via DHCPv6 for the _selected_ network adapter that is configured to automatically obtain an IPv6 address (`ipconfig /release6 <ADAPTER>`).
     - **Renew** - Renews the current IPv6 address via DHCPv6 for the _selected_ network adapter that is configured to automatically obtain an IPv6 address (`ipconfig /renew6 <ADAPTER>`).
+- **Export...** - Export the information to a CSV, XML or JSON file.
 
 :::
 
 :::note
 
-Right-click on the result to copy or export the information.
+Right-click on the result to copy the information.
 
 :::
 

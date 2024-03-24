@@ -19,6 +19,10 @@ Example inputs:
 
 ![IPGeolocation](../img/ip-geolocation.png)
 
+In addition, further actions can be performed using the buttons at the bottom right:
+
+- **Export...** - Export the information to a CSV, XML or JSON file.
+
 :::note
 
 Right-click on the result to copy the information.
