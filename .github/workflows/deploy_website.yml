@@ -1,6 +1,7 @@
 name: GitHub Pages
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -11,6 +12,7 @@ on:
 
 jobs:
   build-and-deploy-website:
+    name: "Build and Deploy Website"
     runs-on: ubuntu-22.04
     permissions:
       contents: write
