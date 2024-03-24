@@ -67,7 +67,7 @@ In addition, further actions can be performed using the buttons at the bottom le
     :::note
 
     If a static IP address is added to a network adapter that is configured for DHCP, the `netsh` option `dhcpstaticipcoexistence` is also activated.
-    
+
     The following command is executed in an elevated PowerShell to enable the `dhcpstaticipcoexistence` option:
 
     ```PowerShell
@@ -81,7 +81,6 @@ In addition, further actions can be performed using the buttons at the bottom le
     `dhcpstaticipcoexistence` allows the network adapter to use a static IP address and still receive DHCP options (e.g. DNS server) from the DHCP server. This is useful if you want to use a static IP address but still want to receive DNS server addresses from the DHCP server. This feature is available since Windows 10 version 1703 (Creators Update).
 
     :::
-
 
   - **Remove IPv4 addres...** - Opens a dialog where you can select an IPv4 address to remove from the selected network adapter.
 

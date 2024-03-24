@@ -11,13 +11,13 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
-public class NetworkInterface
+public sealed class NetworkInterface
 {
     #region Events
 
     public event EventHandler UserHasCanceled;
 
-    protected virtual void OnUserHasCanceled()
+    private void OnUserHasCanceled()
     {
         UserHasCanceled?.Invoke(this, EventArgs.Empty);
     }
@@ -28,7 +28,7 @@ public class NetworkInterface
 
     public static Task<List<NetworkInterfaceInfo>> GetNetworkInterfacesAsync()
     {
-        return Task.Run(() => GetNetworkInterfaces());
+        return Task.Run(GetNetworkInterfaces);
     }
 
     public static List<NetworkInterfaceInfo> GetNetworkInterfaces()
@@ -54,6 +54,7 @@ public class NetworkInterface
             var ipProperties = networkInterface.GetIPProperties();
 
             foreach (var unicastIPAddrInfo in ipProperties.UnicastAddresses)
+            {
                 switch (unicastIPAddrInfo.Address.AddressFamily)
                 {
                     case AddressFamily.InterNetwork:
@@ -74,11 +75,13 @@ public class NetworkInterface
                         listIPv6Address.Add(unicastIPAddrInfo.Address);
                         break;
                 }
+            }
 
             var listIPv4Gateway = new List<IPAddress>();
             var listIPv6Gateway = new List<IPAddress>();
 
             foreach (var gatewayIPAddrInfo in ipProperties.GatewayAddresses)
+            {
                 switch (gatewayIPAddrInfo.Address.AddressFamily)
                 {
                     case AddressFamily.InterNetwork:
@@ -88,23 +91,14 @@ public class NetworkInterface
                         listIPv6Gateway.Add(gatewayIPAddrInfo.Address);
                         break;
                 }
-
-            var listDhcpServer = new List<IPAddress>();
-
-            foreach (var dhcpServerIPAddress in ipProperties.DhcpServerAddresses)
-                if (dhcpServerIPAddress.AddressFamily == AddressFamily.InterNetwork)
-                    listDhcpServer.Add(dhcpServerIPAddress);
+            }
 
             // Check if autoconfiguration for DNS is enabled (only via registry key)
             var nameServerKey =
                 Registry.LocalMachine.OpenSubKey(
                     $@"SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Interfaces\{networkInterface.Id}");
             var dnsAutoconfigurationEnabled = nameServerKey?.GetValue("NameServer") != null &&
-                                              string.IsNullOrEmpty(nameServerKey.GetValue("NameServer").ToString());
-
-            var listDNSServer = new List<IPAddress>();
-
-            foreach (var dnsServerIPAddress in ipProperties.DnsAddresses) listDNSServer.Add(dnsServerIPAddress);
+                                              string.IsNullOrEmpty(nameServerKey.GetValue("NameServer")?.ToString());
 
             // Check if IPv4 protocol is available
             var ipv4ProtocolAvailable = true;
@@ -121,11 +115,10 @@ public class NetworkInterface
 
             // Check if IPv6 protocol is available
             var ipv6ProtocolAvailable = true;
-            IPv6InterfaceProperties ipv6Properties = null;
 
             try
             {
-                ipv6Properties = ipProperties.GetIPv6Properties();
+                ipProperties.GetIPv6Properties();
             }
             catch (NetworkInformationException)
             {
@@ -145,8 +138,8 @@ public class NetworkInterface
                 IPv4ProtocolAvailable = ipv4ProtocolAvailable,
                 IPv4Address = listIPv4Address.ToArray(),
                 IPv4Gateway = listIPv4Gateway.ToArray(),
-                DhcpEnabled = ipv4Properties != null && ipv4Properties.IsDhcpEnabled,
-                DhcpServer = listDhcpServer.ToArray(),
+                DhcpEnabled = ipv4Properties is { IsDhcpEnabled: true },
+                DhcpServer = ipProperties.DhcpServerAddresses.Where(dhcpServerIPAddress => dhcpServerIPAddress.AddressFamily == AddressFamily.InterNetwork).ToArray(),
                 DhcpLeaseObtained = dhcpLeaseObtained,
                 DhcpLeaseExpires = dhcpLeaseExpires,
                 IPv6ProtocolAvailable = ipv6ProtocolAvailable,
@@ -155,7 +148,7 @@ public class NetworkInterface
                 IPv6Gateway = listIPv6Gateway.ToArray(),
                 DNSAutoconfigurationEnabled = dnsAutoconfigurationEnabled,
                 DNSSuffix = ipProperties.DnsSuffix,
-                DNSServer = listDNSServer.ToArray()
+                DNSServer = ipProperties.DnsAddresses.ToArray()
             });
         }
 
@@ -167,7 +160,7 @@ public class NetworkInterface
         return Task.Run(() => DetectLocalIPAddressBasedOnRouting(remoteIPAddress));
     }
 
-    public static IPAddress DetectLocalIPAddressBasedOnRouting(IPAddress remoteIPAddress)
+    private static IPAddress DetectLocalIPAddressBasedOnRouting(IPAddress remoteIPAddress)
     {
         var isIPv4 = remoteIPAddress.AddressFamily == AddressFamily.InterNetwork;
 
@@ -195,7 +188,7 @@ public class NetworkInterface
         return Task.Run(() => DetectGatewayBasedOnLocalIPAddress(localIPAddress));
     }
 
-    public static IPAddress DetectGatewayBasedOnLocalIPAddress(IPAddress localIPAddress)
+    private static IPAddress DetectGatewayBasedOnLocalIPAddress(IPAddress localIPAddress)
     {
         foreach (var networkInterface in GetNetworkInterfaces())
             if (localIPAddress.AddressFamily == AddressFamily.InterNetwork)
@@ -221,23 +214,21 @@ public class NetworkInterface
         return Task.Run(() => ConfigureNetworkInterface(config));
     }
 
-    public void ConfigureNetworkInterface(NetworkInterfaceConfig config)
+    private void ConfigureNetworkInterface(NetworkInterfaceConfig config)
     {
         // IP
-        var command = @"netsh interface ipv4 set address name='" + config.Name + @"'";
+        var command = $"netsh interface ipv4 set address name='{config.Name}'";
         command += config.EnableStaticIPAddress
-            ? @" source=static address=" + config.IPAddress + @" mask=" + config.Subnetmask + @" gateway=" +
-              config.Gateway
-            : @" source=dhcp";
+            ? $" source=static address={config.IPAddress} mask={config.Subnetmask} gateway={config.Gateway};"
+            : $" source=dhcp;";
 
         // DNS
-        command += @";netsh interface ipv4 set DNSservers name='" + config.Name + @"'";
+        command += $"netsh interface ipv4 set DNSservers name='{config.Name}'";
         command += config.EnableStaticDNS
-            ? @" source=static address=" + config.PrimaryDNSServer + @" register=primary validate=no"
-            : @" source=dhcp";
+            ? $" source=static address={config.PrimaryDNSServer} register=primary validate=no;"
+            : $" source=dhcp;";
         command += config.EnableStaticDNS && !string.IsNullOrEmpty(config.SecondaryDNSServer)
-            ? @";netsh interface ipv4 add DNSservers name='" + config.Name + @"' address=" + config.SecondaryDNSServer +
-              @" index=2 validate=no"
+            ? $"netsh interface ipv4 add DNSservers name='{config.Name}' address={config.SecondaryDNSServer} index=2 validate=no;"
             : "";
 
         try
@@ -263,15 +254,15 @@ public class NetworkInterface
     /// <returns>Running task.</returns>
     public static Task FlushDnsAsync()
     {
-        return Task.Run(() => FlushDns());
+        return Task.Run(FlushDns);
     }
 
     /// <summary>
     ///     Flush the DNS cache.
     /// </summary>
-    public static void FlushDns()
+    private static void FlushDns()
     {
-        const string command = @"ipconfig /flushdns";
+        const string command = $"ipconfig /flushdns;";
 
         PowerShellHelper.ExecuteCommand(command);
     }
@@ -292,21 +283,21 @@ public class NetworkInterface
     /// </summary>
     /// <param name="mode">ipconfig.exe modes which are used like /release(6) or /renew(6)</param>
     /// <param name="adapterName">Name of the ethernet adapter.</param>
-    public static void ReleaseRenew(IPConfigReleaseRenewMode mode, string adapterName)
+    private static void ReleaseRenew(IPConfigReleaseRenewMode mode, string adapterName)
     {
         var command = string.Empty;
 
-        if (mode == IPConfigReleaseRenewMode.ReleaseRenew || mode == IPConfigReleaseRenewMode.Release)
-            command += @"ipconfig /release '" + adapterName + "';";
+        if (mode is IPConfigReleaseRenewMode.ReleaseRenew or IPConfigReleaseRenewMode.Release)
+            command += $"ipconfig /release '{adapterName}';";
 
-        if (mode == IPConfigReleaseRenewMode.ReleaseRenew || mode == IPConfigReleaseRenewMode.Renew)
-            command += @"ipconfig /renew '" + adapterName + "';";
+        if (mode is IPConfigReleaseRenewMode.ReleaseRenew or IPConfigReleaseRenewMode.Renew)
+            command += $"ipconfig /renew '{adapterName}';";
 
-        if (mode == IPConfigReleaseRenewMode.ReleaseRenew6 || mode == IPConfigReleaseRenewMode.Release6)
-            command += @"ipconfig /release6 '" + adapterName + "';";
+        if (mode is IPConfigReleaseRenewMode.ReleaseRenew6 or IPConfigReleaseRenewMode.Release6)
+            command += $"ipconfig /release6 '{adapterName}';";
 
-        if (mode == IPConfigReleaseRenewMode.ReleaseRenew6 || mode == IPConfigReleaseRenewMode.Renew6)
-            command += @"ipconfig /renew6 '" + adapterName + "';";
+        if (mode is IPConfigReleaseRenewMode.ReleaseRenew6 or IPConfigReleaseRenewMode.Renew6)
+            command += $"ipconfig /renew6 '{adapterName}';";
 
         PowerShellHelper.ExecuteCommand(command);
     }
@@ -325,10 +316,14 @@ public class NetworkInterface
     ///     Add an IP address to a network interface.
     /// </summary>
     /// <param name="config">Ethernet adapter name, IP address and subnetmask.</param>
-    public static void AddIPAddressToNetworkInterface(NetworkInterfaceConfig config)
+    private static void AddIPAddressToNetworkInterface(NetworkInterfaceConfig config)
     {
-        var command = @"netsh interface ipv4 add address '" + config.Name + @"' " + config.IPAddress + @" " +
-                      config.Subnetmask;
+        var command = string.Empty;
+
+        if (config.EnableDhcpStaticIpCoexistence)
+            command += $"netsh interface ipv4 set interface interface='{config.Name}' dhcpstaticipcoexistence=enabled;";
+        
+        command += $"netsh interface ipv4 add address '{config.Name}' {config.IPAddress} {config.Subnetmask};";
 
         PowerShellHelper.ExecuteCommand(command, true);
     }
@@ -347,9 +342,9 @@ public class NetworkInterface
     ///     Remove an IP address from a network interface.
     /// </summary>
     /// <param name="config">Ethernet adapter name, IP address</param>
-    public static void RemoveIPAddressFromNetworkInterface(NetworkInterfaceConfig config)
+    private static void RemoveIPAddressFromNetworkInterface(NetworkInterfaceConfig config)
     {
-        var command = @"netsh interface ipv4 delete address '" + config.Name + @"' " + config.IPAddress;
+        var command = $"netsh interface ipv4 delete address '{config.Name}' {config.IPAddress};";
 
         PowerShellHelper.ExecuteCommand(command, true);
     }

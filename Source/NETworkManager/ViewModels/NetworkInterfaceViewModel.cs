@@ -707,7 +707,8 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
             [
                 ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
             ], true,
-            SettingsManager.Current.NetworkInterface_ExportFileType, SettingsManager.Current.NetworkInterface_ExportFilePath);
+            SettingsManager.Current.NetworkInterface_ExportFileType,
+            SettingsManager.Current.NetworkInterface_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {
@@ -716,7 +717,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
-    
+
     public ICommand ApplyConfigurationCommand =>
         new RelayCommand(_ => ApplyConfigurationAction(), ApplyConfiguration_CanExecute);
 
@@ -1154,6 +1155,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         var config = new NetworkInterfaceConfig
         {
             Name = SelectedNetworkInterface.Name,
+            EnableDhcpStaticIpCoexistence = SelectedNetworkInterface.DhcpEnabled,
             IPAddress = ipAddress,
             Subnetmask = subnetmask
         };
