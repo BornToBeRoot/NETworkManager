@@ -19,21 +19,30 @@ Release date: **xx.xx.2023**
 
 ## What's new?
 
+**Network Interfaces**
+
+- Adding an additional IPv4 address to the network adapter will enable the `netsh` option `dhcpstaticipcoexistence` if the network adapter is configured to use DHCP [#2656](https://github.com/BornToBeRoot/NETworkManager/pull/2656)
+
 ## Improvements
 
 - **Network Interfaces**
+
   - Export to CSV, XML and JSON added [#2626](https://github.com/BornToBeRoot/NETworkManager/pull/2626)
 
 - **Ping Monitor**
+
   - Grouping of hosts added. Hosts are now grouped based on the profile or added to the default group [#2645](https://github.com/BornToBeRoot/NETworkManager/pull/2645)
 
 - **Discovery Protocol**
+
   - Export to CSV, XML and JSON added [#2626](https://github.com/BornToBeRoot/NETworkManager/pull/2626)
 
 - **IP Geolocation**
+
   - Export to CSV, XML and JSON added [#2626](https://github.com/BornToBeRoot/NETworkManager/pull/2626)
 
 - **Bit Calculator**
+
   - Export to CSV, XML and JSON added [#2626](https://github.com/BornToBeRoot/NETworkManager/pull/2626)
 
 ## Bugfixes
