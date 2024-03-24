@@ -72,7 +72,7 @@ Hostname or IP range to scan for open ports.
 
 :::note
 
-See also the [Port Scanner](#top) example inputs for more information about the supported host formats.
+See also the [Port Scanner](#port-scanner) example inputs for more information about the supported host formats.
 
 :::
 
@@ -91,7 +91,7 @@ TCP ports to scan each host for.
 
 :::note
 
-See also the [Port Scanner](#top) example inputs for more information about the supported port formats.
+See also the [Port Scanner](#port-scanner) example inputs for more information about the supported port formats.
 
 :::
 

@@ -23,7 +23,7 @@ const config = {
   trailingSlash: false,
 
   onBrokenLinks: "throw",
-  onBrokenMarkdownLinks: "warn",
+  onBrokenMarkdownLinks: "throw",
 
   i18n: {
     defaultLocale: "en",
@@ -86,6 +86,12 @@ const config = {
             position: "right",
           },
         ],
+      },
+      themeConfig: {
+        tableOfContents: {
+          minHeadingLevel: 1,
+          maxHeadingLevel: 5,
+        },
       },
       footer: {
         style: "dark",

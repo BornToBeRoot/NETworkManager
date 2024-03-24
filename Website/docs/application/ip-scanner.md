@@ -70,7 +70,7 @@ Hostname or IP range to scan for active devices.
 
 :::note
 
-See also the [IP Scanner](#top) example inputs for more information about the supported host formats.
+See also the [IP Scanner](#ip-scanner) example inputs for more information about the supported host formats.
 
 :::
 
