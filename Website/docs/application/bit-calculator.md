@@ -8,6 +8,10 @@ With the **Bit Calculator** different data units can be converted. Based on the 
 
 ![Bit Calculator](../img/bit-calculator.png)
 
+In addition, further actions can be performed using the buttons at the bottom right:
+
+- **Export...** - Export the information to a CSV, XML or JSON file.
+
 :::note
 
 Right-click on the result to copy the information.

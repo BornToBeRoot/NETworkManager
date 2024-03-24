@@ -1,10 +1,11 @@
-﻿using NETworkManager.ViewModels;
+﻿using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
 public partial class BitCalculatorView
 {
-    private readonly BitCalculatorViewModel _viewModel = new();
+    private readonly BitCalculatorViewModel _viewModel = new(DialogCoordinator.Instance);
 
     public BitCalculatorView()
     {

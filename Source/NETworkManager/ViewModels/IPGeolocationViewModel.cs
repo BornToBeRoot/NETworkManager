@@ -181,29 +181,30 @@ public class IPGeolocationViewModel : ViewModelBase
         };
 
         var exportViewModel = new ExportViewModel(async instance =>
-        {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-            try
             {
-                // ExportManager.Export(instance.FilePath, Result);
-            }
-            catch (Exception ex)
-            {
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Strings.OK;
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
-                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine +
-                    ex.Message, MessageDialogStyle.Affirmative, settings);
-            }
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType,
+                        [Result]);
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Strings.OK;
 
-            SettingsManager.Current.Whois_ExportFileType = instance.FileType;
-            SettingsManager.Current.Whois_ExportFilePath = instance.FilePath;
-        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new[]
-        {
-            ExportFileType.Txt
-        }, false, SettingsManager.Current.Whois_ExportFileType, SettingsManager.Current.Whois_ExportFilePath);
+                    await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                        Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                        Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.IPGeolocation_ExportFileType = instance.FileType;
+                SettingsManager.Current.IPGeolocation_ExportFilePath = instance.FilePath;
+            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, [
+                ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
+            ], false, SettingsManager.Current.IPGeolocation_ExportFileType,
+            SettingsManager.Current.IPGeolocation_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {

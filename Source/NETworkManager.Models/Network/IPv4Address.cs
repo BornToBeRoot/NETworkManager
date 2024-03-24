@@ -91,4 +91,46 @@ public static class IPv4Address
 
         return ip >= IPv4MulticastStart && ip <= IPv4MulticastEnd;
     }
+    
+    /// <summary>
+    /// Convert a list of IP addresses to a string.
+    /// </summary>
+    /// <param name="ipAddresses">IP addresses.</param>
+    /// <param name="delimiter">Delimiter to separate the IP addresses. Null for new line. (Default: null)</param>
+    /// <returns>IP addresses as string.</returns>
+    public static object ConvertIPAddressListToString(IEnumerable<IPAddress> ipAddresses, string delimiter = null)
+    {
+        var result = string.Empty;
+
+        foreach (var ipAddr in ipAddresses)
+        {
+            if (!string.IsNullOrEmpty(result))
+                result += delimiter ?? Environment.NewLine;
+
+            result += ipAddr.ToString();
+        }
+
+        return result;            
+    }
+
+    /// <summary>
+    /// Convert a list of IP addresses with subnetmasks to a string.
+    /// </summary>
+    /// <param name="ipAddresses">IP addresses with subnetmasks.</param>
+    /// <returns>IP addresses with subnetmasks as string.</returns>
+    
+    public static object ConvertIPAddressWithSubnetmaskListToString(Tuple<IPAddress, IPAddress>[] ipAddresses, string delimiter = null)
+    {
+        var result = string.Empty;
+
+        foreach (var ipAddr in ipAddresses)
+        {
+            if (!string.IsNullOrEmpty(result))
+                result += delimiter ?? Environment.NewLine;
+
+            result += ipAddr.Item1 + "/" + Subnetmask.ConvertSubnetmaskToCidr(ipAddr.Item2);
+        }
+
+        return result;
+    }
 }

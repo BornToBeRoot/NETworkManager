@@ -86,6 +86,9 @@ public static class GlobalStaticConfiguration
     public static bool Dashboard_CheckIPApiIPGeolocation => false;
     public static bool Dashboard_CheckIPApiDNSResolver => false;
 
+    // Application: Network Interface
+    public static ExportFileType NetworkInterface_ExportFileType => ExportFileType.Csv;
+
     // Application: WiFi
     public static bool WiFi_Show2dot4GHzNetworks => true;
     public static bool WiFi_Show5GHzNetworks => true;
@@ -194,7 +197,7 @@ public static class GlobalStaticConfiguration
     // Application: TigerVNC
     public static int TigerVNC_DefaultVNCPort => 5900;
 
-    // WebConsole
+    // Application: WebConsole
     public static bool WebConsole_ShowAddressBar => true;
 
     public static string WebConsole_Cache =>
@@ -218,7 +221,8 @@ public static class GlobalStaticConfiguration
     // Application: Discovery Protocol
     public static DiscoveryProtocol DiscoveryProtocol_Protocol => DiscoveryProtocol.LldpCdp;
     public static int DiscoveryProtocol_Duration => 60;
-
+    public static ExportFileType DiscoveryProtocol_ExportFileType => ExportFileType.Csv;
+    
     // Application: Wake on LAN
     public static int WakeOnLAN_Port => 9;
 
@@ -228,6 +232,7 @@ public static class GlobalStaticConfiguration
     // Application: Bit Calculator
     public static BitCaluclatorUnit BitCalculator_Unit => BitCaluclatorUnit.Bytes;
     public static BitCaluclatorNotation BitCalculator_Notation => BitCaluclatorNotation.Binary;
+    public static ExportFileType BitCalculator_ExportFileType => ExportFileType.Csv;
 
     // Application: Lookup
     public static ExportFileType Lookup_OUI_ExportFileType => ExportFileType.Csv;

@@ -4,12 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+             dialogs:DialogParticipation.Register="{Binding}"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:BitCalculatorViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
@@ -116,65 +118,105 @@
                         </mahAppsControls:MetroProgressBar.Style>
                     </mahAppsControls:MetroProgressBar>
                 </Grid>
-                <StackPanel Grid.Column="0" Grid.Row="2"
-                            Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                    <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Result}" />
-                    <ScrollViewer Style="{DynamicResource DefaultScrollViewer}">
-                        <Grid>
-                            <Grid.Resources>
-                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" />
-                                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
-                                    <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
-                                </Style>
-                            </Grid.Resources>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="10" />
-                                <ColumnDefinition Width="2*" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <GridSplitter Grid.Column="1" Grid.RowSpan="14" Background="Transparent"
-                                          HorizontalAlignment="Stretch" />
-                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Bits}" />
-                            <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding Result.Bits}" />
-                            <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Bytes}" />
-                            <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding Result.Bytes}" />
-                            <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Kilobits}" />
-                            <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding Result.Kilobits}" />
-                            <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.Kilobytes}" />
-                            <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Result.Kilobytes}" />
-                            <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Megabits}" />
-                            <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding Result.Megabits}" />
-                            <TextBlock Grid.Column="0" Grid.Row="5" Text="{x:Static localization:Strings.Megabytes}" />
-                            <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding Result.Megabytes}" />
-                            <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.Gigabits}" />
-                            <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding Result.Gigabits}" />
-                            <TextBlock Grid.Column="0" Grid.Row="7" Text="{x:Static localization:Strings.Gigabytes}" />
-                            <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding Result.Gigabytes}" />
-                            <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static localization:Strings.Terabits}" />
-                            <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding Result.Terabits}" />
-                            <TextBlock Grid.Column="0" Grid.Row="9" Text="{x:Static localization:Strings.Terabytes}" />
-                            <TextBox Grid.Column="2" Grid.Row="9" Text="{Binding Result.Terabytes}" />
-                            <TextBlock Grid.Column="0" Grid.Row="10" Text="{x:Static localization:Strings.Petabits}" />
-                            <TextBox Grid.Column="2" Grid.Row="10" Text="{Binding Result.Petabits}" />
-                            <TextBlock Grid.Column="0" Grid.Row="11" Text="{x:Static localization:Strings.Petabytes}" />
-                            <TextBox Grid.Column="2" Grid.Row="11" Text="{Binding Result.Petabytes}" />
-                        </Grid>
-                    </ScrollViewer>
-                </StackPanel>
+                <Grid Grid.Column="0" Grid.Row="2"
+                      Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Column="0" Grid.Row="0">
+                        <TextBlock Style="{StaticResource HeaderTextBlock}"
+                                   Text="{x:Static localization:Strings.Result}" />
+                        <ScrollViewer Style="{DynamicResource DefaultScrollViewer}">
+                            <Grid>
+                                <Grid.Resources>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" />
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
+                                        <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
+                                    </Style>
+                                </Grid.Resources>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="2*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <GridSplitter Grid.Column="1" Grid.RowSpan="14" Background="Transparent"
+                                              HorizontalAlignment="Stretch" />
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Bits}" />
+                                <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding Result.Bits}" />
+                                <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Bytes}" />
+                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding Result.Bytes}" />
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Kilobits}" />
+                                <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding Result.Kilobits}" />
+                                <TextBlock Grid.Column="0" Grid.Row="3"
+                                           Text="{x:Static localization:Strings.Kilobytes}" />
+                                <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Result.Kilobytes}" />
+                                <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Megabits}" />
+                                <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding Result.Megabits}" />
+                                <TextBlock Grid.Column="0" Grid.Row="5"
+                                           Text="{x:Static localization:Strings.Megabytes}" />
+                                <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding Result.Megabytes}" />
+                                <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.Gigabits}" />
+                                <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding Result.Gigabits}" />
+                                <TextBlock Grid.Column="0" Grid.Row="7"
+                                           Text="{x:Static localization:Strings.Gigabytes}" />
+                                <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding Result.Gigabytes}" />
+                                <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static localization:Strings.Terabits}" />
+                                <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding Result.Terabits}" />
+                                <TextBlock Grid.Column="0" Grid.Row="9"
+                                           Text="{x:Static localization:Strings.Terabytes}" />
+                                <TextBox Grid.Column="2" Grid.Row="9" Text="{Binding Result.Terabytes}" />
+                                <TextBlock Grid.Column="0" Grid.Row="10"
+                                           Text="{x:Static localization:Strings.Petabits}" />
+                                <TextBox Grid.Column="2" Grid.Row="10" Text="{Binding Result.Petabits}" />
+                                <TextBlock Grid.Column="0" Grid.Row="11"
+                                           Text="{x:Static localization:Strings.Petabytes}" />
+                                <TextBox Grid.Column="2" Grid.Row="11" Text="{Binding Result.Petabytes}" />
+                            </Grid>
+                        </ScrollViewer>
+                    </StackPanel>
+                    <Button Grid.Column="0" Grid.Row="2"
+                            Command="{Binding Path=ExportCommand}"
+                            HorizontalAlignment="Right">
+                        <Button.Style>
+                            <Style TargetType="{x:Type TypeName=Button}"
+                                   BasedOn="{StaticResource ResourceKey=ImageWithTextButton}">
+                            </Style>
+                        </Button.Style>
+                        <Button.Content>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Grid.Column="0" Grid.Row="0"
+                                           Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                                <TextBlock Grid.Column="1" Grid.Row="0"
+                                           Text="{x:Static Member=localization:Strings.ExportDots}"
+                                           Style="{StaticResource ResourceKey=ButtonWithImageTextBlock}" />
+                            </Grid>
+                        </Button.Content>
+                    </Button>
+                </Grid>
                 <TextBlock Grid.Column="0" Grid.Row="2"
                            Foreground="{DynamicResource MahApps.Brushes.Gray3}"
                            Text="{x:Static localization:Strings.EnterANumberAndSelectAUnitToCalculateTheUnitsDots}"
