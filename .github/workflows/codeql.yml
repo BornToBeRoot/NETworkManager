@@ -26,6 +26,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+      with:
+        submodules: 'true'
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
@@ -34,13 +36,8 @@ jobs:
         languages: ${{ matrix.language }}
         
     # Autobuild attempts to build any compiled languages (C/C++, C#, Go, Java, or Swift).
-    # If this step fails, then you should remove it and run the build manually (see below)
     - name: Autobuild
       uses: github/codeql-action/autobuild@v3
-
-    #- run: |
-    #    echo "Run, Build Application using script"
-    #    ./build.ps1
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
