@@ -86,13 +86,7 @@ const config = {
             position: "right",
           },
         ],
-      },
-      themeConfig: {
-        tableOfContents: {
-          minHeadingLevel: 1,
-          maxHeadingLevel: 5,
-        },
-      },
+      },    
       footer: {
         style: "dark",
         links: [
