@@ -313,7 +313,37 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+    
+    private bool _flyoutRunCommandIsOpen;
 
+    public bool FlyoutRunCommandIsOpen
+    {
+        get => _flyoutRunCommandIsOpen;
+        set
+        {
+            if (value == _flyoutRunCommandIsOpen)
+                return;
+
+            _flyoutRunCommandIsOpen = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    private bool _flyoutRunCommandAreAnimationsEnabled;
+
+    public bool FlyoutRunCommandAreAnimationsEnabled
+    {
+        get => _flyoutRunCommandAreAnimationsEnabled;
+        set
+        {
+            if (value == _flyoutRunCommandAreAnimationsEnabled)
+                return;
+
+            _flyoutRunCommandAreAnimationsEnabled = value;
+            OnPropertyChanged();
+        }
+    }
+    
     private bool _isRestartRequired;
 
     public bool IsRestartRequired
@@ -1209,7 +1239,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     {
         ConfigurationManager.OnDialogOpen();
 
-        FlyoutRunCommand.IsOpen = true;
+        FlyoutRunCommandAreAnimationsEnabled = true;
+        FlyoutRunCommandIsOpen = true;
     }
 
     public ICommand RunCommandDoCommand => new RelayCommand(_ => RunCommandDoAction());
@@ -1285,24 +1316,28 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         }
 
         // Close the flyout
-        RunCommandFlyoutClose();
+        RunCommandFlyoutClose(true);
     }
 
     /// <summary>
     ///     Close the run command flyout and clear the search.
     /// </summary>
-    private void RunCommandFlyoutClose()
+    private async Task RunCommandFlyoutClose(bool clearSearch = false)
     {
-        if (!FlyoutRunCommand.IsOpen)
+        if (!FlyoutRunCommandIsOpen)
             return;
 
-        FlyoutRunCommand.AreAnimationsEnabled = false;
-        FlyoutRunCommand.IsOpen = false;
+        FlyoutRunCommandAreAnimationsEnabled = false;
+        FlyoutRunCommandIsOpen = false;
 
         ConfigurationManager.OnDialogClose();
 
         // Clear the search
-        RunCommandSearch = string.Empty;
+        if (clearSearch)
+        {
+            await Task.Delay(500); // Wait for the animation to finish
+            RunCommandSearch = string.Empty;
+        }
     }
 
     #endregion

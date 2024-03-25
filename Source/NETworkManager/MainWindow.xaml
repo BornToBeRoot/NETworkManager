@@ -16,7 +16,7 @@
                  mc:Ignorable="d"
                  Style="{DynamicResource DefaultWindow}"
                  MinWidth="800" Width="1024" Height="768" MinHeight="600"
-                 SaveWindowPosition="True" TitleAlignment="Center"
+                 SaveWindowPosition="True" TitleAlignment="Left"
                  ContentRendered="MetroMainWindow_ContentRendered" StateChanged="MetroWindowMain_StateChanged"
                  Activated="MetroMainWindow_Activated" Closing="MetroWindowMain_Closing"
                  d:DataContext="{d:DesignInstance networkManager:MainWindow}">
@@ -26,6 +26,7 @@
         <converters:ApplicationNameToTranslatedStringConverter x:Key="ApplicationNameToTranslatedStringConverter" />
         <converters:ApplicationNameToIconConverter x:Key="ApplicationNameToIconConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter"/>
         <!-- ReSharper disable once Xaml.RedundantResource - Used in TrayIcon -->
         <ContextMenu x:Key="ContextMenuNotifyIcon" MinWidth="200" Opened="ContextMenu_Opened" x:Shared="False">
             <MenuItem Header="{x:Static localization:Strings.Show}" Command="{Binding ShowWindowCommand}">
@@ -66,48 +67,7 @@
             </MenuItem>
         </ContextMenu>
     </mah:MetroWindow.Resources>
-    <mah:MetroWindow.TitleTemplate>
-        <DataTemplate>
-            <Grid
-                Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:MetroWindow}}, Path=ActualWidth}">
-                <TextBlock Grid.Column="0" Grid.Row="0"
-                           Margin="8,-1,1,0"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Left"
-                           FontFamily="{DynamicResource MahApps.Fonts.Family.Window.Title}"
-                           FontSize="{DynamicResource MahApps.Font.Size.Window.Title}"
-                           Text="{TemplateBinding Content}"
-                           TextTrimming="CharacterEllipsis" />
-                <Button Grid.Column="0" Grid.Row="0"
-                        Command="{Binding OpenRunCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center"
-                        Cursor="Hand"
-                        Style="{StaticResource CleanButton}">
-                    <Grid Height="30">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="270" />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
-                                   Fill="{DynamicResource MahApps.Brushes.Gray10}" />
-                        <Rectangle Grid.Column="0" Grid.Row="0"
-                                   Margin="5,0"
-                                   Width="20" Height="20"
-                                   HorizontalAlignment="Right"
-                                   Fill="{DynamicResource MahApps.Brushes.Gray8}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronRight}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBlock Grid.Column="1" Grid.Row="0"
-                                   Style="{StaticResource InfoTextBlock}"
-                                   Text="{x:Static localization:Strings.Watermark_RunCommandWithHotKey}" />
-                    </Grid>
-                </Button>
-            </Grid>
-        </DataTemplate>
-    </mah:MetroWindow.TitleTemplate>
+
     <mah:MetroWindow.InputBindings>
         <KeyBinding Command="{Binding OpenRunCommand}" Modifiers="Control+Shift" Key="P" />
     </mah:MetroWindow.InputBindings>
@@ -117,7 +77,7 @@
     <mah:MetroWindow.LeftWindowCommands>
         <mah:WindowCommands ShowSeparators="False">
             <!-- Fix some design issues with margin -2 and -1 -->
-            <Grid Background="{DynamicResource MahApps.Brushes.Gray8}"
+            <Grid Background="{DynamicResource MahApps.Brushes.Gray10}"
                   Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
                   Margin="-2,-1,0,0">
                 <TextBlock Text="Administrator" Foreground="{DynamicResource MahApps.Brushes.Gray3}"
@@ -127,29 +87,54 @@
     </mah:MetroWindow.LeftWindowCommands>
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands ShowSeparators="False">
-            <Rectangle Width="10" />
-            <Button Command="{Binding RestartApplicationCommand}" Opacity="1"
-                    Visibility="{Binding IsRestartRequired, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                    Cursor="Hand">
-                <StackPanel Orientation="Horizontal">
-                    <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Accent}">
+            <!-- ToDo: CenterWindowCommands https://github.com/MahApps/MahApps.Metro/issues/4419 -->
+            <Button Command="{Binding Path=OpenRunCommand}"
+                    Cursor="Hand"
+                    Visibility="{Binding Path=FlyoutRunCommandIsOpen, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}"
+                    Style="{StaticResource ResourceKey=CleanButton}"
+                    Margin="0,0,10,0">
+                <Grid Height="30">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="270" />
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
+                               Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray10}" />
+                    <Rectangle Grid.Column="0" Grid.Row="0"
+                               Margin="5,0"
+                               Width="20" Height="20"
+                               HorizontalAlignment="Right"
+                               Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray8}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Restart}" />
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronRight}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
-                    <TextBlock Text="{x:Static localization:Strings.RestartRequired}"
-                               Style="{StaticResource LinkTextBlock}" VerticalAlignment="Center" Margin="5,0,0,0" />
-                </StackPanel>
+                    <TextBlock Grid.Column="1" Grid.Row="0"
+                               Style="{StaticResource ResourceKey=InfoTextBlock}"
+                               Text="{x:Static Member=localization:Strings.Watermark_RunCommandWithHotKey}" />
+                </Grid>
+            </Button>
+            <Button Command="{Binding RestartApplicationCommand}"
+                    Opacity="1"
+                    Visibility="{Binding IsRestartRequired, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
+                    ToolTip="{x:Static localization:Strings.RestartRequired}"
+                    Cursor="Hand">
+                <Rectangle Width="20" Height="20"
+                           Fill="{DynamicResource MahApps.Brushes.Accent}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ReloadAlert}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
             </Button>
             <Button Command="{Binding OpenWebsiteCommand}"
                     Opacity="1"
                     Visibility="{Binding IsUpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
                     CommandParameter="{Binding UpdateReleaseUrl, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                     Cursor="Hand"
+                    ToolTip="{x:Static localization:Strings.UpdateAvailable}"
                     Focusable="False">
                 <Rectangle Width="20" Height="20"
-                           Fill="{DynamicResource MahApps.Brushes.Accent}"
-                           ToolTip="{x:Static localization:Strings.UpdateAvailable}">
+                           Fill="{DynamicResource MahApps.Brushes.Accent}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=RocketLaunchOutline}" />
                     </Rectangle.OpacityMask>
@@ -157,39 +142,17 @@
             </Button>
             <Button Command="{Binding UnlockProfileCommand}"
                     Opacity="1"
+                    Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=ProfileManagerShowUnlock, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
+                    CommandParameter="{Binding UpdateReleaseUrl, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                     Cursor="Hand"
+                    ToolTip="{x:Static localization:Strings.UnlockProfile}"
                     Focusable="False">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}"
-                           BasedOn="{StaticResource MahApps.Styles.Button.WindowCommands}">
-                        <Setter Property="Visibility" Value="Collapsed" />
-                        <Style.Triggers>
-                            <DataTrigger
-                                Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=ProfileManagerShowUnlock}"
-                                Value="True">
-                                <Setter Property="Visibility" Value="Visible" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-                <StackPanel Orientation="Horizontal">
-                    <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Accent}">
-                        <Rectangle.Style>
-                            <Style TargetType="Rectangle">
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Rectangle.Style>
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=InterfacePassword}" />
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
-                    <TextBlock Text="{x:Static localization:Strings.UnlockProfile}"
-                               Style="{StaticResource LinkTextBlock}" Margin="5,0" />
-                </StackPanel>
+                <Rectangle Width="20" Height="20"
+                           Fill="{DynamicResource MahApps.Brushes.Accent}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=InterfacePassword}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
             </Button>
             <ComboBox ItemsSource="{Binding ProfileFiles}"
                       SelectedItem="{Binding SelectedProfileFile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -200,8 +163,7 @@
                       HorizontalAlignment="Left"
                       Focusable="False"
                       VerticalAlignment="Center"
-                      Height="30"
-                      Margin="0,0,10,0">
+                      Height="30">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -283,13 +245,15 @@
     </mah:MetroWindow.RightWindowCommands>
     <mah:MetroWindow.Flyouts>
         <mah:FlyoutsControl>
-            <mah:Flyout x:Name="FlyoutRunCommand"
-                        IsKeyboardFocusWithinChanged="FlyoutRunCommand_IsKeyboardFocusWithinChanged"
+            <mah:Flyout IsKeyboardFocusWithinChanged="FlyoutRunCommand_IsKeyboardFocusWithinChanged"
+                        IsOpen="{Binding FlyoutRunCommandIsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        AreAnimationsEnabled="{Binding FlyoutRunCommandAreAnimationsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Visibility="{Binding FlyoutRunCommandIsOpen, Converter={StaticResource BooleanToVisibilityConverter}}"
                         Position="Top"
                         TitleVisibility="Collapsed"
                         CloseButtonVisibility="Collapsed"
                         IsModal="False"
-                        Width="500" MaxHeight="400"
+                        Width="600" MaxHeight="400"
                         Theme="Adapt">
                 <mah:Flyout.InputBindings>
                     <KeyBinding Command="{Binding RunCommandCloseCommand}" Key="Escape" />
@@ -316,6 +280,8 @@
                             </Rectangle.OpacityMask>
                         </Rectangle>
                         <TextBox Grid.Column="1" Grid.Row="0"
+                                 FontSize="18"
+                                 FontFamily="Consolas"
                                  Text="{Binding RunCommandSearch, UpdateSourceTrigger=PropertyChanged}"
                                  mah:TextBoxHelper.Watermark="{x:Static localization:Strings.Watermark_RunCommand}">
                             <TextBox.Style>
@@ -327,7 +293,6 @@
                         </TextBox>
                     </Grid>
                     <ListView Grid.Column="0" Grid.Row="2"
-                              x:Name="ListViewRunCommand"
                               ItemsSource="{Binding RunCommands}"
                               SelectedItem="{Binding SelectedRunCommand, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                               SelectionMode="Single"
