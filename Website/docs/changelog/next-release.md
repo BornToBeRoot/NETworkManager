@@ -47,7 +47,12 @@ Release date: **xx.xx.2023**
 
 ## Bugfixes
 
+- **General**
+
+  - Fix some design issues for the `Run command` button. The button is now in the right-hand title bar instead of in the center until a better solution is found [#2651](https://github.com/BornToBeRoot/NETworkManager/pull/2651)
+
 - **IP Scanner**
+
   - Copy MAC address to clipboard fixed [#2644](https://github.com/BornToBeRoot/NETworkManager/pull/2644)
 
 ## Dependencies, Refactoring & Documentation
