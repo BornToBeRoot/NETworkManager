@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -534,6 +535,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private Task Export()
     {
+        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
         var customDialog = new CustomDialog
         {
             Title = Strings.Export
@@ -541,7 +544,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         var exportViewModel = new ExportViewModel(async instance =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.HideMetroDialogAsync(window, customDialog);
 
             try
             {
@@ -563,7 +566,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             SettingsManager.Current.IPScanner_ExportFileType = instance.FileType;
             SettingsManager.Current.IPScanner_ExportFilePath = instance.FilePath;
-        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new[]
+        }, _ => { _dialogCoordinator.HideMetroDialogAsync(window, customDialog); }, new[]
         {
             ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
         }, true, SettingsManager.Current.IPScanner_ExportFileType, SettingsManager.Current.IPScanner_ExportFilePath);
@@ -572,8 +575,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         {
             DataContext = exportViewModel
         };
-
-        return _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+                
+        return _dialogCoordinator.ShowMetroDialogAsync(window, customDialog);
     }
 
     public void OnClose()

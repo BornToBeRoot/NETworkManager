@@ -35,5 +35,6 @@ public class DragablzTabItem : ViewModelBase
     }
 
     public UserControl View { get; set; }
+    
     public Guid Id { get; set; }
 }
