@@ -89,7 +89,22 @@
     </mah:MetroWindow.LeftWindowCommands>
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands ShowSeparators="False">
+            <Button Command="{Binding OpenRunCommand}"
+                    Visibility="{Binding Path=FlyoutRunCommandIsOpen, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}"
+                    ToolTip="{x:Static localization:Strings.ToolTip_RunCommandWithHotKey}"
+                    Cursor="Hand"
+                    Focusable="False">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="20" Height="20"
+                               Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:FontAwesome Kind=TerminalSolid}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </StackPanel>
+            </Button>
             <!-- ToDo: CenterWindowCommands https://github.com/MahApps/MahApps.Metro/issues/4419 -->
+            <!--
             <Button Command="{Binding Path=OpenRunCommand}"
                     Cursor="Hand"
                     Visibility="{Binding Path=FlyoutRunCommandIsOpen, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}"
@@ -108,14 +123,16 @@
                                HorizontalAlignment="Right"
                                Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray8}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronRight}" />
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:FontAwesome Kind=TerminalSolid}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
+                    
                     <TextBlock Grid.Column="1" Grid.Row="0"
                                Style="{StaticResource ResourceKey=InfoTextBlock}"
                                Text="{x:Static Member=localization:Strings.Watermark_RunCommandWithHotKey}" />
                 </Grid>
             </Button>
+            -->
             <Button Command="{Binding RestartApplicationCommand}"
                     Opacity="1"
                     Visibility="{Binding IsRestartRequired, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
