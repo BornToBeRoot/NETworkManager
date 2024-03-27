@@ -10171,6 +10171,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Run command... (Ctrl+Shift+P).
+        /// </summary>
+        public static string ToolTip_RunCommandWithHotKey {
+            get {
+                return ResourceManager.GetString("ToolTip_RunCommandWithHotKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Help translate the project on Transifex..
         /// </summary>
         public static string ToolTip_TransifexProjectUrl {
