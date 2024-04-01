@@ -174,6 +174,10 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
             case ApplicationName.Whois:
                 ((WhoisView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                 break;
+            case ApplicationName.IPGeolocation:
+                ((IPGeolocationView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
+                break;
+                
         }
     }
 
