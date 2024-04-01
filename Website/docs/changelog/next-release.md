@@ -17,11 +17,12 @@ Release date: **xx.xx.2023**
 
 ## Breaking Changes
 
-## What's new?
-
 **Network Interfaces**
 
 - Adding an additional IPv4 address to the network adapter will enable the `netsh` option `dhcpstaticipcoexistence` if the network adapter is configured to use DHCP [#2656](https://github.com/BornToBeRoot/NETworkManager/pull/2656)
+  See <https://borntoberoot.net/NETworkManager/docs/application/network-interface#configure> for more information.
+
+## What's new?
 
 ## Improvements
 
