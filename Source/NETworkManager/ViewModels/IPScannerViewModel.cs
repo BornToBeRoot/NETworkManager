@@ -338,8 +338,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         };
 
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-        
-        await ProfileDialogManager.ShowAddProfileDialog(window, this, _dialogCoordinator, profileInfo, null, ApplicationName.IPScanner);
+
+        await ProfileDialogManager.ShowAddProfileDialog(window, this, _dialogCoordinator, profileInfo, null,
+            ApplicationName.IPScanner);
     }
 
     public ICommand CopySelectedPortsCommand => new RelayCommand(_ => CopySelectedPortsAction());
@@ -561,23 +562,22 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = Strings.OK;
 
-                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                await _dialogCoordinator.ShowMessageAsync(window, Strings.Error,
                     Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
                     Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
             }
 
             SettingsManager.Current.IPScanner_ExportFileType = instance.FileType;
             SettingsManager.Current.IPScanner_ExportFilePath = instance.FilePath;
-        }, _ => { _dialogCoordinator.HideMetroDialogAsync(window, customDialog); }, new[]
-        {
+        }, _ => { _dialogCoordinator.HideMetroDialogAsync(window, customDialog); }, [
             ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
-        }, true, SettingsManager.Current.IPScanner_ExportFileType, SettingsManager.Current.IPScanner_ExportFilePath);
+        ], true, SettingsManager.Current.IPScanner_ExportFileType, SettingsManager.Current.IPScanner_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {
             DataContext = exportViewModel
         };
-                
+
         return _dialogCoordinator.ShowMetroDialogAsync(window, customDialog);
     }
 
