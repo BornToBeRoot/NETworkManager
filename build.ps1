@@ -67,8 +67,6 @@ if (-not(Test-Path -Path $MSBuildPath -PathType Leaf)) {
 # Build with msbuild
 Start-Process -FilePath $MSBuildPath -ArgumentList "$PSScriptRoot\Source\NETworkManager.sln /restore /t:Clean,Build /p:Configuration=Release /p:TargetFramework=$TargetFramework /p:RuntimeIdentifier=$RuntimeIdentifier /p:Platform=$TargetPlatform /p:WarningLevel=0" -Wait -NoNewWindow
 
-Start-Sleep -Seconds 10
-
 # Test if build is available
 if (-not(Test-Path -Path "$PSScriptRoot\Source\NETworkManager\bin\Release\$TargetFramework\$RuntimeIdentifier\NETworkManager.exe" -PathType Leaf)) {
     Write-Error -Message "Could not find release build. Is .NET SDK 8.0 or later installed? Check logs above for more information." -ErrorAction Stop
