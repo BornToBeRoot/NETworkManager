@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Diagnostics;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -117,8 +116,6 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
         await Task.Delay(2000);
 
         Result = await DNSResolverService.GetInstance().GetDNSResolverAsync();
-
-        Debug.WriteLine(Result);
 
         IsRunning = false;
     }

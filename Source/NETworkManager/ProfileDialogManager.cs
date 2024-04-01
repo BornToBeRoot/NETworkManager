@@ -301,8 +301,8 @@ public static class ProfileDialogManager
                 !string.Equals(instance.Group.Name, name, StringComparison.Ordinal))
                 foreach (var profile in profiles)
                     profile.Group = name;
-            else
-                Debug.WriteLine("Cannot update group in profiles");
+            //else
+            //    Debug.WriteLine("Cannot update group in profiles");
         }
 
         return new GroupInfo
