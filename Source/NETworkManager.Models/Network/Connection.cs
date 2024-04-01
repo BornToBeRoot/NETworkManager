@@ -125,9 +125,6 @@ public static class Connection
                     // Cache the result
                     _remoteHostNames.Add(remoteAddress,
                         !dnsResolverTask.Result.HasError ? dnsResolverTask.Result.Value : "-/-");
-
-                    Debug.WriteLine("Cache: Added " + remoteAddress + " -> " +
-                                    (!dnsResolverTask.Result.HasError ? dnsResolverTask.Result.Value : "-/-"));
                 }
 
                 result.Add(new ConnectionInfo(

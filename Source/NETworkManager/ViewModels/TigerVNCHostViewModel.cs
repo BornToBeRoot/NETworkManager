@@ -256,9 +256,11 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 
     private void ReconnectAction(object view)
     {
-        if (view is TigerVNCControl control)
-            if (control.ReconnectCommand.CanExecute(null))
-                control.ReconnectCommand.Execute(null);
+        if (view is not TigerVNCControl control) 
+            return;
+        
+        if (control.ReconnectCommand.CanExecute(null))
+            control.ReconnectCommand.Execute(null);
     }
 
     public ICommand ConnectProfileCommand => new RelayCommand(_ => ConnectProfileAction(), ConnectProfile_CanExecute);
@@ -284,7 +286,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.TigerVNC)
+        ProfileDialogManager.ShowAddProfileDialog(this, this, _dialogCoordinator, null, null, ApplicationName.TigerVNC)
             .ConfigureAwait(false);
     }
 

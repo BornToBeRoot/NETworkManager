@@ -342,6 +342,8 @@ public class TracerouteViewModel : ViewModelBase
 
     private async Task Export()
     {
+        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
         var customDialog = new CustomDialog
         {
             Title = Strings.Export
@@ -349,7 +351,7 @@ public class TracerouteViewModel : ViewModelBase
 
         var exportViewModel = new ExportViewModel(async instance =>
             {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                await _dialogCoordinator.HideMetroDialogAsync(window, customDialog);
 
                 try
                 {
@@ -363,15 +365,16 @@ public class TracerouteViewModel : ViewModelBase
                     var settings = AppearanceManager.MetroDialog;
                     settings.AffirmativeButtonText = Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                    await _dialogCoordinator.ShowMessageAsync(window, Strings.Error,
                         Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
                         Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
                 SettingsManager.Current.Traceroute_ExportFileType = instance.FileType;
                 SettingsManager.Current.Traceroute_ExportFilePath = instance.FilePath;
-            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-            new[] { ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json }, true,
+            }, _ => { _dialogCoordinator.HideMetroDialogAsync(window, customDialog); },
+            [ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json],
+            true,
             SettingsManager.Current.Traceroute_ExportFileType, SettingsManager.Current.Traceroute_ExportFilePath
         );
 
@@ -380,7 +383,7 @@ public class TracerouteViewModel : ViewModelBase
             DataContext = exportViewModel
         };
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        await _dialogCoordinator.ShowMetroDialogAsync(window, customDialog);
     }
 
     private void AddHostToHistory(string host)

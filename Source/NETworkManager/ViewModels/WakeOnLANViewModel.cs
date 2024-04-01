@@ -308,7 +308,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.WakeOnLAN)
+        ProfileDialogManager.ShowAddProfileDialog(this, this, _dialogCoordinator, null, null, ApplicationName.WakeOnLAN)
             .ConfigureAwait(false);
     }
 

@@ -281,52 +281,11 @@ public class DNSLookupViewModel : ViewModelBase
             Query();
     }
 
-    public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
+    public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
 
-    private async Task ExportAction()
+    private void ExportAction()
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.Export
-        };
-
-        var exportViewModel = new ExportViewModel(async instance =>
-            {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                try
-                {
-                    ExportManager.Export(instance.FilePath, instance.FileType,
-                        instance.ExportAll
-                            ? Results
-                            : new ObservableCollection<DNSLookupRecordInfo>(SelectedResults
-                                .Cast<DNSLookupRecordInfo>().ToArray()));
-                }
-                catch (Exception ex)
-                {
-                    var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Strings.OK;
-
-                    await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
-                        Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                        Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
-                }
-
-                SettingsManager.Current.DNSLookup_ExportFileType = instance.FileType;
-                SettingsManager.Current.DNSLookup_ExportFilePath = instance.FilePath;
-            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-            new[]
-            {
-                ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
-            }, true,
-            SettingsManager.Current.DNSLookup_ExportFileType, SettingsManager.Current.DNSLookup_ExportFilePath);
-
-        customDialog.Content = new ExportDialog
-        {
-            DataContext = exportViewModel
-        };
-
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        Export().ConfigureAwait(false);
     }
 
     #endregion
@@ -400,6 +359,54 @@ public class DNSLookupViewModel : ViewModelBase
         list.ForEach(x => SettingsManager.Current.DNSLookup_HostHistory.Add(x));
     }
 
+
+    private async Task Export()
+    {
+        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+        
+        var customDialog = new CustomDialog
+        {
+            Title = Strings.Export
+        };
+
+        var exportViewModel = new ExportViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(window, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType,
+                        instance.ExportAll
+                            ? Results
+                            : new ObservableCollection<DNSLookupRecordInfo>(SelectedResults
+                                .Cast<DNSLookupRecordInfo>().ToArray()));
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(window, Strings.Error,
+                        Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                        Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.DNSLookup_ExportFileType = instance.FileType;
+                SettingsManager.Current.DNSLookup_ExportFilePath = instance.FilePath;
+            }, _ => { _dialogCoordinator.HideMetroDialogAsync(window, customDialog); },
+            new[]
+            {
+                ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
+            }, true,
+            SettingsManager.Current.DNSLookup_ExportFileType, SettingsManager.Current.DNSLookup_ExportFilePath);
+
+        customDialog.Content = new ExportDialog
+        {
+            DataContext = exportViewModel
+        };
+
+        await _dialogCoordinator.ShowMetroDialogAsync(window, customDialog);
+    }
     #endregion
 
     #region Events

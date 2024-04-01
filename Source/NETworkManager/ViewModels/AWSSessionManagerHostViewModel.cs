@@ -423,7 +423,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     private void AddProfileAction()
     {
         ProfileDialogManager
-            .ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.AWSSessionManager)
+            .ShowAddProfileDialog(this, this, _dialogCoordinator, null, null, ApplicationName.AWSSessionManager)
             .ConfigureAwait(false);
     }
 

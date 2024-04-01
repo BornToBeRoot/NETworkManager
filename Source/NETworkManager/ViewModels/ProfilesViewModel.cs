@@ -165,7 +165,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, SelectedGroup?.Name)
+        ProfileDialogManager.ShowAddProfileDialog(this, this, _dialogCoordinator, null, SelectedGroup?.Name)
             .ConfigureAwait(false);
     }
 

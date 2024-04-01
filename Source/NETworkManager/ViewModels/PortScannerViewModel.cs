@@ -316,6 +316,8 @@ public class PortScannerViewModel : ViewModelBase
 
     private async Task OpenPortProfileSelection()
     {
+        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+        
         var customDialog = new CustomDialog
         {
             Title = Strings.SelectPortProfile
@@ -323,17 +325,17 @@ public class PortScannerViewModel : ViewModelBase
 
         var viewModel = new PortProfilesViewModel(async instance =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.HideMetroDialogAsync(window, customDialog);
 
             Ports = string.Join("; ", instance.GetSelectedPortProfiles().Select(x => x.Ports));
-        }, async _ => { await _dialogCoordinator.HideMetroDialogAsync(this, customDialog); });
+        }, async _ => { await _dialogCoordinator.HideMetroDialogAsync(window, customDialog); });
 
         customDialog.Content = new PortProfilesDialog
         {
             DataContext = viewModel
         };
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        await _dialogCoordinator.ShowMetroDialogAsync(window, customDialog);
     }
 
     private async Task Start()
@@ -413,6 +415,8 @@ public class PortScannerViewModel : ViewModelBase
 
     private async Task Export()
     {
+        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
         var customDialog = new CustomDialog
         {
             Title = Strings.Export
@@ -420,7 +424,7 @@ public class PortScannerViewModel : ViewModelBase
 
         var exportViewModel = new ExportViewModel(async instance =>
             {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                await _dialogCoordinator.HideMetroDialogAsync(window, customDialog);
 
                 try
                 {
@@ -435,15 +439,16 @@ public class PortScannerViewModel : ViewModelBase
                     var settings = AppearanceManager.MetroDialog;
                     settings.AffirmativeButtonText = Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                    await _dialogCoordinator.ShowMessageAsync(window, Strings.Error,
                         Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
                         Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
                 SettingsManager.Current.PortScanner_ExportFileType = instance.FileType;
                 SettingsManager.Current.PortScanner_ExportFilePath = instance.FilePath;
-            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-            new[] { ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json }, true,
+            }, _ => { _dialogCoordinator.HideMetroDialogAsync(window, customDialog); },
+            [ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json],
+            true,
             SettingsManager.Current.PortScanner_ExportFileType, SettingsManager.Current.PortScanner_ExportFilePath);
 
         customDialog.Content = new ExportDialog
@@ -451,7 +456,7 @@ public class PortScannerViewModel : ViewModelBase
             DataContext = exportViewModel
         };
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        await _dialogCoordinator.ShowMetroDialogAsync(window, customDialog);
     }
 
     private void AddHostToHistory(string host)

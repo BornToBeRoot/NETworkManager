@@ -53,7 +53,39 @@ Release date: **xx.xx.2023**
 
 - **IP Scanner**
 
+  - `Add profile...` in dragged out tab fixed [#2661](https://github.com/BornToBeRoot/NETworkManager/pull/2661)
+  - `Export...` in dragged out tab fixed [#2661](https://github.com/BornToBeRoot/NETworkManager/pull/2661)
   - Copy MAC address to clipboard fixed [#2644](https://github.com/BornToBeRoot/NETworkManager/pull/2644)
+
+- **Port Scanner**
+
+  - `Open port profiles...` in dragged out tab fixed [#2661](https://github.com/BornToBeRoot/NETworkManager/pull/2661)
+  - `Export...` in dragged out tab fixed [#2661](https://github.com/BornToBeRoot/NETworkManager/pull/2661)
+
+- **Traceroute**
+
+  - `Export...` in dragged out tab fixed [#2661](https://github.com/BornToBeRoot/NETworkManager/pull/2661)
+
+- **DNS Lookup**
+
+  - `Export...` in dragged out tab fixed [#2661](https://github.com/BornToBeRoot/NETworkManager/pull/2661)
+
+- **SNMP**
+
+  - `Open OID profiles...` in dragged out tab fixed [#2661](https://github.com/BornToBeRoot/NETworkManager/pull/2661)
+  - `Export...` in dragged out tab fixed [#2661](https://github.com/BornToBeRoot/NETworkManager/pull/2661)
+
+- **SNTP Lookup**
+
+  - `Export...` in dragged out tab fixed [#2661](https://github.com/BornToBeRoot/NETworkManager/pull/2661)
+
+- **Whois**
+
+  `Export...` in dragged out tab fixed [#2661](https://github.com/BornToBeRoot/NETworkManager/pull/2661)
+
+- **IP Geolocation**
+
+  - `Export...` in dragged out tab fixed [#2661](https://github.com/BornToBeRoot/NETworkManager/pull/2661)
 
 ## Dependencies, Refactoring & Documentation
 

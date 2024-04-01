@@ -234,7 +234,7 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.IPGeolocation)
+        ProfileDialogManager.ShowAddProfileDialog(this,  this, _dialogCoordinator, null, null, ApplicationName.IPGeolocation)
             .ConfigureAwait(false);
     }
 

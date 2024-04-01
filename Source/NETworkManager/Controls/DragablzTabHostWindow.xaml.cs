@@ -135,8 +135,6 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
         // Switch between application identifiers...
         switch (_applicationName)
         {
-            case ApplicationName.None:
-                break;
             case ApplicationName.IPScanner:
                 ((IPScannerView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                 break;
@@ -176,20 +174,10 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
             case ApplicationName.Whois:
                 ((WhoisView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                 break;
-            case ApplicationName.Dashboard:
-            case ApplicationName.NetworkInterface:
-            case ApplicationName.WiFi:
-            case ApplicationName.PingMonitor:
-            case ApplicationName.DiscoveryProtocol:
-            case ApplicationName.WakeOnLAN:
-            case ApplicationName.SubnetCalculator:
-            case ApplicationName.BitCalculator:
-            case ApplicationName.Lookup:
-            case ApplicationName.Connections:
-            case ApplicationName.Listeners:
-            case ApplicationName.ARPTable:
-            default:
+            case ApplicationName.IPGeolocation:
+                ((IPGeolocationView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                 break;
+                
         }
     }
 

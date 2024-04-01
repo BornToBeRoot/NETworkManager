@@ -336,7 +336,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             WakeOnLAN_MACAddress = SelectedResult.MACAddress
         };
 
-        await ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, profileInfo);
+        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
+        await ProfileDialogManager.ShowAddProfileDialog(window, this, _dialogCoordinator, profileInfo, null,
+            ApplicationName.IPScanner);
     }
 
     public ICommand CopySelectedPortsCommand => new RelayCommand(_ => CopySelectedPortsAction());
@@ -534,6 +537,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private Task Export()
     {
+        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
         var customDialog = new CustomDialog
         {
             Title = Strings.Export
@@ -541,7 +546,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         var exportViewModel = new ExportViewModel(async instance =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.HideMetroDialogAsync(window, customDialog);
 
             try
             {
@@ -556,24 +561,23 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = Strings.OK;
 
-                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                await _dialogCoordinator.ShowMessageAsync(window, Strings.Error,
                     Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
                     Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
             }
 
             SettingsManager.Current.IPScanner_ExportFileType = instance.FileType;
             SettingsManager.Current.IPScanner_ExportFilePath = instance.FilePath;
-        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new[]
-        {
+        }, _ => { _dialogCoordinator.HideMetroDialogAsync(window, customDialog); }, [
             ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
-        }, true, SettingsManager.Current.IPScanner_ExportFileType, SettingsManager.Current.IPScanner_ExportFilePath);
+        ], true, SettingsManager.Current.IPScanner_ExportFileType, SettingsManager.Current.IPScanner_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {
             DataContext = exportViewModel
         };
 
-        return _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        return _dialogCoordinator.ShowMetroDialogAsync(window, customDialog);
     }
 
     public void OnClose()

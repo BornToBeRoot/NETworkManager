@@ -301,8 +301,8 @@ public static class ProfileDialogManager
                 !string.Equals(instance.Group.Name, name, StringComparison.Ordinal))
                 foreach (var profile in profiles)
                     profile.Group = name;
-            else
-                Debug.WriteLine("Cannot update group in profiles");
+            //else
+            //    Debug.WriteLine("Cannot update group in profiles");
         }
 
         return new GroupInfo
@@ -468,7 +468,7 @@ public static class ProfileDialogManager
 
     #region Dialog to add, edit, copy as and delete profile
 
-    public static Task ShowAddProfileDialog(IProfileManagerMinimal viewModel,
+    public static Task ShowAddProfileDialog(object context, IProfileManagerMinimal viewModel,
         IDialogCoordinator dialogCoordinator, ProfileInfo profile = null, string group = null,
         ApplicationName applicationName = ApplicationName.None)
     {
@@ -480,13 +480,13 @@ public static class ProfileDialogManager
 
         ProfileViewModel profileViewModel = new(async instance =>
         {
-            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+            await dialogCoordinator.HideMetroDialogAsync(context, customDialog);
             viewModel.OnProfileManagerDialogClose();
 
             ProfileManager.AddProfile(ParseProfileInfo(instance));
         }, async _ =>
         {
-            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+            await dialogCoordinator.HideMetroDialogAsync(context, customDialog);
             viewModel.OnProfileManagerDialogClose();
         }, ProfileManager.GetGroupNames(), group, ProfileEditMode.Add, profile, applicationName);
 
@@ -497,7 +497,7 @@ public static class ProfileDialogManager
 
         viewModel.OnProfileManagerDialogOpen();
 
-        return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
+        return dialogCoordinator.ShowMetroDialogAsync(context, customDialog);
     }
 
     public static Task ShowEditProfileDialog(IProfileManagerMinimal viewModel,

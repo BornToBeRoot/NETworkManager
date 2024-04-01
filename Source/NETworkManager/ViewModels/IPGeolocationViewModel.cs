@@ -171,47 +171,11 @@ public class IPGeolocationViewModel : ViewModelBase
         Query().ConfigureAwait(false);
     }
 
-    public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
+    public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
 
-    private async Task ExportAction()
+    private void ExportAction()
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.Export
-        };
-
-        var exportViewModel = new ExportViewModel(async instance =>
-            {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                try
-                {
-                    ExportManager.Export(instance.FilePath, instance.FileType,
-                        [Result]);
-                }
-                catch (Exception ex)
-                {
-                    var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Strings.OK;
-
-                    await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
-                        Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                        Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
-                }
-
-                SettingsManager.Current.IPGeolocation_ExportFileType = instance.FileType;
-                SettingsManager.Current.IPGeolocation_ExportFilePath = instance.FilePath;
-            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, [
-                ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
-            ], false, SettingsManager.Current.IPGeolocation_ExportFileType,
-            SettingsManager.Current.IPGeolocation_ExportFilePath);
-
-        customDialog.Content = new ExportDialog
-        {
-            DataContext = exportViewModel
-        };
-
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        Export().ConfigureAwait(false);
     }
 
     #endregion
@@ -270,6 +234,49 @@ public class IPGeolocationViewModel : ViewModelBase
         }
 
         IsRunning = false;
+    }
+
+    private async Task Export()
+    {
+        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
+        var customDialog = new CustomDialog
+        {
+            Title = Strings.Export
+        };
+
+        var exportViewModel = new ExportViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(window, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType,
+                        [Result]);
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(window, Strings.Error,
+                        Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                        Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.IPGeolocation_ExportFileType = instance.FileType;
+                SettingsManager.Current.IPGeolocation_ExportFilePath = instance.FilePath;
+            }, _ => { _dialogCoordinator.HideMetroDialogAsync(window, customDialog); }, [
+                ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
+            ], false, SettingsManager.Current.IPGeolocation_ExportFileType,
+            SettingsManager.Current.IPGeolocation_ExportFilePath);
+
+        customDialog.Content = new ExportDialog
+        {
+            DataContext = exportViewModel
+        };
+
+        await _dialogCoordinator.ShowMetroDialogAsync(window, customDialog);
     }
 
     public void OnClose()
