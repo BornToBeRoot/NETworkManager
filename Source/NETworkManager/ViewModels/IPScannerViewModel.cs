@@ -337,7 +337,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             WakeOnLAN_MACAddress = SelectedResult.MACAddress
         };
 
-        await ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, profileInfo);
+        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+        
+        await ProfileDialogManager.ShowAddProfileDialog(window, this, _dialogCoordinator, profileInfo, null, ApplicationName.IPScanner);
     }
 
     public ICommand CopySelectedPortsCommand => new RelayCommand(_ => CopySelectedPortsAction());
