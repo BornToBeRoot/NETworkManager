@@ -3906,4 +3906,7 @@ Attendi il completamento del processo e riprova.</value>
   <data name="CloseGroup" xml:space="preserve">
     <value>Chiudi gruppo</value>
   </data>
+  <data name="ToolTip_RunCommandWithHotKey" xml:space="preserve">
+    <value>Esegui comando... (Ctrl+Maiusc+P)</value>
+  </data>
 </root>
