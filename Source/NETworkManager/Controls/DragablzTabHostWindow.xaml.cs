@@ -29,7 +29,7 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
 
         InterTabClient = new DragablzInterTabClient(applicationName);
 
-        InterTabController.Partition = applicationName.ToString();
+        Partition = applicationName.ToString();
 
         Title =
             $"NETworkManager {AssemblyManager.Current.Version} - {ResourceTranslator.Translate(ResourceIdentifier.ApplicationName, applicationName)}";
@@ -109,6 +109,21 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
         }
     }
 
+    private string _partition;
+
+    public string Partition
+    {
+        get => _partition;
+        set
+        {
+            if (value == _partition)
+                return;
+
+            _partition = value;
+            OnPropertyChanged();
+        }
+    }
+
     private bool _headerContextMenuIsOpen;
 
     public bool HeaderContextMenuIsOpen
@@ -177,7 +192,6 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
             case ApplicationName.IPGeolocation:
                 ((IPGeolocationView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                 break;
-                
         }
     }
 
