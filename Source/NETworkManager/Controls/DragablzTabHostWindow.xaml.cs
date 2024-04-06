@@ -29,7 +29,7 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
 
         InterTabClient = new DragablzInterTabClient(applicationName);
 
-        Partition = applicationName.ToString();
+        InterTabPartition = applicationName.ToString();
 
         Title =
             $"NETworkManager {AssemblyManager.Current.Version} - {ResourceTranslator.Translate(ResourceIdentifier.ApplicationName, applicationName)}";
@@ -94,6 +94,7 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
     #region Variables
 
     public IInterTabClient InterTabClient { get; }
+    
     private ApplicationName _applicationName;
 
     public ApplicationName ApplicationName
@@ -109,17 +110,17 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
         }
     }
 
-    private string _partition;
+    private string _interTabPartition;
 
-    public string Partition
+    public string InterTabPartition
     {
-        get => _partition;
+        get => _interTabPartition;
         set
         {
-            if (value == _partition)
+            if (value == _interTabPartition)
                 return;
 
-            _partition = value;
+            _interTabPartition = value;
             OnPropertyChanged();
         }
     }

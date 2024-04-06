@@ -21,14 +21,14 @@
         <mah:WindowButtonCommands Template="{DynamicResource MahApps.Templates.WindowButtonCommands.Win10}" />
     </mah:MetroWindow.WindowButtonCommands>
     <Grid>
-        <dockablz:Layout Partition="{Binding Partition}">
+        <dockablz:Layout Partition="{Binding InterTabPartition}">
             <dockablz:Layout.BranchTemplate>
                 <DataTemplate>
                     <dragablz:TabablzControl>
                         <dragablz:TabablzControl.InterTabController>
                             <dragablz:InterTabController DataContext="{Binding}"
                                                          InterTabClient="{Binding InterTabClient}"
-                                                         Partition="{Binding Partition}" />
+                                                         Partition="{Binding InterTabPartition}" />
                         </dragablz:TabablzControl.InterTabController>
                     </dragablz:TabablzControl>
                 </DataTemplate>
@@ -39,7 +39,7 @@
                 </dragablz:TabablzControl.Resources>
                 <dragablz:TabablzControl.InterTabController>
                     <dragablz:InterTabController InterTabClient="{Binding InterTabClient}"
-                                                 Partition="{Binding Partition}" />
+                                                 Partition="{Binding InterTabPartition}" />
                 </dragablz:TabablzControl.InterTabController>
                 <dragablz:TabablzControl.Style>
                     <Style TargetType="{x:Type dragablz:TabablzControl}"
