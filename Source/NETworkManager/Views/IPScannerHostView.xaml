@@ -45,10 +45,12 @@
             </dockablz:Layout.BranchTemplate>
         <dragablz:TabablzControl ClosingItemCallback="{Binding CloseItemCommand}"
                                  ItemsSource="{Binding TabItems}" 
-                                 SelectedIndex="{Binding SelectedTabIndex}">
+                                 SelectedIndex="{Binding SelectedTabIndex}"
+                                 DisableBranchConsolidation="True">
             <dragablz:TabablzControl.InterTabController>
                 <dragablz:InterTabController InterTabClient="{Binding InterTabClient}"
-                                             Partition="{Binding InterTabPartition }" />
+                                             Partition="{Binding InterTabPartition}" 
+                                             MoveWindowWithSolitaryTabs="False" />
             </dragablz:TabablzControl.InterTabController>
             <dragablz:TabablzControl.HeaderSuffixContent>
                 <Grid HorizontalAlignment="Right" Width="32" Height="32">
