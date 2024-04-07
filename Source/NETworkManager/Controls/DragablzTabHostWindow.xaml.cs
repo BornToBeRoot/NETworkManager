@@ -28,7 +28,6 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
         ApplicationName = applicationName;
 
         InterTabClient = new DragablzInterTabClient(applicationName);
-
         InterTabPartition = applicationName.ToString();
 
         Title =
@@ -68,7 +67,7 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
                 break;
         }
     }
-
+   
     #endregion
 
     #region Events

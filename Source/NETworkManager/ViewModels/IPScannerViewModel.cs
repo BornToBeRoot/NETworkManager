@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -235,6 +236,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         _dialogCoordinator = instance;
 
+        ConfigurationManager.Current.IPScannerTabCount++;
+        
         _tabId = tabId;
         Host = hostOrIPRange;
 
@@ -579,12 +582,22 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         return _dialogCoordinator.ShowMetroDialogAsync(window, customDialog);
     }
+    
+    private bool _closed;
 
     public void OnClose()
     {
+        // Prevent multiple calls
+        if (_closed)
+            return;
+        
+        _closed = true;
+        
         // Stop scan
         if (IsRunning)
             Stop();
+
+        ConfigurationManager.Current.IPScannerTabCount--;
     }
 
     #endregion

@@ -187,7 +187,7 @@ public class IPScannerHostViewModel : ViewModelBase, IProfileManager
     public IPScannerHostViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
-
+                
         _dialogCoordinator = instance;
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.IPScanner);
@@ -196,7 +196,7 @@ public class IPScannerHostViewModel : ViewModelBase, IProfileManager
         var tabId = Guid.NewGuid();
 
         TabItems = [ 
-            new DragablzTabItem(Strings.NewTab, new IPScannerView(tabId), tabId) 
+            new(Strings.NewTab, new IPScannerView(tabId), tabId) 
         ];
 
         // Profiles
@@ -303,7 +303,6 @@ public class IPScannerHostViewModel : ViewModelBase, IProfileManager
     {
         ((args.DragablzItem.Content as DragablzTabItem)?.View as IPScannerView)?.CloseTab();
     }
-
     #endregion
 
     #region Methods

@@ -1,4 +1,5 @@
-﻿using NETworkManager.Models;
+﻿using System.Diagnostics;
+using NETworkManager.Models;
 using NETworkManager.Utilities;
 
 namespace NETworkManager.Settings;
@@ -67,6 +68,23 @@ public class ConfigurationInfo : PropertyChangedBase
     /// </summary>
     public ApplicationName CurrentApplication { get; set; } = Models.ApplicationName.None;
 
+    private int _ipScannerTabCount;
+    
+    public int IPScannerTabCount
+    {
+        get => _ipScannerTabCount;
+        set
+        {
+            if (value == _ipScannerTabCount)
+                return;
+
+            Debug.WriteLine("IPScanner current tabs: " + value);
+            
+            _ipScannerTabCount = value;
+            OnPropertyChanged();
+        }
+    }
+    
     /// <summary>
     ///     Indicates if Remote Desktop has tabs.
     /// </summary>
