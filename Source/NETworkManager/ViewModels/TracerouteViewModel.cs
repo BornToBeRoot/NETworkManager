@@ -37,6 +37,7 @@ public class TracerouteViewModel : ViewModelBase
 
     private readonly Guid _tabId;
     private bool _firstLoad = true;
+    private bool _closed;
 
     private string _host;
 
@@ -171,6 +172,8 @@ public class TracerouteViewModel : ViewModelBase
     {
         _dialogCoordinator = instance;
 
+        ConfigurationManager.Current.TracerouteTabCount++;
+        
         _tabId = tabId;
         Host = host;
 
@@ -402,8 +405,17 @@ public class TracerouteViewModel : ViewModelBase
 
     public void OnClose()
     {
+        // Prevent multiple calls
+        if (_closed)
+            return;
+        
+        _closed = true;
+        
+        // Stop trace
         if (IsRunning)
             StopTrace();
+        
+        ConfigurationManager.Current.TracerouteTabCount--;
     }
 
     #endregion

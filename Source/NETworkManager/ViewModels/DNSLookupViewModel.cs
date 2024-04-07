@@ -31,6 +31,7 @@ public class DNSLookupViewModel : ViewModelBase
 
     private readonly Guid _tabId;
     private bool _firstLoad = true;
+    private bool _closed;
 
     private readonly bool _isLoading;
 
@@ -205,6 +206,8 @@ public class DNSLookupViewModel : ViewModelBase
 
         _dialogCoordinator = instance;
 
+        ConfigurationManager.Current.DNSLookupTabCount++;
+        
         _tabId = tabId;
         Host = host;
 
@@ -342,6 +345,13 @@ public class DNSLookupViewModel : ViewModelBase
 
     public void OnClose()
     {
+        // Prevent multiple calls
+        if (_closed)
+            return;
+        
+        _closed = true;
+        
+        ConfigurationManager.Current.DNSLookupTabCount--;
     }
 
     // Modify history list

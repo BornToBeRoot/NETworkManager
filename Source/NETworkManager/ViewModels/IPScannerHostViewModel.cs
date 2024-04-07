@@ -196,7 +196,7 @@ public class IPScannerHostViewModel : ViewModelBase, IProfileManager
         var tabId = Guid.NewGuid();
 
         TabItems = [ 
-            new(Strings.NewTab, new IPScannerView(tabId), tabId) 
+            new DragablzTabItem(Strings.NewTab, new IPScannerView(tabId), tabId) 
         ];
 
         // Profiles

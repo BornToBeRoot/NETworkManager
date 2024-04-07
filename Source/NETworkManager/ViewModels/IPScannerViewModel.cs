@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -41,6 +40,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private readonly Guid _tabId;
     private bool _firstLoad = true;
+    private bool _closed;
 
     private string _host;
 
@@ -583,8 +583,6 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         return _dialogCoordinator.ShowMetroDialogAsync(window, customDialog);
     }
     
-    private bool _closed;
-
     public void OnClose()
     {
         // Prevent multiple calls

@@ -17,11 +17,18 @@ public partial class DNSLookupView
         _viewModel = new DNSLookupViewModel(DialogCoordinator.Instance, tabId, host);
 
         DataContext = _viewModel;
+        
+        Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
     }
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e)
     {
         _viewModel.OnLoaded();
+    }
+    
+    private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
+    {
+        _viewModel.OnClose();
     }
 
     public void CloseTab()
