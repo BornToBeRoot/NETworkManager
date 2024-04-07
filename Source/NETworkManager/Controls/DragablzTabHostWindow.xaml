@@ -26,24 +26,8 @@
     </mah:MetroWindow.WindowButtonCommands>
     <Grid>
         <dockablz:Layout Partition="{Binding InterTabPartition}">
-            <dockablz:Layout.BranchTemplate>
-                <DataTemplate>
-                    <dragablz:TabablzControl>
-                        <dragablz:TabablzControl.InterTabController>
-                            <dragablz:InterTabController DataContext="{Binding}"
-                                                         InterTabClient="{Binding InterTabClient}"
-                                                         Partition="{Binding InterTabPartition}" />
-                        </dragablz:TabablzControl.InterTabController>
-                    </dragablz:TabablzControl>
-                </DataTemplate>
-            </dockablz:Layout.BranchTemplate>
-            <dragablz:TabablzControl Name="TabsContainer" ClosingItemCallback="{Binding CloseItemCommand}">                
-                <dragablz:TabablzControl.InterTabController>
-                    <dragablz:InterTabController InterTabClient="{Binding InterTabClient}"
-                                                 Partition="{Binding InterTabPartition}" />
-                </dragablz:TabablzControl.InterTabController>
-                <dragablz:TabablzControl.Style>
-                    <Style TargetType="{x:Type dragablz:TabablzControl}"
+            <dockablz:Layout.Resources>
+                <Style TargetType="{x:Type dragablz:TabablzControl}"
                            BasedOn="{StaticResource DefaultTabablzControl}">
                         <!-- If not null, the header suffix will be removed in the main window -->
                         <Setter Property="HeaderSuffixContent" Value="{x:Null}" />
@@ -744,7 +728,23 @@
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </dragablz:TabablzControl.Style>
+            </dockablz:Layout.Resources>
+            <dockablz:Layout.BranchTemplate>
+                <DataTemplate>
+                    <dragablz:TabablzControl>
+                        <dragablz:TabablzControl.InterTabController>
+                            <dragablz:InterTabController DataContext="{Binding}"
+                                                         InterTabClient="{Binding InterTabClient}"
+                                                         Partition="{Binding InterTabPartition}" />
+                        </dragablz:TabablzControl.InterTabController>
+                    </dragablz:TabablzControl>
+                </DataTemplate>
+            </dockablz:Layout.BranchTemplate>
+            <dragablz:TabablzControl Name="TabsContainer" ClosingItemCallback="{Binding CloseItemCommand}">                
+                <dragablz:TabablzControl.InterTabController>
+                    <dragablz:InterTabController InterTabClient="{Binding InterTabClient}"
+                                                 Partition="{Binding InterTabPartition}" />
+                </dragablz:TabablzControl.InterTabController>
             </dragablz:TabablzControl>
         </dockablz:Layout>
     </Grid>
