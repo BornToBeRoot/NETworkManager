@@ -29,11 +29,11 @@ public partial class PuTTYControl : UserControlBase
     #region Variables
 
     private bool _initialized;
-    private bool _closing; // When the tab is closed --> OnClose()
     private bool _closed;
 
     private readonly IDialogCoordinator _dialogCoordinator;
 
+    private readonly Guid _tabId;
     private readonly PuTTYSessionInfo _sessionInfo;
 
     private Process _process;
@@ -73,7 +73,7 @@ public partial class PuTTYControl : UserControlBase
 
     #region Constructor, load
 
-    public PuTTYControl(PuTTYSessionInfo sessionInfo)
+    public PuTTYControl(Guid tabId, PuTTYSessionInfo sessionInfo)
     {
         InitializeComponent();
         DataContext = this;
@@ -82,6 +82,7 @@ public partial class PuTTYControl : UserControlBase
         
         ConfigurationManager.Current.PuTTYTabCount++;
 
+        _tabId = tabId;
         _sessionInfo = sessionInfo;
 
         Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
@@ -211,7 +212,7 @@ public partial class PuTTYControl : UserControlBase
         }
         catch (Exception ex)
         {
-            if (!_closing)
+            if (!_closed)
             {
                 var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = Strings.OK;

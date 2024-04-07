@@ -427,7 +427,9 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
     {
         sessionInfo.ApplicationFilePath = SettingsManager.Current.TigerVNC_ApplicationFilePath;
 
-        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Host, new TigerVNCControl(sessionInfo)));
+        var tabId = Guid.NewGuid();
+        
+        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Host, new TigerVNCControl(tabId, sessionInfo), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }

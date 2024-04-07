@@ -20,6 +20,7 @@ public partial class RemoteDesktopControl : UserControlBase
     private bool _initialized;
     private bool _closed;
 
+    private readonly Guid _tabId;
     private readonly RemoteDesktopSessionInfo _sessionInfo;
 
     // Fix WindowsFormsHost width
@@ -118,13 +119,14 @@ public partial class RemoteDesktopControl : UserControlBase
 
     #region Constructor, load
 
-    public RemoteDesktopControl(RemoteDesktopSessionInfo sessionInfo)
+    public RemoteDesktopControl(Guid tabId, RemoteDesktopSessionInfo sessionInfo)
     {
         InitializeComponent();
         DataContext = this;
         
         ConfigurationManager.Current.RemoteDesktopTabCount++;
 
+        _tabId = tabId;
         _sessionInfo = sessionInfo;
 
         Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;

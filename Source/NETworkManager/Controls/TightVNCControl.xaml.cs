@@ -32,6 +32,7 @@ public partial class TigerVNCControl : UserControlBase
 
     private readonly IDialogCoordinator _dialogCoordinator;
 
+    private readonly Guid _tabId;
     private readonly TigerVNCSessionInfo _sessionInfo;
 
     private Process _process;
@@ -71,7 +72,7 @@ public partial class TigerVNCControl : UserControlBase
 
     #region Constructor, load
 
-    public TigerVNCControl(TigerVNCSessionInfo sessionInfo)
+    public TigerVNCControl(Guid tabId, TigerVNCSessionInfo sessionInfo)
     {
         InitializeComponent();
         DataContext = this;
@@ -80,6 +81,7 @@ public partial class TigerVNCControl : UserControlBase
         
         ConfigurationManager.Current.TigerVNCTabCount++;
 
+        _tabId = tabId;
         _sessionInfo = sessionInfo;
 
         Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;

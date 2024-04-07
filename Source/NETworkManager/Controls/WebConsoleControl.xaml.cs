@@ -15,6 +15,7 @@ public partial class WebConsoleControl : UserControlBase
     private bool _initialized;
     private bool _closed;
     
+    private readonly Guid _tabId;
     private readonly WebConsoleSessionInfo _sessionInfo;
 
     private bool _isLoading;
@@ -66,13 +67,14 @@ public partial class WebConsoleControl : UserControlBase
 
     #region Constructor, load
 
-    public WebConsoleControl(WebConsoleSessionInfo sessionInfo)
+    public WebConsoleControl(Guid tabId, WebConsoleSessionInfo sessionInfo)
     {
         InitializeComponent();
         DataContext = this;
 
         ConfigurationManager.Current.WebConsoleTabCount++;
         
+        _tabId = tabId;
         _sessionInfo = sessionInfo;
 
         Browser2.NavigationStarting += Browser2_NavigationStarting;

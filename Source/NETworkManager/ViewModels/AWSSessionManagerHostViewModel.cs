@@ -847,7 +847,9 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     {
         sessionInfo.ApplicationFilePath = SettingsManager.Current.AWSSessionManager_ApplicationFilePath;
 
-        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.InstanceID, new AWSSessionManagerControl(sessionInfo)));
+        var tabId = Guid.NewGuid();
+        
+        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.InstanceID, new AWSSessionManagerControl(tabId, sessionInfo), tabId));
 
         // Select the added tab
         _disableFocusEmbeddedWindow = true;

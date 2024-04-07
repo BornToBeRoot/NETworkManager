@@ -508,7 +508,10 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
     private void Connect(RemoteDesktopSessionInfo sessionInfo, string header = null)
     {
-        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Hostname, new RemoteDesktopControl(sessionInfo)));
+        var tabId = Guid.NewGuid();
+        
+        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Hostname, new RemoteDesktopControl(tabId, sessionInfo), tabId));
+        
         SelectedTabIndex = TabItems.Count - 1;
     }
 

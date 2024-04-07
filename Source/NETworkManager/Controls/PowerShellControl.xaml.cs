@@ -26,12 +26,12 @@ public partial class PowerShellControl : UserControlBase
     #endregion
 
     #region Variables
-
     private bool _initialized;
     private bool _closed;
 
     private readonly IDialogCoordinator _dialogCoordinator;
 
+    private readonly Guid _tabId;
     private readonly PowerShellSessionInfo _sessionInfo;
 
     private Process _process;
@@ -71,7 +71,7 @@ public partial class PowerShellControl : UserControlBase
 
     #region Constructor, load
 
-    public PowerShellControl(PowerShellSessionInfo sessionInfo)
+    public PowerShellControl(Guid tabId, PowerShellSessionInfo sessionInfo)
     {
         InitializeComponent();
         DataContext = this;
@@ -80,8 +80,9 @@ public partial class PowerShellControl : UserControlBase
 
         ConfigurationManager.Current.PowerShellTabCount++;
     
+        _tabId = tabId;
         _sessionInfo = sessionInfo;
-
+        
         Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
     }
 

@@ -34,8 +34,9 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
     public IInterTabClient InterTabClient { get; }
-    
+
     private string _interTabPartition;
+
     public string InterTabPartition
     {
         get => _interTabPartition;
@@ -48,7 +49,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-    
+
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
     private readonly bool _isLoading;
@@ -84,7 +85,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-    
+
     private DragablzTabItem _selectedTabItem;
 
     public DragablzTabItem SelectedTabItem
@@ -538,7 +539,9 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         // Must be added here. So that it works with profiles and the connect dialog.
         sessionInfo.ApplicationFilePath = SettingsManager.Current.PuTTY_ApplicationFilePath;
 
-        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.HostOrSerialLine, new PuTTYControl(sessionInfo)));
+        var tabId = Guid.NewGuid();
+
+        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.HostOrSerialLine, new PuTTYControl(tabId, sessionInfo), tabId));
 
         // Select the added tab
         _disableFocusEmbeddedWindow = true;

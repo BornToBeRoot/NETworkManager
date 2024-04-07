@@ -26,12 +26,12 @@ public partial class AWSSessionManagerControl : UserControlBase
     #endregion
 
     #region Variables
-
     private bool _initialized;
     private bool _closed;
-
+    
     private readonly IDialogCoordinator _dialogCoordinator;
-
+    
+    private readonly Guid _tabId;
     private readonly AWSSessionManagerSessionInfo _sessionInfo;
 
     private Process _process;
@@ -71,7 +71,7 @@ public partial class AWSSessionManagerControl : UserControlBase
 
     #region Constructor, load
 
-    public AWSSessionManagerControl(AWSSessionManagerSessionInfo sessionInfo)
+    public AWSSessionManagerControl(Guid tabId, AWSSessionManagerSessionInfo sessionInfo)
     {
         InitializeComponent();
         DataContext = this;
@@ -80,6 +80,7 @@ public partial class AWSSessionManagerControl : UserControlBase
 
         ConfigurationManager.Current.AWSSessionManagerTabCount++;
         
+        _tabId = tabId;
         _sessionInfo = sessionInfo;
 
         Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;

@@ -215,12 +215,7 @@ public class SNTPLookupViewModel : ViewModelBase
         // Reset the latest results
         Results.Clear();
 
-        // Change the tab title (not nice, but it works)
-        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-
-        if (window != null)
-            foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
-                tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = SNTPServer.Name;
+        DragablzTabItem.SetTabHeader(_tabId, SNTPServer.Name);
 
         SNTPLookupSettings settings = new(
             SettingsManager.Current.SNTPLookup_Timeout

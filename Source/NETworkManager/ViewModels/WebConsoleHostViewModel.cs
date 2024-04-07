@@ -410,7 +410,9 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
 
     private void Connect(WebConsoleSessionInfo sessionInfo, string header = null)
     {
-        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Url, new WebConsoleControl(sessionInfo)));
+        var tabId = Guid.NewGuid();
+        
+        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Url, new WebConsoleControl(tabId, sessionInfo), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }

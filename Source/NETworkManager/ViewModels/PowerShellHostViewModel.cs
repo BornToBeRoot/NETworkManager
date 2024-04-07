@@ -510,9 +510,11 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     {
         sessionInfo.ApplicationFilePath = SettingsManager.Current.PowerShell_ApplicationFilePath;
 
+        var tabId = Guid.NewGuid();
+        
         TabItems.Add(new DragablzTabItem(
             header ?? (sessionInfo.EnableRemoteConsole ? sessionInfo.Host : Strings.PowerShell),
-            new PowerShellControl(sessionInfo)));
+            new PowerShellControl(tabId, sessionInfo), tabId));
 
         // Select the added tab
         _disableFocusEmbeddedWindow = true;
