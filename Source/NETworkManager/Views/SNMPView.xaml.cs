@@ -22,8 +22,15 @@ public partial class SNMPView
         _viewModel = new SNMPViewModel(DialogCoordinator.Instance, tabId, sessionInfo);
 
         DataContext = _viewModel;
+        
+        Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
     }
 
+    private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
+    {
+        _viewModel.OnClose();
+    }
+    
     public void CloseTab()
     {
         _viewModel.OnClose();

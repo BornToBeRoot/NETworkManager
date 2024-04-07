@@ -26,7 +26,8 @@ public class WhoisViewModel : ViewModelBase
 
     private readonly Guid _tabId;
     private bool _firstLoad = true;
-
+    private bool _closed;
+    
     private string _domain;
 
     public string Domain
@@ -127,6 +128,8 @@ public class WhoisViewModel : ViewModelBase
     {
         _dialogCoordinator = instance;
 
+        ConfigurationManager.Current.WhoisTabCount++;
+        
         _tabId = tabId;
         Domain = domain;
 
@@ -222,6 +225,13 @@ public class WhoisViewModel : ViewModelBase
 
     public void OnClose()
     {
+        // Prevent multiple calls
+        if (_closed)
+            return;
+        
+        _closed = true;
+        
+        ConfigurationManager.Current.WhoisTabCount--;
     }
 
     private void AddDomainToHistory(string domain)

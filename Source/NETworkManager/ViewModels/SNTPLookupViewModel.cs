@@ -28,8 +28,8 @@ public class SNTPLookupViewModel : ViewModelBase
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly Guid _tabId;
-
     private readonly bool _isLoading;
+    private bool _closed;
 
     public ICollectionView SNTPServers { get; }
 
@@ -66,7 +66,7 @@ public class SNTPLookupViewModel : ViewModelBase
         }
     }
 
-    private ObservableCollection<SNTPLookupInfo> _results = new();
+    private ObservableCollection<SNTPLookupInfo> _results = [];
 
     public ObservableCollection<SNTPLookupInfo> Results
     {
@@ -151,6 +151,7 @@ public class SNTPLookupViewModel : ViewModelBase
         _isLoading = true;
 
         _dialogCoordinator = instance;
+        ConfigurationManager.Current.SNTPLookupTabCount++;
 
         _tabId = tabId;
 
@@ -280,6 +281,13 @@ public class SNTPLookupViewModel : ViewModelBase
 
     public void OnClose()
     {
+        // Prevent multiple calls
+        if (_closed)
+            return;
+        
+        _closed = true;
+        
+        ConfigurationManager.Current.SNTPLookupTabCount--;
     }
 
     #endregion

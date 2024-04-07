@@ -35,6 +35,8 @@ public class SNMPViewModel : ViewModelBase
         _isLoading = true;
 
         _dialogCoordinator = instance;
+        
+        ConfigurationManager.Current.SNMPTabCount++;
 
         _tabId = tabId;
         Host = sessionInfo?.Host;
@@ -101,8 +103,8 @@ public class SNMPViewModel : ViewModelBase
     private CancellationTokenSource _cancellationTokenSource;
 
     private readonly Guid _tabId;
-
     private readonly bool _isLoading;
+    private bool _closed;
 
     private string _host;
 
@@ -643,6 +645,13 @@ public class SNMPViewModel : ViewModelBase
 
     public void OnClose()
     {
+        // Prevent multiple calls
+        if (_closed)
+            return;
+        
+        _closed = true;
+        
+        ConfigurationManager.Current.SNMPTabCount--;
     }
 
     private async Task OpenOIDProfileSelection()

@@ -29,6 +29,7 @@ public class IPGeolocationViewModel : ViewModelBase
 
     private readonly Guid _tabId;
     private bool _firstLoad = true;
+    private bool _closed;
 
     private string _host;
 
@@ -130,6 +131,8 @@ public class IPGeolocationViewModel : ViewModelBase
     {
         _dialogCoordinator = instance;
 
+        ConfigurationManager.Current.IPGeolocationTabCount++;
+        
         _tabId = tabId;
         Host = host;
 
@@ -281,6 +284,13 @@ public class IPGeolocationViewModel : ViewModelBase
 
     public void OnClose()
     {
+        // Prevent multiple calls
+        if (_closed)
+            return;
+        
+        _closed = true;
+        
+        ConfigurationManager.Current.IPGeolocationTabCount--;
     }
 
     private void AddHostToHistory(string host)

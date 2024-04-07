@@ -16,6 +16,8 @@ public partial class IPGeolocationView
         _viewModel = new IPGeolocationViewModel(DialogCoordinator.Instance, tabId, domain);
 
         DataContext = _viewModel;
+        
+        Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
     }
 
     private void UserControl_OnLoaded(object sender, RoutedEventArgs e)
@@ -23,6 +25,11 @@ public partial class IPGeolocationView
         _viewModel.OnLoaded();
     }
 
+    private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
+    {
+        _viewModel.OnClose();
+    }
+    
     public void CloseTab()
     {
         _viewModel.OnClose();
