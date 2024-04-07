@@ -36,7 +36,7 @@ public static class ConfigurationManager
     /// <summary>
     ///     Current <see cref="ConfigurationInfo" /> that is used in the application.
     /// </summary>
-    public static ConfigurationInfo Current { get; set; }
+    public static ConfigurationInfo Current { get; }
 
     /// <summary>
     ///     Method can be called before opening a dialog to fix airspace issues.
@@ -46,12 +46,12 @@ public static class ConfigurationManager
     {
         switch (Current.CurrentApplication)
         {
-            case ApplicationName.RemoteDesktop when Current.RemoteDesktopHasTabs:
-            case ApplicationName.PowerShell when Current.PowerShellHasTabs:
-            case ApplicationName.PuTTY when Current.PuTTYHasTabs:
-            case ApplicationName.AWSSessionManager when Current.AWSSessionManagerHasTabs:
-            case ApplicationName.TigerVNC when Current.TigerVNCHasTabs:
-            case ApplicationName.WebConsole when Current.WebConsoleHasTabs:
+            case ApplicationName.RemoteDesktop when Current.RemoteDesktopTabCount > 1:
+            case ApplicationName.PowerShell when Current.PowerShellTabCount > 1:
+            case ApplicationName.PuTTY when Current.PuTTYTabCount > 1:
+            case ApplicationName.AWSSessionManager when Current.AWSSessionManagerTabCount > 1:
+            case ApplicationName.TigerVNC when Current.TigerVNCTabCount > 1:
+            case ApplicationName.WebConsole when Current.WebConsoleTabCount > 1:
                 Current.FixAirspace = true;
                 break;
         }
