@@ -239,8 +239,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.PuTTY);
 
-        TabItems = new ObservableCollection<DragablzTabItem>();
-        TabItems.CollectionChanged += TabItems_CollectionChanged;
+        TabItems = [];
 
         // Profiles
         SetProfilesView();
@@ -740,12 +739,6 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         RefreshProfiles();
 
         IsSearching = false;
-    }
-
-    private void TabItems_CollectionChanged(object sender,
-        NotifyCollectionChangedEventArgs e)
-    {
-        ConfigurationManager.Current.PuTTYHasTabs = TabItems.Count > 0;
     }
 
     #endregion

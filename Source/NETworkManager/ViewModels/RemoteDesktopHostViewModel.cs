@@ -181,8 +181,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.RemoteDesktop);
 
-        TabItems = new ObservableCollection<DragablzTabItem>();
-        TabItems.CollectionChanged += TabItems_CollectionChanged;
+        TabItems = [];
 
         // Profiles
         SetProfilesView();
@@ -630,12 +629,5 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
         IsSearching = false;
     }
-
-    private void TabItems_CollectionChanged(object sender,
-        NotifyCollectionChangedEventArgs e)
-    {
-        ConfigurationManager.Current.RemoteDesktopHasTabs = TabItems.Count > 0;
-    }
-
     #endregion
 }

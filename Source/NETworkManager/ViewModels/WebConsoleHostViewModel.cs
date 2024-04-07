@@ -213,8 +213,7 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.WebConsole);
 
-        TabItems = new ObservableCollection<DragablzTabItem>();
-        TabItems.CollectionChanged += TabItems_CollectionChanged;
+        TabItems = [];
 
         // Profiles
         SetProfilesView();
@@ -527,12 +526,6 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         RefreshProfiles();
 
         IsSearching = false;
-    }
-
-    private void TabItems_CollectionChanged(object sender,
-        NotifyCollectionChangedEventArgs e)
-    {
-        ConfigurationManager.Current.WebConsoleHasTabs = TabItems.Count > 0;
     }
 
     #endregion

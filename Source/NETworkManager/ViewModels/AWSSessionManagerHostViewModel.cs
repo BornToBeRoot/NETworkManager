@@ -309,8 +309,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.AWSSessionManager);
 
-        TabItems = new ObservableCollection<DragablzTabItem>();
-        TabItems.CollectionChanged += TabItems_CollectionChanged;
+        TabItems = [];
 
         // Profiles
         SetProfilesView();
@@ -1036,12 +1035,6 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         RefreshProfiles();
 
         IsSearching = false;
-    }
-
-    private void TabItems_CollectionChanged(object sender,
-        NotifyCollectionChangedEventArgs e)
-    {
-        ConfigurationManager.Current.AWSSessionManagerHasTabs = TabItems.Count > 0;
     }
 
     #endregion

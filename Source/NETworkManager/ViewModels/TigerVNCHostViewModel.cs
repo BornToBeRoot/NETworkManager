@@ -200,8 +200,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.TigerVNC);
 
-        TabItems = new ObservableCollection<DragablzTabItem>();
-        TabItems.CollectionChanged += TabItems_CollectionChanged;
+        TabItems = [];
 
         // Profiles
         SetProfilesView();
@@ -559,12 +558,6 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
         RefreshProfiles();
 
         IsSearching = false;
-    }
-
-    private void TabItems_CollectionChanged(object sender,
-        NotifyCollectionChangedEventArgs e)
-    {
-        ConfigurationManager.Current.TigerVNCHasTabs = TabItems.Count > 0;
     }
 
     private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)

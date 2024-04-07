@@ -239,8 +239,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.PowerShell);
 
-        TabItems = new ObservableCollection<DragablzTabItem>();
-        TabItems.CollectionChanged += TabItems_CollectionChanged;
+        TabItems = [];
 
         // Profiles
         SetProfilesView();
@@ -638,11 +637,6 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         RefreshProfiles();
 
         IsSearching = false;
-    }
-
-    private void TabItems_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-    {
-        ConfigurationManager.Current.PowerShellHasTabs = TabItems.Count > 0;
     }
 
     private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
