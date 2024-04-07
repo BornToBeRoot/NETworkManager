@@ -15,8 +15,6 @@ public partial class DNSLookupHostView
     {
         InitializeComponent();
         DataContext = _viewModel;
-
-        InterTabController.Partition = ApplicationName.DNSLookup.ToString();
     }
 
     private void ContextMenu_Opened(object sender, RoutedEventArgs e)

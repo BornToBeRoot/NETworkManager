@@ -31,7 +31,7 @@
                               Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                               MaxWidth="{x:Static settings:GlobalStaticConfiguration.Profile_MaxWidthExpanded}" />
         </Grid.ColumnDefinitions>
-        <dockablz:Layout Grid.Column="0" Grid.Row="0"  
+        <dockablz:Layout Grid.Column="0" Grid.Row="0"
                          Partition="{Binding InterTabPartition}">
             <dockablz:Layout.BranchTemplate>
                 <DataTemplate>
@@ -44,44 +44,44 @@
                     </dragablz:TabablzControl>
                 </DataTemplate>
             </dockablz:Layout.BranchTemplate>
-        <dragablz:TabablzControl ClosingItemCallback="{Binding CloseItemCommand}"
-                                 ItemsSource="{Binding TabItems}" 
-                                 SelectedIndex="{Binding SelectedTabIndex}"
-                                 DisableBranchConsolidation="True">
+            <dragablz:TabablzControl ClosingItemCallback="{Binding CloseItemCommand}"
+                                     ItemsSource="{Binding TabItems}"
+                                     SelectedIndex="{Binding SelectedTabIndex}"
+                                     DisableBranchConsolidation="True">
                 <dragablz:TabablzControl.InterTabController>
                     <dragablz:InterTabController InterTabClient="{Binding InterTabClient}"
-                                             Partition="{Binding InterTabPartition}" 
-                                             MoveWindowWithSolitaryTabs="False" />
+                                                 Partition="{Binding InterTabPartition}"
+                                                 MoveWindowWithSolitaryTabs="False" />
                 </dragablz:TabablzControl.InterTabController>
                 <dragablz:TabablzControl.HeaderSuffixContent>
-                <Grid HorizontalAlignment="Right" Width="32" Height="32">
-                    <Button Style="{StaticResource CleanButton}"
-                            Command="{Binding AddTabCommand}"
-                            ToolTip="{x:Static localization:Strings.NewTab}"
-                            Focusable="False">
-                        <Rectangle Width="16" Height="16">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=Plus}" />
-                            </Rectangle.OpacityMask>
-                            <Rectangle.Style>
-                                <Style TargetType="{x:Type Rectangle}">
-                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                    <Style.Triggers>
-                                        <DataTrigger
-                                            Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
-                                            Value="True">
-                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Rectangle.Style>
-                        </Rectangle>
-                    </Button>
-                </Grid>
-            </dragablz:TabablzControl.HeaderSuffixContent>
-        </dragablz:TabablzControl>
-            </dockablz:Layout>
-        <Grid Grid.Column="0" Grid.Row="0" 
+                    <Grid HorizontalAlignment="Right" Width="32" Height="32">
+                        <Button Style="{StaticResource CleanButton}"
+                                Command="{Binding AddTabCommand}"
+                                ToolTip="{x:Static localization:Strings.NewTab}"
+                                Focusable="False">
+                            <Rectangle Width="16" Height="16">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=Plus}" />
+                                </Rectangle.OpacityMask>
+                                <Rectangle.Style>
+                                    <Style TargetType="{x:Type Rectangle}">
+                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                        <Style.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
+                                                Value="True">
+                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
+                            </Rectangle>
+                        </Button>
+                    </Grid>
+                </dragablz:TabablzControl.HeaderSuffixContent>
+            </dragablz:TabablzControl>
+        </dockablz:Layout>
+        <Grid Grid.Column="0" Grid.Row="0"
               VerticalAlignment="Center"
               Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IPScannerTabCount, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}">
             <Button HorizontalAlignment="Center" Command="{Binding AddTabCommand}" Style="{StaticResource CleanButton}">
@@ -127,8 +127,8 @@
             </Button>
         </Grid>
         <GridSplitter Grid.Column="1" Grid.Row="0"
-                         Focusable="False"
-                         Style="{StaticResource ProfileGridSplitter}" />
+                      Focusable="False"
+                      Style="{StaticResource ProfileGridSplitter}" />
         <Expander Grid.Column="2" Grid.Row="0"
                   x:Name="ExpanderProfiles" Header="{x:Static localization:Strings.Profiles}"
                   Style="{StaticResource ProfileExpander}"

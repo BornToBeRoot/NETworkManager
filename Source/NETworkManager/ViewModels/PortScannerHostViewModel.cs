@@ -190,7 +190,7 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
         _dialogCoordinator = instance;
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.PortScanner);
-        InterTabPartition = ApplicationName.IPScanner.ToString();
+        InterTabPartition = ApplicationName.PortScanner.ToString();
 
         var tabId = Guid.NewGuid();
 

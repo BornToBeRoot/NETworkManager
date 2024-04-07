@@ -15,8 +15,6 @@ public partial class IPGeolocationHostView
     {
         InitializeComponent();
         DataContext = _viewModel;
-
-        InterTabController.Partition = ApplicationName.IPGeolocation.ToString();
     }
 
     private void ContextMenu_Opened(object sender, RoutedEventArgs e)

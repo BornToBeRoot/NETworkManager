@@ -190,7 +190,7 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
         _dialogCoordinator = instance;
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.IPGeolocation);
-        InterTabPartition = ApplicationName.IPScanner.ToString();
+        InterTabPartition = ApplicationName.IPGeolocation.ToString();
 
         var tabId = Guid.NewGuid();
 

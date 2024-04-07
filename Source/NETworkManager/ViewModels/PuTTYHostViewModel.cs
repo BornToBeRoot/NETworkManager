@@ -53,6 +53,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
     private readonly bool _isLoading;
     private bool _isViewActive = true;
+    private bool _disableFocusEmbeddedWindow;
 
     private bool _isConfigured;
 
@@ -69,8 +70,21 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    private bool _disableFocusEmbeddedWindow;
+    private int _selectedTabIndex;
 
+    public int SelectedTabIndex
+    {
+        get => _selectedTabIndex;
+        set
+        {
+            if (value == _selectedTabIndex)
+                return;
+
+            _selectedTabIndex = value;
+            OnPropertyChanged();
+        }
+    }
+    
     private DragablzTabItem _selectedTabItem;
 
     public DragablzTabItem SelectedTabItem
@@ -528,7 +542,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
         // Select the added tab
         _disableFocusEmbeddedWindow = true;
-        SelectedTabItem = TabItems.Last();
+        SelectedTabIndex = TabItems.Count - 1;
         _disableFocusEmbeddedWindow = false;
     }
 

@@ -18,8 +18,6 @@ public partial class RemoteDesktopHostView
     {
         InitializeComponent();
         DataContext = _viewModel;
-
-        InterTabController.Partition = ApplicationName.RemoteDesktop.ToString();
     }
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e)

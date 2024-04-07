@@ -18,6 +18,9 @@
                  dialogs:DialogParticipation.Register="{Binding}"
                  ShowCloseButton="False"
                  d:DataContext="{d:DesignInstance controls:DragablzTabHostWindow}">
+    <mah:MetroWindow.Resources>
+        <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
+    </mah:MetroWindow.Resources>
     <mah:MetroWindow.WindowButtonCommands>
         <mah:WindowButtonCommands Template="{DynamicResource MahApps.Templates.WindowButtonCommands.Win10}" />
     </mah:MetroWindow.WindowButtonCommands>
@@ -34,10 +37,7 @@
                     </dragablz:TabablzControl>
                 </DataTemplate>
             </dockablz:Layout.BranchTemplate>
-            <dragablz:TabablzControl Name="TabsContainer" ClosingItemCallback="{Binding CloseItemCommand}">
-                <dragablz:TabablzControl.Resources>
-                    <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
-                </dragablz:TabablzControl.Resources>
+            <dragablz:TabablzControl Name="TabsContainer" ClosingItemCallback="{Binding CloseItemCommand}">                
                 <dragablz:TabablzControl.InterTabController>
                     <dragablz:InterTabController InterTabClient="{Binding InterTabClient}"
                                                  Partition="{Binding InterTabPartition}" />

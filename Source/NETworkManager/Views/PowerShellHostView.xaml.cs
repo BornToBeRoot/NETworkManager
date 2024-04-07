@@ -18,8 +18,6 @@ public partial class PowerShellHostView
     {
         InitializeComponent();
         DataContext = _viewModel;
-
-        InterTabController.Partition = ApplicationName.PowerShell.ToString();
     }
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e)

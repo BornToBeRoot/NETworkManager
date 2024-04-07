@@ -11,8 +11,6 @@ public partial class SNTPLookupHostView
     {
         InitializeComponent();
         DataContext = _viewModel;
-
-        InterTabController.Partition = ApplicationName.SNTPLookup.ToString();
     }
 
     public void OnViewHide()
