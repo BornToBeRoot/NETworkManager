@@ -13,7 +13,8 @@ public partial class WebConsoleControl : UserControlBase
     #region Variables
 
     private bool _initialized;
-
+    private bool _closed;
+    
     private readonly WebConsoleSessionInfo _sessionInfo;
 
     private bool _isLoading;
@@ -70,6 +71,8 @@ public partial class WebConsoleControl : UserControlBase
         InitializeComponent();
         DataContext = this;
 
+        ConfigurationManager.Current.WebConsoleTabCount++;
+        
         _sessionInfo = sessionInfo;
 
         Browser2.NavigationStarting += Browser2_NavigationStarting;
@@ -109,7 +112,7 @@ public partial class WebConsoleControl : UserControlBase
         return !IsLoading;
     }
 
-    public ICommand NavigateCommand => new RelayCommand(p => NavigateAction(), NavigateCommand_CanExecute);
+    public ICommand NavigateCommand => new RelayCommand(_ => NavigateAction(), NavigateCommand_CanExecute);
 
     private void NavigateAction()
     {
@@ -121,7 +124,7 @@ public partial class WebConsoleControl : UserControlBase
         return IsLoading;
     }
 
-    public ICommand StopCommand => new RelayCommand(p => StopAction(), StopCommand_CanExecute);
+    public ICommand StopCommand => new RelayCommand(_ => StopAction(), StopCommand_CanExecute);
 
     private void StopAction()
     {
@@ -133,7 +136,7 @@ public partial class WebConsoleControl : UserControlBase
         return !IsLoading;
     }
 
-    public ICommand ReloadCommand => new RelayCommand(p => ReloadAction(), ReloadCommand_CanExecute);
+    public ICommand ReloadCommand => new RelayCommand(_ => ReloadAction(), ReloadCommand_CanExecute);
 
     private void ReloadAction()
     {
@@ -145,7 +148,7 @@ public partial class WebConsoleControl : UserControlBase
         return !IsLoading && Browser2.CanGoBack;
     }
 
-    public ICommand GoBackCommand => new RelayCommand(p => GoBackAction(), GoBackCommand_CanExecute);
+    public ICommand GoBackCommand => new RelayCommand(_ => GoBackAction(), GoBackCommand_CanExecute);
 
     private void GoBackAction()
     {
@@ -157,7 +160,7 @@ public partial class WebConsoleControl : UserControlBase
         return !IsLoading && Browser2.CanGoForward;
     }
 
-    public ICommand GoForwardCommand => new RelayCommand(p => GoForwardAction(), GoForwardCommand_CanExecute);
+    public ICommand GoForwardCommand => new RelayCommand(_ => GoForwardAction(), GoForwardCommand_CanExecute);
 
     private void GoForwardAction()
     {
@@ -180,6 +183,13 @@ public partial class WebConsoleControl : UserControlBase
 
     public void CloseTab()
     {
+        // Prevent multiple calls
+        if (_closed)
+            return;
+        
+        _closed = true;  
+        
+        ConfigurationManager.Current.WebConsoleTabCount--;
     }
 
     #endregion

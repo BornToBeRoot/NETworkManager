@@ -28,7 +28,7 @@ public partial class TigerVNCControl : UserControlBase
     #region Variables
 
     private bool _initialized;
-    private bool _closing; // When the tab is closed --> OnClose()
+    private bool _closed;
 
     private readonly IDialogCoordinator _dialogCoordinator;
 
@@ -77,6 +77,8 @@ public partial class TigerVNCControl : UserControlBase
         DataContext = this;
 
         _dialogCoordinator = DialogCoordinator.Instance;
+        
+        ConfigurationManager.Current.TigerVNCTabCount++;
 
         _sessionInfo = sessionInfo;
 
@@ -109,7 +111,7 @@ public partial class TigerVNCControl : UserControlBase
 
     public ICommand ReconnectCommand
     {
-        get { return new RelayCommand(p => ReconnectAction()); }
+        get { return new RelayCommand(_ => ReconnectAction()); }
     }
 
     private void ReconnectAction()
@@ -205,7 +207,7 @@ public partial class TigerVNCControl : UserControlBase
         }
         catch (Exception ex)
         {
-            if (!_closing)
+            if (!_closed)
             {
                 var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = Strings.OK;
@@ -234,7 +236,7 @@ public partial class TigerVNCControl : UserControlBase
                 WindowHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
     }
 
-    public void Disconnect()
+    private void Disconnect()
     {
         if (IsConnected)
             _process.Kill();
@@ -250,9 +252,16 @@ public partial class TigerVNCControl : UserControlBase
 
     public void CloseTab()
     {
-        _closing = true;
+        // Prevent multiple calls
+        if (_closed)
+            return;
+        
+        _closed = true;
 
+        // Disconnect the session
         Disconnect();
+        
+        ConfigurationManager.Current.TigerVNCTabCount--;
     }
 
     #endregion
