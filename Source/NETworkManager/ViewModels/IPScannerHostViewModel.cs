@@ -29,7 +29,6 @@ public class IPScannerHostViewModel : ViewModelBase, IProfileManager
     public IInterTabClient InterTabClient { get; }
     
     private string _interTabPartition;
-
     public string InterTabPartition
     {
         get => _interTabPartition;

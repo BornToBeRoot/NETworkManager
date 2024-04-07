@@ -43,6 +43,21 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
     public IInterTabClient InterTabClient { get; }
+    
+    private string _interTabPartition;
+    public string InterTabPartition
+    {
+        get => _interTabPartition;
+        set
+        {
+            if (value == _interTabPartition)
+                return;
+
+            _interTabPartition = value;
+            OnPropertyChanged();
+        }
+    }
+    
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
     private readonly bool _isLoading;
@@ -308,7 +323,8 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         CheckSettings();
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.AWSSessionManager);
-
+        InterTabPartition = ApplicationName.AWSSessionManager.ToString();
+        
         TabItems = [];
 
         // Profiles
