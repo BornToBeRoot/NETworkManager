@@ -1,7 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using Dragablz;
@@ -12,7 +14,7 @@ using NETworkManager.Models;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
-using NETworkManager.Views;
+using Application = System.Windows.Application;
 
 namespace NETworkManager.Controls;
 
@@ -57,13 +59,13 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
         switch (ApplicationName)
         {
             case ApplicationName.PowerShell:
-                ((PowerShellControl)((DragablzTabItem)TabsContainer?.SelectedItem)?.View)?.FocusEmbeddedWindow();
+                //((PowerShellControl)((DragablzTabItem)TabsContainer?.SelectedItem)?.View)?.FocusEmbeddedWindow();
                 break;
             case ApplicationName.PuTTY:
-                ((PuTTYControl)((DragablzTabItem)TabsContainer?.SelectedItem)?.View)?.FocusEmbeddedWindow();
+                //((PuTTYControl)((DragablzTabItem)TabsContainer?.SelectedItem)?.View)?.FocusEmbeddedWindow();
                 break;
             case ApplicationName.AWSSessionManager:
-                ((AWSSessionManagerControl)((DragablzTabItem)TabsContainer?.SelectedItem)?.View)?.FocusEmbeddedWindow();
+                //((AWSSessionManagerControl)((DragablzTabItem)TabsContainer?.SelectedItem)?.View)?.FocusEmbeddedWindow();
                 break;
         }
     }
@@ -75,6 +77,21 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
     private void MetroWindow_Activated(object sender, EventArgs e)
     {
         FocusEmbeddedWindow();
+    }
+    
+    private void DragablzTabHostWindow_OnClosing(object sender, CancelEventArgs e)
+    {
+        // Close all tabs properly when the window is closing
+        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
+        if (window == null)
+            return;
+        
+        foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
+        {
+            foreach(var tabItem in tabablzControl.Items.OfType<DragablzTabItem>())
+                ((IDragablzTabItem)tabItem.View).CloseTab();
+        }
     }
 
     #endregion
@@ -147,52 +164,7 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
 
     private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
     {
-        // Switch between application identifiers...
-        switch (_applicationName)
-        {
-            case ApplicationName.IPScanner:
-                ((IPScannerView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                break;
-            case ApplicationName.PortScanner:
-                ((PortScannerView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                break;
-            case ApplicationName.Traceroute:
-                ((TracerouteView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                break;
-            case ApplicationName.DNSLookup:
-                ((DNSLookupView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                break;
-            case ApplicationName.RemoteDesktop:
-                ((RemoteDesktopControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                break;
-            case ApplicationName.PowerShell:
-                ((PowerShellControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                break;
-            case ApplicationName.PuTTY:
-                ((PuTTYControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                break;
-            case ApplicationName.AWSSessionManager:
-                ((AWSSessionManagerControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                break;
-            case ApplicationName.TigerVNC:
-                ((TigerVNCControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                break;
-            case ApplicationName.WebConsole:
-                ((WebConsoleControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                break;
-            case ApplicationName.SNMP:
-                ((SNMPView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                break;
-            case ApplicationName.SNTPLookup:
-                ((SNTPLookupView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                break;
-            case ApplicationName.Whois:
-                ((WhoisView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                break;
-            case ApplicationName.IPGeolocation:
-                ((IPGeolocationView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                break;
-        }
+        ((IDragablzTabItem)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
     }
 
     #region RemoteDesktop commands
@@ -256,22 +228,23 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
 
     private async void RemoteDesktop_SendCtrlAltDelAction(object view)
     {
-        if (view is RemoteDesktopControl control)
-            try
-            {
-                control.SendKey(Keystroke.CtrlAltDel);
-            }
-            catch (Exception ex)
-            {
-                ConfigurationManager.OnDialogOpen();
+        if (view is not RemoteDesktopControl control)
+            return;
+        
+        try
+        {
+            control.SendKey(Keystroke.CtrlAltDel);
+        }
+        catch (Exception ex)
+        {
+            ConfigurationManager.OnDialogOpen();
 
-                await this.ShowMessageAsync(Strings.Error,
-                    string.Format("{0}\n\nMessage:\n{1}",
-                        Strings.CouldNotSendKeystroke, ex.Message,
-                        MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog));
+            await this.ShowMessageAsync(Strings.Error,
+                string.Format("{0}\n\nMessage:\n{1}",
+                    Strings.CouldNotSendKeystroke, ex.Message));
 
-                ConfigurationManager.OnDialogClose();
-            }
+            ConfigurationManager.OnDialogClose();
+        }
     }
 
     #endregion

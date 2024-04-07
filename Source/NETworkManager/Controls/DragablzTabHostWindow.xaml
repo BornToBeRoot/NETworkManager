@@ -16,7 +16,7 @@
                  Style="{DynamicResource DefaultWindow}" MinWidth="800" Width="1024" Height="768" MinHeight="600"
                  TitleAlignment="Left" Activated="MetroWindow_Activated"
                  dialogs:DialogParticipation.Register="{Binding}"
-                 ShowCloseButton="False"
+                 Closing="DragablzTabHostWindow_OnClosing"
                  d:DataContext="{d:DesignInstance controls:DragablzTabHostWindow}">
     <mah:MetroWindow.Resources>
         <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
@@ -731,7 +731,8 @@
             </dockablz:Layout.Resources>
             <dockablz:Layout.BranchTemplate>
                 <DataTemplate>
-                    <dragablz:TabablzControl>
+                    <dragablz:TabablzControl DataContext="{Binding}"
+                                             ClosingItemCallback="{Binding CloseItemCommand}">
                         <dragablz:TabablzControl.InterTabController>
                             <dragablz:InterTabController DataContext="{Binding}"
                                                          InterTabClient="{Binding InterTabClient}"
@@ -740,7 +741,8 @@
                     </dragablz:TabablzControl>
                 </DataTemplate>
             </dockablz:Layout.BranchTemplate>
-            <dragablz:TabablzControl Name="TabsContainer" ClosingItemCallback="{Binding CloseItemCommand}">                
+            <dragablz:TabablzControl Name="TabsContainer" 
+                                     ClosingItemCallback="{Binding CloseItemCommand}">                
                 <dragablz:TabablzControl.InterTabController>
                     <dragablz:InterTabController InterTabClient="{Binding InterTabClient}"
                                                  Partition="{Binding InterTabPartition}" />

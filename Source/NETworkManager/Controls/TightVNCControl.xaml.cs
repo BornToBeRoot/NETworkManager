@@ -13,7 +13,7 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.Controls;
 
-public partial class TigerVNCControl : UserControlBase
+public partial class TigerVNCControl : UserControlBase, IDragablzTabItem
 {
     #region Events
 

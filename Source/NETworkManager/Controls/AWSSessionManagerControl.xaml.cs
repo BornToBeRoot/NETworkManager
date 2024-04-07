@@ -13,7 +13,7 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.Controls;
 
-public partial class AWSSessionManagerControl : UserControlBase
+public partial class AWSSessionManagerControl : UserControlBase, IDragablzTabItem
 {
     #region Events
 

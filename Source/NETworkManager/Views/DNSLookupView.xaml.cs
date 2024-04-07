@@ -2,11 +2,12 @@
 using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Controls;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
-public partial class DNSLookupView
+public partial class DNSLookupView : IDragablzTabItem
 {
     private readonly DNSLookupViewModel _viewModel;
 

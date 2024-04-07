@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Controls;
 using NETworkManager.Models.Network;
 using NETworkManager.Utilities;
 using NETworkManager.ViewModels;
@@ -13,7 +14,7 @@ using VisualTreeHelper = System.Windows.Media.VisualTreeHelper;
 
 namespace NETworkManager.Views;
 
-public partial class IPScannerView
+public partial class IPScannerView : IDragablzTabItem
 {
     private readonly IPScannerViewModel _viewModel;
 

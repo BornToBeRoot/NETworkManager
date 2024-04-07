@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Windows;
 using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Controls;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
-public partial class WhoisView
+public partial class WhoisView : IDragablzTabItem
 {
     private readonly WhoisViewModel _viewModel;
 

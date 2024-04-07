@@ -13,7 +13,7 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.Controls;
 
-public partial class PowerShellControl : UserControlBase
+public partial class PowerShellControl : UserControlBase, IDragablzTabItem
 {
     #region Events
 

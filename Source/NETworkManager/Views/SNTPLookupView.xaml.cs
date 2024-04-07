@@ -2,11 +2,12 @@
 using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Controls;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
-public partial class SNTPLookupView
+public partial class SNTPLookupView : IDragablzTabItem
 {
     private readonly SNTPLookupViewModel _viewModel;
 

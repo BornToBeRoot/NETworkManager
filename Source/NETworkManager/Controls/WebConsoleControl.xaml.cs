@@ -8,7 +8,7 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.Controls;
 
-public partial class WebConsoleControl : UserControlBase
+public partial class WebConsoleControl : UserControlBase, IDragablzTabItem
 {
     #region Variables
 

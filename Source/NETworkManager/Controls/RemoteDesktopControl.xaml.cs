@@ -13,7 +13,7 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.Controls;
 
-public partial class RemoteDesktopControl : UserControlBase
+public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
 {
     #region Variables
 
