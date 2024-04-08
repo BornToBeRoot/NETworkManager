@@ -14,7 +14,7 @@ using PuTTY = NETworkManager.Models.PuTTY.PuTTY;
 
 namespace NETworkManager.Controls;
 
-public partial class PuTTYControl : UserControlBase, IDragablzTabItem
+public partial class PuTTYControl : UserControlBase, IDragablzTabItem, IEmbeddedWindow
 {
     #region Events
 

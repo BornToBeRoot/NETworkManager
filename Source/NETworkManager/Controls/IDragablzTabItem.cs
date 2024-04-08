@@ -8,7 +8,7 @@ namespace NETworkManager.Controls;
 public interface IDragablzTabItem
 {
     /// <summary>
-    /// Event is fired when the tab is closed. 
+    /// Method to close the tab.
     /// </summary>
     public void CloseTab()
     {

@@ -85,6 +85,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         }
     }
     
+    /*
     private DragablzTabItem _selectedTabItem;
 
     public DragablzTabItem SelectedTabItem
@@ -104,6 +105,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
+    */
 
     private bool _headerContextMenuIsOpen;
 
@@ -577,7 +579,22 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         if (_textBoxSearchIsFocused || HeaderContextMenuIsOpen || ProfileContextMenuIsOpen)
             return;
 
-        (SelectedTabItem?.View as PowerShellControl)?.FocusEmbeddedWindow();
+        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
+        if (window == null)
+            return;
+
+        // Find all TabablzControl in the active window
+        foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
+        {
+            // Skip if no items
+            if(tabablzControl.Items.Count == 0)
+                continue;
+            
+            // Focus embedded window in the selected tab
+            (((DragablzTabItem)tabablzControl.SelectedItem)?.View as IEmbeddedWindow)?.FocusEmbeddedWindow();
+            break;
+        }
     }
 
     public void OnViewVisible()

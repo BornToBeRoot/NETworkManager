@@ -664,7 +664,22 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         if (_textBoxSearchIsFocused || HeaderContextMenuIsOpen || ProfileContextMenuIsOpen)
             return;
 
-        (SelectedTabItem?.View as PuTTYControl)?.FocusEmbeddedWindow();
+        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
+        if (window == null)
+            return;
+
+        // Find all TabablzControl in the active window
+        foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
+        {
+            // Skip if no items
+            if(tabablzControl.Items.Count == 0)
+                continue;
+            
+            // Focus embedded window in the selected tab
+            (((DragablzTabItem)tabablzControl.SelectedItem)?.View as IEmbeddedWindow)?.FocusEmbeddedWindow();
+            break;
+        }
     }
 
     public void OnViewVisible()

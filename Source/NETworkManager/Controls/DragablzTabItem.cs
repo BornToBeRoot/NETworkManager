@@ -68,6 +68,7 @@ public class DragablzTabItem : ViewModelBase
         if (window == null)
             return;
 
+        // Find all TabablzControl in the active window
         foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
         {
             var tabItem = tabablzControl.Items.OfType<DragablzTabItem>().FirstOrDefault(x => x.Id == tabId);
