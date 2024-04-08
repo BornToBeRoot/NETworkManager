@@ -8,6 +8,7 @@
                        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
                        xmlns:local="clr-namespace:NETworkManager.Controls"
+                       xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
                        mc:Ignorable="d" Loaded="UserControl_Loaded"
                        d:DataContext="{d:DesignInstance local:RemoteDesktopControl}">
     <local:UserControlBase.Resources>
@@ -18,10 +19,14 @@
     </local:UserControlBase.Resources>
     <Grid x:Name="RdpGrid" SizeChanged="RdpGrid_SizeChanged">
         <WindowsFormsHost MaxWidth="{Binding RdpClientWidth, Mode=OneWay}"
-                          MaxHeight="{Binding RdpClientHeight, Mode=OneWay}">
+                          MaxHeight="{Binding RdpClientHeight, Mode=OneWay}"
+                          Background="{DynamicResource ResourceKey=MahApps.Brushes.Window.Background}">
             <WindowsFormsHost.Style>
                 <Style TargetType="{x:Type WindowsFormsHost}">
                     <Style.Triggers>
+                        <DataTrigger Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsRemoteDesktopWindowDragging}" Value="True">
+                            <Setter Property="Visibility" Value="Hidden" />
+                        </DataTrigger>
                         <DataTrigger Binding="{Binding IsConnected}" Value="False">
                             <Setter Property="Visibility" Value="Hidden" />
                         </DataTrigger>

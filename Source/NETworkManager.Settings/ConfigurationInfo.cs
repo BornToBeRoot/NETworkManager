@@ -77,8 +77,6 @@ public class ConfigurationInfo : PropertyChangedBase
             if (value == _ipScannerTabCount)
                 return;
 
-            Debug.WriteLine("IPScanner current tabs: " + value);
-
             _ipScannerTabCount = value;
             OnPropertyChanged();
         }
@@ -92,8 +90,6 @@ public class ConfigurationInfo : PropertyChangedBase
         {
             if (value == _portScannerTabCount)
                 return;
-
-            Debug.WriteLine("Port Scanner current tabs: " + value);
 
             _portScannerTabCount = value;
             OnPropertyChanged();
@@ -109,8 +105,6 @@ public class ConfigurationInfo : PropertyChangedBase
             if (value == _tracerouteTabCount)
                 return;
 
-            Debug.WriteLine("Traceroute current tabs: " + value);
-
             _tracerouteTabCount = value;
             OnPropertyChanged();
         }
@@ -124,8 +118,6 @@ public class ConfigurationInfo : PropertyChangedBase
         {
             if (value == _dnsLookupTabCount)
                 return;
-
-            Debug.WriteLine("DNS Lookup current tabs: " + value);
 
             _dnsLookupTabCount = value;
             OnPropertyChanged();
@@ -141,9 +133,21 @@ public class ConfigurationInfo : PropertyChangedBase
             if (value == _remoteDesktopTabCount)
                 return;
 
-            Debug.WriteLine("Remote Desktop current tabs: " + value);
-
             _remoteDesktopTabCount = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _isRemoteDesktopWindowDragging;
+    public bool IsRemoteDesktopWindowDragging
+    {
+        get => _isRemoteDesktopWindowDragging;
+        set
+        {
+            if (value == _isRemoteDesktopWindowDragging)
+                return;
+
+            _isRemoteDesktopWindowDragging = value;
             OnPropertyChanged();
         }
     }
@@ -157,9 +161,21 @@ public class ConfigurationInfo : PropertyChangedBase
             if (value == _powerShellTabCount)
                 return;
 
-            Debug.WriteLine("PowerShell current tabs: " + value);
-
             _powerShellTabCount = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    private bool _isPowerShellWindowDragging;
+    public bool IsPowerShellWindowDragging
+    {
+        get => _isPowerShellWindowDragging;
+        set
+        {
+            if (value == _isPowerShellWindowDragging)
+                return;
+
+            _isPowerShellWindowDragging = value;
             OnPropertyChanged();
         }
     }
@@ -173,9 +189,21 @@ public class ConfigurationInfo : PropertyChangedBase
             if (value == _puTTYTabCount)
                 return;
 
-            Debug.WriteLine("PuTTY current tabs: " + value);
-
             _puTTYTabCount = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _isPuTTYWindowDragging;
+    public bool IsPuTTYWindowDragging
+    {
+        get => _isPuTTYWindowDragging;
+        set
+        {
+            if (value == _isPuTTYWindowDragging)
+                return;
+
+            _isPuTTYWindowDragging = value;
             OnPropertyChanged();
         }
     }
@@ -189,9 +217,21 @@ public class ConfigurationInfo : PropertyChangedBase
             if (value == _awsSessionManagerTabCount)
                 return;
 
-            Debug.WriteLine("AWS SSM current tabs: " + value);
-
             _awsSessionManagerTabCount = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _isAWSSessionManagerWindowDragging;
+    public bool IsAWSSessionManagerWindowDragging
+    {
+        get => _isAWSSessionManagerWindowDragging;
+        set
+        {
+            if (value == _isAWSSessionManagerWindowDragging)
+                return;
+
+            _isAWSSessionManagerWindowDragging = value;
             OnPropertyChanged();
         }
     }
@@ -205,9 +245,21 @@ public class ConfigurationInfo : PropertyChangedBase
             if (value == _tigerVNCTabCount)
                 return;
 
-            Debug.WriteLine("TigerVNC current tabs: " + value);
-
             _tigerVNCTabCount = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _isTigerVNCWindowDragging;
+    public bool IsTigerVNCWindowDragging
+    {
+        get => _isTigerVNCWindowDragging;
+        set
+        {
+            if (value == _isTigerVNCWindowDragging)
+                return;
+
+            _isTigerVNCWindowDragging = value;
             OnPropertyChanged();
         }
     }
@@ -221,9 +273,21 @@ public class ConfigurationInfo : PropertyChangedBase
             if (value == _webConsoleTabCount)
                 return;
 
-            Debug.WriteLine("WebConsole current tabs: " + value);
-
             _webConsoleTabCount = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _isWebConsoleWindowDragging;
+    public bool IsWebConsoleWindowDragging
+    {
+        get => _isWebConsoleWindowDragging;
+        set
+        {
+            if (value == _isWebConsoleWindowDragging)
+                return;
+
+            _isWebConsoleWindowDragging = value;
             OnPropertyChanged();
         }
     }
@@ -236,8 +300,6 @@ public class ConfigurationInfo : PropertyChangedBase
         {
             if (value == _snmpTabCount)
                 return;
-
-            Debug.WriteLine("SNMP current tabs: " + value);
 
             _snmpTabCount = value;
             OnPropertyChanged();
@@ -253,8 +315,6 @@ public class ConfigurationInfo : PropertyChangedBase
             if (value == _sntpLookupTabCount)
                 return;
 
-            Debug.WriteLine("SNTP Lookup current tabs: " + value);
-
             _sntpLookupTabCount = value;
             OnPropertyChanged();
         }
@@ -269,8 +329,6 @@ public class ConfigurationInfo : PropertyChangedBase
             if (value == _whoisTabCount)
                 return;
 
-            Debug.WriteLine("Whois current tabs: " + value);
-
             _whoisTabCount = value;
             OnPropertyChanged();
         }
@@ -284,8 +342,6 @@ public class ConfigurationInfo : PropertyChangedBase
         {
             if (value == _ipGeolocationTabCount)
                 return;
-
-            Debug.WriteLine("IP Geolocation current tabs: " + value);
 
             _ipGeolocationTabCount = value;
             OnPropertyChanged();
