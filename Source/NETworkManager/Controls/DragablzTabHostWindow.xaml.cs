@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using Dragablz;
@@ -12,74 +15,12 @@ using NETworkManager.Models;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
-using NETworkManager.Views;
+using Application = System.Windows.Application;
 
 namespace NETworkManager.Controls;
 
 public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
 {
-    #region Constructor
-
-    public DragablzTabHostWindow(ApplicationName applicationName)
-    {
-        InitializeComponent();
-        DataContext = this;
-
-        ApplicationName = applicationName;
-
-        InterTabClient = new DragablzInterTabClient(applicationName);
-
-        InterTabController.Partition = applicationName.ToString();
-
-        Title =
-            $"NETworkManager {AssemblyManager.Current.Version} - {ResourceTranslator.Translate(ResourceIdentifier.ApplicationName, applicationName)}";
-    }
-
-    #endregion
-
-    #region Methods
-
-    private async void FocusEmbeddedWindow()
-    {
-        // Delay the focus to prevent blocking the ui
-        // Detect if window is resizing
-        do
-        {
-            await Task.Delay(250);
-        } while (Control.MouseButtons == MouseButtons.Left);
-
-        /* Don't continue if
-           - Header ContextMenu is opened
-        */
-        if (HeaderContextMenuIsOpen)
-            return;
-
-        // Switch by name
-        switch (ApplicationName)
-        {
-            case ApplicationName.PowerShell:
-                ((PowerShellControl)((DragablzTabItem)TabsContainer?.SelectedItem)?.View)?.FocusEmbeddedWindow();
-                break;
-            case ApplicationName.PuTTY:
-                ((PuTTYControl)((DragablzTabItem)TabsContainer?.SelectedItem)?.View)?.FocusEmbeddedWindow();
-                break;
-            case ApplicationName.AWSSessionManager:
-                ((AWSSessionManagerControl)((DragablzTabItem)TabsContainer?.SelectedItem)?.View)?.FocusEmbeddedWindow();
-                break;
-        }
-    }
-
-    #endregion
-
-    #region Events
-
-    private void MetroWindow_Activated(object sender, EventArgs e)
-    {
-        FocusEmbeddedWindow();
-    }
-
-    #endregion
-
     #region PropertyChangedEventHandler
 
     public event PropertyChangedEventHandler PropertyChanged;
@@ -94,6 +35,14 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
     #region Variables
 
     public IInterTabClient InterTabClient { get; }
+
+    private HashSet<ApplicationName> _embeddedWindowApplicationNames =
+    [
+        ApplicationName.PowerShell,
+        ApplicationName.PuTTY,
+        ApplicationName.AWSSessionManager
+    ];
+
     private ApplicationName _applicationName;
 
     public ApplicationName ApplicationName
@@ -105,6 +54,21 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
                 return;
 
             _applicationName = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _interTabPartition;
+
+    public string InterTabPartition
+    {
+        get => _interTabPartition;
+        set
+        {
+            if (value == _interTabPartition)
+                return;
+
+            _interTabPartition = value;
             OnPropertyChanged();
         }
     }
@@ -126,59 +90,31 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
 
     #endregion
 
+    #region Constructor
+
+    public DragablzTabHostWindow(ApplicationName applicationName)
+    {
+        InitializeComponent();
+        DataContext = this;
+
+        ApplicationName = applicationName;
+
+        InterTabClient = new DragablzInterTabClient(applicationName);
+        InterTabPartition = applicationName.ToString();
+
+        Title =
+            $"NETworkManager {AssemblyManager.Current.Version} - {ResourceTranslator.Translate(ResourceIdentifier.ApplicationName, applicationName)}";
+    }
+
+    #endregion
+
     #region ICommand & Actions
 
     public ItemActionCallback CloseItemCommand => CloseItemAction;
 
     private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
     {
-        // Switch between application identifiers...
-        switch (_applicationName)
-        {
-            case ApplicationName.IPScanner:
-                ((IPScannerView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                break;
-            case ApplicationName.PortScanner:
-                ((PortScannerView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                break;
-            case ApplicationName.Traceroute:
-                ((TracerouteView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                break;
-            case ApplicationName.DNSLookup:
-                ((DNSLookupView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                break;
-            case ApplicationName.RemoteDesktop:
-                ((RemoteDesktopControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                break;
-            case ApplicationName.PowerShell:
-                ((PowerShellControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                break;
-            case ApplicationName.PuTTY:
-                ((PuTTYControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                break;
-            case ApplicationName.AWSSessionManager:
-                ((AWSSessionManagerControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                break;
-            case ApplicationName.TigerVNC:
-                ((TigerVNCControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                break;
-            case ApplicationName.WebConsole:
-                ((WebConsoleControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                break;
-            case ApplicationName.SNMP:
-                ((SNMPView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                break;
-            case ApplicationName.SNTPLookup:
-                ((SNTPLookupView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                break;
-            case ApplicationName.Whois:
-                ((WhoisView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                break;
-            case ApplicationName.IPGeolocation:
-                ((IPGeolocationView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                break;
-                
-        }
+        ((IDragablzTabItem)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
     }
 
     #region RemoteDesktop commands
@@ -242,22 +178,23 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
 
     private async void RemoteDesktop_SendCtrlAltDelAction(object view)
     {
-        if (view is RemoteDesktopControl control)
-            try
-            {
-                control.SendKey(Keystroke.CtrlAltDel);
-            }
-            catch (Exception ex)
-            {
-                ConfigurationManager.OnDialogOpen();
+        if (view is not RemoteDesktopControl control)
+            return;
 
-                await this.ShowMessageAsync(Strings.Error,
-                    string.Format("{0}\n\nMessage:\n{1}",
-                        Strings.CouldNotSendKeystroke, ex.Message,
-                        MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog));
+        try
+        {
+            control.SendKey(Keystroke.CtrlAltDel);
+        }
+        catch (Exception ex)
+        {
+            ConfigurationManager.OnDialogOpen();
 
-                ConfigurationManager.OnDialogClose();
-            }
+            await this.ShowMessageAsync(Strings.Error,
+                string.Format("{0}\n\nMessage:\n{1}",
+                    Strings.CouldNotSendKeystroke, ex.Message));
+
+            ConfigurationManager.OnDialogClose();
+        }
     }
 
     #endregion
@@ -386,6 +323,122 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
     }
 
     #endregion
+
+    #endregion
+
+    #region Methods
+
+    private async void FocusEmbeddedWindow()
+    {
+        // Delay the focus to prevent blocking the ui
+        // Detect if window is resizing
+        do
+        {
+            await Task.Delay(250);
+        } while (Control.MouseButtons == MouseButtons.Left);
+
+        /* Don't continue if
+           - Header ContextMenu is opened
+        */
+        if (HeaderContextMenuIsOpen)
+            return;
+
+        // Return if the application is not an embedded window
+        if(!_embeddedWindowApplicationNames.Contains(ApplicationName))
+            return;
+
+        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
+        if (window == null)
+            return;
+
+        // Find all TabablzControl in the active window
+        foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
+        {
+            // Skip if no items
+            if (tabablzControl.Items.Count == 0)
+                continue;
+
+            // Focus embedded window in the selected tab
+            (((DragablzTabItem)tabablzControl.SelectedItem)?.View as IEmbeddedWindow)?.FocusEmbeddedWindow();
+
+            break;
+        }
+    }
+
+    #endregion
+
+    #region Events
+
+    private void MetroWindow_Activated(object sender, EventArgs e)
+    {
+        FocusEmbeddedWindow();
+    }
+
+    private void DragablzTabHostWindow_OnClosing(object sender, CancelEventArgs e)
+    {
+        // Close all tabs properly when the window is closing
+        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
+        if (window == null)
+            return;
+
+        // Find all TabablzControl in the active window
+        foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
+        {
+            foreach (var tabItem in tabablzControl.Items.OfType<DragablzTabItem>())
+                ((IDragablzTabItem)tabItem.View).CloseTab();
+        }
+
+        // Reset the dragging state
+        switch (ApplicationName)
+        {
+            case ApplicationName.RemoteDesktop:
+                ConfigurationManager.Current.IsRemoteDesktopWindowDragging = false;
+                break;
+            case ApplicationName.PowerShell:
+                ConfigurationManager.Current.IsPowerShellWindowDragging = false;
+                break;
+            case ApplicationName.PuTTY:
+                ConfigurationManager.Current.IsPuTTYWindowDragging = false;
+                break;
+            case ApplicationName.AWSSessionManager:
+                ConfigurationManager.Current.IsAWSSessionManagerWindowDragging = false;
+                break;
+            case ApplicationName.TigerVNC:
+                ConfigurationManager.Current.IsTigerVNCWindowDragging = false;
+                break;
+            case ApplicationName.WebConsole:
+                ConfigurationManager.Current.IsWebConsoleWindowDragging = false;
+                break;
+        }
+    }
+
+    private void TabablzControl_OnIsDraggingWindowChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
+    {
+        // Set the dragging state
+        switch (ApplicationName)
+        {
+            case ApplicationName.RemoteDesktop:
+                ConfigurationManager.Current.IsRemoteDesktopWindowDragging = e.NewValue;
+                break;
+            case ApplicationName.PowerShell:
+                ConfigurationManager.Current.IsPowerShellWindowDragging = e.NewValue;
+                break;
+            case ApplicationName.PuTTY:
+                ConfigurationManager.Current.IsPuTTYWindowDragging = e.NewValue;
+                break;
+            case ApplicationName.AWSSessionManager:
+                ConfigurationManager.Current.IsAWSSessionManagerWindowDragging = e.NewValue;
+                break;
+            case ApplicationName.TigerVNC:
+                ConfigurationManager.Current.IsTigerVNCWindowDragging = e.NewValue;
+                break;
+            case ApplicationName.WebConsole:
+                ConfigurationManager.Current.IsWebConsoleWindowDragging = e.NewValue;
+                break;
+        }
+    }
 
     #endregion
 }

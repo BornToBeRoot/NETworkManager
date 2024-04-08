@@ -2,11 +2,12 @@
 using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Controls;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
-public partial class PortScannerView
+public partial class PortScannerView : IDragablzTabItem
 {
     private readonly PortScannerViewModel _viewModel;
 

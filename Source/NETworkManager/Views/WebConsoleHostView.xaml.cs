@@ -15,8 +15,6 @@ public partial class WebConsoleHostView
     {
         InitializeComponent();
         DataContext = _viewModel;
-
-        InterTabController.Partition = ApplicationName.WebConsole.ToString();
     }
 
     private void ContextMenu_Opened(object sender, RoutedEventArgs e)

@@ -15,8 +15,6 @@ public partial class SNMPHostView
     {
         InitializeComponent();
         DataContext = _viewModel;
-
-        InterTabController.Partition = ApplicationName.SNMP.ToString();
     }
 
     private void ContextMenu_Opened(object sender, RoutedEventArgs e)

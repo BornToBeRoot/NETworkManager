@@ -8,6 +8,7 @@
                        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
                        xmlns:local="clr-namespace:NETworkManager.Controls"
                        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                       xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
                        mah:DialogParticipation.Register="{Binding}"
                        mc:Ignorable="d" Loaded="UserControl_Loaded"
                        d:DataContext="{d:DesignInstance local:TigerVNCControl}">
@@ -19,9 +20,19 @@
     </local:UserControlBase.Resources>
     <Grid SizeChanged="TigerVNCGrid_SizeChanged">
         <!-- Background color will prevent flickering when app inside the panel is closed -->
-        <WindowsFormsHost
-            Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-            Background="{DynamicResource MahApps.Brushes.Window.Background}">
+        <WindowsFormsHost Background="{DynamicResource MahApps.Brushes.Window.Background}">
+            <WindowsFormsHost.Style>
+                <Style TargetType="{x:Type WindowsFormsHost}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsTigerVNCWindowDragging}" Value="True">
+                            <Setter Property="Visibility" Value="Hidden" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsConnected}" Value="False">
+                            <Setter Property="Visibility" Value="Hidden" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </WindowsFormsHost.Style>
             <windowsForms:Panel x:Name="WindowHost" />
         </WindowsFormsHost>
         <Grid VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center"

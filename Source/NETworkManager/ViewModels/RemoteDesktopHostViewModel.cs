@@ -32,6 +32,21 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
     public IInterTabClient InterTabClient { get; }
+    
+    private string _interTabPartition;
+    public string InterTabPartition
+    {
+        get => _interTabPartition;
+        set
+        {
+            if (value == _interTabPartition)
+                return;
+
+            _interTabPartition = value;
+            OnPropertyChanged();
+        }
+    }
+    
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
     private readonly bool _isLoading;
@@ -180,9 +195,9 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
         _dialogCoordinator = instance;
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.RemoteDesktop);
-
-        TabItems = new ObservableCollection<DragablzTabItem>();
-        TabItems.CollectionChanged += TabItems_CollectionChanged;
+        InterTabPartition = ApplicationName.RemoteDesktop.ToString();
+        
+        TabItems = [];
 
         // Profiles
         SetProfilesView();
@@ -493,7 +508,10 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
     private void Connect(RemoteDesktopSessionInfo sessionInfo, string header = null)
     {
-        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Hostname, new RemoteDesktopControl(sessionInfo)));
+        var tabId = Guid.NewGuid();
+        
+        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Hostname, new RemoteDesktopControl(tabId, sessionInfo), tabId));
+        
         SelectedTabIndex = TabItems.Count - 1;
     }
 
@@ -630,12 +648,5 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
         IsSearching = false;
     }
-
-    private void TabItems_CollectionChanged(object sender,
-        NotifyCollectionChangedEventArgs e)
-    {
-        ConfigurationManager.Current.RemoteDesktopHasTabs = TabItems.Count > 0;
-    }
-
     #endregion
 }

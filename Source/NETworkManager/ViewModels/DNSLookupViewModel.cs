@@ -10,7 +10,6 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
 using DnsClient;
-using Dragablz;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
@@ -31,6 +30,7 @@ public class DNSLookupViewModel : ViewModelBase
 
     private readonly Guid _tabId;
     private bool _firstLoad = true;
+    private bool _closed;
 
     private readonly bool _isLoading;
 
@@ -205,6 +205,8 @@ public class DNSLookupViewModel : ViewModelBase
 
         _dialogCoordinator = instance;
 
+        ConfigurationManager.Current.DNSLookupTabCount++;
+
         _tabId = tabId;
         Host = host;
 
@@ -292,6 +294,8 @@ public class DNSLookupViewModel : ViewModelBase
 
     #region Methods
 
+    
+
     private void Query()
     {
         IsStatusMessageDisplayed = false;
@@ -301,13 +305,8 @@ public class DNSLookupViewModel : ViewModelBase
 
         // Reset the latest results
         Results.Clear();
-
-        // Change the tab title (not nice, but it works)
-        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-
-        if (window != null)
-            foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
-                tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Host;
+        
+        DragablzTabItem.SetTabHeader(_tabId, Host);
 
         AddHostToHistory(Host);
 
@@ -342,6 +341,13 @@ public class DNSLookupViewModel : ViewModelBase
 
     public void OnClose()
     {
+        // Prevent multiple calls
+        if (_closed)
+            return;
+
+        _closed = true;
+
+        ConfigurationManager.Current.DNSLookupTabCount--;
     }
 
     // Modify history list
@@ -363,7 +369,7 @@ public class DNSLookupViewModel : ViewModelBase
     private async Task Export()
     {
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-        
+
         var customDialog = new CustomDialog
         {
             Title = Strings.Export
@@ -407,6 +413,7 @@ public class DNSLookupViewModel : ViewModelBase
 
         await _dialogCoordinator.ShowMetroDialogAsync(window, customDialog);
     }
+
     #endregion
 
     #region Events

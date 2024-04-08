@@ -34,6 +34,21 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
     public IInterTabClient InterTabClient { get; }
+    
+    private string _interTabPartition;
+    public string InterTabPartition
+    {
+        get => _interTabPartition;
+        set
+        {
+            if (value == _interTabPartition)
+                return;
+
+            _interTabPartition = value;
+            OnPropertyChanged();
+        }
+    }
+    
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
     private readonly bool _isLoading;
@@ -199,9 +214,9 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
         CheckSettings();
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.TigerVNC);
-
-        TabItems = new ObservableCollection<DragablzTabItem>();
-        TabItems.CollectionChanged += TabItems_CollectionChanged;
+        InterTabPartition = ApplicationName.TigerVNC.ToString();
+        
+        TabItems = [];
 
         // Profiles
         SetProfilesView();
@@ -412,7 +427,9 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
     {
         sessionInfo.ApplicationFilePath = SettingsManager.Current.TigerVNC_ApplicationFilePath;
 
-        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Host, new TigerVNCControl(sessionInfo)));
+        var tabId = Guid.NewGuid();
+        
+        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Host, new TigerVNCControl(tabId, sessionInfo), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }
@@ -559,12 +576,6 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
         RefreshProfiles();
 
         IsSearching = false;
-    }
-
-    private void TabItems_CollectionChanged(object sender,
-        NotifyCollectionChangedEventArgs e)
-    {
-        ConfigurationManager.Current.TigerVNCHasTabs = TabItems.Count > 0;
     }
 
     private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)

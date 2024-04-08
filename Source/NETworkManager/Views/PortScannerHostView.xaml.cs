@@ -15,8 +15,6 @@ public partial class PortScannerHostView
     {
         InitializeComponent();
         DataContext = _viewModel;
-
-        InterTabController.Partition = ApplicationName.PortScanner.ToString();
     }
 
     private void ContextMenu_Opened(object sender, RoutedEventArgs e)

@@ -8,16 +8,19 @@ using AxMSTSCLib;
 using MSTSCLib;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.RemoteDesktop;
+using NETworkManager.Settings;
 using NETworkManager.Utilities;
 
 namespace NETworkManager.Controls;
 
-public partial class RemoteDesktopControl : UserControlBase
+public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
 {
     #region Variables
 
     private bool _initialized;
+    private bool _closed;
 
+    private readonly Guid _tabId;
     private readonly RemoteDesktopSessionInfo _sessionInfo;
 
     // Fix WindowsFormsHost width
@@ -26,9 +29,9 @@ public partial class RemoteDesktopControl : UserControlBase
     public double RdpClientWidth
     {
         get => _rdpClientWidth;
-        set
+        private set
         {
-            if (value == _rdpClientWidth)
+            if (Math.Abs(value - _rdpClientWidth) < double.Epsilon)
                 return;
 
             _rdpClientWidth = value;
@@ -42,9 +45,9 @@ public partial class RemoteDesktopControl : UserControlBase
     public double RdpClientHeight
     {
         get => _rdpClientHeight;
-        set
+        private set
         {
-            if (value == _rdpClientHeight)
+            if (Math.Abs(value - _rdpClientHeight) < double.Epsilon)
                 return;
 
             _rdpClientHeight = value;
@@ -87,7 +90,7 @@ public partial class RemoteDesktopControl : UserControlBase
     public string DisconnectReason
     {
         get => _disconnectReason;
-        set
+        private set
         {
             if (value == _disconnectReason)
                 return;
@@ -116,11 +119,14 @@ public partial class RemoteDesktopControl : UserControlBase
 
     #region Constructor, load
 
-    public RemoteDesktopControl(RemoteDesktopSessionInfo sessionInfo)
+    public RemoteDesktopControl(Guid tabId, RemoteDesktopSessionInfo sessionInfo)
     {
         InitializeComponent();
         DataContext = this;
+        
+        ConfigurationManager.Current.RemoteDesktopTabCount++;
 
+        _tabId = tabId;
         _sessionInfo = sessionInfo;
 
         Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
@@ -147,7 +153,7 @@ public partial class RemoteDesktopControl : UserControlBase
 
     public ICommand ReconnectCommand
     {
-        get { return new RelayCommand(p => ReconnectAction()); }
+        get { return new RelayCommand(_ => ReconnectAction()); }
     }
 
     private void ReconnectAction()
@@ -157,7 +163,7 @@ public partial class RemoteDesktopControl : UserControlBase
 
     public ICommand DisconnectCommand
     {
-        get { return new RelayCommand(p => DisconnectAction()); }
+        get { return new RelayCommand(_ => DisconnectAction()); }
     }
 
     private void DisconnectAction()
@@ -373,7 +379,16 @@ public partial class RemoteDesktopControl : UserControlBase
 
     public void CloseTab()
     {
+        // Prevent multiple calls
+        if (_closed)
+            return;
+        
+        _closed = true;
+        
+        // Disconnect the session
         Disconnect();
+        
+        ConfigurationManager.Current.RemoteDesktopTabCount--;
     }
 
     /// <summary>

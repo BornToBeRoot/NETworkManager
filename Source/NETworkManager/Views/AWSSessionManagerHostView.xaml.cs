@@ -17,8 +17,6 @@ public partial class AWSSessionManagerHostView
     {
         InitializeComponent();
         DataContext = _viewModel;
-
-        InterTabController.Partition = ApplicationName.AWSSessionManager.ToString();
     }
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e)

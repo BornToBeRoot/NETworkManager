@@ -4,6 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
+             xmlns:dockablz="clr-namespace:Dragablz.Dockablz;assembly=Dragablz"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
@@ -16,6 +17,7 @@
     <UserControl.Resources>
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
         <converters:StringNullOrEmptyToBoolConverter x:Key="StringNullOrEmptyToBoolConverter" />
     </UserControl.Resources>
     <UserControl.InputBindings>
@@ -29,50 +31,59 @@
                               Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                               MaxWidth="{x:Static settings:GlobalStaticConfiguration.Profile_MaxWidthExpanded}" />
         </Grid.ColumnDefinitions>
-        <dragablz:TabablzControl Grid.Column="0" Grid.Row="0" ClosingItemCallback="{Binding CloseItemCommand}"
-                                 ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}">
-            <dragablz:TabablzControl.InterTabController>
-                <dragablz:InterTabController InterTabClient="{Binding InterTabClient}"
-                                             MoveWindowWithSolitaryTabs="False" x:Name="InterTabController" />
-            </dragablz:TabablzControl.InterTabController>
-            <dragablz:TabablzControl.HeaderSuffixContent>
-                <Grid HorizontalAlignment="Right" Width="32" Height="32">
-                    <Button Style="{StaticResource CleanButton}"
-                            Command="{Binding AddTabCommand}"
-                            ToolTip="{x:Static localization:Strings.NewTab}"
-                            Focusable="False">
-                        <Rectangle Width="16" Height="16">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=Plus}" />
-                            </Rectangle.OpacityMask>
-                            <Rectangle.Style>
-                                <Style TargetType="{x:Type Rectangle}">
-                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                    <Style.Triggers>
-                                        <DataTrigger
-                                            Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
-                                            Value="True">
-                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Rectangle.Style>
-                        </Rectangle>
-                    </Button>
-                </Grid>
-            </dragablz:TabablzControl.HeaderSuffixContent>
-        </dragablz:TabablzControl>
-        <Grid Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">
-            <Grid.Style>
-                <Style TargetType="{x:Type Grid}">
-                    <Setter Property="Visibility" Value="Collapsed" />
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding TabItems.Count}" Value="0">
-                            <Setter Property="Visibility" Value="Visible" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Grid.Style>
+        <dockablz:Layout Grid.Column="0" Grid.Row="0"
+                         Partition="{Binding InterTabPartition}">
+            <dockablz:Layout.BranchTemplate>
+                <DataTemplate>
+                    <dragablz:TabablzControl DataContext="{Binding}" ClosingItemCallback="{Binding CloseItemCommand}">
+                        <dragablz:TabablzControl.InterTabController>
+                            <dragablz:InterTabController DataContext="{Binding}"
+                                                         InterTabClient="{Binding InterTabClient}"
+                                                         Partition="{Binding InterTabPartition}" />
+                        </dragablz:TabablzControl.InterTabController>
+                    </dragablz:TabablzControl>
+                </DataTemplate>
+            </dockablz:Layout.BranchTemplate>
+            <dragablz:TabablzControl ClosingItemCallback="{Binding CloseItemCommand}"
+                                     ItemsSource="{Binding TabItems}"
+                                     SelectedIndex="{Binding SelectedTabIndex}"
+                                     DisableBranchConsolidation="True">
+                <dragablz:TabablzControl.InterTabController>
+                    <dragablz:InterTabController InterTabClient="{Binding InterTabClient}"
+                                                 Partition="{Binding InterTabPartition}"
+                                                 MoveWindowWithSolitaryTabs="False" />
+                </dragablz:TabablzControl.InterTabController>
+                <dragablz:TabablzControl.HeaderSuffixContent>
+                    <Grid HorizontalAlignment="Right" Width="32" Height="32">
+                        <Button Style="{StaticResource CleanButton}"
+                                Command="{Binding AddTabCommand}"
+                                ToolTip="{x:Static localization:Strings.NewTab}"
+                                Focusable="False">
+                            <Rectangle Width="16" Height="16">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=Plus}" />
+                                </Rectangle.OpacityMask>
+                                <Rectangle.Style>
+                                    <Style TargetType="{x:Type Rectangle}">
+                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                        <Style.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
+                                                Value="True">
+                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
+                            </Rectangle>
+                        </Button>
+                    </Grid>
+                </dragablz:TabablzControl.HeaderSuffixContent>
+            </dragablz:TabablzControl>
+        </dockablz:Layout>
+        <Grid Grid.Column="0" Grid.Row="0"
+              VerticalAlignment="Center"
+              Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=TracerouteTabCount, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}">
             <Button HorizontalAlignment="Center" Command="{Binding AddTabCommand}" Style="{StaticResource CleanButton}">
                 <Button.Content>
                     <Grid>

@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Controls;
 using NETworkManager.Models;
 using NETworkManager.ViewModels;
 
@@ -18,8 +19,6 @@ public partial class PowerShellHostView
     {
         InitializeComponent();
         DataContext = _viewModel;
-
-        InterTabController.Partition = ApplicationName.PowerShell.ToString();
     }
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e)

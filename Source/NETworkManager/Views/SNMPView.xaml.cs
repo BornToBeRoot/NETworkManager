@@ -5,13 +5,14 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Controls;
 using NETworkManager.Models.Network;
 using NETworkManager.Utilities;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
-public partial class SNMPView
+public partial class SNMPView : IDragablzTabItem
 {
     private readonly SNMPViewModel _viewModel;
 
@@ -22,6 +23,13 @@ public partial class SNMPView
         _viewModel = new SNMPViewModel(DialogCoordinator.Instance, tabId, sessionInfo);
 
         DataContext = _viewModel;
+
+        Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
+    }
+
+    private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
+    {
+        _viewModel.OnClose();
     }
 
     public void CloseTab()

@@ -35,6 +35,8 @@ public class SNMPViewModel : ViewModelBase
         _isLoading = true;
 
         _dialogCoordinator = instance;
+        
+        ConfigurationManager.Current.SNMPTabCount++;
 
         _tabId = tabId;
         Host = sessionInfo?.Host;
@@ -101,8 +103,8 @@ public class SNMPViewModel : ViewModelBase
     private CancellationTokenSource _cancellationTokenSource;
 
     private readonly Guid _tabId;
-
     private readonly bool _isLoading;
+    private bool _closed;
 
     private string _host;
 
@@ -528,12 +530,7 @@ public class SNMPViewModel : ViewModelBase
 
         QueryResults.Clear();
 
-        // Change the tab title (not nice, but it works)
-        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-
-        if (window != null)
-            foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
-                tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Host;
+        DragablzTabItem.SetTabHeader(_tabId, Host);
 
         // Try to parse the string into an IP-Address
         if (!IPAddress.TryParse(Host, out var ipAddress))
@@ -643,6 +640,13 @@ public class SNMPViewModel : ViewModelBase
 
     public void OnClose()
     {
+        // Prevent multiple calls
+        if (_closed)
+            return;
+        
+        _closed = true;
+        
+        ConfigurationManager.Current.SNMPTabCount--;
     }
 
     private async Task OpenOIDProfileSelection()

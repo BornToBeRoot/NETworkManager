@@ -27,6 +27,21 @@ public class TracerouteHostViewModel : ViewModelBase, IProfileManager
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
     public IInterTabClient InterTabClient { get; }
+    
+    private string _interTabPartition;
+    public string InterTabPartition
+    {
+        get => _interTabPartition;
+        set
+        {
+            if (value == _interTabPartition)
+                return;
+
+            _interTabPartition = value;
+            OnPropertyChanged();
+        }
+    }
+    
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
     private readonly bool _isLoading;
@@ -175,13 +190,13 @@ public class TracerouteHostViewModel : ViewModelBase, IProfileManager
         _dialogCoordinator = instance;
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.Traceroute);
-
+        InterTabPartition = ApplicationName.Traceroute.ToString();
+        
         var tabId = Guid.NewGuid();
 
-        TabItems = new ObservableCollection<DragablzTabItem>
-        {
-            new(Strings.NewTab, new TracerouteView(tabId), tabId)
-        };
+        TabItems = [
+            new DragablzTabItem(Strings.NewTab, new TracerouteView(tabId), tabId)
+        ];
 
         // Profiles
         SetProfilesView();

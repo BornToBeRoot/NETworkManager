@@ -19,8 +19,6 @@ public partial class TigerVNCHostView
     {
         InitializeComponent();
         DataContext = _viewModel;
-
-        InterTabController.Partition = ApplicationName.TigerVNC.ToString();
     }
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e)

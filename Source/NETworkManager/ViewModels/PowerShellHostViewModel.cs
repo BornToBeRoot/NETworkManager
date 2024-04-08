@@ -34,10 +34,26 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
     public IInterTabClient InterTabClient { get; }
+    
+    private string _interTabPartition;
+    public string InterTabPartition
+    {
+        get => _interTabPartition;
+        set
+        {
+            if (value == _interTabPartition)
+                return;
+
+            _interTabPartition = value;
+            OnPropertyChanged();
+        }
+    }
+    
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
     private readonly bool _isLoading;
     private bool _isViewActive = true;
+    private bool _disableFocusEmbeddedWindow;
 
     private bool _isConfigured;
 
@@ -54,8 +70,22 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    private bool _disableFocusEmbeddedWindow;
+    private int _selectedTabIndex;
 
+    public int SelectedTabIndex
+    {
+        get => _selectedTabIndex;
+        set
+        {
+            if (value == _selectedTabIndex)
+                return;
+
+            _selectedTabIndex = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    /*
     private DragablzTabItem _selectedTabItem;
 
     public DragablzTabItem SelectedTabItem
@@ -75,6 +105,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
+    */
 
     private bool _headerContextMenuIsOpen;
 
@@ -238,9 +269,9 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         CheckSettings();
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.PowerShell);
+        InterTabPartition = ApplicationName.PowerShell.ToString();
 
-        TabItems = new ObservableCollection<DragablzTabItem>();
-        TabItems.CollectionChanged += TabItems_CollectionChanged;
+        TabItems = [];
 
         // Profiles
         SetProfilesView();
@@ -481,13 +512,15 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     {
         sessionInfo.ApplicationFilePath = SettingsManager.Current.PowerShell_ApplicationFilePath;
 
+        var tabId = Guid.NewGuid();
+        
         TabItems.Add(new DragablzTabItem(
             header ?? (sessionInfo.EnableRemoteConsole ? sessionInfo.Host : Strings.PowerShell),
-            new PowerShellControl(sessionInfo)));
+            new PowerShellControl(tabId, sessionInfo), tabId));
 
         // Select the added tab
         _disableFocusEmbeddedWindow = true;
-        SelectedTabItem = TabItems.Last();
+        SelectedTabIndex = TabItems.Count - 1;
         _disableFocusEmbeddedWindow = false;
     }
 
@@ -546,7 +579,22 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         if (_textBoxSearchIsFocused || HeaderContextMenuIsOpen || ProfileContextMenuIsOpen)
             return;
 
-        (SelectedTabItem?.View as PowerShellControl)?.FocusEmbeddedWindow();
+        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
+        if (window == null)
+            return;
+
+        // Find all TabablzControl in the active window
+        foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
+        {
+            // Skip if no items
+            if(tabablzControl.Items.Count == 0)
+                continue;
+            
+            // Focus embedded window in the selected tab
+            (((DragablzTabItem)tabablzControl.SelectedItem)?.View as IEmbeddedWindow)?.FocusEmbeddedWindow();
+            break;
+        }
     }
 
     public void OnViewVisible()
@@ -638,11 +686,6 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         RefreshProfiles();
 
         IsSearching = false;
-    }
-
-    private void TabItems_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-    {
-        ConfigurationManager.Current.PowerShellHasTabs = TabItems.Count > 0;
     }
 
     private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)

@@ -2,11 +2,12 @@
 using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Controls;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
-public partial class TracerouteView
+public partial class TracerouteView : IDragablzTabItem
 {
     private readonly TracerouteViewModel _viewModel;
 

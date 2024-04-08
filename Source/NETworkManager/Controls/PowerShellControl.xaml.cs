@@ -13,7 +13,7 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.Controls;
 
-public partial class PowerShellControl : UserControlBase
+public partial class PowerShellControl : UserControlBase, IDragablzTabItem, IEmbeddedWindow
 {
     #region Events
 
@@ -26,12 +26,12 @@ public partial class PowerShellControl : UserControlBase
     #endregion
 
     #region Variables
-
     private bool _initialized;
-    private bool _closing; // When the tab is closed --> OnClose()
+    private bool _closed;
 
     private readonly IDialogCoordinator _dialogCoordinator;
 
+    private readonly Guid _tabId;
     private readonly PowerShellSessionInfo _sessionInfo;
 
     private Process _process;
@@ -71,15 +71,18 @@ public partial class PowerShellControl : UserControlBase
 
     #region Constructor, load
 
-    public PowerShellControl(PowerShellSessionInfo sessionInfo)
+    public PowerShellControl(Guid tabId, PowerShellSessionInfo sessionInfo)
     {
         InitializeComponent();
         DataContext = this;
 
         _dialogCoordinator = DialogCoordinator.Instance;
 
+        ConfigurationManager.Current.PowerShellTabCount++;
+    
+        _tabId = tabId;
         _sessionInfo = sessionInfo;
-
+        
         Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
     }
 
@@ -108,7 +111,7 @@ public partial class PowerShellControl : UserControlBase
 
     public ICommand ReconnectCommand
     {
-        get { return new RelayCommand(p => ReconnectAction()); }
+        get { return new RelayCommand(_ => ReconnectAction()); }
     }
 
     private void ReconnectAction()
@@ -191,7 +194,7 @@ public partial class PowerShellControl : UserControlBase
         }
         catch (Exception ex)
         {
-            if (!_closing)
+            if (!_closed)
             {
                 var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = Strings.OK;
@@ -227,7 +230,7 @@ public partial class PowerShellControl : UserControlBase
                 WindowHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
     }
 
-    public void Disconnect()
+    private void Disconnect()
     {
         if (IsConnected)
             _process.Kill();
@@ -243,9 +246,16 @@ public partial class PowerShellControl : UserControlBase
 
     public void CloseTab()
     {
-        _closing = true;
+        // Prevent multiple calls
+        if (_closed)
+            return;
+        
+        _closed = true;
 
+        // Disconnect the session
         Disconnect();
+        
+        ConfigurationManager.Current.PowerShellTabCount--;
     }
 
     #endregion

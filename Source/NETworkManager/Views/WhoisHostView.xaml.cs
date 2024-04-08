@@ -15,8 +15,6 @@ public partial class WhoisHostView
     {
         InitializeComponent();
         DataContext = _viewModel;
-
-        InterTabController.Partition = ApplicationName.Whois.ToString();
     }
 
     private void ContextMenu_Opened(object sender, RoutedEventArgs e)

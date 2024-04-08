@@ -34,8 +34,7 @@ public class PortScannerViewModel : ViewModelBase
 
     private readonly Guid _tabId;
     private bool _firstLoad = true;
-
-    private string _lastSortDescriptionAscending = string.Empty;
+    private bool _closed;
 
     private string _host;
 
@@ -231,6 +230,8 @@ public class PortScannerViewModel : ViewModelBase
     {
         _dialogCoordinator = instance;
 
+        ConfigurationManager.Current.PortScannerTabCount++;
+        
         _tabId = tabId;
         Host = host;
         Ports = port;
@@ -263,9 +264,17 @@ public class PortScannerViewModel : ViewModelBase
 
     public void OnClose()
     {
+        // Prevent multiple calls
+        if (_closed)
+            return;
+        
+        _closed = true;
+        
         // Stop scan
         if (IsRunning)
             Stop();
+        
+        ConfigurationManager.Current.PortScannerTabCount--;
     }
 
     #endregion
@@ -348,13 +357,8 @@ public class PortScannerViewModel : ViewModelBase
 
         Results.Clear();
 
-        // Change the tab title (not nice, but it works)
-        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-
-        if (window != null)
-            foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
-                tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Host;
-
+        DragablzTabItem.SetTabHeader(_tabId, Host);
+        
         _cancellationTokenSource = new CancellationTokenSource();
 
         // Resolve hostnames

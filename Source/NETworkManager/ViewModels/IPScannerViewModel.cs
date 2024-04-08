@@ -40,6 +40,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private readonly Guid _tabId;
     private bool _firstLoad = true;
+    private bool _closed;
 
     private string _host;
 
@@ -235,6 +236,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         _dialogCoordinator = instance;
 
+        ConfigurationManager.Current.IPScannerTabCount++;
+        
         _tabId = tabId;
         Host = hostOrIPRange;
 
@@ -374,12 +377,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         Results.Clear();
 
-        // Change the tab title (not nice, but it works)
-        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-
-        if (window != null)
-            foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
-                tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Host;
+        DragablzTabItem.SetTabHeader(_tabId, Host);
 
         _cancellationTokenSource = new CancellationTokenSource();
 
@@ -579,12 +577,20 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         return _dialogCoordinator.ShowMetroDialogAsync(window, customDialog);
     }
-
+    
     public void OnClose()
     {
+        // Prevent multiple calls
+        if (_closed)
+            return;
+        
+        _closed = true;
+        
         // Stop scan
         if (IsRunning)
             Stop();
+
+        ConfigurationManager.Current.IPScannerTabCount--;
     }
 
     #endregion

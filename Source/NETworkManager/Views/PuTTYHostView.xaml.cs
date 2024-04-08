@@ -18,8 +18,6 @@ public partial class PuTTYHostView
     {
         InitializeComponent();
         DataContext = _viewModel;
-
-        InterTabController.Partition = ApplicationName.PuTTY.ToString();
     }
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e)

@@ -28,8 +28,8 @@ public class SNTPLookupViewModel : ViewModelBase
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly Guid _tabId;
-
     private readonly bool _isLoading;
+    private bool _closed;
 
     public ICollectionView SNTPServers { get; }
 
@@ -66,7 +66,7 @@ public class SNTPLookupViewModel : ViewModelBase
         }
     }
 
-    private ObservableCollection<SNTPLookupInfo> _results = new();
+    private ObservableCollection<SNTPLookupInfo> _results = [];
 
     public ObservableCollection<SNTPLookupInfo> Results
     {
@@ -151,6 +151,7 @@ public class SNTPLookupViewModel : ViewModelBase
         _isLoading = true;
 
         _dialogCoordinator = instance;
+        ConfigurationManager.Current.SNTPLookupTabCount++;
 
         _tabId = tabId;
 
@@ -214,12 +215,7 @@ public class SNTPLookupViewModel : ViewModelBase
         // Reset the latest results
         Results.Clear();
 
-        // Change the tab title (not nice, but it works)
-        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-
-        if (window != null)
-            foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
-                tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = SNTPServer.Name;
+        DragablzTabItem.SetTabHeader(_tabId, SNTPServer.Name);
 
         SNTPLookupSettings settings = new(
             SettingsManager.Current.SNTPLookup_Timeout
@@ -280,6 +276,13 @@ public class SNTPLookupViewModel : ViewModelBase
 
     public void OnClose()
     {
+        // Prevent multiple calls
+        if (_closed)
+            return;
+        
+        _closed = true;
+        
+        ConfigurationManager.Current.SNTPLookupTabCount--;
     }
 
     #endregion
