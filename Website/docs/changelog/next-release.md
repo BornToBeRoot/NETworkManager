@@ -23,6 +23,10 @@ Release date: **xx.xx.2023**
   
 ## What's new?
 
+- Tabs can now be arranged within the window using drag & drop. [#2669](https://github.com/BornToBeRoot/NETworkManager/pull/2669)
+
+  ![Changelog #2669](../img/changelog-2669.gif)
+
 ## Improvements
 
 - **Network Interfaces**
