@@ -414,7 +414,7 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
         }
     }
 
-    private void TabsContainer_OnIsDraggingWindowChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
+    private void TabablzControl_OnIsDraggingWindowChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
     {
         // Set the dragging state
         switch (ApplicationName)

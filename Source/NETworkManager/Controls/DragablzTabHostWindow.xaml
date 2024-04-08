@@ -732,6 +732,7 @@
             <dockablz:Layout.BranchTemplate>
                 <DataTemplate>
                     <dragablz:TabablzControl DataContext="{Binding}"
+                                             IsDraggingWindowChanged="TabablzControl_OnIsDraggingWindowChanged"
                                              ClosingItemCallback="{Binding CloseItemCommand}">
                         <dragablz:TabablzControl.InterTabController>
                             <dragablz:InterTabController DataContext="{Binding}"
@@ -742,7 +743,7 @@
                 </DataTemplate>
             </dockablz:Layout.BranchTemplate>
             <dragablz:TabablzControl Name="TabsContainer"
-                                     IsDraggingWindowChanged="TabsContainer_OnIsDraggingWindowChanged"
+                                     IsDraggingWindowChanged="TabablzControl_OnIsDraggingWindowChanged"
                                      ClosingItemCallback="{Binding CloseItemCommand}">                
                 <dragablz:TabablzControl.InterTabController>
                     <dragablz:InterTabController InterTabClient="{Binding InterTabClient}"
