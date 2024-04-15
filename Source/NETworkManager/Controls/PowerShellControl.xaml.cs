@@ -19,13 +19,13 @@ public partial class PowerShellControl : UserControlBase, IDragablzTabItem, IEmb
 
     private void WindowGrid_SizeChanged(object sender, SizeChangedEventArgs e)
     {
-        if (IsConnected)
-            ResizeEmbeddedWindow();
+        ResizeEmbeddedWindow();
     }
 
     #endregion
 
     #region Variables
+
     private bool _initialized;
     private bool _closed;
 
@@ -79,10 +79,10 @@ public partial class PowerShellControl : UserControlBase, IDragablzTabItem, IEmb
         _dialogCoordinator = DialogCoordinator.Instance;
 
         ConfigurationManager.Current.PowerShellTabCount++;
-    
+
         _tabId = tabId;
         _sessionInfo = sessionInfo;
-        
+
         Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
     }
 
@@ -92,11 +92,13 @@ public partial class PowerShellControl : UserControlBase, IDragablzTabItem, IEmb
         if (_initialized)
             return;
 
-        // Fix: The control is not visible by default, thus height and width is not set. If the values are not set, the size does not scale properly
-        WindowHost.Height = (int)ActualHeight;
-        WindowHost.Width = (int)ActualWidth;
+        // Fix 1: The control is not visible by default, thus height and width is not set. If the values are not set, the size does not scale properly
+        // Fix 2: Somehow the initial size need to be 20px smaller than the actual size after using Dragablz (https://github.com/BornToBeRoot/NETworkManager/pull/2678)
+        WindowHost.Height = (int)ActualHeight - 20;
+        WindowHost.Width = (int)ActualWidth - 20;
 
         Connect().ConfigureAwait(false);
+
         _initialized = true;
     }
 
@@ -143,7 +145,6 @@ public partial class PowerShellControl : UserControlBase, IDragablzTabItem, IEmb
                 _process.Exited += Process_Exited;
 
                 // Embed window into panel, remove border etc.
-                //  _process.WaitForInputIdle();
                 _appWin = _process.MainWindowHandle;
 
                 if (_appWin == IntPtr.Zero)
@@ -249,12 +250,12 @@ public partial class PowerShellControl : UserControlBase, IDragablzTabItem, IEmb
         // Prevent multiple calls
         if (_closed)
             return;
-        
+
         _closed = true;
 
         // Disconnect the session
         Disconnect();
-        
+
         ConfigurationManager.Current.PowerShellTabCount--;
     }
 

@@ -19,18 +19,18 @@ public partial class AWSSessionManagerControl : UserControlBase, IDragablzTabIte
 
     private void WindowGrid_SizeChanged(object sender, SizeChangedEventArgs e)
     {
-        if (IsConnected)
-            ResizeEmbeddedWindow();
+        ResizeEmbeddedWindow();
     }
 
     #endregion
 
     #region Variables
+
     private bool _initialized;
     private bool _closed;
-    
+
     private readonly IDialogCoordinator _dialogCoordinator;
-    
+
     private readonly Guid _tabId;
     private readonly AWSSessionManagerSessionInfo _sessionInfo;
 
@@ -79,7 +79,7 @@ public partial class AWSSessionManagerControl : UserControlBase, IDragablzTabIte
         _dialogCoordinator = DialogCoordinator.Instance;
 
         ConfigurationManager.Current.AWSSessionManagerTabCount++;
-        
+
         _tabId = tabId;
         _sessionInfo = sessionInfo;
 
@@ -92,9 +92,10 @@ public partial class AWSSessionManagerControl : UserControlBase, IDragablzTabIte
         if (_initialized)
             return;
 
-        // Fix: The control is not visible by default, thus height and width is not set. If the values are not set, the size does not scale properly
-        WindowHost.Height = (int)ActualHeight;
-        WindowHost.Width = (int)ActualWidth;
+        // Fix 1: The control is not visible by default, thus height and width is not set. If the values are not set, the size does not scale properly
+        // Fix 2: Somehow the initial size need to be 20px smaller than the actual size after using Dragablz (https://github.com/BornToBeRoot/NETworkManager/pull/2678)
+        WindowHost.Height = (int)ActualHeight - 20;
+        WindowHost.Width = (int)ActualWidth - 20;
 
         Connect().ConfigureAwait(false);
         _initialized = true;
@@ -249,12 +250,12 @@ public partial class AWSSessionManagerControl : UserControlBase, IDragablzTabIte
         // Prevent multiple calls
         if (_closed)
             return;
-        
+
         _closed = true;
 
         // Disconnect the session
         Disconnect();
-        
+
         ConfigurationManager.Current.AWSSessionManagerTabCount--;
     }
 
