@@ -78,7 +78,7 @@ public partial class TigerVNCControl : UserControlBase, IDragablzTabItem
         DataContext = this;
 
         _dialogCoordinator = DialogCoordinator.Instance;
-        
+
         ConfigurationManager.Current.TigerVNCTabCount++;
 
         _tabId = tabId;
@@ -93,7 +93,7 @@ public partial class TigerVNCControl : UserControlBase, IDragablzTabItem
         if (_initialized)
             return;
 
-        // Fix: The control is not visible by default, thus height and width is not set. If the values are not set, the size does not scale properly
+        // Fix 1: The control is not visible by default, thus height and width is not set. If the values are not set, the size does not scale properly
         WindowHost.Height = (int)ActualHeight;
         WindowHost.Width = (int)ActualWidth;
 
@@ -257,12 +257,12 @@ public partial class TigerVNCControl : UserControlBase, IDragablzTabItem
         // Prevent multiple calls
         if (_closed)
             return;
-        
+
         _closed = true;
 
         // Disconnect the session
         Disconnect();
-        
+
         ConfigurationManager.Current.TigerVNCTabCount--;
     }
 
