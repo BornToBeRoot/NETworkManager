@@ -19,8 +19,7 @@ public partial class TigerVNCControl : UserControlBase, IDragablzTabItem
 
     private void TigerVNCGrid_SizeChanged(object sender, SizeChangedEventArgs e)
     {
-        if (IsConnected)
-            ResizeEmbeddedWindow();
+        ResizeEmbeddedWindow();
     }
 
     #endregion

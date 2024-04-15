@@ -20,8 +20,7 @@ public partial class PuTTYControl : UserControlBase, IDragablzTabItem, IEmbedded
 
     private void WindowGrid_SizeChanged(object sender, SizeChangedEventArgs e)
     {
-        if (IsConnected)
-            ResizeEmbeddedWindow();
+        ResizeEmbeddedWindow();
     }
 
     #endregion
@@ -95,7 +94,7 @@ public partial class PuTTYControl : UserControlBase, IDragablzTabItem, IEmbedded
             return;
 
         // Fix 1: The control is not visible by default, thus height and width is not set. If the values are not set, the size does not scale properly
-        // Fix 2: Somehow the initial size need to be 20px smaller than the actual size after using Dragablz.
+        // Fix 2: Somehow the initial size need to be 20px smaller than the actual size after using Dragablz (https://github.com/BornToBeRoot/NETworkManager/pull/2678)
         WindowHost.Height = (int)ActualHeight - 20;
         WindowHost.Width = (int)ActualWidth - 20;
 
