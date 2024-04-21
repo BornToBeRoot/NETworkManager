@@ -3805,4 +3805,10 @@ Try again in a few seconds.</value>
   <data name="ResolveMACAddressIsDisabled" xml:space="preserve">
     <value>Resolve MAC address is disabled!</value>
   </data>
+  <data name="CloseGroup" xml:space="preserve">
+    <value>Close group</value>
+  </data>
+  <data name="ToolTip_RunCommandWithHotKey" xml:space="preserve">
+    <value>Run command... (Ctrl+Shift+P)</value>
+  </data>
 </root>
