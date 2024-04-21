@@ -35,3 +35,9 @@
 .footer--dark {
   --ifm-footer-background-color: #2b3137;
 }
+
+.image {
+  display: block;
+  margin: auto;
+  max-width: 1060px;
+}
