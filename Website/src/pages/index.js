@@ -243,16 +243,16 @@ export default function Home() {
     {
       original: ImageGalleryProfilesProfileSettings,
       thumbnail: ImageGalleryProfilesProfileSettings,
-      originalAlt: "Profiles - Profile Settings",
-      thumbnailAlt: "Profiles - Profile Settings",
-      description: "Profiles - Profile Settings",
+      originalAlt: "Profiles - Profile settings",
+      thumbnailAlt: "Profiles - Profile settings",
+      description: "Profiles - Profile settings",
     },
     {
       original: ImageGalleryProfilesGroupSettings,
       thumbnail: ImageGalleryProfilesGroupSettings,
-      originalAlt: "Profiles - Group Settings",
-      thumbnailAlt: "Profiles - Group Settings",
-      description: "Profiles - Group Settings",
+      originalAlt: "Profiles - Group settings",
+      thumbnailAlt: "Profiles - Group settings",
+      description: "Profiles - Group settings",
     },
   ];
 
