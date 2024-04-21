@@ -589,7 +589,7 @@
     <value>Statyczny serwer DNS IPv4</value>
   </data>
   <data name="SubnetMask" xml:space="preserve">
-    <value>Subnet mask</value>
+    <value>Maska podsieci</value>
   </data>
   <data name="Threads" xml:space="preserve">
     <value>Wątki</value>
@@ -2635,7 +2635,7 @@ $$hostname$$	--&gt;	Nazwa hosta</value>
     <value>Profiles</value>
   </data>
   <data name="SettingsName_Settings" xml:space="preserve">
-    <value>Settings</value>
+    <value>Ustawienia</value>
   </data>
   <data name="SettingsName_Status" xml:space="preserve">
     <value>Status</value>
@@ -3525,10 +3525,10 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>New subnet mask</value>
   </data>
   <data name="AddServer" xml:space="preserve">
-    <value>Add server</value>
+    <value>Dodaj serwer</value>
   </data>
   <data name="SNTPServer" xml:space="preserve">
-    <value>SNTP server</value>
+    <value>Serwer SNTP</value>
   </data>
   <data name="ErrorMessage_TabPageHasError" xml:space="preserve">
     <value>The settings on this page contain errors. Correct them to be able to save.</value>
@@ -3549,13 +3549,13 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>AS Name</value>
   </data>
   <data name="City" xml:space="preserve">
-    <value>City</value>
+    <value>Miasto</value>
   </data>
   <data name="Continent" xml:space="preserve">
-    <value>Continent</value>
+    <value>Kontynent</value>
   </data>
   <data name="Country" xml:space="preserve">
-    <value>Country</value>
+    <value>Kraj</value>
   </data>
   <data name="Currency" xml:space="preserve">
     <value>Currency</value>
@@ -3597,7 +3597,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>PTR record</value>
   </data>
   <data name="Timezone" xml:space="preserve">
-    <value>Timezone</value>
+    <value>Strefa czasowa</value>
   </data>
   <data name="ZipCode" xml:space="preserve">
     <value>Zip</value>
@@ -3776,10 +3776,10 @@ Try again in a few seconds.</value>
     <value>NetBIOS</value>
   </data>
   <data name="ComputerName" xml:space="preserve">
-    <value>Computer name</value>
+    <value>Nazwa komputera</value>
   </data>
   <data name="ConnectionState_Error" xml:space="preserve">
-    <value>Error</value>
+    <value>Błąd</value>
   </data>
   <data name="ConnectionState_OK" xml:space="preserve">
     <value>OK</value>
@@ -3804,5 +3804,11 @@ Try again in a few seconds.</value>
   </data>
   <data name="ResolveMACAddressIsDisabled" xml:space="preserve">
     <value>Resolve MAC address is disabled!</value>
+  </data>
+  <data name="CloseGroup" xml:space="preserve">
+    <value>Close group</value>
+  </data>
+  <data name="ToolTip_RunCommandWithHotKey" xml:space="preserve">
+    <value>Run command... (Ctrl+Shift+P)</value>
   </data>
 </root>
