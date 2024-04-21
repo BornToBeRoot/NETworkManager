@@ -199,7 +199,7 @@
     <value>DNS</value>
   </data>
   <data name="DNSLookup" xml:space="preserve">
-    <value>DNS查找</value>
+    <value>DNS 查找</value>
   </data>
   <data name="DontFragment" xml:space="preserve">
     <value>不分段</value>
@@ -487,28 +487,28 @@
     <value>IPv4 地址</value>
   </data>
   <data name="IPv4DefaultGateway" xml:space="preserve">
-    <value>IPv4默认路由</value>
+    <value>IPv4 默认路由</value>
   </data>
   <data name="IPv6" xml:space="preserve">
-    <value>IPv6地址</value>
+    <value>IPv6 地址</value>
   </data>
   <data name="IPv6Address" xml:space="preserve">
     <value>IPv6 地址</value>
   </data>
   <data name="IPv6AddressLinkLocal" xml:space="preserve">
-    <value>IPv6链路地址</value>
+    <value>IPv6 链路地址</value>
   </data>
   <data name="IPv6DefaultGateway" xml:space="preserve">
-    <value>IPv6默认网关</value>
+    <value>IPv6 默认网关</value>
   </data>
   <data name="Maximum" xml:space="preserve">
     <value>最大值</value>
   </data>
   <data name="MaximumHops" xml:space="preserve">
-    <value>Maximum hops</value>
+    <value>最大跳数</value>
   </data>
   <data name="MinimizeInsteadOfTerminating" xml:space="preserve">
-    <value>最小化窗口不退出</value>
+    <value>最小化主窗口而不是终止应用程序</value>
   </data>
   <data name="MinimizeToTrayInsteadOfTaskbar" xml:space="preserve">
     <value>最小化到任务栏托盘</value>
@@ -523,16 +523,16 @@
     <value>网络地址</value>
   </data>
   <data name="NewSubnetmaskOrCIDR" xml:space="preserve">
-    <value>新的子网掩码或CIDR</value>
+    <value>新的子网掩码或 CIDR</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>否</value>
   </data>
   <data name="ObtainAnIPAddressAutomatically" xml:space="preserve">
-    <value>自动获取IP地址</value>
+    <value>自动获取 IP 地址</value>
   </data>
   <data name="ObtainDNSServerAddressAutomatically" xml:space="preserve">
-    <value>自动获取DNS</value>
+    <value>自动获取 DNS</value>
   </data>
   <data name="PacketLoss" xml:space="preserve">
     <value>丢包</value>
@@ -547,7 +547,7 @@
     <value>解析主机名时的首选协议：</value>
   </data>
   <data name="PrimaryDNSServer" xml:space="preserve">
-    <value>主DNS服务器</value>
+    <value>主 DNS 服务器</value>
   </data>
   <data name="ReceivedLost" xml:space="preserve">
     <value>接收 / 丢失</value>
@@ -562,7 +562,7 @@
     <value>保存设置到应用文件夹</value>
   </data>
   <data name="SecondaryDNSServer" xml:space="preserve">
-    <value>辅助DNS服务器</value>
+    <value>辅助 DNS 服务器</value>
   </data>
   <data name="Show" xml:space="preserve">
     <value>显示</value>
@@ -583,13 +583,13 @@
     <value>开始菜单（当前用户）</value>
   </data>
   <data name="StaticIPv4Address" xml:space="preserve">
-    <value>静态IPv4地址</value>
+    <value>静态 IPv4 地址</value>
   </data>
   <data name="StaticIPv4DNSServer" xml:space="preserve">
-    <value>静态IPv4 DNS服务器</value>
+    <value>静态 IPv4 DNS 服务器</value>
   </data>
   <data name="SubnetMask" xml:space="preserve">
-    <value>Subnet mask</value>
+    <value>子网掩码</value>
   </data>
   <data name="Threads" xml:space="preserve">
     <value>线程</value>
@@ -613,10 +613,10 @@
     <value>超时（毫秒）</value>
   </data>
   <data name="TimeMSToWaitBetweenEachPing" xml:space="preserve">
-    <value>Time (ms) to wait between each ping</value>
+    <value>每次 Ping 之间的等待时间(毫秒)</value>
   </data>
   <data name="TTL" xml:space="preserve">
-    <value>生存周期</value>
+    <value>TTL</value>
   </data>
   <data name="Type" xml:space="preserve">
     <value>类型</value>
@@ -637,16 +637,16 @@
     <value>添加</value>
   </data>
   <data name="AddATabToPerformADNSLookup" xml:space="preserve">
-    <value>添加一个DNS查找页...</value>
+    <value>添加一 个 DNS 查找页...</value>
   </data>
   <data name="AddATabToPerformANetworkScan" xml:space="preserve">
     <value>添加一个网络扫描页...</value>
   </data>
   <data name="AddATabToPerformAnSNMPAction" xml:space="preserve">
-    <value>添加一个SNMP动作页...</value>
+    <value>添加一个 SNMP 动作页...</value>
   </data>
   <data name="AddATabToPerformAPing" xml:space="preserve">
-    <value>添加一个Ping操作页...</value>
+    <value>添加一个 Ping 操作页...</value>
   </data>
   <data name="AddATabToPerformAPortScan" xml:space="preserve">
     <value>添加一个端口扫描页...</value>
@@ -655,7 +655,7 @@
     <value>添加一个路由追踪页...</value>
   </data>
   <data name="AddDNSSuffixToHostname" xml:space="preserve">
-    <value>主机名后添加DNS后缀(主)</value>
+    <value>主机名后添加 DNS 后缀(主)</value>
   </data>
   <data name="AdditionalCommandLine" xml:space="preserve">
     <value>附加到命令行</value>
@@ -679,7 +679,7 @@
     <value>应用</value>
   </data>
   <data name="ApplyWindowsKeyCombinationsLikeAltTab" xml:space="preserve">
-    <value>应用Windows键组合（例如ALT + TAB）：</value>
+    <value>应用 Windows 键组合（例如ALT + TAB）：</value>
   </data>
   <data name="Auth" xml:space="preserve">
     <value>验证</value>
@@ -724,7 +724,7 @@
     <value>社区</value>
   </data>
   <data name="ConfigureThePathToPuTTYInTheSettingsDots" xml:space="preserve">
-    <value>配置PuTTY程序路径</value>
+    <value>配置 PuTTY 程序路径</value>
   </data>
   <data name="ConfirmClose" xml:space="preserve">
     <value>确认关闭...</value>
@@ -736,7 +736,7 @@
     <value>连接方式...</value>
   </data>
   <data name="ConnectExternal" xml:space="preserve">
-    <value>使用Windows连接</value>
+    <value>使用 Windows 连接</value>
   </data>
   <data name="ConnectTheNetworkCardToConfigureIt" xml:space="preserve">
     <value>请配置网卡的网络连接！</value>
@@ -783,13 +783,13 @@ First make a backup copy of your profile files before enabling encryption!</valu
     <value>默认端口：</value>
   </data>
   <data name="RloginPort" xml:space="preserve">
-    <value>Rlogin端口</value>
+    <value>Rlogin 端口</value>
   </data>
   <data name="SSHPort" xml:space="preserve">
-    <value>SSH端口</value>
+    <value>SSH 端口</value>
   </data>
   <data name="TelnetPort" xml:space="preserve">
-    <value>Telnet端口</value>
+    <value>Telnet 端口</value>
   </data>
   <data name="DeleteCredentialMessage" xml:space="preserve">
     <value>被选择的凭据将被永久删除.</value>
@@ -798,16 +798,16 @@ First make a backup copy of your profile files before enabling encryption!</valu
     <value>删除条目</value>
   </data>
   <data name="DeleteProfileMessage" xml:space="preserve">
-    <value>Selected profile will be deleted permanently.</value>
+    <value>所选配置文件将被永久删除。</value>
   </data>
   <data name="DNSAutoconfiguration" xml:space="preserve">
-    <value>DNS配置</value>
+    <value>DNS 配置</value>
   </data>
   <data name="DNSLookupDots" xml:space="preserve">
-    <value>DNS查询</value>
+    <value>DNS 查询</value>
   </data>
   <data name="DNSServer" xml:space="preserve">
-    <value>DNS服务器</value>
+    <value>DNS 服务器</value>
   </data>
   <data name="OpenDocumentation" xml:space="preserve">
     <value>打开文档</value>
@@ -831,13 +831,13 @@ First make a backup copy of your profile files before enabling encryption!</valu
     <value>结束时间</value>
   </data>
   <data name="EnterASubnetToCalculateItDots" xml:space="preserve">
-    <value>Enter a subnet to calculate it...</value>
+    <value>输入子网进行计算…</value>
   </data>
   <data name="EnterSubnetAndANewSubnetmaskToCreateSubnets" xml:space="preserve">
     <value>输入子网和子网掩码以创建子网</value>
   </data>
   <data name="ErrorCheckingApiGithubComVerifyYourNetworkConnection" xml:space="preserve">
-    <value>不能连接到'api.github.com'，请检查网络状态</value>
+    <value>不能连接到 'api.github.com'，请检查网络状态</value>
   </data>
   <data name="ErrorInResponse" xml:space="preserve">
     <value>响应出错！</value>
@@ -855,7 +855,7 @@ First make a backup copy of your profile files before enabling encryption!</valu
     <value>固定屏幕大小：</value>
   </data>
   <data name="StarForkTheProjectOnGitHub" xml:space="preserve">
-    <value>在Github上对项目关注或创建分支</value>
+    <value>在 Github 上对项目关注或创建分支</value>
   </data>
   <data name="Found" xml:space="preserve">
     <value>查找</value>
@@ -873,13 +873,13 @@ First make a backup copy of your profile files before enabling encryption!</valu
     <value>主机名或IP地址</value>
   </data>
   <data name="Hosts" xml:space="preserve">
-    <value>Hosts</value>
+    <value>主机</value>
   </data>
   <data name="ID" xml:space="preserve">
     <value>ID</value>
   </data>
   <data name="InheritHostFromGeneral" xml:space="preserve">
-    <value>Inherit host from general</value>
+    <value>从常规继承主机</value>
   </data>
   <data name="IPRange" xml:space="preserve">
     <value>IP范围</value>
@@ -915,7 +915,7 @@ First make a backup copy of your profile files before enabling encryption!</valu
     <value>多实例</value>
   </data>
   <data name="NetworkLocationCannotBeReachedMessage" xml:space="preserve">
-    <value>无法访问此地址，请确认你的计算机已连接到此网络。有关网络故障排除的信息，请参阅Windows帮助。</value>
+    <value>无法访问此地址，请确认你的计算机已连接到此网络。有关网络故障排除的信息，请参阅 Windows 帮助。</value>
   </data>
   <data name="NewConnectionDots" xml:space="preserve">
     <value>创建新连接</value>
@@ -1051,7 +1051,7 @@ First make a backup copy of your profile files before enabling encryption!</valu
     <value>重复</value>
   </data>
   <data name="ResolveCNAMEOnANYRequests" xml:space="preserve">
-    <value>解析所有请求的CNAME</value>
+    <value>解析所有请求的 CNAME</value>
   </data>
   <data name="Responses" xml:space="preserve">
     <value>响应</value>
@@ -1084,17 +1084,17 @@ First make a backup copy of your profile files before enabling encryption!</valu
     <value>串口</value>
   </data>
   <data name="SerialLine" xml:space="preserve">
-    <value>Serial line</value>
+    <value>串行线</value>
   </data>
   <data name="Service" xml:space="preserve">
     <value>服务</value>
   </data>
   <data name="SettingsFileFoundWasCorruptOrNotCompatibleMessage" xml:space="preserve">
-    <value>The found settings file was corrupted or is not compatible with this version! You may report this issue on GitHub.
+    <value>找到的设置文件已损坏或与此版本不兼容！您可以在GitHub上报告此问题。
 
-A backup of the settings file was created in the settings folder and the settings were reset.
+在设置文件夹中创建了设置文件的备份，并重置了设置。
 
-Profile files are not affected!</value>
+配置文件不受影响！</value>
   </data>
   <data name="ShowClosedPorts" xml:space="preserve">
     <value>显示已关闭端口</value>
@@ -1106,7 +1106,7 @@ Profile files are not affected!</value>
     <value>仅显示最常见的查询类型</value>
   </data>
   <data name="ShowUnreachableIPAddressesAndPorts" xml:space="preserve">
-    <value>Show unreachable IP addresses and ports</value>
+    <value>显示不可达的 IP 地址和端口</value>
   </data>
   <data name="ShowStatistics" xml:space="preserve">
     <value>显示统计</value>
@@ -1148,10 +1148,10 @@ Profile files are not affected!</value>
     <value>此进程将耗费一些时间和资源（CPU/RAM）。</value>
   </data>
   <data name="TheSettingsLocationIsNotAffected" xml:space="preserve">
-    <value>The settings location is not affected!</value>
+    <value>此设置位置无效!</value>
   </data>
   <data name="TimeoutOnSNMPQuery" xml:space="preserve">
-    <value>Timeout on SNMP query. Maybe the host is not reachable or the community / password is wrong.</value>
+    <value>SNM P查询超时时间。可能主机不可达或社区/密码错误。</value>
   </data>
   <data name="TimeoutWhenQueryingDNSServerMessage" xml:space="preserve">
     <value>从DNS服务器查询IP地址“{0}”超时！</value>
@@ -1166,7 +1166,7 @@ Profile files are not affected!</value>
     <value>未知错误！</value>
   </data>
   <data name="UntrayBringWindowToForeground" xml:space="preserve">
-    <value>Untray / Bring window to foreground</value>
+    <value>打开托盘/将窗口放到前台</value>
   </data>
   <data name="URL" xml:space="preserve">
     <value>URL</value>
@@ -1202,13 +1202,13 @@ Profile files are not affected!</value>
     <value>新版本可用：{0}！</value>
   </data>
   <data name="WalkMode" xml:space="preserve">
-    <value>Walk模式</value>
+    <value>Walk 模式</value>
   </data>
   <data name="Width" xml:space="preserve">
     <value>宽度</value>
   </data>
   <data name="WrongPasswordDecryptionFailedMessage" xml:space="preserve">
-    <value>Profile file could not be decrypted with the given password.</value>
+    <value>无法用给定的密码解密配置文件。</value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
     <value>输入密码有误。</value>
@@ -1268,7 +1268,7 @@ Profile files are not affected!</value>
     <value>过滤器...</value>
   </data>
   <data name="FlushDNSCache" xml:space="preserve">
-    <value>清理DNS缓存</value>
+    <value>清理 DNS 缓存</value>
   </data>
   <data name="HelpMessage_Credentials" xml:space="preserve">
     <value>解密并载入你选择的的凭据。</value>
@@ -1283,14 +1283,10 @@ Profile files are not affected!</value>
     <value>编辑时将不会显示密码明文，但你可以重置它。</value>
   </data>
   <data name="HelpMessage_RDPAuthenticationLevel" xml:space="preserve">
-    <value>[0]如果服务器身份验证失败，连接到计算机，没有警告。
- 
-[1]如果服务器认证失败，不建立连接。
- 
-[2]如果服务器身份验证失败，显示一个警告并允许我连接或拒绝连接。
- 
-
-[3] 不指定认证要求。。</value>
+    <value>[0]如果服务器身份验证失败，请在没有警告的情况下连接到计算机。
+[1] 如果服务器身份验证失败，请不要建立连接。
+[2] 如果服务器身份验证失败，则显示警告并允许我连接或拒绝连接。
+[3] 未指定身份验证要求。</value>
   </data>
   <data name="HelpMessage_Tags" xml:space="preserve">
     <value>标签帮助您按照主题/项目组织概要文件/概要文件。多个标签可以用";"隔开。通过标签“tag=xxx”进行搜索。</value>
@@ -1317,7 +1313,7 @@ Profile files are not affected!</value>
     <value>关</value>
   </data>
   <data name="OK" xml:space="preserve">
-    <value>确认</value>
+    <value>确定</value>
   </data>
   <data name="On" xml:space="preserve">
     <value>开</value>
@@ -1371,13 +1367,13 @@ Profile files are not affected!</value>
     <value>连接</value>
   </data>
   <data name="EnterValidIPScanRange" xml:space="preserve">
-    <value>Enter a valid IP range!</value>
+    <value>输入有效的 IP 范围！</value>
   </data>
   <data name="EnterValidIPv4Address" xml:space="preserve">
-    <value>输入有效的IPv4地址！</value>
+    <value>輸入有效的 IPv4 地址！</value>
   </data>
   <data name="EnterValidMACAddress" xml:space="preserve">
-    <value>输入有效的MAC地址（如 00:F1:23:AB:F2:35）！</value>
+    <value>输入有效的 MAC 地址（如 00:F1:23:AB:F2:35）！</value>
   </data>
   <data name="EnterValidPort" xml:space="preserve">
     <value>输入有效端口（1-65535）！</value>
@@ -1386,7 +1382,7 @@ Profile files are not affected!</value>
     <value>输入有效子网掩码（如 255.255.255.0）！</value>
   </data>
   <data name="EnterValidSubnetmaskOrCIDR" xml:space="preserve">
-    <value>输入有效子网掩码或CIDR（如 255.255.255.0 或 /24）！</value>
+    <value>输入有效子网掩码或 CIDR（如 255.255.255.0 或 /24）！</value>
   </data>
   <data name="FieldCannotBeEmpty" xml:space="preserve">
     <value>字段不能为空！</value>
@@ -1437,7 +1433,7 @@ Profile files are not affected!</value>
     <value>Emerald</value>
   </data>
   <data name="EnterOneOrMoreValidIPAddresses" xml:space="preserve">
-    <value>输入一个或多个有效的IP地址！</value>
+    <value>输入一个或多个有效的 IP 地址！</value>
   </data>
   <data name="EnterValidBaud" xml:space="preserve">
     <value>输入有效的波特率！</value>
@@ -1452,7 +1448,7 @@ Profile files are not affected!</value>
     <value>输入有效数字！</value>
   </data>
   <data name="EnterValidOID" xml:space="preserve">
-    <value>输入有效的OID！</value>
+    <value>输入有效的 OID！</value>
   </data>
   <data name="EnterValidPortOrPortRange" xml:space="preserve">
     <value>输入有效的端口或端口范围（1 - 65535）！</value>
@@ -1488,10 +1484,10 @@ Profile files are not affected!</value>
     <value>请求超时。</value>
   </data>
   <data name="IPStatus_TtlExpired" xml:space="preserve">
-    <value>TTL在传输途中过期。</value>
+    <value>TTL 在传输途中过期。</value>
   </data>
   <data name="KeyMustHave8CharactersOrMore" xml:space="preserve">
-    <value>密钥必须有8个字符或更多!</value>
+    <value>密钥必须有 8 个字符或更多!</value>
   </data>
   <data name="Lime" xml:space="preserve">
     <value>Lime</value>
@@ -1536,10 +1532,10 @@ Profile files are not affected!</value>
     <value>解密出错。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_DNSLookupFailed" xml:space="preserve">
-    <value>DNS名称查找失败。</value>
+    <value>DNS 名称查找失败。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_DNSLookupFailed2" xml:space="preserve">
-    <value>DNS查找失败。</value>
+    <value>DNS 查找失败。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_EncryptionError" xml:space="preserve">
     <value>加密出错。</value>
@@ -1602,10 +1598,10 @@ Profile files are not affected!</value>
     <value>无法识别服务器证书。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SocketConnectFailed" xml:space="preserve">
-    <value>Windows套接字连接失败。</value>
+    <value>Windows 套接字连接失败。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SocketRecvFailed" xml:space="preserve">
-    <value>Windows套接字接收失败。</value>
+    <value>Windows 套接字接收失败。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrAccountDisabled" xml:space="preserve">
     <value>此账户已禁用。</value>
@@ -1651,7 +1647,7 @@ Profile files are not affected!</value>
     <value>智能卡已禁用。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrSmartcardWrongPIN" xml:space="preserve">
-    <value>向智能卡提供了错误的PIN。</value>
+    <value>向智能卡提供了错误的 PIN。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_TimeoutOccurred" xml:space="preserve">
     <value>发生超时。</value>
@@ -1660,7 +1656,7 @@ Profile files are not affected!</value>
     <value>内部定时器错误。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_WinsockSendFailed" xml:space="preserve">
-    <value>Windows套接字 send 调用失败。</value>
+    <value>Windows 套接字 send 调用失败。</value>
   </data>
   <data name="Sienna" xml:space="preserve">
     <value>Sienna</value>
@@ -1675,19 +1671,19 @@ Profile files are not affected!</value>
     <value>Taupe</value>
   </data>
   <data name="TcpState_Closed" xml:space="preserve">
-    <value>Closed</value>
+    <value>已关闭</value>
   </data>
   <data name="TcpState_CloseWait" xml:space="preserve">
     <value>CloseWait</value>
   </data>
   <data name="TcpState_Closing" xml:space="preserve">
-    <value>Closing</value>
+    <value>正在关闭</value>
   </data>
   <data name="TcpState_DeleteTcb" xml:space="preserve">
     <value>DeleteTcb</value>
   </data>
   <data name="TcpState_Established" xml:space="preserve">
-    <value>Established</value>
+    <value>已建立</value>
   </data>
   <data name="TcpState_FinWait1" xml:space="preserve">
     <value>FinWait1</value>
@@ -1774,19 +1770,19 @@ Profile files are not affected!</value>
     <value>Windows DNS 设置</value>
   </data>
   <data name="DeleteDNSServer" xml:space="preserve">
-    <value>删除DNS服务器</value>
+    <value>删除 DNS 服务器</value>
   </data>
   <data name="DeleteDNSServerMessage" xml:space="preserve">
-    <value>选定的DNS服务器将永久删除。</value>
+    <value>选定的 DNS 服务器将永久删除。</value>
   </data>
   <data name="AddDNSServer" xml:space="preserve">
-    <value>添加DNS服务器</value>
+    <value>添加 DNS 服务器</value>
   </data>
   <data name="EditDNSServer" xml:space="preserve">
-    <value>编辑DNS服务器</value>
+    <value>编辑 DNS 服务器</value>
   </data>
   <data name="DNSServerWithThisNameAlreadyExists" xml:space="preserve">
-    <value>已存在具有此名称的DNS服务器！</value>
+    <value>已存在具有此名称的 DNS 服务器！</value>
   </data>
   <data name="RestartSession" xml:space="preserve">
     <value>重启会话</value>
@@ -1795,7 +1791,7 @@ Profile files are not affected!</value>
     <value>TigerVNC</value>
   </data>
   <data name="ConfigureThePathToTigerVNCInTheSettingsDots" xml:space="preserve">
-    <value>配置TigerVNC程序路径</value>
+    <value>配置 TigerVNC 程序路径</value>
   </data>
   <data name="TigerVNCProcessHasEnded" xml:space="preserve">
     <value>TigerVNC  进程已终止！</value>
@@ -1804,7 +1800,7 @@ Profile files are not affected!</value>
     <value>正在连接...</value>
   </data>
   <data name="ResolveMACAddressAndVendor" xml:space="preserve">
-    <value>解析MAC地址和供应商</value>
+    <value>解析  MAC 地址和供应商</value>
   </data>
   <data name="Note" xml:space="preserve">
     <value>Note</value>
@@ -1856,22 +1852,22 @@ Profile files are not affected!</value>
     <value>添加标签...</value>
   </data>
   <data name="AddIPv4AddressDots" xml:space="preserve">
-    <value>添加IPv4地址</value>
+    <value>添加 IPv4 地址</value>
   </data>
   <data name="AddIPv4Address" xml:space="preserve">
-    <value>添加IPv4地址</value>
+    <value>添加 IPv4 地址</value>
   </data>
   <data name="MaxHostThreads" xml:space="preserve">
-    <value>Max. concurrent host threads</value>
+    <value>最大并发主机线程</value>
   </data>
   <data name="MaxPortThreads" xml:space="preserve">
-    <value>Max. concurrent port threads</value>
+    <value>最大并发端口线程</value>
   </data>
   <data name="PowerShell" xml:space="preserve">
     <value>PowerShell</value>
   </data>
   <data name="ConfigureThePathToPowerShellInTheSettingsDots" xml:space="preserve">
-    <value>在设置中配置PowerShell的路径…</value>
+    <value>在设置中配置 PowerShell 的路径…</value>
   </data>
   <data name="PowerShellProcessHasEnded" xml:space="preserve">
     <value>PowerShell  进程已终止！</value>
@@ -1889,7 +1885,7 @@ Profile files are not affected!</value>
     <value>覆盖默认设置</value>
   </data>
   <data name="ResolveIPv4AddressForThisHost" xml:space="preserve">
-    <value>解析此主机的IPv4地址</value>
+    <value>解析此主机的 IPv4 地址</value>
   </data>
   <data name="Hide" xml:space="preserve">
     <value>隐藏</value>
@@ -1910,7 +1906,7 @@ Profile files are not affected!</value>
     <value>上行</value>
   </data>
   <data name="ApplyWindowsKeyCombinations" xml:space="preserve">
-    <value>应用Windows组合键</value>
+    <value>应用 Windows 组合键</value>
   </data>
   <data name="CredentialSecuritySupportProvider" xml:space="preserve">
     <value>凭据安全支持提供程序</value>
@@ -1919,14 +1915,14 @@ Profile files are not affected!</value>
     <value>后台任务</value>
   </data>
   <data name="HelpMessage_BackgroundJob" xml:space="preserve">
-    <value>The background job will save settings and profiles every x-minutes.
+    <value>后台作业将每隔 x 分钟保存一次设置和配置文件。
 
-Value 0 will disable this feature.
+值为 0 将禁用此特性。
 
-Changes to this value will take effect after restarting the application.</value>
+对该值的修改将在重新启动应用程序后生效。</value>
   </data>
   <data name="RunBackgroundJobEveryXMinute" xml:space="preserve">
-    <value>每隔x分钟运行后台任务</value>
+    <value>每隔 x 分钟运行后台任务</value>
   </data>
   <data name="YourSystemOSIsIncompatibleWithTheLatestRelease" xml:space="preserve">
     <value>您的操作系统与最新版本不兼容！</value>
@@ -1935,15 +1931,13 @@ Changes to this value will take effect after restarting the application.</value>
     <value>仪表盘</value>
   </data>
   <data name="AllSettingsCanBeChangedLaterInTheSettings" xml:space="preserve">
-    <value>All settings can be changed later in the settings!</value>
+    <value>以后可以在程序设置中更改所有设置值</value>
   </data>
   <data name="CheckPublicIPAddress" xml:space="preserve">
     <value>检查公网IP地址</value>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
-    <value>Thank you for using NETworkManager!
-
-If you like this tool, please leave a star on GitHub and recommend it to others.</value>
+    <value>感谢您使用 NETworkManager! 如果你喜欢这个工具，请在GitHub上留下一颗星，并推荐给其他人。</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>启动程序时，它会在后台检查GitHub上是否有新的程序版本。
@@ -1965,19 +1959,19 @@ URL: https://api.github.com/</value>
     <value>第三方服务</value>
   </data>
   <data name="ToolTip_GitHubProjectUrl" xml:space="preserve">
-    <value>在Github上对项目关注或创建分支</value>
+    <value>在 Github 上对项目关注或创建分支</value>
   </data>
   <data name="ToolTip_TransifexProjectUrl" xml:space="preserve">
-    <value>帮助翻译Transifex上的项目。</value>
+    <value>帮助翻译 Transifex 上的项目。</value>
   </data>
   <data name="ToolTip_TwitterContactUrl" xml:space="preserve">
-    <value>通过Twitter联系。</value>
+    <value>通过 Twitter 联系。</value>
   </data>
   <data name="Connection" xml:space="preserve">
     <value>连接</value>
   </data>
   <data name="Computer" xml:space="preserve">
-    <value>Computer</value>
+    <value>计算机</value>
   </data>
   <data name="GatewayRouter" xml:space="preserve">
     <value>网关/路由</value>
@@ -1989,28 +1983,28 @@ URL: https://api.github.com/</value>
     <value>检查网络适配器配置（dns）以及是否正确配置了dns服务器。</value>
   </data>
   <data name="CheckNetworkAdapterConfigurationAndNetworkConnectionMessage" xml:space="preserve">
-    <value>检查网络适配器配置（dhcp，静态IP）以及是否已连接到网络。</value>
+    <value>检查网络适配器配置（dhcp，静态 IP）以及是否已连接到网络。</value>
   </data>
   <data name="CouldNotDetectGatewayIPAddressMessage" xml:space="preserve">
-    <value>无法检测网关IP地址！</value>
+    <value>无法检测网关 IP 地址！</value>
   </data>
   <data name="CouldNotDetectLocalIPAddressMessage" xml:space="preserve">
-    <value>无法检测本地IP地址！</value>
+    <value>无法检测本地 IP 地址！</value>
   </data>
   <data name="CouldNotGetPublicIPAddressFromXXXMessage" xml:space="preserve">
-    <value>无法通过WebRequest（http/https）从"{0}"获得公共ip地址! 检查你的网络连接（防火墙、代理等）。</value>
+    <value>无法通过 WebRequest（http/https）从"{0}"获得公共ip地址! 检查你的网络连接（防火墙、代理等）。</value>
   </data>
   <data name="NoADNSRecordsResolvedForXXXMessage" xml:space="preserve">
-    <value>无法解析“{0}”的A记录！</value>
+    <value>无法解析“{0}”的 A 记录！</value>
   </data>
   <data name="NoPTRDNSRecordResolvedForXXXMessage" xml:space="preserve">
-    <value>无法解析“{0}”的PTR记录！</value>
+    <value>无法解析“{0}”的 PTR 记录！</value>
   </data>
   <data name="XADNSRecordsResolvedForXXXMessage" xml:space="preserve">
-    <value>"{0}" 解析的dns记录 "{1}"!</value>
+    <value>"{0}" 解析的 dns 记录 "{1}"!</value>
   </data>
   <data name="PTRDNSRecordResolvedForXXXMessage" xml:space="preserve">
-    <value>解析的PTR dns记录"{0}"!</value>
+    <value>解析的 PTR dns 记录"{0}"!</value>
   </data>
   <data name="GotXXXAsPublicIPAddressFromXXXMessage" xml:space="preserve">
     <value>获得“{0}”作为公共ip地址"{1}"!</value>
@@ -2019,7 +2013,7 @@ URL: https://api.github.com/</value>
     <value>解析“{0}”为ip地址主机名"{1}"!</value>
   </data>
   <data name="PublicIPAddressCheckIsDisabled" xml:space="preserve">
-    <value>已禁用公网IP地址检测！</value>
+    <value>已禁用公网 IP 地址检测！</value>
   </data>
   <data name="TCPIPStackIsAvailableMessage" xml:space="preserve">
     <value>TCP/IP 堆栈可用。"{0}" 可通过 ICMP 访问!</value>
@@ -2043,7 +2037,7 @@ URL: https://api.github.com/</value>
     <value>使用自定义 IPv4 地址 API</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv4AddressAPI" xml:space="preserve">
-    <value>URL to a web service that can be reached via http or https and returns an IPv4 address like "xx.xx.xx.xx" as response.</value>
+    <value>可以通过 http 或 https 访问的 web 服务的 URL，并返回 IPv4 地址（如“xx.xx.xx.xx”）作为响应。</value>
   </data>
   <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
     <value>无法解析公共ip地址"{0}"! 尝试其他服务或使用默认的... </value>
@@ -2052,10 +2046,10 @@ URL: https://api.github.com/</value>
     <value>不能连接到“{0}”！</value>
   </data>
   <data name="IPv4ProtocolAvailable" xml:space="preserve">
-    <value>IPv4协议可用</value>
+    <value>IPv4 协议可用</value>
   </data>
   <data name="IPv6ProtocolAvailable" xml:space="preserve">
-    <value>IPv6协议可用</value>
+    <value>IPv6 协议可用</value>
   </data>
   <data name="CopyNoun" xml:space="preserve">
     <value>复制</value>
@@ -2175,7 +2169,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>重启</value>
   </data>
   <data name="WarningMessage_CouldNotResolveIPAddressForHostname" xml:space="preserve">
-    <value>Could not resolve ip address for hostname!</value>
+    <value>无法解析主机名的 ip 地址!</value>
   </data>
   <data name="CtrlAltDel" xml:space="preserve">
     <value>Ctrl+Alt+Del</value>
@@ -2217,7 +2211,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>网络变化时显示状态窗口</value>
   </data>
   <data name="TimeInSecondsHowLongTheStatusWindowIsShown" xml:space="preserve">
-    <value>Time in seconds how long the status window is shown</value>
+    <value>状态窗口显示的时间（以秒为单位）</value>
   </data>
   <data name="WiFi" xml:space="preserve">
     <value>WiFi</value>
@@ -2616,43 +2610,43 @@ $$hostname$$	--&gt;	主机名</value>
     <value>Steel</value>
   </data>
   <data name="ProfileName_General" xml:space="preserve">
-    <value>General</value>
+    <value>常规</value>
   </data>
   <data name="SettingsGroup_Application" xml:space="preserve">
-    <value>Applications</value>
+    <value>应用</value>
   </data>
   <data name="SettingsGroup_General" xml:space="preserve">
-    <value>General</value>
+    <value>常规</value>
   </data>
   <data name="SettingsName_Appearance" xml:space="preserve">
-    <value>Appearance</value>
+    <value>外观</value>
   </data>
   <data name="SettingsName_Autostart" xml:space="preserve">
-    <value>Autostart</value>
+    <value>自动启动</value>
   </data>
   <data name="SettingsName_General" xml:space="preserve">
-    <value>General</value>
+    <value>常规</value>
   </data>
   <data name="SettingsName_HotKeys" xml:space="preserve">
-    <value>HotKeys</value>
+    <value>热键</value>
   </data>
   <data name="SettingsName_Language" xml:space="preserve">
-    <value>Language</value>
+    <value>语言</value>
   </data>
   <data name="SettingsName_Profiles" xml:space="preserve">
-    <value>Profiles</value>
+    <value>配置文件</value>
   </data>
   <data name="SettingsName_Settings" xml:space="preserve">
-    <value>Settings</value>
+    <value>设置</value>
   </data>
   <data name="SettingsName_Status" xml:space="preserve">
-    <value>Status</value>
+    <value>状态</value>
   </data>
   <data name="SettingsName_Update" xml:space="preserve">
-    <value>Update</value>
+    <value>更新</value>
   </data>
   <data name="SettingsName_Window" xml:space="preserve">
-    <value>Window</value>
+    <value>窗口</value>
   </data>
   <data name="EnableLog" xml:space="preserve">
     <value>启用日志</value>
@@ -2682,7 +2676,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>SSH 日志</value>
   </data>
   <data name="PuTTYLogMode_SSHRawLog" xml:space="preserve">
-    <value>SSH and Raw log</value>
+    <value>SSH和原始日志</value>
   </data>
   <data name="EnterValidFileName" xml:space="preserve">
     <value>输入一个有效的文件名!</value>
@@ -2733,27 +2727,27 @@ $$hostname$$	--&gt;	主机名</value>
     <value>启动画面</value>
   </data>
   <data name="DownloadMicrosoftEdgeWebView2Runtime" xml:space="preserve">
-    <value>下载微软Edge WebView2 Runtime</value>
+    <value>下载微软 Edge WebView2 Runtime</value>
   </data>
   <data name="MicrosoftEdgeWebView2RuntimeIsNotAvailable" xml:space="preserve">
-    <value>Microsoft Edge WebView2 Runtime不可用!</value>
+    <value>Microsoft Edge WebView2 Runtime 不可用!</value>
   </data>
   <data name="Frequency" xml:space="preserve">
-    <value>頻率</value>
+    <value>频率</value>
   </data>
   <data name="SSID" xml:space="preserve">
     <value>SSID</value>
   </data>
   <data name="ProfileFileCouldNotBeLoaded" xml:space="preserve">
-    <value>Profile file could not be loaded!</value>
+    <value>配置文件无法加载!</value>
   </data>
   <data name="ProfileFileCouldNotBeLoadedMessage" xml:space="preserve">
-    <value>The profile file could not be loaded and may be corrupted. You can try to restore the file from a backup or delete it.
+    <value>配置文件无法加载，可能已损坏。您可以尝试从备份中还原该文件，也可以将其删除。
 
-If this happens unexpectedly or after an update, please report the error on GitHub.
+如果这种情况意外发生或在更新后发生，请在GitHub上报告错误。
 
 
-Error message:
+错误消息：
 "{0}"</value>
   </data>
   <data name="EditGroupDots" xml:space="preserve">
@@ -2784,7 +2778,7 @@ Error message:
     <value>打开配置文件</value>
   </data>
   <data name="UnlockTheProfileFileMessage" xml:space="preserve">
-    <value>Unlock the profile file to use the profiles!</value>
+    <value>解锁配置文件以使用配置文件！</value>
   </data>
   <data name="Disclaimer" xml:space="preserve">
     <value>免责声明</value>
@@ -2805,13 +2799,13 @@ Error message:
     <value>隐藏网络</value>
   </data>
   <data name="DevelopedAndMaintainedByX" xml:space="preserve">
-    <value>Developed and maintained by {0} with the help of the</value>
+    <value>由 {0}在以下机构的帮助下开发和维护</value>
   </data>
   <data name="ExternalService_ipify_Description" xml:space="preserve">
     <value>一个简单的公共IP地址 API</value>
   </data>
   <data name="Library_AirspaceFixer_Description" xml:space="preserve">
-    <value>AirspacePanel修复了所有Airspace与WPF-hosted Winforms的问题。</value>
+    <value>AirspacePanel 修复了所有 Airspace 与 WPF-hosted Winforms 的问题。</value>
   </data>
   <data name="Library_ControlzEx_Description" xml:space="preserve">
     <value>共享控件的WPF和…更多的</value>
@@ -2906,10 +2900,10 @@ Error message:
     <value>请输入合法的IPv6地址!</value>
   </data>
   <data name="HelpMessage_PublicIPv4Address" xml:space="preserve">
-    <value>Public IPv4 address reachable via ICMP.</value>
+    <value>可通过 ICMP 到达的公共 IPv4 地址。</value>
   </data>
   <data name="HelpMessage_PublicIPv6Address" xml:space="preserve">
-    <value>Public IPv6 address reachable via ICMP.</value>
+    <value>可通过 ICMP 到达的公共 IPv6 地址。</value>
   </data>
   <data name="PublicIPv4Address" xml:space="preserve">
     <value>公共 IPv4 地址</value>
@@ -2918,7 +2912,7 @@ Error message:
     <value>公共 IPv6 地址</value>
   </data>
   <data name="UseCustomIPv6AddressAPI" xml:space="preserve">
-    <value>使用自定义IPv6地址API</value>
+    <value>使用自定义 IPv6 地址 API</value>
   </data>
   <data name="TimeToLive" xml:space="preserve">
     <value>存活时间</value>
@@ -2936,13 +2930,13 @@ Error message:
     <value>端口描述</value>
   </data>
   <data name="RemoveIPv4Address" xml:space="preserve">
-    <value>删除IPv4地址</value>
+    <value>删除 IPv4 地址</value>
   </data>
   <data name="AdditionalConfigDots" xml:space="preserve">
     <value>额外的配置</value>
   </data>
   <data name="RemoveIPv4AddressDots" xml:space="preserve">
-    <value>删除IPv4地址</value>
+    <value>删除 IPv4 地址</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached" xml:space="preserve">
     <value>远程会话已结束，因为已达到总登录时间限制。此限制由服务器管理员或网络策略设置。</value>
@@ -2957,208 +2951,208 @@ Error message:
     <value>无法重新连接远程会话。</value>
   </data>
   <data name="Migrate" xml:space="preserve">
-    <value>Migrate</value>
+    <value>迁移</value>
   </data>
   <data name="ReportOnGitHub" xml:space="preserve">
-    <value>Report on GitHub</value>
+    <value>在 GitHub 上提交报告</value>
   </data>
   <data name="Groups" xml:space="preserve">
-    <value>Groups</value>
+    <value>组</value>
   </data>
   <data name="AddGroup" xml:space="preserve">
-    <value>Add group</value>
+    <value>添加组</value>
   </data>
   <data name="DeleteGroup" xml:space="preserve">
-    <value>Delete group</value>
+    <value>删除组</value>
   </data>
   <data name="DeleteGroupMessage" xml:space="preserve">
-    <value>Selected group and all profiles inside this group will be deleted permanently.</value>
+    <value>所选组和组内所有配置文件将被永久删除。</value>
   </data>
   <data name="ErrorMessage_NameIsAlreadyUsed" xml:space="preserve">
-    <value>The name is already used!</value>
+    <value>该名称已被使用！</value>
   </data>
   <data name="Resize" xml:space="preserve">
     <value>Resize</value>
   </data>
   <data name="DeleteProfiles" xml:space="preserve">
-    <value>Delete profiles</value>
+    <value>删除配置文件</value>
   </data>
   <data name="DeleteProfilesMessage" xml:space="preserve">
-    <value>Selected profiles will be deleted permanently.</value>
+    <value>所选配置文件将永久删除。</value>
   </data>
   <data name="UseCustomThemes" xml:space="preserve">
-    <value>Use custom themes</value>
+    <value>使用自定义主题</value>
   </data>
   <data name="CustomThemes" xml:space="preserve">
-    <value>Custom themes</value>
+    <value>自定义主题</value>
   </data>
   <data name="ResetSettingsQuestion" xml:space="preserve">
-    <value>Reset settings?</value>
+    <value>重置设置？</value>
   </data>
   <data name="SettingsResetExclamationMark" xml:space="preserve">
-    <value>Settings reset!</value>
+    <value>设置已重置！</value>
   </data>
   <data name="ApplicationName_AWSSessionManager" xml:space="preserve">
-    <value>AWS Session Manager</value>
+    <value>AWS 会话管理器</value>
   </data>
   <data name="InstanceId" xml:space="preserve">
-    <value>Instance ID</value>
+    <value>实例 ID</value>
   </data>
   <data name="LocalConnection" xml:space="preserve">
-    <value>Local connection</value>
+    <value>本地连接</value>
   </data>
   <data name="LocalInterface" xml:space="preserve">
-    <value>Local interface</value>
+    <value>本地接口</value>
   </data>
   <data name="Library_log4net_Description" xml:space="preserve">
-    <value>log4net is a tool to help the programmer output log statements to a variety of output targets.</value>
+    <value>log4net 是一款帮助程序员向各种输出目标输出日志语句的工具。</value>
   </data>
   <data name="AWSSessionManager" xml:space="preserve">
-    <value>AWS Session Manager</value>
+    <value>AWS 会话管理器</value>
   </data>
   <data name="Enabled" xml:space="preserve">
-    <value>Enabled</value>
+    <value>启用</value>
   </data>
   <data name="Region" xml:space="preserve">
-    <value>Region</value>
+    <value>区域</value>
   </data>
   <data name="SyncEC2InstancesFromAWS" xml:space="preserve">
-    <value>Synchronize EC2 instances from AWS</value>
+    <value>从 AWS 同步 EC2 实例</value>
   </data>
   <data name="AddAWSProfile" xml:space="preserve">
-    <value>Add AWS profile</value>
+    <value>添加 AWS 配置文件</value>
   </data>
   <data name="DeleteAWSProfile" xml:space="preserve">
-    <value>Delete AWS profile</value>
+    <value>删除 AWS 配置文件</value>
   </data>
   <data name="DeleteAWSProfileMessage" xml:space="preserve">
-    <value>The selected AWS profile is permanently deleted.
+    <value>所选 AWS 配置文件将被永久删除。
 
-The profile is not removed from the ~\.aws\credentials file.</value>
+配置文件不会从 ~\.aws\credentials 文件中删除。</value>
   </data>
   <data name="EditAWSProfile" xml:space="preserve">
-    <value>Edit AWS profile</value>
+    <value>编辑 AWS 配置文件</value>
   </data>
   <data name="SyncAllEC2InstancesFromAWS" xml:space="preserve">
-    <value>Synchronize all EC2 instances from AWS</value>
+    <value>从 AWS 同步所有 EC2 实例</value>
   </data>
   <data name="SyncGroupEC2InstancesFromAWS" xml:space="preserve">
-    <value>Synchronize group EC2 instances from AWS</value>
+    <value>从 AWS 同步 EC2 实例组</value>
   </data>
   <data name="ProfilesAndRegionsToSync" xml:space="preserve">
-    <value>Profiles and regions to synchronize</value>
+    <value>要同步的配置文件和区域</value>
   </data>
   <data name="HelpMessage_AWSSessionManagerProfilesAndRegionsToSync" xml:space="preserve">
-    <value>To synchronize EC2 instances from AWS, the AWS CLI must be configured on the system. The EC2 instances can be queried for multiple AWS accounts (profiles) and multiple regions. To do this, the profile stored in the file "~/.aws/credentials" must be configured along with the region to query.</value>
+    <value>要从 AWS 同步 EC2 实例，必须在系统上配置 AWS CLI。EC2 实例可通过多个 AWS 账户（配置文件）和多个区域进行查询。为此，必须配置存储在"~/.aws/credentials "文件中的配置文件以及要查询的区域。</value>
   </data>
   <data name="Library_AWSSDKdotEC2_Description" xml:space="preserve">
-    <value>AWS SDK for .NET to work with Amazon Elastic Compute Cloud (Amazon EC2) in Amazon Web Services (AWS).</value>
+    <value>AWS SDK for .NET 可与亚马逊网络服务（AWS）中的亚马逊弹性计算云（Amazon EC2）协同工作。</value>
   </data>
   <data name="DefaultProfile" xml:space="preserve">
-    <value>Default profile</value>
+    <value>默认配置文件</value>
   </data>
   <data name="DefaultRegion" xml:space="preserve">
-    <value>Default region</value>
+    <value>默认区域</value>
   </data>
   <data name="HelpMessage_AWSSessionManagerProfile" xml:space="preserve">
-    <value>Profile which is used by manually created profiles to connect to an EC2 instance via AWS CLI.
+    <value>手动创建用于通过 AWS CLI 连接 EC2 实例的配置文件。
 
-If not set, the default AWS CLI settings are used.</value>
+如果未设置，则使用默认的 AWS CLI 设置。</value>
   </data>
   <data name="HelpMessage_AWSSessionManagerRegion" xml:space="preserve">
-    <value>Region which is used by manually created profiles to connect to an EC2 instance via AWS CLI .
+    <value>手动创建的配置文件用于通过AWS CLI连接到EC2实例的区域。
 
-If not set, the default AWS CLI settings are used.</value>
+如果未设置，则使用默认的AWS CLI设置。</value>
   </data>
   <data name="HelpMessage_AWSCLIDefaultsAreUsedIfNotSet" xml:space="preserve">
-    <value>If not set, the default AWS CLI settings are used.</value>
+    <value>如果未设置，则使用默认的AWS CLI设置。</value>
   </data>
   <data name="GroupNameCannotStartWithX" xml:space="preserve">
-    <value>Group name cannot start with "{0}"!</value>
+    <value>组名不能以“{0}”开头！</value>
   </data>
   <data name="SyncOnlyRunningEC2InstancesFromAWS" xml:space="preserve">
-    <value>Synchronize only running EC2 instances from AWS</value>
+    <value>只同步 AWS 正在运行的 EC2 实例</value>
   </data>
   <data name="AnAWSRegionNamedXDoesNotExist" xml:space="preserve">
-    <value>An AWS region named "{0}" does not exist!</value>
+    <value>名为"{0}"的 AWS 区域不存在！</value>
   </data>
   <data name="AWSCLIv2IsInstalled" xml:space="preserve">
-    <value>AWS CLI v2 is installed!</value>
+    <value>已安装 AWS CLI v2！</value>
   </data>
   <data name="AWSCLIv2IsNotInstalled" xml:space="preserve">
-    <value>AWS CLI v2 is not installed!</value>
+    <value>未安装 AWS CLI v2！</value>
   </data>
   <data name="AWSSessionManagerPluginIsInstalled" xml:space="preserve">
-    <value>AWS Session Manager Plugin is installed!</value>
+    <value>已安装 AWS 会话管理器插件！</value>
   </data>
   <data name="AWSSessionManagerPluginIsNotInstalled" xml:space="preserve">
-    <value>AWS Session Manager Plugin is not installed!</value>
+    <value>未安装 AWS 会话管理器插件！</value>
   </data>
   <data name="CheckForPreReleases" xml:space="preserve">
-    <value>Check for pre-releases</value>
+    <value>检查预发布版本</value>
   </data>
   <data name="SyncIsDisabled" xml:space="preserve">
-    <value>Synchronization is disabled!</value>
+    <value>同步已禁用！</value>
   </data>
   <data name="Command" xml:space="preserve">
-    <value>Command</value>
+    <value>命令</value>
   </data>
   <data name="ApplyThemeToPowerShellConsole" xml:space="preserve">
-    <value>Apply theme to PowerShell console</value>
+    <value>将主题应用到 PowerShell 控制台</value>
   </data>
   <data name="PowerShellConsoleColorCanBeChangedUnderSettingsGeneralApperance" xml:space="preserve">
-    <value>The color of the PowerShell console can be changed to the application theme under Settings &gt; General &gt; Appearance</value>
+    <value>PowerShell控制台的颜色可以更改为“设置”&gt;“常规”&gt;“外观”下的应用程序主题</value>
   </data>
   <data name="HelpMessage_ApplyThemeToPowerShellConsole" xml:space="preserve">
-    <value>If you enable this option, the default PowerShell console settings in the registry under HKCU:\Console are overridden so that the PowerShell console window matches the application theme. This is a global system setting that may affect the appearance of the normal PowerShell window.
+    <value>如果启用此选项，注册表 HKCU:\Console 下的 PowerShell 控制台默认设置将被覆盖，以便 PowerShell 控制台窗口与应用程序主题相匹配。这是一个全局系统设置，可能会影响正常 PowerShell 窗口的外观。
 
-Only the PowerShell consoles configured in the PowerShell and AWS Session Manager settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
+只有在 PowerShell 和 AWS 会话管理器设置中配置的 PowerShell 控制台才会被修改。支持 Windows PowerShell 和 PWSH（PowerShell 7 及更高版本）。
 
-Click in the upper right corner on the help / documentation button (left of the minimize button) or navigate to https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance for more details. Here are the values documented which will be adjusted.
+单击右上角的帮助/文档按钮（最小化按钮左侧）或导航至 https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance 获取更多详细信息。这里记录了将被调整的值。
 
-If the option is disabled again, the values are no longer modified. However, the original values are NOT restored.</value>
+如果再次禁用该选项，这些值将不再被修改。但不会恢复原始值。</value>
   </data>
   <data name="InputCannotEndWithSemicolon" xml:space="preserve">
-    <value>Input cannot end with a ";"!</value>
+    <value>输入不能以"; "结束！</value>
   </data>
   <data name="InputDoesNotContainAnyText" xml:space="preserve">
-    <value>Input does not contain any text!</value>
+    <value>输入不包含任何文本！</value>
   </data>
   <data name="ApplicationName_BitCalculator" xml:space="preserve">
-    <value>Bit Calculator</value>
+    <value>位计算器</value>
   </data>
   <data name="BitCalculator" xml:space="preserve">
-    <value>Bit Calculator</value>
+    <value>位计算器</value>
   </data>
   <data name="Notation" xml:space="preserve">
-    <value>Notation</value>
+    <value>符号</value>
   </data>
   <data name="Input" xml:space="preserve">
-    <value>Input</value>
+    <value>输入</value>
   </data>
   <data name="Unit" xml:space="preserve">
-    <value>Unit</value>
+    <value>单位</value>
   </data>
   <data name="Bits" xml:space="preserve">
-    <value>Bits</value>
+    <value>位</value>
   </data>
   <data name="Gigabits" xml:space="preserve">
-    <value>Gigabits</value>
+    <value>千兆位</value>
   </data>
   <data name="Gigabytes" xml:space="preserve">
-    <value>Gigabytes</value>
+    <value>千兆字节</value>
   </data>
   <data name="Kilobits" xml:space="preserve">
-    <value>Kilobits</value>
+    <value>千位</value>
   </data>
   <data name="Kilobytes" xml:space="preserve">
-    <value>Kilobytes</value>
+    <value>千字节</value>
   </data>
   <data name="Megabits" xml:space="preserve">
-    <value>Megabits</value>
+    <value>兆位</value>
   </data>
   <data name="Megabytes" xml:space="preserve">
-    <value>Megabytes</value>
+    <value>兆字节</value>
   </data>
   <data name="Petabits" xml:space="preserve">
     <value>Petabits</value>
@@ -3173,211 +3167,211 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>Terabytes</value>
   </data>
   <data name="EnterANumberAndSelectAUnitToCalculateTheUnitsDots" xml:space="preserve">
-    <value>Enter a number and select a unit to calculate the units...</value>
+    <value>输入数字并选择单位以计算单位...</value>
   </data>
   <data name="SettingsName_Network" xml:space="preserve">
-    <value>Network</value>
+    <value>网络</value>
   </data>
   <data name="Proxy" xml:space="preserve">
-    <value>Proxy</value>
+    <value>代理</value>
   </data>
   <data name="ResolveIPAddressForThisHost" xml:space="preserve">
-    <value>Resolve IP address for this host (IPv4 is preferred)</value>
+    <value>解析该主机的 IP 地址（首选 IPv4）</value>
   </data>
   <data name="NoValidPowerShellPath" xml:space="preserve">
-    <value>A valid path to PowerShell should end with "pwsh.exe" or "powershell.exe"!</value>
+    <value>PowerShell 的有效路径应以 "pwsh.exe "或 "powershell.exe "结尾！</value>
   </data>
   <data name="NoValidPuTTYPath" xml:space="preserve">
-    <value>A valid path to PuTTY should end with "PuTTY.exe"!</value>
+    <value>PuTTY 的有效路径应以 "PuTTY.exe "结尾！</value>
   </data>
   <data name="NoValidTigerVNCPath" xml:space="preserve">
-    <value>A valid path to TigerVNC should end with "vncviewer-*.exe" or "vncviewer64-*.exe"!</value>
+    <value>TigerVNC 的有效路径应以 "vncviewer-*.exe "或 "vncviewer64-*.exe "结尾！</value>
   </data>
   <data name="ApplicationName_SNTPLookup" xml:space="preserve">
-    <value>SNTP Lookup</value>
+    <value>SNTP 查询</value>
   </data>
   <data name="Library_nulastudioNetBeauty_Description" xml:space="preserve">
-    <value>Move a .NET Framework/.NET Core app runtime components and dependencies into a sub-directory and make it beauty.</value>
+    <value>将 .NET Framework/.NET Core 应用程序运行时组件和依赖项移至子目录，并使其美观。</value>
   </data>
   <data name="AddATabToPerformASNTPLookup" xml:space="preserve">
-    <value>Add a tab to perform a SNTP lookup...</value>
+    <value>添加执行 SNTP 查询的选项卡...</value>
   </data>
   <data name="SNTPServers" xml:space="preserve">
-    <value>SNTP server(s)</value>
+    <value>SNTP 服务器</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv6AddressAPI" xml:space="preserve">
-    <value>URL to a web service that can be reached via http or https and returns an IPv6 address like "xxxx:xx:xxx::xx" as response.</value>
+    <value>可通过 http 或 https 访问的网络服务的 URL，并返回一个 IPv6 地址（如 "xxxx:xx:xxx::xx"）作为响应。</value>
   </data>
   <data name="IPEndPoint" xml:space="preserve">
-    <value>IP endpoint</value>
+    <value>IP 端点</value>
   </data>
   <data name="LocalEndTime" xml:space="preserve">
-    <value>Local end time</value>
+    <value>本地结束时间</value>
   </data>
   <data name="LocalStartTime" xml:space="preserve">
-    <value>Local start time</value>
+    <value>本地开始时间</value>
   </data>
   <data name="NetworkTime" xml:space="preserve">
-    <value>Network time</value>
+    <value>网络时间</value>
   </data>
   <data name="Offset" xml:space="preserve">
-    <value>Offset</value>
+    <value>偏移</value>
   </data>
   <data name="RoundTripDelay" xml:space="preserve">
-    <value>Round trip delay</value>
+    <value>往返延迟</value>
   </data>
   <data name="Server" xml:space="preserve">
-    <value>Server</value>
+    <value>服务器</value>
   </data>
   <data name="SNTPLookup" xml:space="preserve">
-    <value>SNTP Lookup</value>
+    <value>SNTP 查询</value>
   </data>
   <data name="AddSNTPServer" xml:space="preserve">
-    <value>Add SNTP server</value>
+    <value>添加 SNTP 服务器</value>
   </data>
   <data name="DeleteSNTPServer" xml:space="preserve">
-    <value>Delete SNTP server</value>
+    <value>删除 SNTP 服务器</value>
   </data>
   <data name="DeleteSNTPServerMessage" xml:space="preserve">
-    <value>The selected SNTP server will be deleted permanently.</value>
+    <value>选中的 SNTP  服务器将被永久删除。</value>
   </data>
   <data name="EditSNTPServer" xml:space="preserve">
-    <value>Edit SNTP server</value>
+    <value>编辑 SNTP 服务器</value>
   </data>
   <data name="SNTPServerWithThisNameAlreadyExists" xml:space="preserve">
-    <value>An SNTP server with this name already exists!</value>
+    <value>已经存在此名称的 SNTP 服务器!</value>
   </data>
   <data name="EnterValidHostnameOrIPAddress" xml:space="preserve">
-    <value>Enter a valid hostname (like "server-01" or "example.com") or a valid IP address (like 192.168.178.1)!</value>
+    <value>输入一个有效的主机名(如“server-01”或“example.com”)或一个有效的IP地址(如192.168.178.1)!</value>
   </data>
   <data name="Servers" xml:space="preserve">
-    <value>Server(s)</value>
+    <value>服务器</value>
   </data>
   <data name="EnterMasterPasswordToUnlockProfile" xml:space="preserve">
-    <value>Enter master password to unlock the profile file:</value>
+    <value>输入主密码解锁配置文件:</value>
   </data>
   <data name="UnlockProfileFile" xml:space="preserve">
-    <value>Unlock profile file</value>
+    <value>解锁配置文件</value>
   </data>
   <data name="PortState_TimedOut" xml:space="preserve">
-    <value>Timed out</value>
+    <value>超时</value>
   </data>
   <data name="Hostkey" xml:space="preserve">
     <value>Hostkey</value>
   </data>
   <data name="SettingsAreResetAndApplicationWillBeRestartedMessage" xml:space="preserve">
-    <value>The settings will be reset and the application will be restarted afterwards!</value>
+    <value>设置将被重置，然后应用程序将重新启动！</value>
   </data>
   <data name="SettingsHaveBeenReset" xml:space="preserve">
     <value>设置将被重置！</value>
   </data>
   <data name="PingStatus" xml:space="preserve">
-    <value>Ping status</value>
+    <value>Ping 状态</value>
   </data>
   <data name="ThreadPoolAdditionalMinThreads" xml:space="preserve">
-    <value>ThreadPool additional min. threads</value>
+    <value>线程池额外的最小线程数</value>
   </data>
   <data name="HelpMessage_ThreadPoolAdditionalMinThreads" xml:space="preserve">
-    <value>This setting specifies the minimum number of threads that will be created from the application's ThreadPool on demand. This can improve the performance for example of the IP scanner or port scanner.
-	
-The value is added to the default min. threads (number of CPU threads). The value 0 leaves the default settings. If the value is higher than the default max. threads of the ThreadPool, this value is used.
+    <value>该设置指定了根据需要从应用程序的线程池中创建的线程的最小数量。例如，这可以提高 IP 扫描仪或端口扫描程序的性能。
 
-If the value is too high, performance problems may occur.
+该值与默认的最小线程数（CPU 线程数）相加。值 0 则保留默认设置。如果该值高于 ThreadPool 的默认最大线程数，则使用该值。
 
-Changes to this value will take effect after the application is restarted. Whether the value was set successfully can be seen in the log file under %LocalAppData%\NETworkManager\NETworkManager.log</value>
+如果该值过高，可能会出现性能问题。
+
+对该值的更改将在重启应用程序后生效。该值是否设置成功，可在 %LocalAppData%\NETworkManager\NETworkManager.log 下的日志文件中查看。</value>
   </data>
   <data name="MaxThreadsOnlyGoToSettingsGeneralGeneral" xml:space="preserve">
-    <value>These settings only change the maximum number of concurrently executed threads per host/port scan. Go to Settings &gt; General &gt; General to adjust the (min) threads of the application.</value>
+    <value>这些设置只更改每个主机/端口扫描并发执行线程的最大数量。转到设置 &gt; 常规 &gt; 常规调整应用程序的（最小）线程数。</value>
   </data>
   <data name="PortStatus" xml:space="preserve">
-    <value>Port status</value>
+    <value>端口状态</value>
   </data>
   <data name="PingDetails" xml:space="preserve">
-    <value>Ping details</value>
+    <value>Ping 详细信息</value>
   </data>
   <data name="NoOpenPortsFound" xml:space="preserve">
-    <value>No open ports found!</value>
+    <value>找不到打开的端口！</value>
   </data>
   <data name="PortScanIsDisabled" xml:space="preserve">
-    <value>Port scan is disabled!</value>
+    <value>端口扫描被禁用！</value>
   </data>
   <data name="ScanPorts" xml:space="preserve">
-    <value>Scan ports</value>
+    <value>扫描端口</value>
   </data>
   <data name="CouldNotFindApplicationXXXMessage" xml:space="preserve">
-    <value>Could not find the application "{0}". Maybe the application was hidden in the settings?</value>
+    <value>找不到应用程序"{0}"。也许应用程序在设置中被隐藏了？</value>
   </data>
   <data name="StatusWindow" xml:space="preserve">
-    <value>Status window</value>
+    <value>状态窗口</value>
   </data>
   <data name="ShowAddressBar" xml:space="preserve">
-    <value>Show address bar</value>
+    <value>显示地址栏</value>
   </data>
   <data name="WarnMessage_MultipleInstances" xml:space="preserve">
-    <value>Enabling this setting is not recommended. Multiple instances of the application share the same settings and profile files. The last instance to be closed may overwrite changes made by other instances.</value>
+    <value>不建议启用此设置。应用程序的多个实例共享相同的设置和配置文件。最后关闭的实例可能会覆盖其他实例所做的更改。</value>
   </data>
   <data name="BypassForLocalAddresses" xml:space="preserve">
-    <value>Bypass for local addresses</value>
+    <value>绕过本地地址</value>
   </data>
   <data name="EnableGatewayServer" xml:space="preserve">
-    <value>Enable gateway server</value>
+    <value>启用网关服务器</value>
   </data>
   <data name="LogonMethod" xml:space="preserve">
-    <value>Logon method</value>
+    <value>登录方法</value>
   </data>
   <data name="GatewayServer" xml:space="preserve">
-    <value>Gateway server</value>
+    <value>网关服务器</value>
   </data>
   <data name="ServerName" xml:space="preserve">
-    <value>Server name</value>
+    <value>服务器名称</value>
   </data>
   <data name="ShareGatewayCredentialsWithRemoteComputer" xml:space="preserve">
-    <value>Share Gateway credentials with remote computer</value>
+    <value>与远程计算机共享网关凭据</value>
   </data>
   <data name="RemoteDesktopGatewayServerLogonMethod_Any" xml:space="preserve">
-    <value>Allow me to select later</value>
+    <value>请允许我稍后选择</value>
   </data>
   <data name="RemoteDesktopGatewayServerLogonMethod_Smartcard" xml:space="preserve">
-    <value>Smart card or Windows Hello for Business</value>
+    <value>智能卡或 Windows Hello 商业版</value>
   </data>
   <data name="RemoteDesktopGatewayServerLogonMethod_Userpass" xml:space="preserve">
-    <value>Ask for password (NTLM)</value>
+    <value>询问密码（NTLM）</value>
   </data>
   <data name="UseGatewayCredentials" xml:space="preserve">
-    <value>Use gateway credentials</value>
+    <value>使用网关凭据</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331661" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server is temporarily unavailable. Try reconnecting later or contact your network administrator for assistance.</value>
+    <value>由于 Remote Desktop Gateway 服务器暂时不可用，您的计算机无法连接到远程计算机。请稍后再尝试重新连接，或联系网络管理员寻求帮助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331651" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer due to one of the following reasons:  1) The requested Remote Desktop Gateway server address and the server SSL certificate subject name do not match. 2) The certificate is expired or revoked. 3) The certificate root authority does not trust the certificate.  Contact your network administrator for assistance.</value>
+    <value>由于以下原因之一，您的计算机无法连接到远程计算机： 1) 请求的 Remote Desktop Gateway 服务器地址和服务器 SSL 证书主题名不匹配。2) 证书已过期或被撤销。3) 证书根授权机构不信任该证书。 请联系网络管理员寻求帮助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331653" xml:space="preserve">
-    <value>This computer can't verify the identity of the RD Gateway "". It's not safe to connect to servers that can't be identified. Contact your network administrator for assistance.</value>
+    <value>此计算机无法验证 RD Gateway "" 的身份。连接到无法识别的服务器是不安全的。请联系网络管理员寻求帮助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331654" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server address requested and the certificate subject name do not match. Contact your network administrator for assistance.</value>
+    <value>由于请求的 Remote Desktop Gateway 服务器地址和证书主题名不匹配，您的计算机无法连接到远程计算机。请联系网络管理员寻求帮助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331655" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server's certificate has expired or has been revoked. Contact your network administrator for assistance.</value>
+    <value>由于 Remote Desktop Gateway 服务器的证书已过期或被撤销，您的计算机无法连接到远程计算机。请联系网络管理员寻求帮助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331657" xml:space="preserve">
-    <value>An error occurred while sending data to the Remote Desktop Gateway server. The server is temporarily unavailable or a network connection is down. Try again later, or contact your network administrator for assistance.</value>
+    <value>向 Remote Desktop Gateway 服务器发送数据时发生错误。服务器暂时不可用或网络连接中断。请稍后再试，或联系网络管理员寻求帮助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331658" xml:space="preserve">
-    <value>An error occurred while receiving data from the Remote Desktop Gateway server. Either the server is temporarily unavailable or a network connection is down. Try again later, or contact your network administrator for assistance.</value>
+    <value>从 Remote Desktop Gateway 服务器接收数据时发生错误。要么是服务器暂时不可用，要么是网络连接出现故障。请稍后再试，或联系网络管理员寻求帮助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331660" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server address is unreachable or incorrect. Type a valid Remote Desktop Gateway server address.</value>
+    <value>由于 Remote Desktop Gateway 服务器地址不可达或不正确，您的计算机无法连接到远程计算机。输入有效的 Remote Desktop Gateway 服务器地址。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331663" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server is running low on server resources and is temporarily unavailable. Try reconnecting later or contact your network administrator for assistance.</value>
+    <value>您的计算机无法连接到远程计算机，因为 Remote Desktop Gateway 服务器资源不足，暂时无法使用。请稍后再尝试重新连接，或联系网络管理员寻求帮助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331672" xml:space="preserve">
-    <value>The Remote Desktop Gateway server has ended the connection. Try reconnecting later or contact your network administrator for assistance.</value>
+    <value>Remote Desktop Gateway 服务器已结束连接。请稍后再尝试重新连接，或联系网络管理员寻求帮助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331673" xml:space="preserve">
-    <value>The Remote Desktop Gateway server administrator has ended the connection. Try reconnecting later or contact your network administrator for assistance.</value>
+    <value>Remote Desktop Gateway 服务器管理员已结束连接。请稍后再尝试重新连接，或联系网络管理员寻求帮助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331675" xml:space="preserve">
     <value>Remote Desktop can't connect to the remote computer "" for one of these reasons:  1) Your user account is not listed in the RD Gateway's permission list 2) You might have specified the remote computer in NetBIOS format (for example, computer1), but the RD Gateway is expecting an FQDN or IP address format (for example, computer1.fabrikam.com or 157.60.0.1).  Contact your network administrator for assistance.</value>
@@ -3557,67 +3551,67 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>AS Name</value>
   </data>
   <data name="City" xml:space="preserve">
-    <value>City</value>
+    <value>城市</value>
   </data>
   <data name="Continent" xml:space="preserve">
-    <value>Continent</value>
+    <value>洲</value>
   </data>
   <data name="Country" xml:space="preserve">
-    <value>Country</value>
+    <value>国家</value>
   </data>
   <data name="Currency" xml:space="preserve">
-    <value>Currency</value>
+    <value>货币</value>
   </data>
   <data name="District" xml:space="preserve">
-    <value>District</value>
+    <value>地区</value>
   </data>
   <data name="DNSResolver" xml:space="preserve">
-    <value>DNS resolver</value>
+    <value>DNS 解析器</value>
   </data>
   <data name="EDNS" xml:space="preserve">
     <value>EDNS</value>
   </data>
   <data name="Geolocation" xml:space="preserve">
-    <value>Geolocation</value>
+    <value>地理位置</value>
   </data>
   <data name="Hosting" xml:space="preserve">
     <value>Hosting</value>
   </data>
   <data name="IPGeolocation" xml:space="preserve">
-    <value>IP geolocation</value>
+    <value>IP 地理定位</value>
   </data>
   <data name="ISP" xml:space="preserve">
     <value>ISP</value>
   </data>
   <data name="Latitude" xml:space="preserve">
-    <value>Latitude</value>
+    <value>纬度</value>
   </data>
   <data name="Longitude" xml:space="preserve">
-    <value>Longitude</value>
+    <value>经度</value>
   </data>
   <data name="Mobile" xml:space="preserve">
     <value>Mobile</value>
   </data>
   <data name="Organization" xml:space="preserve">
-    <value>Organization</value>
+    <value>组织</value>
   </data>
   <data name="PTRRecord" xml:space="preserve">
-    <value>PTR record</value>
+    <value>PTR 记录</value>
   </data>
   <data name="Timezone" xml:space="preserve">
-    <value>Timezone</value>
+    <value>时区</value>
   </data>
   <data name="ZipCode" xml:space="preserve">
     <value>Zip</value>
   </data>
   <data name="ExternalService_ip_api_Description" xml:space="preserve">
-    <value>IP Geolocation API - Fast, accurate, reliable</value>
+    <value>IP 地理定位 API - 快速、准确、可靠</value>
   </data>
   <data name="CheckDNSResolver" xml:space="preserve">
-    <value>Check DNS resolver</value>
+    <value>检查 DNS 解析器</value>
   </data>
   <data name="CheckIPGeolocation" xml:space="preserve">
-    <value>Check IP geolocation</value>
+    <value>检查 IP 地理定位</value>
   </data>
   <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
     <value>The DNS resolver is determined via ip-api.com.
@@ -3655,7 +3649,7 @@ Try again in a few seconds.</value>
     <value>Rate limit reached! Try again in {0} seconds...</value>
   </data>
   <data name="ProfileGroup_General" xml:space="preserve">
-    <value>General</value>
+    <value>常规</value>
   </data>
   <data name="BSSID" xml:space="preserve">
     <value>BSSID</value>
@@ -3787,16 +3781,16 @@ Try again in a few seconds.</value>
     <value>Computer name</value>
   </data>
   <data name="ConnectionState_Error" xml:space="preserve">
-    <value>Error</value>
+    <value>错误</value>
   </data>
   <data name="ConnectionState_OK" xml:space="preserve">
-    <value>OK</value>
+    <value>确定</value>
   </data>
   <data name="ConnectionState_Warning" xml:space="preserve">
-    <value>Warning</value>
+    <value>警告</value>
   </data>
   <data name="GroupDomainName" xml:space="preserve">
-    <value>Group / domain name</value>
+    <value>工作组/域名称</value>
   </data>
   <data name="NetBIOSReachable" xml:space="preserve">
     <value>NetBIOS reachable</value>
@@ -3812,5 +3806,11 @@ Try again in a few seconds.</value>
   </data>
   <data name="ResolveMACAddressIsDisabled" xml:space="preserve">
     <value>Resolve MAC address is disabled!</value>
+  </data>
+  <data name="CloseGroup" xml:space="preserve">
+    <value>Close group</value>
+  </data>
+  <data name="ToolTip_RunCommandWithHotKey" xml:space="preserve">
+    <value>Run command... (Ctrl+Shift+P)</value>
   </data>
 </root>
