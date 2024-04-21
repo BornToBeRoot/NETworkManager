@@ -225,8 +225,10 @@ export default function Home() {
   const images2 = [
     {
       original: ImageGalleryDragDrop,
-      originalAlt: "Tabs, Drag & Drop, and more...",
-      description: "Tabs, Drag & Drop, and more...",
+      thumbnail: ImageGalleryDragDrop,
+      originalAlt: "Tabs, drag & drop",
+      description: "Tabs, drag & drop",
+      thumbnailAlt: "Tabs, drag & drop",
     },
   ];
 
@@ -276,13 +278,13 @@ export default function Home() {
           </Heading>
           <div className="gallery-container2">
             <ImageGallery
-              autoPlay="false"
+              autoPlay="true"              
               items={images2}
               additionalClass={styles.image}
             />
           </div>
           <Heading as="h2" className="margin-top--xl">
-            ...and (encrypted) profiles.
+            ...and (encrypted) profiles...
           </Heading>
           <div className="gallery-container3">
             <ImageGallery
