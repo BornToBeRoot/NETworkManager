@@ -3811,4 +3811,7 @@ Versuchen Sie es in einigen Sekunden erneut.</value>
   <data name="CloseGroup" xml:space="preserve">
     <value>Gruppe schließen</value>
   </data>
+  <data name="ToolTip_RunCommandWithHotKey" xml:space="preserve">
+    <value>Befehl ausführen... (Strg+Shift+P)</value>
+  </data>
 </root>
