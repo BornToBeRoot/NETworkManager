@@ -38,6 +38,11 @@ build_script:
 
 after_build:
   - ps: |
+      if($env:APPVEYOR_REPO_TAG -eq $false) {
+        Write-Host "Release build is skipped because no tag was found!"
+        return
+      }
+
       # Copy build
       New-Item -Path ".\Build\NETworkManager" -ItemType Directory -Force
       Copy-Item -Path ".\Source\NETworkManager\bin\Release\net8.0-windows10.0.17763.0\win-x64\*" -Destination ".\Build\NETworkManager" -Recurse -Force
