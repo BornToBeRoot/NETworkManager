@@ -1,7 +1,7 @@
 image: Visual Studio 2022
-branches:
-  only:
-    - main
+#branches:
+#  only:
+#    - main
 configuration: Release
 platform: x64
 install:
