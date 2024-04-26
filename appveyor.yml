@@ -10,8 +10,8 @@ before_build:
   - dotnet restore .\Source\NETworkManager.sln
   - ps: >-
       # Update the version based on the current date (e.g. 2024.4.27.0)
-      $Date = Get-Date
-      $VersionString = "$($Date.Year).$($Date.Month).$($Date.Day).0"
+      $Date = Get-Date;
+      $VersionString = "$($Date.Year).$($Date.Month).$($Date.Day).0";
 
       # Update assembly version
       $PatternVersion = '\[assembly: AssemblyVersion\("(.*)"\)\]'
@@ -19,19 +19,19 @@ before_build:
 
       $AssemblyFile = "$PSScriptRoot\Source\GlobalAssemblyInfo.cs"
 
-      $AssemlbyContent = Get-Content -Path "$AssemblyFile" -Encoding utf8
-      $AssemlbyContent = $AssemlbyContent -replace $PatternVersion, "[assembly: AssemblyVersion(""$($VersionString)"")]"
-      $AssemlbyContent = $AssemlbyContent -replace $PatternFileVersion, "[assembly: AssemblyFileVersion(""$($VersionString)"")]"
-      $AssemlbyContent | Set-Content -Path "$AssemblyFile" -Encoding utf8
+      $AssemlbyContent = Get-Content -Path $AssemblyFile -Encoding utf8;
+      $AssemlbyContent = $AssemlbyContent -replace $PatternVersion, "[assembly: AssemblyVersion(""$($VersionString)"")]";
+      $AssemlbyContent = $AssemlbyContent -replace $PatternFileVersion, "[assembly: AssemblyFileVersion(""$($VersionString)"")]";
+      $AssemlbyContent | Set-Content -Path $AssemblyFile -Encoding utf8;
       
       # Update inno setup version
-      $PatternSetupVersion = '#define MyAppVersion "(.*)"'
+      $PatternSetupVersion = '#define MyAppVersion "(.*)"';
 
-      $InnoSetupFile = "$PSScriptRoot\InnoSetup.iss"
+      $InnoSetupFile = "$PSScriptRoot\InnoSetup.iss";
 
-      $SetupContent = Get-Content -Path "$InnoSetupFile" -Encoding utf8
-      $SetupContent = $SetupContent -replace $PatternSetupVersion, "#define MyAppVersion ""$($VersionString)"""
-      $SetupContent | Set-Content -Path "$InnoSetupFile" -Encoding utf8
+      $SetupContent = Get-Content -Path "$InnoSetupFile" -Encoding utf8;
+      $SetupContent = $SetupContent -replace $PatternSetupVersion, "#define MyAppVersion ""$($VersionString)""";
+      $SetupContent | Set-Content -Path "$InnoSetupFile" -Encoding utf8;
 
 build_script:
   - dotnet build .\Source\NETworkManager.sln --configuration Release --no-restore
@@ -39,7 +39,7 @@ build_script:
 after_build:
   - ps: >-
       # Copy build
-      New-Item -Path "$PSScriptRoot\Build\NETworkManager" -ItemType Directory -Force
-      Copy-Item -Path "$PSScriptRoot\Source\NETworkManager\bin\Release\net8.0-windows10.0.17763.0\win-x64\*" -Destination "$PSScriptRoot\Build\NETworkManager" -Recurse -Force
+      New-Item -Path "$PSScriptRoot\Build\NETworkManager" -ItemType Directory -Force;
+      Copy-Item -Path "$PSScriptRoot\Source\NETworkManager\bin\Release\net8.0-windows10.0.17763.0\win-x64\*" -Destination "$PSScriptRoot\Build\NETworkManager" -Recurse -Force;
 
-      ls $PSScriptRoot\Build\NETworkManager
+      ls $PSScriptRoot\Build\NETworkManager;
