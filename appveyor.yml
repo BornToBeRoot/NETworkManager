@@ -9,7 +9,7 @@ install:
 before_build:
   - dotnet restore .\Source\NETworkManager.sln
   - ps: >-
-      # Update the version based on the current date (e.g. 2021.2.15.0)
+      # Update the version based on the current date (e.g. 2024.4.27.0)
       $Date = Get-Date
       $VersionString = "$($Date.Year).$($Date.Month).$($Date.Day).0"
 
@@ -19,19 +19,19 @@ before_build:
 
       $AssemblyFile = "$PSScriptRoot\Source\GlobalAssemblyInfo.cs"
 
-      $AssemlbyContent = Get-Content -Path $AssemblyFile -Encoding utf8
+      $AssemlbyContent = Get-Content -Path "$AssemblyFile" -Encoding utf8
       $AssemlbyContent = $AssemlbyContent -replace $PatternVersion, "[assembly: AssemblyVersion(""$($VersionString)"")]"
       $AssemlbyContent = $AssemlbyContent -replace $PatternFileVersion, "[assembly: AssemblyFileVersion(""$($VersionString)"")]"
-      $AssemlbyContent | Set-Content -Path $AssemblyFile -Encoding utf8
+      $AssemlbyContent | Set-Content -Path "$AssemblyFile" -Encoding utf8
       
       # Update inno setup version
       $PatternSetupVersion = '#define MyAppVersion "(.*)"'
 
       $InnoSetupFile = "$PSScriptRoot\InnoSetup.iss"
 
-      $SetupContent = Get-Content -Path $InnoSetupFile -Encoding utf8
+      $SetupContent = Get-Content -Path "$InnoSetupFile" -Encoding utf8
       $SetupContent = $SetupContent -replace $PatternSetupVersion, "#define MyAppVersion ""$($VersionString)"""
-      $SetupContent | Set-Content -Path $InnoSetupFile -Encoding utf8
+      $SetupContent | Set-Content -Path "$InnoSetupFile" -Encoding utf8
 
 build_script:
   - dotnet build .\Source\NETworkManager.sln --configuration Release --no-restore
