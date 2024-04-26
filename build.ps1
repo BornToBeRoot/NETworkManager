@@ -57,12 +57,8 @@ if (-not(Test-Path -Path $VSwherePath -PathType Leaf)) {
 }
 
 $VSwhere = & $VSwherePath -version "[16.0,18.0)" -products * -requires Microsoft.Component.MSBuild -prerelease -latest -utf8 -format json | ConvertFrom-Json
+$MSBuildPath = [System.IO.Path]::Combine($VSwhere[0].installationPath, "MSBuild", "Current", "Bin", "MSBuild.exe")
 
-$VSwhere
-
-Write-Host "Test 1"
-$MSBuildPath = Join-Path $VSwhere[0].installationPath "MSBuild" "Current" "Bin" "MSBuild.exe"
-Write-Host "Test 2"
 # Test if we found msbuild
 if (-not(Test-Path -Path $MSBuildPath -PathType Leaf)) {
     Write-Error -Message "Could not find msbuild. Is Visual Studio installed?" -ErrorAction Stop
