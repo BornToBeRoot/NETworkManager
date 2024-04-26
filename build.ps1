@@ -11,6 +11,9 @@ $TargetFramework = "net8.0-windows10.0.17763.0"
 $RuntimeIdentifier = "win-x64"
 $TargetPlatform = "x64"
 
+# Init git submodules
+Start-Process -FilePath "git" -ArgumentList "submodule update --init" -Wait -NoNewWindow
+
 # Remove old build and generated files
 if (Test-Path -Path $BuildPath) {
     Remove-Item -Path $BuildPath -Recurse -Force -ErrorAction Stop
