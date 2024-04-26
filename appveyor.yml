@@ -7,7 +7,7 @@ platform: x64
 install:
   - git submodule update --init
 before_build:
-  - dotnet restore .\Source\NETworkManager.sln
+  - dotnet restore $($env:APPVEYOR_BUILD_FOLDER)\Source\NETworkManager.sln
   - ps: |
       # Update the version based on the current date (e.g. 2024.4.27.0)
       $Date = Get-Date
@@ -19,7 +19,7 @@ before_build:
       $PatternVersion = '\[assembly: AssemblyVersion\("(.*)"\)\]'
       $PatternFileVersion = '\[assembly: AssemblyFileVersion\("(.*)"\)\]'
 
-      $AssemblyFile = ".\Source\GlobalAssemblyInfo.cs"
+      $AssemblyFile = "$($env:APPVEYOR_BUILD_FOLDER)\Source\GlobalAssemblyInfo.cs"
 
       $AssemlbyContent = Get-Content -Path $AssemblyFile -Encoding utf8
       $AssemlbyContent = $AssemlbyContent -replace $PatternVersion, "[assembly: AssemblyVersion(""$($VersionString)"")]"
@@ -36,7 +36,7 @@ before_build:
       $SetupContent | Set-Content -Path "$InnoSetupFile" -Encoding utf8
 
 build_script:
-  - dotnet build .\Source\NETworkManager.sln --configuration Release --no-restore
+  - dotnet build $($env:APPVEYOR_BUILD_FOLDER)\Source\NETworkManager.sln --configuration Release --no-restore
 
 after_build:
   - ps: |
@@ -46,18 +46,23 @@ after_build:
       }
 
       # Copy build
-      New-Item -Path ".\Build\NETworkManager" -ItemType Directory -Force
-      Copy-Item -Path ".\Source\NETworkManager\bin\Release\net8.0-windows10.0.17763.0\win-x64\*" -Destination ".\Build\NETworkManager" -Recurse -Force
+      New-Item -Path "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager" -ItemType Directory -Force
+      Copy-Item -Path "$($env:APPVEYOR_BUILD_FOLDER)\Source\NETworkManager\bin\Release\net8.0-windows10.0.17763.0\win-x64\*" -Destination "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager" -Recurse -Force
 
       # Cleanup build
-      Get-ChildItem -Path ".\Build\NETworkManager" | Where-Object { $_.Name.EndsWith(".pdb") } | Remove-Item
-      Remove-Item -Path ".\Build\NETworkManager\WebView2Loader.dll"
+      Get-ChildItem -Path "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager" | Where-Object { $_.Name.EndsWith(".pdb") } | Remove-Item
+      Remove-Item -Path "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager\WebView2Loader.dll"
 
       # Version
-      $Version = [System.Diagnostics.FileVersionInfo]::GetVersionInfo(".\Build\NETworkManager\NETworkManager.exe").FileVersion
+      $Version = [System.Diagnostics.FileVersionInfo]::GetVersionInfo("$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager\NETworkManager.exe").FileVersion
 
       # Create archive
-      Compress-Archive -Path ".\Build\NETworkManager" -DestinationPath ".\Build\NETworkManager_$($Version)_Archive.zip"
+      Compress-Archive -Path "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager" -DestinationPath "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager_$($Version)_Archive.zip"
+
+      # Create portable
+      New-Item -Path "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager" -Name "IsPortable.settings" -ItemType File
+      Compress-Archive -Path "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager" -DestinationPath "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager_$($Version)_Portable.zip"
+      Remove-Item -Path "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager\IsPortable.settings"
 
 artifacts:
   - path: 'Build\NETworkManager_*.*'
