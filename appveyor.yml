@@ -8,7 +8,7 @@ install:
   - git submodule update --init
 before_build:
   - dotnet restore .\Source\NETworkManager.sln
-  - ps: >-
+  - ps: |
       # Update the version based on the current date (e.g. 2024.4.27.0)
       $Date = Get-Date
       $VersionString = "$($Date.Year).$($Date.Month).$($Date.Day).0"
@@ -37,7 +37,7 @@ build_script:
   - dotnet build .\Source\NETworkManager.sln --configuration Release --no-restore
 
 after_build:
-  - ps: >-
+  - ps: |
       # Copy build
       New-Item -Path ".\Build\NETworkManager" -ItemType Directory -Force
       Copy-Item -Path ".\Source\NETworkManager\bin\Release\net8.0-windows10.0.17763.0\win-x64\*" -Destination ".\Build\NETworkManager" -Recurse -Force
