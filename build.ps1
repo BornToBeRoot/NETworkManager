@@ -1,5 +1,7 @@
 $ErrorActionPreference = "Stop"
 
+Write-Host "Hello"
+
 # Set current directory to script directory
 Set-Location -Path $PSScriptRoot
 
