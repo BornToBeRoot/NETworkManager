@@ -7,7 +7,7 @@ platform: x64
 install:
   - git submodule update --init
 before_build:
-  - dotnet restore $($env:APPVEYOR_BUILD_FOLDER)\Source\NETworkManager.sln
+  - dotnet restore %APPVEYOR_BUILD_FOLDER%\Source\NETworkManager.sln
   - ps: |
       # Update the version based on the current date (e.g. 2024.4.27.0)
       $Date = Get-Date
@@ -36,7 +36,7 @@ before_build:
       $SetupContent | Set-Content -Path "$InnoSetupFile" -Encoding utf8
 
 build_script:
-  - dotnet build $($env:APPVEYOR_BUILD_FOLDER)\Source\NETworkManager.sln --configuration Release --no-restore
+  - dotnet build %APPVEYOR_BUILD_FOLDER%\Source\NETworkManager.sln --configuration Release --no-restore
 
 after_build:
   - ps: |
