@@ -13,6 +13,8 @@ before_build:
       $Date = Get-Date
       $VersionString = "$($Date.Year).$($Date.Month).$($Date.Day).0"
 
+      Write-Host "Set NETworkManager version set to $VersionString"
+
       # Update assembly version
       $PatternVersion = '\[assembly: AssemblyVersion\("(.*)"\)\]'
       $PatternFileVersion = '\[assembly: AssemblyFileVersion\("(.*)"\)\]'
@@ -47,4 +49,15 @@ after_build:
       New-Item -Path ".\Build\NETworkManager" -ItemType Directory -Force
       Copy-Item -Path ".\Source\NETworkManager\bin\Release\net8.0-windows10.0.17763.0\win-x64\*" -Destination ".\Build\NETworkManager" -Recurse -Force
 
-      ls .\Build\NETworkManager
+      # Cleanup build
+      Get-ChildItem -Path ".\Build\NETworkManager" | Where-Object { $_.Name.EndsWith(".pdb") } | Remove-Item
+      Remove-Item -Path ".\Build\NETworkManager\WebView2Loader.dll"
+
+      # Version
+      $Version = [System.Diagnostics.FileVersionInfo]::GetVersionInfo(".\Build\NETworkManager\NETworkManager.exe").FileVersion
+
+      # Create archive
+      Compress-Archive -Path ".\Build\NETworkManager" -DestinationPath ".\Build\NETworkManager_$($Version)_Archive.zip"
+
+artifacts:
+  - path: 'Build\NETworkManager_*.*'
