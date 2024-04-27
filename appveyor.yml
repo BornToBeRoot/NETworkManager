@@ -57,7 +57,7 @@ after_build:
       $Version = [System.Diagnostics.FileVersionInfo]::GetVersionInfo("$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager\NETworkManager.exe").FileVersion
 
       # Create archive
-      Compress-Archive -Path "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager" -DestinationPath "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager_$($Version)_Archive.zip"
+      #Compress-Archive -Path "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager" -DestinationPath "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager_$($Version)_Archive.zip"
 
       # Create portable
       New-Item -Path "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager" -Name "IsPortable.settings" -ItemType File | Out-Null
@@ -65,15 +65,15 @@ after_build:
       Remove-Item -Path "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager\IsPortable.settings"
 
       # Create setup
-      $InnoSetupPath = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
-      Start-Process -FilePath $InnoSetupPath -ArgumentList """$($env:APPVEYOR_BUILD_FOLDER)\InnoSetup.iss""" -NoNewWindow -Wait
+      #$InnoSetupPath = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+      #Start-Process -FilePath $InnoSetupPath -ArgumentList """$($env:APPVEYOR_BUILD_FOLDER)\InnoSetup.iss""" -NoNewWindow -Wait
 
       # Create SHA256 file hashes
-      foreach ($hash in Get-ChildItem -Path "$($env:APPVEYOR_BUILD_FOLDER)\Build" | Where-Object { $_.Name.EndsWith(".zip") -or $_.Name.EndsWith(".exe") } | Get-FileHash) {
-          "$($hash.Algorithm) | $($hash.Hash) | $([System.IO.Path]::GetFileName($hash.Path))" | Out-File -FilePath "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager_$($Version)_Hash.txt" -Encoding utf8 -Append
-      }
+      #foreach ($hash in Get-ChildItem -Path "$($env:APPVEYOR_BUILD_FOLDER)\Build" | Where-Object { $_.Name.EndsWith(".zip") -or $_.Name.EndsWith(".exe") } | Get-FileHash) {
+      #    "$($hash.Algorithm) | $($hash.Hash) | $([System.IO.Path]::GetFileName($hash.Path))" | Out-File -FilePath "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager_$($Version)_Hash.txt" -Encoding utf8 -Append
+      #}
 
-      Get-Content -Path "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager_$($Version)_Hash.txt"
+      #Get-Content -Path "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager_$($Version)_Hash.txt"
 artifacts:
   - path: 'Build\NETworkManager_*.*'
 deploy:
