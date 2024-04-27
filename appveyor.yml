@@ -80,6 +80,6 @@ deploy:
   - provider: Webhook
     url: https://app.signpath.io/API/v1/0a191750-608c-457a-a11d-8a5433ad6491/Integrations/AppVeyor?ProjectSlug=NETworkManager&SigningPolicySlug=test-signing&ArtifactConfigurationSlug=initial
     authorization:
-      secure: AjYy8D8kdWagyj82Wzf0C1gpofC9Pa575g4Be81ouvNWx7bw33vYpfoPfDhlRmKYXhvR/NxhOxiJHpj7i1rwGA==
+      secure: PF6YBkp3Gg4c9TUX4HOzgjG5FeCzq9hYMCG5Zbs6xEL3jVuWe605D+Q/x1PKtK/q2nxUGzQIvOdiWbXMnUXWQg==
     on:
       APPVEYOR_REPO_TAG: true
