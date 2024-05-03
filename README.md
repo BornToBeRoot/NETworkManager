@@ -121,6 +121,7 @@ You can build the application like any other .NET / WPF application on Windows.
    the solution.
 
    > **ALTERNATIVE**
+   >
    > With the following commands you can directly build the binaries from the command line:
    >
    > ```PowerShell
