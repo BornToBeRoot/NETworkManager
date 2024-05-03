@@ -1,0 +1,29 @@
+﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+	 xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
+	<?define ProductVersion="0.0.0" ?>
+
+	<Package Name="NETworkManager 20$(var.ProductVersion).0"
+			 Manufacturer="BornToBeRoot"
+			 Version="$(var.ProductVersion)"
+			 UpgradeCode="e343d8ab-ed71-41d1-9784-6f6860bda078">
+		<MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeError)" />
+
+		<!-- Include CAB file in MSI -->
+		<MediaTemplate EmbedCab="true" />
+
+		<!-- Icon -->
+		<Icon Id="icon.ico"  SourceFile="$(var.NETworkManager.ProjectDir)NETworkManager.ico" />
+		<Property Id="ARPPRODUCTICON" Value="icon.ico" />
+
+		<!-- UI -->
+		<WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)LICENSE.rtf" />
+		<ui:WixUI Id="WixUI_InstallDir"  InstallDirectory="INSTALLFOLDER" >
+		</ui:WixUI>
+
+		<!-- Features -->
+		<Feature Id="Main" Title="NETworkManager">
+			<ComponentGroupRef Id="Components" />
+		</Feature>
+	</Package>
+
+</Wix>

@@ -40,6 +40,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3rdparty", "3rdparty", "{B4
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dragablz", "3rdparty\Dragablz\Dragablz\Dragablz.csproj", "{6178E008-0BAB-4B83-9FBA-BAF897D51E9D}"
 EndProject
+Project("{B7DD6F7E-DEF8-4E67-B5B7-07EF123DB6F0}") = "NETworkManager.Setup", "NETworkManager.Setup\NETworkManager.Setup.wixproj", "{B474758D-E657-4DA6-AB2B-63764C5FBAF1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -315,6 +317,26 @@ Global
 		{6178E008-0BAB-4B83-9FBA-BAF897D51E9D}.Release|x64.Build.0 = Release|Any CPU
 		{6178E008-0BAB-4B83-9FBA-BAF897D51E9D}.Release|x86.ActiveCfg = Release|Any CPU
 		{6178E008-0BAB-4B83-9FBA-BAF897D51E9D}.Release|x86.Build.0 = Release|Any CPU
+		{B474758D-E657-4DA6-AB2B-63764C5FBAF1}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{B474758D-E657-4DA6-AB2B-63764C5FBAF1}.Debug|Any CPU.Build.0 = Debug|x64
+		{B474758D-E657-4DA6-AB2B-63764C5FBAF1}.Debug|ARM.ActiveCfg = Debug|x64
+		{B474758D-E657-4DA6-AB2B-63764C5FBAF1}.Debug|ARM.Build.0 = Debug|x64
+		{B474758D-E657-4DA6-AB2B-63764C5FBAF1}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{B474758D-E657-4DA6-AB2B-63764C5FBAF1}.Debug|ARM64.Build.0 = Debug|ARM64
+		{B474758D-E657-4DA6-AB2B-63764C5FBAF1}.Debug|x64.ActiveCfg = Debug|x64
+		{B474758D-E657-4DA6-AB2B-63764C5FBAF1}.Debug|x64.Build.0 = Debug|x64
+		{B474758D-E657-4DA6-AB2B-63764C5FBAF1}.Debug|x86.ActiveCfg = Debug|x86
+		{B474758D-E657-4DA6-AB2B-63764C5FBAF1}.Debug|x86.Build.0 = Debug|x86
+		{B474758D-E657-4DA6-AB2B-63764C5FBAF1}.Release|Any CPU.ActiveCfg = Release|x64
+		{B474758D-E657-4DA6-AB2B-63764C5FBAF1}.Release|Any CPU.Build.0 = Release|x64
+		{B474758D-E657-4DA6-AB2B-63764C5FBAF1}.Release|ARM.ActiveCfg = Release|x64
+		{B474758D-E657-4DA6-AB2B-63764C5FBAF1}.Release|ARM.Build.0 = Release|x64
+		{B474758D-E657-4DA6-AB2B-63764C5FBAF1}.Release|ARM64.ActiveCfg = Release|ARM64
+		{B474758D-E657-4DA6-AB2B-63764C5FBAF1}.Release|ARM64.Build.0 = Release|ARM64
+		{B474758D-E657-4DA6-AB2B-63764C5FBAF1}.Release|x64.ActiveCfg = Release|x64
+		{B474758D-E657-4DA6-AB2B-63764C5FBAF1}.Release|x64.Build.0 = Release|x64
+		{B474758D-E657-4DA6-AB2B-63764C5FBAF1}.Release|x86.ActiveCfg = Release|x86
+		{B474758D-E657-4DA6-AB2B-63764C5FBAF1}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

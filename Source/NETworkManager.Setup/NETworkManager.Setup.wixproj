@@ -1,0 +1,9 @@
+﻿<Project Sdk="WixToolset.Sdk/5.0.0">
+  <ItemGroup>
+    <None Include="LICENSE.rtf" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="WixToolset.UI.wixext" Version="5.0.0" />
+    <ProjectReference Include="..\NETworkManager\NETworkManager.csproj" />
+  </ItemGroup>
+</Project>

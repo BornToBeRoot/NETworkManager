@@ -1,0 +1,33 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Fragment>
+    <ComponentGroup Id="Components" Directory="INSTALLFOLDER">
+		<Files Include="$(var.NETworkManager.TargetDir)**">
+			<Exclude Files="$(var.NETworkManager.TargetDir)**\*.pdb" />
+			<Exclude Files="$(var.NETworkManager.TargetDir)NETworkManager.exe" />
+		</Files>
+
+		<!-- Main content -->
+		<Component>
+			<File Id="NETworkManagerExecutable"
+				  Source="$(var.NETworkManager.TargetDir)NETworkManager.exe">
+				<Shortcut Name="NETworkManager" 
+						  Directory="ProgramMenuFolder" 
+						  Advertise="true" 
+						  Icon="icon.ico"
+						  Description="A powerful tool for managing networks and troubleshoot network problems!" />
+			</File>
+		</Component>
+
+		<!-- Desktop shortcut -->
+		<Component Directory="DesktopFolder" Condition="DESKTOPSHORTCUTENABLED=1">
+			<RegistryValue Root="HKCU" Key="SOFTWARE\NETworkManager" Name="DesktopShortcutEnabled" Value="1" />
+			<Shortcut Name="NETworkManager"
+					  Directory="DesktopFolder"
+					  Target="[#NETworkManagerExecutable]"
+					  Icon="icon.ico"
+					  Description="A powerful tool for managing networks and troubleshoot network problems!" />
+		</Component>		
+			
+    </ComponentGroup>
+  </Fragment>
+</Wix>
