@@ -55,7 +55,7 @@ after_build:
       $Version = [System.Diagnostics.FileVersionInfo]::GetVersionInfo("$($BuildPath)\NETworkManager.exe").FileVersion
 
       # Cleanup build
-      Get-ChildItem -Path "$BuildPath" | Where-Object { $_.Name.EndsWith(".pdb") } | Remove-Item
+      Get-ChildItem -Path "$BuildPath" -Recurse | Where-Object { $_.Name.EndsWith(".pdb") } | Remove-Item
       Remove-Item -Path "$($BuildPath)\WebView2Loader.dll"
 
       # Create release folder
