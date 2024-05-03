@@ -33,7 +33,7 @@ before_build:
       $SetupFile = ".\Source\NETworkManager.Setup\Package.wxs"
 
       $SetupContent = Get-Content -Path "$SetupFile" -Encoding utf8
-      $SetupContent = $SetupContent -replace $SetupVersionPattern, "#define MyAppVersion ""$($SetupVersionString)"""
+      $SetupContent = $SetupContent -replace $SetupVersionPattern, "<?define ProductVersion=""$SetupVersionString"" ?>"
       $SetupContent | Set-Content -Path "$SetupFile" -Encoding utf8
 
 build_script:
