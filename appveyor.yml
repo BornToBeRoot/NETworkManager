@@ -1,7 +1,4 @@
 image: Visual Studio 2022
-#branches:
-#  only:
-#    - main
 configuration: Release
 platform: x64
 install:
@@ -9,31 +6,35 @@ install:
 before_build:
   - dotnet restore %APPVEYOR_BUILD_FOLDER%\Source\NETworkManager.sln
   - ps: |
-      # Update the version based on the current date (e.g. 2024.4.27.0)
+      # Set the version based on the current date (e.g. 2024.4.27.0)
       $Date = Get-Date
-      $VersionString = "$($Date.Year).$($Date.Month).$($Date.Day).0"
-
+      $VersionString = $Date.ToString("yyyy.M.d.0")
+      
       Write-Host "Set NETworkManager version set to $VersionString"
-
+      
       # Update assembly version
-      $PatternVersion = '\[assembly: AssemblyVersion\("(.*)"\)\]'
-      $PatternFileVersion = '\[assembly: AssemblyFileVersion\("(.*)"\)\]'
+      $AssemblyVersionPattern = '\[assembly: AssemblyVersion\("(.*)"\)\]'
+      $AssemblyFileVersionPattern = '\[assembly: AssemblyFileVersion\("(.*)"\)\]'
 
       $AssemblyFile = "$($env:APPVEYOR_BUILD_FOLDER)\Source\GlobalAssemblyInfo.cs"
 
       $AssemlbyContent = Get-Content -Path $AssemblyFile -Encoding utf8
-      $AssemlbyContent = $AssemlbyContent -replace $PatternVersion, "[assembly: AssemblyVersion(""$($VersionString)"")]"
-      $AssemlbyContent = $AssemlbyContent -replace $PatternFileVersion, "[assembly: AssemblyFileVersion(""$($VersionString)"")]"
+      $AssemlbyContent = $AssemlbyContent -replace $AssemblyVersionPattern, "[assembly: AssemblyVersion(""$($VersionString)"")]"
+      $AssemlbyContent = $AssemlbyContent -replace $AssemblyFileVersionPattern, "[assembly: AssemblyFileVersion(""$($VersionString)"")]"
       $AssemlbyContent | Set-Content -Path $AssemblyFile -Encoding utf8
 
-      # Update inno setup version
-      $PatternSetupVersion = '#define MyAppVersion "(.*)"'
+      # Set setup version information
+      $SetupVersionString = $Date.ToString("yy.M.d") # MSI only supports major.minor.build and 255 as highest value
+      
+      Write-Host "Set NETworkManager setup version set to $SetupVersionString"
 
-      $InnoSetupFile = ".\InnoSetup.iss"
+      $SetupVersionPattern = '<\?define ProductVersion="(.*)" \?>'
 
-      $SetupContent = Get-Content -Path "$InnoSetupFile" -Encoding utf8
-      $SetupContent = $SetupContent -replace $PatternSetupVersion, "#define MyAppVersion ""$($VersionString)"""
-      $SetupContent | Set-Content -Path "$InnoSetupFile" -Encoding utf8
+      $SetupFile = ".\Source\NETworkManager.Setup\Package.wxs"
+
+      $SetupContent = Get-Content -Path "$SetupFile" -Encoding utf8
+      $SetupContent = $SetupContent -replace $SetupVersionPattern, "#define MyAppVersion ""$($SetupVersionString)"""
+      $SetupContent | Set-Content -Path "$SetupFile" -Encoding utf8
 
 build_script:
   - dotnet build %APPVEYOR_BUILD_FOLDER%\Source\NETworkManager.sln --configuration Release --no-restore
@@ -45,37 +46,39 @@ after_build:
         return
       }
 
-      # Copy build
-      New-Item -Path "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager" -ItemType Directory -Force | Out-Null
-      Copy-Item -Path "$($env:APPVEYOR_BUILD_FOLDER)\Source\NETworkManager\bin\Release\net8.0-windows10.0.17763.0\win-x64\*" -Destination "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager" -Recurse -Force
+      # Build path
+      $BuildPath = "$($env:APPVEYOR_BUILD_FOLDER)\Source\NETworkManager\bin\Release\net8.0-windows10.0.17763.0\win-x64"
+      $SetupPath = "$($env:APPVEYOR_BUILD_FOLDER)\Source\NETworkManager.Setup\bin\x64\Release\en-US\NETworkManager.Setup.msi"
+      $ArtifactsPath = "$($env:APPVEYOR_BUILD_FOLDER)\Artifacts"
+
+      # Get version
+      $Version = [System.Diagnostics.FileVersionInfo]::GetVersionInfo("$($BuildPath)\NETworkManager.exe").FileVersion
 
       # Cleanup build
-      Get-ChildItem -Path "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager" | Where-Object { $_.Name.EndsWith(".pdb") } | Remove-Item
-      Remove-Item -Path "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager\WebView2Loader.dll"
+      Get-ChildItem -Path "$BuildPath" | Where-Object { $_.Name.EndsWith(".pdb") } | Remove-Item
+      Remove-Item -Path "$($BuildPath)\NETworkManager\WebView2Loader.dll"
 
-      # Version
-      $Version = [System.Diagnostics.FileVersionInfo]::GetVersionInfo("$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager\NETworkManager.exe").FileVersion
+      # Create release folder
+      New-Item -Path "$ArtifactsPath" -ItemType Directory -Force | Out-Null
 
       # Create archive
-      ##Compress-Archive -Path "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager" -DestinationPath "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager_$($Version)_Archive.zip"
+      Compress-Archive -Path "$BuildPath" -DestinationPath "$($ArtifactsPath)\NETworkManager_$($Version)_Archive.zip"
 
       # Create portable
-      ##New-Item -Path "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager" -Name "IsPortable.settings" -ItemType File | Out-Null
-      ##Compress-Archive -Path "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager" -DestinationPath "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager_$($Version)_Portable.zip"
-      ##Remove-Item -Path "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager\IsPortable.settings"
+      New-Item -Path "$BuildPath" -Name "IsPortable.settings" -ItemType File | Out-Null
+      Compress-Archive -Path "$BuildPath" -DestinationPath "$($ArtifactsPath)\NETworkManager_$($Version)_Portable.zip"
+      Remove-Item -Path "$($BuildPath)\IsPortable.settings"
 
-      # Create setup
-      $InnoSetupPath = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
-      Start-Process -FilePath $InnoSetupPath -ArgumentList """$($env:APPVEYOR_BUILD_FOLDER)\InnoSetup.iss""" -NoNewWindow -Wait
+      # Copy setup
+      Move-Item -Path "$SetupPath" -Destination "$($ArtifactsPath)\NETworkManager_$($Version)_Setup.msi"
 
       # Create SHA256 file hashes
-      ##foreach ($hash in Get-ChildItem -Path "$($env:APPVEYOR_BUILD_FOLDER)\Build" | Where-Object { $_.Name.EndsWith(".zip") -or $_.Name.EndsWith(".exe") } | Get-FileHash) {
-      ##    "$($hash.Algorithm) | $($hash.Hash) | $([System.IO.Path]::GetFileName($hash.Path))" | Out-File -FilePath "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager_$($Version)_Hash.txt" -Encoding utf8 -Append
-      ##}
+      foreach ($hash in Get-ChildItem -Path "$ArtifactsPath" | Where-Object { $_.Name.EndsWith(".zip") -or $_.Name.EndsWith(".msi") } | Get-FileHash) {
+          "$($hash.Algorithm) | $($hash.Hash) | $([System.IO.Path]::GetFileName($hash.Path))" | Out-File -FilePath "$($ArtifactsPath)\NETworkManager_$($Version)_Hash.txt" -Encoding utf8 -Append
+      }
 
-      ##Get-Content -Path "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager_$($Version)_Hash.txt"
-      Remove-Item -Path "$($env:APPVEYOR_BUILD_FOLDER)\Build\NETworkManager" -Recurse
-      Compress-Archive -Path "$($env:APPVEYOR_BUILD_FOLDER)\Build" -DestinationPath "$($env:APPVEYOR_BUILD_FOLDER)\releases_unsigned.zip"
+      # Create artifacts archive for signing
+      Compress-Archive -Path "$ArtifactsPath" -DestinationPath "$($ArtifactsPath).zip"
 
 artifacts:
   - path: 'releases_unsigned.zip'

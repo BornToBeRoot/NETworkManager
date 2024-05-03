@@ -3,6 +3,7 @@
     <ComponentGroup Id="Components" Directory="INSTALLFOLDER">
 		<Files Include="$(var.NETworkManager.TargetDir)**">
 			<Exclude Files="$(var.NETworkManager.TargetDir)**\*.pdb" />
+			<Exclude Files="$(var.NETworkManager.TargetDir)WebView2Loader.dll" />
 			<Exclude Files="$(var.NETworkManager.TargetDir)NETworkManager.exe" />
 		</Files>
 
