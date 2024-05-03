@@ -62,11 +62,11 @@ after_build:
       New-Item -Path "$ArtifactsPath" -ItemType Directory -Force | Out-Null
 
       # Create archive
-      Compress-Archive -Path "$BuildPath" -DestinationPath "$($ArtifactsPath)\NETworkManager_$($Version)_Archive.zip"
+      Compress-Archive -Path "$($BuildPath)\*" -DestinationPath "$($ArtifactsPath)\NETworkManager_$($Version)_Archive.zip"
 
       # Create portable
       New-Item -Path "$BuildPath" -Name "IsPortable.settings" -ItemType File | Out-Null
-      Compress-Archive -Path "$BuildPath" -DestinationPath "$($ArtifactsPath)\NETworkManager_$($Version)_Portable.zip"
+      Compress-Archive -Path "$($BuildPath)\*" -DestinationPath "$($ArtifactsPath)\NETworkManager_$($Version)_Portable.zip"
       Remove-Item -Path "$($BuildPath)\IsPortable.settings"
 
       # Copy setup
@@ -84,7 +84,7 @@ artifacts:
   - path: 'Artifacts_unsigned.zip'
 deploy:
   - provider: Webhook
-    url: https://app.signpath.io/API/v1/0a191750-608c-457a-a11d-8a5433ad6491/Integrations/AppVeyor?ProjectSlug=NETworkManager&SigningPolicySlug=test-signing&ArtifactConfigurationSlug=initial
+    url: https://app.signpath.io/API/v1/0a191750-608c-457a-a11d-8a5433ad6491/Integrations/AppVeyor?ProjectSlug=NETworkManager&SigningPolicySlug=test-signing&ArtifactConfigurationSlug=artifacts
     authorization:
       secure: PF6YBkp3Gg4c9TUX4HOzgjG5FeCzq9hYMCG5Zbs6xEL3jVuWe605D+Q/x1PKtK/q2nxUGzQIvOdiWbXMnUXWQg==
     on:

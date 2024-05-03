@@ -97,54 +97,37 @@ This project has adopted the [code of conduct](https://github.com/BornToBeRoot/N
 
 ## 🔧 Build
 
-You can build the application like any other .NET Core / WPF application on Windows.
+You can build the application like any other .NET / WPF application on Windows.
 
 1. Make sure that the following requirements are installed:
 
-   - [SDK .NET 6.x](https://dotnet.microsoft.com/download/dotnet/6.0)
-   - Visual Studio 2019 or later with `.NET desktop development` and `Universal Windows Platform development`
+   - [.NET 8.x - SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+   - Visual Studio 2022 with `.NET desktop development` and `Universal Windows Platform development`
 
-2. (optional) Install [InnoSetup](https://jrsoftware.org/isinfo.php) to create an installer.
+2. Clone the repository with all submodules:
 
-   - Download the additional languages from the [Inno Setup repository](https://github.com/jrsoftware/issrc/blob/main/Files/Languages/Unofficial/) and copy the following files to `%ProgramFiles%\Inno Setup 6\Languages`: `ChineseSimplified.isl`, `ChineseTraditional.isl`, `Hungarian.isl`, `Korean.isl`
+   ```PowerShell
+   # Clone the repository
+   git clone https://github.com/BornToBeRoot/NETworkManager
 
-   > **NOTE**: The languages files must be downloaded or cloned so that the encoding of the file is not changed
-   > (e.g. Chinese should be `UTF-8-BOM`).
+   # Navigate to the repository
+   cd NETworkManager
 
-3. Clone the repository and all submodules:
+   # Clone the submodules
+   git submodule update --init
+   ```
 
-```PowerShell
-# Clone the repository
-git clone https://github.com/BornToBeRoot/NETworkManager
+3. Open the project file `.\Source\NETworkManager.sln` with Visual Studio or JetBrains Rider to build (or debug)
+   the solution.
 
-# Change directory
-cd NETworkManager
-
-# Clone the submodules
-git submodule update --init --recursive
-```
-
-4. Open the `Source\NETworkManager.sln` with Visual Studio or JetBrains Rider to build (or debug) the solution.
-
-> **NOTE** If you have installed the requirements from step 1 (and optionally step 2), you can also directly build the
-> binaries with PowerShell 7 or later:
->
-> ```PowerShell
-> # Clone the repository
-> git clone https://github.com/BornToBeRoot/NETworkManager
->
-> # Change directory
-> cd NETworkManager
->
-> # Clone the submodules
-> git submodule update --init --recursive
->
-> # Allow the execution of the build script
-> Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
->
-> # Build the binaries
-> & .\build.ps1
-> ```
+   > **ALTERNATIVE**
+   > With the following commands you can directly build the binaries from the command line:
+   >
+   > ```PowerShell
+   > dotnet restore .\Source\NETworkManager.sln
+   >
+   > dotnet build .\Source\NETworkManager.sln --configuration Release --no-restore
+   > ```
 
 ## 📝 License
 
