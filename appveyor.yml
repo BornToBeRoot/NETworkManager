@@ -56,7 +56,7 @@ after_build:
 
       # Cleanup build
       Get-ChildItem -Path "$BuildPath" | Where-Object { $_.Name.EndsWith(".pdb") } | Remove-Item
-      Remove-Item -Path "$($BuildPath)\NETworkManager\WebView2Loader.dll"
+      Remove-Item -Path "$($BuildPath)\WebView2Loader.dll"
 
       # Create release folder
       New-Item -Path "$ArtifactsPath" -ItemType Directory -Force | Out-Null
@@ -78,7 +78,7 @@ after_build:
       }
 
       # Create artifacts archive for signing
-      Compress-Archive -Path "$ArtifactsPath" -DestinationPath "$($ArtifactsPath)_unsigned.zip"
+      Compress-Archive -Path "$ArtifactsPath\*" -DestinationPath "$($ArtifactsPath)_unsigned.zip"
 
 artifacts:
   - path: 'Artifacts_unsigned.zip'
