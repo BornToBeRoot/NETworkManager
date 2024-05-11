@@ -24,6 +24,14 @@
 		<Feature Id="Main" Title="NETworkManager">
 			<ComponentGroupRef Id="Components" />
 		</Feature>
+		
+		<!-- Uninstall InnoSetup version -->	
+		<!-- Get-Item -Path "$($env:ProgramFiles)\NETworkManager\*" -Filter "unins*.exe" | Select-Object -First 1 | ForEach-Object { Start-Process -FilePath $_.FullName -ArgumentList "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART" } -->
+		<CustomAction Id="UninstallInnoSetup" Directory="INSTALLFOLDER" Execute="commit" Impersonate="no" ExeCommand="PowerShell.exe -EncodedCommand &quot;RwBlAHQALQBJAHQAZQBtACAALQBQAGEAdABoACAAIgAkACgAJABlAG4AdgA6AFAAcgBvAGcAcgBhAG0ARgBpAGwAZQBzACkAXABOAEUAVAB3AG8AcgBrAE0AYQBuAGEAZwBlAHIAXAAqACIAIAAtAEYAaQBsAHQAZQByACAAIgB1AG4AaQBuAHMAKgAuAGUAeABlACIAIAB8ACAAUwBlAGwAZQBjAHQALQBPAGIAagBlAGMAdAAgAC0ARgBpAHIAcwB0ACAAMQAgAHwAIABGAG8AcgBFAGEAYwBoAC0ATwBiAGoAZQBjAHQAIAB7ACAAUwB0AGEAcgB0AC0AUAByAG8AYwBlAHMAcwAgAC0ARgBpAGwAZQBQAGEAdABoACAAJABfAC4ARgB1AGwAbABOAGEAbQBlACAALQBBAHIAZwB1AG0AZQBuAHQATABpAHMAdAAgACIALwBWAEUAUgBZAFMASQBMAEUATgBUACAALwBTAFUAUABQAFIARQBTAFMATQBTAEcAQgBPAFgARQBTACAALwBOAE8AUgBFAFMAVABBAFIAVAAiACAAfQA=&quot;" Return="check" />
+		
+		<InstallExecuteSequence>
+			<Custom Action="UninstallInnoSetup" Before="InstallFiles" />
+		</InstallExecuteSequence>
 	</Package>
 
 </Wix>
