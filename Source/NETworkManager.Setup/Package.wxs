@@ -16,8 +16,10 @@
 		<Property Id="ARPPRODUCTICON" Value="icon.ico" />
 
 		<!-- UI -->
-		<WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)LICENSE.rtf" />
-		<ui:WixUI Id="WixUI_InstallDir"  InstallDirectory="INSTALLFOLDER" />		
+		<WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)Resources\LICENSE.rtf" />
+		<WixVariable Id="WixUIBannerBmp" Value="$(var.ProjectDir)Resources\WixUIBanner.png" />
+		<WixVariable Id="WixUIDialogBmp" Value="$(var.ProjectDir)Resources\WixUIDialog.png" />
+		<ui:WixUI Id="WixUI_InstallDir" InstallDirectory="INSTALLFOLDER" />		
 
 		<!-- Features -->
 		<Feature Id="Main" Title="NETworkManager">
