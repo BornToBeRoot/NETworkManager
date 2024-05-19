@@ -6818,6 +6818,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Profile files.
+        /// </summary>
+        public static string ProfileFiles {
+            get {
+                return ResourceManager.GetString("ProfileFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Application.
         /// </summary>
         public static string ProfileGroup_Application {

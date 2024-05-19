@@ -3814,4 +3814,7 @@ Try again in a few seconds.</value>
   <data name="ToolTip_RunCommandWithHotKey" xml:space="preserve">
     <value>Run command... (Ctrl+Shift+P)</value>
   </data>
+  <data name="ProfileFiles" xml:space="preserve">
+    <value>Profile files</value>
+  </data>
 </root>

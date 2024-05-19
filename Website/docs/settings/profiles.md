@@ -25,7 +25,7 @@ To restore the profiles, close the application and copy the files from the backu
 
 :::
 
-### Profiles
+### Profile files
 
 List of profile files.
 

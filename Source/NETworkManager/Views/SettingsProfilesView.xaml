@@ -41,6 +41,8 @@
                 </Grid>
             </Button.Content>
         </Button>
+        <TextBlock Style="{StaticResource ResourceKey=HeaderTextBlock}"
+                   Text="{x:Static Member=localization:Strings.ProfileFiles}" />
         <DataGrid x:Name="DataGridProfileLocations" ItemsSource="{Binding ProfileFiles}" SelectionMode="Single"
                   SelectedItem="{Binding SelectedProfileFile}" Height="200" Margin="0,0,0,10">
             <DataGrid.Resources>
