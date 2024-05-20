@@ -14,6 +14,7 @@ using Windows.Security.Credentials;
 using Windows.System;
 using LiveCharts;
 using LiveCharts.Wpf;
+using log4net;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Localization;
 using NETworkManager.Localization.Resources;
@@ -29,8 +30,9 @@ namespace NETworkManager.ViewModels;
 public class WiFiViewModel : ViewModelBase
 {
     #region Variables
-
     private readonly IDialogCoordinator _dialogCoordinator;
+
+    private static readonly ILog Log = LogManager.GetLogger(typeof(WiFiViewModel));
 
     private readonly bool _isLoading;
     private readonly DispatcherTimer _autoRefreshTimer = new();
@@ -567,8 +569,17 @@ public class WiFiViewModel : ViewModelBase
 
         // Show a loading animation for the user
         await Task.Delay(2500);
-        
-        Adapters = await WiFi.GetAdapterAsync();
+
+        try
+        {
+            Adapters = await WiFi.GetAdapterAsync();
+        }
+        catch (Exception ex)
+        {
+            Log.Error("Error trying to get WiFi adapters.", ex);
+            
+            Adapters.Clear();
+        }
 
         // Check if we found any adapters
         if (Adapters.Count > 0)
