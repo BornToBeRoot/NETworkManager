@@ -477,7 +477,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         EventSystem.OnRedirectDataToApplicationEvent += EventSystem_RedirectDataToApplicationEvent;
         EventSystem.OnRedirectToSettingsEvent += EventSystem_RedirectToSettingsEvent;
-
+        
         _isLoading = false;
     }
 

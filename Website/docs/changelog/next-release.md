@@ -21,9 +21,19 @@ Release date: **xx.xx.2023**
 
 ## Improvements
 
-- Improve ToolTip for the application view [#2716](https://github.com/BornToBeRoot/NETworkManager/pull/2716)
+- **General**
+ 
+  - Improve ToolTip for the application view [#2716](https://github.com/BornToBeRoot/NETworkManager/pull/2716)
+
+- **WiFi**
+
+  - Request WiFi access as described [here](https://learn.microsoft.com/en-us/windows/win32/nativewifi/wi-fi-access-location-changes) due to new Windows 11 requirements. [#2719](https://github.com/BornToBeRoot/NETworkManager/pull/2719)
 
 ## Bugfixes
+
+- **WiFi**
+  
+  - Handle exception when accessing WiFi adapter is not possible [#2719](https://github.com/BornToBeRoot/NETworkManager/pull/2719)
 
 ## Dependencies, Refactoring & Documentation
 

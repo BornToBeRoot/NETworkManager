@@ -10850,6 +10850,19 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Access to the Wi-Fi adapter is not permitted by Windows.
+        ///
+        ///Open the Windows settings and allow Wi-Fi access for this application.
+        ///
+        ///Restart the application afterwards to use this feature..
+        /// </summary>
+        public static string WiFiAccessNotAvailableMessage {
+            get {
+                return ResourceManager.GetString("WiFiAccessNotAvailableMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Access to the network has been revoked.
         /// </summary>
         public static string WiFiConnectionStatus_AccessRevoked {

@@ -3,16 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Windows.Devices.WiFi;
+using Windows.Foundation.Metadata;
 using Windows.Security.Credentials;
+using Windows.System;
 using LiveCharts;
 using LiveCharts.Wpf;
+using log4net;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Localization;
 using NETworkManager.Localization.Resources;
@@ -28,24 +30,40 @@ namespace NETworkManager.ViewModels;
 public class WiFiViewModel : ViewModelBase
 {
     #region Variables
-
     private readonly IDialogCoordinator _dialogCoordinator;
+
+    private static readonly ILog Log = LogManager.GetLogger(typeof(WiFiViewModel));
 
     private readonly bool _isLoading;
     private readonly DispatcherTimer _autoRefreshTimer = new();
     private readonly DispatcherTimer _hideConnectionStatusMessageTimer = new();
 
-    private bool _sdkContractsFailedToLoad;
+    private bool _sdkContractAvailable;
 
-    public bool SdkContractsFailedToLoad
+    public bool SdkContractAvailable
     {
-        get => _sdkContractsFailedToLoad;
+        get => _sdkContractAvailable;
         set
         {
-            if (value == _sdkContractsFailedToLoad)
+            if (value == _sdkContractAvailable)
                 return;
 
-            _sdkContractsFailedToLoad = value;
+            _sdkContractAvailable = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _wiFiAdapterAccessEnabled;
+
+    public bool WiFiAdapterAccessEnabled
+    {
+        get => _wiFiAdapterAccessEnabled;
+        set
+        {
+            if (value == _wiFiAdapterAccessEnabled)
+                return;
+
+            _wiFiAdapterAccessEnabled = value;
             OnPropertyChanged();
         }
     }
@@ -398,6 +416,26 @@ public class WiFiViewModel : ViewModelBase
 
         _dialogCoordinator = instance;
 
+        // Check if Microsoft.Windows.SDK.Contracts is available 
+        SdkContractAvailable = ApiInformation.IsTypePresent("Windows.Devices.WiFi.WiFiAdapter");
+
+        if (!SdkContractAvailable)
+        {
+            _isLoading = false;
+
+            return;
+        }
+
+        // Check if the access is denied and show a message
+        WiFiAdapterAccessEnabled = RequestAccess();
+        
+        if (!WiFiAdapterAccessEnabled)
+        {
+            _isLoading = false;
+
+            return;
+        }
+
         // Result view + search
         NetworksView = CollectionViewSource.GetDefaultView(Networks);
         NetworksView.SortDescriptions.Add(new SortDescription(
@@ -504,33 +542,54 @@ public class WiFiViewModel : ViewModelBase
         Export().ConfigureAwait(false);
     }
 
+    public ICommand OpenSettingsCommand => new RelayCommand(_ => OpenSettingsAction());
+
+    private static void OpenSettingsAction()
+    {
+        Launcher.LaunchUriAsync(new Uri("ms-settings:privacy-location"));
+    }
     #endregion
 
     #region Methods
+
+    /// <summary>
+    /// Request access to the WiFi adapter.
+    /// </summary>
+    /// <returns>Fails if the access is denied.</returns>
+    private static bool RequestAccess()
+    {
+        var accessStatus = WiFiAdapter.RequestAccessAsync().GetAwaiter().GetResult();
+        
+        return accessStatus == WiFiAccessStatus.Allowed;
+    }
 
     private async Task LoadAdapters(string adapterId = null)
     {
         IsAdaptersLoading = true;
 
+        // Show a loading animation for the user
+        await Task.Delay(2500);
+
         try
         {
             Adapters = await WiFi.GetAdapterAsync();
-
-            // Check if we found any adapters
-            if (Adapters.Count > 0)
-            {
-                // Check for existing adapter id or select the first one
-                if (string.IsNullOrEmpty(adapterId))
-                    SelectedAdapter = Adapters.FirstOrDefault();
-                else
-                    SelectedAdapter = Adapters.FirstOrDefault(s => s.NetworkInterfaceInfo.Id.ToString() == adapterId) ??
-                                      Adapters.FirstOrDefault();
-            }
         }
-        catch
-            (FileNotFoundException) // This exception is thrown, when the Microsoft.Windows.SDK.Contracts is not available...
+        catch (Exception ex)
         {
-            SdkContractsFailedToLoad = true;
+            Log.Error("Error trying to get WiFi adapters.", ex);
+            
+            Adapters.Clear();
+        }
+
+        // Check if we found any adapters
+        if (Adapters.Count > 0)
+        {
+            // Check for existing adapter id or select the first one
+            if (string.IsNullOrEmpty(adapterId))
+                SelectedAdapter = Adapters.FirstOrDefault();
+            else
+                SelectedAdapter = Adapters.FirstOrDefault(s => s.NetworkInterfaceInfo.Id.ToString() == adapterId) ??
+                                  Adapters.FirstOrDefault();
         }
 
         IsAdaptersLoading = false;

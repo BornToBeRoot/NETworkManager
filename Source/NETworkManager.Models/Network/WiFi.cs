@@ -28,7 +28,7 @@ public static class WiFi
     /// </returns>
     public static async Task<List<WiFiAdapterInfo>> GetAdapterAsync()
     {
-        List<WiFiAdapterInfo> wifiAdapterInfos = new();
+        List<WiFiAdapterInfo> wifiAdapterInfos = [];
 
         var wifiAdapters = await WiFiAdapter.FindAllAdaptersAsync();
 
