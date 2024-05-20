@@ -3671,6 +3671,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expand and open search....
+        /// </summary>
+        public static string ExpandAndOpenSearchDots {
+            get {
+                return ResourceManager.GetString("ExpandAndOpenSearchDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Expand host view.
         /// </summary>
         public static string ExpandHostView {
@@ -6293,6 +6302,15 @@ namespace NETworkManager.Localization.Resources {
         public static string OpenSettings {
             get {
                 return ResourceManager.GetString("OpenSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open settings....
+        /// </summary>
+        public static string OpenSettingsDots {
+            get {
+                return ResourceManager.GetString("OpenSettingsDots", resourceCulture);
             }
         }
         

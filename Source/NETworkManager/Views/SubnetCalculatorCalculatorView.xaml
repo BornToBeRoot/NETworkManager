@@ -85,7 +85,7 @@
         <StackPanel Grid.Row="2"
                     Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
             <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Result}" />
-            <ScrollViewer Style="{DynamicResource DefaultScrollViewer}">
+            <ScrollViewer>
                 <Grid>
                     <Grid.Resources>
                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" />

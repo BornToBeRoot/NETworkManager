@@ -156,7 +156,7 @@
                                    Visibility="{Binding Path=IsStatusMessageDisplayed, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                    Style="{DynamicResource ResourceKey=StatusMessageTextBlock}" Margin="0,10,0,0" />
                     </Grid>
-                    <ScrollViewer Grid.Column="0" Grid.Row="2" Style="{StaticResource ResourceKey=DefaultScrollViewer}"
+                    <ScrollViewer Grid.Column="0" Grid.Row="2"
                                   HorizontalScrollBarVisibility="Auto">
                         <ListView ItemsSource="{Binding Path=HostsView}"
                                   SelectedItem="{Binding Path=SelectedHost}"

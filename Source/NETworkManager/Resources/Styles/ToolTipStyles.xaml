@@ -1,13 +1,13 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Style x:Key="DefaultToolTip" TargetType="{x:Type ToolTip}" BasedOn="{StaticResource MahApps.Styles.ToolTip}">
+    <Style x:Key="DefaultToolTip" TargetType="{x:Type ToolTip}" BasedOn="{StaticResource  ResourceKey=MahApps.Styles.ToolTip}">
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Window.Background}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource  ResourceKey=MahApps.Brushes.Gray8}" />
+        <Setter Property="Foreground" Value="{DynamicResource  ResourceKey=MahApps.Brushes.Text}" />
+        <Setter Property="Background" Value="{DynamicResource  ResourceKey=MahApps.Brushes.Window.Background}" />
     </Style>
 
-    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
+    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource  ResourceKey=DefaultToolTip}" />
 
     <Style x:Key="HelpToolTip" TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}">
         <Setter Property="Template">

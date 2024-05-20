@@ -181,9 +181,9 @@
                                 </Button>
                             </Grid>
                         </StackPanel>
-                        <TextBlock Grid.Row="1" Text="{x:Static localization:Strings.Details}"
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Details}"
                                    Style="{StaticResource HeaderTextBlock}" />
-                        <ScrollViewer Grid.Row="2" Style="{StaticResource DefaultScrollViewer}">
+                        <ScrollViewer Grid.Column="0" Grid.Row="2">
                             <Grid>
                                 <Grid.Resources>
                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
@@ -851,7 +851,7 @@
                             </StackPanel>
                             <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}"
                                        Text="{x:Static localization:Strings.Configure}" />
-                            <ScrollViewer Grid.Row="2" Style="{StaticResource DefaultScrollViewer}">
+                            <ScrollViewer Grid.Row="2">
                                 <StackPanel>
                                     <RadioButton x:Name="RadioButtonConfigEnableDynamicIPAddress"
                                                  GroupName="IPAddressConfig"

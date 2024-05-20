@@ -15,7 +15,7 @@
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
-    <ScrollViewer Style="{StaticResource DefaultScrollViewer}" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel"
+    <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel"
                   HorizontalScrollBarVisibility="Disabled">
         <Grid>
             <Grid.RowDefinitions>
@@ -220,7 +220,6 @@
             <DataGrid Grid.Row="4" ItemsSource="{Binding LibrariesView}" SelectedItem="{Binding SelectedLibraryInfo}"
                       Margin="0,0,0,10">
                 <DataGrid.Resources>
-                    <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                     <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                         <MenuItem Header="{x:Static localization:Strings.OpenProject}"
                                   Command="{Binding OpenWebsiteCommand}"
@@ -296,7 +295,6 @@
             <DataGrid x:Name="DataGridExternalServices" Grid.Row="7" ItemsSource="{Binding ExternalServicesView}"
                       SelectedItem="{Binding SelectedExternalServicesInfo}" Margin="0,0,0,20">
                 <DataGrid.Resources>
-                    <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                     <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                         <MenuItem Header="{x:Static localization:Strings.OpenWebsite}"
                                   Command="{Binding OpenWebsiteCommand}"
@@ -341,7 +339,6 @@
             <DataGrid x:Name="DataGridResources" Grid.Row="9" ItemsSource="{Binding ResourcesView}"
                       SelectedItem="{Binding SelectedResourceInfo}">
                 <DataGrid.Resources>
-                    <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                     <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                         <MenuItem Header="{x:Static localization:Strings.OpenWebsite}"
                                   Command="{Binding OpenWebsiteCommand}"
