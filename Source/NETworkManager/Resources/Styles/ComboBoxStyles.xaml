@@ -2,9 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls">
     <Style x:Key="DefaultComboBox" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource MahApps.Styles.ComboBox}">
-        <Style.Resources>
-            <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaultScrollViewer}" />
-        </Style.Resources>
         <Setter Property="FontSize" Value="14" />
         <!--<Setter Property="BorderThickness" Value="0,0,0,1" />-->
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />

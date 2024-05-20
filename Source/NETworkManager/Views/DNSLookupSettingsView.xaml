@@ -23,7 +23,6 @@
         <DataGrid x:Name="DataGridDNSServers" ItemsSource="{Binding DNSServers}" SelectionMode="Single"
                   SelectedItem="{Binding SelectedDNSServer}" Height="200" Margin="0,0,0,10">
             <DataGrid.Resources>
-                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{x:Static localization:Strings.EditDots}"
                               Command="{Binding EditDNSServerCommand}">

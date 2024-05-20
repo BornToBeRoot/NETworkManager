@@ -148,8 +148,6 @@
                                       SelectedItem="{Binding SelectedResult}"
                                       SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <controls:MultiSelectDataGrid.Resources>
-                <Style TargetType="{x:Type TypeName=ScrollBar}"
-                       BasedOn="{StaticResource ResourceKey=DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{x:Static Member=localization:Strings.IPScanner}"
                               Command="{Binding RedirectDataToApplicationCommand}"

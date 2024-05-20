@@ -61,7 +61,6 @@
                                       ItemsSource="{Binding Servers}"
                                       SelectedItemsList="{Binding SelectedServers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <controls:MultiSelectDataGrid.Resources>
-                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="ContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{x:Static localization:Strings.Delete}" Command="{Binding DeleteServerCommand}">
                         <MenuItem.Icon>

@@ -26,9 +26,6 @@
                       ItemsSource="{Binding Path=OIDProfiles}"
                       SelectedItem="{Binding Path=SelectedOIDProfile}"
                       SelectionMode="Single">
-                <DataGrid.Resources>
-                    <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
-                </DataGrid.Resources>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="{x:Static Member=localization:Strings.Name}"
                                         Binding="{Binding Path=(network:SNMPOIDProfileInfo.Name)}"

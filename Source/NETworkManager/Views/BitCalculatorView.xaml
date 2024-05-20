@@ -128,7 +128,7 @@
                     <StackPanel Grid.Column="0" Grid.Row="0">
                         <TextBlock Style="{StaticResource HeaderTextBlock}"
                                    Text="{x:Static localization:Strings.Result}" />
-                        <ScrollViewer Style="{DynamicResource DefaultScrollViewer}">
+                        <ScrollViewer>
                             <Grid>
                                 <Grid.Resources>
                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" />

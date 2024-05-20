@@ -25,9 +25,6 @@
             <controls:MultiSelectDataGrid x:Name="DataGridProfiles"
                                           ItemsSource="{Binding Path=PortProfiles}"
                                           SelectedItemsList="{Binding Path=SelectedPortProfiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                <controls:MultiSelectDataGrid.Resources>
-                    <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
-                </controls:MultiSelectDataGrid.Resources>
                 <controls:MultiSelectDataGrid.Columns>
                     <DataGridTextColumn Header="{x:Static Member=localization:Strings.Name}"
                                         Binding="{Binding Path=(network:PortProfileInfo.Name)}"

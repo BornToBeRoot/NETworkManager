@@ -243,8 +243,6 @@
                                                                SelectedItem="{Binding Path=SelectedNetwork}"
                                                                SelectedItemsList="{Binding Path=SelectedNetworks, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                     <controls2:MultiSelectDataGrid.Resources>
-                                        <Style TargetType="{x:Type ScrollBar}"
-                                               BasedOn="{StaticResource ResourceKey=DataGridScrollBar}" />
                                         <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                                             <MenuItem Header="{x:Static Member=localization:Strings.ConnectDots}"
                                                       Command="{Binding ConnectCommand}"

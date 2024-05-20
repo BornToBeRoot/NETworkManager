@@ -36,9 +36,9 @@
                                      Style="{StaticResource SearchTextBox}" />
                             <ScrollViewer Grid.Row="1"
                                           ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback"
-                                          Style="{StaticResource FadeOutScrollViewer}">
+                                          Margin="10,0,10,10">
                                 <ListBox x:Name="ListBoxSettings" ItemsSource="{Binding SettingsViews}"
-                                         SelectedItem="{Binding SelectedSettingsView}" Margin="10,0,10,10">
+                                         SelectedItem="{Binding SelectedSettingsView}">
                                     <ListBox.GroupStyle>
                                         <GroupStyle>
                                             <GroupStyle.ContainerStyle>
@@ -194,7 +194,7 @@
                     </Border>
                     <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Disabled" Margin="10">
                         <ScrollViewer.Style>
-                            <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaultScrollViewer}">
+                            <Style TargetType="{x:Type ScrollViewer}">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding SelectedSettingsView.Name}"
                                                  Value="{x:Static settings:SettingsName.Language}">

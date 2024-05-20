@@ -39,7 +39,6 @@
                     <DataGrid Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Groups}" SelectionMode="Single"
                               SelectedItem="{Binding SelectedGroup}">
                         <DataGrid.Resources>
-                            <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                             <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                                 <MenuItem Header="{x:Static localization:Strings.EditDots}"
                                           Command="{Binding EditGroupCommand}">
@@ -136,7 +135,6 @@
                                               VirtualizingPanel.VirtualizationMode="Recycling"
                                               VirtualizingPanel.ScrollUnit="Item">
                     <DataGrid.Resources>
-                        <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                         <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                             <MenuItem Header="{x:Static localization:Strings.Delete}"
                                       Command="{Binding DeleteProfileCommand}">

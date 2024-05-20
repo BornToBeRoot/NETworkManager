@@ -133,9 +133,6 @@
                          VerticalScrollBarVisibility="Auto"
                          Text="{Binding Result}"
                          IsReadOnly="True">
-                    <TextBox.Resources>
-                        <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource TextBoxScrollBar}" />
-                    </TextBox.Resources>
                     <TextBox.Style>
                         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource ConsoleTextBox}">
                             <Setter Property="ContextMenu" Value="{StaticResource CopyExportContextMenu}" />

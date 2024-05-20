@@ -18,7 +18,6 @@
         <DataGrid x:Name="DataGridPortProfiles" ItemsSource="{Binding PortProfiles}" SelectionMode="Single"
                   SelectedItem="{Binding SelectedPortProfile}" Height="200" Margin="0,0,0,10">
             <DataGrid.Resources>
-                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="RowContextMenu_OnOpened" MinWidth="150">
                     <MenuItem Header="{x:Static localization:Strings.EditDots}"
                               Command="{Binding EditPortProfileCommand}">

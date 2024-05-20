@@ -9,8 +9,7 @@
              d:DataContext="{d:DesignInstance viewModels:DashboardViewModel}">
     <TabControl Style="{StaticResource ResourceKey=DefaultTabControl}">
         <TabItem Header="{x:Static Member=localization:Strings.Dashboard }">
-            <ScrollViewer Style="{StaticResource ResourceKey=DefaultScrollViewer}"
-                          HorizontalScrollBarVisibility="Disabled" Margin="10">
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled" Margin="10">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />

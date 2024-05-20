@@ -32,9 +32,6 @@
         </Grid>
         <ListView Grid.Row="2" ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}"
                   Background="Transparent" BorderThickness="0" SelectionMode="Single">
-            <ListView.Resources>
-                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ListViewScrollBar}" />
-            </ListView.Resources>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="5">

@@ -3817,4 +3817,10 @@ Try again in a few seconds.</value>
   <data name="ProfileFiles" xml:space="preserve">
     <value>Profile files</value>
   </data>
+  <data name="OpenSettingsDots" xml:space="preserve">
+    <value>Open settings...</value>
+  </data>
+  <data name="ExpandAndOpenSearchDots" xml:space="preserve">
+    <value>Expand and open search...</value>
+  </data>
 </root>
