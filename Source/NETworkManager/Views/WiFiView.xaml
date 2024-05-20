@@ -41,12 +41,24 @@
         <converters:WiFiPhyKindToStringConverter x:Key="WiFiPhyKindToStringConverter" />
     </UserControl.Resources>
     <Grid>
-        <Grid
-            Visibility="{Binding Path=SdkContractsFailedToLoad, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
+        <Grid>
+            <Grid.Style>
+                <Style TargetType="{x:Type Grid}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SdkContractAvailable}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding WiFiAdapterAccessEnabled}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
+
             <TabControl Grid.Row="0" Style="{StaticResource ResourceKey=DefaultTabControl}">
                 <TabItem Header="{x:Static Member=localization:Strings.WiFi}">
                     <Grid Margin="10">
@@ -812,7 +824,6 @@
                                            Style="{StaticResource ResourceKey=MessageTextBlock}" />
                             </StackPanel>
                         </StackPanel>
-                        <!-- SDK.Contracts not found -->
                     </Grid>
                 </TabItem>
             </TabControl>
@@ -946,10 +957,49 @@
         </Grid>
         <!-- SDK.Contracts not found -->
         <Grid
-            Visibility="{Binding Path=SdkContractsFailedToLoad, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
-            <TextBlock HorizontalAlignment="Stretch"
-                       Text="{x:Static Member=localization:Strings.MicrosoftWindowsSDKContractsIsNotAvailable}"
+            Visibility="{Binding Path=SdkContractAvailable, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}"
+            Margin="10">
+            <TextBlock Text="{x:Static Member=localization:Strings.MicrosoftWindowsSDKContractsIsNotAvailable}"
                        Style="{StaticResource ResourceKey=MessageTextBlock}" />
         </Grid>
+        <!-- WiFi adapter access disabled -->
+        <StackPanel VerticalAlignment="Center" Margin="10">
+            <StackPanel.Style>
+                <Style TargetType="{x:Type StackPanel}">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=SdkContractAvailable}" Value="True" />
+                                <Condition Binding="{Binding Path=WiFiAdapterAccessEnabled}" Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.Setters>
+                                <Setter Property="Visibility" Value="Visible" />
+                            </MultiDataTrigger.Setters>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <TextBlock Text="{x:Static localization:Strings.WiFiAccessNotAvailableMessage}"
+                       Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
+            <Button HorizontalAlignment="Center" Command="{Binding Path=OpenSettingsCommand}"
+                    Style="{StaticResource ImageWithTextButton}">
+                <Button.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:MaterialLight Kind=Cog}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.OpenSettings}"
+                                   Style="{StaticResource ButtonWithImageTextBlock}" />
+                    </Grid>
+                </Button.Content>
+            </Button>
+        </StackPanel>
     </Grid>
 </UserControl>
