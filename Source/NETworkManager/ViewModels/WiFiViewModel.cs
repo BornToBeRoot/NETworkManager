@@ -565,6 +565,9 @@ public class WiFiViewModel : ViewModelBase
     {
         IsAdaptersLoading = true;
 
+        // Show a loading animation for the user
+        await Task.Delay(2500);
+        
         Adapters = await WiFi.GetAdapterAsync();
 
         // Check if we found any adapters
