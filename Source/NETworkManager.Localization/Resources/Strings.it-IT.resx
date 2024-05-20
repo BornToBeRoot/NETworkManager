@@ -3918,4 +3918,11 @@ Attendi il completamento del processo e riprova.</value>
   <data name="ExpandAndOpenSearchDots" xml:space="preserve">
     <value>Espandi e apri ricerca...</value>
   </data>
+  <data name="WiFiAccessNotAvailableMessage" xml:space="preserve">
+    <value>L'accesso alla scheda Wi-Fi non è consentito da Windows.
+
+Apri le impostazioni di Windows e consenti l'accesso Wi-Fi per questa applicazione.
+
+Per usare questa funzionalità riavvia l'applicazione.</value>
+  </data>
 </root>
