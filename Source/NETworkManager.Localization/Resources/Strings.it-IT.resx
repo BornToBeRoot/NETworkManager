@@ -3909,4 +3909,13 @@ Attendi il completamento del processo e riprova.</value>
   <data name="ToolTip_RunCommandWithHotKey" xml:space="preserve">
     <value>Esegui comando... (Ctrl+Maiusc+P)</value>
   </data>
+  <data name="ProfileFiles" xml:space="preserve">
+    <value>File profili</value>
+  </data>
+  <data name="OpenSettingsDots" xml:space="preserve">
+    <value>Apri impostazioni...</value>
+  </data>
+  <data name="ExpandAndOpenSearchDots" xml:space="preserve">
+    <value>Espandi e apri ricerca...</value>
+  </data>
 </root>
