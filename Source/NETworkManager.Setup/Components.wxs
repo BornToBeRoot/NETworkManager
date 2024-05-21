@@ -12,7 +12,7 @@
 		<Component>
 			<File Id="NETworkManagerExecutable"
 				  Source="$(var.NETworkManager.TargetDir)NETworkManager.exe">
-				<!-- Startmenu shortcut -->
+				<!-- Start menu shortcut -->
 				<Shortcut Name="NETworkManager" 
 						  Directory="ProgramMenuFolder" 
 						  Advertise="true" 
