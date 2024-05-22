@@ -118,11 +118,19 @@ const config = {
             ],
           },
           {
-            title: "Source Code",
+            title: "Contributing",
             items: [
               {
                 label: "GitHub",
                 href: "https://github.com/BornToBeRoot/NETworkManager",
+              },
+              {
+                label: "Transifex",
+                href: "https://app.transifex.com/BornToBeRoot/NETworkManager/",
+              },
+              {
+                label: "Code of Conduct",
+                href: "https://github.com/BornToBeRoot/NETworkManager/blob/main/CODE_OF_CONDUCT.md",
               },
             ],
           },
