@@ -505,7 +505,7 @@
     <value>Máximo</value>
   </data>
   <data name="MaximumHops" xml:space="preserve">
-    <value>Maximum hops</value>
+    <value>Máximo de saltos</value>
   </data>
   <data name="MinimizeInsteadOfTerminating" xml:space="preserve">
     <value>Minimizar janela principal em vez de finalizar o aplicativo</value>
@@ -589,7 +589,7 @@
     <value>Servidor DNS IPv4 estático</value>
   </data>
   <data name="SubnetMask" xml:space="preserve">
-    <value>Subnet mask</value>
+    <value>Máscara de sub-rede </value>
   </data>
   <data name="Threads" xml:space="preserve">
     <value>Segmentos</value>
@@ -613,7 +613,7 @@
     <value>Tempo limite (ms)</value>
   </data>
   <data name="TimeMSToWaitBetweenEachPing" xml:space="preserve">
-    <value>Time (ms) to wait between each ping</value>
+    <value>Tempo para esperar (ms) entre cada ping</value>
   </data>
   <data name="TTL" xml:space="preserve">
     <value>TTL</value>
@@ -831,7 +831,7 @@ Primeiro faça uma cópia de backup dos seus arquivos de perfil antes de habilit
     <value>Hora final</value>
   </data>
   <data name="EnterASubnetToCalculateItDots" xml:space="preserve">
-    <value>Enter a subnet to calculate it...</value>
+    <value>Insira uma sub-rede para calculá-la...</value>
   </data>
   <data name="EnterSubnetAndANewSubnetmaskToCreateSubnets" xml:space="preserve">
     <value>Digite a sub-rede e uma nova máscara de sub-rede para criar sub-redes...</value>
@@ -1084,7 +1084,7 @@ Crie um...</value>
     <value>Serial</value>
   </data>
   <data name="SerialLine" xml:space="preserve">
-    <value>Serial line</value>
+    <value>Linha de série</value>
   </data>
   <data name="Service" xml:space="preserve">
     <value>Serviço</value>
@@ -1151,7 +1151,7 @@ Os arquivos do perfil não foram afetados!</value>
     <value>A pasta de configurações não é afetada!</value>
   </data>
   <data name="TimeoutOnSNMPQuery" xml:space="preserve">
-    <value>Timeout on SNMP query. Maybe the host is not reachable or the community / password is wrong.</value>
+    <value>Tempo limite na consulta SNMP. Talvez o host não esteja acessível ou a comunidade/senha esteja errada.</value>
   </data>
   <data name="TimeoutWhenQueryingDNSServerMessage" xml:space="preserve">
     <value>Tempo limite ao consultar o servidor DNS com o endereço IP "{0}"!</value>
@@ -1166,7 +1166,7 @@ Os arquivos do perfil não foram afetados!</value>
     <value>Erro desconhecido!</value>
   </data>
   <data name="UntrayBringWindowToForeground" xml:space="preserve">
-    <value>Untray / Bring window to foreground</value>
+    <value>Trazer janela para a frente</value>
   </data>
   <data name="URL" xml:space="preserve">
     <value>URL</value>
@@ -1929,15 +1929,15 @@ Alterar esse valor requer uma reinicialização do aplicativo para entrar em vig
     <value>Painel de Controle</value>
   </data>
   <data name="AllSettingsCanBeChangedLaterInTheSettings" xml:space="preserve">
-    <value>All settings can be changed later in the settings!</value>
+    <value>Todas as configurações podem ser alteradas mais tarde nas configurações!</value>
   </data>
   <data name="CheckPublicIPAddress" xml:space="preserve">
     <value>Verificar endereço de IP público</value>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
-    <value>Thank you for using NETworkManager!
+    <value>Obrigado por usar o NETworkManager!
 
-If you like this tool, please leave a star on GitHub and recommend it to others.</value>
+Se você gosta desta ferramenta, deixe uma estrela no GitHub e recomende-a a outras pessoas.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Ao iniciar o programa, ele verifica em segundo plano se uma nova versão do programa está disponível no GitHub.
@@ -2212,7 +2212,7 @@ $$hostname$$--&gt;Nome do host</value>
     <value>Mostrar janela de status ao alterar rede</value>
   </data>
   <data name="TimeInSecondsHowLongTheStatusWindowIsShown" xml:space="preserve">
-    <value>Time in seconds how long the status window is shown</value>
+    <value>Tempo em segundos de quanto tempo a janela de status deve ser exibida</value>
   </data>
   <data name="WiFi" xml:space="preserve">
     <value>Wi-Fi</value>
@@ -2608,46 +2608,46 @@ $$hostname$$--&gt;Nome do host</value>
     <value>Amarelo</value>
   </data>
   <data name="Accent_Steel" xml:space="preserve">
-    <value>Steel</value>
+    <value>Aço</value>
   </data>
   <data name="ProfileName_General" xml:space="preserve">
-    <value>General</value>
+    <value>Geral</value>
   </data>
   <data name="SettingsGroup_Application" xml:space="preserve">
-    <value>Applications</value>
+    <value>Aplicativos</value>
   </data>
   <data name="SettingsGroup_General" xml:space="preserve">
-    <value>General</value>
+    <value>Geral</value>
   </data>
   <data name="SettingsName_Appearance" xml:space="preserve">
-    <value>Appearance</value>
+    <value>Aparência</value>
   </data>
   <data name="SettingsName_Autostart" xml:space="preserve">
-    <value>Autostart</value>
+    <value>Iniciar automático</value>
   </data>
   <data name="SettingsName_General" xml:space="preserve">
-    <value>General</value>
+    <value>Geral</value>
   </data>
   <data name="SettingsName_HotKeys" xml:space="preserve">
-    <value>HotKeys</value>
+    <value>Teclas de Atalho</value>
   </data>
   <data name="SettingsName_Language" xml:space="preserve">
-    <value>Language</value>
+    <value>Idioma</value>
   </data>
   <data name="SettingsName_Profiles" xml:space="preserve">
-    <value>Profiles</value>
+    <value>Perfis</value>
   </data>
   <data name="SettingsName_Settings" xml:space="preserve">
-    <value>Settings</value>
+    <value>Configurações</value>
   </data>
   <data name="SettingsName_Status" xml:space="preserve">
     <value>Status</value>
   </data>
   <data name="SettingsName_Update" xml:space="preserve">
-    <value>Update</value>
+    <value>Atualizar</value>
   </data>
   <data name="SettingsName_Window" xml:space="preserve">
-    <value>Window</value>
+    <value>Janela</value>
   </data>
   <data name="EnableLog" xml:space="preserve">
     <value>Habilitar registro</value>
@@ -2677,7 +2677,7 @@ $$hostname$$--&gt;Nome do host</value>
     <value>Registro SSH</value>
   </data>
   <data name="PuTTYLogMode_SSHRawLog" xml:space="preserve">
-    <value>SSH and Raw log</value>
+    <value>Registro SSH e Raw</value>
   </data>
   <data name="EnterValidFileName" xml:space="preserve">
     <value>Entre o nome válido de arquivo!</value>
@@ -2740,15 +2740,15 @@ $$hostname$$--&gt;Nome do host</value>
     <value>SSID</value>
   </data>
   <data name="ProfileFileCouldNotBeLoaded" xml:space="preserve">
-    <value>Profile file could not be loaded!</value>
+    <value>O perfil não pôde ser carregado!</value>
   </data>
   <data name="ProfileFileCouldNotBeLoadedMessage" xml:space="preserve">
-    <value>The profile file could not be loaded and may be corrupted. You can try to restore the file from a backup or delete it.
+    <value>O arquivo de perfil não pôde ser carregado e pode estar corrompido. Você pode tentar restaurar o arquivo de um backup ou excluí-lo.
 
-If this happens unexpectedly or after an update, please report the error on GitHub.
+Se isso acontecer inesperadamente ou após uma atualização, relate o erro no GitHub.
 
 
-Error message:
+Mensagem de erro:
 "{0}"</value>
   </data>
   <data name="EditGroupDots" xml:space="preserve">
@@ -3056,14 +3056,14 @@ O perfil não foi removido do arquivo ~\.aws\credentials.</value>
     <value>Região padrão</value>
   </data>
   <data name="HelpMessage_AWSSessionManagerProfile" xml:space="preserve">
-    <value>Profile which is used by manually created profiles to connect to an EC2 instance via AWS CLI.
+    <value>O perfil que é usado para criar perfis para conectar a uma instância EC2 pelo CLI do AWS.
 
-If not set, the default AWS CLI settings are used.</value>
+Se não definidas, as configurações CLI padrão do AWS serão usadas.</value>
   </data>
   <data name="HelpMessage_AWSSessionManagerRegion" xml:space="preserve">
-    <value>Region which is used by manually created profiles to connect to an EC2 instance via AWS CLI .
+    <value>A região que é usada para criar perfis para conectar a uma instância EC2 pelo CLI do AWS.
 
-If not set, the default AWS CLI settings are used.</value>
+Se não definidas, as configurações CLI padrão do AWS serão usadas.</value>
   </data>
   <data name="HelpMessage_AWSCLIDefaultsAreUsedIfNotSet" xml:space="preserve">
     <value>Se não definidas, as configurações CLI padrão do AWS serão usadas.</value>
@@ -3168,10 +3168,10 @@ Se a opção for desativada novamente, os valores não serão mais modificados. 
     <value>Terabytes</value>
   </data>
   <data name="EnterANumberAndSelectAUnitToCalculateTheUnitsDots" xml:space="preserve">
-    <value>Enter a number and select a unit to calculate the units...</value>
+    <value>Digite um número e selecione uma unidade para calcular as unidades...</value>
   </data>
   <data name="SettingsName_Network" xml:space="preserve">
-    <value>Network</value>
+    <value>Rede</value>
   </data>
   <data name="Proxy" xml:space="preserve">
     <value>Proxy</value>
@@ -3309,277 +3309,277 @@ As alterações nesse valor entrarão em vigor depois que o aplicativo for reini
     <value>Mostrar barra de endereço</value>
   </data>
   <data name="WarnMessage_MultipleInstances" xml:space="preserve">
-    <value>Enabling this setting is not recommended. Multiple instances of the application share the same settings and profile files. The last instance to be closed may overwrite changes made by other instances.</value>
+    <value>Ativar esta configuração não é recomendado. Várias instâncias do aplicativo compartilham as mesmas configurações e arquivos de perfil. A última instância a ser fechada pode substituir as alterações feitas por outras instâncias.</value>
   </data>
   <data name="BypassForLocalAddresses" xml:space="preserve">
-    <value>Bypass for local addresses</value>
+    <value>Ignorar para endereços locais</value>
   </data>
   <data name="EnableGatewayServer" xml:space="preserve">
-    <value>Enable gateway server</value>
+    <value>Habilitar servidor gateway</value>
   </data>
   <data name="LogonMethod" xml:space="preserve">
-    <value>Logon method</value>
+    <value>Método de logon</value>
   </data>
   <data name="GatewayServer" xml:space="preserve">
-    <value>Gateway server</value>
+    <value>Servidor gateway</value>
   </data>
   <data name="ServerName" xml:space="preserve">
-    <value>Server name</value>
+    <value>Nome do servidor</value>
   </data>
   <data name="ShareGatewayCredentialsWithRemoteComputer" xml:space="preserve">
-    <value>Share Gateway credentials with remote computer</value>
+    <value>Compartilhar credenciais do gateway com computador remoto</value>
   </data>
   <data name="RemoteDesktopGatewayServerLogonMethod_Any" xml:space="preserve">
-    <value>Allow me to select later</value>
+    <value>Permitir selecionar mais tarde</value>
   </data>
   <data name="RemoteDesktopGatewayServerLogonMethod_Smartcard" xml:space="preserve">
-    <value>Smart card or Windows Hello for Business</value>
+    <value>Cartão inteligente ou Windows Hello para Empresas</value>
   </data>
   <data name="RemoteDesktopGatewayServerLogonMethod_Userpass" xml:space="preserve">
-    <value>Ask for password (NTLM)</value>
+    <value>Solicitar senha (NTLM)</value>
   </data>
   <data name="UseGatewayCredentials" xml:space="preserve">
-    <value>Use gateway credentials</value>
+    <value>Usar credenciais do gateway</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331661" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server is temporarily unavailable. Try reconnecting later or contact your network administrator for assistance.</value>
+    <value>Seu computador não consegue se conectar ao computador remoto porque o servidor Remote Desktop Gateway está temporariamente indisponível. Tente reconectar mais tarde ou entre em contato com o administrador da rede para obter assistência.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331651" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer due to one of the following reasons:  1) The requested Remote Desktop Gateway server address and the server SSL certificate subject name do not match. 2) The certificate is expired or revoked. 3) The certificate root authority does not trust the certificate.  Contact your network administrator for assistance.</value>
+    <value>Seu computador não consegue se conectar ao computador remoto devido a um dos seguintes motivos: 1) O endereço do servidor Gateway de Área de Trabalho Remota solicitado e o nome da entidade do certificado SSL do servidor não correspondem. 2) O certificado expirou ou foi revogado. 3) A autoridade raiz do certificado não confia no certificado. Entre em contato com o administrador da rede para obter assistência.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331653" xml:space="preserve">
-    <value>This computer can't verify the identity of the RD Gateway "". It's not safe to connect to servers that can't be identified. Contact your network administrator for assistance.</value>
+    <value>Este computador não consegue verificar a identidade do Gateway RD "". Não é seguro conectar-se a servidores que não podem ser identificados. Entre em contato com o administrador da rede para obter assistência.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331654" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server address requested and the certificate subject name do not match. Contact your network administrator for assistance.</value>
+    <value>Seu computador não pode se conectar ao computador remoto porque o endereço do servidor Gateway de Área de Trabalho Remota solicitado e o nome da entidade do certificado não correspondem. Entre em contato com o administrador da rede para obter assistência.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331655" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server's certificate has expired or has been revoked. Contact your network administrator for assistance.</value>
+    <value>Seu computador não consegue se conectar ao computador remoto porque o certificado do servidor Gateway de Área de Trabalho Remota expirou ou foi revogado. Entre em contato com o administrador da rede para obter assistência.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331657" xml:space="preserve">
-    <value>An error occurred while sending data to the Remote Desktop Gateway server. The server is temporarily unavailable or a network connection is down. Try again later, or contact your network administrator for assistance.</value>
+    <value>Ocorreu um erro ao enviar dados para o servidor Remote Desktop Gateway. O servidor está temporariamente indisponível ou a conexão de rede está indisponível. Tente novamente mais tarde ou entre em contato com o administrador da rede para obter assistência.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331658" xml:space="preserve">
-    <value>An error occurred while receiving data from the Remote Desktop Gateway server. Either the server is temporarily unavailable or a network connection is down. Try again later, or contact your network administrator for assistance.</value>
+    <value>Ocorreu um erro ao receber dados do servidor Remote Desktop Gateway. O servidor está temporariamente indisponível ou a conexão de rede está inoperante. Tente novamente mais tarde ou entre em contato com o administrador da rede para obter assistência.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331660" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server address is unreachable or incorrect. Type a valid Remote Desktop Gateway server address.</value>
+    <value>Seu computador não consegue se conectar ao computador remoto porque o endereço do servidor Remote Desktop Gateway está inacessível ou incorreto. Digite um endereço de servidor Gateway de Área de Trabalho Remota válido.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331663" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server is running low on server resources and is temporarily unavailable. Try reconnecting later or contact your network administrator for assistance.</value>
+    <value>Seu computador não consegue se conectar ao computador remoto porque o servidor Gateway de Área de Trabalho Remota está com poucos recursos do servidor e está temporariamente indisponível. Tente reconectar mais tarde ou entre em contato com o administrador da rede para obter assistência.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331672" xml:space="preserve">
-    <value>The Remote Desktop Gateway server has ended the connection. Try reconnecting later or contact your network administrator for assistance.</value>
+    <value>O servidor Gateway de Área de Trabalho Remota encerrou a conexão. Tente reconectar mais tarde ou entre em contato com o administrador da rede para obter assistência.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331673" xml:space="preserve">
-    <value>The Remote Desktop Gateway server administrator has ended the connection. Try reconnecting later or contact your network administrator for assistance.</value>
+    <value>O administrador do servidor Remote Desktop Gateway encerrou a conexão. Tente reconectar mais tarde ou entre em contato com o administrador da rede para obter assistência.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331675" xml:space="preserve">
-    <value>Remote Desktop can't connect to the remote computer "" for one of these reasons:  1) Your user account is not listed in the RD Gateway's permission list 2) You might have specified the remote computer in NetBIOS format (for example, computer1), but the RD Gateway is expecting an FQDN or IP address format (for example, computer1.fabrikam.com or 157.60.0.1).  Contact your network administrator for assistance.</value>
+    <value>A Área de Trabalho Remota não pode se conectar ao computador remoto "" por um destes motivos: 1) Sua conta de usuário não está listada na lista de permissões do Gateway RD 2) Você pode ter especificado o computador remoto no formato NetBIOS (por exemplo, computador1) , mas o Gateway RD espera um formato de endereço IP ou FQDN (por exemplo, computer1.fabrikam.com ou 157.60.0.1). Entre em contato com o administrador da rede para obter assistência.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331676" xml:space="preserve">
-    <value>Remote Desktop can't connect to the remote computer "" for one of these reasons:  1) Your user account is not authorized to access the RD Gateway "" 2) Your computer is not authorized to access the RD Gateway "" 3) You are using an incompatible authentication method (for example, the RD Gateway might be expecting a smart card but you provided a password)  Contact your network administrator for assistance.</value>
+    <value>A Área de Trabalho Remota não consegue se conectar ao computador remoto "" por um destes motivos: 1) Sua conta de usuário não está autorizada a acessar o Gateway RD "" 2) Seu computador não está autorizado a acessar o Gateway RD "" 3) Você estiver usando um método de autenticação incompatível (por exemplo, o gateway RD pode estar esperando um cartão inteligente, mas você forneceu uma senha). Entre em contato com o administrador da rede para obter assistência.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331679" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because your network administrator has restricted access to this RD Gateway server. Contact your network administrator for assistance.</value>
+    <value>Seu computador não consegue se conectar ao computador remoto porque o administrador da rede restringiu o acesso a este servidor Gateway RD. Entre em contato com o administrador da rede para obter assistência.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331680" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the web proxy server requires authentication. To allow unauthenticated traffic to an RD Gateway server through your web proxy server, contact your network administrator.</value>
+    <value>Seu computador não consegue se conectar ao computador remoto porque o servidor proxy da web requer autenticação. Para permitir o tráfego não autenticado para um servidor Gateway RD através do seu servidor proxy da Web, entre em contato com o administrador da rede.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331682" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server reached its maximum allowed connections. Try reconnecting later or contact your network administrator for assistance.</value>
+    <value>Seu computador não consegue se conectar ao computador remoto porque o servidor Remote Desktop Gateway atingiu o máximo de conexões permitidas. Tente reconectar mais tarde ou entre em contato com o administrador da rede para obter assistência.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331683" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server does not support the request. Contact your network administrator for assistance.</value>
+    <value>Seu computador não consegue se conectar ao computador remoto porque o servidor Remote Desktop Gateway não oferece suporte à solicitação. Entre em contato com o administrador da rede para obter assistência.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331684" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the client does not support one of the Remote Desktop Gateway's capabilities. Contact your network administrator for assistance.</value>
+    <value>Seu computador não consegue se conectar ao computador remoto porque o cliente não oferece suporte a um dos recursos do Gateway de Área de Trabalho Remota. Entre em contato com o administrador da rede para obter assistência.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331685" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server and this computer are incompatible. Contact your network administrator for assistance.</value>
+    <value>Seu computador não consegue se conectar ao computador remoto porque o servidor Remote Desktop Gateway e este computador são incompatíveis. Entre em contato com o administrador da rede para obter assistência.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331688" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because no certificate was configured to use at the Remote Desktop Gateway server. Contact your network administrator for assistance.</value>
+    <value>Seu computador não consegue se conectar ao computador remoto porque nenhum certificado foi configurado para uso no servidor Gateway de Área de Trabalho Remota. Entre em contato com o administrador da rede para obter assistência.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331689" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the RD Gateway server that you are trying to connect to is not allowed by your computer administrator. If you are the administrator, add this Remote Desktop Gateway server name to the trusted Remote Desktop Gateway server list on your computer and then try connecting again.</value>
+    <value>Seu computador não consegue se conectar ao computador remoto porque o servidor Gateway RD ao qual você está tentando se conectar não é permitido pelo administrador do computador. Se você for o administrador, adicione este nome de servidor Gateway de Área de Trabalho Remota à lista confiável de servidores Gateway de Área de Trabalho Remota em seu computador e tente conectar-se novamente.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331690" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because your computer or device did not meet the Network Access Protection requirements set by your network administrator, for one of the following reasons:  1) The Remote Desktop Gateway server name and the server's public key certificate subject name do not match. 2) The certificate has expired or has been revoked. 3) The certificate root authority does not trust the certificate. 4) The certificate key extension does not support encryption. 5) Your computer cannot verify the certificate revocation list.  Contact your network administrator for assistance.</value>
+    <value>Seu computador não pode se conectar ao computador remoto porque seu computador ou dispositivo não atendeu aos requisitos de proteção de acesso à rede definidos pelo administrador de rede, por um dos seguintes motivos: 1) O nome do servidor Remote Desktop Gateway e o certificado de chave pública do servidor o nome do assunto não corresponde. 2) O certificado expirou ou foi revogado. 3) A autoridade raiz do certificado não confia no certificado. 4) A extensão da chave do certificado não oferece suporte à criptografia. 5) Seu computador não consegue verificar a lista de certificados revogados. Entre em contato com o administrador da rede para obter assistência.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331691" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because a user name and password are required to authenticate to the Remote Desktop Gateway server instead of smart card credentials.</value>
+    <value>Seu computador não pode se conectar ao computador remoto porque são necessários um nome de usuário e uma senha para autenticar no servidor Gateway de Área de Trabalho Remota em vez de credenciais de cartão inteligente.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331692" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because smart card credentials are required to authenticate to the Remote Desktop Gateway server instead of a user name and password.</value>
+    <value>Seu computador não pode se conectar ao computador remoto porque são necessárias credenciais de cartão inteligente para autenticação no servidor Gateway de Área de Trabalho Remota, em vez de um nome de usuário e senha.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331700" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because an invalid cookie was sent to the Remote Desktop Gateway server. Contact your network administrator for assistance.</value>
+    <value>Seu computador não consegue se conectar ao computador remoto porque um cookie inválido foi enviado ao servidor Remote Desktop Gateway. Entre em contato com o administrador da rede para obter assistência.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331701" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the cookie was rejected by the Remote Desktop Gateway server. Contact your network administrator for assistance.</value>
+    <value>Seu computador não consegue se conectar ao computador remoto porque o cookie foi rejeitado pelo servidor Remote Desktop Gateway. Entre em contato com o administrador da rede para obter assistência.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331703" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server is expecting an authentication method different from the one attempted. Contact your network administrator for assistance.</value>
+    <value>Seu computador não consegue se conectar ao computador remoto porque o servidor Gateway de Área de Trabalho Remota espera um método de autenticação diferente daquele tentado. Entre em contato com o administrador da rede para obter assistência.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331704" xml:space="preserve">
-    <value>The RD Gateway connection ended because periodic user authentication failed. Try reconnecting with a correct user name and password. If the reconnection fails, contact your network administrator for further assistance.</value>
+    <value>A conexão do Gateway RD foi encerrada porque a autenticação periódica do usuário falhou. Tente se reconectar com um nome de usuário e senha corretos. Se a reconexão falhar, entre em contato com o administrador da rede para obter mais assistência.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331705" xml:space="preserve">
-    <value>The RD Gateway connection ended because periodic user authorization failed. Try reconnecting with a correct user name and password. If the reconnection fails, contact your network administrator for further assistance.</value>
+    <value>A conexão do Gateway RD foi encerrada porque a autorização periódica do usuário falhou. Tente se reconectar com um nome de usuário e senha corretos. Se a reconexão falhar, entre em contato com o administrador da rede para obter mais assistência.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331707" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway and the remote computer are unable to exchange policies. This could happen due to one of the following reasons:     1. The remote computer is not capable of exchanging policies with the Remote Desktop Gateway.     2. The remote computer's configuration does not permit a new connection.     3. The connection between the Remote Desktop Gateway and the remote computer ended.    Contact your network administrator for assistance.</value>
+    <value>Seu computador não consegue se conectar ao computador remoto porque o Gateway de Área de Trabalho Remota e o computador remoto não conseguem trocar políticas. Isso pode acontecer por um dos seguintes motivos: 1. O computador remoto não é capaz de trocar políticas com o Gateway de Área de Trabalho Remota. 2. A configuração do computador remoto não permite uma nova conexão. 3. A conexão entre o Gateway de Área de Trabalho Remota e o computador remoto foi encerrada. Entre em contato com o administrador da rede para obter assistência.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331713" xml:space="preserve">
-    <value>The RD Gateway connection ended because periodic user authorization failed. Your computer or device didn't pass the Network Access Protection (NAP) requirements set by your network administrator. Contact your network administrator for assistance.</value>
+    <value>A conexão do Gateway RD foi encerrada porque a autorização periódica do usuário falhou. Seu computador ou dispositivo não atendeu aos requisitos de proteção de acesso à rede (NAP) definidos pelo administrador da rede. Entre em contato com o administrador da rede para obter assistência.</value>
   </data>
   <data name="Connected" xml:space="preserve">
-    <value>Connected</value>
+    <value>Conectad</value>
   </data>
   <data name="ErrorWhileScanningWiFiAdapterXXXWithErrorXXX" xml:space="preserve">
-    <value>Error while scanning WiFi adapter "{0}" with error: "{1}"</value>
+    <value>Erro ao examinar adaptador Wi-Fi "{0}" com erro: "{1}"</value>
   </data>
   <data name="ConnectDots" xml:space="preserve">
-    <value>Connect...</value>
+    <value>Conectar...</value>
   </data>
   <data name="XXXDisconnected" xml:space="preserve">
-    <value>{0} disconnected!</value>
+    <value>{0} desconectado!</value>
   </data>
   <data name="ConnectToXXX" xml:space="preserve">
-    <value>Connect to {0}</value>
+    <value>Conectar à {0}</value>
   </data>
   <data name="WPS" xml:space="preserve">
     <value>WPS</value>
   </data>
   <data name="ConnectAutomatically" xml:space="preserve">
-    <value>Connect automatically</value>
+    <value>Conectar automaticamente</value>
   </data>
   <data name="PreSharedKey" xml:space="preserve">
-    <value>Pre-shared key</value>
+    <value>Chave pré-compartilhada</value>
   </data>
   <data name="ConnectingToXXX" xml:space="preserve">
-    <value>Connecting to {0}...</value>
+    <value>Conectando à {0}...</value>
   </data>
   <data name="CouldNotConnectToXXXReasonXXX" xml:space="preserve">
-    <value>Could not connect to {0} ({1})!</value>
+    <value>Não foi possível conectar-se a "{0}({1})"!</value>
   </data>
   <data name="SuccessfullyConnectedToXXX" xml:space="preserve">
-    <value>Successfully connected to {0}!</value>
+    <value>Conectado com sucesso a {0}!</value>
   </data>
   <data name="WiFiConnectionStatus_AccessRevoked" xml:space="preserve">
-    <value>Access to the network has been revoked</value>
+    <value>O acesso à rede foi revogado</value>
   </data>
   <data name="WiFiConnectionStatus_InvalidCredential" xml:space="preserve">
-    <value>Invalid credentials</value>
+    <value>Credenciais inválidas</value>
   </data>
   <data name="WiFiConnectionStatus_NetworkNotAvailable" xml:space="preserve">
-    <value>Network not available</value>
+    <value>Rede não disponível</value>
   </data>
   <data name="WiFiConnectionStatus_Success" xml:space="preserve">
-    <value>Successful</value>
+    <value>Sucesso</value>
   </data>
   <data name="WiFiConnectionStatus_Timeout" xml:space="preserve">
-    <value>Connection attempt timed out</value>
+    <value>A tentativa de conexão expirou</value>
   </data>
   <data name="WiFiConnectionStatus_UnspecifiedFailure" xml:space="preserve">
     <value>-/-</value>
   </data>
   <data name="WiFiConnectionStatus_UnsupportedAuthenticationProtocol" xml:space="preserve">
-    <value>Authentication protocol is not supported!</value>
+    <value>Protocolo de autenticação não suportado!</value>
   </data>
   <data name="CheckingWPSDots" xml:space="preserve">
-    <value>Checking WPS...</value>
+    <value>Verificando WPS...</value>
   </data>
   <data name="OpenOIDProfilesDots" xml:space="preserve">
-    <value>Open OID profiles...</value>
+    <value>Abrir perfil OID...</value>
   </data>
   <data name="MIB" xml:space="preserve">
     <value>MIB</value>
   </data>
   <data name="OIDProfiles" xml:space="preserve">
-    <value>OID profiles</value>
+    <value>Perfis OID</value>
   </data>
   <data name="SelectOIDProfile" xml:space="preserve">
-    <value>Select OID profile</value>
+    <value>Selecionar perfi OID</value>
   </data>
   <data name="AddOIDProfile" xml:space="preserve">
-    <value>Add OID profile</value>
+    <value>Adicionar perfil OID</value>
   </data>
   <data name="DeleteOIDProfile" xml:space="preserve">
-    <value>Delete OID profile</value>
+    <value>Excluir perfil OID</value>
   </data>
   <data name="DeleteOIDProfileMessage" xml:space="preserve">
-    <value>The selected OID profile will be deleted permanently.</value>
+    <value>O perfil OID selecionado será excluído permanentemente.</value>
   </data>
   <data name="EditOIDProfile" xml:space="preserve">
-    <value>Edit OID profile</value>
+    <value>Editar perfil OID</value>
   </data>
   <data name="EnterPasswordDots" xml:space="preserve">
-    <value>Enter password...</value>
+    <value>Inserir senha...</value>
   </data>
   <data name="AddTab" xml:space="preserve">
-    <value>Add tab</value>
+    <value>Adicionar aba</value>
   </data>
   <data name="FromProfile" xml:space="preserve">
-    <value>(from profile)</value>
+    <value>(do perfil)</value>
   </data>
   <data name="NewSubnetMask" xml:space="preserve">
-    <value>New subnet mask</value>
+    <value>Nova máscara de sub-rede</value>
   </data>
   <data name="AddServer" xml:space="preserve">
-    <value>Add server</value>
+    <value>Adicionar servidor</value>
   </data>
   <data name="SNTPServer" xml:space="preserve">
-    <value>SNTP server</value>
+    <value>Servidor SNTP</value>
   </data>
   <data name="ErrorMessage_TabPageHasError" xml:space="preserve">
-    <value>The settings on this page contain errors. Correct them to be able to save.</value>
+    <value>As configurações nesta página contêm erros. Corrija-os para poder salvar.</value>
   </data>
   <data name="HelpMessage_PuTTYHostkey" xml:space="preserve">
-    <value>SSH hostkey to use for the connection (like "71:b8:f2:6e..."). Only available if the mode is "SSH".</value>
+    <value>Chave de host SSH a ser usada para a conexão (como "71:b8:f2:6e..."). Disponível apenas se o modo for "SSH".</value>
   </data>
   <data name="HelpMessage_PuTTYPrivateKeyFile" xml:space="preserve">
-    <value>Full path to the private key file (like "C:\Users\BornToBeRoot\SSH\private_key.ppk"). Only available if the mode is "SSH".</value>
+    <value>Caminho completo para o arquivo de chave privada (como "C:\Users\BornToBeRoot\SSH\private_key.ppk"). Disponível apenas se o modo for "SSH".</value>
   </data>
   <data name="HelpMessage_PuTTYUsername" xml:space="preserve">
-    <value>Username that will be passed into the PuTTY session. Only available if the mode is "SSH", "Telnet" or "Rlogin".</value>
+    <value>Nome de usuário que será passado para a sessão PuTTY. Disponível apenas se o modo for "SSH", "Telnet" ou "Rlogin".</value>
   </data>
   <data name="ASN" xml:space="preserve">
     <value>ASN</value>
   </data>
   <data name="ASName" xml:space="preserve">
-    <value>AS Name</value>
+    <value>Nome AS</value>
   </data>
   <data name="City" xml:space="preserve">
-    <value>City</value>
+    <value>Cidade</value>
   </data>
   <data name="Continent" xml:space="preserve">
-    <value>Continent</value>
+    <value>Continente</value>
   </data>
   <data name="Country" xml:space="preserve">
-    <value>Country</value>
+    <value>País</value>
   </data>
   <data name="Currency" xml:space="preserve">
-    <value>Currency</value>
+    <value>Moeda</value>
   </data>
   <data name="District" xml:space="preserve">
-    <value>District</value>
+    <value>Distrito</value>
   </data>
   <data name="DNSResolver" xml:space="preserve">
-    <value>DNS resolver</value>
+    <value>Resolvedor DNS</value>
   </data>
   <data name="EDNS" xml:space="preserve">
     <value>EDNS</value>
   </data>
   <data name="Geolocation" xml:space="preserve">
-    <value>Geolocation</value>
+    <value>Geolocalização</value>
   </data>
   <data name="Hosting" xml:space="preserve">
-    <value>Hosting</value>
+    <value>Hospedagem</value>
   </data>
   <data name="IPGeolocation" xml:space="preserve">
-    <value>IP geolocation</value>
+    <value>Geolocalização por IP</value>
   </data>
   <data name="ISP" xml:space="preserve">
     <value>ISP</value>
@@ -3591,227 +3591,243 @@ As alterações nesse valor entrarão em vigor depois que o aplicativo for reini
     <value>Longitude</value>
   </data>
   <data name="Mobile" xml:space="preserve">
-    <value>Mobile</value>
+    <value>Móvel</value>
   </data>
   <data name="Organization" xml:space="preserve">
-    <value>Organization</value>
+    <value>Organização</value>
   </data>
   <data name="PTRRecord" xml:space="preserve">
-    <value>PTR record</value>
+    <value>Registro PTR</value>
   </data>
   <data name="Timezone" xml:space="preserve">
-    <value>Timezone</value>
+    <value>Fuso horário</value>
   </data>
   <data name="ZipCode" xml:space="preserve">
-    <value>Zip</value>
+    <value>CEP</value>
   </data>
   <data name="ExternalService_ip_api_Description" xml:space="preserve">
-    <value>IP Geolocation API - Fast, accurate, reliable</value>
+    <value>API de geolocalização por IP – rápida, precisa e confiável</value>
   </data>
   <data name="CheckDNSResolver" xml:space="preserve">
-    <value>Check DNS resolver</value>
+    <value>Verificar resolvedor DNS</value>
   </data>
   <data name="CheckIPGeolocation" xml:space="preserve">
-    <value>Check IP geolocation</value>
+    <value>Verificar geolocalização por IP</value>
   </data>
   <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
-    <value>The DNS resolver is determined via ip-api.com.
+    <value>O resolvedor DNS é determinado via ip-api.com.
 
 URL: https://edns.ip-api.com/</value>
   </data>
   <data name="HelpMessage_CheckIPGeolocation" xml:space="preserve">
-    <value>The IP geolocation is determined via ip-api.com.
+    <value>A geolocalização por IP é determinada via ip-api.com.
 
 URL: http://ip-api.com/</value>
   </data>
   <data name="WelcomePrivacyMessage" xml:space="preserve">
-    <value>To provide additional features, third party services are used that are not operated by me. You can deselect them below. No data is transferred to me at any time.</value>
+    <value>Para fornecer recursos adicionais, são utilizados serviços de terceiros que não são operados por mim. Você pode desmarcá-los abaixo. Nenhum dado é transferido para mim em nenhum momento.</value>
   </data>
   <data name="CheckingDNSResolverDots" xml:space="preserve">
-    <value>Checking DNS resolver...</value>
+    <value>Verificando resolvedor DNS</value>
   </data>
   <data name="CheckingIPGeolocationDots" xml:space="preserve">
-    <value>Checking IP geolocation...</value>
+    <value>Verificando geolocalização por IP</value>
   </data>
   <data name="CheckNetworkConnectionTryAgainMessage" xml:space="preserve">
-    <value>Check your network connection and try again in a few seconds.</value>
+    <value>Verifique sua conexão de rede e tente novamente em alguns segundos.</value>
   </data>
   <data name="IPApiRateLimitMessage" xml:space="preserve">
-    <value>ip-api.com rate limit reached (too many requests from your network)!
-Try again in a few seconds.</value>
+    <value>Limite de taxa ip-api.com atingido (muitas solicitações da sua rede)!
+Tente novamente em alguns segundos.</value>
   </data>
   <data name="HTTPStatusCode" xml:space="preserve">
-    <value>HTTP status code</value>
+    <value>Código de status HTTP</value>
   </data>
   <data name="Accen_Steel" xml:space="preserve">
-    <value>Steel</value>
+    <value>Aço</value>
   </data>
   <data name="RateLimitReachedTryAgainInXSeconds" xml:space="preserve">
-    <value>Rate limit reached! Try again in {0} seconds...</value>
+    <value>Limite de taxa atingido! Tente novamente em {0} segundos...</value>
   </data>
   <data name="ProfileGroup_General" xml:space="preserve">
-    <value>General</value>
+    <value>Geral</value>
   </data>
   <data name="BSSID" xml:space="preserve">
     <value>BSSID</value>
   </data>
   <data name="NoReachableHostsFound" xml:space="preserve">
-    <value>No reachable hosts found!</value>
+    <value>Nenhum host acessível encontrado!</value>
   </data>
   <data name="ProfileGroup_Application" xml:space="preserve">
-    <value>Application</value>
+    <value>Aplicativo</value>
   </data>
   <data name="HelpMessage_ExperimentalFeatures" xml:space="preserve">
-    <value>Enable experimental features to test new functions. These are not yet complete, contain bugs, can crash the application and may change again until release.</value>
+    <value>Habilite recursos experimentais para testar novas funções. Eles ainda não estão completos, contêm bugs, podem travar o aplicativo e podem mudar novamente até o lançamento.</value>
   </data>
   <data name="ExperimentalFeatures" xml:space="preserve">
-    <value>Experimental features</value>
+    <value>Recursos experimentais</value>
   </data>
   <data name="Experimental" xml:space="preserve">
     <value>Experimental</value>
   </data>
   <data name="Watermark_RunCommand" xml:space="preserve">
-    <value>Run command...</value>
+    <value>Executar comando...</value>
   </data>
   <data name="ApplicationName_IPGeolocation" xml:space="preserve">
-    <value>IP Geolocation</value>
+    <value>Geolocalização por IP</value>
   </data>
   <data name="AddATabToQueryTheIPGeolocation" xml:space="preserve">
-    <value>Add a tab to query the IP geolocation...</value>
+    <value>Adicionar aba para consultar geolocalização por IP...</value>
   </data>
   <data name="EnterADomainToQueryWhoisDots" xml:space="preserve">
-    <value>Enter a domain to query whois...</value>
+    <value>Adicionar domínio para consultar whois...</value>
   </data>
   <data name="EnterHostToQueryIPGeolocationDots" xml:space="preserve">
-    <value>Enter host to query IP geolocation...</value>
+    <value>Adicionar host para consultar geolocalização por IP...</value>
   </data>
   <data name="SNMPV3ErrorCode_UnknownUserName" xml:space="preserve">
-    <value>Unknown user name.</value>
+    <value>Nome de usuário desconhecido.</value>
   </data>
   <data name="SNMPV3ErrorCode_AuthenticationFailed" xml:space="preserve">
-    <value>Authentication failure (incorrect password, community or key).</value>
+    <value>Falha de autenticação (senha, comunidade ou chave incorreta).</value>
   </data>
   <data name="SNMPErrorCode_NoError" xml:space="preserve">
-    <value>The operation was successful without any errors.</value>
+    <value>A operação foi bem-sucedida sem erros.</value>
   </data>
   <data name="SNMPErrorCode_TooBig" xml:space="preserve">
-    <value>The response to your request was too large to fit into a single response!</value>
+    <value>A resposta à sua solicitação era muito grande para caber em uma única resposta!</value>
   </data>
   <data name="SNMPErrorCode_NoSuchName" xml:space="preserve">
-    <value>The requested OID could not be found!</value>
+    <value>O OID solicitado não foi encontrado!</value>
   </data>
   <data name="SNMPErrorCode_BadValue" xml:space="preserve">
-    <value>A read-write or write-only object was set to an inconsistent value!</value>
+    <value>Um objeto de leitura-gravação ou somente gravação foi definido com um valor inconsistente!</value>
   </data>
   <data name="SNMPErrorCode_ReadOnly" xml:space="preserve">
-    <value>The requested OID does not exist and is not writable!</value>
+    <value>O OID solicitado não existe e não é gravável!</value>
   </data>
   <data name="SNMPErrorCode_GenError" xml:space="preserve">
-    <value>An error occurred for which no specific message is available!</value>
+    <value>Ocorreu um erro para o qual nenhuma mensagem específica está disponível!</value>
   </data>
   <data name="SNMPErrorCode_NoAccess" xml:space="preserve">
-    <value>The requested object is not accessible for modification!</value>
+    <value>O objeto solicitado não está acessível para modificação!</value>
   </data>
   <data name="SNMPErrorCode_WrongType" xml:space="preserve">
-    <value>The object was set to an incompatible data type!</value>
+    <value>O objeto foi definido como um tipo de dados incompatível!</value>
   </data>
   <data name="SNMPErrorCode_WrongLength" xml:space="preserve">
-    <value>The value assigned to the object exceeds its maximum length!</value>
+    <value>O valor atribuído ao objeto excede seu comprimento máximo!</value>
   </data>
   <data name="SNMPErrorCode_WrongEncoding" xml:space="preserve">
-    <value>The encoding used for the object is incorrect!</value>
+    <value>A codificação usada para o objeto está incorreta!</value>
   </data>
   <data name="SNMPErrorCode_WrongValue" xml:space="preserve">
-    <value>The value assigned to the object is not a valid choice!</value>
+    <value>O valor atribuído ao objeto não é uma escolha válida!</value>
   </data>
   <data name="SNMPErrorCode_NoCreation" xml:space="preserve">
-    <value>The requested object does not exist and cannot be created!</value>
+    <value>O objeto solicitado não existe e não pode ser criado!</value>
   </data>
   <data name="SNMPErrorCode_InconsistentValue" xml:space="preserve">
-    <value>The MIB variable is currently in an inconsistent state and cannot be modified!</value>
+    <value>A variável MIB está atualmente em um estado inconsistente e não pode ser modificada!</value>
   </data>
   <data name="SNMPErrorCode_ResourceUnavailable" xml:space="preserve">
-    <value>There are no available system resources to perform the requested operation!</value>
+    <value>Não há recursos de sistema disponíveis para realizar a operação solicitada!</value>
   </data>
   <data name="SNMPErrorCode_CommitFailed" xml:space="preserve">
-    <value>An error occurred during the set operation!</value>
+    <value>Ocorreu um erro durante a operação definida!</value>
   </data>
   <data name="SNMPErrorCode_UndoFailed" xml:space="preserve">
-    <value>A set operation failed, and previous changes could not be rolled back!</value>
+    <value>Uma operação definida falhou e as alterações anteriores não puderam ser revertidas!</value>
   </data>
   <data name="SNMPErrorCode_AuthorizationError" xml:space="preserve">
-    <value>Authentication failed. Please check the community string!</value>
+    <value>Falha na autenticação. Por favor, verifique a string da comunidade!</value>
   </data>
   <data name="SNMPErrorCode_NotWritable" xml:space="preserve">
-    <value>The requested object is not writable and cannot be modified!</value>
+    <value>O objeto solicitado não é gravável e não pode ser modificado!</value>
   </data>
   <data name="SNMPErrorCode_InconsistentName" xml:space="preserve">
-    <value>The object's state is inconsistent, preventing the set operation!</value>
+    <value>O estado do objeto é inconsistente, impedindo a operação definida!</value>
   </data>
   <data name="CloseAll" xml:space="preserve">
-    <value>Close all</value>
+    <value>Fechar todos</value>
   </data>
   <data name="ExpandHostView" xml:space="preserve">
-    <value>Expand host view</value>
+    <value>Expandir visualização do host</value>
   </data>
   <data name="CannotSetHostWhileRunningMessage" xml:space="preserve">
-    <value>Host cannot be set while other hosts are being added. Please wait until the process is complete and try again.</value>
+    <value>O host não pode ser definido enquanto outros hosts estão sendo adicionados. Aguarde até que o processo seja concluído e tente novamente.</value>
   </data>
   <data name="Watermark_RunCommandWithHotKey" xml:space="preserve">
-    <value>Run command... (Ctrl+Shift+P)</value>
+    <value>Executar comando... (Ctrl+Shift+P)</value>
   </data>
   <data name="NoMatchingCommands" xml:space="preserve">
-    <value>No matching commands!</value>
+    <value>Nenhum comando correspondente!</value>
   </data>
   <data name="RemoteHostname" xml:space="preserve">
-    <value>Remote hostname</value>
+    <value>Nome do host remoto</value>
   </data>
   <data name="ProcessID" xml:space="preserve">
-    <value>Process ID</value>
+    <value>ID do processo</value>
   </data>
   <data name="ProcessPath" xml:space="preserve">
-    <value>Process path</value>
+    <value>Caminho do processo</value>
   </data>
   <data name="ProcessName" xml:space="preserve">
-    <value>Process name</value>
+    <value>Nome do processo</value>
   </data>
   <data name="NetBIOS" xml:space="preserve">
     <value>NetBIOS</value>
   </data>
   <data name="ComputerName" xml:space="preserve">
-    <value>Computer name</value>
+    <value>Nome do computador</value>
   </data>
   <data name="ConnectionState_Error" xml:space="preserve">
-    <value>Error</value>
+    <value>Erro</value>
   </data>
   <data name="ConnectionState_OK" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="ConnectionState_Warning" xml:space="preserve">
-    <value>Warning</value>
+    <value>Aviso</value>
   </data>
   <data name="GroupDomainName" xml:space="preserve">
-    <value>Group / domain name</value>
+    <value>Nome do grupo / domínio</value>
   </data>
   <data name="NetBIOSReachable" xml:space="preserve">
-    <value>NetBIOS reachable</value>
+    <value>NetBIOS acessível</value>
   </data>
   <data name="ScanForNetBIOS" xml:space="preserve">
-    <value>Scan for NetBIOS</value>
+    <value>Verificar por NetBIOS</value>
   </data>
   <data name="NetBIOSIsDisabled" xml:space="preserve">
-    <value>NetBIOS scan is disabled!</value>
+    <value>A verificação NetBIOS está desativada!</value>
   </data>
   <data name="ResolveHostnameIsDisabled" xml:space="preserve">
-    <value>Resolve Hostname is disabled!</value>
+    <value>A resolução de nome de host está desativada!</value>
   </data>
   <data name="ResolveMACAddressIsDisabled" xml:space="preserve">
-    <value>Resolve MAC address is disabled!</value>
+    <value>A resolução de endereço MAC está desativada!</value>
   </data>
   <data name="CloseGroup" xml:space="preserve">
-    <value>Close group</value>
+    <value>Fechar grupo</value>
   </data>
   <data name="ToolTip_RunCommandWithHotKey" xml:space="preserve">
-    <value>Run command... (Ctrl+Shift+P)</value>
+    <value>Executar comando... (Ctrl+Shift+P)</value>
+  </data>
+  <data name="ProfileFiles" xml:space="preserve">
+    <value>Arquivos do perfil</value>
+  </data>
+  <data name="OpenSettingsDots" xml:space="preserve">
+    <value>Abrir configurações...</value>
+  </data>
+  <data name="ExpandAndOpenSearchDots" xml:space="preserve">
+    <value>Expandir e abrir pesquisa...</value>
+  </data>
+  <data name="WiFiAccessNotAvailableMessage" xml:space="preserve">
+    <value>O acesso ao adaptador Wi-Fi não é permitido pelo Windows.
+
+Abra as configurações do Windows e permita o acesso Wi-Fi para este aplicativo.
+
+Reinicie o aplicativo posteriormente para usar este recurso.</value>
   </data>
 </root>
