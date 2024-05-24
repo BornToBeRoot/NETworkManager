@@ -2,11 +2,30 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://borntoberoot.net/NETworkManager/blog</id>
     <title>NETworkManager Blog</title>
-    <updated>2024-01-01T00:00:00.000Z</updated>
+    <updated>2024-05-24T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://borntoberoot.net/NETworkManager/blog"/>
     <subtitle>NETworkManager Blog</subtitle>
     <icon>https://borntoberoot.net/NETworkManager/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Binaries are now signed with a code signing certificate]]></title>
+        <id>https://borntoberoot.net/NETworkManager/blog/binaries-are-now-signed-with-a-code-signing-certificate</id>
+        <link href="https://borntoberoot.net/NETworkManager/blog/binaries-are-now-signed-with-a-code-signing-certificate"/>
+        <updated>2024-05-24T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Starting with NETworkManager version 2024.5.24.0, the binaries and the installer are now signed with a code signing certificate.]]></summary>
+        <content type="html"><![CDATA[<p>Starting with NETworkManager version 2024.5.24.0, the binaries and the installer are now signed with a code signing certificate.</p>
+<p>The binaries and installer are built on <a href="https://ci.appveyor.com/project/BornToBeRoot/networkmanager" target="_blank" rel="noopener noreferrer">AppVeyor</a> directly from the <a href="https://github.com/BornToBeRoot/NETworkManager/blob/main/appveyor.yml" target="_blank" rel="noopener noreferrer">GitHub repository</a>.
+Build artifacts are automatically sent to <a href="https://signpath.io/" target="_blank" rel="noopener noreferrer">SignPath.io</a> via webhook, where they are signed after manual approval by the maintainer.
+The signed binaries are then uploaded to the <a href="https://github.com/BornToBeRoot/NETworkManager/releases" target="_blank" rel="noopener noreferrer">GitHub releases</a> page.</p>
+<p>Special thanks goes to <a href="https://signpath.io/" target="_blank" rel="noopener noreferrer">SignPath.io</a> for providing free code signing and the <a href="https://signpath.org/" target="_blank" rel="noopener noreferrer">SignPath Foundation</a> for the free code signing certificate.</p>]]></content>
+        <author>
+            <name>BornToBeRoot</name>
+            <uri>https://github.com/BornToBeRoot</uri>
+        </author>
+        <category label="code-signing" term="code-signing"/>
+        <category label="binaries" term="binaries"/>
+        <category label="installer" term="installer"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Welcome]]></title>
         <id>https://borntoberoot.net/NETworkManager/blog/welcome</id>
@@ -21,7 +40,6 @@
             <uri>https://github.com/BornToBeRoot</uri>
         </author>
         <category label="welcome" term="welcome"/>
-        <category label="networkmanager" term="networkmanager"/>
         <category label="docusaurus" term="docusaurus"/>
     </entry>
 </feed>
