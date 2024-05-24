@@ -22,9 +22,9 @@ Release date: **xx.xx.2023**
 - Installer has been changed from `InnoSetup` (`.exe`) to `WiX Toolset` (`.msi`) in order to support deep signing of the binaries. [#2705](https://github.com/BornToBeRoot/NETworkManager/pull/2705)
 
   :::info
-  The MSI installer will attempt to automatically uninstall the previous version of NETworkManager.
 
-  If you are using an installation path other than the default installation path (`%ProgramFiles%\NETworkManager`), please uninstall the previous version manually before installing the new version.
+  The MSI installer will attempt to automatically uninstall the previous version of NETworkManager.
+  
   :::
   
 ## What's new?
