@@ -70,24 +70,24 @@ Download the latest binaries via GitHub Releases:
 </div>
 
 <details>
-  <summary>SHA256 checksums</summary>
-  <div>
-    <p>File hashes of the above downloads:</p>
+  <summary>Checksums [SHA-256]</summary>
+  <div>    
+    <p>SHA-256 checksums for the latest release:</p>
     <p>
-      <b>Setup:</b>
+      <b>Setup</b> (MSI-Installer)
       <pre>  
         <code>C0A49E98C788CC0C69B0AAA87D7550B7307B797A761B8913D1CDAE305FDFF666</code>
       </pre>
-      <b>Portable:</b>
+      <b>Portable</b> (ZIP-Archive)
       <pre>
         <code>85AB794D44FEC49A08FBD261C00689E8D50A50DF9787B85946752B1F180373B6</code>
       </pre>      
-      <b>Archive:</b>
+      <b>Archive</b> (ZIP-Archive)
       <pre>        
         <code>96DAFC53A89A86E7FF9C971F5136FD9474BF2CCB956C724EE93C10B231B25819</code><br />
       </pre>
     </p>
-    <p>You can verify the file hash with the following PowerShell command:</p>
+    <p>Verify the file hash with the following PowerShell command:</p>    
     <pre>
       <code class="language-powershell">
         Get-FileHash -Path .\NETworkManager_&#123;VERSION&#125;_Setup.msi -Algorithm
@@ -117,16 +117,6 @@ Profiles and settings are stored in the user profile under `Documents\NETworkMan
 
 - Windows 10 / Server x64 (1809 or later)
 - [.NET Desktop Runtime 8.0 (LTS) - x64](https://dotnet.microsoft.com/en-us/download/dotnet/8.0/runtime)
-
-:::info
-
-You can verify the file hash with the following PowerShell command:
-
-```powershell
-Get-FileHash -Path .\NETworkManager_{VERSION}_Setup.exe -Algorithm SHA256
-```
-
-:::
 
 ## Silent install
 
