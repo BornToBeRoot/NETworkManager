@@ -25,7 +25,7 @@
   <p>
     <a href="https://github.com/BornToBeroot/NETworkManager/stargazers" target="_blank">
       <img alt="GitHub stars" src="https://img.shields.io/github/stars/BornToBeroot/NETworkManager.svg?style=for-the-badge&logo=github" />
-    </a>    
+    </a>
     <a href="https://github.com/BornToBeroot/NETworkManager/network" target="_blank">       
       <img alt="GitHub forks" src="https://img.shields.io/github/forks/BornToBeroot/NETworkManager.svg?style=for-the-badge&logo=github" />
     </a>
@@ -60,9 +60,11 @@
 
 Pre-built and [signed](https://borntoberoot.net/NETworkManager/download#code-signing-policy) binaries (setup, portable and archive) are available on the [download page](https://borntoberoot.net/NETworkManager/Download) with install instructions (e.g. silent install). The files are provided via [GitHub releases](https://github.com/BornToBeRoot/NETworkManager/releases/latest).
 
-NETworkManager is also available through the following [package managers](https://borntoberoot.net/NETworkManager/download#package-manager)
+In addition, NETworkManager is also available through the following [package managers](https://borntoberoot.net/NETworkManager/download#package-manager)
 
 - [Chocolatey](https://chocolatey.org/packages/NETworkManager)
+
+  Install via Chocolatey:
 
   ```PowerShell
   choco install networkmanager
@@ -70,15 +72,25 @@ NETworkManager is also available through the following [package managers](https:
 
 - [WinGet](https://github.com/microsoft/winget-pkgs/tree/master/manifests/b/BornToBeRoot/NETworkManager/)
 
+  Install via WinGet:
+
   ```PowerShell
   winget install BornToBeRoot.NETworkManager
   ```
 
 - [Evergreen](https://stealthpuppy.com/evergreen/apps/):
 
+  Get the latest release via Evergreen:
+
   ```PowerShell
+  # Get release via Evergreen
+  Get-EvergreenApp -Name NETworkManager
+  
+  # Get release via Evergreen and save the setup file to disk
   Get-EvergreenApp -Name NETworkManager | Save-EvergreenApp -Path C:\Users\$env:Username\Downloads\
   ```
+
+  Evergreen PowerShell module: github.com/aaronparker/evergreen
 
 ## 📃 Changelog
 
@@ -141,7 +153,7 @@ You can build the application like any other .NET / WPF application on Windows.
 
 Thanks to everyone helping to improve NETworkManager by contributing code, translations, bug reports, feature requests, documentation, and more.
 
-We also want to thank the following companies for their support of this open source project:
+We also wish to thank the following individuals and companies for their support of this open source project::
 
 |                                              |                                                                                             |
 | -------------------------------------------- | ------------------------------------------------------------------------------------------- |
@@ -153,7 +165,7 @@ We also want to thank the following companies for their support of this open sou
 | [SignPath.io](https://signpath.io/)          | Free code signing service for open source projects                                          |
 | [Transifex](https://www.transifex.com/)      | Localization platform                                                                       |
 
-Show also some support (e.g. by starring the repository) to the following projects and libraries that are used in NETworkManager:
+Please also support the following projects and libraries used in NETworkManager (e.g., by starring their repositories)::
 
 |                                                                               |                                                                        |
 | ----------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
