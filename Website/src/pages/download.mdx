@@ -114,15 +114,17 @@ Get-FileHash -Path .\NETworkManager_{VERSION}_Setup.exe -Algorithm SHA256
 
 :::
 
-## Pre-release
+## Silent install
 
-Features under development are (sometimes) available as pre-releases directly via [GitHub Releases](https://github.com/BornToBeRoot/NETworkManager/releases).
+Install silent with the following command:
 
-You can help to improve the software by testing pre-release versions and reporting bugs via [GitHub Issues](https://github.com/BornToBeRoot/NETworkManager/issues/new/choose).
+```
+.\NETworkManager_{VERSION}_Setup.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /TASKS="desktopicon" /SP-
+```
 
-:::warning
+:::info
 
-Please note that pre-release versions are not as stable as regular versions and may contain more bugs.
+The setup is based on [InnoSetup](https://jrsoftware.org/isinfo.php) and the common [command line parameters](https://jrsoftware.org/ishelp/index.php?topic=setupcmdline) are supported.
 
 :::
 
@@ -164,17 +166,15 @@ Get-EvergreenApp -Name NETworkManager | Save-EvergreenApp -Path C:\Users\$env:Us
 
 Evergreen PowerShell module: [github.com/aaronparker/evergreen](https://github.com/aaronparker/evergreen)
 
-## Silent install
+## Pre-release
 
-Install silent with the following command:
+Features under development are (sometimes) available as pre-releases directly via [GitHub Releases](https://github.com/BornToBeRoot/NETworkManager/releases).
 
-```
-.\NETworkManager_{VERSION}_Setup.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /TASKS="desktopicon" /SP-
-```
+You can help to improve the software by testing pre-release versions and reporting bugs via [GitHub Issues](https://github.com/BornToBeRoot/NETworkManager/issues/new/choose).
 
-:::info
+:::warning
 
-The setup is based on [InnoSetup](https://jrsoftware.org/isinfo.php) and the common [command line parameters](https://jrsoftware.org/ishelp/index.php?topic=setupcmdline) are supported.
+Please note that pre-release versions are not as stable as regular versions and may contain more bugs.
 
 :::
 
