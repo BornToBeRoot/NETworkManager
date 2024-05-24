@@ -64,23 +64,19 @@ In addition, NETworkManager is also available through the following [package man
 
 - [Chocolatey](https://chocolatey.org/packages/NETworkManager)
 
-  Install via Chocolatey:
-
   ```PowerShell
+  # Install via Chocolatey
   choco install networkmanager
   ```
 
 - [WinGet](https://github.com/microsoft/winget-pkgs/tree/master/manifests/b/BornToBeRoot/NETworkManager/)
 
-  Install via WinGet:
-
   ```PowerShell
+  # Install via WinGet
   winget install BornToBeRoot.NETworkManager
   ```
 
-- [Evergreen](https://stealthpuppy.com/evergreen/apps/):
-
-  Get the latest release via Evergreen:
+- [Evergreen](https://stealthpuppy.com/evergreen/apps/)
 
   ```PowerShell
   # Get release via Evergreen
@@ -90,7 +86,7 @@ In addition, NETworkManager is also available through the following [package man
   Get-EvergreenApp -Name NETworkManager | Save-EvergreenApp -Path C:\Users\$env:Username\Downloads\
   ```
 
-  Evergreen PowerShell module: github.com/aaronparker/evergreen
+  Evergreen PowerShell module: <https://github.com/aaronparker/evergreen>
 
 ## 📃 Changelog
 
