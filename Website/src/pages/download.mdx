@@ -8,14 +8,12 @@ import styles from "./styles.module.css";
 
 # Download
 
-## Latest
-
 Version: **2024.4.21.0**<br />
 Release date: **21.04.2024**
 
 Download the latest binaries via GitHub Releases:
 
-<div className={`${styles.downloadButtonContainer} margin-bottom--lg`}>
+<div className={`${styles.centerButtonContainer} margin-bottom--lg`}>
   <Link
     className={`button button--primary ${styles.downloadButton}`}
     to="https://github.com/BornToBeRoot/NETworkManager/releases/download/2024.4.21.0/NETworkManager_2024.4.21.0_Setup.exe"
@@ -61,35 +59,66 @@ Download the latest binaries via GitHub Releases:
   </p>
 </div>
 
-Here you can find the [changelog](/docs/changelog/2024-4-21-0).
+<div className={`${styles.centerButtonContainer} margin-bottom--lg`}>
+  <Link
+    className={`button button--secondary ${styles.additionalButton}`}
+    to="/docs/changelog/2024-4-21-0"
+  >
+    Changelog
+  </Link>
+</div>
+
+<details>
+  <summary>SHA256 checksums</summary>  
+  <div>
+    <div>
+        <p>File hashes of the above downloads:</p>
+        <table>
+          <thead>
+            <tr>
+              <th>File</th>
+              <th><code>SHA256</code></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>NETworkManager_2024.4.21.0_Setup.exe</code></td>
+              <td><code>C0A49E98C788CC0C69B0AAA87D7550B7307B797A761B8913D1CDAE305FDFF666</code></td>
+            </tr>
+            <tr>
+              <td><code>NETworkManager_2024.4.21.0_Portable.zip</code></td>
+              <td><code>85AB794D44FEC49A08FBD261C00689E8D50A50DF9787B85946752B1F180373B6</code></td>
+            </tr>
+            <tr>
+              <td><code>NETworkManager_2024.4.21.0_Archive.zip</code></td>
+              <td><code>96DAFC53A89A86E7FF9C971F5136FD9474BF2CCB956C724EE93C10B231B25819</code></td>
+            </tr>
+          </tbody>
+        </table>
+    </div>    
+  </div>
+</details>
 
 :::info
 
-**Setup** [Recommended]<br />
+**Setup** (MSI-Installer) [Recommended]<br />
 Installs NETworkManager on your system for all users (requires administrator privileges).<br />
 Profiles and settings are stored in the user profile under `Documents\NETworkManager`.<br />
 
-**Portable**<br />
+**Portable** (ZIP-Archive)<br />
 Run NETworkManager anywhere without installation (e.g. USB stick, network share).<br />
 Profiles and settings are stored in the same directory as the executable. Upgrades are supported by copying the `Profiles` and `Settings` directories to the newly downloaded version.
 
-**Archive**<br />
+**Archive** (ZIP-Archive)<br />
 Run NETworkManager anywhere without installation (e.g. USB stick, network share).<br />
 Profiles and settings are stored in the user profile under `Documents\NETworkManager`. Might be useful for custom deployment senarios (e.g. Terminal Server, Intune, etc.).
 
-See also the [system requirements](#system-requirements).
-
 :::
 
-### Hashes
+## System requirements
 
-File hashes of the above downloads:
-
-| File                                      | `SHA256`                                                           |
-| :---------------------------------------- | :----------------------------------------------------------------- |
-| `NETworkManager_2024.4.21.0_Setup.exe`    | `C0A49E98C788CC0C69B0AAA87D7550B7307B797A761B8913D1CDAE305FDFF666` |
-| `NETworkManager_2024.4.21.0_Portable.zip` | `85AB794D44FEC49A08FBD261C00689E8D50A50DF9787B85946752B1F180373B6` |
-| `NETworkManager_2024.4.21.0_Archive.zip`  | `96DAFC53A89A86E7FF9C971F5136FD9474BF2CCB956C724EE93C10B231B25819` |
+- Windows 10 / Server x64 (1809 or later)
+- [.NET Desktop Runtime 8.0 (LTS) - x64](https://dotnet.microsoft.com/en-us/download/dotnet/8.0/runtime)
 
 :::info
 
@@ -112,11 +141,6 @@ You can help to improve the software by testing pre-release versions and reporti
 Please note that pre-release versions are not as stable as regular versions and may contain more bugs.
 
 :::
-
-## System requirements
-
-- Windows 10 / Server x64 (1809 or later)
-- [.NET Desktop Runtime 8.0 (LTS) - x64](https://dotnet.microsoft.com/en-us/download/dotnet/8.0/runtime)
 
 ## Package Manager
 

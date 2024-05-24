@@ -120,7 +120,7 @@ table {
   overflow: hidden;
 }
 
-.downloadButtonContainer {
+.centerButtonContainer {
   display: flex;
   justify-content: center;
 }
@@ -130,6 +130,13 @@ table {
   height: 56px;
   width: 200px;
   font-size: 24px;
+}
+
+.additionalButton {
+  margin: 20px;
+  height: 44px;
+  width: 200px;
+  font-size: 18px;
 }
 
 @media only screen and (max-width: 768px) {
@@ -170,7 +177,7 @@ table {
     display: none;
   }
 
-  .downloadButtonContainer {
+  .centerButtonContainer {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
