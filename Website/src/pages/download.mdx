@@ -169,3 +169,34 @@ Install silent with the following command:
 The setup is based on [InnoSetup](https://jrsoftware.org/isinfo.php) and the common [command line parameters](https://jrsoftware.org/ishelp/index.php?topic=setupcmdline) are supported.
 
 :::
+
+## Code Signing Policy
+
+NETworkManager uses free code signing provided by [SignPath.io](https://signpath.io/) and a free code signing certificate 
+from [SignPath Foundation](https://signpath.org/).
+
+Sure, here's an improved version of the text:
+
+---
+
+The binaries and installer are built on [AppVeyor](https://ci.appveyor.com/project/BornToBeRoot/networkmanager) directly from the [GitHub repository](https://github.com/BornToBeRoot/NETworkManager/blob/main/appveyor.yml).
+Build artifacts are automatically sent to [SignPath.io](https://signpath.io/) via webhook, where they are signed after manual approval by the maintainer.
+The signed binaries are then uploaded to the [GitHub releases](https://github.com/BornToBeRoot/NETworkManager/releases) page.
+
+## Privacy Policy
+
+This program will not transfer any information to other networked systems unless specifically requested
+by the user or the person installing or operating it.
+
+NETworkManager has integrated the following services for additional functions, which can be enabled or
+disabled at the first start (in the welcome dialog) or at any time in the settings:
+
+- [api.github.com](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement) (Check for program updates)
+- [ipify.org](https://www.ipify.org/) (Retrieve the public IP address used by the client)
+- [ip-api.com](https://ip-api.com/docs/legal) (Retrieve network information such as geo location, ISP, DNS resolver used, etc. used by the client)
+
+## License
+
+The code is open source and available on [GitHub](https://github.com/BornToBeRoot/NETworkManager) published under the [GNU General Public License v3](https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE).
+
+The licenses of the libraries used can be found [here](https://github.com/BornToBeRoot/NETworkManager/tree/main/Source/NETworkManager.Documentation/Licenses).

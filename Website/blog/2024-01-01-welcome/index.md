@@ -2,7 +2,7 @@
 slug: welcome
 title: Welcome
 authors: [borntoberoot]
-tags: [welcome, networkmanager, docusaurus]
+tags: [welcome, docusaurus]
 ---
 
 Welcome to the new NETworkManager website and documentation.

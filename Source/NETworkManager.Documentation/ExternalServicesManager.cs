@@ -13,9 +13,9 @@ public static class ExternalServicesManager
     /// </summary>
     public static List<ExternalServicesInfo> List => new()
     {
-        new ExternalServicesInfo("ip-api", "https://ip-api.com/",
+        new ExternalServicesInfo("ip-api.com", "https://ip-api.com/",
             Strings.ExternalService_ip_api_Description),
-        new ExternalServicesInfo("ipify", "https://www.ipify.org/",
+        new ExternalServicesInfo("ipify.org", "https://www.ipify.org/",
             Strings.ExternalService_ipify_Description)
     };
 }

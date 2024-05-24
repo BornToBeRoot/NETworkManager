@@ -25,7 +25,7 @@
   <p>
     <a href="https://github.com/BornToBeroot/NETworkManager/stargazers" target="_blank">
       <img alt="GitHub stars" src="https://img.shields.io/github/stars/BornToBeroot/NETworkManager.svg?style=for-the-badge&logo=github" />
-    </a>    
+    </a>
     <a href="https://github.com/BornToBeroot/NETworkManager/network" target="_blank">       
       <img alt="GitHub forks" src="https://img.shields.io/github/forks/BornToBeroot/NETworkManager.svg?style=for-the-badge&logo=github" />
     </a>
@@ -58,32 +58,51 @@
 
 ## 📦 Download
 
-Prebuilt binaries (setup, portable and archive) are available on the [download page](https://borntoberoot.net/NETworkManager/Download). Here you will also find the system requirements and how to install the application silent. The files are provided via [GitHub releases](https://github.com/BornToBeRoot/NETworkManager/releases/latest).
+Pre-built and [signed](https://borntoberoot.net/NETworkManager/download#code-signing-policy) binaries (setup, portable and archive) are available on the [download page](https://borntoberoot.net/NETworkManager/Download) with install instructions (e.g. silent install). The files are provided via [GitHub releases](https://github.com/BornToBeRoot/NETworkManager/releases/latest).
 
-In addition, NETworkManager is available through the package managers [Chocolatey](https://chocolatey.org/packages/NETworkManager), [WinGet](https://github.com/microsoft/winget-pkgs/tree/master/manifests/b/BornToBeRoot/NETworkManager/) and [Evergreen](https://stealthpuppy.com/evergreen/apps/):
+In addition, NETworkManager is also available through the following [package managers](https://borntoberoot.net/NETworkManager/download#package-manager)
 
-```PowerShell
-# Chocolatey
-choco install networkmanager
+- [Chocolatey](https://chocolatey.org/packages/NETworkManager)
 
-# WinGet
-winget install BornToBeRoot.NETworkManager
+  Install via Chocolatey:
 
-# Evergreen
-Get-EvergreenApp -Name NETworkManager | Save-EvergreenApp -Path C:\Users\$env:Username\Downloads\
-```
+  ```PowerShell
+  choco install networkmanager
+  ```
+
+- [WinGet](https://github.com/microsoft/winget-pkgs/tree/master/manifests/b/BornToBeRoot/NETworkManager/)
+
+  Install via WinGet:
+
+  ```PowerShell
+  winget install BornToBeRoot.NETworkManager
+  ```
+
+- [Evergreen](https://stealthpuppy.com/evergreen/apps/):
+
+  Get the latest release via Evergreen:
+
+  ```PowerShell
+  # Get release via Evergreen
+  Get-EvergreenApp -Name NETworkManager
+  
+  # Get release via Evergreen and save the setup file to disk
+  Get-EvergreenApp -Name NETworkManager | Save-EvergreenApp -Path C:\Users\$env:Username\Downloads\
+  ```
+
+  Evergreen PowerShell module: github.com/aaronparker/evergreen
 
 ## 📃 Changelog
 
-You can find the changelog for each version [here](https://borntoberoot.net/NETworkManager/Changelog).
+You can find the changelog for each version of NETworkManager [here](https://borntoberoot.net/NETworkManager/Changelog).
 
 ## 📖 Documentation
 
-The documentation is provided via GitHub pages and can be found [here](https://borntoberoot.net/NETworkManager/docs/introduction).
+The documentation is provided with Docusaurus via GitHub pages and can be found [here](https://borntoberoot.net/NETworkManager/docs/introduction).
 
 ## ✨ Contributing
 
-Here you will find ways to contribute:
+Want to contribute to NETworkManager? Here are a few information on how to get started:
 
 - [Request a feature, report a bug or ask a question](CONTRIBUTING.md#contributing)
 - [Add a feature or fix a bug](CONTRIBUTING.md#code)
@@ -130,6 +149,60 @@ You can build the application like any other .NET / WPF application on Windows.
    > dotnet build .\Source\NETworkManager.sln --configuration Release --no-restore
    > ```
 
+## 🙏 Thanks
+
+Thanks to everyone helping to improve NETworkManager by contributing code, translations, bug reports, feature requests, documentation, and more.
+
+We would like to thank the following people and companies for their support of this open source project:
+
+|                                              |                                                                                             |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| [AppVeyor](https://www.appveyor.com/)        | CI/CD service for Windows, Linux and macOS                                                  |
+| [GitHub Pages](https://pages.github.com/)    | Websites for you and your projects                                                          |
+| [ip-api.com](https://ip-api.com/)            | IP Geolocation API (free for non-commercial use)                                            |
+| [JetBrains](https://www.jetbrains.com/)      | Providing a license for [JetBrains Rider](https://www.jetbrains.com/rider/) and other tools |
+| [SignPath Foundation](https://signpath.org/) | Free code signing certificates for open source projects                                     |
+| [SignPath.io](https://signpath.io/)          | Free code signing service for open source projects                                          |
+| [Transifex](https://www.transifex.com/)      | Localization platform                                                                       |
+
+NETworkManager uses the following projects and libraries. Please consider supporting them as well (e.g., by starring their repositories):
+
+|                                                                               |                                                                        |
+| ----------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| [#SNMP Library](https://github.com/lextudio/sharpsnmplib)                     | SNMP library for .NET                                                  |
+| [AirspaceFixer](https://github.com/chris84948/AirspaceFixer)                  | AirspacePanel fixes all Airspace issues with WPF-hosted Winforms.      |
+| [ControlzEx](https://github.com/ControlzEx/ControlzEx)                        | Shared Controlz for WPF and more                                       |
+| [DnsClient.NET](https://github.com/MichaCo/DnsClient.NET)                     | Powerful, high-performance open-source library for DNS lookups         |
+| [Docusaurus](https://docusaurus.io/)                                          | Easy to maintain open source documentation websites.                   |
+| [Dragablz](https://dragablz.net/)                                             | Tearable TabControl for WPF                                            |
+| [IPNetwork](https://github.com/lduchosal/ipnetwork)                           | .NET library for complex network, IP, and subnet calculations          |
+| [LoadingIndicators.WPF](https://github.com/zeluisping/LoadingIndicators.WPF)  | A collection of loading indicators for WPF                             |
+| [MahApps.Metro.IconPacks](https://github.com/MahApps/MahApps.Metro.IconPacks) | Awesome icon packs for WPF and UWP in one library                      |
+| [MahApps.Metro](https://mahapps.com/)                                         | UI toolkit for WPF applications                                        |
+| [NetBeauty2](https://github.com/nulastudio/NetBeauty2)                        | Move .NET app runtime components and dependencies into a sub-directory |
+| [PSDiscoveryProtocol](https://github.com/lahell/PSDiscoveryProtocol)          | PowerShell module for LLDP/CDP discovery                               |
+
+## Code Signing Policy
+
+NETworkManager uses free code signing provided by [SignPath.io](https://signpath.io/) and a free code signing certificate 
+from [SignPath Foundation](https://signpath.org/).
+
+The binaries and installer are built on [AppVeyor](https://ci.appveyor.com/project/BornToBeRoot/networkmanager) directly from the [GitHub repository](https://github.com/BornToBeRoot/NETworkManager/blob/main/appveyor.yml).
+Build artifacts are automatically sent to [SignPath.io](https://signpath.io/) via webhook, where they are signed after manual approval by the maintainer.
+The signed binaries are then uploaded to the [GitHub releases](https://github.com/BornToBeRoot/NETworkManager/releases) page.
+
+## Privacy Policy
+
+This program will not transfer any information to other networked systems unless specifically requested by the user or the person installing or operating it.
+
+NETworkManager has integrated the following services for additional functions, which can be enabled or disabled at the first start (in the welcome dialog) or at any time in the settings:
+
+- [api.github.com](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement) (Check for program updates)
+- [ipify.org](https://www.ipify.org/) (Retrieve the public IP address used by the client)
+- [ip-api.com](https://ip-api.com/docs/legal) (Retrieve network information such as geo location, ISP, DNS resolver used, etc. used by the client)
+
 ## 📝 License
 
-NETworkManager is published under the [GNU General Public License v3](https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE). The licenses of the used libraries can be found [here](https://github.com/BornToBeRoot/NETworkManager/tree/main/Source/NETworkManager.Documentation/Licenses).
+NETworkManager is published under the [GNU General Public License v3](https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE).
+
+The licenses of the libraries used can be found [here](https://github.com/BornToBeRoot/NETworkManager/tree/main/Source/NETworkManager.Documentation/Licenses).
