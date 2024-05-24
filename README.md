@@ -153,7 +153,7 @@ You can build the application like any other .NET / WPF application on Windows.
 
 Thanks to everyone helping to improve NETworkManager by contributing code, translations, bug reports, feature requests, documentation, and more.
 
-We also wish to thank the following individuals and companies for their support of this open source project::
+We would like to thank the following people and companies for their support of this open source project:
 
 |                                              |                                                                                             |
 | -------------------------------------------- | ------------------------------------------------------------------------------------------- |
@@ -165,7 +165,7 @@ We also wish to thank the following individuals and companies for their support 
 | [SignPath.io](https://signpath.io/)          | Free code signing service for open source projects                                          |
 | [Transifex](https://www.transifex.com/)      | Localization platform                                                                       |
 
-Please also support the following projects and libraries used in NETworkManager (e.g., by starring their repositories)::
+NETworkManager uses the following projects and libraries. Please consider supporting them as well (e.g., by starring their repositories):
 
 |                                                                               |                                                                        |
 | ----------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
@@ -187,8 +187,9 @@ Please also support the following projects and libraries used in NETworkManager 
 NETworkManager uses free code signing provided by [SignPath.io](https://signpath.io/) and a free code signing certificate 
 from [SignPath Foundation](https://signpath.org/).
 
-The binaries and the installer are built on [AppVeyor](https://ci.appveyor.com/project/BornToBeRoot/networkmanager) from the [GitHub repository](https://github.com/BornToBeRoot/NETworkManager/blob/main/appveyor.yml).
-The build artifacts are sent automatically to [SignPath.io](https://signpath.io/) via webhook and signed after manual approval by the maintainer. The signed binaries are then uploaded to the [GitHub release](https://github.com/BornToBeRoot/NETworkManager/releases).
+The binaries and installer are built on [AppVeyor](https://ci.appveyor.com/project/BornToBeRoot/networkmanager) directly from the [GitHub repository](https://github.com/BornToBeRoot/NETworkManager/blob/main/appveyor.yml).
+Build artifacts are automatically sent to [SignPath.io](https://signpath.io/) via webhook, where they are signed after manual approval by the maintainer.
+The signed binaries are then uploaded to the [GitHub releases](https://github.com/BornToBeRoot/NETworkManager/releases) page.
 
 ## Privacy Policy
 
