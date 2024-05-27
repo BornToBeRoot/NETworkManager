@@ -8,27 +8,27 @@ import styles from "./styles.module.css";
 
 # Download
 
-Version: **2024.4.21.0**<br />
-Release date: **21.04.2024**
+Version: **2024.5.27.0**<br />
+Release date: **27.05.2024**
 
 Download the latest binaries via GitHub Releases:
 
 <div className={`${styles.centerButtonContainer} margin-bottom--lg`}>
   <Link
     className={`button button--primary ${styles.downloadButton}`}
-    to="https://github.com/BornToBeRoot/NETworkManager/releases/download/2024.4.21.0/NETworkManager_2024.4.21.0_Setup.exe"
+    to="https://github.com/BornToBeRoot/NETworkManager/releases/download/2024.5.27.0/NETworkManager_2024.5.27.0_Setup.exe"
   >
     Setup
   </Link>
   <Link
     className={`button button--info ${styles.downloadButton}`}
-    to="https://github.com/BornToBeRoot/NETworkManager/releases/download/2024.4.21.0/NETworkManager_2024.4.21.0_Portable.zip"
+    to="https://github.com/BornToBeRoot/NETworkManager/releases/download/2024.5.27.0/NETworkManager_2024.5.27.0_Portable.zip"
   >
     Portable
   </Link>
   <Link
     className={`button button--info ${styles.downloadButton}`}
-    to="https://github.com/BornToBeRoot/NETworkManager/releases/download/2024.4.21.0/NETworkManager_2024.4.21.0_Archive.zip"
+    to="https://github.com/BornToBeRoot/NETworkManager/releases/download/2024.5.27.0/NETworkManager_2024.5.27.0_Archive.zip"
   >
     Archive
   </Link>
@@ -62,7 +62,7 @@ Download the latest binaries via GitHub Releases:
 <div className={`${styles.centerButtonContainer} margin-bottom--lg`}>
   <Link
     className={`button button--secondary ${styles.additionalButton}`}
-    to="/docs/changelog/2024-4-21-0"
+    to="/docs/changelog/2024-5-27-0"
     target="_blank"
   >
     Changelog
@@ -76,15 +76,15 @@ Download the latest binaries via GitHub Releases:
     <p>
       <b>Setup</b> (MSI-Installer)
       <pre>  
-        <code>C0A49E98C788CC0C69B0AAA87D7550B7307B797A761B8913D1CDAE305FDFF666</code>
+        <code>BE6A466ACD8912B21702A8D07CC45D7DEF7D177A6BFC3BDE2AB97E1DBE8E9CEA</code>
       </pre>
       <b>Portable</b> (ZIP-Archive)
       <pre>
-        <code>85AB794D44FEC49A08FBD261C00689E8D50A50DF9787B85946752B1F180373B6</code>
+        <code>3B5AE229CF692AA43B2F35B3FF9595E48E0D821B9CF8015E6AB3B1DA91B59B36</code>
       </pre>      
       <b>Archive</b> (ZIP-Archive)
       <pre>        
-        <code>96DAFC53A89A86E7FF9C971F5136FD9474BF2CCB956C724EE93C10B231B25819</code><br />
+        <code>775AAF2BEC7434D458F9A4208B803D7E26F447EF2DEDD977030E6FA16F501BE7</code><br />
       </pre>
     </p>
     <p>Verify the file hash with the following PowerShell command:</p>    
@@ -123,14 +123,8 @@ Profiles and settings are stored in the user profile under `Documents\NETworkMan
 Install silent with the following command:
 
 ```
-.\NETworkManager_{VERSION}_Setup.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /TASKS="desktopicon" /SP-
+.\NETworkManager_{VERSION}_Setup.msi /qn /norestart
 ```
-
-:::info
-
-The setup is based on [InnoSetup](https://jrsoftware.org/isinfo.php) and the common [command line parameters](https://jrsoftware.org/ishelp/index.php?topic=setupcmdline) are supported.
-
-:::
 
 ## Package Manager
 
