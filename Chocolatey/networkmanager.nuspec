@@ -3,7 +3,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>NETworkManager</id>
-    <version>2024.4.21.0</version>
+    <version>2024.5.27.0</version>
     <owners>BornToBeRoot</owners>
     <title>NETworkManager</title>
     <authors>BornToBeRoot</authors>
@@ -15,7 +15,7 @@
     <packageSourceUrl>https://github.com/BornToBeRoot/NETworkManager/tree/main/Chocolatey</packageSourceUrl>
     <docsUrl>https://borntoberoot.net/NETworkManager/docs/introduction</docsUrl>
     <bugTrackerUrl>https://github.com/BornToBeRoot/NETworkManager/issues</bugTrackerUrl>
-    <releaseNotes>https://borntoberoot.net/NETworkManager/docs/changelog/2024-4-21-0</releaseNotes>
+    <releaseNotes>https://borntoberoot.net/NETworkManager/docs/changelog/2024-5-27-0</releaseNotes>
     <tags>wifi ipscanner portscanner traceroute pingmonitor dns remotedesktop putty lldp</tags>
     <summary>A powerful tool for managing networks and troubleshoot network problems!</summary>
     <description>

@@ -1,19 +1,21 @@
 ﻿$ErrorActionPreference = 'Stop'
-$toolsDir   = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
-$url        = 'https://github.com/BornToBeRoot/NETworkManager/releases/download/2024.4.21.0/NETworkManager_2024.4.21.0_Setup.exe'
+
+$packageName = 'NETworkManager'
+$toolsDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
 
 $packageArgs = @{
-  packageName   = $env:ChocolateyPackageName
-  unzipLocation = $toolsDir
-  fileType      = 'EXE'
-  url           = $url
-  softwareName  = 'NETworkManager*'
+  packageName    = $packageName
+  unzipLocation  = $toolsDir
+  fileType       = 'MSI'
+  url            = 'https://github.com/BornToBeRoot/NETworkManager/releases/download/2024.5.27.0/NETworkManager_2024.5.27.0_Setup.msi'
 
-  checksum      = 'C0A49E98C788CC0C69B0AAA87D7550B7307B797A761B8913D1CDAE305FDFF666'
-  checksumType  = 'sha256'
-    
-  silentArgs   = '/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /TASKS="desktopicon" /SP-'
-  validExitCodes= @(0)
+  softwareName   = 'NETworkManager*'
+
+  checksum       = 'BE6A466ACD8912B21702A8D07CC45D7DEF7D177A6BFC3BDE2AB97E1DBE8E9CEA'
+  checksumType   = 'sha256'
+
+  silentArgs     = "/qn /norestart /l*v `"$($env:TEMP)\$($packageName).$($env:chocolateyPackageVersion).MsiInstall.log`""
+  validExitCodes = @(0, 3010, 1641)
 }
 
 Install-ChocolateyPackage @packageArgs
