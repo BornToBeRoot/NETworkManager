@@ -51,7 +51,7 @@
         <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="4.11.0"/>
         <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0"/>
         <PackageReference Include="MahApps.Metro.IconPacks.MaterialLight" Version="4.11.0"/>
-        <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="4.11.0"/>
+        <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="5.0.0"/>
         <PackageReference Include="MahApps.Metro.IconPacks.Octicons" Version="4.11.0"/>
     </ItemGroup>
     <ItemGroup>
