@@ -26,14 +26,5 @@
 		<Feature Id="Main" Title="NETworkManager">
 			<ComponentGroupRef Id="Components" />
 		</Feature>
-		
-		<!-- Uninstall InnoSetup version -->	
-		<!-- try {Get-Item "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{8028080F-B785-4A74-A243-3D63467880A6}_is1" -ErrorAction Stop | ForEach-Object {Start-Process -FilePath $($_.GetValue("UninstallString")) -ArgumentList "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART" -Wait}} catch {} finally {exit 0} -->
-		<CustomAction Id="UninstallInnoSetup" Directory="INSTALLFOLDER" Execute="deferred" Impersonate="yes" ExeCommand="PowerShell.exe -NoProfile -WindowStyle Hidden -EncodedCommand &quot;dAByAHkAIAB7AEcAZQB0AC0ASQB0AGUAbQAgACIASABLAEwATQA6AFwAUwBPAEYAVABXAEEAUgBFAFwATQBpAGMAcgBvAHMAbwBmAHQAXABXAGkAbgBkAG8AdwBzAFwAQwB1AHIAcgBlAG4AdABWAGUAcgBzAGkAbwBuAFwAVQBuAGkAbgBzAHQAYQBsAGwAXAB7ADgAMAAyADgAMAA4ADAARgAtAEIANwA4ADUALQA0AEEANwA0AC0AQQAyADQAMwAtADMARAA2ADMANAA2ADcAOAA4ADAAQQA2AH0AXwBpAHMAMQAiACAALQBFAHIAcgBvAHIAQQBjAHQAaQBvAG4AIABTAHQAbwBwACAAfAAgAEYAbwByAEUAYQBjAGgALQBPAGIAagBlAGMAdAAgAHsAUwB0AGEAcgB0AC0AUAByAG8AYwBlAHMAcwAgAC0ARgBpAGwAZQBQAGEAdABoACAAJAAoACQAXwAuAEcAZQB0AFYAYQBsAHUAZQAoACIAVQBuAGkAbgBzAHQAYQBsAGwAUwB0AHIAaQBuAGcAIgApACkAIAAtAEEAcgBnAHUAbQBlAG4AdABMAGkAcwB0ACAAIgAvAFYARQBSAFkAUwBJAEwARQBOAFQAIAAvAFMAVQBQAFAAUgBFAFMAUwBNAFMARwBCAE8AWABFAFMAIAAvAE4ATwBSAEUAUwBUAEEAUgBUACIAIAAtAFcAYQBpAHQAfQB9ACAAYwBhAHQAYwBoACAAewB9ACAAZgBpAG4AYQBsAGwAeQAgAHsAZQB4AGkAdAAgADAAfQA=&quot;" Return="check" />
-		
-		<InstallExecuteSequence>
-			<Custom Action="UninstallInnoSetup" After="InstallInitialize" Condition="NOT Installed" />
-		</InstallExecuteSequence>
 	</Package>
-
 </Wix>
