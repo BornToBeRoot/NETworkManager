@@ -68,7 +68,7 @@
         <PackageReference Include="MahApps.Metro" Version="2.4.10" />
         <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="5.0.0" />
         <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="5.0.0" />
-        <PackageReference Include="MahApps.Metro.IconPacks.MaterialLight" Version="4.11.0" />
+        <PackageReference Include="MahApps.Metro.IconPacks.MaterialLight" Version="5.0.0" />
         <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="5.0.0" />
         <PackageReference Include="MahApps.Metro.IconPacks.Octicons" Version="4.11.0" />
         <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2535.41" />
