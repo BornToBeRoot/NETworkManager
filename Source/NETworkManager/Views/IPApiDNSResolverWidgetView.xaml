@@ -41,7 +41,7 @@
                 <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10">
                     <Rectangle Width="32" Height="32" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:FontAwesome Kind=SearchLocationSolid}" />
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=SearchWeb}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                     <TextBlock Text="{x:Static localization:Strings.DNSResolver}"
