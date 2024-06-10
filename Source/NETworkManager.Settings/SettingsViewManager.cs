@@ -22,7 +22,7 @@ public static class SettingsViewManager
             SettingsGroup.General),
         new SettingsViewInfo(SettingsName.Status, new PackIconMaterial { Kind = PackIconMaterialKind.Pulse },
             SettingsGroup.General),
-        new SettingsViewInfo(SettingsName.HotKeys, new PackIconOcticons { Kind = PackIconOcticonsKind.Keyboard },
+        new SettingsViewInfo(SettingsName.HotKeys, new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.KeyboardRegular },
             SettingsGroup.General),
         new SettingsViewInfo(SettingsName.Autostart, new PackIconMaterial { Kind = PackIconMaterialKind.Power },
             SettingsGroup.General),
