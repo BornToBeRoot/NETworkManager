@@ -3814,4 +3814,20 @@ Try again in a few seconds.</value>
   <data name="ToolTip_RunCommandWithHotKey" xml:space="preserve">
     <value>Run command... (Ctrl+Shift+P)</value>
   </data>
+  <data name="ProfileFiles" xml:space="preserve">
+    <value>Profile files</value>
+  </data>
+  <data name="OpenSettingsDots" xml:space="preserve">
+    <value>Open settings...</value>
+  </data>
+  <data name="ExpandAndOpenSearchDots" xml:space="preserve">
+    <value>Expand and open search...</value>
+  </data>
+  <data name="WiFiAccessNotAvailableMessage" xml:space="preserve">
+    <value>Access to the Wi-Fi adapter is not permitted by Windows.
+
+Open the Windows settings and allow Wi-Fi access for this application.
+
+Restart the application afterwards to use this feature.</value>
+  </data>
 </root>
