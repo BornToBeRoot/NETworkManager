@@ -17,8 +17,6 @@ Release date: **xx.xx.2024**
 
 ## Breaking Changes
 
-- InnoSetup uninstall routine removed from MSI installer (If you run NETworkManager version 2024.4.21.0, uninstall it manually before installing the new version OR install version 2024.5.27.0 first)
-
 ## What's new?
 
 ## Improvements
