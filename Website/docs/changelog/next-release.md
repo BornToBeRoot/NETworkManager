@@ -23,6 +23,8 @@ Release date: **xx.xx.2024**
 
 ## Bugfixes
 
+- TextBox content not centered because of ScrollViewer issue. [#2763](https://github.com/BornToBeRoot/NETworkManager/pull/2763)
+
 ## Dependencies, Refactoring & Documentation
 
 - Code cleanup & refactoring
