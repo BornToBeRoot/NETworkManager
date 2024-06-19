@@ -17,7 +17,11 @@
                             <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <ScrollContentPresenter Grid.ColumnSpan="1" Grid.RowSpan="1" />
+                        <ScrollContentPresenter Grid.ColumnSpan="1" Grid.RowSpan="1"
+                                                Margin="{TemplateBinding Control.Padding}"
+                                                Content="{TemplateBinding ContentControl.Content}"
+                                                ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}"
+                                                CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}" />
                         <ScrollBar Name="PART_VerticalScrollBar"
                                    HorizontalAlignment="Right"
                                    Grid.Row="0"
@@ -43,7 +47,7 @@
     </Style>
 
     <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaultScrollViewer}" />
-    
+
     <Style x:Key="FadeOutScrollViewer" TargetType="{x:Type ScrollViewer}"
            BasedOn="{StaticResource MahApps.Styles.ScrollViewer}">
         <Setter Property="VerticalScrollBarVisibility" Value="Hidden" />
@@ -61,7 +65,11 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <ScrollContentPresenter Grid.Column="0" Grid.Row="0"
-                                                Grid.ColumnSpan="2" Grid.RowSpan="2" />
+                                                Grid.ColumnSpan="2" Grid.RowSpan="2"
+                                                Margin="{TemplateBinding Control.Padding}"
+                                                Content="{TemplateBinding ContentControl.Content}"
+                                                ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}"
+                                                CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}" />
                         <ScrollBar Name="PART_VerticalScrollBar"
                                    HorizontalAlignment="Right"
                                    Grid.Row="0"
@@ -77,7 +85,7 @@
                                    Maximum="{TemplateBinding Property=ScrollableWidth}"
                                    ViewportSize="{TemplateBinding Property=ViewportWidth}"
                                    Orientation="Horizontal"
-                                   Visibility="{TemplateBinding Property=ComputedHorizontalScrollBarVisibility}"/>
+                                   Visibility="{TemplateBinding Property=ComputedHorizontalScrollBarVisibility}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
