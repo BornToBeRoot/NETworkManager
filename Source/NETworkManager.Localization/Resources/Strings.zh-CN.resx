@@ -700,7 +700,7 @@
     <value>备份</value>
   </data>
   <data name="Baud" xml:space="preserve">
-    <value>波特</value>
+    <value>波特率</value>
   </data>
   <data name="CanceledByUserMessage" xml:space="preserve">
     <value>该操作已被用户取消！</value>
