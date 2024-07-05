@@ -1427,10 +1427,10 @@
     <value>深红色</value>
   </data>
   <data name="Cyan" xml:space="preserve">
-    <value>Cyan</value>
+    <value>青色</value>
   </data>
   <data name="Emerald" xml:space="preserve">
-    <value>Emerald</value>
+    <value>深绿色</value>
   </data>
   <data name="EnterOneOrMoreValidIPAddresses" xml:space="preserve">
     <value>输入一个或多个有效的 IP 地址！</value>
