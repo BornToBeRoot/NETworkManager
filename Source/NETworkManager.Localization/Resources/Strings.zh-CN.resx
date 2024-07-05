@@ -1259,7 +1259,7 @@
     <value>删除表单</value>
   </data>
   <data name="EnterLocationDots" xml:space="preserve">
-    <value>输入位置</value>
+    <value>输入位置...</value>
   </data>
   <data name="Everything" xml:space="preserve">
     <value>所有</value>
