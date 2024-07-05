@@ -997,7 +997,7 @@
     <value>端口</value>
   </data>
   <data name="Priv" xml:space="preserve">
-    <value>Priv</value>
+    <value>私有</value>
   </data>
   <data name="Profile" xml:space="preserve">
     <value>配置文件</value>
