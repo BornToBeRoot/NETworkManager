@@ -757,9 +757,9 @@
     <value>凭据</value>
   </data>
   <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
-    <value>Profile files are encrypted on disk using AES with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
+    <value>配置文件在磁盘上使用 AES 加密，密钥大小为 256 位，块大小为 128 位，采用 CBC 模式。加密密钥使用 Rfc2898DeriveBytes (PBKDF2) 从主密码中提取，迭代次数为 1,000,000 次。运行时，一旦加载配置文件，密码就会以 SecureString 的形式存储。对于某些函数，密码必须转换为普通字符串，并在内存中保持未加密状态，直到垃圾回收器将其清理干净。
 
-First make a backup copy of your profile files before enabling encryption!</value>
+启用加密前，请先备份一份配置文件！</value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>自定义</value>
