@@ -2760,7 +2760,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>无法解密文件。您可以在GitHub上报告此问题。</value>
   </data>
   <data name="EncryptionError" xml:space="preserve">
-    <value>解密出错。</value>
+    <value>加密出错</value>
   </data>
   <data name="EncryptionErrorMessage" xml:space="preserve">
     <value>无法加密文件。您可以在GitHub上报告此问题。</value>
