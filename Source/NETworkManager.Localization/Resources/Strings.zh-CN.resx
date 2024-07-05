@@ -2853,7 +2853,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>OUI 数据来自 ieee.org。</value>
   </data>
   <data name="Resource_ServiceNamePortNumber_Description" xml:space="preserve">
-    <value>服务名称和传输协议端口号注册从iana.org。</value>
+    <value>来自 iana.org 的服务名称和传输协议端口号注册表</value>
   </data>
   <data name="License_ApacheLicense2dot0" xml:space="preserve">
     <value>Apache 2.0许可</value>
