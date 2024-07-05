@@ -1469,7 +1469,7 @@
     <value>靛蓝色</value>
   </data>
   <data name="IPStatus_DestinationHostUnreachable" xml:space="preserve">
-    <value>目标主机不可达。</value>
+    <value>目标主机无法访问。</value>
   </data>
   <data name="IPStatus_DestinationNetworkUnreachable" xml:space="preserve">
     <value>目标网络无法访问。</value>
