@@ -2727,7 +2727,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>启动画面</value>
   </data>
   <data name="DownloadMicrosoftEdgeWebView2Runtime" xml:space="preserve">
-    <value>下载微软 Edge WebView2 Runtime</value>
+    <value>下载 Microsoft Edge WebView2 Runtime</value>
   </data>
   <data name="MicrosoftEdgeWebView2RuntimeIsNotAvailable" xml:space="preserve">
     <value>Microsoft Edge WebView2 Runtime 不可用!</value>
