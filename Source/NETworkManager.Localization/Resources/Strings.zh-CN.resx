@@ -2817,7 +2817,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>适用于 WPF 的可拖拽标签控件</value>
   </data>
   <data name="Library_IPNetwork_Description" xml:space="preserve">
-    <value>C#库为.NET开发人员的复杂网络，IP, IPv4, IPv6, netmask, CIDR，子网，子网，超网和超网计算。</value>
+    <value>C#库为.NET开发人员处理复杂的网络、IP、IPv4、IPv6、子网掩码、CIDR、子网、子网划分、超网和超网划分计算。</value>
   </data>
   <data name="Library_LiveCharts_Description" xml:space="preserve">
     <value>适用于.Net的简单、灵活、互动和强大的图表、地图和仪表</value>
