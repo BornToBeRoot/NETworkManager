@@ -1532,10 +1532,10 @@
     <value>解密出错。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_DNSLookupFailed" xml:space="preserve">
-    <value>DNS 名称查找失败。</value>
+    <value>DNS 名称查询失败。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_DNSLookupFailed2" xml:space="preserve">
-    <value>DNS 查找失败。</value>
+    <value>DNS 查询失败。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_EncryptionError" xml:space="preserve">
     <value>加密出错。</value>
