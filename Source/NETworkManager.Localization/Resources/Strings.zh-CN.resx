@@ -2541,10 +2541,10 @@ $$hostname$$	--&gt;	主机名</value>
     <value>WiFi</value>
   </data>
   <data name="Accent_Amber" xml:space="preserve">
-    <value>Amber</value>
+    <value>琥珀色</value>
   </data>
   <data name="Accent_Black" xml:space="preserve">
-    <value>Black</value>
+    <value>黑色</value>
   </data>
   <data name="Accent_Blue" xml:space="preserve">
     <value>Blue</value>
