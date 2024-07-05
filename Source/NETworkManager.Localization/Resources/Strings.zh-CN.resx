@@ -2808,7 +2808,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>AirspacePanel 修复了所有 Airspace 与 WPF-hosted Winforms 的问题。</value>
   </data>
   <data name="Library_ControlzEx_Description" xml:space="preserve">
-    <value>共享控件的WPF和…更多的</value>
+    <value>强大的 WPF 共享控件库</value>
   </data>
   <data name="Library_DnsClientNET_Description" xml:space="preserve">
     <value>DnsClient。NET是一个简单但非常强大和高性能的开放源码库，用于。NET框架进行DNS查找</value>
