@@ -2811,7 +2811,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>强大的 WPF 共享控件库</value>
   </data>
   <data name="Library_DnsClientNET_Description" xml:space="preserve">
-    <value>DnsClient。NET是一个简单但非常强大和高性能的开放源码库，用于。NET框架进行DNS查找</value>
+    <value>DnsClient.NET 是一个简单但功能强大且高性能的开源库，用于在 .NET Framework 中执行 DNS 查询</value>
   </data>
   <data name="Library_Dragablz_Description" xml:space="preserve">
     <value>适用于WPF的可拖动和可撕裂的标签控件</value>
