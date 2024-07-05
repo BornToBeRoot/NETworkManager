@@ -2906,10 +2906,10 @@ $$hostname$$	--&gt;	主机名</value>
     <value>可通过 ICMP 到达的公网 IPv6 地址。</value>
   </data>
   <data name="PublicIPv4Address" xml:space="preserve">
-    <value>公共 IPv4 地址</value>
+    <value>公网 IPv4 地址</value>
   </data>
   <data name="PublicIPv6Address" xml:space="preserve">
-    <value>公共 IPv6 地址</value>
+    <value>公网 IPv6 地址</value>
   </data>
   <data name="UseCustomIPv6AddressAPI" xml:space="preserve">
     <value>使用自定义 IPv6 地址 API</value>
