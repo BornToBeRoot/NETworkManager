@@ -3679,7 +3679,7 @@ URL: http://ip-api.com/</value>
     <value>添加一个 IP 地理位置查询页...</value>
   </data>
   <data name="EnterADomainToQueryWhoisDots" xml:space="preserve">
-    <value>输入要查询 WHOIS 的域名...</value>
+    <value>输入要查询 whois 的域名...</value>
   </data>
   <data name="EnterHostToQueryIPGeolocationDots" xml:space="preserve">
     <value>输入主机名以查询 IP 地理位置...</value>
