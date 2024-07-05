@@ -870,7 +870,7 @@
     <value>主机</value>
   </data>
   <data name="HostnameOrIPAddress" xml:space="preserve">
-    <value>主机名或IP地址</value>
+    <value>主机名或 IP 地址</value>
   </data>
   <data name="Hosts" xml:space="preserve">
     <value>主机</value>
