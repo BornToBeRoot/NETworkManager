@@ -1409,13 +1409,13 @@
     <value>深色</value>
   </data>
   <data name="Theme_Light" xml:space="preserve">
-    <value>Light</value>
+    <value>浅色</value>
   </data>
   <data name="Black" xml:space="preserve">
     <value>黑色</value>
   </data>
   <data name="Blue" xml:space="preserve">
-    <value>蓝</value>
+    <value>蓝色</value>
   </data>
   <data name="Brown" xml:space="preserve">
     <value>棕</value>
