@@ -637,7 +637,7 @@
     <value>添加</value>
   </data>
   <data name="AddATabToPerformADNSLookup" xml:space="preserve">
-    <value>添加一 个 DNS 查询页...</value>
+    <value>添加一个 DNS 查询页...</value>
   </data>
   <data name="AddATabToPerformANetworkScan" xml:space="preserve">
     <value>添加一个网络扫描页...</value>
