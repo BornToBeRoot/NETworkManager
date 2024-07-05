@@ -2880,7 +2880,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>使用 XAML Behaviors for WPF 为您的应用程序轻松添加交互性</value>
   </data>
   <data name="License_MicrosoftWebView2License" xml:space="preserve">
-    <value>微软WebView2许可</value>
+    <value>Microsoft WebView2 许可</value>
   </data>
   <data name="WarningMessage_ProfileFileNotEncryptedStoringPasswords" xml:space="preserve">
     <value>当前配置文件未加密，密码将不加密存储在磁盘上!
