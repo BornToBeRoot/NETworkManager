@@ -1514,7 +1514,7 @@
     <value>紫色</value>
   </data>
   <data name="Red" xml:space="preserve">
-    <value>Red</value>
+    <value>红色</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_AtClientWinsockFDCLOSE" xml:space="preserve">
     <value>套接字已关闭。</value>
