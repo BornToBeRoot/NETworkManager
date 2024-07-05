@@ -2667,7 +2667,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>SSH 日志</value>
   </data>
   <data name="SSHRawLog" xml:space="preserve">
-    <value>SSH原始日志</value>
+    <value>SSH 原始日志</value>
   </data>
   <data name="PuTTYLogMode_SessionLog" xml:space="preserve">
     <value>会话日志</value>
