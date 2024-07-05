@@ -1484,7 +1484,7 @@
     <value>请求超时。</value>
   </data>
   <data name="IPStatus_TtlExpired" xml:space="preserve">
-    <value>TTL 在传输途中过期。</value>
+    <value>TTL 在传输过程中过期。</value>
   </data>
   <data name="KeyMustHave8CharactersOrMore" xml:space="preserve">
     <value>密钥必须有 8 个字符或更多!</value>
