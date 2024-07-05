@@ -1752,7 +1752,7 @@
     <value>输入有效的域名（例如“example.com”）！</value>
   </data>
   <data name="WhoisServerNotFoundForTheDomain" xml:space="preserve">
-    <value>没有找到该域名的Whois服务器: "{0}"</value>
+    <value>未找到该域名的 Whois 服务器：“{0}”</value>
   </data>
   <data name="Routing" xml:space="preserve">
     <value>路由</value>
