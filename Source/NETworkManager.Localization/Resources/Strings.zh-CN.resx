@@ -2007,7 +2007,7 @@ URL: https://api.github.com/</value>
     <value>解析的 PTR dns 记录"{0}"!</value>
   </data>
   <data name="GotXXXAsPublicIPAddressFromXXXMessage" xml:space="preserve">
-    <value>获得“{0}”作为公共ip地址"{1}"!</value>
+    <value>获得“{0}”作为公网 IP 地址"{1}"!</value>
   </data>
   <data name="ResolvedXXXAsHostnameForIPAddressXXXMessage" xml:space="preserve">
     <value>解析“{0}”为ip地址主机名"{1}"!</value>
