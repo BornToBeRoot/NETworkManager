@@ -2559,10 +2559,10 @@ $$hostname$$	--&gt;	主机名</value>
     <value>深红色</value>
   </data>
   <data name="Accent_Cyan" xml:space="preserve">
-    <value>Cyan</value>
+    <value>青色</value>
   </data>
   <data name="Accent_Emerald" xml:space="preserve">
-    <value>Emerald</value>
+    <value>深绿色</value>
   </data>
   <data name="Accent_Green" xml:space="preserve">
     <value>Green</value>
