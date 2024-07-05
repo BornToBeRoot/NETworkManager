@@ -792,7 +792,7 @@
     <value>Telnet 端口</value>
   </data>
   <data name="DeleteCredentialMessage" xml:space="preserve">
-    <value>被选择的凭据将被永久删除.</value>
+    <value>选定的凭据将被永久删除.</value>
   </data>
   <data name="DeleteEntry" xml:space="preserve">
     <value>删除条目</value>
