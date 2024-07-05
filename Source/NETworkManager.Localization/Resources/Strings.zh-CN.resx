@@ -2877,7 +2877,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>WebView2 控件使您能够在由 Microsoft Edge (Chromium) 驱动的原生应用中嵌入网页技术 (HTML、CSS 和 JavaScript)。</value>
   </data>
   <data name="Library_XamlBehaviorsWpf_Description" xml:space="preserve">
-    <value>使用XAML behavior for WPF可以轻松地为您的应用程序添加交互性。</value>
+    <value>使用 XAML Behaviors for WPF 为您的应用程序轻松添加交互性</value>
   </data>
   <data name="License_MicrosoftWebView2License" xml:space="preserve">
     <value>微软WebView2许可</value>
