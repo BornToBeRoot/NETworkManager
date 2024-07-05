@@ -2040,7 +2040,7 @@ URL: https://api.github.com/</value>
     <value>可以通过 http 或 https 访问的 web 服务的 URL，并返回 IPv4 地址（如“xx.xx.xx.xx”）作为响应。</value>
   </data>
   <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
-    <value>无法解析公共ip地址"{0}"! 尝试其他服务或使用默认的... </value>
+    <value>无法解析公网ip地址"{0}"! 尝试其他服务或使用默认的... </value>
   </data>
   <data name="CouldNotConnectToXXXMessage" xml:space="preserve">
     <value>不能连接到“{0}”！</value>
