@@ -1250,7 +1250,7 @@
     <value>剪切</value>
   </data>
   <data name="DecryptAndLoadDots" xml:space="preserve">
-    <value>解密并加载</value>
+    <value>解密并加载...</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>删除</value>
