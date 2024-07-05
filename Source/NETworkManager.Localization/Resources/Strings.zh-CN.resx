@@ -2535,7 +2535,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>Web 控制台</value>
   </data>
   <data name="ApplicationName_Whois" xml:space="preserve">
-    <value>域名查询</value>
+    <value>Whois</value>
   </data>
   <data name="ApplicationName_WiFi" xml:space="preserve">
     <value>WiFi</value>
