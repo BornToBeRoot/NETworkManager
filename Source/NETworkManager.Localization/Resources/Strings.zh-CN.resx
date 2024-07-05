@@ -2202,7 +2202,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>将在 “{0}” 秒后关闭</value>
   </data>
   <data name="NetworkUnavailable" xml:space="preserve">
-    <value>网络不可用</value>
+    <value>网络不可用！</value>
   </data>
   <data name="IPAddressToDetectLocalIPAddressBasedOnRouting" xml:space="preserve">
     <value>基于路由检测本地IP地址</value>
