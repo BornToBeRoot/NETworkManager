@@ -2412,7 +2412,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>持续时间(s)</value>
   </data>
   <data name="Model" xml:space="preserve">
-    <value>Model</value>
+    <value>型号</value>
   </data>
   <data name="VLAN" xml:space="preserve">
     <value>VLAN</value>
