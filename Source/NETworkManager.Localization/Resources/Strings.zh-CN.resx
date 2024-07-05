@@ -2972,7 +2972,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>该名称已被使用！</value>
   </data>
   <data name="Resize" xml:space="preserve">
-    <value>Resize</value>
+    <value>缩放</value>
   </data>
   <data name="DeleteProfiles" xml:space="preserve">
     <value>删除配置文件</value>
