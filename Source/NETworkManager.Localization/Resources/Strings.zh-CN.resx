@@ -3185,7 +3185,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>PuTTY 的有效路径应以“PuTTY.exe”结尾！</value>
   </data>
   <data name="NoValidTigerVNCPath" xml:space="preserve">
-    <value>TigerVNC 的有效路径应以 "vncviewer-*.exe "或 "vncviewer64-*.exe "结尾！</value>
+    <value>TigerVNC 的有效路径应以“vncviewer-*.exe”或“vncviewer64-*.exe”结尾！</value>
   </data>
   <data name="ApplicationName_SNTPLookup" xml:space="preserve">
     <value>SNTP 查询</value>
