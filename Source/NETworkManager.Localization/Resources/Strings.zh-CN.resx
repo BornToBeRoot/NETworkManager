@@ -837,7 +837,7 @@
     <value>输入子网和子网掩码以创建子网</value>
   </data>
   <data name="ErrorCheckingApiGithubComVerifyYourNetworkConnection" xml:space="preserve">
-    <value>不能连接到 'api.github.com'，请检查网络状态</value>
+    <value>无法连接到“api.github.com”，请检查网络连接！</value>
   </data>
   <data name="ErrorInResponse" xml:space="preserve">
     <value>响应出错！</value>
