@@ -469,7 +469,7 @@
     <value>跃点</value>
   </data>
   <data name="Hops" xml:space="preserve">
-    <value>路由数</value>
+    <value>跃点数</value>
   </data>
   <data name="Hostname" xml:space="preserve">
     <value>主机名</value>
