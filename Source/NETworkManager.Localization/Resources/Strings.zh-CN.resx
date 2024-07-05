@@ -1719,7 +1719,7 @@
     <value>白色</value>
   </data>
   <data name="Yellow" xml:space="preserve">
-    <value>Yellow</value>
+    <value>黄色</value>
   </data>
   <data name="ProfileWithThisNameAlreadyExists" xml:space="preserve">
     <value>已存在具有此名称的配置！</value>
