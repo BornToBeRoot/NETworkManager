@@ -2847,7 +2847,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>所有 SVG 国旗的集合</value>
   </data>
   <data name="Resource_ListTLD_Description" xml:space="preserve">
-    <value>来自iana.org的顶级域名列表，用于从whois.iana.org通过43端口查询顶级域名的whois服务器。</value>
+    <value>来自 iana.org 的顶级域名列表，用于从 whois.iana.org 通过 43 端口查询顶级域名的 whois 服务器</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
     <value>OUI 数据来自 ieee.org。</value>
