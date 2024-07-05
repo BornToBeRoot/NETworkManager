@@ -2751,10 +2751,10 @@ $$hostname$$	--&gt;	主机名</value>
 "{0}"</value>
   </data>
   <data name="EditGroupDots" xml:space="preserve">
-    <value>编辑组</value>
+    <value>编辑组...</value>
   </data>
   <data name="DecryptionError" xml:space="preserve">
-    <value>解密出错。</value>
+    <value>解密出错</value>
   </data>
   <data name="DecryptionErrorMessage" xml:space="preserve">
     <value>无法解密文件。您可以在GitHub上报告此问题。</value>
