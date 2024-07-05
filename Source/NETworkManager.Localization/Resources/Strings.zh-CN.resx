@@ -2676,7 +2676,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>SSH 日志</value>
   </data>
   <data name="PuTTYLogMode_SSHRawLog" xml:space="preserve">
-    <value>SSH和原始日志</value>
+    <value>SSH 和原始日志</value>
   </data>
   <data name="EnterValidFileName" xml:space="preserve">
     <value>输入一个有效的文件名!</value>
