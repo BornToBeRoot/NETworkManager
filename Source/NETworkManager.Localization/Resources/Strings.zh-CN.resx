@@ -2349,7 +2349,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>在GitHub上打开文档。</value>
   </data>
   <data name="ExampleProfileFileName" xml:space="preserve">
-    <value>客户1</value>
+    <value>客户 1</value>
   </data>
   <data name="AddProfileFile" xml:space="preserve">
     <value>添加配置文件</value>
