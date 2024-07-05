@@ -1343,7 +1343,7 @@
     <value>保存</value>
   </data>
   <data name="SearchDots" xml:space="preserve">
-    <value>搜索</value>
+    <value>搜索...</value>
   </data>
   <data name="TimeUnit_Second" xml:space="preserve">
     <value>秒(s)</value>
