@@ -226,7 +226,7 @@
     <value>全局</value>
   </data>
   <data name="Headers" xml:space="preserve">
-    <value>头信息</value>
+    <value>标头</value>
   </data>
   <data name="History" xml:space="preserve">
     <value>历史</value>
