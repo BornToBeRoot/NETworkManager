@@ -3140,7 +3140,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>吉比特</value>
   </data>
   <data name="Gigabytes" xml:space="preserve">
-    <value>千兆字节</value>
+    <value>吉字节</value>
   </data>
   <data name="Kilobits" xml:space="preserve">
     <value>千位</value>
