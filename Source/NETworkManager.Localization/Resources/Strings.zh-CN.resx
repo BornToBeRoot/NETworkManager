@@ -505,7 +505,7 @@
     <value>最大值</value>
   </data>
   <data name="MaximumHops" xml:space="preserve">
-    <value>最大跳数</value>
+    <value>最大跃点数</value>
   </data>
   <data name="MinimizeInsteadOfTerminating" xml:space="preserve">
     <value>最小化主窗口而不是终止应用程序</value>
