@@ -1151,7 +1151,7 @@ First make a backup copy of your profile files before enabling encryption!</valu
     <value>此设置位置无效!</value>
   </data>
   <data name="TimeoutOnSNMPQuery" xml:space="preserve">
-    <value>SNM P查询超时时间。可能主机不可达或社区/密码错误。</value>
+    <value>SNMP 查询超时。可能是主机无法访问或社区字符串/密码错误。</value>
   </data>
   <data name="TimeoutWhenQueryingDNSServerMessage" xml:space="preserve">
     <value>从DNS服务器查询IP地址“{0}”超时！</value>
@@ -2607,7 +2607,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>Yellow</value>
   </data>
   <data name="Accent_Steel" xml:space="preserve">
-    <value>Steel</value>
+    <value>铁灰色</value>
   </data>
   <data name="ProfileName_General" xml:space="preserve">
     <value>常规</value>
@@ -2850,7 +2850,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>来自iana.org的顶级域名列表，用于从whois.iana.org通过43端口查询顶级域名的whois服务器。</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
-    <value>OUI data from ieee.org.</value>
+    <value>OUI 数据来自 ieee.org。</value>
   </data>
   <data name="Resource_ServiceNamePortNumber_Description" xml:space="preserve">
     <value>服务名称和传输协议端口号注册从iana.org。</value>
@@ -3155,16 +3155,16 @@ $$hostname$$	--&gt;	主机名</value>
     <value>兆字节</value>
   </data>
   <data name="Petabits" xml:space="preserve">
-    <value>Petabits</value>
+    <value>拍比特</value>
   </data>
   <data name="Petabytes" xml:space="preserve">
-    <value>Petabytes</value>
+    <value>拍字节</value>
   </data>
   <data name="Terabits" xml:space="preserve">
-    <value>Terabits</value>
+    <value>太比特</value>
   </data>
   <data name="Terabytes" xml:space="preserve">
-    <value>Terabytes</value>
+    <value>太字节</value>
   </data>
   <data name="EnterANumberAndSelectAUnitToCalculateTheUnitsDots" xml:space="preserve">
     <value>输入数字并选择单位以计算单位...</value>
@@ -3257,7 +3257,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>超时</value>
   </data>
   <data name="Hostkey" xml:space="preserve">
-    <value>Hostkey</value>
+    <value>主机密钥</value>
   </data>
   <data name="SettingsAreResetAndApplicationWillBeRestartedMessage" xml:space="preserve">
     <value>设置将被重置，然后应用程序将重新启动！</value>
@@ -3374,181 +3374,181 @@ $$hostname$$	--&gt;	主机名</value>
     <value>Remote Desktop Gateway 服务器管理员已结束连接。请稍后再尝试重新连接，或联系网络管理员寻求帮助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331675" xml:space="preserve">
-    <value>Remote Desktop can't connect to the remote computer "" for one of these reasons:  1) Your user account is not listed in the RD Gateway's permission list 2) You might have specified the remote computer in NetBIOS format (for example, computer1), but the RD Gateway is expecting an FQDN or IP address format (for example, computer1.fabrikam.com or 157.60.0.1).  Contact your network administrator for assistance.</value>
+    <value>远程桌面无法连接到远程计算机“”，原因如下：1） 您的用户帐户未在 RD 网关的权限列表中列出 2） 您可能已经以 NetBIOS 格式（例如：computer1）指定了远程计算机，但 RD 网关需要 FQDN 或 IP 地址格式（例如：computer1.fabrikam.com 或 157.60.0.1）。 请联系您的网络管理员以获取帮助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331676" xml:space="preserve">
-    <value>Remote Desktop can't connect to the remote computer "" for one of these reasons:  1) Your user account is not authorized to access the RD Gateway "" 2) Your computer is not authorized to access the RD Gateway "" 3) You are using an incompatible authentication method (for example, the RD Gateway might be expecting a smart card but you provided a password)  Contact your network administrator for assistance.</value>
+    <value>远程桌面无法连接到远程计算机“”，原因如下：1） 你的用户帐户没有权限访问 RD 网关 “” 2） 你的计算机没有权限访问 RD 网关 “” 3） 您正在使用不兼容的身份验证方式（例如：RD 网关可能需要智能卡，但您提供了密码）。请联系您的网络管理员以获取帮助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331679" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because your network administrator has restricted access to this RD Gateway server. Contact your network administrator for assistance.</value>
+    <value>您的计算机无法连接到远程计算机，因为您的网络管理员已限制对此 RD 网关服务器的访问。请联系您的网络管理员以获取帮助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331680" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the web proxy server requires authentication. To allow unauthenticated traffic to an RD Gateway server through your web proxy server, contact your network administrator.</value>
+    <value>您的计算机无法连接到远程计算机，因为 Web 代理服务器需要身份验证。若要允许通过 Web 代理服务器向 RD 网关服务器发送未经身份验证的流量，请与您的网络管理员联系。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331682" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server reached its maximum allowed connections. Try reconnecting later or contact your network administrator for assistance.</value>
+    <value>您的计算机无法连接到远程计算机，因为远程桌面网关服务器已达到其允许的最大连接数。请稍后尝试重新连接或联系您的网络管理员以获取帮助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331683" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server does not support the request. Contact your network administrator for assistance.</value>
+    <value>您的计算机无法连接到远程计算机，因为远程桌面网关服务器不支持该请求。请联系您的网络管理员以获取帮助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331684" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the client does not support one of the Remote Desktop Gateway's capabilities. Contact your network administrator for assistance.</value>
+    <value>您的计算机无法连接到远程计算机，因为客户端不支持远程桌面网关的某项功能。请联系您的网络管理员以获取帮助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331685" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server and this computer are incompatible. Contact your network administrator for assistance.</value>
+    <value>您的计算机无法连接到远程计算机，因为远程桌面网关服务器和此计算机不兼容。请联系您的网络管理员以获取帮助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331688" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because no certificate was configured to use at the Remote Desktop Gateway server. Contact your network administrator for assistance.</value>
+    <value>您的计算机无法连接到远程计算机，因为没有配置在远程桌面网关服务器上使用的证书。请联系您的网络管理员以获取帮助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331689" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the RD Gateway server that you are trying to connect to is not allowed by your computer administrator. If you are the administrator, add this Remote Desktop Gateway server name to the trusted Remote Desktop Gateway server list on your computer and then try connecting again.</value>
+    <value>您的计算机无法连接到远程计算机，因为您尝试连接到的 RD 网关服务器未被您的计算机管理员允许。如果您是管理员，请将此远程桌面网关服务器名称添加到计算机上受信任的远程桌面网关服务器列表中，然后再次尝试连接。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331690" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because your computer or device did not meet the Network Access Protection requirements set by your network administrator, for one of the following reasons:  1) The Remote Desktop Gateway server name and the server's public key certificate subject name do not match. 2) The certificate has expired or has been revoked. 3) The certificate root authority does not trust the certificate. 4) The certificate key extension does not support encryption. 5) Your computer cannot verify the certificate revocation list.  Contact your network administrator for assistance.</value>
+    <value>由于以下原因之一，您的计算机无法连接到远程计算机，因为您的计算机或设备不符合网络管理员设置的网络访问保护要求：1） 远程桌面网关服务器名称和服务器的公钥证书使用者名称不匹配。2）证书已过期或已被吊销。3） 证书根颁发机构不信任该证书。4）证书密钥扩展不支持加密。5） 您的计算机无法验证证书吊销列表。请联系您的网络管理员以获取帮助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331691" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because a user name and password are required to authenticate to the Remote Desktop Gateway server instead of smart card credentials.</value>
+    <value>您的计算机无法连接到远程计算机，因为需要用户名和密码才能对远程桌面网关服务器进行身份验证，而不是智能卡凭据。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331692" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because smart card credentials are required to authenticate to the Remote Desktop Gateway server instead of a user name and password.</value>
+    <value>您的计算机无法连接到远程计算机，因为需要智能卡凭据才能向远程桌面网关服务器进行身份验证，而不是用户名和密码。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331700" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because an invalid cookie was sent to the Remote Desktop Gateway server. Contact your network administrator for assistance.</value>
+    <value>您的计算机无法连接到远程计算机，因为向远程桌面网关服务器发送了无效的 Cookie。请联系您的网络管理员以获取帮助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331701" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the cookie was rejected by the Remote Desktop Gateway server. Contact your network administrator for assistance.</value>
+    <value>您的计算机无法连接到远程计算机，因为远程桌面网关服务器拒绝了该 Cookie。请联系您的网络管理员以获取帮助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331703" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server is expecting an authentication method different from the one attempted. Contact your network administrator for assistance.</value>
+    <value>您的计算机无法连接到远程计算机，因为远程桌面网关服务器需要的身份验证方法与尝试的身份验证方法不同。请联系您的网络管理员以获取帮助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331704" xml:space="preserve">
-    <value>The RD Gateway connection ended because periodic user authentication failed. Try reconnecting with a correct user name and password. If the reconnection fails, contact your network administrator for further assistance.</value>
+    <value>RD 网关连接已结束，因为间歇性或定期用户身份验证失败。请尝试使用正确的用户名和密码重新连接。如果重新连接仍失败，请联系您的网络管理员以获得进一步的帮助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331705" xml:space="preserve">
-    <value>The RD Gateway connection ended because periodic user authorization failed. Try reconnecting with a correct user name and password. If the reconnection fails, contact your network administrator for further assistance.</value>
+    <value>RD 网关连接已结束，因为间歇性或定期用户身份验证失败。请尝试使用正确的用户名和密码重新连接。如果重新连接仍失败，请联系您的网络管理员以获得进一步的帮助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331707" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway and the remote computer are unable to exchange policies. This could happen due to one of the following reasons:     1. The remote computer is not capable of exchanging policies with the Remote Desktop Gateway.     2. The remote computer's configuration does not permit a new connection.     3. The connection between the Remote Desktop Gateway and the remote computer ended.    Contact your network administrator for assistance.</value>
+    <value>您的计算机无法连接到远程计算机，因为远程桌面网关和远程计算机无法交换策略。这可能是由于以下原因造成的： 1. 远程计算机无法与远程桌面网关交换策略。 2. 远程计算机的配置不允许新连接。 3. 远程桌面网关与远程计算机之间的连接已结束。请联系您的网络管理员以获取帮助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331713" xml:space="preserve">
-    <value>The RD Gateway connection ended because periodic user authorization failed. Your computer or device didn't pass the Network Access Protection (NAP) requirements set by your network administrator. Contact your network administrator for assistance.</value>
+    <value>RD 网关连接已结束，因为间歇性或定期用户身份验证失败。您的计算机或设备未通过网络管理员设置的网络访问保护 （NAP） 要求。请联系您的网络管理员以获取帮助。</value>
   </data>
   <data name="Connected" xml:space="preserve">
-    <value>Connected</value>
+    <value>已连接</value>
   </data>
   <data name="ErrorWhileScanningWiFiAdapterXXXWithErrorXXX" xml:space="preserve">
-    <value>Error while scanning WiFi adapter "{0}" with error: "{1}"</value>
+    <value>扫描WiFi适配器“{0}”时出错，错误：“{1}”。</value>
   </data>
   <data name="ConnectDots" xml:space="preserve">
-    <value>Connect...</value>
+    <value>连接中……</value>
   </data>
   <data name="XXXDisconnected" xml:space="preserve">
-    <value>{0} disconnected!</value>
+    <value>{0} 已断开连接！</value>
   </data>
   <data name="ConnectToXXX" xml:space="preserve">
-    <value>Connect to {0}</value>
+    <value>连接到{0}</value>
   </data>
   <data name="WPS" xml:space="preserve">
     <value>WPS</value>
   </data>
   <data name="ConnectAutomatically" xml:space="preserve">
-    <value>Connect automatically</value>
+    <value>自动连接</value>
   </data>
   <data name="PreSharedKey" xml:space="preserve">
-    <value>Pre-shared key</value>
+    <value>预共享密钥</value>
   </data>
   <data name="ConnectingToXXX" xml:space="preserve">
-    <value>Connecting to {0}...</value>
+    <value>正在连接到 {0}……</value>
   </data>
   <data name="CouldNotConnectToXXXReasonXXX" xml:space="preserve">
-    <value>Could not connect to {0} ({1})!</value>
+    <value>无法连接到 {0}（{1}）！</value>
   </data>
   <data name="SuccessfullyConnectedToXXX" xml:space="preserve">
-    <value>Successfully connected to {0}!</value>
+    <value>已成功连接到 {0}！</value>
   </data>
   <data name="WiFiConnectionStatus_AccessRevoked" xml:space="preserve">
-    <value>Access to the network has been revoked</value>
+    <value>网络访问已被取消</value>
   </data>
   <data name="WiFiConnectionStatus_InvalidCredential" xml:space="preserve">
-    <value>Invalid credentials</value>
+    <value>凭据无效</value>
   </data>
   <data name="WiFiConnectionStatus_NetworkNotAvailable" xml:space="preserve">
-    <value>Network not available</value>
+    <value>网络不可用</value>
   </data>
   <data name="WiFiConnectionStatus_Success" xml:space="preserve">
-    <value>Successful</value>
+    <value>成功</value>
   </data>
   <data name="WiFiConnectionStatus_Timeout" xml:space="preserve">
-    <value>Connection attempt timed out</value>
+    <value>尝试连接超时</value>
   </data>
   <data name="WiFiConnectionStatus_UnspecifiedFailure" xml:space="preserve">
     <value>-/-</value>
   </data>
   <data name="WiFiConnectionStatus_UnsupportedAuthenticationProtocol" xml:space="preserve">
-    <value>Authentication protocol is not supported!</value>
+    <value>不支持身份验证协议！</value>
   </data>
   <data name="CheckingWPSDots" xml:space="preserve">
-    <value>Checking WPS...</value>
+    <value>正在检查 WPS……</value>
   </data>
   <data name="OpenOIDProfilesDots" xml:space="preserve">
-    <value>Open OID profiles...</value>
+    <value>打开 OID 配置文件...</value>
   </data>
   <data name="MIB" xml:space="preserve">
     <value>MIB</value>
   </data>
   <data name="OIDProfiles" xml:space="preserve">
-    <value>OID profiles</value>
+    <value>OID 配置文件</value>
   </data>
   <data name="SelectOIDProfile" xml:space="preserve">
-    <value>Select OID profile</value>
+    <value>选择 OID 配置文件</value>
   </data>
   <data name="AddOIDProfile" xml:space="preserve">
-    <value>Add OID profile</value>
+    <value>添加 OID 配置文件</value>
   </data>
   <data name="DeleteOIDProfile" xml:space="preserve">
-    <value>Delete OID profile</value>
+    <value>删除 OID 配置文件</value>
   </data>
   <data name="DeleteOIDProfileMessage" xml:space="preserve">
-    <value>The selected OID profile will be deleted permanently.</value>
+    <value>选定的 OID 配置文件将被永久删除。</value>
   </data>
   <data name="EditOIDProfile" xml:space="preserve">
-    <value>Edit OID profile</value>
+    <value>编辑 OID 配置文件</value>
   </data>
   <data name="EnterPasswordDots" xml:space="preserve">
-    <value>Enter password...</value>
+    <value>输入密码...</value>
   </data>
   <data name="AddTab" xml:space="preserve">
-    <value>Add tab</value>
+    <value>添加标签</value>
   </data>
   <data name="FromProfile" xml:space="preserve">
-    <value>(from profile)</value>
+    <value>（从配置文件）</value>
   </data>
   <data name="NewSubnetMask" xml:space="preserve">
-    <value>New subnet mask</value>
+    <value>新建子网掩码</value>
   </data>
   <data name="AddServer" xml:space="preserve">
-    <value>Add server</value>
+    <value>添加服务器</value>
   </data>
   <data name="SNTPServer" xml:space="preserve">
-    <value>SNTP server</value>
+    <value>SNTP 服务器</value>
   </data>
   <data name="ErrorMessage_TabPageHasError" xml:space="preserve">
-    <value>The settings on this page contain errors. Correct them to be able to save.</value>
+    <value>本页面的设置包含错误，须更正后才能保存。</value>
   </data>
   <data name="HelpMessage_PuTTYHostkey" xml:space="preserve">
-    <value>SSH hostkey to use for the connection (like "71:b8:f2:6e..."). Only available if the mode is "SSH".</value>
+    <value>用于连接的 SSH 主机密钥（如“71:b8:f2:6e...”）。仅当模式为“SSH”时可用。</value>
   </data>
   <data name="HelpMessage_PuTTYPrivateKeyFile" xml:space="preserve">
-    <value>Full path to the private key file (like "C:\Users\BornToBeRoot\SSH\private_key.ppk"). Only available if the mode is "SSH".</value>
+    <value>私钥文件的完整路径（如“C:\Users\BornToBeRoot\SSH\private_key.ppk”）。仅当模式为“SSH”时可用。</value>
   </data>
   <data name="HelpMessage_PuTTYUsername" xml:space="preserve">
-    <value>Username that will be passed into the PuTTY session. Only available if the mode is "SSH", "Telnet" or "Rlogin".</value>
+    <value>将传入 PuTTY 会话的用户名。仅当模式为“SSH”、“Telnet”或“Rlogin”时可用。</value>
   </data>
   <data name="ASN" xml:space="preserve">
     <value>ASN</value>
   </data>
   <data name="ASName" xml:space="preserve">
-    <value>AS Name</value>
+    <value>AS 名称</value>
   </data>
   <data name="City" xml:space="preserve">
     <value>城市</value>
@@ -3575,10 +3575,10 @@ $$hostname$$	--&gt;	主机名</value>
     <value>地理位置</value>
   </data>
   <data name="Hosting" xml:space="preserve">
-    <value>Hosting</value>
+    <value>托管</value>
   </data>
   <data name="IPGeolocation" xml:space="preserve">
-    <value>IP 地理定位</value>
+    <value>IP 地理位置</value>
   </data>
   <data name="ISP" xml:space="preserve">
     <value>ISP</value>
@@ -3590,7 +3590,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>经度</value>
   </data>
   <data name="Mobile" xml:space="preserve">
-    <value>Mobile</value>
+    <value>移动</value>
   </data>
   <data name="Organization" xml:space="preserve">
     <value>组织</value>
@@ -3602,51 +3602,51 @@ $$hostname$$	--&gt;	主机名</value>
     <value>时区</value>
   </data>
   <data name="ZipCode" xml:space="preserve">
-    <value>Zip</value>
+    <value>压缩</value>
   </data>
   <data name="ExternalService_ip_api_Description" xml:space="preserve">
-    <value>IP 地理定位 API - 快速、准确、可靠</value>
+    <value>IP 地理位置 API - 快速、准确、可靠</value>
   </data>
   <data name="CheckDNSResolver" xml:space="preserve">
     <value>检查 DNS 解析器</value>
   </data>
   <data name="CheckIPGeolocation" xml:space="preserve">
-    <value>检查 IP 地理定位</value>
+    <value>检查 IP 地理位置</value>
   </data>
   <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
-    <value>The DNS resolver is determined via ip-api.com.
+    <value>DNS 解析通过 ip-api.com 确定。
 
 URL: https://edns.ip-api.com/</value>
   </data>
   <data name="HelpMessage_CheckIPGeolocation" xml:space="preserve">
-    <value>The IP geolocation is determined via ip-api.com.
+    <value>P 地理位置通过 ip-api.com 确定。
 
 URL: http://ip-api.com/</value>
   </data>
   <data name="WelcomePrivacyMessage" xml:space="preserve">
-    <value>To provide additional features, third party services are used that are not operated by me. You can deselect them below. No data is transferred to me at any time.</value>
+    <value>为了提供更多功能，我们使用了非我运营的第三方服务。您可以在下面取消选择。任何时候都不会向我传输数据。</value>
   </data>
   <data name="CheckingDNSResolverDots" xml:space="preserve">
-    <value>Checking DNS resolver...</value>
+    <value>正在检查 DNS 解析...</value>
   </data>
   <data name="CheckingIPGeolocationDots" xml:space="preserve">
-    <value>Checking IP geolocation...</value>
+    <value>检查 IP 地理位置...</value>
   </data>
   <data name="CheckNetworkConnectionTryAgainMessage" xml:space="preserve">
-    <value>Check your network connection and try again in a few seconds.</value>
+    <value>请检查您的网络连接，稍后再试。</value>
   </data>
   <data name="IPApiRateLimitMessage" xml:space="preserve">
-    <value>ip-api.com rate limit reached (too many requests from your network)!
-Try again in a few seconds.</value>
+    <value>已达到 ip-api.com 的速率限制（请求过多）！
+请稍后再试。</value>
   </data>
   <data name="HTTPStatusCode" xml:space="preserve">
-    <value>HTTP status code</value>
+    <value>HTTP 状态码</value>
   </data>
   <data name="Accen_Steel" xml:space="preserve">
-    <value>Steel</value>
+    <value>铁灰色</value>
   </data>
   <data name="RateLimitReachedTryAgainInXSeconds" xml:space="preserve">
-    <value>Rate limit reached! Try again in {0} seconds...</value>
+    <value>达到速率限制！请{0}秒钟后再试...</value>
   </data>
   <data name="ProfileGroup_General" xml:space="preserve">
     <value>常规</value>
@@ -3655,130 +3655,130 @@ Try again in a few seconds.</value>
     <value>BSSID</value>
   </data>
   <data name="NoReachableHostsFound" xml:space="preserve">
-    <value>No reachable hosts found!</value>
+    <value>未找到可连接的主机！</value>
   </data>
   <data name="ProfileGroup_Application" xml:space="preserve">
-    <value>Application</value>
+    <value>应用程序</value>
   </data>
   <data name="HelpMessage_ExperimentalFeatures" xml:space="preserve">
-    <value>Enable experimental features to test new functions. These are not yet complete, contain bugs, can crash the application and may change again until release.</value>
+    <value>启用实验功能来测试新功能。这些功能尚未完成，会包含错误，可能导致应用程序崩溃，并可能在发布前再次更改。</value>
   </data>
   <data name="ExperimentalFeatures" xml:space="preserve">
-    <value>Experimental features</value>
+    <value>实验功能</value>
   </data>
   <data name="Experimental" xml:space="preserve">
-    <value>Experimental</value>
+    <value>实验性</value>
   </data>
   <data name="Watermark_RunCommand" xml:space="preserve">
-    <value>Run command...</value>
+    <value>运行命令...</value>
   </data>
   <data name="ApplicationName_IPGeolocation" xml:space="preserve">
-    <value>IP Geolocation</value>
+    <value>IP 地理位置</value>
   </data>
   <data name="AddATabToQueryTheIPGeolocation" xml:space="preserve">
-    <value>Add a tab to query the IP geolocation...</value>
+    <value>添加一个 IP 地理位置查询页...</value>
   </data>
   <data name="EnterADomainToQueryWhoisDots" xml:space="preserve">
-    <value>Enter a domain to query whois...</value>
+    <value>输入要查询 WHOIS 的域名...</value>
   </data>
   <data name="EnterHostToQueryIPGeolocationDots" xml:space="preserve">
-    <value>Enter host to query IP geolocation...</value>
+    <value>输入主机名以查询 IP 地理位置...</value>
   </data>
   <data name="SNMPV3ErrorCode_UnknownUserName" xml:space="preserve">
-    <value>Unknown user name.</value>
+    <value>未知用户名。</value>
   </data>
   <data name="SNMPV3ErrorCode_AuthenticationFailed" xml:space="preserve">
-    <value>Authentication failure (incorrect password, community or key).</value>
+    <value>认证失败（密码、社区字符串或密钥不正确）。</value>
   </data>
   <data name="SNMPErrorCode_NoError" xml:space="preserve">
-    <value>The operation was successful without any errors.</value>
+    <value>操作成功，未出现任何错误。</value>
   </data>
   <data name="SNMPErrorCode_TooBig" xml:space="preserve">
-    <value>The response to your request was too large to fit into a single response!</value>
+    <value>对您请求的响应数据过大，无法一次性完整装入单个响应中！</value>
   </data>
   <data name="SNMPErrorCode_NoSuchName" xml:space="preserve">
-    <value>The requested OID could not be found!</value>
+    <value>无法找到所请求的 OID！</value>
   </data>
   <data name="SNMPErrorCode_BadValue" xml:space="preserve">
-    <value>A read-write or write-only object was set to an inconsistent value!</value>
+    <value>一个允许读写或仅允许写入的对象被赋予了不相符的值！</value>
   </data>
   <data name="SNMPErrorCode_ReadOnly" xml:space="preserve">
-    <value>The requested OID does not exist and is not writable!</value>
+    <value>请求的 OID 不存在且不可写！</value>
   </data>
   <data name="SNMPErrorCode_GenError" xml:space="preserve">
-    <value>An error occurred for which no specific message is available!</value>
+    <value>发生了一个错误，但没有可用的具体错误信息！</value>
   </data>
   <data name="SNMPErrorCode_NoAccess" xml:space="preserve">
-    <value>The requested object is not accessible for modification!</value>
+    <value>请求的对象不可访问，无法修改！</value>
   </data>
   <data name="SNMPErrorCode_WrongType" xml:space="preserve">
-    <value>The object was set to an incompatible data type!</value>
+    <value>对象被设置为一个不兼容的数据类型！</value>
   </data>
   <data name="SNMPErrorCode_WrongLength" xml:space="preserve">
-    <value>The value assigned to the object exceeds its maximum length!</value>
+    <value>分配给对象的值超过其最大长度！</value>
   </data>
   <data name="SNMPErrorCode_WrongEncoding" xml:space="preserve">
-    <value>The encoding used for the object is incorrect!</value>
+    <value>对象使用的编码不正确！</value>
   </data>
   <data name="SNMPErrorCode_WrongValue" xml:space="preserve">
-    <value>The value assigned to the object is not a valid choice!</value>
+    <value>分配给对象的值不是一个有效的选择！</value>
   </data>
   <data name="SNMPErrorCode_NoCreation" xml:space="preserve">
-    <value>The requested object does not exist and cannot be created!</value>
+    <value>请求的对象不存在，无法创建！</value>
   </data>
   <data name="SNMPErrorCode_InconsistentValue" xml:space="preserve">
-    <value>The MIB variable is currently in an inconsistent state and cannot be modified!</value>
+    <value>MIB 变量当前处于不一致状态，无法修改！</value>
   </data>
   <data name="SNMPErrorCode_ResourceUnavailable" xml:space="preserve">
-    <value>There are no available system resources to perform the requested operation!</value>
+    <value>没有可用的系统资源来执行请求的操作！</value>
   </data>
   <data name="SNMPErrorCode_CommitFailed" xml:space="preserve">
-    <value>An error occurred during the set operation!</value>
+    <value>设置操作过程中发生错误！</value>
   </data>
   <data name="SNMPErrorCode_UndoFailed" xml:space="preserve">
-    <value>A set operation failed, and previous changes could not be rolled back!</value>
+    <value>设置操作失败，无法回滚之前的更改！</value>
   </data>
   <data name="SNMPErrorCode_AuthorizationError" xml:space="preserve">
-    <value>Authentication failed. Please check the community string!</value>
+    <value>验证失败。请检查社区字符串！</value>
   </data>
   <data name="SNMPErrorCode_NotWritable" xml:space="preserve">
-    <value>The requested object is not writable and cannot be modified!</value>
+    <value>请求的对象不可写，不能修改！</value>
   </data>
   <data name="SNMPErrorCode_InconsistentName" xml:space="preserve">
-    <value>The object's state is inconsistent, preventing the set operation!</value>
+    <value>对象的状态不一致，阻止了设置操作的执行！</value>
   </data>
   <data name="CloseAll" xml:space="preserve">
-    <value>Close all</value>
+    <value>关闭全部</value>
   </data>
   <data name="ExpandHostView" xml:space="preserve">
-    <value>Expand host view</value>
+    <value>展开主机视图</value>
   </data>
   <data name="CannotSetHostWhileRunningMessage" xml:space="preserve">
-    <value>Host cannot be set while other hosts are being added. Please wait until the process is complete and try again.</value>
+    <value>正在添加其他主机时无法设置主机。请等待进程完成后再试。</value>
   </data>
   <data name="Watermark_RunCommandWithHotKey" xml:space="preserve">
-    <value>Run command... (Ctrl+Shift+P)</value>
+    <value>运行命令...（Ctrl+Shift+P）</value>
   </data>
   <data name="NoMatchingCommands" xml:space="preserve">
-    <value>No matching commands!</value>
+    <value>没有匹配的命令！</value>
   </data>
   <data name="RemoteHostname" xml:space="preserve">
-    <value>Remote hostname</value>
+    <value>远程主机名</value>
   </data>
   <data name="ProcessID" xml:space="preserve">
-    <value>Process ID</value>
+    <value>进程 ID</value>
   </data>
   <data name="ProcessPath" xml:space="preserve">
-    <value>Process path</value>
+    <value>进程路径</value>
   </data>
   <data name="ProcessName" xml:space="preserve">
-    <value>Process name</value>
+    <value>进程名</value>
   </data>
   <data name="NetBIOS" xml:space="preserve">
     <value>NetBIOS</value>
   </data>
   <data name="ComputerName" xml:space="preserve">
-    <value>Computer name</value>
+    <value>计算机名</value>
   </data>
   <data name="ConnectionState_Error" xml:space="preserve">
     <value>错误</value>
@@ -3793,40 +3793,40 @@ Try again in a few seconds.</value>
     <value>工作组/域名称</value>
   </data>
   <data name="NetBIOSReachable" xml:space="preserve">
-    <value>NetBIOS reachable</value>
+    <value>NetBIOS 可访问</value>
   </data>
   <data name="ScanForNetBIOS" xml:space="preserve">
-    <value>Scan for NetBIOS</value>
+    <value>扫描 NetBIOS</value>
   </data>
   <data name="NetBIOSIsDisabled" xml:space="preserve">
-    <value>NetBIOS scan is disabled!</value>
+    <value>NetBIOS 扫描被禁用！</value>
   </data>
   <data name="ResolveHostnameIsDisabled" xml:space="preserve">
-    <value>Resolve Hostname is disabled!</value>
+    <value>解析主机名被禁用！</value>
   </data>
   <data name="ResolveMACAddressIsDisabled" xml:space="preserve">
-    <value>Resolve MAC address is disabled!</value>
+    <value>解析 MAC 地址被禁用！</value>
   </data>
   <data name="CloseGroup" xml:space="preserve">
-    <value>Close group</value>
+    <value>关闭组</value>
   </data>
   <data name="ToolTip_RunCommandWithHotKey" xml:space="preserve">
-    <value>Run command... (Ctrl+Shift+P)</value>
+    <value>运行命令... (Ctrl+Shift+P)</value>
   </data>
   <data name="ProfileFiles" xml:space="preserve">
-    <value>Profile files</value>
+    <value>配置文件</value>
   </data>
   <data name="OpenSettingsDots" xml:space="preserve">
-    <value>Open settings...</value>
+    <value>打开设置...</value>
   </data>
   <data name="ExpandAndOpenSearchDots" xml:space="preserve">
-    <value>Expand and open search...</value>
+    <value>展开并打开搜索...</value>
   </data>
   <data name="WiFiAccessNotAvailableMessage" xml:space="preserve">
-    <value>Access to the Wi-Fi adapter is not permitted by Windows.
+    <value>Windows 不允许访问 Wi-Fi 适配器。
 
-Open the Windows settings and allow Wi-Fi access for this application.
+打开 Windows 设置，允许此应用程序访问 Wi-Fi。
 
-Restart the application afterwards to use this feature.</value>
+之后重新启动应用程序即可使用此功能。</value>
   </data>
 </root>
