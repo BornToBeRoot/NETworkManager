@@ -2802,7 +2802,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>由 {0}在以下机构的帮助下开发和维护</value>
   </data>
   <data name="ExternalService_ipify_Description" xml:space="preserve">
-    <value>一个简单的公共IP地址 API</value>
+    <value>一个简单的公网 IP 地址 API</value>
   </data>
   <data name="Library_AirspaceFixer_Description" xml:space="preserve">
     <value>AirspacePanel 修复了所有 Airspace 与 WPF-hosted Winforms 的问题。</value>
