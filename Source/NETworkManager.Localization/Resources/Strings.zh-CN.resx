@@ -2481,7 +2481,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>发现协议</value>
   </data>
   <data name="ApplicationName_DNSLookup" xml:space="preserve">
-    <value>DNS 查找</value>
+    <value>DNS 查询</value>
   </data>
   <data name="ApplicationName_HTTPHeaders" xml:space="preserve">
     <value>HTTP 信息</value>
