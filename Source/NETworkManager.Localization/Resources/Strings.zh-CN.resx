@@ -3440,7 +3440,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>扫描WiFi适配器“{0}”时出错，错误：“{1}”。</value>
   </data>
   <data name="ConnectDots" xml:space="preserve">
-    <value>连接中……</value>
+    <value>正在连接...</value>
   </data>
   <data name="XXXDisconnected" xml:space="preserve">
     <value>{0} 已断开连接！</value>
