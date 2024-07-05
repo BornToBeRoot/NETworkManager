@@ -2841,7 +2841,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>在本地或远端计算机上抓取CDP、LLDP报文并解析</value>
   </data>
   <data name="Library_SharpSNMP_Description" xml:space="preserve">
-    <value>夏普SNMP库 - 适用于.NET和Mono的开源SNMP</value>
+    <value>Sharp SNMP 库 - 适用于 .NET 和 Mono 的开源 SNMP</value>
   </data>
   <data name="Resource_Flag_Description" xml:space="preserve">
     <value>SVG中所有国家标志的集合</value>
