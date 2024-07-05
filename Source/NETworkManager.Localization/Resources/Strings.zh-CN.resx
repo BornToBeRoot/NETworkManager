@@ -2871,7 +2871,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>C#/WinRT 为 C# 语言提供了封装的 WinRT 投射支持。</value>
   </data>
   <data name="Library_PowerShellSDK_Description" xml:space="preserve">
-    <value>运行时托管PowerShell</value>
+    <value>用于承载PowerShell的运行时环境</value>
   </data>
   <data name="Library_WebView2_Description" xml:space="preserve">
     <value>WebView2控件允许你在由Microsoft Edge (Chromium)支持的原生应用程序中嵌入web技术(HTML、CSS和JavaScript)。</value>
