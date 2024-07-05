@@ -1544,7 +1544,7 @@
     <value>Windows 套接字 gethostbyname 调用失败。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_HostNotFound" xml:space="preserve">
-    <value>主机未找到。</value>
+    <value>找不到主机。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InternalError" xml:space="preserve">
     <value>内部错误。</value>
