@@ -2814,7 +2814,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>DnsClient.NET 是一个简单但功能强大且高性能的开源库，用于在 .NET Framework 中执行 DNS 查询</value>
   </data>
   <data name="Library_Dragablz_Description" xml:space="preserve">
-    <value>适用于WPF的可拖动和可撕裂的标签控件</value>
+    <value>适用于 WPF 的可拖拽标签控件</value>
   </data>
   <data name="Library_IPNetwork_Description" xml:space="preserve">
     <value>C#库为.NET开发人员的复杂网络，IP, IPv4, IPv6, netmask, CIDR，子网，子网，超网和超网计算。</value>
