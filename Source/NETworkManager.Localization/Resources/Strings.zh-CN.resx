@@ -2832,7 +2832,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>一个用于创建Metro / Modern UI风格的WPF应用程序的工具包。</value>
   </data>
   <data name="Library_NewtonsoftJson_Description" xml:space="preserve">
-    <value>Json。NET是。NET的一个流行的高性能JSON框架</value>
+    <value>Json.NET 是一款适用于 .NET 的流行的高性能 JSON 框架</value>
   </data>
   <data name="Library_Octokit_Description" xml:space="preserve">
     <value>用于.NET的GitHub API客户端库</value>
