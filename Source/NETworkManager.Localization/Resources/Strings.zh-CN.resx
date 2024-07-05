@@ -1809,7 +1809,7 @@
     <value>导出全部</value>
   </data>
   <data name="ExportDots" xml:space="preserve">
-    <value>导出</value>
+    <value>导出...</value>
   </data>
   <data name="ExportSelected" xml:space="preserve">
     <value>导出所选</value>
