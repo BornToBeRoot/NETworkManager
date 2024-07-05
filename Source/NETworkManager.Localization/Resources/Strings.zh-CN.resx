@@ -2484,7 +2484,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>DNS 查询</value>
   </data>
   <data name="ApplicationName_HTTPHeaders" xml:space="preserve">
-    <value>HTTP 信息</value>
+    <value>HTTP 头</value>
   </data>
   <data name="ApplicationName_IPScanner" xml:space="preserve">
     <value>IP 扫描器</value>
