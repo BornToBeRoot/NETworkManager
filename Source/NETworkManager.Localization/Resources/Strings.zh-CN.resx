@@ -900,7 +900,7 @@ First make a backup copy of your profile files before enabling encryption!</valu
     <value>唤醒数据包发送成功！</value>
   </data>
   <data name="MaximumNumberOfHopsReached" xml:space="preserve">
-    <value>达到最大跳数/路由器限制（{0}）！</value>
+    <value>达到最大跃点数/路由器限制（{0}）！</value>
   </data>
   <data name="MessageSize" xml:space="preserve">
     <value>消息大小</value>
