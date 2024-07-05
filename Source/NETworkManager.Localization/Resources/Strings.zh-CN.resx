@@ -771,7 +771,7 @@
     <value>数据已更新！</value>
   </data>
   <data name="DecryptAndLoadCredentialsMessage" xml:space="preserve">
-    <value>必须解密并加载凭据才能进行管理.</value>
+    <value>必须解密并加载凭据才能进行管理。</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>默认</value>
