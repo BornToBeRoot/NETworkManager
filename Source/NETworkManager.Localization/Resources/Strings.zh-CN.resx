@@ -466,7 +466,7 @@
     <value>动态IPv4 DNS地址</value>
   </data>
   <data name="Hop" xml:space="preserve">
-    <value>路由</value>
+    <value>跃点</value>
   </data>
   <data name="Hops" xml:space="preserve">
     <value>路由数</value>
