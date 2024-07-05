@@ -121,7 +121,7 @@
     <value>关于</value>
   </data>
   <data name="Accent" xml:space="preserve">
-    <value>焦点</value>
+    <value>强调</value>
   </data>
   <data name="AddCredentials" xml:space="preserve">
     <value>新增凭据</value>
