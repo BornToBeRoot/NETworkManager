@@ -2868,7 +2868,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>未授权</value>
   </data>
   <data name="Library_CsWinRT_Description" xml:space="preserve">
-    <value>c# /WinRT为c#语言提供了打包的WinRT投影支持。</value>
+    <value>C#/WinRT 为 C# 语言提供了封装的 WinRT 投射支持。</value>
   </data>
   <data name="Library_PowerShellSDK_Description" xml:space="preserve">
     <value>运行时托管PowerShell</value>
