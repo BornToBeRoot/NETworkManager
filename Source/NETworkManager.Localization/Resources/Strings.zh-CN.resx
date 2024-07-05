@@ -2844,7 +2844,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>Sharp SNMP 库 - 适用于 .NET 和 Mono 的开源 SNMP</value>
   </data>
   <data name="Resource_Flag_Description" xml:space="preserve">
-    <value>SVG中所有国家标志的集合</value>
+    <value>所有 SVG 国旗的集合</value>
   </data>
   <data name="Resource_ListTLD_Description" xml:space="preserve">
     <value>来自iana.org的顶级域名列表，用于从whois.iana.org通过43端口查询顶级域名的whois服务器。</value>
