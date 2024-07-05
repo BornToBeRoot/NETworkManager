@@ -1992,7 +1992,7 @@ URL: https://api.github.com/</value>
     <value>无法检测本地 IP 地址！</value>
   </data>
   <data name="CouldNotGetPublicIPAddressFromXXXMessage" xml:space="preserve">
-    <value>无法通过 WebRequest（http/https）从"{0}"获得公共ip地址! 检查你的网络连接（防火墙、代理等）。</value>
+    <value>无法通过 WebRequest（http/https）从"{0}"获得公网 IP 地址! 检查你的网络连接（防火墙、代理等）。</value>
   </data>
   <data name="NoADNSRecordsResolvedForXXXMessage" xml:space="preserve">
     <value>无法解析“{0}”的 A 记录！</value>
