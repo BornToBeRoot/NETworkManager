@@ -1803,7 +1803,7 @@
     <value>解析  MAC 地址和供应商</value>
   </data>
   <data name="Note" xml:space="preserve">
-    <value>Note</value>
+    <value>注意事项</value>
   </data>
   <data name="ExportAll" xml:space="preserve">
     <value>导出全部</value>
