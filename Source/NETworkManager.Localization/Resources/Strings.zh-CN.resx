@@ -1406,7 +1406,7 @@
     <value>应用</value>
   </data>
   <data name="Theme_Dark" xml:space="preserve">
-    <value>Dark</value>
+    <value>深色</value>
   </data>
   <data name="Theme_Light" xml:space="preserve">
     <value>Light</value>
