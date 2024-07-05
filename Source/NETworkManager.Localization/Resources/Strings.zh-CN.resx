@@ -2835,7 +2835,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>Json.NET 是一款适用于 .NET 的流行的高性能 JSON 框架</value>
   </data>
   <data name="Library_Octokit_Description" xml:space="preserve">
-    <value>用于.NET的GitHub API客户端库</value>
+    <value>适用于 .NET 的 GitHub API 客户端库</value>
   </data>
   <data name="Library_PSDicoveryProtocol_Description" xml:space="preserve">
     <value>在本地或远端计算机上抓取CDP、LLDP报文并解析</value>
