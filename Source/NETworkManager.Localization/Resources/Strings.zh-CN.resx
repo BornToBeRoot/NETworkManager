@@ -3179,10 +3179,10 @@ $$hostname$$	--&gt;	主机名</value>
     <value>解析该主机的 IP 地址（首选 IPv4）</value>
   </data>
   <data name="NoValidPowerShellPath" xml:space="preserve">
-    <value>PowerShell 的有效路径应以 "pwsh.exe "或 "powershell.exe "结尾！</value>
+    <value>PowerShell 的有效路径应以“pwsh.exe”或“powershell.exe”结尾！</value>
   </data>
   <data name="NoValidPuTTYPath" xml:space="preserve">
-    <value>PuTTY 的有效路径应以 "PuTTY.exe "结尾！</value>
+    <value>PuTTY 的有效路径应以“PuTTY.exe”结尾！</value>
   </data>
   <data name="NoValidTigerVNCPath" xml:space="preserve">
     <value>TigerVNC 的有效路径应以 "vncviewer-*.exe "或 "vncviewer64-*.exe "结尾！</value>
