@@ -736,7 +736,7 @@
     <value>连接方式...</value>
   </data>
   <data name="ConnectExternal" xml:space="preserve">
-    <value>使用 Windows 连接</value>
+    <value>连接外部</value>
   </data>
   <data name="ConnectTheNetworkCardToConfigureIt" xml:space="preserve">
     <value>请配置网卡的网络连接！</value>
