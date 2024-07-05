@@ -739,7 +739,7 @@
     <value>连接外部</value>
   </data>
   <data name="ConnectTheNetworkCardToConfigureIt" xml:space="preserve">
-    <value>请配置网卡的网络连接！</value>
+    <value>请将网卡连接到网络进行配置！</value>
   </data>
   <data name="Copy" xml:space="preserve">
     <value>复制</value>
