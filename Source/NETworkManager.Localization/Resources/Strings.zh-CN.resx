@@ -2691,7 +2691,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>状态更改</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
-    <value>更新可用!</value>
+    <value>有可用的更新！</value>
   </data>
   <data name="PrivateKeyFile" xml:space="preserve">
     <value>私钥文件</value>
