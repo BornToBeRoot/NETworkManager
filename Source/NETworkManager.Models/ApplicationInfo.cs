@@ -10,6 +10,7 @@ public class ApplicationInfo
     /// </summary>
     public ApplicationInfo()
     {
+        
     }
 
     /// <summary>
@@ -34,6 +35,11 @@ public class ApplicationInfo
     /// </summary>
     public bool IsVisible { get; set; }
 
+    /// <summary>
+    ///     Indicates that the application is the default application.
+    /// </summary>
+    public bool IsDefault { get; set; }
+    
     /// <summary>
     ///     Method to check if an object is equal to this object.
     /// </summary>
@@ -72,6 +78,7 @@ public class ApplicationInfo
     /// <returns>Hashcode as <see cref="int" />.</returns>
     public override int GetHashCode()
     {
+        // ReSharper disable once NonReadonlyMemberInGetHashCode
         return Name.GetHashCode();
     }
 }

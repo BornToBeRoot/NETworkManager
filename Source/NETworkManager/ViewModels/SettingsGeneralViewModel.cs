@@ -11,106 +11,23 @@ namespace NETworkManager.ViewModels;
 
 public class SettingsGeneralViewModel : ViewModelBase
 {
-    #region Methods
-
-    private void ValidateHideVisibleApplications()
-    {
-        IsVisibleToHideApplicationEnabled = ApplicationsVisible.Cast<ApplicationInfo>().Count() > 1 &&
-                                            VisibleApplicationSelectedItem != null;
-        IsHideToVisibleApplicationEnabled =
-            ApplicationsHidden.Cast<ApplicationInfo>().Any() && HiddenApplicationSelectedItem != null;
-    }
-
-    #endregion
-
     #region Variables
 
     private readonly bool _isLoading;
+    
+    public ICollectionView Applications { get; private set; }
 
-    private ApplicationInfo _defaultApplicationSelectedItem;
+    private ApplicationInfo _applicationSelectedItem;
 
-    public ApplicationInfo DefaultApplicationSelectedItem
+    public ApplicationInfo ApplicationSelectedItem
     {
-        get => _defaultApplicationSelectedItem;
+        get => _applicationSelectedItem;
         set
         {
-            if (Equals(value, _defaultApplicationSelectedItem))
+            if (Equals(value, _applicationSelectedItem))
                 return;
 
-            if (value != null && !_isLoading)
-                SettingsManager.Current.General_DefaultApplicationViewName = value.Name;
-
-            _defaultApplicationSelectedItem = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public ICollectionView ApplicationsVisible { get; private set; }
-
-    private ApplicationInfo _visibleApplicationSelectedItem;
-
-    public ApplicationInfo VisibleApplicationSelectedItem
-    {
-        get => _visibleApplicationSelectedItem;
-        set
-        {
-            if (Equals(value, _visibleApplicationSelectedItem))
-                return;
-
-            _visibleApplicationSelectedItem = value;
-
-            ValidateHideVisibleApplications();
-
-            OnPropertyChanged();
-        }
-    }
-
-    private bool _isVisibleToHideApplicationEnabled;
-
-    public bool IsVisibleToHideApplicationEnabled
-    {
-        get => _isVisibleToHideApplicationEnabled;
-        set
-        {
-            if (value == _isVisibleToHideApplicationEnabled)
-                return;
-
-            _isVisibleToHideApplicationEnabled = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public ICollectionView ApplicationsHidden { get; private set; }
-
-    private ApplicationInfo _hiddenApplicationSelectedItem;
-
-    public ApplicationInfo HiddenApplicationSelectedItem
-    {
-        get => _hiddenApplicationSelectedItem;
-        set
-        {
-            if (Equals(value, _hiddenApplicationSelectedItem))
-                return;
-
-            _hiddenApplicationSelectedItem = value;
-
-            ValidateHideVisibleApplications();
-
-            OnPropertyChanged();
-        }
-    }
-
-    private bool _isHideToVisibleApplicationEnabled;
-
-    public bool IsHideToVisibleApplicationEnabled
-    {
-        get => _isHideToVisibleApplicationEnabled;
-        set
-        {
-            if (value == _isHideToVisibleApplicationEnabled)
-                return;
-
-            _isHideToVisibleApplicationEnabled = value;
+            _applicationSelectedItem = value;
             OnPropertyChanged();
         }
     }
@@ -187,89 +104,16 @@ public class SettingsGeneralViewModel : ViewModelBase
     private void General_ApplicationList_CollectionChanged(object sender,
         NotifyCollectionChangedEventArgs e)
     {
-        ApplicationsVisible.Refresh();
-        ApplicationsHidden.Refresh();
+        Applications.Refresh();
     }
 
     private void LoadSettings()
     {
-        ApplicationsVisible = new CollectionViewSource
+        Applications = new CollectionViewSource
             { Source = SettingsManager.Current.General_ApplicationList }.View;
-        ApplicationsVisible.SortDescriptions.Add(new SortDescription(nameof(ApplicationInfo.Name),
-            ListSortDirection.Ascending));
-        ApplicationsVisible.Filter = o =>
-        {
-            if (o is not ApplicationInfo info)
-                return false;
-
-            return info.IsVisible;
-        };
-
-        ApplicationsHidden = new CollectionViewSource { Source = SettingsManager.Current.General_ApplicationList }.View;
-        ApplicationsHidden.SortDescriptions.Add(new SortDescription(nameof(ApplicationInfo.Name),
-            ListSortDirection.Ascending));
-        ApplicationsHidden.Filter = o =>
-        {
-            if (o is not ApplicationInfo info)
-                return false;
-
-            return !info.IsVisible;
-        };
-
-        ValidateHideVisibleApplications();
-
-        DefaultApplicationSelectedItem = ApplicationsVisible.Cast<ApplicationInfo>()
-            .FirstOrDefault(x => x.Name == SettingsManager.Current.General_DefaultApplicationViewName);
         BackgroundJobInterval = SettingsManager.Current.General_BackgroundJobInterval;
         ThreadPoolAdditionalMinThreads = SettingsManager.Current.General_ThreadPoolAdditionalMinThreads;
         HistoryListEntries = SettingsManager.Current.General_HistoryListEntries;
-    }
-
-    #endregion
-
-    #region ICommands & Actions
-
-    public ICommand VisibleToHideApplicationCommand
-    {
-        get { return new RelayCommand(_ => VisibleToHideApplicationAction()); }
-    }
-
-    private void VisibleToHideApplicationAction()
-    {
-        var selectNewDefaultApplication = DefaultApplicationSelectedItem.Name == VisibleApplicationSelectedItem.Name;
-
-        // Remove and add will fire a collection changed event --> detected in MainWindow
-        var info = SettingsManager.Current.General_ApplicationList.First(x =>
-            VisibleApplicationSelectedItem.Name.Equals(x.Name));
-
-        info.IsVisible = false;
-
-        SettingsManager.Current.General_ApplicationList.Remove(info);
-        SettingsManager.Current.General_ApplicationList.Add(info);
-
-        if (selectNewDefaultApplication)
-            DefaultApplicationSelectedItem = ApplicationsVisible.Cast<ApplicationInfo>().FirstOrDefault();
-
-        ValidateHideVisibleApplications();
-    }
-
-    public ICommand HideToVisibleApplicationCommand
-    {
-        get { return new RelayCommand(_ => HideToVisibleApplicationAction()); }
-    }
-
-    private void HideToVisibleApplicationAction()
-    {
-        // Remove and add will fire a collection changed event --> detected in MainWindow
-        var info = SettingsManager.Current.General_ApplicationList.First(x =>
-            HiddenApplicationSelectedItem.Name.Equals(x.Name));
-
-        info.IsVisible = true;
-
-        SettingsManager.Current.General_ApplicationList.Remove(info);
-        SettingsManager.Current.General_ApplicationList.Add(info);
-
-        ValidateHideVisibleApplications();
     }
 
     #endregion
