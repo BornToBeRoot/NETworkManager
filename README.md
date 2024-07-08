@@ -90,7 +90,7 @@ In addition, NETworkManager is also available through the following [package man
 
 ## 📃 Changelog
 
-You can find the changelog for each version of NETworkManager [here](https://borntoberoot.net/NETworkManager/Changelog).
+You can find the changelog for each version of NETworkManager [here](https://borntoberoot.net/NETworkManager/docs/category/changelog).
 
 ## 📖 Documentation
 
