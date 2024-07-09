@@ -2496,7 +2496,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>查找</value>
   </data>
   <data name="ApplicationName_NetworkInterface" xml:space="preserve">
-    <value>网络界面</value>
+    <value>网络接口</value>
   </data>
   <data name="ApplicationName_Ping" xml:space="preserve">
     <value>Ping</value>
