@@ -674,11 +674,6 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             Source = SettingsManager.Current.General_ApplicationList
         }.View;
 
-        /*
-        Applications.SortDescriptions.Add(
-            new SortDescription(nameof(ApplicationInfo.Name), ListSortDirection.Ascending));
-        */
-
         Applications.Filter = o =>
         {
             if (o is not ApplicationInfo info)
@@ -699,7 +694,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             );
         };
 
-        SettingsManager.Current.General_ApplicationList.CollectionChanged += (_, _) => Applications.Refresh();
+        // SettingsManager.Current.General_ApplicationList.CollectionChanged += (_, _) => Applications.Refresh();
 
         _isApplicationViewLoading = false;
 

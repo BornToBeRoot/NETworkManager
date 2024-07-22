@@ -14,7 +14,7 @@
     <UserControl.Resources>
         <converters:ApplicationNameToTranslatedStringConverter x:Key="ApplicationNameToTranslatedStringConverter" />
         <converters:BooleanReverseToVisibilityHiddenConverter x:Key="BooleanReverseToVisibilityHiddenConverter" />
-        <converters:BooleanToVisibilityHiddenConverter x:Key="BooleanToVisibilityHiddenConverter" />
+        <converters:BooleanToVisibilityHiddenConverter x:Key="BooleanToVisibilityHiddenConverter" />        
     </UserControl.Resources>
     <StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}"
@@ -27,8 +27,8 @@
                  BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
                  Margin="0,0,0,10"
                  dd:DragDrop.IsDragSource="True"
-                 dd:DragDrop.IsDropTarget="True" >
-            <ListBox.ItemTemplate>
+                 dd:DragDrop.IsDropTarget="True">                        
+            <ListBox.ItemTemplate>                
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -55,7 +55,7 @@
                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=CheckAll}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
-                    </Grid>
+                    </Grid>                     
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
