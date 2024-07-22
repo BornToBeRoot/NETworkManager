@@ -523,7 +523,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
                 // Generate lists at runtime
                 SettingsManager.Current.General_ApplicationList =
-                    new ObservableSetCollection<ApplicationInfo>(ApplicationManager.GetList());
+                    new ObservableSetCollection<ApplicationInfo>(ApplicationManager.GetDefaultList());
                 SettingsManager.Current.IPScanner_CustomCommands =
                     new ObservableCollection<CustomCommandInfo>(IPScannerCustomCommand.GetDefaultList());
                 SettingsManager.Current.PortScanner_PortProfiles =

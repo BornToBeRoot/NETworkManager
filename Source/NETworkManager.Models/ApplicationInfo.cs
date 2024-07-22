@@ -10,19 +10,20 @@ public class ApplicationInfo
     /// </summary>
     public ApplicationInfo()
     {
-        
+
     }
 
     /// <summary>
-    ///     Initializes a new instance of the <see cref="ApplicationInfo" /> class with parameters.
+    ///    Initializes a new instance of the <see cref="ApplicationInfo" /> class with parameters.
     /// </summary>
-    /// <param name="name">
-    ///     <see cref="Name" />
-    /// </param>
-    public ApplicationInfo(ApplicationName name)
+    /// <param name="name">Name of the application.</param> 
+    /// <param name="isVisible">Indicates that the application is visible to the user.</param>
+    /// <param name="isDefault">Indicates that the application is the default application.</param>
+    public ApplicationInfo(ApplicationName name, bool isVisible = true, bool isDefault = false)
     {
         Name = name;
-        IsVisible = true;
+        IsVisible = isVisible;
+        IsDefault = isDefault;
     }
 
     /// <summary>
@@ -39,7 +40,7 @@ public class ApplicationInfo
     ///     Indicates that the application is the default application.
     /// </summary>
     public bool IsDefault { get; set; }
-    
+
     /// <summary>
     ///     Method to check if an object is equal to this object.
     /// </summary>

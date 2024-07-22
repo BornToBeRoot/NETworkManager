@@ -1,8 +1,8 @@
-﻿using System;
+﻿using MahApps.Metro.IconPacks;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
-using MahApps.Metro.IconPacks;
 
 namespace NETworkManager.Models;
 
@@ -21,12 +21,13 @@ public static class ApplicationManager
     }
 
     /// <summary>
-    ///     Method returns a list with all <see cref="ApplicationInfo" />.
+    ///     Method returns a default list with all <see cref="ApplicationInfo" /> and sets 
+    ///     the default properties for each application.
     /// </summary>
-    /// <returns>IEnumerable with <see cref="ApplicationInfo" /></returns>
-    public static IEnumerable<ApplicationInfo> GetList()
+    /// <returns>IEnumerable with <see cref="ApplicationInfo" />.</returns>
+    public static IEnumerable<ApplicationInfo> GetDefaultList()
     {
-        return GetNames().Where(x => x != ApplicationName.None).Select(name => new ApplicationInfo(name)).ToList();
+        return GetNames().Where(x => x != ApplicationName.None).Select(name => new ApplicationInfo(name, true, name == ApplicationName.Dashboard)).ToList();
     }
 
     /// <summary>

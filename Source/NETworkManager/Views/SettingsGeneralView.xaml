@@ -13,6 +13,8 @@
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsGeneralViewModel}">
     <UserControl.Resources>
         <converters:ApplicationNameToTranslatedStringConverter x:Key="ApplicationNameToTranslatedStringConverter" />
+        <converters:BooleanReverseToVisibilityHiddenConverter x:Key="BooleanReverseToVisibilityHiddenConverter" />
+        <converters:BooleanToVisibilityHiddenConverter x:Key="BooleanToVisibilityHiddenConverter" />
     </UserControl.Resources>
     <StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}"
@@ -37,7 +39,22 @@
                         <TextBlock Grid.Row="0" Grid.Column="0"
                             Text="{Binding Name, Converter={StaticResource ApplicationNameToTranslatedStringConverter}}"
                             d:DataContext="{d:DesignInstance models:ApplicationInfo}" />
-                        
+                        <Rectangle Grid.Row="0" Grid.Column="2"
+                                   Width="16" Height="16"
+                                   Fill="{DynamicResource MahApps.Brushes.Gray3}"
+                                   Visibility="{Binding IsVisible, Converter={StaticResource BooleanReverseToVisibilityHiddenConverter}}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=EyeOffOutline}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <Rectangle Grid.Row="0" Grid.Column="2" 
+                                   Width="16" Height="16"
+                                   Fill="{DynamicResource MahApps.Brushes.Gray3}"
+                                   Visibility="{Binding IsDefault, Converter={StaticResource BooleanToVisibilityHiddenConverter}}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=CheckAll}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
