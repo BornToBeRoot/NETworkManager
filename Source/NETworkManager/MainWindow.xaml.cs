@@ -1,4 +1,22 @@
-﻿using System;
+﻿using log4net;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Controls;
+using NETworkManager.Documentation;
+using NETworkManager.Localization;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models;
+using NETworkManager.Models.AWS;
+using NETworkManager.Models.EventSystem;
+using NETworkManager.Models.Network;
+using NETworkManager.Models.PowerShell;
+using NETworkManager.Models.PuTTY;
+using NETworkManager.Profiles;
+using NETworkManager.Settings;
+using NETworkManager.Update;
+using NETworkManager.Utilities;
+using NETworkManager.ViewModels;
+using NETworkManager.Views;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -19,24 +37,6 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Markup;
 using System.Windows.Threading;
-using log4net;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Controls;
-using NETworkManager.Documentation;
-using NETworkManager.Localization;
-using NETworkManager.Localization.Resources;
-using NETworkManager.Models;
-using NETworkManager.Models.AWS;
-using NETworkManager.Models.EventSystem;
-using NETworkManager.Models.Network;
-using NETworkManager.Models.PowerShell;
-using NETworkManager.Models.PuTTY;
-using NETworkManager.Profiles;
-using NETworkManager.Settings;
-using NETworkManager.Update;
-using NETworkManager.Utilities;
-using NETworkManager.ViewModels;
-using NETworkManager.Views;
 using Application = System.Windows.Application;
 using ContextMenu = System.Windows.Controls.ContextMenu;
 using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
@@ -313,7 +313,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    
+
     private bool _flyoutRunCommandIsOpen;
 
     public bool FlyoutRunCommandIsOpen
@@ -328,7 +328,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    
+
     private bool _flyoutRunCommandAreAnimationsEnabled;
 
     public bool FlyoutRunCommandAreAnimationsEnabled
@@ -343,7 +343,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    
+
     private bool _isRestartRequired;
 
     public bool IsRestartRequired
@@ -477,7 +477,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         EventSystem.OnRedirectDataToApplicationEvent += EventSystem_RedirectDataToApplicationEvent;
         EventSystem.OnRedirectToSettingsEvent += EventSystem_RedirectToSettingsEvent;
-        
+
         _isLoading = false;
     }
 
@@ -669,9 +669,15 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     {
         _isApplicationViewLoading = true;
 
-        Applications = new CollectionViewSource { Source = SettingsManager.Current.General_ApplicationList }.View;
+        Applications = new CollectionViewSource
+        {
+            Source = SettingsManager.Current.General_ApplicationList
+        }.View;
+
+        /*
         Applications.SortDescriptions.Add(
             new SortDescription(nameof(ApplicationInfo.Name), ListSortDirection.Ascending));
+        */
 
         Applications.Filter = o =>
         {

@@ -1,11 +1,8 @@
-﻿using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows.Data;
-using System.Windows.Input;
-using NETworkManager.Models;
+﻿using NETworkManager.Models;
 using NETworkManager.Settings;
-using NETworkManager.Utilities;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Windows.Data;
 
 namespace NETworkManager.ViewModels;
 
@@ -14,7 +11,7 @@ public class SettingsGeneralViewModel : ViewModelBase
     #region Variables
 
     private readonly bool _isLoading;
-    
+
     public ICollectionView Applications { get; private set; }
 
     private ApplicationInfo _applicationSelectedItem;
@@ -110,7 +107,10 @@ public class SettingsGeneralViewModel : ViewModelBase
     private void LoadSettings()
     {
         Applications = new CollectionViewSource
-            { Source = SettingsManager.Current.General_ApplicationList }.View;
+        {
+            Source = SettingsManager.Current.General_ApplicationList
+        }.View;
+
         BackgroundJobInterval = SettingsManager.Current.General_BackgroundJobInterval;
         ThreadPoolAdditionalMinThreads = SettingsManager.Current.General_ThreadPoolAdditionalMinThreads;
         HistoryListEntries = SettingsManager.Current.General_HistoryListEntries;

@@ -3830,4 +3830,11 @@ Open the Windows settings and allow Wi-Fi access for this application.
 
 Restart the application afterwards to use this feature.</value>
   </data>
+  <data name="DragDropApplicationsToReorderRightClickForMoreOptions" xml:space="preserve">
+    <value>Drag and drop the applications to reorder them.
+Right-click for more options.</value>
+  </data>
+  <data name="RestoreDefaults" xml:space="preserve">
+    <value>Restore defaults</value>
+  </data>
 </root>
