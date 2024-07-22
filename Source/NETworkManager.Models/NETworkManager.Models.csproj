@@ -26,8 +26,8 @@
         <EmbeddedResource Include="Resources\PSDiscoveryProtocol.psm1" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="AWSSDK.Core" Version="3.7.304.22" />
-        <PackageReference Include="DnsClient" Version="1.7.0" />
+        <PackageReference Include="AWSSDK.Core" Version="3.7.304.30" />
+        <PackageReference Include="DnsClient" Version="1.8.0" />
         <PackageReference Include="IPNetwork2" Version="3.0.667" />            
         <PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.2" />
         <PackageReference Include="log4net" Version="2.0.17" />
@@ -38,7 +38,7 @@
         <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="5.0.0" />
         <PackageReference Include="MahApps.Metro.IconPacks.Octicons" Version="5.0.0" />
         <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2592.51" />
-        <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.7" />
+        <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.8" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.4.3" />
     </ItemGroup>

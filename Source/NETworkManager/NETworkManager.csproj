@@ -58,8 +58,8 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="AirspaceFixer" Version="1.0.6" />
-        <PackageReference Include="AWSSDK.EC2" Version="3.7.332.2" />
-        <PackageReference Include="DnsClient" Version="1.7.0" />
+        <PackageReference Include="AWSSDK.EC2" Version="3.7.335" />
+        <PackageReference Include="DnsClient" Version="1.8.0" />
         <PackageReference Include="IPNetwork2" Version="3.0.667" />
         <PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.2" />
         <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
@@ -72,7 +72,7 @@
         <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="5.0.0" />
         <PackageReference Include="MahApps.Metro.IconPacks.Octicons" Version="5.0.0" />
         <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2592.51" />
-        <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.7" />
+        <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.8" />
         <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.122" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.4.3" />
