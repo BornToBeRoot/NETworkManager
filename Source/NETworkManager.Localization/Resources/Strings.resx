@@ -3837,4 +3837,10 @@ Right-click for more options.</value>
   <data name="RestoreDefaults" xml:space="preserve">
     <value>Restore defaults</value>
   </data>
+  <data name="Library_GongSolutionsWpfDragDrop_Description" xml:space="preserve">
+    <value>An easy to use drag'n'drop framework for WPF.</value>
+  </data>
+  <data name="License_BDS3Clause" xml:space="preserve">
+    <value>BSD-3-Clause</value>
+  </data>
 </root>

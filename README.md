@@ -81,7 +81,7 @@ In addition, NETworkManager is also available through the following [package man
   ```PowerShell
   # Get release via Evergreen
   Get-EvergreenApp -Name NETworkManager
-  
+
   # Get release via Evergreen and save the setup file to disk
   Get-EvergreenApp -Name NETworkManager | Save-EvergreenApp -Path C:\Users\$env:Username\Downloads\
   ```
@@ -171,6 +171,7 @@ NETworkManager uses the following projects and libraries. Please consider suppor
 | [DnsClient.NET](https://github.com/MichaCo/DnsClient.NET)                     | Powerful, high-performance open-source library for DNS lookups         |
 | [Docusaurus](https://docusaurus.io/)                                          | Easy to maintain open source documentation websites.                   |
 | [Dragablz](https://dragablz.net/)                                             | Tearable TabControl for WPF                                            |
+| [GongSolutions.Wpf.DragDrop](https://github.com/punker76/gong-wpf-dragdrop)   | An easy to use drag'n'drop framework for WPF                           |
 | [IPNetwork](https://github.com/lduchosal/ipnetwork)                           | .NET library for complex network, IP, and subnet calculations          |
 | [LoadingIndicators.WPF](https://github.com/zeluisping/LoadingIndicators.WPF)  | A collection of loading indicators for WPF                             |
 | [MahApps.Metro.IconPacks](https://github.com/MahApps/MahApps.Metro.IconPacks) | Awesome icon packs for WPF and UWP in one library                      |
@@ -180,7 +181,7 @@ NETworkManager uses the following projects and libraries. Please consider suppor
 
 ## Code Signing Policy
 
-NETworkManager uses free code signing provided by [SignPath.io](https://signpath.io/) and a free code signing certificate 
+NETworkManager uses free code signing provided by [SignPath.io](https://signpath.io/) and a free code signing certificate
 from [SignPath Foundation](https://signpath.org/).
 
 The binaries and installer are built on [AppVeyor](https://ci.appveyor.com/project/BornToBeRoot/networkmanager) directly from the [GitHub repository](https://github.com/BornToBeRoot/NETworkManager/blob/main/appveyor.yml).

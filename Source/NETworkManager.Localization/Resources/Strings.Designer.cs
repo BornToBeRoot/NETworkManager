@@ -5029,6 +5029,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die An easy to use drag&apos;n&apos;drop framework for WPF. ähnelt.
+        /// </summary>
+        public static string Library_GongSolutionsWpfDragDrop_Description {
+            get {
+                return ResourceManager.GetString("Library_GongSolutionsWpfDragDrop_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die C# library take care of complex network, IP, IPv4, IPv6, netmask, CIDR, subnet, subnetting, supernet, and supernetting calculation for .NET developers. ähnelt.
         /// </summary>
         public static string Library_IPNetwork_Description {
@@ -5178,6 +5187,15 @@ namespace NETworkManager.Localization.Resources {
         public static string License_BDS2Clause {
             get {
                 return ResourceManager.GetString("License_BDS2Clause", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die BSD-3-Clause ähnelt.
+        /// </summary>
+        public static string License_BDS3Clause {
+            get {
+                return ResourceManager.GetString("License_BDS3Clause", resourceCulture);
             }
         }
         
