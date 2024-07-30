@@ -12,7 +12,7 @@ Hidden wireless networks are displayed as `Hidden Network`.
 
 On the **WiFi** tab, you can select which wireless network adapter is used to scan for wireless networks. Wireless networks can be filtered by 2.4 Ghz, 5 Ghz and the SSID.
 
-Right-clicking on a wireless network opens a context menu with the following options:
+Right-click on a wireless network opens a context menu with the following options:
 
 - **Connect...**: Opens a dialog to connect to the selected wireless network.
 - **Disconnect**: Disconnect from the selected wireless network.
