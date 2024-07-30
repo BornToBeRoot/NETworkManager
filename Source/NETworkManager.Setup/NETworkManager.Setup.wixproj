@@ -1,13 +1,13 @@
 ﻿<Project Sdk="WixToolset.Sdk/5.0.0">
-  <ItemGroup>
-    <Content Include="Resources\WixUIBanner.png" />
-    <Content Include="Resources\WixUIDialog.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\LICENSE.rtf" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="WixToolset.UI.wixext" Version="5.0.0" />
-    <ProjectReference Include="..\NETworkManager\NETworkManager.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <Content Include="Resources\WixUIBanner.png"/>
+        <Content Include="Resources\WixUIDialog.png"/>
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="Resources\LICENSE.rtf"/>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="WixToolset.UI.wixext" Version="5.0.0"/>
+        <ProjectReference Include="..\NETworkManager\NETworkManager.csproj"/>
+    </ItemGroup>
 </Project>

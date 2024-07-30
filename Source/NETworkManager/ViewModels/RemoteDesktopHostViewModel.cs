@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -32,8 +31,9 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
     public IInterTabClient InterTabClient { get; }
-    
+
     private string _interTabPartition;
+
     public string InterTabPartition
     {
         get => _interTabPartition;
@@ -46,7 +46,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-    
+
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
     private readonly bool _isLoading;
@@ -196,7 +196,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.RemoteDesktop);
         InterTabPartition = ApplicationName.RemoteDesktop.ToString();
-        
+
         TabItems = [];
 
         // Profiles
@@ -336,7 +336,8 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, this, _dialogCoordinator, null, null, ApplicationName.RemoteDesktop)
+        ProfileDialogManager
+            .ShowAddProfileDialog(this, this, _dialogCoordinator, null, null, ApplicationName.RemoteDesktop)
             .ConfigureAwait(false);
     }
 
@@ -509,9 +510,10 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     private void Connect(RemoteDesktopSessionInfo sessionInfo, string header = null)
     {
         var tabId = Guid.NewGuid();
-        
-        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Hostname, new RemoteDesktopControl(tabId, sessionInfo), tabId));
-        
+
+        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Hostname, new RemoteDesktopControl(tabId, sessionInfo),
+            tabId));
+
         SelectedTabIndex = TabItems.Count - 1;
     }
 
@@ -648,5 +650,6 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
         IsSearching = false;
     }
+
     #endregion
 }

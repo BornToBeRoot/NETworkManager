@@ -91,9 +91,9 @@ public static class IPv4Address
 
         return ip >= IPv4MulticastStart && ip <= IPv4MulticastEnd;
     }
-    
+
     /// <summary>
-    /// Convert a list of IP addresses to a string.
+    ///     Convert a list of IP addresses to a string.
     /// </summary>
     /// <param name="ipAddresses">IP addresses.</param>
     /// <param name="delimiter">Delimiter to separate the IP addresses. Null for new line. (Default: null)</param>
@@ -110,16 +110,16 @@ public static class IPv4Address
             result += ipAddr.ToString();
         }
 
-        return result;            
+        return result;
     }
 
     /// <summary>
-    /// Convert a list of IP addresses with subnetmasks to a string.
+    ///     Convert a list of IP addresses with subnetmasks to a string.
     /// </summary>
     /// <param name="ipAddresses">IP addresses with subnetmasks.</param>
     /// <returns>IP addresses with subnetmasks as string.</returns>
-    
-    public static object ConvertIPAddressWithSubnetmaskListToString(Tuple<IPAddress, IPAddress>[] ipAddresses, string delimiter = null)
+    public static object ConvertIPAddressWithSubnetmaskListToString(Tuple<IPAddress, IPAddress>[] ipAddresses,
+        string delimiter = null)
     {
         var result = string.Empty;
 

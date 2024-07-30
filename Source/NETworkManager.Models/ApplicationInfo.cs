@@ -8,17 +8,27 @@ namespace NETworkManager.Models;
 public class ApplicationInfo : PropertyChangedBase
 {
     /// <summary>
+    ///     Private field for the <see cref="IsDefault" /> property.
+    /// </summary>
+    private bool _isDefault;
+
+
+    /// <summary>
+    ///     Private field for the <see cref="IsVisible" /> property.
+    /// </summary>
+    private bool _isVisible;
+
+    /// <summary>
     ///     Initializes a new instance of the <see cref="ApplicationInfo" /> class.
     /// </summary>
     public ApplicationInfo()
     {
-
     }
 
     /// <summary>
-    ///    Initializes a new instance of the <see cref="ApplicationInfo" /> class with parameters.
+    ///     Initializes a new instance of the <see cref="ApplicationInfo" /> class with parameters.
     /// </summary>
-    /// <param name="name">Name of the application.</param> 
+    /// <param name="name">Name of the application.</param>
     /// <param name="isVisible">Indicates that the application is visible to the user.</param>
     /// <param name="isDefault">Indicates that the application is the default application.</param>
     public ApplicationInfo(ApplicationName name, bool isVisible = true, bool isDefault = false)
@@ -32,12 +42,6 @@ public class ApplicationInfo : PropertyChangedBase
     ///     Name of the application.
     /// </summary>
     public ApplicationName Name { get; set; }
-
-      
-    /// <summary>
-    ///     Private field for the <see cref="IsVisible" /> property.
-    /// </summary>
-    private bool _isVisible;
 
     /// <summary>
     ///     Indicates that the application is visible to the user.
@@ -54,11 +58,6 @@ public class ApplicationInfo : PropertyChangedBase
             OnPropertyChanged();
         }
     }
-    
-    /// <summary>
-    ///     Private field for the <see cref="IsDefault" /> property.
-    /// </summary>
-    private bool _isDefault;
 
     /// <summary>
     ///     Indicates that the application is the default application.

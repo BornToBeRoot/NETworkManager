@@ -27,12 +27,12 @@ public partial class SNMPView : IDragablzTabItem
         Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
     }
 
-    private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
+    public void CloseTab()
     {
         _viewModel.OnClose();
     }
 
-    public void CloseTab()
+    private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
     {
         _viewModel.OnClose();
     }

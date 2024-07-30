@@ -9,7 +9,7 @@
                        xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
                        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                        xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
-                       xmlns:webview="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"                       
+                       xmlns:webview="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
                        mah:DialogParticipation.Register="{Binding}"
                        mc:Ignorable="d" Loaded="UserControl_Loaded"
                        d:DataContext="{d:DesignInstance local:WebConsoleControl}">
@@ -171,7 +171,9 @@
             <webview:WebView2.Style>
                 <Style TargetType="{x:Type webview:WebView2}">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsWebConsoleWindowDragging}" Value="True">
+                        <DataTrigger
+                            Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsWebConsoleWindowDragging}"
+                            Value="True">
                             <Setter Property="Visibility" Value="Hidden" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding FirstLoad}" Value="True">

@@ -1,4 +1,10 @@
-﻿using DnsClient;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Xml.Serialization;
+using DnsClient;
 using Lextm.SharpSnmpLib.Messaging;
 using NETworkManager.Controls;
 using NETworkManager.Models;
@@ -9,12 +15,6 @@ using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Utilities;
-using System;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Xml.Serialization;
 
 // ReSharper disable InconsistentNaming
 
@@ -754,6 +754,7 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region WiFi
@@ -3692,7 +3693,8 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ExportFileType _discoveryProtocol_ExportFileType = GlobalStaticConfiguration.DiscoveryProtocol_ExportFileType;
+    private ExportFileType _discoveryProtocol_ExportFileType =
+        GlobalStaticConfiguration.DiscoveryProtocol_ExportFileType;
 
     public ExportFileType DiscoveryProtocol_ExportFileType
     {
@@ -3706,6 +3708,7 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region WakeOnLAN
@@ -3942,6 +3945,7 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Subnet Calculator
@@ -4143,6 +4147,7 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Lookup

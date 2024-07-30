@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -541,7 +540,8 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
         var tabId = Guid.NewGuid();
 
-        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.HostOrSerialLine, new PuTTYControl(tabId, sessionInfo), tabId));
+        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.HostOrSerialLine, new PuTTYControl(tabId, sessionInfo),
+            tabId));
 
         // Select the added tab
         _disableFocusEmbeddedWindow = true;
@@ -673,9 +673,9 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
         {
             // Skip if no items
-            if(tabablzControl.Items.Count == 0)
+            if (tabablzControl.Items.Count == 0)
                 continue;
-            
+
             // Focus embedded window in the selected tab
             (((DragablzTabItem)tabablzControl.SelectedItem)?.View as IEmbeddedWindow)?.FocusEmbeddedWindow();
             break;

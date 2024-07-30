@@ -18,16 +18,16 @@ public partial class SNTPLookupView : IDragablzTabItem
         _viewModel = new SNTPLookupViewModel(DialogCoordinator.Instance, tabId);
 
         DataContext = _viewModel;
-        
+
         Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
     }
 
-    private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
+    public void CloseTab()
     {
         _viewModel.OnClose();
     }
-    
-    public void CloseTab()
+
+    private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
     {
         _viewModel.OnClose();
     }

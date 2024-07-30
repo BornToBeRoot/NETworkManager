@@ -1,10 +1,10 @@
-﻿using NETworkManager.Models;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
+using NETworkManager.Models;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
@@ -154,11 +154,11 @@ public class SettingsGeneralViewModel : ViewModelBase
         var defaultList = ApplicationManager.GetDefaultList().ToList();
 
         var indexMap = SettingsManager.Current.General_ApplicationList
-           .Select((item, index) => new { Item = item, Index = defaultList.IndexOf(item) })
-           .OrderBy(x => x.Index)
-           .ToList();
+            .Select((item, index) => new { Item = item, Index = defaultList.IndexOf(item) })
+            .OrderBy(x => x.Index)
+            .ToList();
 
-        for (int i = 0; i < indexMap.Count; i++)
+        for (var i = 0; i < indexMap.Count; i++)
         {
             var currentIndex = SettingsManager.Current.General_ApplicationList.IndexOf(indexMap[i].Item);
 
@@ -179,8 +179,9 @@ public class SettingsGeneralViewModel : ViewModelBase
     #endregion
 
     #region Methods
+
     /// <summary>
-    /// Set the default application that will be shown when the application starts.
+    ///     Set the default application that will be shown when the application starts.
     /// </summary>
     /// <param name="applicationName">Name of the application.</param>
     private void SetDefaultApplication(ApplicationName applicationName)
@@ -192,13 +193,14 @@ public class SettingsGeneralViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Change the visibility of an application.
+    ///     Change the visibility of an application.
     /// </summary>
     /// <param name="applicationName">Name of the application.</param>
     /// <param name="isVisible">If set to <c>true</c> the application will be visible.</param>
     private void ChangeApplicationVisibility(ApplicationName applicationName, bool isVisible)
     {
-        var application = SettingsManager.Current.General_ApplicationList.FirstOrDefault(x => x.Name == applicationName);
+        var application =
+            SettingsManager.Current.General_ApplicationList.FirstOrDefault(x => x.Name == applicationName);
 
         var index = SettingsManager.Current.General_ApplicationList.IndexOf(application);
 
@@ -208,5 +210,6 @@ public class SettingsGeneralViewModel : ViewModelBase
 
         SettingsManager.Current.General_ApplicationList.Insert(index, application);
     }
+
     #endregion
 }

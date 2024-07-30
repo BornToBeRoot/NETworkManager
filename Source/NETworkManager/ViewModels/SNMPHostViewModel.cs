@@ -29,8 +29,9 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
     public IInterTabClient InterTabClient { get; }
-    
+
     private string _interTabPartition;
+
     public string InterTabPartition
     {
         get => _interTabPartition;
@@ -43,7 +44,7 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-    
+
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
     private readonly bool _isLoading;

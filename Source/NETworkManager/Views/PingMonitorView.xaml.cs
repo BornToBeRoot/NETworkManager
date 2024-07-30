@@ -9,7 +9,8 @@ public partial class PingMonitorView
 {
     private readonly PingMonitorViewModel _viewModel;
 
-    public PingMonitorView(Guid hostId, Action<Guid> removeHostByGuid, (IPAddress ipAddress, string hostname) host, string group)
+    public PingMonitorView(Guid hostId, Action<Guid> removeHostByGuid, (IPAddress ipAddress, string hostname) host,
+        string group)
     {
         InitializeComponent();
 

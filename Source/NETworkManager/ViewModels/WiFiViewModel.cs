@@ -30,6 +30,7 @@ namespace NETworkManager.ViewModels;
 public class WiFiViewModel : ViewModelBase
 {
     #region Variables
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private static readonly ILog Log = LogManager.GetLogger(typeof(WiFiViewModel));
@@ -428,7 +429,7 @@ public class WiFiViewModel : ViewModelBase
 
         // Check if the access is denied and show a message
         WiFiAdapterAccessEnabled = RequestAccess();
-        
+
         if (!WiFiAdapterAccessEnabled)
         {
             _isLoading = false;
@@ -548,18 +549,19 @@ public class WiFiViewModel : ViewModelBase
     {
         Launcher.LaunchUriAsync(new Uri("ms-settings:privacy-location"));
     }
+
     #endregion
 
     #region Methods
 
     /// <summary>
-    /// Request access to the WiFi adapter.
+    ///     Request access to the WiFi adapter.
     /// </summary>
     /// <returns>Fails if the access is denied.</returns>
     private static bool RequestAccess()
     {
         var accessStatus = WiFiAdapter.RequestAccessAsync().GetAwaiter().GetResult();
-        
+
         return accessStatus == WiFiAccessStatus.Allowed;
     }
 
@@ -577,7 +579,7 @@ public class WiFiViewModel : ViewModelBase
         catch (Exception ex)
         {
             Log.Error("Error trying to get WiFi adapters.", ex);
-            
+
             Adapters.Clear();
         }
 

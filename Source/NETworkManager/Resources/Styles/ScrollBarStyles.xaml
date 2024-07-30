@@ -17,6 +17,6 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
-    
+
     <Style TargetType="{x:Type TypeName=ScrollBar}" BasedOn="{StaticResource ResourceKey=DefaultScrollBar}" />
 </ResourceDictionary>

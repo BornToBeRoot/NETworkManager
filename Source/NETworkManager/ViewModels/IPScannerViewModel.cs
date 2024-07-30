@@ -13,7 +13,6 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using Dragablz;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
@@ -237,7 +236,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         _dialogCoordinator = instance;
 
         ConfigurationManager.Current.IPScannerTabCount++;
-        
+
         _tabId = tabId;
         Host = hostOrIPRange;
 
@@ -577,15 +576,15 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         return _dialogCoordinator.ShowMetroDialogAsync(window, customDialog);
     }
-    
+
     public void OnClose()
     {
         // Prevent multiple calls
         if (_closed)
             return;
-        
+
         _closed = true;
-        
+
         // Stop scan
         if (IsRunning)
             Stop();

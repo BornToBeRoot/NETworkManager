@@ -14,6 +14,8 @@ public class DragablzInterTabClient(ApplicationName applicationName) : IInterTab
 
     public TabEmptiedResponse TabEmptiedHandler(TabablzControl tabControl, Window window)
     {
-        return window is MainWindow ? TabEmptiedResponse.CloseLayoutBranch : TabEmptiedResponse.CloseWindowOrLayoutBranch;
+        return window is MainWindow
+            ? TabEmptiedResponse.CloseLayoutBranch
+            : TabEmptiedResponse.CloseWindowOrLayoutBranch;
     }
 }

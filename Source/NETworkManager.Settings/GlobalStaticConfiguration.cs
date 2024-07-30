@@ -222,7 +222,7 @@ public static class GlobalStaticConfiguration
     public static DiscoveryProtocol DiscoveryProtocol_Protocol => DiscoveryProtocol.LldpCdp;
     public static int DiscoveryProtocol_Duration => 60;
     public static ExportFileType DiscoveryProtocol_ExportFileType => ExportFileType.Csv;
-    
+
     // Application: Wake on LAN
     public static int WakeOnLAN_Port => 9;
 

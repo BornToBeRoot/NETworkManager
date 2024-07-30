@@ -29,6 +29,7 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
     public IInterTabClient InterTabClient { get; }
 
     private string _interTabPartition;
+
     public string InterTabPartition
     {
         get => _interTabPartition;
@@ -41,7 +42,7 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-    
+
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
     private readonly bool _isLoading;
@@ -194,7 +195,8 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
 
         var tabId = Guid.NewGuid();
 
-        TabItems = [
+        TabItems =
+        [
             new DragablzTabItem(Strings.NewTab, new PortScannerView(tabId), tabId)
         ];
 
@@ -249,7 +251,8 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, this, _dialogCoordinator, null, null, ApplicationName.PortScanner)
+        ProfileDialogManager
+            .ShowAddProfileDialog(this, this, _dialogCoordinator, null, null, ApplicationName.PortScanner)
             .ConfigureAwait(false);
     }
 

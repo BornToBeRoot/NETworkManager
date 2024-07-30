@@ -51,7 +51,8 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Border BorderThickness="0,0,1,0" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
-                <ScrollViewer ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback" Margin="0,0,10,0">
+                <ScrollViewer ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback"
+                              Margin="0,0,10,0">
                     <ListBox x:Name="ListBoxViews" ItemsSource="{Binding ProfileViews}" Margin="0,0,10,0">
                         <ListBox.Resources>
                             <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />

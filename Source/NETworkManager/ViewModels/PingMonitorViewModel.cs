@@ -39,7 +39,7 @@ public class PingMonitorViewModel : ViewModelBase
         IPAddress = host.ipAddress;
         Hostname = host.hostname;
         Group = group;
-        
+
         InitialTimeChart();
 
         ExpandHostView = SettingsManager.Current.PingMonitor_ExpandHostView;
@@ -101,7 +101,7 @@ public class PingMonitorViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+
     private string _group;
 
     public string Group

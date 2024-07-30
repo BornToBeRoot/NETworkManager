@@ -29,17 +29,17 @@ public partial class IPScannerView : IDragablzTabItem
         Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
     }
 
+    public void CloseTab()
+    {
+        _viewModel.OnClose();
+    }
+
     private void UserControl_Loaded(object sender, RoutedEventArgs e)
     {
         _viewModel.OnLoaded();
     }
 
     private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
-    {
-        _viewModel.OnClose();
-    }
-
-    public void CloseTab()
     {
         _viewModel.OnClose();
     }

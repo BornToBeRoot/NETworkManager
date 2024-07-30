@@ -1,22 +1,4 @@
-﻿using log4net;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Controls;
-using NETworkManager.Documentation;
-using NETworkManager.Localization;
-using NETworkManager.Localization.Resources;
-using NETworkManager.Models;
-using NETworkManager.Models.AWS;
-using NETworkManager.Models.EventSystem;
-using NETworkManager.Models.Network;
-using NETworkManager.Models.PowerShell;
-using NETworkManager.Models.PuTTY;
-using NETworkManager.Profiles;
-using NETworkManager.Settings;
-using NETworkManager.Update;
-using NETworkManager.Utilities;
-using NETworkManager.ViewModels;
-using NETworkManager.Views;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -37,6 +19,24 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Markup;
 using System.Windows.Threading;
+using log4net;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Controls;
+using NETworkManager.Documentation;
+using NETworkManager.Localization;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models;
+using NETworkManager.Models.AWS;
+using NETworkManager.Models.EventSystem;
+using NETworkManager.Models.Network;
+using NETworkManager.Models.PowerShell;
+using NETworkManager.Models.PuTTY;
+using NETworkManager.Profiles;
+using NETworkManager.Settings;
+using NETworkManager.Update;
+using NETworkManager.Utilities;
+using NETworkManager.ViewModels;
+using NETworkManager.Views;
 using Application = System.Windows.Application;
 using ContextMenu = System.Windows.Controls.ContextMenu;
 using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
@@ -705,7 +705,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         if (CommandLineManager.Current.Application != ApplicationName.None)
             SelectedApplication = applicationList.FirstOrDefault(x => x.Name == CommandLineManager.Current.Application);
         else
-            SelectedApplication = applicationList.FirstOrDefault(x => x.IsDefault) ?? applicationList.FirstOrDefault(x => x.IsVisible);
+            SelectedApplication = applicationList.FirstOrDefault(x => x.IsDefault) ??
+                                  applicationList.FirstOrDefault(x => x.IsVisible);
 
         // Scroll into view
         if (SelectedApplication != null)

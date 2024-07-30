@@ -605,7 +605,7 @@
                     <ScrollViewer Grid.Row="1" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback"
                                   Style="{StaticResource FadeOutScrollViewer}">
                         <ListView x:Name="ListViewApplication" ItemsSource="{Binding Applications}"
-                                  SelectedItem="{Binding SelectedApplication, Mode=TwoWay}" 
+                                  SelectedItem="{Binding SelectedApplication, Mode=TwoWay}"
                                   SelectionMode="Single"
                                   BorderThickness="0"
                                   dd:DragDrop.IsDragSource="True"
