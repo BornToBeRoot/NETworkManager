@@ -8846,6 +8846,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Set default ähnelt.
+        /// </summary>
+        public static string SetDefault {
+            get {
+                return ResourceManager.GetString("SetDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Set Master Password ähnelt.
         /// </summary>
         public static string SetMasterPassword {

@@ -694,15 +694,18 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             );
         };
 
-        // SettingsManager.Current.General_ApplicationList.CollectionChanged += (_, _) => Applications.Refresh();
+        SettingsManager.Current.General_ApplicationList.CollectionChanged += (_, _) => Applications.Refresh();
 
         _isApplicationViewLoading = false;
 
-        // Select the application        
-        SelectedApplication = Applications.Cast<ApplicationInfo>().FirstOrDefault(x =>
-            x.Name == (CommandLineManager.Current.Application != ApplicationName.None
-                ? CommandLineManager.Current.Application
-                : SettingsManager.Current.General_DefaultApplicationViewName));
+        // Select the application
+        // Set application via command line, or select the default one, fallback to the first visible one
+        var applicationList = Applications.Cast<ApplicationInfo>();
+
+        if (CommandLineManager.Current.Application != ApplicationName.None)
+            SelectedApplication = applicationList.FirstOrDefault(x => x.Name == CommandLineManager.Current.Application);
+        else
+            SelectedApplication = applicationList.FirstOrDefault(x => x.IsDefault) ?? applicationList.FirstOrDefault(x => x.IsVisible);
 
         // Scroll into view
         if (SelectedApplication != null)

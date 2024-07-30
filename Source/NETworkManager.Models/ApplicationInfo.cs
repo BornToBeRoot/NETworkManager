@@ -1,9 +1,11 @@
-﻿namespace NETworkManager.Models;
+﻿using NETworkManager.Utilities;
+
+namespace NETworkManager.Models;
 
 /// <summary>
 ///     Stores information's about an application.
 /// </summary>
-public class ApplicationInfo
+public class ApplicationInfo : PropertyChangedBase
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="ApplicationInfo" /> class.
@@ -31,15 +33,48 @@ public class ApplicationInfo
     /// </summary>
     public ApplicationName Name { get; set; }
 
+      
+    /// <summary>
+    ///     Private field for the <see cref="IsVisible" /> property.
+    /// </summary>
+    private bool _isVisible;
+
     /// <summary>
     ///     Indicates that the application is visible to the user.
     /// </summary>
-    public bool IsVisible { get; set; }
+    public bool IsVisible
+    {
+        get => _isVisible;
+        set
+        {
+            if (value == _isVisible)
+                return;
+
+            _isVisible = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    /// <summary>
+    ///     Private field for the <see cref="IsDefault" /> property.
+    /// </summary>
+    private bool _isDefault;
 
     /// <summary>
     ///     Indicates that the application is the default application.
     /// </summary>
-    public bool IsDefault { get; set; }
+    public bool IsDefault
+    {
+        get => _isDefault;
+        set
+        {
+            if (value == _isDefault)
+                return;
+
+            _isDefault = value;
+            OnPropertyChanged();
+        }
+    }
 
     /// <summary>
     ///     Method to check if an object is equal to this object.

@@ -3843,4 +3843,7 @@ Right-click for more options.</value>
   <data name="License_BDS3Clause" xml:space="preserve">
     <value>BSD-3-Clause</value>
   </data>
+  <data name="SetDefault" xml:space="preserve">
+    <value>Set default</value>
+  </data>
 </root>

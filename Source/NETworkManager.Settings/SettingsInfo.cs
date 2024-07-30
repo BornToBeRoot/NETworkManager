@@ -67,19 +67,18 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #region General
 
-    // General
-    private ApplicationName _general_DefaultApplicationViewName =
-        GlobalStaticConfiguration.General_DefaultApplicationViewName;
+    // General   
+    private ObservableSetCollection<ApplicationInfo> _general_ApplicationList = new();
 
-    public ApplicationName General_DefaultApplicationViewName
+    public ObservableSetCollection<ApplicationInfo> General_ApplicationList
     {
-        get => _general_DefaultApplicationViewName;
+        get => _general_ApplicationList;
         set
         {
-            if (value == _general_DefaultApplicationViewName)
+            if (value == _general_ApplicationList)
                 return;
 
-            _general_DefaultApplicationViewName = value;
+            _general_ApplicationList = value;
             OnPropertyChanged();
         }
     }
@@ -127,21 +126,6 @@ public class SettingsInfo : INotifyPropertyChanged
                 return;
 
             _general_HistoryListEntries = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private ObservableSetCollection<ApplicationInfo> _general_ApplicationList = new();
-
-    public ObservableSetCollection<ApplicationInfo> General_ApplicationList
-    {
-        get => _general_ApplicationList;
-        set
-        {
-            if (value == _general_ApplicationList)
-                return;
-
-            _general_ApplicationList = value;
             OnPropertyChanged();
         }
     }
@@ -1288,7 +1272,7 @@ public class SettingsInfo : INotifyPropertyChanged
                 return;
 
             _portScanner_MaxPortThreads = value;
-            SettingsChanged = true;
+            OnPropertyChanged();
         }
     }
 
