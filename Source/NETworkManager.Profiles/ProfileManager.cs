@@ -482,7 +482,7 @@ public static class ProfileManager
             // Only if the password provided earlier was valid...
             if (LoadedProfileFile.IsPasswordValid)
             {
-                var decryptedBytes = SerializeToByteArray(new List<GroupInfo>(Groups));
+                var decryptedBytes = SerializeToByteArray([..Groups]);
                 var encryptedBytes = CryptoHelper.Encrypt(decryptedBytes,
                     SecureStringHelper.ConvertToString(LoadedProfileFile.Password),
                     GlobalStaticConfiguration.Profile_EncryptionKeySize,
@@ -493,7 +493,7 @@ public static class ProfileManager
         }
         else
         {
-            SerializeToFile(LoadedProfileFile.Path, new List<GroupInfo>(Groups));
+            SerializeToFile(LoadedProfileFile.Path, [..Groups]);
         }
 
         ProfilesChanged = false;

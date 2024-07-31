@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 using log4net;
+using NETworkManager.Controls;
 using NETworkManager.Models;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.PowerShell;
@@ -333,6 +334,10 @@ public static class SettingsManager
     private static void UpgradeToLatest(Version version)
     {
         Log.Info($"Apply upgrade to {version}...");
+
+        Log.Info("Reset ApplicationList to default...");
+        Current.General_ApplicationList =
+            new ObservableSetCollection<ApplicationInfo>(ApplicationManager.GetDefaultList());
     }
 
     #endregion

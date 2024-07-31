@@ -700,8 +700,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         // Select the application
         // Set application via command line, or select the default one, fallback to the first visible one
-        var applicationList = Applications.Cast<ApplicationInfo>();
-
+        var applicationList = Applications.Cast<ApplicationInfo>().ToArray();
+        
         if (CommandLineManager.Current.Application != ApplicationName.None)
             SelectedApplication = applicationList.FirstOrDefault(x => x.Name == CommandLineManager.Current.Application);
         else
@@ -1259,7 +1259,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private void RunCommandCloseAction()
     {
-        RunCommandFlyoutClose();
+        RunCommandFlyoutClose().ConfigureAwait(false);
     }
 
     #endregion
@@ -1321,7 +1321,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         }
 
         // Close the flyout
-        RunCommandFlyoutClose(true);
+        RunCommandFlyoutClose(true).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -1360,7 +1360,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         if (e.NewValue is not false)
             return;
 
-        RunCommandFlyoutClose();
+        RunCommandFlyoutClose().ConfigureAwait(false);
     }
 
     #endregion
