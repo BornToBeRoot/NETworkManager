@@ -59,8 +59,7 @@
               : using a System.ComponentModel.TypeConverter
               : and then encoded with base64 encoding.
       -->
-    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"
-                xmlns="" id="root">
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns="" id="root">
         <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
         <xsd:element name="root" msdata:IsDataSet="true">
             <xsd:complexType>
@@ -3834,5 +3833,21 @@ Tente novamente em alguns segundos.</value>
 Abra as configurações do Windows e permita o acesso Wi-Fi para este aplicativo.
 
 Reinicie o aplicativo posteriormente para usar este recurso.</value>
+  </data>
+    <data name="DragDropApplicationsToReorderRightClickForMoreOptions" xml:space="preserve">
+    <value>Arraste e solte os aplicativos para reordená-los.
+Clique direito para mais opções.</value>
+  </data>
+    <data name="RestoreDefaults" xml:space="preserve">
+    <value>Restaurar padrões</value>
+  </data>
+    <data name="Library_GongSolutionsWpfDragDrop_Description" xml:space="preserve">
+    <value>Uma framework de arrastar e soltar para WPF fácil de usar.</value>
+  </data>
+    <data name="License_BDS3Clause" xml:space="preserve">
+    <value>BSD-3-Clause</value>
+  </data>
+    <data name="SetDefault" xml:space="preserve">
+    <value>Definir padrão</value>
   </data>
 </root>
