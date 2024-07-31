@@ -19,7 +19,14 @@ Release date: **xx.xx.2024**
 
 ## What's new?
 
+- Applications can now be sorted via drag & drop in the application sidebar or in the settings under `Settings > General > Applications`. [#2781](https://github.com/BornToBeRoot/NETworkManager/pull/2781)
+
 ## Improvements
+
+- Applications settings under `Settings > General > Applications` redesigned and context menu added (Right-click) [#2781](https://github.com/BornToBeRoot/NETworkManager/pull/2781)
+  - `Set default` added (Set the startup application - available if not set)
+  - `Show` added (Shows the application in the main window - available if hidden)
+  - `Hide` added (Hides the application from the main window - available if shown)
 
 ## Bugfixes
 

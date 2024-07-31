@@ -34,9 +34,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private readonly bool _isLoading;
     private bool _isViewActive = true;
-    
+
     private string _group = Strings.Hosts; // Default group name
-    
+
     private string _host;
 
     public string Host
@@ -354,7 +354,8 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, this, _dialogCoordinator, null, null, ApplicationName.PingMonitor)
+        ProfileDialogManager
+            .ShowAddProfileDialog(this, this, _dialogCoordinator, null, null, ApplicationName.PingMonitor)
             .ConfigureAwait(false);
     }
 
@@ -424,9 +425,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
         if (group != null)
             _group = group;
-        
+
         Host = host;
-        
+
         return true;
     }
 
@@ -501,9 +502,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     {
         for (var i = Hosts.Count - 1; i >= 0; i--)
         {
-            if (!Hosts[i].Group.Equals(group)) 
+            if (!Hosts[i].Group.Equals(group))
                 continue;
-            
+
             Hosts[i].Stop();
             Hosts.RemoveAt(i);
         }

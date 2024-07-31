@@ -294,8 +294,6 @@ public class DNSLookupViewModel : ViewModelBase
 
     #region Methods
 
-    
-
     private void Query()
     {
         IsStatusMessageDisplayed = false;
@@ -305,7 +303,7 @@ public class DNSLookupViewModel : ViewModelBase
 
         // Reset the latest results
         Results.Clear();
-        
+
         DragablzTabItem.SetTabHeader(_tabId, Host);
 
         AddHostToHistory(Host);

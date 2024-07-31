@@ -19,6 +19,7 @@
         <None Remove="Licenses\ControlzEx.txt"/>
         <None Remove="Licenses\DnsClient.NET.txt"/>
         <None Remove="Licenses\Dragablz.txt"/>
+        <None Remove="Licenses\GongSolutions.Wpf.DragDrop.txt"/>
         <None Remove="Licenses\IPNetwork.txt"/>
         <None Remove="Licenses\LiveCharts.txt"/>
         <None Remove="Licenses\LoadingIndicators.WPF.txt"/>
@@ -40,6 +41,9 @@
         <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs"/>
     </ItemGroup>
     <ItemGroup>
+        <Content Include="Licenses\GongSolutions.Wpf.DragDrop.txt">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
         <Content Include="Licenses\AirspaceFixer.txt">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>

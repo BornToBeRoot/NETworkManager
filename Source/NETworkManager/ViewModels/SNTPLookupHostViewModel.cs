@@ -15,8 +15,9 @@ public class SNTPLookupHostViewModel : ViewModelBase
     #region Variables
 
     public IInterTabClient InterTabClient { get; }
-    
+
     private string _interTabPartition;
+
     public string InterTabPartition
     {
         get => _interTabPartition;
@@ -29,7 +30,7 @@ public class SNTPLookupHostViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
     private int _selectedTabIndex;
@@ -58,7 +59,8 @@ public class SNTPLookupHostViewModel : ViewModelBase
 
         var tabId = Guid.NewGuid();
 
-        TabItems = [
+        TabItems =
+        [
             new DragablzTabItem(Strings.NewTab, new SNTPLookupView(tabId), tabId)
         ];
 

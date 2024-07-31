@@ -123,7 +123,7 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
     {
         InitializeComponent();
         DataContext = this;
-        
+
         ConfigurationManager.Current.RemoteDesktopTabCount++;
 
         _tabId = tabId;
@@ -382,12 +382,12 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
         // Prevent multiple calls
         if (_closed)
             return;
-        
+
         _closed = true;
-        
+
         // Disconnect the session
         Disconnect();
-        
+
         ConfigurationManager.Current.RemoteDesktopTabCount--;
     }
 

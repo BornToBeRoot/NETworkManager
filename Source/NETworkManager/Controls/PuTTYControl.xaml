@@ -24,12 +24,14 @@
             <WindowsFormsHost.Style>
                 <Style TargetType="{x:Type WindowsFormsHost}">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsPuTTYWindowDragging}" Value="True">
+                        <DataTrigger
+                            Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsPuTTYWindowDragging}"
+                            Value="True">
                             <Setter Property="Visibility" Value="Hidden" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding IsConnected}" Value="False">
                             <Setter Property="Visibility" Value="Hidden" />
-                        </DataTrigger>                        
+                        </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </WindowsFormsHost.Style>

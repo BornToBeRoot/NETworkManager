@@ -14,7 +14,7 @@ public partial class WebConsoleControl : UserControlBase, IDragablzTabItem
 
     private bool _initialized;
     private bool _closed;
-    
+
     private readonly Guid _tabId;
     private readonly WebConsoleSessionInfo _sessionInfo;
 
@@ -73,7 +73,7 @@ public partial class WebConsoleControl : UserControlBase, IDragablzTabItem
         DataContext = this;
 
         ConfigurationManager.Current.WebConsoleTabCount++;
-        
+
         _tabId = tabId;
         _sessionInfo = sessionInfo;
 
@@ -188,9 +188,9 @@ public partial class WebConsoleControl : UserControlBase, IDragablzTabItem
         // Prevent multiple calls
         if (_closed)
             return;
-        
-        _closed = true;  
-        
+
+        _closed = true;
+
         ConfigurationManager.Current.WebConsoleTabCount--;
     }
 

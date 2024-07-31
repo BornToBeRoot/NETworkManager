@@ -1,10 +1,23 @@
-﻿namespace NETworkManager.Models;
+﻿using NETworkManager.Utilities;
+
+namespace NETworkManager.Models;
 
 /// <summary>
 ///     Stores information's about an application.
 /// </summary>
-public class ApplicationInfo
+public class ApplicationInfo : PropertyChangedBase
 {
+    /// <summary>
+    ///     Private field for the <see cref="IsDefault" /> property.
+    /// </summary>
+    private bool _isDefault;
+
+
+    /// <summary>
+    ///     Private field for the <see cref="IsVisible" /> property.
+    /// </summary>
+    private bool _isVisible;
+
     /// <summary>
     ///     Initializes a new instance of the <see cref="ApplicationInfo" /> class.
     /// </summary>
@@ -15,13 +28,14 @@ public class ApplicationInfo
     /// <summary>
     ///     Initializes a new instance of the <see cref="ApplicationInfo" /> class with parameters.
     /// </summary>
-    /// <param name="name">
-    ///     <see cref="Name" />
-    /// </param>
-    public ApplicationInfo(ApplicationName name)
+    /// <param name="name">Name of the application.</param>
+    /// <param name="isVisible">Indicates that the application is visible to the user.</param>
+    /// <param name="isDefault">Indicates that the application is the default application.</param>
+    public ApplicationInfo(ApplicationName name, bool isVisible = true, bool isDefault = false)
     {
         Name = name;
-        IsVisible = true;
+        IsVisible = isVisible;
+        IsDefault = isDefault;
     }
 
     /// <summary>
@@ -32,7 +46,34 @@ public class ApplicationInfo
     /// <summary>
     ///     Indicates that the application is visible to the user.
     /// </summary>
-    public bool IsVisible { get; set; }
+    public bool IsVisible
+    {
+        get => _isVisible;
+        set
+        {
+            if (value == _isVisible)
+                return;
+
+            _isVisible = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    ///     Indicates that the application is the default application.
+    /// </summary>
+    public bool IsDefault
+    {
+        get => _isDefault;
+        set
+        {
+            if (value == _isDefault)
+                return;
+
+            _isDefault = value;
+            OnPropertyChanged();
+        }
+    }
 
     /// <summary>
     ///     Method to check if an object is equal to this object.
@@ -72,6 +113,7 @@ public class ApplicationInfo
     /// <returns>Hashcode as <see cref="int" />.</returns>
     public override int GetHashCode()
     {
+        // ReSharper disable once NonReadonlyMemberInGetHashCode
         return Name.GetHashCode();
     }
 }

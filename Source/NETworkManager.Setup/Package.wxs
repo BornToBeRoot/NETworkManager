@@ -1,30 +1,30 @@
-﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
-	 xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
-	<?define ProductVersion="0.0.0" ?>
+﻿<Wix xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui"
+     xmlns="http://wixtoolset.org/schemas/v4/wxs">
+    <?define ProductVersion="0.0.0" ?>
 
-	<Package Name="NETworkManager 20$(var.ProductVersion).0"
-			 Manufacturer="BornToBeRoot"
-			 Version="$(var.ProductVersion)"
-			
-			 UpgradeCode="e343d8ab-ed71-41d1-9784-6f6860bda078">
-		<MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeError)" />
+    <Package Name="NETworkManager 20$(var.ProductVersion).0"
+             Manufacturer="BornToBeRoot"
+             Version="$(var.ProductVersion)"
 
-		<!-- Include CAB file in MSI -->
-		<MediaTemplate EmbedCab="true" />
+             UpgradeCode="e343d8ab-ed71-41d1-9784-6f6860bda078">
+        <MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeError)"/>
 
-		<!-- Icon -->
-		<Icon Id="icon.ico"  SourceFile="$(var.NETworkManager.ProjectDir)NETworkManager.ico" />
-		<Property Id="ARPPRODUCTICON" Value="icon.ico" />
+        <!-- Include CAB file in MSI -->
+        <MediaTemplate EmbedCab="true"/>
 
-		<!-- UI -->
-		<WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)Resources\LICENSE.rtf" />
-		<WixVariable Id="WixUIBannerBmp" Value="$(var.ProjectDir)Resources\WixUIBanner.png" />
-		<WixVariable Id="WixUIDialogBmp" Value="$(var.ProjectDir)Resources\WixUIDialog.png" />
-		<ui:WixUI Id="WixUI_InstallDir" InstallDirectory="INSTALLFOLDER" />		
+        <!-- Icon -->
+        <Icon Id="icon.ico" SourceFile="$(var.NETworkManager.ProjectDir)NETworkManager.ico"/>
+        <Property Id="ARPPRODUCTICON" Value="icon.ico"/>
 
-		<!-- Features -->
-		<Feature Id="Main" Title="NETworkManager">
-			<ComponentGroupRef Id="Components" />
-		</Feature>
-	</Package>
+        <!-- UI -->
+        <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)Resources\LICENSE.rtf"/>
+        <WixVariable Id="WixUIBannerBmp" Value="$(var.ProjectDir)Resources\WixUIBanner.png"/>
+        <WixVariable Id="WixUIDialogBmp" Value="$(var.ProjectDir)Resources\WixUIDialog.png"/>
+        <ui:WixUI Id="WixUI_InstallDir" InstallDirectory="INSTALLFOLDER"/>
+
+        <!-- Features -->
+        <Feature Id="Main" Title="NETworkManager">
+            <ComponentGroupRef Id="Components"/>
+        </Feature>
+    </Package>
 </Wix>

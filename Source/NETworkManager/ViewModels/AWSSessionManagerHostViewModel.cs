@@ -43,8 +43,9 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
     public IInterTabClient InterTabClient { get; }
-    
+
     private string _interTabPartition;
+
     public string InterTabPartition
     {
         get => _interTabPartition;
@@ -57,7 +58,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-    
+
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
     private readonly bool _isLoading;
@@ -153,7 +154,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-    
+
     private DragablzTabItem _selectedTabItem;
 
     public DragablzTabItem SelectedTabItem
@@ -338,7 +339,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.AWSSessionManager);
         InterTabPartition = ApplicationName.AWSSessionManager.ToString();
-        
+
         TabItems = [];
 
         // Profiles
@@ -848,8 +849,9 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         sessionInfo.ApplicationFilePath = SettingsManager.Current.AWSSessionManager_ApplicationFilePath;
 
         var tabId = Guid.NewGuid();
-        
-        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.InstanceID, new AWSSessionManagerControl(tabId, sessionInfo), tabId));
+
+        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.InstanceID,
+            new AWSSessionManagerControl(tabId, sessionInfo), tabId));
 
         // Select the added tab
         _disableFocusEmbeddedWindow = true;
@@ -936,9 +938,9 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
         {
             // Skip if no items
-            if(tabablzControl.Items.Count == 0)
+            if (tabablzControl.Items.Count == 0)
                 continue;
-            
+
             // Focus embedded window in the selected tab
             (((DragablzTabItem)tabablzControl.SelectedItem)?.View as IEmbeddedWindow)?.FocusEmbeddedWindow();
             break;

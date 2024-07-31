@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -34,8 +33,9 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
     public IInterTabClient InterTabClient { get; }
-    
+
     private string _interTabPartition;
+
     public string InterTabPartition
     {
         get => _interTabPartition;
@@ -48,7 +48,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-    
+
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
     private readonly bool _isLoading;
@@ -215,7 +215,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.TigerVNC);
         InterTabPartition = ApplicationName.TigerVNC.ToString();
-        
+
         TabItems = [];
 
         // Profiles
@@ -271,9 +271,9 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 
     private void ReconnectAction(object view)
     {
-        if (view is not TigerVNCControl control) 
+        if (view is not TigerVNCControl control)
             return;
-        
+
         if (control.ReconnectCommand.CanExecute(null))
             control.ReconnectCommand.Execute(null);
     }
@@ -428,7 +428,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
         sessionInfo.ApplicationFilePath = SettingsManager.Current.TigerVNC_ApplicationFilePath;
 
         var tabId = Guid.NewGuid();
-        
+
         TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Host, new TigerVNCControl(tabId, sessionInfo), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;

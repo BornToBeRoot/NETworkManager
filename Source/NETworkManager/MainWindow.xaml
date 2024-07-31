@@ -5,6 +5,7 @@
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
                  xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                  xmlns:interactivity="http://schemas.microsoft.com/xaml/behaviors"
                  xmlns:asf="clr-namespace:AirspaceFixer;assembly=AirspaceFixer"
@@ -604,8 +605,11 @@
                     <ScrollViewer Grid.Row="1" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback"
                                   Style="{StaticResource FadeOutScrollViewer}">
                         <ListView x:Name="ListViewApplication" ItemsSource="{Binding Applications}"
-                                  SelectedItem="{Binding SelectedApplication, Mode=TwoWay}" SelectionMode="Single"
-                                  BorderThickness="0">
+                                  SelectedItem="{Binding SelectedApplication, Mode=TwoWay}"
+                                  SelectionMode="Single"
+                                  BorderThickness="0"
+                                  dd:DragDrop.IsDragSource="True"
+                                  dd:DragDrop.IsDropTarget="True">
                             <ListView.ItemTemplate>
                                 <DataTemplate DataType="{x:Type models:ApplicationInfo}">
                                     <Grid Height="48" Background="Transparent"

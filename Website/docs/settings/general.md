@@ -4,29 +4,25 @@ sidebar_position: 0
 
 # General
 
-### Show the following application on startup:
+### Applications
 
-Default application that is displayed when the application is launched.
+Applications that are displayed in the main window in the sidebar.
 
-Type: `NETworkManager.Models.ApplicationName`
-
-Default: `Dashboard`
-
-### Visible applications
-
-Applications that are displayed in the bar.
-
-Type: `NETworkManager.Models.ApplicationName`
+Type: `NETworkManager.Models.ApplicationInfo`
 
 Default: `All`
 
-### Hidden applications
+:::note
 
-Applications that are not displayed in the bar.
+Applications can be sorted via drag & drop.
 
-Type: `NETworkManager.Models.ApplicationName`
+Right-click on an application opens a context menu with the following options:
 
-Default: `None`
+- `Set default` (Set the default application that is launched on startup - available if not set)
+- `Show` (Shows the application in the main window - available if hidden)
+- `Hide` (Hides the application from the main window - available if shown)
+
+:::
 
 ### Run background job every x-minutes
 

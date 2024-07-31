@@ -212,8 +212,7 @@
                                     HorizontalAlignment="Right">
                                 <Button.Style>
                                     <Style TargetType="{x:Type TypeName=Button}"
-                                           BasedOn="{StaticResource ResourceKey=ImageWithTextButton}">
-                                    </Style>
+                                           BasedOn="{StaticResource ResourceKey=ImageWithTextButton}" />
                                 </Button.Style>
                                 <Button.Content>
                                     <Grid>

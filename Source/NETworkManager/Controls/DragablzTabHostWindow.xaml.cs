@@ -21,6 +21,66 @@ namespace NETworkManager.Controls;
 
 public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
 {
+    #region Constructor
+
+    public DragablzTabHostWindow(ApplicationName applicationName)
+    {
+        InitializeComponent();
+        DataContext = this;
+
+        ApplicationName = applicationName;
+
+        InterTabClient = new DragablzInterTabClient(applicationName);
+        InterTabPartition = applicationName.ToString();
+
+        Title =
+            $"NETworkManager {AssemblyManager.Current.Version} - {ResourceTranslator.Translate(ResourceIdentifier.ApplicationName, applicationName)}";
+    }
+
+    #endregion
+
+    #region Methods
+
+    private async void FocusEmbeddedWindow()
+    {
+        // Delay the focus to prevent blocking the ui
+        // Detect if window is resizing
+        do
+        {
+            await Task.Delay(250);
+        } while (Control.MouseButtons == MouseButtons.Left);
+
+        /* Don't continue if
+           - Header ContextMenu is opened
+        */
+        if (HeaderContextMenuIsOpen)
+            return;
+
+        // Return if the application is not an embedded window
+        if (!_embeddedWindowApplicationNames.Contains(ApplicationName))
+            return;
+
+        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
+        if (window == null)
+            return;
+
+        // Find all TabablzControl in the active window
+        foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
+        {
+            // Skip if no items
+            if (tabablzControl.Items.Count == 0)
+                continue;
+
+            // Focus embedded window in the selected tab
+            (((DragablzTabItem)tabablzControl.SelectedItem)?.View as IEmbeddedWindow)?.FocusEmbeddedWindow();
+
+            break;
+        }
+    }
+
+    #endregion
+
     #region PropertyChangedEventHandler
 
     public event PropertyChangedEventHandler PropertyChanged;
@@ -36,7 +96,7 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
 
     public IInterTabClient InterTabClient { get; }
 
-    private HashSet<ApplicationName> _embeddedWindowApplicationNames =
+    private readonly HashSet<ApplicationName> _embeddedWindowApplicationNames =
     [
         ApplicationName.PowerShell,
         ApplicationName.PuTTY,
@@ -86,24 +146,6 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
             _headerContextMenuIsOpen = value;
             OnPropertyChanged();
         }
-    }
-
-    #endregion
-
-    #region Constructor
-
-    public DragablzTabHostWindow(ApplicationName applicationName)
-    {
-        InitializeComponent();
-        DataContext = this;
-
-        ApplicationName = applicationName;
-
-        InterTabClient = new DragablzInterTabClient(applicationName);
-        InterTabPartition = applicationName.ToString();
-
-        Title =
-            $"NETworkManager {AssemblyManager.Current.Version} - {ResourceTranslator.Translate(ResourceIdentifier.ApplicationName, applicationName)}";
     }
 
     #endregion
@@ -326,48 +368,6 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
 
     #endregion
 
-    #region Methods
-
-    private async void FocusEmbeddedWindow()
-    {
-        // Delay the focus to prevent blocking the ui
-        // Detect if window is resizing
-        do
-        {
-            await Task.Delay(250);
-        } while (Control.MouseButtons == MouseButtons.Left);
-
-        /* Don't continue if
-           - Header ContextMenu is opened
-        */
-        if (HeaderContextMenuIsOpen)
-            return;
-
-        // Return if the application is not an embedded window
-        if(!_embeddedWindowApplicationNames.Contains(ApplicationName))
-            return;
-
-        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-
-        if (window == null)
-            return;
-
-        // Find all TabablzControl in the active window
-        foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
-        {
-            // Skip if no items
-            if (tabablzControl.Items.Count == 0)
-                continue;
-
-            // Focus embedded window in the selected tab
-            (((DragablzTabItem)tabablzControl.SelectedItem)?.View as IEmbeddedWindow)?.FocusEmbeddedWindow();
-
-            break;
-        }
-    }
-
-    #endregion
-
     #region Events
 
     private void MetroWindow_Activated(object sender, EventArgs e)
@@ -385,10 +385,8 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
 
         // Find all TabablzControl in the active window
         foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
-        {
-            foreach (var tabItem in tabablzControl.Items.OfType<DragablzTabItem>())
-                ((IDragablzTabItem)tabItem.View).CloseTab();
-        }
+        foreach (var tabItem in tabablzControl.Items.OfType<DragablzTabItem>())
+            ((IDragablzTabItem)tabItem.View).CloseTab();
 
         // Reset the dragging state
         switch (ApplicationName)

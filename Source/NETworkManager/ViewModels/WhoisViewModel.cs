@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using Dragablz;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
@@ -27,7 +26,7 @@ public class WhoisViewModel : ViewModelBase
     private readonly Guid _tabId;
     private bool _firstLoad = true;
     private bool _closed;
-    
+
     private string _domain;
 
     public string Domain
@@ -129,7 +128,7 @@ public class WhoisViewModel : ViewModelBase
         _dialogCoordinator = instance;
 
         ConfigurationManager.Current.WhoisTabCount++;
-        
+
         _tabId = tabId;
         Domain = domain;
 
@@ -223,9 +222,9 @@ public class WhoisViewModel : ViewModelBase
         // Prevent multiple calls
         if (_closed)
             return;
-        
+
         _closed = true;
-        
+
         ConfigurationManager.Current.WhoisTabCount--;
     }
 

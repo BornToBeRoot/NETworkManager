@@ -10,7 +10,6 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using Dragablz;
 using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
@@ -173,7 +172,7 @@ public class TracerouteViewModel : ViewModelBase
         _dialogCoordinator = instance;
 
         ConfigurationManager.Current.TracerouteTabCount++;
-        
+
         _tabId = tabId;
         Host = host;
 
@@ -403,13 +402,13 @@ public class TracerouteViewModel : ViewModelBase
         // Prevent multiple calls
         if (_closed)
             return;
-        
+
         _closed = true;
-        
+
         // Stop trace
         if (IsRunning)
             StopTrace();
-        
+
         ConfigurationManager.Current.TracerouteTabCount--;
     }
 

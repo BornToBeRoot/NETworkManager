@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Security;
 using System.Threading.Tasks;
 using System.Windows;
@@ -296,15 +295,12 @@ public static class ProfileDialogManager
 
         // Update group in profiles
         if (profiles.Count > 0)
-        {
             if (!string.IsNullOrEmpty(instance.Group.Name) &&
                 !string.Equals(instance.Group.Name, name, StringComparison.Ordinal))
                 foreach (var profile in profiles)
                     profile.Group = name;
-            //else
-            //    Debug.WriteLine("Cannot update group in profiles");
-        }
-
+        //else
+        //    Debug.WriteLine("Cannot update group in profiles");
         return new GroupInfo
         {
             Name = name,

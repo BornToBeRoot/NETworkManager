@@ -446,12 +446,10 @@
                                 </mah:DropDownButton.Items>
                             </mah:DropDownButton>
                             <Button Command="{Binding Path=ExportCommand}"
-                                    HorizontalAlignment="Left"
-                                    >
+                                    HorizontalAlignment="Left">
                                 <Button.Style>
                                     <Style TargetType="{x:Type TypeName=Button}"
-                                           BasedOn="{StaticResource ResourceKey=ImageWithTextButton}">
-                                    </Style>
+                                           BasedOn="{StaticResource ResourceKey=ImageWithTextButton}" />
                                 </Button.Style>
                                 <Button.Content>
                                     <Grid>
@@ -462,7 +460,8 @@
                                         <Rectangle Grid.Column="0" Grid.Row="0"
                                                    Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
                                             <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
+                                                <VisualBrush Stretch="Uniform"
+                                                             Visual="{iconPacks:Material Kind=Export}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                         <TextBlock Grid.Column="1" Grid.Row="0"

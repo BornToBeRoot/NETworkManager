@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using Dragablz;
 using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
@@ -132,7 +131,7 @@ public class IPGeolocationViewModel : ViewModelBase
         _dialogCoordinator = instance;
 
         ConfigurationManager.Current.IPGeolocationTabCount++;
-        
+
         _tabId = tabId;
         Host = host;
 
@@ -282,9 +281,9 @@ public class IPGeolocationViewModel : ViewModelBase
         // Prevent multiple calls
         if (_closed)
             return;
-        
+
         _closed = true;
-        
+
         ConfigurationManager.Current.IPGeolocationTabCount--;
     }
 

@@ -11,7 +11,6 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using Dragablz;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
@@ -231,7 +230,7 @@ public class PortScannerViewModel : ViewModelBase
         _dialogCoordinator = instance;
 
         ConfigurationManager.Current.PortScannerTabCount++;
-        
+
         _tabId = tabId;
         Host = host;
         Ports = port;
@@ -267,13 +266,13 @@ public class PortScannerViewModel : ViewModelBase
         // Prevent multiple calls
         if (_closed)
             return;
-        
+
         _closed = true;
-        
+
         // Stop scan
         if (IsRunning)
             Stop();
-        
+
         ConfigurationManager.Current.PortScannerTabCount--;
     }
 
@@ -326,7 +325,7 @@ public class PortScannerViewModel : ViewModelBase
     private async Task OpenPortProfileSelection()
     {
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-        
+
         var customDialog = new CustomDialog
         {
             Title = Strings.SelectPortProfile
@@ -358,7 +357,7 @@ public class PortScannerViewModel : ViewModelBase
         Results.Clear();
 
         DragablzTabItem.SetTabHeader(_tabId, Host);
-        
+
         _cancellationTokenSource = new CancellationTokenSource();
 
         // Resolve hostnames

@@ -313,7 +313,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    
+
     private bool _flyoutRunCommandIsOpen;
 
     public bool FlyoutRunCommandIsOpen
@@ -328,7 +328,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    
+
     private bool _flyoutRunCommandAreAnimationsEnabled;
 
     public bool FlyoutRunCommandAreAnimationsEnabled
@@ -343,7 +343,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    
+
     private bool _isRestartRequired;
 
     public bool IsRestartRequired
@@ -477,7 +477,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         EventSystem.OnRedirectDataToApplicationEvent += EventSystem_RedirectDataToApplicationEvent;
         EventSystem.OnRedirectToSettingsEvent += EventSystem_RedirectToSettingsEvent;
-        
+
         _isLoading = false;
     }
 
@@ -523,7 +523,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
                 // Generate lists at runtime
                 SettingsManager.Current.General_ApplicationList =
-                    new ObservableSetCollection<ApplicationInfo>(ApplicationManager.GetList());
+                    new ObservableSetCollection<ApplicationInfo>(ApplicationManager.GetDefaultList());
                 SettingsManager.Current.IPScanner_CustomCommands =
                     new ObservableCollection<CustomCommandInfo>(IPScannerCustomCommand.GetDefaultList());
                 SettingsManager.Current.PortScanner_PortProfiles =
@@ -669,9 +669,10 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     {
         _isApplicationViewLoading = true;
 
-        Applications = new CollectionViewSource { Source = SettingsManager.Current.General_ApplicationList }.View;
-        Applications.SortDescriptions.Add(
-            new SortDescription(nameof(ApplicationInfo.Name), ListSortDirection.Ascending));
+        Applications = new CollectionViewSource
+        {
+            Source = SettingsManager.Current.General_ApplicationList
+        }.View;
 
         Applications.Filter = o =>
         {
@@ -697,11 +698,15 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         _isApplicationViewLoading = false;
 
-        // Select the application        
-        SelectedApplication = Applications.Cast<ApplicationInfo>().FirstOrDefault(x =>
-            x.Name == (CommandLineManager.Current.Application != ApplicationName.None
-                ? CommandLineManager.Current.Application
-                : SettingsManager.Current.General_DefaultApplicationViewName));
+        // Select the application
+        // Set application via command line, or select the default one, fallback to the first visible one
+        var applicationList = Applications.Cast<ApplicationInfo>();
+
+        if (CommandLineManager.Current.Application != ApplicationName.None)
+            SelectedApplication = applicationList.FirstOrDefault(x => x.Name == CommandLineManager.Current.Application);
+        else
+            SelectedApplication = applicationList.FirstOrDefault(x => x.IsDefault) ??
+                                  applicationList.FirstOrDefault(x => x.IsVisible);
 
         // Scroll into view
         if (SelectedApplication != null)

@@ -12,7 +12,6 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using Dragablz;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
@@ -35,7 +34,7 @@ public class SNMPViewModel : ViewModelBase
         _isLoading = true;
 
         _dialogCoordinator = instance;
-        
+
         ConfigurationManager.Current.SNMPTabCount++;
 
         _tabId = tabId;
@@ -643,16 +642,16 @@ public class SNMPViewModel : ViewModelBase
         // Prevent multiple calls
         if (_closed)
             return;
-        
+
         _closed = true;
-        
+
         ConfigurationManager.Current.SNMPTabCount--;
     }
 
     private async Task OpenOIDProfileSelection()
     {
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-        
+
         var customDialog = new CustomDialog
         {
             Title = Strings.SelectOIDProfile

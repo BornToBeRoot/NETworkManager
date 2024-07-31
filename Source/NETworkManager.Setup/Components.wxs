@@ -1,35 +1,35 @@
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
-  <Fragment>
-    <ComponentGroup Id="Components" Directory="INSTALLFOLDER">
-		<!-- Include all files in output -->
-		<Files Include="$(var.NETworkManager.TargetDir)**">
-			<Exclude Files="$(var.NETworkManager.TargetDir)**\*.pdb" />
-			<Exclude Files="$(var.NETworkManager.TargetDir)WebView2Loader.dll" />
-			<Exclude Files="$(var.NETworkManager.TargetDir)NETworkManager.exe" />
-		</Files>
+    <Fragment>
+        <ComponentGroup Id="Components" Directory="INSTALLFOLDER">
+            <!-- Include all files in output -->
+            <Files Include="$(var.NETworkManager.TargetDir)**">
+                <Exclude Files="$(var.NETworkManager.TargetDir)**\*.pdb"/>
+                <Exclude Files="$(var.NETworkManager.TargetDir)WebView2Loader.dll"/>
+                <Exclude Files="$(var.NETworkManager.TargetDir)NETworkManager.exe"/>
+            </Files>
 
-		<!-- NETworkManager executable -->
-		<Component>
-			<File Id="NETworkManagerExecutable"
-				  Source="$(var.NETworkManager.TargetDir)NETworkManager.exe">
-				<!-- Start menu shortcut -->
-				<Shortcut Name="NETworkManager" 
-						  Directory="ProgramMenuFolder" 
-						  Advertise="true" 
-						  Icon="icon.ico"
-						  Description="A powerful tool for managing networks and troubleshoot network problems!" />
-			</File>
-		</Component>
+            <!-- NETworkManager executable -->
+            <Component>
+                <File Id="NETworkManagerExecutable"
+                      Source="$(var.NETworkManager.TargetDir)NETworkManager.exe">
+                    <!-- Start menu shortcut -->
+                    <Shortcut Name="NETworkManager"
+                              Directory="ProgramMenuFolder"
+                              Advertise="true"
+                              Icon="icon.ico"
+                              Description="A powerful tool for managing networks and troubleshoot network problems!"/>
+                </File>
+            </Component>
 
-		<!-- Desktop shortcut -->
-		<Component Directory="DesktopFolder">
-			<RegistryValue Root="HKCU" Key="SOFTWARE\NETworkManager" Name="DesktopShortcutEnabled" Value="1" />
-			<Shortcut Name="NETworkManager"
-					  Directory="DesktopFolder"
-					  Target="[#NETworkManagerExecutable]"
-					  Icon="icon.ico"
-					  Description="A powerful tool for managing networks and troubleshoot network problems!" />
-		</Component>			
-    </ComponentGroup>
-  </Fragment>
+            <!-- Desktop shortcut -->
+            <Component Directory="DesktopFolder">
+                <RegistryValue Root="HKCU" Key="SOFTWARE\NETworkManager" Name="DesktopShortcutEnabled" Value="1"/>
+                <Shortcut Name="NETworkManager"
+                          Directory="DesktopFolder"
+                          Target="[#NETworkManagerExecutable]"
+                          Icon="icon.ico"
+                          Description="A powerful tool for managing networks and troubleshoot network problems!"/>
+            </Component>
+        </ComponentGroup>
+    </Fragment>
 </Wix>

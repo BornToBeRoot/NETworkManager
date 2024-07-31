@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -34,8 +33,9 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
     public IInterTabClient InterTabClient { get; }
-    
+
     private string _interTabPartition;
+
     public string InterTabPartition
     {
         get => _interTabPartition;
@@ -48,7 +48,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-    
+
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
     private readonly bool _isLoading;
@@ -84,7 +84,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-    
+
     /*
     private DragablzTabItem _selectedTabItem;
 
@@ -372,7 +372,8 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, this, _dialogCoordinator, null, null, ApplicationName.PowerShell)
+        ProfileDialogManager
+            .ShowAddProfileDialog(this, this, _dialogCoordinator, null, null, ApplicationName.PowerShell)
             .ConfigureAwait(false);
     }
 
@@ -513,7 +514,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         sessionInfo.ApplicationFilePath = SettingsManager.Current.PowerShell_ApplicationFilePath;
 
         var tabId = Guid.NewGuid();
-        
+
         TabItems.Add(new DragablzTabItem(
             header ?? (sessionInfo.EnableRemoteConsole ? sessionInfo.Host : Strings.PowerShell),
             new PowerShellControl(tabId, sessionInfo), tabId));
@@ -588,9 +589,9 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
         {
             // Skip if no items
-            if(tabablzControl.Items.Count == 0)
+            if (tabablzControl.Items.Count == 0)
                 continue;
-            
+
             // Focus embedded window in the selected tab
             (((DragablzTabItem)tabablzControl.SelectedItem)?.View as IEmbeddedWindow)?.FocusEmbeddedWindow();
             break;

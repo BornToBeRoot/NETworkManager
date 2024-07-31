@@ -27,8 +27,9 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
     public IInterTabClient InterTabClient { get; }
-    
+
     private string _interTabPartition;
+
     public string InterTabPartition
     {
         get => _interTabPartition;
@@ -41,7 +42,7 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-    
+
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
     private readonly bool _isLoading;
@@ -191,10 +192,11 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.DNSLookup);
         InterTabPartition = ApplicationName.DNSLookup.ToString();
-        
+
         var tabId = Guid.NewGuid();
 
-        TabItems = [
+        TabItems =
+        [
             new DragablzTabItem(Strings.NewTab, new DNSLookupView(tabId), tabId)
         ];
 
@@ -249,7 +251,7 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this,this, _dialogCoordinator, null, null, ApplicationName.DNSLookup)
+        ProfileDialogManager.ShowAddProfileDialog(this, this, _dialogCoordinator, null, null, ApplicationName.DNSLookup)
             .ConfigureAwait(false);
     }
 

@@ -15,9 +15,9 @@ public sealed class IPAddressArrayToStringConverter : IValueConverter
         if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             return "-/-";
 
-        if (value is not IPAddress[] ipAddresses) 
+        if (value is not IPAddress[] ipAddresses)
             return "-/-";
-        
+
         return IPv4Address.ConvertIPAddressListToString(ipAddresses);
     }
 

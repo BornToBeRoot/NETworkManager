@@ -54,7 +54,6 @@ public sealed class NetworkInterface
             var ipProperties = networkInterface.GetIPProperties();
 
             foreach (var unicastIPAddrInfo in ipProperties.UnicastAddresses)
-            {
                 switch (unicastIPAddrInfo.Address.AddressFamily)
                 {
                     case AddressFamily.InterNetwork:
@@ -75,13 +74,11 @@ public sealed class NetworkInterface
                         listIPv6Address.Add(unicastIPAddrInfo.Address);
                         break;
                 }
-            }
 
             var listIPv4Gateway = new List<IPAddress>();
             var listIPv6Gateway = new List<IPAddress>();
 
             foreach (var gatewayIPAddrInfo in ipProperties.GatewayAddresses)
-            {
                 switch (gatewayIPAddrInfo.Address.AddressFamily)
                 {
                     case AddressFamily.InterNetwork:
@@ -91,7 +88,6 @@ public sealed class NetworkInterface
                         listIPv6Gateway.Add(gatewayIPAddrInfo.Address);
                         break;
                 }
-            }
 
             // Check if autoconfiguration for DNS is enabled (only via registry key)
             var nameServerKey =
@@ -139,7 +135,8 @@ public sealed class NetworkInterface
                 IPv4Address = listIPv4Address.ToArray(),
                 IPv4Gateway = listIPv4Gateway.ToArray(),
                 DhcpEnabled = ipv4Properties is { IsDhcpEnabled: true },
-                DhcpServer = ipProperties.DhcpServerAddresses.Where(dhcpServerIPAddress => dhcpServerIPAddress.AddressFamily == AddressFamily.InterNetwork).ToArray(),
+                DhcpServer = ipProperties.DhcpServerAddresses.Where(dhcpServerIPAddress =>
+                    dhcpServerIPAddress.AddressFamily == AddressFamily.InterNetwork).ToArray(),
                 DhcpLeaseObtained = dhcpLeaseObtained,
                 DhcpLeaseExpires = dhcpLeaseExpires,
                 IPv6ProtocolAvailable = ipv6ProtocolAvailable,
@@ -220,13 +217,13 @@ public sealed class NetworkInterface
         var command = $"netsh interface ipv4 set address name='{config.Name}'";
         command += config.EnableStaticIPAddress
             ? $" source=static address={config.IPAddress} mask={config.Subnetmask} gateway={config.Gateway};"
-            : $" source=dhcp;";
+            : " source=dhcp;";
 
         // DNS
         command += $"netsh interface ipv4 set DNSservers name='{config.Name}'";
         command += config.EnableStaticDNS
             ? $" source=static address={config.PrimaryDNSServer} register=primary validate=no;"
-            : $" source=dhcp;";
+            : " source=dhcp;";
         command += config.EnableStaticDNS && !string.IsNullOrEmpty(config.SecondaryDNSServer)
             ? $"netsh interface ipv4 add DNSservers name='{config.Name}' address={config.SecondaryDNSServer} index=2 validate=no;"
             : "";
@@ -262,7 +259,7 @@ public sealed class NetworkInterface
     /// </summary>
     private static void FlushDns()
     {
-        const string command = $"ipconfig /flushdns;";
+        const string command = "ipconfig /flushdns;";
 
         PowerShellHelper.ExecuteCommand(command);
     }
@@ -322,7 +319,7 @@ public sealed class NetworkInterface
 
         if (config.EnableDhcpStaticIpCoexistence)
             command += $"netsh interface ipv4 set interface interface='{config.Name}' dhcpstaticipcoexistence=enabled;";
-        
+
         command += $"netsh interface ipv4 add address '{config.Name}' {config.IPAddress} {config.Subnetmask};";
 
         PowerShellHelper.ExecuteCommand(command, true);

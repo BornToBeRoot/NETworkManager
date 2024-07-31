@@ -51,7 +51,7 @@ public static partial class ExportManager
         foreach (var info in collection)
             stringBuilder.AppendLine(
                 $"{info.Status},{info.Continent},{info.ContinentCode},{info.Country},{info.CountryCode},{info.Region},{info.RegionName},{info.City},{info.District},{info.Zip},{info.Lat},{info.Lon},{info.Timezone},{info.Offset},{info.Currency},{info.Isp},{info.Org},{info.As},{info.Asname},{info.Reverse},{info.Mobile},{info.Proxy},{info.Hosting},{info.Query}");
-        
+
         File.WriteAllText(filePath, stringBuilder.ToString());
     }
 
@@ -92,7 +92,7 @@ public static partial class ExportManager
                             new XElement(nameof(IPGeolocationInfo.Proxy), info.Proxy),
                             new XElement(nameof(IPGeolocationInfo.Hosting), info.Hosting),
                             new XElement(nameof(IPGeolocationInfo.Query), info.Query)))));
-        
+
         document.Save(filePath);
     }
 
@@ -133,7 +133,7 @@ public static partial class ExportManager
                 collection[i].Hosting,
                 collection[i].Query
             };
-       
+
         File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
     }
 }

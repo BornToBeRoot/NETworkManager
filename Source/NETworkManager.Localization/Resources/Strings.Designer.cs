@@ -3032,6 +3032,16 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Drag and drop the applications to reorder them.
+        ///Right-click for more options..
+        /// </summary>
+        public static string DragDropApplicationsToReorderRightClickForMoreOptions {
+            get {
+                return ResourceManager.GetString("DragDropApplicationsToReorderRightClickForMoreOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Duration.
         /// </summary>
         public static string Duration {
@@ -5018,6 +5028,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An easy to use drag&apos;n&apos;drop framework for WPF..
+        /// </summary>
+        public static string Library_GongSolutionsWpfDragDrop_Description {
+            get {
+                return ResourceManager.GetString("Library_GongSolutionsWpfDragDrop_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to C# library take care of complex network, IP, IPv4, IPv6, netmask, CIDR, subnet, subnetting, supernet, and supernetting calculation for .NET developers..
         /// </summary>
         public static string Library_IPNetwork_Description {
@@ -5167,6 +5186,15 @@ namespace NETworkManager.Localization.Resources {
         public static string License_BDS2Clause {
             get {
                 return ResourceManager.GetString("License_BDS2Clause", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BSD-3-Clause.
+        /// </summary>
+        public static string License_BDS3Clause {
+            get {
+                return ResourceManager.GetString("License_BDS3Clause", resourceCulture);
             }
         }
         
@@ -8484,6 +8512,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restore defaults.
+        /// </summary>
+        public static string RestoreDefaults {
+            get {
+                return ResourceManager.GetString("RestoreDefaults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Result.
         /// </summary>
         public static string Result {
@@ -8804,6 +8841,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Service {
             get {
                 return ResourceManager.GetString("Service", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set default.
+        /// </summary>
+        public static string SetDefault {
+            get {
+                return ResourceManager.GetString("SetDefault", resourceCulture);
             }
         }
         

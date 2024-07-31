@@ -42,7 +42,7 @@
     </Style>
 
     <Style x:Key="TextBlockAsTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
-        <Setter Property="FontWeight" Value="Bold" />        
+        <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="IsReadOnly" Value="True" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="IsTabStop" Value="False" />

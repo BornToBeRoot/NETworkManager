@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using NETworkManager.Models;
+﻿using NETworkManager.Models;
 using NETworkManager.Utilities;
 
 namespace NETworkManager.Settings;
@@ -69,6 +68,7 @@ public class ConfigurationInfo : PropertyChangedBase
     public ApplicationName CurrentApplication { get; set; } = Models.ApplicationName.None;
 
     private int _ipScannerTabCount;
+
     public int IPScannerTabCount
     {
         get => _ipScannerTabCount;
@@ -83,6 +83,7 @@ public class ConfigurationInfo : PropertyChangedBase
     }
 
     private int _portScannerTabCount;
+
     public int PortScannerTabCount
     {
         get => _portScannerTabCount;
@@ -97,6 +98,7 @@ public class ConfigurationInfo : PropertyChangedBase
     }
 
     private int _tracerouteTabCount;
+
     public int TracerouteTabCount
     {
         get => _tracerouteTabCount;
@@ -111,6 +113,7 @@ public class ConfigurationInfo : PropertyChangedBase
     }
 
     private int _dnsLookupTabCount;
+
     public int DNSLookupTabCount
     {
         get => _dnsLookupTabCount;
@@ -125,6 +128,7 @@ public class ConfigurationInfo : PropertyChangedBase
     }
 
     private int _remoteDesktopTabCount;
+
     public int RemoteDesktopTabCount
     {
         get => _remoteDesktopTabCount;
@@ -139,6 +143,7 @@ public class ConfigurationInfo : PropertyChangedBase
     }
 
     private bool _isRemoteDesktopWindowDragging;
+
     public bool IsRemoteDesktopWindowDragging
     {
         get => _isRemoteDesktopWindowDragging;
@@ -153,6 +158,7 @@ public class ConfigurationInfo : PropertyChangedBase
     }
 
     private int _powerShellTabCount;
+
     public int PowerShellTabCount
     {
         get => _powerShellTabCount;
@@ -165,8 +171,9 @@ public class ConfigurationInfo : PropertyChangedBase
             OnPropertyChanged();
         }
     }
-    
+
     private bool _isPowerShellWindowDragging;
+
     public bool IsPowerShellWindowDragging
     {
         get => _isPowerShellWindowDragging;
@@ -181,6 +188,7 @@ public class ConfigurationInfo : PropertyChangedBase
     }
 
     private int _puTTYTabCount;
+
     public int PuTTYTabCount
     {
         get => _puTTYTabCount;
@@ -195,6 +203,7 @@ public class ConfigurationInfo : PropertyChangedBase
     }
 
     private bool _isPuTTYWindowDragging;
+
     public bool IsPuTTYWindowDragging
     {
         get => _isPuTTYWindowDragging;
@@ -209,6 +218,7 @@ public class ConfigurationInfo : PropertyChangedBase
     }
 
     private int _awsSessionManagerTabCount;
+
     public int AWSSessionManagerTabCount
     {
         get => _awsSessionManagerTabCount;
@@ -223,6 +233,7 @@ public class ConfigurationInfo : PropertyChangedBase
     }
 
     private bool _isAWSSessionManagerWindowDragging;
+
     public bool IsAWSSessionManagerWindowDragging
     {
         get => _isAWSSessionManagerWindowDragging;
@@ -237,6 +248,7 @@ public class ConfigurationInfo : PropertyChangedBase
     }
 
     private int _tigerVNCTabCount;
+
     public int TigerVNCTabCount
     {
         get => _tigerVNCTabCount;
@@ -251,6 +263,7 @@ public class ConfigurationInfo : PropertyChangedBase
     }
 
     private bool _isTigerVNCWindowDragging;
+
     public bool IsTigerVNCWindowDragging
     {
         get => _isTigerVNCWindowDragging;
@@ -265,6 +278,7 @@ public class ConfigurationInfo : PropertyChangedBase
     }
 
     private int _webConsoleTabCount;
+
     public int WebConsoleTabCount
     {
         get => _webConsoleTabCount;
@@ -279,6 +293,7 @@ public class ConfigurationInfo : PropertyChangedBase
     }
 
     private bool _isWebConsoleWindowDragging;
+
     public bool IsWebConsoleWindowDragging
     {
         get => _isWebConsoleWindowDragging;
@@ -293,6 +308,7 @@ public class ConfigurationInfo : PropertyChangedBase
     }
 
     private int _snmpTabCount;
+
     public int SNMPTabCount
     {
         get => _snmpTabCount;
@@ -307,6 +323,7 @@ public class ConfigurationInfo : PropertyChangedBase
     }
 
     private int _sntpLookupTabCount;
+
     public int SNTPLookupTabCount
     {
         get => _sntpLookupTabCount;
@@ -321,6 +338,7 @@ public class ConfigurationInfo : PropertyChangedBase
     }
 
     private int _whoisTabCount;
+
     public int WhoisTabCount
     {
         get => _whoisTabCount;
@@ -335,6 +353,7 @@ public class ConfigurationInfo : PropertyChangedBase
     }
 
     private int _ipGeolocationTabCount;
+
     public int IPGeolocationTabCount
     {
         get => _ipGeolocationTabCount;

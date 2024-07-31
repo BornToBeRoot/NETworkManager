@@ -27,8 +27,9 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
     public IInterTabClient InterTabClient { get; }
-    
+
     private string _interTabPartition;
+
     public string InterTabPartition
     {
         get => _interTabPartition;
@@ -41,7 +42,7 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-    
+
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
     private readonly bool _isLoading;
@@ -194,7 +195,8 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
 
         var tabId = Guid.NewGuid();
 
-        TabItems = [
+        TabItems =
+        [
             new DragablzTabItem(Strings.NewTab, new WhoisView(tabId), tabId)
         ];
 
