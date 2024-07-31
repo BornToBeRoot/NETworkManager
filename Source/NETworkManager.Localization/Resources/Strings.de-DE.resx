@@ -59,8 +59,7 @@
               : using a System.ComponentModel.TypeConverter
               : and then encoded with base64 encoding.
       -->
-    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"
-                xmlns="" id="root">
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns="" id="root">
         <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
         <xsd:element name="root" msdata:IsDataSet="true">
             <xsd:complexType>
@@ -3834,5 +3833,21 @@ Versuchen Sie es in einigen Sekunden erneut.</value>
 Öffnen Sie die Windows-Einstellungen und erlauben Sie den Wi-Fi-Zugriff für diese Anwendung.
 
 Starten Sie die Anwendung anschließend neu, um das Feature zu nutzen.</value>
+  </data>
+    <data name="DragDropApplicationsToReorderRightClickForMoreOptions" xml:space="preserve">
+    <value>Mit Drag &amp; Drop können Sie die Anwendungen neu anordnen.
+Rechtsklick für weitere Optionen.</value>
+  </data>
+    <data name="RestoreDefaults" xml:space="preserve">
+    <value>Standards wiederherstellen</value>
+  </data>
+    <data name="Library_GongSolutionsWpfDragDrop_Description" xml:space="preserve">
+    <value>Ein einfach zu bedienendes Drag'n'Drop-Framework für WPF.</value>
+  </data>
+    <data name="License_BDS3Clause" xml:space="preserve">
+    <value>BSD-3-Clause</value>
+  </data>
+    <data name="SetDefault" xml:space="preserve">
+    <value>Standard festlegen</value>
   </data>
 </root>
