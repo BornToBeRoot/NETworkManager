@@ -59,8 +59,7 @@
               : using a System.ComponentModel.TypeConverter
               : and then encoded with base64 encoding.
       -->
-    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"
-                xmlns="" id="root">
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns="" id="root">
         <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
         <xsd:element name="root" msdata:IsDataSet="true">
             <xsd:complexType>
@@ -3833,5 +3832,21 @@ URL: http://ip-api.com/</value>
 打开 Windows 设置，允许此应用程序访问 Wi-Fi。
 
 之后重新启动应用程序即可使用此功能。</value>
+  </data>
+    <data name="DragDropApplicationsToReorderRightClickForMoreOptions" xml:space="preserve">
+    <value>拖放应用程序以重新排序它们。
+右键单击可查看更多选项。</value>
+  </data>
+    <data name="RestoreDefaults" xml:space="preserve">
+    <value>恢复默认</value>
+  </data>
+    <data name="Library_GongSolutionsWpfDragDrop_Description" xml:space="preserve">
+    <value>一个易于使用的 WPF 拖放框架。</value>
+  </data>
+    <data name="License_BDS3Clause" xml:space="preserve">
+    <value>BSD-3-条款</value>
+  </data>
+    <data name="SetDefault" xml:space="preserve">
+    <value>设为默认</value>
   </data>
 </root>
