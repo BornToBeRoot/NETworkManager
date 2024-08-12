@@ -1603,6 +1603,21 @@
     webpack "^5.88.1"
     webpack-merge "^5.9.0"
 
+"@docusaurus/types@3.5.1":
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/@docusaurus/types/-/types-3.5.1.tgz#f9e86fbf8f6e090d635a3016cfa25bf9d5fb6fcf"
+  integrity sha512-IXTGQBoXAGFliGF5Cn3F+gSGskgzAL8+4y6dDY1gcePA0r8WngHj8oovS1YPv+b9JOff32nv8YGGZITHOMXJsA==
+  dependencies:
+    "@mdx-js/mdx" "^3.0.0"
+    "@types/history" "^4.7.11"
+    "@types/react" "*"
+    commander "^5.1.0"
+    joi "^17.9.2"
+    react-helmet-async "^1.3.0"
+    utility-types "^3.10.0"
+    webpack "^5.88.1"
+    webpack-merge "^5.9.0"
+
 "@docusaurus/utils-common@3.4.0":
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/@docusaurus/utils-common/-/utils-common-3.4.0.tgz#2a43fefd35b85ab9fcc6833187e66c15f8bfbbc6"
