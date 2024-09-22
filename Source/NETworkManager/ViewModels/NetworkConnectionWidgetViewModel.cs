@@ -1,43 +1,21 @@
-﻿using System;
+﻿using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Net;
 using System.Net.Http;
-using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using NETworkManager.Models.Network;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
 using NetworkInterface = NETworkManager.Models.Network.NetworkInterface;
 
 namespace NETworkManager.ViewModels;
 
 public class NetworkConnectionWidgetViewModel : ViewModelBase
 {
-    #region Events
-
-    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-        switch (e.PropertyName)
-        {
-            case nameof(SettingsInfo.Dashboard_CheckPublicIPAddress):
-                OnPropertyChanged(nameof(CheckPublicIPAddressEnabled));
-
-                // Check connection if enabled via settings
-                if (CheckPublicIPAddressEnabled)
-                    CheckConnection();
-
-                break;
-        }
-    }
-
-    #endregion
-
     #region Variables
-
     private bool _isChecking;
 
     #region Computer
@@ -465,14 +443,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
 
     public NetworkConnectionWidgetViewModel()
     {
-        // Detect if network address or status changed...
-        NetworkChange.NetworkAvailabilityChanged += (_, _) => CheckConnection();
-        NetworkChange.NetworkAddressChanged += (_, _) => CheckConnection();
-
         LoadSettings();
-
-        // Detect if settings have changed...
-        SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
     }
 
     private void LoadSettings()
@@ -483,26 +454,26 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
 
     #region ICommands & Actions
 
-    public ICommand CheckConnectionViaHotkeyCommand => new RelayCommand(_ => CheckConnectionViaHotkeyAction());
+    public ICommand CheckViaHotkeyCommand => new RelayCommand(_ => CheckViaHotkeyAction());
 
-    private void CheckConnectionViaHotkeyAction()
+    private void CheckViaHotkeyAction()
     {
-        CheckConnection();
+        Check();
     }
 
     #endregion
 
     #region Methods
 
-    public void CheckConnection()
+    public void Check()
     {
-        CheckConnectionAsync().ConfigureAwait(false);
+        CheckAsync().ConfigureAwait(false);
     }
 
     private CancellationTokenSource _tokenSource;
     private CancellationToken _ct;
 
-    private async Task CheckConnectionAsync()
+    private async Task CheckAsync()
     {
         // Already in queue
         if (_tokenSource is { IsCancellationRequested: true })
@@ -538,6 +509,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         }
         catch (OperationCanceledException)
         {
+
         }
         finally
         {
@@ -877,4 +849,5 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     #endregion
+
 }

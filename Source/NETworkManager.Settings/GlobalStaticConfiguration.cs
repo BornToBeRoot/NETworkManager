@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using DnsClient;
+﻿using DnsClient;
 using Lextm.SharpSnmpLib.Messaging;
 using NETworkManager.Models;
 using NETworkManager.Models.Export;
@@ -10,6 +7,9 @@ using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Utilities;
+using System;
+using System.IO;
+using System.Linq;
 
 // ReSharper disable InconsistentNaming
 
@@ -22,8 +22,8 @@ public static class GlobalStaticConfiguration
     // Type to search (average type speed --> 187 chars/min)
     public static TimeSpan SearchDispatcherTimerTimeSpan => new(0, 0, 0, 0, 750);
 
-    // Status window delay in ms
-    public static int StatusWindowDelayBeforeOpen => 5000;
+    // Network config
+    public static int NetworkChangeDetectionDelay => 5000;
 
     // Profile config
     public static bool Profile_ExpandProfileView => true;

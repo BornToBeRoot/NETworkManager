@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using NETworkManager.ViewModels;
+﻿using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
@@ -13,13 +12,8 @@ public partial class NetworkConnectionWidgetView
         DataContext = _viewModel;
     }
 
-    public void Reload()
+    public void Check()
     {
-        _viewModel.CheckConnection();
-    }
-
-    private void UserControl_Loaded(object sender, RoutedEventArgs e)
-    {
-        _viewModel.CheckConnection();
+        _viewModel.Check();
     }
 }

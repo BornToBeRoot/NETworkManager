@@ -6,6 +6,8 @@ public partial class DashboardView
 {
     private readonly DashboardViewModel _viewModel = new();
 
+
+
     public DashboardView()
     {
         InitializeComponent();
