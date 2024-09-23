@@ -58,7 +58,7 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="AirspaceFixer" Version="1.0.6"/>
-        <PackageReference Include="AWSSDK.EC2" Version="3.7.405.8"/>
+        <PackageReference Include="AWSSDK.EC2" Version="3.7.405.10"/>
         <PackageReference Include="DnsClient" Version="1.8.0"/>
         <PackageReference Include="gong-wpf-dragdrop" Version="3.2.1"/>
         <PackageReference Include="IPNetwork2" Version="3.0.667"/>
