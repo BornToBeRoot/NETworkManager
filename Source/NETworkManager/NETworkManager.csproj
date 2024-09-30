@@ -65,7 +65,7 @@
         <PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.3"/>
         <PackageReference Include="LiveCharts.Wpf" Version="0.9.7"/>
         <PackageReference Include="LoadingIndicators.WPF" Version="0.0.1"/>
-        <PackageReference Include="log4net" Version="3.0.0"/>
+        <PackageReference Include="log4net" Version="3.0.1"/>
         <PackageReference Include="MahApps.Metro" Version="2.4.10"/>
         <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="5.0.0"/>
         <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="5.0.0"/>
