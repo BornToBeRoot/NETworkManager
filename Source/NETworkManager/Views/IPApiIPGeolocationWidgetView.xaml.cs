@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using NETworkManager.ViewModels;
+﻿using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
@@ -13,7 +12,7 @@ public partial class IPApiIPGeolocationWidgetView
         DataContext = _viewModel;
     }
 
-    private void UserControl_Loaded(object sender, RoutedEventArgs e)
+    public void Check()
     {
         _viewModel.Check();
     }

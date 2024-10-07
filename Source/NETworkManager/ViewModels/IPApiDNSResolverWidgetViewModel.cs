@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using System.Net.NetworkInformation;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows.Input;
 using NETworkManager.Models.IPApi;
 using NETworkManager.Settings;
@@ -10,23 +8,6 @@ namespace NETworkManager.ViewModels;
 
 public class IPApiDNSResolverWidgetViewModel : ViewModelBase
 {
-    #region Events
-
-    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-        switch (e.PropertyName)
-        {
-            case nameof(SettingsInfo.Dashboard_CheckIPApiDNSResolver):
-                // Check if enabled via settings
-                if (SettingsManager.Current.Dashboard_CheckIPApiDNSResolver)
-                    Check();
-
-                break;
-        }
-    }
-
-    #endregion
-
     #region Variables
 
     private bool _isRunning;
@@ -65,18 +46,12 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
 
     public IPApiDNSResolverWidgetViewModel()
     {
-        // Detect if network address or status changed...
-        NetworkChange.NetworkAvailabilityChanged += (_, _) => Check();
-        NetworkChange.NetworkAddressChanged += (_, _) => Check();
-
         LoadSettings();
-
-        // Detect if settings have changed...
-        SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
     }
 
     private void LoadSettings()
     {
+        
     }
 
     #endregion

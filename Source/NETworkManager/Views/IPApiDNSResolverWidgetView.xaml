@@ -11,7 +11,7 @@
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" MinHeight="200"
-             d:DataContext="{d:DesignInstance viewModels:IPApiDNSResolverWidgetViewModel}" Loaded="UserControl_Loaded">
+             d:DataContext="{d:DesignInstance viewModels:IPApiDNSResolverWidgetViewModel}">
     <UserControl.InputBindings>
         <KeyBinding Key="F5" Command="{Binding CheckViaHotkeyCommand}" />
     </UserControl.InputBindings>

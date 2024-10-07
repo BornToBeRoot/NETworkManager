@@ -11,8 +11,7 @@
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" MinHeight="200"
-             d:DataContext="{d:DesignInstance viewModels:IPApiIPGeolocationWidgetViewModel}"
-             Loaded="UserControl_Loaded">
+             d:DataContext="{d:DesignInstance viewModels:IPApiIPGeolocationWidgetViewModel}">
     <UserControl.InputBindings>
         <KeyBinding Key="F5" Command="{Binding CheckViaHotkeyCommand}" />
     </UserControl.InputBindings>
