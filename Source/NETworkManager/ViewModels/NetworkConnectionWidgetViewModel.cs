@@ -2,13 +2,13 @@
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using log4net;
 using NetworkInterface = NETworkManager.Models.Network.NetworkInterface;
 
 namespace NETworkManager.ViewModels;
@@ -16,6 +16,7 @@ namespace NETworkManager.ViewModels;
 public class NetworkConnectionWidgetViewModel : ViewModelBase
 {
     #region Variables
+    private static readonly ILog Log = LogManager.GetLogger(typeof(NetworkConnectionWidgetViewModel));
     private bool _isChecking;
 
     #region Computer
@@ -537,9 +538,11 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             IsComputerIPv4Checking = true;
             ComputerIPv4 = "";
             ComputerIPv4State = ConnectionState.None;
+            
             IsComputerIPv6Checking = true;
             ComputerIPv6 = "";
             ComputerIPv6State = ConnectionState.None;
+            
             IsComputerDNSChecking = true;
             ComputerDNS = "";
             ComputerDNSState = ConnectionState.None;
