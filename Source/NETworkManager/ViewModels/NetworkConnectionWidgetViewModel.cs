@@ -472,52 +472,63 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
 
     private CancellationTokenSource _tokenSource;
     private CancellationToken _ct;
+    private Task _checkTask = Task.CompletedTask;
 
     private async Task CheckAsync()
     {
-        // Already in queue
-        if (_tokenSource is { IsCancellationRequested: true })
+        // Return if cancellation is already requested
+        if(_tokenSource is { IsCancellationRequested: true })
             return;
-
-        // Cancel if running
+        
+        // Cancel previous checks if running
         if (_isChecking)
-        {
-            _tokenSource.Cancel();
+        { 
+            await _tokenSource.CancelAsync();
 
-            while (_isChecking) await Task.Delay(250, _ct);
+            try
+            {
+                await _checkTask;
+            }
+            catch(OperationCanceledException)
+            {
+                // Handle task cancellation
+            }
+            finally
+            {
+                _tokenSource.Dispose();
+            }
         }
-
+        
         // Start check
         _isChecking = true;
-
         _tokenSource = new CancellationTokenSource();
         _ct = _tokenSource.Token;
-
+        
+        // Run tasks
         try
         {
-            await Task.Run(async () =>
-            {
-                List<Task> tasks = new()
-                {
-                    CheckConnectionComputerAsync(_ct),
-                    CheckConnectionRouterAsync(_ct),
-                    CheckConnectionInternetAsync(_ct)
-                };
-
-                await Task.WhenAll(tasks);
-            }, _tokenSource.Token);
+            _checkTask = RunTasks(_ct);
+            await _checkTask;
         }
-        catch (OperationCanceledException)
+        catch(OperationCanceledException)
         {
-
+            // Handle task cancellation
         }
         finally
         {
-            _tokenSource.Dispose();
             _isChecking = false;
         }
     }
-
+    
+    private async Task RunTasks(CancellationToken ct)
+    {
+        await Task.WhenAll(
+            CheckConnectionComputerAsync(ct),
+            CheckConnectionRouterAsync(ct),
+            CheckConnectionInternetAsync(ct)
+        );
+    }
+    
     private Task CheckConnectionComputerAsync(CancellationToken ct)
     {
         return Task.Run(async () =>
@@ -847,7 +858,6 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             IsInternetDNSChecking = false;
         }, ct);
     }
-
     #endregion
 
 }

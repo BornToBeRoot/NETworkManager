@@ -6,7 +6,10 @@ public partial class DashboardView
 {
     private readonly DashboardViewModel _viewModel = new();
 
-
+    private readonly NetworkConnectionWidgetView _networkConnectionWidgetView = new();
+    private readonly IPApiIPGeolocationWidgetView _ipApiIPGeolocationWidgetView = new();
+    private readonly IPApiDNSResolverWidgetView _ipApiDNSResolverWidgetView = new();
+    
 
     public DashboardView()
     {
@@ -14,18 +17,34 @@ public partial class DashboardView
         DataContext = _viewModel;
 
         // Load views
-        ContentControlNetworkConnection.Content = new NetworkConnectionWidgetView();
-        ContentControlIPApiIPGeolocation.Content = new IPApiIPGeolocationWidgetView();
-        ContentControlIPApiDNSResolver.Content = new IPApiDNSResolverWidgetView();
+        ContentControlNetworkConnection.Content = _networkConnectionWidgetView;
+        ContentControlIPApiIPGeolocation.Content = _ipApiIPGeolocationWidgetView;
+        ContentControlIPApiDNSResolver.Content = _ipApiDNSResolverWidgetView;
+        
+        // Check all widgets
+        Check();
+    }
+    
+    public void OnViewVisible()
+    {
+        _viewModel.OnViewVisible();
+        
+        // Check all widgets
+        Check();
     }
 
     public void OnViewHide()
     {
         _viewModel.OnViewHide();
     }
-
-    public void OnViewVisible()
+    
+    /// <summary>
+    /// Check all widgets
+    /// </summary>
+    private void Check()
     {
-        _viewModel.OnViewVisible();
+        _networkConnectionWidgetView.Check();
+        _ipApiIPGeolocationWidgetView.Check();
+        _ipApiDNSResolverWidgetView.Check();
     }
 }
