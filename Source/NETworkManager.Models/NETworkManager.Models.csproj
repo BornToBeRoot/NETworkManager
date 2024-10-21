@@ -36,7 +36,7 @@
         <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="5.0.0"/>
         <PackageReference Include="MahApps.Metro.IconPacks.MaterialLight" Version="5.0.0"/>
         <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="5.0.0"/>
-        <PackageReference Include="MahApps.Metro.IconPacks.Octicons" Version="5.0.0"/>
+        <PackageReference Include="MahApps.Metro.IconPacks.Octicons" Version="5.0.1"/>
         <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2792.45"/>
         <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.5"/>
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
