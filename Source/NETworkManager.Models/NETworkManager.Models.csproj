@@ -40,7 +40,7 @@
         <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2792.45"/>
         <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.6"/>
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
-        <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.4.5"/>
+        <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.4.6"/>
     </ItemGroup>
 
     <ItemGroup>
