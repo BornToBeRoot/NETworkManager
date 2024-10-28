@@ -62,7 +62,7 @@
         <PackageReference Include="DnsClient" Version="1.8.0"/>
         <PackageReference Include="gong-wpf-dragdrop" Version="3.2.1"/>
         <PackageReference Include="IPNetwork2" Version="3.0.667"/>
-        <PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.3"/>
+        <PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.5"/>
         <PackageReference Include="LiveCharts.Wpf" Version="0.9.7"/>
         <PackageReference Include="LoadingIndicators.WPF" Version="0.0.1"/>
         <PackageReference Include="log4net" Version="3.0.1"/>

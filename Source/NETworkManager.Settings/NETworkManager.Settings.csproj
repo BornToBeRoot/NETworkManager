@@ -45,7 +45,7 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="DnsClient" Version="1.8.0"/>
-        <PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.3"/>
+        <PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.5"/>
         <PackageReference Include="log4net" Version="3.0.1"/>
         <PackageReference Include="MahApps.Metro" Version="2.4.10"/>
         <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="5.0.1"/>
