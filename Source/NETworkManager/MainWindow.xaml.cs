@@ -70,7 +70,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             // Update DNS server if changed in the settings
             case nameof(SettingsInfo.Network_UseCustomDNSServer):
             case nameof(SettingsInfo.Network_CustomDNSServer):
-                ConfigureDNS();
+                ConfigureDNSServer();
 
                 break;
 
@@ -466,8 +466,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         // Load and change appearance
         AppearanceManager.Load();
 
-        // Load and configure DNS
-        ConfigureDNS();
+        // Load and configure DNS server
+        ConfigureDNSServer();
 
         // Set window title
         Title = $"NETworkManager {AssemblyManager.Current.Version}";
@@ -1542,7 +1542,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     private void CheckForUpdates()
     {
         var updater = new Updater();
+        
         updater.UpdateAvailable += Updater_UpdateAvailable;
+        
         updater.CheckOnGitHub(Properties.Resources.NETworkManager_GitHub_User,
             Properties.Resources.NETworkManager_GitHub_Repo, AssemblyManager.Current.Version,
             SettingsManager.Current.Update_CheckForPreReleases);
@@ -1873,9 +1875,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         Activate();
     }
 
-    private void ConfigureDNS()
+    private void ConfigureDNSServer()
     {
-        Log.Info("Configure application DNS...");
+        Log.Info("Configure application DNS servers...");
 
         DNSClientSettings dnsSettings = new();
 
@@ -1885,10 +1887,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             {
                 Log.Info($"Use custom DNS servers ({SettingsManager.Current.Network_CustomDNSServer})...");
 
-                List<(string Server, int Port)> dnsServers = new();
-
-                foreach (var dnsServer in SettingsManager.Current.Network_CustomDNSServer.Split(";"))
-                    dnsServers.Add((dnsServer, 53));
+                List<(string Server, int Port)> dnsServers = SettingsManager.Current.Network_CustomDNSServer.Split(";")
+                    .Select(dnsServer => (dnsServer, 53))
+                    .ToList();
 
                 dnsSettings.UseCustomDNSServers = true;
                 dnsSettings.DNSServers = dnsServers;
@@ -1896,22 +1897,15 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             else
             {
                 Log.Info(
-                    $"Custom DNS servers could not be set (Setting \"{nameof(SettingsManager.Current.Network_CustomDNSServer)}\" has value \"{SettingsManager.Current.Network_CustomDNSServer}\")! Fallback to Windows DNS servers...");
+                    $"Custom DNS servers could not be set (Setting \"{nameof(SettingsManager.Current.Network_CustomDNSServer)}\" has value \"{SettingsManager.Current.Network_CustomDNSServer}\")! Fallback to Windows default DNS servers...");
             }
         }
         else
         {
-            Log.Info("Use Windows DNS servers...");
+            Log.Info("Use Windows default DNS servers...");
         }
 
         DNSClient.GetInstance().Configure(dnsSettings);
-    }
-
-    private void UpdateDNS()
-    {
-        Log.Info("Update Windows DNS servers...");
-
-        DNSClient.GetInstance().UpdateFromWindows();
     }
 
     private void WriteDefaultPowerShellProfileToRegistry()
@@ -1919,7 +1913,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         if (!SettingsManager.Current.Appearance_PowerShellModifyGlobalProfile)
             return;
 
-        HashSet<string> paths = new();
+        HashSet<string> paths = [];
 
         // PowerShell
         if (!string.IsNullOrEmpty(SettingsManager.Current.PowerShell_ApplicationFilePath) &&
@@ -1958,12 +1952,20 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         // Update DNS server if network changed
         if (!SettingsManager.Current.Network_UseCustomDNSServer)
-            UpdateDNS();
+        {
+            Log.Info("Update Windows default DNS servers...");
+            DNSClient.GetInstance().UpdateWindowsDNSSever();
+        }
 
         // Show status window on network change
         if (SettingsManager.Current.Status_ShowWindowOnNetworkChange)
-            await Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate { OpenStatusWindow(true); }));
-
+        {
+            await Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            {
+                OpenStatusWindow(true);
+            }));
+        }
+    
         _isNetworkChanging = false;
     }
 

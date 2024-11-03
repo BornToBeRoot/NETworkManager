@@ -1,13 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using DnsClient;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using DnsClient;
+using log4net;
 
 namespace NETworkManager.Utilities;
 
 public class DNSClient : SingletonBase<DNSClient>
 {
+    private static readonly ILog Log = LogManager.GetLogger(typeof(DNSClient));
+    
     /// <summary>
     ///     Error message which is returned when the DNS client is not configured.
     /// </summary>
@@ -36,21 +40,31 @@ public class DNSClient : SingletonBase<DNSClient>
     {
         _settings = settings;
 
+        Log.Debug("Configuring DNS client...");
+        
         if (_settings.UseCustomDNSServers)
         {
+            Log.Debug("Using custom DNS servers...");
+            
             // Setup custom DNS servers
-            List<NameServer> servers = new();
+            List<NameServer> servers = [];
 
             foreach (var (server, port) in _settings.DNSServers)
+            {
+                Log.Debug($"Adding custom DNS server: {server}:{port}");
                 servers.Add(new IPEndPoint(IPAddress.Parse(server), port));
+            }
 
+            Log.Debug("Creating LookupClient with custom DNS servers...");
             _client = new LookupClient(new LookupClientOptions(servers.ToArray()));
         }
         else
         {
-            UpdateFromWindows();
+            Log.Debug("Creating LookupClient with Windows default DNS servers...");
+            _client = new LookupClient();
         }
-
+        
+        Log.Debug("DNS client configured.");
         _isConfigured = true;
     }
 
@@ -58,12 +72,9 @@ public class DNSClient : SingletonBase<DNSClient>
     ///     Method to update the (Windows) name servers of the DNS client
     ///     when they may have changed due to a network update.
     /// </summary>
-    public void UpdateFromWindows()
+    public void UpdateWindowsDNSSever()
     {
-        // Default (Windows) settings
-        if (_settings.UseCustomDNSServers)
-            return;
-
+        Log.Debug("Recreating LookupClient with with Windows default DNS servers...");
         _client = new LookupClient();
     }
 
@@ -96,6 +107,11 @@ public class DNSClient : SingletonBase<DNSClient>
         }
         catch (DnsResponseException ex)
         {
+            return new DNSClientResultIPAddress(true, ex.Message);
+        }
+        catch (Exception ex)
+        {
+            Log.Error($"Error while resolving A record (Query string is \"{query}\".", ex);
             return new DNSClientResultIPAddress(true, ex.Message);
         }
     }
@@ -131,6 +147,11 @@ public class DNSClient : SingletonBase<DNSClient>
         {
             return new DNSClientResultIPAddress(true, ex.Message);
         }
+        catch (Exception ex)
+        {
+            Log.Error($"Error while resolving AAAA record (Query string is \"{query}\".", ex);
+            return new DNSClientResultIPAddress(true, ex.Message);
+        }
     }
 
     /// <summary>
@@ -164,6 +185,11 @@ public class DNSClient : SingletonBase<DNSClient>
         {
             return new DNSClientResultString(true, ex.Message);
         }
+        catch (Exception ex)
+        {
+            Log.Error($"Error while resolving CNAME record (Query string is \"{query}\".", ex);
+            return new DNSClientResultString(true, ex.Message);
+        }
     }
 
     /// <summary>
@@ -195,6 +221,11 @@ public class DNSClient : SingletonBase<DNSClient>
         }
         catch (DnsResponseException ex)
         {
+            return new DNSClientResultString(true, ex.Message);
+        }
+        catch (Exception ex)
+        {
+            Log.Error($"Error while resolving PTR record (IP address is \"{ipAddress}\".", ex);
             return new DNSClientResultString(true, ex.Message);
         }
     }
