@@ -10,7 +10,7 @@ namespace NETworkManager.Models.Network;
 
 public sealed class Ping
 {
-    #region Varaibles
+    #region Variables
 
     public int WaitTime = 1000;
     public int Timeout = 4000;
