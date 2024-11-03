@@ -17,7 +17,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
 {
     #region Variables
     private static readonly ILog Log = LogManager.GetLogger(typeof(NetworkConnectionWidgetViewModel));
-    private bool _isChecking;
+
 
     #region Computer
 
@@ -471,57 +471,59 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         CheckAsync().ConfigureAwait(false);
     }
 
-    private CancellationTokenSource _tokenSource;
-    private CancellationToken _ct;
+    private bool _isChecking;
+    private CancellationTokenSource _cancellationTokenSource;
     private Task _checkTask = Task.CompletedTask;
-
+    
     private async Task CheckAsync()
     {
-        // Return if cancellation is already requested
-        if(_tokenSource is { IsCancellationRequested: true })
-            return;
+        Log.Info("Checking network connection...");
         
         // Cancel previous checks if running
-        if (_isChecking)
-        { 
-            await _tokenSource.CancelAsync();
-
+        if(!_checkTask.IsCompleted)
+        {
+            Log.Info("Cancelling previous checks...");
+            await _cancellationTokenSource.CancelAsync();
+            
             try
             {
                 await _checkTask;
             }
             catch(OperationCanceledException)
             {
-                // Handle task cancellation
+                Log.Info("Task was cancelled from previous checks.");
             }
             finally
             {
-                _tokenSource.Dispose();
+                _cancellationTokenSource.Dispose();
             }
         }
         
-        // Start check
         _isChecking = true;
-        _tokenSource = new CancellationTokenSource();
-        _ct = _tokenSource.Token;
-        
-        // Run tasks
+        _cancellationTokenSource = new CancellationTokenSource();
+        bool wasCanceled = false;
+
         try
         {
-            _checkTask = RunTasks(_ct);
+            _checkTask = RunTask(_cancellationTokenSource.Token);
             await _checkTask;
         }
-        catch(OperationCanceledException)
+        catch (OperationCanceledException)
         {
-            // Handle task cancellation
+            wasCanceled = true;
+            Log.Info("Task was cancelled from current checks.");
         }
         finally
         {
-            _isChecking = false;
+            if (!wasCanceled)
+            {
+                _isChecking = false;
+                Log.Info("Network connection check completed.");
+            }
         }
     }
     
-    private async Task RunTasks(CancellationToken ct)
+    private async Task RunTask(CancellationToken ct)
     {
         await Task.WhenAll(
             CheckConnectionComputerAsync(ct),
@@ -862,5 +864,4 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         }, ct);
     }
     #endregion
-
 }
