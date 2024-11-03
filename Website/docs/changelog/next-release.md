@@ -30,6 +30,9 @@ Release date: **xx.xx.2024**
 
 ## Bugfixes
 
+- **Ping Monitor**
+  - A problem has been fixed where the ping does not start if the DNS server is not configured. This can occur if the network interface via which the Windows DNS server was configured is deactivated/disconnected. [#2876](https://github.com/BornToBeRoot/NETworkManager/pull/2876)
+
 - TextBox content not centered because of ScrollViewer issue. [#2763](https://github.com/BornToBeRoot/NETworkManager/pull/2763)
 
 ## Dependencies, Refactoring & Documentation
