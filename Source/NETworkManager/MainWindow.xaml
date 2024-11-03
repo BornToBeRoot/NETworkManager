@@ -237,7 +237,7 @@
         <mah:FlyoutsControl>
             <mah:Flyout IsKeyboardFocusWithinChanged="FlyoutRunCommand_IsKeyboardFocusWithinChanged"
                         IsOpen="{Binding FlyoutRunCommandIsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        AreAnimationsEnabled="{Binding FlyoutRunCommandAreAnimationsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        AreAnimationsEnabled="False"
                         Visibility="{Binding FlyoutRunCommandIsOpen, Converter={StaticResource BooleanToVisibilityConverter}}"
                         Position="Top"
                         TitleVisibility="Collapsed"
