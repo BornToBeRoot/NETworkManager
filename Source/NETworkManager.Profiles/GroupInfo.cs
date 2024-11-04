@@ -19,7 +19,7 @@ public class GroupInfo
     /// </summary>
     public GroupInfo()
     {
-        Profiles = new List<ProfileInfo>();
+        Profiles = [];
     }
 
     /// <summary>
@@ -35,6 +35,10 @@ public class GroupInfo
     /// </summary>
     public GroupInfo(GroupInfo group) : this(group.Name)
     {
+        // General
+        Description = group.Description;
+        
+        // Profiles
         Profiles = group.Profiles;
 
         // Remote Desktop
@@ -164,6 +168,11 @@ public class GroupInfo
     ///     Name of the group.
     /// </summary>
     public string Name { get; set; }
+    
+    /// <summary>
+    ///    Description of the group.
+    /// </summary>
+    public string Description { get; set; }
 
     [XmlIgnore] public bool IsDynamic { get; set; }
 

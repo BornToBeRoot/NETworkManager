@@ -31,6 +31,7 @@ public class ProfileInfo
     {
         Name = profile.Name;
         Host = profile.Host;
+        Description = profile.Description;
         Group = profile.Group;
         Tags = profile.Tags;
 
@@ -249,10 +250,15 @@ public class ProfileInfo
     public string Host { get; set; }
 
     /// <summary>
+    ///     Description of the profile.
+    /// </summary>
+    public string Description { get; set; }
+    
+    /// <summary>
     ///     Name of the group. Profiles are grouped based on the name.
     /// </summary>
     public string Group { get; set; }
-
+    
     /// <summary>
     ///     Tags to classify the profiles and to filter by it.
     /// </summary>

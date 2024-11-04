@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security;
-using System.Threading.Tasks;
-using System.Windows;
-using MahApps.Metro.Controls.Dialogs;
+﻿using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.Network;
@@ -12,6 +7,11 @@ using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Profiles;
 using NETworkManager.ViewModels;
 using NETworkManager.Views;
+using System;
+using System.Collections.Generic;
+using System.Security;
+using System.Threading.Tasks;
+using System.Windows;
 
 namespace NETworkManager;
 
@@ -31,6 +31,7 @@ public static class ProfileDialogManager
         {
             Name = instance.Name.Trim(),
             Host = instance.Host.Trim(),
+            Description = instance.Description?.Trim(),
             Group = instance.Group.Trim(),
             Tags = instance.Tags?.Trim(),
 
@@ -304,7 +305,8 @@ public static class ProfileDialogManager
         return new GroupInfo
         {
             Name = name,
-
+            Description = instance.Description?.Trim(),
+            
             Profiles = profiles,
 
             // Remote Desktop

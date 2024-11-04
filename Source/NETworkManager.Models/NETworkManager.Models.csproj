@@ -26,14 +26,14 @@
         <EmbeddedResource Include="Resources\PSDiscoveryProtocol.psm1"/>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="AWSSDK.Core" Version="3.7.400.33"/>
+        <PackageReference Include="AWSSDK.Core" Version="3.7.400.45"/>
         <PackageReference Include="DnsClient" Version="1.8.0"/>
         <PackageReference Include="IPNetwork2" Version="3.0.667"/>
         <PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.5"/>
         <PackageReference Include="log4net" Version="3.0.2"/>
         <PackageReference Include="MahApps.Metro" Version="2.4.10"/>
         <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="5.1.0"/>
-        <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="5.0.1"/>
+        <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="5.1.0"/>
         <PackageReference Include="MahApps.Metro.IconPacks.MaterialLight" Version="5.1.0"/>
         <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="5.1.0"/>
         <PackageReference Include="MahApps.Metro.IconPacks.Octicons" Version="5.1.0"/>

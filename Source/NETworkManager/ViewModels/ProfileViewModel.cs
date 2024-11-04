@@ -22,6 +22,7 @@ namespace NETworkManager.ViewModels;
 
 public class ProfileViewModel : ViewModelBase
 {
+    #region Constructor
     public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler,
         IReadOnlyCollection<string> groups, string group = null, ProfileEditMode editMode = ProfileEditMode.Add,
         ProfileInfo profile = null, ApplicationName applicationName = ApplicationName.None)
@@ -43,16 +44,18 @@ public class ProfileViewModel : ViewModelBase
 
         Host = profileInfo.Host;
 
+        Description = profileInfo.Description;
+        
         // Try to get group (name) as parameter, then from profile, then the first in the list of groups, then the default group            
         Group = group ?? (string.IsNullOrEmpty(profileInfo.Group)
             ? groups.Count > 0 ? groups.OrderBy(x => x).First() : Strings.Default
             : profileInfo.Group);
-
-        Tags = profileInfo.Tags;
-
+        
         Groups = CollectionViewSource.GetDefaultView(groups);
         Groups.SortDescriptions.Add(new SortDescription());
 
+        Tags = profileInfo.Tags;
+        
         // Network Interface
         NetworkInterface_Enabled = editMode == ProfileEditMode.Add
             ? applicationName == ApplicationName.NetworkInterface
@@ -331,6 +334,8 @@ public class ProfileViewModel : ViewModelBase
         _isLoading = false;
     }
 
+    #endregion
+    
     #region Methods
 
     private void ChangeNetworkConnectionTypeSettings(NetworkConnectionType connectionSpeed)
@@ -446,6 +451,21 @@ public class ProfileViewModel : ViewModelBase
                 return;
 
             _showCouldNotResolveHostnameWarning = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    private string _description;
+
+    public string Description
+    {
+        get => _description;
+        set
+        {
+            if (value == _description)
+                return;
+
+            _description = value;
             OnPropertyChanged();
         }
     }

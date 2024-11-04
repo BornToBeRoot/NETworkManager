@@ -227,7 +227,7 @@
     <data name="ExamplePortScanRange" xml:space="preserve">
     <value>22; 80; 443; 500 - 999; 8080</value>
   </data>
-    <data name="ExampleRemoteDesktopProfileName" xml:space="preserve">
+    <data name="ExampleProfileName" xml:space="preserve">
     <value>Webserver</value>
   </data>
     <data name="ExampleSerialLine" xml:space="preserve">

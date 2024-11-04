@@ -12,6 +12,7 @@
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
+             xmlns:profiles="clr-namespace:NETworkManager.Profiles;assembly=NETworkManager.Profiles"
              dialogs:DialogParticipation.Register="{Binding}"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:WakeOnLANViewModel}">
     <UserControl.Resources>
@@ -229,10 +230,10 @@
                     </Grid>
                     <ListBox Grid.Column="0" Grid.Row="2" ItemsSource="{Binding Profiles}"
                              Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
-                             DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}"
+                             SelectedItem="{Binding SelectedProfile}"
                              Style="{StaticResource ProfileListBox}">
                         <ListBox.Resources>
-                            <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                            <ContextMenu x:Key="ProfileContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                                 <MenuItem Header="{x:Static localization:Strings.WakeUp}"
                                           Command="{Binding WakeUpProfileCommand}">
                                     <MenuItem.Icon>
@@ -279,10 +280,6 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
                             </ContextMenu>
-                            <Style TargetType="{x:Type ListBoxItem}"
-                                   BasedOn="{StaticResource MahApps.Styles.ListBoxItem}">
-                                <Setter Property="ContextMenu" Value="{StaticResource ListBoxItemContextMenu}" />
-                            </Style>
                         </ListBox.Resources>
                         <ListBox.InputBindings>
                             <KeyBinding Command="{Binding EditProfileCommand}" Key="F2" />
@@ -304,7 +301,7 @@
                                                                     <ColumnDefinition Width="10" />
                                                                     <ColumnDefinition Width="Auto" />
                                                                 </Grid.ColumnDefinitions>
-                                                                <Rectangle Grid.Column="0" Grid.ColumnSpan="4"
+                                                                <Rectangle Grid.Column="0" Grid.ColumnSpan="3"
                                                                            Fill="Transparent" />
                                                                 <TextBlock Grid.Column="0"
                                                                            Text="{Binding (CollectionViewGroup.Name)}"
@@ -347,6 +344,30 @@
                                 </GroupStyle.ContainerStyle>
                             </GroupStyle>
                         </ListBox.GroupStyle>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type TypeName=ListBoxItem}"
+                                   BasedOn="{StaticResource ResourceKey=MahApps.Styles.ListBoxItem}">
+                                <Setter Property="ContextMenu" Value="{StaticResource ResourceKey=ProfileContextMenu}" />
+                                <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type profiles:ProfileInfo}">
+                                <Grid Background="Transparent">
+                                    <Grid.ToolTip>
+                                        <ToolTip MinWidth="250">
+                                            <StackPanel Margin="10">
+                                                <TextBlock Text="{Binding WakeOnLAN_MACAddress}" Style="{StaticResource DefaultTextBlock}" />
+                                                <Separator Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,10" />
+                                                <TextBlock Text="{Binding Description}" Style="{StaticResource InfoTextBlock}" TextWrapping="Wrap" />
+                                            </StackPanel>
+                                        </ToolTip>                                        
+                                    </Grid.ToolTip>
+                                    <TextBlock Text="{Binding Name}" Style="{StaticResource CenterTextBlock}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
                     </ListBox>
                     <mah:ProgressRing Grid.Row="2" Height="50" Width="50" IsActive="{Binding IsSearching}" />
                     <Grid Grid.Row="2" VerticalAlignment="Center">

@@ -58,7 +58,7 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="AirspaceFixer" Version="1.0.6"/>
-        <PackageReference Include="AWSSDK.EC2" Version="3.7.410"/>
+        <PackageReference Include="AWSSDK.EC2" Version="3.7.414.2"/>
         <PackageReference Include="DnsClient" Version="1.8.0"/>
         <PackageReference Include="gong-wpf-dragdrop" Version="3.2.1"/>
         <PackageReference Include="IPNetwork2" Version="3.0.667"/>
@@ -68,7 +68,7 @@
         <PackageReference Include="log4net" Version="3.0.2"/>
         <PackageReference Include="MahApps.Metro" Version="2.4.10"/>
         <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="5.1.0"/>
-        <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="5.0.1"/>
+        <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="5.1.0"/>
         <PackageReference Include="MahApps.Metro.IconPacks.MaterialLight" Version="5.1.0"/>
         <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="5.1.0"/>
         <PackageReference Include="MahApps.Metro.IconPacks.Octicons" Version="5.1.0"/>

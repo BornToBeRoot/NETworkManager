@@ -3850,4 +3850,10 @@ Clique direito para mais opções.</value>
     <data name="SetDefault" xml:space="preserve">
     <value>Definir padrão</value>
   </data>
+    <data name="ExampleProfileDescription" xml:space="preserve">
+      <value>Ubuntu Server rodando Docker com Nextcloud e Traefik...</value>
+    </data>
+    <data name="ExampleGroupDescription" xml:space="preserve">
+      <value>Servidores Linux rodando em AWS...</value>
+    </data>
 </root>

@@ -501,6 +501,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Webserver.
+        /// </summary>
+        public static string ExampleProfileName {
+            get {
+                return ResourceManager.GetString("ExampleProfileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to https://api.ipify.org.
         /// </summary>
         public static string ExamplePublicIPv4AddressAPI {
@@ -533,15 +542,6 @@ namespace NETworkManager.Localization.Resources {
         public static string ExamplePuTTYProfile {
             get {
                 return ResourceManager.GetString("ExamplePuTTYProfile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Webserver.
-        /// </summary>
-        public static string ExampleRemoteDesktopProfileName {
-            get {
-                return ResourceManager.GetString("ExampleRemoteDesktopProfileName", resourceCulture);
             }
         }
         
