@@ -3945,4 +3945,10 @@ Clic con il tasto destro per ulteriori opzioni.</value>
     <data name="SetDefault" xml:space="preserve">
     <value>Imposta predefinito</value>
   </data>
+    <data name="ExampleProfileDescription" xml:space="preserve">
+      <value>Server Ubuntu che esegue Docker con Nextcloud e Traefik...</value>
+    </data>
+    <data name="ExampleGroupDescription" xml:space="preserve">
+      <value>Server Linux in esecuzione in AWS...</value>
+    </data>
 </root>
