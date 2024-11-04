@@ -12,6 +12,7 @@
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             xmlns:profiles="clr-namespace:NETworkManager.Profiles;assembly=NETworkManager.Profiles"
              dialogs:DialogParticipation.Register="{Binding}"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:TracerouteHostViewModel}">
     <UserControl.Resources>
@@ -214,7 +215,7 @@
                     </Grid>
                     <ListBox Grid.Column="0" Grid.Row="2" ItemsSource="{Binding Profiles}"
                              Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
-                             DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}"
+                             SelectedItem="{Binding SelectedProfile}"
                              Style="{StaticResource ProfileListBox}"
                              ScrollViewer.CanContentScroll="True"
                              VirtualizingPanel.IsVirtualizing="True"
@@ -345,8 +346,26 @@
                                    BasedOn="{StaticResource MahApps.Styles.ListBoxItem}">
                                 <Setter Property="ContextMenu" Value="{StaticResource ListBoxItemContextMenu}" />
                                 <EventSetter Event="MouseDoubleClick" Handler="ListBoxItem_MouseDoubleClick" />
+                                <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                             </Style>
                         </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type profiles:ProfileInfo}">
+                                <Grid Background="Transparent">
+                                    <Grid.ToolTip>
+                                        <ToolTip MinWidth="250">
+                                            <StackPanel Margin="10">
+                                                <TextBlock Text="{Binding Traceroute_Host}" Style="{StaticResource DefaultTextBlock}" />
+                                                <Separator Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,10" />
+                                                <TextBlock Text="{Binding Description}" Style="{StaticResource InfoTextBlock}" TextWrapping="Wrap" />
+                                            </StackPanel>
+                                        </ToolTip>                                        
+                                    </Grid.ToolTip>
+                                    <TextBlock Text="{Binding Name}" Style="{StaticResource CenterTextBlock}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
                     </ListBox>
                     <mah:ProgressRing Grid.Row="2" Height="50" Width="50" IsActive="{Binding IsSearching}" />
                     <Grid Grid.Row="2" VerticalAlignment="Center">
