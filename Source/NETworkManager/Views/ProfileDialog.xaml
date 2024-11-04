@@ -1377,7 +1377,7 @@
                                          VerticalContentAlignment="Top"
                                          Height="150"
                                          Text="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                         mah:TextBoxHelper.Watermark="{x:Static Member=localization:Strings.ExampleDescription}" />
+                                         mah:TextBoxHelper.Watermark="{x:Static Member=localization:Strings.ExampleProfileDescription}" />
                                 <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.Group}" />
                                 <ComboBox x:Name="ComboBoxGroup" Grid.Column="2" Grid.Row="6"
                                           Style="{StaticResource EditableComboBox}" ItemsSource="{Binding Groups}"

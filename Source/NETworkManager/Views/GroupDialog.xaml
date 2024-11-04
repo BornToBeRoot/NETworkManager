@@ -616,6 +616,8 @@
                                 </Grid.Resources>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*" />
@@ -645,6 +647,18 @@
                                         <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource ErrorToolTip}" />
                                     </Rectangle.Resources>
                                 </Rectangle>
+                                <TextBlock Grid.Column="0" Grid.Row="2" 
+                                           Text="{x:Static Member=localization:Strings.Description}" 
+                                           Margin="0,5,0,0"
+                                           VerticalAlignment="Top" />
+                                <TextBox Grid.Column="2" Grid.Row="2"
+                                         AcceptsReturn="True"
+                                         TextWrapping="Wrap"
+                                         VerticalScrollBarVisibility="Auto"
+                                         VerticalContentAlignment="Top"
+                                         Height="150"
+                                         Text="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         mah:TextBoxHelper.Watermark="{x:Static Member=localization:Strings.ExampleGroupDescription}" />
                             </Grid>
                         </StackPanel>
                     </ScrollViewer>

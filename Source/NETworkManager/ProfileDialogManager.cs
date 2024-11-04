@@ -305,7 +305,8 @@ public static class ProfileDialogManager
         return new GroupInfo
         {
             Name = name,
-
+            Description = instance.Description?.Trim(),
+            
             Profiles = profiles,
 
             // Remote Desktop
