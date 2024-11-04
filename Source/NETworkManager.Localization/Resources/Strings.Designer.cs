@@ -3654,6 +3654,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Linux servers running in AWS....
+        /// </summary>
+        public static string ExampleGroupDescription {
+            get {
+                return ResourceManager.GetString("ExampleGroupDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ubuntu Server running Docker with Nextcloud and Traefik....
+        /// </summary>
+        public static string ExampleProfileDescription {
+            get {
+                return ResourceManager.GetString("ExampleProfileDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Customer 1.
         /// </summary>
         public static string ExampleProfileFileName {
