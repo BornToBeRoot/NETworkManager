@@ -28,6 +28,7 @@ Release date: **xx.xx.2024**
   - `Set default` added (Set the startup application - available if not set)
   - `Show` added (Shows the application in the main window - available if hidden)
   - `Hide` added (Hides the application from the main window - available if shown)
+- Groups now have a field for a description [#2877](https://github.com/BornToBeRoot/NETworkManager/pull/2877)
 
 ## Bugfixes
 
