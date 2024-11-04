@@ -3851,4 +3851,7 @@ Right-click for more options.</value>
     <data name="SetDefault" xml:space="preserve">
     <value>Set default</value>
   </data>
+    <data name="ExampleProfileDescription" xml:space="preserve">
+      <value>Ubuntu Server running Docker with Nextcloud and Traefik...</value>
+    </data>
 </root>

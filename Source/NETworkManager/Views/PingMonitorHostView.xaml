@@ -370,7 +370,7 @@
                     </Grid>
                     <ListBox Grid.Column="0" Grid.Row="2" ItemsSource="{Binding Path=Profiles}"
                              Visibility="{Binding Path=IsSearching, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}"
-                             DisplayMemberPath="Name" SelectedItem="{Binding Path=SelectedProfile}"
+                             SelectedItem="{Binding Path=SelectedProfile}"
                              Style="{StaticResource ResourceKey=ProfileListBox}"
                              ScrollViewer.CanContentScroll="True"
                              VirtualizingPanel.IsVirtualizing="True"
@@ -502,8 +502,26 @@
                                    BasedOn="{StaticResource ResourceKey=MahApps.Styles.ListBoxItem}">
                                 <Setter Property="ContextMenu" Value="{StaticResource ResourceKey=ProfileContextMenu}" />
                                 <EventSetter Event="MouseDoubleClick" Handler="ListBoxItem_MouseDoubleClick" />
+                                <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                             </Style>
                         </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Background="Transparent">
+                                    <Grid.ToolTip>
+                                        <ToolTip MinWidth="250">
+                                            <StackPanel Margin="10">
+                                                <TextBlock Text="{Binding PingMonitor_Host}" Style="{StaticResource DefaultTextBlock}" />
+                                                <Separator Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,10" />
+                                                <TextBlock Text="{Binding Description}" Style="{StaticResource InfoTextBlock}" TextWrapping="Wrap" />
+                                            </StackPanel>
+                                        </ToolTip>                                        
+                                    </Grid.ToolTip>
+                                    <TextBlock Text="{Binding Name}" Style="{StaticResource CenterTextBlock}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
                     </ListBox>
                     <mah:ProgressRing Grid.Row="2" Height="50" Width="50" IsActive="{Binding Path=IsSearching}" />
                     <Grid Grid.Row="2" VerticalAlignment="Center">
