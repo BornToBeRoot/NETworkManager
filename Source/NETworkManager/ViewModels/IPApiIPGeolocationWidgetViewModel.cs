@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using System.Net.NetworkInformation;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows.Input;
 using log4net;
 using NETworkManager.Models.IPApi;
@@ -11,23 +9,6 @@ namespace NETworkManager.ViewModels;
 
 public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
 {
-    #region Events
-
-    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-        switch (e.PropertyName)
-        {
-            case nameof(SettingsInfo.Dashboard_CheckIPApiIPGeolocation):
-                // Check if enabled via settings
-                if (SettingsManager.Current.Dashboard_CheckIPApiIPGeolocation)
-                    Check();
-
-                break;
-        }
-    }
-
-    #endregion
-
     #region Variables
 
     private static readonly ILog Log = LogManager.GetLogger(typeof(IPApiIPGeolocationWidgetViewModel));
@@ -68,14 +49,7 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
 
     public IPApiIPGeolocationWidgetViewModel()
     {
-        // Detect if network address or status changed...
-        NetworkChange.NetworkAvailabilityChanged += (_, _) => Check();
-        NetworkChange.NetworkAddressChanged += (_, _) => Check();
-
         LoadSettings();
-
-        // Detect if settings have changed...
-        SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
     }
 
     private void LoadSettings()

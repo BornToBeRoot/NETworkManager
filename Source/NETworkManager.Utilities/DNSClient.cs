@@ -40,31 +40,31 @@ public class DNSClient : SingletonBase<DNSClient>
     {
         _settings = settings;
 
-        Log.Debug("Configuring DNS client...");
+        Log.Debug("Configure - Configuring DNS client...");
         
         if (_settings.UseCustomDNSServers)
         {
-            Log.Debug("Using custom DNS servers...");
+            Log.Debug("Configure - Using custom DNS servers...");
             
             // Setup custom DNS servers
             List<NameServer> servers = [];
 
             foreach (var (server, port) in _settings.DNSServers)
             {
-                Log.Debug($"Adding custom DNS server: {server}:{port}");
+                Log.Debug($"Configure - Adding custom DNS server: {server}:{port}");
                 servers.Add(new IPEndPoint(IPAddress.Parse(server), port));
             }
 
-            Log.Debug("Creating LookupClient with custom DNS servers...");
+            Log.Debug("Configure - Creating LookupClient with custom DNS servers...");
             _client = new LookupClient(new LookupClientOptions(servers.ToArray()));
         }
         else
         {
-            Log.Debug("Creating LookupClient with Windows default DNS servers...");
+            Log.Debug("Configure - Creating LookupClient with Windows default DNS servers...");
             _client = new LookupClient();
         }
         
-        Log.Debug("DNS client configured.");
+        Log.Debug("Configure - DNS client configured.");
         _isConfigured = true;
     }
 
@@ -74,7 +74,7 @@ public class DNSClient : SingletonBase<DNSClient>
     /// </summary>
     public void UpdateWindowsDNSSever()
     {
-        Log.Debug("Recreating LookupClient with with Windows default DNS servers...");
+        Log.Debug("UpdateWindowsDNSSever - Recreating LookupClient with with Windows default DNS servers...");
         _client = new LookupClient();
     }
 

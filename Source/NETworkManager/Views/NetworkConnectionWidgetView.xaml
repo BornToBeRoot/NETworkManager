@@ -9,9 +9,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance viewModels:NetworkConnectionWidgetViewModel}" Loaded="UserControl_Loaded">
+             d:DataContext="{d:DesignInstance viewModels:NetworkConnectionWidgetViewModel}">
     <UserControl.InputBindings>
-        <KeyBinding Key="F5" Command="{Binding CheckConnectionViaHotkeyCommand}" />
+        <KeyBinding Key="F5" Command="{Binding CheckViaHotkeyCommand}" />
     </UserControl.InputBindings>
     <UserControl.Resources>
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />

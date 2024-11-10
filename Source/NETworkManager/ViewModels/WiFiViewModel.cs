@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
@@ -114,7 +115,7 @@ public class WiFiViewModel : ViewModelBase
                 if (!_isLoading)
                     SettingsManager.Current.WiFi_InterfaceId = value.NetworkInterfaceInfo.Id;
 
-                Scan(value).ConfigureAwait(false);
+                ScanAsync(value).ConfigureAwait(false);
             }
 
             _selectedAdapters = value;
@@ -301,18 +302,18 @@ public class WiFiViewModel : ViewModelBase
         }
     }
 
-    public SeriesCollection Radio1Series { get; set; } = new();
+    public SeriesCollection Radio1Series { get; set; } = [];
 
     public string[] Radio1Labels { get; set; } =
-        { " ", " ", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", " ", " " };
+        [" ", " ", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", " ", " "];
 
-    public SeriesCollection Radio2Series { get; set; } = new();
+    public SeriesCollection Radio2Series { get; set; } = [];
 
     public string[] Radio2Labels { get; set; } =
-    {
+    [
         " ", " ", "36", "40", "44", "48", "52", "56", "60", "64", "", "", "", "", "100", "104", "108", "112", "116",
         "120", "124", "128", "132", "136", "140", "144", "149", "153", "157", "161", "165", " ", " "
-    };
+    ];
 
     public Func<double, string> FormattedDbm { get; set; } =
         value => $"- {100 - value} dBm"; // Reverse y-axis 0 to -100
@@ -471,7 +472,7 @@ public class WiFiViewModel : ViewModelBase
         };
 
         // Load network adapters
-        LoadAdapters(SettingsManager.Current.WiFi_InterfaceId).ConfigureAwait(false);
+        LoadAdaptersAsync(SettingsManager.Current.WiFi_InterfaceId).ConfigureAwait(false);
 
         // Auto refresh
         _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
@@ -506,7 +507,7 @@ public class WiFiViewModel : ViewModelBase
 
     private void ReloadAdapterAction()
     {
-        LoadAdapters(SelectedAdapter?.NetworkInterfaceInfo.Id).ConfigureAwait(false);
+        LoadAdaptersAsync(SelectedAdapter?.NetworkInterfaceInfo.Id).ConfigureAwait(false);
     }
 
     public ICommand ScanNetworksCommand =>
@@ -519,7 +520,7 @@ public class WiFiViewModel : ViewModelBase
 
     private async Task ScanNetworksAction()
     {
-        await Scan(SelectedAdapter, true);
+        await ScanAsync(SelectedAdapter, true);
     }
 
     public ICommand ConnectCommand => new RelayCommand(_ => ConnectAction());
@@ -555,7 +556,7 @@ public class WiFiViewModel : ViewModelBase
     #region Methods
 
     /// <summary>
-    ///     Request access to the WiFi adapter.
+    ///     Request access to the Wi-Fi adapter.
     /// </summary>
     /// <returns>Fails if the access is denied.</returns>
     private static bool RequestAccess()
@@ -565,8 +566,10 @@ public class WiFiViewModel : ViewModelBase
         return accessStatus == WiFiAccessStatus.Allowed;
     }
 
-    private async Task LoadAdapters(string adapterId = null)
+    private async Task LoadAdaptersAsync(string adapterId = null)
     {
+        Log.Debug("LoadAdaptersAsync - Trying to get WiFi adapters...");
+        
         IsAdaptersLoading = true;
 
         // Show a loading animation for the user
@@ -582,23 +585,44 @@ public class WiFiViewModel : ViewModelBase
 
             Adapters.Clear();
         }
-
+        
         // Check if we found any adapters
         if (Adapters.Count > 0)
         {
-            // Check for existing adapter id or select the first one
+            Log.Debug("LoadAdaptersAsync - Found " + Adapters.Count + " WiFi adapters.");
+            
+            // Check for previous selected adapter
             if (string.IsNullOrEmpty(adapterId))
+            {
+                Log.Debug("LoadAdaptersAsync - No previous adapter ID found. Selecting the first adapter.");
+                
                 SelectedAdapter = Adapters.FirstOrDefault();
+            }
             else
+            {
+                Log.Debug("LoadAdaptersAsync - Previous adapter ID found. Trying to select the adapter with the ID: " + adapterId);
+                
                 SelectedAdapter = Adapters.FirstOrDefault(s => s.NetworkInterfaceInfo.Id.ToString() == adapterId) ??
                                   Adapters.FirstOrDefault();
+            }
+
+            Log.Debug("LoadAdaptersAsync - Selected adapter: " + SelectedAdapter?.NetworkInterfaceInfo.Name + " (" +
+                      SelectedAdapter?.NetworkInterfaceInfo.Id + ")");
+        }
+        else
+        {
+            Log.Debug("LoadAdaptersAsync - No WiFi adapters found.");        
         }
 
         IsAdaptersLoading = false;
+        
+        Log.Debug("LoadAdaptersAsync - Done.");
     }
-
-    private async Task Scan(WiFiAdapterInfo adapterInfo, bool refreshing = false, uint delayInMs = 0)
+    
+    private async Task ScanAsync(WiFiAdapterInfo adapterInfo, bool refreshing = false, uint delayInMs = 0)
     {
+        Log.Debug($"ScanAsync - Scanning WiFi adapter \"{adapterInfo.NetworkInterfaceInfo.Name}\" with delay of {delayInMs} ms...");
+        
         if (refreshing)
         {
             StatusMessage = Strings.SearchingForNetworksDots;
@@ -619,13 +643,20 @@ public class WiFiViewModel : ViewModelBase
         {
             var wiFiNetworkScanInfo = await WiFi.GetNetworksAsync(adapterInfo.WiFiAdapter);
 
+            Log.Debug("ScanAsync - Scan completed. Found " + wiFiNetworkScanInfo.WiFiNetworkInfos.Count + " networks.");
+            
             // Clear the values after the scan to make the UI smoother
+            Log.Debug("ScanAsync - Clearing old values...");
             Networks.Clear();
             Radio1Series.Clear();
             Radio2Series.Clear();
 
+            Log.Debug("ScanAsync - Adding new values...");
             foreach (var network in wiFiNetworkScanInfo.WiFiNetworkInfos)
             {
+                Log.Debug("ScanAsync - Add network: " + network.AvailableNetwork.Ssid + " with channel frequency: " +
+                          network.AvailableNetwork.ChannelCenterFrequencyInKilohertz);
+                
                 Networks.Add(network);
 
                 if (WiFi.ConvertChannelFrequencyToGigahertz(network.AvailableNetwork
@@ -640,13 +671,15 @@ public class WiFiViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
+            Log.Error($"Error while scanning WiFi adapter \"{adapterInfo.NetworkInterfaceInfo.Name}\".", ex);
+            
+            statusMessage = string.Format(Strings.ErrorWhileScanningWiFiAdapterXXXWithErrorXXX,
+                adapterInfo.NetworkInterfaceInfo.Name, ex.Message);
+            
             // Clear the existing old values if an error occurs
             Networks.Clear();
             Radio1Series.Clear();
             Radio2Series.Clear();
-
-            statusMessage = string.Format(Strings.ErrorWhileScanningWiFiAdapterXXXWithErrorXXX,
-                adapterInfo.NetworkInterfaceInfo.Name, ex.Message);
         }
         finally
         {
@@ -655,12 +688,14 @@ public class WiFiViewModel : ViewModelBase
 
             IsBackgroundSearchRunning = false;
             IsNetworksLoading = false;
+            
+            Log.Debug("ScanAsync - Done.");
         }
     }
 
     private ChartValues<double> GetDefaultChartValues(WiFiRadio radio)
     {
-        ChartValues<double> values = new();
+        ChartValues<double> values = [];
 
         for (var i = 0; i < (radio == WiFiRadio.One ? Radio1Labels.Length : Radio2Labels.Length); i++)
             values.Add(-1);
@@ -685,8 +720,10 @@ public class WiFiViewModel : ViewModelBase
 
     private LineSeries GetSeriesCollection(WiFiNetworkInfo network, WiFiRadio radio)
     {
-        var index = Array.IndexOf(radio == WiFiRadio.One ? Radio1Labels : Radio2Labels,
-            $"{WiFi.GetChannelFromChannelFrequency(network.AvailableNetwork.ChannelCenterFrequencyInKilohertz)}");
+        var radioLabels = radio == WiFiRadio.One ? Radio1Labels : Radio2Labels;
+        var channel = WiFi.GetChannelFromChannelFrequency(network.AvailableNetwork.ChannelCenterFrequencyInKilohertz);
+        
+        var index = Array.IndexOf(radioLabels, $"{channel}");
 
         return new LineSeries
         {
@@ -766,9 +803,9 @@ public class WiFiViewModel : ViewModelBase
                 // Hide message automatically
                 _hideConnectionStatusMessageTimer.Start();
 
-                // Update the wifi networks.
+                // Update the Wi-Fi networks.
                 // Wait because an error may occur if a refresh is done directly after connecting.            
-                await Scan(SelectedAdapter, true, 5000);
+                await ScanAsync(SelectedAdapter, true, 5000);
             }, async instance =>
             {
                 // Connect WPS
@@ -802,9 +839,9 @@ public class WiFiViewModel : ViewModelBase
                 // Hide message automatically
                 _hideConnectionStatusMessageTimer.Start();
 
-                // Update the wifi networks.
+                // Update the Wi-Fi networks.
                 // Wait because an error may occur if a refresh is done directly after connecting.            
-                await Scan(SelectedAdapter, true, 5000);
+                await ScanAsync(SelectedAdapter, true, 5000);
             },
             _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, (selectedAdapter, selectedNetwork),
             connectMode);
@@ -834,7 +871,7 @@ public class WiFiViewModel : ViewModelBase
         }
 
         // Refresh
-        await Scan(SelectedAdapter, true, 2500);
+        await ScanAsync(SelectedAdapter, true, 2500);
     }
 
     private async Task Export()
@@ -908,7 +945,7 @@ public class WiFiViewModel : ViewModelBase
         _autoRefreshTimer.Stop();
 
         // Scan networks
-        await Scan(SelectedAdapter, true);
+        await ScanAsync(SelectedAdapter, true);
 
         // Restart timer...
         _autoRefreshTimer.Start();

@@ -1,4 +1,22 @@
-﻿using System;
+﻿using log4net;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Controls;
+using NETworkManager.Documentation;
+using NETworkManager.Localization;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models;
+using NETworkManager.Models.AWS;
+using NETworkManager.Models.EventSystem;
+using NETworkManager.Models.Network;
+using NETworkManager.Models.PowerShell;
+using NETworkManager.Models.PuTTY;
+using NETworkManager.Profiles;
+using NETworkManager.Settings;
+using NETworkManager.Update;
+using NETworkManager.Utilities;
+using NETworkManager.ViewModels;
+using NETworkManager.Views;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -19,24 +37,6 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Markup;
 using System.Windows.Threading;
-using log4net;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Controls;
-using NETworkManager.Documentation;
-using NETworkManager.Localization;
-using NETworkManager.Localization.Resources;
-using NETworkManager.Models;
-using NETworkManager.Models.AWS;
-using NETworkManager.Models.EventSystem;
-using NETworkManager.Models.Network;
-using NETworkManager.Models.PowerShell;
-using NETworkManager.Models.PuTTY;
-using NETworkManager.Profiles;
-using NETworkManager.Settings;
-using NETworkManager.Update;
-using NETworkManager.Utilities;
-using NETworkManager.ViewModels;
-using NETworkManager.Views;
 using Application = System.Windows.Application;
 using ContextMenu = System.Windows.Controls.ContextMenu;
 using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
@@ -325,21 +325,6 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 return;
 
             _flyoutRunCommandIsOpen = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private bool _flyoutRunCommandAreAnimationsEnabled;
-
-    public bool FlyoutRunCommandAreAnimationsEnabled
-    {
-        get => _flyoutRunCommandAreAnimationsEnabled;
-        set
-        {
-            if (value == _flyoutRunCommandAreAnimationsEnabled)
-                return;
-
-            _flyoutRunCommandAreAnimationsEnabled = value;
             OnPropertyChanged();
         }
     }
@@ -701,7 +686,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         // Select the application
         // Set application via command line, or select the default one, fallback to the first visible one
         var applicationList = Applications.Cast<ApplicationInfo>().ToArray();
-        
+
         if (CommandLineManager.Current.Application != ApplicationName.None)
             SelectedApplication = applicationList.FirstOrDefault(x => x.Name == CommandLineManager.Current.Application);
         else
@@ -1244,7 +1229,6 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     {
         ConfigurationManager.OnDialogOpen();
 
-        FlyoutRunCommandAreAnimationsEnabled = true;
         FlyoutRunCommandIsOpen = true;
     }
 
@@ -1259,7 +1243,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private void RunCommandCloseAction()
     {
-        RunCommandFlyoutClose().ConfigureAwait(false);
+        RunCommandFlyoutClose();
     }
 
     #endregion
@@ -1321,28 +1305,24 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         }
 
         // Close the flyout
-        RunCommandFlyoutClose(true).ConfigureAwait(false);
+        RunCommandFlyoutClose(true);
     }
 
     /// <summary>
     ///     Close the run command flyout and clear the search.
     /// </summary>
-    private async Task RunCommandFlyoutClose(bool clearSearch = false)
+    private void RunCommandFlyoutClose(bool clearSearch = false)
     {
         if (!FlyoutRunCommandIsOpen)
             return;
-
-        FlyoutRunCommandAreAnimationsEnabled = false;
+        
         FlyoutRunCommandIsOpen = false;
 
         ConfigurationManager.OnDialogClose();
 
         // Clear the search
         if (clearSearch)
-        {
-            await Task.Delay(500); // Wait for the animation to finish
             RunCommandSearch = string.Empty;
-        }
     }
 
     #endregion
@@ -1360,7 +1340,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         if (e.NewValue is not false)
             return;
 
-        RunCommandFlyoutClose().ConfigureAwait(false);
+        RunCommandFlyoutClose();
     }
 
     #endregion
@@ -1946,7 +1926,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         _isNetworkChanging = true;
 
         // Wait, because the event may be triggered several times.
-        await Task.Delay(GlobalStaticConfiguration.StatusWindowDelayBeforeOpen);
+        await Task.Delay(GlobalStaticConfiguration.NetworkChangeDetectionDelay);
 
         Log.Info("Network availability or address has changed!");
 
