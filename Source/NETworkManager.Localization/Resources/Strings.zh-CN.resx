@@ -3849,4 +3849,10 @@ URL: http://ip-api.com/</value>
     <data name="SetDefault" xml:space="preserve">
     <value>设为默认</value>
   </data>
+    <data name="ExampleProfileDescription" xml:space="preserve">
+      <value>Ubuntu Server running Docker with Nextcloud and Traefik...</value>
+    </data>
+    <data name="ExampleGroupDescription" xml:space="preserve">
+      <value>Linux servers running in AWS...</value>
+    </data>
 </root>
