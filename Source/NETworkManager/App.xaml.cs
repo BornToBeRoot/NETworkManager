@@ -244,7 +244,8 @@ public partial class App
         if (_singleInstanceClose || CommandLineManager.Current.Help)
             return;
 
-        Log.Info("Stop background job (if it exists)...");
+        Log.Info("Stop background job, if it exists...");
+        
         _dispatcherTimer?.Stop();
 
         Save();
