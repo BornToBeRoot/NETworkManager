@@ -19,24 +19,9 @@ Release date: **xx.xx.2024**
 
 ## What's new?
 
-- Applications can now be sorted via drag & drop in the application sidebar or in the settings under `Settings > General > Applications`. [#2781](https://github.com/BornToBeRoot/NETworkManager/pull/2781)
-- Profiles now have a field for a description, which is displayed together with the host name/IP address in a tooltip in the profile sidebar. [#2877](https://github.com/BornToBeRoot/NETworkManager/pull/2877)
-
 ## Improvements
 
-- Applications settings under `Settings > General > Applications` redesigned and context menu added (Right-click) [#2781](https://github.com/BornToBeRoot/NETworkManager/pull/2781)
-  - `Set default` added (Set the startup application - available if not set)
-  - `Show` added (Shows the application in the main window - available if hidden)
-  - `Hide` added (Hides the application from the main window - available if shown)
-- Groups now have a field for a description [#2877](https://github.com/BornToBeRoot/NETworkManager/pull/2877)
-
 ## Bugfixes
-
-- **Ping Monitor**
-
-  - A problem has been fixed where the ping does not start if the DNS server is not configured. This can occur if the network interface via which the Windows DNS server was configured is deactivated/disconnected. [#2876](https://github.com/BornToBeRoot/NETworkManager/pull/2876)
-
-- TextBox content not centered because of ScrollViewer issue. [#2763](https://github.com/BornToBeRoot/NETworkManager/pull/2763)
 
 ## Dependencies, Refactoring & Documentation
 
