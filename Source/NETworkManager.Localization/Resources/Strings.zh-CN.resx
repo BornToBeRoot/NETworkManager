@@ -3850,9 +3850,9 @@ URL: http://ip-api.com/</value>
     <value>设为默认</value>
   </data>
     <data name="ExampleProfileDescription" xml:space="preserve">
-      <value>Ubuntu Server running Docker with Nextcloud and Traefik...</value>
+      <value>运行 Docker 并部署 Nextcloud 和 Traefik 的 Ubuntu Server</value>
     </data>
     <data name="ExampleGroupDescription" xml:space="preserve">
-      <value>Linux servers running in AWS...</value>
+      <value>在 AWS 运行的 Linux 服务器</value>
     </data>
 </root>
