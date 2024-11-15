@@ -48,6 +48,9 @@
     <a href="https://github.com/BornToBeRoot/NETworkManager/issues/new?labels=Issue&template=Bug_report.md">
       <img alt="Bug report" src="https://img.shields.io/badge/github-bug_report-red.svg?style=for-the-badge&logo=github" />
     </a>     
+    <a href="https://gurubase.io/g/networkmanager">
+      <img alt="Gurubase" src="https://img.shields.io/badge/Gurubase-Ask%20NETworkManager%20Guru-006BFF?style=for-the-badge" />
+    </a>
   </p>
   <p>
     <a href="#-download">Download</a> • <a href="#-changelog">Changelog</a> • <a href="#-documentation">Documentation</a> • <a href="#-contributing">Contributing</a> • <a href="#-build">Build</a> • <a href="#-license">License</a>
