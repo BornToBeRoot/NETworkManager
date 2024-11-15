@@ -7,11 +7,11 @@ $packageArgs = @{
   packageName    = $packageName
   unzipLocation  = $toolsDir
   fileType       = 'MSI'
-  url            = 'https://github.com/BornToBeRoot/NETworkManager/releases/download/2024.6.15.0/NETworkManager_2024.6.15.0_Setup.msi'
+  url            = 'https://github.com/BornToBeRoot/NETworkManager/releases/download/2024.11.11.0/NETworkManager_2024.11.11.0_Setup.msi'
 
   softwareName   = 'NETworkManager*'
 
-  checksum       = 'CB78E596EF0247808522B6F5883CD154BF0A8630496E2545AAF99E1B324E3D9B'
+  checksum       = 'B3B2128F752B6CA84C9FE0B84CA279C284AEB3BB479508E546633BF34E59A125'
   checksumType   = 'sha256'
 
   silentArgs     = "/qn /norestart /l*v `"$($env:TEMP)\$($packageName).$($env:chocolateyPackageVersion).MsiInstall.log`""
