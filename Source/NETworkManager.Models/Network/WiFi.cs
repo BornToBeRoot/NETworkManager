@@ -1,26 +1,23 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Devices.WiFi;
 using Windows.Networking.Connectivity;
 using Windows.Security.Credentials;
-using log4net;
-
-//https://docs.microsoft.com/en-us/uwp/api/windows.devices.wifi.wifiadapter.requestaccessasync
-//var access = await WiFiAdapter.RequestAccessAsync() == WiFiAccessStatus.Allowed;
 
 namespace NETworkManager.Models.Network;
 
 /// <summary>
-///     Class with WiFi related methods.
+///     Class with Wi-Fi related methods.
 /// </summary>
 public static class WiFi
 {
     private static readonly ILog Log = LogManager.GetLogger(typeof(WiFi));
 
     /// <summary>
-    ///     Get all WiFi adapters async with additional information from <see cref="NetworkInterface" />.
+    ///     Get all Wi-Fi adapters async with additional information from <see cref="NetworkInterface" />.
     /// </summary>
     /// <returns>
     ///     <see cref="WiFiAdapterInfo" /> with <see cref="NetworkInterface" /> and <see cref="WiFiAdapter" /> as
@@ -58,7 +55,7 @@ public static class WiFi
     }
 
     /// <summary>
-    ///     Get all available WiFi networks for an adapter with additional information's.
+    ///     Get all available Wi-Fi networks for an adapter with additional information's.
     /// </summary>
     /// <param name="adapter">WiFi adapter as <see cref="WiFiAdapter" />.</param>
     /// <returns>A report as <see cref="WiFiNetworkScanInfo" /> including a list of <see cref="WiFiNetworkInfo" />.</returns>
@@ -67,7 +64,7 @@ public static class WiFi
         // Scan network adapter async
         await adapter.ScanAsync();
 
-        // Try to get the current connected wifi network of this network adapter
+        // Try to get the current connected Wi-Fi network of this network adapter
         var (_, bssid) = TryGetConnectedNetworkFromWiFiAdapter(adapter.NetworkAdapter.NetworkAdapterId.ToString());
 
         var wifiNetworkInfos = adapter.NetworkReport.AvailableNetworks.Select(availableNetwork => new WiFiNetworkInfo
@@ -86,14 +83,14 @@ public static class WiFi
     }
 
     /// <summary>
-    ///     Try to get the current connected wifi network (SSID and BSSID) of a network adapter from
+    ///     Try to get the current connected Wi-Fi network (SSID and BSSID) of a network adapter from
     ///     netsh.exe.
     ///     Calling netsh.exe and parsing the output feels so dirty, but Microsoft's API returns only
     ///     the WLAN profile and the SSID of the connected network. The BSSID is needed to find a
     ///     specific access point among several.
     /// </summary>
-    /// <param name="adapterId">GUID of the WiFi network adapter.</param>
-    /// <returns>SSID and BSSID of the connected wifi network. Values are null if not detected.</returns>
+    /// <param name="adapterId">GUID of the Wi-Fi network adapter.</param>
+    /// <returns>SSID and BSSID of the connected Wi-Fi network. Values are null if not detected.</returns>
     // ReSharper disable once UnusedTupleComponentInReturnValue
     private static (string SSID, string BSSID) TryGetConnectedNetworkFromWiFiAdapter(string adapterId)
     {
@@ -151,10 +148,10 @@ public static class WiFi
     }
 
     /// <summary>
-    ///     Connect to a WiFi network with Pre-shared key, EAP or no security.
+    ///     Connect to a Wi-Fi network with Pre-shared key, EAP or no security.
     /// </summary>
-    /// <param name="adapter">WiFi adapter which should be used for the connection.</param>
-    /// <param name="network">WiFi network to connect to.</param>
+    /// <param name="adapter">Wi-Fi adapter which should be used for the connection.</param>
+    /// <param name="network">Wi-Fi network to connect to.</param>
     /// <param name="reconnectionKind">Reconnection type to automatically or manuel reconnect.</param>
     /// <param name="credential">Credentials for EAP or PSK. Empty for open networks.</param>
     /// <param name="ssid">SSID for hidden networks.</param>
@@ -178,10 +175,10 @@ public static class WiFi
     }
 
     /// <summary>
-    ///     Connect to a WiFi network with WPS push button.
+    ///     Connect to a Wi-Fi network with WPS push button.
     /// </summary>
-    /// <param name="adapter">WiFi adapter which should be used for the connection.</param>
-    /// <param name="network">WiFi network to connect to.</param>
+    /// <param name="adapter">Wi-Fi adapter which should be used for the connection.</param>
+    /// <param name="network">Wi-Fi network to connect to.</param>
     /// <param name="reconnectionKind">Reconnection type to automatically or manuel reconnect.</param>
     /// <returns></returns>
     public static async Task<WiFiConnectionStatus> ConnectWpsAsync(WiFiAdapter adapter, WiFiAvailableNetwork network,
@@ -199,25 +196,24 @@ public static class WiFi
     }
 
     /// <summary>
-    ///     Disconnect the wifi adapter from the current wifi network.
+    ///     Disconnect the Wi-Fi adapter from the current Wi-Fi network.
     /// </summary>
-    /// <param name="adapter">WiFi adapter from which the wifi network should be disconnected.</param>
+    /// <param name="adapter">Wi-Fi adapter from which the Wi-Fi network should be disconnected.</param>
     public static void Disconnect(WiFiAdapter adapter)
     {
         adapter.Disconnect();
     }
 
     /// <summary>
-    ///     Get the connect mode of a wifi network like Open, Eap (WPA2-Enterprise)
+    ///     Get the connect mode of a Wi-Fi network like Open, Eap (WPA2-Enterprise)
     ///     or Psk (WPA2-Personal).
     /// </summary>
-    /// <param name="network">WiFi network as <see cref="WiFiAvailableNetwork" />.</param>
+    /// <param name="network">Wi-Fi network as <see cref="WiFiAvailableNetwork" />.</param>
     /// <returns>Connect mode as <see cref="WiFiConnectMode" />.</returns>
     public static WiFiConnectMode GetConnectMode(WiFiAvailableNetwork network)
     {
         // Enterprise
-        if (network.SecuritySettings.NetworkAuthenticationType == NetworkAuthenticationType.Rsna ||
-            network.SecuritySettings.NetworkAuthenticationType == NetworkAuthenticationType.Wpa)
+        if (network.SecuritySettings.NetworkAuthenticationType is NetworkAuthenticationType.Rsna or NetworkAuthenticationType.Wpa)
             return WiFiConnectMode.Eap;
 
         // Open
@@ -230,11 +226,11 @@ public static class WiFi
     }
 
     /// <summary>
-    ///     Check if WPS is available for a wifi network.
+    ///     Check if WPS is available for a Wi-Fi network.
     /// </summary>
     /// <param name="adapter">WiFi adapter as <see cref="WiFiAdapter" />.</param>
     /// <param name="network">WiFi network as <see cref="WiFiAvailableNetwork" />.</param>
-    /// <returns></returns>
+    /// <returns>Ture if WPS is available.</returns>
     public static async Task<bool> IsWpsAvailable(WiFiAdapter adapter, WiFiAvailableNetwork network)
     {
         var result = await adapter.GetWpsConfigurationAsync(network);
@@ -243,7 +239,7 @@ public static class WiFi
     }
 
     /// <summary>
-    ///     Get the WiFi channel from channel frequency.
+    ///     Get the Wi-Fi channel from channel frequency.
     /// </summary>
     /// <param name="kilohertz">Input like 2422000 or 5240000.</param>
     /// <returns>WiFi channel like 3 or 48.</returns>
@@ -252,7 +248,7 @@ public static class WiFi
         return ConvertChannelFrequencyToGigahertz(kilohertz) switch
         {
             // 2.4 GHz
-            2.412 => 1,
+            2.412 => 1, 
             2.417 => 2,
             2.422 => 3,
             2.427 => 4,
@@ -265,32 +261,33 @@ public static class WiFi
             2.462 => 11,
             2.467 => 12,
             2.472 => 13,
+            2.484 => 14, // Most countries do not allow this channel
             // 5 GHz
-            5.180 => 36,
-            5.200 => 40,
-            5.220 => 44,
-            5.240 => 48,
-            5.260 => 52,
-            5.280 => 56,
-            5.300 => 60,
-            5.320 => 64,
-            5.500 => 100,
-            5.520 => 104,
-            5.540 => 108,
-            5.560 => 112,
-            5.580 => 116,
-            5.600 => 120,
-            5.620 => 124,
-            5.640 => 128,
-            5.660 => 132,
-            5.680 => 136,
-            5.700 => 140,
-            5.720 => 144,
-            5.745 => 149,
-            5.765 => 153,
-            5.785 => 157,
-            5.805 => 161,
-            5.825 => 165,
+            5.180 => 36, // UNII-1
+            5.200 => 40, // UNII-1
+            5.220 => 44, // UNII-1
+            5.240 => 48, // UNII-1
+            5.260 => 52, // UNII-2, DFS
+            5.280 => 56, // UNII-2, DFS
+            5.300 => 60, // UNII-2, DFS
+            5.320 => 64, // UNII-2, DFS
+            5.500 => 100, // UNII-2 Extended, DFS
+            5.520 => 104, // UNII-2 Extended, DFS
+            5.540 => 108, // UNII-2 Extended, DFS
+            5.560 => 112, // UNII-2 Extended, DFS
+            5.580 => 116, // UNII-2 Extended, DFS
+            5.600 => 120, // UNII-2 Extended, DFS
+            5.620 => 124, // UNII-2 Extended, DFS
+            5.640 => 128, // UNII-2 Extended, DFS
+            5.660 => 132, // UNII-2 Extended, DFS
+            5.680 => 136, // UNII-2 Extended, DFS
+            5.700 => 140, // UNII-2 Extended, DFS
+            5.720 => 144, // UNII-2 Extended, DFS
+            5.745 => 149, // UNII-3
+            5.765 => 153, // UNII-3
+            5.785 => 157, // UNII-3
+            5.805 => 161, // UNII-3
+            5.825 => 165, // UNII-3
             _ => -1
         };
     }
@@ -306,69 +303,82 @@ public static class WiFi
     }
 
     /// <summary>
-    ///     Check if the WiFi network is a 2.4 GHz network.
+    ///     Check if the Wi-Fi network is a 2.4 GHz network.
     /// </summary>
     /// <param name="kilohertz">Frequency in kilohertz like 2422000 or 5240000.</param>
-    /// <returns>True if WiFi network is 2.4 GHz.</returns>
+    /// <returns>True if Wi-Fi network is 2.4 GHz.</returns>
     public static bool Is2dot4GHzNetwork(int kilohertz)
     {
         var x = ConvertChannelFrequencyToGigahertz(kilohertz);
 
-        return x is >= 2.412 and <= 2.472;
+        return x is >= 2.412 and <= 2.484;
     }
 
     /// <summary>
-    ///     Check if the WiFi network is a 5 GHz network.
+    ///     Check if the Wi-Fi network is a 5 GHz network.
     /// </summary>
     /// <param name="kilohertz">Frequency in kilohertz like 2422000 or 5240000.</param>
-    /// <returns>True if WiFi network is 5 GHz.</returns>
+    /// <returns>True if Wi-Fi network is 5 GHz.</returns>
     public static bool Is5GHzNetwork(int kilohertz)
     {
         var x = ConvertChannelFrequencyToGigahertz(kilohertz);
 
         return x is >= 5.180 and <= 5.825;
     }
+    
+    public static bool Is6GHzNetwork(int kilohertz)
+    {
+        var x = ConvertChannelFrequencyToGigahertz(kilohertz);
+
+        return x is >= 5.925 and <= 7.125;
+    }
 
     /// <summary>
-    ///     Get the human readable network authentication type.
+    ///     Get the human-readable network authentication type.
     /// </summary>
-    /// <param name="networkAuthenticationType">WiFi network authentication type as <see cref="NetworkAuthenticationType" />.</param>
-    /// <returns>Human readable authentication type as string like "Open" or "WPA2 Enterprise".</returns>
+    /// <param name="networkAuthenticationType">Wi-Fi network authentication type as <see cref="NetworkAuthenticationType" />.</param>
+    /// <returns>Human-readable authentication type as string like "Open" or "WPA2 Enterprise".</returns>
     public static string GetHumanReadableNetworkAuthenticationType(NetworkAuthenticationType networkAuthenticationType)
     {
         return networkAuthenticationType switch
         {
-            NetworkAuthenticationType.Open80211 => "Open",
-            NetworkAuthenticationType.Rsna => "WPA2 Enterprise",
-            NetworkAuthenticationType.RsnaPsk => "WPA2 PSK",
-            NetworkAuthenticationType.Wpa => "WPA Enterprise",
-            NetworkAuthenticationType.WpaNone => "WPA None",
-            NetworkAuthenticationType.WpaPsk => "WPA PSK",
-            NetworkAuthenticationType.SharedKey80211 => "WEP",
-            NetworkAuthenticationType.Ihv => "IHV",
-            NetworkAuthenticationType.Unknown => "Unknown",
             NetworkAuthenticationType.None => "-/-",
+            NetworkAuthenticationType.Unknown => "Unknown",
+            NetworkAuthenticationType.Open80211 => "Open",
+            NetworkAuthenticationType.SharedKey80211 => "WEP",
+            NetworkAuthenticationType.Wpa => "WPA Enterprise",
+            NetworkAuthenticationType.WpaPsk => "WPA PSK",
+            NetworkAuthenticationType.WpaNone => "WPA None",
+            NetworkAuthenticationType.Rsna => "WPA2 Enterprise",
+            NetworkAuthenticationType.RsnaPsk => "WPA2 Personal (PSK)",
+            NetworkAuthenticationType.Ihv => "IHV",
+            NetworkAuthenticationType.Wpa3Enterprise192Bits => "WPA3 Enterprise (192-bit)", // Same as Wpa3
+            NetworkAuthenticationType.Wpa3Sae => "WPA3 Personal (SAE)",
+            NetworkAuthenticationType.Owe => "OWE",
+            NetworkAuthenticationType.Wpa3Enterprise => "WPA3 Enterprise",
             _ => "-/-"
         };
     }
 
     /// <summary>
-    ///     Get the human readable network phy kind.
+    ///     Get the human-readable network phy kind.
     /// </summary>
-    /// <param name="phyKind">WiFi network phy kind as <see cref="WiFiPhyKind" />.</param>
-    /// <returns>Human readable phy kind as string like "802.11g" or "802.11ax".</returns>
+    /// <param name="phyKind">Wi-Fi network phy kind as <see cref="WiFiPhyKind" />.</param>
+    /// <returns>Human-readable phy kind as string like "802.11g" or "802.11ax".</returns>
     public static string GetHumanReadablePhyKind(WiFiPhyKind phyKind)
     {
         return phyKind switch
         {
+            WiFiPhyKind.Unknown => "Unknown",
             WiFiPhyKind.Dsss or WiFiPhyKind.Fhss => "802.11",
             WiFiPhyKind.Ofdm => "802.11a",
             WiFiPhyKind.Hrdsss => "802.11b",
             WiFiPhyKind.Erp => "802.11g",
             WiFiPhyKind.HT => "802.11n",
-            WiFiPhyKind.Dmg => "802.11ad",
             WiFiPhyKind.Vht => "802.11ac",
+            WiFiPhyKind.Dmg => "802.11ad",
             WiFiPhyKind.HE => "802.11ax",
+            WiFiPhyKind.Eht => "802.11be",
             _ => "-/-"
         };
     }

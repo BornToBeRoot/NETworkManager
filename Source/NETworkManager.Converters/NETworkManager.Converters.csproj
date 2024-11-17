@@ -5,7 +5,7 @@
         <AppDesignerFolder>Properties</AppDesignerFolder>
         <RootNamespace>NETworkManager.Converters</RootNamespace>
         <AssemblyName>NETworkManager.Converters</AssemblyName>
-        <TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+        <TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
         <RuntimeIdentifier>win-x64</RuntimeIdentifier>
         <PlatformTarget>x64</PlatformTarget>
         <SelfContained>false</SelfContained>
