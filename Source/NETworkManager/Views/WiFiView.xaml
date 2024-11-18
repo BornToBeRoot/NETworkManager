@@ -657,7 +657,7 @@
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="0" Text="{x:Static Member=localization:Strings.GHz2dot4}"
                                            Style="{StaticResource ResourceKey=HeaderTextBlock}" />
-                                <liveChart:CartesianChart Grid.Row="1" Series="{Binding Path=Radio1Series}"
+                                <liveChart:CartesianChart Grid.Row="1" Series="{Binding Path=Radio2dot4GHzSeries}"
                                                           LegendLocation="Bottom" DisableAnimations="True">
                                     <liveChart:CartesianChart.DataTooltip>
                                         <controls:LvlChartsWiFiChannelTooltip Background="Transparent" />
@@ -665,7 +665,7 @@
                                     <liveChart:CartesianChart.AxisX>
                                         <liveChart:Axis Title="{x:Static Member=localization:Strings.Channel}"
                                                         MinValue="0"
-                                                        MaxValue="16" Labels="{Binding Path=Radio1Labels}">
+                                                        MaxValue="16" Labels="{Binding Path=Radio2dot4GHzLabels}">
                                             <liveChart:Axis.Separator>
                                                 <liveChart:Separator Step="1" StrokeThickness="0" />
                                             </liveChart:Axis.Separator>
@@ -707,7 +707,7 @@
                                 </liveChart:CartesianChart>
                                 <TextBlock Grid.Row="3" Text="{x:Static Member=localization:Strings.GHz5}"
                                            Style="{StaticResource ResourceKey=HeaderTextBlock}" />
-                                <liveChart:CartesianChart Grid.Row="4" Series="{Binding Path=Radio2Series}"
+                                <liveChart:CartesianChart Grid.Row="4" Series="{Binding Path=Radio5GHzSeries}"
                                                           LegendLocation="Bottom" DisableAnimations="True">
                                     <liveChart:CartesianChart.DataTooltip>
                                         <controls:LvlChartsWiFiChannelTooltip Background="Transparent" />
@@ -715,7 +715,7 @@
                                     <liveChart:CartesianChart.AxisX>
                                         <liveChart:Axis Title="{x:Static Member=localization:Strings.Channel}"
                                                         MinValue="0"
-                                                        MaxValue="32" Labels="{Binding Path=Radio2Labels}">
+                                                        MaxValue="32" Labels="{Binding Path=Radio5GHzLabels}">
                                             <liveChart:Axis.Separator>
                                                 <liveChart:Separator Step="1" StrokeThickness="0" />
                                             </liveChart:Axis.Separator>

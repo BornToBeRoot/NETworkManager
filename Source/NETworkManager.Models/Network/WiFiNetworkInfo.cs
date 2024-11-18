@@ -3,7 +3,7 @@
 namespace NETworkManager.Models.Network;
 
 /// <summary>
-///     Class contains information about a WiFi network.
+///     Class contains information about a Wi-Fi network.
 /// </summary>
 public class WiFiNetworkInfo
 {
@@ -17,17 +17,17 @@ public class WiFiNetworkInfo
     #region Variables
 
     /// <summary>
-    ///     Information's about an available WiFi network.
+    ///     Information's about an available Wi-Fi network.
     /// </summary>
     public WiFiAvailableNetwork AvailableNetwork { get; init; }
 
     /// <summary>
-    ///     Indicates if the WiFi network Ssid is hidden.
+    ///     Indicates if the Wi-Fi network Ssid is hidden.
     /// </summary>
     public bool IsHidden { get; set; }
 
     /// <summary>
-    ///     Indicates if the WiFi network is connected to the current WiFi adapter.
+    ///     Indicates if the Wi-Fi network is connected to the current WiFi adapter.
     /// </summary>
     public bool IsConnected { get; set; }
 

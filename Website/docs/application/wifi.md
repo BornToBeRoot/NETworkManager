@@ -32,7 +32,7 @@ Due to limitations of the `Windows.Devices.WiFi` API the channel bandwidth canno
 
 Right-click on the result to copy or export the information.
 
-:::note
+:::
 
 ## Channels
 
@@ -42,6 +42,6 @@ On the **Channels** tab, all wireless networks of the selected wireless network 
 
 You can move the mouse over the channel to display all wireless networks in a ToolTip that occupy that channel.
 
-:::note
+:::
 
 ![WiFi - Channel](../img/wifi--channel.png)
