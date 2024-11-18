@@ -70,7 +70,6 @@
             </MenuItem>
         </ContextMenu>
     </mah:MetroWindow.Resources>
-
     <mah:MetroWindow.InputBindings>
         <KeyBinding Command="{Binding OpenRunCommand}" Modifiers="Control+Shift" Key="P" />
     </mah:MetroWindow.InputBindings>
@@ -89,7 +88,7 @@
         </mah:WindowCommands>
     </mah:MetroWindow.LeftWindowCommands>
     <mah:MetroWindow.RightWindowCommands>
-        <mah:WindowCommands ShowSeparators="False">
+        <mah:WindowCommands ShowSeparators="False" Visibility="{Binding IsWelcomeWindowOpen, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
             <Button Command="{Binding OpenRunCommand}"
                     Visibility="{Binding Path=FlyoutRunCommandIsOpen, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}"
                     ToolTip="{x:Static localization:Strings.ToolTip_RunCommandWithHotKey}"
