@@ -23,6 +23,8 @@ Release date: **xx.xx.2024**
 
 ## Bugfixes
 
+- Changed the Welcome dialog from `MahApps.Metro.Controls.Dialogs` to `MahApps.Metro.SimpleChildWindow`, so the main window can be dragged and resized on the first start. [#2914](https://github.com/BornToBeRoot/NETworkManager/pull/2914)
+
 ## Dependencies, Refactoring & Documentation
 
 - Code cleanup & refactoring

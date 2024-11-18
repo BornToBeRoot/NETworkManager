@@ -1,8 +1,8 @@
 ﻿namespace NETworkManager.Views;
 
-public partial class WelcomeDialog
+public partial class WelcomeChildWindow
 {
-    public WelcomeDialog()
+    public WelcomeChildWindow()
     {
         InitializeComponent();
     }
