@@ -1,5 +1,6 @@
 ﻿using log4net;
 using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Documentation;
 using NETworkManager.Localization;
@@ -126,6 +127,21 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private bool _isInTray;
     private bool _isClosing;
+
+    private bool _isWelcomeWindowOpen;
+
+    public bool IsWelcomeWindowOpen
+    {
+        get => _isWelcomeWindowOpen;
+        set
+        {
+            if (value == _isWelcomeWindowOpen)
+                return;
+
+            _isWelcomeWindowOpen = value;
+            OnPropertyChanged();
+        }
+    }
 
     private bool _applicationViewIsExpanded;
 
@@ -487,14 +503,14 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         // Show welcome dialog
         if (SettingsManager.Current.WelcomeDialog_Show)
         {
-            var customDialog = new CustomDialog
-            {
-                Title = Strings.Welcome
-            };
+
+            var x = new WelcomeChildWindow();
 
             var welcomeViewModel = new WelcomeViewModel(async instance =>
             {
-                await this.HideMetroDialogAsync(customDialog);
+                IsWelcomeWindowOpen = false;
+
+                x.IsOpen = false;
 
                 // Set settings based on user choice
                 SettingsManager.Current.Update_CheckForUpdatesAtStartup = instance.CheckForUpdatesAtStartup;
@@ -546,12 +562,11 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 Load();
             });
 
-            customDialog.Content = new WelcomeDialog
-            {
-                DataContext = welcomeViewModel
-            };
+            x.DataContext = welcomeViewModel;
 
-            await this.ShowMetroDialogAsync(customDialog).ConfigureAwait(true);
+            IsWelcomeWindowOpen = true;
+
+            await this.ShowChildWindowAsync(x);
         }
         else
         {
@@ -1315,7 +1330,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     {
         if (!FlyoutRunCommandIsOpen)
             return;
-        
+
         FlyoutRunCommandIsOpen = false;
 
         ConfigurationManager.OnDialogClose();
@@ -1522,9 +1537,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     private void CheckForUpdates()
     {
         var updater = new Updater();
-        
+
         updater.UpdateAvailable += Updater_UpdateAvailable;
-        
+
         updater.CheckOnGitHub(Properties.Resources.NETworkManager_GitHub_User,
             Properties.Resources.NETworkManager_GitHub_Repo, AssemblyManager.Current.Version,
             SettingsManager.Current.Update_CheckForPreReleases);
@@ -1945,7 +1960,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 OpenStatusWindow(true);
             }));
         }
-    
+
         _isNetworkChanging = false;
     }
 

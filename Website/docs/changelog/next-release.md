@@ -17,20 +17,22 @@ Release date: **xx.xx.2024**
 
 ## Breaking Changes
 
-- Minimum supported Windows version increased is now `22H2`
+- Minimum supported Windows version increased to `22H2`. [#2912](https://github.com/BornToBeRoot/NETworkManager/pull/2912)
 
 ## What's new?
 
 ## Improvements
 
 - **WiFi**
-  - `WPA3 Personal (SAE)`, `WPA3 Enterprise` and `WPA3 Enterprise (192-bit)` are now supported
-  - `802.11be` (`EHT`) is now supported
+  - `WPA3 Personal (SAE)`, `WPA3 Enterprise` and `WPA3 Enterprise (192-bit)` are now supported. [#2912](https://github.com/BornToBeRoot/NETworkManager/pull/2912)
+  - `802.11be` (`EHT`) is now supported. [#2912](https://github.com/BornToBeRoot/NETworkManager/pull/2912)
 
 ## Bugfixes
 
+- Changed the Welcome dialog from `MahApps.Metro.Controls.Dialogs` to `MahApps.Metro.SimpleChildWindow`, so the main window can be dragged and resized on the first start. [#2914](https://github.com/BornToBeRoot/NETworkManager/pull/2914)
+
 - **WiFi**
-  - Fixed a bug that caused the scan process to crash when a 6 GHz network was found
+  - Fixed a bug that caused the scan process to crash when a 6 GHz network was found. [#2912](https://github.com/BornToBeRoot/NETworkManager/pull/2912)
 
 ## Dependencies, Refactoring & Documentation
 
