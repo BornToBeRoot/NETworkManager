@@ -47,7 +47,7 @@ after_build:
       }
 
       # Build path
-      $BuildPath = "$($env:APPVEYOR_BUILD_FOLDER)\Source\NETworkManager\bin\Release\net8.0-windows10.0.17763.0\win-x64"
+      $BuildPath = "$($env:APPVEYOR_BUILD_FOLDER)\Source\NETworkManager\bin\Release\net8.0-windows10.0.22621.0\win-x64"
       $SetupPath = "$($env:APPVEYOR_BUILD_FOLDER)\Source\NETworkManager.Setup\bin\x64\Release\en-US\NETworkManager.Setup.msi"
       $ArtifactsPath = "$($env:APPVEYOR_BUILD_FOLDER)\Artifacts"
 
