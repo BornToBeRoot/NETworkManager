@@ -11,6 +11,8 @@ updates:
   - ":heavy_check_mark: dependencies"
 - package-ecosystem: "dotnet-sdk"
   directory: "/Source"
+  ignore:
+    versions: '9.*'
   schedule:
     interval: weekly
   target-branch: main
