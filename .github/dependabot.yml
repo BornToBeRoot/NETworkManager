@@ -14,7 +14,7 @@ updates:
   ignore:
   - dependency-name: dotnet-sdk
     update-types:
-    - "major"
+    - "version-update:semver-major"
   schedule:
     interval: weekly
   target-branch: main
