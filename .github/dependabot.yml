@@ -3,10 +3,19 @@ updates:
 - package-ecosystem: "nuget"
   directory: "/Source"
   schedule:
-    interval: weekly  
+    interval: weekly
   target-branch: main
   commit-message:
     prefix: "Dependency (dependabot/nuget):"
+  labels:
+  - ":heavy_check_mark: dependencies"
+- package-ecosystem: "dotnet-sdk"
+  directory: "/Source"
+  schedule:
+    interval: weekly
+  target-branch: main
+  commit-message:
+    prefix: "Dependency (dependabot/dotnet-sdk):"
   labels:
   - ":heavy_check_mark: dependencies"
 - package-ecosystem: "npm"
