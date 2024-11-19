@@ -12,6 +12,7 @@ updates:
 - package-ecosystem: "dotnet-sdk"
   directory: "/Source"
   ignore:
+  - dependency-name: dotnet-sdk
     versions: '9.*'
   schedule:
     interval: weekly
