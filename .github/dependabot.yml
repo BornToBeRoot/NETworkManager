@@ -13,7 +13,8 @@ updates:
   directory: "/Source"
   ignore:
   - dependency-name: dotnet-sdk
-    versions: '9.*'
+    update-types:
+    - "major"
   schedule:
     interval: weekly
   target-branch: main
