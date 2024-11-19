@@ -21,11 +21,12 @@ Release date: **xx.xx.2024**
 
 ## What's new?
 
-## Improvements
-
 - **WiFi**
+  - 6 GHz networks are not supported. [#2912](https://github.com/BornToBeRoot/NETworkManager/pull/2912)
   - `WPA3 Personal (SAE)`, `WPA3 Enterprise` and `WPA3 Enterprise (192-bit)` are now supported. [#2912](https://github.com/BornToBeRoot/NETworkManager/pull/2912)
   - `802.11be` (`EHT`) is now supported. [#2912](https://github.com/BornToBeRoot/NETworkManager/pull/2912)
+
+## Improvements
 
 ## Bugfixes
 
