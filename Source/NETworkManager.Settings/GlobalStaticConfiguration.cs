@@ -92,6 +92,8 @@ public static class GlobalStaticConfiguration
     // Application: WiFi
     public static bool WiFi_Show2dot4GHzNetworks => true;
     public static bool WiFi_Show5GHzNetworks => true;
+    public static bool WiFi_Show6GHzNetworks => true;
+
 
     public static AutoRefreshTimeInfo WiFi_AutoRefreshTime =>
         AutoRefreshTime.GetDefaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);

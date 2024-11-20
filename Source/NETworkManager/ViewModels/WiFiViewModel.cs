@@ -254,6 +254,27 @@ public class WiFiViewModel : ViewModelBase
         }
     }
 
+    private bool _show6GHzNetworks;
+
+    public bool Show6GHzNetworks
+    {
+        get => _show6GHzNetworks;
+        set
+        {
+            if (value == _show6GHzNetworks)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.WiFi_Show6GHzNetworks = value;
+
+            _show6GHzNetworks = value;
+
+            NetworksView.Refresh();
+
+            OnPropertyChanged();
+        }
+    }
+
     private ObservableCollection<WiFiNetworkInfo> _networks = new();
 
     public ObservableCollection<WiFiNetworkInfo> Networks
@@ -454,11 +475,13 @@ public class WiFiViewModel : ViewModelBase
             if (o is not WiFiNetworkInfo info)
                 return false;
 
-            if (WiFi.Is2dot4GHzNetwork(info.AvailableNetwork.ChannelCenterFrequencyInKilohertz) &&
-                !Show2dot4GHzNetworks)
+            if (info.Radio == WiFiRadio.GHz2dot4 && !Show2dot4GHzNetworks)
                 return false;
 
-            if (WiFi.Is5GHzNetwork(info.AvailableNetwork.ChannelCenterFrequencyInKilohertz) && !Show5GHzNetworks)
+            if (info.Radio == WiFiRadio.GHz5 && !Show5GHzNetworks)
+                return false;
+
+            if (info.Radio == WiFiRadio.GHz6 && !Show6GHzNetworks)
                 return false;
 
             if (string.IsNullOrEmpty(Search))
@@ -466,15 +489,11 @@ public class WiFiViewModel : ViewModelBase
 
             // Search by: SSID, Security, Channel, BSSID (MAC address), Vendor, Phy kind
             return info.AvailableNetwork.Ssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   WiFi.GetHumanReadableNetworkAuthenticationType(info.AvailableNetwork.SecuritySettings
-                       .NetworkAuthenticationType).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   $"{WiFi.GetChannelFromChannelFrequency(info.AvailableNetwork.ChannelCenterFrequencyInKilohertz)}"
-                       .IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   WiFi.GetHumanReadableNetworkAuthenticationType(info.AvailableNetwork.SecuritySettings.NetworkAuthenticationType).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   $"{info.Channel}".IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    info.AvailableNetwork.Bssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   OUILookup.LookupByMacAddress(info.AvailableNetwork.Bssid).FirstOrDefault()?.Vendor
-                       .IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   WiFi.GetHumanReadablePhyKind(info.AvailableNetwork.PhyKind)
-                       .IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
+                   OUILookup.LookupByMacAddress(info.AvailableNetwork.Bssid).FirstOrDefault()?.Vendor.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   WiFi.GetHumanReadablePhyKind(info.AvailableNetwork.PhyKind).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
         // Load network adapters
@@ -503,6 +522,7 @@ public class WiFiViewModel : ViewModelBase
     {
         Show2dot4GHzNetworks = SettingsManager.Current.WiFi_Show2dot4GHzNetworks;
         Show5GHzNetworks = SettingsManager.Current.WiFi_Show5GHzNetworks;
+        Show6GHzNetworks = SettingsManager.Current.WiFi_Show6GHzNetworks;
     }
 
     #endregion
@@ -665,15 +685,21 @@ public class WiFiViewModel : ViewModelBase
 
                 Networks.Add(network);
 
-                switch (network.AvailableNetwork.ChannelCenterFrequencyInKilohertz)
+                switch (network.Radio)
                 {
-                    case var frequency when WiFi.Is2dot4GHzNetwork(frequency):
-                        Radio2dot4GHzSeries.Add(GetSeriesCollection(network, WiFiRadio.Radio2dot4GHz));
+                    case WiFiRadio.GHz2dot4:
+                        Radio2dot4GHzSeries.Add(GetSeriesCollection(network));
                         break;
 
-                    case var frequency when WiFi.Is5GHzNetwork(frequency):
-                        Radio5GHzSeries.Add(GetSeriesCollection(network, WiFiRadio.Radio5GHz));
+                    case WiFiRadio.GHz5:
+                        Radio5GHzSeries.Add(GetSeriesCollection(network));
                         break;
+
+                        // ToDo: Implement 6 GHz
+                        /*
+                        case WiFiRadio.GHz6:
+                            break;
+                        */
                 }
             }
 
@@ -710,9 +736,9 @@ public class WiFiViewModel : ViewModelBase
 
         var size = radio switch
         {
-            WiFiRadio.Radio2dot4GHz => Radio2dot4GHzLabels.Length,
-            WiFiRadio.Radio5GHz => Radio5GHzLabels.Length,
-            WiFiRadio.Radio6GHz => Radio6GHzLabels.Length,
+            WiFiRadio.GHz2dot4 => Radio2dot4GHzLabels.Length,
+            WiFiRadio.GHz5 => Radio5GHzLabels.Length,
+            WiFiRadio.GHz6 => Radio6GHzLabels.Length,
             _ => 0
         };
 
@@ -722,9 +748,9 @@ public class WiFiViewModel : ViewModelBase
         return values;
     }
 
-    private ChartValues<double> GetChartValues(WiFiNetworkInfo network, WiFiRadio radio, int index)
+    private ChartValues<double> GetChartValues(WiFiNetworkInfo network, int index)
     {
-        var values = GetDefaultChartValues(radio);
+        var values = GetDefaultChartValues(network.Radio);
 
         var reverseMilliwatts = 100 - network.AvailableNetwork.NetworkRssiInDecibelMilliwatts * -1;
 
@@ -738,24 +764,22 @@ public class WiFiViewModel : ViewModelBase
         return values;
     }
 
-    private LineSeries GetSeriesCollection(WiFiNetworkInfo network, WiFiRadio radio)
+    private LineSeries GetSeriesCollection(WiFiNetworkInfo network)
     {
-        var radioLabels = radio switch
+        var radioLabels = network.Radio switch
         {
-            WiFiRadio.Radio2dot4GHz => Radio2dot4GHzLabels,
-            WiFiRadio.Radio5GHz => Radio5GHzLabels,
-            WiFiRadio.Radio6GHz => Radio6GHzLabels,
+            WiFiRadio.GHz2dot4 => Radio2dot4GHzLabels,
+            WiFiRadio.GHz5 => Radio5GHzLabels,
+            WiFiRadio.GHz6 => Radio6GHzLabels,
             _ => []
         };
 
-        var channel = WiFi.GetChannelFromChannelFrequency(network.AvailableNetwork.ChannelCenterFrequencyInKilohertz);
-
-        var index = Array.IndexOf(radioLabels, $"{channel}");
+        var index = Array.IndexOf(radioLabels, $"{network.Channel}");
 
         return new LineSeries
         {
             Title = $"{network.AvailableNetwork.Ssid} ({network.AvailableNetwork.Bssid})",
-            Values = GetChartValues(network, radio, index),
+            Values = GetChartValues(network, index),
             PointGeometry = null,
             LineSmoothness = 0
         };
@@ -933,7 +957,7 @@ public class WiFiViewModel : ViewModelBase
                 SettingsManager.Current.WiFi_ExportFileType = instance.FileType;
                 SettingsManager.Current.WiFi_ExportFilePath = instance.FilePath;
             }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-            new[] { ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json }, true,
+            [ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json], true,
             SettingsManager.Current.WiFi_ExportFileType, SettingsManager.Current.WiFi_ExportFilePath);
 
         customDialog.Content = new ExportDialog

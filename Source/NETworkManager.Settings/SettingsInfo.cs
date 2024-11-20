@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Xml.Serialization;
-using DnsClient;
+﻿using DnsClient;
 using Lextm.SharpSnmpLib.Messaging;
 using NETworkManager.Controls;
 using NETworkManager.Models;
@@ -15,6 +9,12 @@ using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Utilities;
+using System;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Xml.Serialization;
 
 // ReSharper disable InconsistentNaming
 
@@ -800,6 +800,21 @@ public class SettingsInfo : INotifyPropertyChanged
                 return;
 
             _wiFi_Show5GHzNetworks = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _wiFi_Show6GHzNetworks = GlobalStaticConfiguration.WiFi_Show6GHzNetworks;
+
+    public bool WiFi_Show6GHzNetworks
+    {
+        get => _wiFi_Show6GHzNetworks;
+        set
+        {
+            if (value == _wiFi_Show6GHzNetworks)
+                return;
+
+            _wiFi_Show6GHzNetworks = value;
             OnPropertyChanged();
         }
     }
