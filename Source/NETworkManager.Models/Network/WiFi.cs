@@ -67,12 +67,24 @@ public static class WiFi
         // Try to get the current connected Wi-Fi network of this network adapter
         var (_, bssid) = TryGetConnectedNetworkFromWiFiAdapter(adapter.NetworkAdapter.NetworkAdapterId.ToString());
 
-        var wifiNetworkInfos = adapter.NetworkReport.AvailableNetworks.Select(availableNetwork => new WiFiNetworkInfo
+        var wifiNetworkInfos = new List<WiFiNetworkInfo>();
+
+        foreach (var availableNetwork in adapter.NetworkReport.AvailableNetworks)
         {
-            AvailableNetwork = availableNetwork,
-            IsHidden = string.IsNullOrEmpty(availableNetwork.Ssid),
-            IsConnected = availableNetwork.Bssid.Equals(bssid, StringComparison.OrdinalIgnoreCase)
-        }).ToList();
+            var channelFrequencyInGigahertz = ConvertChannelFrequencyToGigahertz(availableNetwork.ChannelCenterFrequencyInKilohertz);
+
+            var wifiNetworkInfo = new WiFiNetworkInfo
+            {
+                AvailableNetwork = availableNetwork,
+                Radio = GetWiFiRadioFromChannelFrequency(channelFrequencyInGigahertz),
+                ChannelCenterFrequencyInGigahertz = channelFrequencyInGigahertz,
+                Channel = GetChannelFromChannelFrequency(channelFrequencyInGigahertz),
+                IsHidden = string.IsNullOrEmpty(availableNetwork.Ssid),
+                IsConnected = availableNetwork.Bssid.Equals(bssid, StringComparison.OrdinalIgnoreCase),
+            };
+
+            wifiNetworkInfos.Add(wifiNetworkInfo);
+        }
 
         return new WiFiNetworkScanInfo
         {
@@ -241,14 +253,14 @@ public static class WiFi
     /// <summary>
     ///     Get the Wi-Fi channel from channel frequency.
     /// </summary>
-    /// <param name="kilohertz">Input like 2422000 or 5240000.</param>
+    /// <param name="gigahertz">Input like 2.422 or 5.240.</param>
     /// <returns>WiFi channel like 3 or 48.</returns>
-    public static int GetChannelFromChannelFrequency(int kilohertz)
+    public static int GetChannelFromChannelFrequency(double gigahertz)
     {
-        return ConvertChannelFrequencyToGigahertz(kilohertz) switch
+        return gigahertz switch
         {
             // 2.4 GHz
-            2.412 => 1, 
+            2.412 => 1,
             2.417 => 2,
             2.422 => 3,
             2.427 => 4,
@@ -303,34 +315,19 @@ public static class WiFi
     }
 
     /// <summary>
-    ///     Check if the Wi-Fi network is a 2.4 GHz network.
+    ///    Get the Wi-Fi radio like 2.4 GHz, 5 GHz, etc. from the channel frequency.
     /// </summary>
-    /// <param name="kilohertz">Frequency in kilohertz like 2422000 or 5240000.</param>
-    /// <returns>True if Wi-Fi network is 2.4 GHz.</returns>
-    public static bool Is2dot4GHzNetwork(int kilohertz)
+    /// <param name="gigahertz">Frequency in gigahertz like 2.412 or 5.180.</param>
+    /// <returns>Radio like 2.4 GHz, 5 GHz, etc. as <see cref="WiFiRadio" />.</returns>
+    public static WiFiRadio GetWiFiRadioFromChannelFrequency(double gigahertz)
     {
-        var x = ConvertChannelFrequencyToGigahertz(kilohertz);
-
-        return x is >= 2.412 and <= 2.484;
-    }
-
-    /// <summary>
-    ///     Check if the Wi-Fi network is a 5 GHz network.
-    /// </summary>
-    /// <param name="kilohertz">Frequency in kilohertz like 2422000 or 5240000.</param>
-    /// <returns>True if Wi-Fi network is 5 GHz.</returns>
-    public static bool Is5GHzNetwork(int kilohertz)
-    {
-        var x = ConvertChannelFrequencyToGigahertz(kilohertz);
-
-        return x is >= 5.180 and <= 5.825;
-    }
-    
-    public static bool Is6GHzNetwork(int kilohertz)
-    {
-        var x = ConvertChannelFrequencyToGigahertz(kilohertz);
-
-        return x is >= 5.925 and <= 7.125;
+        return gigahertz switch
+        {
+            >= 2.412 and <= 2.484 => WiFiRadio.GHz2dot4,
+            >= 5.180 and <= 5.825 => WiFiRadio.GHz5,
+            >= 5.925 and <= 7.125 => WiFiRadio.GHz6,
+            _ => WiFiRadio.Unknown
+        };
     }
 
     /// <summary>

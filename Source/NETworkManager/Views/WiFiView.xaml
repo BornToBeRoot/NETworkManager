@@ -238,6 +238,8 @@
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="10" />
                                             <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Grid.Column="0" Grid.Row="0"
                                                    Text="{x:Static Member=localization:Strings.Networks}"
@@ -249,7 +251,10 @@
                                         <CheckBox Grid.Column="6" Grid.Row="0"
                                                   Content="{x:Static Member=localization:Strings.GHz5}"
                                                   IsChecked="{Binding Path=Show5GHzNetworks}" />
-                                        <TextBox Grid.Column="8" Grid.Row="0"
+                                        <CheckBox Grid.Column="8" Grid.Row="0"
+                                                  Content="{x:Static Member=localization:Strings.GHz6}"
+                                                  IsChecked="{Binding Path=Show6GHzNetworks}" />
+                                        <TextBox Grid.Column="10" Grid.Row="0"
                                                  Width="250"
                                                  Text="{Binding Path=Search, UpdateSourceTrigger=PropertyChanged}"
                                                  Style="{StaticResource ResourceKey=SearchTextBox}" />
@@ -305,11 +310,11 @@
                                                               Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                                     <MenuItem Header="{x:Static Member=localization:Strings.Frequency}"
                                                               Command="{Binding Path=CopyDataToClipboardCommand}"
-                                                              CommandParameter="{Binding Path=SelectedNetwork.AvailableNetwork.ChannelCenterFrequencyInKilohertz, Converter={StaticResource ResourceKey=WiFiChannelCenterFrequencyToFrequencyStringConverter}}"
+                                                              CommandParameter="{Binding Path=SelectedNetwork.ChannelCenterFrequencyInGigahertz, Converter={StaticResource ResourceKey=WiFiChannelCenterFrequencyToFrequencyStringConverter}}"
                                                               Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                                     <MenuItem Header="{x:Static Member=localization:Strings.Channel}"
                                                               Command="{Binding Path=CopyDataToClipboardCommand}"
-                                                              CommandParameter="{Binding Path=SelectedNetwork.AvailableNetwork.ChannelCenterFrequencyInKilohertz, Converter={StaticResource ResourceKey=WiFiChannelCenterFrequencyToChannelStringConverter}}"
+                                                              CommandParameter="{Binding Path=SelectedNetwork.Channel, Converter={StaticResource ResourceKey=WiFiChannelCenterFrequencyToChannelStringConverter}}"
                                                               Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                                     <MenuItem
                                                         Header="{x:Static Member=localization:Strings.SignalStrength}"
@@ -568,10 +573,10 @@
                                                 SortMemberPath="AvailableNetwork.SecuritySettings.NetworkAuthenticationType" />
                                             <DataGridTextColumn
                                                 Header="{x:Static Member=localization:Strings.Frequency}"
-                                                Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).ChannelCenterFrequencyInKilohertz, Converter={StaticResource ResourceKey=WiFiChannelCenterFrequencyToFrequencyStringConverter}}"
+                                                Binding="{Binding Path=(network:WiFiNetworkInfo.ChannelCenterFrequencyInGigahertz), Converter={StaticResource ResourceKey=WiFiChannelCenterFrequencyToFrequencyStringConverter}}"
                                                 SortMemberPath="AvailableNetwork.ChannelCenterFrequencyInKilohertz" />
                                             <DataGridTextColumn Header="{x:Static Member=localization:Strings.Channel}"
-                                                                Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).ChannelCenterFrequencyInKilohertz, Converter={StaticResource ResourceKey=WiFiChannelCenterFrequencyToChannelStringConverter}}"
+                                                                Binding="{Binding Path=(network:WiFiNetworkInfo.Channel), Converter={StaticResource ResourceKey=WiFiChannelCenterFrequencyToChannelStringConverter}}"
                                                                 SortMemberPath="AvailableNetwork.ChannelCenterFrequencyInKilohertz" />
                                             <DataGridTextColumn
                                                 Header="{x:Static Member=localization:Strings.SignalStrength}"
