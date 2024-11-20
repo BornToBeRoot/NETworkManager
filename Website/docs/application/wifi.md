@@ -18,7 +18,7 @@ Right-click on a wireless network opens a context menu with the following option
 - **Disconnect**: Disconnect from the selected wireless network.
 - **Export...**: Opens a dialog to export the selected or all wireless network(s) to a file.
 
-In the search field, you can filter the wireless networks by `SSID`, `Security`, `Channel`, `MAC Address (BSSID)`, `Vendor` and `Phy kind`. The search is case insensitive.
+In the search field, you can filter the wireless networks by `SSID`, `Security`, `Channel`, `BSSID (MAC Address)`, `Vendor` and `Phy kind`. The search is case insensitive.
 
 :::note
 
