@@ -40,6 +40,6 @@ Release date: **xx.xx.2024**
 
 ## Dependencies, Refactoring & Documentation
 
-- Code cleanup & refactoring
+- Code cleanup & refactoring [#2940](https://github.com/BornToBeRoot/NETworkManager/pull/2940)
 - Language files updated via [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration)
 - Dependencies updated via [#dependabot](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot)
