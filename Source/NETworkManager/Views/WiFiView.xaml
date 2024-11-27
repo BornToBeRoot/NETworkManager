@@ -27,18 +27,12 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
-        <converters:MACAddressToVendorConverter x:Key="MACAddressToVendorConverter" />
         <converters:TimeSpanToMillisecondConverter x:Key="TimeSpanToMillisecondConverter" />
         <converters:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter" />
-        <converters:WiFiAuthenticationTypeToHumanReadableStringConverter
-            x:Key="WiFiAuthenticationTypeToHumanReadableStringConverter" />
-        <converters:WiFiChannelCenterFrequencyToChannelStringConverter
-            x:Key="WiFiChannelCenterFrequencyToChannelStringConverter" />
         <converters:WiFiChannelCenterFrequencyToFrequencyStringConverter
             x:Key="WiFiChannelCenterFrequencyToFrequencyStringConverter" />
         <converters:WiFiNetworkRssiInDecibelMilliwattsToSignalStrengthStringConverter
             x:Key="WiFiNetworkRssiInDecibelMilliwattsToSignalStrengthStringConverter" />
-        <converters:WiFiPhyKindToStringConverter x:Key="WiFiPhyKindToStringConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid>
@@ -306,7 +300,7 @@
                                                               Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                                     <MenuItem Header="{x:Static Member=localization:Strings.Security}"
                                                               Command="{Binding Path=CopyDataToClipboardCommand}"
-                                                              CommandParameter="{Binding Path=SelectedNetwork.AvailableNetwork.SecuritySettings.NetworkAuthenticationType, Converter={StaticResource ResourceKey=WiFiAuthenticationTypeToHumanReadableStringConverter}}"
+                                                              CommandParameter="{Binding Path=SelectedNetwork.NetworkAuthenticationType}"
                                                               Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                                     <MenuItem Header="{x:Static Member=localization:Strings.Frequency}"
                                                               Command="{Binding Path=CopyDataToClipboardCommand}"
@@ -314,7 +308,7 @@
                                                               Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                                     <MenuItem Header="{x:Static Member=localization:Strings.Channel}"
                                                               Command="{Binding Path=CopyDataToClipboardCommand}"
-                                                              CommandParameter="{Binding Path=SelectedNetwork.Channel, Converter={StaticResource ResourceKey=WiFiChannelCenterFrequencyToChannelStringConverter}}"
+                                                              CommandParameter="{Binding Path=SelectedNetwork.Channel}"
                                                               Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                                     <MenuItem
                                                         Header="{x:Static Member=localization:Strings.SignalStrength}"
@@ -337,11 +331,11 @@
                                                               Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                                     <MenuItem Header="{x:Static Member=localization:Strings.Vendor}"
                                                               Command="{Binding Path=CopyDataToClipboardCommand}"
-                                                              CommandParameter="{Binding Path=SelectedNetwork.AvailableNetwork.Bssid, Converter={StaticResource ResourceKey=MACAddressToVendorConverter}}"
+                                                              CommandParameter="{Binding Path=SelectedNetwork.Vendor}"
                                                               Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                                     <MenuItem Header="{x:Static Member=localization:Strings.PhyKind}"
                                                               Command="{Binding Path=CopyDataToClipboardCommand}"
-                                                              CommandParameter="{Binding Path=SelectedNetwork.AvailableNetwork.PhyKind, Converter={StaticResource ResourceKey=WiFiPhyKindToStringConverter}}"
+                                                              CommandParameter="{Binding Path=SelectedNetwork.PhyKind}"
                                                               Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                                     <MenuItem
                                                         Header="{x:Static Member=localization:Strings.NetworkKind}"
@@ -569,15 +563,15 @@
                                                 SortMemberPath="IsConnected" />
                                             <DataGridTextColumn
                                                 Header="{x:Static Member=localization:Strings.Security}"
-                                                Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SecuritySettings.NetworkAuthenticationType, Converter={StaticResource ResourceKey=WiFiAuthenticationTypeToHumanReadableStringConverter}}"
-                                                SortMemberPath="AvailableNetwork.SecuritySettings.NetworkAuthenticationType" />
+                                                Binding="{Binding Path=(network:WiFiNetworkInfo.NetworkAuthenticationType)}"
+                                                SortMemberPath="NetworkAuthenticationType" />
                                             <DataGridTextColumn
                                                 Header="{x:Static Member=localization:Strings.Frequency}"
                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.ChannelCenterFrequencyInGigahertz), Converter={StaticResource ResourceKey=WiFiChannelCenterFrequencyToFrequencyStringConverter}}"
-                                                SortMemberPath="AvailableNetwork.ChannelCenterFrequencyInKilohertz" />
+                                                SortMemberPath="ChannelCenterFrequencyInGigahertz" />
                                             <DataGridTextColumn Header="{x:Static Member=localization:Strings.Channel}"
-                                                                Binding="{Binding Path=(network:WiFiNetworkInfo.Channel), Converter={StaticResource ResourceKey=WiFiChannelCenterFrequencyToChannelStringConverter}}"
-                                                                SortMemberPath="AvailableNetwork.ChannelCenterFrequencyInKilohertz" />
+                                                                Binding="{Binding Path=(network:WiFiNetworkInfo.Channel)}"
+                                                                SortMemberPath="Channel" />
                                             <DataGridTextColumn
                                                 Header="{x:Static Member=localization:Strings.SignalStrength}"
                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).NetworkRssiInDecibelMilliwatts, Converter={StaticResource ResourceKey=WiFiNetworkRssiInDecibelMilliwattsToSignalStrengthStringConverter}}"
@@ -594,11 +588,11 @@
                                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).Bssid}"
                                                                 SortMemberPath="AvailableNetwork.Bssid" />
                                             <DataGridTextColumn Header="{x:Static Member=localization:Strings.Vendor}"
-                                                                Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).Bssid, Converter={StaticResource ResourceKey=MACAddressToVendorConverter}}"
-                                                                SortMemberPath="AvailableNetwork.Bssid" />
+                                                                Binding="{Binding Path=(network:WiFiNetworkInfo.Vendor)}"
+                                                                SortMemberPath="Vendor" />
                                             <DataGridTextColumn Header="{x:Static Member=localization:Strings.PhyKind}"
-                                                                Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).PhyKind, Converter={StaticResource ResourceKey=WiFiPhyKindToStringConverter}}"
-                                                                SortMemberPath="AvailableNetwork.PhyKind" />
+                                                                Binding="{Binding Path=(network:WiFiNetworkInfo.PhyKind)}"
+                                                                SortMemberPath="PhyKind" />
                                             <DataGridTextColumn
                                                 Header="{x:Static Member=localization:Strings.NetworkKind}"
                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).NetworkKind}"

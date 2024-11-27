@@ -25,10 +25,10 @@ public class WiFiNetworkInfo
     /// <summary>
     ///    Radio that is used like 2.4 GHz, 5 GHz, etc.
     /// </summary>
-    public WiFiRadio Radio { get; set; }
+    public WiFiRadio Radio { get; init; }
 
     /// <summary>
-    ///    The channel center frequency in Gigahertz.
+    ///    The channel center frequency in Gigahertz like 2.4 GHz, 5 GHz, etc.
     /// </summary>
     public double ChannelCenterFrequencyInGigahertz { get; set; }
 
@@ -47,5 +47,19 @@ public class WiFiNetworkInfo
     /// </summary>
     public bool IsConnected { get; set; }
 
+    /// <summary>
+    /// Human-readable network authentication type.
+    /// </summary>
+    public string NetworkAuthenticationType { get; set; }
+    
+    /// <summary>
+    /// Vendor of the Wi-Fi network like Cisco, Netgear, etc.
+    /// </summary>
+    public string Vendor { get; set; }
+    
+    /// <summary>
+    /// Human-readable phy kind.
+    /// </summary>
+    public string PhyKind { get; set; }
     #endregion
 }

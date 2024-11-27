@@ -84,7 +84,7 @@ public class WiFiViewModel : ViewModelBase
         }
     }
 
-    private List<WiFiAdapterInfo> _adapters = new();
+    private List<WiFiAdapterInfo> _adapters = [];
 
     public List<WiFiAdapterInfo> Adapters
     {
@@ -487,13 +487,14 @@ public class WiFiViewModel : ViewModelBase
             if (string.IsNullOrEmpty(Search))
                 return true;
 
-            // Search by: SSID, Security, Channel, BSSID (MAC address), Vendor, Phy kind
+            // Search by: SSID, Security, Frequency , Channel, BSSID (MAC address), Vendor, Phy kind
             return info.AvailableNetwork.Ssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   WiFi.GetHumanReadableNetworkAuthenticationType(info.AvailableNetwork.SecuritySettings.NetworkAuthenticationType).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.NetworkAuthenticationType.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   $"{info.ChannelCenterFrequencyInGigahertz}".IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    $"{info.Channel}".IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    info.AvailableNetwork.Bssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   OUILookup.LookupByMacAddress(info.AvailableNetwork.Bssid).FirstOrDefault()?.Vendor.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   WiFi.GetHumanReadablePhyKind(info.AvailableNetwork.PhyKind).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
+                   info.Vendor.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.PhyKind.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
         // Load network adapters
