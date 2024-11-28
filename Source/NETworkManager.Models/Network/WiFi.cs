@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Windows.Devices.WiFi;
 using Windows.Networking.Connectivity;
 using Windows.Security.Credentials;
+using NETworkManager.Models.Lookup;
 
 namespace NETworkManager.Models.Network;
 
@@ -81,6 +82,9 @@ public static class WiFi
                 Channel = GetChannelFromChannelFrequency(channelFrequencyInGigahertz),
                 IsHidden = string.IsNullOrEmpty(availableNetwork.Ssid),
                 IsConnected = availableNetwork.Bssid.Equals(bssid, StringComparison.OrdinalIgnoreCase),
+                NetworkAuthenticationType = GetHumanReadableNetworkAuthenticationType(availableNetwork.SecuritySettings.NetworkAuthenticationType),
+                Vendor = (await OUILookup.LookupByMacAddressAsync(availableNetwork.Bssid)).FirstOrDefault()?.Vendor ?? "-/-",
+                PhyKind = GetHumanReadablePhyKind(availableNetwork.PhyKind)
             };
 
             wifiNetworkInfos.Add(wifiNetworkInfo);

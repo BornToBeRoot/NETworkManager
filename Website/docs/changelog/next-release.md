@@ -28,6 +28,9 @@ Release date: **xx.xx.2024**
 
 ## Improvements
 
+- **WiFi**
+  - Improve search, cleanup/remove some converters to make the code more readable and faster. [#2940](https://github.com/BornToBeRoot/NETworkManager/pull/2940)
+
 ## Bugfixes
 
 - Changed the Welcome dialog from `MahApps.Metro.Controls.Dialogs` to `MahApps.Metro.SimpleChildWindow`, so the main window can be dragged and resized on the first start. [#2914](https://github.com/BornToBeRoot/NETworkManager/pull/2914)
@@ -37,6 +40,6 @@ Release date: **xx.xx.2024**
 
 ## Dependencies, Refactoring & Documentation
 
-- Code cleanup & refactoring
+- Code cleanup & refactoring [#2940](https://github.com/BornToBeRoot/NETworkManager/pull/2940)
 - Language files updated via [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration)
 - Dependencies updated via [#dependabot](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot)
