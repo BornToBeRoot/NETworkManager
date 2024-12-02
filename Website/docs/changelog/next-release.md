@@ -33,6 +33,7 @@ Release date: **xx.xx.2024**
 
 ## Bugfixes
 
+- Fixed an issue with DPI scaling where the application was blurry if a second monitor had a different dpi setting than the main monitor. [#2941](https://github.com/BornToBeRoot/NETworkManager/pull/2941)
 - Changed the Welcome dialog from `MahApps.Metro.Controls.Dialogs` to `MahApps.Metro.SimpleChildWindow`, so the main window can be dragged and resized on the first start. [#2914](https://github.com/BornToBeRoot/NETworkManager/pull/2914)
 
 - **WiFi**

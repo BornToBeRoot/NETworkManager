@@ -1,4 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+	
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
         <TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
@@ -8,15 +9,16 @@
         <!-- Publish a single file can't be used when accessing assembly file path
         <PublishSingleFile>true</PublishSingleFile>
         <PublishReadyToRun>true</PublishReadyToRun>
-        -->
+        -->		
         <CsWinRTWindowsMetadata>sdk</CsWinRTWindowsMetadata>
         <RootNamespace>NETworkManager</RootNamespace>
         <AssemblyName>NETworkManager</AssemblyName>
         <UseWPF>true</UseWPF>
-        <UseWindowsForms>true</UseWindowsForms>
+        <UseWindowsForms>true</UseWindowsForms>		
         <StartupObject>NETworkManager.App</StartupObject>
-        <ApplicationIcon>NETworkManager.ico</ApplicationIcon>
-        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<ApplicationIcon>NETworkManager.ico</ApplicationIcon>		
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
         <Authors>BornToBeRoot</Authors>
         <PackageProjectUrl>https://github.com/BornToBeRoot/NETworkManager</PackageProjectUrl>
