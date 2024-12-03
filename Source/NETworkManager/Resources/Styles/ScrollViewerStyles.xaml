@@ -3,7 +3,7 @@
     <Style x:Key="DefaultScrollViewer" TargetType="{x:Type ScrollViewer}"
            BasedOn="{StaticResource MahApps.Styles.ScrollViewer}">
         <Setter Property="PanningMode" Value="Both" />
-        <Setter Property="HorizontalScrollBarVisibility" Value="Hidden" />
+        <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
         <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="Template">
             <Setter.Value>
