@@ -809,9 +809,6 @@ Erstelle zuerst ein Backup der Profildatei bevor du die Verschlüsselung aktivie
   <data name="DNSServer" xml:space="preserve">
     <value>DNS-Server</value>
   </data>
-  <data name="OpenDocumentation" xml:space="preserve">
-    <value>Dokumentation öffnen</value>
-  </data>
   <data name="Domain" xml:space="preserve">
     <value>Domäne</value>
   </data>
@@ -853,9 +850,6 @@ Erstelle zuerst ein Backup der Profildatei bevor du die Verschlüsselung aktivie
   </data>
   <data name="FixedScreenSize" xml:space="preserve">
     <value>Feste Bildschirmgröße:</value>
-  </data>
-  <data name="StarForkTheProjectOnGitHub" xml:space="preserve">
-    <value>Star/Fork das Projekt auf GitHub</value>
   </data>
   <data name="Found" xml:space="preserve">
     <value>Gefunden</value>
@@ -1958,14 +1952,14 @@ URL: https://api.ipify.org und https://api6.ipify.org</value>
   <data name="ExternalServices" xml:space="preserve">
     <value>Externe Dienste</value>
   </data>
-  <data name="ToolTip_GitHubProjectUrl" xml:space="preserve">
+  <data name="ToolTip_StarForkProjectOnGitHub" xml:space="preserve">
     <value>Star/Fork das Projekt auf GitHub.</value>
   </data>
-  <data name="ToolTip_TransifexProjectUrl" xml:space="preserve">
-    <value>Helfen Sie bei der Übersetzung des Projects auf Transifex.</value>
+  <data name="ToolTip_HelpTranslateOnTransifex" xml:space="preserve">
+    <value>Helfen Sie bei der Übersetzung des Projekts auf Transifex.</value>
   </data>
-  <data name="ToolTip_TwitterContactUrl" xml:space="preserve">
-    <value>Kontakt über Twitter.</value>
+  <data name="ToolTip_ContactOrContactMeViaX" xml:space="preserve">
+    <value>Folgen Sie mir oder kontaktieren Sie mich über X.</value>
   </data>
   <data name="Connection" xml:space="preserve">
     <value>Verbindung</value>
@@ -2283,11 +2277,8 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="TimeoutS" xml:space="preserve">
     <value>Timeout (s)</value>
   </data>
-  <data name="ReportAnIssueOrCreateAFeatureRequest" xml:space="preserve">
-    <value>Problem melden oder einen Feature-Request erstellen</value>
-  </data>
-  <data name="ToolTip_GithubNewIssueUrl" xml:space="preserve">
-    <value>Ein Problem melden oder eine Feature-Anfrage erstellen.</value>
+  <data name="ToolTip_ReportIssueOrCreateFeatureRequest" xml:space="preserve">
+    <value>Melden Sie ein Problem oder erstellen Sie einen Feature Request.</value>
   </data>
   <data name="BeaconInterval" xml:space="preserve">
     <value>Beacon-Intervall</value>
@@ -2346,8 +2337,8 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="IsEncrypted" xml:space="preserve">
     <value>Ist Verschlüsselt</value>
   </data>
-  <data name="ToolTip_GithubDocumentationUrl" xml:space="preserve">
-    <value>Dokumentation auf GitHub öffnen.</value>
+  <data name="ToolTip_OpenTheDocumentation" xml:space="preserve">
+    <value>Öffnen Sie die Dokumentation.</value>
   </data>
   <data name="ExampleProfileFileName" xml:space="preserve">
     <value>Kunde 1</value>
@@ -3854,5 +3845,11 @@ Rechtsklick für weitere Optionen.</value>
   </data>
   <data name="GHz6" xml:space="preserve">
     <value>6 GHz</value>
+  </data>
+  <data name="ToolTip_SupportThisProjectWithADonation" xml:space="preserve">
+    <value>Unterstützen Sie dieses Projekt mit einer Spende.</value>
+  </data>
+  <data name="OpenDocumentation" xml:space="preserve">
+    <value>Dokumentation öffnen</value>
   </data>
 </root>
