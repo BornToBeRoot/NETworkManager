@@ -61,7 +61,7 @@
 
 ## 📦 Download
 
-Pre-built and [signed](https://borntoberoot.net/NETworkManager/download#code-signing-policy) binaries (setup, portable and archive) are available on the [download page](https://borntoberoot.net/NETworkManager/Download) with install instructions (e.g. silent install). The files are provided via [GitHub releases](https://github.com/BornToBeRoot/NETworkManager/releases/latest).
+Pre-built and [signed](https://borntoberoot.net/NETworkManager/download#-code-signing-policy) binaries (setup, portable and archive) are available on the [download page](https://borntoberoot.net/NETworkManager/Download) with install instructions (e.g. silent install). The files are provided via [GitHub releases](https://github.com/BornToBeRoot/NETworkManager/releases/latest).
 
 In addition, NETworkManager is also available through the following [package managers](https://borntoberoot.net/NETworkManager/download#package-manager)
 
@@ -91,7 +91,7 @@ In addition, NETworkManager is also available through the following [package man
 
   Evergreen PowerShell module: <https://github.com/aaronparker/evergreen>
 
-## ❤️ Donate
+## Donate
 
 NETworkManager is open-source and provided for free, without any ads. I'm developing it in my spare time. If you like the project and want to support it, you can donate a few coins so I can buy a coffee :coffee: or a beer :beer:. Feel free to leave a star and share the project with your friends and colleagues. Thank you!
 
