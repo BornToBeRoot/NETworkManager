@@ -91,7 +91,7 @@ In addition, NETworkManager is also available through the following [package man
 
   Evergreen PowerShell module: <https://github.com/aaronparker/evergreen>
 
-## ♥️ Donate
+## ❤️ Donate
 
 NETworkManager is open-source and provided for free, without any ads. I'm developing it in my spare time. If you like the project and want to support it, you can donate a few coins so I can buy a coffee :coffee: or a beer :beer:. Feel free to leave a star and share the project with your friends and colleagues. Thank you!
 
