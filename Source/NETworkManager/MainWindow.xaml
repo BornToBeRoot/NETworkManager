@@ -148,7 +148,7 @@
                       IsDropDownOpen="{Binding IsProfileFileDropDownOpened}"
                       Background="{DynamicResource MahApps.Brushes.Gray10}"
                       BorderThickness="0"
-                      MinWidth="100"
+                      MinWidth="180"
                       HorizontalAlignment="Left"
                       Focusable="False"
                       VerticalAlignment="Center"
@@ -188,10 +188,10 @@
                         </Grid>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
-            </ComboBox>
+            </ComboBox>           
             <Button Command="{Binding OpenWebsiteCommand}"
-                    ToolTip="{x:Static localization:Strings.StarForkTheProjectOnGitHub}"
-                    CommandParameter="{x:Static resources:Resources.NETworkManager_RepoUrl}"
+                    ToolTip="{x:Static localization:Strings.ToolTip_StarForkProjectOnGitHub}"
+                    CommandParameter="{x:Static resources:Resources.NETworkManager_GitHubRepoUrl}"
                     Cursor="Hand"
                     Focusable="False">
                 <StackPanel Orientation="Horizontal">
@@ -203,9 +203,10 @@
                     </Rectangle>
                 </StackPanel>
             </Button>
+          
             <Button Command="{Binding OpenWebsiteCommand}"
-                    ToolTip="{x:Static localization:Strings.ReportAnIssueOrCreateAFeatureRequest}"
-                    CommandParameter="{x:Static resources:Resources.NETworkManager_NewIssueUrl}"
+                    ToolTip="{x:Static localization:Strings.ToolTip_ReportIssueOrCreateFeatureRequest}"
+                    CommandParameter="{x:Static resources:Resources.NETworkManager_GitHubNewIssueUrl}"
                     Cursor="Hand"
                     Focusable="False">
                 <StackPanel Orientation="Horizontal">
@@ -218,7 +219,7 @@
                 </StackPanel>
             </Button>
             <Button Command="{Binding OpenDocumentationCommand}"
-                    ToolTip="{x:Static localization:Strings.OpenDocumentation}"
+                    ToolTip="{x:Static localization:Strings.ToolTip_OpenTheDocumentation}"
                     Cursor="Hand"
                     Focusable="False">
                 <StackPanel Orientation="Horizontal">
@@ -226,6 +227,20 @@
                                Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Book}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding OpenWebsiteCommand}"
+          ToolTip="{x:Static localization:Strings.ToolTip_SupportThisProjectWithADonation}"
+          CommandParameter="{x:Static resources:Resources.NETworkManager_DonateUrl}"
+          Cursor="Hand"
+          Focusable="False">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="20" Height="20"
+                     Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Heart}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </StackPanel>

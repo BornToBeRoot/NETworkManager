@@ -69,9 +69,9 @@
                                 <Setter Property="Cursor" Value="Hand" />
                             </Style>
                         </StackPanel.Resources>
-                        <Button ToolTip="{x:Static localization:Strings.ToolTip_GitHubProjectUrl}"
+                        <Button ToolTip="{x:Static localization:Strings.ToolTip_StarForkProjectOnGitHub}"
                                 Command="{Binding OpenWebsiteCommand}"
-                                CommandParameter="{x:Static resources:Resources.NETworkManager_RepoUrl}">
+                                CommandParameter="{x:Static resources:Resources.NETworkManager_GitHubRepoUrl}">
                             <Rectangle Width="24" Height="24">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Github}" />
@@ -90,9 +90,9 @@
                                 </Rectangle.Style>
                             </Rectangle>
                         </Button>
-                        <Button ToolTip="{x:Static localization:Strings.ToolTip_GithubNewIssueUrl}"
+                        <Button ToolTip="{x:Static localization:Strings.ToolTip_ReportIssueOrCreateFeatureRequest}"
                                 Command="{Binding OpenWebsiteCommand}"
-                                CommandParameter="{x:Static resources:Resources.NETworkManager_NewIssueUrl}"
+                                CommandParameter="{x:Static resources:Resources.NETworkManager_GitHubNewIssueUrl}"
                                 Margin="10,0,0,0">
                             <Rectangle Width="24" Height="24">
                                 <Rectangle.OpacityMask>
@@ -112,7 +112,7 @@
                                 </Rectangle.Style>
                             </Rectangle>
                         </Button>
-                        <Button ToolTip="{x:Static localization:Strings.ToolTip_GithubDocumentationUrl}"
+                        <Button ToolTip="{x:Static localization:Strings.ToolTip_OpenTheDocumentation}"
                                 Command="{Binding OpenDocumentationCommand}" Margin="10,0,0,0">
                             <Rectangle Width="24" Height="24">
                                 <Rectangle.OpacityMask>
@@ -123,8 +123,8 @@
                                         <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                         <Style.Triggers>
                                             <DataTrigger
-                                                Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
-                                                Value="True">
+                                               Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
+                                               Value="True">
                                                 <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -132,7 +132,29 @@
                                 </Rectangle.Style>
                             </Rectangle>
                         </Button>
-                        <Button ToolTip="{x:Static localization:Strings.ToolTip_TransifexProjectUrl}"
+                        <Button ToolTip="{x:Static localization:Strings.ToolTip_SupportThisProjectWithADonation}"
+                                Command="{Binding OpenWebsiteCommand}"
+                                CommandParameter="{x:Static resources:Resources.NETworkManager_DonateUrl}"
+                                Margin="10,0,0,0">
+                            <Rectangle Width="24" Height="24">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Heart}" />
+                                </Rectangle.OpacityMask>
+                                <Rectangle.Style>
+                                    <Style TargetType="{x:Type Rectangle}">
+                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                        <Style.Triggers>
+                                            <DataTrigger
+                                                 Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
+                                                 Value="True">          
+                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
+                            </Rectangle>
+                        </Button>
+                        <Button ToolTip="{x:Static localization:Strings.ToolTip_HelpTranslateOnTransifex}"
                                 Command="{Binding OpenWebsiteCommand}"
                                 CommandParameter="{x:Static resources:Resources.NETworkManager_TranslationUrl}"
                                 Margin="10,0,0,0">
@@ -154,13 +176,13 @@
                                 </Rectangle.Style>
                             </Rectangle>
                         </Button>
-                        <Button ToolTip="{x:Static localization:Strings.ToolTip_TwitterContactUrl}"
+                        <Button ToolTip="{x:Static localization:Strings.ToolTip_ContactOrContactMeViaX}"
                                 Command="{Binding OpenWebsiteCommand}"
-                                CommandParameter="{x:Static resources:Resources.NETworkManager_TwitterUrl}"
+                                CommandParameter="{x:Static resources:Resources.NETworkManager_XContactUrl}"
                                 Margin="10,0,0,0">
                             <Rectangle Width="24" Height="24">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Twitter}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:FontAwesome Kind=XTwitterBrands}" />
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
