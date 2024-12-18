@@ -811,9 +811,6 @@ Per alcune funzioni, la password deve essere convertita in una stringa normale e
   <data name="DNSServer" xml:space="preserve">
     <value>Server DNS</value>
   </data>
-  <data name="OpenDocumentation" xml:space="preserve">
-    <value>Apri documentazione</value>
-  </data>
   <data name="Domain" xml:space="preserve">
     <value>Dominio</value>
   </data>
@@ -857,9 +854,6 @@ Verifica se disponi delle autorizzazioni di scrittura.</value>
   </data>
   <data name="FixedScreenSize" xml:space="preserve">
     <value>Dimensione dello schermo fissa:</value>
-  </data>
-  <data name="StarForkTheProjectOnGitHub" xml:space="preserve">
-    <value>Star/fork del progetto su GitHub</value>
   </data>
   <data name="Found" xml:space="preserve">
     <value>Trovato</value>
@@ -1974,14 +1968,14 @@ URL: https://api.ipify.org e https://api6.ipify.org</value>
   <data name="ExternalServices" xml:space="preserve">
     <value>Servizi esterni</value>
   </data>
-  <data name="ToolTip_GitHubProjectUrl" xml:space="preserve">
-    <value>Start/fork progetto su Github.</value>
+  <data name="ToolTip_StarForkProjectOnGitHub" xml:space="preserve">
+    <value>Star/fork del progetto su GitHub.</value>
   </data>
-  <data name="ToolTip_TransifexProjectUrl" xml:space="preserve">
-    <value>Aiutaci nella traduzione del programma su Transiflex.</value>
+  <data name="ToolTip_HelpTranslateOnTransifex" xml:space="preserve">
+    <value>Aiutaci a tradurre il progetto su Transifex.</value>
   </data>
-  <data name="ToolTip_TwitterContactUrl" xml:space="preserve">
-    <value>Contattami su Twitter.</value>
+  <data name="ToolTip_ContactOrContactMeViaX" xml:space="preserve">
+    <value>Seguimi o contattami tramite X.</value>
   </data>
   <data name="Connection" xml:space="preserve">
     <value>Connessione</value>
@@ -2302,11 +2296,8 @@ $$hostname$$	--&gt;	Nome host</value>
   <data name="TimeoutS" xml:space="preserve">
     <value>Timeout (s)</value>
   </data>
-  <data name="ReportAnIssueOrCreateAFeatureRequest" xml:space="preserve">
-    <value>Segnala un problema o richiedi nuova funzionalità</value>
-  </data>
-  <data name="ToolTip_GithubNewIssueUrl" xml:space="preserve">
-    <value>Segnala un problema o richiedi nuova funzionalità.</value>
+  <data name="ToolTip_ReportIssueOrCreateFeatureRequest" xml:space="preserve">
+    <value>Segnala un problema o crea una richiesta di funzionalità.</value>
   </data>
   <data name="BeaconInterval" xml:space="preserve">
     <value>Intervallo Beacon</value>
@@ -2367,8 +2358,8 @@ Vedi messaggio errore: "{0}"</value>
   <data name="IsEncrypted" xml:space="preserve">
     <value>È criptato</value>
   </data>
-  <data name="ToolTip_GithubDocumentationUrl" xml:space="preserve">
-    <value>Apri documentazione su Github</value>
+  <data name="ToolTip_OpenTheDocumentation" xml:space="preserve">
+    <value>Apri la documentazione.</value>
   </data>
   <data name="ExampleProfileFileName" xml:space="preserve">
     <value>Personale 1</value>
@@ -3949,5 +3940,11 @@ Clic con il tasto destro per ulteriori opzioni.</value>
   </data>
   <data name="GHz6" xml:space="preserve">
     <value>6 GHz</value>
+  </data>
+  <data name="ToolTip_SupportThisProjectWithADonation" xml:space="preserve">
+    <value>Sostieni questo progetto con una donazione.</value>
+  </data>
+  <data name="OpenDocumentation" xml:space="preserve">
+    <value>Apri documentazione</value>
   </data>
 </root>
