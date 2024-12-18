@@ -61,7 +61,7 @@
 
 ## 📦 Download
 
-Pre-built and [signed](https://borntoberoot.net/NETworkManager/download#-code-signing-policy) binaries (setup, portable and archive) are available on the [download page](https://borntoberoot.net/NETworkManager/Download) with install instructions (e.g. silent install). The files are provided via [GitHub releases](https://github.com/BornToBeRoot/NETworkManager/releases/latest).
+Pre-built and [signed](https://borntoberoot.net/NETworkManager/download#code-signing-policy) binaries (setup, portable and archive) are available on the [download page](https://borntoberoot.net/NETworkManager/Download) with install instructions (e.g. silent install). The files are provided via [GitHub releases](https://github.com/BornToBeRoot/NETworkManager/releases/latest).
 
 In addition, NETworkManager is also available through the following [package managers](https://borntoberoot.net/NETworkManager/download#package-manager)
 
