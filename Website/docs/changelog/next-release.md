@@ -28,6 +28,7 @@ Release date: **xx.xx.2024**
 
 ## Improvements
 
+- Improve ToolTips (e.g. migrate from Twitter to X, etc.), Buttons, etc. [#2955](https://github.com/BornToBeRoot/NETworkManager/pull/2955)
 - **WiFi**
   - Improve search, cleanup/remove some converters to make the code more readable and faster. [#2940](https://github.com/BornToBeRoot/NETworkManager/pull/2940)
 
