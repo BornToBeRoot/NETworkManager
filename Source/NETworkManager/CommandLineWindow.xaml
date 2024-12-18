@@ -23,7 +23,7 @@
         <mahAppsControls:WindowCommands>
             <StackPanel Orientation="Horizontal">
                 <Button Command="{Binding OpenDocumentationCommand}"
-                        ToolTip="{x:Static localization:Strings.OpenDocumentation}" Cursor="Hand">
+                        ToolTip="{x:Static localization:Strings.ToolTip_OpenTheDocumentation}" Cursor="Hand">
                     <StackPanel Orientation="Horizontal">
                         <Rectangle Width="20" Height="20"
                                    Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">

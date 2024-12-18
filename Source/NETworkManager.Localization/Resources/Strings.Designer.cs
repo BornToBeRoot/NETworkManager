@@ -8297,15 +8297,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Report an issue or create a feature request ähnelt.
-        /// </summary>
-        public static string ReportAnIssueOrCreateAFeatureRequest {
-            get {
-                return ResourceManager.GetString("ReportAnIssueOrCreateAFeatureRequest", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Report on GitHub ähnelt.
         /// </summary>
         public static string ReportOnGitHub {
@@ -9534,15 +9525,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Star/Fork the Project on GitHub ähnelt.
-        /// </summary>
-        public static string StarForkTheProjectOnGitHub {
-            get {
-                return ResourceManager.GetString("StarForkTheProjectOnGitHub", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Start minimized in tray ähnelt.
         /// </summary>
         public static string StartMinimizedInTray {
@@ -10245,29 +10227,38 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Open documentation on GitHub. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Follow or contact me via X. ähnelt.
         /// </summary>
-        public static string ToolTip_GithubDocumentationUrl {
+        public static string ToolTip_ContactOrContactMeViaX {
             get {
-                return ResourceManager.GetString("ToolTip_GithubDocumentationUrl", resourceCulture);
+                return ResourceManager.GetString("ToolTip_ContactOrContactMeViaX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Help translate the project on Transifex. ähnelt.
+        /// </summary>
+        public static string ToolTip_HelpTranslateOnTransifex {
+            get {
+                return ResourceManager.GetString("ToolTip_HelpTranslateOnTransifex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Open the documentation. ähnelt.
+        /// </summary>
+        public static string ToolTip_OpenTheDocumentation {
+            get {
+                return ResourceManager.GetString("ToolTip_OpenTheDocumentation", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Report an issue or create a feature request. ähnelt.
         /// </summary>
-        public static string ToolTip_GithubNewIssueUrl {
+        public static string ToolTip_ReportIssueOrCreateFeatureRequest {
             get {
-                return ResourceManager.GetString("ToolTip_GithubNewIssueUrl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Star/Fork the Project on GitHub. ähnelt.
-        /// </summary>
-        public static string ToolTip_GitHubProjectUrl {
-            get {
-                return ResourceManager.GetString("ToolTip_GitHubProjectUrl", resourceCulture);
+                return ResourceManager.GetString("ToolTip_ReportIssueOrCreateFeatureRequest", resourceCulture);
             }
         }
         
@@ -10281,20 +10272,20 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Help translate the project on Transifex. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Star/Fork the Project on GitHub. ähnelt.
         /// </summary>
-        public static string ToolTip_TransifexProjectUrl {
+        public static string ToolTip_StarForkProjectOnGitHub {
             get {
-                return ResourceManager.GetString("ToolTip_TransifexProjectUrl", resourceCulture);
+                return ResourceManager.GetString("ToolTip_StarForkProjectOnGitHub", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Contact via Twitter. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Support this project with a donation. ähnelt.
         /// </summary>
-        public static string ToolTip_TwitterContactUrl {
+        public static string ToolTip_SupportThisProjectWithADonation {
             get {
-                return ResourceManager.GetString("ToolTip_TwitterContactUrl", resourceCulture);
+                return ResourceManager.GetString("ToolTip_SupportThisProjectWithADonation", resourceCulture);
             }
         }
         
