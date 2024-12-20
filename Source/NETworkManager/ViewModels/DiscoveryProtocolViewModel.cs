@@ -6,6 +6,7 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using log4net;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
@@ -19,6 +20,7 @@ namespace NETworkManager.ViewModels;
 public class DiscoveryProtocolViewModel : ViewModelBase
 {
     #region Variables
+    private static readonly ILog Log = LogManager.GetLogger(typeof(DiscoveryProtocolViewModel));
 
     private readonly IDialogCoordinator _dialogCoordinator;
 
@@ -281,6 +283,8 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
+            Log.Error("Error while trying to capture", ex);
+            
             await _dialogCoordinator.ShowMessageAsync(this, Strings.Error, ex.Message,
                 MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
         }
@@ -306,6 +310,8 @@ public class DiscoveryProtocolViewModel : ViewModelBase
                 }
                 catch (Exception ex)
                 {
+                    Log.Error("Error while exporting data as " + instance.FileType, ex);
+                    
                     var settings = AppearanceManager.MetroDialog;
                     settings.AffirmativeButtonText = Strings.OK;
 
@@ -316,7 +322,8 @@ public class DiscoveryProtocolViewModel : ViewModelBase
 
                 SettingsManager.Current.DiscoveryProtocol_ExportFileType = instance.FileType;
                 SettingsManager.Current.DiscoveryProtocol_ExportFilePath = instance.FilePath;
-            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, [
+            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, 
+            [
                 ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
             ], false, SettingsManager.Current.DiscoveryProtocol_ExportFileType,
             SettingsManager.Current.DiscoveryProtocol_ExportFilePath);

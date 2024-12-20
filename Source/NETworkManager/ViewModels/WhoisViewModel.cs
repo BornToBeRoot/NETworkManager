@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
@@ -20,7 +21,8 @@ namespace NETworkManager.ViewModels;
 public class WhoisViewModel : ViewModelBase
 {
     #region Variables
-
+    private static readonly ILog Log = LogManager.GetLogger(typeof(IPScannerViewModel));
+    
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly Guid _tabId;
@@ -261,11 +263,13 @@ public class WhoisViewModel : ViewModelBase
             }
             catch (Exception ex)
             {
+                Log.Error("Error while exporting data as " + instance.FileType, ex);
+                
                 var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = Strings.OK;
 
                 await _dialogCoordinator.ShowMessageAsync(window, Strings.Error,
-                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine +
+                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
                     ex.Message, MessageDialogStyle.Affirmative, settings);
             }
 

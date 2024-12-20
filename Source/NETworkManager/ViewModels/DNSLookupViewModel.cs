@@ -10,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
 using DnsClient;
+using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
@@ -25,6 +26,7 @@ namespace NETworkManager.ViewModels;
 public class DNSLookupViewModel : ViewModelBase
 {
     #region Variables
+    private static readonly ILog Log = LogManager.GetLogger(typeof(DNSLookupViewModel));
 
     private readonly IDialogCoordinator _dialogCoordinator;
 
@@ -387,6 +389,8 @@ public class DNSLookupViewModel : ViewModelBase
                 }
                 catch (Exception ex)
                 {
+                    Log.Error("Error while exporting data as " + instance.FileType, ex);
+                    
                     var settings = AppearanceManager.MetroDialog;
                     settings.AffirmativeButtonText = Strings.OK;
 
@@ -398,10 +402,9 @@ public class DNSLookupViewModel : ViewModelBase
                 SettingsManager.Current.DNSLookup_ExportFileType = instance.FileType;
                 SettingsManager.Current.DNSLookup_ExportFilePath = instance.FilePath;
             }, _ => { _dialogCoordinator.HideMetroDialogAsync(window, customDialog); },
-            new[]
-            {
+            [
                 ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
-            }, true,
+            ], true,
             SettingsManager.Current.DNSLookup_ExportFileType, SettingsManager.Current.DNSLookup_ExportFilePath);
 
         customDialog.Content = new ExportDialog

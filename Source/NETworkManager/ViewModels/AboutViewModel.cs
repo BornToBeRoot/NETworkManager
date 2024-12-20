@@ -1,14 +1,15 @@
-﻿using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows.Data;
-using System.Windows.Input;
-using NETworkManager.Documentation;
+﻿using NETworkManager.Documentation;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Properties;
 using NETworkManager.Settings;
 using NETworkManager.Update;
 using NETworkManager.Utilities;
+using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using System.Windows.Data;
+using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
@@ -33,12 +34,15 @@ public class AboutViewModel : ViewModelBase
 
     #region Methods
 
-    private void CheckForUpdates()
+    private async Task CheckForUpdatesAsync()
     {
         IsUpdateAvailable = false;
         ShowUpdaterMessage = false;
 
         IsUpdateCheckRunning = true;
+
+        // Show a loading animation for the user
+        await Task.Delay(1000);
 
         var updater = new Updater();
 
@@ -208,7 +212,7 @@ public class AboutViewModel : ViewModelBase
 
     private void CheckForUpdatesAction()
     {
-        CheckForUpdates();
+        CheckForUpdatesAsync();
     }
 
     public ICommand OpenWebsiteCommand => new RelayCommand(OpenWebsiteAction);

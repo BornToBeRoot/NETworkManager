@@ -3006,6 +3006,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Donate ähnelt.
+        /// </summary>
+        public static string Donate {
+            get {
+                return ResourceManager.GetString("Donate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Don&apos;t fragment ähnelt.
         /// </summary>
         public static string DontFragment {
@@ -8297,6 +8306,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  ähnelt.
+        /// </summary>
+        public static string ReportAnIssueOrCreateAFeatureRequest {
+            get {
+                return ResourceManager.GetString("ReportAnIssueOrCreateAFeatureRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Report on GitHub ähnelt.
         /// </summary>
         public static string ReportOnGitHub {
@@ -9525,6 +9543,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  ähnelt.
+        /// </summary>
+        public static string StarForkTheProjectOnGitHub {
+            get {
+                return ResourceManager.GetString("StarForkTheProjectOnGitHub", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Start minimized in tray ähnelt.
         /// </summary>
         public static string StartMinimizedInTray {
@@ -10236,6 +10263,33 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  ähnelt.
+        /// </summary>
+        public static string ToolTip_GithubDocumentationUrl {
+            get {
+                return ResourceManager.GetString("ToolTip_GithubDocumentationUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  ähnelt.
+        /// </summary>
+        public static string ToolTip_GithubNewIssueUrl {
+            get {
+                return ResourceManager.GetString("ToolTip_GithubNewIssueUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  ähnelt.
+        /// </summary>
+        public static string ToolTip_GitHubProjectUrl {
+            get {
+                return ResourceManager.GetString("ToolTip_GitHubProjectUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Help translate the project on Transifex. ähnelt.
         /// </summary>
         public static string ToolTip_HelpTranslateOnTransifex {
@@ -10286,6 +10340,24 @@ namespace NETworkManager.Localization.Resources {
         public static string ToolTip_SupportThisProjectWithADonation {
             get {
                 return ResourceManager.GetString("ToolTip_SupportThisProjectWithADonation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  ähnelt.
+        /// </summary>
+        public static string ToolTip_TransifexProjectUrl {
+            get {
+                return ResourceManager.GetString("ToolTip_TransifexProjectUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  ähnelt.
+        /// </summary>
+        public static string ToolTip_TwitterContactUrl {
+            get {
+                return ResourceManager.GetString("ToolTip_TwitterContactUrl", resourceCulture);
             }
         }
         

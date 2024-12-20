@@ -28,7 +28,6 @@ namespace NETworkManager.ViewModels;
 public class TracerouteViewModel : ViewModelBase
 {
     #region Variables
-
     private static readonly ILog Log = LogManager.GetLogger(typeof(TracerouteViewModel));
 
     private readonly IDialogCoordinator _dialogCoordinator;
@@ -359,6 +358,8 @@ public class TracerouteViewModel : ViewModelBase
                 }
                 catch (Exception ex)
                 {
+                    Log.Error("Error while exporting data as " + instance.FileType, ex);
+                    
                     var settings = AppearanceManager.MetroDialog;
                     settings.AffirmativeButtonText = Strings.OK;
 

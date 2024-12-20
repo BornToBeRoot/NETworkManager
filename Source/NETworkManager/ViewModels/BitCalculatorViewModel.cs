@@ -21,7 +21,6 @@ namespace NETworkManager.ViewModels;
 public class BitCalculatorViewModel : ViewModelBase
 {
     #region Variables
-
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private static readonly ILog Log = LogManager.GetLogger(typeof(BitCalculatorViewModel));
@@ -185,6 +184,8 @@ public class BitCalculatorViewModel : ViewModelBase
                 }
                 catch (Exception ex)
                 {
+                    Log.Error("Error while exporting data as " + instance.FileType, ex);
+                    
                     var settings = AppearanceManager.MetroDialog;
                     settings.AffirmativeButtonText = Strings.OK;
 
