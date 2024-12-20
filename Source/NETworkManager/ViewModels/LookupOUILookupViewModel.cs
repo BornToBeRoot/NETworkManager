@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Localization.Resources;
@@ -58,7 +59,8 @@ public class LookupOUILookupViewModel : ViewModelBase
     #endregion
 
     #region Variables
-
+    private static readonly ILog Log = LogManager.GetLogger(typeof(LookupOUILookupViewModel));
+    
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private string _search;
@@ -250,6 +252,8 @@ public class LookupOUILookupViewModel : ViewModelBase
             }
             catch (Exception ex)
             {
+                Log.Error("Error while exporting data as " + instance.FileType, ex);
+                
                 var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = Strings.OK;
 

@@ -26,24 +26,23 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />                
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Margin="0,0,0,20">
+            <Grid Grid.Column="0" Grid.Row="0" 
+                  Margin="0,0,0,20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Image Grid.Column="0" Grid.Row="0" Width="128" Height="128" Source="/NETworkManager.ico"
-                       VerticalAlignment="Center" />
-                <StackPanel Grid.Column="1" Margin="20,0,0,0">
+                </Grid.ColumnDefinitions>                
+                <Image Grid.Column="0" Grid.Row="0" Width="128" Height="128" Source="/NETworkManager.ico" VerticalAlignment="Top" Margin="10" />
+                <StackPanel Grid.Column="2" Grid.Row="0">
                     <TextBlock FontSize="32" Text="{x:Static resources:Resources.NETworkManager_ProjectName}"
                                Style="{StaticResource HeaderTextBlock}" />
                     <TextBlock Text="{x:Static localization:Strings.Slogan}" Style="{DynamicResource WrapTextBlock}"
                                Margin="0,0,0,5" />
                     <TextBlock Text="{Binding Version}" Style="{StaticResource DefaultTextBlock}" FontWeight="Bold"
-                               VerticalAlignment="Center" Margin="0,0,0,5" />
+                               VerticalAlignment="Center" Margin="0,0,0,10" />                    
                     <TextBlock Text="{x:Static resources:Resources.NETworkManager_License}"
                                Style="{StaticResource LinkTextBlock}" HorizontalAlignment="Left" Margin="0,0,0,5">
                         <TextBlock.InputBindings>
@@ -63,12 +62,77 @@
                             </TextBlock.InputBindings>
                         </TextBlock>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                        <Button ToolTip="{x:Static localization:Strings.ToolTip_SupportThisProjectWithADonation}"
+                                Command="{Binding OpenWebsiteCommand}"
+                                CommandParameter="{x:Static resources:Resources.NETworkManager_DonateUrl}"
+                                Style="{StaticResource ImageWithTextButton}"                        
+                                HorizontalAlignment="Left">
+                            <Button.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Heart}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                    <TextBlock Grid.Column="1" Grid.Row="0"                                           
+                                               Text="{x:Static localization:Strings.Donate}"
+                                               Style="{StaticResource ButtonWithImageTextBlock}" />               
+                                </Grid>
+                            </Button.Content>
+                        </Button>
+                        <Grid Margin="10,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" Grid.Row="0" x:Name="ButtonCheckForUpdates"                                    
+                                    Command="{Binding CheckForUpdatesCommand}"
+                                    IsEnabled="{Binding IsUpdateCheckRunning, Converter={StaticResource BooleanReverseConverter}}"
+                                    Style="{StaticResource DefaultButton}"
+                                    Content="{x:Static localization:Strings.CheckForUpdates}" />
+                            <StackPanel Grid.Column="2" Grid.Row="0"
+                                        Orientation="Horizontal"
+                                        Visibility="{Binding IsUpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                <StackPanel.InputBindings>
+                                    <MouseBinding Gesture="LeftClick" Command="{Binding OpenWebsiteCommand}"
+                                                  CommandParameter="{Binding UpdateReleaseUrl, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel.InputBindings>
+                                <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Accent}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=RocketLaunchOutline}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                                <TextBlock Text="{Binding UpdateText}" 
+                                           Style="{StaticResource LinkTextBlock}"
+                                           VerticalAlignment="Center"
+                                           Margin="10,0,0,0" />
+                            </StackPanel>
+                            <mahAppsControls:ProgressRing Grid.Column="2" Grid.Row="0"
+                                                          Visibility="{Binding IsUpdateCheckRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
+                                                          Height="{Binding ElementName=ButtonCheckForUpdates, Path=ActualHeight}"
+                                                          Width="{Binding ElementName=ButtonCheckForUpdates, Path=ActualHeight}"
+                                                          HorizontalAlignment="Left"
+                                                          IsActive="True" />
+                            <TextBlock Grid.Column="2" Grid.Row="0"
+                                       Text="{Binding UpdaterMessage}"
+                                       Visibility="{Binding ShowUpdaterMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
+                                       Style="{StaticResource CenterTextBlock}"
+                                       Margin="10,0,0,0" />
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                         <StackPanel.Resources>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
                                 <Setter Property="Cursor" Value="Hand" />
                             </Style>
                         </StackPanel.Resources>
+
                         <Button ToolTip="{x:Static localization:Strings.ToolTip_StarForkProjectOnGitHub}"
                                 Command="{Binding OpenWebsiteCommand}"
                                 CommandParameter="{x:Static resources:Resources.NETworkManager_GitHubRepoUrl}">
@@ -80,9 +144,8 @@
                                     <Style TargetType="{x:Type Rectangle}">
                                         <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                         <Style.Triggers>
-                                            <DataTrigger
-                                                Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
-                                                Value="True">
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
+                                                         Value="True">
                                                 <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -102,9 +165,8 @@
                                     <Style TargetType="{x:Type Rectangle}">
                                         <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                         <Style.Triggers>
-                                            <DataTrigger
-                                                Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
-                                                Value="True">
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
+                                                         Value="True">
                                                 <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -113,7 +175,8 @@
                             </Rectangle>
                         </Button>
                         <Button ToolTip="{x:Static localization:Strings.ToolTip_OpenTheDocumentation}"
-                                Command="{Binding OpenDocumentationCommand}" Margin="10,0,0,0">
+                                Command="{Binding OpenDocumentationCommand}"
+                                Margin="10,0,0,0">
                             <Rectangle Width="24" Height="24">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Book}" />
@@ -122,31 +185,8 @@
                                     <Style TargetType="{x:Type Rectangle}">
                                         <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                         <Style.Triggers>
-                                            <DataTrigger
-                                               Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
-                                               Value="True">
-                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Rectangle.Style>
-                            </Rectangle>
-                        </Button>
-                        <Button ToolTip="{x:Static localization:Strings.ToolTip_SupportThisProjectWithADonation}"
-                                Command="{Binding OpenWebsiteCommand}"
-                                CommandParameter="{x:Static resources:Resources.NETworkManager_DonateUrl}"
-                                Margin="10,0,0,0">
-                            <Rectangle Width="24" Height="24">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Heart}" />
-                                </Rectangle.OpacityMask>
-                                <Rectangle.Style>
-                                    <Style TargetType="{x:Type Rectangle}">
-                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                        <Style.Triggers>
-                                            <DataTrigger
-                                                 Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
-                                                 Value="True">          
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
+                                       Value="True">
                                                 <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -166,9 +206,8 @@
                                     <Style TargetType="{x:Type Rectangle}">
                                         <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                         <Style.Triggers>
-                                            <DataTrigger
-                                                Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
-                                                Value="True">
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
+                                                         Value="True">
                                                 <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -179,7 +218,7 @@
                         <Button ToolTip="{x:Static localization:Strings.ToolTip_ContactOrContactMeViaX}"
                                 Command="{Binding OpenWebsiteCommand}"
                                 CommandParameter="{x:Static resources:Resources.NETworkManager_XContactUrl}"
-                                Margin="10,0,0,0">
+                                Margin="10,0,0,0">        
                             <Rectangle Width="24" Height="24">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:FontAwesome Kind=XTwitterBrands}" />
@@ -188,9 +227,8 @@
                                     <Style TargetType="{x:Type Rectangle}">
                                         <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                         <Style.Triggers>
-                                            <DataTrigger
-                                                Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
-                                                Value="True">
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
+                                       Value="True">
                                                 <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -199,47 +237,14 @@
                             </Rectangle>
                         </Button>
                     </StackPanel>
-                </StackPanel>
+                </StackPanel>                
             </Grid>
-            <TextBlock Grid.Row="1" Text="{x:Static localization:Strings.Update}"
+            <TextBlock Grid.Column="0" Grid.Row="1" 
+                       Text="{x:Static localization:Strings.Libraries}"
                        Style="{StaticResource HeaderTextBlock}" />
-            <Grid Grid.Row="2" Margin="0,0,0,20">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" x:Name="ButtonCheckForUpdates" HorizontalAlignment="Left"
-                        Command="{Binding CheckForUpdatesCommand}"
-                        IsEnabled="{Binding IsUpdateCheckRunning, Converter={StaticResource BooleanReverseConverter}}"
-                        Style="{StaticResource DefaultButton}"
-                        Content="{x:Static localization:Strings.CheckForUpdates}" />
-                <StackPanel Grid.Column="2" Orientation="Horizontal"
-                            Visibility="{Binding IsUpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                    <StackPanel.InputBindings>
-                        <MouseBinding Gesture="LeftClick" Command="{Binding OpenWebsiteCommand}"
-                                      CommandParameter="{Binding UpdateReleaseUrl, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                    </StackPanel.InputBindings>
-                    <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Accent}">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=RocketLaunchOutline}" />
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
-                    <TextBlock Text="{Binding UpdateText}" Style="{StaticResource LinkTextBlock}"
-                               VerticalAlignment="Center" Margin="10,0,0,0" />
-                </StackPanel>
-                <mahAppsControls:ProgressRing Grid.Column="2"
-                                              Visibility="{Binding IsUpdateCheckRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                                              Height="{Binding ElementName=ButtonCheckForUpdates, Path=ActualHeight}"
-                                              Width="{Binding ElementName=ButtonCheckForUpdates, Path=ActualHeight}"
-                                              HorizontalAlignment="Left" IsActive="True" />
-                <TextBlock Grid.Column="2" Text="{Binding UpdaterMessage}"
-                           Visibility="{Binding ShowUpdaterMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                           Style="{StaticResource CenterTextBlock}" Margin="10,0,0,0" />
-            </Grid>
-            <TextBlock Grid.Row="3" Text="{x:Static localization:Strings.Libraries}"
-                       Style="{StaticResource HeaderTextBlock}" />
-            <DataGrid Grid.Row="4" ItemsSource="{Binding LibrariesView}" SelectedItem="{Binding SelectedLibraryInfo}"
+            <DataGrid Grid.Column="0" Grid.Row="2" 
+                      ItemsSource="{Binding LibrariesView}" 
+                      SelectedItem="{Binding SelectedLibraryInfo}"
                       Margin="0,0,0,10">
                 <DataGrid.Resources>
                     <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
@@ -294,8 +299,11 @@
                                         Binding="{Binding (documentation:LibraryInfo.License)}" MinWidth="150" />
                 </DataGrid.Columns>
             </DataGrid>
-            <Button Grid.Row="5" Command="{Binding OpenLicenseFolderCommand}" HorizontalAlignment="Right"
-                    Style="{StaticResource ImageWithTextButton}" Margin="0,0,0,20">
+            <Button Grid.Column="0" Grid.Row="3" 
+                    Command="{Binding OpenLicenseFolderCommand}" 
+                    HorizontalAlignment="Right"
+                    Style="{StaticResource ImageWithTextButton}" 
+                    Margin="0,0,0,20">
                 <Button.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -312,9 +320,12 @@
                     </Grid>
                 </Button.Content>
             </Button>
-            <TextBlock Grid.Row="6" Text="{x:Static localization:Strings.ExternalServices}"
+            <TextBlock Grid.Column="0" Grid.Row="4" 
+                       Text="{x:Static localization:Strings.ExternalServices}"
                        Style="{StaticResource HeaderTextBlock}" />
-            <DataGrid x:Name="DataGridExternalServices" Grid.Row="7" ItemsSource="{Binding ExternalServicesView}"
+            <DataGrid Grid.Column="0" Grid.Row="5"
+                      x:Name="DataGridExternalServices"                      
+                      ItemsSource="{Binding ExternalServicesView}"
                       SelectedItem="{Binding SelectedExternalServicesInfo}" Margin="0,0,0,20">
                 <DataGrid.Resources>
                     <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
@@ -356,9 +367,12 @@
                     </DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <TextBlock Grid.Row="8" Text="{x:Static localization:Strings.Resources}"
+            <TextBlock Grid.Column="0" Grid.Row="6"
+                       Text="{x:Static localization:Strings.Resources}"
                        Style="{StaticResource HeaderTextBlock}" />
-            <DataGrid x:Name="DataGridResources" Grid.Row="9" ItemsSource="{Binding ResourcesView}"
+            <DataGrid Grid.Column="0" Grid.Row="7" 
+                      x:Name="DataGridResources" 
+                      ItemsSource="{Binding ResourcesView}"
                       SelectedItem="{Binding SelectedResourceInfo}">
                 <DataGrid.Resources>
                     <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">

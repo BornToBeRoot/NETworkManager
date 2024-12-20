@@ -5,7 +5,6 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Localization;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
-using NETworkManager.Models.Lookup;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
@@ -800,7 +799,7 @@ public class WiFiViewModel : ViewModelBase
                 : string.Format(Strings.ConnectToXXX, selectedNetwork.AvailableNetwork.Ssid)
         };
 
-        var exportViewModel = new WiFiConnectViewModel(async instance =>
+        var connectViewModel = new WiFiConnectViewModel(async instance =>
             {
                 // Connect Open/PSK/EAP
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -900,7 +899,7 @@ public class WiFiViewModel : ViewModelBase
 
         customDialog.Content = new WiFiConnectDialog
         {
-            DataContext = exportViewModel
+            DataContext = connectViewModel
         };
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
@@ -947,6 +946,8 @@ public class WiFiViewModel : ViewModelBase
                 }
                 catch (Exception ex)
                 {
+                    Log.Error("Error while exporting data as " + instance.FileType, ex);
+
                     var settings = AppearanceManager.MetroDialog;
                     settings.AffirmativeButtonText = Strings.OK;
 

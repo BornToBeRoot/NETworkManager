@@ -1,9 +1,9 @@
-﻿using System;
+﻿using NETworkManager.Models.Network;
+using NETworkManager.Utilities;
+using System;
 using System.Security;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using NETworkManager.Models.Network;
-using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
@@ -344,7 +344,7 @@ public class WiFiConnectViewModel : ViewModelBase
             return;
 
         IsWpsChecking = true;
-        // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
+        // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
         await Task.Delay(1000);
 
         IsWpsAvailable =

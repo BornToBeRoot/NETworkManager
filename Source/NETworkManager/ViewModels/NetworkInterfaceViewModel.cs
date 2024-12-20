@@ -13,6 +13,7 @@ using System.Windows.Threading;
 using LiveCharts;
 using LiveCharts.Configurations;
 using LiveCharts.Wpf;
+using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Localization.Resources;
@@ -31,7 +32,8 @@ namespace NETworkManager.ViewModels;
 public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
-
+    private static readonly ILog Log = LogManager.GetLogger(typeof(NetworkInterfaceViewModel));
+    
     private readonly IDialogCoordinator _dialogCoordinator;
     private readonly DispatcherTimer _searchDispatcherTimer = new();
     private BandwidthMeter _bandwidthMeter;
@@ -692,6 +694,8 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
                 }
                 catch (Exception ex)
                 {
+                    Log.Error("Error while exporting data as " + instance.FileType, ex);
+                    
                     var settings = AppearanceManager.MetroDialog;
                     settings.AffirmativeButtonText = Strings.OK;
 

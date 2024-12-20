@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
+using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
@@ -23,7 +24,8 @@ namespace NETworkManager.ViewModels;
 public class SNTPLookupViewModel : ViewModelBase
 {
     #region Variables
-
+    private static readonly ILog Log = LogManager.GetLogger(typeof(SNTPLookupViewModel));
+    
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly Guid _tabId;
@@ -251,6 +253,8 @@ public class SNTPLookupViewModel : ViewModelBase
             }
             catch (Exception ex)
             {
+                Log.Error("Error while exporting data as " + instance.FileType, ex);
+                
                 var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = Strings.OK;
 

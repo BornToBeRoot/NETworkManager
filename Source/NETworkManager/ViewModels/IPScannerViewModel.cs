@@ -13,6 +13,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
+using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
@@ -32,11 +33,12 @@ namespace NETworkManager.ViewModels;
 public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 {
     #region Variables
-
+    private static readonly ILog Log = LogManager.GetLogger(typeof(IPScannerViewModel));
+    
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private CancellationTokenSource _cancellationTokenSource;
-
+    
     private readonly Guid _tabId;
     private bool _firstLoad = true;
     private bool _closed;
@@ -510,6 +512,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             }
             catch (Exception ex)
             {
+                Log.Error("Error trying to run custom command", ex);
+                
                 await _dialogCoordinator.ShowMessageAsync(this,
                     Strings.ResourceManager.GetString("Error",
                         LocalizationManager.GetInstance().Culture), ex.Message, MessageDialogStyle.Affirmative,
@@ -555,6 +559,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             }
             catch (Exception ex)
             {
+                Log.Error("Error while exporting data as " + instance.FileType, ex);
+                
                 var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = Strings.OK;
 
