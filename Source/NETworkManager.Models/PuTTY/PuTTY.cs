@@ -13,92 +13,76 @@ namespace NETworkManager.Models.PuTTY;
 public class PuTTY
 {
     /// <summary>
-    ///     Default PuTTY installation paths.
+    ///     PuTTY file name.
     /// </summary>
-    public static readonly List<string> GetDefaultInstallationPaths = new()
-    {
-        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), _puttyFolder, _puttyFile),
-        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), _puttyFolder, _puttyFile)
-    };
+    public static readonly string FileName = "putty.exe";
 
     /// <summary>
     ///     Default SZ registry keys for PuTTY profile NETworkManager.
     /// </summary>
-    private static readonly List<Tuple<string, string>> DefaultProfileRegkeysSZBase = new()
-    {
-        new Tuple<string, string>("Colour1", "255,255,255"),
-        new Tuple<string, string>("Colour3", "85,85,85"),
-        new Tuple<string, string>("Colour4", "0,0,0"),
-        new Tuple<string, string>("Colour5", "0,255,0"),
-        new Tuple<string, string>("Colour6", "0,0,0"),
-        new Tuple<string, string>("Colour7", "85,85,85"),
-        new Tuple<string, string>("Colour8", "187,0,0"),
-        new Tuple<string, string>("Colour9", "255,85,85"),
-        new Tuple<string, string>("Colour10", "0,187,0"),
-        new Tuple<string, string>("Colour11", "85,255,85"),
-        new Tuple<string, string>("Colour12", "187,187,0"),
-        new Tuple<string, string>("Colour13", "255,255,85"),
-        new Tuple<string, string>("Colour14", "0,0,187"),
-        new Tuple<string, string>("Colour15", "85,85,255"),
-        new Tuple<string, string>("Colour16", "187,0,187"),
-        new Tuple<string, string>("Colour17", "255,85,255"),
-        new Tuple<string, string>("Colour18", "0,187,187"),
-        new Tuple<string, string>("Colour19", "85,255,255"),
-        new Tuple<string, string>("Colour20", "187,187,187"),
-        new Tuple<string, string>("Colour21", "255,255,255"),
-        new Tuple<string, string>("LineCodePage", "UTF-8"),
-        new Tuple<string, string>("Font", "Consolas")
-    };
+    private static readonly List<Tuple<string, string>> DefaultProfileRegkeysSzBase =
+    [
+        new("Colour1", "255,255,255"),
+        new("Colour3", "85,85,85"),
+        new("Colour4", "0,0,0"),
+        new("Colour5", "0,255,0"),
+        new("Colour6", "0,0,0"),
+        new("Colour7", "85,85,85"),
+        new("Colour8", "187,0,0"),
+        new("Colour9", "255,85,85"),
+        new("Colour10", "0,187,0"),
+        new("Colour11", "85,255,85"),
+        new("Colour12", "187,187,0"),
+        new("Colour13", "255,255,85"),
+        new("Colour14", "0,0,187"),
+        new("Colour15", "85,85,255"),
+        new("Colour16", "187,0,187"),
+        new("Colour17", "255,85,255"),
+        new("Colour18", "0,187,187"),
+        new("Colour19", "85,255,255"),
+        new("Colour20", "187,187,187"),
+        new("Colour21", "255,255,255"),
+        new("LineCodePage", "UTF-8"),
+        new("Font", "Consolas")
+    ];
 
     /// <summary>
     ///     Default DWORD registry keys for PuTTY profile NETworkManager.
     /// </summary>
-    private static readonly List<Tuple<string, int>> DefaultProfileRegkeysDwordBase = new()
-    {
-        new Tuple<string, int>("CurType", 2),
-        new Tuple<string, int>("FontHeight", 12),
-        new Tuple<string, int>("BlinkCur", 1),
-        new Tuple<string, int>("ScrollBar", 0)
-    };
-
-    /// <summary>
-    ///     Name of the PuTTY folder.
-    /// </summary>
-    private static string _puttyFolder => "PuTTY";
-
-    /// <summary>
-    ///     Name of the PuTTY executable.
-    /// </summary>
-    private static string _puttyFile => "putty.exe";
+    private static readonly List<Tuple<string, int>> DefaultProfileRegkeysDwordBase =
+    [
+        new("CurType", 2),
+        new("FontHeight", 12),
+        new("BlinkCur", 1),
+        new("ScrollBar", 0)
+    ];
 
     /// <summary>
     ///     SZ registry keys for PuTTY profile NETworkManager if app theme is dark.
     /// </summary>
     /// <returns>List with SZ registry keys.</returns>
-    private static List<Tuple<string, string>> GetProfileRegkeysSZDark()
+    private static List<Tuple<string, string>> GetProfileRegkeysSzDark()
     {
-        return DefaultProfileRegkeysSZBase.Concat(
-            new[]
-            {
-                // new Tuple<string, string>("Colour0", "255,255,255"),
+        return DefaultProfileRegkeysSzBase.Concat(
+        [
+            // new Tuple<string, string>("Colour0", "255,255,255"),
                 new Tuple<string, string>("Colour0", "187,187,187"), // Foreground
                 new Tuple<string, string>("Colour2", "37,37,37") // Background
-            }).ToList();
+        ]).ToList();
     }
 
     /// <summary>
     ///     SZ registry keys for PuTTY profile NETworkManager if app theme is white.
     /// </summary>
     /// <returns>List with DWORD registry keys.</returns>
-    private static List<Tuple<string, string>> GetProfileRegkeysSZWhite()
+    private static List<Tuple<string, string>> GetProfileRegkeysSzWhite()
     {
-        return DefaultProfileRegkeysSZBase.Concat(
-            new[]
-            {
-                // new Tuple<string, string>("Colour0", "68,68,68"),
+        return DefaultProfileRegkeysSzBase.Concat(
+        [
+            // new Tuple<string, string>("Colour0", "68,68,68"),
                 new Tuple<string, string>("Colour0", "0,0,0"), // Foreground
                 new Tuple<string, string>("Colour2", "255,255,255") // Background
-            }).ToList();
+        ]).ToList();
     }
 
     /// <summary>
@@ -116,7 +100,7 @@ public class PuTTY
 
         if (registryKey != null)
         {
-            foreach (var item in theme == "Dark" ? GetProfileRegkeysSZDark() : GetProfileRegkeysSZWhite())
+            foreach (var item in theme == "Dark" ? GetProfileRegkeysSzDark() : GetProfileRegkeysSzWhite())
                 registryKey.SetValue(item.Item1, item.Item2);
 
             foreach (var item in DefaultProfileRegkeysDwordBase)

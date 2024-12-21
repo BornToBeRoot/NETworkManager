@@ -504,13 +504,13 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         if (SettingsManager.Current.WelcomeDialog_Show)
         {
 
-            var x = new WelcomeChildWindow();
+            var welcomeChildWindow = new WelcomeChildWindow();
 
             var welcomeViewModel = new WelcomeViewModel(async instance =>
             {
                 IsWelcomeWindowOpen = false;
 
-                x.IsOpen = false;
+                welcomeChildWindow.IsOpen = false;
 
                 // Set settings based on user choice
                 SettingsManager.Current.Update_CheckForUpdatesAtStartup = instance.CheckForUpdatesAtStartup;
@@ -547,13 +547,6 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                     break;
                 }
 
-                // Check if PuTTY is installed
-                foreach (var file in PuTTY.GetDefaultInstallationPaths.Where(File.Exists))
-                {
-                    SettingsManager.Current.PuTTY_ApplicationFilePath = file;
-                    break;
-                }
-
                 SettingsManager.Current.WelcomeDialog_Show = false;
 
                 // Save it to create a settings file
@@ -562,11 +555,11 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 Load();
             });
 
-            x.DataContext = welcomeViewModel;
+            welcomeChildWindow.DataContext = welcomeViewModel;
 
             IsWelcomeWindowOpen = true;
 
-            await this.ShowChildWindowAsync(x);
+            await this.ShowChildWindowAsync(welcomeChildWindow);
         }
         else
         {

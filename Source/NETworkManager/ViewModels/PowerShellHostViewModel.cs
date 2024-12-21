@@ -53,7 +53,6 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
     private readonly bool _isLoading;
     private bool _isViewActive = true;
-    private bool _disableFocusEmbeddedWindow;
 
     private bool _isConfigured;
 
@@ -84,28 +83,6 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-
-    /*
-    private DragablzTabItem _selectedTabItem;
-
-    public DragablzTabItem SelectedTabItem
-    {
-        get => _selectedTabItem;
-        set
-        {
-            if (value == _selectedTabItem)
-                return;
-
-            _selectedTabItem = value;
-
-            // Focus embedded window on switching tab
-            if (!_disableFocusEmbeddedWindow)
-                FocusEmbeddedWindow();
-
-            OnPropertyChanged();
-        }
-    }
-    */
 
     private bool _headerContextMenuIsOpen;
 
@@ -520,9 +497,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
             new PowerShellControl(tabId, sessionInfo), tabId));
 
         // Select the added tab
-        _disableFocusEmbeddedWindow = true;
         SelectedTabIndex = TabItems.Count - 1;
-        _disableFocusEmbeddedWindow = false;
     }
 
     public void AddTab(string host)

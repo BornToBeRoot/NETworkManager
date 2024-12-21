@@ -63,8 +63,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
     private readonly bool _isLoading;
     private bool _isViewActive = true;
-    private bool _disableFocusEmbeddedWindow;
-
+    
     private bool _isAWSCLIInstalled;
 
     public bool IsAWSCLIInstalled
@@ -154,27 +153,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-
-    private DragablzTabItem _selectedTabItem;
-
-    public DragablzTabItem SelectedTabItem
-    {
-        get => _selectedTabItem;
-        set
-        {
-            if (value == _selectedTabItem)
-                return;
-
-            _selectedTabItem = value;
-
-            // Focus embedded window on switching tab
-            if (!_disableFocusEmbeddedWindow)
-                FocusEmbeddedWindow();
-
-            OnPropertyChanged();
-        }
-    }
-
+    
     private bool _headerContextMenuIsOpen;
 
     public bool HeaderContextMenuIsOpen
@@ -854,9 +833,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
             new AWSSessionManagerControl(tabId, sessionInfo), tabId));
 
         // Select the added tab
-        _disableFocusEmbeddedWindow = true;
         SelectedTabIndex = TabItems.Count - 1;
-        _disableFocusEmbeddedWindow = false;
     }
 
     // Modify history list
