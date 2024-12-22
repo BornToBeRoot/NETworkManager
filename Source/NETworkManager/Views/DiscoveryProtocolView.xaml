@@ -4,9 +4,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:networkManager="clr-namespace:NETworkManager"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-             xmlns:loadingIndicators="clr-namespace:LoadingIndicators.WPF;assembly=LoadingIndicators.WPF"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
@@ -260,7 +260,7 @@
                         </TextBlock>
                         <StackPanel Grid.Column="0" Grid.Row="6" VerticalAlignment="Center"
                                     Visibility="{Binding IsCapturing, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                            <loadingIndicators:LoadingIndicator IsActive="True"
+                            <networkManager:LoadingIndicator IsActive="True"
                                                                 Style="{DynamicResource LoadingIndicatorArcsStyle}"
                                                                 SpeedRatio="1" Margin="0,0,0,10" />
                             <TextBlock Text="{x:Static localization:Strings.CapturingNetworkPackagesDots}"
