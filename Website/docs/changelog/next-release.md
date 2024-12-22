@@ -45,7 +45,7 @@ Release date: **xx.xx.2024**
 
 - **IP Scanner**
 
-  - NullReferenceException in ICMP & NETBIOS fixed for some IP addresses. [#2964](https://github.com/BornToBeRoot/NETworkManager/pull/2964)
+  - Fixed two `NullReferenceException` in ICMP & NETBIOS for some IP addresses. [#2964](https://github.com/BornToBeRoot/NETworkManager/pull/2964)
 
 ## Dependencies, Refactoring & Documentation
 
