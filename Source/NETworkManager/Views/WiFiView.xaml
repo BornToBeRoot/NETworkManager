@@ -8,10 +8,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-             xmlns:liveChart="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:liveChart="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" 
+             xmlns:networkManager="clr-namespace:NETworkManager"
              xmlns:controls="clr-namespace:NETworkManager.Controls"
-             xmlns:controls2="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
-             xmlns:loadingIndicators="clr-namespace:LoadingIndicators.WPF;assembly=LoadingIndicators.WPF"
+             xmlns:controls2="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"             
              xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
              xmlns:utilities="clr-namespace:NETworkManager.Utilities;assembly=NETworkManager.Utilities"
              dialogs:DialogParticipation.Register="{Binding}"
@@ -631,7 +631,7 @@
                                     <StackPanel Grid.Column="0" Grid.Row="2"
                                                 VerticalAlignment="Center"
                                                 Visibility="{Binding Path=IsNetworksLoading, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
-                                        <loadingIndicators:LoadingIndicator IsActive="True"
+                                        <networkManager:LoadingIndicator IsActive="True"
                                                                             Style="{DynamicResource ResourceKey=LoadingIndicatorArcsStyle}"
                                                                             SpeedRatio="1"
                                                                             Margin="0,0,0,10" />
@@ -770,8 +770,7 @@
                                Orientation="Horizontal"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Center">
-                        <loadingIndicators:LoadingIndicator IsActive="True"
-                                                            Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Accent}"
+                        <networkManager:LoadingIndicator IsActive="True"
                                                             Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
                                                             Visibility="{Binding Path=IsBackgroundSearchRunning, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                                             Width="24" Height="24"
@@ -790,9 +789,8 @@
                             <Rectangle Width="1"
                                        Stroke="{DynamicResource ResourceKey=MahApps.Brushes.Accent}"
                                        VerticalAlignment="Stretch" />
-                            <loadingIndicators:LoadingIndicator IsActive="True"
-                                                                Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Accent}"
-                                                                Style="{DynamicResource LoadingIndicatorPulseStyle}"
+                            <networkManager:LoadingIndicator IsActive="True"
+                                                                Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
                                                                 Visibility="{Binding IsConnecting, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                                                 Width="24" Height="24"
                                                                 VerticalAlignment="Center"
@@ -920,8 +918,7 @@
                 </Button>
                 <StackPanel VerticalAlignment="Center"
                             Visibility="{Binding Path=IsAdaptersLoading, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
-                    <loadingIndicators:LoadingIndicator IsActive="True"
-                                                        Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Accent}"
+                    <networkManager:LoadingIndicator IsActive="True"                                                        
                                                         Style="{DynamicResource ResourceKey=LoadingIndicatorArcsStyle}"
                                                         SpeedRatio="1"
                                                         Margin="0,0,0,10" />

@@ -1,16 +1,29 @@
-**Please provide some details about this pull request:**
--
+## Changes proposed in this pull request
+
 -
 -
 
-Fixes #{issue number}
+## Related issue(s)
 
-**ToDo:**
+- Fixes #{issue number}
+
+## Copilot generated summary
+
+Provide a Copilot generated summary of the changes in this pull request.
+
+<details>
+<summary>Copilot summary</summary>
+
+{generated summary}
+
+</details>
+
+## To-Do
 
 - [ ] Update [documentation](https://github.com/BornToBeRoot/NETworkManager/tree/main/Website/docs) to reflect this changes
 - [ ] Update [changelog](https://github.com/BornToBeRoot/NETworkManager/tree/main/Website/docs/changelog) to reflect this changes
 
----
+## Contributing
 
 **By submitting this pull request, I confirm the following:**
 

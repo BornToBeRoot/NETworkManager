@@ -17,21 +17,8 @@
                     Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.FlatButton.xaml" />
                 <ResourceDictionary
                     Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.FlatSlider.xaml" />
-
                 <!-- Dragablz -->
                 <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/MahApps.xaml" />
-                <!-- LoadingIndicators.WPF -->
-                <ResourceDictionary Source="pack://application:,,,/LoadingIndicators.WPF;component/Styles.xaml" />
-                <ResourceDictionary
-                    Source="pack://application:,,,/LoadingIndicators.WPF;component/Styles/LoadingWave.xaml" />
-                <ResourceDictionary
-                    Source="pack://application:,,,/LoadingIndicators.WPF;component/Styles/LoadingThreeDots.xaml" />
-                <ResourceDictionary
-                    Source="pack://application:,,,/LoadingIndicators.WPF;component/Styles/LoadingFlipPlane.xaml" />
-                <ResourceDictionary
-                    Source="pack://application:,,,/LoadingIndicators.WPF;component/Styles/LoadingPulse.xaml" />
-                <ResourceDictionary
-                    Source="pack://application:,,,/LoadingIndicators.WPF;component/Styles/LoadingDoubleBounce.xaml" />
                 <!-- Context menu (import berfore styles)-->
                 <ResourceDictionary Source="/Resources/ContextMenu/ContextMenu.xaml" />
                 <!-- Control templates (import before styles) -->
@@ -44,6 +31,8 @@
                 <ResourceDictionary Source="/Resources/Styles/DropDownButtonStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/GridSplitterStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/GroupBoxStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/LoadingIndicatorArcsStyle.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/LoadingIndicatorPulseStyle.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/MenuItemStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/MetroDialogStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/NumericUpDownStyles.xaml" />
