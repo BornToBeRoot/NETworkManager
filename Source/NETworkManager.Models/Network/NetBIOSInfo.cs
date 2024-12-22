@@ -10,9 +10,10 @@ public class NetBIOSInfo
     /// <summary>
     ///     Constructor for an unreachable host.
     /// </summary>
-    public NetBIOSInfo()
+    public NetBIOSInfo(IPAddress ipAddress)
     {
         IsReachable = false;
+        IPAddress = ipAddress;
     }
 
     /// <summary>
@@ -20,7 +21,7 @@ public class NetBIOSInfo
     /// </summary>
     /// <param name="ipAddress">IP address of the host.</param>
     /// <param name="computerName">Computer name of the host.</param>
-    /// <param name="userName">User name of the host.</param>
+    /// <param name="userName">Username of the host.</param>
     /// <param name="groupName">Group name or domain of the host.</param>
     /// <param name="macAddress">MAC address of the host.</param>
     /// <param name="vendor">Vendor of the host based on the MAC address.</param>
@@ -52,7 +53,7 @@ public class NetBIOSInfo
     public string ComputerName { get; set; }
 
     /// <summary>
-    ///     User name of the host.
+    ///     Username of the host.
     /// </summary>
     public string UserName { get; set; }
 

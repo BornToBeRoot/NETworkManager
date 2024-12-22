@@ -59,17 +59,17 @@ public static class NetBIOSResolver
             var receiveTask = udpClient.ReceiveAsync();
 
             if (!receiveTask.Wait(timeout, cancellationToken))
-                return new NetBIOSInfo();
+                return new NetBIOSInfo(ipAddress);
 
             var response = receiveTask.Result;
 
             if (response.Buffer.Length < ResponseBaseLen || response.Buffer[ResponseTypePos] != ResponseTypeNbstat)
-                return new NetBIOSInfo(); // response was too short
+                return new NetBIOSInfo(ipAddress); // response was too short
 
             var count = response.Buffer[ResponseBaseLen - 1] & 0xFF;
 
             if (response.Buffer.Length < ResponseBaseLen + ResponseBlockLen * count)
-                return new NetBIOSInfo(); // data was truncated or something is wrong
+                return new NetBIOSInfo(ipAddress); // data was truncated or something is wrong
 
             var result = ExtractNames(response.Buffer, count);
 
@@ -96,7 +96,7 @@ public static class NetBIOSResolver
         }
         catch (Exception)
         {
-            return null;
+            return new NetBIOSInfo(ipAddress);
         }
         finally
         {
