@@ -632,7 +632,7 @@
                                     <ListViewItem>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition MinWidth="100" Width="Auto" />
                                                 <ColumnDefinition Width="10" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
@@ -645,7 +645,7 @@
                                     <ListViewItem>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition MinWidth="100" Width="Auto" />
                                                 <ColumnDefinition Width="10" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
@@ -664,7 +664,7 @@
                                     <ListViewItem>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition MinWidth="100" Width="Auto" />
                                                 <ColumnDefinition Width="10" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
@@ -677,7 +677,7 @@
                                     <ListViewItem>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition MinWidth="100" Width="Auto" />
                                                 <ColumnDefinition Width="10" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
@@ -817,7 +817,7 @@
                                     <ListViewItem>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition MinWidth="150" Width="Auto" />
                                                 <ColumnDefinition Width="10" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
@@ -830,7 +830,7 @@
                                     <ListViewItem>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition MinWidth="150" Width="Auto" />
                                                 <ColumnDefinition Width="10" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
@@ -843,7 +843,7 @@
                                     <ListViewItem>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition MinWidth="150" Width="Auto" />
                                                 <ColumnDefinition Width="10" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
@@ -856,7 +856,7 @@
                                     <ListViewItem>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition MinWidth="150" Width="Auto" />
                                                 <ColumnDefinition Width="10" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
@@ -869,7 +869,7 @@
                                     <ListViewItem>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition MinWidth="150" Width="Auto" />
                                                 <ColumnDefinition Width="10" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
@@ -929,7 +929,7 @@
                                     <ListViewItem>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition MinWidth="150" Width="Auto" />
                                                 <ColumnDefinition Width="10" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
@@ -977,7 +977,7 @@
                                     <ListViewItem>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition MinWidth="150" Width="Auto" />
                                                 <ColumnDefinition Width="10" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
@@ -990,7 +990,7 @@
                                     <ListViewItem>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition MinWidth="150" Width="Auto" />
                                                 <ColumnDefinition Width="10" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
