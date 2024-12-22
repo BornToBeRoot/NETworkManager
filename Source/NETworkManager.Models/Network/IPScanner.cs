@@ -93,7 +93,7 @@ public sealed class IPScanner(IPScannerOptions options)
                     // Start netbios lookup async (if enabled)
                     var netbiosTask = options.NetBIOSEnabled
                         ? NetBIOSResolver.ResolveAsync(host.ipAddress, options.NetBIOSTimeout, cancellationToken)
-                        : Task.FromResult(new NetBIOSInfo());
+                        : Task.FromResult(new NetBIOSInfo(host.ipAddress));
 
                     // Get ping result
                     pingTask.Wait(cancellationToken);
@@ -214,26 +214,34 @@ public sealed class IPScanner(IPScannerOptions options)
 
             for (var i = 0; i < options.ICMPAttempts; i++)
             {
+                // Get timestamp 
+                var timestamp = DateTime.Now;
+                
                 try
                 {
-                    // Get timestamp 
-                    var timestamp = DateTime.Now;
-
                     var pingReply = ping.Send(ipAddress, options.ICMPTimeout, options.ICMPBuffer);
 
                     // Success
                     if (pingReply is { Status: IPStatus.Success })
                     {
-                        // IPv4
-                        if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
-                            return new PingInfo(timestamp, pingReply.Address, pingReply.Buffer.Length,
-                                pingReply.RoundtripTime,
-                                pingReply.Options!.Ttl, pingReply.Status);
-
-                        // IPv6
-                        return new PingInfo(timestamp, pingReply.Address, pingReply.Buffer.Length,
-                            pingReply.RoundtripTime,
-                            pingReply.Status);
+                        switch (ipAddress.AddressFamily)
+                        {
+                            case AddressFamily.InterNetwork:
+                               return new PingInfo(
+                                                            timestamp,
+                                                            pingReply.Address, 
+                                                            pingReply.Buffer.Length,
+                                                            pingReply.RoundtripTime,
+                                                            pingReply.Options!.Ttl, 
+                                                            pingReply.Status);
+                            case AddressFamily.InterNetworkV6:
+                                   return new PingInfo(
+                                                            timestamp, 
+                                                            pingReply.Address,
+                                                            pingReply.Buffer.Length,
+                                                            pingReply.RoundtripTime,
+                                                            pingReply.Status);
+                        }
                     }
 
                     // Failed
@@ -242,6 +250,8 @@ public sealed class IPScanner(IPScannerOptions options)
                 }
                 catch (PingException)
                 {
+                    // Ping failed with unknown status
+                    return new PingInfo(timestamp, ipAddress, IPStatus.Unknown);
                 }
 
                 // Don't scan again, if the user has canceled (when more than 1 attempt)
@@ -249,7 +259,8 @@ public sealed class IPScanner(IPScannerOptions options)
                     break;
             }
 
-            return new PingInfo();
+            // Fall back to unknown status
+            return new PingInfo(DateTime.Now, ipAddress, IPStatus.Unknown);
         }, cancellationToken);
     }
 
