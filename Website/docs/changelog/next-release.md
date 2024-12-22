@@ -22,6 +22,7 @@ Release date: **xx.xx.2024**
 ## What's new?
 
 - **WiFi**
+
   - 6 GHz networks are not supported. [#2912](https://github.com/BornToBeRoot/NETworkManager/pull/2912) [#2928](https://github.com/BornToBeRoot/NETworkManager/pull/2928)
   - `WPA3 Personal (SAE)`, `WPA3 Enterprise` and `WPA3 Enterprise (192-bit)` are now supported. [#2912](https://github.com/BornToBeRoot/NETworkManager/pull/2912)
   - `802.11be` (`EHT`) is now supported. [#2912](https://github.com/BornToBeRoot/NETworkManager/pull/2912)
@@ -39,11 +40,16 @@ Release date: **xx.xx.2024**
 - Changed the Welcome dialog from `MahApps.Metro.Controls.Dialogs` to `MahApps.Metro.SimpleChildWindow`, so the main window can be dragged and resized on the first start. [#2914](https://github.com/BornToBeRoot/NETworkManager/pull/2914)
 
 - **WiFi**
+
   - Fixed a bug that caused the scan process to crash when a 6 GHz network was found. [#2912](https://github.com/BornToBeRoot/NETworkManager/pull/2912)
+
+- **IP Scanner**
+
+  - NullReferenceException in ICMP & NETBIOS fixed for some IP addresses. [#2964](https://github.com/BornToBeRoot/NETworkManager/pull/2964)
 
 ## Dependencies, Refactoring & Documentation
 
-Migrated code for some loading indicators from the library [LoadingIndicators.WPF] (https://github.com/zeluisping/LoadingIndicators.WPF) to the NETworkManager repo, as the original repo looks unmaintained and has problems with MahApps.Metro version 2 and later. [#2963](https://github.com/BornToBeRoot/NETworkManager/pull/2963)
+- Migrated code for some loading indicators from the library [LoadingIndicators.WPF] (https://github.com/zeluisping/LoadingIndicators.WPF) to the NETworkManager repo, as the original repo looks unmaintained and has problems with MahApps.Metro version 2 and later. [#2963](https://github.com/BornToBeRoot/NETworkManager/pull/2963)
 - Code cleanup & refactoring [#2940](https://github.com/BornToBeRoot/NETworkManager/pull/2940)
 - Language files updated via [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration)
 - Dependencies updated via [#dependabot](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot)
