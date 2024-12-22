@@ -56,17 +56,17 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     private readonly bool _isLoading;
     private bool _isViewActive = true;
 
-    private bool _isConfigured;
+    private bool _isExecutableConfigured;
 
-    public bool IsConfigured
+    public bool IsExecutableConfigured
     {
-        get => _isConfigured;
+        get => _isExecutableConfigured;
         set
         {
-            if (value == _isConfigured)
+            if (value == _isExecutableConfigured)
                 return;
 
-            _isConfigured = value;
+            _isExecutableConfigured = value;
             OnPropertyChanged();
         }
     }
@@ -236,6 +236,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #endregion
+    
     #region Constructor, load settings
 
     public PuTTYHostViewModel(IDialogCoordinator instance)
@@ -244,11 +245,11 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
         _dialogCoordinator = instance;
         
-        // Check if PuTTY is configured
+        // Check if PuTTY executable is configured
         CheckExecutable();
 
-        // Try to find PuTTY executable if not configured
-        if (!IsConfigured)
+        // Try to find PuTTY executable
+        if (!IsExecutableConfigured)
             TryFindExecutable();
         
         WriteDefaultProfileToRegistry();
@@ -297,7 +298,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
     private bool Connect_CanExecute(object obj)
     {
-        return IsConfigured;
+        return IsExecutableConfigured;
     }
 
     public ICommand ConnectCommand => new RelayCommand(_ => ConnectAction(), Connect_CanExecute);
@@ -433,21 +434,21 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
     #region Methods
     /// <summary>
-    /// Check if PuTTY executable is configured.
+    /// Check if PuTTY executable is configured and exists.
     /// </summary>
     private void CheckExecutable()
     {
-        IsConfigured = !string.IsNullOrEmpty(SettingsManager.Current.PuTTY_ApplicationFilePath) &&
+        IsExecutableConfigured = !string.IsNullOrEmpty(SettingsManager.Current.PuTTY_ApplicationFilePath) &&
                        File.Exists(SettingsManager.Current.PuTTY_ApplicationFilePath);
         
-        if(IsConfigured)
-            Log.Info($"PuTTY executable configured: {SettingsManager.Current.PuTTY_ApplicationFilePath}");
+        if(IsExecutableConfigured)
+            Log.Info($"PuTTY executable configured: \"{SettingsManager.Current.PuTTY_ApplicationFilePath}\"");
         else
-            Log.Warn("PuTTY executable not found.");
+            Log.Warn("PuTTY executable not found!");
     }
     
     /// <summary>
-    /// Try to find PuTTY executabl in
+    /// Try to find PuTTY executable.
     /// </summary>
     private void TryFindExecutable()
     {
@@ -456,6 +457,9 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         SettingsManager.Current.PuTTY_ApplicationFilePath = ApplicationHelper.Find(Models.PuTTY.PuTTY.FileName);
             
         CheckExecutable();
+        
+        if(!IsExecutableConfigured)
+            Log.Warn("Install PuTTY or configure the path in the settings.");
     }
 
     private async Task Connect(string host = null)
@@ -758,8 +762,12 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
     private void WriteDefaultProfileToRegistry()
     {
-        if (IsConfigured)
-            Models.PuTTY.PuTTY.WriteDefaultProfileToRegistry(SettingsManager.Current.Appearance_Theme);
+        if (!IsExecutableConfigured)
+            return;
+        
+        Log.Info("Write PuTTY profile to registry...");
+        
+        Models.PuTTY.PuTTY.WriteDefaultProfileToRegistry(SettingsManager.Current.Appearance_Theme);
     }
 
     #endregion
@@ -773,7 +781,6 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
             case nameof(SettingsInfo.PuTTY_ApplicationFilePath):
                 CheckExecutable();
                 break;
-            // Update PuTTY profile "NETworkManager" if application theme has changed
             case nameof(SettingsInfo.Appearance_Theme):
                 WriteDefaultProfileToRegistry();
                 break;

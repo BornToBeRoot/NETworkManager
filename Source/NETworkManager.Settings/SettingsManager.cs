@@ -173,10 +173,6 @@ public static class SettingsManager
     {
         Log.Info($"Start settings upgrade from {fromVersion} to {toVersion}...");
 
-        // 2022.12.20.0
-        if (fromVersion < new Version(2022, 12, 20, 0))
-            UpgradeTo_2022_12_20_0();
-
         // 2023.3.7.0
         if (fromVersion < new Version(2023, 3, 7, 0))
             UpgradeTo_2023_3_7_0();
@@ -193,6 +189,11 @@ public static class SettingsManager
         if (fromVersion < new Version(2023, 11, 28, 0))
             UpgradeTo_2023_11_28_0();
 
+        
+        // 2024.11.11.0
+        if (fromVersion < new Version(2024, 11, 11, 0))
+            UpgradeTo_2024_11_11_0();
+
         // Latest
         if (fromVersion < toVersion)
             UpgradeToLatest(toVersion);
@@ -204,35 +205,7 @@ public static class SettingsManager
         Log.Info("Settings upgrade finished!");
     }
 
-    /// <summary>
-    ///     Method to apply changes for version 2022.12.20.0.
-    /// </summary>
-    private static void UpgradeTo_2022_12_20_0()
-    {
-        Log.Info("Apply update to 2022.12.20.0...");
-
-        // Add AWS Session Manager application
-        Log.Info("Add new app \"AWSSessionManager\"...");
-        Current.General_ApplicationList.Add(ApplicationManager.GetDefaultList()
-            .First(x => x.Name == ApplicationName.AWSSessionManager));
-
-        var powerShellPath = "";
-        foreach (var file in PowerShell.GetDefaultInstallationPaths.Where(File.Exists))
-        {
-            powerShellPath = file;
-            break;
-        }
-
-        Log.Info($"Set \"AWSSessionManager_ApplicationFilePath\" to \"{powerShellPath}\"...");
-        Current.AWSSessionManager_ApplicationFilePath = powerShellPath;
-
-        // Add Bit Calculator application
-        Log.Info("Add new app \"BitCalculator\"...");
-        Current.General_ApplicationList.Add(ApplicationManager.GetDefaultList()
-            .First(x => x.Name == ApplicationName.BitCalculator));
-    }
-
-    /// <summary>
+     /// <summary>
     ///     Method to apply changes for version 2023.3.7.0.
     /// </summary>
     private static void UpgradeTo_2023_3_7_0()
@@ -326,6 +299,18 @@ public static class SettingsManager
         Current.DNSLookup_DNSServers =
             new ObservableCollection<DNSServerConnectionInfoProfile>(DNSServer.GetDefaultList());
     }
+    
+    /// <summary>
+    ///     Method to apply changes for version 2024.11.11.0.
+    /// </summary>
+    private static void UpgradeTo_2024_11_11_0()
+    {
+        Log.Info("Apply upgrade to 2024.11.11.0...");
+
+        Log.Info("Reset ApplicationList to default...");
+        Current.General_ApplicationList =
+            new ObservableSetCollection<ApplicationInfo>(ApplicationManager.GetDefaultList());
+    }
 
     /// <summary>
     ///     Method to apply changes for the latest version.
@@ -335,9 +320,7 @@ public static class SettingsManager
     {
         Log.Info($"Apply upgrade to {version}...");
 
-        Log.Info("Reset ApplicationList to default...");
-        Current.General_ApplicationList =
-            new ObservableSetCollection<ApplicationInfo>(ApplicationManager.GetDefaultList());
+        
     }
 
     #endregion

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using log4net;
 using Microsoft.Win32;
 
 namespace NETworkManager.Models.PowerShell;
@@ -11,20 +11,18 @@ namespace NETworkManager.Models.PowerShell;
 /// </summary>
 public static class PowerShell
 {
-    /// <summary>
-    ///     Default installation paths for PowerShell.
-    /// </summary>
+    private static readonly ILog Log = LogManager.GetLogger(typeof(PowerShell));
     
-    public static readonly List<string> GetDefaultInstallationPaths =
-    [
-        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "PowerShell", "7", "pwsh.exe"),
-        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "PowerShell", "7",
-            "pwsh.exe"),
-
-        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows),
-            @"System32\WindowsPowerShell\v1.0\powershell.exe")
-    ];
-
+    /// <summary>
+    /// Windows PowerShell file name.
+    /// </summary>
+    public const string WindowsPowerShellFileName = "powershell.exe";
+    
+    /// <summary>
+    /// PowerShell Core file name.
+    /// </summary>
+    public const string PwshFileName = "pwsh.exe";
+    
     /// <summary>
     ///     Default SZ registry keys for the global PowerShell profile.
     /// </summary>
@@ -92,12 +90,13 @@ public static class PowerShell
 
         // Windows PowerShell --> HKCU:\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe
         if (powerShellPath.StartsWith(systemRoot))
-            registryPath += "%SystemRoot%" + powerShellPath
-                .Substring(systemRoot.Length, powerShellPath.Length - systemRoot.Length).Replace(@"\", "_");
+            registryPath += "%SystemRoot%" + powerShellPath.Substring(systemRoot.Length, powerShellPath.Length - systemRoot.Length).Replace(@"\", "_");
         // PWSH -->  HKCU:\Console\C:_Program Files_PowerShell_7_pwsh.exe
         else
             registryPath += powerShellPath.Replace(@"\", "_");
 
+        Log.Info($"Registry path for PowerShell profile: \"{registryPath}\"");
+        
         var registryKey = Registry.CurrentUser.OpenSubKey(registryPath, true);
 
         registryKey ??= Registry.CurrentUser.CreateSubKey(registryPath);

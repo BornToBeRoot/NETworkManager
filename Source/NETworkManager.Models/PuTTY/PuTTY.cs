@@ -10,12 +10,12 @@ namespace NETworkManager.Models.PuTTY;
 /// <summary>
 ///     Class control PuTTY.
 /// </summary>
-public class PuTTY
+public static class PuTTY
 {
     /// <summary>
     ///     PuTTY file name.
     /// </summary>
-    public static readonly string FileName = "putty.exe";
+    public const string FileName = "putty.exe";
 
     /// <summary>
     ///     Default SZ registry keys for PuTTY profile NETworkManager.
