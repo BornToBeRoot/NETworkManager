@@ -3,13 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:networkManager="clr-namespace:NETworkManager"
              xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
              xmlns:interactivity="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-             xmlns:loadingIndicators="clr-namespace:LoadingIndicators.WPF;assembly=LoadingIndicators.WPF"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              mc:Ignorable="d" Loaded="UserControl_Loaded"
              d:DataContext="{d:DesignInstance viewModels:WiFiConnectViewModel}">
@@ -174,10 +174,11 @@
             <WrapPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center"
                        HorizontalAlignment="Center"
                        Visibility="{Binding IsWpsChecking,Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                <loadingIndicators:LoadingIndicator IsActive="True"
-                                                    Foreground="{DynamicResource MahApps.Brushes.Accent}"
-                                                    Style="{DynamicResource LoadingIndicatorPulseStyle}" Width="24"
-                                                    Height="24" VerticalAlignment="Center" SpeedRatio="1" />
+                <networkManager:LoadingIndicator IsActive="True"
+                                                    Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
+                                                    Width="24"
+                                                    Height="24" 
+                                                    SpeedRatio="1" />
                 <TextBlock Style="{StaticResource AccentTextBlock}"
                            Text="{x:Static localization:Strings.CheckingWPSDots}" VerticalAlignment="Center"
                            Margin="10,0,0,0" />

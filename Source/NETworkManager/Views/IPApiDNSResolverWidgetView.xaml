@@ -6,7 +6,7 @@
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:loadingIndicators="clr-namespace:LoadingIndicators.WPF;assembly=LoadingIndicators.WPF"
+             xmlns:networkManager="clr-namespace:NETworkManager"
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
@@ -128,7 +128,7 @@
                     <!-- Loading indicator -->
                     <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"
                                 Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityHiddenConverter}}">
-                        <loadingIndicators:LoadingIndicator IsActive="True"
+                        <networkManager:LoadingIndicator IsActive="True"
                                                             Style="{DynamicResource LoadingIndicatorArcsStyle}"
                                                             SpeedRatio="1" Margin="0,0,0,10" />
                         <TextBlock Text="{x:Static localization:Strings.CheckingDNSResolverDots}"
