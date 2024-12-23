@@ -78,7 +78,7 @@ public static class ApplicationManager
                 canvas.Children.Add(new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.TerminalSolid });
                 break;
             case ApplicationName.AWSSessionManager:
-                canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Aws });
+                canvas.Children.Add(new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.AwsBrands });
                 break;
             case ApplicationName.TigerVNC:
                 canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.EyeOutline });
