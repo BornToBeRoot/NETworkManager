@@ -371,7 +371,7 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
         RdpClient.FullScreen = true;
     }
 
-    public async void AdjustScreen()
+    public void AdjustScreen()
     {
         if (IsConnecting)
             return;
