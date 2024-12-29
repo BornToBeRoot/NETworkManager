@@ -20,7 +20,8 @@
     <Grid x:Name="RdpGrid" SizeChanged="RdpGrid_SizeChanged">
         <WindowsFormsHost MaxWidth="{Binding RdpClientWidth, Mode=OneWay}"
                           MaxHeight="{Binding RdpClientHeight, Mode=OneWay}"
-                          Background="{DynamicResource ResourceKey=MahApps.Brushes.Window.Background}">
+                          Background="{DynamicResource ResourceKey=MahApps.Brushes.Window.Background}"
+                          DpiChanged="WindowsFormsHost_DpiChanged">            
             <WindowsFormsHost.Style>
                 <Style TargetType="{x:Type WindowsFormsHost}">
                     <Style.Triggers>
@@ -38,7 +39,7 @@
                     </Style.Triggers>
                 </Style>
             </WindowsFormsHost.Style>
-            <mstsc:AxMsRdpClient9NotSafeForScripting x:Name="RdpClient" />
+            <mstsc:AxMsRdpClient10NotSafeForScripting x:Name="RdpClient" />
         </WindowsFormsHost>
         <Grid VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center"
               Visibility="{Binding IsConnected, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">

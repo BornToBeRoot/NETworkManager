@@ -1,27 +1,32 @@
 ﻿// Documenation: https://docs.microsoft.com/en-us/windows/desktop/termserv/remote-desktop-web-connection-reference
 
-using System;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
 using AxMSTSCLib;
+using log4net;
 using MSTSCLib;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
+using System;
+using System.Diagnostics;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace NETworkManager.Controls;
 
 public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
 {
     #region Variables
+    private static readonly ILog Log = LogManager.GetLogger(typeof(RemoteDesktopControl));
 
     private bool _initialized;
     private bool _closed;
 
     private readonly Guid _tabId;
     private readonly RemoteDesktopSessionInfo _sessionInfo;
+
+    private DispatcherTimer _adjustScreenTimer;
 
     // Fix WindowsFormsHost width
     private double _rdpClientWidth;
@@ -132,6 +137,7 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
         Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
     }
 
+
     private void UserControl_Loaded(object sender, RoutedEventArgs e)
     {
         // Connect after the control is drawn and only on the first init
@@ -201,16 +207,30 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
         // Display
         RdpClient.ColorDepth = _sessionInfo.ColorDepth; // 8, 15, 16, 24
 
+        double desktopWidth, desktopHeight;
+
         if (_sessionInfo.AdjustScreenAutomatically || _sessionInfo.UseCurrentViewSize)
         {
-            RdpClient.DesktopWidth = (int)RdpGrid.ActualWidth;
-            RdpClient.DesktopHeight = (int)RdpGrid.ActualHeight;
+            desktopWidth = RdpGrid.ActualWidth;
+            desktopHeight = RdpGrid.ActualHeight;
         }
         else
         {
-            RdpClient.DesktopWidth = _sessionInfo.DesktopWidth;
-            RdpClient.DesktopHeight = _sessionInfo.DesktopHeight;
+            desktopWidth = _sessionInfo.DesktopWidth;
+            desktopHeight = _sessionInfo.DesktopHeight;
         }
+
+        var scaleFactor = GetDpiScaleFactor();
+
+        desktopWidth = desktopWidth * scaleFactor / 100;
+        desktopHeight = desktopHeight * scaleFactor / 100;
+
+        RdpClient.DesktopWidth = (int)desktopWidth;
+        RdpClient.DesktopHeight = (int)desktopHeight;
+
+        // Initial scaling before connecting
+        ((IMsRdpExtendedSettings)RdpClient.GetOcx()).set_Property("DesktopScaleFactor", GetDesktopScaleFactor());
+        ((IMsRdpExtendedSettings)RdpClient.GetOcx()).set_Property("DeviceScaleFactor", GetDeviceScaleFactor());
 
         // Authentication
         RdpClient.AdvancedSettings9.AuthenticationLevel = _sessionInfo.AuthenticationLevel;
@@ -307,7 +327,7 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
         // Connect
         RdpClient.Connect();
 
-        FixWindowsFormsHostSize();
+        FixWindowsFormsHostSize(desktopWidth, desktopHeight);
     }
 
     private void Reconnect()
@@ -317,16 +337,30 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
 
         IsConnecting = true;
 
-        // Update screen size
+        double desktopWidth, desktopHeight;
+
         if (_sessionInfo.AdjustScreenAutomatically || _sessionInfo.UseCurrentViewSize)
         {
-            RdpClient.DesktopWidth = (int)RdpGrid.ActualWidth;
-            RdpClient.DesktopHeight = (int)RdpGrid.ActualHeight;
+            desktopWidth = RdpGrid.ActualWidth;
+            desktopHeight = RdpGrid.ActualHeight;
         }
+        else
+        {
+            desktopWidth = _sessionInfo.DesktopWidth;
+            desktopHeight = _sessionInfo.DesktopHeight;
+        }
+
+        var scaleFactor = GetDpiScaleFactor();
+
+        desktopWidth = desktopWidth * scaleFactor / 100;
+        desktopHeight = desktopHeight * scaleFactor / 100;
+
+        RdpClient.DesktopWidth = (int)desktopWidth;
+        RdpClient.DesktopHeight = (int)desktopHeight;
 
         RdpClient.Connect();
 
-        FixWindowsFormsHostSize();
+        FixWindowsFormsHostSize(desktopWidth, desktopHeight);
     }
 
     public void FullScreen()
@@ -337,22 +371,83 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
         RdpClient.FullScreen = true;
     }
 
-    public void AdjustScreen()
+    public async void AdjustScreen()
     {
+        if (IsConnecting)
+            return;
+
         if (!IsConnected)
             return;
 
-        // Adjust screen size 
-        if (_sessionInfo.AdjustScreenAutomatically || _sessionInfo.UseCurrentViewSize)
-            RdpClient.Reconnect((uint)RdpGrid.ActualWidth, (uint)RdpGrid.ActualHeight);
+        if (IsReconnecting)
+            return;
 
-        FixWindowsFormsHostSize();
+        IsReconnecting = true;
+
+        double desktopWidth, desktopHeight;
+
+        if (_sessionInfo.AdjustScreenAutomatically || _sessionInfo.UseCurrentViewSize)
+        {
+            desktopWidth = RdpGrid.ActualWidth;
+            desktopHeight = RdpGrid.ActualHeight;
+        }
+        else
+        {
+            desktopWidth = _sessionInfo.DesktopWidth;
+            desktopHeight = _sessionInfo.DesktopHeight;
+        }
+
+        var scaleFactor = GetDpiScaleFactor();
+
+        desktopWidth = desktopWidth * scaleFactor / 100;
+        desktopHeight = desktopHeight * scaleFactor / 100;
+
+        try
+        {
+            // This may fail if the RDP session was connected recently
+            RdpClient.UpdateSessionDisplaySettings((uint)desktopWidth, (uint)desktopHeight, (uint)desktopWidth, (uint)desktopHeight, 0, GetDesktopScaleFactor(), GetDeviceScaleFactor());
+        }
+        catch (Exception ex)
+        {
+            Log.Error("Error while adjusting screen", ex);
+        }
+
+        FixWindowsFormsHostSize(desktopWidth, desktopHeight);
+
+        IsReconnecting = false;
     }
 
-    private void FixWindowsFormsHostSize()
+    /// <summary>
+    ///    Adjust the screen when the size of the control changes.
+    ///    Prevent multiple calls while resizing by using a timer.
+    /// </summary>
+    private void AdjustScreenOnSizeChanged()
     {
-        RdpClientWidth = RdpClient.DesktopWidth;
-        RdpClientHeight = RdpClient.DesktopHeight;
+        if (_adjustScreenTimer == null)
+        {
+            _adjustScreenTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(250)
+            };
+
+            _adjustScreenTimer.Tick += (sender, args) =>
+            {
+                _adjustScreenTimer.Stop();
+
+                AdjustScreen();
+            };
+        }
+
+        _adjustScreenTimer.Start();
+    }
+
+    private void FixWindowsFormsHostSize(double width, double height)
+    {
+        RdpClientWidth = width;
+        RdpClientHeight = height;
+
+        Debug.WriteLine($"Values: {width} x {height}");
+        Debug.WriteLine($"RDPClient: {RdpClient.DesktopWidth} x {RdpClient.DesktopHeight}");
     }
 
     public void SendKey(Keystroke keystroke)
@@ -487,6 +582,73 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
         };
     }
 
+    /// <summary>
+    /// Get the desktop scale factor based on the DPI scale factor.
+    /// Supported values are 100, 125, 150, 175, 200.
+    /// See docs:
+    /// https://learn.microsoft.com/en-us/windows/win32/termserv/imsrdpextendedsettings-property --> DesktopScaleFactor
+    /// https://cdnweb.devolutions.net/blog/pdf/smart-resizing-and-high-dpi-issues-in-remote-desktop-manager.pdf
+    /// </summary>
+    /// <returns></returns>
+    protected uint GetDesktopScaleFactor()
+    {
+        var scaleFactor = GetDpiScaleFactor();
+
+        switch (scaleFactor)
+        {
+            case 125:
+                return 125;
+            case 150:
+            case 175:
+                return 150;
+            case 200:
+                return 200;
+        }
+
+        if (scaleFactor > 200)
+            return 200;
+
+        return 100;
+    }
+
+    /// <summary>
+    /// Get the device scale factor based on the DPI scale factor.
+    /// Supported values are 100, 140, 180.
+    /// See docs:
+    /// https://learn.microsoft.com/en-us/windows/win32/termserv/imsrdpextendedsettings-property --> DeviceScaleFactor
+    /// https://cdnweb.devolutions.net/blog/pdf/smart-resizing-and-high-dpi-issues-in-remote-desktop-manager.pdf
+    /// </summary>
+    /// <returns>Device scale factor.</returns>
+    protected uint GetDeviceScaleFactor()
+    {
+        var scaleFactor = GetDpiScaleFactor();
+
+        switch (scaleFactor)
+        {
+            case 125:
+            case 150:
+            case 175:
+                return 140;
+            case 200:
+                return 180;
+        }
+
+        if (scaleFactor > 200)
+            return 180;
+
+        return 100;
+    }
+
+    /// <summary>
+    /// Get the current DPI scale factor like 100, 125, 150, 175, 200, 225, etc.
+    /// </summary>
+    /// <returns>Returns the DPI scale factor.</returns>
+    public uint GetDpiScaleFactor()
+    {
+        var x = System.Windows.Media.VisualTreeHelper.GetDpi(this);
+
+        return (uint)(x.PixelsPerDip * 100);
+    }
     #endregion
 
     #region Events
@@ -508,26 +670,13 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
     private void RdpGrid_SizeChanged(object sender, SizeChangedEventArgs e)
     {
         // Resize the RDP screen size when the window size changes
-        if (IsConnected && _sessionInfo.AdjustScreenAutomatically && !IsReconnecting)
-            ReconnectOnSizeChanged().ConfigureAwait(false);
+        if (_sessionInfo.AdjustScreenAutomatically)
+            AdjustScreenOnSizeChanged();
     }
-
-    private async Task ReconnectOnSizeChanged()
-    {
-        IsReconnecting = true;
-
-        do // Prevent to many requests
-        {
-            await Task.Delay(250);
-        } while (Mouse.LeftButton == MouseButtonState.Pressed);
-
-        // Reconnect with the new screen size
-        RdpClient.Reconnect((uint)RdpGrid.ActualWidth, (uint)RdpGrid.ActualHeight);
-
-        FixWindowsFormsHostSize();
-
-        IsReconnecting = false;
-    }
-
     #endregion
+
+    private void WindowsFormsHost_DpiChanged(object sender, DpiChangedEventArgs e)
+    {
+        AdjustScreen();
+    }
 }
