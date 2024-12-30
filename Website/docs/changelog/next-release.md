@@ -18,6 +18,7 @@ Release date: **xx.xx.2024**
 ## Breaking Changes
 
 - Minimum supported Windows version increased to `22H2`. [#2912](https://github.com/BornToBeRoot/NETworkManager/pull/2912)
+- If you are upgrading from a version older than or equal to `2022.12.20.0`, first install [`2024.11.11.0`](https://github.com/BornToBeRoot/NETworkManager/releases/tag/2024.11.11.0) to upgrade the settings. See [#2962](https://github.com/BornToBeRoot/NETworkManager/pull/2962).
 
 ## What's new?
 
