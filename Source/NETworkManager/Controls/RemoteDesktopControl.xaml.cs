@@ -8,6 +8,7 @@ using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -162,15 +163,15 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
 
     #region Methods
 
-    private Tuple<int, int> GetDesktopSize()
+    private Tuple<double, double> GetDesktopSize()
     {
         // Get the screen size
-        int desktopWidth, desktopHeight;
+        double desktopWidth, desktopHeight;
 
         if (_sessionInfo.AdjustScreenAutomatically || _sessionInfo.UseCurrentViewSize)
         {
-            desktopWidth = (int)Math.Floor(RdpGrid.ActualWidth);
-            desktopHeight = (int)Math.Floor(RdpGrid.ActualHeight);
+            desktopWidth = RdpGrid.ActualWidth;
+            desktopHeight = RdpGrid.ActualHeight;
         }
         else
         {
@@ -185,10 +186,10 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
         desktopHeight = desktopHeight * scaleFactor / 100;
 
         // Round the screen size to an even number
-        desktopWidth = desktopWidth % 2 == 0 ? desktopWidth : desktopWidth - 1;
-        desktopHeight = desktopHeight % 2 == 0 ? desktopHeight : desktopHeight - 1;
+        desktopWidth = Math.Floor(desktopWidth / 2) * 2;
+        desktopHeight = Math.Floor(desktopHeight / 2) * 2;
 
-        return new Tuple<int, int>(desktopWidth, desktopHeight);
+        return new Tuple<double, double>(desktopWidth, desktopHeight);
     }
 
     /// <summary>
@@ -222,8 +223,8 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
 
         var desktopSize = GetDesktopSize();
 
-        RdpClient.DesktopWidth = desktopSize.Item1;
-        RdpClient.DesktopHeight = desktopSize.Item2;
+        RdpClient.DesktopWidth = (int)desktopSize.Item1;
+        RdpClient.DesktopHeight = (int)desktopSize.Item2;
 
         FixWindowsFormsHostSize(desktopSize.Item1, desktopSize.Item2);
 
@@ -336,8 +337,8 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
 
         var desktopSize = GetDesktopSize();
 
-        RdpClient.DesktopWidth = desktopSize.Item1;
-        RdpClient.DesktopHeight = desktopSize.Item2;
+        RdpClient.DesktopWidth = (int)desktopSize.Item1;
+        RdpClient.DesktopHeight = (int)desktopSize.Item2;
 
         FixWindowsFormsHostSize(desktopSize.Item1, desktopSize.Item2);
 
@@ -352,7 +353,7 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
         RdpClient.FullScreen = true;
     }
 
-    public async void AdjustScreen()
+    public async void AdjustScreen(bool dpiChange = false)
     {
         // Check preconditions
         if (IsConnecting)
@@ -366,20 +367,30 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
 
         var desktopSize = GetDesktopSize();
 
-        // Check if we need to adjust the screen
-        if (RdpClient.DesktopWidth == desktopSize.Item1 && RdpClient.DesktopHeight == desktopSize.Item2)
-            return;
+        // Check if we need to adjust the screen (always on DPI changes)
+        if (dpiChange == false)
+        {
+            if (RdpClient.DesktopWidth == desktopSize.Item1 && RdpClient.DesktopHeight == desktopSize.Item2)
+            {
+                Debug.WriteLine("==>>> Screen size is already correct.");
+                return;
+            }
 
-        if (RdpClient.Width == desktopSize.Item1 && RdpClient.Height == desktopSize.Item2)
-            return;
+
+            if (RdpClient.Width == desktopSize.Item1 && RdpClient.Height == desktopSize.Item2)
+            {
+                Debug.WriteLine("==>>> Screen size is already correct.");
+                return;
+            }
+        }
 
         try
         {
-            // This may fail if the RDP session was connected recently
-            RdpClient.UpdateSessionDisplaySettings((uint)desktopSize.Item1, (uint)desktopSize.Item2, (uint)desktopSize.Item1, (uint)desktopSize.Item2, 0, GetDesktopScaleFactor(), GetDeviceScaleFactor());
-
+            Debug.WriteLine("UpdateSessionDisplaySettings...");
             // Fix the size of the WindowsFormsHost and the RDP control
             FixWindowsFormsHostSize(desktopSize.Item1, desktopSize.Item2);
+            // This may fail if the RDP session was connected recently
+            RdpClient.UpdateSessionDisplaySettings((uint)desktopSize.Item1, (uint)desktopSize.Item2, (uint)desktopSize.Item1, (uint)desktopSize.Item2, 0, GetDesktopScaleFactor(), GetDeviceScaleFactor());
         }
         catch (Exception ex)
         {
@@ -395,13 +406,23 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
     /// <param name="height">Height of the RDP session.</param>
     private void FixWindowsFormsHostSize(double width, double height)
     {
+        var widthScaled = width / GetDpiScaleFactor() * 100;
+        var heightScaled = height / GetDpiScaleFactor() * 100;
+
+        widthScaled = Math.Ceiling(widthScaled / 2) * 2;
+        heightScaled = Math.Ceiling(heightScaled / 2) * 2;
+
         // Set the max width and height for the WindowsFormsHost
-        WindowsFormsHostMaxWidth = (int)(width / GetDpiScaleFactor() * 100);
-        WindowsFormsHostMaxHeight = (int)(height / GetDpiScaleFactor() * 100);
+        WindowsFormsHostMaxWidth = widthScaled;
+        WindowsFormsHostMaxHeight = heightScaled;
 
         // Update the size of the RDP control
         RdpClient.Width = (int)width;
         RdpClient.Height = (int)height;
+
+        Debug.WriteLine($"RDP control size: {RdpClient.Width}x{RdpClient.Height}");
+        Debug.WriteLine($"WindowsFormsHost size: {WindowsFormsHostMaxWidth}x{WindowsFormsHostMaxHeight}");
+        Debug.WriteLine($"Values: {width}x{height} - DPI: {GetDpiScaleFactor()}%");
     }
 
     /// <summary>
@@ -634,12 +655,15 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
 
     public void UpdateOnWindowResize()
     {
+
+        Debug.WriteLine("UpdateOnWindowResize...");
+
         if (_sessionInfo.AdjustScreenAutomatically)
             AdjustScreen();
     }
 
     private void WindowsFormsHost_DpiChanged(object sender, DpiChangedEventArgs e)
     {
-        AdjustScreen();
+        AdjustScreen(dpiChange: true);
     }
 }
