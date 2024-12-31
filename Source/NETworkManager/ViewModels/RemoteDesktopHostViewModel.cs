@@ -1,4 +1,14 @@
-﻿using System;
+﻿using Dragablz;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Controls;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models;
+using NETworkManager.Models.RemoteDesktop;
+using NETworkManager.Profiles;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -9,16 +19,6 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using Dragablz;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Controls;
-using NETworkManager.Localization.Resources;
-using NETworkManager.Models;
-using NETworkManager.Models.RemoteDesktop;
-using NETworkManager.Profiles;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using NETworkManager.Views;
 using RemoteDesktop = NETworkManager.Profiles.Application.RemoteDesktop;
 
 namespace NETworkManager.ViewModels;
@@ -281,7 +281,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     private void AdjustScreenAction(object view)
     {
         if (view is RemoteDesktopControl control)
-            control.AdjustScreen();
+            control.AdjustScreen(force:true);
     }
 
     public ICommand SendCtrlAltDelCommand => new RelayCommand(SendCtrlAltDelAction, IsConnected_CanExecute);
@@ -574,6 +574,12 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
         _isViewActive = false;
     }
 
+    public void UpdateOnWindowResize()
+    {
+        foreach (var tab in TabItems)
+            (tab.View as RemoteDesktopControl)?.UpdateOnWindowResize();
+    }
+
     private void SetProfilesView(ProfileInfo profile = null)
     {
         Profiles = new CollectionViewSource
@@ -652,4 +658,6 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     }
 
     #endregion
+
+
 }

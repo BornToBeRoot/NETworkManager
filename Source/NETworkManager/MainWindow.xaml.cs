@@ -1555,9 +1555,14 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     #endregion
 
-    #region Handle WndProc messages (Single instance, handle HotKeys)
+    #region Handle WndProc messages (Single instance, handle HotKeys, handle window size events)
 
     private HwndSource _hwndSource;
+
+    private const int WmExitSizeMove = 0x232;
+    private const int WmSysCommand = 0x0112;
+    private const int ScMaximize = 0xF030;
+    private const int ScRestore = 0xF120;
 
     // This is called after MainWindow() and before OnContentRendered() --> to register hotkeys...
     protected override void OnSourceInitialized(EventArgs e)
@@ -1578,7 +1583,31 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         {
             ShowWindow();
             handled = true;
+
+            return IntPtr.Zero;
         }
+
+        // Window size events
+        switch (msg)
+        {
+            case WmExitSizeMove:
+                _remoteDesktopHostView?.UpdateOnWindowResize();
+                break;
+
+            case WmSysCommand:
+                // Handle system commands (like maximize and restore)
+                if (wParam.ToInt32() == ScMaximize)
+                    // Window is maximized
+                    _remoteDesktopHostView?.UpdateOnWindowResize();
+
+                if (wParam.ToInt32() == ScRestore)
+                    // Window is restored (back to normal size from maximized state)
+                    _remoteDesktopHostView?.UpdateOnWindowResize();
+
+                break;
+        }
+
+        handled = false;
 
         return IntPtr.Zero;
     }
@@ -1601,7 +1630,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
      *  1  | ShowWindow()
      */
 
-    private readonly List<int> _registeredHotKeys = new();
+    private readonly List<int> _registeredHotKeys = [];
 
     private void RegisterHotKeys()
     {

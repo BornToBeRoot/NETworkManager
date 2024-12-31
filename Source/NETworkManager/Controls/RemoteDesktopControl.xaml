@@ -9,7 +9,7 @@
                        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
                        xmlns:local="clr-namespace:NETworkManager.Controls"
                        xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
-                       mc:Ignorable="d" Loaded="UserControl_Loaded"
+                       mc:Ignorable="d" Loaded="UserControl_Loaded"                       
                        d:DataContext="{d:DesignInstance local:RemoteDesktopControl}">
     <local:UserControlBase.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
@@ -17,10 +17,11 @@
         <converters:BooleanReverseToVisibilityHiddenConverter x:Key="BooleanReverseToVisibilityHiddenConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </local:UserControlBase.Resources>
-    <Grid x:Name="RdpGrid" SizeChanged="RdpGrid_SizeChanged">
-        <WindowsFormsHost MaxWidth="{Binding RdpClientWidth, Mode=OneWay}"
-                          MaxHeight="{Binding RdpClientHeight, Mode=OneWay}"
-                          Background="{DynamicResource ResourceKey=MahApps.Brushes.Window.Background}">
+    <Grid x:Name="RdpGrid">
+        <WindowsFormsHost MaxWidth="{Binding WindowsFormsHostMaxWidth, Mode=OneWay}"
+                          MaxHeight="{Binding WindowsFormsHostMaxHeight, Mode=OneWay}"
+                          Background="{DynamicResource ResourceKey=MahApps.Brushes.Window.Background}"                          
+                          DpiChanged="WindowsFormsHost_DpiChanged">            
             <WindowsFormsHost.Style>
                 <Style TargetType="{x:Type WindowsFormsHost}">
                     <Style.Triggers>
@@ -31,14 +32,11 @@
                         </DataTrigger>
                         <DataTrigger Binding="{Binding IsConnected}" Value="False">
                             <Setter Property="Visibility" Value="Hidden" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding IsReconnecting}" Value="True">
-                            <Setter Property="Visibility" Value="Hidden" />
-                        </DataTrigger>
+                        </DataTrigger>                        
                     </Style.Triggers>
                 </Style>
             </WindowsFormsHost.Style>
-            <mstsc:AxMsRdpClient9NotSafeForScripting x:Name="RdpClient" />
+            <mstsc:AxMsRdpClient10NotSafeForScripting x:Name="RdpClient" />
         </WindowsFormsHost>
         <Grid VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center"
               Visibility="{Binding IsConnected, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
@@ -65,18 +63,6 @@
             <TextBlock Grid.Row="3" Text="{x:Static localization:Strings.ConnectingDots}"
                        Style="{StaticResource MessageTextBlock}"
                        Visibility="{Binding IsConnecting, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-        </Grid>
-        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center"
-              Visibility="{Binding IsReconnecting, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="20" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <mah:ProgressRing Grid.Row="0" Grid.RowSpan="2" Height="50" Width="50" />
-            <TextBlock Grid.Row="3" Text="{x:Static localization:Strings.ConnectingDots}"
-                       Style="{StaticResource MessageTextBlock}" />
-        </Grid>
+        </Grid>        
     </Grid>
 </local:UserControlBase>
