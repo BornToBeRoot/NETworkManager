@@ -19,7 +19,7 @@ Release date: **xx.xx.2024**
 
 - Minimum supported Windows version increased to `22H2` to support:
   - WiFi 6 GHz, WPA3, 802.11be [#2912](https://github.com/BornToBeRoot/NETworkManager/pull/2912)
-  - Remote Desktop high DPI, scaling and resizing [#2968](https://github.com/BornToBeRoot/NETworkManager/pull/2968)
+  - Remote Desktop high DPI, scaling and fast resizing [#2968](https://github.com/BornToBeRoot/NETworkManager/pull/2968)
 
 ## What's new?
 
