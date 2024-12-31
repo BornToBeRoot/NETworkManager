@@ -281,7 +281,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     private void AdjustScreenAction(object view)
     {
         if (view is RemoteDesktopControl control)
-            control.AdjustScreen();
+            control.AdjustScreen(force:true);
     }
 
     public ICommand SendCtrlAltDelCommand => new RelayCommand(SendCtrlAltDelAction, IsConnected_CanExecute);

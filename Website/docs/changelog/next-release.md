@@ -17,7 +17,9 @@ Release date: **xx.xx.2024**
 
 ## Breaking Changes
 
-- Minimum supported Windows version increased to `22H2`. [#2912](https://github.com/BornToBeRoot/NETworkManager/pull/2912)
+- Minimum supported Windows version increased to `22H2` to support:
+  - WiFi 6 GHz, WPA3, 802.11be [#2912](https://github.com/BornToBeRoot/NETworkManager/pull/2912)
+  - Remote Desktop high DPI, scaling and resizing [#2968](https://github.com/BornToBeRoot/NETworkManager/pull/2968)
 
 ## What's new?
 
@@ -26,6 +28,17 @@ Release date: **xx.xx.2024**
   - 6 GHz networks are not supported. [#2912](https://github.com/BornToBeRoot/NETworkManager/pull/2912) [#2928](https://github.com/BornToBeRoot/NETworkManager/pull/2928)
   - `WPA3 Personal (SAE)`, `WPA3 Enterprise` and `WPA3 Enterprise (192-bit)` are now supported. [#2912](https://github.com/BornToBeRoot/NETworkManager/pull/2912)
   - `802.11be` (`EHT`) is now supported. [#2912](https://github.com/BornToBeRoot/NETworkManager/pull/2912)
+
+- **Remote Desktop**
+
+  - Scale rdp session and control to support high DPI (e.g. per Monitor DPI like 125%, 150%, etc.). [#2968](https://github.com/BornToBeRoot/NETworkManager/pull/2968)
+  - Resizing now uses [`IMsRdpClient9::UpdateSessionDisplaySettings`](<https://learn.microsoft.com/en-us/previous-versions/windows/desktop/legacy/mt703457(v=vs.85)>) instead of [`IMsRdpClient::Reconnect`](https://learn.microsoft.com/en-us/windows/win32/termserv/imsrdpclient8-reconnect) to support scaling and faster resizing (without the need of reconnecting). [#2968](https://github.com/BornToBeRoot/NETworkManager/pull/2968).
+
+  :::warning
+
+  The new features for high DPI, scaling and resizing may cause issues or doesn't work with legacy servers/clients. Please report any issues you find here: [#2911](https://github.com/BornToBeRoot/NETworkManager/issues/2911)
+
+  :::
 
 ## Improvements
 

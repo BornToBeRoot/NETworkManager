@@ -9,7 +9,6 @@
                        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
                        xmlns:local="clr-namespace:NETworkManager.Controls"
                        xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
-                       xmlns:windowsForms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
                        mc:Ignorable="d" Loaded="UserControl_Loaded"                       
                        d:DataContext="{d:DesignInstance local:RemoteDesktopControl}">
     <local:UserControlBase.Resources>

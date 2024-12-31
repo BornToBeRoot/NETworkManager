@@ -212,7 +212,7 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
     private void RemoteDesktop_AdjustScreenAction(object view)
     {
         if (view is RemoteDesktopControl control)
-            control.AdjustScreen();
+            control.AdjustScreen(force:true);
     }
 
     public ICommand RemoteDesktop_SendCtrlAltDelCommand =>
