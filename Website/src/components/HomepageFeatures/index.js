@@ -10,7 +10,7 @@ const FeatureList = [
       <>
         Analyze your network and gather detailed information using built-in
         tools such as the WiFi Analyzer, IP Scanner, Port Scanner, Traceroute,
-        DNS Lookup, Ping Monitor, LLDP/CDP Capture, and many [more(./docs/features)].
+        DNS Lookup, Ping Monitor, LLDP/CDP Capture, and many more.
       </>
     ),
   },
