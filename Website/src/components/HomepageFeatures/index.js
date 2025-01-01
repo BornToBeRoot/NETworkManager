@@ -27,16 +27,6 @@ const FeatureList = [
     ),
   },
   {
-    title: "Effortless Troubleshooting",
-    Svg: require("@site/static/img/undraw_server_down_s-4-lk.svg").default,
-    description: (
-      <>
-        Diagnose and resolve issues effectively with a comprehensive suite of
-        tools within a unified application.
-      </>
-    ),
-  },
-  {
     title: "Profile Management",
     Svg: require("@site/static/img/undraw_personal_settings_re_i6w4.svg")
       .default,
@@ -48,6 +38,16 @@ const FeatureList = [
       </>
     ),
   },
+  {
+    title: "Effortless Troubleshooting",
+    Svg: require("@site/static/img/undraw_server_down_s-4-lk.svg").default,
+    description: (
+      <>
+        Diagnose and resolve issues effectively with a comprehensive suite of
+        tools within a unified application.
+      </>
+    ),
+  },  
   {
     title: "Open Source",
     Svg: require("@site/static/img/undraw_version_control_re_mg66.svg").default,
