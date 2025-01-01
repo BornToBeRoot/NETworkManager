@@ -8,7 +8,6 @@ using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -372,18 +371,18 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
             await Task.Delay(250);
 
             var desktopSize = GetDesktopSize();
-            
+
             Log.Debug($"AdjustScreen - Desktop size: {desktopSize.Item1}x{desktopSize.Item2}");
 
             // Check if we need to adjust the screen (always on DPI changes or manual)
             if (force == false)
             {
                 var needUpdate = false;
-                
+
                 var windowsFormsHostSize = GetWindowsFormsHostSize(desktopSize.Item1, desktopSize.Item2);
 
                 Log.Debug($"AdjustScreen - WindowsFormsHost size: {windowsFormsHostSize.Item1}x{windowsFormsHostSize.Item2}");
-                
+
                 if (!(Math.Abs(WindowsFormsHostMaxWidth - windowsFormsHostSize.Item1) < double.Epsilon) ||
                     !(Math.Abs(WindowsFormsHostMaxHeight - windowsFormsHostSize.Item2) < double.Epsilon))
                 {
@@ -426,7 +425,7 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
 
             // Fix the size of the WindowsFormsHost and the RDP control
             FixWindowsFormsHostSize(desktopSize.Item1, desktopSize.Item2);
-            
+
             try
             {
                 // This may fail if the RDP session was connected recently
@@ -462,19 +461,25 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
         RdpClient.Height = (int)height;
     }
 
+    /// <summary>
+    /// Get the size of the WindowsFormsHost based on the DPI scale factor.
+    /// </summary>
+    /// <param name="width">Target width of the RDP session.</param>
+    /// <param name="height">Target height of the RDP session.</param>
+    /// <returns>Scaled width and height of the WindowsFormsHost.</returns>
     private Tuple<double, double> GetWindowsFormsHostSize(double width, double height)
     {
         var scaleFactor = GetDpiScaleFactor();
-        
+
         var widthScaled = width / scaleFactor * 100;
         var heightScaled = height / scaleFactor * 100;
 
         widthScaled = Math.Ceiling(widthScaled / 2) * 2;
         heightScaled = Math.Ceiling(heightScaled / 2) * 2;
-        
+
         return new Tuple<double, double>(widthScaled, heightScaled);
     }
-    
+
     /// <summary>
     /// Send a keystroke to the remote session.
     /// </summary>
@@ -676,6 +681,15 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
 
         return (int)(x.PixelsPerDip * 100);
     }
+
+    /// <summary>
+    /// Update the screen size when the window is resized.
+    /// </summary>
+    public void UpdateOnWindowResize()
+    {
+        if (_sessionInfo.AdjustScreenAutomatically)
+            AdjustScreen();
+    }
     #endregion
 
     #region Events
@@ -693,16 +707,14 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
 
         DisconnectReason = GetDisconnectReason(e.discReason);
     }
-    #endregion
-
-    public void UpdateOnWindowResize()
-    {
-        if (_sessionInfo.AdjustScreenAutomatically)
-            AdjustScreen();
-    }
 
     private void WindowsFormsHost_DpiChanged(object sender, DpiChangedEventArgs e)
     {
         AdjustScreen(force: true);
     }
+    #endregion
+
+
+
+
 }
