@@ -100,7 +100,6 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
             OnPropertyChanged();
         }
     }
-
     #endregion
 
     #region Constructor, load

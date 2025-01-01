@@ -574,12 +574,6 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
         _isViewActive = false;
     }
 
-    public void UpdateOnWindowResize()
-    {
-        foreach (var tab in TabItems)
-            (tab.View as RemoteDesktopControl)?.UpdateOnWindowResize();
-    }
-
     private void SetProfilesView(ProfileInfo profile = null)
     {
         Profiles = new CollectionViewSource

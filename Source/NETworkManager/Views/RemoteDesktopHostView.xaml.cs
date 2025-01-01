@@ -54,9 +54,4 @@ public partial class RemoteDesktopHostView
     {
         _viewModel.OnViewVisible();
     }
-
-    public void UpdateOnWindowResize()
-    {
-        _viewModel.UpdateOnWindowResize();
-    }
 }
