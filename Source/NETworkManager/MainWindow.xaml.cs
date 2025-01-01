@@ -38,6 +38,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Markup;
 using System.Windows.Threading;
+using Dragablz;
 using Application = System.Windows.Application;
 using ContextMenu = System.Windows.Controls.ContextMenu;
 using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
@@ -1590,19 +1591,23 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         // Window size events
         switch (msg)
         {
+            // Handle window resize and move events
             case WmExitSizeMove:
-                _remoteDesktopHostView?.UpdateOnWindowResize();
+                UpdateOnWindowResize();
                 break;
 
+            // Handle system commands (like maximize and restore)
             case WmSysCommand:
-                // Handle system commands (like maximize and restore)
-                if (wParam.ToInt32() == ScMaximize)
+                
+                switch (wParam.ToInt32())
+                {
                     // Window is maximized
-                    _remoteDesktopHostView?.UpdateOnWindowResize();
-
-                if (wParam.ToInt32() == ScRestore)
+                    case ScMaximize:
                     // Window is restored (back to normal size from maximized state)
-                    _remoteDesktopHostView?.UpdateOnWindowResize();
+                    case ScRestore:
+                        UpdateOnWindowResize();
+                        break;
+                }
 
                 break;
         }
@@ -1610,6 +1615,22 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         handled = false;
 
         return IntPtr.Zero;
+    }
+    
+    private void UpdateOnWindowResize()
+    {
+        foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(this))
+        {
+            // Skip if no items
+            if (tabablzControl.Items.Count == 0)
+                continue;
+
+            foreach (var item in tabablzControl.Items.OfType<DragablzTabItem>())
+            {
+                if (item.View is RemoteDesktopControl control)
+                    control.UpdateOnWindowResize();
+            }
+        }
     }
 
     #endregion
