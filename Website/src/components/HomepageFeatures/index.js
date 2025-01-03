@@ -21,8 +21,8 @@ const FeatureList = [
       <>
         Connect to remote systems and manage your network and server
         infrastructure with integrated clients such as Remote Desktop (RDP),
-        PuTTY (SSH, Telnet, Serial), PowerShell (WinRM), TigerVNC (VNC), and AWS
-        Console (AWS SSM).
+        PuTTY (SSH, Telnet, Serial), PowerShell (WinRM, WSL, Custom Tools),
+        TigerVNC (VNC), and AWS Console (AWS SSM).
       </>
     ),
   },
@@ -32,9 +32,10 @@ const FeatureList = [
       .default,
     description: (
       <>
-        Save hosts and networks with custom configurations in encrypted profiles
-        to protect your sensitive data, organize them by environment (e.g.,
-        Company A, Company B), and use them seamlessly across features.
+        Save hosts and networks with custom configurations in encrypted 
+        profile files to protect sensitive data, organize them by customers
+        (e.g., Company A, Company B) or environments (e.g., dev, prod),
+        and use them seamlessly across features.        
       </>
     ),
   },
