@@ -959,6 +959,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
             // Focus embedded window in the selected tab
             (((DragablzTabItem)tabablzControl.SelectedItem)?.View as IEmbeddedWindow)?.FocusEmbeddedWindow();
+            
             break;
         }
     }

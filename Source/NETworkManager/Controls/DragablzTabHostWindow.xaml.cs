@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Interop;
 using Dragablz;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Localization;
@@ -60,13 +62,8 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
         if (!_embeddedWindowApplicationNames.Contains(ApplicationName))
             return;
 
-        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-
-        if (window == null)
-            return;
-
         // Find all TabablzControl in the active window
-        foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
+        foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(this))
         {
             // Skip if no items
             if (tabablzControl.Items.Count == 0)
@@ -74,7 +71,7 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
 
             // Focus embedded window in the selected tab
             (((DragablzTabItem)tabablzControl.SelectedItem)?.View as IEmbeddedWindow)?.FocusEmbeddedWindow();
-
+            
             break;
         }
     }
@@ -212,7 +209,7 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
     private void RemoteDesktop_AdjustScreenAction(object view)
     {
         if (view is RemoteDesktopControl control)
-            control.AdjustScreen();
+            control.AdjustScreen(force: true);
     }
 
     public ICommand RemoteDesktop_SendCtrlAltDelCommand =>
@@ -377,14 +374,8 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
 
     private void DragablzTabHostWindow_OnClosing(object sender, CancelEventArgs e)
     {
-        // Close all tabs properly when the window is closing
-        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-
-        if (window == null)
-            return;
-
         // Find all TabablzControl in the active window
-        foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
+        foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(this))
         foreach (var tabItem in tabablzControl.Items.OfType<DragablzTabItem>())
             ((IDragablzTabItem)tabItem.View).CloseTab();
 
@@ -435,6 +426,74 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
             case ApplicationName.WebConsole:
                 ConfigurationManager.Current.IsWebConsoleWindowDragging = e.NewValue;
                 break;
+        }
+    }
+
+    #endregion
+
+    #region Handle WndProc messages (handle window size events)
+
+    private HwndSource _hwndSource;
+
+    private const int WmExitSizeMove = 0x232;
+    private const int WmSysCommand = 0x0112;
+    private const int ScMaximize = 0xF030;
+    private const int ScRestore = 0xF120;
+
+    protected override void OnSourceInitialized(EventArgs e)
+    {
+        base.OnSourceInitialized(e);
+
+        _hwndSource = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
+        _hwndSource?.AddHook(HwndHook);
+    }
+
+    [DebuggerStepThrough]
+    private IntPtr HwndHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+    {
+        // Window size events
+        switch (msg)
+        {
+            // Handle window resize and move events
+            case WmExitSizeMove:
+                UpdateOnWindowResize();
+                break;
+
+            // Handle system commands (like maximize and restore)
+            case WmSysCommand:
+
+                switch (wParam.ToInt32())
+                {
+                    // Window is maximized
+                    case ScMaximize:
+                    // Window is restored (back to normal size from maximized state)
+                    case ScRestore:
+                        UpdateOnWindowResize();
+                        break;
+                }
+
+                break;
+        }
+
+        handled = false;
+
+        return IntPtr.Zero;
+    }
+
+    private void UpdateOnWindowResize()
+    { 
+        // Find all TabablzControl
+        foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(this))
+        {
+            // Skip if no items
+            if (tabablzControl.Items.Count == 0)
+                continue;
+            
+            foreach (var item in tabablzControl.Items.OfType<DragablzTabItem>())
+            {
+                if (item.View is RemoteDesktopControl control)
+                    control.UpdateOnWindowResize();
+            }
         }
     }
 

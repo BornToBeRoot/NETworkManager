@@ -13,5 +13,6 @@ public interface IDragablzTabItem
     /// </summary>
     public void CloseTab()
     {
+        
     }
 }

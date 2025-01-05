@@ -4,56 +4,58 @@ import styles from "./styles.module.css";
 
 const FeatureList = [
   {
-    title: "Analyze Networks",
+    title: "Network Analysis",
     Svg: require("@site/static/img/undraw_connected_world_wuay.svg").default,
     description: (
       <>
-        Analyze your network and get detailed information about hosts with the
-        numerous built-in features such as IP / port scanner, traceroute, DNS
-        query and much more.
+        Analyze your network and gather detailed information using built-in
+        tools such as the WiFi Analyzer, IP Scanner, Port Scanner, Traceroute,
+        DNS Lookup, Ping Monitor, LLDP/CDP Capture, and many more.
       </>
     ),
   },
   {
-    title: "Manage Systems",
+    title: "Remote System Management",
     Svg: require("@site/static/img/undraw_server_cluster_jwwq.svg").default,
     description: (
       <>
-        Manage your network and server infrastructure via various protocols such
-        as SSH, RDP, VNC, WinRM or AWS SSM with the integrated clients.
+        Connect to remote systems and manage your network and server
+        infrastructure with integrated clients such as Remote Desktop (RDP),
+        PuTTY (SSH, Telnet, Serial), PowerShell (WinRM, WSL, Custom Tools),
+        TigerVNC (VNC), and AWS Console (AWS SSM).
       </>
     ),
   },
   {
-    title: "Troubleshoot Problems",
-    Svg: require("@site/static/img/undraw_server_down_s-4-lk.svg").default,
-    description: (
-      <>
-        Effectively analyze and resolve problems by combining numerous features
-        in a single application.
-      </>
-    ),
-  },
-  {
-    title: "Profiles Management",
+    title: "Profile Management",
     Svg: require("@site/static/img/undraw_personal_settings_re_i6w4.svg")
       .default,
     description: (
       <>
-        Save your hosts with specific configurations in profiles and use them
-        across all features. Separate them by environments and encrypt them to
-        protect your sensitive data.
+        Save hosts and networks with custom configurations in encrypted 
+        profile files to protect sensitive data, organize them by customers
+        (e.g., Company A, Company B) or environments (e.g., dev, prod),
+        and use them seamlessly across features.        
       </>
     ),
   },
+  {
+    title: "Effortless Troubleshooting",
+    Svg: require("@site/static/img/undraw_server_down_s-4-lk.svg").default,
+    description: (
+      <>
+        Diagnose and resolve issues effectively with a comprehensive suite of
+        tools within a unified application.
+      </>
+    ),
+  },  
   {
     title: "Open Source",
     Svg: require("@site/static/img/undraw_version_control_re_mg66.svg").default,
     description: (
       <>
-        NETworkManager is open source and available on GitHub! You can review
-        the code at any time, build it yourself and even contribute to the
-        project to improve it.
+        NETworkManager is fully open source on GitHub. Review the code, build it
+        yourself, or contribute to make it even better.
       </>
     ),
   },

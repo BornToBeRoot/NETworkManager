@@ -38,6 +38,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Markup;
 using System.Windows.Threading;
+using Dragablz;
 using Application = System.Windows.Application;
 using ContextMenu = System.Windows.Controls.ContextMenu;
 using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
@@ -1523,9 +1524,14 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     #endregion
 
-    #region Handle WndProc messages (Single instance, handle HotKeys)
+    #region Handle WndProc messages (Single instance, handle HotKeys, handle window size events)
 
     private HwndSource _hwndSource;
+
+    private const int WmExitSizeMove = 0x232;
+    private const int WmSysCommand = 0x0112;
+    private const int ScMaximize = 0xF030;
+    private const int ScRestore = 0xF120;
 
     // This is called after MainWindow() and before OnContentRendered() --> to register hotkeys...
     protected override void OnSourceInitialized(EventArgs e)
@@ -1546,9 +1552,53 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         {
             ShowWindow();
             handled = true;
+
+            return IntPtr.Zero;
         }
 
+        // Window size events
+        switch (msg)
+        {
+            // Handle window resize and move events
+            case WmExitSizeMove:
+                UpdateOnWindowResize();
+                break;
+
+            // Handle system commands (like maximize and restore)
+            case WmSysCommand:
+                
+                switch (wParam.ToInt32())
+                {
+                    // Window is maximized
+                    case ScMaximize:
+                    // Window is restored (back to normal size from maximized state)
+                    case ScRestore:
+                        UpdateOnWindowResize();
+                        break;
+                }
+
+                break;
+        }
+
+        handled = false;
+
         return IntPtr.Zero;
+    }
+    
+    private void UpdateOnWindowResize()
+    {
+        foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(this))
+        {
+            // Skip if no items
+            if (tabablzControl.Items.Count == 0)
+                continue;
+
+            foreach (var item in tabablzControl.Items.OfType<DragablzTabItem>())
+            {
+                if (item.View is RemoteDesktopControl control)
+                    control.UpdateOnWindowResize();
+            }
+        }
     }
 
     #endregion
@@ -1569,7 +1619,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
      *  1  | ShowWindow()
      */
 
-    private readonly List<int> _registeredHotKeys = new();
+    private readonly List<int> _registeredHotKeys = [];
 
     private void RegisterHotKeys()
     {
