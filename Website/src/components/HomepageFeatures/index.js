@@ -10,7 +10,7 @@ const FeatureList = [
       <>
         Analyze your network and gather detailed information using built-in
         tools such as the WiFi Analyzer, IP Scanner, Port Scanner, Traceroute,
-        DNS Lookup, Ping Monitor, LLDP/CDP Capture, and many more.
+        DNS Lookup, Ping Monitor, LLDP Capture, and many more.
       </>
     ),
   },
@@ -22,7 +22,7 @@ const FeatureList = [
         Connect to remote systems and manage your network and server
         infrastructure with integrated clients such as Remote Desktop (RDP),
         PuTTY (SSH, Telnet, Serial), PowerShell (WinRM, WSL, Custom Tools),
-        TigerVNC (VNC), and AWS Console (AWS SSM).
+        TigerVNC (VNC), and AWS SSM.
       </>
     ),
   },
@@ -34,8 +34,7 @@ const FeatureList = [
       <>
         Save hosts and networks with custom configurations in encrypted 
         profile files to protect sensitive data, organize them by customers
-        (e.g., Company A, Company B) or environments (e.g., dev, prod),
-        and use them seamlessly across features.        
+        or environments, and use them seamlessly across features.        
       </>
     ),
   },
