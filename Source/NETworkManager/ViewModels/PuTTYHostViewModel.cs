@@ -11,6 +11,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Dragablz;
+using log4net;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
@@ -28,7 +29,8 @@ namespace NETworkManager.ViewModels;
 public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
-
+    private static readonly ILog Log = LogManager.GetLogger(typeof(PuTTYHostViewModel));
+    
     private readonly IDialogCoordinator _dialogCoordinator;
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
@@ -53,19 +55,18 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
     private readonly bool _isLoading;
     private bool _isViewActive = true;
-    private bool _disableFocusEmbeddedWindow;
 
-    private bool _isConfigured;
+    private bool _isExecutableConfigured;
 
-    public bool IsConfigured
+    public bool IsExecutableConfigured
     {
-        get => _isConfigured;
+        get => _isExecutableConfigured;
         set
         {
-            if (value == _isConfigured)
+            if (value == _isExecutableConfigured)
                 return;
 
-            _isConfigured = value;
+            _isExecutableConfigured = value;
             OnPropertyChanged();
         }
     }
@@ -81,26 +82,6 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
                 return;
 
             _selectedTabIndex = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private DragablzTabItem _selectedTabItem;
-
-    public DragablzTabItem SelectedTabItem
-    {
-        get => _selectedTabItem;
-        set
-        {
-            if (value == _selectedTabItem)
-                return;
-
-            _selectedTabItem = value;
-
-            // Focus embedded window on switching tab
-            if (!_disableFocusEmbeddedWindow)
-                FocusEmbeddedWindow();
-
             OnPropertyChanged();
         }
     }
@@ -255,7 +236,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #endregion
-
+    
     #region Constructor, load settings
 
     public PuTTYHostViewModel(IDialogCoordinator instance)
@@ -263,8 +244,15 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         _isLoading = true;
 
         _dialogCoordinator = instance;
+        
+        // Check if PuTTY executable is configured
+        CheckExecutable();
 
-        CheckSettings();
+        // Try to find PuTTY executable
+        if (!IsExecutableConfigured)
+            TryFindExecutable();
+        
+        WriteDefaultProfileToRegistry();
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.PuTTY);
         InterTabPartition = ApplicationName.PuTTY.ToString();
@@ -310,7 +298,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
     private bool Connect_CanExecute(object obj)
     {
-        return IsConfigured;
+        return IsExecutableConfigured;
     }
 
     public ICommand ConnectCommand => new RelayCommand(_ => ConnectAction(), Connect_CanExecute);
@@ -445,14 +433,33 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #region Methods
-
-    private void CheckSettings()
+    /// <summary>
+    /// Check if PuTTY executable is configured and exists.
+    /// </summary>
+    private void CheckExecutable()
     {
-        IsConfigured = !string.IsNullOrEmpty(SettingsManager.Current.PuTTY_ApplicationFilePath) &&
+        IsExecutableConfigured = !string.IsNullOrEmpty(SettingsManager.Current.PuTTY_ApplicationFilePath) &&
                        File.Exists(SettingsManager.Current.PuTTY_ApplicationFilePath);
-
-        // Create default PuTTY profile for NETworkManager
-        WriteDefaultProfileToRegistry();
+        
+        if(IsExecutableConfigured)
+            Log.Info($"PuTTY executable configured: \"{SettingsManager.Current.PuTTY_ApplicationFilePath}\"");
+        else
+            Log.Warn("PuTTY executable not found!");
+    }
+    
+    /// <summary>
+    /// Try to find PuTTY executable.
+    /// </summary>
+    private void TryFindExecutable()
+    {
+        Log.Info("Try to find PuTTY executable...");
+            
+        SettingsManager.Current.PuTTY_ApplicationFilePath = ApplicationHelper.Find(Models.PuTTY.PuTTY.FileName);
+            
+        CheckExecutable();
+        
+        if(!IsExecutableConfigured)
+            Log.Warn("Install PuTTY or configure the path in the settings.");
     }
 
     private async Task Connect(string host = null)
@@ -544,9 +551,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
             tabId));
 
         // Select the added tab
-        _disableFocusEmbeddedWindow = true;
         SelectedTabIndex = TabItems.Count - 1;
-        _disableFocusEmbeddedWindow = false;
     }
 
     public void AddTab(string host)
@@ -758,8 +763,12 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
     private void WriteDefaultProfileToRegistry()
     {
-        if (IsConfigured)
-            Models.PuTTY.PuTTY.WriteDefaultProfileToRegistry(SettingsManager.Current.Appearance_Theme);
+        if (!IsExecutableConfigured)
+            return;
+        
+        Log.Info("Write PuTTY profile to registry...");
+        
+        Models.PuTTY.PuTTY.WriteDefaultProfileToRegistry(SettingsManager.Current.Appearance_Theme);
     }
 
     #endregion
@@ -768,12 +777,15 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
     private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(SettingsInfo.PuTTY_ApplicationFilePath))
-            CheckSettings();
-
-        // Update PuTTY profile "NETworkManager" if application theme has changed
-        if (e.PropertyName == nameof(SettingsInfo.Appearance_Theme))
-            WriteDefaultProfileToRegistry();
+        switch (e.PropertyName)
+        {
+            case nameof(SettingsInfo.PuTTY_ApplicationFilePath):
+                CheckExecutable();
+                break;
+            case nameof(SettingsInfo.Appearance_Theme):
+                WriteDefaultProfileToRegistry();
+                break;
+        }
     }
 
     private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)

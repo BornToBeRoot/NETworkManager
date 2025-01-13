@@ -17,6 +17,7 @@ Release date: **xx.xx.2024**
 
 ## Breaking Changes
 
+- If you are upgrading from a version older than or equal to `2022.12.20.0`, first install [`2024.11.11.0`](https://github.com/BornToBeRoot/NETworkManager/releases/tag/2024.11.11.0) to upgrade the settings. [#2962](https://github.com/BornToBeRoot/NETworkManager/pull/2962).
 - Minimum supported Windows version increased to `22H2` to support:
   - WiFi 6 GHz, WPA3, 802.11be [#2912](https://github.com/BornToBeRoot/NETworkManager/pull/2912)
   - Remote Desktop high DPI, scaling and fast resizing [#2968](https://github.com/BornToBeRoot/NETworkManager/pull/2968)

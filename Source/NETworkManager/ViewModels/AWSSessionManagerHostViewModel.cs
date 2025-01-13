@@ -26,6 +26,7 @@ using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.AWS;
 using NETworkManager.Models.EventSystem;
+using NETworkManager.Models.PowerShell;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
@@ -39,6 +40,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     #region Variables
 
     private static readonly ILog Log = LogManager.GetLogger(typeof(AWSSessionManagerHostViewModel));
+    
     private readonly IDialogCoordinator _dialogCoordinator;
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
@@ -63,8 +65,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
     private readonly bool _isLoading;
     private bool _isViewActive = true;
-    private bool _disableFocusEmbeddedWindow;
-
+    
     private bool _isAWSCLIInstalled;
 
     public bool IsAWSCLIInstalled
@@ -95,17 +96,17 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    private bool _isPowerShellConfigured;
+    private bool _isExecutableConfigured;
 
-    public bool IsPowerShellConfigured
+    public bool IsExecutableConfigured
     {
-        get => _isPowerShellConfigured;
+        get => _isExecutableConfigured;
         set
         {
-            if (value == _isPowerShellConfigured)
+            if (value == _isExecutableConfigured)
                 return;
 
-            _isPowerShellConfigured = value;
+            _isExecutableConfigured = value;
             OnPropertyChanged();
         }
     }
@@ -154,27 +155,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-
-    private DragablzTabItem _selectedTabItem;
-
-    public DragablzTabItem SelectedTabItem
-    {
-        get => _selectedTabItem;
-        set
-        {
-            if (value == _selectedTabItem)
-                return;
-
-            _selectedTabItem = value;
-
-            // Focus embedded window on switching tab
-            if (!_disableFocusEmbeddedWindow)
-                FocusEmbeddedWindow();
-
-            OnPropertyChanged();
-        }
-    }
-
+    
     private bool _headerContextMenuIsOpen;
 
     public bool HeaderContextMenuIsOpen
@@ -334,9 +315,18 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
         _dialogCoordinator = instance;
 
-        CheckInstallationStatus();
-        CheckSettings();
+        // Check if AWS tools are installed
+        CheckRequirements();
+        
+        // Check if PowerShell executable is configured
+        CheckExecutable();
 
+        // Try to find PowerShell executable
+        if(!IsExecutableConfigured)
+            TryFindExecutable();
+        
+        WriteDefaultProfileToRegistry();
+        
         InterTabClient = new DragablzInterTabClient(ApplicationName.AWSSessionManager);
         InterTabPartition = ApplicationName.AWSSessionManager.ToString();
 
@@ -378,11 +368,11 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
     #region ICommand & Actions
 
-    public ICommand CheckInstallationStatusCommand => new RelayCommand(_ => CheckInstallationStatusAction());
+    public ICommand CheckRequirementsCommand => new RelayCommand(_ => CheckRequirementsAction());
 
-    private void CheckInstallationStatusAction()
+    private void CheckRequirementsAction()
     {
-        CheckInstallationStatus();
+        CheckRequirements();
     }
 
     public ItemActionCallback CloseItemCommand => CloseItemAction;
@@ -394,7 +384,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
     private bool Connect_CanExecute(object obj)
     {
-        return IsPowerShellConfigured;
+        return IsExecutableConfigured;
     }
 
     public ICommand ConnectCommand => new RelayCommand(_ => ConnectAction(), Connect_CanExecute);
@@ -552,7 +542,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
     #region Methods
 
-    private void CheckInstallationStatus()
+    private void CheckRequirements()
     {
         using var key =
             Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall");
@@ -580,13 +570,41 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    private void CheckSettings()
+    /// <summary>
+    /// Check if the PowerShell executable is configured and exists.
+    /// </summary>
+    private void CheckExecutable()
     {
-        IsPowerShellConfigured = !string.IsNullOrEmpty(SettingsManager.Current.AWSSessionManager_ApplicationFilePath) &&
+        IsExecutableConfigured = !string.IsNullOrEmpty(SettingsManager.Current.AWSSessionManager_ApplicationFilePath) &&
                                  File.Exists(SettingsManager.Current.AWSSessionManager_ApplicationFilePath);
+        
+        if(IsExecutableConfigured)
+            Log.Info($"PowerShell executable found: \"{SettingsManager.Current.AWSSessionManager_ApplicationFilePath}\"");
+        else
+            Log.Warn("PowerShell executable not found!");
+    }
+    
+    /// <summary>
+    /// Try to find PuTTY executable.
+    /// </summary>
+    private void TryFindExecutable()
+    {
+        Log.Info("Try to find PowerShell executable...");
+
+        var applicationFilePath =  ApplicationHelper.Find(Models.PowerShell.PowerShell.PwshFileName);
+        
+        if(string.IsNullOrEmpty(applicationFilePath))
+            applicationFilePath = ApplicationHelper.Find(Models.PowerShell.PowerShell.WindowsPowerShellFileName);
+            
+        SettingsManager.Current.AWSSessionManager_ApplicationFilePath = applicationFilePath;
+            
+        CheckExecutable();
+        
+        if(!IsExecutableConfigured)
+              Log.Warn("Install PowerShell or configure the path in the settings.");
     }
 
-    private bool IsConfigured => IsAWSCLIInstalled && IsAWSSessionManagerPluginInstalled && IsPowerShellConfigured;
+    private bool IsConfigured => IsAWSCLIInstalled && IsAWSSessionManagerPluginInstalled && IsExecutableConfigured;
 
     private async Task SyncAllInstanceIDsFromAWS()
     {
@@ -601,7 +619,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         if (!IsConfigured)
         {
             Log.Warn(
-                $"Preconditions not met! AWS CLI installed {IsAWSCLIInstalled}. AWS Session Manager plugin installed {IsAWSSessionManagerPluginInstalled}. PowerShell configured {IsPowerShellConfigured}.");
+                $"Preconditions not met! AWS CLI installed {IsAWSCLIInstalled}. AWS Session Manager plugin installed {IsAWSSessionManagerPluginInstalled}. PowerShell configured {IsExecutableConfigured}.");
             return;
         }
 
@@ -854,9 +872,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
             new AWSSessionManagerControl(tabId, sessionInfo), tabId));
 
         // Select the added tab
-        _disableFocusEmbeddedWindow = true;
         SelectedTabIndex = TabItems.Count - 1;
-        _disableFocusEmbeddedWindow = false;
     }
 
     // Modify history list
@@ -1028,6 +1044,21 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     {
         ConfigurationManager.OnDialogClose();
     }
+    
+    private void WriteDefaultProfileToRegistry()
+    {
+        if (!SettingsManager.Current.Appearance_PowerShellModifyGlobalProfile)
+            return;
+        
+        if(!IsExecutableConfigured)
+            return;
+        
+        Log.Info("Write PowerShell profile to registry...");
+        
+        PowerShell.WriteDefaultProfileToRegistry(
+            SettingsManager.Current.Appearance_Theme,
+            SettingsManager.Current.AWSSessionManager_ApplicationFilePath);
+    }
 
     #endregion
 
@@ -1051,7 +1082,12 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
                 SyncAllInstanceIDsFromAWS().ConfigureAwait(false);
                 break;
             case nameof(SettingsInfo.AWSSessionManager_ApplicationFilePath):
-                CheckSettings();
+                CheckExecutable();
+                WriteDefaultProfileToRegistry();
+                break;
+            case nameof(SettingsInfo.Appearance_PowerShellModifyGlobalProfile):
+            case nameof(SettingsInfo.Appearance_Theme):
+                WriteDefaultProfileToRegistry();
                 break;
         }
     }

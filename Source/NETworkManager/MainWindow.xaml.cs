@@ -75,19 +75,6 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 ConfigureDNSServer();
 
                 break;
-
-            // Update PowerShell profile if changed in the settings
-            case nameof(SettingsInfo.Appearance_PowerShellModifyGlobalProfile):
-            case nameof(SettingsInfo.Appearance_Theme):
-            case nameof(SettingsInfo.PowerShell_ApplicationFilePath):
-            case nameof(SettingsInfo.AWSSessionManager_ApplicationFilePath):
-                // Skip on welcome dialog
-                if (SettingsManager.Current.WelcomeDialog_Show)
-                    return;
-
-                WriteDefaultPowerShellProfileToRegistry();
-
-                break;
         }
     }
 
@@ -505,13 +492,13 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         if (SettingsManager.Current.WelcomeDialog_Show)
         {
 
-            var x = new WelcomeChildWindow();
+            var welcomeChildWindow = new WelcomeChildWindow();
 
             var welcomeViewModel = new WelcomeViewModel(async instance =>
             {
                 IsWelcomeWindowOpen = false;
 
-                x.IsOpen = false;
+                welcomeChildWindow.IsOpen = false;
 
                 // Set settings based on user choice
                 SettingsManager.Current.Update_CheckForUpdatesAtStartup = instance.CheckForUpdatesAtStartup;
@@ -539,22 +526,6 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 SettingsManager.Current.SNTPLookup_SNTPServers =
                     new ObservableCollection<ServerConnectionInfoProfile>(SNTPServer.GetDefaultList());
 
-                // Check if PowerShell is installed
-                foreach (var file in PowerShell.GetDefaultInstallationPaths.Where(File.Exists))
-                {
-                    SettingsManager.Current.PowerShell_ApplicationFilePath = file;
-                    SettingsManager.Current.AWSSessionManager_ApplicationFilePath = file;
-
-                    break;
-                }
-
-                // Check if PuTTY is installed
-                foreach (var file in PuTTY.GetDefaultInstallationPaths.Where(File.Exists))
-                {
-                    SettingsManager.Current.PuTTY_ApplicationFilePath = file;
-                    break;
-                }
-
                 SettingsManager.Current.WelcomeDialog_Show = false;
 
                 // Save it to create a settings file
@@ -563,11 +534,11 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 Load();
             });
 
-            x.DataContext = welcomeViewModel;
+            welcomeChildWindow.DataContext = welcomeViewModel;
 
             IsWelcomeWindowOpen = true;
 
-            await this.ShowChildWindowAsync(x);
+            await this.ShowChildWindowAsync(welcomeChildWindow);
         }
         else
         {
@@ -600,9 +571,6 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         // Detect network changes...
         NetworkChange.NetworkAvailabilityChanged += (_, _) => OnNetworkHasChanged();
         NetworkChange.NetworkAddressChanged += (_, _) => OnNetworkHasChanged();
-
-        // Set PowerShell global profile
-        WriteDefaultPowerShellProfileToRegistry();
 
         // Search for updates... 
         if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
@@ -1952,28 +1920,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         DNSClient.GetInstance().Configure(dnsSettings);
     }
-
-    private void WriteDefaultPowerShellProfileToRegistry()
-    {
-        if (!SettingsManager.Current.Appearance_PowerShellModifyGlobalProfile)
-            return;
-
-        HashSet<string> paths = [];
-
-        // PowerShell
-        if (!string.IsNullOrEmpty(SettingsManager.Current.PowerShell_ApplicationFilePath) &&
-            File.Exists(SettingsManager.Current.PowerShell_ApplicationFilePath))
-            paths.Add(SettingsManager.Current.PowerShell_ApplicationFilePath);
-
-        // AWS Session Manager
-        if (!string.IsNullOrEmpty(SettingsManager.Current.AWSSessionManager_ApplicationFilePath) &&
-            File.Exists(SettingsManager.Current.AWSSessionManager_ApplicationFilePath))
-            paths.Add(SettingsManager.Current.AWSSessionManager_ApplicationFilePath);
-
-        foreach (var path in paths)
-            PowerShell.WriteDefaultProfileToRegistry(SettingsManager.Current.Appearance_Theme, path);
-    }
-
+    
     #endregion
 
     #region Status window
