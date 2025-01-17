@@ -245,7 +245,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     private bool IsDisconnected_CanExecute(object view)
     {
         if (view is RemoteDesktopControl control)
-            return !control.IsConnected;
+            return !control.IsConnected && !control.IsConnecting;
 
         return false;
     }
@@ -281,7 +281,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     private void AdjustScreenAction(object view)
     {
         if (view is RemoteDesktopControl control)
-            control.AdjustScreen(force:true);
+            control.AdjustScreen(force: true);
     }
 
     public ICommand SendCtrlAltDelCommand => new RelayCommand(SendCtrlAltDelAction, IsConnected_CanExecute);

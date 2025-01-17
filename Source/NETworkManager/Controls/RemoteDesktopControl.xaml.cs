@@ -8,6 +8,7 @@ using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -65,6 +66,8 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
             if (value == _isConnected)
                 return;
 
+            Debug.WriteLine("IsConnected: " + value);
+
             _isConnected = value;
             OnPropertyChanged();
         }
@@ -79,6 +82,8 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
         {
             if (value == _isConnecting)
                 return;
+
+            Debug.WriteLine("IsConnecting: " + value);
 
             _isConnecting = value;
             OnPropertyChanged();
@@ -327,6 +332,9 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
 
     private void Reconnect()
     {
+        if (IsConnecting)
+            return;
+
         if (IsConnected)
             return;
 
