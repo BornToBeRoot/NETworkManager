@@ -327,6 +327,9 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
 
     private void Reconnect()
     {
+        if (IsConnecting)
+            return;
+
         if (IsConnected)
             return;
 

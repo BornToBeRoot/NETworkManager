@@ -60,6 +60,10 @@ Release date: **xx.xx.2024**
 
   - Fixed two `NullReferenceException` in ICMP & NETBIOS for some IP addresses. [#2964](https://github.com/BornToBeRoot/NETworkManager/pull/2964)
 
+- **Remote Desktop**
+
+  - Fixed an app crash when a reconnect was triggered while it was already trying to connect. [#2988](https://github.com/BornToBeRoot/NETworkManager/pull/2988)
+
 ## Dependencies, Refactoring & Documentation
 
 - Migrated code for some loading indicators from the library [LoadingIndicators.WPF] (https://github.com/zeluisping/LoadingIndicators.WPF) to the NETworkManager repo, as the original repo looks unmaintained and has problems with MahApps.Metro version 2 and later. [#2963](https://github.com/BornToBeRoot/NETworkManager/pull/2963)
