@@ -8,7 +8,7 @@ module.exports = function (context) {
               tagName: "script",
               attributes: {
                 src: "https://widget.gurubase.io/widget.latest.min.js",
-                "data-widget-id": "Zd_w46FaGI0XssTb2Sjivabt0w__rvepD0w1rQ5uKIg",
+                "data-widget-id": "50cwxAGtBx7_T8lBt0wDabjjmYws1JMCYF-MMKfJV7w",
                 "data-text": "Ask AI",
                 "data-margins": '{"bottom": "20px", "right": "20px"}',
                 "data-light-mode": "false",
@@ -24,4 +24,3 @@ module.exports = function (context) {
       },
     };
   };
-  
