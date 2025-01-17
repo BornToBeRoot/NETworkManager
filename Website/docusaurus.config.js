@@ -21,7 +21,7 @@ const config = {
   projectName: "NETworkManager",
 
   trailingSlash: false,
-  
+
   onBrokenLinks: "throw",
   onBrokenAnchors: "throw",
   onBrokenMarkdownLinks: "throw",
@@ -74,7 +74,7 @@ const config = {
             type: "docSidebar",
             sidebarId: "docsSidebar",
             position: "left",
-            label: "Docs",
+            label: "Documentation",
           },
           {
             to: "/blog",
@@ -87,7 +87,7 @@ const config = {
             position: "right",
           },
         ],
-      },    
+      },
       footer: {
         style: "dark",
         links: [
@@ -99,7 +99,7 @@ const config = {
                 to: "/download",
               },
               {
-                label: "Docs",
+                label: "Documentation",
                 to: "/docs/introduction",
               },
               {
@@ -112,8 +112,8 @@ const config = {
             title: "Community",
             items: [
               {
-                label: "Twitter",
-                href: "https://twitter.com/_BornToBeRoot",
+                label: "X",
+                href: "https://x.com/_BornToBeRoot",
               },
             ],
           },
@@ -142,6 +142,10 @@ const config = {
         darkTheme: prismThemes.dracula,
       },
     }),
+
+  plugins: [
+    require.resolve("./plugins/gurubase-widget.js")
+  ],
 };
 
 export default config;
