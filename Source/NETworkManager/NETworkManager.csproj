@@ -63,7 +63,7 @@
         <PackageReference Include="AWSSDK.EC2" Version="3.7.429.1" />
         <PackageReference Include="DnsClient" Version="1.8.0" />
         <PackageReference Include="gong-wpf-dragdrop" Version="4.0.0" />
-        <PackageReference Include="IPNetwork2" Version="3.0.667" />
+        <PackageReference Include="IPNetwork2" Version="3.0.712" />
         <PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.5" />
         <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
         <PackageReference Include="log4net" Version="3.0.3" />

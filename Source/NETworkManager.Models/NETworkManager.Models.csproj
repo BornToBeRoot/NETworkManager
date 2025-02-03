@@ -28,7 +28,7 @@
     <ItemGroup>
         <PackageReference Include="AWSSDK.Core" Version="3.7.401.6"/>
         <PackageReference Include="DnsClient" Version="1.8.0"/>
-        <PackageReference Include="IPNetwork2" Version="3.0.667"/>
+        <PackageReference Include="IPNetwork2" Version="3.0.712"/>
         <PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.5"/>
         <PackageReference Include="log4net" Version="3.0.3"/>
         <PackageReference Include="MahApps.Metro" Version="2.4.10"/>
