@@ -1,4 +1,12 @@
-﻿using System;
+﻿using Dragablz;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models;
+using NETworkManager.Models.RemoteDesktop;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -9,15 +17,6 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
-using Dragablz;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Localization;
-using NETworkManager.Localization.Resources;
-using NETworkManager.Models;
-using NETworkManager.Models.RemoteDesktop;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using Application = System.Windows.Application;
 
 namespace NETworkManager.Controls;
 
@@ -71,7 +70,7 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
 
             // Focus embedded window in the selected tab
             (((DragablzTabItem)tabablzControl.SelectedItem)?.View as IEmbeddedWindow)?.FocusEmbeddedWindow();
-            
+
             break;
         }
     }
@@ -169,7 +168,7 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
     private bool RemoteDesktop_IsDisconnected_CanExecute(object view)
     {
         if (view is RemoteDesktopControl control)
-            return !control.IsConnected;
+            return !control.IsConnected && !control.IsConnecting;
 
         return false;
     }
@@ -376,8 +375,8 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
     {
         // Find all TabablzControl in the active window
         foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(this))
-        foreach (var tabItem in tabablzControl.Items.OfType<DragablzTabItem>())
-            ((IDragablzTabItem)tabItem.View).CloseTab();
+            foreach (var tabItem in tabablzControl.Items.OfType<DragablzTabItem>())
+                ((IDragablzTabItem)tabItem.View).CloseTab();
 
         // Reset the dragging state
         switch (ApplicationName)
@@ -481,14 +480,14 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
     }
 
     private void UpdateOnWindowResize()
-    { 
+    {
         // Find all TabablzControl
         foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(this))
         {
             // Skip if no items
             if (tabablzControl.Items.Count == 0)
                 continue;
-            
+
             foreach (var item in tabablzControl.Items.OfType<DragablzTabItem>())
             {
                 if (item.View is RemoteDesktopControl control)

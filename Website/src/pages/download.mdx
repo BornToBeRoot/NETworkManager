@@ -8,27 +8,27 @@ import styles from "./styles.module.css";
 
 # Download
 
-Version: **2024.11.11.0**<br />
-Release date: **11.11.2024**
+Version: **2025.1.18.0**<br />
+Release date: **18.01.2025**
 
 Download the latest binaries via GitHub Releases:
 
 <div className={`${styles.centerButtonContainer} margin-bottom--lg`}>
   <Link
     className={`button button--primary ${styles.downloadButton}`}
-    to="https://github.com/BornToBeRoot/NETworkManager/releases/download/2024.11.11.0/NETworkManager_2024.11.11.0_Setup.msi"
+    to="https://github.com/BornToBeRoot/NETworkManager/releases/download/2025.1.18.0/NETworkManager_2025.1.18.0_Setup.msi"
   >
     Setup
   </Link>
   <Link
     className={`button button--info ${styles.downloadButton}`}
-    to="https://github.com/BornToBeRoot/NETworkManager/releases/download/2024.11.11.0/NETworkManager_2024.11.11.0_Portable.zip"
+    to="https://github.com/BornToBeRoot/NETworkManager/releases/download/2025.1.18.0/NETworkManager_2025.1.18.0_Portable.zip"
   >
     Portable
   </Link>
   <Link
     className={`button button--info ${styles.downloadButton}`}
-    to="https://github.com/BornToBeRoot/NETworkManager/releases/download/2024.11.11.0/NETworkManager_2024.11.11.0_Archive.zip"
+    to="https://github.com/BornToBeRoot/NETworkManager/releases/download/2025.1.18.0/NETworkManager_2025.1.18.0_Archive.zip"
   >
     Archive
   </Link>
@@ -69,7 +69,7 @@ Download the latest binaries via GitHub Releases:
   </Link>
   <Link
     className={`button button--secondary ${styles.additionalButton}`}
-    to="/docs/changelog/2024-11-11-0"
+    to="/docs/changelog/2025-1-18-0"
     target="_blank"
   >
     📃 Changelog
@@ -84,21 +84,20 @@ Download the latest binaries via GitHub Releases:
       <b>Setup</b> (MSI-Installer)
       <pre>
         <code>
-          B3B2128F752B6CA84C9FE0B84CA279C284AEB3BB479508E546633BF34E59A125
+          0E8722AB821FDFC5079C8E914CDBC293F373F551924EFBA14CA4AF6E68B678F9
         </code>
       </pre>
       <b>Portable</b> (ZIP-Archive)
       <pre>
         <code>
-          1D0C419C71103038397F3A0E14914B3DB1194164153448BFE57E261D093D7D55
+          85000CC7E9892C14B3C1F7DE2D540A57E2C90CF5AE25E27960844751AADCF166
         </code>
       </pre>
       <b>Archive</b> (ZIP-Archive)
       <pre>
         <code>
-          5C054ED5233207692187E1355E581F3CA226EF6BB0C551141E795C06B86832FA
-        </code>
-        <br />
+          68FFC7A42F0CF27B83525BB6AE79C730C96C40A956869F5C45D60B97CCECAE74
+        </code>        
       </pre>
     </p>
     <p>Verify the file hash with the following PowerShell command:</p>
@@ -129,7 +128,7 @@ Profiles and settings are stored in the user profile under `Documents\NETworkMan
 
 ## System requirements
 
-- Windows 10 / Server x64 (1809 or later)
+- Windows 10 / Server x64 (22H2 or later)
 - [.NET Desktop Runtime 8.0 (LTS) - x64](https://dotnet.microsoft.com/en-us/download/dotnet/8.0/runtime)
 
 ## Silent install
@@ -137,7 +136,7 @@ Profiles and settings are stored in the user profile under `Documents\NETworkMan
 Install silent with the following command:
 
 ```
-.\NETworkManager_{VERSION}_Setup.msi /qn /norestart
+.\NETworkManager_{VERSION}_Setup.msi /quiet /norestart
 ```
 
 ## Package Manager
