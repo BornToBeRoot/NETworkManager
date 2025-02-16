@@ -23,7 +23,7 @@ Release date: **xx.xx.2025**
 
 **PowerShell**
 
-- Find `pwsg.exe` and `powershell.exe` executable by path, similar to `where.exe`. [#2962](https://github.com/BornToBeRoot/NETworkManager/pull/2962)
+- Find `pwsh.exe` and `powershell.exe` executable by path, similar to `where.exe`. [#2962](https://github.com/BornToBeRoot/NETworkManager/pull/2962)
 
 **PuTTY**
 
@@ -31,7 +31,7 @@ Release date: **xx.xx.2025**
 
 **AWS Session Manager**
 
-- Find `pwsg.exe` and `powershell.exe` executable by path, similar to `where.exe`. [#2962](https://github.com/BornToBeRoot/NETworkManager/pull/2962)
+- Find `pwsh.exe` and `powershell.exe` executable by path, similar to `where.exe`. [#2962](https://github.com/BornToBeRoot/NETworkManager/pull/2962)
 
 ## Bugfixes
 
