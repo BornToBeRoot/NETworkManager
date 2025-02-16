@@ -43,7 +43,7 @@ public partial class PuTTYHostView
         while (!_loaded)
             await Task.Delay(250);
 
-        if (_viewModel.IsConfigured)
+        if (_viewModel.IsExecutableConfigured)
             _viewModel.AddTab(host);
     }
 

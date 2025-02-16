@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using log4net;
 using Microsoft.Win32;
 
 namespace NETworkManager.Models.PowerShell;
@@ -11,44 +11,43 @@ namespace NETworkManager.Models.PowerShell;
 /// </summary>
 public static class PowerShell
 {
+    private static readonly ILog Log = LogManager.GetLogger(typeof(PowerShell));
+    
     /// <summary>
-    ///     Default installation paths for PowerShell.
+    /// Windows PowerShell file name.
     /// </summary>
-    public static readonly List<string> GetDefaultInstallationPaths = new()
-    {
-        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "PowerShell", "7", "pwsh.exe"),
-        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "PowerShell", "7",
-            "pwsh.exe"),
-        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows),
-            @"System32\WindowsPowerShell\v1.0\powershell.exe")
-    };
-
+    public const string WindowsPowerShellFileName = "powershell.exe";
+    
+    /// <summary>
+    /// PowerShell Core file name.
+    /// </summary>
+    public const string PwshFileName = "pwsh.exe";
+    
     /// <summary>
     ///     Default SZ registry keys for the global PowerShell profile.
     /// </summary>
-    private static readonly List<Tuple<string, string>> DefaultProfileRegkeysSzBase = new()
-    {
-        new Tuple<string, string>("FaceName", "Consolas")
-    };
+    private static readonly List<Tuple<string, string>> DefaultProfileRegkeysSzBase =
+        [
+            new("FaceName", "Consolas")
+        ];
 
     /// <summary>
     ///     Default DWORD registry keys for the global PowerShell profile.
     /// </summary>
-    private static readonly List<Tuple<string, int>> DefaultProfileRegkeysDwordBase = new()
-    {
-        new Tuple<string, int>("CursorType", 1),
-        new Tuple<string, int>("FontFamily", 54), // 36
-        new Tuple<string, int>("FontSize", 1179648), // 120000
-        new Tuple<string, int>("FontWeight", 400) // 190
-    };
+    private static readonly List<Tuple<string, int>> DefaultProfileRegkeysDwordBase =
+    [
+        new("CursorType", 1),
+        new("FontFamily", 54),    // 36
+        new("FontSize", 1179648), // 120000
+        new("FontWeight", 400)    // 190
+    ];
 
     /// <summary>
     ///     Default DWORD registry keys for the global PowerShell profile to delete.
     /// </summary>
-    private static readonly List<string> DefaultProfileRegkeysDwordDelete = new()
-    {
+    private static readonly List<string> DefaultProfileRegkeysDwordDelete = [
         "ScreenColors"
-    };
+    ];
 
     /// <summary>
     ///     Default DWORD registry keys for the global PowerShell profile with dark theme.
@@ -57,12 +56,11 @@ public static class PowerShell
     private static List<Tuple<string, int>> GetProfileRegkeysDwordDark()
     {
         return DefaultProfileRegkeysDwordBase.Concat(
-            new[]
-            {
-                new Tuple<string, int>("DefaultBackground", 2434341), // HEX: 252525
-                new Tuple<string, int>("ColorTable00", 2434341), // HEX: 252525
-                new Tuple<string, int>("ColorTable07", 13421772) // HEX: cccccc
-            }).ToList();
+        [
+            new Tuple<string, int>("DefaultBackground", 2434341), // HEX: 252525
+                new Tuple<string, int>("ColorTable00", 2434341),  // HEX: 252525
+                new Tuple<string, int>("ColorTable07", 13421772)  // HEX: cccccc
+        ]).ToList();
     }
 
     /// <summary>
@@ -72,12 +70,11 @@ public static class PowerShell
     private static List<Tuple<string, int>> GetProfileRegkeysDwordWhite()
     {
         return DefaultProfileRegkeysDwordBase.Concat(
-            new[]
-            {
-                new Tuple<string, int>("DefaultBackground", 16777215), // HEX: FFFFFF
+        [
+            new Tuple<string, int>("DefaultBackground", 16777215), // HEX: FFFFFF
                 new Tuple<string, int>("ColorTable00", 16777215), // HEX: FFFFFF
                 new Tuple<string, int>("ColorTable07", 2434341) // HEX: 252525
-            }).ToList();
+        ]).ToList();
     }
 
     /// <summary>
@@ -93,12 +90,13 @@ public static class PowerShell
 
         // Windows PowerShell --> HKCU:\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe
         if (powerShellPath.StartsWith(systemRoot))
-            registryPath += "%SystemRoot%" + powerShellPath
-                .Substring(systemRoot.Length, powerShellPath.Length - systemRoot.Length).Replace(@"\", "_");
+            registryPath += "%SystemRoot%" + powerShellPath.Substring(systemRoot.Length, powerShellPath.Length - systemRoot.Length).Replace(@"\", "_");
         // PWSH -->  HKCU:\Console\C:_Program Files_PowerShell_7_pwsh.exe
         else
             registryPath += powerShellPath.Replace(@"\", "_");
 
+        Log.Info($"Registry path for PowerShell profile: \"{registryPath}\"");
+        
         var registryKey = Registry.CurrentUser.OpenSubKey(registryPath, true);
 
         registryKey ??= Registry.CurrentUser.CreateSubKey(registryPath);

@@ -41,7 +41,7 @@
                         <DataTrigger Binding="{Binding IsAWSSessionManagerPluginInstalled}" Value="False">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding IsPowerShellConfigured}" Value="False">
+                        <DataTrigger Binding="{Binding IsExecutableConfigured}" Value="False">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                     </Style.Triggers>
@@ -794,7 +794,7 @@
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding IsAWSCLIInstalled}" Value="True" />
                                 <Condition Binding="{Binding IsAWSSessionManagerPluginInstalled}" Value="True" />
-                                <Condition Binding="{Binding IsPowerShellConfigured}" Value="True" />
+                                <Condition Binding="{Binding IsExecutableConfigured}" Value="True" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.Setters>
                                 <Setter Property="Visibility" Value="Collapsed" />
@@ -849,7 +849,7 @@
                         <MouseBinding Command="{Binding OpenDocumentationCommand}" MouseAction="LeftClick" />
                     </TextBlock.InputBindings>
                 </TextBlock>
-                <Button HorizontalAlignment="Center" Command="{Binding CheckInstallationStatusCommand}"
+                <Button HorizontalAlignment="Center" Command="{Binding CheckRequirementsCommand}"
                         Style="{StaticResource ImageWithTextButton}">
                     <Button.Content>
                         <Grid>
@@ -872,7 +872,7 @@
                 <StackPanel.Style>
                     <Style TargetType="{x:Type StackPanel}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsPowerShellConfigured}" Value="True">
+                            <DataTrigger Binding="{Binding IsExecutableConfigured}" Value="True">
                                 <Setter Property="Visibility" Value="Collapsed" />
                             </DataTrigger>
                         </Style.Triggers>

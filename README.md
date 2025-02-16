@@ -121,7 +121,7 @@ Want to contribute to NETworkManager? Here are a few information on how to get s
 - [Improve the documentation](CONTRIBUTING.md#documentation)
 - [Report a security vulnerability](https://github.com/BornToBeRoot/NETworkManager/blob/main/SECURITY.md)
 
-A list of all contributors can be found [here](https://github.com/BornToBeRoot/NETworkManager/blob/main/Contributors.md).
+A list of all contributors can be found [here](https://github.com/BornToBeRoot/NETworkManager/blob/main/CONTRIBUTORS.md).
 
 This project has adopted the [code of conduct](https://github.com/BornToBeRoot/NETworkManager/blob/main/CODE_OF_CONDUCT.md) defined by the [Contributor Covenant](https://contributor-covenant.org/).
 

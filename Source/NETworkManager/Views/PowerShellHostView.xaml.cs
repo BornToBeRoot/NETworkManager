@@ -1,9 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.ViewModels;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
@@ -43,7 +43,7 @@ public partial class PowerShellHostView
         while (!_loaded)
             await Task.Delay(250);
 
-        if (_viewModel.IsConfigured)
+        if (_viewModel.IsExecutableConfigured)
             _viewModel.AddTab(host);
     }
 

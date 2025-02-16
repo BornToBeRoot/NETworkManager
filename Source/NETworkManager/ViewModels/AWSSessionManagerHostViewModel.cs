@@ -1,18 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Input;
-using System.Windows.Threading;
-using Amazon;
+﻿using Amazon;
 using Amazon.EC2;
 using Amazon.EC2.Model;
 using Amazon.Runtime.CredentialManagement;
@@ -26,11 +12,26 @@ using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.AWS;
 using NETworkManager.Models.EventSystem;
+using NETworkManager.Models.PowerShell;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
-using AWSSessionManager = NETworkManager.Profiles.Application.AWSSessionManager;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Threading;
+using AWSSessionManagerProfile = NETworkManager.Profiles.Application.AWSSessionManager;
 
 namespace NETworkManager.ViewModels;
 
@@ -39,6 +40,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     #region Variables
 
     private static readonly ILog Log = LogManager.GetLogger(typeof(AWSSessionManagerHostViewModel));
+
     private readonly IDialogCoordinator _dialogCoordinator;
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
@@ -63,7 +65,6 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
     private readonly bool _isLoading;
     private bool _isViewActive = true;
-    private bool _disableFocusEmbeddedWindow;
 
     private bool _isAWSCLIInstalled;
 
@@ -95,17 +96,17 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    private bool _isPowerShellConfigured;
+    private bool _isExecutableConfigured;
 
-    public bool IsPowerShellConfigured
+    public bool IsExecutableConfigured
     {
-        get => _isPowerShellConfigured;
+        get => _isExecutableConfigured;
         set
         {
-            if (value == _isPowerShellConfigured)
+            if (value == _isExecutableConfigured)
                 return;
 
-            _isPowerShellConfigured = value;
+            _isExecutableConfigured = value;
             OnPropertyChanged();
         }
     }
@@ -151,26 +152,6 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
                 return;
 
             _selectedTabIndex = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private DragablzTabItem _selectedTabItem;
-
-    public DragablzTabItem SelectedTabItem
-    {
-        get => _selectedTabItem;
-        set
-        {
-            if (value == _selectedTabItem)
-                return;
-
-            _selectedTabItem = value;
-
-            // Focus embedded window on switching tab
-            if (!_disableFocusEmbeddedWindow)
-                FocusEmbeddedWindow();
-
             OnPropertyChanged();
         }
     }
@@ -334,8 +315,17 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
         _dialogCoordinator = instance;
 
-        CheckInstallationStatus();
-        CheckSettings();
+        // Check if AWS tools are installed
+        CheckRequirements();
+
+        // Check if PowerShell executable is configured
+        CheckExecutable();
+
+        // Try to find PowerShell executable
+        if (!IsExecutableConfigured)
+            TryFindExecutable();
+
+        WriteDefaultProfileToRegistry();
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.AWSSessionManager);
         InterTabPartition = ApplicationName.AWSSessionManager.ToString();
@@ -378,11 +368,11 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
     #region ICommand & Actions
 
-    public ICommand CheckInstallationStatusCommand => new RelayCommand(_ => CheckInstallationStatusAction());
+    public ICommand CheckRequirementsCommand => new RelayCommand(_ => CheckRequirementsAction());
 
-    private void CheckInstallationStatusAction()
+    private void CheckRequirementsAction()
     {
-        CheckInstallationStatus();
+        CheckRequirements();
     }
 
     public ItemActionCallback CloseItemCommand => CloseItemAction;
@@ -394,7 +384,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
     private bool Connect_CanExecute(object obj)
     {
-        return IsPowerShellConfigured;
+        return IsExecutableConfigured;
     }
 
     public ICommand ConnectCommand => new RelayCommand(_ => ConnectAction(), Connect_CanExecute);
@@ -552,7 +542,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
     #region Methods
 
-    private void CheckInstallationStatus()
+    private void CheckRequirements()
     {
         using var key =
             Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall");
@@ -580,13 +570,41 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    private void CheckSettings()
+    /// <summary>
+    /// Check if the executable is configured and exists.
+    /// </summary>
+    private void CheckExecutable()
     {
-        IsPowerShellConfigured = !string.IsNullOrEmpty(SettingsManager.Current.AWSSessionManager_ApplicationFilePath) &&
+        IsExecutableConfigured = !string.IsNullOrEmpty(SettingsManager.Current.AWSSessionManager_ApplicationFilePath) &&
                                  File.Exists(SettingsManager.Current.AWSSessionManager_ApplicationFilePath);
+
+        if (IsExecutableConfigured)
+            Log.Info($"PowerShell executable found: \"{SettingsManager.Current.AWSSessionManager_ApplicationFilePath}\"");
+        else
+            Log.Warn("PowerShell executable not found!");
     }
 
-    private bool IsConfigured => IsAWSCLIInstalled && IsAWSSessionManagerPluginInstalled && IsPowerShellConfigured;
+    /// <summary>
+    /// Try to find executable.
+    /// </summary>
+    private void TryFindExecutable()
+    {
+        Log.Info("Try to find PowerShell executable...");
+
+        var applicationFilePath = ApplicationHelper.Find(PowerShell.PwshFileName);
+
+        if (string.IsNullOrEmpty(applicationFilePath))
+            applicationFilePath = ApplicationHelper.Find(PowerShell.WindowsPowerShellFileName);
+
+        SettingsManager.Current.AWSSessionManager_ApplicationFilePath = applicationFilePath;
+
+        CheckExecutable();
+
+        if (!IsExecutableConfigured)
+            Log.Warn("Install PowerShell or configure the path in the settings.");
+    }
+
+    private bool IsConfigured => IsAWSCLIInstalled && IsAWSSessionManagerPluginInstalled && IsExecutableConfigured;
 
     private async Task SyncAllInstanceIDsFromAWS()
     {
@@ -601,7 +619,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         if (!IsConfigured)
         {
             Log.Warn(
-                $"Preconditions not met! AWS CLI installed {IsAWSCLIInstalled}. AWS Session Manager plugin installed {IsAWSSessionManagerPluginInstalled}. PowerShell configured {IsPowerShellConfigured}.");
+                $"Preconditions not met! AWS CLI installed {IsAWSCLIInstalled}. AWS Session Manager plugin installed {IsAWSSessionManagerPluginInstalled}. PowerShell configured {IsExecutableConfigured}.");
             return;
         }
 
@@ -706,33 +724,33 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         };
 
         foreach (var reservation in response.Reservations)
-        foreach (var instance in reservation.Instances)
-        {
-            if (SettingsManager.Current.AWSSessionManager_SyncOnlyRunningInstancesFromAWS &&
-                instance.State.Name.Value != "running")
-                continue;
-
-            var tagName = instance.Tags.FirstOrDefault(x => x.Key == "Name");
-
-            var name = tagName == null || tagName.Value == null
-                ? instance.InstanceId
-                : $"{tagName.Value} ({instance.InstanceId})";
-
-            groupInfo.Profiles.Add(new ProfileInfo
+            foreach (var instance in reservation.Instances)
             {
-                Name = name,
-                Host = instance.InstanceId,
-                Group = $"~ [{profile}\\{region}]",
-                IsDynamic = true,
+                if (SettingsManager.Current.AWSSessionManager_SyncOnlyRunningInstancesFromAWS &&
+                    instance.State.Name.Value != "running")
+                    continue;
 
-                AWSSessionManager_Enabled = true,
-                AWSSessionManager_InstanceID = instance.InstanceId,
-                AWSSessionManager_OverrideProfile = true,
-                AWSSessionManager_Profile = profile,
-                AWSSessionManager_OverrideRegion = true,
-                AWSSessionManager_Region = region
-            });
-        }
+                var tagName = instance.Tags.FirstOrDefault(x => x.Key == "Name");
+
+                var name = tagName == null || tagName.Value == null
+                    ? instance.InstanceId
+                    : $"{tagName.Value} ({instance.InstanceId})";
+
+                groupInfo.Profiles.Add(new ProfileInfo
+                {
+                    Name = name,
+                    Host = instance.InstanceId,
+                    Group = $"~ [{profile}\\{region}]",
+                    IsDynamic = true,
+
+                    AWSSessionManager_Enabled = true,
+                    AWSSessionManager_InstanceID = instance.InstanceId,
+                    AWSSessionManager_OverrideProfile = true,
+                    AWSSessionManager_Profile = profile,
+                    AWSSessionManager_OverrideRegion = true,
+                    AWSSessionManager_Region = region
+                });
+            }
 
         // Remove, replace or add group
         var profilesChangedCurrentState = ProfileManager.ProfilesChanged;
@@ -828,14 +846,14 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
     private void ConnectProfile()
     {
-        var sessionInfo = AWSSessionManager.CreateSessionInfo(SelectedProfile);
+        var sessionInfo = AWSSessionManagerProfile.CreateSessionInfo(SelectedProfile);
 
         Connect(sessionInfo, SelectedProfile.Name);
     }
 
     private void ConnectProfileExternal()
     {
-        var sessionInfo = AWSSessionManager.CreateSessionInfo(SelectedProfile);
+        var sessionInfo = AWSSessionManagerProfile.CreateSessionInfo(SelectedProfile);
 
         Process.Start(new ProcessStartInfo
         {
@@ -854,9 +872,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
             new AWSSessionManagerControl(tabId, sessionInfo), tabId));
 
         // Select the added tab
-        _disableFocusEmbeddedWindow = true;
         SelectedTabIndex = TabItems.Count - 1;
-        _disableFocusEmbeddedWindow = false;
     }
 
     // Modify history list
@@ -943,7 +959,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
             // Focus embedded window in the selected tab
             (((DragablzTabItem)tabablzControl.SelectedItem)?.View as IEmbeddedWindow)?.FocusEmbeddedWindow();
-            
+
             break;
         }
     }
@@ -1029,6 +1045,21 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         ConfigurationManager.OnDialogClose();
     }
 
+    private void WriteDefaultProfileToRegistry()
+    {
+        if (!SettingsManager.Current.Appearance_PowerShellModifyGlobalProfile)
+            return;
+
+        if (!IsExecutableConfigured)
+            return;
+
+        Log.Info("Write PowerShell profile to registry...");
+
+        PowerShell.WriteDefaultProfileToRegistry(
+            SettingsManager.Current.Appearance_Theme,
+            SettingsManager.Current.AWSSessionManager_ApplicationFilePath);
+    }
+
     #endregion
 
     #region Event
@@ -1038,20 +1069,25 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         switch (e.PropertyName)
         {
             case nameof(SettingsInfo.AWSSessionManager_EnableSyncInstanceIDsFromAWS):
-            {
-                IsSyncEnabled = SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS;
+                {
+                    IsSyncEnabled = SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS;
 
-                if (IsSyncEnabled)
-                    SyncAllInstanceIDsFromAWS().ConfigureAwait(false);
-                else
-                    RemoveDynamicGroups();
-                break;
-            }
+                    if (IsSyncEnabled)
+                        SyncAllInstanceIDsFromAWS().ConfigureAwait(false);
+                    else
+                        RemoveDynamicGroups();
+                    break;
+                }
             case nameof(SettingsInfo.AWSSessionManager_SyncOnlyRunningInstancesFromAWS):
                 SyncAllInstanceIDsFromAWS().ConfigureAwait(false);
                 break;
             case nameof(SettingsInfo.AWSSessionManager_ApplicationFilePath):
-                CheckSettings();
+                CheckExecutable();
+                WriteDefaultProfileToRegistry();
+                break;
+            case nameof(SettingsInfo.Appearance_PowerShellModifyGlobalProfile):
+            case nameof(SettingsInfo.Appearance_Theme):
+                WriteDefaultProfileToRegistry();
                 break;
         }
     }
