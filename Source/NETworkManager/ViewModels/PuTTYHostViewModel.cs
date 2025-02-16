@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Input;
-using System.Windows.Threading;
-using Dragablz;
+﻿using Dragablz;
 using log4net;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
@@ -22,7 +10,19 @@ using NETworkManager.Profiles;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
-using PuTTY = NETworkManager.Settings.Application.PuTTY;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Threading;
+using PuTTYProfile = NETworkManager.Settings.Application.PuTTY;
 
 namespace NETworkManager.ViewModels;
 
@@ -30,7 +30,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
     private static readonly ILog Log = LogManager.GetLogger(typeof(PuTTYHostViewModel));
-    
+
     private readonly IDialogCoordinator _dialogCoordinator;
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
@@ -236,7 +236,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #endregion
-    
+
     #region Constructor, load settings
 
     public PuTTYHostViewModel(IDialogCoordinator instance)
@@ -244,14 +244,14 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         _isLoading = true;
 
         _dialogCoordinator = instance;
-        
+
         // Check if PuTTY executable is configured
         CheckExecutable();
 
         // Try to find PuTTY executable
         if (!IsExecutableConfigured)
             TryFindExecutable();
-        
+
         WriteDefaultProfileToRegistry();
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.PuTTY);
@@ -434,31 +434,31 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
     #region Methods
     /// <summary>
-    /// Check if PuTTY executable is configured and exists.
+    /// Check if executable is configured and exists.
     /// </summary>
     private void CheckExecutable()
     {
         IsExecutableConfigured = !string.IsNullOrEmpty(SettingsManager.Current.PuTTY_ApplicationFilePath) &&
                        File.Exists(SettingsManager.Current.PuTTY_ApplicationFilePath);
-        
-        if(IsExecutableConfigured)
+
+        if (IsExecutableConfigured)
             Log.Info($"PuTTY executable configured: \"{SettingsManager.Current.PuTTY_ApplicationFilePath}\"");
         else
             Log.Warn("PuTTY executable not found!");
     }
-    
+
     /// <summary>
-    /// Try to find PuTTY executable.
+    /// Try to find executable.
     /// </summary>
     private void TryFindExecutable()
     {
         Log.Info("Try to find PuTTY executable...");
-            
+
         SettingsManager.Current.PuTTY_ApplicationFilePath = ApplicationHelper.Find(Models.PuTTY.PuTTY.FileName);
-            
+
         CheckExecutable();
-        
-        if(!IsExecutableConfigured)
+
+        if (!IsExecutableConfigured)
             Log.Warn("Install PuTTY or configure the path in the settings.");
     }
 
@@ -488,7 +488,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
                 EnableLog = SettingsManager.Current.PuTTY_EnableSessionLog,
                 LogMode = SettingsManager.Current.PuTTY_LogMode,
                 LogFileName = SettingsManager.Current.PuTTY_LogFileName,
-                LogPath = PuTTY.LogPath,
+                LogPath = PuTTYProfile.LogPath,
                 AdditionalCommandLine = instance.AdditionalCommandLine
             };
 
@@ -527,7 +527,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     private void ConnectProfileExternal()
     {
         // Create log path
-        DirectoryHelper.CreateWithEnvironmentVariables(PuTTY.LogPath);
+        DirectoryHelper.CreateWithEnvironmentVariables(PuTTYProfile.LogPath);
 
         var sessionInfo = NETworkManager.Profiles.Application.PuTTY.CreateSessionInfo(SelectedProfile);
 
@@ -683,7 +683,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
             // Focus embedded window in the selected tab
             (((DragablzTabItem)tabablzControl.SelectedItem)?.View as IEmbeddedWindow)?.FocusEmbeddedWindow();
-            
+
             break;
         }
     }
@@ -765,9 +765,9 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     {
         if (!IsExecutableConfigured)
             return;
-        
+
         Log.Info("Write PuTTY profile to registry...");
-        
+
         Models.PuTTY.PuTTY.WriteDefaultProfileToRegistry(SettingsManager.Current.Appearance_Theme);
     }
 

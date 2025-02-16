@@ -11,6 +11,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Dragablz;
+using log4net;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
@@ -21,14 +22,15 @@ using NETworkManager.Profiles;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
-using PowerShell = NETworkManager.Profiles.Application.PowerShell;
+using PowerShellProfile = NETworkManager.Profiles.Application.PowerShell;
 
 namespace NETworkManager.ViewModels;
 
 public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
-
+    private static readonly ILog Log = LogManager.GetLogger(typeof(PowerShellHostViewModel));
+    
     private readonly IDialogCoordinator _dialogCoordinator;
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
@@ -54,17 +56,17 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     private readonly bool _isLoading;
     private bool _isViewActive = true;
 
-    private bool _isConfigured;
+    private bool _isExecutableConfigured;
 
-    public bool IsConfigured
+    public bool IsExecutableConfigured
     {
-        get => _isConfigured;
+        get => _isExecutableConfigured;
         set
         {
-            if (value == _isConfigured)
+            if (value == _isExecutableConfigured)
                 return;
 
-            _isConfigured = value;
+            _isExecutableConfigured = value;
             OnPropertyChanged();
         }
     }
@@ -243,7 +245,14 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
         _dialogCoordinator = instance;
 
-        CheckSettings();
+        // Check if PowerShell executable is configured
+        CheckExecutable();
+
+        // Try to find PowerShell executable
+        if(!IsExecutableConfigured)
+            TryFindExecutable();
+
+        WriteDefaultProfileToRegistry();
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.PowerShell);
         InterTabPartition = ApplicationName.PowerShell.ToString();
@@ -289,7 +298,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
     private bool Connect_CanExecute(object obj)
     {
-        return IsConfigured;
+        return IsExecutableConfigured;
     }
 
     public ICommand ConnectCommand => new RelayCommand(_ => ConnectAction(), Connect_CanExecute);
@@ -418,10 +427,38 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
     #region Methods
 
-    private void CheckSettings()
+    /// <summary>
+    /// Check if the executable is configured and exists.
+    /// </summary>
+    private void CheckExecutable()
     {
-        IsConfigured = !string.IsNullOrEmpty(SettingsManager.Current.PowerShell_ApplicationFilePath) &&
-                       File.Exists(SettingsManager.Current.PowerShell_ApplicationFilePath);
+        IsExecutableConfigured = !string.IsNullOrEmpty(SettingsManager.Current.PowerShell_ApplicationFilePath) &&
+                                 File.Exists(SettingsManager.Current.PowerShell_ApplicationFilePath);
+        
+        if(IsExecutableConfigured)
+            Log.Info($"PowerShell executable found: \"{SettingsManager.Current.PowerShell_ApplicationFilePath}\"");
+        else
+            Log.Warn("PowerShell executable not found!");
+    }
+    
+    /// <summary>
+    /// Try to find executable.
+    /// </summary>
+    private void TryFindExecutable()
+    {
+        Log.Info("Try to find PowerShell executable...");
+
+        var applicationFilePath =  ApplicationHelper.Find(PowerShell.PwshFileName);
+        
+        if(string.IsNullOrEmpty(applicationFilePath))
+            applicationFilePath = ApplicationHelper.Find(PowerShell.WindowsPowerShellFileName);
+            
+        SettingsManager.Current.PowerShell_ApplicationFilePath = applicationFilePath;
+            
+        CheckExecutable();
+        
+        if(!IsExecutableConfigured)
+            Log.Warn("Install PowerShell or configure the path in the settings.");
     }
 
     private async Task Connect(string host = null)
@@ -470,19 +507,19 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
     private void ConnectProfile()
     {
-        Connect(PowerShell.CreateSessionInfo(SelectedProfile),
+        Connect(PowerShellProfile.CreateSessionInfo(SelectedProfile),
             SelectedProfile.Name);
     }
 
     private void ConnectProfileExternal()
     {
         var sessionInfo =
-            PowerShell.CreateSessionInfo(SelectedProfile);
+            PowerShellProfile.CreateSessionInfo(SelectedProfile);
 
         Process.Start(new ProcessStartInfo
         {
             FileName = SettingsManager.Current.PowerShell_ApplicationFilePath,
-            Arguments = Models.PowerShell.PowerShell.BuildCommandLine(sessionInfo)
+            Arguments = PowerShell.BuildCommandLine(sessionInfo)
         });
     }
 
@@ -646,6 +683,21 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     {
         ConfigurationManager.OnDialogClose();
     }
+    
+    private void WriteDefaultProfileToRegistry()
+    {
+        if (!SettingsManager.Current.Appearance_PowerShellModifyGlobalProfile)
+            return;
+        
+        if(!IsExecutableConfigured)
+            return;
+        
+        Log.Info("Write PowerShell profile to registry...");
+
+        PowerShell.WriteDefaultProfileToRegistry(
+            SettingsManager.Current.Appearance_Theme,
+            SettingsManager.Current.AWSSessionManager_ApplicationFilePath);
+    }
 
     #endregion
 
@@ -667,8 +719,17 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
     private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(SettingsInfo.PowerShell_ApplicationFilePath))
-            CheckSettings();
+        switch (e.PropertyName)
+        {
+            case nameof(SettingsInfo.PowerShell_ApplicationFilePath):
+                CheckExecutable();
+                WriteDefaultProfileToRegistry();
+                break;
+            case nameof(SettingsInfo.Appearance_PowerShellModifyGlobalProfile):
+            case nameof(SettingsInfo.Appearance_Theme):
+                WriteDefaultProfileToRegistry();
+                break;
+        }
     }
 
     #endregion
