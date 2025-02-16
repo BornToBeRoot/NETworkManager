@@ -319,8 +319,6 @@ public static class SettingsManager
     private static void UpgradeToLatest(Version version)
     {
         Log.Info($"Apply upgrade to {version}...");
-
-        
     }
 
     #endregion

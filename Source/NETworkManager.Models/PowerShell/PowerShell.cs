@@ -37,9 +37,9 @@ public static class PowerShell
     private static readonly List<Tuple<string, int>> DefaultProfileRegkeysDwordBase =
     [
         new("CursorType", 1),
-        new("FontFamily", 54), // 36
+        new("FontFamily", 54),    // 36
         new("FontSize", 1179648), // 120000
-        new("FontWeight", 400)
+        new("FontWeight", 400)    // 190
     ];
 
     /// <summary>
@@ -58,8 +58,8 @@ public static class PowerShell
         return DefaultProfileRegkeysDwordBase.Concat(
         [
             new Tuple<string, int>("DefaultBackground", 2434341), // HEX: 252525
-                new Tuple<string, int>("ColorTable00", 2434341), // HEX: 252525
-                new Tuple<string, int>("ColorTable07", 13421772) // HEX: cccccc
+                new Tuple<string, int>("ColorTable00", 2434341),  // HEX: 252525
+                new Tuple<string, int>("ColorTable07", 13421772)  // HEX: cccccc
         ]).ToList();
     }
 
