@@ -945,13 +945,12 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         if (SelectedNetworkInterface != null)
             id = SelectedNetworkInterface.Id;
 
-        NetworkInterfaces = await NetworkInterface.GetNetworkInterfacesAsync();
+        // Load network interfaces... 
+        var networkItems = await Models.Network.NetworkInterface.GetNetworkInterfacesAsync();       
 
-        // Change interface...
-        SelectedNetworkInterface = string.IsNullOrEmpty(id)
-            ? NetworkInterfaces.FirstOrDefault()
-            : NetworkInterfaces.FirstOrDefault(x => x.Id == id);
-
+           // Change interface...
+        SelectedNetworkInterface = string.IsNullOrEmpty(id) ? networkItems.FirstOrDefault() : networkItems.FirstOrDefault(x => x.Id == id);
+        NetworkInterfaces = networkItems;
         IsNetworkInterfaceLoading = false;
     }
 
