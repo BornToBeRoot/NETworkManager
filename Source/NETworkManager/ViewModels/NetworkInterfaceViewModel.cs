@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -32,8 +33,9 @@ namespace NETworkManager.ViewModels;
 public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
+
     private static readonly ILog Log = LogManager.GetLogger(typeof(NetworkInterfaceViewModel));
-    
+
     private readonly IDialogCoordinator _dialogCoordinator;
     private readonly DispatcherTimer _searchDispatcherTimer = new();
     private BandwidthMeter _bandwidthMeter;
@@ -118,9 +120,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     #region NetworkInterfaces, SelectedNetworkInterface
 
-    private List<NetworkInterfaceInfo> _networkInterfaces;
+    private ObservableCollection<NetworkInterfaceInfo> _networkInterfaces = [];
 
-    public List<NetworkInterfaceInfo> NetworkInterfaces
+    public ObservableCollection<NetworkInterfaceInfo> NetworkInterfaces
     {
         get => _networkInterfaces;
         private set
@@ -629,7 +631,8 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     {
         IsNetworkInterfaceLoading = true;
 
-        NetworkInterfaces = await NetworkInterface.GetNetworkInterfacesAsync();
+        // Get all network interfaces...
+        (await NetworkInterface.GetNetworkInterfacesAsync()).ForEach(NetworkInterfaces.Add);
 
         // Get the last selected interface, if it is still available on this machine...
         if (NetworkInterfaces.Count > 0)
@@ -695,7 +698,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
                 catch (Exception ex)
                 {
                     Log.Error("Error while exporting data as " + instance.FileType, ex);
-                    
+
                     var settings = AppearanceManager.MetroDialog;
                     settings.AffirmativeButtonText = Strings.OK;
 
@@ -935,22 +938,36 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private async void ReloadNetworkInterfaces()
     {
+        // Avoid multiple reloads
+        if(IsNetworkInterfaceLoading)
+            return;
+        
         IsNetworkInterfaceLoading = true;
 
         // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
         await Task.Delay(2000);
 
-        var id = string.Empty;
+        // Store the last selected id
+        var id = SelectedNetworkInterface?.Id ?? string.Empty;
+        
+        // Get all network interfaces...
+        var networkInterfaces = await NetworkInterface.GetNetworkInterfacesAsync();
 
-        if (SelectedNetworkInterface != null)
-            id = SelectedNetworkInterface.Id;
+        // Invoke on UI thread synchronously
+        Application.Current.Dispatcher.Invoke(() =>
+        {
+            // Clear the list            
+            NetworkInterfaces.Clear();
+            
+            // Add all network interfaces to the list
+            networkInterfaces.ForEach(NetworkInterfaces.Add);
+        });
 
-        // Load network interfaces... 
-        var networkItems = await Models.Network.NetworkInterface.GetNetworkInterfacesAsync();       
-
-           // Change interface...
-        SelectedNetworkInterface = string.IsNullOrEmpty(id) ? networkItems.FirstOrDefault() : networkItems.FirstOrDefault(x => x.Id == id);
-        NetworkInterfaces = networkItems;
+        // Set the last selected interface, if it is still available on this machine...
+        SelectedNetworkInterface = string.IsNullOrEmpty(id)
+            ? NetworkInterfaces.FirstOrDefault()
+            : NetworkInterfaces.FirstOrDefault(x => x.Id == id);
+        
         IsNetworkInterfaceLoading = false;
     }
 
