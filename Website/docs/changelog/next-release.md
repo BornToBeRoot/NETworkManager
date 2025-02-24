@@ -27,13 +27,17 @@ Release date: **xx.xx.2025**
 
 **PuTTY**
 
-- Find `putty.exe` and `powershell.exe` executable by path, similar to `where.exe`. [#2962](https://github.com/BornToBeRoot/NETworkManager/pull/2962)
+- Find `putty.exe` executable by path, similar to `where.exe`. [#2962](https://github.com/BornToBeRoot/NETworkManager/pull/2962)
 
 **AWS Session Manager**
 
 - Find `pwsh.exe` and `powershell.exe` executable by path, similar to `where.exe`. [#2962](https://github.com/BornToBeRoot/NETworkManager/pull/2962)
 
 ## Bugfixes
+
+**Network Interface**
+
+- Re-select the network interface after a network change or configuration update. Thanks to [@Ghislain1](https://github.com/Ghislain1) [#3004](https://github.com/BornToBeRoot/NETworkManager/pull/3004) [#2962](https://github.com/BornToBeRoot/NETworkManager/pull/2962)
 
 ## Dependencies, Refactoring & Documentation
 
