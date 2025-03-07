@@ -2539,7 +2539,7 @@ Vedi messaggio errore: "{0}"</value>
     <value>TigerVNC</value>
   </data>
   <data name="ApplicationName_Traceroute" xml:space="preserve">
-    <value>Tarceroute</value>
+    <value>Traceroute</value>
   </data>
   <data name="ApplicationName_WakeOnLAN" xml:space="preserve">
     <value>WakeOnLAN</value>
@@ -3946,5 +3946,29 @@ Clic con il tasto destro per ulteriori opzioni.</value>
   </data>
   <data name="OpenDocumentation" xml:space="preserve">
     <value>Apri documentazione</value>
+  </data>
+  <data name="StarForkTheProjectOnGitHub" xml:space="preserve">
+    <value/>
+  </data>
+  <data name="ToolTip_GitHubProjectUrl" xml:space="preserve">
+    <value/>
+  </data>
+  <data name="ToolTip_TransifexProjectUrl" xml:space="preserve">
+    <value/>
+  </data>
+  <data name="ToolTip_TwitterContactUrl" xml:space="preserve">
+    <value/>
+  </data>
+  <data name="ReportAnIssueOrCreateAFeatureRequest" xml:space="preserve">
+    <value/>
+  </data>
+  <data name="ToolTip_GithubNewIssueUrl" xml:space="preserve">
+    <value/>
+  </data>
+  <data name="ToolTip_GithubDocumentationUrl" xml:space="preserve">
+    <value/>
+  </data>
+  <data name="Donate" xml:space="preserve">
+    <value>Donare</value>
   </data>
 </root>
