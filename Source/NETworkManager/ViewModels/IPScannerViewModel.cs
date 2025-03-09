@@ -272,7 +272,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private bool Scan_CanExecute(object parameter)
     {
-        return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+        return Application.Current.MainWindow != null && 
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
+               !ConfigurationManager.Current.IsChildWindowOpen;
     }
 
     private void ScanAction()

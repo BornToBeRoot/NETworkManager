@@ -117,8 +117,8 @@ public class SubnetCalculatorWideSubnetViewModel : ViewModelBase
     private bool Calculate_CanExecute(object parameter)
     {
         return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow)
-                   .IsAnyDialogOpen;
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
+               !ConfigurationManager.Current.IsChildWindowOpen;
     }
 
     private void CalculateAction()

@@ -431,6 +431,27 @@ public class ConfigurationInfo : PropertyChangedBase
     }
 
     /// <summary>
+    /// Private variable for <see cref="IsChildWindowOpen" />.
+    /// </summary>
+    private bool _isChildWindowOpen;
+
+    /// <summary>
+    /// Indicates if a child window is open.
+    /// </summary>
+    public bool IsChildWindowOpen
+    {
+        get => _isChildWindowOpen;
+        set
+        {
+            if (value == _isChildWindowOpen)
+                return;
+
+            _isChildWindowOpen = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     ///     Private variable for <see cref="FixAirspace" />.
     /// </summary>
     private bool _fixAirspace;

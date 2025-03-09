@@ -252,7 +252,9 @@ public class ARPTableViewModel : ViewModelBase
 
     private bool Refresh_CanExecute(object parameter)
     {
-        return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+        return Application.Current.MainWindow != null && 
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
+               !ConfigurationManager.Current.IsChildWindowOpen;        
     }
 
     private async Task RefreshAction()
@@ -267,7 +269,9 @@ public class ARPTableViewModel : ViewModelBase
 
     private bool DeleteTable_CanExecute(object parameter)
     {
-        return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+        return Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
+               !ConfigurationManager.Current.IsChildWindowOpen;
     }
 
     private async Task DeleteTableAction()
@@ -297,8 +301,8 @@ public class ARPTableViewModel : ViewModelBase
     private bool DeleteEntry_CanExecute(object parameter)
     {
         return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow)
-                   .IsAnyDialogOpen;
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen  &&
+               !ConfigurationManager.Current.IsChildWindowOpen;;
     }
 
     private async Task DeleteEntryAction()
@@ -328,8 +332,8 @@ public class ARPTableViewModel : ViewModelBase
     private bool AddEntry_CanExecute(object parameter)
     {
         return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow)
-                   .IsAnyDialogOpen;
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
+               !ConfigurationManager.Current.IsChildWindowOpen;
     }
 
     private async Task AddEntryAction()
