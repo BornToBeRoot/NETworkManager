@@ -668,8 +668,8 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     {
         return !IsNetworkInterfaceLoading &&
                Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow)
-                   .IsAnyDialogOpen;
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
+               !ConfigurationManager.Current.IsChildWindowOpen;
     }
 
     private void ReloadNetworkInterfacesAction()
@@ -730,8 +730,8 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     private bool ApplyConfiguration_CanExecute(object parameter)
     {
         return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow)
-                   .IsAnyDialogOpen;
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen  &&
+               !ConfigurationManager.Current.IsChildWindowOpen;
     }
 
     private void ApplyConfigurationAction()
@@ -803,8 +803,8 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     private bool AdditionalCommands_CanExecute(object parameter)
     {
         return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow)
-                   .IsAnyDialogOpen;
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
+               !ConfigurationManager.Current.IsChildWindowOpen;
     }
 
     public ICommand OpenNetworkConnectionsCommand =>

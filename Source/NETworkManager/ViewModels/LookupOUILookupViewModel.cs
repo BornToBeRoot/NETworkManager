@@ -180,8 +180,9 @@ public class LookupOUILookupViewModel : ViewModelBase
     private bool OUILookup_CanExecute(object parameter)
     {
         return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow)
-                   .IsAnyDialogOpen && !HasError;
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&            
+               !ConfigurationManager.Current.IsChildWindowOpen && 
+               !HasError;
     }
 
     private async void OUILookupAction()

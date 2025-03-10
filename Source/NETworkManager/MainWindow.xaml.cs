@@ -1,4 +1,5 @@
-﻿using log4net;
+﻿using Dragablz;
+using log4net;
 using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
@@ -9,8 +10,6 @@ using NETworkManager.Models;
 using NETworkManager.Models.AWS;
 using NETworkManager.Models.EventSystem;
 using NETworkManager.Models.Network;
-using NETworkManager.Models.PowerShell;
-using NETworkManager.Models.PuTTY;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
 using NETworkManager.Update;
@@ -19,11 +18,9 @@ using NETworkManager.ViewModels;
 using NETworkManager.Views;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
@@ -38,7 +35,6 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Markup;
 using System.Windows.Threading;
-using Dragablz;
 using Application = System.Windows.Application;
 using ContextMenu = System.Windows.Controls.ContextMenu;
 using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
@@ -115,21 +111,6 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private bool _isInTray;
     private bool _isClosing;
-
-    private bool _isWelcomeWindowOpen;
-
-    public bool IsWelcomeWindowOpen
-    {
-        get => _isWelcomeWindowOpen;
-        set
-        {
-            if (value == _isWelcomeWindowOpen)
-                return;
-
-            _isWelcomeWindowOpen = value;
-            OnPropertyChanged();
-        }
-    }
 
     private bool _applicationViewIsExpanded;
 
@@ -412,7 +393,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             {
                 if (!_isProfileFileUpdating)
                     LoadProfile(value);
-
+                
                 ConfigurationManager.Current.ProfileManagerShowUnlock = value.IsEncrypted && !value.IsPasswordValid;
                 SettingsManager.Current.Profiles_LastSelected = value.Name;
             }
@@ -492,13 +473,13 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         if (SettingsManager.Current.WelcomeDialog_Show)
         {
 
-            var welcomeChildWindow = new WelcomeChildWindow();
+            var childWindow = new WelcomeChildWindow();
 
-            var welcomeViewModel = new WelcomeViewModel(async instance =>
+            var viewModel = new WelcomeViewModel(instance =>
             {
-                IsWelcomeWindowOpen = false;
+                childWindow.IsOpen = false;
 
-                welcomeChildWindow.IsOpen = false;
+                ConfigurationManager.Current.IsChildWindowOpen = false;
 
                 // Set settings based on user choice
                 SettingsManager.Current.Update_CheckForUpdatesAtStartup = instance.CheckForUpdatesAtStartup;
@@ -511,21 +492,13 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                     instance.PowerShellModifyGlobalProfile;
 
                 // Generate lists at runtime
-                SettingsManager.Current.General_ApplicationList =
-                    new ObservableSetCollection<ApplicationInfo>(ApplicationManager.GetDefaultList());
-                SettingsManager.Current.IPScanner_CustomCommands =
-                    new ObservableCollection<CustomCommandInfo>(IPScannerCustomCommand.GetDefaultList());
-                SettingsManager.Current.PortScanner_PortProfiles =
-                    new ObservableCollection<PortProfileInfo>(PortProfile.GetDefaultList());
-                SettingsManager.Current.DNSLookup_DNSServers =
-                    new ObservableCollection<DNSServerConnectionInfoProfile>(DNSServer.GetDefaultList());
-                SettingsManager.Current.AWSSessionManager_AWSProfiles =
-                    new ObservableCollection<AWSProfileInfo>(AWSProfile.GetDefaultList());
-                SettingsManager.Current.SNMP_OidProfiles =
-                    new ObservableCollection<SNMPOIDProfileInfo>(SNMPOIDProfile.GetDefaultList());
-                SettingsManager.Current.SNTPLookup_SNTPServers =
-                    new ObservableCollection<ServerConnectionInfoProfile>(SNTPServer.GetDefaultList());
-
+                SettingsManager.Current.General_ApplicationList = [.. ApplicationManager.GetDefaultList()];
+                SettingsManager.Current.IPScanner_CustomCommands = [.. IPScannerCustomCommand.GetDefaultList()];
+                SettingsManager.Current.PortScanner_PortProfiles = [.. PortProfile.GetDefaultList()];
+                SettingsManager.Current.DNSLookup_DNSServers = [.. DNSServer.GetDefaultList()];
+                SettingsManager.Current.AWSSessionManager_AWSProfiles = [.. AWSProfile.GetDefaultList()];
+                SettingsManager.Current.SNMP_OidProfiles = [.. SNMPOIDProfile.GetDefaultList()];
+                SettingsManager.Current.SNTPLookup_SNTPServers = [.. SNTPServer.GetDefaultList()];
                 SettingsManager.Current.WelcomeDialog_Show = false;
 
                 // Save it to create a settings file
@@ -534,11 +507,11 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 Load();
             });
 
-            welcomeChildWindow.DataContext = welcomeViewModel;
+            childWindow.DataContext = viewModel;
 
-            IsWelcomeWindowOpen = true;
+            ConfigurationManager.Current.IsChildWindowOpen = true;
 
-            await this.ShowChildWindowAsync(welcomeChildWindow);
+            await this.ShowChildWindowAsync(childWindow);
         }
         else
         {
@@ -1395,7 +1368,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             .FirstOrDefault(x => x.Name == SettingsManager.Current.Profiles_LastSelected);
         SelectedProfileFile ??= ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault();
     }
-
+    
     private async void LoadProfile(ProfileFileInfo info, bool showWrongPassword = false)
     {
         // Disable profile management while switching profiles
@@ -1404,34 +1377,37 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         if (info.IsEncrypted && !info.IsPasswordValid)
         {
-            var customDialog = new CustomDialog
-            {
-                Title = Strings.UnlockProfileFile
-            };
+            var childWindow = new CredentialsPasswordProfileFileChildWindow();
 
-            var viewModel = new CredentialsPasswordProfileFileViewModel(async instance =>
+            var viewModel = new CredentialsPasswordProfileFileViewModel(instance =>
             {
-                await this.HideMetroDialogAsync(customDialog);
+                childWindow.IsOpen = false;
+
+                ConfigurationManager.Current.IsChildWindowOpen = false;
+
                 ConfigurationManager.OnDialogClose();
 
                 info.Password = instance.Password;
 
                 SwitchProfile(info);
-            }, async _ =>
+            }, _ =>
             {
-                await this.HideMetroDialogAsync(customDialog);
+                childWindow.IsOpen = false;
+
+                ConfigurationManager.Current.IsChildWindowOpen = false;
+
                 ConfigurationManager.OnDialogClose();
 
                 ProfileManager.Unload();
             }, info.Name, showWrongPassword);
 
-            customDialog.Content = new CredentialsPasswordProfileFileDialog
-            {
-                DataContext = viewModel
-            };
+            childWindow.DataContext = viewModel;
 
             ConfigurationManager.OnDialogOpen();
-            await this.ShowMetroDialogAsync(customDialog);
+
+            ConfigurationManager.Current.IsChildWindowOpen = true;
+
+            await this.ShowChildWindowAsync(childWindow);
         }
         else
         {
@@ -1566,7 +1542,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
             // Handle system commands (like maximize and restore)
             case WmSysCommand:
-                
+
                 switch (wParam.ToInt32())
                 {
                     // Window is maximized
@@ -1584,7 +1560,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         return IntPtr.Zero;
     }
-    
+
     private void UpdateOnWindowResize()
     {
         foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(this))
@@ -1609,6 +1585,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     private static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vk);
 
     [DllImport("user32.dll")]
+
     private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
     // WM_HOTKEY
@@ -1920,7 +1897,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         DNSClient.GetInstance().Configure(dnsSettings);
     }
-    
+
     #endregion
 
     #region Status window

@@ -3876,4 +3876,7 @@ Right-click for more options.</value>
   <data name="Donate" xml:space="preserve">
     <value>Donate</value>
   </data>
+  <data name="ProfileFile" xml:space="preserve">
+    <value>Profile file</value>
+  </data>
 </root>

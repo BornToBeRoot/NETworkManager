@@ -1,7 +1,7 @@
-﻿using System;
+﻿using NETworkManager.Utilities;
+using System;
 using System.Security;
 using System.Windows.Input;
-using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
@@ -26,7 +26,6 @@ public class CredentialsPasswordProfileFileViewModel : ViewModelBase
     ///     Private variable for <see cref="ShowWrongPassword" />.
     /// </summary>
     private bool _showWrongPassword;
-
 
     /// <summary>
     ///     Initialize a new class <see cref="CredentialsPasswordProfileFileViewModel" /> with <see cref="OKCommand" /> and
