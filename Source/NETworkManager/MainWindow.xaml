@@ -258,6 +258,8 @@
                         CloseButtonVisibility="Collapsed"
                         IsModal="False"
                         Width="600" MaxHeight="400"
+                        BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
+                        BorderThickness="1"
                         Theme="Adapt">
                 <mah:Flyout.InputBindings>
                     <KeyBinding Command="{Binding RunCommandCloseCommand}" Key="Escape" />
