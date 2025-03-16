@@ -3879,4 +3879,7 @@ Right-click for more options.</value>
   <data name="ProfileFile" xml:space="preserve">
     <value>Profile file</value>
   </data>
+  <data name="ApplicationName_HostsEditor" xml:space="preserve">
+    <value>Hosts Editor</value>
+  </data>
 </root>
