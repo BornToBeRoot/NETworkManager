@@ -489,7 +489,8 @@ public class SNMPViewModel : ViewModelBase
     private bool Work_CanExecute(object parameter)
     {
         return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
+               !ConfigurationManager.Current.IsChildWindowOpen;
     }
 
     private void WorkAction()

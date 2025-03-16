@@ -312,7 +312,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private bool Ping_CanExecute(object parameter)
     {
-        return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+        return Application.Current.MainWindow != null && 
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen && 
+               !ConfigurationManager.Current.IsChildWindowOpen;
     }
 
     private void PingAction()

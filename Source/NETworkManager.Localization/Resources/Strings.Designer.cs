@@ -6877,6 +6877,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Profile file ähnelt.
+        /// </summary>
+        public static string ProfileFile {
+            get {
+                return ResourceManager.GetString("ProfileFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Profile file could not be loaded! ähnelt.
         /// </summary>
         public static string ProfileFileCouldNotBeLoaded {

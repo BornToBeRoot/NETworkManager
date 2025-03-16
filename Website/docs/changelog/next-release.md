@@ -33,6 +33,10 @@ Release date: **xx.xx.2025**
 
 - Find `pwsh.exe` and `powershell.exe` executable by path, similar to `where.exe`. [#2962](https://github.com/BornToBeRoot/NETworkManager/pull/2962)
 
+**Profiles**
+
+- Changed the unlock dialog from `MahApps.Metro.Controls.Dialogs` to `MahApps.Metro.SimpleChildWindow`, so the main window can be dragged and resized [#3010](https://github.com/BornToBeRoot/NETworkManager/pull/3010)
+
 ## Bugfixes
 
 **Network Interface**

@@ -288,8 +288,8 @@ public class PortScannerViewModel : ViewModelBase
     private bool OpenPortProfileSelection_CanExecute(object parameter)
     {
         return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow)
-                   .IsAnyDialogOpen;
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
+               !ConfigurationManager.Current.IsChildWindowOpen;
     }
 
     private void OpenPortProfileSelectionAction()
@@ -302,7 +302,8 @@ public class PortScannerViewModel : ViewModelBase
     private bool Scan_CanExecute(object parameter)
     {
         return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
+               !ConfigurationManager.Current.IsChildWindowOpen;
     }
 
     private void ScanAction()
