@@ -91,6 +91,11 @@ public enum ApplicationName
     SNTPLookup,
 
     /// <summary>
+    /// Hosts editor application.
+    /// </summary>
+    HostsEditor,
+
+    /// <summary>
     ///     Discovery protocol application.
     /// </summary>
     DiscoveryProtocol,

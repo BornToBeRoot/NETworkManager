@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using log4net;
+using NETworkManager.Models;
+using NETworkManager.Models.Network;
+using System;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
-using log4net;
-using NETworkManager.Controls;
-using NETworkManager.Models;
-using NETworkManager.Models.Network;
-using NETworkManager.Models.PowerShell;
 
 namespace NETworkManager.Settings;
 
@@ -189,7 +186,7 @@ public static class SettingsManager
         if (fromVersion < new Version(2023, 11, 28, 0))
             UpgradeTo_2023_11_28_0();
 
-        
+
         // 2024.11.11.0
         if (fromVersion < new Version(2024, 11, 11, 0))
             UpgradeTo_2024_11_11_0();
@@ -205,7 +202,7 @@ public static class SettingsManager
         Log.Info("Settings upgrade finished!");
     }
 
-     /// <summary>
+    /// <summary>
     ///     Method to apply changes for version 2023.3.7.0.
     /// </summary>
     private static void UpgradeTo_2023_3_7_0()
@@ -217,14 +214,14 @@ public static class SettingsManager
         Current.General_ApplicationList.Add(ApplicationManager.GetDefaultList()
             .First(x => x.Name == ApplicationName.SNTPLookup));
         Current.SNTPLookup_SNTPServers =
-            new ObservableCollection<ServerConnectionInfoProfile>(SNTPServer.GetDefaultList());
+            [.. SNTPServer.GetDefaultList()];
 
         // Add IP Scanner custom commands
         foreach (var customCommand in from customCommand in IPScannerCustomCommand.GetDefaultList()
-                 let customCommandFound =
-                     Current.IPScanner_CustomCommands.FirstOrDefault(x => x.Name == customCommand.Name)
-                 where customCommandFound == null
-                 select customCommand)
+                                      let customCommandFound =
+                                          Current.IPScanner_CustomCommands.FirstOrDefault(x => x.Name == customCommand.Name)
+                                      where customCommandFound == null
+                                      select customCommand)
         {
             Log.Info($"Add \"{customCommand.Name}\" to \"IPScanner_CustomCommands\"...");
             Current.IPScanner_CustomCommands.Add(customCommand);
@@ -251,7 +248,7 @@ public static class SettingsManager
         // Add new DNS lookup profiles
         Log.Info("Init \"DNSLookup_DNSServers_v2\" with default DNS servers...");
         Current.DNSLookup_DNSServers =
-            new ObservableCollection<DNSServerConnectionInfoProfile>(DNSServer.GetDefaultList());
+            [.. DNSServer.GetDefaultList()];
     }
 
     /// <summary>
@@ -263,7 +260,7 @@ public static class SettingsManager
 
         // Add SNMP OID profiles
         Log.Info("Add SNMP OID profiles...");
-        Current.SNMP_OidProfiles = new ObservableCollection<SNMPOIDProfileInfo>(SNMPOIDProfile.GetDefaultList());
+        Current.SNMP_OidProfiles = [.. SNMPOIDProfile.GetDefaultList()];
     }
 
     /// <summary>
@@ -297,9 +294,9 @@ public static class SettingsManager
         // Add DNS lookup profiles after refactoring
         Log.Info("Init \"DNSLookup_DNSServers\" with default DNS servers...");
         Current.DNSLookup_DNSServers =
-            new ObservableCollection<DNSServerConnectionInfoProfile>(DNSServer.GetDefaultList());
+            [.. DNSServer.GetDefaultList()];
     }
-    
+
     /// <summary>
     ///     Method to apply changes for version 2024.11.11.0.
     /// </summary>
@@ -309,7 +306,7 @@ public static class SettingsManager
 
         Log.Info("Reset ApplicationList to default...");
         Current.General_ApplicationList =
-            new ObservableSetCollection<ApplicationInfo>(ApplicationManager.GetDefaultList());
+            [.. ApplicationManager.GetDefaultList()];
     }
 
     /// <summary>
@@ -319,6 +316,13 @@ public static class SettingsManager
     private static void UpgradeToLatest(Version version)
     {
         Log.Info($"Apply upgrade to {version}...");
+
+        // Add Hosts editor application
+        Log.Info("Add new app \"Hosts Editor\"...");
+
+        Current.General_ApplicationList.Insert(
+            ApplicationManager.GetDefaultList().ToList().FindIndex(x => x.Name == ApplicationName.HostsEditor),
+            ApplicationManager.GetDefaultList().First(x => x.Name == ApplicationName.HostsEditor));
     }
 
     #endregion
