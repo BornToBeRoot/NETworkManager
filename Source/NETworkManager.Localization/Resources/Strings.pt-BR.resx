@@ -809,9 +809,6 @@ Primeiro faça uma cópia de backup dos seus arquivos de perfil antes de habilit
   <data name="DNSServer" xml:space="preserve">
     <value>Servidor DNS</value>
   </data>
-  <data name="OpenDocumentation" xml:space="preserve">
-    <value>Abrir documentação</value>
-  </data>
   <data name="Domain" xml:space="preserve">
     <value>Domínio</value>
   </data>
@@ -853,9 +850,6 @@ Primeiro faça uma cópia de backup dos seus arquivos de perfil antes de habilit
   </data>
   <data name="FixedScreenSize" xml:space="preserve">
     <value>Tamanho fixo da tela:</value>
-  </data>
-  <data name="StarForkTheProjectOnGitHub" xml:space="preserve">
-    <value>Star/Fork Projeto no GirHub</value>
   </data>
   <data name="Found" xml:space="preserve">
     <value>Encontrado</value>
@@ -1958,14 +1952,14 @@ URL: https://api.ipify.org/</value>
   <data name="ExternalServices" xml:space="preserve">
     <value>Serviços externos</value>
   </data>
-  <data name="ToolTip_GitHubProjectUrl" xml:space="preserve">
+  <data name="ToolTip_StarForkProjectOnGitHub" xml:space="preserve">
     <value>Star/Fork Projeto no GirHub.</value>
   </data>
-  <data name="ToolTip_TransifexProjectUrl" xml:space="preserve">
+  <data name="ToolTip_HelpTranslateOnTransifex" xml:space="preserve">
     <value>Ajude a traduzir o projeto no Transifex.</value>
   </data>
-  <data name="ToolTip_TwitterContactUrl" xml:space="preserve">
-    <value>Contato pelo Twitter.</value>
+  <data name="ToolTip_ContactOrContactMeViaX" xml:space="preserve">
+    <value>Siga ou contate-me no X.</value>
   </data>
   <data name="Connection" xml:space="preserve">
     <value>Conexão</value>
@@ -2283,10 +2277,7 @@ $$hostname$$--&gt;Nome do host</value>
   <data name="TimeoutS" xml:space="preserve">
     <value>Tempo limite (s)</value>
   </data>
-  <data name="ReportAnIssueOrCreateAFeatureRequest" xml:space="preserve">
-    <value>Reporte um erro ou crie um pedido de recurso</value>
-  </data>
-  <data name="ToolTip_GithubNewIssueUrl" xml:space="preserve">
+  <data name="ToolTip_ReportIssueOrCreateFeatureRequest" xml:space="preserve">
     <value>Reporte um erro ou crie um pedido de recurso.</value>
   </data>
   <data name="BeaconInterval" xml:space="preserve">
@@ -2346,8 +2337,8 @@ $$hostname$$--&gt;Nome do host</value>
   <data name="IsEncrypted" xml:space="preserve">
     <value>Está criptografado</value>
   </data>
-  <data name="ToolTip_GithubDocumentationUrl" xml:space="preserve">
-    <value>Abrir documentação no GitHub.</value>
+  <data name="ToolTip_OpenTheDocumentation" xml:space="preserve">
+    <value>Abrir a documentação.</value>
   </data>
   <data name="ExampleProfileFileName" xml:space="preserve">
     <value>Cliente 1</value>
@@ -3854,5 +3845,38 @@ Clique direito para mais opções.</value>
   </data>
   <data name="GHz6" xml:space="preserve">
     <value>6 GHz</value>
+  </data>
+  <data name="ToolTip_SupportThisProjectWithADonation" xml:space="preserve">
+    <value>Apoie o projeto com uma doação.</value>
+  </data>
+  <data name="OpenDocumentation" xml:space="preserve">
+    <value>Abrir documentação</value>
+  </data>
+  <data name="StarForkTheProjectOnGitHub" xml:space="preserve">
+    <value/>
+  </data>
+  <data name="ToolTip_GitHubProjectUrl" xml:space="preserve">
+    <value/>
+  </data>
+  <data name="ToolTip_TransifexProjectUrl" xml:space="preserve">
+    <value/>
+  </data>
+  <data name="ToolTip_TwitterContactUrl" xml:space="preserve">
+    <value/>
+  </data>
+  <data name="ReportAnIssueOrCreateAFeatureRequest" xml:space="preserve">
+    <value/>
+  </data>
+  <data name="ToolTip_GithubNewIssueUrl" xml:space="preserve">
+    <value/>
+  </data>
+  <data name="ToolTip_GithubDocumentationUrl" xml:space="preserve">
+    <value/>
+  </data>
+  <data name="Donate" xml:space="preserve">
+    <value>Doar</value>
+  </data>
+  <data name="ProfileFile" xml:space="preserve">
+    <value>Arquivo de perfil</value>
   </data>
 </root>
