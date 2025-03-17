@@ -3969,6 +3969,9 @@ Clic con il tasto destro per ulteriori opzioni.</value>
     <value/>
   </data>
   <data name="Donate" xml:space="preserve">
-    <value>Donare</value>
+    <value>Dona</value>
+  </data>
+  <data name="ProfileFile" xml:space="preserve">
+    <value>Nome profilo</value>
   </data>
 </root>
