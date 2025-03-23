@@ -3879,7 +3879,13 @@ Right-click for more options.</value>
   <data name="ProfileFile" xml:space="preserve">
     <value>Profile file</value>
   </data>
-  <data name="ApplicationName_HostsEditor" xml:space="preserve">
-    <value>Hosts Editor</value>
+  <data name="ApplicationName_HostsFileEditor" xml:space="preserve">
+    <value>Hosts File Editor</value>
+  </data>
+  <data name="HostsFileEditor" xml:space="preserve">
+    <value>Hosts File Editor</value>
+  </data>
+  <data name="HostsFileEditorAdminMessage" xml:space="preserve">
+    <value>To edit the hosts file, the application must be started with elevated rights!</value>
   </data>
 </root>

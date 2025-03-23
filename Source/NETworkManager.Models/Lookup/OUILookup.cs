@@ -22,7 +22,7 @@ public static class OUILookup
     /// </summary>
     static OUILookup()
     {
-        OUIInfoList = new List<OUIInfo>();
+        OUIInfoList = [];
 
         var document = new XmlDocument();
         document.Load(OuiFilePath);

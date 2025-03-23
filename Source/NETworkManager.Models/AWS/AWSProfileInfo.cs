@@ -1,7 +1,7 @@
 ﻿namespace NETworkManager.Models.AWS;
 
 /// <summary>
-///     Class is used to store informations about an AWS profile.
+///     Class is used to store information about an AWS profile.
 /// </summary>
 public class AWSProfileInfo
 {
@@ -15,7 +15,7 @@ public class AWSProfileInfo
     /// <summary>
     ///     Create an instance of <see cref="AWSProfileInfo" /> with parameters.
     /// </summary>
-    /// <param name="IsEnabled"><see cref="IsEnabled" />.</param>
+    /// <param name="isEnabled"><see cref="IsEnabled" />.</param>
     /// <param name="profile"><see cref="Profile" />.</param>
     /// <param name="region"><see cref="Region" />.</param>
     public AWSProfileInfo(bool isEnabled, string profile, string region)

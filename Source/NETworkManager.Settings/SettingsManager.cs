@@ -318,11 +318,11 @@ public static class SettingsManager
         Log.Info($"Apply upgrade to {version}...");
 
         // Add Hosts editor application
-        Log.Info("Add new app \"Hosts Editor\"...");
+        Log.Info("Add new app \"Hosts File Editor\"...");
 
         Current.General_ApplicationList.Insert(
-            ApplicationManager.GetDefaultList().ToList().FindIndex(x => x.Name == ApplicationName.HostsEditor),
-            ApplicationManager.GetDefaultList().First(x => x.Name == ApplicationName.HostsEditor));
+            ApplicationManager.GetDefaultList().ToList().FindIndex(x => x.Name == ApplicationName.HostsFileEditor),
+            ApplicationManager.GetDefaultList().First(x => x.Name == ApplicationName.HostsFileEditor));
     }
 
     #endregion
