@@ -650,7 +650,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         }
 
         // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
-        await Task.Delay(2000);
+        await Task.Delay(2500);
 
         Log.Info("All Instance IDs synced from AWS!");
 
@@ -679,7 +679,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         }
 
         // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
-        await Task.Delay(2000);
+        await Task.Delay(2500);
 
         Log.Info("Group synced!");
 
@@ -998,11 +998,11 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
         Profiles.Filter = o =>
         {
+            if (string.IsNullOrEmpty(Search))
+                         return true ;
+            
             if (o is not ProfileInfo info)
                 return false;
-
-            if (string.IsNullOrEmpty(Search))
-                return true;
 
             var search = Search.Trim();
 

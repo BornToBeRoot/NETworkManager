@@ -2,25 +2,28 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using log4net;
 using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.HostsFileEditor;
 
-public class HostsFileEditor
+public static class HostsFileEditor
 {
 #region Events
-    public event EventHandler HostsFileChanged;
+    public static event EventHandler HostsFileChanged;
     
-    private void OnHostsFileChanged()
+    private static void OnHostsFileChanged()
     {
         Log.Debug("OnHostsFileChanged - Hosts file changed.");
-        HostsFileChanged?.Invoke(this, EventArgs.Empty);
+        HostsFileChanged?.Invoke(null, EventArgs.Empty);
     }
     #endregion
     
     #region Variables
     private static readonly ILog Log = LogManager.GetLogger(typeof(HostsFileEditor));
+
+    private static readonly FileSystemWatcher HostsFileWatcher;
     
     /// <summary>
     /// Path to the hosts file.
@@ -28,30 +31,42 @@ public class HostsFileEditor
     private static string HostsFilePath => Path.Combine(Environment.SystemDirectory, "drivers", "etc", "hosts");
 
     /// <summary>
+    /// Example values in the hosts file that should be ignored.
+    /// </summary>
+    private static readonly HashSet<(string IPAddress, string Hostname)> ExampleValuesToIgnore =
+    [
+        ("102.54.94.97", "rhino.acme.com"),
+        ("38.25.63.10", "x.acme.com")
+    ];
+    
+    /// <summary>
     /// Regex to match a hosts file entry with optional comments, supporting IPv4, IPv6, and hostnames
     /// </summary>
-    private readonly Regex _hostsFileEntryRegex = new Regex(RegexHelper.HostsEntryRegex);
+    private static readonly Regex HostsFileEntryRegex = new(RegexHelper.HostsEntryRegex);
 
     #endregion
     
     #region Constructor
-    public HostsFileEditor()
+
+    static HostsFileEditor()
     {
         // Create a file system watcher to monitor changes to the hosts file
         try
         {
             Log.Debug("HostsFileEditor - Creating file system watcher for hosts file...");
             
-            FileSystemWatcher watcher = new();
-            watcher.Path = Path.GetDirectoryName(HostsFilePath) ?? throw new InvalidOperationException("Hosts file path is invalid.");
-            watcher.Filter = Path.GetFileName(HostsFilePath) ?? throw new InvalidOperationException("Hosts file name is invalid.");
-            watcher.NotifyFilter = NotifyFilters.LastWrite;
+            // Create the file system watcher
+            HostsFileWatcher = new FileSystemWatcher();
+            HostsFileWatcher.Path = Path.GetDirectoryName(HostsFilePath) ?? throw new InvalidOperationException("Hosts file path is invalid.");
+            HostsFileWatcher.Filter = Path.GetFileName(HostsFilePath) ?? throw new InvalidOperationException("Hosts file name is invalid.");
+            HostsFileWatcher.NotifyFilter = NotifyFilters.LastWrite;
             
             // Maybe fired twice. This is a known bug/feature.
             // See: https://stackoverflow.com/questions/1764809/filesystemwatcher-changed-event-is-raised-twice
-            watcher.Changed += (_, _) => OnHostsFileChanged();
+            HostsFileWatcher.Changed += (_, _) => OnHostsFileChanged();
             
-            watcher.EnableRaisingEvents = true;
+            // Enable the file system watcher
+            HostsFileWatcher.EnableRaisingEvents = true;
             
             Log.Debug("HostsFileEditor - File system watcher for hosts file created.");
         }
@@ -63,11 +78,16 @@ public class HostsFileEditor
     #endregion
 
     #region Methods
+    public static Task<IEnumerable<HostsFileEntry>> GetHostsFileEntriesAsync()
+    {
+        return Task.Run(GetHostsFileEntries);
+    }
+    
     /// <summary>
     /// 
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<HostsFileEntry> GetHostsFileEntries()
+    private static IEnumerable<HostsFileEntry> GetHostsFileEntries()
     {
         var hostsFileLines = File.ReadAllLines(HostsFilePath);
 
@@ -76,7 +96,7 @@ public class HostsFileEditor
 
         foreach (var line in hostsFileLines)
         {
-            var result = _hostsFileEntryRegex.Match(line.Trim());
+            var result = HostsFileEntryRegex.Match(line.Trim());
 
             if (result.Success)
             {
@@ -85,17 +105,20 @@ public class HostsFileEditor
                 var entry = new HostsFileEntry
                 {
                     IsEnabled = !result.Groups[1].Value.Equals("#"),
-                    IpAddress = result.Groups[2].Value,
-                    HostName = result.Groups[3].Value.Replace(@"\s", "").Split([' ']),
-                    Comment = result.Groups[4].Value,
+                    IPAddress = result.Groups[2].Value,
+                    Hostname = result.Groups[3].Value.Replace(@"\s", "").Trim(),
+                    Comment = result.Groups[4].Value.TrimStart('#'),
                     Line = line
                 };
                 
                 // Skip example entries
-                if(!entry.IsEnabled && entry.IpAddress is "102.54.94.97" or "38.25.63.10" && entry.HostName[0] is "rhino.acme.com" or "x.acme.com")
+                if(!entry.IsEnabled)
                 {
-                    Log.Debug("GetHostsFileEntries - Matched example entry. Skipping...");
-                    continue;
+                    if (ExampleValuesToIgnore.Contains((entry.IPAddress, entry.Hostname)))
+                    {
+                        Log.Debug("GetHostsFileEntries - Matched example entry. Skipping...");
+                        continue;
+                    }
                 }
                 
                 entries.Add(entry);

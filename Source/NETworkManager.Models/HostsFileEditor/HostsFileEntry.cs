@@ -13,12 +13,13 @@ public class HostsFileEntry
     /// <summary>
     /// IP address of the host.
     /// </summary>
-    public string IpAddress { get; init; }
+    public string IPAddress { get; init; }
 
     /// <summary>
-    /// Host name(s) of the host.
+    /// Host name(s) of the host. Multiple host names are separated by a
+    /// space (equal to the hosts file format).
     /// </summary>
-    public string[] HostName { get; init; }
+    public string Hostname { get; init; }
 
     /// <summary>
     /// Comment of the host.
@@ -43,13 +44,13 @@ public class HostsFileEntry
     /// </summary>
     /// <param name="isEnabled">Indicates whether the entry is enabled or not.</param>
     /// <param name="ipAddress">IP address of the host.</param>
-    /// <param name="hostName">Host name(s) of the host.</param>
+    /// <param name="hostname">Host name(s) of the host.</param>
     /// <param name="comment">Comment of the host.</param>
-    public HostsFileEntry(bool isEnabled, string ipAddress, string[] hostName, string comment)
+    public HostsFileEntry(bool isEnabled, string ipAddress, string hostname, string comment)
     {
         IsEnabled = isEnabled;
-        IpAddress = ipAddress;
-        HostName = hostName;
+        IPAddress = ipAddress;
+        Hostname = hostname;
         Comment = comment;
     }
     
@@ -58,10 +59,10 @@ public class HostsFileEntry
     /// </summary>
     /// <param name="isEnabled">Indicates whether the entry is enabled or not.</param>
     /// <param name="ipAddress">IP address of the host.</param>
-    /// <param name="hostName">Host name(s) of the host.</param>
+    /// <param name="hostname">Host name(s) of the host.</param>
     /// <param name="comment">Comment of the host.</param>
     /// <param name="line">Line of the entry in the hosts file.</param>
-    public HostsFileEntry(bool isEnabled, string ipAddress, string[] hostName, string comment, string line) : this(isEnabled, ipAddress, hostName, comment)
+    public HostsFileEntry(bool isEnabled, string ipAddress, string hostname, string comment, string line) : this(isEnabled, ipAddress, hostname, comment)
     {
         Line = line;
     }

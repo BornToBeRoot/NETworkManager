@@ -3888,4 +3888,7 @@ Right-click for more options.</value>
   <data name="HostsFileEditorAdminMessage" xml:space="preserve">
     <value>To edit the hosts file, the application must be started with elevated rights!</value>
   </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
 </root>
