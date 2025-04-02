@@ -586,11 +586,11 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
         Profiles.Filter = o =>
         {
-            if (o is not ProfileInfo info)
-                return false;
-
             if (string.IsNullOrEmpty(Search))
                 return true;
+            
+            if (o is not ProfileInfo info)
+                return false;
 
             var search = Search.Trim();
 
