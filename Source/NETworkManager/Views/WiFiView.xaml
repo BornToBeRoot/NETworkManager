@@ -774,7 +774,6 @@
                                                             Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
                                                             Visibility="{Binding Path=IsBackgroundSearchRunning, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                                             Width="24" Height="24"
-                                                            VerticalAlignment="Center"
                                                             SpeedRatio="1"
                                                             Margin="0,0,10,0" />
                         <TextBlock Style="{StaticResource ResourceKey=AccentTextBlock}"

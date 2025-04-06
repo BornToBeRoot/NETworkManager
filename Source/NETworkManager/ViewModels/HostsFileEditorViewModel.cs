@@ -12,6 +12,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
 using log4net;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
@@ -166,12 +167,12 @@ public class HostsFileEditorViewModel : ViewModelBase
         };
         
         // Get hosts file entries
-        Refresh().ConfigureAwait(false);
+        Refresh(true).ConfigureAwait(false);
         
         // Watch hosts file for changes
-        HostsFileEditor.HostsFileChanged += async (_, _) =>
+        HostsFileEditor.HostsFileChanged += (_, _) =>
         {
-            StatusMessage = "Hosts file changed on disk. Reloading...";
+            StatusMessage = "Refreshing...";
             IsStatusMessageDisplayed = true;
             
             Application.Current.Dispatcher.Invoke(() =>
@@ -191,7 +192,23 @@ public class HostsFileEditorViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
+    public ICommand RefreshCommand => new RelayCommand(_ => RefreshAction().ConfigureAwait(false), Refresh_CanExecute);
+    
+    private bool Refresh_CanExecute(object parameter)
+    {
+        return Application.Current.MainWindow != null && 
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
+               !ConfigurationManager.Current.IsChildWindowOpen;        
+    }
 
+    private async Task RefreshAction()
+    {
+        StatusMessage = "Refreshing...";
+        IsStatusMessageDisplayed = true;
+
+        await Refresh();
+    }
+    
     public ICommand RestartAsAdminCommand => new RelayCommand(_ => RestartAsAdminAction().ConfigureAwait(false));
 
     private async Task RestartAsAdminAction()
@@ -210,20 +227,25 @@ public class HostsFileEditorViewModel : ViewModelBase
 
     #region Methods
 
-    private async Task Refresh()
+    private async Task Refresh(bool init = false)
     {
         if(IsRefreshing)
             return;
         
         IsRefreshing = true;
-        
+
+        if (!init)
+            await Task.Delay(2500);
+
         Results.Clear();
        
-        (await HostsFileEditor.GetHostsFileEntriesAsync()).ToList().ForEach(Results.Add);
-
-        StatusMessage = "Hosts file reloaded at " + DateTime.Now;
-        IsStatusMessageDisplayed = true;
+        // Todo: try catch + Re-try count and delay
         
+        (await HostsFileEditor.GetHostsFileEntriesAsync()).ToList().ForEach(Results.Add);
+        
+        StatusMessage = "Reloaded at " + DateTime.Now.ToShortTimeString();
+        IsStatusMessageDisplayed = true;
+
         IsRefreshing = false;
     }
 
@@ -236,6 +258,5 @@ public class HostsFileEditorViewModel : ViewModelBase
     {
         
     }
-
     #endregion
 }

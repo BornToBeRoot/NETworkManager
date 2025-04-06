@@ -20,11 +20,9 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
     </UserControl.Resources>
-    <!--
     <UserControl.InputBindings>
-        <KeyBinding Key="F5" Command="{Binding RefreshCommand}" />
+        <KeyBinding Key="F5" Command="{Binding Path=RefreshCommand}" />
     </UserControl.InputBindings>
-    -->
     <TabControl Style="{StaticResource ResourceKey=DefaultTabControl}">
         <TabItem Header="{x:Static Member=localization:Strings.HostsFileEditor}">
             <Grid Margin="10">
@@ -32,8 +30,6 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="10" />
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="10" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
@@ -123,33 +119,56 @@
                                             Binding="{Binding Path=(hostsFileEditor:HostsFileEntry.IPAddress)}"
                                             SortMemberPath="IPAddress"
                                             MinWidth="150" />
-                        <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}"
-                                            Binding="{Binding (hostsFileEditor:HostsFileEntry.Hostname)}"
+                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.Hostname}"
+                                            Binding="{Binding Path=(hostsFileEditor:HostsFileEntry.Hostname)}"
                                             SortMemberPath="Hostname"
                                             MinWidth="200" />
-                        <DataGridTextColumn Header="{x:Static localization:Strings.Comment}"
-                                            Binding="{Binding (hostsFileEditor:HostsFileEntry.Comment)}"
+                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.Comment}"
+                                            Binding="{Binding Path=(hostsFileEditor:HostsFileEntry.Comment)}"
                                             SortMemberPath="Hostname"
                                             MinWidth="200" />
                     </controls:MultiSelectDataGrid.Columns>
                 </controls:MultiSelectDataGrid>
-                <TextBlock Grid.Column="0" Grid.Row="3" Foreground="{DynamicResource MahApps.Brushes.Accent}"
-                                                                                                 Text="{Binding StatusMessage}"
-                                                                                                 Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                                                                                                 Style="{DynamicResource StatusMessageTextBlock}" Margin="0,10,0,0" />
-                <mahAppsControls:MetroProgressBar Grid.Column="0" Grid.Row="4" Margin="0,10,0,0"
-                                                  Foreground="{DynamicResource MahApps.Brushes.Accent}"
-                                                  IsIndeterminate="True">
-                    <mahAppsControls:MetroProgressBar.Style>
-                        <Style TargetType="{x:Type mahAppsControls:MetroProgressBar}">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsRefreshing}" Value="False">
-                                    <Setter Property="Visibility" Value="Collapsed" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </mahAppsControls:MetroProgressBar.Style>
-                </mahAppsControls:MetroProgressBar>
+                  <Grid Grid.Column="0" Grid.Row="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <WrapPanel Grid.Column="0" Grid.Row="0"
+                               Orientation="Horizontal"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center">
+                        <networkManager:LoadingIndicator IsActive="True"
+                                                            Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
+                                                            Visibility="{Binding Path=IsRefreshing, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                                            Width="24" Height="24"
+                                                            SpeedRatio="1"
+                                                            Margin="0,0,10,0" />
+                        <TextBlock Style="{StaticResource ResourceKey=AccentTextBlock}"
+                                   Visibility="{Binding Path=IsStatusMessageDisplayed, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                   Text="{Binding Path=StatusMessage}"
+                                   VerticalAlignment="Center" />
+                    </WrapPanel>
+                      </Grid>
+                <!--
+                <StackPanel Grid.Column="0" Grid.Row="3" 
+                            VerticalAlignment="Center">
+                    <networkManager:LoadingIndicator IsActive="True"                                                    
+                                                     SpeedRatio="1"
+                                                     Visibility="{Binding Path=IsRefreshing, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                                     Style="{DynamicResource ResourceKey=LoadingIndicatorArcsStyle}"
+                                                     Margin="0,10,0,10" />
+                  
+                    <TextBlock Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Accent}"
+                           
+                               Text="{Binding Path=StatusMessage}"
+                               Visibility="{Binding Path=IsStatusMessageDisplayed, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                               Style="{DynamicResource ResourceKey=StatusMessageTextBlock}" Margin="0,10,0,0" />
+                </StackPanel>
+                -->
                 <!--
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
                             Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
