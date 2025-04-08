@@ -39,12 +39,12 @@ public class ConnectionsViewModel : ViewModelBase
             IPAddressHelper.CompareIPAddresses(x.LocalIPAddress, y.LocalIPAddress));
 
         ResultsView.Filter = o =>
-        {
-            if (o is not ConnectionInfo info)
-                return false;
-
+        {             
             if (string.IsNullOrEmpty(Search))
-                return true;
+                         return true;
+            
+            if (o is not ConnectionInfo info)
+                return false;           
 
             // Search by local/remote IP Address, local/remote Port, Protocol and State
             return info.LocalIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
@@ -346,8 +346,8 @@ public class ConnectionsViewModel : ViewModelBase
         IsRefreshing = true;
 
         Results.Clear();
-
-        (await Connection.GetActiveTcpConnectionsAsync()).ForEach(x => Results.Add(x));
+     
+        (await Connection.GetActiveTcpConnectionsAsync()).ForEach(Results.Add);
 
         IsRefreshing = false;
     }

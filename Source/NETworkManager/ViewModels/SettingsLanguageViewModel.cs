@@ -27,7 +27,7 @@ public class SettingsLanguageViewModel : ViewModelBase
             if (string.IsNullOrEmpty(Search))
                 return true;
 
-            if (!(o is LocalizationInfo info))
+            if (o is not LocalizationInfo info)
                 return false;
 
             var search = Search.Trim();

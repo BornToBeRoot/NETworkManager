@@ -19,7 +19,7 @@ public static class PortLookup
     /// </summary>
     static PortLookup()
     {
-        PortList = new List<PortLookupInfo>();
+        PortList = [];
 
         var document = new XmlDocument();
         document.Load(PortsFilePath);
