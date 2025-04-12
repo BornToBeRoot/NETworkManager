@@ -187,41 +187,39 @@ public class SettingsProfilesViewModel : ViewModelBase
         settings.NegativeButtonText = Strings.Cancel;
         settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-        if (await _dialogCoordinator.ShowMessageAsync(this, Strings.Disclaimer,
-                Strings.ProfileEncryptionDisclaimer,
-                MessageDialogStyle.AffirmativeAndNegative) == MessageDialogResult.Affirmative)
+        if (await _dialogCoordinator.ShowMessageAsync(this, Strings.Disclaimer, Strings.ProfileEncryptionDisclaimer, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative) 
+            return;
+        
+        var customDialog = new CustomDialog
         {
-            var customDialog = new CustomDialog
+            Title = Strings.SetMasterPassword
+        };
+
+        var credentialsSetPasswordViewModel = new CredentialsSetPasswordViewModel(async instance =>
+        {
+            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+            try
             {
-                Title = Strings.SetMasterPassword
-            };
-
-            var credentialsSetPasswordViewModel = new CredentialsSetPasswordViewModel(async instance =>
+                ProfileManager.EnableEncryption(SelectedProfileFile, instance.Password);
+            }
+            catch (Exception ex)
             {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                var metroDialogSettings = AppearanceManager.MetroDialog;
+                metroDialogSettings.AffirmativeButtonText = Strings.OK;
 
-                try
-                {
-                    ProfileManager.EnableEncryption(SelectedProfileFile, instance.Password);
-                }
-                catch (Exception ex)
-                {
-                    var metroDialogSettings = AppearanceManager.MetroDialog;
-                    metroDialogSettings.AffirmativeButtonText = Strings.OK;
+                await _dialogCoordinator.ShowMessageAsync(this, Strings.EncryptionError,
+                    $"{Strings.EncryptionErrorMessage}\n\n{ex.Message}",
+                    MessageDialogStyle.Affirmative, metroDialogSettings);
+            }
+        }, async _ => { await _dialogCoordinator.HideMetroDialogAsync(this, customDialog); });
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Strings.EncryptionError,
-                        $"{Strings.EncryptionErrorMessage}\n\n{ex.Message}",
-                        MessageDialogStyle.Affirmative, metroDialogSettings);
-                }
-            }, async _ => { await _dialogCoordinator.HideMetroDialogAsync(this, customDialog); });
+        customDialog.Content = new CredentialsSetPasswordDialog
+        {
+            DataContext = credentialsSetPasswordViewModel
+        };
 
-            customDialog.Content = new CredentialsSetPasswordDialog
-            {
-                DataContext = credentialsSetPasswordViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
+        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
     public ICommand ChangeMasterPasswordCommand => new RelayCommand(_ => ChangeMasterPasswordAction());
