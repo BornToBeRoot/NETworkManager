@@ -696,7 +696,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
         PowerShell.WriteDefaultProfileToRegistry(
             SettingsManager.Current.Appearance_Theme,
-            SettingsManager.Current.AWSSessionManager_ApplicationFilePath);
+            SettingsManager.Current.PowerShell_ApplicationFilePath);
     }
 
     #endregion
