@@ -3875,4 +3875,7 @@ URL: http://ip-api.com/</value>
   <data name="Donate" xml:space="preserve">
     <value>捐款</value>
   </data>
+  <data name="ProfileFile" xml:space="preserve">
+    <value>Profile file</value>
+  </data>
 </root>
