@@ -53,6 +53,7 @@ Start a specific application on startup.
 - `DiscoveryProtocol`
 - `WakeOnLAN`
 - `Whois`
+- `IPGeolocation`
 - `SubnetCalculator`
 - `BitCalculator`
 - `Lookup`

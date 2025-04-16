@@ -12,6 +12,25 @@ Language for the user interface of the application.
 
 **Default:** `English` (`en-US`)
 
+**Possible values:**
+
+- `English` (`en-US`)
+- `German (Germany)` (`de-DE`)
+- `Chinese (China)` (`zh-CN`)
+- `Chinese (Taiwan)` (`zh-TW`)
+- `Czech (Czech Republic)` (`cs-CZ`)
+- `Dutch (Netherlands)` (`nl-NL`)
+- `French (France)` (`fr-FR`)
+- `Hungarian (Hungary)` (`hu-HU`)
+- `Italian (Italy)` (`it-IT`)
+- `Japanese (Japan)` (`ja-JP`)
+- `Korean (South Korea)` (`ko-KR`)
+- `Polish (Poland)` (`pl-PL`)
+- `Portuguese (Brazil)` (`pt-BR`)
+- `Russian (Russia)` (`ru-RU`)
+- `Slovenian (Slovenia)` (`sl-SI`)
+- `Spanish (Spain)` (`es-ES`)
+
 :::note
 
 The language is automatically detected based on the system language. If the language is not available, the default language is used. Changes to this value will take effect after restarting the application.
