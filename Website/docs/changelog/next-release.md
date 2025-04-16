@@ -19,6 +19,8 @@ Release date: **xx.xx.2025**
 
 ## What's new?
 
+- New language Japanese (`ja-JP`) has been added. Thanks to [@coolvitto](https://github.com/coolvitto) [#3044](https://github.com/BornToBeRoot/NETworkManager/pull/3044) [#3030](https://github.com/BornToBeRoot/NETworkManager/pull/3030) [#3035](https://github.com/BornToBeRoot/NETworkManager/pull/3035)
+
 ## Improvements
 
 **PowerShell**
