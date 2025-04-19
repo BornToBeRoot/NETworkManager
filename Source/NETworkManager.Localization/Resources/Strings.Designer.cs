@@ -772,6 +772,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hosts File Editor ähnelt.
+        /// </summary>
+        public static string ApplicationName_HostsFileEditor {
+            get {
+                return ResourceManager.GetString("ApplicationName_HostsFileEditor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die HTTP Headers ähnelt.
         /// </summary>
         public static string ApplicationName_HTTPHeaders {
@@ -1758,6 +1767,15 @@ namespace NETworkManager.Localization.Resources {
         public static string CommandLineArguments {
             get {
                 return ResourceManager.GetString("CommandLineArguments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Comment ähnelt.
+        /// </summary>
+        public static string Comment {
+            get {
+                return ResourceManager.GetString("Comment", resourceCulture);
             }
         }
         
@@ -4529,6 +4547,24 @@ namespace NETworkManager.Localization.Resources {
         public static string Hosts {
             get {
                 return ResourceManager.GetString("Hosts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hosts File Editor ähnelt.
+        /// </summary>
+        public static string HostsFileEditor {
+            get {
+                return ResourceManager.GetString("HostsFileEditor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die To edit the hosts file, the application must be started with elevated rights! ähnelt.
+        /// </summary>
+        public static string HostsFileEditorAdminMessage {
+            get {
+                return ResourceManager.GetString("HostsFileEditorAdminMessage", resourceCulture);
             }
         }
         

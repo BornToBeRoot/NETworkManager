@@ -512,12 +512,11 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
         Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
 
         Profiles.Filter = o =>
-        {
+        {if (string.IsNullOrEmpty(Search))
+                         return true;
+            
             if (o is not ProfileInfo info)
                 return false;
-
-            if (string.IsNullOrEmpty(Search))
-                return true;
 
             var search = Search.Trim();
 
