@@ -118,268 +118,268 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>Vizitka</value>
+    <value>NETworkManager について</value>
   </data>
   <data name="Accent" xml:space="preserve">
-    <value>Poudarek</value>
+    <value>強調</value>
   </data>
   <data name="AddCredentials" xml:space="preserve">
-    <value>Dodaj poverilnice</value>
+    <value>資格情報の追加</value>
   </data>
   <data name="AddEntry" xml:space="preserve">
-    <value>Dodaj vnos</value>
+    <value>エントリの追加</value>
   </data>
   <data name="AddProfile" xml:space="preserve">
-    <value>Dodaj profil</value>
+    <value>プロファイルの追加</value>
   </data>
   <data name="AreYouSure" xml:space="preserve">
-    <value>Ali ste prepričani?</value>
+    <value>よろしいですか?</value>
   </data>
   <data name="ARP" xml:space="preserve">
     <value>ARP</value>
   </data>
   <data name="ARPTable" xml:space="preserve">
-    <value>Tabela ARP</value>
+    <value>ARP テーブル</value>
   </data>
   <data name="Authentication" xml:space="preserve">
-    <value>Preverjanje pristnosti</value>
+    <value>認証</value>
   </data>
   <data name="Autostart" xml:space="preserve">
-    <value>Samodejni zagon</value>
+    <value>自動起動</value>
   </data>
   <data name="Calculator" xml:space="preserve">
-    <value>Računalo</value>
+    <value>計算機</value>
   </data>
   <data name="CommandLineArguments" xml:space="preserve">
-    <value>Argumenti ukazne vrstice</value>
+    <value>コマンドライン引数</value>
   </data>
   <data name="Configure" xml:space="preserve">
-    <value>Nastavi</value>
+    <value>設定</value>
   </data>
   <data name="Confirm" xml:space="preserve">
-    <value>Potrdi</value>
+    <value>確認</value>
   </data>
   <data name="Connect" xml:space="preserve">
-    <value>Poveži</value>
+    <value>接続</value>
   </data>
   <data name="ConnectAs" xml:space="preserve">
-    <value>Poveži kot</value>
+    <value>連絡先</value>
   </data>
   <data name="CopyProfile" xml:space="preserve">
-    <value>Kopiraj profil</value>
+    <value>プロファイルのコピー</value>
   </data>
   <data name="Credentials" xml:space="preserve">
-    <value>Poverilnice</value>
+    <value>資格</value>
   </data>
   <data name="Data" xml:space="preserve">
-    <value>Podatki</value>
+    <value>データ</value>
   </data>
   <data name="DefaultApplication" xml:space="preserve">
-    <value>Privzeti program</value>
+    <value>既定のアプリ</value>
   </data>
   <data name="DeleteCredentials" xml:space="preserve">
-    <value>Izbriši poverilnice</value>
+    <value>資格情報の削除</value>
   </data>
   <data name="DeleteProfile" xml:space="preserve">
-    <value>Izbriši profil</value>
+    <value>プロファイルの削除</value>
   </data>
   <data name="Destination" xml:space="preserve">
-    <value>Cilj</value>
+    <value>対象</value>
   </data>
   <data name="Details" xml:space="preserve">
-    <value>Podrobnosti</value>
+    <value>詳細</value>
   </data>
   <data name="Disconnected" xml:space="preserve">
-    <value>Odklopljeno</value>
+    <value>切断</value>
   </data>
   <data name="Display" xml:space="preserve">
-    <value>Prikaz</value>
+    <value>表示</value>
   </data>
   <data name="DNS" xml:space="preserve">
     <value>DNS</value>
   </data>
   <data name="DNSLookup" xml:space="preserve">
-    <value>Iskanje DNS</value>
+    <value>DNS Lookup</value>
   </data>
   <data name="DontFragment" xml:space="preserve">
-    <value>Ne drobi</value>
+    <value>断片化しない</value>
   </data>
   <data name="EditCredentials" xml:space="preserve">
-    <value>Uredi poverilnice</value>
+    <value>資格情報の編集</value>
   </data>
   <data name="EditGroup" xml:space="preserve">
-    <value>Uredi skupino</value>
+    <value>グループの編集</value>
   </data>
   <data name="EditProfile" xml:space="preserve">
-    <value>Uredi profil</value>
+    <value>プロファイルの編集</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>Napaka</value>
+    <value>エラー</value>
   </data>
   <data name="Export" xml:space="preserve">
-    <value>Izvozi</value>
+    <value>エクスポート</value>
   </data>
   <data name="Filter" xml:space="preserve">
-    <value>Filter</value>
+    <value>フィルター</value>
   </data>
   <data name="General" xml:space="preserve">
-    <value>Splošno</value>
+    <value>全般</value>
   </data>
   <data name="Headers" xml:space="preserve">
-    <value>Glave</value>
+    <value>ヘッダ</value>
   </data>
   <data name="History" xml:space="preserve">
-    <value>Zgodovina</value>
+    <value>履歴</value>
   </data>
   <data name="HotKeys" xml:space="preserve">
-    <value>Vroče tipke</value>
+    <value>ホットキー</value>
   </data>
   <data name="HTTPHeaders" xml:space="preserve">
-    <value>Glave HTTP</value>
+    <value>HTTP ヘッダ</value>
   </data>
   <data name="Import" xml:space="preserve">
-    <value>Uvozi</value>
+    <value>インポート</value>
   </data>
   <data name="Information" xml:space="preserve">
-    <value>Informacija</value>
+    <value>情報</value>
   </data>
   <data name="Interface" xml:space="preserve">
-    <value>Vmesnik</value>
+    <value>インタフェース</value>
   </data>
   <data name="IPScanner" xml:space="preserve">
-    <value>Pregledovalnik IP</value>
+    <value>IP スキャナ</value>
   </data>
   <data name="Keyboard" xml:space="preserve">
-    <value>Tipkovnica</value>
+    <value>キーボード</value>
   </data>
   <data name="Language" xml:space="preserve">
-    <value>Jezik</value>
+    <value>言語</value>
   </data>
   <data name="Libraries" xml:space="preserve">
-    <value>Knjižnice</value>
+    <value>ライブラリ</value>
   </data>
   <data name="License" xml:space="preserve">
-    <value>Licenca</value>
+    <value>ライセンス</value>
   </data>
   <data name="LocalDevicesAndResources" xml:space="preserve">
-    <value>Lokalne naprave in viri</value>
+    <value>ローカルデバイスとリソース</value>
   </data>
   <data name="Location" xml:space="preserve">
-    <value>Lokacija</value>
+    <value>場所</value>
   </data>
   <data name="Lookup" xml:space="preserve">
-    <value>Iskanje</value>
+    <value>Lookup</value>
   </data>
   <data name="MACAddress" xml:space="preserve">
-    <value>Naslov MAC</value>
+    <value>MAC アドレス</value>
   </data>
   <data name="MasterPassword" xml:space="preserve">
-    <value>Glavno geslo</value>
+    <value>マスター パスワード</value>
   </data>
   <data name="Multithreading" xml:space="preserve">
-    <value>Večnitnost</value>
+    <value>マルチスレッド</value>
   </data>
   <data name="Network" xml:space="preserve">
-    <value>Omrežje</value>
+    <value>ネットワーク</value>
   </data>
   <data name="NetworkInterface" xml:space="preserve">
-    <value>Omrežni vmesnik</value>
+    <value>ネットワーク インタフェース</value>
   </data>
   <data name="NewTab" xml:space="preserve">
-    <value>Nov zavihek</value>
+    <value>新しいタブ</value>
   </data>
   <data name="OUI" xml:space="preserve">
     <value>OUI</value>
   </data>
   <data name="OverwriteQuestion" xml:space="preserve">
-    <value>Želite prepisati?</value>
+    <value>上書きしますか?</value>
   </data>
   <data name="Ping" xml:space="preserve">
     <value>Ping</value>
   </data>
   <data name="Port" xml:space="preserve">
-    <value>Vrata</value>
+    <value>ポート</value>
   </data>
   <data name="Portable" xml:space="preserve">
-    <value>Prenosni</value>
+    <value>ポータブル</value>
   </data>
   <data name="PortScanner" xml:space="preserve">
-    <value>Pregledovalnik vrat</value>
+    <value>ポート スキャナ</value>
   </data>
   <data name="Profiles" xml:space="preserve">
-    <value>Profili</value>
+    <value>プロファイル</value>
   </data>
   <data name="PuTTY" xml:space="preserve">
     <value>PuTTY</value>
   </data>
   <data name="Query" xml:space="preserve">
-    <value>Poizvedba</value>
+    <value>クエリ</value>
   </data>
   <data name="RemoteDesktop" xml:space="preserve">
-    <value>Oddaljeno namizje</value>
+    <value>リモートデスクトップ Desktop</value>
   </data>
   <data name="Reset" xml:space="preserve">
-    <value>Ponastavi</value>
+    <value>リセット</value>
   </data>
   <data name="ResolvePTR" xml:space="preserve">
-    <value>Reši PTR</value>
+    <value>PTRの解決</value>
   </data>
   <data name="Resources" xml:space="preserve">
-    <value>Viri</value>
+    <value>リソース</value>
   </data>
   <data name="Result" xml:space="preserve">
-    <value>Rezultat</value>
+    <value>結果</value>
   </data>
   <data name="Route" xml:space="preserve">
-    <value>Pot</value>
+    <value>ルート</value>
   </data>
   <data name="Scan" xml:space="preserve">
-    <value>Preglej</value>
+    <value>スキャン</value>
   </data>
   <data name="Search" xml:space="preserve">
-    <value>Poišči</value>
+    <value>検索</value>
   </data>
   <data name="SelectAProfileDots" xml:space="preserve">
-    <value>Izberi profil...</value>
+    <value>プロファイルの選択...</value>
   </data>
   <data name="SetMasterPassword" xml:space="preserve">
-    <value>Nastavi glavno geslo</value>
+    <value>マスター パスワードの設定</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value>Nastavitve</value>
+    <value>設定</value>
   </data>
   <data name="SNMP" xml:space="preserve">
     <value>SNMP</value>
   </data>
   <data name="Socket" xml:space="preserve">
-    <value>Vtičnica</value>
+    <value>ソケット</value>
   </data>
   <data name="Statistics" xml:space="preserve">
-    <value>Statistika</value>
+    <value>統計</value>
   </data>
   <data name="Status" xml:space="preserve">
-    <value>Stanje</value>
+    <value>状態</value>
   </data>
   <data name="Subnet" xml:space="preserve">
-    <value>Podomrežje</value>
+    <value>サブネット</value>
   </data>
   <data name="Subnetting" xml:space="preserve">
-    <value>Podomreženje</value>
+    <value>サブネット化</value>
   </data>
   <data name="Success" xml:space="preserve">
-    <value>Uspeh!</value>
+    <value>成功!</value>
   </data>
   <data name="Theme" xml:space="preserve">
-    <value>Tema</value>
+    <value>テーマ</value>
   </data>
   <data name="Traceroute" xml:space="preserve">
-    <value>Sled poti</value>
+    <value>トレースルート</value>
   </data>
   <data name="Tray" xml:space="preserve">
-    <value>Programska vrstica</value>
+    <value>トレイ</value>
   </data>
   <data name="Update" xml:space="preserve">
-    <value>Posodobi</value>
+    <value>更新</value>
   </data>
   <data name="v1v2c" xml:space="preserve">
     <value>v1/v2c</value>
@@ -388,1291 +388,1295 @@
     <value>v3</value>
   </data>
   <data name="ValidationFailed" xml:space="preserve">
-    <value>Preverjanje ni uspelo!</value>
+    <value>検証失敗!</value>
   </data>
   <data name="WakeOnLAN" xml:space="preserve">
-    <value>Zbudi lokalno omrežje</value>
+    <value>Wake on LAN</value>
   </data>
   <data name="Website" xml:space="preserve">
-    <value>Spletna stran</value>
+    <value>ウェブサイト</value>
   </data>
   <data name="Window" xml:space="preserve">
-    <value>Okno</value>
+    <value>Window</value>
   </data>
   <data name="WrongPassword" xml:space="preserve">
-    <value>Napačno geslo!</value>
+    <value>パスワードが違います！</value>
   </data>
   <data name="Client" xml:space="preserve">
-    <value>Odjemalec</value>
+    <value>クライアント</value>
   </data>
   <data name="Administrator" xml:space="preserve">
-    <value>Skrbnik</value>
+    <value>Administrator</value>
   </data>
   <data name="AlwaysShowIconInTray" xml:space="preserve">
-    <value>Vedno prikaži ikono v programski vrstici</value>
+    <value>トレイにアイコンを常に表示</value>
   </data>
   <data name="Attempts" xml:space="preserve">
-    <value>Poskusi</value>
+    <value>試行回数</value>
   </data>
   <data name="AverageTime" xml:space="preserve">
-    <value>Povprečen čas</value>
+    <value>平均時間</value>
   </data>
   <data name="Broadcast" xml:space="preserve">
-    <value>Oddaja</value>
+    <value>ブロードキャスト</value>
   </data>
   <data name="Buffer" xml:space="preserve">
-    <value>Medpomnilnik</value>
+    <value>バッファ</value>
   </data>
   <data name="Bytes" xml:space="preserve">
-    <value>Bajtov</value>
+    <value>バイト</value>
   </data>
   <data name="CIDR" xml:space="preserve">
     <value>CIDR</value>
   </data>
   <data name="Close" xml:space="preserve">
-    <value>Zapri</value>
+    <value>閉じる</value>
   </data>
   <data name="DefaultGateway" xml:space="preserve">
-    <value>Privzeti prehod</value>
+    <value>デフォルト ゲートウェイ</value>
   </data>
   <data name="DeleteDots" xml:space="preserve">
-    <value>Izbriši...</value>
+    <value>削除...</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Opis</value>
+    <value>説明</value>
   </data>
   <data name="DHCPEnabled" xml:space="preserve">
-    <value>DHCP je omogočen</value>
+    <value>DHCP 有効</value>
   </data>
   <data name="DHCPLeaseExpires" xml:space="preserve">
-    <value>Poteče najem DHCP</value>
+    <value>DHCP リースの有効期限</value>
   </data>
   <data name="DHCPLeaseObtained" xml:space="preserve">
-    <value>Pridobljen najem DHCP</value>
+    <value>DHCP リースの取得</value>
   </data>
   <data name="DHCPServer" xml:space="preserve">
-    <value>Strežnik DHCP</value>
+    <value>DHCP サーバー</value>
   </data>
   <data name="DNSServers" xml:space="preserve">
-    <value>Strežniki DNS</value>
+    <value>DNS サーバー</value>
   </data>
   <data name="DNSSuffix" xml:space="preserve">
-    <value>Pripona DNS</value>
+    <value>DNS サフィックス</value>
   </data>
   <data name="DynamicIPv4Address" xml:space="preserve">
-    <value>Dinamični naslov IPv4</value>
+    <value>動的 IPv4 アドレス</value>
   </data>
   <data name="DynamicIPv4DNSServer" xml:space="preserve">
-    <value>Dinamični strežnik DNS IPv4</value>
+    <value>動的 IPv4 DNS サーバー</value>
   </data>
   <data name="Hop" xml:space="preserve">
-    <value>Skok</value>
+    <value>ホップ</value>
   </data>
   <data name="Hops" xml:space="preserve">
-    <value>Skoki</value>
+    <value>ホップ</value>
   </data>
   <data name="Hostname" xml:space="preserve">
-    <value>Ime gostitelja</value>
+    <value>ホスト名</value>
   </data>
   <data name="IPAddress" xml:space="preserve">
-    <value>Naslov IP</value>
+    <value>IP アドレス</value>
   </data>
   <data name="IPAddresses" xml:space="preserve">
-    <value>Naslovi IP</value>
+    <value>IP アドレス</value>
   </data>
   <data name="IPv4" xml:space="preserve">
     <value>IPv4</value>
   </data>
   <data name="IPv4Address" xml:space="preserve">
-    <value>Naslov IPv4</value>
+    <value>IPv4 アドレス</value>
   </data>
   <data name="IPv4DefaultGateway" xml:space="preserve">
-    <value>Privzeti prehod IPv4</value>
+    <value>IPv4-デフォルト-ゲートウェイ</value>
   </data>
   <data name="IPv6" xml:space="preserve">
     <value>IPv6</value>
   </data>
   <data name="IPv6Address" xml:space="preserve">
-    <value>Naslov IPv6</value>
+    <value>IPv6 アドレス</value>
   </data>
   <data name="IPv6AddressLinkLocal" xml:space="preserve">
-    <value>Naslov IPv6 na lokalni povezavi</value>
+    <value>リンク-ローカル IPv6 アドレス</value>
   </data>
   <data name="IPv6DefaultGateway" xml:space="preserve">
-    <value>Privzeti prehod IPv6</value>
+    <value>IPv6-デフォルト-ゲートウェイ</value>
   </data>
   <data name="Maximum" xml:space="preserve">
-    <value>Največ</value>
+    <value>最大</value>
   </data>
   <data name="MaximumHops" xml:space="preserve">
-    <value>Največ poskokov</value>
+    <value>最大 ホップ</value>
   </data>
   <data name="MinimizeInsteadOfTerminating" xml:space="preserve">
-    <value>Zmanjšaj glavno okno, namesto da izhoda iz programa</value>
+    <value>アプリケーションを終了せずにメインウィンドウを最小化</value>
   </data>
   <data name="MinimizeToTrayInsteadOfTaskbar" xml:space="preserve">
-    <value>Zmanjšaj v programsko namesto v opravilno vrstico</value>
+    <value>タスクバーではなくトレイに最小化</value>
   </data>
   <data name="Minimum" xml:space="preserve">
-    <value>Najmanj</value>
+    <value>最小</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Ime</value>
+    <value>名前</value>
   </data>
   <data name="NetworkAddress" xml:space="preserve">
-    <value>Omrežni naslov</value>
+    <value>ネットワーク アドレス</value>
   </data>
   <data name="NewSubnetmaskOrCIDR" xml:space="preserve">
-    <value>Nova maska podomrežja ali CIDR</value>
+    <value>新しいサブネットマスクまたは CIDR</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>Ne</value>
+    <value>いいえ</value>
   </data>
   <data name="ObtainAnIPAddressAutomatically" xml:space="preserve">
-    <value>Samodejno pridobi naslov IP</value>
+    <value>IPアドレスを自動的に取得</value>
   </data>
   <data name="ObtainDNSServerAddressAutomatically" xml:space="preserve">
-    <value>Samodejno pridobi naslov strežnika DNS</value>
+    <value>DNSサーバーのアドレスを自動的に取得</value>
   </data>
   <data name="PacketLoss" xml:space="preserve">
-    <value>Izguba paketov</value>
+    <value>パケット損失</value>
   </data>
   <data name="PacketsTransmitted" xml:space="preserve">
-    <value>Preneseni paketi
- 
- </value>
+    <value>送信済パケット</value>
   </data>
   <data name="PhysicalAddress" xml:space="preserve">
-    <value>Fizični naslov</value>
+    <value>物理アドレス</value>
   </data>
   <data name="PreferredProtocolWhenResolvingHostname" xml:space="preserve">
-    <value>Prednostni protokol pri razreševanju imena gostitelja:</value>
+    <value>ホスト名解決時の優先プロトコル :</value>
   </data>
   <data name="PrimaryDNSServer" xml:space="preserve">
-    <value>Primarni strežnik DNS</value>
+    <value>プライマリ DNS サーバー</value>
   </data>
   <data name="ReceivedLost" xml:space="preserve">
-    <value>Prejeto/izgubljeno</value>
+    <value>受信 / 損失</value>
   </data>
   <data name="ResolveHostname" xml:space="preserve">
-    <value>Razreši ime gostitelja</value>
+    <value>ホスト名の解決</value>
   </data>
   <data name="RestartRequired" xml:space="preserve">
-    <value>Potreben je ponovni zagon</value>
+    <value>要再起動</value>
   </data>
   <data name="SaveSettingsInApplicationFolder" xml:space="preserve">
-    <value>Shrani nastavitve v mapo programa</value>
+    <value>アプリケーションフォルダーに設定を保存</value>
   </data>
   <data name="SecondaryDNSServer" xml:space="preserve">
-    <value>Sekundarni strežnik DNS</value>
+    <value>セカンダリ DNS サーバー</value>
   </data>
   <data name="Show" xml:space="preserve">
-    <value>Prikaži</value>
+    <value>表示</value>
   </data>
   <data name="ShowTheFollowingApplicationOnStartup" xml:space="preserve">
-    <value>Pri zagonu prikaži naslednji program:</value>
+    <value>起動時に次のアプリを表示 :</value>
   </data>
   <data name="Slogan" xml:space="preserve">
-    <value>Zmogljivo orodje za upravljanje omrežij in odpravljanje težav z omrežjem!</value>
+    <value>ネットワークを管理し、ネットワークの問題を解決するための強力なツールです!</value>
   </data>
   <data name="Speed" xml:space="preserve">
-    <value>Hitrost</value>
+    <value>速度</value>
   </data>
   <data name="StartMinimizedInTray" xml:space="preserve">
-    <value>Zaženi pomanjšano v programski vrstici</value>
+    <value>トレイに最小化状態で起動</value>
   </data>
   <data name="StartWithWindows" xml:space="preserve">
-    <value>Zaženi ob zagonu Windows (trenutni uporabnik)</value>
+    <value>ウィンドウで起動 (現在のユーザー)</value>
   </data>
   <data name="StaticIPv4Address" xml:space="preserve">
-    <value>Statični naslov IPv4</value>
+    <value>静的 IPv4 アドレス</value>
   </data>
   <data name="StaticIPv4DNSServer" xml:space="preserve">
-    <value>Statični strežnik DNS IPv4</value>
+    <value>静的 IPv4 DNS サーバー</value>
   </data>
   <data name="SubnetMask" xml:space="preserve">
-    <value>Maska podomrežja</value>
+    <value>サブネットマスク</value>
   </data>
   <data name="Threads" xml:space="preserve">
-    <value>Niti</value>
+    <value>スレッド</value>
   </data>
   <data name="Time" xml:space="preserve">
-    <value>Čas</value>
+    <value>時間</value>
   </data>
   <data name="Time1" xml:space="preserve">
-    <value>Čas 1</value>
+    <value>時間 1</value>
   </data>
   <data name="Time2" xml:space="preserve">
-    <value>Čas 2</value>
+    <value>時間 2</value>
   </data>
   <data name="Time3" xml:space="preserve">
-    <value>Čas 3</value>
+    <value>時間 3</value>
   </data>
   <data name="Timeout" xml:space="preserve">
-    <value>Odmor</value>
+    <value>タイムアウト</value>
   </data>
   <data name="TimeoutMS" xml:space="preserve">
-    <value>Odmor (ms)</value>
+    <value>タイムアウト (ミリ秒)</value>
   </data>
   <data name="TimeMSToWaitBetweenEachPing" xml:space="preserve">
-    <value>Čas (ms) čakanja med posameznimi pingi</value>
+    <value>各ping間の待機時間 (ミリ秒)</value>
   </data>
   <data name="TTL" xml:space="preserve">
     <value>TTL</value>
   </data>
   <data name="Type" xml:space="preserve">
-    <value>Vrsta</value>
+    <value>種類</value>
   </data>
   <data name="UseTheFollowingDNSServerAddresses" xml:space="preserve">
-    <value>Uporabi naslednje naslove strežnika DNS:</value>
+    <value>次の DNS サーバーアドレスを使用 :</value>
   </data>
   <data name="UseTheFollowingIPAddress" xml:space="preserve">
-    <value>Uporabi naslednji naslov IP:</value>
+    <value>次の IP アドレスを使用 :</value>
   </data>
   <data name="WakeUp" xml:space="preserve">
-    <value>Zbudi</value>
+    <value>ウェイクアップ</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>Da</value>
+    <value>はい</value>
   </data>
   <data name="Add" xml:space="preserve">
-    <value>Dodaj</value>
+    <value>追加</value>
   </data>
   <data name="AddATabToPerformADNSLookup" xml:space="preserve">
-    <value>Dodaj zavihek za iskanje DNS...</value>
+    <value>DNS Lookupを実行するタブの追加...</value>
   </data>
   <data name="AddATabToPerformANetworkScan" xml:space="preserve">
-    <value>Dodaj zavihek za izvedbo omrežnega pregleda...</value>
+    <value>ネットワークスキャンを実行するタブの追加...</value>
   </data>
   <data name="AddATabToPerformAnSNMPAction" xml:space="preserve">
-    <value>Dodaj zavihek za izvedbo akcije SNMP...</value>
+    <value>SNMPアクションを実行するタブの追加...</value>
   </data>
   <data name="AddATabToPerformAPing" xml:space="preserve">
-    <value>Dodaj zavihek za izvedbo pinga...</value>
+    <value>pingを実行するタブの追加...</value>
   </data>
   <data name="AddATabToPerformAPortScan" xml:space="preserve">
-    <value>Dodaj zavihek za izvedbo pregleda vrat...</value>
+    <value>ポートスキャンを実行するタブの追加...</value>
   </data>
   <data name="AddATabToPerformATrace" xml:space="preserve">
-    <value>Dodaj zavihek za izvedbo sledenja...</value>
+    <value>トレースを実行するタブの追加...</value>
   </data>
   <data name="AddDNSSuffixToHostname" xml:space="preserve">
-    <value>V ime gostitelja dodaj pripono DNS (primarno)</value>
+    <value>ホスト名にDNSサフィックス(プライマリ)を追加</value>
   </data>
   <data name="AdditionalCommandLine" xml:space="preserve">
-    <value>Dodatna ukazna vrstica</value>
+    <value>追加のコマンドライン</value>
   </data>
   <data name="Additionals" xml:space="preserve">
-    <value>Dodatki</value>
+    <value>追加</value>
   </data>
   <data name="AddProfileDots" xml:space="preserve">
-    <value>Dodaj profil...</value>
+    <value>プロファイルの追加...</value>
   </data>
   <data name="AdjustScreenAutomatically" xml:space="preserve">
-    <value>Samodejno prilagodi zaslon</value>
+    <value>画面の自動調整</value>
   </data>
   <data name="Answers" xml:space="preserve">
-    <value>Odgovori</value>
+    <value>応答</value>
   </data>
   <data name="ApplicationWillBeRestartedAfterwards" xml:space="preserve">
-    <value>Aplikacija se bo nato znova zagnala! </value>
+    <value>アプリケーションは後で再起動されます!</value>
   </data>
   <data name="Apply" xml:space="preserve">
-    <value>Uporabi</value>
+    <value>適用</value>
   </data>
   <data name="ApplyWindowsKeyCombinationsLikeAltTab" xml:space="preserve">
-    <value>Uporabi kombinacije tipk Windows (npr. ALT + TAB):</value>
+    <value>Windowsキーの組み合わせを適用 (例 ALT+TAB):</value>
   </data>
   <data name="Auth" xml:space="preserve">
-    <value>Poobl.</value>
+    <value>認証</value>
   </data>
   <data name="AuthenticationLevel" xml:space="preserve">
-    <value>Raven preverjanja pristnosti</value>
+    <value>認証レベル</value>
   </data>
   <data name="Authorities" xml:space="preserve">
-    <value>Pooblaščenci</value>
+    <value>権限</value>
   </data>
   <data name="AutomaticallyUpdateEvery" xml:space="preserve">
-    <value>Samodejno posodobi vsakih</value>
+    <value>自動更新の間隔</value>
   </data>
   <data name="Back" xml:space="preserve">
-    <value>Nazaj</value>
+    <value>戻る</value>
   </data>
   <data name="Backup" xml:space="preserve">
-    <value>Varnostna kopija</value>
+    <value>バックアップ</value>
   </data>
   <data name="Baud" xml:space="preserve">
-    <value>Baud</value>
+    <value>ボーレート</value>
   </data>
   <data name="CanceledByUserMessage" xml:space="preserve">
-    <value>Operacijo je preklical sam uporabnik</value>
+    <value>操作はユーザーによってキャンセルされました!</value>
   </data>
   <data name="CapsLockIsEnabled" xml:space="preserve">
-    <value>'Caps lock' je omogočen!</value>
+    <value>Caps Lockが有効になりました!</value>
   </data>
   <data name="CheckForUpdatesAtStartup" xml:space="preserve">
-    <value>Ob zagonu preveri obstoj posodobitev</value>
+    <value>起動時に更新を確認</value>
   </data>
   <data name="Class" xml:space="preserve">
-    <value>Razred</value>
+    <value>クラス</value>
   </data>
   <data name="ClearFilter" xml:space="preserve">
-    <value>Počisti filter</value>
+    <value>フィルターの消去</value>
   </data>
   <data name="ColorDepthBit" xml:space="preserve">
-    <value>Globina barve (bitov)</value>
+    <value>色深度 (bit)</value>
   </data>
   <data name="Community" xml:space="preserve">
-    <value>Skupnost</value>
+    <value>コミュニティ</value>
   </data>
   <data name="ConfigureThePathToPuTTYInTheSettingsDots" xml:space="preserve">
-    <value>Pot do PuTTY nastavite v nastavitvah...</value>
+    <value>PuTTYへのパスを設定...</value>
   </data>
   <data name="ConfirmClose" xml:space="preserve">
-    <value>Potrdi zapiranje</value>
+    <value>閉じるの確認</value>
   </data>
   <data name="ConfirmCloseMessage" xml:space="preserve">
-    <value>Ali ste prepričani, da želite zapreti program?</value>
+    <value>アプリケーションを閉じますか?</value>
   </data>
   <data name="ConnectAsDots" xml:space="preserve">
-    <value>Poveži kot...</value>
+    <value>接続形式...</value>
   </data>
   <data name="ConnectExternal" xml:space="preserve">
-    <value>Poveži zunanjo</value>
+    <value>外部接続</value>
   </data>
   <data name="ConnectTheNetworkCardToConfigureIt" xml:space="preserve">
-    <value>Povežite omrežno kartico z omrežjem, da jo nastavite!</value>
+    <value>ネットワークカードをネットワークに接続して設定!</value>
   </data>
   <data name="Copy" xml:space="preserve">
-    <value>Kopiraj</value>
+    <value>コピー</value>
   </data>
   <data name="CopyAsDots" xml:space="preserve">
-    <value>Kopiraj kot...</value>
+    <value>コピー形式...</value>
   </data>
   <data name="CopyDots" xml:space="preserve">
-    <value>Kopiraj...</value>
+    <value>コピー...</value>
   </data>
   <data name="CouldNotResolveHostnameFor" xml:space="preserve">
-    <value>Ni bilo mogoče razrešiti imena gostitelja za: "{0}"</value>
+    <value>解決できなかったホスト名 : "{0}"</value>
   </data>
   <data name="Credential" xml:space="preserve">
-    <value>Poverilnica</value>
+    <value>資格情報</value>
   </data>
   <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
-    <value>Datoteke profila so šifrirane na disku z uporabo AES z velikostjo ključa 256 bitov in velikostjo bloka 128 bitov v načinu CBC. Šifrirni ključ je pridobljen iz glavnega gesla z uporabo Rfc2898DeriveBytes (PBKDF2) z 1.000.000 ponovitvami. Med izvajanjem so gesla shranjena kot SecureString, ko je datoteka profila naložena. Za nekatere funkcije je treba geslo pretvoriti v običajni niz in ostane nešifrirano v pomnilniku, dokler jih zbiralnik smeti ne počisti.Najprej naredite varnostno kopijo datotek svojega profila, preden omogočite šifriranje!</value>
+    <value>プロファイルファイルは、ディスク上でAES（鍵長256ビット、ブロックサイズ128ビット、CBCモード）を使用して暗号化されます。暗号化鍵は、マスターパスワードからRFC2898DeriveBytes（PBKDF2）を用いて1,000,000回の反復処理で生成されます。実行時には、プロファイルファイルが読み込まれると、パスワードはSecureStringとして保存されます。一部の関数では、パスワードを通常の文字列に変換する必要があり、ガベージコレクタによってクリーンアップされるまで、暗号化されていない状態でメモリ内に残ります。
+
+暗号化を有効にする前に、まずプロファイル ファイルのバックアップ コピーを作成してください!</value>
   </data>
   <data name="Custom" xml:space="preserve">
-    <value>Po meri</value>
+    <value>カスタム</value>
   </data>
   <data name="CustomScreenSize" xml:space="preserve">
-    <value>Velikost zaslona po meri:</value>
+    <value>カスタム 画面サイズ :</value>
   </data>
   <data name="DataHasBeenUpdated" xml:space="preserve">
-    <value>Podatki so posodobljeni!</value>
+    <value>データが更新されました!</value>
   </data>
   <data name="DecryptAndLoadCredentialsMessage" xml:space="preserve">
-    <value>Poverilnice je treba dešifrirati in naložiti za njihovo upravljanje.</value>
+    <value>資格情報を管理するには、それを復号化して読み込む必要があります。</value>
   </data>
   <data name="Default" xml:space="preserve">
-    <value>Privzeto</value>
+    <value>既定</value>
   </data>
   <data name="BaudRate" xml:space="preserve">
-    <value>Hitrost prenosa</value>
+    <value>ボーレート</value>
   </data>
   <data name="DefaultPort" xml:space="preserve">
-    <value>Privzeta vrata:</value>
+    <value>既定のポート :</value>
   </data>
   <data name="RloginPort" xml:space="preserve">
-    <value>Vrata Rlogin</value>
+    <value>Rlogin ポート</value>
   </data>
   <data name="SSHPort" xml:space="preserve">
-    <value>Vrata SSH</value>
+    <value>SSH ポート</value>
   </data>
   <data name="TelnetPort" xml:space="preserve">
-    <value>Vrata Telneta</value>
+    <value>Telnet ポート</value>
   </data>
   <data name="DeleteCredentialMessage" xml:space="preserve">
-    <value>Izbrana poverilnica bo trajno izbrisana.</value>
+    <value>選択した資格情報は完全に削除されます。</value>
   </data>
   <data name="DeleteEntry" xml:space="preserve">
-    <value>Izbriši vnos</value>
+    <value>エントリを削除</value>
   </data>
   <data name="DeleteProfileMessage" xml:space="preserve">
-    <value>Izbrani profil bo trajno izbrisan.</value>
+    <value>選択したプロファイルは完全に削除されます。</value>
   </data>
   <data name="DNSAutoconfiguration" xml:space="preserve">
-    <value>Nastavitve DNS</value>
+    <value>DNS 自動設定</value>
   </data>
   <data name="DNSLookupDots" xml:space="preserve">
-    <value>Iskanje DNS...</value>
+    <value>DNS Lookup...</value>
   </data>
   <data name="DNSServer" xml:space="preserve">
-    <value>Strežnik DNS</value>
+    <value>DNS サーバー</value>
   </data>
   <data name="Domain" xml:space="preserve">
-    <value>Domena</value>
+    <value>ドメイン</value>
   </data>
   <data name="Duration" xml:space="preserve">
-    <value>Trajanje</value>
+    <value>間隔</value>
   </data>
   <data name="EditDots" xml:space="preserve">
-    <value>Uredi...</value>
+    <value>編集...</value>
   </data>
   <data name="Enable" xml:space="preserve">
-    <value>Omogoči</value>
+    <value>有効</value>
   </data>
   <data name="EnableCredentialSecuritySupportProvider" xml:space="preserve">
-    <value>Omogoči ponudnika podpore za varnost poverilnic</value>
+    <value>資格情報セキュリティサポートプロバイダーを有効にする</value>
   </data>
   <data name="EndTime" xml:space="preserve">
-    <value>Končni čas</value>
+    <value>終了時間</value>
   </data>
   <data name="EnterASubnetToCalculateItDots" xml:space="preserve">
-    <value>Vnesi podomrežje za njegov izračun...</value>
+    <value>計算するサブネットの入力...</value>
   </data>
   <data name="EnterSubnetAndANewSubnetmaskToCreateSubnets" xml:space="preserve">
-    <value>Vnesite podomrežje in novo masko podomrežja, da ustvarite podomrežja...</value>
+    <value>サブネットと新しいサブネットマスクを入力してサブネットを作成...</value>
   </data>
   <data name="ErrorCheckingApiGithubComVerifyYourNetworkConnection" xml:space="preserve">
-    <value>Ni bilo mogoče vzpostaviti povezave z 'api.github.com'. Preverite svojo omrežno povezavo!</value>
+    <value>'api.github.com' に接続できませんでした。ネットワーク接続を確認してください!</value>
   </data>
   <data name="ErrorInResponse" xml:space="preserve">
-    <value>Napaka v odgovoru!</value>
+    <value>応答エラー!</value>
   </data>
   <data name="ErrorInResponseCheckIfYouHaveWritePermissions" xml:space="preserve">
-    <value>Napaka v odgovoru! Preverite, ali imate dovoljenja za pisanje.</value>
+    <value>応答エラー! 書き込み権限があるか確認してください。</value>
   </data>
   <data name="Expand" xml:space="preserve">
-    <value>Razširi</value>
+    <value>拡張</value>
   </data>
   <data name="FirstUsableIPAddress" xml:space="preserve">
-    <value>Prvi uporabni naslov IP</value>
+    <value>最初の使用可能なIPアドレス</value>
   </data>
   <data name="FixedScreenSize" xml:space="preserve">
-    <value>Stalna velikost zaslona</value>
+    <value>固定画面サイズ :</value>
   </data>
   <data name="Found" xml:space="preserve">
-    <value>Najdeno</value>
+    <value>検索</value>
   </data>
   <data name="Group" xml:space="preserve">
-    <value>Skupina</value>
+    <value>グループ</value>
   </data>
   <data name="Height" xml:space="preserve">
-    <value>Višina</value>
+    <value>高さ</value>
   </data>
   <data name="Host" xml:space="preserve">
-    <value>Gostitelj</value>
+    <value>ホスト</value>
   </data>
   <data name="HostnameOrIPAddress" xml:space="preserve">
-    <value>Ime gostitelja ali naslov IP</value>
+    <value>ホスト名 または IP アップ</value>
   </data>
   <data name="Hosts" xml:space="preserve">
-    <value>Gostitelji</value>
+    <value>ホスト</value>
   </data>
   <data name="ID" xml:space="preserve">
     <value>ID</value>
   </data>
   <data name="InheritHostFromGeneral" xml:space="preserve">
-    <value>Podeduj gostitelja iz splošnega</value>
+    <value>一般からホストを継承</value>
   </data>
   <data name="IPRange" xml:space="preserve">
-    <value>Razpon IP</value>
+    <value>IP 範囲</value>
   </data>
   <data name="LastUsableIPAddress" xml:space="preserve">
-    <value>Zadnji uporabni naslov IP</value>
+    <value>利用可能な最後の IP アドレス</value>
   </data>
   <data name="LocalIPAddress" xml:space="preserve">
-    <value>Lokalni naslov IP</value>
+    <value>ローカル IP アドレス</value>
   </data>
   <data name="LocalPort" xml:space="preserve">
-    <value>Lokalna vrata</value>
+    <value>ローカル ポート</value>
   </data>
   <data name="MACAddressOrVendor" xml:space="preserve">
-    <value>Naslov MAC ali prodajalec</value>
+    <value>MAC アドレス または ベンダー</value>
   </data>
   <data name="MagicPacketSentMessage" xml:space="preserve">
-    <value>Čarobni paket je uspešno poslan!</value>
+    <value>マジックパケットが正常に送信されました!</value>
   </data>
   <data name="MaximumNumberOfHopsReached" xml:space="preserve">
-    <value>Doseženo je največje število ({0}) skokov/usmerjevalnikov!</value>
+    <value>ルーターあたりの最大ホップ数 ({0}) に達しました!</value>
   </data>
   <data name="MessageSize" xml:space="preserve">
-    <value>Velikost sporočila</value>
+    <value>メッセージ サイズ</value>
   </data>
   <data name="Mode" xml:space="preserve">
-    <value>Način</value>
+    <value>モード</value>
   </data>
   <data name="Multicast" xml:space="preserve">
-    <value>Večoddaja</value>
+    <value>マルチキャスト</value>
   </data>
   <data name="MultipleInstances" xml:space="preserve">
-    <value>Več primerkov</value>
+    <value>複数インスタンス</value>
   </data>
   <data name="NetworkLocationCannotBeReachedMessage" xml:space="preserve">
-    <value>Omrežnega naslova ni mogoče doseči. Preverite, ali je računalnik povezan v omrežje. Za informacije o odpravljanju težav z omrežjem glejte pomoč za Windows.</value>
+    <value>ネットワークアドレスにアクセスできません。コンピュータがネットワークに接続されているかどうかを確認してください。ネットワークのトラブルシューティングについては、Windowsヘルプを参照してください。</value>
   </data>
   <data name="NewConnectionDots" xml:space="preserve">
-    <value>Nova povezava...</value>
+    <value>新しい接続...</value>
   </data>
   <data name="NoDNSRecordFoundCheckYourInputAndSettings" xml:space="preserve">
-    <value>Za "{0}" ni bilo mogoče najti zapisa DNS! Preverite svoj vnos in nastavitve.</value>
+    <value>"{0}" の DNS レコードが見つかりません! 入力内容と設定を確認してください。</value>
   </data>
   <data name="NoEnabledNetworkAdaptersFound" xml:space="preserve">
-    <value>Ni bila najdena nobena omogočena omrežna kartica!</value>
+    <value>有効なネットワーク アダプターが見つかりません!</value>
   </data>
   <data name="NoPortsFoundCheckYourInput" xml:space="preserve">
-    <value>N najdenih vrat. Preverite svoj vnos!</value>
+    <value>ポートが見つかりません。入力内容を確認してください!</value>
   </data>
   <data name="NoProfilesFoundCreateOne" xml:space="preserve">
-    <value>Ni najdenih profilov.
-Ustvarite enega...</value>
+    <value>プロファイルが見つかりません!
+作成...</value>
   </data>
   <data name="NothingFound" xml:space="preserve">
-    <value>Nič ni bilo mogoče najti!</value>
+    <value>何も見つかりません!</value>
   </data>
   <data name="NothingToDoCheckYourInput" xml:space="preserve">
-    <value>Nič za početi. Preverite svoj vnos!</value>
+    <value>何もすることはありません。入力を確認してください。</value>
   </data>
   <data name="NoUpdateAvailable" xml:space="preserve">
-    <value>Posodobitev ni na voljo!</value>
+    <value>更新プログラムはありません!</value>
   </data>
   <data name="NoValidFileFoundToImport" xml:space="preserve">
-    <value>Najti ni bilo mogoče nobene veljavne datoteke za uvoz.</value>
+    <value>インポートする有効なファイルが見つかりません。</value>
   </data>
   <data name="NoVendorFoundCheckYourInput" xml:space="preserve">
-    <value>Nobenega prodajalca ni bilo mogoče najti. Preverite svoj vnos!</value>
+    <value>ベンダーが見つかりません。入力内容を確認してください!</value>
   </data>
   <data name="NumberOfErrorsAfterWhichIsCanceled" xml:space="preserve">
-    <value>Število napak, po katerih je preklicano:</value>
+    <value>キャンセルされるまでのエラー数 :</value>
   </data>
   <data name="NumberOfStoredEntries" xml:space="preserve">
-    <value>Število shranjenih vnosov</value>
+    <value>保存されたエントリの数</value>
   </data>
   <data name="OID" xml:space="preserve">
     <value>OID</value>
   </data>
   <data name="OnlyWhenUsingTheFullScreen" xml:space="preserve">
-    <value>Samo pri uporabi celotnega zaslona</value>
+    <value>全画面表示時のみ</value>
   </data>
   <data name="RemoteDesktopKeyboardHookMode_OnTheRemoteComputer" xml:space="preserve">
-    <value>Na oddaljenem računalniku</value>
+    <value>リモートコンピューター上</value>
   </data>
   <data name="RemoteDesktopKeyboardHookMode_OnThisComputer" xml:space="preserve">
-    <value>Na tem računalniku</value>
+    <value>このコンピューター</value>
   </data>
   <data name="Open" xml:space="preserve">
-    <value>Odpri</value>
+    <value>開く</value>
   </data>
   <data name="OpenLicense" xml:space="preserve">
-    <value>Odpri licenco</value>
+    <value>ライセンスを開く</value>
   </data>
   <data name="OpenProject" xml:space="preserve">
-    <value>Odpri projekt</value>
+    <value>プロジェクトを開く</value>
   </data>
   <data name="OpenWebsite" xml:space="preserve">
-    <value>Odpri spletno stran</value>
+    <value>ウェブサイトを開く</value>
   </data>
   <data name="Override" xml:space="preserve">
-    <value>preglasi</value>
+    <value>上書き</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>Geslo</value>
+    <value>パスワード</value>
   </data>
   <data name="PasswordsDoNotMatch" xml:space="preserve">
-    <value>Gesli se ne ujemata!</value>
+    <value>パスワードが一致しません!</value>
   </data>
   <data name="Path" xml:space="preserve">
-    <value>Pot</value>
+    <value>パス</value>
   </data>
   <data name="PortOrService" xml:space="preserve">
-    <value>Vrata ali storitev</value>
+    <value>ポート または サービス</value>
   </data>
   <data name="Ports" xml:space="preserve">
-    <value>Vrata</value>
+    <value>ポート</value>
   </data>
   <data name="Priv" xml:space="preserve">
-    <value>Zaseb.</value>
+    <value>プライベート</value>
   </data>
   <data name="Profile" xml:space="preserve">
-    <value>Profil</value>
+    <value>プロファイル</value>
   </data>
   <data name="ProfilesReloaded" xml:space="preserve">
-    <value>Profili so znova naloženi</value>
+    <value>再読み込みされたプロファイル</value>
   </data>
   <data name="Protocol" xml:space="preserve">
-    <value>Protokol</value>
+    <value>プロトコル</value>
   </data>
   <data name="PuTTYProcessHasEnded" xml:space="preserve">
-    <value>Proces PuTTY se je končal!</value>
+    <value>PuTTYプロセスが終了しました！</value>
   </data>
   <data name="Questions" xml:space="preserve">
-    <value>Vprašanja</value>
+    <value>質問</value>
   </data>
   <data name="RAW" xml:space="preserve">
-    <value>SUROV</value>
+    <value>RAW</value>
   </data>
   <data name="Recursion" xml:space="preserve">
-    <value>Rekurzija!</value>
+    <value>再帰</value>
   </data>
   <data name="RedirectClipboard" xml:space="preserve">
-    <value>Preusmeri odložišče</value>
+    <value>クリップボードのリダイレクト</value>
   </data>
   <data name="RedirectDevices" xml:space="preserve">
-    <value>Preusmeri  naprave</value>
+    <value>デバイスのリダイレクト</value>
   </data>
   <data name="RedirectDrives" xml:space="preserve">
-    <value>Preusmeri pogone</value>
+    <value>ドライブのリダイレクト</value>
   </data>
   <data name="RedirectPorts" xml:space="preserve">
-    <value>Preusmeri vrata</value>
+    <value>ポートのリダイレクト</value>
   </data>
   <data name="RedirectPrinters" xml:space="preserve">
-    <value>Preusmeri tiskalnike</value>
+    <value>プリンタのリダイレクト</value>
   </data>
   <data name="RedirectSmartcards" xml:space="preserve">
-    <value>Preusmeri pametne kartice</value>
+    <value>スマートカードのリダイレクト</value>
   </data>
   <data name="RemainingTime" xml:space="preserve">
-    <value>Preostali čas</value>
+    <value>残り時間</value>
   </data>
   <data name="RemoteIPAddress" xml:space="preserve">
-    <value>Oddaljeni naslov IP</value>
+    <value>リモート IP アドレス</value>
   </data>
   <data name="RemotePort" xml:space="preserve">
-    <value>Oddaljena vrata</value>
+    <value>リモート ポート</value>
   </data>
   <data name="Repeat" xml:space="preserve">
-    <value>Ponovi</value>
+    <value>繰り返し</value>
   </data>
   <data name="ResolveCNAMEOnANYRequests" xml:space="preserve">
-    <value>Razreši CNAME na VSEH zahtevah</value>
+    <value>すべてのリクエストでCNAMEを解決</value>
   </data>
   <data name="Responses" xml:space="preserve">
-    <value>Odzivi</value>
+    <value>応答</value>
   </data>
   <data name="Rlogin" xml:space="preserve">
-    <value>R prijava</value>
+    <value>Rlogin</value>
   </data>
   <data name="Scanned" xml:space="preserve">
-    <value>Pregledano</value>
+    <value>スキャン済み</value>
   </data>
   <data name="SearchedApplicationNotFound" xml:space="preserve">
-    <value>Iskanega programa ni mogoče najti!</value>
+    <value>検索したアプリが見つかりません!</value>
   </data>
   <data name="SearchedLanguageNotFound" xml:space="preserve">
-    <value>Iskanega jezika ni mogoče najti!</value>
+    <value>検索した言語が見つかりません!</value>
   </data>
   <data name="SearchedSettingNotFound" xml:space="preserve">
-    <value>Iskane nastavitve ni mogoče najti!</value>
+    <value>検索した設定が見つかりません!</value>
   </data>
   <data name="Security" xml:space="preserve">
-    <value>Varnost</value>
+    <value>セキュリティ</value>
   </data>
   <data name="SelectAScreenResolution" xml:space="preserve">
-    <value>Izberite ločljivost zaslona</value>
+    <value>画面解像度の選択</value>
   </data>
   <data name="ThisWillResetAllSettings" xml:space="preserve">
-    <value>To bo ponastavilo vse nastavitve!</value>
+    <value>すべての設定がリセットされます!</value>
   </data>
   <data name="Serial" xml:space="preserve">
-    <value>Serijsko</value>
+    <value>シリアル</value>
   </data>
   <data name="SerialLine" xml:space="preserve">
-    <value>Zaporedna vrsta</value>
+    <value>シリアル回線</value>
   </data>
   <data name="Service" xml:space="preserve">
-    <value>Storitev</value>
+    <value>サービス</value>
   </data>
   <data name="SettingsFileFoundWasCorruptOrNotCompatibleMessage" xml:space="preserve">
-    <value>Najdena datoteka z nastavitvami je bila poškodovana ali pa ni združljiva s to različico! To težavo lahko prijavite na GitHub. V mapi z nastavitvami je bila ustvarjena varnostna kopija datoteke z nastavitvami in nastavitve so bile ponastavljene. Datoteke profila niso prizadete!</value>
+    <value>見つかった設定ファイルは破損しているか、このバージョンと互換性がありません! この問題は GitHub で報告できます。
+
+設定ファイルのバックアップを設定フォルダに作成し、設定をリセットしました。
+
+プロファイルファイルは影響を受けません!</value>
   </data>
   <data name="ShowClosedPorts" xml:space="preserve">
-    <value>Prikaži zaprta vrata</value>
+    <value>閉じたポートを表示</value>
   </data>
   <data name="ShowCurrentApplicationTitle" xml:space="preserve">
-    <value>Prikaži naslov trenutnega programa</value>
+    <value>現在のアプリのタイトルを表示</value>
   </data>
   <data name="ShowOnlyMostCommonQueryTypes" xml:space="preserve">
-    <value>Prikaži samo najpogostejše vrste poizvedb</value>
+    <value>最も一般的なクエリタイプのみを表示</value>
   </data>
   <data name="ShowUnreachableIPAddressesAndPorts" xml:space="preserve">
-    <value>Prikaži nedosegljive naslove IP in vrata</value>
+    <value>到達不能なIPアドレスとポートを表示</value>
   </data>
   <data name="ShowStatistics" xml:space="preserve">
-    <value>Prikaži statistiko</value>
+    <value>統計を表示</value>
   </data>
   <data name="SSH" xml:space="preserve">
     <value>SSH</value>
   </data>
   <data name="StartTime" xml:space="preserve">
-    <value>Začetni čas</value>
+    <value>開始時間</value>
   </data>
   <data name="State" xml:space="preserve">
-    <value>Stanje</value>
+    <value>状態</value>
   </data>
   <data name="Subnet1" xml:space="preserve">
-    <value>Podomrežje 1</value>
+    <value>サブネット 1</value>
   </data>
   <data name="Subnet2" xml:space="preserve">
-    <value>Podomrežje 2</value>
+    <value>サブネット 2</value>
   </data>
   <data name="Tags" xml:space="preserve">
-    <value>Oznake</value>
+    <value>タグ</value>
   </data>
   <data name="Telnet" xml:space="preserve">
     <value>Telnet</value>
   </data>
   <data name="TheApplicationCanBeStartedWithoutParameters" xml:space="preserve">
-    <value>Program je mogoče zagnati brez parametrov!</value>
+    <value>アプリはパラメータなしで起動できます!</value>
   </data>
   <data name="TheFollowingHostnamesCouldNotBeResolved" xml:space="preserve">
-    <value>Naslednjih imen gostiteljev ni bilo mogoče razrešiti:</value>
+    <value>解決できなかったホスト名 :</value>
   </data>
   <data name="TheFollowingParametersAreAvailable" xml:space="preserve">
-    <value>Na voljo so naslednji parametri:</value>
+    <value>使用可能なパラメータ :</value>
   </data>
   <data name="TheFollowingParametersCanNotBeProcesses" xml:space="preserve">
-    <value>Naslednjih parametrov ni mogoče obdelati:</value>
+    <value>処理できないパラメータ :</value>
   </data>
   <data name="TheProcessCanTakeUpSomeTimeAndResources" xml:space="preserve">
-    <value>Proces lahko vzame nekaj časa in virov (CPE/RAM).</value>
+    <value>このプロセスには時間とリソースがかかる場合があります。 (CPU / RAM)</value>
   </data>
   <data name="TheSettingsLocationIsNotAffected" xml:space="preserve">
-    <value>Nastavitev lokacije ni prizadeta!</value>
+    <value>設定場所は影響を受けません!</value>
   </data>
   <data name="TimeoutOnSNMPQuery" xml:space="preserve">
-    <value>Časovna omejitev pri poizvedbi SNMP. Morda gostitelj ni dosegljiv ali pa je skupnost/geslo napačno.</value>
+    <value>SNMPクエリがタイムアウトしました。ホストにアクセスできないか、コミュニティ/パスワードが間違っている可能性があります。</value>
   </data>
   <data name="TimeoutWhenQueryingDNSServerMessage" xml:space="preserve">
-    <value>Časovna omejitev pri poizvedbi strežnika DNS z naslovom IP "{0}"!</value>
+    <value>IP アドレス "{0}" で DNS サーバーにクエリを実行中にタイムアウトが発生しました!</value>
   </data>
   <data name="Timestamp" xml:space="preserve">
-    <value>Časovni žig</value>
+    <value>タイムスタンプ</value>
   </data>
   <data name="Trace" xml:space="preserve">
-    <value>Sledi</value>
+    <value>トレース</value>
   </data>
   <data name="UnkownError" xml:space="preserve">
-    <value>Neznana napaka!</value>
+    <value>不明なエラー!</value>
   </data>
   <data name="UntrayBringWindowToForeground" xml:space="preserve">
-    <value>Odstrani iz programske vrstice/Postavi okno v ospredje</value>
+    <value>トレイ解除/ウィンドウを前面に移動</value>
   </data>
   <data name="URL" xml:space="preserve">
-    <value>URL naslov</value>
+    <value>URL</value>
   </data>
   <data name="UseCredentials" xml:space="preserve">
-    <value>Uporabi poverilnice</value>
+    <value>資格情報の使用</value>
   </data>
   <data name="UseCurrentViewSize" xml:space="preserve">
-    <value>Kot velikost zaslona uporabi trenutno velikost prikaza</value>
+    <value>現在の表示サイズを画面サイズとして使用</value>
   </data>
   <data name="UseCustomDNSServer" xml:space="preserve">
-    <value>Uporabi strežnik DNS po meri</value>
+    <value>カスタム DNS サーバーを使用</value>
   </data>
   <data name="UseCustomDNSSuffix" xml:space="preserve">
-    <value>Uporabi pripono DNS po meri</value>
+    <value>カスタム DNS サフィックスを使用</value>
   </data>
   <data name="UseResolverCache" xml:space="preserve">
-    <value>Uporabi predpomnilnik razreševalnika</value>
+    <value>リゾルバーキャッシュを使用</value>
   </data>
   <data name="UserInterfaceLocked" xml:space="preserve">
-    <value>Uporabniški vmesnik je zaklenjen!</value>
+    <value>ユーザーインタフェースがロックされました!</value>
   </data>
   <data name="Username" xml:space="preserve">
-    <value>Uporabniško ime</value>
+    <value>ユーザー名</value>
   </data>
   <data name="Vendor" xml:space="preserve">
-    <value>Prodajalec</value>
+    <value>ベンダー</value>
   </data>
   <data name="Version" xml:space="preserve">
-    <value>Različica</value>
+    <value>バージョン</value>
   </data>
   <data name="VersionxxIsAvailable" xml:space="preserve">
-    <value>Na voljo je različica {0}!</value>
+    <value>バージョン {0} が利用可能です!</value>
   </data>
   <data name="WalkMode" xml:space="preserve">
-    <value>Način hoje</value>
+    <value>ウォークモード</value>
   </data>
   <data name="Width" xml:space="preserve">
-    <value>Širina</value>
+    <value>幅</value>
   </data>
   <data name="WrongPasswordDecryptionFailedMessage" xml:space="preserve">
-    <value>Datoteke profila ni bilo mogoče dešifrirati z danim geslom.</value>
+    <value>指定されたパスワードではプロファイル ファイルを復号化できませんでした。</value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
-    <value>Vneseno geslo je napačno.</value>
+    <value>入力したパスワードが間違っています。</value>
   </data>
   <data name="AddDots" xml:space="preserve">
-    <value>Dodaj...</value>
+    <value>追加...</value>
   </data>
   <data name="AddEntryDots" xml:space="preserve">
-    <value>Dodaj vnos...</value>
+    <value>エントリーの追加...</value>
   </data>
   <data name="Calculate" xml:space="preserve">
-    <value>Izračunaj</value>
+    <value>計算</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Prekliči</value>
+    <value>キャンセル</value>
   </data>
   <data name="Change" xml:space="preserve">
-    <value>Spremeni</value>
+    <value>変更</value>
   </data>
   <data name="ChangeMasterPasswordDots" xml:space="preserve">
-    <value>Spremeni glavno geslo...</value>
+    <value>マスターパスワードの変更...</value>
   </data>
   <data name="Check" xml:space="preserve">
-    <value>Preveri</value>
+    <value>確認</value>
   </data>
   <data name="CheckForUpdates" xml:space="preserve">
-    <value>Preveri obstoj posodobitev</value>
+    <value>更新の確認</value>
   </data>
   <data name="Closed" xml:space="preserve">
-    <value>Zaprto</value>
+    <value>閉じる</value>
   </data>
   <data name="Continue" xml:space="preserve">
-    <value>Nadaljuj</value>
+    <value>続行</value>
   </data>
   <data name="CustomColon" xml:space="preserve">
-    <value>Po meri:</value>
+    <value>カスタム :</value>
   </data>
   <data name="Cut" xml:space="preserve">
-    <value>Izreži</value>
+    <value>切り取り</value>
   </data>
   <data name="DecryptAndLoadDots" xml:space="preserve">
-    <value>Dešifriraj in naloži...</value>
+    <value>復号化と読み込み...</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Izbriši</value>
+    <value>削除</value>
   </data>
   <data name="DeleteTable" xml:space="preserve">
-    <value>Izbriši tabelo</value>
+    <value>テーブルの削除</value>
   </data>
   <data name="EnterLocationDots" xml:space="preserve">
-    <value>Vnesi lokacijo...</value>
+    <value>場所の入力...</value>
   </data>
   <data name="Everything" xml:space="preserve">
-    <value>Vse</value>
+    <value>すべて</value>
   </data>
   <data name="FilterDots" xml:space="preserve">
-    <value>Filtriraj...</value>
+    <value>フィルター...</value>
   </data>
   <data name="FlushDNSCache" xml:space="preserve">
-    <value>Izprazni predpomnilnik DNS</value>
+    <value>DNS キャッシュの消去</value>
   </data>
   <data name="HelpMessage_Credentials" xml:space="preserve">
-    <value>Dešifrirajte in naložite svoje poverilnice, da jih izberete.</value>
+    <value>資格情報を復号化して読み込み、選択します。</value>
   </data>
   <data name="HelpMessage_ParameterHelp" xml:space="preserve">
-    <value>Prikaže to pogovorno okno</value>
+    <value>このダイアログを表示。</value>
   </data>
   <data name="HelpMessage_ParameterResetSettings" xml:space="preserve">
-    <value>Ponastavi vse nastavitve programa</value>
+    <value>すべてのアプリケーション設定をリセット。</value>
   </data>
   <data name="HelpMessage_PasswordNotDisplayedCanBeOverwritten" xml:space="preserve">
-    <value>Geslo se med urejanjem ne prikaže, lahko pa ga prepišete.</value>
+    <value>編集時にパスワードは表示されませんが、上書きすることは可能です。</value>
   </data>
   <data name="HelpMessage_RDPAuthenticationLevel" xml:space="preserve">
-    <value>[0] Če ne uspe preverjanje pristnosti strežnika, se brez opozorila poveži z računalnikom. 
-[1] Če ne uspe preverjanje pristnosti strežnika, ne vzpostavljaj povezavo.
-[2] Če ne uspe preverjanje pristnosti strežnika, prikaži opozorilo in mi dovoli, da se povežem ali zavrnem povezavo. 
-[3] Ni določena nobena zahteva za preverjanje pristnosti.</value>
+    <value>[0] サーバー認証に失敗した場合は、警告なしでコンピューターに接続する。
+[1] サーバー認証に失敗した場合は、接続を確立しない。
+[2] サーバー認証に失敗した場合は警告を表示し、接続を許可するか接続を拒否する。
+[3] 認証要件は指定されていません。</value>
   </data>
   <data name="HelpMessage_Tags" xml:space="preserve">
-    <value>Ozake vam pomagajo organizirati profile/Profili po temah/projektih. Več oznak je mogoče uporabiti ločeno s podpičji ";". Poiščite oznake z "tag=xxx".</value>
+    <value>タグは、トピックやプロジェクトごとにプロフィールを整理するのに役立ちます。複数のタグを使用する場合は、";"で区切ります。 "tag=xxx"でタグ検索します。</value>
   </data>
   <data name="TimeUnit_Hour" xml:space="preserve">
-    <value>Ur</value>
+    <value>時間</value>
   </data>
   <data name="LocationOfTheImport" xml:space="preserve">
-    <value>Lokacija datoteke za uvoz...</value>
+    <value>インポート ファイルの場所...</value>
   </data>
   <data name="TimeUnit_Minute" xml:space="preserve">
-    <value>Minut</value>
+    <value>分</value>
   </data>
   <data name="MoveAndRestart" xml:space="preserve">
-    <value>Premakni in znova zaženi</value>
+    <value>移動と再起動</value>
   </data>
   <data name="NetworkConnectionsDots" xml:space="preserve">
-    <value>Omrežne povezave....</value>
+    <value>ネットワーク接続....</value>
   </data>
   <data name="NotChanged" xml:space="preserve">
-    <value>(ni spremenjeno)</value>
+    <value>(変更なし)</value>
   </data>
   <data name="Off" xml:space="preserve">
-    <value>Izklopljeno</value>
+    <value>Off</value>
   </data>
   <data name="OK" xml:space="preserve">
-    <value>Vredu</value>
+    <value>OK</value>
   </data>
   <data name="On" xml:space="preserve">
-    <value>Vklopljeno</value>
+    <value>On</value>
   </data>
   <data name="OpenLocation" xml:space="preserve">
-    <value>Odpri lokacijo</value>
+    <value>場所を開く</value>
   </data>
   <data name="OpenSettings" xml:space="preserve">
-    <value>Odpri nastavitve</value>
+    <value>設定を開く</value>
   </data>
   <data name="Overwrite" xml:space="preserve">
-    <value>Prepiši</value>
+    <value>上書き</value>
   </data>
   <data name="Paste" xml:space="preserve">
-    <value>Prilepi</value>
+    <value>貼り付け</value>
   </data>
   <data name="Reconnect" xml:space="preserve">
-    <value>Ponovno poveži</value>
+    <value>再接続</value>
   </data>
   <data name="Refresh" xml:space="preserve">
-    <value>Osveži</value>
+    <value>更新</value>
   </data>
   <data name="RestartNow" xml:space="preserve">
-    <value>Znova zaženi zdaj</value>
+    <value>今すぐ再起動</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Shrani</value>
+    <value>保存</value>
   </data>
   <data name="SearchDots" xml:space="preserve">
-    <value>Poišči...</value>
+    <value>検索...</value>
   </data>
   <data name="TimeUnit_Second" xml:space="preserve">
-    <value>Sekund</value>
+    <value>秒</value>
   </data>
   <data name="Send" xml:space="preserve">
-    <value>Pošlji</value>
+    <value>送信</value>
   </data>
   <data name="SetMasterPasswordDots" xml:space="preserve">
-    <value>Nastavi glavno geslo...</value>
+    <value>マスター パスワードの設定...</value>
   </data>
   <data name="ShowLocalLicenses" xml:space="preserve">
-    <value>Prikaži lokalne licence</value>
+    <value>ローカル ライセンスの表示</value>
   </data>
   <data name="SubnetCalculator" xml:space="preserve">
-    <value>Računalo podomrežij</value>
+    <value>サブネット計算機</value>
   </data>
   <data name="Validate" xml:space="preserve">
-    <value>Preveri</value>
+    <value>検証</value>
   </data>
   <data name="Connections" xml:space="preserve">
-    <value>Povezave</value>
+    <value>接続</value>
   </data>
   <data name="EnterValidIPScanRange" xml:space="preserve">
-    <value>Vnesit veljaven obseg IP!</value>
+    <value>有効な IP 範囲を入力してください!</value>
   </data>
   <data name="EnterValidIPv4Address" xml:space="preserve">
-    <value>Vnesite veljaven naslov IPv4! </value>
+    <value>有効な IPv4 アドレスを入力してください!</value>
   </data>
   <data name="EnterValidMACAddress" xml:space="preserve">
-    <value>Vnesite veljaven naslov MAC (kot 00:F1:23:AB:F2:35)!</value>
+    <value>有効なMACアドレスを入力してください (00:F1:23:AB:F2:35 のように)!</value>
   </data>
   <data name="EnterValidPort" xml:space="preserve">
-    <value>Vnesite veljavna vrata (1 - 65535)!</value>
+    <value>有効なポートを入力してください (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnetmask" xml:space="preserve">
-    <value>Vnesite veljavno masko podomrežja (kot 255.255.255.0)!</value>
+    <value>有効なサブネットマスクを入力してください (255.255.255.0 のように)!</value>
   </data>
   <data name="EnterValidSubnetmaskOrCIDR" xml:space="preserve">
-    <value>Vnesite veljavno masko podomrežja ali CIDR (kot 255.255.255.0 ali /24)!</value>
+    <value>有効なCIDRのサブネットマスクを入力してください (255.255.255.0 または /24 のように)!</value>
   </data>
   <data name="FieldCannotBeEmpty" xml:space="preserve">
-    <value>Polje ne sme biti prazno!</value>
+    <value>フィールドを空にすることはできません!</value>
   </data>
   <data name="FileDoesNotExist" xml:space="preserve">
-    <value>Datoteka ne obstaja!</value>
+    <value>ファイルが存在しません!</value>
   </data>
   <data name="FolderDoesNotExist" xml:space="preserve">
-    <value>Mapa ne obstaja!</value>
+    <value>フォルダーが存在しません!</value>
   </data>
   <data name="Listeners" xml:space="preserve">
-    <value>Poslušalci</value>
+    <value>リスナー</value>
   </data>
   <data name="Amber" xml:space="preserve">
-    <value>Jantar</value>
+    <value>アンバー</value>
   </data>
   <data name="Appearance" xml:space="preserve">
-    <value>Videz</value>
+    <value>外観</value>
   </data>
   <data name="Applications" xml:space="preserve">
-    <value>Programi</value>
+    <value>アプリ</value>
   </data>
   <data name="Theme_Dark" xml:space="preserve">
-    <value>Temna</value>
+    <value>ダーク</value>
   </data>
   <data name="Theme_Light" xml:space="preserve">
-    <value>Svetla</value>
+    <value>ライト</value>
   </data>
   <data name="Black" xml:space="preserve">
-    <value>Črna</value>
+    <value>黒</value>
   </data>
   <data name="Blue" xml:space="preserve">
-    <value>Modra</value>
+    <value>青</value>
   </data>
   <data name="Brown" xml:space="preserve">
-    <value>Rjava</value>
+    <value>茶</value>
   </data>
   <data name="Cobalt" xml:space="preserve">
-    <value>Kobaltna</value>
+    <value>コバルト</value>
   </data>
   <data name="Crimson" xml:space="preserve">
-    <value>Škrlatna</value>
+    <value>クリムゾン</value>
   </data>
   <data name="Cyan" xml:space="preserve">
-    <value>Cijan</value>
+    <value>シアン</value>
   </data>
   <data name="Emerald" xml:space="preserve">
-    <value>Smaragdna</value>
+    <value>エメラルド</value>
   </data>
   <data name="EnterOneOrMoreValidIPAddresses" xml:space="preserve">
-    <value>Vnesite enega ali več veljavnih naslovov IP!</value>
+    <value>有効な IP アドレスを 1 つ以上入力してください!</value>
   </data>
   <data name="EnterValidBaud" xml:space="preserve">
-    <value>Vnesite veljavno hitrost!</value>
+    <value>有効なボーレートを入力してください!</value>
   </data>
   <data name="EnterValidHosts" xml:space="preserve">
-    <value>Vnesite veljavne gostitelje (več gostiteljev ne sme končati z ";")!</value>
+    <value>有効なホストを入力してください (複数のホストは";"で終わることはできません)!</value>
   </data>
   <data name="EnterValidIPAddress" xml:space="preserve">
-    <value>Vnesite veljaven naslov IP!</value>
+    <value>有効な IP アドレスを入力してください!</value>
   </data>
   <data name="EnterValidNumber" xml:space="preserve">
-    <value>Vnesite veljavno številko!</value>
+    <value>有効な数値を入力してください!</value>
   </data>
   <data name="EnterValidOID" xml:space="preserve">
-    <value>Vnesite veljaven OIDI</value>
+    <value>有効な OID を入力してください!</value>
   </data>
   <data name="EnterValidPortOrPortRange" xml:space="preserve">
-    <value>Vnesite veljavna vrata in/ali obseg vrat (1-65535)</value>
+    <value>有効なポートまたはポート範囲を入力してください (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnet" xml:space="preserve">
-    <value>Vnesite veljavno podomrežje (kot 192.168.178.133/26)!</value>
+    <value>有効なサブネットを入力してください (192.168.178.133/26 のように)!</value>
   </data>
   <data name="EnterValidWebsiteUri" xml:space="preserve">
-    <value>Vnesite veljavno spletno stran (kot https://primer.com.index.html)</value>
+    <value>有効なウェブサイトを入力してください (https://example.com/index.html のように)</value>
   </data>
   <data name="Green" xml:space="preserve">
-    <value>Zelena</value>
+    <value>緑</value>
   </data>
   <data name="ImportExport" xml:space="preserve">
-    <value>Uvozi/Izvozi</value>
+    <value>インポート / エクスポート</value>
   </data>
   <data name="Indigo" xml:space="preserve">
-    <value>Indigo modra</value>
+    <value>インディゴ</value>
   </data>
   <data name="IPStatus_DestinationHostUnreachable" xml:space="preserve">
-    <value>Ciljni gostitelj ni dosegljiv.</value>
+    <value>宛先ホストに到達できません。</value>
   </data>
   <data name="IPStatus_DestinationNetworkUnreachable" xml:space="preserve">
-    <value>Ciljno omrežje ni dosegljivo.</value>
+    <value>宛先ネットワークに到達できません。</value>
   </data>
   <data name="IPStatus_DestinationPortUnreachable" xml:space="preserve">
-    <value>Ciljna vrata niso dosegljiva.</value>
+    <value>宛先ポートに到達できません。</value>
   </data>
   <data name="IPStatus_Success" xml:space="preserve">
-    <value>Uspeh</value>
+    <value>成功</value>
   </data>
   <data name="IPStatus_TimedOut" xml:space="preserve">
-    <value>Zahteva je potekla.</value>
+    <value>リクエストがタイムアウトしました。</value>
   </data>
   <data name="IPStatus_TtlExpired" xml:space="preserve">
-    <value>TTL je potekel med prevozom.</value>
+    <value>転送中にTTLが期限切れになりました。</value>
   </data>
   <data name="KeyMustHave8CharactersOrMore" xml:space="preserve">
-    <value>Ključ mora imeti 8 ali več znakov!</value>
+    <value>キーは 8 文字以上である必要があります!</value>
   </data>
   <data name="Lime" xml:space="preserve">
-    <value>Limeta</value>
+    <value>ライム</value>
   </data>
   <data name="Magenta" xml:space="preserve">
-    <value>Škrlatna</value>
+    <value>マゼンタ</value>
   </data>
   <data name="Mauve" xml:space="preserve">
-    <value>Lila</value>
+    <value>モーブ</value>
   </data>
   <data name="Olive" xml:space="preserve">
-    <value>Olivna</value>
+    <value>オリーブ</value>
   </data>
   <data name="OnlyNumbersCanBeEntered" xml:space="preserve">
-    <value>Vnašati je mogoče samo številke!</value>
+    <value>数字のみ入力できます!</value>
   </data>
   <data name="Orange" xml:space="preserve">
-    <value>Oranžna</value>
+    <value>オレンジ</value>
   </data>
   <data name="Pink" xml:space="preserve">
-    <value>Roza</value>
+    <value>ピンク</value>
   </data>
   <data name="Purple" xml:space="preserve">
-    <value>Vijolična</value>
+    <value>紫</value>
   </data>
   <data name="Red" xml:space="preserve">
-    <value>Rdeča</value>
+    <value>赤</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_AtClientWinsockFDCLOSE" xml:space="preserve">
-    <value>Vtičnica je zaprta.</value>
+    <value>ソケットが閉じられました。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_ByServer" xml:space="preserve">
-    <value>Oddaljena prekini povezavo s strežnikom.</value>
+    <value>サーバーによるリモート切断。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_ClientDecompressionError" xml:space="preserve">
-    <value>Napaka pri razširjanju.</value>
+    <value>解凍エラー。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_ConnectionTimedOut" xml:space="preserve">
-    <value>Povezava je potekla.</value>
+    <value>接続がタイムアウトしました。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_DecryptionError" xml:space="preserve">
-    <value>Napaka pri dešifriranju.</value>
+    <value>復号化エラー。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_DNSLookupFailed" xml:space="preserve">
-    <value>Napaka iskanja imena DNS.</value>
+    <value>DNS 名 Lookupに失敗しました。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_DNSLookupFailed2" xml:space="preserve">
-    <value>Iskanje DNS ni uspelo.</value>
+    <value>DNS Lookupに失敗しました。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_EncryptionError" xml:space="preserve">
-    <value>Napaka pri šifriranju.</value>
+    <value>暗号化エラー。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_GetHostByNameFailed" xml:space="preserve">
-    <value>Klic gethostbyname Windows vtičnic ni uspel.</value>
+    <value>Windows Sockets gethostbyname 呼び出しに失敗しました。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_HostNotFound" xml:space="preserve">
-    <value>Gostitelja ni mogoče najti.</value>
+    <value>ホストが見つかりません。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InternalError" xml:space="preserve">
-    <value>Notranja napaka.</value>
+    <value>内部エラーです。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InternalSecurityError" xml:space="preserve">
-    <value>Notranja varnostna napaka.</value>
+    <value>内部セキュリティ エラー。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InternalSecurityError2" xml:space="preserve">
-    <value>Notranja varnostna napaka.</value>
+    <value>内部セキュリティ エラー。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InvalidEncryption" xml:space="preserve">
-    <value>Navedena metoda šifriranja ni veljavna.</value>
+    <value>指定された暗号化方法が無効です。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InvalidIP" xml:space="preserve">
-    <value>Naveden je napačen naslov IP.</value>
+    <value>指定された IP アドレスが間違っています。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InvalidIPAddr" xml:space="preserve">
-    <value>Navedeni naslov IP ni veljaven.</value>
+    <value>指定された IP アドレスは無効です。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InvalidSecurityData" xml:space="preserve">
-    <value>Varnostni podatki niso veljavni.</value>
+    <value>セキュリティデータが無効です。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InvalidServerSecurityInfo" xml:space="preserve">
-    <value>Varnostni podatki strežnika niso veljavni.</value>
+    <value>サーバー セキュリティ データが無効です。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_LicensingFailed" xml:space="preserve">
-    <value>Pogajanje o licenci ni uspelo.</value>
+    <value>ライセンスネゴシエーションに失敗しました。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_LicensingTimeout" xml:space="preserve">
-    <value>Časovna omejitev licenciranja.</value>
+    <value>ライセンスのタイムアウト。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_LocalNotError" xml:space="preserve">
-    <value>Lokalni odklop.</value>
+    <value>ローカル切断。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_NoInfo" xml:space="preserve">
-    <value>Ni dostopnih podatkov.</value>
+    <value>情報はありません。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_OutOfMemory" xml:space="preserve">
-    <value>Zmanjkalo je pomnilnika.</value>
+    <value>メモリ不足です。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_OutOfMemory2" xml:space="preserve">
-    <value>Zmanjkalo je pomnilnika.</value>
+    <value>メモリ不足です。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_OutOfMemory3" xml:space="preserve">
-    <value>Zmanjkalo je pomnilnika.</value>
+    <value>メモリ不足です。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_RemoteByUser" xml:space="preserve">
-    <value>Daljinski odklop uporabnika.</value>
+    <value>ユーザーによるリモート切断。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_ServerCertificateUnpackErr" xml:space="preserve">
-    <value>Potrdila strežnika ni bilo mogoče razpakirati.</value>
+    <value>サーバー証明書の解凍に失敗しました。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SocketConnectFailed" xml:space="preserve">
-    <value>Povezava vtičnic Windows ni uspela.</value>
+    <value>Windows ソケットの接続に失敗しました。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SocketRecvFailed" xml:space="preserve">
-    <value>Recv klic vtičnic Windows ni uspel.</value>
+    <value>Windows Sockets の recv 呼び出しに失敗しました。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrAccountDisabled" xml:space="preserve">
-    <value>Račun je onemogočen.</value>
+    <value>アカウントは無効です。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrAccountExpired" xml:space="preserve">
-    <value>Račun je potekel.</value>
+    <value>アカウントの有効期限が切れています。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrAccountLockedOut" xml:space="preserve">
-    <value>Račun je zaklenjen.</value>
+    <value>アカウントがロックアウトされています。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrAccountRestriction" xml:space="preserve">
-    <value>Račun je omejen.</value>
+    <value>アカウントが制限されています。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrCertExpired" xml:space="preserve">
-    <value>Prejeto potrdilo je poteklo.</value>
+    <value>受信した証明書の有効期限が切れています。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrDelegationPolicy" xml:space="preserve">
-    <value>Pplotika ne podpira prenosa poverilnic na ciljni strežnik.</value>
+    <value>ポリシーは、ターゲット サーバーへの資格情報の委任をサポートしていません。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrFreshCredRequiredByServer" xml:space="preserve">
-    <value>Politika preverjanja pristnosti strežnika ne dovoljuje zahtev za povezavo z uporabo shranjenih poverilnic. Uporabnik mora vnesti nove poverilnice.</value>
+    <value>サーバーの認証ポリシーにより、保存された資格情報を使用した接続要求は許可されません。ユーザーは新しい資格情報を入力する必要があります。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrLogonFailure" xml:space="preserve">
-    <value>Prijava ni uspela.</value>
+    <value>ログインに失敗しました。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrNoAuthenticatingAuthority" xml:space="preserve">
-    <value>Za preverjanje pristnosti ni bilo mogoče kontaktirati nobenega pooblastitelja. Ime domene stranke za preverjanje pristnosti je lahko napačno, domena nedosegljiva ali pa je prišlo do okvare zaupanja vrednega odnosa.</value>
+    <value>認証のために認証機関に接続できませんでした。認証側のドメイン名が間違っているか、ドメインにアクセスできないか、信頼関係に問題がある可能性があります。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrNoSuchUser" xml:space="preserve">
-    <value>Navedeni uporabnik nima računa.</value>
+    <value>指定されたユーザーにはアカウントがありません。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrPasswordExpired" xml:space="preserve">
-    <value>Geslo je poteklo.</value>
+    <value>パスワードの有効期限が切れています。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrPasswordMustChange" xml:space="preserve">
-    <value>Uporabniško geslo je treba spremeniti pred prvo prijavo.</value>
+    <value>初めてログオンする前に、ユーザー パスワードを変更する必要があります。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrPolicyNTLMOnly" xml:space="preserve">
-    <value>Prenos poverilnic na ciljni strežnik ni dovoljen razen, če je bila doseženo vzajemno preverjanje pristnosti.</value>
+    <value>相互認証が達成されない限り、ターゲット サーバーへの資格情報の委任は許可されません。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrSmartcardCardBlocked" xml:space="preserve">
-    <value>Pametna kartica ja blokirana.</value>
+    <value>スマートカードがブロックされています。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrSmartcardWrongPIN" xml:space="preserve">
-    <value>Na pametni kartici je bila predstavljena napačna koda PIN.</value>
+    <value>スマート カードに誤った PIN が提示されました。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_TimeoutOccurred" xml:space="preserve">
-    <value>Prišlo je do časovne omejitve.</value>
+    <value>タイムアウトが発生しました。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_TimerError" xml:space="preserve">
-    <value>Notranja napaka časovnika.</value>
+    <value>内部タイマー エラー。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_WinsockSendFailed" xml:space="preserve">
-    <value>Klic pošiljanja Windows vtičnic ni uspel.</value>
+    <value>Windows ソケットの送信呼び出しに失敗しました。</value>
   </data>
   <data name="Sienna" xml:space="preserve">
-    <value>Sienna</value>
+    <value>シエナ</value>
   </data>
   <data name="SpacesAreNotAllowed" xml:space="preserve">
-    <value>Presledki niso dovoljeni!</value>
+    <value>スペースは使用できません!</value>
   </data>
   <data name="Steel" xml:space="preserve">
-    <value>Jeklo</value>
+    <value>スチール</value>
   </data>
   <data name="Taupe" xml:space="preserve">
-    <value>Siva z rjavim odtenkom</value>
+    <value>トープ</value>
   </data>
   <data name="TcpState_Closed" xml:space="preserve">
-    <value>Zaprto</value>
+    <value>Closed</value>
   </data>
   <data name="TcpState_CloseWait" xml:space="preserve">
-    <value>Zapri Počakaj </value>
+    <value>CloseWait</value>
   </data>
   <data name="TcpState_Closing" xml:space="preserve">
-    <value>Zapiranje</value>
+    <value>Closing</value>
   </data>
   <data name="TcpState_DeleteTcb" xml:space="preserve">
-    <value>Izbriši Tcb</value>
+    <value>DeleteTcb</value>
   </data>
   <data name="TcpState_Established" xml:space="preserve">
-    <value>Vzpostavljena</value>
+    <value>Established</value>
   </data>
   <data name="TcpState_FinWait1" xml:space="preserve">
     <value>FinWait1</value>
@@ -1681,552 +1685,552 @@ Ustvarite enega...</value>
     <value>FinWait2</value>
   </data>
   <data name="TcpState_LastAck" xml:space="preserve">
-    <value>Zadnja akcija</value>
+    <value>LastAck</value>
   </data>
   <data name="TcpState_Listen" xml:space="preserve">
-    <value>Poslušaj</value>
+    <value>Listen</value>
   </data>
   <data name="TcpState_SynReceived" xml:space="preserve">
-    <value>Sinkr. prejeto</value>
+    <value>SynReceived</value>
   </data>
   <data name="TcpState_SynSent" xml:space="preserve">
-    <value>Sinkr. poslano</value>
+    <value>SynSent</value>
   </data>
   <data name="TcpState_TimeWait" xml:space="preserve">
-    <value>Čakalni čas</value>
+    <value>TimeWait</value>
   </data>
   <data name="TcpState_Unknown" xml:space="preserve">
-    <value>Neznano</value>
+    <value>不明</value>
   </data>
   <data name="Teal" xml:space="preserve">
-    <value>Zelenomodra</value>
+    <value>ティール</value>
   </data>
   <data name="Violet" xml:space="preserve">
-    <value>Vijolična</value>
+    <value>バイオレット</value>
   </data>
   <data name="White" xml:space="preserve">
-    <value>Bela</value>
+    <value>白</value>
   </data>
   <data name="Yellow" xml:space="preserve">
-    <value>Rumena</value>
+    <value>黄</value>
   </data>
   <data name="ProfileWithThisNameAlreadyExists" xml:space="preserve">
-    <value>Profil s tem imenom že obstaja!</value>
+    <value>この名前のプロファイルは既に存在します!</value>
   </data>
   <data name="PortState_Closed" xml:space="preserve">
-    <value>Zaprto</value>
+    <value>閉じる</value>
   </data>
   <data name="PortState_Open" xml:space="preserve">
-    <value>Odpri</value>
+    <value>開く</value>
   </data>
   <data name="AtLeastOneApplicationMustBeVisible" xml:space="preserve">
-    <value>Vsaj eden program mora biti viden!</value>
+    <value>少なくとも 1 つのアプリケーションが表示されている必要があります!</value>
   </data>
   <data name="HiddenApplications" xml:space="preserve">
-    <value>Skriti programi</value>
+    <value>非表示のアプリ</value>
   </data>
   <data name="VisibleApplications" xml:space="preserve">
-    <value>Vidni programi</value>
+    <value>表示のアプリ</value>
   </data>
   <data name="VisibleApplicationsInTheBar" xml:space="preserve">
-    <value>Vidni programi v vrstici:</value>
+    <value>バーに表示するアプリ :</value>
   </data>
   <data name="Whois" xml:space="preserve">
     <value>Whois</value>
   </data>
   <data name="AddATabToQueryWhois" xml:space="preserve">
-    <value>Dodaj zavihek za poizvedbo Whois...</value>
+    <value>whois を照会するためのタブを追加...</value>
   </data>
   <data name="EnterValidDomain" xml:space="preserve">
-    <value>Vnesite veljavno domeno (kot 'primer.com')!</value>
+    <value>有効なドメインを入力してください ("example.com" のように)!</value>
   </data>
   <data name="WhoisServerNotFoundForTheDomain" xml:space="preserve">
-    <value>Whois strežnika ni mogoče najti za domeno: "{0}"</value>
+    <value>ドメインのWhoisサーバーが見つかりません : "{0}"</value>
   </data>
   <data name="Routing" xml:space="preserve">
-    <value>Usmerjanje</value>
+    <value>ルーティング</value>
   </data>
   <data name="Release" xml:space="preserve">
-    <value>Sprosti</value>
+    <value>リリース</value>
   </data>
   <data name="ReleaseRenew" xml:space="preserve">
-    <value>Sprosti in obnovi</value>
+    <value>リリースと更新</value>
   </data>
   <data name="Renew" xml:space="preserve">
-    <value>Obnovi</value>
+    <value>更新</value>
   </data>
   <data name="WindowsDNSSettings" xml:space="preserve">
-    <value>Nastavitve Windows DNS</value>
+    <value>Windows DNS 設定</value>
   </data>
   <data name="DeleteDNSServer" xml:space="preserve">
-    <value>Izbriši strežnik DNS</value>
+    <value>DNS サーバーの削除</value>
   </data>
   <data name="DeleteDNSServerMessage" xml:space="preserve">
-    <value>Izbrani strežnik DNS bo trajno izbrisan.</value>
+    <value>選択した DNS サーバーは完全に削除されます。</value>
   </data>
   <data name="AddDNSServer" xml:space="preserve">
-    <value>Dodaj strežnik DNS</value>
+    <value>DNS サーバーの追加</value>
   </data>
   <data name="EditDNSServer" xml:space="preserve">
-    <value>Uredi strežnik DNS</value>
+    <value>DNS サーバーの編集</value>
   </data>
   <data name="DNSServerWithThisNameAlreadyExists" xml:space="preserve">
-    <value>Strežnik DNS s tem imenom že obstaja!</value>
+    <value>この名前の DNS サーバーは既に存在します!</value>
   </data>
   <data name="RestartSession" xml:space="preserve">
-    <value>Znova zaženi sejo</value>
+    <value>セッションの再起動</value>
   </data>
   <data name="TigerVNC" xml:space="preserve">
     <value>TigerVNC</value>
   </data>
   <data name="ConfigureThePathToTigerVNCInTheSettingsDots" xml:space="preserve">
-    <value>Pot do TigerVNC nastavite v nastavitvah...</value>
+    <value>TigerVNC へのパスを設定...</value>
   </data>
   <data name="TigerVNCProcessHasEnded" xml:space="preserve">
-    <value>Proces TigerVNC se je končal!</value>
+    <value>TigerVNCプロセスが終了しました!</value>
   </data>
   <data name="ConnectingDots" xml:space="preserve">
-    <value>Povezovanje...</value>
+    <value>接続中...</value>
   </data>
   <data name="ResolveMACAddressAndVendor" xml:space="preserve">
-    <value>Razreši naslov MAC in prodajalca</value>
+    <value>MACアドレスとベンダーを解決</value>
   </data>
   <data name="Note" xml:space="preserve">
-    <value>Opomba</value>
+    <value>注記</value>
   </data>
   <data name="ExportAll" xml:space="preserve">
-    <value>Izvozi vse</value>
+    <value>すべてエクスポート</value>
   </data>
   <data name="ExportDots" xml:space="preserve">
-    <value>Izvozi...</value>
+    <value>エクスポート...</value>
   </data>
   <data name="ExportSelected" xml:space="preserve">
-    <value>Izvozi izbrano</value>
+    <value>選択項目をエクスポート</value>
   </data>
   <data name="LocationDots" xml:space="preserve">
-    <value>Lokacija...</value>
+    <value>場所...</value>
   </data>
   <data name="File" xml:space="preserve">
-    <value>Datoteka</value>
+    <value>File</value>
   </data>
   <data name="EnterValidFilePath" xml:space="preserve">
-    <value>Vnesite veljavno pot do datoteke!</value>
+    <value>有効なファイル パスを入力してください!</value>
   </data>
   <data name="All" xml:space="preserve">
-    <value>Vse</value>
+    <value>すべて</value>
   </data>
   <data name="Format" xml:space="preserve">
-    <value>Oblika</value>
+    <value>形式</value>
   </data>
   <data name="Selected" xml:space="preserve">
-    <value>Izbrano</value>
+    <value>選択済み</value>
   </data>
   <data name="AnErrorOccurredWhileExportingTheData" xml:space="preserve">
-    <value>Pri izvozu podatkov je prišlo do napake. Za podrobnosti glejte sporočilo o napaki:</value>
+    <value>データのエクスポート中にエラーが発生しました。詳細はエラーメッセージをご覧ください :</value>
   </data>
   <data name="Design" xml:space="preserve">
-    <value>Oblikovanje</value>
+    <value>デザイン</value>
   </data>
   <data name="HighlightTimeouts" xml:space="preserve">
-    <value>Označi časovne omejitve</value>
+    <value>タイムアウトの強調表示</value>
   </data>
   <data name="EnterSubnetsToCreateAWideSubnet" xml:space="preserve">
-    <value>Vnesite podomrežja, da ustvarite široko podomrežje...</value>
+    <value>サブネットを入力してワイドサブネットを作成...</value>
   </data>
   <data name="WideSubnet" xml:space="preserve">
-    <value>Široko podomrežje</value>
+    <value>ワイドサブネット</value>
   </data>
   <data name="AddTabDots" xml:space="preserve">
-    <value>Dodaj zavihek...</value>
+    <value>タブの追加...</value>
   </data>
   <data name="AddIPv4AddressDots" xml:space="preserve">
-    <value>Dodaj naslov IPv4...</value>
+    <value>IPv4 アドレスの追加...</value>
   </data>
   <data name="AddIPv4Address" xml:space="preserve">
-    <value>Dodaj naslov IPv4</value>
+    <value>IPv4 アドレスの追加</value>
   </data>
   <data name="MaxHostThreads" xml:space="preserve">
-    <value>Najv. sočasnih gostiteljskih niti</value>
+    <value>最大同時ホスト スレッド数</value>
   </data>
   <data name="MaxPortThreads" xml:space="preserve">
-    <value>Najv. sočasnih niti vrat</value>
+    <value>最大同時ポート スレッド数</value>
   </data>
   <data name="PowerShell" xml:space="preserve">
     <value>PowerShell</value>
   </data>
   <data name="ConfigureThePathToPowerShellInTheSettingsDots" xml:space="preserve">
-    <value>Pot do PowerShella nastavite v nastavitvah...</value>
+    <value>PowerShellへのパスを設定...</value>
   </data>
   <data name="PowerShellProcessHasEnded" xml:space="preserve">
-    <value>Proces PowerShella se je končal!</value>
+    <value>PowerShell プロセスが終了しました!</value>
   </data>
   <data name="ExecutionPolicy" xml:space="preserve">
-    <value>Politika izvedbe</value>
+    <value>実行ポリシー</value>
   </data>
   <data name="RemoteConsole" xml:space="preserve">
-    <value>Oddaljena konzola</value>
+    <value>リモート コンソール</value>
   </data>
   <data name="FilePath" xml:space="preserve">
-    <value>Pot do datoteke</value>
+    <value>ファイルのパス</value>
   </data>
   <data name="OverrideDefaultSettings" xml:space="preserve">
-    <value>Preglasi privzete nastaitve</value>
+    <value>既定の設定を上書き</value>
   </data>
   <data name="ResolveIPv4AddressForThisHost" xml:space="preserve">
-    <value>Razreši naslov IPv4 za tega gostitelja</value>
+    <value>このホストの IPv4 アドレスを解決</value>
   </data>
   <data name="Hide" xml:space="preserve">
-    <value>Skrij</value>
+    <value>非表示</value>
   </data>
   <data name="TotalBytesReceived" xml:space="preserve">
-    <value>Skupno prejetih bajtov</value>
+    <value>受信した合計バイト数</value>
   </data>
   <data name="TotalBytesSent" xml:space="preserve">
-    <value>Skupno poslanih bajtov</value>
+    <value>送信した合計バイト数</value>
   </data>
   <data name="Download" xml:space="preserve">
-    <value>Prenos</value>
+    <value>ダウンロード</value>
   </data>
   <data name="Bandwidth" xml:space="preserve">
-    <value>Pasovna širina</value>
+    <value>帯域幅</value>
   </data>
   <data name="Upload" xml:space="preserve">
-    <value>Nalaganje</value>
+    <value>アップロード</value>
   </data>
   <data name="ApplyWindowsKeyCombinations" xml:space="preserve">
-    <value>Uporabi kombinacije tipk Windows</value>
+    <value>Windowsキーの組み合わせを適用</value>
   </data>
   <data name="CredentialSecuritySupportProvider" xml:space="preserve">
-    <value>Ponudnik podpore za varnost poverilnic</value>
+    <value>認証情報セキュリティサポートプロバイダー</value>
   </data>
   <data name="BackgroundJob" xml:space="preserve">
-    <value>Posel v ozadju</value>
+    <value>バックグラウンド ジョブ</value>
   </data>
   <data name="HelpMessage_BackgroundJob" xml:space="preserve">
-    <value>Posel v ozadju bo shranil nastavitve in profile vsakih x minut. 
+    <value>バックグラウンド ジョブは、x 分ごとに設定とプロファイルを保存します。
 
-Vrednost 0 onemogoči to funkcijo. 
+値が 0 の場合、この機能は無効になります。
 
-Spremembe te vrednosti bodo uveljavljene po ponovnem zagonu aplikacije.</value>
+この値の変更は、アプリを再起動した後に有効になります。</value>
   </data>
   <data name="RunBackgroundJobEveryXMinute" xml:space="preserve">
-    <value>Zaženi posel v ozadju vsakih x-minut</value>
+    <value>x 分ごとにバックグラウンドジョブを実行する</value>
   </data>
   <data name="YourSystemOSIsIncompatibleWithTheLatestRelease" xml:space="preserve">
-    <value>Vaš operacijski sistem ni združljiv z najnovejšo izdajo!</value>
+    <value>お使いのシステム OS は最新リリースと互換性がありません!</value>
   </data>
   <data name="Dashboard" xml:space="preserve">
-    <value>Armaturna plošča</value>
+    <value>ダッシュボード</value>
   </data>
   <data name="AllSettingsCanBeChangedLaterInTheSettings" xml:space="preserve">
-    <value>Vse nastavitve lahko pozneje spremenite v nastavitvah</value>
+    <value>すべての設定は後から設定で変更できます!</value>
   </data>
   <data name="CheckPublicIPAddress" xml:space="preserve">
-    <value>Preveri javni naslov IP</value>
+    <value>パブリックIPアドレスの確認</value>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
-    <value>Hvala, ker uporabljate NETworkManager!
+    <value>NETworkManagerをご利用いただきありがとうございます!
 
-Če vam je to orodje všeč, pustite zvezdico na GitHubu in ga priporočite drugim.</value>
+このツールが気に入ったら、GitHub でスターを付けて、他の人にお勧めしてください。</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
-    <value>Ob zagonu programa ta v ozadju preveri, če je na GitHubu na voljo nova različica programa.
+    <value>プログラムを起動すると、バックグラウンドで GitHub 上に新しいバージョンがあるかどうかがチェックされます。
 
 URL: https://api.github.com/</value>
   </data>
   <data name="HelpMessage_CheckPublicIPAddress" xml:space="preserve">
-    <value>Javni naslov IP je določen prek ipify.org.
+    <value>パブリック IP アドレスは ipify.org によって決定されます。
 
 URL: https://api.ipify.org and https://api6.ipify.org</value>
   </data>
   <data name="Privacy" xml:space="preserve">
-    <value>Zasebnost</value>
+    <value>プライバシー</value>
   </data>
   <data name="Welcome" xml:space="preserve">
-    <value>Dobrodošli</value>
+    <value>ようこそ</value>
   </data>
   <data name="ExternalServices" xml:space="preserve">
-    <value>Zunanje storitve</value>
+    <value>外部サービス</value>
   </data>
   <data name="ToolTip_StarForkProjectOnGitHub" xml:space="preserve">
-    <value>Star/Fork the Project on GitHub.</value>
+    <value>GitHub でプロジェクトにスター/フォークを付ける。</value>
   </data>
   <data name="ToolTip_HelpTranslateOnTransifex" xml:space="preserve">
-    <value>Help translate the project on Transifex.</value>
+    <value>Transifex のプロジェクトの翻訳を手伝ってください。</value>
   </data>
   <data name="ToolTip_ContactOrContactMeViaX" xml:space="preserve">
-    <value>Follow or contact me via X.</value>
+    <value>フォローするか、Xから連絡してください。</value>
   </data>
   <data name="Connection" xml:space="preserve">
-    <value>Povezava</value>
+    <value>接続</value>
   </data>
   <data name="Computer" xml:space="preserve">
-    <value>Računalnik</value>
+    <value>コンピューター</value>
   </data>
   <data name="GatewayRouter" xml:space="preserve">
-    <value>Prehod/Usmerjevalnik</value>
+    <value>ゲートウェイ / ルーター</value>
   </data>
   <data name="Internet" xml:space="preserve">
-    <value>Internet</value>
+    <value>インターネット</value>
   </data>
   <data name="CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage" xml:space="preserve">
-    <value>Preverite nastavitve svoje omrežne kartice (DNS) in ali je strežnik DNS pravilno nastavljen.</value>
+    <value>ネットワーク アダプターの構成 (DNS) を確認し、DNS サーバーが正しく構成されているか確認する。</value>
   </data>
   <data name="CheckNetworkAdapterConfigurationAndNetworkConnectionMessage" xml:space="preserve">
-    <value>Preverite nastavitve svoje omrežne kartice (DHCP, statiččni IP)  in ali ste povezani v omrežje.</value>
+    <value>ネットワークアダプターの設定（dhcp、static ip）と、ネットワークに接続されているかどうかを確認してください。</value>
   </data>
   <data name="CouldNotDetectGatewayIPAddressMessage" xml:space="preserve">
-    <value>Ni bilo mogoče zaznati prehoda naslova IP!</value>
+    <value>ゲートウェイ IP アドレスを検出できませんでした!</value>
   </data>
   <data name="CouldNotDetectLocalIPAddressMessage" xml:space="preserve">
-    <value>Ni bilo mogoče zaznati lokalnega naslova IP!</value>
+    <value>ローカル IP アドレスを検出できませんでした!</value>
   </data>
   <data name="CouldNotGetPublicIPAddressFromXXXMessage" xml:space="preserve">
-    <value> Ni bilo mogoče dobitit javnega naslova IP prek storitve WebRequestip (http/https) z "{0}"! Preverite svojo omrežno povezavo (požarni zid, namestniški strežnik itd.).</value>
+    <value>"{0}" から WebRequest (http/https) 経由でパブリック IP アドレスを取得できませんでした! ネットワーク接続 (ファイアウォール、プロキシなど) を確認してください。</value>
   </data>
   <data name="NoADNSRecordsResolvedForXXXMessage" xml:space="preserve">
-    <value>Noben A DNS zapis ni razrešen za "{0}"!</value>
+    <value>"{0}" の DNS レコードが解決されませんでした!</value>
   </data>
   <data name="NoPTRDNSRecordResolvedForXXXMessage" xml:space="preserve">
-    <value>Noben PTR zapis ni razrešen za "{0}"!</value>
+    <value>"{0}" の PTR DNS レコードが解決されません!</value>
   </data>
   <data name="XADNSRecordsResolvedForXXXMessage" xml:space="preserve">
-    <value>"{0}"A DNS zapisov je razrešeno za "{1}"!</value>
+    <value>"{0}" DNS レコードが "{1}" に対して解決されました!</value>
   </data>
   <data name="PTRDNSRecordResolvedForXXXMessage" xml:space="preserve">
-    <value>PTR DNS zapisov je razrešeno za "{0}"! </value>
+    <value>"{0}" の PTR DNS レコードが解決されました!</value>
   </data>
   <data name="GotXXXAsPublicIPAddressFromXXXMessage" xml:space="preserve">
-    <value>Dobili ste "{0}" kot javni naslov IP od "{1}"!</value>
+    <value>"{1}" からパブリック IP アドレスとして "{0}" を取得しました!</value>
   </data>
   <data name="ResolvedXXXAsHostnameForIPAddressXXXMessage" xml:space="preserve">
-    <value>Razrešeno je "{0}" kot ime gostitelja za naslov IP "{1}"!</value>
+    <value>"{0}" を IP アドレス "{1}" のホスト名として解決しました!</value>
   </data>
   <data name="PublicIPAddressCheckIsDisabled" xml:space="preserve">
-    <value>Preverjanje javnega naslova IP
-je onemogočeno!</value>
+    <value>パブリックIPアドレスのチェック
+は無効になっています!</value>
   </data>
   <data name="TCPIPStackIsAvailableMessage" xml:space="preserve">
-    <value>Na voljo je sklad TCP/IP. "{0}" je dosegljiv prek ICMP!</value>
+    <value>TCP/IP スタックが利用可能です。"{0}" は ICMP 経由で到達可能です!</value>
   </data>
   <data name="TCPIPStackIsNotAvailableMessage" xml:space="preserve">
-    <value>Sklad TCP/IP ni na voljo... "{0}" ni dosegljiv prek ICMP!</value>
+    <value>TCP/IP スタックが利用できません... "{0}" は ICMP 経由では到達できません!</value>
   </data>
   <data name="XXXDetectedAsGatewayIPAddress" xml:space="preserve">
-    <value>"{0}" je zaznan kot prehod naslova IP!</value>
+    <value>ゲートウェイ IP アドレスとして "{0}" が検出されました!</value>
   </data>
   <data name="XXXDetectedAsLocalIPAddressMessage" xml:space="preserve">
-    <value>"{0}" je zaznan kot lokalni naslov IP!</value>
+    <value>"{0}" がローカル IP アドレスとして検出されました!</value>
   </data>
   <data name="XXXIsNotReachableViaICMPMessage" xml:space="preserve">
-    <value>"{0}" ni dosegljiv prek ICMP!</value>
+    <value>"{0}" は ICMP 経由では到達できません!</value>
   </data>
   <data name="XXXIsReachableViaICMPMessage" xml:space="preserve">
-    <value>"{0}" je dosegljiv prek ICMP!</value>
+    <value>"{0}" は ICMP 経由で到達可能です!</value>
   </data>
   <data name="UseCustomIPv4AddressAPI" xml:space="preserve">
-    <value>Uporabi API poljubnega naslova IPv4</value>
+    <value>カスタム IPv4 アドレス API を使用する</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv4AddressAPI" xml:space="preserve">
-    <value>URL do spletne storitve, ki je dosegljiva prek http ali https in kot odgovor vrne naslov IPv4, kot je "xx.xx.xx.xx".</value>
+    <value>httpまたはhttps経由で到達でき、応答として"xx.xx.xx.xx"のようなIPv4アドレスを返すWebサービスのURL。</value>
   </data>
   <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
-    <value>Javnega naslova IP ni bilo mogoče razčleniti iz "{0}"! Poskusite drugo storitev ali uporabite privzeto...</value>
+    <value>"{0}" からパブリック IP アドレスを解析できませんでした! 別のサービスを試すか、デフォルトを使用してください... </value>
   </data>
   <data name="CouldNotConnectToXXXMessage" xml:space="preserve">
-    <value>Ni bilo mogoče vzpostaviti povezave z "{0}"!</value>
+    <value>「{0}」に接続できませんでした!</value>
   </data>
   <data name="IPv4ProtocolAvailable" xml:space="preserve">
-    <value>Razpoložljivi protokol IPv4</value>
+    <value>IPv4プロトコルが利用可能</value>
   </data>
   <data name="IPv6ProtocolAvailable" xml:space="preserve">
-    <value>Razpoložljivi protokol IPv6</value>
+    <value>IPv6プロトコルが利用可能</value>
   </data>
   <data name="CopyNoun" xml:space="preserve">
-    <value>Kopiraj</value>
+    <value>コピー</value>
   </data>
   <data name="Official" xml:space="preserve">
-    <value>Uradno</value>
+    <value>公式</value>
   </data>
   <data name="NetworkConnectionType" xml:space="preserve">
-    <value>Vrsta omrežne povezave</value>
+    <value>ネットワーク接続タイプ</value>
   </data>
   <data name="DesktopBackground" xml:space="preserve">
-    <value>Ozadje namizja</value>
+    <value>デスクトップの背景</value>
   </data>
   <data name="DesktopComposition" xml:space="preserve">
-    <value>Sestava namizja</value>
+    <value>デスクトップ構成</value>
   </data>
   <data name="Experience" xml:space="preserve">
-    <value>Izkušnje</value>
+    <value>経験</value>
   </data>
   <data name="FontSmoothing" xml:space="preserve">
-    <value>Glajenje pisave</value>
+    <value>フォントスムージング</value>
   </data>
   <data name="MenuAndWindowAnimation" xml:space="preserve">
-    <value>Meni in animacija okna</value>
+    <value>メニューとウィンドウのアニメーション</value>
   </data>
   <data name="Performance" xml:space="preserve">
-    <value>Izvedba</value>
+    <value>パフォーマンス</value>
   </data>
   <data name="PersistentBitmapCaching" xml:space="preserve">
-    <value>Trajno predpomnjenje bitnih slik</value>
+    <value>永続的なビットマップキャッシュ</value>
   </data>
   <data name="ReconnectIfTheConnectionIsDropped" xml:space="preserve">
-    <value>Če pade povezava, znova vzpostavi povezavo</value>
+    <value>接続が切断された場合は再接続する</value>
   </data>
   <data name="RemoteDesktopNetworkConnectionType_BroadbandHigh" xml:space="preserve">
-    <value>Širokopasovna povezava visoke hitrosti (2 Mbps - 10 Mbps)</value>
+    <value>高速ブロードバンド (2 Mbps - 10 Mbps)</value>
   </data>
   <data name="RemoteDesktopNetworkConnectionType_BroadbandLow" xml:space="preserve">
-    <value>Širokopasovna povezava nizke hitrosti (256 kbps - 2 Mbps)</value>
+    <value>低速ブロードバンド (256 kbps - 2 Mbps)</value>
   </data>
   <data name="RemoteDesktopNetworkConnectionType_DetectAutomatically" xml:space="preserve">
-    <value>Samodejno zaznaj kakovost povezave</value>
+    <value>接続品質を自動的に検出</value>
   </data>
   <data name="RemoteDesktopNetworkConnectionType_LAN" xml:space="preserve">
-    <value>Lokalno omrežje (10 Mbps ali več)</value>
+    <value>LAN (10 Mbps または それ以上)</value>
   </data>
   <data name="RemoteDesktopNetworkConnectionType_Modem" xml:space="preserve">
     <value>Modem (56 kbps)</value>
   </data>
   <data name="RemoteDesktopNetworkConnectionType_Satellite" xml:space="preserve">
-    <value>Satelitska povezava (2 Mbps - 16 Mbps z veliko zakasnitvijo)</value>
+    <value>サテライト (2 Mbps - 16 Mbps with high latency)</value>
   </data>
   <data name="RemoteDesktopNetworkConnectionType_WAN" xml:space="preserve">
-    <value>Prostrano omrežje WAN (10 Mbps ali več z veliko zakasnitvijo)</value>
+    <value>WAN (10 Mbps or higher with high latency)</value>
   </data>
   <data name="ShowWindowContentsWhileDragging" xml:space="preserve">
-    <value>Med vlečenjem prikaži vsebino okna</value>
+    <value>ドラッグ中にウィンドウの内容を表示する</value>
   </data>
   <data name="VisualStyles" xml:space="preserve">
-    <value>Vidni slogi</value>
+    <value>ビジュアルスタイル</value>
   </data>
   <data name="RemoteAudio" xml:space="preserve">
-    <value>Oddaljeni zvok</value>
+    <value>リモート オーディオ</value>
   </data>
   <data name="RemoteAudioPlayback" xml:space="preserve">
-    <value>Predvajanje zvoka na daljavo</value>
+    <value>リモート オーディオ再生</value>
   </data>
   <data name="RemoteAudioRecording" xml:space="preserve">
-    <value>Snemanje zvoka na daljavo</value>
+    <value>リモート オーディオ録音</value>
   </data>
   <data name="RemoteDesktopAudioCaptureRedirectionMode_DoNotRecord" xml:space="preserve">
-    <value>Ne snemaj</value>
+    <value>記録しない</value>
   </data>
   <data name="RemoteDesktopAudioCaptureRedirectionMode_RecordFromThisComputer" xml:space="preserve">
-    <value>Snemaj iz tega računalnika</value>
+    <value>このコンピューターから録音する</value>
   </data>
   <data name="RemoteDesktopAudioRedirectionMode_DoNotPlay" xml:space="preserve">
-    <value>Ne predvajaj</value>
+    <value>再生しない</value>
   </data>
   <data name="RemoteDesktopAudioRedirectionMode_PlayOnRemoteComputer" xml:space="preserve">
-    <value>Predvajaj na oddaljenem računalniku</value>
+    <value>リモートコンピュータで再生</value>
   </data>
   <data name="RemoteDesktopAudioRedirectionMode_PlayOnThisComputer" xml:space="preserve">
-    <value>Predvajaj na tem računalniku</value>
+    <value>このコンピュータで再生</value>
   </data>
   <data name="Gateway" xml:space="preserve">
-    <value>Prehod</value>
+    <value>ゲートウェイ</value>
   </data>
   <data name="CustomCommands" xml:space="preserve">
-    <value>Ukazi po meri</value>
+    <value>カスタム コマンド</value>
   </data>
   <data name="AddCustomCommand" xml:space="preserve">
-    <value>Dodaj ukaz po meri</value>
+    <value>カスタム コマンドの追加</value>
   </data>
   <data name="Arguments" xml:space="preserve">
-    <value>Argumenti</value>
+    <value>引数</value>
   </data>
   <data name="DeleteCustomCommand" xml:space="preserve">
-    <value>Izbriši ukaz po meri</value>
+    <value>カスタムコマンドの削除</value>
   </data>
   <data name="EditCustomCommand" xml:space="preserve">
-    <value>Uredi ukaz po meri</value>
+    <value>カスタムコマンドの編集</value>
   </data>
   <data name="Program" xml:space="preserve">
-    <value>Izbriši ukaz po meri</value>
+    <value>プログラム</value>
   </data>
   <data name="DeleteCustomCommandMessage" xml:space="preserve">
-    <value>Izbrani ukaz po meri bo trajno izbrisan.</value>
+    <value>選択したカスタム コマンドは完全に削除されます。</value>
   </data>
   <data name="HelpMessage_CustomCommandVariables" xml:space="preserve">
-    <value>Na voljo so naslednje spremenljivke:
+    <value>以下の変数が利用可能です :
 
-$$ipaddress$$--&gt;naslov IP
-$$hostname$$--&gt;Ime gostitelja</value>
+$$ipaddress$$	--&gt;	IP アドレス
+$$hostname$$	--&gt;	ホスト名</value>
   </data>
   <data name="Restart" xml:space="preserve">
-    <value>Znova zaženi</value>
+    <value>再起動</value>
   </data>
   <data name="WarningMessage_CouldNotResolveIPAddressForHostname" xml:space="preserve">
-    <value>Ni bilo mogoče razrešiti naslova IP za ime gostitelja!</value>
+    <value>ホスト名の IP アドレスを解決できませんでした!</value>
   </data>
   <data name="CtrlAltDel" xml:space="preserve">
     <value>Ctrl+Alt+Del</value>
   </data>
   <data name="KeyboardShortcuts" xml:space="preserve">
-    <value>Bližnjice s tipkovnico</value>
+    <value>キーボード ショートカット</value>
   </data>
   <data name="AdjustScreen" xml:space="preserve">
-    <value>Prilagodi zaslon</value>
+    <value>画面の調整</value>
   </data>
   <data name="Fullscreen" xml:space="preserve">
-    <value>Celozaslonski način</value>
+    <value>全画面</value>
   </data>
   <data name="CouldNotSendKeystroke" xml:space="preserve">
-    <value>Ni bilo mogoče poslati pritiska tipke!</value>
+    <value>キーストロークを送信できませんでした!</value>
   </data>
   <data name="Disconnect" xml:space="preserve">
-    <value>Odklopi</value>
+    <value>切断</value>
   </data>
   <data name="DetectLocalIPAddressAndSubnetmask" xml:space="preserve">
-    <value>Zaznaj lokalni naslov IP in masko podomrežja</value>
+    <value>ローカルIPアドレスとサブネットマスクの検出</value>
   </data>
   <data name="CouldNotDetectSubnetmask" xml:space="preserve">
-    <value>Ni bilo mogoče zaznati maske podomrežja!</value>
+    <value>サブネットマスクを検出できませんでした!</value>
   </data>
   <data name="DetectingNetworkDots" xml:space="preserve">
-    <value>Zaznavanje omrežja...</value>
+    <value>ネットワークの検出...</value>
   </data>
   <data name="ClosingInXSecondsDots" xml:space="preserve">
-    <value>Zapiranje po {0} sekundah...</value>
+    <value>{0} 秒後に終了...</value>
   </data>
   <data name="NetworkUnavailable" xml:space="preserve">
-    <value>Omrežje ni na voljo!</value>
+    <value>ネットワークが利用できません!</value>
   </data>
   <data name="IPAddressToDetectLocalIPAddressBasedOnRouting" xml:space="preserve">
-    <value>Naslov IP za zaznavanje lokalnega naslova IP na podlagi usmerjanja</value>
+    <value>ルーティングに基づいてローカルIPアドレスを検出するIPアドレス</value>
   </data>
   <data name="ShowStatusWindowOnNetworkChange" xml:space="preserve">
-    <value>Prikaži statusno okno ob spremembi omrežja</value>
+    <value>ネットワーク変更時にステータスウィンドウを表示する</value>
   </data>
   <data name="TimeInSecondsHowLongTheStatusWindowIsShown" xml:space="preserve">
-    <value>Čas prikaza statusnega okna v sekundah</value>
+    <value>ステータスウィンドウの表示時間（秒)</value>
   </data>
   <data name="WiFi" xml:space="preserve">
-    <value>Brezžično omrežje Wi-Fi</value>
+    <value>WiFi</value>
   </data>
   <data name="Networks" xml:space="preserve">
-    <value>Omrežja</value>
+    <value>ネットワーク</value>
   </data>
   <data name="SearchingForNetworksDots" xml:space="preserve">
-    <value>Iskanje omrežij...</value>
+    <value>ネットワークを検索しています...</value>
   </data>
   <data name="NoWiFiAdaptersFound" xml:space="preserve">
-    <value>Ni bilo mogoče najti nobene brezžične kartice!</value>
+    <value>WiFi アダプターが見つかりません!</value>
   </data>
   <data name="SearchingWiFiAdaptersDots" xml:space="preserve">
-    <value>Iskanje brezžičnih kartic...</value>
+    <value>WiFi アダプターを検索しています...</value>
   </data>
   <data name="NoWiFiNetworksFound" xml:space="preserve">
-    <value>Ni bilo mogoče najti nobenega brezžičnega omrežja!</value>
+    <value>WiFi ネットワークが見つかりません!</value>
   </data>
   <data name="Channels" xml:space="preserve">
-    <value>Kanali</value>
+    <value>チャンネル</value>
   </data>
   <data name="Channel" xml:space="preserve">
-    <value>Kanal</value>
+    <value>チャンネル</value>
   </data>
   <data name="GHz2dot4" xml:space="preserve">
     <value>2.4 GHz</value>
@@ -2235,187 +2239,187 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>5 GHz</value>
   </data>
   <data name="SignalStrength" xml:space="preserve">
-    <value>Moč signala</value>
+    <value>信号強度</value>
   </data>
   <data name="CurrentDownloadSpeed" xml:space="preserve">
-    <value>Trenutna hitrost prenosa</value>
+    <value>現在のダウンロード速度</value>
   </data>
   <data name="CurrentUploadSpeed" xml:space="preserve">
-    <value>Trenutna hitrost nalaganja</value>
+    <value>現在のアップロード速度</value>
   </data>
   <data name="MeasuredTime" xml:space="preserve">
-    <value>Izmerjeni čas</value>
+    <value>測定時間</value>
   </data>
   <data name="NetworkUsage" xml:space="preserve">
-    <value>Uporaba omrežja</value>
+    <value>ネットワークの使用状況</value>
   </data>
   <data name="TotalDownload" xml:space="preserve">
-    <value>Skupni prenos</value>
+    <value>合計ダウンロード数</value>
   </data>
   <data name="TotalUpload" xml:space="preserve">
-    <value>Skupno nalaganje</value>
+    <value>合計アップロード</value>
   </data>
   <data name="Retries" xml:space="preserve">
-    <value>Ponovitve</value>
+    <value>再試行</value>
   </data>
   <data name="UseCache" xml:space="preserve">
-    <value>Uporabi predpomnilnik</value>
+    <value>キャッシュを使用</value>
   </data>
   <data name="UseOnlyTCP" xml:space="preserve">
-    <value>Uporabi samo TCP</value>
+    <value>TCPのみ使用</value>
   </data>
   <data name="QueryClass" xml:space="preserve">
-    <value>Razred poizvedbe</value>
+    <value>クエリ クラス</value>
   </data>
   <data name="DomainName" xml:space="preserve">
-    <value>Ime domene</value>
+    <value>ドメイン名</value>
   </data>
   <data name="TimeoutS" xml:space="preserve">
-    <value>Časovna omejitev (s)</value>
+    <value>タイムアウト (秒)</value>
   </data>
   <data name="ToolTip_ReportIssueOrCreateFeatureRequest" xml:space="preserve">
-    <value>Report an issue or create a feature request.</value>
+    <value>問題を報告するか、機能リクエストを作成。</value>
   </data>
   <data name="BeaconInterval" xml:space="preserve">
-    <value>Oddajni interval</value>
+    <value>ビーコン間隔</value>
   </data>
   <data name="Encryption" xml:space="preserve">
-    <value>Šifriranje</value>
+    <value>暗号化</value>
   </data>
   <data name="Infrastructure" xml:space="preserve">
-    <value>Infrastruktura</value>
+    <value>インフラストラクチャー</value>
   </data>
   <data name="NetworkKind" xml:space="preserve">
-    <value>Vrsta omrežja</value>
+    <value>ネットワークの種類</value>
   </data>
   <data name="PhyKind" xml:space="preserve">
-    <value>PHY vrsta</value>
+    <value>Phy の種類</value>
   </data>
   <data name="Uptime" xml:space="preserve">
-    <value>Čas delovanja</value>
+    <value>稼働時間</value>
   </data>
   <data name="ShowErrorMessage" xml:space="preserve">
-    <value>Prikaži sporočilo o napaki</value>
+    <value>エラーメッセージを表示</value>
   </data>
   <data name="PingMonitor" xml:space="preserve">
-    <value>Spremljaj Ping</value>
+    <value>Ping モニター</value>
   </data>
   <data name="AddHost" xml:space="preserve">
-    <value>Dodaj gostitelja</value>
+    <value>ホストの追加</value>
   </data>
   <data name="AddAHostToMonitor" xml:space="preserve">
-    <value>Dodaj gostitelja za spremljanje</value>
+    <value>監視するホストの追加</value>
   </data>
   <data name="Pause" xml:space="preserve">
-    <value>Premor</value>
+    <value>一時停止</value>
   </data>
   <data name="Resume" xml:space="preserve">
-    <value>Nadaljuj</value>
+    <value>再開</value>
   </data>
   <data name="CouldNotResolveIPAddressFor" xml:space="preserve">
-    <value>Ni bilo mogoče razrešiti naslova IP za: "{0}"</value>
+    <value>IPアドレスを解決できませんでした : "{0}"</value>
   </data>
   <data name="TheApplicationWillBeRestarted" xml:space="preserve">
-    <value>Program se bo znova zagnal...</value>
+    <value>アプリケーションが再起動されます...</value>
   </data>
   <data name="ClouldNotExportFileSeeErrorMessageXX" xml:space="preserve">
-    <value>Ni bilo mogoče izvoziti datoteke! Glejte sporočilo o napaki: "{0}"</value>
+    <value>ファイルをエクスポートできませんでした! エラーメッセージを参照してください : "{0}"</value>
   </data>
   <data name="FileExportedToXX" xml:space="preserve">
-    <value>Datoteka je izvožena v "{0}"!</value>
+    <value>ファイルが"{0}"にエクスポートされました!</value>
   </data>
   <data name="ClouldNotImportFileSeeErrorMessageXX" xml:space="preserve">
-    <value>Ni bilo mogoče uvoziti datoteke! Glejte sporočilo o napaki: "{0}"</value>
+    <value>ファイルをインポートできませんでした! エラーメッセージを参照してください : "{0}"</value>
   </data>
   <data name="LocationCannotBeChangedInThePortableVersion" xml:space="preserve">
-    <value>Ni mogoče spremeniti lokacije v prenosni različici!</value>
+    <value>ポータブル版では場所を変更できません!</value>
   </data>
   <data name="IsEncrypted" xml:space="preserve">
-    <value>Je šifrirano</value>
+    <value>暗号化されています</value>
   </data>
   <data name="ToolTip_OpenTheDocumentation" xml:space="preserve">
-    <value>Open the documentation.</value>
+    <value>ドキュメントを開く。</value>
   </data>
   <data name="ExampleProfileFileName" xml:space="preserve">
-    <value>Stranka 1</value>
+    <value>カスタマー 1</value>
   </data>
   <data name="AddProfileFile" xml:space="preserve">
-    <value>Dodaj profilno datoteko</value>
+    <value>プロファイルファイルの追加</value>
   </data>
   <data name="DisableEncryptionDots" xml:space="preserve">
-    <value>Onemogoči šifriranje...</value>
+    <value>暗号化を無効...</value>
   </data>
   <data name="EditProfileFile" xml:space="preserve">
-    <value>Uredi profilno datoteko</value>
+    <value>プロファイルファイルの編集</value>
   </data>
   <data name="EnableEncryptionDots" xml:space="preserve">
-    <value>Omogoči šifriranje...</value>
+    <value>暗号化を有効...</value>
   </data>
   <data name="EncryptionDots" xml:space="preserve">
-    <value>Šifriranje...</value>
+    <value>暗号化...</value>
   </data>
   <data name="ProfileNameAlreadyExists" xml:space="preserve">
-    <value>Ime profila že obstaja!</value>
+    <value>プロファイル名は既に存在します!</value>
   </data>
   <data name="Rename" xml:space="preserve">
-    <value>Preimenuj</value>
+    <value>名前の変更</value>
   </data>
   <data name="DeleteProfileFile" xml:space="preserve">
-    <value>Izbriši profilno datoteko</value>
+    <value>プロファイルファイルを削除</value>
   </data>
   <data name="DeleteProfileFileMessage" xml:space="preserve">
-    <value>Izbrana profilna datoteka bo trajno izbrisana.</value>
+    <value>選択したプロファイル ファイルは完全に削除されます。</value>
   </data>
   <data name="ResetProfilesMessage" xml:space="preserve">
-    <value>Vse profilne datoteke v tem profilu bodo trajno izbrisane!</value>
+    <value>このプロファイル ファイル内のすべてのプロファイルは完全に削除されます!</value>
   </data>
   <data name="Patch" xml:space="preserve">
-    <value>Popravek</value>
+    <value>パッチ</value>
   </data>
   <data name="RestartTheApplicationToChangeTheLanguage" xml:space="preserve">
-    <value>Za spremembo jezika znova zaženite program!</value>
+    <value>言語を変更するには、アプリケーションを再起動してください!</value>
   </data>
   <data name="CurrentlyDownloaded" xml:space="preserve">
-    <value>Trenutno preneseno</value>
+    <value>現在ダウンロード済み</value>
   </data>
   <data name="CurrentlyUploaded" xml:space="preserve">
-    <value>Trenutno naloženo</value>
+    <value>現在アップロード済み</value>
   </data>
   <data name="LldpCdp" xml:space="preserve">
-    <value>LLDP/CDP</value>
+    <value>LLDP / CDP</value>
   </data>
   <data name="RestartAsAdmin" xml:space="preserve">
-    <value>Znova zaženi kot skrbnik</value>
+    <value>管理者として再起動</value>
   </data>
   <data name="NetworkPacketsCaptureAdminMessage" xml:space="preserve">
-    <value>Za analizo omrežnih paketov je potrebno program zagnati s povišanimi pravicami!</value>
+    <value>ネットワーク パケットを分析するには、アプリケーションを昇格された権限で起動する必要があります!</value>
   </data>
   <data name="Capture" xml:space="preserve">
-    <value>Zajemi</value>
+    <value>キャプチャ</value>
   </data>
   <data name="Device" xml:space="preserve">
-    <value>Naprava</value>
+    <value>デバイス</value>
   </data>
   <data name="DurationS" xml:space="preserve">
-    <value>Trajanje (s)</value>
+    <value>間隔 (秒)</value>
   </data>
   <data name="Model" xml:space="preserve">
-    <value>Model</value>
+    <value>モデル</value>
   </data>
   <data name="VLAN" xml:space="preserve">
     <value>VLAN</value>
   </data>
   <data name="CaptureNetworkPacketsToViewLLDPorCDPInformation" xml:space="preserve">
-    <value>Zajemi omrežne pakete za prikaz podatkov LLDP ali CDP!</value>
+    <value>ネットワークパケットをキャプチャしてLLDPまたはCDP情報を表示!</value>
   </data>
   <data name="NoDiscoveryProtocolPackagesReceived" xml:space="preserve">
-    <value>Niso bili prejeti nobeni paketi protokola za odkrivanje!</value>
+    <value>検出プロトコル パッケージを受信できませんでした!</value>
   </data>
   <data name="CapturingNetworkPackagesDots" xml:space="preserve">
-    <value>Zajem omrežnih paketov...</value>
+    <value>ネットワーク パッケージをキャプチャしています...</value>
   </data>
   <data name="DiscoveryProtocol" xml:space="preserve">
-    <value>Protokol odkritja</value>
+    <value>検出プロトコル</value>
   </data>
   <data name="DiscoveryProtocol_Cdp" xml:space="preserve">
     <value>CDP</value>
@@ -2427,73 +2431,73 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>LLDP / CDP</value>
   </data>
   <data name="XXSecondsRemainingDots" xml:space="preserve">
-    <value>{0} preostalih sekund...</value>
+    <value>残り{0}秒...</value>
   </data>
   <data name="Help" xml:space="preserve">
-    <value>Pomoč</value>
+    <value>ヘルプ</value>
   </data>
   <data name="HelpMessage_ParameterApplication" xml:space="preserve">
-    <value>Program, ki se prikaže ob zagonu.</value>
+    <value>起動時に表示されるアプリケーション。</value>
   </data>
   <data name="Parameter" xml:space="preserve">
-    <value>Parameter</value>
+    <value>パラメータ</value>
   </data>
   <data name="Value" xml:space="preserve">
-    <value>Vrednost</value>
+    <value>値</value>
   </data>
   <data name="WebConsole" xml:space="preserve">
-    <value>Spletna konzola</value>
+    <value>Web コンソール</value>
   </data>
   <data name="Reload" xml:space="preserve">
-    <value>Znova naloži</value>
+    <value>再読み込み</value>
   </data>
   <data name="Browser" xml:space="preserve">
-    <value>Brskalnik</value>
+    <value>ブラウザ</value>
   </data>
   <data name="WebViewControlCertificateIsInvalidMessage" xml:space="preserve">
-    <value>Kontrolnik WebView (Microsoft Edge) se ne more povezati s spletnimi stranmi z neveljavnim potrdilom!</value>
+    <value>WebView コントロール (Microsoft Edge) は、証明書が無効な Web サイトに接続できません!</value>
   </data>
   <data name="MicrosoftWindowsSDKContractsIsNotAvailable" xml:space="preserve">
-    <value>Microsoft.Windows.SDK.Contracts je potreben za to funkcijo, vendar ni na voljo v tem sistemu (npr. na Windows Strežnik).</value>
+    <value>この機能には Microsoft.Windows.SDK.Contracts が必要ですが、このシステム (Windows Server など) では使用できません。</value>
   </data>
   <data name="ApplicationName_ARPTable" xml:space="preserve">
-    <value>Tabela ARP</value>
+    <value>ARP テーブル</value>
   </data>
   <data name="ApplicationName_Connections" xml:space="preserve">
-    <value>Povezave</value>
+    <value>接続</value>
   </data>
   <data name="ApplicationName_Dashboard" xml:space="preserve">
-    <value>Armaturna plošča</value>
+    <value>ダッシュボード</value>
   </data>
   <data name="ApplicationName_DiscoveryProtocol" xml:space="preserve">
-    <value>Protokol odkritja</value>
+    <value>検出プロトコル</value>
   </data>
   <data name="ApplicationName_DNSLookup" xml:space="preserve">
-    <value>Iskanje DNS</value>
+    <value>DNS Lookup</value>
   </data>
   <data name="ApplicationName_HTTPHeaders" xml:space="preserve">
-    <value>Glave HTTP</value>
+    <value>HTTP ヘッダ</value>
   </data>
   <data name="ApplicationName_IPScanner" xml:space="preserve">
-    <value>Pregledovalnik IP</value>
+    <value>IP スキャナ</value>
   </data>
   <data name="ApplicationName_Listeners" xml:space="preserve">
-    <value>Poslušalci</value>
+    <value>リスナー</value>
   </data>
   <data name="ApplicationName_Lookup" xml:space="preserve">
-    <value>Iskanje</value>
+    <value>Lookup</value>
   </data>
   <data name="ApplicationName_NetworkInterface" xml:space="preserve">
-    <value>Omrežna kartica</value>
+    <value>ネットワーク インターフェース</value>
   </data>
   <data name="ApplicationName_Ping" xml:space="preserve">
     <value>Ping</value>
   </data>
   <data name="ApplicationName_PingMonitor" xml:space="preserve">
-    <value>Spremljaj Ping</value>
+    <value>Ping モニター</value>
   </data>
   <data name="ApplicationName_PortScanner" xml:space="preserve">
-    <value>Pregledovalnik vrat</value>
+    <value>ポート スキャナ</value>
   </data>
   <data name="ApplicationName_PowerShell" xml:space="preserve">
     <value>PowerShell</value>
@@ -2502,375 +2506,378 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>PuTTY</value>
   </data>
   <data name="ApplicationName_RemoteDesktop" xml:space="preserve">
-    <value>Oddaljeno namizje</value>
+    <value>リモート デスクトップ</value>
   </data>
   <data name="ApplicationName_SNMP" xml:space="preserve">
     <value>SNMP</value>
   </data>
   <data name="ApplicationName_SubnetCalculator" xml:space="preserve">
-    <value>Računalo podomrežij</value>
+    <value>サブネット 計算機</value>
   </data>
   <data name="ApplicationName_TigerVNC" xml:space="preserve">
     <value>TigerVNC</value>
   </data>
   <data name="ApplicationName_Traceroute" xml:space="preserve">
-    <value>Sled poti</value>
+    <value>トレースルート</value>
   </data>
   <data name="ApplicationName_WakeOnLAN" xml:space="preserve">
-    <value>Zbudi lokalno omrežje</value>
+    <value>Wake on LAN</value>
   </data>
   <data name="ApplicationName_WebConsole" xml:space="preserve">
-    <value>Spletna konzola</value>
+    <value>Web コンソール</value>
   </data>
   <data name="ApplicationName_Whois" xml:space="preserve">
     <value>Whois</value>
   </data>
   <data name="ApplicationName_WiFi" xml:space="preserve">
-    <value>Brezžično omrežje Wi-Fi</value>
+    <value>WiFi</value>
   </data>
   <data name="Accent_Amber" xml:space="preserve">
-    <value>Jantar</value>
+    <value>アンバー</value>
   </data>
   <data name="Accent_Black" xml:space="preserve">
-    <value>Črna</value>
+    <value>黒</value>
   </data>
   <data name="Accent_Blue" xml:space="preserve">
-    <value>Modra</value>
+    <value>青</value>
   </data>
   <data name="Accent_Brown" xml:space="preserve">
-    <value>Rjava</value>
+    <value>茶</value>
   </data>
   <data name="Accent_Cobalt" xml:space="preserve">
-    <value>Kobaltna</value>
+    <value>コバルト</value>
   </data>
   <data name="Accent_Crimson" xml:space="preserve">
-    <value>Škrlatna</value>
+    <value>クリムゾン</value>
   </data>
   <data name="Accent_Cyan" xml:space="preserve">
-    <value>Cijan</value>
+    <value>シアン</value>
   </data>
   <data name="Accent_Emerald" xml:space="preserve">
-    <value>Smaragdna</value>
+    <value>エメラルド</value>
   </data>
   <data name="Accent_Green" xml:space="preserve">
-    <value>Zelena</value>
+    <value>緑</value>
   </data>
   <data name="Accent_Indigo" xml:space="preserve">
-    <value>Indigo modra</value>
+    <value>インディゴ</value>
   </data>
   <data name="Accent_Lime" xml:space="preserve">
-    <value>Limeta</value>
+    <value>ライム</value>
   </data>
   <data name="Accent_Magenta" xml:space="preserve">
-    <value>Škrlatna</value>
+    <value>マゼンタ</value>
   </data>
   <data name="Accent_Mauve" xml:space="preserve">
-    <value>Lila</value>
+    <value>モーブ</value>
   </data>
   <data name="Accent_Olive" xml:space="preserve">
-    <value>Olivna</value>
+    <value>オリーブ</value>
   </data>
   <data name="Accent_Orange" xml:space="preserve">
-    <value>Oranžna</value>
+    <value>オレンジ</value>
   </data>
   <data name="Accent_Purple" xml:space="preserve">
-    <value>Vijolična</value>
+    <value>紫</value>
   </data>
   <data name="Accent_Red" xml:space="preserve">
-    <value>Rdeča</value>
+    <value>赤</value>
   </data>
   <data name="Accent_Sienna" xml:space="preserve">
-    <value>Sienna</value>
+    <value>シエナ</value>
   </data>
   <data name="Accent_Taupe" xml:space="preserve">
-    <value>Siva z rjavim odtenkom</value>
+    <value>トープ</value>
   </data>
   <data name="Accent_Teal" xml:space="preserve">
-    <value>Zelenomodra</value>
+    <value>ティール</value>
   </data>
   <data name="Accent_Violet" xml:space="preserve">
-    <value>Roza</value>
+    <value>ピンク</value>
   </data>
   <data name="Accent_Yellow" xml:space="preserve">
-    <value>Rumena</value>
+    <value>黄</value>
   </data>
   <data name="Accent_Steel" xml:space="preserve">
-    <value>Jeklo</value>
+    <value>スチール</value>
   </data>
   <data name="ProfileName_General" xml:space="preserve">
-    <value>Splošno</value>
+    <value>全般</value>
   </data>
   <data name="SettingsGroup_Application" xml:space="preserve">
-    <value>Aplikacije</value>
+    <value>アプリケーション</value>
   </data>
   <data name="SettingsGroup_General" xml:space="preserve">
-    <value>Splošno</value>
+    <value>全般</value>
   </data>
   <data name="SettingsName_Appearance" xml:space="preserve">
-    <value>Videz</value>
+    <value>外観</value>
   </data>
   <data name="SettingsName_Autostart" xml:space="preserve">
-    <value>Samodejni zagon</value>
+    <value>自動起動</value>
   </data>
   <data name="SettingsName_General" xml:space="preserve">
-    <value>Splošno</value>
+    <value>全般</value>
   </data>
   <data name="SettingsName_HotKeys" xml:space="preserve">
-    <value>Vroče tipke</value>
+    <value>ホットキー</value>
   </data>
   <data name="SettingsName_Language" xml:space="preserve">
-    <value>Jezik</value>
+    <value>言語</value>
   </data>
   <data name="SettingsName_Profiles" xml:space="preserve">
-    <value>Profili</value>
+    <value>プロファイ</value>
   </data>
   <data name="SettingsName_Settings" xml:space="preserve">
-    <value>Nastavitve</value>
+    <value>設定</value>
   </data>
   <data name="SettingsName_Status" xml:space="preserve">
-    <value>Stanje</value>
+    <value>状態</value>
   </data>
   <data name="SettingsName_Update" xml:space="preserve">
-    <value>Posodobi</value>
+    <value>更新</value>
   </data>
   <data name="SettingsName_Window" xml:space="preserve">
-    <value>Okno</value>
+    <value>ウィンドウ</value>
   </data>
   <data name="EnableLog" xml:space="preserve">
-    <value>Omogoči dnevnik</value>
+    <value>ログを有効</value>
   </data>
   <data name="LogFileName" xml:space="preserve">
-    <value>Ime dnevniške datoteke</value>
+    <value>ログファイル名</value>
   </data>
   <data name="LogPath" xml:space="preserve">
-    <value>Pot dnevnika</value>
+    <value>ログのパス</value>
   </data>
   <data name="LogMode" xml:space="preserve">
-    <value>Način dnevnika</value>
+    <value>ログ モード</value>
   </data>
   <data name="Log" xml:space="preserve">
-    <value>Dnevnik</value>
+    <value>ログ</value>
   </data>
   <data name="SSHLog" xml:space="preserve">
-    <value>Dnevnik SSH</value>
+    <value>SSH ログ</value>
   </data>
   <data name="SSHRawLog" xml:space="preserve">
-    <value>Surovi dnevnik SSH</value>
+    <value>SSH Raw ログ</value>
   </data>
   <data name="PuTTYLogMode_SessionLog" xml:space="preserve">
-    <value>Dnevnik seje</value>
+    <value>セッション ログ</value>
   </data>
   <data name="PuTTYLogMode_SSHLog" xml:space="preserve">
-    <value>Dnevnik SSH</value>
+    <value>SSH ログ</value>
   </data>
   <data name="PuTTYLogMode_SSHRawLog" xml:space="preserve">
-    <value>SSH in surov dnevnik</value>
+    <value>SSH and Raw ログ</value>
   </data>
   <data name="EnterValidFileName" xml:space="preserve">
-    <value>Vnesite veljavno ime!</value>
+    <value>有効なファイル名を入力してください!</value>
   </data>
   <data name="Lost" xml:space="preserve">
-    <value>Izgubljeno</value>
+    <value>損失</value>
   </data>
   <data name="Received" xml:space="preserve">
-    <value>Prejeto</value>
+    <value>受信済み</value>
   </data>
   <data name="StatusChange" xml:space="preserve">
-    <value>Stanje spremembe</value>
+    <value>状態の変更</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
-    <value>Posodobitev je na voljo!</value>
+    <value>更新が利用可能です!</value>
   </data>
   <data name="PrivateKeyFile" xml:space="preserve">
-    <value>Datoteka z zasebnim ključem</value>
+    <value>プライベート キー ファイル</value>
   </data>
   <data name="Preview" xml:space="preserve">
-    <value>Predogled</value>
+    <value>プレビュー</value>
   </data>
   <data name="PortProfiles" xml:space="preserve">
-    <value>Profili vrat</value>
+    <value>ポートのプロファイル</value>
   </data>
   <data name="AddPortProfile" xml:space="preserve">
-    <value>Dodaj profil vrat</value>
+    <value>ポートのプロファイルを追加</value>
   </data>
   <data name="DeletePortProfile" xml:space="preserve">
-    <value>Izbriši profil vrat</value>
+    <value>ポートのプロファイルを削除</value>
   </data>
   <data name="EditPortProfile" xml:space="preserve">
-    <value>Uredi profil vrat</value>
+    <value>ポートのプロファイルを編集</value>
   </data>
   <data name="DeletePortProfileMessage" xml:space="preserve">
-    <value>Izbrani profil vrat bo trajno izbrisan.</value>
+    <value>選択したポート プロファイルは完全に削除されます。</value>
   </data>
   <data name="SelectPortProfile" xml:space="preserve">
-    <value>Izberi profil vrat</value>
+    <value>ポートプロファイルの選択</value>
   </data>
   <data name="OpenPortProfilesDots" xml:space="preserve">
-    <value>Odpri profile vrat...</value>
+    <value>ポート プロファイルを開く...</value>
   </data>
   <data name="ShowSplashScreenOnStart" xml:space="preserve">
-    <value>Prikaži pojavni zaslon ob zagonu</value>
+    <value>起動時にスプラッシュスクリーンを表示</value>
   </data>
   <data name="SplashScreen" xml:space="preserve">
-    <value>Pojavni zaslon</value>
+    <value>スプラッシュスクリーン</value>
   </data>
   <data name="DownloadMicrosoftEdgeWebView2Runtime" xml:space="preserve">
-    <value>Prenesi Microsoft Edge WebView2 Runtime</value>
+    <value>Microsoft Edge WebView2 Runtime をダウンロード</value>
   </data>
   <data name="MicrosoftEdgeWebView2RuntimeIsNotAvailable" xml:space="preserve">
-    <value>Microsoft Edge WebView2 Runtime ni na voljo!</value>
+    <value>Microsoft Edge WebView2 ランタイムは利用できません!</value>
   </data>
   <data name="Frequency" xml:space="preserve">
-    <value>Frekvenca</value>
+    <value>周波数</value>
   </data>
   <data name="SSID" xml:space="preserve">
     <value>SSID</value>
   </data>
   <data name="ProfileFileCouldNotBeLoaded" xml:space="preserve">
-    <value>Datoteke profila ni bilo mogoče naložiti!</value>
+    <value>プロファイルファイルを読み込めませんでした!</value>
   </data>
   <data name="ProfileFileCouldNotBeLoadedMessage" xml:space="preserve">
-    <value> Datoteke profila ni bilo mogoče naložiti in je morda poškodovana. Datoteko lahko poskusite obnoviti iz varnostne kopije ali jo izbrišete. 
+    <value>プロファイルファイルを読み込めませんでした。破損している可能性があります。バックアップからファイルを復元するか、削除してください。
 
-  Če se to zgodi nepričakovano ali po posodobitvi, prijavite napako na GitHub. 
+これが予期せず発生した場合、またはアップデート後に発生した場合は、GitHub でエラーを報告してください。
 
-  Sporočilo o napaki:
+
+エラーメッセージ :
 "{0}"</value>
   </data>
   <data name="EditGroupDots" xml:space="preserve">
-    <value>Uredi skupino...</value>
+    <value>グループの編集...</value>
   </data>
   <data name="DecryptionError" xml:space="preserve">
-    <value>Napaka pri dešifriranju</value>
+    <value>復号化エラー</value>
   </data>
   <data name="DecryptionErrorMessage" xml:space="preserve">
-    <value>Datoteke ni bilo mogoče dešifrirati. To težavo lahko prijavite na GitHubu. </value>
+    <value>ファイルを復号できませんでした。この問題はGitHubで報告できます。</value>
   </data>
   <data name="EncryptionError" xml:space="preserve">
-    <value>Napaka pri šifriranju.</value>
+    <value>暗号化エラー</value>
   </data>
   <data name="EncryptionErrorMessage" xml:space="preserve">
-    <value>Datoteke ni bilo mogoče šifrirati. To težavo lahko prijavite na GitHubu. </value>
+    <value>ファイルを暗号化できませんでした。この問題はGitHubで報告できます。</value>
   </data>
   <data name="CurrentPassword" xml:space="preserve">
-    <value>Trenutno geslo</value>
+    <value>現在のパスワード</value>
   </data>
   <data name="NewPassword" xml:space="preserve">
-    <value>Novo gslo</value>
+    <value>新しいパスワード</value>
   </data>
   <data name="ChangeMasterPassword" xml:space="preserve">
-    <value>Spremeni glavno geslo...</value>
+    <value>マスターパスワードの変更</value>
   </data>
   <data name="UnlockProfile" xml:space="preserve">
-    <value>Odkleni profil</value>
+    <value>プロファイルのロック解除</value>
   </data>
   <data name="UnlockTheProfileFileMessage" xml:space="preserve">
-    <value>Odklenite datoteko profila za uporabo profilov!</value>
+    <value>プロファイルを使用するには、プロファイル ファイルをロック解除してください!</value>
   </data>
   <data name="Disclaimer" xml:space="preserve">
-    <value>Izjava o omejitvi odgovornosti </value>
+    <value>免責事項</value>
   </data>
   <data name="Merge" xml:space="preserve">
-    <value>Združi</value>
+    <value>結合</value>
   </data>
   <data name="UseOther" xml:space="preserve">
-    <value>Uporabi drugo</value>
+    <value>その他を使用</value>
   </data>
   <data name="Move" xml:space="preserve">
-    <value>Premakni</value>
+    <value>移動</value>
   </data>
   <data name="LastScanAtX" xml:space="preserve">
-    <value>Zadnji pregled ob {0}</value>
+    <value>最終スキャン : {0}</value>
   </data>
   <data name="HiddenNetwork" xml:space="preserve">
-    <value>Skrito omrežje</value>
+    <value>非表示のネットワーク</value>
   </data>
   <data name="DevelopedAndMaintainedByX" xml:space="preserve">
-    <value>Razvil in vzdržuje {0} s pomočjo</value>
+    <value>{0}によって開発および保守</value>
   </data>
   <data name="ExternalService_ipify_Description" xml:space="preserve">
-    <value>Preprost API za javni IP naslov</value>
+    <value>シンプルなパブリックIPアドレスAPI</value>
   </data>
   <data name="Library_AirspaceFixer_Description" xml:space="preserve">
-    <value>AirspacePanel odpravlja vse težave z zračnim prostorom z Winforms, ki jih gosti WPF.</value>
+    <value>AirspacePanel は、WPF でホストされる Winforms のすべての Airspace の問題を修正します。</value>
   </data>
   <data name="Library_ControlzEx_Description" xml:space="preserve">
-    <value>Deljen nadzor za WPF in ... več </value>
+    <value>WPF 用の Shared Controlz および ... 詳細</value>
   </data>
   <data name="Library_DnsClientNET_Description" xml:space="preserve">
-    <value>DnsClient.NET je preprosta, a zelo zmogljiva in visoko zmogljiva odprtokodna knjižnica za .NET Framework za iskanje DNS</value>
+    <value>DnsClient.NETは、.NET FrameworkでDNS Lookupsを行うためのシンプルでありながら非常に強力で高性能なオープンソースライブラリです</value>
   </data>
   <data name="Library_Dragablz_Description" xml:space="preserve">
-    <value>Nadzor zavihkov, ki jih je mogoče povleči in trgati, za WPF</value>
+    <value>WPF 用のドラッグおよび切り取り可能なタブ コントロール</value>
   </data>
   <data name="Library_IPNetwork_Description" xml:space="preserve">
-    <value>Knjižnica C# skrbi za kompleksno omrežje, IP, IPv4, IPv6, omrežno masko, CIDR, podomrežje, podomrežje, superomrežje in izračun superomrežij za razvijalce .NET.</value>
+    <value>C# ライブラリは、.NET 開発者向けに、複雑なネットワーク、IP、IPv4、IPv6、ネットマスク、CIDR、サブネット、サブネット化、スーパーネット、スーパーネット化の計算を処理します。</value>
   </data>
   <data name="Library_LiveCharts_Description" xml:space="preserve">
-    <value>Preprosti, prilagodljivi, interaktivni in zmogljivi grafikoni, zemljevidi in merilniki za .Net</value>
+    <value>.Net 用のシンプルで柔軟性が高く、インタラクティブで強力なチャート、マップ、ゲージ</value>
   </data>
   <data name="Library_LoadingIndicatorsWPF_Description" xml:space="preserve">
-    <value>Zbirka kazalnikov obremenitve za WPF</value>
+    <value>WPF の読み込みインジケーターのコレクション</value>
   </data>
   <data name="Library_MahAppsMetroIconPacks_Description" xml:space="preserve">
-    <value>Nekaj odličnih ikon za WPF in UWP, vse skupaj... </value>
+    <value>WPF と UWP 用のすばらしいアイコン集...</value>
   </data>
   <data name="Library_MahAppsMetro_Description" xml:space="preserve">
-    <value>Zbirka orodij za ustvarjanje aplikacij v slogu Metro/Modernega uporabniškega vmesnika WPF.</value>
+    <value>Metro / Modern UI スタイルの WPF アプリを作成するためのツールキット。</value>
   </data>
   <data name="Library_NewtonsoftJson_Description" xml:space="preserve">
-    <value>Json.NET je priljubljen visokozmogljiv okvir JSON za .NET</value>
+    <value>Json.NETは、.NET向けの人気の高い高性能JSONフレームワークです。</value>
   </data>
   <data name="Library_Octokit_Description" xml:space="preserve">
-    <value>Odjemalska knjižnica API GitHub za .NET</value>
+    <value>.NET 用の GitHub API クライアント ライブラリ</value>
   </data>
   <data name="Library_PSDicoveryProtocol_Description" xml:space="preserve">
-    <value>Zajeme in razčleni pakete CDP in LLDP na lokalnih ali oddaljenih računalnikih</value>
+    <value>ローカルまたはリモート コンピュータ上の CDP および LLDP パケットをキャプチャして解析します</value>
   </data>
   <data name="Library_SharpSNMP_Description" xml:space="preserve">
-    <value>Sharp SNMP knjižnica – odprtokodni SNMP za .NET in Mono</value>
+    <value>Sharp SNMP ライブラリ - .NET および Mono 用のオープンソース SNMP</value>
   </data>
   <data name="Resource_Flag_Description" xml:space="preserve">
-    <value>Zbirka vseh državnih zastav v SVG</value>
+    <value>SVG形式のすべての国旗のコレクション</value>
   </data>
   <data name="Resource_ListTLD_Description" xml:space="preserve">
-    <value>Seznam domen najvišje ravni iz iana.org, ki se uporablja za poizvedovanje whois strežnikov TLD s whois.iana.org prek vrat 43</value>
+    <value>iana.org のトップレベルドメインのリスト。これは、ポート 43 経由で whois.iana.org から TLD の whois サーバーを照会するために使用されます。</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
-    <value>Podatki OUI z ieee.org.</value>
+    <value>ieee.org からの OUI データ。</value>
   </data>
   <data name="Resource_ServiceNamePortNumber_Description" xml:space="preserve">
-    <value>Ime storitve in register številke vrat transportnega protokola z iana.org.</value>
+    <value>iana.org からのサービス名およびトランスポート プロトコル ポート番号レジストリ。</value>
   </data>
   <data name="License_ApacheLicense2dot0" xml:space="preserve">
-    <value>Licenca Apache 2.0</value>
+    <value>Apache License 2.0</value>
   </data>
   <data name="License_BDS2Clause" xml:space="preserve">
-    <value>BSD-2-klavzula</value>
+    <value>BSD-2-Clause</value>
   </data>
   <data name="License_MITLicense" xml:space="preserve">
-    <value>Licenca MIT</value>
+    <value>MIT License</value>
   </data>
   <data name="License_Unlicense" xml:space="preserve">
-    <value>Preklic licence</value>
+    <value>Unlicense</value>
   </data>
   <data name="Library_CsWinRT_Description" xml:space="preserve">
-    <value>C#/WinRT zagotavlja zapakirano podporo za projekcijo WinRT za jezik C#.</value>
+    <value>C#/WinRT は、C# 言語用のパッケージ化された WinRT プロジェクション サポートを提供します。</value>
   </data>
   <data name="Library_PowerShellSDK_Description" xml:space="preserve">
-    <value>Runtime za gostovanje PowerShell</value>
+    <value>Runtime for hosting PowerShell</value>
   </data>
   <data name="Library_WebView2_Description" xml:space="preserve">
-    <value>Kontrolnik WebView2 vam omogoča, da spletne tehnologije (HTML, CSS in JavaScript) vdelate v svoje domače aplikacije, ki jih poganja Microsoft Edge (Chromium).</value>
+    <value>WebView2 コントロールを使用すると、Microsoft Edge (Chromium) を搭載したネイティブ アプリケーションに Web テクノロジ (HTML、CSS、JavaScript) を埋め込むことができます。</value>
   </data>
   <data name="Library_XamlBehaviorsWpf_Description" xml:space="preserve">
-    <value>Preprosto dodajte interaktivnost svojim aplikacijam z uporabo XAML Behaviors for WPF. </value>
+    <value>WPF の XAML ビヘイビアを使用して、アプリにインタラクティブ機能を簡単に追加できます。</value>
   </data>
   <data name="License_MicrosoftWebView2License" xml:space="preserve">
-    <value>Licenca Microsoft WebView2</value>
+    <value>Microsoft WebView2 License</value>
   </data>
   <data name="WarningMessage_ProfileFileNotEncryptedStoringPasswords" xml:space="preserve">
-    <value>Trenutna datoteka profila ni šifrirana in gesla bodo shranjena nešifrirana na disku! Omogočite šifriranje datoteke profila v Nastavitve -&gt; Profil za varno shranjevanje poverilnic. </value>
+    <value>現在のプロファイル ファイルは暗号化されておらず、パスワードは暗号化されずにディスクに保存されます!
+
+資格情報を安全に保存するには、[設定] &gt; [プロファイル] でプロファイル ファイルの暗号化を有効にします。</value>
   </data>
   <data name="ICMPv4" xml:space="preserve">
     <value>ICMPv4</value>
@@ -2879,960 +2886,971 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>ICMPv6</value>
   </data>
   <data name="CheckIsDisabled" xml:space="preserve">
-    <value>Preverjanje je onemogočeno!</value>
+    <value>チェックは無効です!</value>
   </data>
   <data name="EnterValidIPv6Address" xml:space="preserve">
-    <value>Vnesite veljaven naslov IPv6!</value>
+    <value>有効な IPv6 アドレスを入力してください!</value>
   </data>
   <data name="HelpMessage_PublicIPv4Address" xml:space="preserve">
-    <value>Javni naslov IPv4, dosegljiv prek ICMP.</value>
+    <value>ICMP 経由で到達可能なパブリック IPv4 アドレス。</value>
   </data>
   <data name="HelpMessage_PublicIPv6Address" xml:space="preserve">
-    <value>Javni naslov IPv6, dosegljiv prek ICMP.</value>
+    <value>ICMP 経由で到達可能なパブリック IPv6 アドレス。</value>
   </data>
   <data name="PublicIPv4Address" xml:space="preserve">
-    <value>Javni naslov IPv4.</value>
+    <value>パブリック IPv4 アドレス</value>
   </data>
   <data name="PublicIPv6Address" xml:space="preserve">
-    <value>Javni naslov IPv6.</value>
+    <value>パブリック IPv6 アドレス</value>
   </data>
   <data name="UseCustomIPv6AddressAPI" xml:space="preserve">
-    <value>Uporabi API poljubnega naslova IPv6</value>
+    <value>カスタム IPv6 アドレス API を使用</value>
   </data>
   <data name="TimeToLive" xml:space="preserve">
-    <value>Čas za življenje - TTL</value>
+    <value>有効期限</value>
   </data>
   <data name="ChassisId" xml:space="preserve">
-    <value>ID šasije</value>
+    <value>シャーシ ID</value>
   </data>
   <data name="Management" xml:space="preserve">
-    <value>Upravljanje</value>
+    <value>管理</value>
   </data>
   <data name="DeviceDescription" xml:space="preserve">
-    <value>Opis naprave</value>
+    <value>デバイスの説明</value>
   </data>
   <data name="PortDescription" xml:space="preserve">
-    <value>Opis vrat</value>
+    <value>ポートの説明</value>
   </data>
   <data name="RemoveIPv4Address" xml:space="preserve">
-    <value>Odstrani naslov IPv4</value>
+    <value>IPv4 アドレスを削除</value>
   </data>
   <data name="AdditionalConfigDots" xml:space="preserve">
-    <value>Dodatne nastavitve...</value>
+    <value>追加設定...</value>
   </data>
   <data name="RemoveIPv4AddressDots" xml:space="preserve">
-    <value>Odstrani naslov IPv4...</value>
+    <value>IPv4 アドレスを削除...</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached" xml:space="preserve">
-    <value>Oddaljena seja se je končala, ker je bila dosežena skupna časovna omejitev za prijavo. To omejitev nastavi skrbnik strežnika ali politike omrežja.</value>
+    <value>ログイン時間制限に達したため、リモートセッションが終了しました。この制限は、サーバー管理者またはネットワークポリシーによって設定されています。</value>
   </data>
   <data name="EnterValidHostname" xml:space="preserve">
-    <value>Vnesite veljavno ime gostitelja!</value>
+    <value>有効なホスト名を入力してください!</value>
   </data>
   <data name="EnterValidHostnameAndPort" xml:space="preserve">
-    <value>Vnesite veljavno ime gostitelja in vrata!</value>
+    <value>有効なホスト名とポートを入力してください!</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_UnableToReconnectToRemoteSession" xml:space="preserve">
-    <value>Ni mogoče znova vzpostaviti povezave z oddaljeno sejo.</value>
+    <value>リモート セッションに再接続できません。</value>
   </data>
   <data name="Migrate" xml:space="preserve">
-    <value>Preseli</value>
+    <value>移行</value>
   </data>
   <data name="ReportOnGitHub" xml:space="preserve">
-    <value>Prijavi na GitHubu</value>
+    <value>GitHubで報告</value>
   </data>
   <data name="Groups" xml:space="preserve">
-    <value>Skupine</value>
+    <value>グループ</value>
   </data>
   <data name="AddGroup" xml:space="preserve">
-    <value>Dodaj skupino</value>
+    <value>グループの追加</value>
   </data>
   <data name="DeleteGroup" xml:space="preserve">
-    <value>Izbriši skupino</value>
+    <value>グループを削除</value>
   </data>
   <data name="DeleteGroupMessage" xml:space="preserve">
-    <value>Izbrana skupina in vsi profili znotraj te skupine bodo trajno izbrisani.</value>
+    <value>選択したグループと、このグループ内のすべてのプロファイルが完全に削除されます。</value>
   </data>
   <data name="ErrorMessage_NameIsAlreadyUsed" xml:space="preserve">
-    <value>Ime je že uporabljeno!</value>
+    <value>この名前はすでに使用されています!</value>
   </data>
   <data name="Resize" xml:space="preserve">
-    <value>Spremeni velikost</value>
+    <value>サイズ変更</value>
   </data>
   <data name="DeleteProfiles" xml:space="preserve">
-    <value>Izbriši profile</value>
+    <value>プロファイルを削除</value>
   </data>
   <data name="DeleteProfilesMessage" xml:space="preserve">
-    <value>Izbrani profili bodo trajno izbrisani.</value>
+    <value>選択したプロファイルは完全に削除されます。</value>
   </data>
   <data name="UseCustomThemes" xml:space="preserve">
-    <value>Uporabi teme po meri</value>
+    <value>カスタムテーマの使用</value>
   </data>
   <data name="CustomThemes" xml:space="preserve">
-    <value>Teme po meri</value>
+    <value>カスタムテーマ</value>
   </data>
   <data name="ResetSettingsQuestion" xml:space="preserve">
-    <value>Želite ponastaviti nastavitve?</value>
+    <value>設定をリセットしますか?</value>
   </data>
   <data name="SettingsResetExclamationMark" xml:space="preserve">
-    <value>Nastavitve so ponastavljene!</value>
+    <value>設定をリセットしました!</value>
   </data>
   <data name="ApplicationName_AWSSessionManager" xml:space="preserve">
-    <value>Upravitelj sej AWS</value>
+    <value>AWSセッションマネージャー</value>
   </data>
   <data name="InstanceId" xml:space="preserve">
-    <value>ID primerka</value>
+    <value>インスタンスID</value>
   </data>
   <data name="LocalConnection" xml:space="preserve">
-    <value>Lokalna povezava</value>
+    <value>ローカル接続</value>
   </data>
   <data name="LocalInterface" xml:space="preserve">
-    <value>Lokalni vmesnik</value>
+    <value>ローカル インターフェース</value>
   </data>
   <data name="Library_log4net_Description" xml:space="preserve">
-    <value>log4net je orodje, ki programerju pomaga pri izpisovanju dnevniških stavkov v različne izhodne cilje.</value>
+    <value>log4net は、プログラマがさまざまな出力ターゲットにログ ステートメントを出力するのに役立つツールです。</value>
   </data>
   <data name="AWSSessionManager" xml:space="preserve">
-    <value>Upravitelj sej AWS</value>
+    <value>AWSセッションマネージャー</value>
   </data>
   <data name="Enabled" xml:space="preserve">
-    <value>Omogočen</value>
+    <value>有効</value>
   </data>
   <data name="Region" xml:space="preserve">
-    <value>Regija</value>
+    <value>地域</value>
   </data>
   <data name="SyncEC2InstancesFromAWS" xml:space="preserve">
-    <value>Sinhroniziraj primerke EC2 iz AWS</value>
+    <value>AWSからEC2インスタンスを同期する</value>
   </data>
   <data name="AddAWSProfile" xml:space="preserve">
-    <value>Dodaj profil AWS</value>
+    <value>AWSプロファイルの追加</value>
   </data>
   <data name="DeleteAWSProfile" xml:space="preserve">
-    <value>Izbriši profil AWS</value>
+    <value>AWSプロファイルを削除</value>
   </data>
   <data name="DeleteAWSProfileMessage" xml:space="preserve">
-    <value>Izbrani profil AWS je trajno izbrisan. Profil ni odstranjen iz datoteke ~\.aws\credentials.</value>
+    <value>選択した AWS プロファイルは完全に削除されます。
+
+プロファイルは ~\.aws\credentials ファイルから削除されません。</value>
   </data>
   <data name="EditAWSProfile" xml:space="preserve">
-    <value>Uredi profil AWS</value>
+    <value>AWSプロファイルの編集</value>
   </data>
   <data name="SyncAllEC2InstancesFromAWS" xml:space="preserve">
-    <value>Sinhroniziraj vse primerke EC2 iz AWS</value>
+    <value>AWSからすべてのEC2インスタンスを同期する</value>
   </data>
   <data name="SyncGroupEC2InstancesFromAWS" xml:space="preserve">
-    <value>Sinhroniziraj skupino primerkov EC2 iz AWS</value>
+    <value>AWSからグループEC2インスタンスを同期する</value>
   </data>
   <data name="ProfilesAndRegionsToSync" xml:space="preserve">
-    <value>Profili in regije za sinhronizacijo</value>
+    <value>同期するプロファイルと地域</value>
   </data>
   <data name="HelpMessage_AWSSessionManagerProfilesAndRegionsToSync" xml:space="preserve">
-    <value>Za sinhronizacijo primerkov EC2 iz AWS mora biti v sistemu nastavljen AWS CLI. Po primerkih EC2 je mogoče poizvedovati za več računov (profilov) AWS in več regij. Da to lahko naredite, mora biti profil, shranjen v datoteki "~/.aws/credentials", nastavljen skupaj z regijo za poizvedbo.</value>
+    <value>AWSからEC2インスタンスを同期するには、システム上でAWS CLIを設定する必要があります。EC2インスタンスに対して、複数のAWSアカウント（プロファイル）と複数のリージョンをクエリできます。そのためには、「~/.aws/credentials」ファイルに保存されているプロファイルと、クエリ対象のリージョンを設定する必要があります。</value>
   </data>
   <data name="Library_AWSSDKdotEC2_Description" xml:space="preserve">
-    <value>AWS SDK za .NET za delo z Amazon Elastični računalniški oblak (Amazon EC2) v Amazon Spletne storitve (AWS).</value>
+    <value>Amazon Web Services (AWS) の Amazon Elastic Compute Cloud (Amazon EC2) と連携するための AWS SDK for .NET。</value>
   </data>
   <data name="DefaultProfile" xml:space="preserve">
-    <value>Privzeti profil</value>
+    <value>既定のプロファイル</value>
   </data>
   <data name="DefaultRegion" xml:space="preserve">
-    <value>Privzeta regija</value>
+    <value>既定の地域</value>
   </data>
   <data name="HelpMessage_AWSSessionManagerProfile" xml:space="preserve">
-    <value>Profil, ki ga uporabljajo ročno ustvarjeni profili za povezavo s primerkom EC2 prek AWS CLI.
+    <value>AWS CLI 経由で EC2 インスタンスに接続するために手動で作成されたプロファイルで使用されるプロファイル。
 
-Če ni nastavljeno, se uporabijo privzete nastavitve CLI AWS.</value>
+設定されていない場合は、デフォルトの AWS CLI 設定が使用されます。</value>
   </data>
   <data name="HelpMessage_AWSSessionManagerRegion" xml:space="preserve">
-    <value>Regija, ki jo uporabljajo ročno ustvarjeni profili za povezavo s primerkom EC2 prek AWS CLI.
+    <value>AWS CLI 経由で EC2 インスタンスに接続するために手動で作成されたプロファイルで使用される地域。
 
-Če ni nastavljeno, se uporabijo privzete nastavitve CLI AWS.</value>
+設定されていない場合は、デフォルトの AWS CLI 設定が使用されます。</value>
   </data>
   <data name="HelpMessage_AWSCLIDefaultsAreUsedIfNotSet" xml:space="preserve">
-    <value>Če ni nastavljeno, se uporabijo privzete nastavitve CLI AWS.</value>
+    <value>設定されていない場合は、デフォルトの AWS CLI 設定が使用されます。</value>
   </data>
   <data name="GroupNameCannotStartWithX" xml:space="preserve">
-    <value>Ime skupine se ne sme začeti z "{0}"!</value>
+    <value>グループ名は"{0}"で始めることはできません!</value>
   </data>
   <data name="SyncOnlyRunningEC2InstancesFromAWS" xml:space="preserve">
-    <value>Sinhroniziraj samo delujoče primerke EC2 iz AWS</value>
+    <value>AWSから実行中のEC2インスタンスのみを同期する</value>
   </data>
   <data name="AnAWSRegionNamedXDoesNotExist" xml:space="preserve">
-    <value>Ne obstaja oimenovana regija AWS {0}!</value>
+    <value>"{0}"という名前の AWS リージョンが存在しません!</value>
   </data>
   <data name="AWSCLIv2IsInstalled" xml:space="preserve">
-    <value>AWS CLI v2 je nameščen!</value>
+    <value>AWS CLI v2 がインストールされました!</value>
   </data>
   <data name="AWSCLIv2IsNotInstalled" xml:space="preserve">
-    <value>AWS CLI v2 ni nameščen!</value>
+    <value>AWS CLI v2 がインストールされていません!</value>
   </data>
   <data name="AWSSessionManagerPluginIsInstalled" xml:space="preserve">
-    <value>Vtičnik AWS Upravitelj sej je nameščen!</value>
+    <value>AWS Session Manager プラグインがインストールされました!</value>
   </data>
   <data name="AWSSessionManagerPluginIsNotInstalled" xml:space="preserve">
-    <value>Vtičnik AWS Upravitelj sej ni nameščen!</value>
+    <value>AWS Session Manager プラグインがインストールされていません!</value>
   </data>
   <data name="CheckForPreReleases" xml:space="preserve">
-    <value>Preveri obstoj predizdaj</value>
+    <value>プレリリース版をチェックする</value>
   </data>
   <data name="SyncIsDisabled" xml:space="preserve">
-    <value>Sinhronizacija je onemogočena!</value>
+    <value>同期が無効になっています!</value>
   </data>
   <data name="Command" xml:space="preserve">
-    <value>Ukaz</value>
+    <value>コマンド</value>
   </data>
   <data name="ApplyThemeToPowerShellConsole" xml:space="preserve">
-    <value>Uporabi temo za konzolo PowerShell</value>
+    <value>PowerShellコンソールにテーマを適用する</value>
   </data>
   <data name="PowerShellConsoleColorCanBeChangedUnderSettingsGeneralApperance" xml:space="preserve">
-    <value>Barvo konzole PowerShell lahko spremenite v temo aplikacije pod Nastavitve &gt; Splošno &gt; Videz</value>
+    <value>PowerShellコンソールの色は、「設定」&gt;「全般」&gt;「外観」でアプリケーションテーマに変更できます。</value>
   </data>
   <data name="HelpMessage_ApplyThemeToPowerShellConsole" xml:space="preserve">
-    <value>Če omogočite to možnost, se privzete nastavitve konzole PowerShell v registru pod HKCU:\Console preglasijo, tako da se okno konzole PowerShell ujema s temo aplikacije. To je globalna sistemska nastavitev, ki lahko vpliva na videz običajnega okna PowerShell. 
+    <value>このオプションを有効にすると、HKCU:\Console レジストリ内のデフォルトの PowerShell コンソール設定が上書きされ、PowerShell コンソールウィンドウがアプリケーションのテーマと一致するようになります。これはグローバルシステム設定であり、通常の PowerShell ウィンドウの外観に影響を与える可能性があります。
 
-Spremenjene so samo konzole PowerShell, nastavljene v nastavitvah PowerShell in AWS Upravitelj sej. Podprti sta lupini Windows PowerShell in PWSH (PowerShell 7 in višje). 
+PowerShell および AWS Session Manager 設定で設定された PowerShell コンソールのみが変更されます。Windows PowerShell と PWSH (PowerShell 7 以降) の両方がサポートされています。
 
-V zgornjem desnem kotu kliknite na gumb za Pomoč/Dokumentacijo (levo od gumba za pomanjšanje) ali pojdite na do https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance za več podrobnosti. Tukaj so dokumentirane vrednosti, ki bodo prilagojene. 
+詳細については、右上隅のヘルプ/ドキュメントボタン（最小化ボタンの左）をクリックするか、https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance にアクセスしてください。調整対象となる値は以下に記載されています。
 
-Če je možnost znova onemogočena, vrednosti niso več spremenjene. Vendar se izvirne vrednosti NE obnovijo.</value>
+オプションを再度無効にすると、値は変更されなくなります。ただし、元の値は復元されません。</value>
   </data>
   <data name="InputCannotEndWithSemicolon" xml:space="preserve">
-    <value>Vnos se ne sme končati z ";"!</value>
+    <value>入力は";"で終わることはできません!</value>
   </data>
   <data name="InputDoesNotContainAnyText" xml:space="preserve">
-    <value>Vnos ne vsebuje nobenega besedila!</value>
+    <value>入力にテキストが含まれていません!</value>
   </data>
   <data name="ApplicationName_BitCalculator" xml:space="preserve">
-    <value>Bitni kalkulator</value>
+    <value>ビット計算機</value>
   </data>
   <data name="BitCalculator" xml:space="preserve">
-    <value>Bitni kalkulator</value>
+    <value>ビット計算機</value>
   </data>
   <data name="Notation" xml:space="preserve">
-    <value>Zapisovanje</value>
+    <value>表記</value>
   </data>
   <data name="Input" xml:space="preserve">
-    <value>Vnos</value>
+    <value>入力</value>
   </data>
   <data name="Unit" xml:space="preserve">
-    <value>Enota</value>
+    <value>単位</value>
   </data>
   <data name="Bits" xml:space="preserve">
-    <value>bitov</value>
+    <value>Bits</value>
   </data>
   <data name="Gigabits" xml:space="preserve">
-    <value>gigabitov</value>
+    <value>Gigabits</value>
   </data>
   <data name="Gigabytes" xml:space="preserve">
-    <value>gigabajtov</value>
+    <value>Gigabytes</value>
   </data>
   <data name="Kilobits" xml:space="preserve">
-    <value>kilobitov</value>
+    <value>Kilobits</value>
   </data>
   <data name="Kilobytes" xml:space="preserve">
-    <value>kilobajtov</value>
+    <value>Kilobytes</value>
   </data>
   <data name="Megabits" xml:space="preserve">
-    <value>megabitov</value>
+    <value>Megabits</value>
   </data>
   <data name="Megabytes" xml:space="preserve">
-    <value>megabajtov</value>
+    <value>Megabytes</value>
   </data>
   <data name="Petabits" xml:space="preserve">
-    <value>petabitov</value>
+    <value>Petabits</value>
   </data>
   <data name="Petabytes" xml:space="preserve">
-    <value>petabajtov</value>
+    <value>Petabytes</value>
   </data>
   <data name="Terabits" xml:space="preserve">
-    <value>terabitov</value>
+    <value>Terabits</value>
   </data>
   <data name="Terabytes" xml:space="preserve">
-    <value>terabajtov</value>
+    <value>Terabytes</value>
   </data>
   <data name="EnterANumberAndSelectAUnitToCalculateTheUnitsDots" xml:space="preserve">
-    <value>Vnesite število in izberite enoto za izračun enot...</value>
+    <value>数値を入力し、単位を選択して単位を計算...</value>
   </data>
   <data name="SettingsName_Network" xml:space="preserve">
-    <value>Omrežje</value>
+    <value>ネットワーク</value>
   </data>
   <data name="Proxy" xml:space="preserve">
-    <value>Namestniški strežnik</value>
+    <value>プロキシ</value>
   </data>
   <data name="ResolveIPAddressForThisHost" xml:space="preserve">
-    <value>Razreši naslov IP za tega gostitelja (IPv4 je prednostni)</value>
+    <value>このホストのIPアドレスを解決します（IPv4が推奨されます）</value>
   </data>
   <data name="NoValidPowerShellPath" xml:space="preserve">
-    <value>Veljavna pot do lupine PowerShell se mora končati z "pwsh.exe" ali "powershell.exe"!</value>
+    <value>PowerShell への有効なパスは、「pwsh.exe」または「powershell.exe」で終わる必要があります!</value>
   </data>
   <data name="NoValidPuTTYPath" xml:space="preserve">
-    <value>Veljavna pot do PuTTY se mora končati z "PuTTY.exe"!</value>
+    <value>PuTTY への有効なパスは「PuTTY.exe」で終わる必要があります!</value>
   </data>
   <data name="NoValidTigerVNCPath" xml:space="preserve">
-    <value>Veljavna pot do TigerVNC se mora končati z "vncviewer-*.exe" ali "vncviewer64-*.exe"!</value>
+    <value>TigerVNC への有効なパスは、「vncviewer-*.exe」または「vncviewer64-*.exe」で終わる必要があります!</value>
   </data>
   <data name="ApplicationName_SNTPLookup" xml:space="preserve">
-    <value>Iskanje SNTP</value>
+    <value>SNTP Lookup</value>
   </data>
   <data name="Library_nulastudioNetBeauty_Description" xml:space="preserve">
-    <value>Premaknite sestavine in odvisnosti izvajalnega okolja aplikacije .NET Framework/.NET Core v podmapo in ga polepšajte.</value>
+    <value>.NET Framework/.NET Core アプリのランタイム コンポーネントと依存関係をサブディレクトリに移動して整理します。</value>
   </data>
   <data name="AddATabToPerformASNTPLookup" xml:space="preserve">
-    <value>Dodaj zavihek za iskanje SNTP...</value>
+    <value>SNTP Lookupを実行するためのタブを追加...</value>
   </data>
   <data name="SNTPServers" xml:space="preserve">
-    <value>Strežniki SNTP</value>
+    <value>SNTP サーバー(s)</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv6AddressAPI" xml:space="preserve">
-    <value>URL do spletne storitve, ki je dosegljiva prek http ali https in kot odgovor vrne naslov IPv6, kot je "xxxx:xx:xxx::xx".</value>
+    <value>http または https 経由でアクセスでき、応答として「xxxx:xx:xxx::xx」のような IPv6 アドレスを返す Web サービスへの URL。</value>
   </data>
   <data name="IPEndPoint" xml:space="preserve">
-    <value>Končna točka IP</value>
+    <value>IPエンドポイント</value>
   </data>
   <data name="LocalEndTime" xml:space="preserve">
-    <value>Lokalni končni čas</value>
+    <value>ローカル終了時刻</value>
   </data>
   <data name="LocalStartTime" xml:space="preserve">
-    <value>Lokalni začetni čas</value>
+    <value>ローカル開始時刻</value>
   </data>
   <data name="NetworkTime" xml:space="preserve">
-    <value>Omrežni čas</value>
+    <value>ネットワーク時刻</value>
   </data>
   <data name="Offset" xml:space="preserve">
-    <value>Odmik</value>
+    <value>オフセット</value>
   </data>
   <data name="RoundTripDelay" xml:space="preserve">
-    <value>Povratna zamuda</value>
+    <value>Round trip delay</value>
   </data>
   <data name="Server" xml:space="preserve">
-    <value>Strežnik</value>
+    <value>Server</value>
   </data>
   <data name="SNTPLookup" xml:space="preserve">
-    <value>Iskanje SNTP</value>
+    <value>SNTP Lookup</value>
   </data>
   <data name="AddSNTPServer" xml:space="preserve">
-    <value>Dodaj strežnik SNTP</value>
+    <value>SNTP サーバーの追加</value>
   </data>
   <data name="DeleteSNTPServer" xml:space="preserve">
-    <value>Izbriši strežnik SNTP</value>
+    <value>SNTP サーバーを削除</value>
   </data>
   <data name="DeleteSNTPServerMessage" xml:space="preserve">
-    <value>Izbrani strežnik SNTP bo trajno izbrisan.</value>
+    <value>選択した SNTP サーバーは完全に削除されます。</value>
   </data>
   <data name="EditSNTPServer" xml:space="preserve">
-    <value>Uredi strežnik SNTP</value>
+    <value>SNTP サーバーの編集</value>
   </data>
   <data name="SNTPServerWithThisNameAlreadyExists" xml:space="preserve">
-    <value>Strežnik SNTP s tem imenom že obstaja!</value>
+    <value>この名前の SNTP サーバーは既に存在します!</value>
   </data>
   <data name="EnterValidHostnameOrIPAddress" xml:space="preserve">
-    <value>Vnesite veljavno ime gostitelja (na primer "server-01" ali "primer.com") ali veljaven naslov IP (na primer 192.168.178.1)!</value>
+    <value>有効なホスト名 (「server-01」や「example.com」など) または有効な IP アドレス (192.168.178.1 など) を入力してください!</value>
   </data>
   <data name="Servers" xml:space="preserve">
-    <value>Strežniki</value>
+    <value>サーバー</value>
   </data>
   <data name="EnterMasterPasswordToUnlockProfile" xml:space="preserve">
-    <value>Vnesi glavno geslo za odklepanje datoteke profila:</value>
+    <value>プロファイルファイルのロックを解除するにはマスターパスワードを入力してください :</value>
   </data>
   <data name="UnlockProfileFile" xml:space="preserve">
-    <value>Odkleni datoteko profila</value>
+    <value>プロファイルファイルのロック解除</value>
   </data>
   <data name="PortState_TimedOut" xml:space="preserve">
-    <value>Časovna omejitev je potekla</value>
+    <value>タイムアウト</value>
   </data>
   <data name="Hostkey" xml:space="preserve">
-    <value>Ključ gostitelja</value>
+    <value>ホストキー</value>
   </data>
   <data name="SettingsAreResetAndApplicationWillBeRestartedMessage" xml:space="preserve">
-    <value>Nastavitve bodo ponastavljene in aplikacija se bo nato znova zagnala!</value>
+    <value>設定がリセットされ、その後アプリケーションが再起動されます!</value>
   </data>
   <data name="SettingsHaveBeenReset" xml:space="preserve">
-    <value>Nastavitve so ponastavljene!</value>
+    <value>設定がリセットされました!</value>
   </data>
   <data name="PingStatus" xml:space="preserve">
-    <value>Stanje Pinga</value>
+    <value>Pingの状態</value>
   </data>
   <data name="ThreadPoolAdditionalMinThreads" xml:space="preserve">
-    <value>Dodatnih najm. niti ThreadPool </value>
+    <value>ThreadPool 追加最小スレッド数</value>
   </data>
   <data name="HelpMessage_ThreadPoolAdditionalMinThreads" xml:space="preserve">
-    <value>Ta nastavitev določa najmanjše število niti, ki bodo na zahtevo ustvarjene iz ThreadPoola aplikacije. To lahko izboljša delovanje na primer skenerja IP ali skenerja vrat. Vrednost se doda privzeti min. niti (število niti procesorja). Vrednost 0 pusti privzete nastavitve. Če je vrednost višja od privzete najv. niti ThreadPool, se uporabi ta vrednost. Če je vrednost previsoka, lahko pride do težav z delovanjem. Spremembe te vrednosti bodo uveljavljene po ponovnem zagonu aplikacije. Ali je bila vrednost uspešno nastavljena, lahko vidite v dnevniški datoteki pod %LocalAppData%\NETworkManager\NETworkManager.log</value>
+    <value>この設定は、アプリケーションのスレッドプールからオンデマンドで作成されるスレッドの最小数を指定します。これにより、例えばIPスキャナーやポートスキャナーのパフォーマンスが向上します。
+	
+この値はデフォルトの最小スレッド数（CPUスレッド数）に追加されます。値が0の場合、デフォルト設定のままとなります。この値がThreadPoolのデフォルトの最大スレッド数よりも大きい場合は、この値が使用されます。
+
+値が高すぎると、パフォーマンスの問題が発生する可能性があります。
+
+この値の変更は、アプリケーションの再起動後に有効になります。値が正常に設定されたかどうかは、%LocalAppData%\NETworkManager\NETworkManager.log のログファイルで確認できます。</value>
   </data>
   <data name="MaxThreadsOnlyGoToSettingsGeneralGeneral" xml:space="preserve">
-    <value>Te nastavitve spremenijo samo največje število sočasno izvedenih niti na skeniranje gostitelja/vrat. Pojdite v Nastavitve &gt; Splošno &gt; Splošno, da prilagodite (najm.) niti aplikacije.</value>
+    <value>これらの設定は、ホスト/ポートスキャンごとに同時に実行されるスレッドの最大数のみを変更します。アプリケーションのスレッド数（最小）を調整するには、「設定」&gt;「一般」&gt;「一般」に移動してください。</value>
   </data>
   <data name="PortStatus" xml:space="preserve">
-    <value>Stanje vrat</value>
+    <value>ポートの状態</value>
   </data>
   <data name="PingDetails" xml:space="preserve">
-    <value>Podrobnsti Pinga</value>
+    <value>Ping の詳細</value>
   </data>
   <data name="NoOpenPortsFound" xml:space="preserve">
-    <value>Ni najdenih odprtih vrat!</value>
+    <value>開いているポートが見つかりません!</value>
   </data>
   <data name="PortScanIsDisabled" xml:space="preserve">
-    <value>Skeniranje vrat je onemogočeno</value>
+    <value>ポートスキャンは無効です!</value>
   </data>
   <data name="ScanPorts" xml:space="preserve">
-    <value>Skeniraj vrata</value>
+    <value>スキャン ポート</value>
   </data>
   <data name="CouldNotFindApplicationXXXMessage" xml:space="preserve">
-    <value>Ni bilo mogoče najti aplikacije "{0}". Morda je bila aplikacija skrita v nastavitvah?</value>
+    <value>アプリケーション"{0}"が見つかりませんでした。設定でアプリケーションが非表示になっている可能性があります。</value>
   </data>
   <data name="StatusWindow" xml:space="preserve">
-    <value>Statusno okno</value>
+    <value>状態ウィンドウ</value>
   </data>
   <data name="ShowAddressBar" xml:space="preserve">
-    <value>Prikaži naslovno vrstico</value>
+    <value>アドレスバーを表示</value>
   </data>
   <data name="WarnMessage_MultipleInstances" xml:space="preserve">
-    <value>Omogočanje te nastavitve ni priporočljivo. Več primerkov aplikacije ima enake nastavitve in datoteke profila. Zadnji zaprti primerek lahko prepiše spremembe, ki so jih naredili drugi primerki.</value>
+    <value>この設定を有効にすることは推奨されません。アプリケーションの複数のインスタンスは同じ設定とプロファイルファイルを共有します。最後に閉じられたインスタンスによって、他のインスタンスによる変更が上書きされる可能性があります。</value>
   </data>
   <data name="BypassForLocalAddresses" xml:space="preserve">
-    <value>Obvoz lokalnih naslovov</value>
+    <value>ローカルアドレスのバイパス</value>
   </data>
   <data name="EnableGatewayServer" xml:space="preserve">
-    <value>Omogoči prehodni strežnik</value>
+    <value>ゲートウェイサーバーを有効にする</value>
   </data>
   <data name="LogonMethod" xml:space="preserve">
-    <value>Način prijave</value>
+    <value>ログオン方法</value>
   </data>
   <data name="GatewayServer" xml:space="preserve">
-    <value>Prehodni strežnik</value>
+    <value>ゲートウェイ サーバー</value>
   </data>
   <data name="ServerName" xml:space="preserve">
-    <value>Ime strežnika</value>
+    <value>サーバー名</value>
   </data>
   <data name="ShareGatewayCredentialsWithRemoteComputer" xml:space="preserve">
-    <value>Deli poverilnice prehoda z oddaljenim računalnikom</value>
+    <value>ゲートウェイの資格情報をリモート コンピュータと共有する</value>
   </data>
   <data name="RemoteDesktopGatewayServerLogonMethod_Any" xml:space="preserve">
-    <value>Dovoli mi, da izberem pozneje</value>
+    <value>後で選択できるようにする</value>
   </data>
   <data name="RemoteDesktopGatewayServerLogonMethod_Smartcard" xml:space="preserve">
-    <value>Pametna kartica ali 'Windows Hello za podjetja'</value>
+    <value>スマートカードまたはWindows Hello for Business</value>
   </data>
   <data name="RemoteDesktopGatewayServerLogonMethod_Userpass" xml:space="preserve">
-    <value>Zahtevaj geslo (NTLM)</value>
+    <value>パスワードを要求する(NTLM)</value>
   </data>
   <data name="UseGatewayCredentials" xml:space="preserve">
-    <value>Uporabi poverilnice prehoda</value>
+    <value>ゲートウェイ資格情報を使用する</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331661" xml:space="preserve">
-    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker Prehodni strežnik za oddaljeno namizje trenutno ni dostopen. Poskusite znova vzpostaviti povezavo pozneje ali se za pomoč obrnite na skrbnika omrežja.</value>
+    <value>リモートデスクトップゲートウェイサーバーが一時的に利用できないため、お使いのコンピューターはリモートコンピューターに接続できません。しばらくしてから再接続するか、ネットワーク管理者にお問い合わせください。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331651" xml:space="preserve">
-    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom zaradi enega od naslednjih razlogov: 1) Zahtevani naslov Prehodnega strežnika za oddaljeno namizje in ime subjekta potrdila SSL strežnika se ne ujemata. 2) Potrdilo je poteklo ali je preklicano. 3) Korenski organ potrdila ne zaupa potrdilu. Za pomoč se obrnite na skrbnika omrežja.</value>
+    <value>お使いのコンピューターは、次のいずれかの理由によりリモートコンピューターに接続できません。1) 要求されたリモートデスクトップゲートウェイサーバーのアドレスとサーバーのSSL証明書のサブジェクト名が一致しません。2) 証明書の有効期限が切れているか、失効しています。3) 証明機関が証明書を信頼していません。ネットワーク管理者にお問い合わせください。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331653" xml:space="preserve">
-    <value>Ta računalnik ne more preveriti identitete prehoda RD "". Povezovanje s strežniki, ki jih ni mogoče identificirati, ni varno. Za pomoč se obrnite na skrbnika omrežja.</value>
+    <value>このコンピューターはRDゲートウェイ「」のIDを確認できません。識別できないサーバーへの接続は安全ではありません。ネットワーク管理者にお問い合わせください。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331654" xml:space="preserve">
-    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker se zahtevani naslov Prehodnega strežnika za oddaljeno namizje in ime predmeta potrdila ne ujemata. Za pomoč se obrnite na skrbnika omrežja.</value>
+    <value>要求されたリモートデスクトップゲートウェイサーバーのアドレスと証明書のサブジェクト名が一致しないため、コンピューターはリモートコンピューターに接続できません。ネットワーク管理者にお問い合わせください。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331655" xml:space="preserve">
-    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker je potrdilo Prehodnega strežnika za oddaljeno namizje poteklo ali je bilo preklicano. Za pomoč se obrnite na skrbnika omrežja.</value>
+    <value>リモートデスクトップゲートウェイサーバーの証明書の有効期限が切れているか失効しているため、お使いのコンピューターはリモートコンピューターに接続できません。ネットワーク管理者にお問い合わせください。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331657" xml:space="preserve">
-    <value>Med pošiljanjem podatkov na Prehodni strežnik oddaljenega namizja je prišlo do napake. Strežnik začasno ni dostopen ali pa je omrežna povezava prekinjena. Poskusite znova pozneje ali se za pomoč obrnite na skrbnika omrežja.</value>
+    <value>リモートデスクトップゲートウェイサーバーへのデータ送信中にエラーが発生しました。サーバーが一時的に利用できないか、ネットワーク接続がダウンしています。しばらくしてからもう一度お試しいただくか、ネットワーク管理者にお問い合わせください。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331658" xml:space="preserve">
-    <value>Med prejemanjem podatkov s Prehodnega strežnika za oddaljeno namizje je prišlo do napake. Strežnik začasno ni dostopen ali pa je omrežna povezava prekinjena. Poskusite znova pozneje ali se za pomoč obrnite na skrbnika omrežja.</value>
+    <value>リモートデスクトップゲートウェイサーバーからデータを受信中にエラーが発生しました。サーバーが一時的に利用できないか、ネットワーク接続がダウンしています。しばらくしてからもう一度お試しいただくか、ネットワーク管理者にお問い合わせください。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331660" xml:space="preserve">
-    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker je naslov Prehodnega strežnika za oddaljeno namizje nedosegljiv ali napačen. Vnesite veljaven naslov Prehodnega strežnika za oddaljeno namizje.</value>
+    <value>リモートデスクトップゲートウェイサーバーのアドレスが到達不能または正しくないため、コンピューターはリモートコンピューターに接続できません。有効なリモートデスクトップゲートウェイサーバーのアドレスを入力してください。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331663" xml:space="preserve">
-    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker Prehodnem strežniku za oddaljeno namizje primanjkuje strežniških virov in začasno ni dostopen. Poskusite znova vzpostaviti povezavo pozneje ali se za pomoč obrnite na skrbnika omrežja.</value>
+    <value>リモートデスクトップゲートウェイサーバーのサーバーリソースが不足しており、一時的に利用できないため、コンピューターはリモートコンピューターに接続できません。しばらくしてから再接続するか、ネットワーク管理者にお問い合わせください。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331672" xml:space="preserve">
-    <value>Prehodni strežnik za oddaljeno namizje je prekinil povezavo. Poskusite znova vzpostaviti povezavo pozneje ali se za pomoč obrnite na skrbnika omrežja.</value>
+    <value>リモートデスクトップゲートウェイサーバーは接続を終了しました。しばらくしてから再接続するか、ネットワーク管理者にお問い合わせください。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331673" xml:space="preserve">
-    <value>Skrbnik Prehodnega strežnika za oddaljeno namizje je prekinil povezavo. Poskusite znova vzpostaviti povezavo pozneje ali se za pomoč obrnite na skrbnika omrežja.</value>
+    <value>リモートデスクトップゲートウェイサーバーの管理者が接続を終了しました。しばらくしてから再接続するか、ネットワーク管理者にお問い合わせください。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331675" xml:space="preserve">
-    <value>Oddaljeno namizje se ne more povezati z oddaljenim računalnikom "" zaradi enega od teh razlogov: 1) Vaš uporabniški račun ni naveden na seznamu dovoljenj prehoda RD 2) Morda ste določili oddaljeni računalnik v formatu NetBIOS (na primer računalnik1) , vendar prehod RD pričakuje FQDN ali obliko naslova IP (na primer computer1.fabrikam.com ali 157.60.0.1). Za pomoč se obrnite na skrbnika omrežja.</value>
+    <value>リモートデスクトップは、次のいずれかの理由により、リモートコンピューター "" に接続できません。1) RDゲートウェイのアクセス許可リストにユーザーアカウントが登録されていない。2) リモートコンピューターをNetBIOS形式（例：computer1）で指定したが、RDゲートウェイではFQDNまたはIPアドレス形式（例：computer1.fabrikam.comまたは157.60.0.1）が想定されている。ネットワーク管理者にお問い合わせください。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331676" xml:space="preserve">
-    <value>Oddaljeno namizje se ne more povezati z oddaljenim računalnikom "" zaradi enega od teh razlogov: 1) Vaš uporabniški račun ni pooblaščen za dostop do prehoda RD "" 2) Vaš računalnik ni pooblaščen za dostop do prehoda RD "" 3) Vi uporabljate nezdružljivi način preverjanja pristnosti (na primer, prehod RD morda pričakuje pametno kartico, vi pa ste vnesli geslo) Za pomoč se obrnite na skrbnika omrežja.</value>
+    <value>リモート デスクトップは、次のいずれかの理由により、リモート コンピューター "" に接続できません。1) ユーザー アカウントに RD ゲートウェイ "" へのアクセスが許可されていません。2) コンピューターに RD ゲートウェイ "" へのアクセスが許可されていません。3) 互換性のない認証方法を使用しています (たとえば、RD ゲートウェイがスマート カードを必要としているのに、パスワードを入力したなど)。サポートについては、ネットワーク管理者に問い合わせてください。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331679" xml:space="preserve">
-    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker je skrbnik omrežja omejil dostop do tega Prehodnega strežnika RD. Za pomoč se obrnite na skrbnika omrežja.</value>
+    <value>ネットワーク管理者がこのRDゲートウェイサーバーへのアクセスを制限しているため、お使いのコンピューターはリモートコンピューターに接続できません。ネットワーク管理者にお問い合わせください。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331680" xml:space="preserve">
-    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker spletni namestniški strežnik zahteva preverjanje pristnosti. Če želite omogočiti nepreverjen promet do Prehodnega strežnika RD prek vašega spletnega namestniškega strežnika, se obrnite na skrbnika omrežja.</value>
+    <value>Webプロキシサーバーが認証を必要とするため、お使いのコンピューターはリモートコンピューターに接続できません。Webプロキシサーバー経由でRDゲートウェイサーバーへの認証されていないトラフィックを許可するには、ネットワーク管理者にお問い合わせください。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331682" xml:space="preserve">
-    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker je Prehodni strežnik za oddaljeno namizje dosegel največje dovoljeno število povezav. Poskusite znova vzpostaviti povezavo pozneje ali se za pomoč obrnite na skrbnika omrežja.</value>
+    <value>リモートデスクトップゲートウェイサーバーの接続数が上限に達したため、お使いのコンピューターはリモートコンピューターに接続できません。しばらくしてから再接続するか、ネットワーク管理者にお問い合わせください。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331683" xml:space="preserve">
-    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker Prehodni strežnik za oddaljeno namizje ne podpira zahteve. Za pomoč se obrnite na skrbnika omrežja.</value>
+    <value>リモートデスクトップゲートウェイサーバーが要求をサポートしていないため、お使いのコンピューターはリモートコンピューターに接続できません。ネットワーク管理者にお問い合わせください。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331684" xml:space="preserve">
-    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker odjemalec ne podpira ene od zmožnosti prehoda za oddaljeno namizje. Za pomoč se obrnite na skrbnika omrežja.</value>
+    <value>クライアントがリモートデスクトップゲートウェイの機能の1つをサポートしていないため、コンピューターはリモートコンピューターに接続できません。ネットワーク管理者にお問い合わせください。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331685" xml:space="preserve">
-    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker Prehodni strežnik za oddaljeno namizje in ta računalnik nista združljiva. Za pomoč se obrnite na skrbnika omrežja.</value>
+    <value>リモートデスクトップゲートウェイサーバーとこのコンピューターに互換性がないため、このコンピューターはリモートコンピューターに接続できません。ネットワーク管理者にお問い合わせください。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331688" xml:space="preserve">
-    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker ni bilo nastavljeno nobeno potrdilo za uporabo na Prehodnem strežniku za oddaljeno namizje. Za pomoč se obrnite na skrbnika omrežja.</value>
+    <value>リモートデスクトップゲートウェイサーバーで使用する証明書が構成されていないため、コンピューターはリモートコンピューターに接続できません。ネットワーク管理者にお問い合わせください。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331689" xml:space="preserve">
-    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker skrbnik računalnika ne dovoli Prehodnega strežnika za oddaljeno namizje, s katerim se poskušate povezati. Če ste skrbnik, dodajte to ime Prehodnega strežnika za oddaljeno namizje na seznam zaupanja vrednih Strežnikov prehoda za oddaljeno namizje v vašem računalniku in se nato poskusite znova povezati.</value>
+    <value>接続しようとしているRDゲートウェイサーバーがコンピューターの管理者によって許可されていないため、コンピューターはリモートコンピューターに接続できません。管理者の場合は、このリモートデスクトップゲートウェイサーバー名をコンピューターの信頼できるリモートデスクトップゲートウェイサーバー一覧に追加してから、再度接続してください。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331690" xml:space="preserve">
-    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker vaš računalnik ali naprava ni izpolnjevala zahtev za zaščito dostopa do omrežja, ki jih je določil skrbnik omrežja, zaradi enega od naslednjih razlogov: 1) Ime Prehodnega strežnika za oddaljeno namizje in potrdilo javnega ključa strežnika ime predmeta se ne ujema. 2) Potrdilo je poteklo ali je bilo preklicano. 3) Korenski organ potrdila ne zaupa potrdilu. 4) Razširitev ključa potrdila ne podpira šifriranja. 5) Vaš računalnik ne more preveriti seznama preklicanih potrdil. Za pomoč se obrnite na skrbnika omrežja.</value>
+    <value>お使いのコンピューターまたはデバイスがネットワーク管理者によって設定されたネットワークアクセス保護の要件を満たしていないため、リモートコンピューターに接続できません。原因としては、次のいずれかが挙げられます。1) リモートデスクトップゲートウェイのサーバー名とサーバーの公開キー証明書のサブジェクト名が一致しません。2) 証明書の有効期限が切れているか、失効しています。3) 証明書ルート証明機関が証明書を信頼していません。4) 証明書キーの拡張が暗号化をサポートしていません。5) お使いのコンピューターが証明書失効リストを検証できません。ネットワーク管理者にお問い合わせください。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331691" xml:space="preserve">
-    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker sta za preverjanje pristnosti na Prehodnem strežniku za oddaljeno namizje potrebna uporabniško ime in geslo namesto poverilnic pametne kartice.</value>
+    <value>リモート デスクトップ ゲートウェイ サーバーへの認証にはスマート カードの資格情報ではなくユーザー名とパスワードが必要なため、コンピューターはリモート コンピューターに接続できません。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331692" xml:space="preserve">
-    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker so za preverjanje pristnosti na Prehodnem strežniku za oddaljeno namizje namesto uporabniškega imena in gesla potrebne poverilnice pametne kartice.</value>
+    <value>リモート デスクトップ ゲートウェイ サーバーに認証するには、ユーザー名とパスワードではなく、スマート カードの資格情報が必要であるため、コンピューターはリモート コンピューターに接続できません。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331700" xml:space="preserve">
-    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker je bil Prehodnem strežniku za oddaljeno namizje poslan neveljaven piškotek. Za pomoč se obrnite na skrbnika omrežja.</value>
+    <value>リモートデスクトップゲートウェイサーバーに無効なCookieが送信されたため、お使いのコンピューターはリモートコンピューターに接続できません。ネットワーク管理者にお問い合わせください。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331701" xml:space="preserve">
-    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker je Prehodni strežnik za oddaljeno namizje zavrnil piškotek. Za pomoč se obrnite na skrbnika omrežja.</value>
+    <value>リモートデスクトップゲートウェイサーバーによってCookieが拒否されたため、コンピューターはリモートコンピューターに接続できません。ネットワーク管理者にお問い合わせください。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331703" xml:space="preserve">
-    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker Prehodni strežnik za oddaljeno namizje pričakuje drugačen način preverjanja pristnosti od tistega, ki je bil uporabljen. Za pomoč se obrnite na skrbnika omrežja.</value>
+    <value>リモートデスクトップゲートウェイサーバーが、試行した認証方法とは異なる認証方法を要求しているため、お使いのコンピューターはリモートコンピューターに接続できません。ネットワーク管理者にお問い合わせください。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331704" xml:space="preserve">
-    <value>Povezava s prehodom oddaljenega namizja se je prekinila, ker periodično preverjanje pristnosti uporabnika ni uspelo. Poskusite se znova povezati s pravilnim uporabniškim imenom in geslom. Če ponovna povezava ne uspe, se za nadaljnjo pomoč obrnite na skrbnika omrežja.</value>
+    <value>定期的なユーザー認証に失敗したため、RDゲートウェイ接続が終了しました。正しいユーザー名とパスワードで再接続してください。再接続に失敗した場合は、ネットワーク管理者にお問い合わせください。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331705" xml:space="preserve">
-    <value>Povezava s prehodom oddaljenega namizja, ker periodično pooblastilo uporabnika ni uspelo. Poskusite se znova povezati s pravilnim uporabniškim imenom in geslom. Če ponovna povezava ne uspe, se za nadaljnjo pomoč obrnite na skrbnika omrežja.</value>
+    <value>定期的なユーザー認証に失敗したため、RDゲートウェイ接続が終了しました。正しいユーザー名とパスワードで再接続してください。再接続に失敗した場合は、ネットワーク管理者にお問い合わせください。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331707" xml:space="preserve">
-    <value>Vaš računalnik se ne more povezati z oddaljenim računalnikom, ker prehod za oddaljeno namizje in oddaljeni računalnik ne moreta izmenjati politik. To se lahko zgodi zaradi enega od naslednjih razlogov: 1. Oddaljeni računalnik ne more izmenjevati politik s prehodom za oddaljeno namizje. 2. Nastavitve oddaljenega računalnika ne dovoljuje nove povezave. 3. Povezava med prehodom za oddaljeno namizje in oddaljenim računalnikom je prekinjena. Za pomoč se obrnite na skrbnika omrežja.</value>
+    <value>リモートデスクトップゲートウェイとリモートコンピュータがポリシーを交換できないため、コンピュータはリモートコンピュータに接続できません。これは、次のいずれかの理由により発生する可能性があります。1. リモートコンピュータがリモートデスクトップゲートウェイとポリシーを交換できない。2. リモートコンピュータの構成で新しい接続が許可されていない。3. リモートデスクトップゲートウェイとリモートコンピュータ間の接続が終了している。ネットワーク管理者に問い合わせてください。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331713" xml:space="preserve">
-    <value>Povezava s prehodom oddaljenega namizja je končana, ker ni uspelo periodično pooblastilo uporabnika. Vaš računalnik ali naprava nista prestala zahtev za zaščito dostopa do omrežja (NAP), ki jih je določil skrbnik omrežja. Za pomoč se obrnite na skrbnika omrežja.</value>
+    <value>定期的なユーザー認証に失敗したため、RDゲートウェイ接続が終了しました。お使いのコンピューターまたはデバイスは、ネットワーク管理者が設定したネットワークアクセス保護（NAP）の要件を満たしていませんでした。ネットワーク管理者にお問い合わせください。</value>
   </data>
   <data name="Connected" xml:space="preserve">
-    <value>Povezan</value>
+    <value>接続済み</value>
   </data>
   <data name="ErrorWhileScanningWiFiAdapterXXXWithErrorXXX" xml:space="preserve">
-    <value>Napaka med pregledovanjem WiFi kartice "{0}" z napako: "{1}"</value>
+    <value>WiFi アダプタ"{0}"のスキャン中にエラー : "{1}"</value>
   </data>
   <data name="ConnectDots" xml:space="preserve">
-    <value>Poveži...</value>
+    <value>接続...</value>
   </data>
   <data name="XXXDisconnected" xml:space="preserve">
-    <value>{0}prekinjena</value>
+    <value>{0} 切断されました！</value>
   </data>
   <data name="ConnectToXXX" xml:space="preserve">
-    <value>Poveži z {0}</value>
+    <value>{0} に接続</value>
   </data>
   <data name="WPS" xml:space="preserve">
     <value>WPS</value>
   </data>
   <data name="ConnectAutomatically" xml:space="preserve">
-    <value>Samodejno poveži</value>
+    <value>自動的に接続</value>
   </data>
   <data name="PreSharedKey" xml:space="preserve">
-    <value>Vnaprej deljeni ključ</value>
+    <value>Pre-shared キー</value>
   </data>
   <data name="ConnectingToXXX" xml:space="preserve">
-    <value>Povezovanje z {0}...</value>
+    <value>{0} に接続しています...</value>
   </data>
   <data name="CouldNotConnectToXXXReasonXXX" xml:space="preserve">
-    <value>Ni bilo mogoče vzpostaviti povezave z {0} ({1})!</value>
+    <value>{0} ({1}) に接続できませんでした!</value>
   </data>
   <data name="SuccessfullyConnectedToXXX" xml:space="preserve">
-    <value>Uspešno povezan z {0}!</value>
+    <value>{0} に正常に接続しました!</value>
   </data>
   <data name="WiFiConnectionStatus_AccessRevoked" xml:space="preserve">
-    <value>Dostop do omrežja je bil preklican</value>
+    <value>ネットワークへのアクセスが取り消されました</value>
   </data>
   <data name="WiFiConnectionStatus_InvalidCredential" xml:space="preserve">
-    <value>Neveljavne poverilnice</value>
+    <value>無効な資格情報</value>
   </data>
   <data name="WiFiConnectionStatus_NetworkNotAvailable" xml:space="preserve">
-    <value>Omrežje ni na voljo</value>
+    <value>ネットワークが利用できません</value>
   </data>
   <data name="WiFiConnectionStatus_Success" xml:space="preserve">
-    <value>Uspešno</value>
+    <value>成功</value>
   </data>
   <data name="WiFiConnectionStatus_Timeout" xml:space="preserve">
-    <value>Časovna omejitev poskusa povezave je potekla</value>
+    <value>接続試行がタイムアウトしました</value>
   </data>
   <data name="WiFiConnectionStatus_UnspecifiedFailure" xml:space="preserve">
     <value>-/-</value>
   </data>
   <data name="WiFiConnectionStatus_UnsupportedAuthenticationProtocol" xml:space="preserve">
-    <value>Protokol za preverjanje pristnosti ni podprt!</value>
+    <value>認証プロトコルはサポートされていません!</value>
   </data>
   <data name="CheckingWPSDots" xml:space="preserve">
-    <value>Preverjanje WPS...</value>
+    <value>WPS を確認しています...</value>
   </data>
   <data name="OpenOIDProfilesDots" xml:space="preserve">
-    <value>Odpri profile OID...</value>
+    <value>OID プロファイルを開く...</value>
   </data>
   <data name="MIB" xml:space="preserve">
     <value>MIB</value>
   </data>
   <data name="OIDProfiles" xml:space="preserve">
-    <value>Profili OID</value>
+    <value>OID プロファイル</value>
   </data>
   <data name="SelectOIDProfile" xml:space="preserve">
-    <value>Izberi profil OID</value>
+    <value>OID プロファイルの選択</value>
   </data>
   <data name="AddOIDProfile" xml:space="preserve">
-    <value>Dodaj profil OID</value>
+    <value>OID プロファイルの追加</value>
   </data>
   <data name="DeleteOIDProfile" xml:space="preserve">
-    <value>Izbriši profil OID</value>
+    <value>OID プロファイルを削除</value>
   </data>
   <data name="DeleteOIDProfileMessage" xml:space="preserve">
-    <value>Izbrani profil OID bo trajno izbrisan.</value>
+    <value>選択した OID プロファイルは完全に削除されます。</value>
   </data>
   <data name="EditOIDProfile" xml:space="preserve">
-    <value>Uredi profil OID</value>
+    <value>OID プロファイルの編集</value>
   </data>
   <data name="EnterPasswordDots" xml:space="preserve">
-    <value>Vnesi geslo...</value>
+    <value>パスワードの入力...</value>
   </data>
   <data name="AddTab" xml:space="preserve">
-    <value>Dodaj zavihek</value>
+    <value>タブの追加</value>
   </data>
   <data name="FromProfile" xml:space="preserve">
-    <value>(iz profila)</value>
+    <value>(プロファイルから)</value>
   </data>
   <data name="NewSubnetMask" xml:space="preserve">
-    <value>Nova maska podomrežja</value>
+    <value>新しいサブネットマスク</value>
   </data>
   <data name="AddServer" xml:space="preserve">
-    <value>Dodaj strežnik</value>
+    <value>サーバーの追加</value>
   </data>
   <data name="SNTPServer" xml:space="preserve">
-    <value>Strežnik SNTP</value>
+    <value>SNTP サーバー</value>
   </data>
   <data name="ErrorMessage_TabPageHasError" xml:space="preserve">
-    <value>Nastavitve na tej strani vsebujejo napake. Popravite jih, da jih lahko shranite.</value>
+    <value>このページの設定にはエラーがあります。修正して保存してください。</value>
   </data>
   <data name="HelpMessage_PuTTYHostkey" xml:space="preserve">
-    <value>Ključ gostitelja SSH za povezavo (na primer "71:b8:f2:6e ..."). Na voljo samo, če je način "SSH".</value>
+    <value>接続に使用するSSHホストキー（「71:b8:f2:6e...」など）。モードが「SSH」の場合にのみ使用できます。</value>
   </data>
   <data name="HelpMessage_PuTTYPrivateKeyFile" xml:space="preserve">
-    <value>Celotna pot do datoteke zasebnega ključa (na primer »C:\Users\BornToBeRoot\SSH\private_key.ppk«). Na voljo samo, če je način "SSH".</value>
+    <value>秘密鍵ファイルへのフルパス（例：「C:\Users\BornToBeRoot\SSH\private_key.ppk」）。モードが「SSH」の場合のみ使用できます。</value>
   </data>
   <data name="HelpMessage_PuTTYUsername" xml:space="preserve">
-    <value>Uporabniško ime, ki bo posredovano v sejo PuTTY. Na voljo samo, če je način "SSH", "Telnet" ali "Rlogin".</value>
+    <value>PuTTYセッションに渡されるユーザー名。モードが「SSH」、「Telnet」、または「Rlogin」の場合にのみ使用できます。</value>
   </data>
   <data name="ASN" xml:space="preserve">
     <value>ASN</value>
   </data>
   <data name="ASName" xml:space="preserve">
-    <value>Ime AS</value>
+    <value>AS 名</value>
   </data>
   <data name="City" xml:space="preserve">
-    <value>Mesto</value>
+    <value>市</value>
   </data>
   <data name="Continent" xml:space="preserve">
-    <value>Celina</value>
+    <value>大陸</value>
   </data>
   <data name="Country" xml:space="preserve">
-    <value>Država</value>
+    <value>国</value>
   </data>
   <data name="Currency" xml:space="preserve">
-    <value>Valuta</value>
+    <value>通貨</value>
   </data>
   <data name="District" xml:space="preserve">
-    <value>Okraj</value>
+    <value>区</value>
   </data>
   <data name="DNSResolver" xml:space="preserve">
-    <value>Razreševalec DNS</value>
+    <value>DNS resolver</value>
   </data>
   <data name="EDNS" xml:space="preserve">
     <value>EDNS</value>
   </data>
   <data name="Geolocation" xml:space="preserve">
-    <value>Geolokacija</value>
+    <value>Geolocation</value>
   </data>
   <data name="Hosting" xml:space="preserve">
-    <value>Gostovanje</value>
+    <value>Hosting</value>
   </data>
   <data name="IPGeolocation" xml:space="preserve">
-    <value>Geolokacija IP</value>
+    <value>IP geolocation</value>
   </data>
   <data name="ISP" xml:space="preserve">
-    <value>Ponudnik internetnih storitev</value>
+    <value>ISP</value>
   </data>
   <data name="Latitude" xml:space="preserve">
-    <value>Zemljepisna širina</value>
+    <value>Latitude</value>
   </data>
   <data name="Longitude" xml:space="preserve">
-    <value>Zemljepisna dolžina</value>
+    <value>Longitude</value>
   </data>
   <data name="Mobile" xml:space="preserve">
-    <value>Mobilna</value>
+    <value>モバイル</value>
   </data>
   <data name="Organization" xml:space="preserve">
-    <value>Organizacija</value>
+    <value>組織</value>
   </data>
   <data name="PTRRecord" xml:space="preserve">
-    <value>Zapis PTR</value>
+    <value>PTRレコード</value>
   </data>
   <data name="Timezone" xml:space="preserve">
-    <value>Časovni pas</value>
+    <value>タイムゾーン</value>
   </data>
   <data name="ZipCode" xml:space="preserve">
-    <value>ZIP</value>
+    <value>郵便番号</value>
   </data>
   <data name="ExternalService_ip_api_Description" xml:space="preserve">
-    <value>API Geolokacija IP - Hitro, natančno, zanesljivo</value>
+    <value>IP位置情報API - 高速、正確、信頼性</value>
   </data>
   <data name="CheckDNSResolver" xml:space="preserve">
-    <value>Preveri razreševalnik DNS</value>
+    <value>DNSリゾルバの確認</value>
   </data>
   <data name="CheckIPGeolocation" xml:space="preserve">
-    <value>Preveri geolokacijo IP</value>
+    <value>IP位置情報の確認</value>
   </data>
   <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
-    <value>Reševalec DNS se določi prek ip-api.com.
+    <value>DNS リゾルバは ip-api.com によって決定されます。
 
 URL: https://edns.ip-api.com/</value>
   </data>
   <data name="HelpMessage_CheckIPGeolocation" xml:space="preserve">
-    <value>Geolokacija IP se določi preko ip-api.com. URL: http://ip-api.com/</value>
+    <value>IP の地理位置は ip-api.com によって決定されます。
+
+URL: http://ip-api.com/</value>
   </data>
   <data name="WelcomePrivacyMessage" xml:space="preserve">
-    <value>Za zagotavljanje dodatnih funkcij se uporabljajo storitve tretjih oseb, ki jih ne upravljam jaz. Spodaj jih lahko prekličete. V nobenem trenutku se mi ne prenesejo nobeni podatki.</value>
+    <value>追加機能を提供するために、私が運営していないサードパーティのサービスが利用されています。以下の選択を解除できます。いかなる場合も、私にデータが転送されることはありません。</value>
   </data>
   <data name="CheckingDNSResolverDots" xml:space="preserve">
-    <value>Preverjanje razreševalnika DNS...</value>
+    <value>DNS リゾルバを確認しています...</value>
   </data>
   <data name="CheckingIPGeolocationDots" xml:space="preserve">
-    <value>Preverjanje geolokacije IP</value>
+    <value>IP 地理位置情報を確認しています...</value>
   </data>
   <data name="CheckNetworkConnectionTryAgainMessage" xml:space="preserve">
-    <value>Preverite omrežno povezavo in poskusite znova čez nekaj sekund.</value>
+    <value>ネットワーク接続を確認し、数秒後にもう一度お試しください。</value>
   </data>
   <data name="IPApiRateLimitMessage" xml:space="preserve">
-    <value>Dosežena je omejitev hitrosti ip-api.com (preveč zahtev iz vašega omrežja)! Poskusite ponovno čez nekaj sekund.</value>
+    <value>ip-api.com のレート制限に達しました (ネットワークからのリクエストが多すぎます)!
+数秒後にもう一度お試しください。</value>
   </data>
   <data name="HTTPStatusCode" xml:space="preserve">
-    <value>Koda stanja HTTP</value>
+    <value>HTTP 状態コード</value>
   </data>
   <data name="Accen_Steel" xml:space="preserve">
-    <value>Jeklo</value>
+    <value>スチール</value>
   </data>
   <data name="RateLimitReachedTryAgainInXSeconds" xml:space="preserve">
-    <value>Omejitev stopnje je dosežena! Poskusite znova čez {0} sekund ...</value>
+    <value>レート制限に達しました。{0} 秒後にもう一度お試しください...</value>
   </data>
   <data name="ProfileGroup_General" xml:space="preserve">
-    <value>Splošno</value>
+    <value>全般</value>
   </data>
   <data name="BSSID" xml:space="preserve">
     <value>BSSID</value>
   </data>
   <data name="NoReachableHostsFound" xml:space="preserve">
-    <value>Ni dosegljivih gostiteljev!</value>
+    <value>アクセス可能なホストが見つかりません!</value>
   </data>
   <data name="ProfileGroup_Application" xml:space="preserve">
-    <value>Aplikacija</value>
+    <value>アプリケーション</value>
   </data>
   <data name="HelpMessage_ExperimentalFeatures" xml:space="preserve">
-    <value>Omogočite eksperimentalne funkcije, da preizkusite nove funkcije. Te še niso dokončane, vsebujejo napake, lahko zrušijo aplikacijo in se lahko znova spremenijo do izdaje.</value>
+    <value>新しい機能をテストするために、試験的な機能を有効にしてください。これらの機能はまだ完成しておらず、バグが含まれており、アプリケーションをクラッシュさせる可能性があり、リリースまでに変更される可能性があります。</value>
   </data>
   <data name="ExperimentalFeatures" xml:space="preserve">
-    <value>Eksperimentalne funkcije</value>
+    <value>実験的な機能</value>
   </data>
   <data name="Experimental" xml:space="preserve">
-    <value>Experimentalno</value>
+    <value>実験的</value>
   </data>
   <data name="Watermark_RunCommand" xml:space="preserve">
-    <value>Zaženi ukaz</value>
+    <value>コマンドを実行...</value>
   </data>
   <data name="ApplicationName_IPGeolocation" xml:space="preserve">
-    <value>Geolokacija naslova IP</value>
+    <value>IP 位置情報</value>
   </data>
   <data name="AddATabToQueryTheIPGeolocation" xml:space="preserve">
-    <value>Dodaj zavihek za poizvedbo po geolokaciji naslova IP...</value>
+    <value>IP 位置情報を照会するためのタブを追加...</value>
   </data>
   <data name="EnterADomainToQueryWhoisDots" xml:space="preserve">
-    <value>Vnesi domeno za poizvedbo whois...</value>
+    <value>whois を照会するドメインの入力...</value>
   </data>
   <data name="EnterHostToQueryIPGeolocationDots" xml:space="preserve">
-    <value>Vnesi gostitelja za poizvedbo o geolokaciji naslova IP...</value>
+    <value>IP 位置情報を照会するにはホストの入力...</value>
   </data>
   <data name="SNMPV3ErrorCode_UnknownUserName" xml:space="preserve">
-    <value>Neznano uporabniško ime.Neznano uporabniško ime.</value>
+    <value>ユーザー名が不明です。</value>
   </data>
   <data name="SNMPV3ErrorCode_AuthenticationFailed" xml:space="preserve">
-    <value>Napaka pri preverjanju pristnosti (nepravilno geslo, skupnost ali ključ).</value>
+    <value>認証に失敗しました (パスワード、コミュニティ、またはキーが正しくありません)。</value>
   </data>
   <data name="SNMPErrorCode_NoError" xml:space="preserve">
-    <value>Operacija je bila uspešna brez napak.</value>
+    <value>操作はエラーなく成功しました。</value>
   </data>
   <data name="SNMPErrorCode_TooBig" xml:space="preserve">
-    <value>Odgovor na vašo zahtevo je bil predolg, da bi ga vključili v en odgovor!</value>
+    <value>リクエストに対する応答が大きすぎて、1 つの応答に収まりきりません。</value>
   </data>
   <data name="SNMPErrorCode_NoSuchName" xml:space="preserve">
-    <value>Zahtevanega OID-ja ni bilo mogoče najti!</value>
+    <value>要求された OID が見つかりませんでした!</value>
   </data>
   <data name="SNMPErrorCode_BadValue" xml:space="preserve">
-    <value>Predmet 'branje-pisanje' ali 'samo-pisanje' je bil nastavljen na nedosledno vrednost!</value>
+    <value>読み取り/書き込みまたは書き込み専用オブジェクトに矛盾した値が設定されました!</value>
   </data>
   <data name="SNMPErrorCode_ReadOnly" xml:space="preserve">
-    <value>Zahtevani OID ne obstaja in ni zapisljiv!</value>
+    <value>要求された OID は存在せず、書き込み可能ではありません!</value>
   </data>
   <data name="SNMPErrorCode_GenError" xml:space="preserve">
-    <value>Prišlo je do napake, za katero ni na voljo nobenega posebnega sporočila!</value>
+    <value>特定のメッセージがないエラーが発生しました!</value>
   </data>
   <data name="SNMPErrorCode_NoAccess" xml:space="preserve">
-    <value>Zahtevani predmet ni dostopen za spreminjanje!</value>
+    <value>要求されたオブジェクトは変更のためにアクセスできません!</value>
   </data>
   <data name="SNMPErrorCode_WrongType" xml:space="preserve">
-    <value>Predmet je bil nastavljen na nezdružljio vrsto podatov!</value>
+    <value>オブジェクトが互換性のないデータ型に設定されました!</value>
   </data>
   <data name="SNMPErrorCode_WrongLength" xml:space="preserve">
-    <value>Dodeljena vrednost predmeta presega njegovo največjo dovoljeno dolžino!</value>
+    <value>オブジェクトに割り当てられた値が最大長を超えています!</value>
   </data>
   <data name="SNMPErrorCode_WrongEncoding" xml:space="preserve">
-    <value>Uporabljeno kodiranje predmeta ni pravilno!</value>
+    <value>オブジェクトに使用されているエンコーディングが正しくありません!</value>
   </data>
   <data name="SNMPErrorCode_WrongValue" xml:space="preserve">
-    <value>Dodeljena vrednost predmeta ni veljavna izbira!</value>
+    <value>オブジェクトに割り当てられた値は有効な選択ではありません!</value>
   </data>
   <data name="SNMPErrorCode_NoCreation" xml:space="preserve">
-    <value>Zahtevani predmet ne obstaja in ga ni mogoče ustvariti!</value>
+    <value>要求されたオブジェクトは存在しないため、作成できません!</value>
   </data>
   <data name="SNMPErrorCode_InconsistentValue" xml:space="preserve">
-    <value>Spremenljivka MIB je trenutno v nedoslednem stanju in je ni mogoče spreminjati!</value>
+    <value>MIB 変数は現在不整合な状態にあるため、変更できません!</value>
   </data>
   <data name="SNMPErrorCode_ResourceUnavailable" xml:space="preserve">
-    <value>Za izvedbo zahtevane operacije ni razpoložljivih sistemskih virov</value>
+    <value>要求された操作を実行するために利用可能なシステム リソースがありません!</value>
   </data>
   <data name="SNMPErrorCode_CommitFailed" xml:space="preserve">
-    <value>Pri nastavljeni operaciji je prišlo do napake!</value>
+    <value>設定操作中にエラーが発生しました!</value>
   </data>
   <data name="SNMPErrorCode_UndoFailed" xml:space="preserve">
-    <value>Nastavljena operacija ni uspela in prejšnjih sprememb ni bilo mogoče razveljaviti!</value>
+    <value>設定操作が失敗し、以前の変更をロールバックできませんでした!</value>
   </data>
   <data name="SNMPErrorCode_AuthorizationError" xml:space="preserve">
-    <value>Preverjanje pristnosti ni uspelo. Preverite niz skupnosti!</value>
+    <value>認証に失敗しました。コミュニティ文字列を確認してください!</value>
   </data>
   <data name="SNMPErrorCode_NotWritable" xml:space="preserve">
-    <value>Zahtevani predmet ni zapisljiv in ga ni mogoče spreminjati!</value>
+    <value>要求されたオブジェクトは書き込み可能ではなく、変更もできません!</value>
   </data>
   <data name="SNMPErrorCode_InconsistentName" xml:space="preserve">
-    <value>Stanje predmeta je nedosledno, kar preprečuje nastavljeno operacijo!</value>
+    <value>オブジェクトの状態が矛盾しているため、設定操作を実行できません!</value>
   </data>
   <data name="CloseAll" xml:space="preserve">
-    <value>Izberi vse</value>
+    <value>すべて閉じる</value>
   </data>
   <data name="ExpandHostView" xml:space="preserve">
-    <value>Razširi prikaz gostitelja</value>
+    <value>ホストビューを展開</value>
   </data>
   <data name="CannotSetHostWhileRunningMessage" xml:space="preserve">
-    <value>Gostitelja ni mogoče nastaviti, medtem ko se dodajajo drugi gostitelji. Počakajte, da se proces konča, in poskusite znova.</value>
+    <value>他のホストを追加している間は、ホストを設定できません。処理が完了するまでお待ちいただき、もう一度お試しください。</value>
   </data>
   <data name="Watermark_RunCommandWithHotKey" xml:space="preserve">
-    <value>Zaženi ukaz... (Ctrl+Shift+P)</value>
+    <value>実行コマンド... (Ctrl+Shift+P)</value>
   </data>
   <data name="NoMatchingCommands" xml:space="preserve">
-    <value>Ni ujemajočega se ukaza!</value>
+    <value>一致するコマンドがありません!</value>
   </data>
   <data name="RemoteHostname" xml:space="preserve">
-    <value>Ime oddaljenega gostitelja</value>
+    <value>リモートホスト名</value>
   </data>
   <data name="ProcessID" xml:space="preserve">
-    <value>ID procesa</value>
+    <value>プロセス ID</value>
   </data>
   <data name="ProcessPath" xml:space="preserve">
-    <value>Pot procesa</value>
+    <value>プロセスのパス</value>
   </data>
   <data name="ProcessName" xml:space="preserve">
-    <value>Ime procesa</value>
+    <value>プロセス名</value>
   </data>
   <data name="NetBIOS" xml:space="preserve">
     <value>NetBIOS</value>
   </data>
   <data name="ComputerName" xml:space="preserve">
-    <value>Ime računalnika</value>
+    <value>コンピューター名</value>
   </data>
   <data name="ConnectionState_Error" xml:space="preserve">
-    <value>Napaka</value>
+    <value>エラー</value>
   </data>
   <data name="ConnectionState_OK" xml:space="preserve">
-    <value>Vredu</value>
+    <value>OK</value>
   </data>
   <data name="ConnectionState_Warning" xml:space="preserve">
-    <value>Opozorilo</value>
+    <value>警告</value>
   </data>
   <data name="GroupDomainName" xml:space="preserve">
-    <value>Skupina/Ime domene</value>
+    <value>グループ / ドメイン名</value>
   </data>
   <data name="NetBIOSReachable" xml:space="preserve">
-    <value>NetBIOS dosegljiv</value>
+    <value>NetBIOS 到達可能</value>
   </data>
   <data name="ScanForNetBIOS" xml:space="preserve">
-    <value>Iskanje NetBIOSa</value>
+    <value>NetBIOS のスキャン</value>
   </data>
   <data name="NetBIOSIsDisabled" xml:space="preserve">
-    <value>Iskanje NetBIOSa je onemogočeno!</value>
+    <value>NetBIOS スキャンが無効です!</value>
   </data>
   <data name="ResolveHostnameIsDisabled" xml:space="preserve">
-    <value>Razrešitev imena gostitelja je onemogočena!</value>
+    <value>ホスト名の解決が無効です!</value>
   </data>
   <data name="ResolveMACAddressIsDisabled" xml:space="preserve">
-    <value>Razrešitev naslova MAC je onemogočena!</value>
+    <value>MAC アドレスの解決が無効です!</value>
   </data>
   <data name="CloseGroup" xml:space="preserve">
-    <value>Close group</value>
+    <value>グループを閉じる</value>
   </data>
   <data name="ToolTip_RunCommandWithHotKey" xml:space="preserve">
-    <value>Run command... (Ctrl+Shift+P)</value>
+    <value>実行コマンド... (Ctrl+Shift+P)</value>
   </data>
   <data name="ProfileFiles" xml:space="preserve">
-    <value>Profile files</value>
+    <value>プロファイル ファイル</value>
   </data>
   <data name="OpenSettingsDots" xml:space="preserve">
-    <value>Open settings...</value>
+    <value>設定を開く...</value>
   </data>
   <data name="ExpandAndOpenSearchDots" xml:space="preserve">
-    <value>Expand and open search...</value>
+    <value>展開して検索を開く...</value>
   </data>
   <data name="WiFiAccessNotAvailableMessage" xml:space="preserve">
-    <value>Access to the Wi-Fi adapter is not permitted by Windows.
+    <value>Wi-Fi アダプターへのアクセスは Windows によって許可されていません。
 
-Open the Windows settings and allow Wi-Fi access for this application.
+Windows 設定を開き、このアプリケーションの Wi-Fi アクセスを許可します。
 
-Restart the application afterwards to use this feature.</value>
+この機能を使用するには、後でアプリケーションを再起動してください。</value>
   </data>
   <data name="DragDropApplicationsToReorderRightClickForMoreOptions" xml:space="preserve">
-    <value>Drag and drop the applications to reorder them.
-Right-click for more options.</value>
+    <value>アプリケーションをドラッグ アンド ドロップして順序を変更します。
+右クリックすると、さらにオプションが表示されます。</value>
   </data>
   <data name="RestoreDefaults" xml:space="preserve">
-    <value>Restore defaults</value>
+    <value>デフォルトに戻す</value>
   </data>
   <data name="Library_GongSolutionsWpfDragDrop_Description" xml:space="preserve">
-    <value>An easy to use drag'n'drop framework for WPF.</value>
+    <value>WPF 用の使いやすいドラッグ アンド ドロップ フレームワーク。</value>
   </data>
   <data name="License_BDS3Clause" xml:space="preserve">
     <value>BSD-3-Clause</value>
   </data>
   <data name="SetDefault" xml:space="preserve">
-    <value>Set default</value>
+    <value>デフォルトの設定</value>
   </data>
   <data name="ExampleProfileDescription" xml:space="preserve">
-    <value>Ubuntu Server running Docker with Nextcloud and Traefik...</value>
+    <value>Nextcloud と Traefik を使って Docker を実行する Ubuntu Server...</value>
   </data>
   <data name="ExampleGroupDescription" xml:space="preserve">
-    <value>Linux servers running in AWS...</value>
+    <value>AWS で実行されている Linux サーバー...</value>
   </data>
   <data name="GHz6" xml:space="preserve">
     <value>6 GHz</value>
   </data>
   <data name="ToolTip_SupportThisProjectWithADonation" xml:space="preserve">
-    <value>Support this project with a donation.</value>
+    <value>寄付を通じてこのプロジェクトを支援してください。</value>
   </data>
   <data name="OpenDocumentation" xml:space="preserve">
-    <value>Odpri dokumentacijo</value>
+    <value>ドキュメントを開く</value>
   </data>
   <data name="StarForkTheProjectOnGitHub" xml:space="preserve">
     <value/>
@@ -3856,9 +3874,9 @@ Right-click for more options.</value>
     <value/>
   </data>
   <data name="Donate" xml:space="preserve">
-    <value>Donate</value>
+    <value>寄付</value>
   </data>
   <data name="ProfileFile" xml:space="preserve">
-    <value>Profile file</value>
+    <value>プロファイル ファイル</value>
   </data>
 </root>

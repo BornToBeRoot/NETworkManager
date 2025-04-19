@@ -6,22 +6,23 @@ git:
       source_language: en_US
       source_file: Source/NETworkManager.Localization/Resources/Strings.resx
       # path expression to translation files, must contain <lang> placeholder
-      translation_files_expression: 'Source/NETworkManager.Localization/Resources/Strings.<lang>.resx'
+      translation_files_expression: "Source/NETworkManager.Localization/Resources/Strings.<lang>.resx"
   settings:
-      # https://www.codedigest.com/CodeDigest/207-Get-All-Language-Country-Code-List-for-all-Culture-in-C---ASP-Net.aspx
-      language_mapping:        
-          de_DE: de-DE
-          zh_CN: zh-CN
-          zh_TW: zh-TW
-          cs_CZ: cs-CZ
-          nl_NL: nl-NL
-          fr_FR: fr-FR          
-          hu_HU: hu-HU
-          it_IT: it-IT
-          ko_KR: ko-KR
-          pl_PL: pl-PL
-          pt_BR: pt-BR
-          ru_RU: ru-RU
-          sl_SI: sl-SI
-          es_ES: es-ES
-          sv_SE: sv-SE
+    # https://www.codedigest.com/CodeDigest/207-Get-All-Language-Country-Code-List-for-all-Culture-in-C---ASP-Net.aspx
+    language_mapping:
+      cs_CZ: cs-CZ
+      de_DE: de-DE
+      es_ES: es-ES
+      fr_FR: fr-FR
+      hu_HU: hu-HU
+      it_IT: it-IT
+      ja_JP: ja-JP
+      ko_KR: ko-KR
+      nl_NL: nl-NL
+      pl_PL: pl-PL
+      pt_BR: pt-BR
+      ru_RU: ru-RU
+      sl_SI: sl-SI
+      sv_SE: sv-SE
+      zh_CN: zh-CN
+      zh_TW: zh-TW

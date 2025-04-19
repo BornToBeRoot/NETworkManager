@@ -19,6 +19,8 @@ Release date: **xx.xx.2025**
 
 ## What's new?
 
+- New language Japanese (`ja-JP`) has been added. Thanks to [@coolvitto](https://github.com/coolvitto) [#3044](https://github.com/BornToBeRoot/NETworkManager/pull/3044) [#3030](https://github.com/BornToBeRoot/NETworkManager/pull/3030) [#3035](https://github.com/BornToBeRoot/NETworkManager/pull/3035)
+
 ## Improvements
 
 **PowerShell**
@@ -42,6 +44,10 @@ Release date: **xx.xx.2025**
 **Network Interface**
 
 - Re-select the network interface after a network change or configuration update. Thanks to [@Ghislain1](https://github.com/Ghislain1) [#3004](https://github.com/BornToBeRoot/NETworkManager/pull/3004) [#2962](https://github.com/BornToBeRoot/NETworkManager/pull/2962)
+
+**PowerShell**
+
+- Set PowerShell console color for correct path... [#3023](https://github.com/BornToBeRoot/NETworkManager/pull/3023)
 
 ## Dependencies, Refactoring & Documentation
 

@@ -938,6 +938,8 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private async void ReloadNetworkInterfaces()
     {
+        Debug.WriteLine("ReloadNetworkInterfaces.............");
+        
         // Avoid multiple reloads
         if(IsNetworkInterfaceLoading)
             return;
