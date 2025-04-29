@@ -598,7 +598,7 @@ public class WiFiViewModel : ViewModelBase
         IsAdaptersLoading = true;
 
         // Show a loading animation for the user
-        await Task.Delay(2500);
+        await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
         try
         {
@@ -644,7 +644,7 @@ public class WiFiViewModel : ViewModelBase
         Log.Debug("LoadAdaptersAsync - Done.");
     }
 
-    private async Task ScanAsync(WiFiAdapterInfo adapterInfo, bool refreshing = false, uint delayInMs = 0)
+    private async Task ScanAsync(WiFiAdapterInfo adapterInfo, bool refreshing = false, int delayInMs = 0)
     {
         Log.Debug($"ScanAsync - Scanning WiFi adapter \"{adapterInfo.NetworkInterfaceInfo.Name}\" with delay of {delayInMs} ms...");
 
@@ -660,7 +660,7 @@ public class WiFiViewModel : ViewModelBase
         }
 
         if (delayInMs != 0)
-            await Task.Delay((int)delayInMs);
+            await Task.Delay(delayInMs);
 
         var statusMessage = string.Empty;
 
@@ -921,7 +921,7 @@ public class WiFiViewModel : ViewModelBase
         }
 
         // Refresh
-        await ScanAsync(SelectedAdapter, true, 2500);
+        await ScanAsync(SelectedAdapter, true, GlobalStaticConfiguration.ApplicationUIRefreshInterval);
     }
 
     private async Task Export()

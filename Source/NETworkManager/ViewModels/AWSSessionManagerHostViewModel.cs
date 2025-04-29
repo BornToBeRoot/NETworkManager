@@ -650,7 +650,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         }
 
         // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
-        await Task.Delay(2500);
+        await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
         Log.Info("All Instance IDs synced from AWS!");
 
@@ -679,7 +679,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         }
 
         // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
-        await Task.Delay(2500);
+        await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
         Log.Info("Group synced!");
 

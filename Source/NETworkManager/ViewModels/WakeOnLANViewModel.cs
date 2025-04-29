@@ -369,7 +369,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
             WakeOnLAN.Send(info);
 
             // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
-            await Task.Delay(2500);
+            await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
             StatusMessage = Strings.MagicPacketSentMessage;
             IsStatusMessageDisplayed = true;

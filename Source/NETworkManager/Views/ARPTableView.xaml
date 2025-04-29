@@ -48,6 +48,17 @@
                                               Sorting="DataGrid_OnSorting">
                     <controls:MultiSelectDataGrid.Resources>
                         <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                            <MenuItem Header="{x:Static localization:Strings.DeleteEntry}"
+                                      Command="{Binding DeleteEntryCommand}">
+                                <MenuItem.Icon>
+                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
                             <MenuItem Header="{x:Static localization:Strings.CopyDots}"
                                       Style="{StaticResource ResourceKey=CopyMenuItem}">
                                 <MenuItem Header="{x:Static Member=localization:Strings.IPAddress}"
@@ -63,20 +74,10 @@
                                           CommandParameter="{Binding SelectedResult.IsMulticast, Converter={StaticResource ResourceKey=BooleanToStringConverter}}"
                                           Style="{StaticResource ResourceKey=CopyMenuItem}" />
                             </MenuItem>
-                            <MenuItem Header="{x:Static localization:Strings.DeleteEntry}"
-                                      Command="{Binding DeleteEntryCommand}">
+                            <MenuItem Header="{x:Static Member=localization:Strings.ExportDots}"
+                                      Command="{Binding Path=ExportCommand}">
                                 <MenuItem.Icon>
-                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                        <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
-                                        </Rectangle.OpacityMask>
-                                    </Rectangle>
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Header="{x:Static localization:Strings.ExportDots}"
-                                      Command="{Binding ExportCommand}">
-                                <MenuItem.Icon>
-                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
                                         </Rectangle.OpacityMask>

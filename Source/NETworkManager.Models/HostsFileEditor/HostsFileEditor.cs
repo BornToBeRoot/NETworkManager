@@ -107,7 +107,7 @@ public static class HostsFileEditor
                     IsEnabled = !result.Groups[1].Value.Equals("#"),
                     IPAddress = result.Groups[2].Value,
                     Hostname = result.Groups[3].Value.Replace(@"\s", "").Trim(),
-                    Comment = result.Groups[4].Value.TrimStart('#'),
+                    Comment = result.Groups[4].Value.TrimStart('#',' '),
                     Line = line
                 };
                 

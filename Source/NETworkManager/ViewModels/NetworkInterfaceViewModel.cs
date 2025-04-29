@@ -938,8 +938,6 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private async void ReloadNetworkInterfaces()
     {
-        Debug.WriteLine("ReloadNetworkInterfaces.............");
-        
         // Avoid multiple reloads
         if(IsNetworkInterfaceLoading)
             return;
@@ -947,7 +945,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         IsNetworkInterfaceLoading = true;
 
         // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
-        await Task.Delay(2500);
+        await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
         // Store the last selected id
         var id = SelectedNetworkInterface?.Id ?? string.Empty;

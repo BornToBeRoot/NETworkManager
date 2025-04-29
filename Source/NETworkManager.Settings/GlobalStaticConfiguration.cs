@@ -19,12 +19,15 @@ public static class GlobalStaticConfiguration
 {
     #region Global settings
 
+    // Application config
+    public static int ApplicationUIRefreshInterval => 2500;
+    
     // Type to search (average type speed --> 187 chars/min)
     public static TimeSpan SearchDispatcherTimerTimeSpan => new(0, 0, 0, 0, 750);
 
     // Network config
     public static int NetworkChangeDetectionDelay => 5000;
-
+    
     // Profile config
     public static bool Profile_ExpandProfileView => true;
     public static double Profile_WidthCollapsed => 40;
@@ -219,6 +222,9 @@ public static class GlobalStaticConfiguration
     // Application: SNTP Lookup
     public static int SNTPLookup_Timeout => 4000;
     public static ExportFileType SNTPLookup_ExportFileType => ExportFileType.Csv;
+    
+    // Application: Hosts File Editor
+    public static ExportFileType HostsFileEditor_ExportFileType => ExportFileType.Csv;
 
     // Application: Discovery Protocol
     public static DiscoveryProtocol DiscoveryProtocol_Protocol => DiscoveryProtocol.LldpCdp;
