@@ -167,7 +167,7 @@
                 </Rectangle>
             </Button>
         </Grid>
-        <webview:WebView2 Grid.Row="2" x:Name="Browser2">
+        <webview:WebView2 Grid.Row="2" x:Name="Browser">
             <webview:WebView2.Style>
                 <Style TargetType="{x:Type webview:WebView2}">
                     <Style.Triggers>

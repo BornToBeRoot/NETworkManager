@@ -77,16 +77,16 @@ public partial class WebConsoleControl : UserControlBase, IDragablzTabItem
         _tabId = tabId;
         _sessionInfo = sessionInfo;
 
-        Browser2.NavigationStarting += Browser2_NavigationStarting;
-        Browser2.NavigationCompleted += Browser2_NavigationCompleted;
-        Browser2.SourceChanged += Browser2_SourceChanged;
+        Browser.NavigationStarting += Browser2_NavigationStarting;
+        Browser.NavigationCompleted += Browser2_NavigationCompleted;
+        Browser.SourceChanged += Browser2_SourceChanged;
 
         Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
     }
 
     private void Browser2_SourceChanged(object sender, CoreWebView2SourceChangedEventArgs e)
     {
-        Url = Browser2.Source.ToString();
+        Url = Browser.Source.ToString();
     }
 
     private async void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -98,7 +98,16 @@ public partial class WebConsoleControl : UserControlBase, IDragablzTabItem
         // Set user data folder - Fix #382            
         var webView2Environment =
             await CoreWebView2Environment.CreateAsync(null, GlobalStaticConfiguration.WebConsole_Cache);
-        await Browser2.EnsureCoreWebView2Async(webView2Environment);
+        
+        await Browser.EnsureCoreWebView2Async(webView2Environment);
+
+        //await Browser.CoreWebView2.Profile.ClearBrowsingDataAsync();
+
+        // Set the default settings
+        Browser.CoreWebView2.Settings.IsStatusBarEnabled = true;
+        Browser.CoreWebView2.Settings.AreDevToolsEnabled = false;
+        Browser.CoreWebView2.Settings.IsGeneralAutofillEnabled = true;
+        Browser.CoreWebView2.Settings.IsPasswordAutosaveEnabled = true;
 
         Navigate(_sessionInfo.Url);
 
@@ -142,31 +151,31 @@ public partial class WebConsoleControl : UserControlBase, IDragablzTabItem
 
     private void ReloadAction()
     {
-        Browser2.Reload();
+        Browser.Reload();
     }
 
     private bool GoBackCommand_CanExecute(object obj)
     {
-        return !IsLoading && Browser2.CanGoBack;
+        return !IsLoading && Browser.CanGoBack;
     }
 
     public ICommand GoBackCommand => new RelayCommand(_ => GoBackAction(), GoBackCommand_CanExecute);
 
     private void GoBackAction()
     {
-        Browser2.GoBack();
+        Browser.GoBack();
     }
 
     private bool GoForwardCommand_CanExecute(object obj)
     {
-        return !IsLoading && Browser2.CanGoForward;
+        return !IsLoading && Browser.CanGoForward;
     }
 
     public ICommand GoForwardCommand => new RelayCommand(_ => GoForwardAction(), GoForwardCommand_CanExecute);
 
     private void GoForwardAction()
     {
-        Browser2.GoForward();
+        Browser.GoForward();
     }
 
     #endregion
@@ -175,12 +184,14 @@ public partial class WebConsoleControl : UserControlBase, IDragablzTabItem
 
     private void Navigate(string url)
     {
-        Browser2.Source = new Uri(url);
+        Browser.Source = new Uri(url);
     }
 
     private void Stop()
     {
-        Browser2.Stop();
+        Browser.Stop();
+        
+        
     }
 
     public void CloseTab()
