@@ -8,6 +8,7 @@ using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Utilities;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -140,6 +141,20 @@ public static class GlobalStaticConfiguration
     // Application: DNS Lookup
     public static QueryClass DNSLookup_QueryClass => QueryClass.IN;
     public static QueryType DNSLookup_QueryType => QueryType.ANY;
+    public static HashSet<QueryType> DNSLookup_CustomQueryTypes =>
+    [
+        QueryType.A,
+        QueryType.AAAA,
+        QueryType.ANY,
+        QueryType.CNAME,
+        QueryType.DNSKEY,
+        QueryType.MX,
+        QueryType.NS,
+        QueryType.PTR,
+        QueryType.SOA,
+        QueryType.SRV,
+        QueryType.TXT
+    ];
     public static bool DNSLookup_UseTCPOnly => false;
     public static int DNSLookup_Retries => 3;
     public static int DNSLookup_Timeout => 2;

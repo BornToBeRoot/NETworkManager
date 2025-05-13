@@ -1,11 +1,12 @@
-﻿using System;
+﻿using DnsClient;
+using DnsClient.Protocol;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
-using DnsClient;
-using DnsClient.Protocol;
 
 namespace NETworkManager.Models.Network;
 
@@ -213,57 +214,73 @@ public sealed class DNSLookup
         if (answers is not DnsResourceRecord[] dnsResourceRecords)
             return;
 
+        Debug.WriteLine(dnsResourceRecords);
+
         // A
-        foreach (var record in dnsResourceRecords.ARecords())
+        foreach (var record in dnsResourceRecords.OfType<ARecord>())
             OnRecordReceived(new DNSLookupRecordReceivedArgs(
                 new DNSLookupRecordInfo(
                     record.DomainName, record.TimeToLive, $"{record.RecordClass}", $"{record.RecordType}",
                     $"{record.Address}", $"{nameServer.Address}", nameServerHostname, nameServer.Port)));
 
         // AAAA
-        foreach (var record in dnsResourceRecords.AaaaRecords())
+        foreach (var record in dnsResourceRecords.OfType<AaaaRecord>())
             OnRecordReceived(new DNSLookupRecordReceivedArgs(
                 new DNSLookupRecordInfo(
                     record.DomainName, record.TimeToLive, $"{record.RecordClass}", $"{record.RecordType}",
                     $"{record.Address}", $"{nameServer.Address}", nameServerHostname, nameServer.Port)));
 
         // CNAME
-        foreach (var record in dnsResourceRecords.CnameRecords())
+        foreach (var record in dnsResourceRecords.OfType<CNameRecord>())
             OnRecordReceived(new DNSLookupRecordReceivedArgs(
                 new DNSLookupRecordInfo(
                     record.DomainName, record.TimeToLive, $"{record.RecordClass}", $"{record.RecordType}",
                     record.CanonicalName, $"{nameServer.Address}", nameServerHostname, nameServer.Port)));
 
+        // DNSKEY
+        foreach (var record in dnsResourceRecords.OfType<DnsKeyRecord>())
+            OnRecordReceived(new DNSLookupRecordReceivedArgs(
+                new DNSLookupRecordInfo(
+                    record.DomainName, record.TimeToLive, $"{record.RecordClass}", $"{record.RecordType}",
+                    $"{record.Flags} {record.Protocol} {record.Algorithm} {Convert.ToBase64String(record.PublicKey.ToArray())}", $"{nameServer.Address}", nameServerHostname, nameServer.Port)));
+
         // MX
-        foreach (var record in dnsResourceRecords.MxRecords())
+        foreach (var record in dnsResourceRecords.OfType<MxRecord>())
             OnRecordReceived(new DNSLookupRecordReceivedArgs(
                 new DNSLookupRecordInfo(
                     record.DomainName, record.TimeToLive, $"{record.RecordClass}", $"{record.RecordType}",
                     record.Exchange, $"{nameServer.Address}", nameServerHostname, nameServer.Port)));
 
         // NS
-        foreach (var record in dnsResourceRecords.NsRecords())
+        foreach (var record in dnsResourceRecords.OfType<NsRecord>())
             OnRecordReceived(new DNSLookupRecordReceivedArgs(
                 new DNSLookupRecordInfo(
                     record.DomainName, record.TimeToLive, $"{record.RecordClass}", $"{record.RecordType}",
                     record.NSDName, $"{nameServer.Address}", nameServerHostname, nameServer.Port)));
 
         // PTR
-        foreach (var record in dnsResourceRecords.PtrRecords())
+        foreach (var record in dnsResourceRecords.OfType<PtrRecord>())
             OnRecordReceived(new DNSLookupRecordReceivedArgs(
                 new DNSLookupRecordInfo(
                     record.DomainName, record.TimeToLive, $"{record.RecordClass}", $"{record.RecordType}",
                     record.PtrDomainName, $"{nameServer.Address}", nameServerHostname, nameServer.Port)));
 
         // SOA
-        foreach (var record in dnsResourceRecords.SoaRecords())
+        foreach (var record in dnsResourceRecords.OfType<SoaRecord>())
             OnRecordReceived(new DNSLookupRecordReceivedArgs(
                 new DNSLookupRecordInfo(
                     record.DomainName, record.TimeToLive, $"{record.RecordClass}", $"{record.RecordType}",
                     record.MName + ", " + record.RName, $"{nameServer.Address}", nameServerHostname, nameServer.Port)));
 
+        // SRV
+        foreach (var record in dnsResourceRecords.OfType<SrvRecord>())
+            OnRecordReceived(new DNSLookupRecordReceivedArgs(
+                new DNSLookupRecordInfo(
+                    record.DomainName, record.TimeToLive, $"{record.RecordClass}", $"{record.RecordType}",
+                    $"{record.Priority} {record.Weight} {record.Port} {record.Target}", $"{nameServer.Address}", nameServerHostname, nameServer.Port)));
+
         // TXT
-        foreach (var record in dnsResourceRecords.TxtRecords())
+        foreach (var record in dnsResourceRecords.OfType<TxtRecord>())
             OnRecordReceived(new DNSLookupRecordReceivedArgs(
                 new DNSLookupRecordInfo(
                     record.DomainName, record.TimeToLive, $"{record.RecordClass}", $"{record.RecordType}",

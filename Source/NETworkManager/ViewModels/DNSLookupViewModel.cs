@@ -1,15 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Input;
-using System.Windows.Threading;
-using DnsClient;
+﻿using DnsClient;
 using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
@@ -20,6 +9,17 @@ using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels;
 
@@ -254,17 +254,18 @@ public class DNSLookupViewModel : ViewModelBase
 
     private void LoadTypes()
     {
-        // Filter by common types...
-        QueryTypes = SettingsManager.Current.DNSLookup_ShowOnlyMostCommonQueryTypes
-            ? Enum.GetValues(typeof(QueryType)).Cast<QueryType>().Where(x =>
-                x is QueryType.A or QueryType.AAAA or QueryType.ANY or QueryType.CNAME or QueryType.MX or QueryType.NS
-                    or QueryType.PTR or QueryType.SOA or QueryType.TXT).OrderBy(x => x.ToString()).ToList()
-            : Enum.GetValues(typeof(QueryType)).Cast<QueryType>().OrderBy(x => x.ToString()).ToList();
+        var queryTypes = (QueryType[])Enum.GetValues(typeof(QueryType));
+
+        if (SettingsManager.Current.DNSLookup_ShowOnlyMostCommonQueryTypes)
+            QueryTypes = [.. queryTypes.Where(GlobalStaticConfiguration.DNSLookup_CustomQueryTypes.Contains).OrderBy(x => x.ToString())];
+        else
+            QueryTypes = [.. queryTypes.OrderBy(x => x.ToString())];
+
         QueryType = QueryTypes.FirstOrDefault(x => x == SettingsManager.Current.DNSLookup_QueryType);
 
         // Fallback
         if (QueryType == 0)
-            QueryType = QueryType.ANY;
+            QueryType = GlobalStaticConfiguration.DNSLookup_QueryType;
     }
 
     #endregion
@@ -337,7 +338,7 @@ public class DNSLookupViewModel : ViewModelBase
         dnsLookup.LookupError += DNSLookup_LookupError;
         dnsLookup.LookupComplete += DNSLookup_LookupComplete;
 
-        dnsLookup.ResolveAsync(Host.Split(';').Select(x => x.Trim()).ToList());
+        dnsLookup.ResolveAsync([.. Host.Split(';').Select(x => x.Trim())]);
     }
 
     public void OnClose()
@@ -391,7 +392,7 @@ public class DNSLookupViewModel : ViewModelBase
                 catch (Exception ex)
                 {
                     Log.Error("Error while exporting data as " + instance.FileType, ex);
-                    
+
                     var settings = AppearanceManager.MetroDialog;
                     settings.AffirmativeButtonText = Strings.OK;
 
