@@ -125,7 +125,7 @@ DNS class to use for the query.
 
 ### Show only most common query types
 
-Only show the most common query types (`A`, `AAAA`, `ANY`, `CNAME`, `MX`, `NS`, `PTR`, `SOA` and `TXT`) in the dropdown menu in the view. Otherwise all available query types are shown.
+Only show the most common query types (`A`, `AAAA`, `ANY`, `CNAME`, `DNSKEY`, `MX`, `NS`, `PTR`, `SOA`, `SRV` and `TXT`) in the dropdown menu in the view. Otherwise all available query types are shown.
 
 **Type:** `Boolean`
 
