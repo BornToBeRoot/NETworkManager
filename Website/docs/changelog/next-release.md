@@ -19,7 +19,14 @@ Release date: **xx.xx.2025**
 
 ## What's new?
 
+**General**
+
 - New language Japanese (`ja-JP`) has been added. Thanks to [@coolvitto](https://github.com/coolvitto) [#3044](https://github.com/BornToBeRoot/NETworkManager/pull/3044) [#3030](https://github.com/BornToBeRoot/NETworkManager/pull/3030) [#3035](https://github.com/BornToBeRoot/NETworkManager/pull/3035)
+
+**DNS Lookup**
+
+- `DNSKEY` records are now supported. [#3060](https://github.com/BornToBeRoot/NETworkManager/pull/3060)
+- `SRV` records are now supported. [#3060](https://github.com/BornToBeRoot/NETworkManager/pull/3060)
 
 ## Improvements
 
@@ -54,3 +61,4 @@ Release date: **xx.xx.2025**
 - Code cleanup & refactoring
 - Language files updated via [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration)
 - Dependencies updated via [#dependabot](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot)
+- Gurubase Widget removed [#3059](https://github.com/BornToBeRoot/NETworkManager/pull/3059)

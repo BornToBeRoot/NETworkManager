@@ -143,9 +143,7 @@ const config = {
       },
     }),
 
-  plugins: [
-    require.resolve("./plugins/gurubase-widget.js")
-  ],
+  plugins: [],
 };
 
 export default config;
