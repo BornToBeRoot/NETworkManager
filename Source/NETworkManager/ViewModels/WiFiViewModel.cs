@@ -471,29 +471,28 @@ public class WiFiViewModel : ViewModelBase
             ListSortDirection.Ascending));
         NetworksView.Filter = o =>
         {
+            if (string.IsNullOrEmpty(Search))
+                return true;
+            
             if (o is not WiFiNetworkInfo info)
                 return false;
 
-            if (info.Radio == WiFiRadio.GHz2dot4 && !Show2dot4GHzNetworks)
-                return false;
-
-            if (info.Radio == WiFiRadio.GHz5 && !Show5GHzNetworks)
-                return false;
-
-            if (info.Radio == WiFiRadio.GHz6 && !Show6GHzNetworks)
-                return false;
-
-            if (string.IsNullOrEmpty(Search))
-                return true;
-
-            // Search by: SSID, Security, Frequency , Channel, BSSID (MAC address), Vendor, Phy kind
-            return info.AvailableNetwork.Ssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   info.NetworkAuthenticationType.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   $"{info.ChannelCenterFrequencyInGigahertz}".IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   $"{info.Channel}".IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   info.AvailableNetwork.Bssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   info.Vendor.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   info.PhyKind.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
+            switch (info.Radio)
+            {
+                case WiFiRadio.GHz2dot4 when !Show2dot4GHzNetworks:
+                case WiFiRadio.GHz5 when !Show5GHzNetworks:
+                case WiFiRadio.GHz6 when !Show6GHzNetworks:
+                    return false;
+                default:
+                    // Search by: SSID, Security, Frequency , Channel, BSSID (MAC address), Vendor, Phy kind
+                    return info.AvailableNetwork.Ssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                           info.NetworkAuthenticationType.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                           $"{info.ChannelCenterFrequencyInGigahertz}".IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                           $"{info.Channel}".IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                           info.AvailableNetwork.Bssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                           info.Vendor.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                           info.PhyKind.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
+            }
         };
 
         // Load network adapters
@@ -599,7 +598,7 @@ public class WiFiViewModel : ViewModelBase
         IsAdaptersLoading = true;
 
         // Show a loading animation for the user
-        await Task.Delay(2500);
+        await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
         try
         {
@@ -645,7 +644,7 @@ public class WiFiViewModel : ViewModelBase
         Log.Debug("LoadAdaptersAsync - Done.");
     }
 
-    private async Task ScanAsync(WiFiAdapterInfo adapterInfo, bool refreshing = false, uint delayInMs = 0)
+    private async Task ScanAsync(WiFiAdapterInfo adapterInfo, bool refreshing = false, int delayInMs = 0)
     {
         Log.Debug($"ScanAsync - Scanning WiFi adapter \"{adapterInfo.NetworkInterfaceInfo.Name}\" with delay of {delayInMs} ms...");
 
@@ -661,7 +660,7 @@ public class WiFiViewModel : ViewModelBase
         }
 
         if (delayInMs != 0)
-            await Task.Delay((int)delayInMs);
+            await Task.Delay(delayInMs);
 
         var statusMessage = string.Empty;
 
@@ -922,7 +921,7 @@ public class WiFiViewModel : ViewModelBase
         }
 
         // Refresh
-        await ScanAsync(SelectedAdapter, true, 2500);
+        await ScanAsync(SelectedAdapter, true, GlobalStaticConfiguration.ApplicationUIRefreshInterval);
     }
 
     private async Task Export()

@@ -38,11 +38,11 @@ public class ARPTableViewModel : ViewModelBase
 
         ResultsView.Filter = o =>
         {
-            if (o is not ARPInfo info)
-                return false;
-
             if (string.IsNullOrEmpty(Search))
                 return true;
+            
+            if (o is not ARPInfo info)
+                return false;
 
             // Search by IPAddress and MACAddress
             return info.IPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
@@ -95,7 +95,7 @@ public class ARPTableViewModel : ViewModelBase
         }
     }
 
-    private ObservableCollection<ARPInfo> _results = new();
+    private ObservableCollection<ARPInfo> _results = [];
 
     public ObservableCollection<ARPInfo> Results
     {
@@ -429,8 +429,8 @@ public class ARPTableViewModel : ViewModelBase
         IsRefreshing = true;
 
         Results.Clear();
-
-        (await ARP.GetTableAsync()).ForEach(x => Results.Add(x));
+        
+        (await ARP.GetTableAsync()).ForEach(Results.Add);
 
         IsRefreshing = false;
     }

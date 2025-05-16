@@ -39,11 +39,11 @@ public class ListenersViewModel : ViewModelBase
 
         ResultsView.Filter = o =>
         {
+            if (string.IsNullOrEmpty(Search))
+                            return true;
+            
             if (o is not ListenerInfo info)
                 return false;
-
-            if (string.IsNullOrEmpty(Search))
-                return true;
 
             // Search by IP Address, Port and Protocol
             return info.IPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
@@ -335,8 +335,8 @@ public class ListenersViewModel : ViewModelBase
         IsRefreshing = true;
 
         Results.Clear();
-
-        (await Listener.GetAllActiveListenersAsync()).ForEach(x => Results.Add(x));
+        
+        (await Listener.GetAllActiveListenersAsync()).ForEach(Results.Add);
 
         IsRefreshing = false;
     }

@@ -369,7 +369,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
             WakeOnLAN.Send(info);
 
             // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
-            await Task.Delay(2000);
+            await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
             StatusMessage = Strings.MagicPacketSentMessage;
             IsStatusMessageDisplayed = true;
@@ -464,11 +464,11 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
         Profiles.Filter = o =>
         {
-            if (o is not ProfileInfo info)
-                return false;
-
             if (string.IsNullOrEmpty(Search))
                 return true;
+            
+            if (o is not ProfileInfo info)
+                return false;
 
             var search = Search.Trim();
 
