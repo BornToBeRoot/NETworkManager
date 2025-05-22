@@ -1,8 +1,8 @@
-﻿using System;
+﻿using MahApps.Metro.IconPacks;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
-using MahApps.Metro.IconPacks;
 
 namespace NETworkManager.Models;
 
@@ -91,6 +91,9 @@ public static class ApplicationManager
                 break;
             case ApplicationName.SNTPLookup:
                 canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.ClockCheckOutline });
+                break;
+            case ApplicationName.HostsFileEditor:
+                canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.FileEditOutline });
                 break;
             case ApplicationName.DiscoveryProtocol:
                 canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.SwapHorizontal });

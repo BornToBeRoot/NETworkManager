@@ -3584,7 +3584,7 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #region SNTP Lookup
 
-    private ObservableCollection<ServerConnectionInfoProfile> _sntpLookup_SNTPServers = new();
+    private ObservableCollection<ServerConnectionInfoProfile> _sntpLookup_SNTPServers = [];
 
     public ObservableCollection<ServerConnectionInfoProfile> SNTPLookup_SNTPServers
     {
@@ -3659,6 +3659,40 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
+    #endregion
+    
+    #region Hosts File Editor
+    
+     private string _hostsFileEditor_ExportFilePath;
+    
+        public string HostsFileEditor_ExportFilePath
+        {
+            get => _hostsFileEditor_ExportFilePath;
+            set
+            {
+                if (value == _hostsFileEditor_ExportFilePath)
+                    return;
+    
+                _hostsFileEditor_ExportFilePath = value;
+                OnPropertyChanged();
+            }
+        }
+    
+        private ExportFileType _hostsFileEditor_ExportFileType = GlobalStaticConfiguration.HostsFileEditor_ExportFileType;
+    
+        public ExportFileType HostsFileEditor_ExportFileType
+        {
+            get => _hostsFileEditor_ExportFileType;
+            set
+            {
+                if (value == _hostsFileEditor_ExportFileType)
+                    return;
+    
+                _hostsFileEditor_ExportFileType = value;
+                OnPropertyChanged();
+            }
+        }
+    
     #endregion
 
     #region Discovery Protocol
