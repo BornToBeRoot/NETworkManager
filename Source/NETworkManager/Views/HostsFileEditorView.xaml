@@ -43,12 +43,46 @@
                                               SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <controls:MultiSelectDataGrid.Resources>                        
                         <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                            <MenuItem Header="{x:Static Member=localization:Strings.Enable}"
+                                      Command="{Binding Path=EnableEntryCommand}"
+                                      Visibility="{Binding Path=SelectedResult.IsEnabled, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
+                                <MenuItem.Icon>
+                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ToggleSwitchOutline}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{x:Static Member=localization:Strings.Disable}"
+                                      Command="{Binding Path=DisableEntryCommand}"
+                                      Visibility="{Binding Path=SelectedResult.IsEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                                <MenuItem.Icon>
+                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ToggleSwitchOffOutline}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{x:Static Member=localization:Strings.Delete}"
+                                      Command="{Binding Path=DeleteEntryCommand}">
+                                <MenuItem.Icon>
+                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            
+                            
                             <Separator />
-                            <MenuItem Header="{x:Static localization:Strings.CopyDots}"
+                            <MenuItem Header="{x:Static Member=localization:Strings.CopyDots}"
                                       Style="{StaticResource ResourceKey=CopyMenuItem}">
                                 <MenuItem Header="{x:Static Member=localization:Strings.Enabled}"
                                           Command="{Binding Path=CopyDataToClipboardCommand}"
-                                          CommandParameter="{Binding Path=SelectedResult.IsEnabled, Converter={StaticResource BooleanToStringConverter}}"
+                                          CommandParameter="{Binding Path=SelectedResult.IsEnabled, Converter={StaticResource ResourceKey=BooleanToStringConverter}}"
                                           Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                 <MenuItem Header="{x:Static Member=localization:Strings.IPAddress}"
                                           Command="{Binding Path=CopyDataToClipboardCommand}"

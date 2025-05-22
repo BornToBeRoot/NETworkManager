@@ -3891,4 +3891,7 @@ Right-click for more options.</value>
   <data name="Comment" xml:space="preserve">
     <value>Comment</value>
   </data>
+  <data name="Disable" xml:space="preserve">
+    <value>Disable</value>
+  </data>
 </root>
