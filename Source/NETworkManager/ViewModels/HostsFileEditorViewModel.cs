@@ -249,6 +249,46 @@ public class HostsFileEditorViewModel : ViewModelBase
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
     
+    public ICommand EnableEntryCommand => new RelayCommand(_ => EnableEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
+    
+    private async Task EnableEntryAction()
+    {
+        Debug.WriteLine("Enable entry action: " + SelectedResult?.Line);
+    }
+    
+    public ICommand DisableEntryCommand => new RelayCommand(_ => DisableEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
+    
+    private async Task DisableEntryAction()
+    {
+        Debug.WriteLine("Disable entry action: " + SelectedResult?.Line);
+    }
+    
+    public ICommand AddEntryCommand => new RelayCommand(_ => AddEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
+
+    private async Task AddEntryAction()
+    {
+        Debug.WriteLine("Adding entry...");
+    }
+    
+    public ICommand DeleteEntryCommand => new RelayCommand(_ => DeleteEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
+
+    private async Task DeleteEntryAction()
+    {
+        Debug.WriteLine("Delete entry action: " + SelectedResult?.Line);
+    }
+    
+    public ICommand EditEntryCommand => new RelayCommand(_ => EditEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
+    
+    private async Task EditEntryAction()
+    {
+        Debug.WriteLine("Edit entry action: " + SelectedResult?.Line);
+    }
+
+    private bool ModifyEntry_CanExecute(object obj)
+    {
+        return ConfigurationManager.Current.IsAdmin;
+    }
+    
     public ICommand RestartAsAdminCommand => new RelayCommand(_ => RestartAsAdminAction().ConfigureAwait(false));
 
     private async Task RestartAsAdminAction()

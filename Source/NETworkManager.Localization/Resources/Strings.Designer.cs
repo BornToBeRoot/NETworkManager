@@ -2852,6 +2852,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disable entry.
+        /// </summary>
+        public static string DisableEntry {
+            get {
+                return ResourceManager.GetString("DisableEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disclaimer.
         /// </summary>
         public static string Disclaimer {
@@ -3159,6 +3168,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit entry.
+        /// </summary>
+        public static string EditEntry {
+            get {
+                return ResourceManager.GetString("EditEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit entry....
+        /// </summary>
+        public static string EditEntryDots {
+            get {
+                return ResourceManager.GetString("EditEntryDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit group.
         /// </summary>
         public static string EditGroup {
@@ -3272,6 +3299,15 @@ namespace NETworkManager.Localization.Resources {
         public static string EnableEncryptionDots {
             get {
                 return ResourceManager.GetString("EnableEncryptionDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable entry.
+        /// </summary>
+        public static string EnableEntry {
+            get {
+                return ResourceManager.GetString("EnableEntry", resourceCulture);
             }
         }
         

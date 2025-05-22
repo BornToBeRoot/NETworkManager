@@ -65,6 +65,16 @@
                                     </Rectangle>
                                 </MenuItem.Icon>
                             </MenuItem>
+                            <MenuItem Header="{x:Static Member=localization:Strings.EditDots}"
+                                      Command="{Binding Path=EditEntryCommand}">
+                                <MenuItem.Icon>
+                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </MenuItem.Icon>
+                            </MenuItem>
                             <MenuItem Header="{x:Static Member=localization:Strings.Delete}"
                                       Command="{Binding Path=DeleteEntryCommand}">
                                 <MenuItem.Icon>

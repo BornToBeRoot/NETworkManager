@@ -3894,4 +3894,16 @@ Right-click for more options.</value>
   <data name="Disable" xml:space="preserve">
     <value>Disable</value>
   </data>
+  <data name="EditEntry" xml:space="preserve">
+    <value>Edit entry</value>
+  </data>
+  <data name="EditEntryDots" xml:space="preserve">
+    <value>Edit entry...</value>
+  </data>
+  <data name="EnableEntry" xml:space="preserve">
+    <value>Enable entry</value>
+  </data>
+  <data name="DisableEntry" xml:space="preserve">
+    <value>Disable entry</value>
+  </data>
 </root>
