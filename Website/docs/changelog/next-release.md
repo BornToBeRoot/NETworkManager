@@ -32,6 +32,10 @@ Release date: **xx.xx.2025**
 
 ## Improvements
 
+**WiFi**
+
+- Redesign refresh button/view. [#3012](https://github.com/BornToBeRoot/NETworkManager/pull/3012)
+
 **PowerShell**
 
 - Find `pwsh.exe` and `powershell.exe` executable by path, similar to `where.exe`. [#2962](https://github.com/BornToBeRoot/NETworkManager/pull/2962)
@@ -43,6 +47,10 @@ Release date: **xx.xx.2025**
 **AWS Session Manager**
 
 - Find `pwsh.exe` and `powershell.exe` executable by path, similar to `where.exe`. [#2962](https://github.com/BornToBeRoot/NETworkManager/pull/2962)
+
+**ARP**
+
+- Redesign refresh button/view. [#3012](https://github.com/BornToBeRoot/NETworkManager/pull/3012)
 
 **Profiles**
 

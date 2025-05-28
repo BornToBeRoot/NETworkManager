@@ -41,9 +41,12 @@
                             VerticalAlignment="Center"
                             HorizontalAlignment="Right">
                     <CheckBox IsChecked="{Binding AutoRefreshEnabled}"
-                              Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" Margin="0,0,10,0" />
-                    <ComboBox ItemsSource="{Binding AutoRefreshTimes}" SelectedItem="{Binding SelectedAutoRefreshTime}"
-                              MinWidth="150" Margin="0,0,10,0">
+                              Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" 
+                              Margin="0,0,10,0" />
+                    <ComboBox ItemsSource="{Binding AutoRefreshTimes}" 
+                              SelectedItem="{Binding SelectedAutoRefreshTime}"
+                              MinWidth="150" 
+                              Margin="0,0,10,0">
                         <ComboBox.ItemTemplate>
                             <DataTemplate DataType="utilities:AutoRefreshTimeInfo">
                                 <TextBlock>
@@ -58,9 +61,7 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <Button Width="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight}"
-                            Height="{Binding ElementName=ComboBoxAdapters, Path=ActualHeight}"
-                            Command="{Binding Path=RefreshCommand}"
+                    <Button Command="{Binding Path=RefreshCommand}"
                             Style="{StaticResource CleanButton}"
                             Margin="0,0,10,0">
                         <Rectangle Width="24" Height="24"
@@ -85,7 +86,8 @@
                             </Rectangle.Style>
                         </Rectangle>
                     </Button>
-                    <TextBox Width="250" Text="{Binding Path=Search, UpdateSourceTrigger=PropertyChanged}"
+                    <TextBox Width="250"
+                             Text="{Binding Path=Search, UpdateSourceTrigger=PropertyChanged}"
                              Style="{StaticResource ResourceKey=SearchTextBox}" />
                 </StackPanel>
                 <controls:MultiSelectDataGrid x:Name="DataGridArpTable"
@@ -199,9 +201,9 @@
                         <ColumnDefinition Width="10" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-
                     <WrapPanel Grid.Column="0" Grid.Row="0"
-                               Orientation="Horizontal" VerticalAlignment="Center"
+                               Orientation="Horizontal" 
+                               VerticalAlignment="Center"
                                HorizontalAlignment="Left">
                         <Button Command="{Binding DeleteTableCommand}" Style="{StaticResource ImageWithTextButton}">
                             <Grid>

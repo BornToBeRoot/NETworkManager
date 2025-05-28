@@ -8,10 +8,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-             xmlns:liveChart="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" 
+             xmlns:liveChart="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:networkManager="clr-namespace:NETworkManager"
              xmlns:controls="clr-namespace:NETworkManager.Controls"
-             xmlns:controls2="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"             
+             xmlns:controls2="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
              xmlns:utilities="clr-namespace:NETworkManager.Utilities;assembly=NETworkManager.Utilities"
              xmlns:wpfHelper="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
@@ -207,32 +207,80 @@
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="10" />
                                             <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="10" />
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="10" />
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="10" />
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="10" />
-                                            <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Grid.Column="0" Grid.Row="0"
                                                    Text="{x:Static Member=localization:Strings.Networks}"
                                                    Style="{StaticResource ResourceKey=HeaderTextBlock}"
                                                    Margin="0,0,0,0" />
-                                        <CheckBox Grid.Column="4" Grid.Row="0"
-                                                  Content="{x:Static Member=localization:Strings.GHz2dot4}"
-                                                  IsChecked="{Binding Path=Show2dot4GHzNetworks}" />
-                                        <CheckBox Grid.Column="6" Grid.Row="0"
-                                                  Content="{x:Static Member=localization:Strings.GHz5}"
-                                                  IsChecked="{Binding Path=Show5GHzNetworks}" />
-                                        <CheckBox Grid.Column="8" Grid.Row="0"
-                                                  Content="{x:Static Member=localization:Strings.GHz6}"
-                                                  IsChecked="{Binding Path=Show6GHzNetworks}" />
-                                        <TextBox Grid.Column="10" Grid.Row="0"
-                                                 Width="250"
-                                                 Text="{Binding Path=Search, UpdateSourceTrigger=PropertyChanged}"
-                                                 Style="{StaticResource ResourceKey=SearchTextBox}" />
+
+
+                                        <StackPanel Grid.Column="2" Grid.Row="0"
+                                                    Orientation="Horizontal"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Right">
+                                            <CheckBox IsChecked="{Binding AutoRefreshEnabled}"
+                                                      Content="{x:Static Member=localization:Strings.AutomaticallyUpdateEvery}"
+                                                      Margin="0,0,10,0">
+                                            </CheckBox>
+                                            <ComboBox ItemsSource="{Binding Path=AutoRefreshTimes}"
+                                                      SelectedItem="{Binding Path=SelectedAutoRefreshTime}"
+                                                      MinWidth="150"
+                                                      Margin="0,0,10,0">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate
+                                                        DataType="{x:Type TypeName=utilities:AutoRefreshTimeInfo}">
+                                                        <TextBlock>
+                                                            <TextBlock.Text>
+                                                                <MultiBinding StringFormat="{}{0} {1}">
+                                                                    <Binding Path="Value" />
+                                                                    <Binding Path="TimeUnit"
+                                                                             Converter="{StaticResource ResourceKey=AutoRefreshTimeToStringConverter}" />
+                                                                </MultiBinding>
+                                                            </TextBlock.Text>
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                            <Button Command="{Binding Path=ScanNetworksCommand}"
+                                                    Style="{StaticResource CleanButton}"
+                                                    Margin="0,0,10,0">
+                                                <Rectangle Width="24" Height="24"
+                                                           wpfHelper:ReloadAnimationHelper.IsReloading="{Binding Path=IsBackgroundSearchRunning}">
+                                                    <Rectangle.OpacityMask>
+                                                        <VisualBrush Stretch="Uniform"
+                                                                     Visual="{iconPacks:Material Kind=Refresh}" />
+                                                    </Rectangle.OpacityMask>
+                                                    <Rectangle.Style>
+                                                        <Style TargetType="{x:Type TypeName=Rectangle}">
+                                                            <Setter Property="Fill"
+                                                                    Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger
+                                                                    Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
+                                                                    Value="True">
+                                                                    <Setter Property="Fill"
+                                                                            Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Rectangle.Style>
+                                                </Rectangle>
+                                            </Button>
+                                            <CheckBox Content="{x:Static Member=localization:Strings.GHz2dot4}"
+                                                      IsChecked="{Binding Path=Show2dot4GHzNetworks}"
+                                                      Margin="0,0,10,0" />
+                                            <CheckBox Content="{x:Static Member=localization:Strings.GHz5}"
+                                                      IsChecked="{Binding Path=Show5GHzNetworks}"
+                                                      Margin="0,0,10,0" />
+                                            <CheckBox Content="{x:Static Member=localization:Strings.GHz6}"
+                                                      IsChecked="{Binding Path=Show6GHzNetworks}"
+                                                      Margin="0,0,10,0" />
+                                            <TextBox Width="250"
+                                                     Text="{Binding Path=Search, UpdateSourceTrigger=PropertyChanged}"
+                                                     Style="{StaticResource ResourceKey=SearchTextBox}" />
+                                        </StackPanel>
+
+
                                     </Grid>
                                     <controls2:MultiSelectDataGrid Grid.Row="2"
                                                                    Visibility="{Binding Path=IsNetworksLoading, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}"
@@ -613,9 +661,9 @@
                                                 VerticalAlignment="Center"
                                                 Visibility="{Binding Path=IsNetworksLoading, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                                         <networkManager:LoadingIndicator IsActive="True"
-                                                                            Style="{DynamicResource ResourceKey=LoadingIndicatorArcsStyle}"
-                                                                            SpeedRatio="1"
-                                                                            Margin="0,0,0,10" />
+                                                                         Style="{DynamicResource ResourceKey=LoadingIndicatorArcsStyle}"
+                                                                         SpeedRatio="1"
+                                                                         Margin="0,0,0,10" />
                                         <TextBlock
                                             Text="{x:Static Member=localization:Strings.SearchingForNetworksDots}"
                                             Style="{StaticResource ResourceKey=MessageTextBlock}" />
@@ -739,24 +787,17 @@
                         </Grid>
                     </TabItem>
                 </TabControl>
-                <Grid Grid.Column="0" Grid.Row="1" Margin="10,0,10,10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="10" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="10" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <WrapPanel Grid.Column="0" Grid.Row="0"
-                               Orientation="Horizontal"
+                <Grid Grid.Column="0" Grid.Row="1"
+                      Margin="10,0,10,10">
+                    <WrapPanel Orientation="Horizontal"
                                VerticalAlignment="Center"
-                               HorizontalAlignment="Center">
+                               HorizontalAlignment="Left">
                         <networkManager:LoadingIndicator IsActive="True"
-                                                            Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
-                                                            Visibility="{Binding Path=IsBackgroundSearchRunning, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                                            Width="24" Height="24"
-                                                            SpeedRatio="1"
-                                                            Margin="0,0,10,0" />
+                                                         Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
+                                                         Visibility="{Binding Path=IsBackgroundSearchRunning, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                                         Width="24" Height="24"
+                                                         SpeedRatio="1"
+                                                         Margin="0,0,10,0" />
                         <TextBlock Style="{StaticResource ResourceKey=AccentTextBlock}"
                                    Visibility="{Binding Path=IsStatusMessageDisplayed, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                    Text="{Binding Path=StatusMessage}"
@@ -770,81 +811,17 @@
                                        Stroke="{DynamicResource ResourceKey=MahApps.Brushes.Accent}"
                                        VerticalAlignment="Stretch" />
                             <networkManager:LoadingIndicator IsActive="True"
-                                                                Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
-                                                                Visibility="{Binding IsConnecting, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                                                Width="24" Height="24"
-                                                                VerticalAlignment="Center"
-                                                                SpeedRatio="1"
-                                                                Margin="10,0,0,0" />
+                                                             Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
+                                                             Visibility="{Binding IsConnecting, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                                             Width="24" Height="24"
+                                                             SpeedRatio="1"
+                                                             Margin="10,0,0,0" />
                             <TextBlock Style="{StaticResource ResourceKey=AccentTextBlock}"
                                        Text="{Binding Path=ConnectionStatusMessage}"
                                        VerticalAlignment="Center"
                                        Margin="10,0,0,0" />
                         </WrapPanel>
                     </WrapPanel>
-                    <WrapPanel Grid.Column="2" Grid.Row="0"
-                               Orientation="Horizontal"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Right">
-                        <CheckBox IsChecked="{Binding AutoRefreshEnabled}"
-                                  Content="{x:Static Member=localization:Strings.AutomaticallyUpdateEvery}"
-                                  Margin="0,0,10,0">
-                            <CheckBox.Style>
-                                <Style TargetType="{x:Type TypeName=CheckBox}"
-                                       BasedOn="{StaticResource ResourceKey=DefaultCheckBox}">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Path=IsNetworksLoading}" Value="True">
-                                            <Setter Property="IsEnabled" Value="False" />
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding Path=IsBackgroundSearchRunning}" Value="True">
-                                            <Setter Property="IsEnabled" Value="False" />
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding Path=IsConnecting}" Value="True">
-                                            <Setter Property="IsEnabled" Value="False" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </CheckBox.Style>
-                        </CheckBox>
-                        <ComboBox ItemsSource="{Binding Path=AutoRefreshTimes}"
-                                  SelectedItem="{Binding Path=SelectedAutoRefreshTime}"
-                                  MinWidth="150">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate DataType="{x:Type TypeName=utilities:AutoRefreshTimeInfo}">
-                                    <TextBlock>
-                                        <TextBlock.Text>
-                                            <MultiBinding StringFormat="{}{0} {1}">
-                                                <Binding Path="Value" />
-                                                <Binding Path="TimeUnit"
-                                                         Converter="{StaticResource ResourceKey=AutoRefreshTimeToStringConverter}" />
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </WrapPanel>
-                    <Button Grid.Column="4" Grid.Row="0" 
-                            Command="{Binding Path=ScanNetworksCommand}"
-                            Style="{StaticResource ImageWithTextButton}">                        
-                        <Button.Content>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Rectangle Grid.Column="0" Grid.Row="0"
-                                           Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                                <TextBlock Grid.Column="1" Grid.Row="0"
-                                           Text="{x:Static Member=localization:Strings.Refresh}"
-                                           Style="{StaticResource ResourceKey=ButtonWithImageTextBlock}" />
-                            </Grid>
-                        </Button.Content>
-                    </Button>
                 </Grid>
             </Grid>
             <!-- Reload Adapter -->
@@ -881,10 +858,10 @@
                 </Button>
                 <StackPanel VerticalAlignment="Center"
                             Visibility="{Binding Path=IsAdaptersLoading, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
-                    <networkManager:LoadingIndicator IsActive="True"                                                        
-                                                        Style="{DynamicResource ResourceKey=LoadingIndicatorArcsStyle}"
-                                                        SpeedRatio="1"
-                                                        Margin="0,0,0,10" />
+                    <networkManager:LoadingIndicator IsActive="True"
+                                                     Style="{DynamicResource ResourceKey=LoadingIndicatorArcsStyle}"
+                                                     SpeedRatio="1"
+                                                     Margin="0,0,0,10" />
                     <TextBlock Text="{x:Static Member=localization:Strings.SearchingWiFiAdaptersDots}"
                                Style="{StaticResource ResourceKey=MessageTextBlock}" />
                 </StackPanel>
