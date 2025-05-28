@@ -473,7 +473,7 @@ public class WiFiViewModel : ViewModelBase
         {
             if (string.IsNullOrEmpty(Search))
                 return true;
-            
+
             if (o is not WiFiNetworkInfo info)
                 return false;
 
@@ -528,7 +528,12 @@ public class WiFiViewModel : ViewModelBase
 
     #region ICommands & Actions
 
-    public ICommand ReloadAdaptersCommand => new RelayCommand(_ => ReloadAdapterAction());
+    public ICommand ReloadAdaptersCommand => new RelayCommand(_ => ReloadAdapterAction(), ReloadAdapter_CanExecute);
+
+    private bool ReloadAdapter_CanExecute(object obj)
+    {
+        return !IsAdaptersLoading && !IsNetworksLoading && !IsBackgroundSearchRunning && !AutoRefreshEnabled && !IsConnecting;
+    }
 
     private void ReloadAdapterAction()
     {
@@ -540,7 +545,7 @@ public class WiFiViewModel : ViewModelBase
 
     private bool ScanNetworks_CanExecute(object obj)
     {
-        return !IsAdaptersLoading && !IsNetworksLoading && !IsBackgroundSearchRunning && !IsConnecting;
+        return !IsAdaptersLoading && !IsNetworksLoading && !IsBackgroundSearchRunning && !AutoRefreshEnabled && !IsConnecting;
     }
 
     private async Task ScanNetworksAction()

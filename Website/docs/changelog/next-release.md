@@ -52,6 +52,10 @@ Release date: **xx.xx.2025**
 
 - Re-select the network interface after a network change or configuration update. Thanks to [@Ghislain1](https://github.com/Ghislain1) [#3004](https://github.com/BornToBeRoot/NETworkManager/pull/3004) [#2962](https://github.com/BornToBeRoot/NETworkManager/pull/2962)
 
+**WiFi**
+
+- Reload animation fixed in some cases. [#3012](https://github.com/BornToBeRoot/NETworkManager/pull/3012)
+
 **PowerShell**
 
 - Set PowerShell console color for correct path... [#3023](https://github.com/BornToBeRoot/NETworkManager/pull/3023)

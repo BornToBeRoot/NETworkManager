@@ -37,9 +37,67 @@
                     <RowDefinition Height="10" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <TextBox Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right"
-                         Width="250" Text="{Binding Path=Search, UpdateSourceTrigger=PropertyChanged}"
-                         Style="{StaticResource ResourceKey=SearchTextBox}" />
+                <StackPanel  Grid.Column="0" Grid.Row="0"
+                             Orientation="Horizontal"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Right"  >
+                    <CheckBox IsChecked="{Binding AutoRefreshEnabled}"            Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" Margin="0,0,10,0" />
+                    <ComboBox ItemsSource="{Binding AutoRefreshTimes}"             SelectedItem="{Binding SelectedAutoRefreshTime}" MinWidth="150" Margin="0,0,10,0">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate DataType="utilities:AutoRefreshTimeInfo">
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} {1}">
+                                            <Binding Path="Value" />
+                                            <Binding Path="TimeUnit"
+                                   Converter="{StaticResource TimeUnitToStringConverter}" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <Button Command="{Binding RefreshCommand}" Margin="0,0,10,0">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsRefreshing}" Value="True">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding AutoRefreshEnabled}" Value="True">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Refresh}"
+                     Style="{StaticResource ButtonWithImageTextBlock}" />
+                        </Grid>
+                    </Button>
+
+
+
+                    <TextBox                        Width="250" Text="{Binding Path=Search, UpdateSourceTrigger=PropertyChanged}"                         Style="{StaticResource ResourceKey=SearchTextBox}" />
+                </StackPanel>
+
+
+
+
+
+
+
+
                 <controls:MultiSelectDataGrid x:Name="DataGridArpTable"
                                               Grid.Column="0" Grid.Row="2"
                                               ItemsSource="{Binding ResultsView}"

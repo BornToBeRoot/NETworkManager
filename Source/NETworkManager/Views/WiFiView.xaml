@@ -14,6 +14,7 @@
              xmlns:controls2="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"             
              xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
              xmlns:utilities="clr-namespace:NETworkManager.Utilities;assembly=NETworkManager.Utilities"
+             xmlns:wpfHelper="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              dialogs:DialogParticipation.Register="{Binding}"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:WiFiViewModel}">
@@ -168,37 +169,17 @@
                                         <Button Grid.Column="1" Grid.Row="0"
                                                 Width="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight}"
                                                 Height="{Binding ElementName=ComboBoxAdapters, Path=ActualHeight}"
-                                                Command="{Binding Path=ReloadAdaptersCommand}" Margin="10,0,0,0">
-                                            <Button.Style>
-                                                <Style TargetType="{x:Type TypeName=Button}"
-                                                       BasedOn="{StaticResource ResourceKey=CleanButton}">
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding Path=IsNetworksLoading}"
-                                                                     Value="True">
-                                                            <Setter Property="IsEnabled" Value="False" />
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Path=IsBackgroundSearchRunning}"
-                                                                     Value="True">
-                                                            <Setter Property="IsEnabled" Value="False" />
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Path=AutoRefreshEnabled}"
-                                                                     Value="True">
-                                                            <Setter Property="IsEnabled" Value="False" />
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Path=IsConnecting}" Value="True">
-                                                            <Setter Property="IsEnabled" Value="False" />
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Button.Style>
-                                            <Rectangle Width="24" Height="24">
+                                                Command="{Binding Path=ReloadAdaptersCommand}"
+                                                Style="{StaticResource CleanButton}"
+                                                Margin="10,0,0,0">
+                                            <Rectangle Width="24" Height="24"
+                                                       wpfHelper:ReloadAnimationHelper.IsReloading="{Binding IsAdaptersLoading}">
                                                 <Rectangle.OpacityMask>
                                                     <VisualBrush Stretch="Uniform"
                                                                  Visual="{iconPacks:Material Kind=Refresh}" />
                                                 </Rectangle.OpacityMask>
                                                 <Rectangle.Style>
-                                                    <Style TargetType="{x:Type TypeName=Rectangle}"
-                                                           BasedOn="{StaticResource ResourceKey=ReloadAnimation}">
+                                                    <Style TargetType="{x:Type TypeName=Rectangle}">
                                                         <Setter Property="Fill"
                                                                 Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
                                                         <Style.Triggers>
@@ -843,26 +824,9 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                     </WrapPanel>
-                    <Button Grid.Column="4" Grid.Row="0" Command="{Binding Path=ScanNetworksCommand}">
-                        <Button.Style>
-                            <Style TargetType="{x:Type TypeName=Button}"
-                                   BasedOn="{StaticResource ResourceKey=ImageWithTextButton}">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=IsNetworksLoading}" Value="True">
-                                        <Setter Property="IsEnabled" Value="False" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Path=IsBackgroundSearchRunning}" Value="True">
-                                        <Setter Property="IsEnabled" Value="False" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Path=AutoRefreshEnabled}" Value="True">
-                                        <Setter Property="IsEnabled" Value="False" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Path=IsConnecting}" Value="True">
-                                        <Setter Property="IsEnabled" Value="False" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
+                    <Button Grid.Column="4" Grid.Row="0" 
+                            Command="{Binding Path=ScanNetworksCommand}"
+                            Style="{StaticResource ImageWithTextButton}">                        
                         <Button.Content>
                             <Grid>
                                 <Grid.ColumnDefinitions>
