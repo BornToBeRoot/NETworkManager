@@ -6,7 +6,7 @@
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-             xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:networkManager="clr-namespace:NETworkManager"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
              xmlns:utilities="clr-namespace:NETworkManager.Utilities;assembly=NETworkManager.Utilities"
@@ -30,18 +30,19 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="10" />
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="10" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-          <StackPanel Grid.Column="0" Grid.Row="0"
+                <StackPanel Grid.Column="0" Grid.Row="0"
                             Orientation="Horizontal"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Right">
                     <CheckBox IsChecked="{Binding AutoRefreshEnabled}"
-                              Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" 
+                              Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}"
                               Margin="0,0,10,0" />
-                    <ComboBox ItemsSource="{Binding AutoRefreshTimes}" 
+                    <ComboBox ItemsSource="{Binding AutoRefreshTimes}"
                               SelectedItem="{Binding SelectedAutoRefreshTime}"
-                              MinWidth="150" 
+                              MinWidth="150"
                               Margin="0,0,10,0">
                         <ComboBox.ItemTemplate>
                             <DataTemplate DataType="utilities:AutoRefreshTimeInfo">
@@ -205,10 +206,20 @@
                                             SortMemberPath="ProcessPath" MinWidth="150" />
                     </DataGrid.Columns>
                 </controls:MultiSelectDataGrid>
-                <TextBlock Grid.Row="3" Foreground="{DynamicResource MahApps.Brushes.Accent}"
-                           Text="{Binding StatusMessage}"
-                           Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                           Style="{DynamicResource StatusMessageTextBlock}" Margin="0,10,0,0" />
+                <WrapPanel Grid.Column="0" Grid.Row="4" Orientation="Horizontal"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left">
+                    <networkManager:LoadingIndicator IsActive="True"
+                                                     Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
+                                                     Visibility="{Binding Path=IsRefreshing, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                                     Width="24" Height="24"
+                                                     SpeedRatio="1" Margin="0,0,10,0" />
+                    <TextBlock Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                               Text="{Binding StatusMessage}"
+                               VerticalAlignment="Center"
+                               Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
+                               Style="{DynamicResource StatusMessageTextBlock}" />
+                </WrapPanel>
             </Grid>
         </TabItem>
     </TabControl>

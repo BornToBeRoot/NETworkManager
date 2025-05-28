@@ -12,7 +12,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -54,7 +53,7 @@ public class ARPTableViewModel : ViewModelBase
         };
 
         // Get ARP table
-        Refresh().ConfigureAwait(false);
+        Refresh(true).ConfigureAwait(false);
 
         // Auto refresh
         _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
@@ -71,6 +70,7 @@ public class ARPTableViewModel : ViewModelBase
     #endregion
 
     #region Variables
+
     private static readonly ILog Log = LogManager.GetLogger(typeof(ARPTableViewModel));
 
     private readonly IDialogCoordinator _dialogCoordinator;
@@ -427,16 +427,25 @@ public class ARPTableViewModel : ViewModelBase
 
     #region Methods
 
-    private async Task Refresh()
+    private async Task Refresh(bool init = false)
     {
         IsRefreshing = true;
 
-        await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
+        if (init == false)
+        {
+            StatusMessage = "Refreshing...";
+            IsStatusMessageDisplayed = true;
+            
+            await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
+        }
 
         Results.Clear();
 
         (await ARP.GetTableAsync()).ForEach(Results.Add);
 
+        StatusMessage = "Reloaded at " + DateTime.Now.ToShortTimeString();
+        IsStatusMessageDisplayed = true;
+        
         IsRefreshing = false;
     }
 

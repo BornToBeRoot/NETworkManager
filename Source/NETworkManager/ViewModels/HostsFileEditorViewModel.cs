@@ -195,7 +195,8 @@ public class HostsFileEditorViewModel : ViewModelBase
     {
         return Application.Current.MainWindow != null && 
                !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen;        
+               !ConfigurationManager.Current.IsChildWindowOpen &&
+               !IsRefreshing;        
     }
 
     private async Task RefreshAction()
@@ -346,7 +347,7 @@ public class HostsFileEditorViewModel : ViewModelBase
                 StatusMessage = "Failed to reload hosts file: " + ex.Message;
 
                 if (i < 3)
-                    StatusMessage += Environment.NewLine + "Retrying in 2.5 seconds...";
+                    StatusMessage += Environment.NewLine + $"Retrying in {GlobalStaticConfiguration.ApplicationUIRefreshInterval / 1000} seconds...";
 
                 IsStatusMessageDisplayed = true;
                 

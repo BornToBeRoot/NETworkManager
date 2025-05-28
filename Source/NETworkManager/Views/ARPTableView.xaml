@@ -9,6 +9,7 @@
     xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
     xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
     xmlns:utilities="clr-namespace:NETworkManager.Utilities;assembly=NETworkManager.Utilities"
+    xmlns:networkManager="clr-namespace:NETworkManager"
     xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
     xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
     xmlns:wpfHelper="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
@@ -32,6 +33,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="10" />
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="10" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="10" />
                     <RowDefinition Height="Auto" />
@@ -176,11 +178,21 @@
                                             MinWidth="100" />
                     </controls:MultiSelectDataGrid.Columns>
                 </controls:MultiSelectDataGrid>
-                <TextBlock Grid.Column="0" Grid.Row="3" Foreground="{DynamicResource MahApps.Brushes.Accent}"
-                           Text="{Binding StatusMessage}"
-                           Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                           Style="{DynamicResource StatusMessageTextBlock}" Margin="0,10,0,0" />
-                <Grid Grid.Column="0" Grid.Row="5">
+                <WrapPanel Grid.Column="0" Grid.Row="4" Orientation="Horizontal"
+           VerticalAlignment="Center"
+           HorizontalAlignment="Left">
+                    <networkManager:LoadingIndicator IsActive="True"
+                                     Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
+                                     Visibility="{Binding Path=IsRefreshing, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                     Width="24" Height="24"
+                                     SpeedRatio="1" Margin="0,0,10,0" />
+                    <TextBlock Foreground="{DynamicResource MahApps.Brushes.Accent}"
+               Text="{Binding StatusMessage}"
+               VerticalAlignment="Center"
+               Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
+               Style="{DynamicResource StatusMessageTextBlock}" />
+                </WrapPanel>
+                <Grid Grid.Column="0" Grid.Row="6">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="10" />

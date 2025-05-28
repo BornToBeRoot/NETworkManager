@@ -39,12 +39,12 @@ public class ConnectionsViewModel : ViewModelBase
             IPAddressHelper.CompareIPAddresses(x.LocalIPAddress, y.LocalIPAddress));
 
         ResultsView.Filter = o =>
-        {             
+        {
             if (string.IsNullOrEmpty(Search))
-                         return true;
-            
+                return true;
+
             if (o is not ConnectionInfo info)
-                return false;           
+                return false;
 
             // Search by local/remote IP Address, local/remote Port, Protocol and State
             return info.LocalIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
@@ -61,7 +61,7 @@ public class ConnectionsViewModel : ViewModelBase
         };
 
         // Get connections
-        Refresh().ConfigureAwait(false);
+        Refresh(true).ConfigureAwait(false);
 
         // Auto refresh
         _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
@@ -94,8 +94,9 @@ public class ConnectionsViewModel : ViewModelBase
     #endregion
 
     #region Variables
+
     private static readonly ILog Log = LogManager.GetLogger(typeof(ConnectionsViewModel));
-    
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly bool _isLoading;
@@ -276,9 +277,9 @@ public class ConnectionsViewModel : ViewModelBase
 
     private bool Refresh_CanExecute(object parameter)
     {
-        return Application.Current.MainWindow != null && 
+        return Application.Current.MainWindow != null &&
                !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen && 
+               !ConfigurationManager.Current.IsChildWindowOpen &&
                !IsRefreshing &&
                !AutoRefreshEnabled;
     }
@@ -314,7 +315,7 @@ public class ConnectionsViewModel : ViewModelBase
                 catch (Exception ex)
                 {
                     Log.Error("Error while exporting data as " + instance.FileType, ex);
-                    
+
                     var settings = AppearanceManager.MetroDialog;
                     settings.AffirmativeButtonText = Strings.OK;
 
@@ -343,16 +344,25 @@ public class ConnectionsViewModel : ViewModelBase
 
     #region Methods
 
-    private async Task Refresh()
+    private async Task Refresh(bool init = false)
     {
         IsRefreshing = true;
 
-        await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
-        
+        if (init == false)
+        {
+            StatusMessage = "Refreshing...";
+            IsStatusMessageDisplayed = true;
+            
+            await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
+        }
+
         Results.Clear();
-     
+
         (await Connection.GetActiveTcpConnectionsAsync()).ForEach(Results.Add);
 
+        StatusMessage = "Reloaded at " + DateTime.Now.ToShortTimeString();
+        IsStatusMessageDisplayed = true;
+        
         IsRefreshing = false;
     }
 

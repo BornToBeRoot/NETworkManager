@@ -40,8 +40,8 @@ public class ListenersViewModel : ViewModelBase
         ResultsView.Filter = o =>
         {
             if (string.IsNullOrEmpty(Search))
-                            return true;
-            
+                return true;
+
             if (o is not ListenerInfo info)
                 return false;
 
@@ -52,7 +52,7 @@ public class ListenersViewModel : ViewModelBase
         };
 
         // Get listeners
-        Refresh().ConfigureAwait(false);
+        Refresh(true).ConfigureAwait(false);
 
         // Auto refresh
         _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
@@ -85,8 +85,9 @@ public class ListenersViewModel : ViewModelBase
     #endregion
 
     #region Variables
+
     private static readonly ILog Log = LogManager.GetLogger(typeof(ListenersViewModel));
-    
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly bool _isLoading;
@@ -304,7 +305,7 @@ public class ListenersViewModel : ViewModelBase
             catch (Exception ex)
             {
                 Log.Error("Error while exporting data as " + instance.FileType, ex);
-                
+
                 var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = Strings.OK;
 
@@ -332,16 +333,25 @@ public class ListenersViewModel : ViewModelBase
 
     #region Methods
 
-    private async Task Refresh()
+    private async Task Refresh(bool init = false)
     {
         IsRefreshing = true;
 
-        await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
-        
+        if (init == false)
+        {
+            StatusMessage = "Refreshing...";
+            IsStatusMessageDisplayed = true;
+            
+            await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
+        }
+
         Results.Clear();
-        
+
         (await Listener.GetAllActiveListenersAsync()).ForEach(Results.Add);
 
+        StatusMessage = "Reloaded at " + DateTime.Now.ToShortTimeString();
+        IsStatusMessageDisplayed = true;
+        
         IsRefreshing = false;
     }
 
