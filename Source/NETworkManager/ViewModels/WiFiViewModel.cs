@@ -471,28 +471,29 @@ public class WiFiViewModel : ViewModelBase
             ListSortDirection.Ascending));
         NetworksView.Filter = o =>
         {
-            if (string.IsNullOrEmpty(Search))
-                return true;
-
             if (o is not WiFiNetworkInfo info)
                 return false;
-
-            switch (info.Radio)
+        
+            // Frequenzfilter immer anwenden
+            if ((info.Radio == WiFiRadio.GHz2dot4 && !Show2dot4GHzNetworks) ||
+                (info.Radio == WiFiRadio.GHz5 && !Show5GHzNetworks) ||
+                (info.Radio == WiFiRadio.GHz6 && !Show6GHzNetworks))
             {
-                case WiFiRadio.GHz2dot4 when !Show2dot4GHzNetworks:
-                case WiFiRadio.GHz5 when !Show5GHzNetworks:
-                case WiFiRadio.GHz6 when !Show6GHzNetworks:
-                    return false;
-                default:
-                    // Search by: SSID, Security, Frequency , Channel, BSSID (MAC address), Vendor, Phy kind
-                    return info.AvailableNetwork.Ssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                           info.NetworkAuthenticationType.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                           $"{info.ChannelCenterFrequencyInGigahertz}".IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                           $"{info.Channel}".IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                           info.AvailableNetwork.Bssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                           info.Vendor.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                           info.PhyKind.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
+                return false;
             }
+        
+            // Wenn kein Suchbegriff, Frequenzfilter reicht
+            if (string.IsNullOrEmpty(Search))
+                return true;
+        
+            // Suchlogik
+            return info.AvailableNetwork.Ssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.NetworkAuthenticationType.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   $"{info.ChannelCenterFrequencyInGigahertz}".IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   $"{info.Channel}".IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.AvailableNetwork.Bssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.Vendor.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.PhyKind.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
         // Load network adapters

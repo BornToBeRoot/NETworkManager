@@ -54,6 +54,7 @@ Release date: **xx.xx.2025**
 
 **WiFi**
 
+- Fix filter by frequency if search is empty. [#3012](https://github.com/BornToBeRoot/NETworkManager/pull/3012)
 - Reload animation fixed in some cases. [#3012](https://github.com/BornToBeRoot/NETworkManager/pull/3012)
 
 **PowerShell**
