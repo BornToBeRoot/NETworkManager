@@ -48,6 +48,14 @@ Release date: **xx.xx.2025**
 
 - Find `pwsh.exe` and `powershell.exe` executable by path, similar to `where.exe`. [#2962](https://github.com/BornToBeRoot/NETworkManager/pull/2962)
 
+**Connections**
+
+- Redesign refresh button/view. [#3012](https://github.com/BornToBeRoot/NETworkManager/pull/3012)
+
+**Listeners**
+
+- Redesign refresh button/view. [#3012](https://github.com/BornToBeRoot/NETworkManager/pull/3012)
+
 **ARP**
 
 - Redesign refresh button/view. [#3012](https://github.com/BornToBeRoot/NETworkManager/pull/3012)
