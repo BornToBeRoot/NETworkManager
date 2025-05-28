@@ -1,15 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Input;
-using System.Windows.Threading;
-using log4net;
+﻿using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Localization.Resources;
@@ -18,6 +7,18 @@ using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels;
 
@@ -40,7 +41,7 @@ public class ARPTableViewModel : ViewModelBase
         {
             if (string.IsNullOrEmpty(Search))
                 return true;
-            
+
             if (o is not ARPInfo info)
                 return false;
 
@@ -71,7 +72,7 @@ public class ARPTableViewModel : ViewModelBase
 
     #region Variables
     private static readonly ILog Log = LogManager.GetLogger(typeof(ARPTableViewModel));
-    
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly bool _isLoading;
@@ -252,9 +253,10 @@ public class ARPTableViewModel : ViewModelBase
 
     private bool Refresh_CanExecute(object parameter)
     {
-        return Application.Current.MainWindow != null && 
+        return Application.Current.MainWindow != null &&
                !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen;        
+               !ConfigurationManager.Current.IsChildWindowOpen &&
+               !IsRefreshing;
     }
 
     private async Task RefreshAction()
@@ -301,8 +303,8 @@ public class ARPTableViewModel : ViewModelBase
     private bool DeleteEntry_CanExecute(object parameter)
     {
         return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen  &&
-               !ConfigurationManager.Current.IsChildWindowOpen;;
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
+               !ConfigurationManager.Current.IsChildWindowOpen; ;
     }
 
     private async Task DeleteEntryAction()
@@ -397,7 +399,7 @@ public class ARPTableViewModel : ViewModelBase
             catch (Exception ex)
             {
                 Log.Error("Error while exporting data as " + instance.FileType, ex);
-                
+
                 var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = Strings.OK;
 
@@ -428,8 +430,12 @@ public class ARPTableViewModel : ViewModelBase
     {
         IsRefreshing = true;
 
+        Debug.WriteLine("Refreshing...");
+
+        await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
+
         Results.Clear();
-        
+
         (await ARP.GetTableAsync()).ForEach(Results.Add);
 
         IsRefreshing = false;
