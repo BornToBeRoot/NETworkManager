@@ -256,7 +256,8 @@ public class ARPTableViewModel : ViewModelBase
         return Application.Current.MainWindow != null &&
                !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
                !ConfigurationManager.Current.IsChildWindowOpen &&
-               !IsRefreshing;
+               !IsRefreshing &&
+               !AutoRefreshEnabled;
     }
 
     private async Task RefreshAction()
@@ -304,7 +305,7 @@ public class ARPTableViewModel : ViewModelBase
     {
         return Application.Current.MainWindow != null &&
                !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen; ;
+               !ConfigurationManager.Current.IsChildWindowOpen;
     }
 
     private async Task DeleteEntryAction()
@@ -429,8 +430,6 @@ public class ARPTableViewModel : ViewModelBase
     private async Task Refresh()
     {
         IsRefreshing = true;
-
-        Debug.WriteLine("Refreshing...");
 
         await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 

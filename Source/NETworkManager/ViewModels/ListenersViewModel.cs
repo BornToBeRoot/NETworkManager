@@ -269,7 +269,9 @@ public class ListenersViewModel : ViewModelBase
     {
         return Application.Current.MainWindow != null &&
                !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen;
+               !ConfigurationManager.Current.IsChildWindowOpen &&
+               !IsRefreshing &&
+               !AutoRefreshEnabled;
     }
 
     private async Task RefreshAction()
@@ -334,6 +336,8 @@ public class ListenersViewModel : ViewModelBase
     {
         IsRefreshing = true;
 
+        await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
+        
         Results.Clear();
         
         (await Listener.GetAllActiveListenersAsync()).ForEach(Results.Add);
