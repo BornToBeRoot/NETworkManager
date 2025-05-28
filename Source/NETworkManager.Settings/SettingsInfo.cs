@@ -1739,6 +1739,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
+    /*
     private bool _dnsLookup_ShowOnlyMostCommonQueryTypes = true;
 
     public bool DNSLookup_ShowOnlyMostCommonQueryTypes
@@ -1753,6 +1754,7 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+    */
 
     private QueryType _dnsLookup_QueryType = GlobalStaticConfiguration.DNSLookup_QueryType;
 
@@ -3660,39 +3662,39 @@ public class SettingsInfo : INotifyPropertyChanged
     }
 
     #endregion
-    
+
     #region Hosts File Editor
-    
-     private string _hostsFileEditor_ExportFilePath;
-    
-        public string HostsFileEditor_ExportFilePath
+
+    private string _hostsFileEditor_ExportFilePath;
+
+    public string HostsFileEditor_ExportFilePath
+    {
+        get => _hostsFileEditor_ExportFilePath;
+        set
         {
-            get => _hostsFileEditor_ExportFilePath;
-            set
-            {
-                if (value == _hostsFileEditor_ExportFilePath)
-                    return;
-    
-                _hostsFileEditor_ExportFilePath = value;
-                OnPropertyChanged();
-            }
+            if (value == _hostsFileEditor_ExportFilePath)
+                return;
+
+            _hostsFileEditor_ExportFilePath = value;
+            OnPropertyChanged();
         }
-    
-        private ExportFileType _hostsFileEditor_ExportFileType = GlobalStaticConfiguration.HostsFileEditor_ExportFileType;
-    
-        public ExportFileType HostsFileEditor_ExportFileType
+    }
+
+    private ExportFileType _hostsFileEditor_ExportFileType = GlobalStaticConfiguration.HostsFileEditor_ExportFileType;
+
+    public ExportFileType HostsFileEditor_ExportFileType
+    {
+        get => _hostsFileEditor_ExportFileType;
+        set
         {
-            get => _hostsFileEditor_ExportFileType;
-            set
-            {
-                if (value == _hostsFileEditor_ExportFileType)
-                    return;
-    
-                _hostsFileEditor_ExportFileType = value;
-                OnPropertyChanged();
-            }
+            if (value == _hostsFileEditor_ExportFileType)
+                return;
+
+            _hostsFileEditor_ExportFileType = value;
+            OnPropertyChanged();
         }
-    
+    }
+
     #endregion
 
     #region Discovery Protocol

@@ -230,6 +230,12 @@ public sealed class DNSLookup
                     record.DomainName, record.TimeToLive, $"{record.RecordClass}", $"{record.RecordType}",
                     $"{record.Address}", $"{nameServer.Address}", nameServerHostname, nameServer.Port)));
 
+        // CAA
+        foreach (var record in dnsResourceRecords.OfType<CaaRecord>())
+            OnRecordReceived(new DNSLookupRecordReceivedArgs(
+                new DNSLookupRecordInfo(record.DomainName, record.TimeToLive, $"{record.RecordClass}", $"{record.RecordType}",
+                    $"{record.Flags} {record.Tag} {record.Value}", $"{nameServer.Address}", nameServerHostname, nameServer.Port)));
+
         // CNAME
         foreach (var record in dnsResourceRecords.OfType<CNameRecord>())
             OnRecordReceived(new DNSLookupRecordReceivedArgs(
@@ -285,6 +291,8 @@ public sealed class DNSLookup
                 new DNSLookupRecordInfo(
                     record.DomainName, record.TimeToLive, $"{record.RecordClass}", $"{record.RecordType}",
                     string.Join(", ", record.Text), $"{nameServer.Address}", nameServerHostname, nameServer.Port)));
+
+
 
         // ToDo: implement more
     }

@@ -27,6 +27,8 @@ Release date: **xx.xx.2025**
 
 - `DNSKEY` records are now supported. [#3060](https://github.com/BornToBeRoot/NETworkManager/pull/3060)
 - `SRV` records are now supported. [#3060](https://github.com/BornToBeRoot/NETworkManager/pull/3060)
+- `CAA` records are now supported. [#3012](https://github.com/BornToBeRoot/NETworkManager/pull/3012)
+- Record types that are not implemented are now hidden in the user interface. [#3012](https://github.com/BornToBeRoot/NETworkManager/pull/3012)
 
 ## Improvements
 

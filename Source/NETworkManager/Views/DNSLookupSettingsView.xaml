@@ -198,8 +198,10 @@
                    Margin="0,0,0,10" />
         <ComboBox ItemsSource="{Binding QueryClasses}" SelectedItem="{Binding QueryClass}" Width="250"
                   HorizontalAlignment="Left" Margin="0,0,0,10" />
+        <!--
         <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowOnlyMostCommonQueryTypes}"
                           IsOn="{Binding ShowOnlyMostCommonQueryTypes}" Margin="0,0,0,10" />
+        -->
         <mah:ToggleSwitch Header="{x:Static localization:Strings.UseOnlyTCP}" IsOn="{Binding UseTCPOnly}"
                           Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.Retries}" Style="{DynamicResource DefaultTextBlock}"

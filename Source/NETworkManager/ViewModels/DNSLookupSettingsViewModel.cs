@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Data;
-using System.Windows.Input;
-using DnsClient;
+﻿using DnsClient;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Data;
+using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
@@ -41,8 +41,8 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         }
     }
 
-    private List<string> ServerInfoProfileNames => SettingsManager.Current.DNSLookup_DNSServers
-        .Where(x => !x.UseWindowsDNSServer).Select(x => x.Name).ToList();
+    private List<string> ServerInfoProfileNames => [.. SettingsManager.Current.DNSLookup_DNSServers
+        .Where(x => !x.UseWindowsDNSServer).Select(x => x.Name)];
 
     private bool _addDNSSuffix;
 
@@ -154,6 +154,10 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         }
     }
 
+    /* 
+     * Disabled until more query types are implemented.
+     * 
+    
     private bool _showOnlyMostCommonQueryTypes;
 
     public bool ShowOnlyMostCommonQueryTypes
@@ -171,6 +175,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+    */
 
     private bool _useTCPOnly;
 
@@ -261,7 +266,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         UseCache = SettingsManager.Current.DNSLookup_UseCache;
         QueryClasses = Enum.GetValues(typeof(QueryClass)).Cast<QueryClass>().OrderBy(x => x.ToString()).ToList();
         QueryClass = QueryClasses.First(x => x == SettingsManager.Current.DNSLookup_QueryClass);
-        ShowOnlyMostCommonQueryTypes = SettingsManager.Current.DNSLookup_ShowOnlyMostCommonQueryTypes;
+        //ShowOnlyMostCommonQueryTypes = SettingsManager.Current.DNSLookup_ShowOnlyMostCommonQueryTypes;
         UseTCPOnly = SettingsManager.Current.DNSLookup_UseTCPOnly;
         Retries = SettingsManager.Current.DNSLookup_Retries;
         Timeout = SettingsManager.Current.DNSLookup_Timeout;
