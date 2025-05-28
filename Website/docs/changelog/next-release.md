@@ -56,6 +56,14 @@ Release date: **xx.xx.2025**
 
 - Set PowerShell console color for correct path... [#3023](https://github.com/BornToBeRoot/NETworkManager/pull/3023)
 
+**SNMP**
+
+- Fixed an issue where the ConsoleTextBox is not displayed correctly. [#3012](https://github.com/BornToBeRoot/NETworkManager/pull/3012)
+
+**Whois**
+
+- Fixed an issue where the ConsoleTextBox is not displayed correctly. [#3012](https://github.com/BornToBeRoot/NETworkManager/pull/3012)
+
 ## Dependencies, Refactoring & Documentation
 
 - Code cleanup & refactoring
