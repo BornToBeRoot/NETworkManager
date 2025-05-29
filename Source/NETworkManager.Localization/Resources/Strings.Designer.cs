@@ -4613,7 +4613,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To edit the hosts file, the application must be started with elevated rights!.
+        ///   Looks up a localized string similar to Read-only mode. Modifying the hosts file requires elevated rights!.
         /// </summary>
         public static string HostsFileEditorAdminMessage {
             get {
@@ -5955,7 +5955,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To analyze network packets, the application must be started with elevated rights!.
+        ///   Looks up a localized string similar to Analysing network packets requires elevated rights!.
         /// </summary>
         public static string NetworkPacketsCaptureAdminMessage {
             get {

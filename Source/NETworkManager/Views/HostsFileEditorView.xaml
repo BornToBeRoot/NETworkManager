@@ -31,25 +31,30 @@
                     <RowDefinition Height="10" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="10" />
+                    <RowDefinition Height="Auto" />                    
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <TextBox Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right"
-                         Width="250" Text="{Binding Path=Search, UpdateSourceTrigger=PropertyChanged}"
-                         Style="{StaticResource SearchTextBox}" />
+                <TextBox Grid.Column="0" Grid.Row="0"
+                         VerticalAlignment="Center" HorizontalAlignment="Right"
+                         Width="250"
+                         Text="{Binding Path=Search, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource ResourceKey=SearchTextBox}" />
                 <controls:MultiSelectDataGrid x:Name="DataGridHostsFileTable"
                                               Grid.Column="0" Grid.Row="2"
                                               ItemsSource="{Binding ResultsView}"
                                               SelectedItem="{Binding SelectedResult}"
                                               SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                    <controls:MultiSelectDataGrid.Resources>                        
+                    <controls:MultiSelectDataGrid.Resources>
                         <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                             <MenuItem Header="{x:Static Member=localization:Strings.Enable}"
                                       Command="{Binding Path=EnableEntryCommand}"
                                       Visibility="{Binding Path=SelectedResult.IsEnabled, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
                                 <MenuItem.Icon>
-                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
+                                    <Rectangle Width="16" Height="16"
+                                               Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ToggleSwitchOutline}" />
+                                            <VisualBrush Stretch="Uniform"
+                                                         Visual="{iconPacks:Material Kind=ToggleSwitchOutline}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </MenuItem.Icon>
@@ -58,9 +63,11 @@
                                       Command="{Binding Path=DisableEntryCommand}"
                                       Visibility="{Binding Path=SelectedResult.IsEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                                 <MenuItem.Icon>
-                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
+                                    <Rectangle Width="16" Height="16"
+                                               Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ToggleSwitchOffOutline}" />
+                                            <VisualBrush Stretch="Uniform"
+                                                         Visual="{iconPacks:Material Kind=ToggleSwitchOffOutline}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </MenuItem.Icon>
@@ -68,7 +75,8 @@
                             <MenuItem Header="{x:Static Member=localization:Strings.EditDots}"
                                       Command="{Binding Path=EditEntryCommand}">
                                 <MenuItem.Icon>
-                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
+                                    <Rectangle Width="16" Height="16"
+                                               Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
                                         </Rectangle.OpacityMask>
@@ -78,15 +86,16 @@
                             <MenuItem Header="{x:Static Member=localization:Strings.Delete}"
                                       Command="{Binding Path=DeleteEntryCommand}">
                                 <MenuItem.Icon>
-                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
+                                    <Rectangle Width="16" Height="16"
+                                               Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </MenuItem.Icon>
                             </MenuItem>
-                            
-                            
+
+
                             <Separator />
                             <MenuItem Header="{x:Static Member=localization:Strings.CopyDots}"
                                       Style="{StaticResource ResourceKey=CopyMenuItem}">
@@ -110,35 +119,14 @@
                             <MenuItem Header="{x:Static Member=localization:Strings.ExportDots}"
                                       Command="{Binding Path=ExportCommand}">
                                 <MenuItem.Icon>
-                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey= MahApps.Brushes.Gray3}">
+                                    <Rectangle Width="16" Height="16"
+                                               Fill="{DynamicResource ResourceKey= MahApps.Brushes.Gray3}">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <!--
-                            <MenuItem Header="{x:Static localization:Strings.DeleteEntry}"
-                                      Command="{Binding DeleteEntryCommand}">
-                                <MenuItem.Icon>
-                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                        <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
-                                        </Rectangle.OpacityMask>
-                                    </Rectangle>
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Header="{x:Static localization:Strings.ExportDots}"
-                                      Command="{Binding ExportCommand}">
-                                <MenuItem.Icon>
-                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                        <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
-                                        </Rectangle.OpacityMask>
-                                    </Rectangle>
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            -->
                         </ContextMenu>
                         <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                             <MenuItem Header="{x:Static localization:Strings.ExportDots}"
@@ -167,9 +155,9 @@
                     </controls:MultiSelectDataGrid.RowStyle>
                     <controls:MultiSelectDataGrid.Columns>
                         <DataGridCheckBoxColumn Header="{x:Static Member=localization:Strings.Enabled}"
-                                            Binding="{Binding Path=(hostsFileEditor:HostsFileEntry.IsEnabled)}"
-                                            SortMemberPath="IsEnabled"
-                                            MinWidth="100" />
+                                                Binding="{Binding Path=(hostsFileEditor:HostsFileEntry.IsEnabled)}"
+                                                SortMemberPath="IsEnabled"
+                                                MinWidth="100" />
                         <DataGridTextColumn Header="{x:Static Member=localization:Strings.IPAddress}"
                                             Binding="{Binding Path=(hostsFileEditor:HostsFileEntry.IPAddress)}"
                                             SortMemberPath="IPAddress"
@@ -183,8 +171,8 @@
                                             SortMemberPath="Hostname"
                                             MinWidth="200" />
                     </controls:MultiSelectDataGrid.Columns>
-                </controls:MultiSelectDataGrid>
-                  <Grid Grid.Column="0" Grid.Row="4">
+                </controls:MultiSelectDataGrid>                
+                <Grid Grid.Column="0" Grid.Row="4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="10" />
@@ -197,59 +185,52 @@
                                VerticalAlignment="Center"
                                HorizontalAlignment="Center">
                         <networkManager:LoadingIndicator IsActive="True"
-                                                            Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
-                                                            Visibility="{Binding Path=IsRefreshing, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                                            Width="24" Height="24"
-                                                            SpeedRatio="1"
-                                                            Margin="0,0,10,0" />
+                                                         Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
+                                                         Visibility="{Binding Path=IsRefreshing, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                                         Width="24" Height="24"
+                                                         SpeedRatio="1"
+                                                         Margin="0,0,10,0" />
                         <TextBlock Style="{StaticResource ResourceKey=AccentTextBlock}"
                                    Visibility="{Binding Path=IsStatusMessageDisplayed, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                    Text="{Binding Path=StatusMessage}"
                                    VerticalAlignment="Center" />
                     </WrapPanel>
-                      </Grid>
-                <!--
-                <StackPanel Grid.Column="0" Grid.Row="3" 
-                            VerticalAlignment="Center">
-                    <networkManager:LoadingIndicator IsActive="True"                                                    
-                                                     SpeedRatio="1"
-                                                     Visibility="{Binding Path=IsRefreshing, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                                     Style="{DynamicResource ResourceKey=LoadingIndicatorArcsStyle}"
-                                                     Margin="0,10,0,10" />
-                  
-                    <TextBlock Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Accent}"
-                           
-                               Text="{Binding Path=StatusMessage}"
-                               Visibility="{Binding Path=IsStatusMessageDisplayed, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                               Style="{DynamicResource ResourceKey=StatusMessageTextBlock}" Margin="0,10,0,0" />
-                </StackPanel>
-                -->
-                <!--
-                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
-                            Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
-                    <TextBlock Text="{x:Static localization:Strings.HostsEditorAdminMessage}"
-                               Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
-                    <Button Command="{Binding RestartAsAdminCommand}" HorizontalAlignment="Center"
-                            Style="{StaticResource ImageWithTextButton}">
-                        <Button.Content>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Rectangle Width="20" Height="20" Margin="10,5,0,5"
-                                           Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Shield}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.RestartAsAdmin}"
-                                           FontSize="14" Margin="10,5" TextAlignment="Center" />
-                            </Grid>
-                        </Button.Content>
-                    </Button>
-                </StackPanel>
-                -->
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="5"
+                      Background="{DynamicResource MahApps.Brushes.Gray10}"
+                      Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
+                      Margin="0,10,0,0">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch"                                  
+                                Margin="10">
+                        <TextBlock Text="{x:Static localization:Strings.HostsFileEditorAdminMessage}"
+                                   Style="{StaticResource MessageTextBlock}" 
+                                   Margin="0,0,0,10" />
+                        <Button Command="{Binding RestartAsAdminCommand}"
+                                HorizontalAlignment="Center"
+                                Style="{StaticResource ImageWithTextButton}">
+                            <Button.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Width="20" Height="20"
+                                               Margin="10,5,0,5"
+                                               Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Shield}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                    <TextBlock Grid.Column="1" Grid.Row="0"
+                                               Text="{x:Static localization:Strings.RestartAsAdmin}"
+                                               FontSize="14"
+                                               Margin="10,5"
+                                               TextAlignment="Center" />
+                                </Grid>
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+                </Grid>
             </Grid>
         </TabItem>
     </TabControl>

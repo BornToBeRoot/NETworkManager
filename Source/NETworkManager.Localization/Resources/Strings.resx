@@ -2392,7 +2392,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Restart as Administrator</value>
   </data>
   <data name="NetworkPacketsCaptureAdminMessage" xml:space="preserve">
-    <value>To analyze network packets, the application must be started with elevated rights!</value>
+    <value>Analysing network packets requires elevated rights!</value>
   </data>
   <data name="Capture" xml:space="preserve">
     <value>Capture</value>
@@ -3886,7 +3886,7 @@ Right-click for more options.</value>
     <value>Hosts File Editor</value>
   </data>
   <data name="HostsFileEditorAdminMessage" xml:space="preserve">
-    <value>To edit the hosts file, the application must be started with elevated rights!</value>
+    <value>Read-only mode. Modifying the hosts file requires elevated rights!</value>
   </data>
   <data name="Comment" xml:space="preserve">
     <value>Comment</value>
