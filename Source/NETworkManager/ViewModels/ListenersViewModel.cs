@@ -1,4 +1,13 @@
-﻿using System;
+﻿using log4net;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models.Export;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,15 +18,6 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using log4net;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Localization.Resources;
-using NETworkManager.Models.Export;
-using NETworkManager.Models.Network;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
@@ -337,21 +337,19 @@ public class ListenersViewModel : ViewModelBase
     {
         IsRefreshing = true;
 
+        StatusMessage = Strings.RefreshingDots;
+        IsStatusMessageDisplayed = true;
+
         if (init == false)
-        {
-            StatusMessage = "Refreshing...";
-            IsStatusMessageDisplayed = true;
-            
             await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
-        }
 
         Results.Clear();
 
         (await Listener.GetAllActiveListenersAsync()).ForEach(Results.Add);
 
-        StatusMessage = "Reloaded at " + DateTime.Now.ToShortTimeString();
+        StatusMessage = string.Format(Strings.ReloadedAtX, DateTime.Now.ToShortTimeString());
         IsStatusMessageDisplayed = true;
-        
+
         IsRefreshing = false;
     }
 

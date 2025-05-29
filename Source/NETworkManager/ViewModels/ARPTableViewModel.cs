@@ -431,21 +431,19 @@ public class ARPTableViewModel : ViewModelBase
     {
         IsRefreshing = true;
 
+        StatusMessage = Strings.RefreshingDots;
+        IsStatusMessageDisplayed = true;
+
         if (init == false)
-        {
-            StatusMessage = "Refreshing...";
-            IsStatusMessageDisplayed = true;
-            
             await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
-        }
 
         Results.Clear();
 
         (await ARP.GetTableAsync()).ForEach(Results.Add);
 
-        StatusMessage = "Reloaded at " + DateTime.Now.ToShortTimeString();
+        StatusMessage = string.Format(Strings.ReloadedAtX, DateTime.Now.ToShortTimeString());
         IsStatusMessageDisplayed = true;
-        
+
         IsRefreshing = false;
     }
 

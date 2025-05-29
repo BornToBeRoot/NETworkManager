@@ -3879,6 +3879,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to load hosts file: {0}.
+        /// </summary>
+        public static string FailedToLoadHostsFileMessage {
+            get {
+                return ResourceManager.GetString("FailedToLoadHostsFileMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Field cannot be empty!.
         /// </summary>
         public static string FieldCannotBeEmpty {
@@ -7360,6 +7369,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Refreshing....
+        /// </summary>
+        public static string RefreshingDots {
+            get {
+                return ResourceManager.GetString("RefreshingDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Region.
         /// </summary>
         public static string Region {
@@ -7392,6 +7410,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Reload {
             get {
                 return ResourceManager.GetString("Reload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reloaded at {0}.
+        /// </summary>
+        public static string ReloadedAtX {
+            get {
+                return ResourceManager.GetString("ReloadedAtX", resourceCulture);
             }
         }
         
@@ -8670,6 +8697,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Retries {
             get {
                 return ResourceManager.GetString("Retries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retrying in {0} seconds....
+        /// </summary>
+        public static string RetryingInXSecondsDots {
+            get {
+                return ResourceManager.GetString("RetryingInXSecondsDots", resourceCulture);
             }
         }
         

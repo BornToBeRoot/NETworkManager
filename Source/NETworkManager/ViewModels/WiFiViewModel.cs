@@ -474,7 +474,7 @@ public class WiFiViewModel : ViewModelBase
             if (o is not WiFiNetworkInfo info)
                 return false;
         
-            // Frequenzfilter immer anwenden
+            // Filter by frequency
             if ((info.Radio == WiFiRadio.GHz2dot4 && !Show2dot4GHzNetworks) ||
                 (info.Radio == WiFiRadio.GHz5 && !Show5GHzNetworks) ||
                 (info.Radio == WiFiRadio.GHz6 && !Show6GHzNetworks))
@@ -482,11 +482,11 @@ public class WiFiViewModel : ViewModelBase
                 return false;
             }
         
-            // Wenn kein Suchbegriff, Frequenzfilter reicht
+            // Return true if no search term is set
             if (string.IsNullOrEmpty(Search))
                 return true;
         
-            // Suchlogik
+            // Search by SSID, authentication type, channel frequency, channel, BSSID, vendor and PHY kind
             return info.AvailableNetwork.Ssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    info.NetworkAuthenticationType.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    $"{info.ChannelCenterFrequencyInGigahertz}".IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||

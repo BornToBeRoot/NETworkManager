@@ -3906,4 +3906,16 @@ Right-click for more options.</value>
   <data name="DisableEntry" xml:space="preserve">
     <value>Disable entry</value>
   </data>
+  <data name="RefreshingDots" xml:space="preserve">
+    <value>Refreshing...</value>
+  </data>
+  <data name="ReloadedAtX" xml:space="preserve">
+    <value>Reloaded at {0}</value>
+  </data>
+  <data name="FailedToLoadHostsFileMessage" xml:space="preserve">
+    <value>Failed to load hosts file: {0}</value>
+  </data>
+  <data name="RetryingInXSecondsDots" xml:space="preserve">
+    <value>Retrying in {0} seconds...</value>
+  </data>
 </root>

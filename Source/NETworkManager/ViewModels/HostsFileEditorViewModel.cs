@@ -1,26 +1,22 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Timers;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Input;
-using System.Windows.Threading;
-using log4net;
+﻿using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.HostsFileEditor;
-using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
+using System;
+using System.Collections;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
@@ -30,7 +26,7 @@ public class HostsFileEditorViewModel : ViewModelBase
     private static readonly ILog Log = LogManager.GetLogger(typeof(HostsFileEditorViewModel));
 
     private readonly IDialogCoordinator _dialogCoordinator;
-    
+
     private readonly bool _isLoading;
 
     private string _search;
@@ -49,7 +45,7 @@ public class HostsFileEditorViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+
     private ObservableCollection<HostsFileEntry> _results = [];
 
     public ObservableCollection<HostsFileEntry> Results
@@ -111,7 +107,7 @@ public class HostsFileEditorViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+
     private bool _isStatusMessageDisplayed;
 
     public bool IsStatusMessageDisplayed
@@ -162,13 +158,13 @@ public class HostsFileEditorViewModel : ViewModelBase
                 return false;
 
             return entry.IPAddress.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   entry.Hostname.IndexOf(Search, StringComparison.OrdinalIgnoreCase)> -1 ||
-                   entry.Comment.IndexOf(Search, StringComparison.OrdinalIgnoreCase)> -1;
+                   entry.Hostname.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   entry.Comment.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
         };
-        
+
         // Get hosts file entries
         Refresh(true).ConfigureAwait(false);
-        
+
         // Watch hosts file for changes
         HostsFileEditor.HostsFileChanged += (_, _) =>
         {
@@ -177,7 +173,7 @@ public class HostsFileEditorViewModel : ViewModelBase
                 Refresh().ConfigureAwait(false);
             });
         };
-        
+
         _isLoading = false;
     }
 
@@ -190,22 +186,22 @@ public class HostsFileEditorViewModel : ViewModelBase
 
     #region ICommands & Actions
     public ICommand RefreshCommand => new RelayCommand(_ => RefreshAction().ConfigureAwait(false), Refresh_CanExecute);
-    
+
     private bool Refresh_CanExecute(object parameter)
     {
-        return Application.Current.MainWindow != null && 
+        return Application.Current.MainWindow != null &&
                !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
                !ConfigurationManager.Current.IsChildWindowOpen &&
-               !IsRefreshing;        
+               !IsRefreshing;
     }
 
     private async Task RefreshAction()
     {
         await Refresh();
     }
-  
+
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
-    
+
     private async Task ExportAction()
     {
         var customDialog = new CustomDialog
@@ -219,15 +215,15 @@ public class HostsFileEditorViewModel : ViewModelBase
 
             try
             {
-               ExportManager.Export(instance.FilePath, instance.FileType,
-                    instance.ExportAll
-                        ? Results
-                        : new ObservableCollection<HostsFileEntry>(SelectedResults.Cast<HostsFileEntry>().ToArray()));
+                ExportManager.Export(instance.FilePath, instance.FileType,
+                     instance.ExportAll
+                         ? Results
+                         : new ObservableCollection<HostsFileEntry>(SelectedResults.Cast<HostsFileEntry>().ToArray()));
             }
             catch (Exception ex)
             {
                 Log.Error("Error while exporting data as " + instance.FileType, ex);
-                
+
                 var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = Strings.OK;
 
@@ -249,37 +245,37 @@ public class HostsFileEditorViewModel : ViewModelBase
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
-    
+
     public ICommand EnableEntryCommand => new RelayCommand(_ => EnableEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
-    
+
     private async Task EnableEntryAction()
     {
         Debug.WriteLine("Enable entry action: " + SelectedResult?.Line);
     }
-    
+
     public ICommand DisableEntryCommand => new RelayCommand(_ => DisableEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
-    
+
     private async Task DisableEntryAction()
     {
         Debug.WriteLine("Disable entry action: " + SelectedResult?.Line);
     }
-    
+
     public ICommand AddEntryCommand => new RelayCommand(_ => AddEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
 
     private async Task AddEntryAction()
     {
         Debug.WriteLine("Adding entry...");
     }
-    
+
     public ICommand DeleteEntryCommand => new RelayCommand(_ => DeleteEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
 
     private async Task DeleteEntryAction()
     {
         Debug.WriteLine("Delete entry action: " + SelectedResult?.Line);
     }
-    
+
     public ICommand EditEntryCommand => new RelayCommand(_ => EditEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
-    
+
     private async Task EditEntryAction()
     {
         Debug.WriteLine("Edit entry action: " + SelectedResult?.Line);
@@ -289,7 +285,7 @@ public class HostsFileEditorViewModel : ViewModelBase
     {
         return ConfigurationManager.Current.IsAdmin;
     }
-    
+
     public ICommand RestartAsAdminCommand => new RelayCommand(_ => RestartAsAdminAction().ConfigureAwait(false));
 
     private async Task RestartAsAdminAction()
@@ -310,62 +306,60 @@ public class HostsFileEditorViewModel : ViewModelBase
 
     private async Task Refresh(bool init = false)
     {
-        if(IsRefreshing)
+        if (IsRefreshing)
             return;
-        
+
         IsRefreshing = true;
-        
+
+        StatusMessage = Strings.RefreshingDots;
+        IsStatusMessageDisplayed = true;
+
         // Retry 3 times if the hosts file is locked
         for (var i = 1; i < 4; i++)
         {
             // Wait for 2.5 seconds on refresh
             if (init == false || i > 1)
-            {
-                StatusMessage = "Refreshing...";
-                IsStatusMessageDisplayed = true;
-                
                 await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
-            }
 
             try
             {
                 var entries = await HostsFileEditor.GetHostsFileEntriesAsync();
-                
+
                 Results.Clear();
-                
+
                 entries.ToList().ForEach(Results.Add);
 
-                StatusMessage = "Reloaded at " + DateTime.Now.ToShortTimeString();
+                StatusMessage = string.Format(Strings.ReloadedAtX, DateTime.Now.ToShortTimeString());
                 IsStatusMessageDisplayed = true;
-                
+
                 break;
             }
             catch (Exception ex)
             {
                 Log.Error(ex);
-                
-                StatusMessage = "Failed to reload hosts file: " + ex.Message;
+
+                StatusMessage = string.Format(Strings.FailedToLoadHostsFileMessage, ex.Message);
 
                 if (i < 3)
-                    StatusMessage += Environment.NewLine + $"Retrying in {GlobalStaticConfiguration.ApplicationUIRefreshInterval / 1000} seconds...";
+                    StatusMessage += Environment.NewLine + string.Format(Strings.RetryingInXSecondsDots, GlobalStaticConfiguration.ApplicationUIRefreshInterval / 1000);
 
                 IsStatusMessageDisplayed = true;
-                
+
                 await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
             }
         }
-        
+
         IsRefreshing = false;
     }
 
     public void OnViewVisible()
     {
-        
+
     }
 
     public void OnViewHide()
     {
-        
+
     }
     #endregion
 }
