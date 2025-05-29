@@ -23,7 +23,7 @@ Release date: **xx.xx.2025**
 
 **Hosts File Editor**
 
-- New feature to display (and edit) the `hosts` file. See [Hosts File Editor]() for more details.
+- New feature to display (and edit) the `hosts` file. (See [documentation](https://borntoberoot.net/NETworkManager/docs/application/hosts-file-editor) for more details)
 
   :::info
 
