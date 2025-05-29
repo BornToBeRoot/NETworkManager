@@ -12,6 +12,7 @@
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:wpfHelper="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              dialog:DialogParticipation.Register="{Binding}"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:HostsFileEditorViewModel}">
@@ -34,11 +35,38 @@
                     <RowDefinition Height="Auto" />                    
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <TextBox Grid.Column="0" Grid.Row="0"
-                         VerticalAlignment="Center" HorizontalAlignment="Right"
-                         Width="250"
-                         Text="{Binding Path=Search, UpdateSourceTrigger=PropertyChanged}"
-                         Style="{StaticResource ResourceKey=SearchTextBox}" />
+                <StackPanel Grid.Column="0" Grid.Row="0"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right">
+                    <Button Command="{Binding Path=RefreshCommand}"
+                            Style="{StaticResource CleanButton}" 
+                            Margin="0,0,10,0">
+                        <Rectangle Width="24" Height="24"
+                                   wpfHelper:ReloadAnimationHelper.IsReloading="{Binding IsRefreshing}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform"
+                                             Visual="{iconPacks:Material Kind=Refresh}" />
+                            </Rectangle.OpacityMask>
+                            <Rectangle.Style>
+                                <Style TargetType="{x:Type TypeName=Rectangle}">
+                                    <Setter Property="Fill"
+                                            Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
+                                                     Value="True">
+                                            <Setter Property="Fill"
+                                                    Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Rectangle.Style>
+                        </Rectangle>
+                    </Button>
+                    <TextBox Width="250"
+                             Text="{Binding Path=Search, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource ResourceKey=SearchTextBox}" />
+                </StackPanel>
                 <controls:MultiSelectDataGrid x:Name="DataGridHostsFileTable"
                                               Grid.Column="0" Grid.Row="2"
                                               ItemsSource="{Binding ResultsView}"
@@ -170,7 +198,6 @@
                                             MinWidth="200" />
                     </controls:MultiSelectDataGrid.Columns>
                 </controls:MultiSelectDataGrid>
-
                 <Grid Grid.Column="0" Grid.Row="4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />

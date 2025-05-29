@@ -32,6 +32,8 @@ In addition, further actions can be performed using the buttons below:
 
 :::note
 
+With `F5` you can refresh the hosts file.
+
 Right-click on the result to enabl e or disable an entry, delete or edit an entry, or to copy or export the information.
 
 :::
