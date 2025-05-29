@@ -1,5 +1,5 @@
 ---
-sidebar_position: 23
+sidebar_position: 24
 ---
 
 # Connections
@@ -15,6 +15,8 @@ The data shown is similar to the output of the `netstat` command.
 ![Connections](../img/connections.png)
 
 :::note
+
+With `F5` you can refresh the connections.
 
 Right-click on the result to copy or export the information.
 
