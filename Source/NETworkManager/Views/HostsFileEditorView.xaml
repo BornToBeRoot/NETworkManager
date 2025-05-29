@@ -46,7 +46,7 @@
                                               SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <controls:MultiSelectDataGrid.Resources>
                         <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                            <MenuItem Header="{x:Static Member=localization:Strings.Enable}"
+                            <MenuItem Header="{x:Static Member=localization:Strings.EnableEntry}"
                                       Command="{Binding Path=EnableEntryCommand}"
                                       Visibility="{Binding Path=SelectedResult.IsEnabled, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
                                 <MenuItem.Icon>
@@ -59,7 +59,7 @@
                                     </Rectangle>
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="{x:Static Member=localization:Strings.Disable}"
+                            <MenuItem Header="{x:Static Member=localization:Strings.DisableEntry}"
                                       Command="{Binding Path=DisableEntryCommand}"
                                       Visibility="{Binding Path=SelectedResult.IsEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                                 <MenuItem.Icon>
@@ -72,7 +72,7 @@
                                     </Rectangle>
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="{x:Static Member=localization:Strings.EditDots}"
+                            <MenuItem Header="{x:Static Member=localization:Strings.EditEntryDots}"
                                       Command="{Binding Path=EditEntryCommand}">
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16"
@@ -83,7 +83,7 @@
                                     </Rectangle>
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="{x:Static Member=localization:Strings.Delete}"
+                            <MenuItem Header="{x:Static Member=localization:Strings.DeleteEntry}"
                                       Command="{Binding Path=DeleteEntryCommand}">
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16"
@@ -94,8 +94,6 @@
                                     </Rectangle>
                                 </MenuItem.Icon>
                             </MenuItem>
-
-
                             <Separator />
                             <MenuItem Header="{x:Static Member=localization:Strings.CopyDots}"
                                       Style="{StaticResource ResourceKey=CopyMenuItem}">
@@ -171,31 +169,49 @@
                                             SortMemberPath="Hostname"
                                             MinWidth="200" />
                     </controls:MultiSelectDataGrid.Columns>
-                </controls:MultiSelectDataGrid>                
+                </controls:MultiSelectDataGrid>
+
                 <Grid Grid.Column="0" Grid.Row="4">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="10" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="10" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <WrapPanel Grid.Column="0" Grid.Row="0"
                                Orientation="Horizontal"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Center">
+                               VerticalAlignment="Bottom"
+                               HorizontalAlignment="Left">
                         <networkManager:LoadingIndicator IsActive="True"
-                                                         Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
-                                                         Visibility="{Binding Path=IsRefreshing, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                                         Width="24" Height="24"
-                                                         SpeedRatio="1"
-                                                         Margin="0,0,10,0" />
+                                     Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
+                                     Visibility="{Binding Path=IsRefreshing, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                     Width="24" Height="24"
+                                     SpeedRatio="1"
+                                     Margin="0,0,10,0" />
                         <TextBlock Style="{StaticResource ResourceKey=AccentTextBlock}"
                                    Visibility="{Binding Path=IsStatusMessageDisplayed, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                    Text="{Binding Path=StatusMessage}"
                                    VerticalAlignment="Center" />
                     </WrapPanel>
-                </Grid>
+                    <WrapPanel Grid.Column="2" Grid.Row="0" 
+                               Orientation="Horizontal" VerticalAlignment="Center"
+                               HorizontalAlignment="Right">
+                        <Button Command="{Binding AddEntryCommand}" Style="{StaticResource ImageWithTextButton}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddEntryDots}"                                         
+                                           Style="{StaticResource ButtonWithImageTextBlock}" />
+                            </Grid>
+                        </Button>
+                    </WrapPanel>
+                </Grid>                
                 <Grid Grid.Column="0" Grid.Row="5"
                       Background="{DynamicResource MahApps.Brushes.Gray10}"
                       Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"

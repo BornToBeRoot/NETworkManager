@@ -11,7 +11,6 @@ using System;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -250,40 +249,44 @@ public class HostsFileEditorViewModel : ViewModelBase
 
     private async Task EnableEntryAction()
     {
-        Debug.WriteLine("Enable entry action: " + SelectedResult?.Line);
+        MessageBox.Show("Enable entry action is not implemented yet.", "Enable Entry", MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     public ICommand DisableEntryCommand => new RelayCommand(_ => DisableEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
 
     private async Task DisableEntryAction()
     {
-        Debug.WriteLine("Disable entry action: " + SelectedResult?.Line);
+        MessageBox.Show("Disable entry action is not implemented yet.", "Disable Entry", MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     public ICommand AddEntryCommand => new RelayCommand(_ => AddEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
 
     private async Task AddEntryAction()
     {
-        Debug.WriteLine("Adding entry...");
+        MessageBox.Show("Add entry action is not implemented yet.", "Add Entry", MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     public ICommand DeleteEntryCommand => new RelayCommand(_ => DeleteEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
 
     private async Task DeleteEntryAction()
     {
-        Debug.WriteLine("Delete entry action: " + SelectedResult?.Line);
+        MessageBox.Show("Delete entry action is not implemented yet.", "Delete Entry", MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     public ICommand EditEntryCommand => new RelayCommand(_ => EditEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
 
     private async Task EditEntryAction()
     {
-        Debug.WriteLine("Edit entry action: " + SelectedResult?.Line);
+        MessageBox.Show("Edit entry action is not implemented yet.", "Edit Entry", MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     private bool ModifyEntry_CanExecute(object obj)
     {
-        return ConfigurationManager.Current.IsAdmin;
+        return ConfigurationManager.Current.IsAdmin &&
+            Application.Current.MainWindow != null &&
+            !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
+            !ConfigurationManager.Current.IsChildWindowOpen &&
+            !IsRefreshing;
     }
 
     public ICommand RestartAsAdminCommand => new RelayCommand(_ => RestartAsAdminAction().ConfigureAwait(false));
