@@ -42,7 +42,7 @@ public class AboutViewModel : ViewModelBase
         IsUpdateCheckRunning = true;
 
         // Show a loading animation for the user
-        await Task.Delay(1250);
+        await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
         var updater = new Updater();
 
