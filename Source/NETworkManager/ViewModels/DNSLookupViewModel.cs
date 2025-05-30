@@ -261,7 +261,7 @@ public class DNSLookupViewModel : ViewModelBase
         //else
         //    QueryTypes = [.. queryTypes.OrderBy(x => x.ToString())];
 
-        QueryTypes = [.. queryTypes.Where(GlobalStaticConfiguration.DNSLookup_CustomQueryTypes.Contains).OrderBy(x => x.ToString())];
+        QueryTypes = [.. queryTypes.Where(DNSLookup.QueryTypes.Contains).OrderBy(x => x.ToString())];
         QueryType = QueryTypes.FirstOrDefault(x => x == SettingsManager.Current.DNSLookup_QueryType);
 
         // Fallback

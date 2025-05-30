@@ -34,6 +34,24 @@ public sealed class DNSLookup
     #endregion
 
     #region Variables
+    /// <summary>
+    ///     Query types that can be used.
+    /// </summary>
+    public static HashSet<QueryType> QueryTypes =>
+    [
+        QueryType.A,
+        QueryType.AAAA,
+        QueryType.ANY,
+        QueryType.CAA,
+        QueryType.CNAME,
+        QueryType.DNSKEY,
+        QueryType.MX,
+        QueryType.NS,
+        QueryType.PTR,
+        QueryType.SOA,
+        QueryType.SRV,
+        QueryType.TXT
+    ];
 
     /// <summary>
     ///     DNS lookup settings to use for the DNS lookup.
