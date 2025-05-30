@@ -2413,7 +2413,7 @@ Vedi messaggio errore: "{0}"</value>
     <value>Riavvia come amministratore</value>
   </data>
   <data name="NetworkPacketsCaptureAdminMessage" xml:space="preserve">
-    <value>Per analizzare i pacchetti di rete l'applicazione deve essere avviata con privilegi elevati!</value>
+    <value>L'analisi dei pacchetti di rete richiede diritti elevati!</value>
   </data>
   <data name="Capture" xml:space="preserve">
     <value>Cattura</value>
@@ -3973,5 +3973,45 @@ Clic con il tasto destro per ulteriori opzioni.</value>
   </data>
   <data name="ProfileFile" xml:space="preserve">
     <value>Nome profilo</value>
+  </data>
+  <data name="ApplicationName_HostsFileEditor" xml:space="preserve">
+    <value>Editor file hosts</value>
+  </data>
+  <data name="HostsFileEditor" xml:space="preserve">
+    <value>Editor file hosts</value>
+  </data>
+  <data name="HostsFileEditorAdminMessage" xml:space="preserve">
+    <value>Modalità di sola lettura. 
+La modifica del file hosta richiede diritti elevati!</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Commento</value>
+  </data>
+  <data name="Disable" xml:space="preserve">
+    <value>Disabilita</value>
+  </data>
+  <data name="EditEntry" xml:space="preserve">
+    <value>Modifica voce</value>
+  </data>
+  <data name="EditEntryDots" xml:space="preserve">
+    <value>Modifica voce...</value>
+  </data>
+  <data name="EnableEntry" xml:space="preserve">
+    <value>Abilita voce</value>
+  </data>
+  <data name="DisableEntry" xml:space="preserve">
+    <value>Disabilita voce</value>
+  </data>
+  <data name="RefreshingDots" xml:space="preserve">
+    <value>Aggiornamento...</value>
+  </data>
+  <data name="ReloadedAtX" xml:space="preserve">
+    <value>Ricaricato al {0}</value>
+  </data>
+  <data name="FailedToLoadHostsFileMessage" xml:space="preserve">
+    <value>Impossibile caricare file hosts: {0}</value>
+  </data>
+  <data name="RetryingInXSecondsDots" xml:space="preserve">
+    <value>Ritentativo tra {0} secondi...</value>
   </data>
 </root>
