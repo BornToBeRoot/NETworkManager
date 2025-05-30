@@ -345,13 +345,13 @@ public class WiFiConnectViewModel : ViewModelBase
 
         IsWpsChecking = true;
         // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
-        await Task.Delay(1250);
+        await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval / 2);
 
         IsWpsAvailable =
             await WiFi.IsWpsAvailable(Options.AdapterInfo.WiFiAdapter, Options.NetworkInfo.AvailableNetwork);
 
         // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
-        await Task.Delay(1250);
+        await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval / 2);
         IsWpsChecking = false;
     }
 
