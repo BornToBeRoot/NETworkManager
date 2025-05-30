@@ -2392,7 +2392,7 @@ $$hostname$$--&gt;Nome do host</value>
     <value>Reiniciar como Administrador</value>
   </data>
   <data name="NetworkPacketsCaptureAdminMessage" xml:space="preserve">
-    <value>Para analisar pacotes de rede, o aplicativo deve ser iniciado com direitos elevados!</value>
+    <value>Analisar pacotes de rede requer direitos elevados!</value>
   </data>
   <data name="Capture" xml:space="preserve">
     <value>Capturar</value>
@@ -3878,5 +3878,44 @@ Clique direito para mais opções.</value>
   </data>
   <data name="ProfileFile" xml:space="preserve">
     <value>Arquivo de perfil</value>
+  </data>
+  <data name="ApplicationName_HostsFileEditor" xml:space="preserve">
+    <value>Editor de arquivo hosts</value>
+  </data>
+  <data name="HostsFileEditor" xml:space="preserve">
+    <value>Editor de arquivo hosts</value>
+  </data>
+  <data name="HostsFileEditorAdminMessage" xml:space="preserve">
+    <value>Modo somente leitura. Modificar o arquivo hosts requer direitos elevados!</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Comentário</value>
+  </data>
+  <data name="Disable" xml:space="preserve">
+    <value>Desativar</value>
+  </data>
+  <data name="EditEntry" xml:space="preserve">
+    <value>Editar entrada</value>
+  </data>
+  <data name="EditEntryDots" xml:space="preserve">
+    <value>Editar entrada...</value>
+  </data>
+  <data name="EnableEntry" xml:space="preserve">
+    <value>Ativar entrada</value>
+  </data>
+  <data name="DisableEntry" xml:space="preserve">
+    <value>Desativar entrada</value>
+  </data>
+  <data name="RefreshingDots" xml:space="preserve">
+    <value>Atualizando...</value>
+  </data>
+  <data name="ReloadedAtX" xml:space="preserve">
+    <value>Recarregado às {0}</value>
+  </data>
+  <data name="FailedToLoadHostsFileMessage" xml:space="preserve">
+    <value>Falha ao carregar o arquivo hosts: {0}</value>
+  </data>
+  <data name="RetryingInXSecondsDots" xml:space="preserve">
+    <value>Repetindo em {0} segundos...</value>
   </data>
 </root>
