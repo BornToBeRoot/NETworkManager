@@ -111,4 +111,20 @@ public static class RegexHelper
 
     // Match an SNMP OID (like 1.3.6.1 or .1.3.6.2)
     public const string SnmpOidRegex = @"^\.?[012]\.(?:[0-9]|[1-3][0-9])(\.\d+)*$";
+    
+    // Match a hosts file entry with optional comments, supporting IPv4, IPv6, and hostnames
+    // ^*                                    : Matches the beginning of the line
+    // (#)?                                  : Optionally matches a comment (#) at the start of the line
+    // \s*                                   : Matches any whitespace after the comment (or before the IP)
+    // ((?:(?:\d{1,3}\.){3}\d{1,3})          : Matches an IPv4 address (e.g., 192.168.1.1)
+    // |                                     : OR (alternation between IPv4 and IPv6)
+    // (?:(?:[A-Fa-f0-9:]+:+)+[A-Fa-f0-9]+)  : Matches an IPv6 address (e.g., 2001:db8::1)
+    // \s+                                   : Matches one or more spaces between the IP and the hostnames
+    // ([\w.-]+(?:\s+[\w.-]+)*)              : Matches one or more hostnames, separated by spaces
+    // \s*                                   : Matches optional whitespace after hostnames
+    // (#.*)?                                : Optionally matches a comment after hostnames
+    // $                                     : Anchors the match to the end of the line
+    public static string HostsEntryRegex =>
+        @"^(#)?\s*((?:(?:\d{1,3}\.){3}\d{1,3})|(?:(?:[A-Fa-f0-9:]+:+)+[A-Fa-f0-9]+))\s+([\w.-]+(?:\s+[\w.-]+)*)\s*(#.*)?$";
+
 }

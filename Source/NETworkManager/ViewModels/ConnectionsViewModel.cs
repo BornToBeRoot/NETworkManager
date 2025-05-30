@@ -1,4 +1,14 @@
-﻿using System;
+﻿using log4net;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models.Export;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,16 +19,6 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using log4net;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Localization;
-using NETworkManager.Localization.Resources;
-using NETworkManager.Models.Export;
-using NETworkManager.Models.Network;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
@@ -40,11 +40,11 @@ public class ConnectionsViewModel : ViewModelBase
 
         ResultsView.Filter = o =>
         {
-            if (o is not ConnectionInfo info)
-                return false;
-
             if (string.IsNullOrEmpty(Search))
                 return true;
+
+            if (o is not ConnectionInfo info)
+                return false;
 
             // Search by local/remote IP Address, local/remote Port, Protocol and State
             return info.LocalIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
@@ -61,7 +61,7 @@ public class ConnectionsViewModel : ViewModelBase
         };
 
         // Get connections
-        Refresh().ConfigureAwait(false);
+        Refresh(true).ConfigureAwait(false);
 
         // Auto refresh
         _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
@@ -94,8 +94,9 @@ public class ConnectionsViewModel : ViewModelBase
     #endregion
 
     #region Variables
+
     private static readonly ILog Log = LogManager.GetLogger(typeof(ConnectionsViewModel));
-    
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly bool _isLoading;
@@ -276,9 +277,11 @@ public class ConnectionsViewModel : ViewModelBase
 
     private bool Refresh_CanExecute(object parameter)
     {
-        return Application.Current.MainWindow != null && 
+        return Application.Current.MainWindow != null &&
                !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen;
+               !ConfigurationManager.Current.IsChildWindowOpen &&
+               !IsRefreshing &&
+               !AutoRefreshEnabled;
     }
 
     private async Task RefreshAction()
@@ -312,7 +315,7 @@ public class ConnectionsViewModel : ViewModelBase
                 catch (Exception ex)
                 {
                     Log.Error("Error while exporting data as " + instance.FileType, ex);
-                    
+
                     var settings = AppearanceManager.MetroDialog;
                     settings.AffirmativeButtonText = Strings.OK;
 
@@ -341,13 +344,22 @@ public class ConnectionsViewModel : ViewModelBase
 
     #region Methods
 
-    private async Task Refresh()
+    private async Task Refresh(bool init = false)
     {
         IsRefreshing = true;
 
+        StatusMessage = Strings.RefreshingDots;
+        IsStatusMessageDisplayed = true;
+
+        if (init == false)
+            await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
+
         Results.Clear();
 
-        (await Connection.GetActiveTcpConnectionsAsync()).ForEach(x => Results.Add(x));
+        (await Connection.GetActiveTcpConnectionsAsync()).ForEach(Results.Add);
+
+        StatusMessage = string.Format(Strings.ReloadedAtX, DateTime.Now.ToShortTimeString());
+        IsStatusMessageDisplayed = true;
 
         IsRefreshing = false;
     }

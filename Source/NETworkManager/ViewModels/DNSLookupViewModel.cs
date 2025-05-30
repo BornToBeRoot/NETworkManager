@@ -256,11 +256,12 @@ public class DNSLookupViewModel : ViewModelBase
     {
         var queryTypes = (QueryType[])Enum.GetValues(typeof(QueryType));
 
-        if (SettingsManager.Current.DNSLookup_ShowOnlyMostCommonQueryTypes)
-            QueryTypes = [.. queryTypes.Where(GlobalStaticConfiguration.DNSLookup_CustomQueryTypes.Contains).OrderBy(x => x.ToString())];
-        else
-            QueryTypes = [.. queryTypes.OrderBy(x => x.ToString())];
+        //if (SettingsManager.Current.DNSLookup_ShowOnlyMostCommonQueryTypes)
+        //    QueryTypes = [.. queryTypes.Where(GlobalStaticConfiguration.DNSLookup_CustomQueryTypes.Contains).OrderBy(x => x.ToString())];
+        //else
+        //    QueryTypes = [.. queryTypes.OrderBy(x => x.ToString())];
 
+        QueryTypes = [.. queryTypes.Where(DNSLookup.QueryTypes.Contains).OrderBy(x => x.ToString())];
         QueryType = QueryTypes.FirstOrDefault(x => x == SettingsManager.Current.DNSLookup_QueryType);
 
         // Fallback
@@ -457,9 +458,9 @@ public class DNSLookupViewModel : ViewModelBase
     {
         switch (e.PropertyName)
         {
-            case nameof(SettingsInfo.DNSLookup_ShowOnlyMostCommonQueryTypes):
-                LoadTypes();
-                break;
+            //case nameof(SettingsInfo.DNSLookup_ShowOnlyMostCommonQueryTypes):
+            //    LoadTypes();
+            //    break;
         }
     }
 

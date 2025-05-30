@@ -30,6 +30,8 @@ Due to limitations of the `Windows.Devices.WiFi` API the channel bandwidth canno
 
 :::note
 
+With `F5` you can search for networks again.
+
 Right-click on the result to copy or export the information.
 
 :::

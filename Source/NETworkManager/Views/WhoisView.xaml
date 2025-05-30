@@ -130,8 +130,10 @@
                            Style="{StaticResource HeaderTextBlock}"
                            Text="{x:Static localization:Strings.Result}" />
                 <TextBox Grid.Column="0" Grid.Row="1"
-                         VerticalScrollBarVisibility="Auto"
-                         Text="{Binding Result}"
+                         VerticalAlignment="Stretch"
+                         VerticalContentAlignment="Top"
+                         VerticalScrollBarVisibility="Auto"                         
+                         Text="{Binding Result}"                         
                          IsReadOnly="True">
                     <TextBox.Style>
                         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource ConsoleTextBox}">

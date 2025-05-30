@@ -938,8 +938,6 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private async void ReloadNetworkInterfaces()
     {
-        Debug.WriteLine("ReloadNetworkInterfaces.............");
-        
         // Avoid multiple reloads
         if(IsNetworkInterfaceLoading)
             return;
@@ -947,7 +945,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         IsNetworkInterfaceLoading = true;
 
         // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
-        await Task.Delay(2000);
+        await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
         // Store the last selected id
         var id = SelectedNetworkInterface?.Id ?? string.Empty;
@@ -1337,12 +1335,12 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
         Profiles.Filter = o =>
         {
+            if (string.IsNullOrEmpty(Search))
+                         return true;
+
             if (o is not ProfileInfo info)
                 return false;
-
-            if (string.IsNullOrEmpty(Search))
-                return true;
-
+            
             var search = Search.Trim();
 
             // Search by: Tag=xxx (exact match, ignore case)

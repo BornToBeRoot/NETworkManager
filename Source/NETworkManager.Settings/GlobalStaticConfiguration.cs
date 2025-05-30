@@ -20,6 +20,9 @@ public static class GlobalStaticConfiguration
 {
     #region Global settings
 
+    // Application config
+    public static int ApplicationUIRefreshInterval => 2500;
+
     // Type to search (average type speed --> 187 chars/min)
     public static TimeSpan SearchDispatcherTimerTimeSpan => new(0, 0, 0, 0, 750);
 
@@ -140,21 +143,7 @@ public static class GlobalStaticConfiguration
 
     // Application: DNS Lookup
     public static QueryClass DNSLookup_QueryClass => QueryClass.IN;
-    public static QueryType DNSLookup_QueryType => QueryType.ANY;
-    public static HashSet<QueryType> DNSLookup_CustomQueryTypes =>
-    [
-        QueryType.A,
-        QueryType.AAAA,
-        QueryType.ANY,
-        QueryType.CNAME,
-        QueryType.DNSKEY,
-        QueryType.MX,
-        QueryType.NS,
-        QueryType.PTR,
-        QueryType.SOA,
-        QueryType.SRV,
-        QueryType.TXT
-    ];
+    public static QueryType DNSLookup_QueryType => QueryType.ANY;    
     public static bool DNSLookup_UseTCPOnly => false;
     public static int DNSLookup_Retries => 3;
     public static int DNSLookup_Timeout => 2;
@@ -234,6 +223,9 @@ public static class GlobalStaticConfiguration
     // Application: SNTP Lookup
     public static int SNTPLookup_Timeout => 4000;
     public static ExportFileType SNTPLookup_ExportFileType => ExportFileType.Csv;
+
+    // Application: Hosts File Editor
+    public static ExportFileType HostsFileEditor_ExportFileType => ExportFileType.Csv;
 
     // Application: Discovery Protocol
     public static DiscoveryProtocol DiscoveryProtocol_Protocol => DiscoveryProtocol.LldpCdp;

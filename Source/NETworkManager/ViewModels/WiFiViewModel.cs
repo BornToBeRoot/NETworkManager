@@ -473,20 +473,20 @@ public class WiFiViewModel : ViewModelBase
         {
             if (o is not WiFiNetworkInfo info)
                 return false;
-
-            if (info.Radio == WiFiRadio.GHz2dot4 && !Show2dot4GHzNetworks)
+        
+            // Filter by frequency
+            if ((info.Radio == WiFiRadio.GHz2dot4 && !Show2dot4GHzNetworks) ||
+                (info.Radio == WiFiRadio.GHz5 && !Show5GHzNetworks) ||
+                (info.Radio == WiFiRadio.GHz6 && !Show6GHzNetworks))
+            {
                 return false;
-
-            if (info.Radio == WiFiRadio.GHz5 && !Show5GHzNetworks)
-                return false;
-
-            if (info.Radio == WiFiRadio.GHz6 && !Show6GHzNetworks)
-                return false;
-
+            }
+        
+            // Return true if no search term is set
             if (string.IsNullOrEmpty(Search))
                 return true;
-
-            // Search by: SSID, Security, Frequency , Channel, BSSID (MAC address), Vendor, Phy kind
+        
+            // Search by SSID, authentication type, channel frequency, channel, BSSID, vendor and PHY kind
             return info.AvailableNetwork.Ssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    info.NetworkAuthenticationType.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    $"{info.ChannelCenterFrequencyInGigahertz}".IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
@@ -529,7 +529,12 @@ public class WiFiViewModel : ViewModelBase
 
     #region ICommands & Actions
 
-    public ICommand ReloadAdaptersCommand => new RelayCommand(_ => ReloadAdapterAction());
+    public ICommand ReloadAdaptersCommand => new RelayCommand(_ => ReloadAdapterAction(), ReloadAdapter_CanExecute);
+
+    private bool ReloadAdapter_CanExecute(object obj)
+    {
+        return !IsAdaptersLoading && !IsNetworksLoading && !IsBackgroundSearchRunning && !AutoRefreshEnabled && !IsConnecting;
+    }
 
     private void ReloadAdapterAction()
     {
@@ -541,7 +546,7 @@ public class WiFiViewModel : ViewModelBase
 
     private bool ScanNetworks_CanExecute(object obj)
     {
-        return !IsAdaptersLoading && !IsNetworksLoading && !IsBackgroundSearchRunning && !IsConnecting;
+        return !IsAdaptersLoading && !IsNetworksLoading && !IsBackgroundSearchRunning && !AutoRefreshEnabled && !IsConnecting;
     }
 
     private async Task ScanNetworksAction()
@@ -599,7 +604,7 @@ public class WiFiViewModel : ViewModelBase
         IsAdaptersLoading = true;
 
         // Show a loading animation for the user
-        await Task.Delay(2500);
+        await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
         try
         {
@@ -645,7 +650,7 @@ public class WiFiViewModel : ViewModelBase
         Log.Debug("LoadAdaptersAsync - Done.");
     }
 
-    private async Task ScanAsync(WiFiAdapterInfo adapterInfo, bool refreshing = false, uint delayInMs = 0)
+    private async Task ScanAsync(WiFiAdapterInfo adapterInfo, bool refreshing = false, int delayInMs = 0)
     {
         Log.Debug($"ScanAsync - Scanning WiFi adapter \"{adapterInfo.NetworkInterfaceInfo.Name}\" with delay of {delayInMs} ms...");
 
@@ -661,7 +666,7 @@ public class WiFiViewModel : ViewModelBase
         }
 
         if (delayInMs != 0)
-            await Task.Delay((int)delayInMs);
+            await Task.Delay(delayInMs);
 
         var statusMessage = string.Empty;
 
@@ -922,7 +927,7 @@ public class WiFiViewModel : ViewModelBase
         }
 
         // Refresh
-        await ScanAsync(SelectedAdapter, true, 2500);
+        await ScanAsync(SelectedAdapter, true, GlobalStaticConfiguration.ApplicationUIRefreshInterval);
     }
 
     private async Task Export()

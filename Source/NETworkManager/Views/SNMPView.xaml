@@ -221,6 +221,7 @@
             </TextBlock>
             <TextBox Grid.Column="14" Grid.Row="2"
                      x:Name="TextBoxUsername"
+                     VerticalAlignment="Stretch"
                      mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleUsername}"
                      IsReadOnly="{Binding IsRunning}">
                 <TextBox.Style>
@@ -269,8 +270,10 @@
                 </TextBlock.Style>
             </TextBlock>
             <ComboBox Grid.Column="2" Grid.Row="3"
+                      Height="{Binding ElementName=ComboBoxOid, Path=ActualHeight}"
                       ItemsSource="{Binding AuthenticationProviders}"
-                      SelectedItem="{Binding AuthenticationProvider}" Margin="0,10,0,0">
+                      SelectedItem="{Binding AuthenticationProvider}"
+                      Margin="0,10,0,0">
                 <ComboBox.Style>
                     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource DefaultComboBox}">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -407,18 +410,19 @@
         <Button Grid.Column="2"
                 Command="{Binding WorkCommand}"
                 IsDefault="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}"
-                IsCancel="{Binding IsRunning}"
-                VerticalAlignment="Bottom">
+                IsCancel="{Binding IsRunning}">
             <Button.Resources>
                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                     <Setter Property="IsDefault" Value="False" />
                     <Setter Property="IsCancel" Value="False" />
                     <Setter Property="IsEnabled" Value="False" />
                     <Setter Property="Grid.Row" Value="1" />
+                    <Setter Property="VerticalAlignment" Value="Bottom" />
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Mode}" Value="Set">
                             <Setter Property="Grid.Row" Value="5" />
-                        </DataTrigger>
+                            <Setter Property="VerticalAlignment" Value="Top" />
+                        </DataTrigger>                        
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Version}" Value="v1" />
@@ -615,7 +619,7 @@
                 </Style>
             </TextBlock.Style>
         </TextBlock>
-        <controls:MultiSelectDataGrid Grid.Row="5" Grid.ColumnSpan="3" Grid.Column="0"
+        <controls:MultiSelectDataGrid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3"
                                       ItemsSource="{Binding ResultsView}"
                                       SelectedItem="{Binding SelectedResult}"
                                       Sorting="DataGrid_OnSorting"
@@ -690,7 +694,11 @@
                                     SortMemberPath="Data" MinWidth="300" />
             </DataGrid.Columns>
         </controls:MultiSelectDataGrid>
-        <TextBox Grid.Row="5" Grid.Column="0" Text="{Binding Data}">
+        <TextBox Grid.Row="5" Grid.Column="0" 
+                 MinHeight="{Binding ElementName=ComboBoxOid, Path=ActualHeight}"
+                 VerticalAlignment="Top"
+                 TextWrapping="Wrap"
+                 Text="{Binding Data}">
             <TextBox.Style>
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource ConsoleTextBox}">
                     <Setter Property="Visibility" Value="Collapsed" />

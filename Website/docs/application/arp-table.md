@@ -1,5 +1,5 @@
 ---
-sidebar_position: 25
+sidebar_position: 26
 ---
 
 # ARP Table
@@ -16,16 +16,17 @@ ARP (Address Resolution Protocol) is a layer 2 protocol for mapping IP addresses
 
 :::note
 
-In addition, further actions can be performed using the buttons at the bottom left:
+In addition, further actions can be performed using the buttons below:
 
 - **Add entry...** - Opens a dialog to add an entry to the ARP table.
-- **Delete entry** - Delete the currently selected entry from the ARP table.
 - **Delete table** - Delete all entries from the ARP table.
 
 :::
 
 :::note
 
-Right-click on the result to copy or export the information.
+With `F5` you can refresh the ARP table.
+
+Right-click on the result to delete an entry, or to copy or export the information.
 
 :::

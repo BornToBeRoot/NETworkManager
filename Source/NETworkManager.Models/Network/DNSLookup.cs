@@ -34,6 +34,24 @@ public sealed class DNSLookup
     #endregion
 
     #region Variables
+    /// <summary>
+    ///     Query types that can be used.
+    /// </summary>
+    public static HashSet<QueryType> QueryTypes =>
+    [
+        QueryType.A,
+        QueryType.AAAA,
+        QueryType.ANY,
+        QueryType.CAA,
+        QueryType.CNAME,
+        QueryType.DNSKEY,
+        QueryType.MX,
+        QueryType.NS,
+        QueryType.PTR,
+        QueryType.SOA,
+        QueryType.SRV,
+        QueryType.TXT
+    ];
 
     /// <summary>
     ///     DNS lookup settings to use for the DNS lookup.
@@ -230,6 +248,12 @@ public sealed class DNSLookup
                     record.DomainName, record.TimeToLive, $"{record.RecordClass}", $"{record.RecordType}",
                     $"{record.Address}", $"{nameServer.Address}", nameServerHostname, nameServer.Port)));
 
+        // CAA
+        foreach (var record in dnsResourceRecords.OfType<CaaRecord>())
+            OnRecordReceived(new DNSLookupRecordReceivedArgs(
+                new DNSLookupRecordInfo(record.DomainName, record.TimeToLive, $"{record.RecordClass}", $"{record.RecordType}",
+                    $"{record.Flags} {record.Tag} {record.Value}", $"{nameServer.Address}", nameServerHostname, nameServer.Port)));
+
         // CNAME
         foreach (var record in dnsResourceRecords.OfType<CNameRecord>())
             OnRecordReceived(new DNSLookupRecordReceivedArgs(
@@ -285,6 +309,8 @@ public sealed class DNSLookup
                 new DNSLookupRecordInfo(
                     record.DomainName, record.TimeToLive, $"{record.RecordClass}", $"{record.RecordType}",
                     string.Join(", ", record.Text), $"{nameServer.Address}", nameServerHostname, nameServer.Port)));
+
+
 
         // ToDo: implement more
     }

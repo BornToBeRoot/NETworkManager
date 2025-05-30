@@ -90,7 +90,7 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
         Result = null;
 
         // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
-        await Task.Delay(2000);
+        await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
         Result = await IPGeolocationService.GetInstance().GetIPGeolocationAsync();
 

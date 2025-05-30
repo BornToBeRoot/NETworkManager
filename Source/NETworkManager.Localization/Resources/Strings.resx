@@ -2392,7 +2392,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Restart as Administrator</value>
   </data>
   <data name="NetworkPacketsCaptureAdminMessage" xml:space="preserve">
-    <value>To analyze network packets, the application must be started with elevated rights!</value>
+    <value>Analysing network packets requires elevated rights!</value>
   </data>
   <data name="Capture" xml:space="preserve">
     <value>Capture</value>
@@ -3878,5 +3878,44 @@ Right-click for more options.</value>
   </data>
   <data name="ProfileFile" xml:space="preserve">
     <value>Profile file</value>
+  </data>
+  <data name="ApplicationName_HostsFileEditor" xml:space="preserve">
+    <value>Hosts File Editor</value>
+  </data>
+  <data name="HostsFileEditor" xml:space="preserve">
+    <value>Hosts File Editor</value>
+  </data>
+  <data name="HostsFileEditorAdminMessage" xml:space="preserve">
+    <value>Read-only mode. Modifying the hosts file requires elevated rights!</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="Disable" xml:space="preserve">
+    <value>Disable</value>
+  </data>
+  <data name="EditEntry" xml:space="preserve">
+    <value>Edit entry</value>
+  </data>
+  <data name="EditEntryDots" xml:space="preserve">
+    <value>Edit entry...</value>
+  </data>
+  <data name="EnableEntry" xml:space="preserve">
+    <value>Enable entry</value>
+  </data>
+  <data name="DisableEntry" xml:space="preserve">
+    <value>Disable entry</value>
+  </data>
+  <data name="RefreshingDots" xml:space="preserve">
+    <value>Refreshing...</value>
+  </data>
+  <data name="ReloadedAtX" xml:space="preserve">
+    <value>Reloaded at {0}</value>
+  </data>
+  <data name="FailedToLoadHostsFileMessage" xml:space="preserve">
+    <value>Failed to load hosts file: {0}</value>
+  </data>
+  <data name="RetryingInXSecondsDots" xml:space="preserve">
+    <value>Retrying in {0} seconds...</value>
   </data>
 </root>
