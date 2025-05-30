@@ -1,5 +1,6 @@
 ﻿using NETworkManager.Models.Network;
 using NETworkManager.Utilities;
+using NETworkManager.Settings;
 using System;
 using System.Security;
 using System.Threading.Tasks;
