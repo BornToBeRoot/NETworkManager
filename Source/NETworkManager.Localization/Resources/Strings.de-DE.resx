@@ -2392,7 +2392,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Neustart als Administrator</value>
   </data>
   <data name="NetworkPacketsCaptureAdminMessage" xml:space="preserve">
-    <value>Um Netzwerkpakete analysieren zu können, muss die Anwendung mit erhöhten Rechten gestartet werden!</value>
+    <value>Analysieren von Netzwerkpaketen erfordert erhöhte Rechte!</value>
   </data>
   <data name="Capture" xml:space="preserve">
     <value>Aufnehmen</value>
@@ -3878,5 +3878,44 @@ Rechtsklick für weitere Optionen.</value>
   </data>
   <data name="ProfileFile" xml:space="preserve">
     <value>Profildatei</value>
+  </data>
+  <data name="ApplicationName_HostsFileEditor" xml:space="preserve">
+    <value>Hosts File Editor</value>
+  </data>
+  <data name="HostsFileEditor" xml:space="preserve">
+    <value>Hosts File Editor</value>
+  </data>
+  <data name="HostsFileEditorAdminMessage" xml:space="preserve">
+    <value>Schreibgeschützter Modus. Das Ändern der hosts Datei erfordert erhöhte Rechte!</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Kommentar</value>
+  </data>
+  <data name="Disable" xml:space="preserve">
+    <value>Deaktivieren</value>
+  </data>
+  <data name="EditEntry" xml:space="preserve">
+    <value>Eintrag bearbeiten</value>
+  </data>
+  <data name="EditEntryDots" xml:space="preserve">
+    <value>Eintrag bearbeiten...</value>
+  </data>
+  <data name="EnableEntry" xml:space="preserve">
+    <value>Eintrag aktivieren</value>
+  </data>
+  <data name="DisableEntry" xml:space="preserve">
+    <value>Eintrag deaktivieren</value>
+  </data>
+  <data name="RefreshingDots" xml:space="preserve">
+    <value>Aktualisieren...</value>
+  </data>
+  <data name="ReloadedAtX" xml:space="preserve">
+    <value>Aktualisiert um {0}</value>
+  </data>
+  <data name="FailedToLoadHostsFileMessage" xml:space="preserve">
+    <value>Hosts-Datei konnte nicht geladen werden: {0}</value>
+  </data>
+  <data name="RetryingInXSecondsDots" xml:space="preserve">
+    <value>Wiederholung in {0} {0} Sekunden...</value>
   </data>
 </root>
