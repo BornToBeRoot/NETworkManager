@@ -12,7 +12,7 @@ import styles from "./styles.module.css";
   <div>
     <h3>2025.1.18.0</h3>
   </div>
-  <div>18.01.2025</div>
+  <div>Release Date: 18.01.2025</div>
 </div>
 
 <div className={`${styles.centerButtonContainer} margin-bottom--lg`}>
@@ -23,21 +23,54 @@ import styles from "./styles.module.css";
     Setup
   </Link>
   <Link
-    className={`button button--info ${styles.downloadButton}`}
+    className={`button button--primary ${styles.downloadButton}`}
     to="https://github.com/BornToBeRoot/NETworkManager/releases/download/2025.1.18.0/NETworkManager_2025.1.18.0_Portable.zip"
   >
     Portable
   </Link>
   <Link
-    className={`button button--info ${styles.downloadButton}`}
+    className={`button button--primary ${styles.downloadButton}`}
     to="https://github.com/BornToBeRoot/NETworkManager/releases/download/2025.1.18.0/NETworkManager_2025.1.18.0_Archive.zip"
   >
     Archive
   </Link>
 </div>
 
+<div className={`${styles.shieldsContainer}`}>
+  <a
+    className={`${styles.shields}`}
+    href="https://github.com/BornToBeroot/NETworkManager/releases"
+    target="_blank"
+  >
+    <img
+      alt="All releases"
+      src="https://img.shields.io/github/downloads/BornToBeroot/NETworkManager/total.svg?style=for-the-badge&logo=github"
+    />
+  </a>
+  <a
+    className={`${styles.shields}`}
+    href="https://github.com/BornToBeroot/NETworkManager/releases/latest"
+    target="_blank"
+  >
+    <img
+      alt="Latest release"
+      src="https://img.shields.io/github/downloads/BornToBeroot/NETworkManager/latest/total.svg?style=for-the-badge&logo=github"
+    />
+  </a>
+</div>
+
+<div className={`${styles.centerButtonContainer}`}>
+  <Link
+    className={`button button--secondary ${styles.additionalButton}`}
+    to="/docs/changelog/2025-1-18-0"
+    target="_blank"
+  >
+    📃 Changelog
+  </Link>
+</div>
+
 <div
-  className="alert alert--secondary"
+  className="alert alert--primary"
   style={{ marginTop: "2rem", marginBottom: "2rem", padding: "1rem" }}
 >
   <h3>🙏 If you enjoy using NETworkManager...</h3>
@@ -49,7 +82,7 @@ import styles from "./styles.module.css";
   </p>
   <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
     <Link
-      className={`button button--secondary ${styles.additionalButton}`}
+      className={`button button--info ${styles.additionalButton}`}
       style={{ margin: "0" }}
       to="https://github.com/BornToBeRoot/NETworkManager#-donate"
       target="_blank"
@@ -89,7 +122,7 @@ import styles from "./styles.module.css";
   </div>
 </details>
 
-<details>
+<details className="alert alert--secondary">
   <summary>Checksums</summary>
   <div>
     <p>SHA-256 checksums for the latest release:</p>
@@ -103,39 +136,6 @@ import styles from "./styles.module.css";
     <pre><code class="language-powershell">Get-FileHash -Path .\NETworkManager_&#123;VERSION&#125;_Setup.msi -Algorithm SHA256</code></pre>
   </div>
 </details>
-
-<div className={`${styles.shieldsContainer}`}>
-  <a
-    className={`${styles.shields}`}
-    href="https://github.com/BornToBeroot/NETworkManager/releases"
-    target="_blank"
-  >
-    <img
-      alt="All releases"
-      src="https://img.shields.io/github/downloads/BornToBeroot/NETworkManager/total.svg?style=for-the-badge&logo=github"
-    />
-  </a>
-  <a
-    className={`${styles.shields}`}
-    href="https://github.com/BornToBeroot/NETworkManager/releases/latest"
-    target="_blank"
-  >
-    <img
-      alt="Latest release"
-      src="https://img.shields.io/github/downloads/BornToBeroot/NETworkManager/latest/total.svg?style=for-the-badge&logo=github"
-    />
-  </a>
-</div>
-
-<div className={`${styles.centerButtonContainer}`}>
-  <Link
-    className={`button button--secondary ${styles.additionalButton}`}
-    to="/docs/changelog/2025-1-18-0"
-    target="_blank"
-  >
-    📃 Changelog
-  </Link>
-</div>
 
 ## System requirements
 
