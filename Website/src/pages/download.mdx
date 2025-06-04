@@ -79,7 +79,7 @@ Download the latest binaries via GitHub Releases:
 <details>
   <summary>Checksums [SHA-256]</summary>
   <div>
-    <p>Checksums [SHA-256] for the latest release:</p>
+    <p>SHA-256 checksums for the latest release:</p>
     <p>
       <b>Setup</b> (MSI-Installer)
       <pre>
@@ -97,7 +97,7 @@ Download the latest binaries via GitHub Releases:
       <pre>
         <code>
           68FFC7A42F0CF27B83525BB6AE79C730C96C40A956869F5C45D60B97CCECAE74
-        </code>        
+        </code>
       </pre>
     </p>
     <p>Verify the file hash with the following PowerShell command:</p>
@@ -107,24 +107,54 @@ Download the latest binaries via GitHub Releases:
         -Algorithm SHA256
       </code>
     </pre>
+    <p>
+      Checksums for each release can be found on{" "}
+      <a
+        href="https://github.com/BornToBeRoot/NETworkManager/releases"
+        target="_blank"
+      >
+        GitHub Releases
+      </a>{" "}
+      section.
+    </p>
   </div>
 </details>
 
-:::info
-
-**Setup** (MSI-Installer) [Recommended]<br />
-Installs NETworkManager on your system for all users (requires administrator privileges).<br />
-Profiles and settings are stored in the user profile under `Documents\NETworkManager`.<br />
-
-**Portable** (ZIP-Archive)<br />
-Run NETworkManager anywhere without installation (e.g. USB stick, network share).<br />
-Profiles and settings are stored in the same directory as the executable. Upgrades are supported by copying the `Profiles` and `Settings` directories to the newly downloaded version.
-
-**Archive** (ZIP-Archive)<br />
-Run NETworkManager anywhere without installation (e.g. USB stick, network share).<br />
-Profiles and settings are stored in the user profile under `Documents\NETworkManager`. Might be useful for custom deployment senarios (e.g. Terminal Server, Intune, etc.).
-
-:::
+<details>
+  <summary>
+    <svg viewBox="0 0 14 16">
+      <path
+        fill-rule="evenodd"
+        d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"
+      ></path>
+    </svg>
+    <p>What version should I download?</p>
+  </summary>
+  <div>
+    <p>NETworkManager is available in three different versions:</p>
+    <ul>
+      <li>
+        <b>Setup</b> (MSI-Installer): Recommended for most users, installs
+        NETworkManager for all users on the system. Requires administrator
+        privileges. Settings and profiles are stored in the user profile
+        directory under <code>~\Documents\NETworkManager</code>.
+      </li>
+      <li>
+        <b>Portable</b> (ZIP-Archive): Run NETworkManager without installation,
+        e.g. from a USB stick or network share. Settings and profiles are stored
+        in the same directory as the executable. Upgrades are supported by
+        copying the <code>Profiles</code> and <code>Settings</code> directories
+        to the new version.
+      </li>
+      <li>
+        <b>Archive</b> (ZIP-Archive): Similar to Portable, but stores profiles
+        and settings in the user profile directory under{" "}
+        <code>~\Documents\NETworkManager</code>. This version might be useful
+        for custom deployment scenarios (e.g. Terminal Server, Intune, etc.).
+      </li>
+    </ul>
+  </div>
+</details>
 
 ## System requirements
 
