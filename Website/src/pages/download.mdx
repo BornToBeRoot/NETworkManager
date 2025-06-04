@@ -8,8 +8,12 @@ import styles from "./styles.module.css";
 
 # Download
 
-Version: **2025.1.18.0**<br />
-Release date: **18.01.2025**
+<div style={{ display: "flex", justifyContent: "space-between" }}>
+  <div>
+    <h3>2025.1.18.0</h3>
+  </div>
+  <div>18.01.2025></div>
+</div>
 
 Download the latest binaries via GitHub Releases:
 
@@ -38,48 +42,44 @@ Download the latest binaries via GitHub Releases:
   className="alert alert--secondary"
   style={{ marginTop: "2rem", marginBottom: "2rem", padding: "1rem" }}
 >
-  <h3>🙏 Enjoying NETworkManager?</h3>
-  <p>
-    If you find <strong>NETworkManager</strong> helpful, please consider
-    supporting the project! Your <strong>donation</strong> or a simple{" "}
-    <strong>share</strong> helps keep the project alive and enables further
-    development and improvements.
-  </p>
-  <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
-    <Link
-      className={`button button--secondary ${styles.additionalButton}`}
-      style={{ margin: "0" }}
-      to="https://github.com/BornToBeRoot/NETworkManager#-donate"
-      target="_blank"
-    >
-      💖 Donate
-    </Link>
-  </div>
+<h3>🙏 If you enjoy using NETworkManager...</h3>
+<p>
+  ...please consider supporting its development! Whether through a 
+  <strong>donation</strong> or simply <strong>sharing it</strong> with others, 
+  your support helps keep the project going and growing. Thank you for being part of the journey!
+</p>
+<div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
+  <Link
+    className={`button button--secondary ${styles.additionalButton}`}
+    style={{ margin: "0" }}
+    to="https://github.com/BornToBeRoot/NETworkManager#-donate"
+    target="_blank"
+  >
+    💖 Donate
+  </Link>
 </div>
 
 <div className={`${styles.shieldsContainer}`}>
-  <p>
-    <a
-      className={`${styles.shields}`}
-      href="https://github.com/BornToBeroot/NETworkManager/releases"
-      target="_blank"
-    >
-      <img
-        alt="All releases"
-        src="https://img.shields.io/github/downloads/BornToBeroot/NETworkManager/total.svg?style=for-the-badge&logo=github"
-      />
-    </a>
-    <a
-      className={`${styles.shields}`}
-      href="https://github.com/BornToBeroot/NETworkManager/releases/latest"
-      target="_blank"
-    >
-      <img
-        alt="Latest release"
-        src="https://img.shields.io/github/downloads/BornToBeroot/NETworkManager/latest/total.svg?style=for-the-badge&logo=github"
-      />
-    </a>
-  </p>
+  <a
+    className={`${styles.shields}`}
+    href="https://github.com/BornToBeroot/NETworkManager/releases"
+    target="_blank"
+  >
+    <img
+      alt="All releases"
+      src="https://img.shields.io/github/downloads/BornToBeroot/NETworkManager/total.svg?style=for-the-badge&logo=github"
+    />
+  </a>
+  <a
+    className={`${styles.shields}`}
+    href="https://github.com/BornToBeroot/NETworkManager/releases/latest"
+    target="_blank"
+  >
+    <img
+      alt="Latest release"
+      src="https://img.shields.io/github/downloads/BornToBeroot/NETworkManager/latest/total.svg?style=for-the-badge&logo=github"
+    />
+  </a>
 </div>
 
 <div className={`${styles.centerButtonContainer}`}>
@@ -125,7 +125,7 @@ Download the latest binaries via GitHub Releases:
 <details>
   <summary>Checksums</summary>
   <div>
-    <p>Checksums [SHA-256] for the latest release:</p>
+    <p>SHA-256 checksums for the latest release:</p>
     <p>
       <b>Setup</b> (MSI-Installer)
       <pre>
@@ -146,7 +146,7 @@ Download the latest binaries via GitHub Releases:
         </code>
       </pre>
     </p>
-    <p>Verify the file hash with the following PowerShell command:</p>
+    <p>You can verify the checksum with the following PowerShell command:</p>
     <pre>
       <code class="language-powershell">
         Get-FileHash -Path .\NETworkManager_&#123;VERSION&#125;_Setup.msi
@@ -154,14 +154,13 @@ Download the latest binaries via GitHub Releases:
       </code>
     </pre>
     <p>
-      Checksums for each release can be found on{" "}
+      Checksums for each release can be found on
       <a
         href="https://github.com/BornToBeRoot/NETworkManager/releases"
         target="_blank"
       >
         GitHub Releases
-      </a>{" "}
-      section.
+      </a>.
     </p>
   </div>
 </details>
