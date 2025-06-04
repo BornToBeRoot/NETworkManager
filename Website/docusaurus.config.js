@@ -82,6 +82,11 @@ const config = {
             position: "left",
           },
           {
+            href: "https://github.com/BornToBeRoot/NETworkManager?tab=readme-ov-file#-donate",
+            label: "Donate",
+            position: "right",
+          },
+          {
             href: "https://github.com/BornToBeRoot/NETworkManager",
             label: "GitHub",
             position: "right",
