@@ -12,7 +12,7 @@ import styles from "./styles.module.css";
   <div>
     <h3>2025.1.18.0</h3>
   </div>
-  <div>18.01.2025></div>
+  <div>18.01.2025</div>
 </div>
 
 <div className={`${styles.centerButtonContainer} margin-bottom--lg`}>
@@ -59,6 +59,57 @@ import styles from "./styles.module.css";
   </div>
 </div>
 
+<details>
+  <summary>
+    <p>What version should I download?</p>
+  </summary>
+  <div>
+    <p>NETworkManager is available in three different versions:</p>
+    <ul>
+      <li>
+        <b>Setup</b> (MSI-Installer): Recommended for most users, installs
+        NETworkManager for all users on the system. Requires administrator
+        privileges. Settings and profiles are stored in the user profile
+        directory under <code>~\Documents\NETworkManager</code>.
+      </li>
+      <li>
+        <b>Portable</b> (ZIP-Archive): Run NETworkManager without installation,
+        e.g. from a USB stick or network share. Settings and profiles are stored
+        in the same directory as the executable. Upgrades are supported by
+        copying the <code>Profiles</code> and <code>Settings</code> directories
+        to the new version.
+      </li>
+      <li>
+        <b>Archive</b> (ZIP-Archive): Similar to Portable, but stores profiles
+        and settings in the user profile directory under{" "}
+        <code>~\Documents\NETworkManager</code>. This version might be useful
+        for custom deployment scenarios (e.g. Terminal Server, Intune, etc.).
+      </li>
+    </ul>
+  </div>
+</details>
+
+<details>
+  <summary>Checksums</summary>
+  <div>
+    <p>SHA-256 checksums for the latest release:</p>
+    <b>Setup</b> (MSI Installer)
+    <pre><code>0E8722AB821FDFC5079C8E914CDBC293F373F551924EFBA14CA4AF6E68B678F9</code></pre>
+    <b>Portable</b> (ZIP Archive)
+    <pre><code>85000CC7E9892C14B3C1F7DE2D540A57E2C90CF5AE25E27960844751AADCF166</code></pre>
+    <b>Archive</b> (ZIP Archive)
+    <pre><code>68FFC7A42F0CF27B83525BB6AE79C730C96C40A956869F5C45D60B97CCECAE74</code></pre>
+    <p>You can verify the checksum with the following PowerShell command:</p>
+    <pre><code class="language-powershell">Get-FileHash -Path .\NETworkManager_{VERSION}_Setup.msi -Algorithm SHA256</code></pre>
+    <p>
+      Checksums for each release can be found on
+      <a href="https://github.com/BornToBeRoot/NETworkManager/releases" target="_blank">
+        GitHub Releases
+      </a>.
+    </p>
+  </div>
+</details>
+
 <div className={`${styles.shieldsContainer}`}>
   <a
     className={`${styles.shields}`}
@@ -91,37 +142,6 @@ import styles from "./styles.module.css";
     📃 Changelog
   </Link>
 </div>
-
-<details>
-  <summary>
-    <p>What version should I download?</p>
-  </summary>
-  <div>
-    <p>NETworkManager is available in three different versions:</p>
-    <ul>
-      <li>
-        <b>Setup</b> (MSI-Installer): Recommended for most users, installs
-        NETworkManager for all users on the system. Requires administrator
-        privileges. Settings and profiles are stored in the user profile
-        directory under <code>~\Documents\NETworkManager</code>.
-      </li>
-      <li>
-        <b>Portable</b> (ZIP-Archive): Run NETworkManager without installation,
-        e.g. from a USB stick or network share. Settings and profiles are stored
-        in the same directory as the executable. Upgrades are supported by
-        copying the <code>Profiles</code> and <code>Settings</code> directories
-        to the new version.
-      </li>
-      <li>
-        <b>Archive</b> (ZIP-Archive): Similar to Portable, but stores profiles
-        and settings in the user profile directory under{" "}
-        <code>~\Documents\NETworkManager</code>. This version might be useful
-        for custom deployment scenarios (e.g. Terminal Server, Intune, etc.).
-      </li>
-    </ul>
-  </div>
-</details>
-
 
 ## System requirements
 
