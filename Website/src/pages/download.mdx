@@ -34,6 +34,28 @@ Download the latest binaries via GitHub Releases:
   </Link>
 </div>
 
+<div
+  className="alert alert--secondary"
+  style={{ marginTop: "2rem", padding: "1rem" }}
+>
+  <h3>🙏 Enjoying NETworkManager?</h3>
+  <p>
+    If you find <strong>NETworkManager</strong> helpful, please consider
+    supporting the project! Your <strong>donation</strong> or a simple{" "}
+    <strong>share</strong> helps keep the project alive and enables further
+    development and improvements.
+  </p>
+  <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
+    <Link
+      className={`button button--secondary ${styles.additionalButton}`}
+      to="https://github.com/BornToBeRoot/NETworkManager#-donate"
+      target="_blank"
+    >
+      💖 Donate
+    </Link>
+  </div>
+</div>
+
 <div className={`${styles.shieldsContainer}`}>
   <p>
     <a
@@ -62,13 +84,6 @@ Download the latest binaries via GitHub Releases:
 <div className={`${styles.centerButtonContainer} margin-bottom--lg`}>
   <Link
     className={`button button--secondary ${styles.additionalButton}`}
-    to="https://github.com/BornToBeRoot/NETworkManager#-donate"
-    target="_blank"
-  >
-    💖 Donate
-  </Link>
-  <Link
-    className={`button button--secondary ${styles.additionalButton}`}
     to="/docs/changelog/2025-1-18-0"
     target="_blank"
   >
@@ -77,9 +92,39 @@ Download the latest binaries via GitHub Releases:
 </div>
 
 <details>
-  <summary>Checksums [SHA-256]</summary>
+  <summary>
+    <p>What version should I download?</p>
+  </summary>
   <div>
-    <p>SHA-256 checksums for the latest release:</p>
+    <p>NETworkManager is available in three different versions:</p>
+    <ul>
+      <li>
+        <b>Setup</b> (MSI-Installer): Recommended for most users, installs
+        NETworkManager for all users on the system. Requires administrator
+        privileges. Settings and profiles are stored in the user profile
+        directory under <code>~\Documents\NETworkManager</code>.
+      </li>
+      <li>
+        <b>Portable</b> (ZIP-Archive): Run NETworkManager without installation,
+        e.g. from a USB stick or network share. Settings and profiles are stored
+        in the same directory as the executable. Upgrades are supported by
+        copying the <code>Profiles</code> and <code>Settings</code> directories
+        to the new version.
+      </li>
+      <li>
+        <b>Archive</b> (ZIP-Archive): Similar to Portable, but stores profiles
+        and settings in the user profile directory under{" "}
+        <code>~\Documents\NETworkManager</code>. This version might be useful
+        for custom deployment scenarios (e.g. Terminal Server, Intune, etc.).
+      </li>
+    </ul>
+  </div>
+</details>
+
+<details>
+  <summary>Checksums</summary>
+  <div>
+    <p>Checksums [SHA-256] for the latest release:</p>
     <p>
       <b>Setup</b> (MSI-Installer)
       <pre>
@@ -117,36 +162,6 @@ Download the latest binaries via GitHub Releases:
       </a>{" "}
       section.
     </p>
-  </div>
-</details>
-
-<details>
-  <summary>
-    <p>What version should I download?</p>
-  </summary>
-  <div>
-    <p>NETworkManager is available in three different versions:</p>
-    <ul>
-      <li>
-        <b>Setup</b> (MSI-Installer): Recommended for most users, installs
-        NETworkManager for all users on the system. Requires administrator
-        privileges. Settings and profiles are stored in the user profile
-        directory under <code>~\Documents\NETworkManager</code>.
-      </li>
-      <li>
-        <b>Portable</b> (ZIP-Archive): Run NETworkManager without installation,
-        e.g. from a USB stick or network share. Settings and profiles are stored
-        in the same directory as the executable. Upgrades are supported by
-        copying the <code>Profiles</code> and <code>Settings</code> directories
-        to the new version.
-      </li>
-      <li>
-        <b>Archive</b> (ZIP-Archive): Similar to Portable, but stores profiles
-        and settings in the user profile directory under{" "}
-        <code>~\Documents\NETworkManager</code>. This version might be useful
-        for custom deployment scenarios (e.g. Terminal Server, Intune, etc.).
-      </li>
-    </ul>
   </div>
 </details>
 
