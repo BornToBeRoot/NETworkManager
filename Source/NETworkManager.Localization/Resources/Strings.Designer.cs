@@ -11040,7 +11040,7 @@ namespace NETworkManager.Localization.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Thank you for using NETworkManager!
         ///
-        ///If you like this tool, please leave a star on GitHub and recommend it to others..
+        ///If you enjoy it, please consider supporting its development — whether by leaving a star on GitHub, making a donation, or simply sharing it with others. Your support helps keep the project going and growing..
         /// </summary>
         public static string WelcomeMessage {
             get {

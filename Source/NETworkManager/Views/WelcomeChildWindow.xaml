@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:resources="clr-namespace:NETworkManager.Properties"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
                                ShowTitleBar="False" 
@@ -24,7 +26,30 @@
             <StackPanel>
                 <TextBlock Text="{x:Static Member=localization:Strings.Welcome}" Style="{StaticResource HeaderTextBlock}" />
                 <TextBlock Text="{x:Static Member=localization:Strings.WelcomeMessage}"
-                           Style="{StaticResource ResourceKey=DefaultTextBlock}" Margin="0,0,0,20" TextWrapping="Wrap" />
+                           Style="{StaticResource ResourceKey=DefaultTextBlock}" Margin="0,0,0,10" TextWrapping="Wrap" />
+                <Button ToolTip="{x:Static localization:Strings.ToolTip_SupportThisProjectWithADonation}"
+              Command="{Binding OpenWebsiteCommand}"
+              CommandParameter="{x:Static resources:Resources.NETworkManager_DonateUrl}"
+              Style="{StaticResource ImageWithTextButton}"                        
+              HorizontalAlignment="Left"
+                        Margin="0,0,0,20">
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Heart}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Grid.Row="0"                                           
+                                       Text="{x:Static localization:Strings.Donate}"
+                                       Style="{StaticResource ButtonWithImageTextBlock}" />
+                        </Grid>
+                    </Button.Content>
+                </Button>
                 <TextBlock Text="{x:Static Member=localization:Strings.Privacy}"
                            Style="{StaticResource ResourceKey=HeaderTextBlock}" />
                 <TextBlock Text="{x:Static Member=localization:Strings.WelcomePrivacyMessage}"
@@ -100,8 +125,8 @@
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
-        <Button Grid.Row="2" HorizontalAlignment="Right" Content="{x:Static Member=localization:Strings.Continue}"
+        <Button Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" Content="{x:Static Member=localization:Strings.Continue}"
                 Command="{Binding ContinueCommand}" IsDefault="True"
-                Style="{StaticResource ResourceKey=HighlightedButton}" />
-    </Grid>
+                Style="{StaticResource ResourceKey=HighlightedButton}" />   
+          </Grid>
 </simpleChildWindow:ChildWindow>

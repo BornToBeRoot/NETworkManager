@@ -1931,7 +1931,7 @@ Changes to this value will take effect after restarting the application.</value>
   <data name="WelcomeMessage" xml:space="preserve">
     <value>Thank you for using NETworkManager!
 
-If you like this tool, please leave a star on GitHub and recommend it to others.</value>
+If you enjoy it, please consider supporting its development — whether by leaving a star on GitHub, making a donation, or simply sharing it with others. Your support helps keep the project going and growing.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>When starting the program, it checks in the background whether a new program version is available on GitHub.
