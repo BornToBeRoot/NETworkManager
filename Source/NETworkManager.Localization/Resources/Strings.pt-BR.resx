@@ -1931,7 +1931,7 @@ Alterar esse valor requer uma reinicialização do aplicativo para entrar em vig
   <data name="WelcomeMessage" xml:space="preserve">
     <value>Obrigado por usar o NETworkManager!
 
-Se você gosta desta ferramenta, deixe uma estrela no GitHub e recomende-a a outras pessoas.</value>
+Se você gostou, considere apoiar o desenvolvimento — seja deixando uma estrela no GitHub, fazendo uma doação ou simplesmente compartilhando com outras pessoas. Seu apoio ajuda a manter o projeto funcionando e crescendo.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Ao iniciar o programa, ele verifica em segundo plano se uma nova versão do programa está disponível no GitHub.
