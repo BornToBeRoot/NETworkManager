@@ -1929,9 +1929,9 @@ Der Wert 0 deaktiviert diese Funktion.
     <value>Überprüfen der öffentlichen IP-Adresse</value>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
-    <value>Vielen Dank, dass Sie NETworkManager verwenden!
+    <value>Vielen Dank, dass du NETworkManager verwendest!
 
-Wenn Sie dieses Tool mögen, hinterlassen Sie bitte einen Stern auf GitHub und empfehlen Sie es weiter.</value>
+Wenn dir das Tool gefällt, kannst du die Entwicklung unterstützen – durch einen Stern auf GitHub, eine Spende oder indem du es mit anderen teilst. Deine Unterstützung hilft dabei, das Projekt am Leben zu halten und weiterzuentwickeln.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Beim Programmstart wird im Hintergrund geprüft, ob eine neue Programmversion auf GitHub verfügbar ist.
