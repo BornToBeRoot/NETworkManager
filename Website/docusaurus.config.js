@@ -148,7 +148,20 @@ const config = {
       },
     }),
 
-  plugins: [],
+  plugins: [
+    [
+      // Custom redirects
+      "@docusaurus/plugin-client-redirects",
+      {
+        redirects: [
+          {
+            from: ["/docs/changelog/latest"],
+            to: "/docs/changelog/2025-1-18-0",
+          },          
+        ],
+      },
+    ],
+  ],
 };
 
 export default config;
