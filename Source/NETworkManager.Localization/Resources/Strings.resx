@@ -3918,4 +3918,16 @@ Right-click for more options.</value>
   <data name="RetryingInXSecondsDots" xml:space="preserve">
     <value>Retrying in {0} seconds...</value>
   </data>
+  <data name="WhatsNew" xml:space="preserve">
+    <value>What's new?</value>
+  </data>
+  <data name="Changelog" xml:space="preserve">
+    <value>Changelog</value>
+  </data>
+  <data name="UpgradedToXXX" xml:space="preserve">
+    <value>Upgraded to {0}</value>
+  </data>
+  <data name="WhatsNewMessage" xml:space="preserve">
+    <value>This release includes new features, improvements, and bug fixes. Check out the changelog for all the details!</value>
+  </data>
 </root>

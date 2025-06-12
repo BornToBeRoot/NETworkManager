@@ -31,7 +31,7 @@ public class ConfigurationInfo : PropertyChangedBase
     /// <summary>
     ///     Indicates that the application is running as administrator.
     /// </summary>
-    public bool IsAdmin { get; set; }
+    public bool IsAdmin { get; }
 
     /// <summary>
     ///     Execution path of the application like "C:\Program Files\NETworkManager".
