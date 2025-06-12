@@ -1,8 +1,8 @@
 ﻿namespace NETworkManager.Views;
 
-public partial class UpgradeNoteChildWindow
+public partial class UpgradeChildWindow
 {
-    public UpgradeNoteChildWindow()
+    public UpgradeChildWindow()
     {
         InitializeComponent();
     }

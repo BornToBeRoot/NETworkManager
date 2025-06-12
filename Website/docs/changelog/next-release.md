@@ -40,7 +40,7 @@ Release date: **xx.xx.2025**
 ## Improvements
 
 - Redesign welcome dialog. [#3077](https://github.com/BornToBeRoot/NETworkManager/pull/3077)
-- Add upgrade note dialog when updating from a previous version. [#3077](https://github.com/BornToBeRoot/NETworkManager/pull/3077)
+- Add upgrade dialog when updating from a previous version. [#3077](https://github.com/BornToBeRoot/NETworkManager/pull/3077)
 
 **WiFi**
 

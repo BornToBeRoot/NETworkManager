@@ -515,9 +515,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         }
         else if (SettingsManager.Current.UpgradeDialog_Show)
         {
-            var childWindow = new UpgradeNoteChildWindow();
+            var childWindow = new UpgradeChildWindow();
 
-            var viewModel = new UpgradeNoteViewModel(instance =>
+            var viewModel = new UpgradeViewModel(instance =>
             {
                 childWindow.IsOpen = false;
 

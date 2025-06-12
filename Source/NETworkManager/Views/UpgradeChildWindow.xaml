@@ -1,4 +1,4 @@
-﻿<simpleChildWindow:ChildWindow x:Class="NETworkManager.Views.UpgradeNoteChildWindow"
+﻿<simpleChildWindow:ChildWindow x:Class="NETworkManager.Views.UpgradeChildWindow"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -14,7 +14,7 @@
                                CloseByEscape="False"               
                                Padding="20"
                                OverlayBrush="{DynamicResource ResourceKey=MahApps.Brushes.Gray8}"
-             mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:UpgradeNoteViewModel}">
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:UpgradeViewModel}">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />

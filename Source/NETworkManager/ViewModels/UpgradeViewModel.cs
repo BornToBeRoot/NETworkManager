@@ -1,16 +1,16 @@
-﻿using NETworkManager.Utilities;
+﻿using NETworkManager.Documentation;
 using NETworkManager.Settings;
+using NETworkManager.Utilities;
 using System;
 using System.Windows.Input;
-using NETworkManager.Documentation;
 
 namespace NETworkManager.ViewModels;
 
-public class UpgradeNoteViewModel : ViewModelBase
+public class UpgradeViewModel : ViewModelBase
 {
     public static string Title => string.Format(Localization.Resources.Strings.UpgradedToXXX, AssemblyManager.Current.Version);
-    
-    public UpgradeNoteViewModel(Action<UpgradeNoteViewModel> continueCommand)
+
+    public UpgradeViewModel(Action<UpgradeViewModel> continueCommand)
     {
         ContinueCommand = new RelayCommand(_ => continueCommand(this));
     }
