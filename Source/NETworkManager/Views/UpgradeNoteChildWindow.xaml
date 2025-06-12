@@ -1,0 +1,83 @@
+﻿<simpleChildWindow:ChildWindow x:Class="NETworkManager.Views.UpgradeNoteChildWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:resources="clr-namespace:NETworkManager.Properties"
+             xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+             xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
+                               ShowTitleBar="False" 
+                               ChildWindowMaxWidth="650"
+                               ChildWindowMaxHeight="800"
+                               CloseByEscape="False"               
+                               Padding="20"
+                               OverlayBrush="{DynamicResource ResourceKey=MahApps.Brushes.Gray8}"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:UpgradeNoteViewModel}">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="20" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel>
+                <TextBlock Text="{Binding Path=Title}" Style="{StaticResource ResourceKey=HeaderTextBlock}" />                
+                <TextBlock Text="{x:Static Member=localization:Strings.WelcomeMessage}"
+                           Style="{StaticResource ResourceKey=DefaultTextBlock}" Margin="0,0,0,10" TextWrapping="Wrap" />
+                <Button ToolTip="{x:Static Member=localization:Strings.ToolTip_SupportThisProjectWithADonation}"
+              Command="{Binding Path=OpenWebsiteCommand}"
+              CommandParameter="{x:Static Member=resources:Resources.NETworkManager_DonateUrl}"
+              Style="{StaticResource ResourceKey=ImageWithTextButton}"                        
+              HorizontalAlignment="Left"
+                        Margin="0,0,0,20">
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Grid.Column="0" Grid.Row="0" Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Heart}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Grid.Row="0"                                           
+                                       Text="{x:Static Member=localization:Strings.Donate}"
+                                       Style="{StaticResource ResourceKey=ButtonWithImageTextBlock}" />
+                        </Grid>
+                    </Button.Content>
+                </Button>
+                <TextBlock Text="{x:Static Member=localization:Strings.WhatsNew}"
+                           Style="{StaticResource ResourceKey=HeaderTextBlock}" />
+                <TextBlock Text="{x:Static Member=localization:Strings.WhatsNewMessage}"
+                           Style="{StaticResource ResourceKey=DefaultTextBlock}" Margin="0,0,0,10" TextWrapping="Wrap" />
+                <Button ToolTip="{x:Static Member=localization:Strings.ToolTip_SupportThisProjectWithADonation}"
+                        Command="{Binding Path=OpenChangelogCommand}"
+                        Style="{StaticResource ResourceKey=ImageWithTextButton}"                        
+                        HorizontalAlignment="Left">
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Grid.Column="0" Grid.Row="0" Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FileDocumentMultipleOutline}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Grid.Row="0"                                     
+                          Text="{x:Static Member=localization:Strings.Changelog}"
+                          Style="{StaticResource ResourceKey=ButtonWithImageTextBlock}" />
+                        </Grid>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+        </ScrollViewer>
+        <Button Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" Content="{x:Static Member=localization:Strings.Continue}"
+                Command="{Binding Path=ContinueCommand}" IsDefault="True"
+                Style="{StaticResource ResourceKey=HighlightedButton}" />   
+          </Grid>
+</simpleChildWindow:ChildWindow>

@@ -1,6 +1,6 @@
-﻿using System.IO;
+﻿using NETworkManager.Models;
+using System.IO;
 using System.Security.Principal;
-using NETworkManager.Models;
 
 namespace NETworkManager.Settings;
 
@@ -26,11 +26,12 @@ public static class ConfigurationManager
     static ConfigurationManager()
     {
         Current = new ConfigurationInfo(
-            new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator),
-            AssemblyManager.Current.Location,
-            Path.Combine(AssemblyManager.Current.Location, AssemblyManager.Current.Name + ".exe"),
-            AssemblyManager.Current.Name,
-            File.Exists(Path.Combine(AssemblyManager.Current.Location, $"{IsPortableFileName}.{IsPortableExtension}")));
+            isAdmin: new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator),
+            executionPath: AssemblyManager.Current.Location,
+            applicationFullName: Path.Combine(AssemblyManager.Current.Location, AssemblyManager.Current.Name + ".exe"),
+            applicationName: AssemblyManager.Current.Name,
+            isPortable: File.Exists(Path.Combine(AssemblyManager.Current.Location, $"{IsPortableFileName}.{IsPortableExtension}"))
+        );
     }
 
     /// <summary>

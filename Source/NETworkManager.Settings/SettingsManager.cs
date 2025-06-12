@@ -186,7 +186,6 @@ public static class SettingsManager
         if (fromVersion < new Version(2023, 11, 28, 0))
             UpgradeTo_2023_11_28_0();
 
-
         // 2024.11.11.0
         if (fromVersion < new Version(2024, 11, 11, 0))
             UpgradeTo_2024_11_11_0();
@@ -196,7 +195,9 @@ public static class SettingsManager
             UpgradeToLatest(toVersion);
 
         // Update to the latest version and save
+        Current.UpgradeDialog_Show = true;
         Current.Version = toVersion.ToString();
+
         Save();
 
         Log.Info("Settings upgrade finished!");

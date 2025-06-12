@@ -393,7 +393,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             {
                 if (!_isProfileFileUpdating)
                     LoadProfile(value);
-                
+
                 ConfigurationManager.Current.ProfileManagerShowUnlock = value.IsEncrypted && !value.IsPasswordValid;
                 SettingsManager.Current.Profiles_LastSelected = value.Name;
             }
@@ -502,6 +502,27 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 SettingsManager.Current.WelcomeDialog_Show = false;
 
                 // Save it to create a settings file
+                SettingsManager.Save();
+
+                Load();
+            });
+
+            childWindow.DataContext = viewModel;
+
+            ConfigurationManager.Current.IsChildWindowOpen = true;
+
+            await this.ShowChildWindowAsync(childWindow);
+        }
+        else if (SettingsManager.Current.UpgradeDialog_Show)
+        {
+            var childWindow = new UpgradeNoteChildWindow();
+
+            var viewModel = new UpgradeNoteViewModel(instance =>
+            {
+                childWindow.IsOpen = false;
+
+                SettingsManager.Current.UpgradeDialog_Show = false;
+
                 SettingsManager.Save();
 
                 Load();
@@ -826,11 +847,11 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 ContentControlApplication.Content = _sntpLookupHostView;
                 break;
             case ApplicationName.HostsFileEditor:
-                if(_hostsFileEditorView == null)
+                if (_hostsFileEditorView == null)
                     _hostsFileEditorView = new HostsFileEditorView();
                 else
                     _hostsFileEditorView.OnViewVisible();
-                
+
                 ContentControlApplication.Content = _hostsFileEditorView;
                 break;
             case ApplicationName.DiscoveryProtocol:
@@ -913,7 +934,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
                 ContentControlApplication.Content = _arpTableView;
                 break;
-            
+
             default:
                 Log.Error("Cannot show unknown application view: " + name);
                 break;
@@ -1387,7 +1408,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             .FirstOrDefault(x => x.Name == SettingsManager.Current.Profiles_LastSelected);
         SelectedProfileFile ??= ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault();
     }
-    
+
     private async void LoadProfile(ProfileFileInfo info, bool showWrongPassword = false)
     {
         // Disable profile management while switching profiles

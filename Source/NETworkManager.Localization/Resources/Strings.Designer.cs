@@ -1455,6 +1455,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Changelog.
+        /// </summary>
+        public static string Changelog {
+            get {
+                return ResourceManager.GetString("Changelog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change master password.
         /// </summary>
         public static string ChangeMasterPassword {
@@ -10640,6 +10649,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Upgraded to {0}.
+        /// </summary>
+        public static string UpgradedToXXX {
+            get {
+                return ResourceManager.GetString("UpgradedToXXX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Upload.
         /// </summary>
         public static string Upload {
@@ -11054,6 +11072,24 @@ namespace NETworkManager.Localization.Resources {
         public static string WelcomePrivacyMessage {
             get {
                 return ResourceManager.GetString("WelcomePrivacyMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What&apos;s new?.
+        /// </summary>
+        public static string WhatsNew {
+            get {
+                return ResourceManager.GetString("WhatsNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This release includes new features, improvements, and bug fixes. Check out the changelog for all the details!.
+        /// </summary>
+        public static string WhatsNewMessage {
+            get {
+                return ResourceManager.GetString("WhatsNewMessage", resourceCulture);
             }
         }
         
