@@ -157,7 +157,11 @@ const config = {
           {
             from: ["/docs/changelog/latest"],
             to: "/docs/changelog/2025-1-18-0",
-          },          
+          },
+          {
+            from: ["/docs/changelog/2025-6-13-0"],
+            to: "/docs/changelog/next-release",
+          }
         ],
       },
     ],
