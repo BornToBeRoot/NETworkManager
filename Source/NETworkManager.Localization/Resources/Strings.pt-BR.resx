@@ -3918,4 +3918,16 @@ Clique direito para mais opções.</value>
   <data name="RetryingInXSecondsDots" xml:space="preserve">
     <value>Repetindo em {0} segundos...</value>
   </data>
+  <data name="WhatsNew" xml:space="preserve">
+    <value>O que há de novo?</value>
+  </data>
+  <data name="Changelog" xml:space="preserve">
+    <value>Registro de alterações</value>
+  </data>
+  <data name="UpgradedToXXX" xml:space="preserve">
+    <value>Atualizado para {0}</value>
+  </data>
+  <data name="WhatsNewMessage" xml:space="preserve">
+    <value>Esta versão inclui novos recursos, melhorias e correções de erros. Confira o registro de alterações para todos os detalhes!</value>
+  </data>
 </root>
