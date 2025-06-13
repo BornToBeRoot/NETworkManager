@@ -1945,9 +1945,10 @@ Le modifiche a questo valore avranno effetto dopo il riavvio dell'applicazione.<
     <value>Controlla l'indirizzo IP pubblico</value>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
-    <value>Grazie per aver utilizzato NETworkManager!
+    <value>Grazie per aver usato NetworkManager!
 
-Se ti piace questo strumento, lascia una stella su GitHub e consiglialo ad altri.</value>
+Se ti piace, per favore considera di supportare il suo sviluppo, lasciando una stella su GitHub, facendo una donazione o semplicemente condividendola con gli altri. 
+Il tuo supporto aiuta il progetto a continuare e a crescere.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Quando parte, il programma verifica in background se sono disponibili nuove versioni su GitHub.
@@ -4013,5 +4014,18 @@ La modifica del file hosta richiede diritti elevati!</value>
   </data>
   <data name="RetryingInXSecondsDots" xml:space="preserve">
     <value>Ritentativo tra {0} secondi...</value>
+  </data>
+  <data name="WhatsNew" xml:space="preserve">
+    <value>Quali sono le novità?</value>
+  </data>
+  <data name="Changelog" xml:space="preserve">
+    <value>Elenco modifiche</value>
+  </data>
+  <data name="UpgradedToXXX" xml:space="preserve">
+    <value>Aggiorna a {0}</value>
+  </data>
+  <data name="WhatsNewMessage" xml:space="preserve">
+    <value>Questa versione include nuove funzionalità, miglioramenti e correzioni di bug. 
+Per tutti i  dettagli consulta l'elenco modifiche</value>
   </data>
 </root>
