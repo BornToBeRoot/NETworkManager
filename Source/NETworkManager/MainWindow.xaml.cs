@@ -521,6 +521,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             {
                 childWindow.IsOpen = false;
 
+                ConfigurationManager.Current.IsChildWindowOpen = false;
+
                 SettingsManager.Current.UpgradeDialog_Show = false;
 
                 SettingsManager.Save();
