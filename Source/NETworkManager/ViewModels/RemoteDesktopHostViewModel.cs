@@ -337,7 +337,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     private void AddProfileAction()
     {
         ProfileDialogManager
-            .ShowAddProfileDialog(this, this, _dialogCoordinator, null, null, ApplicationName.RemoteDesktop)
+            .ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.RemoteDesktop)
             .ConfigureAwait(false);
     }
 

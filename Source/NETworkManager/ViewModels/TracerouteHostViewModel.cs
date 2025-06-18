@@ -252,7 +252,7 @@ public class TracerouteHostViewModel : ViewModelBase, IProfileManager
     private void AddProfileAction()
     {
         ProfileDialogManager
-            .ShowAddProfileDialog(this, this, _dialogCoordinator, null, null, ApplicationName.Traceroute)
+            .ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.Traceroute)
             .ConfigureAwait(false);
     }
 

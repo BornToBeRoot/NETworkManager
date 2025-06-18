@@ -443,7 +443,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     private void AddProfileAction()
     {
         ProfileDialogManager
-            .ShowAddProfileDialog(this, this, _dialogCoordinator, null, null, ApplicationName.AWSSessionManager)
+            .ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.AWSSessionManager)
             .ConfigureAwait(false);
     }
 
@@ -999,8 +999,8 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         Profiles.Filter = o =>
         {
             if (string.IsNullOrEmpty(Search))
-                         return true ;
-            
+                return true;
+
             if (o is not ProfileInfo info)
                 return false;
 

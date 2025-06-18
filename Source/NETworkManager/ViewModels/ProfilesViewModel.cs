@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -165,7 +166,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, this, _dialogCoordinator, null, SelectedGroup?.Name)
+        ProfileDialogManager.ShowAddProfileDialog(Application.Current.MainWindow, this, null, SelectedGroup?.Name)
             .ConfigureAwait(false);
     }
 
