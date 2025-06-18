@@ -251,7 +251,7 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, this, _dialogCoordinator, null, null, ApplicationName.Whois)
+        ProfileDialogManager.ShowAddProfileDialog(Application.Current.MainWindow, this,  null, null, ApplicationName.Whois)
             .ConfigureAwait(false);
     }
 

@@ -11,6 +11,7 @@ public interface IProfileManagerMinimal
     /// </summary>
     public void OnProfileManagerDialogOpen()
     {
+
     }
 
     /// <summary>
@@ -18,5 +19,6 @@ public interface IProfileManagerMinimal
     /// </summary>
     public void OnProfileManagerDialogClose()
     {
+
     }
 }

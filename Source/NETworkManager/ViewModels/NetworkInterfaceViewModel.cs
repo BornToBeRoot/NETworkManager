@@ -751,7 +751,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     private void AddProfileAction()
     {
         ProfileDialogManager
-            .ShowAddProfileDialog(this, this, _dialogCoordinator, null, null, ApplicationName.NetworkInterface)
+            .ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.NetworkInterface)
             .ConfigureAwait(false);
     }
 

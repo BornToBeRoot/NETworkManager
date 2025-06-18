@@ -472,7 +472,6 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         // Show welcome dialog
         if (SettingsManager.Current.WelcomeDialog_Show)
         {
-
             var childWindow = new WelcomeChildWindow();
 
             var viewModel = new WelcomeViewModel(instance =>

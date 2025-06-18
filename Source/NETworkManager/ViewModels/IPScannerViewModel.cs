@@ -344,7 +344,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
-        await ProfileDialogManager.ShowAddProfileDialog(window, this, _dialogCoordinator, profileInfo, null,
+        await ProfileDialogManager.ShowAddProfileDialog(window, this, profileInfo, null,
             ApplicationName.IPScanner);
     }
 

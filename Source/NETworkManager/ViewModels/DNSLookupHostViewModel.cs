@@ -251,7 +251,7 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, this, _dialogCoordinator, null, null, ApplicationName.DNSLookup)
+        ProfileDialogManager.ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.DNSLookup)
             .ConfigureAwait(false);
     }
 

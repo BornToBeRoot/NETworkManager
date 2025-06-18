@@ -366,7 +366,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(this, this, _dialogCoordinator, null, null, ApplicationName.PuTTY)
+        ProfileDialogManager.ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.PuTTY)
             .ConfigureAwait(false);
     }
 

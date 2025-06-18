@@ -357,7 +357,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     private void AddProfileAction()
     {
         ProfileDialogManager
-            .ShowAddProfileDialog(this, this, _dialogCoordinator, null, null, ApplicationName.PingMonitor)
+            .ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.PingMonitor)
             .ConfigureAwait(false);
     }
 

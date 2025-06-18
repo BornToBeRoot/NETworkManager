@@ -359,7 +359,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     private void AddProfileAction()
     {
         ProfileDialogManager
-            .ShowAddProfileDialog(this, this, _dialogCoordinator, null, null, ApplicationName.PowerShell)
+            .ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.PowerShell)
             .ConfigureAwait(false);
     }
 

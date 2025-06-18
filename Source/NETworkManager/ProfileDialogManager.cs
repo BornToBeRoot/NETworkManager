@@ -9,9 +9,11 @@ using NETworkManager.ViewModels;
 using NETworkManager.Views;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Security;
 using System.Threading.Tasks;
 using System.Windows;
+using MahApps.Metro.SimpleChildWindow;
 
 namespace NETworkManager;
 
@@ -466,36 +468,36 @@ public static class ProfileDialogManager
 
     #region Dialog to add, edit, copy as and delete profile
 
-    public static Task ShowAddProfileDialog(object context, IProfileManagerMinimal viewModel,
-        IDialogCoordinator dialogCoordinator, ProfileInfo profile = null, string group = null,
+    public static Task ShowAddProfileDialog(Window parentWindow,IProfileManagerMinimal viewModel,
+        ProfileInfo profile = null, string group = null,
         ApplicationName applicationName = ApplicationName.None)
     {
-        CustomDialog customDialog = new()
-        {
-            Title = Strings.AddProfile,
-            Style = (Style)Application.Current.FindResource(DialogResourceKey)
-        };
 
-        ProfileViewModel profileViewModel = new(async instance =>
+        var childWindow = new ProfileChildWindow(parentWindow);
+
+        ProfileViewModel profileViewModel = new(instance =>
         {
-            await dialogCoordinator.HideMetroDialogAsync(context, customDialog);
+            childWindow.IsOpen = false;
+         Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
+            
             viewModel.OnProfileManagerDialogClose();
-
+            
             ProfileManager.AddProfile(ParseProfileInfo(instance));
-        }, async _ =>
+        }, _ =>
         {
-            await dialogCoordinator.HideMetroDialogAsync(context, customDialog);
+            childWindow.IsOpen = false;
+            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
+            
             viewModel.OnProfileManagerDialogClose();
         }, ProfileManager.GetGroupNames(), group, ProfileEditMode.Add, profile, applicationName);
 
-        customDialog.Content = new ProfileDialog
-        {
-            DataContext = profileViewModel
-        };
-
-        viewModel.OnProfileManagerDialogOpen();
-
-        return dialogCoordinator.ShowMetroDialogAsync(context, customDialog);
+        childWindow.Title = Strings.AddProfile;
+        
+            childWindow.DataContext = profileViewModel;
+        
+        Settings.ConfigurationManager.Current.IsChildWindowOpen = true;
+        
+        return parentWindow.ShowChildWindowAsync(childWindow);
     }
 
     public static Task ShowEditProfileDialog(IProfileManagerMinimal viewModel,
