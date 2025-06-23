@@ -82,6 +82,9 @@ Release date: **xx.xx.2025**
 
 ## Bugfixes
 
+- Fixed an issue where the profile file could be overwritten when creating a new profile file with the same name, but with another case (`Profile` exists, but `profile` is created). [#3087](https://github.com/BornToBeRoot/NETworkManager/pull/3087)
+- Fixed an application crash when a profile file is renamed to another case (e.g. `Profile` to `profile`) [#3087](https://github.com/BornToBeRoot/NETworkManager/pull/3087).
+
 **Network Interface**
 
 - Re-select the network interface after a network change or configuration update. Thanks to [@Ghislain1](https://github.com/Ghislain1) [#3004](https://github.com/BornToBeRoot/NETworkManager/pull/3004) [#2962](https://github.com/BornToBeRoot/NETworkManager/pull/2962)
