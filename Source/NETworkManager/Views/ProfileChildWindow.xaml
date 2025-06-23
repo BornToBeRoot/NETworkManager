@@ -22,12 +22,11 @@
              ShowTitleBar="True"
              TitleBarBackground="Transparent"
              TitleBarNonActiveBackground="Transparent"
-             TitleFontSize="18"
-        Loaded="UserControl_Loaded"
-                               TitleForeground="{DynamicResource MahApps.Brushes.Gray3}"
-                               CloseByEscape="False"               
-                               Padding="20"
-                               OverlayBrush="{DynamicResource ResourceKey=MahApps.Brushes.Gray.SemiTransparent}"
+             ShowCloseButton="True"
+             Loaded="UserControl_Loaded"                               
+             TitleForeground="{DynamicResource MahApps.Brushes.Gray3}"
+             CloseByEscape="False"             
+             OverlayBrush="{DynamicResource ResourceKey=MahApps.Brushes.Gray.SemiTransparent}"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ProfileViewModel}">
     <simpleChildWindow:ChildWindow.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />

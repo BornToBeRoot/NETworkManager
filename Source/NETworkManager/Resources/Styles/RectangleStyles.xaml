@@ -40,7 +40,7 @@
         <Style.Resources>
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
         </Style.Resources>
-        <Setter Property="Fill" Value="Orange" />
+        <Setter Property="Fill" Value="#f1b856" />
         <Setter Property="OpacityMask">
             <Setter.Value>
                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=AlertOutline}" />
@@ -54,7 +54,7 @@
         <Style.Resources>
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
         </Style.Resources>
-        <Setter Property="Fill" Value="Red" />
+        <Setter Property="Fill" Value="#b95353" />
         <Setter Property="OpacityMask">
             <Setter.Value>
                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=AlertOctagonOutline}" />
@@ -82,7 +82,7 @@
         <Style.Resources>
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
         </Style.Resources>
-        <Setter Property="Fill" Value="Orange" />
+        <Setter Property="Fill" Value="#f1b856" />
         <Setter Property="OpacityMask">
             <Setter.Value>
                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=AlertOutline}" />
@@ -95,7 +95,7 @@
         <Style.Resources>
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
         </Style.Resources>
-        <Setter Property="Fill" Value="Red" />
+        <Setter Property="Fill" Value="#b95353" />
         <Setter Property="OpacityMask">
             <Setter.Value>
                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
@@ -155,7 +155,7 @@
         <Style.Resources>
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
         </Style.Resources>
-        <Setter Property="Fill" Value="Red" />
+        <Setter Property="Fill" Value="#b95353" />
         <Setter Property="OpacityMask">
             <Setter.Value>
                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=LanDisconnect}" />
@@ -181,7 +181,7 @@
         <Style.Resources>
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
         </Style.Resources>
-        <Setter Property="Fill" Value="Red" />
+        <Setter Property="Fill" Value="#b95353" />
         <Setter Property="OpacityMask">
             <Setter.Value>
                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=NetworkPortDisconnect}" />
