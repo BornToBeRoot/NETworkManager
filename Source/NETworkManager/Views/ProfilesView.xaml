@@ -263,111 +263,11 @@
                                                 SortMemberPath="Whois_Enabled" MinWidth="80" Width="Auto" />
                     </DataGrid.Columns>
                 </controls:MultiSelectDataGrid>
-                <mah:ProgressRing Grid.Column="0" Grid.Row="1" Height="50" Width="50" IsActive="{Binding IsSearching}" />
-                <StackPanel Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right" Orientation="Horizontal">
-                    <Button Command="{Binding DeleteProfileCommand}">
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                                <Style.Triggers>
-                                    <MultiDataTrigger>
-                                        <MultiDataTrigger.Conditions>
-                                            <Condition
-                                                Binding="{Binding ElementName=DataGridProfiles, Path=SelectedItems.Count}"
-                                                Value="0" />
-                                        </MultiDataTrigger.Conditions>
-                                        <MultiDataTrigger.Setters>
-                                            <Setter Property="IsEnabled" Value="False" />
-                                        </MultiDataTrigger.Setters>
-                                    </MultiDataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                        <Button.Content>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.DeleteDots}"
-                                           Style="{StaticResource ButtonWithImageTextBlock}" />
-                            </Grid>
-                        </Button.Content>
-                    </Button>
-                    <Button Command="{Binding EditProfileCommand}" Margin="10,0,0,0">
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                                <Setter Property="IsEnabled" Value="False" />
-                                <Style.Triggers>
-                                    <MultiDataTrigger>
-                                        <MultiDataTrigger.Conditions>
-                                            <Condition
-                                                Binding="{Binding ElementName=DataGridProfiles, Path=SelectedItems.Count}"
-                                                Value="1" />
-                                        </MultiDataTrigger.Conditions>
-                                        <MultiDataTrigger.Setters>
-                                            <Setter Property="IsEnabled" Value="True" />
-                                        </MultiDataTrigger.Setters>
-                                    </MultiDataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                        <Button.Content>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.EditDots}"
-                                           Style="{StaticResource ButtonWithImageTextBlock}" />
-                            </Grid>
-                        </Button.Content>
-                    </Button>
-                    <Button Command="{Binding CopyAsProfileCommand}" Margin="10,0,0,0">
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                                <Setter Property="IsEnabled" Value="False" />
-                                <Style.Triggers>
-                                    <MultiDataTrigger>
-                                        <MultiDataTrigger.Conditions>
-                                            <Condition
-                                                Binding="{Binding ElementName=DataGridProfiles, Path=SelectedItems.Count}"
-                                                Value="1" />
-                                        </MultiDataTrigger.Conditions>
-                                        <MultiDataTrigger.Setters>
-                                            <Setter Property="IsEnabled" Value="True" />
-                                        </MultiDataTrigger.Setters>
-                                    </MultiDataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                        <Button.Content>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform"
-                                                     Visual="{iconPacks:Material Kind=ContentDuplicate}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.CopyAsDots}"
-                                           Style="{StaticResource ButtonWithImageTextBlock}" />
-                            </Grid>
-                        </Button.Content>
-                    </Button>
-                    <Button Command="{Binding AddProfileCommand}" Style="{StaticResource ImageWithTextButton}"
+                <mah:ProgressRing Grid.Column="0" Grid.Row="1" 
+                                  Height="50" Width="50" 
+                                  IsActive="{Binding Path=IsSearching}" />
+                    <Button Command="{Binding Path=AddProfileCommand}" Style="{StaticResource ResourceKey=ImageWithTextButton}"
+                            Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right"
                             Margin="10,0,0,0">
                         <Button.Content>
                             <Grid>
@@ -375,17 +275,18 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                <Rectangle Grid.Column="0" Grid.Row="0" 
+                                           Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
-                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddDots}"
-                                           Style="{StaticResource ButtonWithImageTextBlock}" />
+                                <TextBlock Grid.Column="1" Grid.Row="0" 
+                                           Text="{x:Static Member=localization:Strings.AddDots}"
+                                           Style="{StaticResource ResourceKey=ButtonWithImageTextBlock}" />
                             </Grid>
                         </Button.Content>
                     </Button>
-                </StackPanel>
             </Grid>
         </Grid>
         <Grid Grid.Column="0" Grid.Row="0">

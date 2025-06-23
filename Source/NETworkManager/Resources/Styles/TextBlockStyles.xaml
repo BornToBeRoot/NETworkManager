@@ -28,7 +28,7 @@
 
     <Style x:Key="ErrorTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
         <Setter Property="TextWrapping" Value="Wrap" />
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Validation5}" />
+        <Setter Property="Foreground" Value="#b95353" />
     </Style>
 
     <Style x:Key="MessageTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
@@ -52,6 +52,12 @@
 
     <Style x:Key="StatusMessageTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource WrapTextBlock}" />
 
+    <Style x:Key="ConsoleTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
+        <Setter Property="FontFamily" Value="Consolas" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+        <Setter Property="Margin" Value="0,5,0,5" />
+    </Style>
+    
     <!-- TextBlock style for buttons with images and text -->
     <Style x:Key="ButtonWithImageTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
         <Setter Property="Margin" Value="10,5" />

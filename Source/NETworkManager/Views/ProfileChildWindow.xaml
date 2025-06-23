@@ -23,10 +23,12 @@
              TitleBarBackground="Transparent"
              TitleBarNonActiveBackground="Transparent"
              ShowCloseButton="True"
-             Loaded="UserControl_Loaded"                               
+             CloseButtonCommand="{Binding CancelCommand}"
+             AllowMove="True"
              TitleForeground="{DynamicResource MahApps.Brushes.Gray3}"
              CloseByEscape="False"             
              OverlayBrush="{DynamicResource ResourceKey=MahApps.Brushes.Gray.SemiTransparent}"
+             Loaded="UserControl_Loaded"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ProfileViewModel}">
     <simpleChildWindow:ChildWindow.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
@@ -4568,7 +4570,7 @@
                             <!-- Wake on LAN -->
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding WakeOnLAN_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding Path=WakeOnLAN_Enabled}" Value="True" />
                                     <Condition
                                         Binding="{Binding ElementName=TextBoxWakeOnLanMacAddress, Path=(Validation.HasError)}"
                                         Value="True" />
@@ -4579,7 +4581,7 @@
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding WakeOnLAN_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding Path=WakeOnLAN_Enabled}" Value="True" />
                                     <Condition
                                         Binding="{Binding ElementName=TextBoxWakeOnLanBroadcast, Path=(Validation.HasError)}"
                                         Value="True" />
@@ -4591,8 +4593,8 @@
                             <!-- Whois -->
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Whois_Enabled}" Value="True" />
-                                    <Condition Binding="{Binding Whois_InheritHost}" Value="False" />
+                                    <Condition Binding="{Binding Path=Whois_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding Path=Whois_InheritHost}" Value="False" />
                                     <Condition
                                         Binding="{Binding ElementName=TextBoxWhoisDomain, Path=(Validation.HasError)}"
                                         Value="True" />
@@ -4604,8 +4606,8 @@
                             <!-- IP Geolocation -->
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IPGeolocation_Enabled}" Value="True" />
-                                    <Condition Binding="{Binding IPGeolocation_InheritHost}" Value="False" />
+                                    <Condition Binding="{Binding Path=IPGeolocation_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding Path=IPGeolocation_InheritHost}" Value="False" />
                                     <Condition
                                         Binding="{Binding ElementName=TextBoxIPGeolocationHost, Path=(Validation.HasError)}"
                                         Value="True" />
@@ -4618,8 +4620,8 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button Content="{x:Static localization:Strings.Cancel}" Command="{Binding CancelCommand}" IsCancel="True"
-                    Style="{StaticResource DefaultButton}" />
+            <Button Content="{x:Static Member=localization:Strings.Cancel}" Command="{Binding Path=CancelCommand}" IsCancel="True"
+                    Style="{StaticResource ResourceKey=DefaultButton}" />
         </StackPanel>
     </Grid>
 </simpleChildWindow:ChildWindow>

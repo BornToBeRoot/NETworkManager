@@ -11,22 +11,21 @@
           -->
         <Grid>
             <Polygon x:Name="ToolTipCorner" Grid.ZIndex="1" Margin="0" Points="12,12 12,0 0,0"
-                         Fill="#b95353" HorizontalAlignment="Right"
-                         VerticalAlignment="Top" IsHitTestVisible="True" />
-
+                     Fill="{DynamicResource MahApps.Brushes.Accent}" HorizontalAlignment="Right"
+                     VerticalAlignment="Top" IsHitTestVisible="True" />
             <AdornedElementPlaceholder x:Name="Adorner" />
             <Popup PlacementTarget="{Binding ElementName=Adorner}" PopupAnimation="Fade" HorizontalOffset="5">
                 <Popup.Style>
                     <Style TargetType="{x:Type Popup}">
                         <Style.Triggers>
                             <DataTrigger
-                                    Binding="{Binding ElementName=Adorner, Path=AdornedElement.IsKeyboardFocusWithin}"
-                                    Value="True">
+                                Binding="{Binding ElementName=Adorner, Path=AdornedElement.IsKeyboardFocusWithin}"
+                                Value="True">
                                 <Setter Property="PlacementTarget" Value="{Binding ElementName=Adorner}" />
                                 <Setter Property="Placement" Value="Right" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding ElementName=ToolTipCorner, Path=IsMouseOver}"
-                                             Value="True">
+                                         Value="True">
                                 <Setter Property="PlacementTarget" Value="{Binding ElementName=ToolTipCorner}" />
                                 <Setter Property="Placement" Value="Mouse" />
                             </DataTrigger>
@@ -44,22 +43,22 @@
                 </Popup.Style>
                 <StackPanel>
                     <Border MaxWidth="300" Background="{DynamicResource MahApps.Brushes.Window.Background}"
-                                BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="1" Padding="5">
+                            BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="1" Padding="5">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Rectangle Grid.Column="0" Width="20" Height="20"
-                                           Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                       Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform"
-                                                     Visual="{iconPacks:Material Kind=InformationVariant}" />
+                                                 Visual="{iconPacks:Material Kind=InformationVariant}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                             <TextBlock Grid.Column="1" Text="{Binding Path=/ErrorContent}"
-                                           Foreground="{DynamicResource MahApps.Brushes.Text}" FontSize="14"
-                                           TextWrapping="Wrap" VerticalAlignment="Center" Margin="10,0,0,0" />
+                                       Foreground="{DynamicResource MahApps.Brushes.Text}" FontSize="14"
+                                       TextWrapping="Wrap" VerticalAlignment="Center" Margin="10,0,0,0" />
                         </Grid>
                     </Border>
                 </StackPanel>

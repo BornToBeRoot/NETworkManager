@@ -1442,6 +1442,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 ProfileManager.Unload();
             }, info.Name, showWrongPassword);
 
+            childWindow.Title = Strings.UnlockProfileFile;
+            
             childWindow.DataContext = viewModel;
 
             ConfigurationManager.OnDialogOpen();

@@ -179,7 +179,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
     private void EditProfileAction()
     {
-        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
+        ProfileDialogManager.ShowEditProfileDialog(Application.Current.MainWindow, this, SelectedProfile).ConfigureAwait(false);
     }
 
     private bool ModifyProfile_CanExecute(object obj)
@@ -191,7 +191,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
+        ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow,this, SelectedProfile).ConfigureAwait(false);
     }
 
     public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
@@ -199,8 +199,8 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     private void DeleteProfileAction()
     {
         ProfileDialogManager
-            .ShowDeleteProfileDialog(this, _dialogCoordinator,
-                new List<ProfileInfo>(SelectedProfiles.Cast<ProfileInfo>())).ConfigureAwait(false);
+            .ShowDeleteProfileDialog(Application.Current.MainWindow, this, new List<ProfileInfo> { SelectedProfile })
+            .ConfigureAwait(false);
     }
 
     public ICommand AddGroupCommand => new RelayCommand(_ => AddGroupAction());
