@@ -1,7 +1,10 @@
 ﻿using System.ComponentModel;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
@@ -328,7 +331,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
 
     private void DeleteCustomCommandAction()
     {
-        DeleteCustomCommand();
+        DeleteCustomCommand().ConfigureAwait(false);
     }
 
     #endregion
@@ -382,27 +385,31 @@ public class IPScannerSettingsViewModel : ViewModelBase
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
-    private async void DeleteCustomCommand()
+    private Task DeleteCustomCommand()
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.DeleteCustomCommand
-        };
+        var childWindow = new OKCancelInfoMessageChildWindow();
 
-        var confirmDeleteViewModel = new ConfirmDeleteViewModel(_ =>
+        var childWindowViewModel = new OKCancelInfoMessageViewModel(_ =>
             {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                childWindow.IsOpen = false;
+                ConfigurationManager.Current.IsChildWindowOpen = false;
 
                 SettingsManager.Current.IPScanner_CustomCommands.Remove(SelectedCustomCommand);
-            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-            Strings.DeleteCustomCommandMessage);
+            }, _ =>
+            {
+                childWindow.IsOpen = false;
+                ConfigurationManager.Current.IsChildWindowOpen = false;
+            },
+            Strings.DeleteCustomCommandMessage
+        );
 
-        customDialog.Content = new ConfirmDeleteDialog
-        {
-            DataContext = confirmDeleteViewModel
-        };
+        childWindow.Title = Strings.DeleteCustomCommand;
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     #endregion

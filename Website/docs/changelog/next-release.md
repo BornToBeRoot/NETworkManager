@@ -40,6 +40,8 @@ Release date: **xx.xx.2025**
 ## Improvements
 
 - Redesign welcome dialog. [#3077](https://github.com/BornToBeRoot/NETworkManager/pull/3077)
+- Redesign profile dialog. [#3087](https://github.com/BornToBeRoot/NETworkManager/pull/3087)
+- Redesign confirm delete dialog. [#3087](https://github.com/BornToBeRoot/NETworkManager/pull/3087)
 - Add upgrade dialog when updating from a previous version. [#3077](https://github.com/BornToBeRoot/NETworkManager/pull/3077)
 
 **WiFi**
@@ -79,6 +81,9 @@ Release date: **xx.xx.2025**
 - Changed the unlock dialog from `MahApps.Metro.Controls.Dialogs` to `MahApps.Metro.SimpleChildWindow`, so the main window can be dragged and resized [#3010](https://github.com/BornToBeRoot/NETworkManager/pull/3010)
 
 ## Bugfixes
+
+- Fixed an issue where the profile file could be overwritten when creating a new profile file with the same name, but with another case (`Profile` exists, but `profile` is created). [#3087](https://github.com/BornToBeRoot/NETworkManager/pull/3087)
+- Fixed an application crash when a profile file is renamed to another case (e.g. `Profile` to `profile`) [#3087](https://github.com/BornToBeRoot/NETworkManager/pull/3087).
 
 **Network Interface**
 

@@ -70,93 +70,26 @@
                 </Style>
             </DataGrid.RowStyle>
         </DataGrid>
-        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,0,0,10">
-            <Button Command="{Binding DeleteServerCommand}">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                        <Setter Property="IsEnabled" Value="False" />
-                        <Style.Triggers>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition
-                                        Binding="{Binding ElementName=DataGridSntpServers, Path=SelectedItems.Count}"
-                                        Value="1" />
-                                </MultiDataTrigger.Conditions>
-                                <MultiDataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="True" />
-                                </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-                <Button.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.DeleteDots}"
-                                   Style="{StaticResource ButtonWithImageTextBlock}" />
-                    </Grid>
-                </Button.Content>
-            </Button>
-            <Button Command="{Binding EditServerCommand}" Margin="10,0,0,0">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                        <Setter Property="IsEnabled" Value="False" />
-                        <Style.Triggers>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition
-                                        Binding="{Binding ElementName=DataGridSntpServers, Path=SelectedItems.Count}"
-                                        Value="1" />
-                                </MultiDataTrigger.Conditions>
-                                <MultiDataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="True" />
-                                </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-                <Button.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.EditDots}"
-                                   Style="{StaticResource ButtonWithImageTextBlock}" />
-                    </Grid>
-                </Button.Content>
-            </Button>
-            <Button Command="{Binding AddServerCommand}" Style="{StaticResource ImageWithTextButton}" Margin="10,0,0,0">
-                <Button.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddDots}"
-                                   Style="{StaticResource ButtonWithImageTextBlock}" />
-                    </Grid>
-                </Button.Content>
-            </Button>
-        </StackPanel>
+        <Button Command="{Binding AddServerCommand}"
+                Style="{StaticResource ImageWithTextButton}"
+                HorizontalAlignment="Left"
+                Margin="00,0,0,10">
+            <Button.Content>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                    <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddDots}"
+                               Style="{StaticResource ButtonWithImageTextBlock}" />
+                </Grid>
+            </Button.Content>
+        </Button>
         <TextBlock Text="{x:Static localization:Strings.TimeoutMS}" Style="{DynamicResource DefaultTextBlock}"
                    Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding Timeout}" Maximum="15000" Minimum="100" Interval="100" />
