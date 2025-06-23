@@ -2,9 +2,11 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
@@ -183,27 +185,31 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
-    private async Task DeleteServer()
+    private Task DeleteServer()
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.DeleteSNTPServer
-        };
+        var childWindow = new OKCancelInfoMessageChildWindow();
 
-        var viewModel = new ConfirmDeleteViewModel(_ =>
+
+        var childWindowViewModel = new OKCancelInfoMessageViewModel(_ =>
             {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                childWindow.IsOpen = false;
+                ConfigurationManager.Current.IsChildWindowOpen = false;
 
                 SettingsManager.Current.SNTPLookup_SNTPServers.Remove(SelectedSNTPServer);
-            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
+            }, _ =>
+            {
+                childWindow.IsOpen = false;
+                ConfigurationManager.Current.IsChildWindowOpen = false;
+            },
             Strings.DeleteSNTPServerMessage);
 
-        customDialog.Content = new ConfirmDeleteDialog
-        {
-            DataContext = viewModel
-        };
+        childWindow.Title = Strings.DeleteSNTPServer;
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     #endregion

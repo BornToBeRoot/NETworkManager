@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
@@ -230,27 +232,31 @@ public class PortScannerSettingsViewModel : ViewModelBase
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
-    private async Task DeletePortProfile()
+    private Task DeletePortProfile()
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.DeletePortProfile
-        };
+        var childWindow = new OKCancelInfoMessageChildWindow();
 
-        var confirmDeleteViewModel = new ConfirmDeleteViewModel(async _ =>
+        var childWindowViewModel = new OKCancelInfoMessageViewModel(async _ =>
             {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                childWindow.IsOpen = false;
+                ConfigurationManager.Current.IsChildWindowOpen = false;
 
                 SettingsManager.Current.PortScanner_PortProfiles.Remove(SelectedPortProfile);
-            }, async _ => { await _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-            Strings.DeletePortProfileMessage);
+            }, async _ =>
+            {
+                childWindow.IsOpen = false;
+                ConfigurationManager.Current.IsChildWindowOpen = false;
+            },
+            Strings.DeletePortProfileMessage
+            );
 
-        customDialog.Content = new ConfirmDeleteDialog
-        {
-            DataContext = confirmDeleteViewModel
-        };
-
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.Title = Strings.DeletePortProfile;
+        
+        childWindow.DataContext = childWindowViewModel;
+        
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+        
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     #endregion

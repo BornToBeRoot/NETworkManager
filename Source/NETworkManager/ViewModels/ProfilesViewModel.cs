@@ -221,7 +221,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
     private void DeleteGroupAction()
     {
-        ProfileDialogManager.ShowDeleteGroupDialog(this, _dialogCoordinator, SelectedGroup).ConfigureAwait(false);
+        ProfileDialogManager.ShowDeleteGroupDialog(Application.Current.MainWindow, this, SelectedGroup).ConfigureAwait(false);
     }
 
     #endregion

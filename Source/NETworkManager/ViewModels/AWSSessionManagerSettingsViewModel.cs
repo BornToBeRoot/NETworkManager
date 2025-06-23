@@ -3,10 +3,11 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
-using System.Windows.Forms;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.AWS;
 using NETworkManager.Settings;
@@ -207,12 +208,12 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
 
     private void BrowseFileAction()
     {
-        var openFileDialog = new OpenFileDialog
+        var openFileDialog = new System.Windows.Forms.OpenFileDialog
         {
             Filter = GlobalStaticConfiguration.ApplicationFileExtensionFilter
         };
 
-        if (openFileDialog.ShowDialog() == DialogResult.OK)
+        if (openFileDialog.ShowDialog() ==  System.Windows.Forms.DialogResult.OK)
             ApplicationFilePath = openFileDialog.FileName;
     }
 
@@ -274,27 +275,31 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
-    private async Task DeleteAWSProfile()
+    private Task DeleteAWSProfile()
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.DeleteAWSProfile
-        };
+        var childWindow = new OKCancelInfoMessageChildWindow();
 
-        var viewModel = new ConfirmDeleteViewModel(_ =>
+        var childWindowViewModel = new OKCancelInfoMessageViewModel(_ =>
             {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                childWindow.IsOpen = false;
+                ConfigurationManager.Current.IsChildWindowOpen = false;
 
                 SettingsManager.Current.AWSSessionManager_AWSProfiles.Remove(SelectedAWSProfile);
-            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-            Strings.DeleteAWSProfileMessage);
+            }, _ =>
+            {
+                childWindow.IsOpen = false;
+                ConfigurationManager.Current.IsChildWindowOpen = false;
+            },
+            Strings.DeleteAWSProfileMessage
+        );
 
-        customDialog.Content = new ConfirmDeleteDialog
-        {
-            DataContext = viewModel
-        };
-
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.Title = Strings.DeleteAWSProfile;
+        
+        childWindow.DataContext = childWindowViewModel;
+        
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+        
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     private async Task Configure()

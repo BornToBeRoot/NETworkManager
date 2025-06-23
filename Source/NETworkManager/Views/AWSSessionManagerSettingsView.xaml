@@ -85,94 +85,26 @@
                 </Style>
             </DataGrid.RowStyle>
         </DataGrid>
-        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,0,0,10">
-            <Button Command="{Binding DeleteAWSProfileCommand}">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                        <Setter Property="IsEnabled" Value="False" />
-                        <Style.Triggers>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition
-                                        Binding="{Binding ElementName=DataGridAwsProfiles, Path=SelectedItems.Count}"
-                                        Value="1" />
-                                </MultiDataTrigger.Conditions>
-                                <MultiDataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="True" />
-                                </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-                <Button.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.DeleteDots}"
-                                   Style="{StaticResource ButtonWithImageTextBlock}" />
-                    </Grid>
-                </Button.Content>
-            </Button>
-            <Button Command="{Binding EditAWSProfileCommand}" Margin="10,0,0,0">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                        <Setter Property="IsEnabled" Value="False" />
-                        <Style.Triggers>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition
-                                        Binding="{Binding ElementName=DataGridAwsProfiles, Path=SelectedItems.Count}"
-                                        Value="1" />
-                                </MultiDataTrigger.Conditions>
-                                <MultiDataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="True" />
-                                </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-                <Button.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.EditDots}"
-                                   Style="{StaticResource ButtonWithImageTextBlock}" />
-                    </Grid>
-                </Button.Content>
-            </Button>
-            <Button Command="{Binding AddAWSProfileCommand}" Style="{StaticResource ImageWithTextButton}"
-                    Margin="10,0,0,0">
-                <Button.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddDots}"
-                                   Style="{StaticResource ButtonWithImageTextBlock}" />
-                    </Grid>
-                </Button.Content>
-            </Button>
-        </StackPanel>
+        <Button Command="{Binding AddAWSProfileCommand}"
+                Style="{StaticResource ImageWithTextButton}"
+                HorizontalAlignment="Left"
+                Margin="0,0,0,10">
+            <Button.Content>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                    <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddDots}"
+                               Style="{StaticResource ButtonWithImageTextBlock}" />
+                </Grid>
+            </Button.Content>
+        </Button>
         <mah:ToggleSwitch Header="{x:Static localization:Strings.SyncOnlyRunningEC2InstancesFromAWS}"
                           IsOn="{Binding SyncOnlyRunningInstancesFromAWS}" Margin="0,0,0,10" />
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">

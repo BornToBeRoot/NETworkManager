@@ -3,9 +3,12 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
@@ -147,34 +150,37 @@ public class SettingsProfilesViewModel : ViewModelBase
     }
 
     public ICommand DeleteProfileFileCommand =>
-        new RelayCommand(_ => DeleteProfileFileAction(), DeleteProfileFile_CanExecute);
+        new RelayCommand(_ => DeleteProfileFileAction().ConfigureAwait(false), DeleteProfileFile_CanExecute);
 
     private bool DeleteProfileFile_CanExecute(object obj)
     {
         return ProfileFiles.Cast<ProfileFileInfo>().Count() > 1;
     }
 
-    private async void DeleteProfileFileAction()
+    private Task DeleteProfileFileAction()
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.DeleteProfileFile
-        };
-
-        var confirmDeleteViewModel = new ConfirmDeleteViewModel(async _ =>
+        var childWindow = new OKCancelInfoMessageChildWindow();
+       
+        var childWindowViewModel = new OKCancelInfoMessageViewModel(async _ =>
             {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                childWindow.IsOpen = false;
+                ConfigurationManager.Current.IsChildWindowOpen = false;
 
                 ProfileManager.DeleteProfileFile(SelectedProfileFile);
-            }, async _ => { await _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
+            }, async _ =>
+            {
+                childWindow.IsOpen = false;
+                ConfigurationManager.Current.IsChildWindowOpen = false;
+            },
             Strings.DeleteProfileFileMessage);
 
-        customDialog.Content = new ConfirmDeleteDialog
-        {
-            DataContext = confirmDeleteViewModel
-        };
-
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.Title = Strings.DeleteProfileFile;
+        
+        childWindow.DataContext = childWindowViewModel;
+        
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+        
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     public ICommand EnableEncryptionCommand => new RelayCommand(_ => EnableEncryptionAction());

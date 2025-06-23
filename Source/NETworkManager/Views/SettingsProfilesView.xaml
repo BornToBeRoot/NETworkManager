@@ -144,95 +144,25 @@
                 </Style>
             </DataGrid.RowStyle>
         </DataGrid>
-        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,0,0,10">
-            <Button Command="{Binding DeleteProfileFileCommand}">
-                <Button.Style>
-                    <Style TargetType="{x:Type TypeName=Button}"
-                           BasedOn="{StaticResource ResourceKey=ImageWithTextButton}">
-                        <Setter Property="IsEnabled" Value="False" />
-                        <Style.Triggers>
-                            <DataTrigger
-                                Binding="{Binding ElementName=DataGridProfileLocations, Path=SelectedItems.Count}"
-                                Value="1">
-                                <DataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="True" />
-                                </DataTrigger.Setters>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-                <Button.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Grid.Column="0" Grid.Row="0"
-                                   Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{x:Static Member=localization:Strings.DeleteDots}"
-                                   Style="{StaticResource ResourceKey=ButtonWithImageTextBlock}" />
-                    </Grid>
-                </Button.Content>
-            </Button>
-            <Button Command="{Binding EditProfileFileCommand}" Margin="10,0,0,0">
-                <Button.Style>
-                    <Style TargetType="{x:Type TypeName=Button}"
-                           BasedOn="{StaticResource ResourceKey=ImageWithTextButton}">
-                        <Setter Property="IsEnabled" Value="False" />
-                        <Style.Triggers>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition
-                                        Binding="{Binding ElementName=DataGridProfileLocations, Path=SelectedItems.Count}"
-                                        Value="1" />
-                                </MultiDataTrigger.Conditions>
-                                <MultiDataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="True" />
-                                </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-                <Button.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Grid.Column="0" Grid.Row="0"
-                                   Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{x:Static Member=localization:Strings.EditDots}"
-                                   Style="{StaticResource ResourceKey=ButtonWithImageTextBlock}" />
-                    </Grid>
-                </Button.Content>
-            </Button>
-            <Button Command="{Binding AddProfileFileCommand}" Style="{StaticResource ResourceKey=ImageWithTextButton}"
-                    Margin="10,0,0,0">
-                <Button.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Grid.Column="0" Grid.Row="0"
-                                   Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{x:Static Member=localization:Strings.AddDots}"
-                                   Style="{StaticResource ResourceKey=ButtonWithImageTextBlock}" />
-                    </Grid>
-                </Button.Content>
-            </Button>
-        </StackPanel>
+        <Button Command="{Binding AddProfileFileCommand}"
+                Style="{StaticResource ResourceKey=ImageWithTextButton}"
+                HorizontalAlignment="Left">
+            <Button.Content>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Grid.Column="0" Grid.Row="0"
+                               Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                    <TextBlock Grid.Column="1" Text="{x:Static Member=localization:Strings.AddDots}"
+                               Style="{StaticResource ResourceKey=ButtonWithImageTextBlock}" />
+                </Grid>
+            </Button.Content>
+        </Button>
     </StackPanel>
 </UserControl>

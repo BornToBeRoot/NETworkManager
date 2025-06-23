@@ -4,12 +4,12 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
-public class ConfirmDeleteViewModel : ViewModelBase
+public class OKCancelInfoMessageViewModel : ViewModelBase
 {
     private readonly string _message;
 
-    public ConfirmDeleteViewModel(Action<ConfirmDeleteViewModel> deleteCommand,
-        Action<ConfirmDeleteViewModel> cancelHandler, string message)
+    public OKCancelInfoMessageViewModel(Action<OKCancelInfoMessageViewModel> deleteCommand,
+        Action<OKCancelInfoMessageViewModel> cancelHandler, string message)
     {
         DeleteCommand = new RelayCommand(_ => deleteCommand(this));
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
