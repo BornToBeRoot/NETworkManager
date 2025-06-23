@@ -232,8 +232,6 @@ public sealed class DNSLookup
         if (answers is not DnsResourceRecord[] dnsResourceRecords)
             return;
 
-        Debug.WriteLine(dnsResourceRecords);
-
         // A
         foreach (var record in dnsResourceRecords.OfType<ARecord>())
             OnRecordReceived(new DNSLookupRecordReceivedArgs(
