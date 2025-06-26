@@ -1,17 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Net.Sockets;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Input;
-using System.Windows.Threading;
-using LiveCharts;
+﻿using LiveCharts;
 using LiveCharts.Configurations;
 using LiveCharts.Wpf;
 using log4net;
@@ -26,6 +13,19 @@ using NETworkManager.Profiles;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Threading;
 using NetworkInterface = NETworkManager.Models.Network.NetworkInterface;
 
 namespace NETworkManager.ViewModels;
@@ -730,7 +730,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     private bool ApplyConfiguration_CanExecute(object parameter)
     {
         return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen  &&
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
                !ConfigurationManager.Current.IsChildWindowOpen;
     }
 
@@ -771,7 +771,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow,this, SelectedProfile).ConfigureAwait(false);
+        ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile).ConfigureAwait(false);
     }
 
     public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
@@ -787,7 +787,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()))
+        ProfileDialogManager.ShowEditGroupDialog(Application.Current.MainWindow, this, ProfileManager.GetGroupByName($"{group}"))
             .ConfigureAwait(false);
     }
 
@@ -939,9 +939,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     private async void ReloadNetworkInterfaces()
     {
         // Avoid multiple reloads
-        if(IsNetworkInterfaceLoading)
+        if (IsNetworkInterfaceLoading)
             return;
-        
+
         IsNetworkInterfaceLoading = true;
 
         // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
@@ -949,7 +949,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
         // Store the last selected id
         var id = SelectedNetworkInterface?.Id ?? string.Empty;
-        
+
         // Get all network interfaces...
         var networkInterfaces = await NetworkInterface.GetNetworkInterfacesAsync();
 
@@ -958,7 +958,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         {
             // Clear the list            
             NetworkInterfaces.Clear();
-            
+
             // Add all network interfaces to the list
             networkInterfaces.ForEach(NetworkInterfaces.Add);
         });
@@ -967,7 +967,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         SelectedNetworkInterface = string.IsNullOrEmpty(id)
             ? NetworkInterfaces.FirstOrDefault()
             : NetworkInterfaces.FirstOrDefault(x => x.Id == id);
-        
+
         IsNetworkInterfaceLoading = false;
     }
 
@@ -1336,11 +1336,11 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         Profiles.Filter = o =>
         {
             if (string.IsNullOrEmpty(Search))
-                         return true;
+                return true;
 
             if (o is not ProfileInfo info)
                 return false;
-            
+
             var search = Search.Trim();
 
             // Search by: Tag=xxx (exact match, ignore case)

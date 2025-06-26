@@ -34,20 +34,14 @@
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <converters:RemoteDesktopAudioCaptureRedirectionModeToStringConverter
-     x:Key="RemoteDesktopAudioCaptureRedirectionModeToStringConverter" />
-        <converters:RemoteDesktopAudioRedirectionModeToStringConverter
-     x:Key="RemoteDesktopAudioRedirectionModeToStringConverter" />
-        <converters:RemoteDesktopKeyboardHookModeToStringConverter
-     x:Key="RemoteDesktopKeyboardHookModeToStringConverter" />
-        <converters:RemoteDesktopGatewayServerLogonMethodToStringConverter
-     x:Key="RemoteDesktopGatewayServerLogonMethodToStringConverter" />
-        <converters:RemoteDesktopNetworkConnectionTypeToStringConverter
-     x:Key="RemoteDesktopNetworkConnectionTypeToStringConverter" />
+        <converters:RemoteDesktopAudioCaptureRedirectionModeToStringConverter x:Key="RemoteDesktopAudioCaptureRedirectionModeToStringConverter" />
+        <converters:RemoteDesktopAudioRedirectionModeToStringConverter x:Key="RemoteDesktopAudioRedirectionModeToStringConverter" />
+        <converters:RemoteDesktopKeyboardHookModeToStringConverter x:Key="RemoteDesktopKeyboardHookModeToStringConverter" />
+        <converters:RemoteDesktopGatewayServerLogonMethodToStringConverter x:Key="RemoteDesktopGatewayServerLogonMethodToStringConverter" />
+        <converters:RemoteDesktopNetworkConnectionTypeToStringConverter x:Key="RemoteDesktopNetworkConnectionTypeToStringConverter" />
         <converters:ProfileNameToTranslatedStringConverter x:Key="ProfileNameToTranslatedStringConverter" />
         <converters:PuTTYLogModeToStringConverter x:Key="PuTTYLogModeToStringConverter" />
-        <converters:StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter
-     x:Key="StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter" />
+        <converters:StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter x:Key="StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter" />
     </simpleChildWindow:ChildWindow.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>

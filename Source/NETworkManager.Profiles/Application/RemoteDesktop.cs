@@ -73,7 +73,7 @@ public static class RemoteDesktop
         var info = CreateSessionInfo();
 
         // Get group info
-        var group = ProfileManager.GetGroup(profile.Group);
+        var group = ProfileManager.GetGroupByName(profile.Group);
 
         // Override hostname
         info.Hostname = profile.RemoteDesktop_Host;

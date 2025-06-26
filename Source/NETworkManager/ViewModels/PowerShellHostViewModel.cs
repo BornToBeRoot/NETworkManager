@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Input;
-using System.Windows.Threading;
-using Dragablz;
+﻿using Dragablz;
 using log4net;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
@@ -22,6 +10,18 @@ using NETworkManager.Profiles;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Threading;
 using PowerShellProfile = NETworkManager.Profiles.Application.PowerShell;
 
 namespace NETworkManager.ViewModels;
@@ -30,7 +30,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
     private static readonly ILog Log = LogManager.GetLogger(typeof(PowerShellHostViewModel));
-    
+
     private readonly IDialogCoordinator _dialogCoordinator;
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
@@ -249,7 +249,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         CheckExecutable();
 
         // Try to find PowerShell executable
-        if(!IsExecutableConfigured)
+        if (!IsExecutableConfigured)
             TryFindExecutable();
 
         WriteDefaultProfileToRegistry();
@@ -379,7 +379,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow,this, SelectedProfile).ConfigureAwait(false);
+        ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile).ConfigureAwait(false);
     }
 
     public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
@@ -395,7 +395,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()))
+        ProfileDialogManager.ShowEditGroupDialog(Application.Current.MainWindow, this, ProfileManager.GetGroupByName($"{group}"))
             .ConfigureAwait(false);
     }
 
@@ -434,13 +434,13 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     {
         IsExecutableConfigured = !string.IsNullOrEmpty(SettingsManager.Current.PowerShell_ApplicationFilePath) &&
                                  File.Exists(SettingsManager.Current.PowerShell_ApplicationFilePath);
-        
-        if(IsExecutableConfigured)
+
+        if (IsExecutableConfigured)
             Log.Info($"PowerShell executable found: \"{SettingsManager.Current.PowerShell_ApplicationFilePath}\"");
         else
             Log.Warn("PowerShell executable not found!");
     }
-    
+
     /// <summary>
     /// Try to find executable.
     /// </summary>
@@ -448,16 +448,16 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     {
         Log.Info("Try to find PowerShell executable...");
 
-        var applicationFilePath =  ApplicationHelper.Find(PowerShell.PwshFileName);
-        
-        if(string.IsNullOrEmpty(applicationFilePath))
+        var applicationFilePath = ApplicationHelper.Find(PowerShell.PwshFileName);
+
+        if (string.IsNullOrEmpty(applicationFilePath))
             applicationFilePath = ApplicationHelper.Find(PowerShell.WindowsPowerShellFileName);
-            
+
         SettingsManager.Current.PowerShell_ApplicationFilePath = applicationFilePath;
-            
+
         CheckExecutable();
-        
-        if(!IsExecutableConfigured)
+
+        if (!IsExecutableConfigured)
             Log.Warn("Install PowerShell or configure the path in the settings.");
     }
 
@@ -606,7 +606,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
             // Focus embedded window in the selected tab
             (((DragablzTabItem)tabablzControl.SelectedItem)?.View as IEmbeddedWindow)?.FocusEmbeddedWindow();
-            
+
             break;
         }
     }
@@ -639,7 +639,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         {
             if (string.IsNullOrEmpty(Search))
                 return true;
-            
+
             if (o is not ProfileInfo info)
                 return false;
 
@@ -683,15 +683,15 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     {
         ConfigurationManager.OnDialogClose();
     }
-    
+
     private void WriteDefaultProfileToRegistry()
     {
         if (!SettingsManager.Current.Appearance_PowerShellModifyGlobalProfile)
             return;
-        
-        if(!IsExecutableConfigured)
+
+        if (!IsExecutableConfigured)
             return;
-        
+
         Log.Info("Write PowerShell profile to registry...");
 
         PowerShell.WriteDefaultProfileToRegistry(
