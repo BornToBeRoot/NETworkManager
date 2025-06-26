@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -6,8 +8,6 @@ using System.Linq;
 using System.Security;
 using System.Text;
 using System.Xml.Serialization;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
 
 namespace NETworkManager.Profiles;
 
@@ -482,7 +482,7 @@ public static class ProfileManager
             // Only if the password provided earlier was valid...
             if (LoadedProfileFile.IsPasswordValid)
             {
-                var decryptedBytes = SerializeToByteArray([..Groups]);
+                var decryptedBytes = SerializeToByteArray([.. Groups]);
                 var encryptedBytes = CryptoHelper.Encrypt(decryptedBytes,
                     SecureStringHelper.ConvertToString(LoadedProfileFile.Password),
                     GlobalStaticConfiguration.Profile_EncryptionKeySize,
@@ -493,7 +493,7 @@ public static class ProfileManager
         }
         else
         {
-            SerializeToFile(LoadedProfileFile.Path, [..Groups]);
+            SerializeToFile(LoadedProfileFile.Path, [.. Groups]);
         }
 
         ProfilesChanged = false;
@@ -579,25 +579,25 @@ public static class ProfileManager
                 continue;
 
             var profilesSerializable = (from profile in @group.Profiles
-                where !profile.IsDynamic
-                select new ProfileInfoSerializable(profile)
-                {
-                    RemoteDesktop_Password = profile.RemoteDesktop_Password != null
-                        ? SecureStringHelper.ConvertToString(profile.RemoteDesktop_Password)
-                        : string.Empty,
-                    RemoteDesktop_GatewayServerPassword = profile.RemoteDesktop_GatewayServerPassword != null
-                        ? SecureStringHelper.ConvertToString(profile.RemoteDesktop_GatewayServerPassword)
-                        : string.Empty,
-                    SNMP_Community = profile.SNMP_Community != null
-                        ? SecureStringHelper.ConvertToString(profile.SNMP_Community)
-                        : string.Empty,
-                    SNMP_Auth = profile.SNMP_Auth != null
-                        ? SecureStringHelper.ConvertToString(profile.SNMP_Auth)
-                        : string.Empty,
-                    SNMP_Priv = profile.SNMP_Priv != null
-                        ? SecureStringHelper.ConvertToString(profile.SNMP_Priv)
-                        : string.Empty
-                }).ToList();
+                                        where !profile.IsDynamic
+                                        select new ProfileInfoSerializable(profile)
+                                        {
+                                            RemoteDesktop_Password = profile.RemoteDesktop_Password != null
+                                                ? SecureStringHelper.ConvertToString(profile.RemoteDesktop_Password)
+                                                : string.Empty,
+                                            RemoteDesktop_GatewayServerPassword = profile.RemoteDesktop_GatewayServerPassword != null
+                                                ? SecureStringHelper.ConvertToString(profile.RemoteDesktop_GatewayServerPassword)
+                                                : string.Empty,
+                                            SNMP_Community = profile.SNMP_Community != null
+                                                ? SecureStringHelper.ConvertToString(profile.SNMP_Community)
+                                                : string.Empty,
+                                            SNMP_Auth = profile.SNMP_Auth != null
+                                                ? SecureStringHelper.ConvertToString(profile.SNMP_Auth)
+                                                : string.Empty,
+                                            SNMP_Priv = profile.SNMP_Priv != null
+                                                ? SecureStringHelper.ConvertToString(profile.SNMP_Priv)
+                                                : string.Empty
+                                        }).ToList();
 
             groupsSerializable.Add(new GroupInfoSerializable(group)
             {
@@ -655,58 +655,58 @@ public static class ProfileManager
         XmlSerializer xmlSerializer = new(typeof(List<GroupInfoSerializable>));
 
         return (from groupSerializable in ((List<GroupInfoSerializable>)xmlSerializer.Deserialize(stream))!
-            let profiles = groupSerializable.Profiles.Select(profileSerializable => new ProfileInfo(profileSerializable)
+                let profiles = groupSerializable.Profiles.Select(profileSerializable => new ProfileInfo(profileSerializable)
                 {
                     // Migrate old data
                     NetworkInterface_Subnetmask =
-                        string.IsNullOrEmpty(profileSerializable.NetworkInterface_Subnetmask) &&
-                        !string.IsNullOrEmpty(profileSerializable.NetworkInterface_SubnetmaskOrCidr)
-                            ? profileSerializable.NetworkInterface_SubnetmaskOrCidr
-                            : profileSerializable.NetworkInterface_Subnetmask,
+                            string.IsNullOrEmpty(profileSerializable.NetworkInterface_Subnetmask) &&
+                            !string.IsNullOrEmpty(profileSerializable.NetworkInterface_SubnetmaskOrCidr)
+                                ? profileSerializable.NetworkInterface_SubnetmaskOrCidr
+                                : profileSerializable.NetworkInterface_Subnetmask,
 
                     // Convert passwords to secure strings
                     RemoteDesktop_Password = !string.IsNullOrEmpty(profileSerializable.RemoteDesktop_Password)
-                        ? SecureStringHelper.ConvertToSecureString(profileSerializable.RemoteDesktop_Password)
+                            ? SecureStringHelper.ConvertToSecureString(profileSerializable.RemoteDesktop_Password)
+                            : null,
+                    RemoteDesktop_GatewayServerPassword =
+                            !string.IsNullOrEmpty(profileSerializable.RemoteDesktop_GatewayServerPassword)
+                                ? SecureStringHelper.ConvertToSecureString(profileSerializable
+                                    .RemoteDesktop_GatewayServerPassword)
+                                : null,
+                    SNMP_Community = !string.IsNullOrEmpty(profileSerializable.SNMP_Community)
+                            ? SecureStringHelper.ConvertToSecureString(profileSerializable.SNMP_Community)
+                            : null,
+                    SNMP_Auth = !string.IsNullOrEmpty(profileSerializable.SNMP_Auth)
+                            ? SecureStringHelper.ConvertToSecureString(profileSerializable.SNMP_Auth)
+                            : null,
+                    SNMP_Priv = !string.IsNullOrEmpty(profileSerializable.SNMP_Priv)
+                            ? SecureStringHelper.ConvertToSecureString(profileSerializable.SNMP_Priv)
+                            : null
+                })
+                    .ToList()
+                select new GroupInfo(groupSerializable)
+                {
+                    Profiles = profiles,
+
+                    // Convert passwords to secure strings
+                    RemoteDesktop_Password = !string.IsNullOrEmpty(groupSerializable.RemoteDesktop_Password)
+                        ? SecureStringHelper.ConvertToSecureString(groupSerializable.RemoteDesktop_Password)
                         : null,
                     RemoteDesktop_GatewayServerPassword =
-                        !string.IsNullOrEmpty(profileSerializable.RemoteDesktop_GatewayServerPassword)
-                            ? SecureStringHelper.ConvertToSecureString(profileSerializable
-                                .RemoteDesktop_GatewayServerPassword)
+                        !string.IsNullOrEmpty(groupSerializable.RemoteDesktop_GatewayServerPassword)
+                            ? SecureStringHelper.ConvertToSecureString(
+                                groupSerializable.RemoteDesktop_GatewayServerPassword)
                             : null,
-                    SNMP_Community = !string.IsNullOrEmpty(profileSerializable.SNMP_Community)
-                        ? SecureStringHelper.ConvertToSecureString(profileSerializable.SNMP_Community)
+                    SNMP_Community = !string.IsNullOrEmpty(groupSerializable.SNMP_Community)
+                        ? SecureStringHelper.ConvertToSecureString(groupSerializable.SNMP_Community)
                         : null,
-                    SNMP_Auth = !string.IsNullOrEmpty(profileSerializable.SNMP_Auth)
-                        ? SecureStringHelper.ConvertToSecureString(profileSerializable.SNMP_Auth)
+                    SNMP_Auth = !string.IsNullOrEmpty(groupSerializable.SNMP_Auth)
+                        ? SecureStringHelper.ConvertToSecureString(groupSerializable.SNMP_Auth)
                         : null,
-                    SNMP_Priv = !string.IsNullOrEmpty(profileSerializable.SNMP_Priv)
-                        ? SecureStringHelper.ConvertToSecureString(profileSerializable.SNMP_Priv)
+                    SNMP_Priv = !string.IsNullOrEmpty(groupSerializable.SNMP_Priv)
+                        ? SecureStringHelper.ConvertToSecureString(groupSerializable.SNMP_Priv)
                         : null
-                })
-                .ToList()
-            select new GroupInfo(groupSerializable)
-            {
-                Profiles = profiles,
-
-                // Convert passwords to secure strings
-                RemoteDesktop_Password = !string.IsNullOrEmpty(groupSerializable.RemoteDesktop_Password)
-                    ? SecureStringHelper.ConvertToSecureString(groupSerializable.RemoteDesktop_Password)
-                    : null,
-                RemoteDesktop_GatewayServerPassword =
-                    !string.IsNullOrEmpty(groupSerializable.RemoteDesktop_GatewayServerPassword)
-                        ? SecureStringHelper.ConvertToSecureString(
-                            groupSerializable.RemoteDesktop_GatewayServerPassword)
-                        : null,
-                SNMP_Community = !string.IsNullOrEmpty(groupSerializable.SNMP_Community)
-                    ? SecureStringHelper.ConvertToSecureString(groupSerializable.SNMP_Community)
-                    : null,
-                SNMP_Auth = !string.IsNullOrEmpty(groupSerializable.SNMP_Auth)
-                    ? SecureStringHelper.ConvertToSecureString(groupSerializable.SNMP_Auth)
-                    : null,
-                SNMP_Priv = !string.IsNullOrEmpty(groupSerializable.SNMP_Priv)
-                    ? SecureStringHelper.ConvertToSecureString(groupSerializable.SNMP_Priv)
-                    : null
-            }).ToList();
+                }).ToList();
     }
 
     #endregion
@@ -741,7 +741,7 @@ public static class ProfileManager
     /// </summary>
     /// <param name="name">Name of the group.</param>
     /// <returns>Group as <see cref="GroupInfo" />.</returns>
-    public static GroupInfo GetGroup(string name)
+    public static GroupInfo GetGroupByName(string name)
     {
         return Groups.First(x => x.Name.Equals(name));
     }

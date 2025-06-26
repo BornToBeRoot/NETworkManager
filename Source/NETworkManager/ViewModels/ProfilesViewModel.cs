@@ -1,4 +1,8 @@
-﻿using System;
+﻿using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Profiles;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,10 +11,6 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Profiles;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
@@ -191,7 +191,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow,this, SelectedProfile).ConfigureAwait(false);
+        ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile).ConfigureAwait(false);
     }
 
     public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
@@ -207,14 +207,14 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
     private void AddGroupAction()
     {
-        ProfileDialogManager.ShowAddGroupDialog(this, _dialogCoordinator).ConfigureAwait(false);
+        ProfileDialogManager.ShowAddGroupDialog(Application.Current.MainWindow, this).ConfigureAwait(false);
     }
 
     public ICommand EditGroupCommand => new RelayCommand(_ => EditGroupAction());
 
     private void EditGroupAction()
     {
-        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, SelectedGroup).ConfigureAwait(false);
+        ProfileDialogManager.ShowEditGroupDialog(Application.Current.MainWindow, this, SelectedGroup).ConfigureAwait(false);
     }
 
     public ICommand DeleteGroupCommand => new RelayCommand(_ => DeleteGroupAction());
@@ -243,7 +243,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     private void SetGroupsView(GroupInfo group = null)
     {
         Groups = new CollectionViewSource
-            { Source = ProfileManager.Groups.Where(x => !x.IsDynamic).OrderBy(x => x.Name) }.View;
+        { Source = ProfileManager.Groups.Where(x => !x.IsDynamic).OrderBy(x => x.Name) }.View;
 
         // Set specific group or first if null
         SelectedGroup = null;
@@ -267,7 +267,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
         {
             if (string.IsNullOrEmpty(Search))
                 return true;
-            
+
             if (o is not ProfileInfo info)
                 return false;
 

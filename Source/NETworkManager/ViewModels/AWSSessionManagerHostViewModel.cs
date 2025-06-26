@@ -463,7 +463,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow,this, SelectedProfile).ConfigureAwait(false);
+        ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile).ConfigureAwait(false);
     }
 
     public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
@@ -479,7 +479,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()))
+        ProfileDialogManager.ShowEditGroupDialog(Application.Current.MainWindow, this, ProfileManager.GetGroupByName($"{group}"))
             .ConfigureAwait(false);
     }
 
@@ -759,14 +759,14 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         if (groupInfo.Profiles.Count == 0)
         {
             if (ProfileManager.GroupExists(groupName))
-                ProfileManager.RemoveGroup(ProfileManager.GetGroup(groupName));
+                ProfileManager.RemoveGroup(ProfileManager.GetGroupByName(groupName));
 
             Log.Info("No EC2 Instance(s) found!");
         }
         else
         {
             if (ProfileManager.GroupExists(groupName))
-                ProfileManager.ReplaceGroup(ProfileManager.GetGroup(groupName), groupInfo);
+                ProfileManager.ReplaceGroup(ProfileManager.GetGroupByName(groupName), groupInfo);
             else
                 ProfileManager.AddGroup(groupInfo);
 
@@ -795,7 +795,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         ProfileManager.ProfilesChanged = false;
 
         if (ProfileManager.GroupExists(groupName))
-            ProfileManager.RemoveGroup(ProfileManager.GetGroup(groupName));
+            ProfileManager.RemoveGroup(ProfileManager.GetGroupByName(groupName));
 
         ProfileManager.ProfilesChanged = profilesChangedCurrentState;
     }

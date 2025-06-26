@@ -23,7 +23,7 @@ public static class SNMP
         SNMPSessionInfo info = new();
 
         // Get group info
-        var group = ProfileManager.GetGroup(profile.Group);
+        var group = ProfileManager.GetGroupByName(profile.Group);
 
         info.Host = profile.SNMP_Host;
 

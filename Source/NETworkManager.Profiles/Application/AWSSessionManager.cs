@@ -8,7 +8,7 @@ public class AWSSessionManager
     public static AWSSessionManagerSessionInfo CreateSessionInfo(ProfileInfo profile)
     {
         // Get group info
-        var group = ProfileManager.GetGroup(profile.Group);
+        var group = ProfileManager.GetGroupByName(profile.Group);
 
         return new AWSSessionManagerSessionInfo
         {
