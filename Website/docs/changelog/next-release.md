@@ -43,6 +43,7 @@ Release date: **xx.xx.2025**
 - Redesign profile dialog. [#3087](https://github.com/BornToBeRoot/NETworkManager/pull/3087)
 - Redesign group dialog. [#3089](https://github.com/BornToBeRoot/NETworkManager/pull/3089)
 - Redesign confirm delete dialog. [#3087](https://github.com/BornToBeRoot/NETworkManager/pull/3087)
+- Redesign export dialog. [#3090](https://github.com/BornToBeRoot/NETworkManager/pull/3090)
 - Add upgrade dialog when updating from a previous version. [#3077](https://github.com/BornToBeRoot/NETworkManager/pull/3077)
 
 **WiFi**
