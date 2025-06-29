@@ -4,7 +4,9 @@ sidebar_position: 16
 
 # Hosts File Editor
 
-In the **Hosts File Editor**, you can view and modify the `hosts` file of the local computer.
+The **Hosts File Editor** allows you to view, add, edit, enable, disable, or remove entries in the local computer's `hosts` file.
+
+Editing the `hosts` file requires administrator privileges. The application automatically creates a daily backup of the `hosts` file, retaining up to 5 backups in the same directory (Syntax: `hosts_backup_NETworkManager_YYYYMMDD`).
 
 :::info
 
@@ -34,6 +36,6 @@ In addition, further actions can be performed using the buttons below:
 
 With `F5` you can refresh the hosts file.
 
-Right-click on the result to enabl e or disable an entry, delete or edit an entry, or to copy or export the information.
+Right-click on the result to enable, disable, edit or delete an entry, or to copy or export the information.
 
 :::
