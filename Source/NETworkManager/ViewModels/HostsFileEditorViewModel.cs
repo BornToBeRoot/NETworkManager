@@ -253,14 +253,14 @@ public class HostsFileEditorViewModel : ViewModelBase
 
     private async Task EnableEntryAction()
     {
-        MessageBox.Show("Enable entry action is not implemented yet.", "Enable Entry", MessageBoxButton.OK, MessageBoxImage.Information);
+        await HostsFileEditor.EnableEntryAsync(SelectedResult);
     }
 
     public ICommand DisableEntryCommand => new RelayCommand(_ => DisableEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
 
     private async Task DisableEntryAction()
     {
-        MessageBox.Show("Disable entry action is not implemented yet.", "Disable Entry", MessageBoxButton.OK, MessageBoxImage.Information);
+        await HostsFileEditor.DisableEntryAsync(SelectedResult);
     }
 
     public ICommand AddEntryCommand => new RelayCommand(_ => AddEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
