@@ -3930,4 +3930,7 @@ Right-click for more options.</value>
   <data name="WhatsNewMessage" xml:space="preserve">
     <value>This release includes new features, improvements, and bug fixes. Check out the changelog for all the details!</value>
   </data>
+  <data name="Entries" xml:space="preserve">
+    <value>Entries</value>
+  </data>
 </root>

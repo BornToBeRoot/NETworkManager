@@ -1,15 +1,15 @@
-﻿using System.ComponentModel;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
+﻿using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
@@ -236,13 +236,13 @@ public class PortScannerSettingsViewModel : ViewModelBase
     {
         var childWindow = new OKCancelInfoMessageChildWindow();
 
-        var childWindowViewModel = new OKCancelInfoMessageViewModel(async _ =>
+        var childWindowViewModel = new OKCancelInfoMessageViewModel(_ =>
             {
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
 
                 SettingsManager.Current.PortScanner_PortProfiles.Remove(SelectedPortProfile);
-            }, async _ =>
+            }, _ =>
             {
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
@@ -251,11 +251,11 @@ public class PortScannerSettingsViewModel : ViewModelBase
             );
 
         childWindow.Title = Strings.DeletePortProfile;
-        
+
         childWindow.DataContext = childWindowViewModel;
-        
+
         ConfigurationManager.Current.IsChildWindowOpen = true;
-        
+
         return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 

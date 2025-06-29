@@ -2,6 +2,7 @@
 using LiveCharts.Wpf;
 using log4net;
 using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
@@ -16,6 +17,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -473,7 +475,7 @@ public class WiFiViewModel : ViewModelBase
         {
             if (o is not WiFiNetworkInfo info)
                 return false;
-        
+
             // Filter by frequency
             if ((info.Radio == WiFiRadio.GHz2dot4 && !Show2dot4GHzNetworks) ||
                 (info.Radio == WiFiRadio.GHz5 && !Show5GHzNetworks) ||
@@ -481,11 +483,11 @@ public class WiFiViewModel : ViewModelBase
             {
                 return false;
             }
-        
+
             // Return true if no search term is set
             if (string.IsNullOrEmpty(Search))
                 return true;
-        
+
             // Search by SSID, authentication type, channel frequency, channel, BSSID, vendor and PHY kind
             return info.AvailableNetwork.Ssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    info.NetworkAuthenticationType.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
@@ -930,49 +932,53 @@ public class WiFiViewModel : ViewModelBase
         await ScanAsync(SelectedAdapter, true, GlobalStaticConfiguration.ApplicationUIRefreshInterval);
     }
 
-    private async Task Export()
+    private Task Export()
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.Export
-        };
+        var childWindow = new ExportChildWindow();
 
-        var exportViewModel = new ExportViewModel(async instance =>
+        var childWindowViewModel = new ExportViewModel(async instance =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            try
             {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                ExportManager.Export(instance.FilePath, instance.FileType,
+                    instance.ExportAll
+                        ? Networks
+                        : new ObservableCollection<WiFiNetworkInfo>(SelectedNetworks.Cast<WiFiNetworkInfo>()
+                            .ToArray()));
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-                try
-                {
-                    ExportManager.Export(instance.FilePath, instance.FileType,
-                        instance.ExportAll
-                            ? Networks
-                            : new ObservableCollection<WiFiNetworkInfo>(SelectedNetworks.Cast<WiFiNetworkInfo>()
-                                .ToArray()));
-                }
-                catch (Exception ex)
-                {
-                    Log.Error("Error while exporting data as " + instance.FileType, ex);
+                var settings = AppearanceManager.MetroDialog;
+                settings.AffirmativeButtonText = Strings.OK;
 
-                    var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Strings.OK;
+                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+            }
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
-                        Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                        Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
-                }
-
-                SettingsManager.Current.WiFi_ExportFileType = instance.FileType;
-                SettingsManager.Current.WiFi_ExportFilePath = instance.FilePath;
-            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-            [ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json], true,
-            SettingsManager.Current.WiFi_ExportFileType, SettingsManager.Current.WiFi_ExportFilePath);
-
-        customDialog.Content = new ExportDialog
+            SettingsManager.Current.WiFi_ExportFileType = instance.FileType;
+            SettingsManager.Current.WiFi_ExportFilePath = instance.FilePath;
+        }, _ =>
         {
-            DataContext = exportViewModel
-        };
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        }, [
+            ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
+        ], true, SettingsManager.Current.WiFi_ExportFileType,
+        SettingsManager.Current.WiFi_ExportFilePath);
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.Title = Strings.Export;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     public void OnViewVisible()

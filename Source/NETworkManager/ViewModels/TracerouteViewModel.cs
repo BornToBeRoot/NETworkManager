@@ -1,4 +1,17 @@
-﻿using System;
+﻿using log4net;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
+using NETworkManager.Controls;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models;
+using NETworkManager.Models.EventSystem;
+using NETworkManager.Models.Export;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
+using System;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -10,18 +23,6 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using log4net;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Controls;
-using NETworkManager.Localization.Resources;
-using NETworkManager.Models;
-using NETworkManager.Models.EventSystem;
-using NETworkManager.Models.Export;
-using NETworkManager.Models.Network;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
@@ -337,52 +338,54 @@ public class TracerouteViewModel : ViewModelBase
         }
     }
 
-    private async Task Export()
+    private Task Export()
     {
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.Export
-        };
+        var childWindow = new ExportChildWindow();
 
-        var exportViewModel = new ExportViewModel(async instance =>
+        var childWindowViewModel = new ExportViewModel(async instance =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            try
             {
-                await _dialogCoordinator.HideMetroDialogAsync(window, customDialog);
+                ExportManager.Export(instance.FilePath, instance.FileType,
+                    instance.ExportAll
+                        ? Results
+                        : SelectedResults.Cast<TracerouteHopInfo>().ToArray());
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-                try
-                {
-                    ExportManager.Export(instance.FilePath, instance.FileType,
-                        instance.ExportAll
-                            ? Results
-                            : SelectedResults.Cast<TracerouteHopInfo>().ToArray());
-                }
-                catch (Exception ex)
-                {
-                    Log.Error("Error while exporting data as " + instance.FileType, ex);
-                    
-                    var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Strings.OK;
+                var settings = AppearanceManager.MetroDialog;
+                settings.AffirmativeButtonText = Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(window, Strings.Error,
-                        Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                        Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
-                }
+                await _dialogCoordinator.ShowMessageAsync(window, Strings.Error,
+                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+            }
 
-                SettingsManager.Current.Traceroute_ExportFileType = instance.FileType;
-                SettingsManager.Current.Traceroute_ExportFilePath = instance.FilePath;
-            }, _ => { _dialogCoordinator.HideMetroDialogAsync(window, customDialog); },
-            [ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json],
-            true,
-            SettingsManager.Current.Traceroute_ExportFileType, SettingsManager.Current.Traceroute_ExportFilePath
-        );
-
-        customDialog.Content = new ExportDialog
+            SettingsManager.Current.Traceroute_ExportFileType = instance.FileType;
+            SettingsManager.Current.Traceroute_ExportFilePath = instance.FilePath;
+        }, _ =>
         {
-            DataContext = exportViewModel
-        };
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        }, [
+            ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
+        ], true, SettingsManager.Current.Traceroute_ExportFileType,
+        SettingsManager.Current.Traceroute_ExportFilePath);
 
-        await _dialogCoordinator.ShowMetroDialogAsync(window, customDialog);
+        childWindow.Title = Strings.Export;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return window.ShowChildWindowAsync(childWindow);
     }
 
     private void AddHostToHistory(string host)

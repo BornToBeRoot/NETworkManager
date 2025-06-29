@@ -1,4 +1,11 @@
-﻿using System;
+﻿using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Profiles;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -7,13 +14,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
-using MahApps.Metro.SimpleChildWindow;
-using NETworkManager.Localization.Resources;
-using NETworkManager.Profiles;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
@@ -160,14 +160,14 @@ public class SettingsProfilesViewModel : ViewModelBase
     private Task DeleteProfileFileAction()
     {
         var childWindow = new OKCancelInfoMessageChildWindow();
-       
-        var childWindowViewModel = new OKCancelInfoMessageViewModel(async _ =>
+
+        var childWindowViewModel = new OKCancelInfoMessageViewModel(_ =>
             {
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
 
                 ProfileManager.DeleteProfileFile(SelectedProfileFile);
-            }, async _ =>
+            }, _ =>
             {
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
@@ -175,11 +175,11 @@ public class SettingsProfilesViewModel : ViewModelBase
             Strings.DeleteProfileFileMessage);
 
         childWindow.Title = Strings.DeleteProfileFile;
-        
+
         childWindow.DataContext = childWindowViewModel;
-        
+
         ConfigurationManager.Current.IsChildWindowOpen = true;
-        
+
         return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
@@ -193,9 +193,9 @@ public class SettingsProfilesViewModel : ViewModelBase
         settings.NegativeButtonText = Strings.Cancel;
         settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-        if (await _dialogCoordinator.ShowMessageAsync(this, Strings.Disclaimer, Strings.ProfileEncryptionDisclaimer, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative) 
+        if (await _dialogCoordinator.ShowMessageAsync(this, Strings.Disclaimer, Strings.ProfileEncryptionDisclaimer, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
             return;
-        
+
         var customDialog = new CustomDialog
         {
             Title = Strings.SetMasterPassword

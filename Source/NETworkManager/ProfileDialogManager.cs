@@ -1,4 +1,4 @@
-﻿using MahApps.Metro.Controls.Dialogs;
+﻿using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.Network;
@@ -9,12 +9,9 @@ using NETworkManager.ViewModels;
 using NETworkManager.Views;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Diagnostics;
 using System.Security;
 using System.Threading.Tasks;
 using System.Windows;
-using MahApps.Metro.SimpleChildWindow;
 
 namespace NETworkManager;
 
@@ -496,9 +493,9 @@ public static class ProfileDialogManager
         childWindow.DataContext = childWindowViewModel;
 
         viewModel.OnProfileManagerDialogOpen();
-        
+
         Settings.ConfigurationManager.Current.IsChildWindowOpen = true;
-        
+
         return parentWindow.ShowChildWindowAsync(childWindow);
     }
 
@@ -528,9 +525,9 @@ public static class ProfileDialogManager
         childWindow.DataContext = childWindowViewModel;
 
         viewModel.OnProfileManagerDialogOpen();
-        
+
         Settings.ConfigurationManager.Current.IsChildWindowOpen = true;
-        
+
         return parentWindow.ShowChildWindowAsync(childWindow);
     }
 
@@ -543,7 +540,7 @@ public static class ProfileDialogManager
         {
             childWindow.IsOpen = false;
             Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
-            
+
             viewModel.OnProfileManagerDialogClose();
 
             ProfileManager.AddProfile(ParseProfileInfo(instance));
@@ -551,16 +548,16 @@ public static class ProfileDialogManager
         {
             childWindow.IsOpen = false;
             Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
-            
+
             viewModel.OnProfileManagerDialogClose();
         }, ProfileManager.GetGroupNames(), profile.Group, ProfileEditMode.Copy, profile);
 
         childWindow.Title = Strings.CopyProfile;
-        
+
         childWindow.DataContext = childWindowViewModel;
-        
+
         viewModel.OnProfileManagerDialogOpen();
-        
+
         Settings.ConfigurationManager.Current.IsChildWindowOpen = true;
 
         return parentWindow.ShowChildWindowAsync(childWindow);
@@ -570,12 +567,12 @@ public static class ProfileDialogManager
         IList<ProfileInfo> profiles)
     {
         var childWindow = new OKCancelInfoMessageChildWindow();
-        
+
         OKCancelInfoMessageViewModel childWindowViewModel = new(_ =>
             {
                 childWindow.IsOpen = false;
                 Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
-                
+
                 viewModel.OnProfileManagerDialogClose();
 
                 ProfileManager.RemoveProfiles(profiles);
@@ -583,7 +580,7 @@ public static class ProfileDialogManager
             {
                 childWindow.IsOpen = false;
                 Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
-                
+
                 viewModel.OnProfileManagerDialogClose();
             },
             profiles.Count == 1
@@ -591,11 +588,11 @@ public static class ProfileDialogManager
                 : Strings.DeleteProfilesMessage);
 
         childWindow.Title = Strings.DeleteProfile;
-        
+
         childWindow.DataContext = childWindowViewModel;
 
         viewModel.OnProfileManagerDialogOpen();
-        
+
         Settings.ConfigurationManager.Current.IsChildWindowOpen = true;
 
         return parentWindow.ShowChildWindowAsync(childWindow);
@@ -608,31 +605,31 @@ public static class ProfileDialogManager
     public static Task ShowAddGroupDialog(Window parentWindow, IProfileManagerMinimal viewModel)
     {
         var childWindow = new GroupChildWindow(parentWindow);
-        
+
         GroupViewModel childWindowViewModel = new(instance =>
         {
             childWindow.IsOpen = false;
             Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
-            
+
             viewModel.OnProfileManagerDialogClose();
-            
+
             ProfileManager.AddGroup(ParseGroupInfo(instance));
         }, _ =>
         {
             childWindow.IsOpen = false;
             Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
-            
+
             viewModel.OnProfileManagerDialogClose();
         }, ProfileManager.GetGroupNames());
-        
+
         childWindow.Title = Strings.AddGroup;
-        
+
         childWindow.DataContext = childWindowViewModel;
-        
+
         viewModel.OnProfileManagerDialogOpen();
-        
+
         Settings.ConfigurationManager.Current.IsChildWindowOpen = true;
-        
+
         return parentWindow.ShowChildWindowAsync(childWindow);
     }
 
@@ -640,31 +637,31 @@ public static class ProfileDialogManager
         GroupInfo group)
     {
         var childWindow = new GroupChildWindow(parentWindow);
-        
+
         GroupViewModel childWindowViewModel = new(instance =>
         {
             childWindow.IsOpen = false;
             Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
-            
+
             viewModel.OnProfileManagerDialogClose();
-            
+
             ProfileManager.ReplaceGroup(group, ParseGroupInfo(instance));
         }, _ =>
         {
             childWindow.IsOpen = false;
             Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
-            
+
             viewModel.OnProfileManagerDialogClose();
         }, ProfileManager.GetGroupNames(), GroupEditMode.Edit, group);
-        
+
         childWindow.Title = Strings.EditGroup;
-        
+
         childWindow.DataContext = childWindowViewModel;
-        
+
         viewModel.OnProfileManagerDialogOpen();
-        
+
         Settings.ConfigurationManager.Current.IsChildWindowOpen = true;
-        
+
         return parentWindow.ShowChildWindowAsync(childWindow);
     }
 
@@ -672,12 +669,12 @@ public static class ProfileDialogManager
         GroupInfo group)
     {
         var childWindow = new OKCancelInfoMessageChildWindow();
-        
+
         OKCancelInfoMessageViewModel childWindowViewModel = new(_ =>
         {
             childWindow.IsOpen = false;
             Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
-            
+
             viewModel.OnProfileManagerDialogClose();
 
             ProfileManager.RemoveGroup(group);
@@ -685,18 +682,18 @@ public static class ProfileDialogManager
         {
             childWindow.IsOpen = false;
             Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
-            
+
             viewModel.OnProfileManagerDialogClose();
         }, Strings.DeleteGroupMessage);
-        
+
         childWindow.Title = Strings.DeleteGroup;
-        
+
         childWindow.DataContext = childWindowViewModel;
-        
+
         viewModel.OnProfileManagerDialogOpen();
-        
+
         Settings.ConfigurationManager.Current.IsChildWindowOpen = true;
-        
+
         return parentWindow.ShowChildWindowAsync(childWindow);
     }
 

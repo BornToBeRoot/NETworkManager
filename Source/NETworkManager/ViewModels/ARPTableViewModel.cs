@@ -1,6 +1,7 @@
 ﻿using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
@@ -379,16 +380,14 @@ public class ARPTableViewModel : ViewModelBase
 
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
 
-    private async Task ExportAction()
+    private Task ExportAction()
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.Export
-        };
+        var childWindow = new ExportChildWindow();
 
-        var exportViewModel = new ExportViewModel(async instance =>
+        var childWindowViewModel = new ExportViewModel(async instance =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
 
             try
             {
@@ -411,16 +410,22 @@ public class ARPTableViewModel : ViewModelBase
 
             SettingsManager.Current.ARPTable_ExportFileType = instance.FileType;
             SettingsManager.Current.ARPTable_ExportFilePath = instance.FilePath;
-        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, [
-            ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
-        ], true, SettingsManager.Current.ARPTable_ExportFileType, SettingsManager.Current.ARPTable_ExportFilePath);
-
-        customDialog.Content = new ExportDialog
+        }, _ =>
         {
-            DataContext = exportViewModel
-        };
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        }, [
+            ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
+        ], true, SettingsManager.Current.ARPTable_ExportFileType,
+        SettingsManager.Current.ARPTable_ExportFilePath);
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.Title = Strings.Export;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     #endregion

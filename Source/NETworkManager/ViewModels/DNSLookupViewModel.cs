@@ -2,6 +2,7 @@
 using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
@@ -369,53 +370,56 @@ public class DNSLookupViewModel : ViewModelBase
     }
 
 
-    private async Task Export()
+    private Task Export()
     {
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
-        var customDialog = new CustomDialog
+        var childWindow = new ExportChildWindow();
+
+        var childWindowViewModel = new ExportViewModel(async instance =>
         {
-            Title = Strings.Export
-        };
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
 
-        var exportViewModel = new ExportViewModel(async instance =>
+            try
             {
-                await _dialogCoordinator.HideMetroDialogAsync(window, customDialog);
+                ExportManager.Export(instance.FilePath, instance.FileType,
+                    instance.ExportAll
+                        ? Results
+                        : new ObservableCollection<DNSLookupRecordInfo>(SelectedResults
+                            .Cast<DNSLookupRecordInfo>().ToArray()));
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-                try
-                {
-                    ExportManager.Export(instance.FilePath, instance.FileType,
-                        instance.ExportAll
-                            ? Results
-                            : new ObservableCollection<DNSLookupRecordInfo>(SelectedResults
-                                .Cast<DNSLookupRecordInfo>().ToArray()));
-                }
-                catch (Exception ex)
-                {
-                    Log.Error("Error while exporting data as " + instance.FileType, ex);
+                var settings = AppearanceManager.MetroDialog;
+                settings.AffirmativeButtonText = Strings.OK;
 
-                    var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Strings.OK;
+                await _dialogCoordinator.ShowMessageAsync(window, Strings.Error,
+                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+            }
 
-                    await _dialogCoordinator.ShowMessageAsync(window, Strings.Error,
-                        Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                        Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
-                }
-
-                SettingsManager.Current.DNSLookup_ExportFileType = instance.FileType;
-                SettingsManager.Current.DNSLookup_ExportFilePath = instance.FilePath;
-            }, _ => { _dialogCoordinator.HideMetroDialogAsync(window, customDialog); },
+            SettingsManager.Current.DNSLookup_ExportFileType = instance.FileType;
+            SettingsManager.Current.DNSLookup_ExportFilePath = instance.FilePath;
+        }, _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        },
             [
                 ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
             ], true,
             SettingsManager.Current.DNSLookup_ExportFileType, SettingsManager.Current.DNSLookup_ExportFilePath);
 
-        customDialog.Content = new ExportDialog
-        {
-            DataContext = exportViewModel
-        };
+        childWindow.Title = Strings.Export;
 
-        await _dialogCoordinator.ShowMetroDialogAsync(window, customDialog);
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return window.ShowChildWindowAsync(childWindow);
     }
 
     #endregion

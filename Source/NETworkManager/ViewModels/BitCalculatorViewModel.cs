@@ -1,4 +1,14 @@
-﻿using System;
+﻿using log4net;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models.Export;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -6,15 +16,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using log4net;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Localization.Resources;
-using NETworkManager.Models.Export;
-using NETworkManager.Models.Network;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
@@ -166,47 +167,50 @@ public class BitCalculatorViewModel : ViewModelBase
 
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
 
-    private async Task ExportAction()
+    private Task ExportAction()
     {
-        var customDialog = new CustomDialog
+        var childWindow = new ExportChildWindow();
+
+        var childWindowViewModel = new ExportViewModel(async instance =>
         {
-            Title = Strings.Export
-        };
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
 
-        var exportViewModel = new ExportViewModel(async instance =>
+            try
             {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                ExportManager.Export(instance.FilePath, instance.FileType,
+                    [Result]);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-                try
-                {
-                    ExportManager.Export(instance.FilePath, instance.FileType,
-                        [Result]);
-                }
-                catch (Exception ex)
-                {
-                    Log.Error("Error while exporting data as " + instance.FileType, ex);
-                    
-                    var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Strings.OK;
+                var settings = AppearanceManager.MetroDialog;
+                settings.AffirmativeButtonText = Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
-                        Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                        Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
-                }
+                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+            }
 
-                SettingsManager.Current.BitCalculator_ExportFileType = instance.FileType;
-                SettingsManager.Current.BitCalculator_ExportFilePath = instance.FilePath;
-            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, [
+            SettingsManager.Current.BitCalculator_ExportFileType = instance.FileType;
+            SettingsManager.Current.BitCalculator_ExportFilePath = instance.FilePath;
+        }, _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        }, [
                 ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
             ], false, SettingsManager.Current.BitCalculator_ExportFileType,
             SettingsManager.Current.BitCalculator_ExportFilePath);
 
-        customDialog.Content = new ExportDialog
-        {
-            DataContext = exportViewModel
-        };
+        childWindow.Title = Strings.Export;
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     #endregion

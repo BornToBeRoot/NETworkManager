@@ -1,6 +1,7 @@
 ﻿using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.HostsFileEditor;
@@ -201,16 +202,14 @@ public class HostsFileEditorViewModel : ViewModelBase
 
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
 
-    private async Task ExportAction()
+    private Task ExportAction()
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.Export
-        };
+        var childWindow = new ExportChildWindow();
 
-        var exportViewModel = new ExportViewModel(async instance =>
+        var childWindowViewModel = new ExportViewModel(async instance =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
 
             try
             {
@@ -233,16 +232,21 @@ public class HostsFileEditorViewModel : ViewModelBase
 
             SettingsManager.Current.HostsFileEditor_ExportFileType = instance.FileType;
             SettingsManager.Current.HostsFileEditor_ExportFilePath = instance.FilePath;
-        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, [
+        }, _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        }, [
             ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
         ], true, SettingsManager.Current.HostsFileEditor_ExportFileType, SettingsManager.Current.HostsFileEditor_ExportFilePath);
 
-        customDialog.Content = new ExportDialog
-        {
-            DataContext = exportViewModel
-        };
+        childWindow.Title = Strings.Export;
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     public ICommand EnableEntryCommand => new RelayCommand(_ => EnableEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);

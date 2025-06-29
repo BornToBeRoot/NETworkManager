@@ -1,4 +1,15 @@
-﻿using System;
+﻿using log4net;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
+using NETworkManager.Controls;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models.Export;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
+using System;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -8,16 +19,6 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using log4net;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Controls;
-using NETworkManager.Localization.Resources;
-using NETworkManager.Models.Export;
-using NETworkManager.Models.Network;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
@@ -25,7 +26,7 @@ public class SNTPLookupViewModel : ViewModelBase
 {
     #region Variables
     private static readonly ILog Log = LogManager.GetLogger(typeof(SNTPLookupViewModel));
-    
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly Guid _tabId;
@@ -232,18 +233,16 @@ public class SNTPLookupViewModel : ViewModelBase
         lookup.QueryAsync(SNTPServer.Servers, SettingsManager.Current.Network_ResolveHostnamePreferIPv4);
     }
 
-    private async Task Export()
+    private Task Export()
     {
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.Export
-        };
+        var childWindow = new ExportChildWindow();
 
-        var exportViewModel = new ExportViewModel(async instance =>
+        var childWindowViewModel = new ExportViewModel(async instance =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(window, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
 
             try
             {
@@ -255,7 +254,7 @@ public class SNTPLookupViewModel : ViewModelBase
             catch (Exception ex)
             {
                 Log.Error("Error while exporting data as " + instance.FileType, ex);
-                
+
                 var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = Strings.OK;
 
@@ -266,16 +265,21 @@ public class SNTPLookupViewModel : ViewModelBase
 
             SettingsManager.Current.SNTPLookup_ExportFileType = instance.FileType;
             SettingsManager.Current.SNTPLookup_ExportFilePath = instance.FilePath;
-        }, _ => { _dialogCoordinator.HideMetroDialogAsync(window, customDialog); }, [
+        }, _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        }, [
             ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
         ], true, SettingsManager.Current.SNTPLookup_ExportFileType, SettingsManager.Current.SNTPLookup_ExportFilePath);
 
-        customDialog.Content = new ExportDialog
-        {
-            DataContext = exportViewModel
-        };
+        childWindow.Title = Strings.Export;
 
-        await _dialogCoordinator.ShowMetroDialogAsync(window, customDialog);
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return window.ShowChildWindowAsync(childWindow);
     }
 
     public void OnClose()
