@@ -4,6 +4,7 @@ using LiveCharts.Wpf;
 using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
@@ -679,49 +680,51 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
 
-    private async Task ExportAction()
+    private Task ExportAction()
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.Export
-        };
+        var childWindow = new ExportChildWindow();
 
-        var exportViewModel = new ExportViewModel(async instance =>
+        var childWindowViewModel = new ExportViewModel(async instance =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            try
             {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                ExportManager.Export(instance.FilePath, instance.FileType,
+                    instance.ExportAll ? NetworkInterfaces : [SelectedNetworkInterface]);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-                try
-                {
-                    ExportManager.Export(instance.FilePath, instance.FileType,
-                        instance.ExportAll ? NetworkInterfaces : [SelectedNetworkInterface]);
-                }
-                catch (Exception ex)
-                {
-                    Log.Error("Error while exporting data as " + instance.FileType, ex);
+                var settings = AppearanceManager.MetroDialog;
+                settings.AffirmativeButtonText = Strings.OK;
 
-                    var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Strings.OK;
+                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+            }
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
-                        Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                        Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
-                }
-
-                SettingsManager.Current.NetworkInterface_ExportFileType = instance.FileType;
-                SettingsManager.Current.NetworkInterface_ExportFilePath = instance.FilePath;
-            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-            [
-                ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
-            ], true,
-            SettingsManager.Current.NetworkInterface_ExportFileType,
-            SettingsManager.Current.NetworkInterface_ExportFilePath);
-
-        customDialog.Content = new ExportDialog
+            SettingsManager.Current.NetworkInterface_ExportFileType = instance.FileType;
+            SettingsManager.Current.NetworkInterface_ExportFilePath = instance.FilePath;
+        }, _ =>
         {
-            DataContext = exportViewModel
-        };
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        }, [
+            ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
+        ], true,
+        SettingsManager.Current.NetworkInterface_ExportFileType,
+        SettingsManager.Current.NetworkInterface_ExportFilePath);
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.Title = Strings.Export;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     public ICommand ApplyConfigurationCommand =>

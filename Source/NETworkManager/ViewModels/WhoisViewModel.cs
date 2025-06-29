@@ -1,13 +1,7 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Input;
-using log4net;
+﻿using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
@@ -15,6 +9,13 @@ using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
+using System;
+using System.ComponentModel;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
@@ -22,7 +23,7 @@ public class WhoisViewModel : ViewModelBase
 {
     #region Variables
     private static readonly ILog Log = LogManager.GetLogger(typeof(IPScannerViewModel));
-    
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly Guid _tabId;
@@ -245,18 +246,16 @@ public class WhoisViewModel : ViewModelBase
         list.ForEach(x => SettingsManager.Current.Whois_DomainHistory.Add(x));
     }
 
-    private async Task Export()
+    private Task Export()
     {
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.Export
-        };
+        var childWindow = new ExportChildWindow();
 
-        var exportViewModel = new ExportViewModel(async instance =>
+        var childWindowViewModel = new ExportViewModel(async instance =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(window, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
 
             try
             {
@@ -265,7 +264,7 @@ public class WhoisViewModel : ViewModelBase
             catch (Exception ex)
             {
                 Log.Error("Error while exporting data as " + instance.FileType, ex);
-                
+
                 var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = Strings.OK;
 
@@ -276,16 +275,21 @@ public class WhoisViewModel : ViewModelBase
 
             SettingsManager.Current.Whois_ExportFileType = instance.FileType;
             SettingsManager.Current.Whois_ExportFilePath = instance.FilePath;
-        }, _ => { _dialogCoordinator.HideMetroDialogAsync(window, customDialog); }, [
+        }, _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        }, [
             ExportFileType.Txt
         ], false, SettingsManager.Current.Whois_ExportFileType, SettingsManager.Current.Whois_ExportFilePath);
 
-        customDialog.Content = new ExportDialog
-        {
-            DataContext = exportViewModel
-        };
+        childWindow.Title = Strings.Export;
 
-        await _dialogCoordinator.ShowMetroDialogAsync(window, customDialog);
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return window.ShowChildWindowAsync(childWindow);
     }
 
     #endregion

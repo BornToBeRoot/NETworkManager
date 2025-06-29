@@ -1,4 +1,16 @@
-﻿using System;
+﻿using LiveCharts;
+using LiveCharts.Configurations;
+using LiveCharts.Wpf;
+using log4net;
+using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models.Export;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net;
@@ -8,17 +20,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
-using LiveCharts;
-using LiveCharts.Configurations;
-using LiveCharts.Wpf;
-using log4net;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Localization.Resources;
-using NETworkManager.Models.Export;
-using NETworkManager.Models.Network;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using NETworkManager.Views;
 using Ping = NETworkManager.Models.Network.Ping;
 
 namespace NETworkManager.ViewModels;
@@ -396,49 +397,51 @@ public class PingMonitorViewModel : ViewModelBase
         }
     }
 
-    public async Task Export()
+    public Task Export()
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.Export
-        };
+        var childWindow = new ExportChildWindow();
 
-        var exportViewModel = new ExportViewModel(async instance =>
+        var childWindowViewModel = new ExportViewModel(async instance =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            try
             {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                ExportManager.Export(instance.FilePath, instance.FileType,
+                    new ObservableCollection<PingInfo>(_pingInfoList));
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-                try
-                {
-                    ExportManager.Export(instance.FilePath, instance.FileType,
-                        new ObservableCollection<PingInfo>(_pingInfoList));
-                }
-                catch (Exception ex)
-                {
-                    Log.Error("Error while exporting data as " + instance.FileType, ex);
-                    
-                    var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Strings.OK;
+                var settings = AppearanceManager.MetroDialog;
+                settings.AffirmativeButtonText = Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
-                        Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                        Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
-                }
+                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+            }
 
-                SettingsManager.Current.PingMonitor_ExportFileType = instance.FileType;
-                SettingsManager.Current.PingMonitor_ExportFilePath = instance.FilePath;
-            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-            [
-                ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
-            ], false,
-            SettingsManager.Current.PingMonitor_ExportFileType,
-            SettingsManager.Current.PingMonitor_ExportFilePath);
-
-        customDialog.Content = new ExportDialog
+            SettingsManager.Current.PingMonitor_ExportFileType = instance.FileType;
+            SettingsManager.Current.PingMonitor_ExportFilePath = instance.FilePath;
+        }, _ =>
         {
-            DataContext = exportViewModel
-        };
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        }, [
+            ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
+        ], false,
+        SettingsManager.Current.PingMonitor_ExportFileType,
+        SettingsManager.Current.PingMonitor_ExportFilePath);
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.Title = Strings.Export;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     #endregion
