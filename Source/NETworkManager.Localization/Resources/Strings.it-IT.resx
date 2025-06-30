@@ -4028,4 +4028,7 @@ La modifica del file hosta richiede diritti elevati!</value>
     <value>Questa versione include nuove funzionalità, miglioramenti e correzioni di bug. 
 Per tutti i  dettagli consulta l'elenco modifiche</value>
   </data>
+  <data name="Entries" xml:space="preserve">
+    <value>Voci</value>
+  </data>
 </root>
