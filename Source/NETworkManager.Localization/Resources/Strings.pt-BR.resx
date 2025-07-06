@@ -3930,4 +3930,12 @@ Clique direito para mais opções.</value>
   <data name="WhatsNewMessage" xml:space="preserve">
     <value>Esta versão inclui novos recursos, melhorias e correções de erros. Confira o registro de alterações para todos os detalhes!</value>
   </data>
+  <data name="Entries" xml:space="preserve">
+    <value>Entradas</value>
+  </data>
+  <data name="DeleteHostsFileEntryMessage" xml:space="preserve">
+    <value>A entrada selecionada será excluída permanentemente:
+
+{0} {1} {2}</value>
+  </data>
 </root>
