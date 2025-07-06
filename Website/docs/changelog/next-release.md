@@ -23,7 +23,7 @@ Release date: **xx.xx.2025**
 
 **Hosts File Editor**
 
-- New feature to display (and edit) the `hosts` file. (See [documentation](https://borntoberoot.net/NETworkManager/docs/application/hosts-file-editor) for more details) [#3012](https://github.com/BornToBeRoot/NETworkManager/pull/3012) [#3092](https://github.com/BornToBeRoot/NETworkManager/pull/3092) 
+- New feature to display (and edit) the `hosts` file. (See [documentation](https://borntoberoot.net/NETworkManager/docs/application/hosts-file-editor) for more details) [#3012](https://github.com/BornToBeRoot/NETworkManager/pull/3012) [#3092](https://github.com/BornToBeRoot/NETworkManager/pull/3092) [#3094](https://github.com/BornToBeRoot/NETworkManager/pull/3094)
 
   :::info
 
