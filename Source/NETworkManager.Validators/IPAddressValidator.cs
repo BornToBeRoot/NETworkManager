@@ -5,13 +5,13 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Validators;
 
-public class IPv6AddressValidator : ValidationRule
+public class IPAddressValidator : ValidationRule
 {
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
         var input = (value as string);
 
-        if (System.Net.IPAddress.TryParse(input, out var address) && address.AddressFamily == AddressFamily.InterNetworkV6)
+        if (System.Net.IPAddress.TryParse(input, out var address) && (address.AddressFamily == AddressFamily.InterNetwork || address.AddressFamily == AddressFamily.InterNetworkV6))
             return ValidationResult.ValidResult;
 
         return new ValidationResult(false, Strings.EnterValidIPv6Address);

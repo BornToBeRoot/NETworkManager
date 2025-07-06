@@ -291,7 +291,62 @@ public class HostsFileEditorViewModel : ViewModelBase
 
     private async Task AddEntryAction()
     {
-        MessageBox.Show("Add entry action is not implemented yet.", "Add Entry", MessageBoxButton.OK, MessageBoxImage.Information);
+        IsModifying = true;
+
+        var childWindow = new HostsFileEditorEntryChildWindow();
+
+        var childWindowViewModel = new HostsFileEditorEntryViewModel(async _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            IsModifying = false;
+        }, _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            IsModifying = false;
+        });
+
+        childWindow.Title = Strings.AddEntry;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+    }
+
+    public ICommand EditEntryCommand => new RelayCommand(_ => EditEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
+
+    private async Task EditEntryAction()
+    {
+        IsModifying = true;
+
+        var childWindow = new HostsFileEditorEntryChildWindow();
+
+        var childWindowViewModel = new HostsFileEditorEntryViewModel(async _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            IsModifying = false;
+        }, _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            IsModifying = false;
+        }, SelectedResult);
+
+        childWindow.Title = Strings.EditEntry;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     public ICommand DeleteEntryCommand => new RelayCommand(_ => DeleteEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
@@ -325,13 +380,6 @@ public class HostsFileEditorViewModel : ViewModelBase
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
         await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
-    }
-
-    public ICommand EditEntryCommand => new RelayCommand(_ => EditEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
-
-    private async Task EditEntryAction()
-    {
-        MessageBox.Show("Edit entry action is not implemented yet.", "Edit Entry", MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     private bool ModifyEntry_CanExecute(object obj)

@@ -1015,7 +1015,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Apply Windows key combinations (e.g. ALT+TAB): ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Apply Windows key combinations (e.g., ALT+TAB): ähnelt.
         /// </summary>
         public static string ApplyWindowsKeyCombinationsLikeAltTab {
             get {
@@ -3495,7 +3495,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid domain (like &quot;example.com&quot;)! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid domain (e.g., &quot;example.com&quot;)! ähnelt.
         /// </summary>
         public static string EnterValidDomain {
             get {
@@ -3540,7 +3540,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid hostname (like &quot;server-01&quot; or &quot;example.com&quot;) or a valid IP address (like 192.168.178.1)! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid hostname (e.g., &quot;server-01&quot; or &quot;example.com&quot;) or a valid IP address (e.g., 192.168.178.1)! ähnelt.
         /// </summary>
         public static string EnterValidHostnameOrIPAddress {
             get {
@@ -3554,6 +3554,15 @@ namespace NETworkManager.Localization.Resources {
         public static string EnterValidHosts {
             get {
                 return ResourceManager.GetString("EnterValidHosts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid hostname (e.g., &quot;server-01&quot; or &quot;example.com&quot;)! Multiple hostnames can be separated with a space. ähnelt.
+        /// </summary>
+        public static string EnterValidHostsFileEntryHostname {
+            get {
+                return ResourceManager.GetString("EnterValidHostsFileEntryHostname", resourceCulture);
             }
         }
         
@@ -3594,7 +3603,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid MAC address (like 00:F1:23:AB:F2:35)! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid MAC address (e.g., 00:F1:23:AB:F2:35)! ähnelt.
         /// </summary>
         public static string EnterValidMACAddress {
             get {
@@ -3639,7 +3648,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid subnet (like 192.168.178.133/26)! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid subnet (e.g., 192.168.178.133/26)! ähnelt.
         /// </summary>
         public static string EnterValidSubnet {
             get {
@@ -3648,7 +3657,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid subnetmask (like 255.255.255.0)! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid subnetmask (e.g., 255.255.255.0)! ähnelt.
         /// </summary>
         public static string EnterValidSubnetmask {
             get {
@@ -3657,7 +3666,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid subnetmask or CIDR (like 255.255.255.0 or /24)! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid subnetmask or CIDR (e.g., 255.255.255.0 or /24)! ähnelt.
         /// </summary>
         public static string EnterValidSubnetmaskOrCIDR {
             get {
@@ -3666,7 +3675,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid website (like https://example.com/index.html) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid website (e.g., https://example.com/index.html) ähnelt.
         /// </summary>
         public static string EnterValidWebsiteUri {
             get {
@@ -3761,6 +3770,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ExampleGroupDescription {
             get {
                 return ResourceManager.GetString("ExampleGroupDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Primary DNS server ähnelt.
+        /// </summary>
+        public static string ExampleHostsFileEntryComment {
+            get {
+                return ResourceManager.GetString("ExampleHostsFileEntryComment", resourceCulture);
             }
         }
         
@@ -4373,7 +4391,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die URL to a web service that can be reached via http or https and returns an IPv4 address like &quot;xx.xx.xx.xx&quot; as response. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die URL to a web service that can be reached via http or https and returns an IPv4 address e.g., &quot;xx.xx.xx.xx&quot; as response. ähnelt.
         /// </summary>
         public static string HelpMessage_CustomPublicIPv4AddressAPI {
             get {
@@ -4382,7 +4400,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die URL to a web service that can be reached via http or https and returns an IPv6 address like &quot;xxxx:xx:xxx::xx&quot; as response. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die URL to a web service that can be reached via http or https and returns an IPv6 address e.g., &quot;xxxx:xx:xxx::xx&quot; as response. ähnelt.
         /// </summary>
         public static string HelpMessage_CustomPublicIPv6AddressAPI {
             get {
@@ -4454,7 +4472,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die SSH hostkey to use for the connection (like &quot;71:b8:f2:6e...&quot;). Only available if the mode is &quot;SSH&quot;. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die SSH hostkey to use for the connection (e.g., &quot;71:b8:f2:6e...&quot;). Only available if the mode is &quot;SSH&quot;. ähnelt.
         /// </summary>
         public static string HelpMessage_PuTTYHostkey {
             get {
@@ -4463,7 +4481,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Full path to the private key file (like &quot;C:\Users\BornToBeRoot\SSH\private_key.ppk&quot;). Only available if the mode is &quot;SSH&quot;. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Full path to the private key file (e.g., &quot;C:\Users\BornToBeRoot\SSH\private_key.ppk&quot;). Only available if the mode is &quot;SSH&quot;. ähnelt.
         /// </summary>
         public static string HelpMessage_PuTTYPrivateKeyFile {
             get {
