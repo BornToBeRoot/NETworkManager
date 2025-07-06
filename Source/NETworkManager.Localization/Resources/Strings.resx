@@ -3933,4 +3933,9 @@ Right-click for more options.</value>
   <data name="Entries" xml:space="preserve">
     <value>Entries</value>
   </data>
+  <data name="DeleteHostsFileEntryMessage" xml:space="preserve">
+    <value>The selected entry is permanently deleted:
+
+{0} {1} {2}</value>
+  </data>
 </root>

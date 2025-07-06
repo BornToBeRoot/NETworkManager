@@ -17,12 +17,12 @@
              AllowMove="True"
              TitleForeground="{DynamicResource MahApps.Brushes.Gray3}"
              CloseByEscape="False"                               
-             OverlayBrush="{DynamicResource ResourceKey=MahApps.Brushes.Gray.SemiTransparent}"
+             OverlayBrush="{DynamicResource ResourceKey=MahApps.Brushes.Gray.SemiTransparent}"                               
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:OKCancelInfoMessageViewModel}">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="10" />
+            <RowDefinition Height="20" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <ScrollViewer Grid.Column="0" Grid.Row="0" 
@@ -40,8 +40,7 @@
                 <TextBlock Grid.Column="2" Grid.Row="0"
                            VerticalAlignment="Center"
                            Text="{Binding Message}"
-                           Style="{StaticResource ResourceKey=WrapTextBlock}"
-                           Foreground="{DynamicResource MahApps.Brushes.Gray3}"/>
+                           Style="{StaticResource ResourceKey=WrapTextBlock}"/>                
             </Grid>
         </ScrollViewer>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
