@@ -2592,6 +2592,17 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The selected entry is permanently deleted:
+        ///
+        ///{0} {1} {2} ähnelt.
+        /// </summary>
+        public static string DeleteHostsFileEntryMessage {
+            get {
+                return ResourceManager.GetString("DeleteHostsFileEntryMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Delete OID profile ähnelt.
         /// </summary>
         public static string DeleteOIDProfile {

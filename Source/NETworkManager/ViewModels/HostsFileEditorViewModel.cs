@@ -93,6 +93,21 @@ public class HostsFileEditorViewModel : ViewModelBase
         }
     }
 
+    private bool _isModifying;
+
+    public bool IsModifying
+    {
+        get => _isModifying;
+        set
+        {
+            if (value == _isModifying)
+                return;
+
+            _isModifying = value;
+            OnPropertyChanged();
+        }
+    }
+
     private bool _isRefreshing;
 
     public bool IsRefreshing
@@ -192,7 +207,8 @@ public class HostsFileEditorViewModel : ViewModelBase
         return Application.Current.MainWindow != null &&
                !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
                !ConfigurationManager.Current.IsChildWindowOpen &&
-               !IsRefreshing;
+               !IsRefreshing &&
+               !IsModifying;
     }
 
     private async Task RefreshAction()
@@ -253,14 +269,22 @@ public class HostsFileEditorViewModel : ViewModelBase
 
     private async Task EnableEntryAction()
     {
+        IsModifying = true;
+
         await HostsFileEditor.EnableEntryAsync(SelectedResult);
+
+        IsModifying = false;
     }
 
     public ICommand DisableEntryCommand => new RelayCommand(_ => DisableEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
 
     private async Task DisableEntryAction()
     {
+        IsModifying = true;
+
         await HostsFileEditor.DisableEntryAsync(SelectedResult);
+
+        IsModifying = false;
     }
 
     public ICommand AddEntryCommand => new RelayCommand(_ => AddEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
@@ -274,7 +298,33 @@ public class HostsFileEditorViewModel : ViewModelBase
 
     private async Task DeleteEntryAction()
     {
-        MessageBox.Show("Delete entry action is not implemented yet.", "Delete Entry", MessageBoxButton.OK, MessageBoxImage.Information);
+        IsModifying = true;
+
+        var childWindow = new OKCancelInfoMessageChildWindow();
+
+        var childWindowViewModel = new OKCancelInfoMessageViewModel(async _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            await HostsFileEditor.DeleteEntryAsync(SelectedResult);
+
+            IsModifying = false;
+        }, _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            IsModifying = false;
+        }, string.Format(Strings.DeleteHostsFileEntryMessage, SelectedResult.IPAddress, SelectedResult.Hostname, string.IsNullOrEmpty(SelectedResult.Comment) ? "" : $"# {SelectedResult.Comment}"));
+
+        childWindow.Title = Strings.DeleteEntry;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     public ICommand EditEntryCommand => new RelayCommand(_ => EditEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
@@ -290,7 +340,8 @@ public class HostsFileEditorViewModel : ViewModelBase
             Application.Current.MainWindow != null &&
             !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
             !ConfigurationManager.Current.IsChildWindowOpen &&
-            !IsRefreshing;
+            !IsRefreshing &&
+            !IsModifying;
     }
 
     public ICommand RestartAsAdminCommand => new RelayCommand(_ => RestartAsAdminAction().ConfigureAwait(false));

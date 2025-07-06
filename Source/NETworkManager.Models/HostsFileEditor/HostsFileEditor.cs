@@ -164,27 +164,52 @@ public static class HostsFileEditor
         return entries;
     }
 
-    public static Task<bool> EnableEntryAsync(HostsFileEntry entry)
+    /// <summary>
+    /// Enable a hosts file entry asynchronously.
+    /// </summary>
+    /// <param name="entry">Entry to enable.</param>
+    /// <returns><see cref="HostsFileEntryModifyResult.Success"/> if the entry was enabled successfully, otherwise an error result.</returns>
+    public static Task<HostsFileEntryModifyResult> EnableEntryAsync(HostsFileEntry entry)
     {
         return Task.Run(() => EnableEntry(entry));
     }
 
-    private static bool EnableEntry(HostsFileEntry entry)
+    /// <summary>
+    /// Enable a hosts file entry.
+    /// </summary>
+    /// <param name="entry">Entry to enable.</param>
+    /// <returns><see cref="HostsFileEntryModifyResult.Success"/> if the entry was enabled successfully, otherwise an error result.</returns>
+    private static HostsFileEntryModifyResult EnableEntry(HostsFileEntry entry)
     {
         // Create a backup of the hosts file before making changes
         if (CreateBackup() == false)
         {
             Log.Error("EnableEntry - Failed to create backup before enabling entry.");
-            return false;
+            return HostsFileEntryModifyResult.BackupError;
         }
 
         // Replace the entry in the hosts file
         var hostsFileLines = File.ReadAllLines(HostsFilePath).ToList();
 
+        bool entryFound = false;
+
         for (var i = 0; i < hostsFileLines.Count; i++)
         {
             if (hostsFileLines[i] == entry.Line)
+            {
+                entryFound = true;
+
                 hostsFileLines[i] = entry.Line.TrimStart('#', ' ');
+
+                break;
+            }
+        }
+
+        if (!entryFound)
+        {
+            Log.Warn($"EnableEntry - Entry not found in hosts file: {entry.Line}");
+
+            return HostsFileEntryModifyResult.NotFound;
         }
 
         try
@@ -195,34 +220,57 @@ public static class HostsFileEditor
         catch (Exception ex)
         {
             Log.Error($"EnableEntry - Failed to write changes to hosts file: {HostsFilePath}", ex);
-
-            return false;
+            return HostsFileEntryModifyResult.WriteError;
         }
 
-        return true;
+        return HostsFileEntryModifyResult.Success;
     }
 
-    public static Task<bool> DisableEntryAsync(HostsFileEntry entry)
+    /// <summary>
+    /// Disable a hosts file entry asynchronously.
+    /// </summary>
+    /// <param name="entry">Entry to disable.</param>
+    /// <returns><see cref="HostsFileEntryModifyResult.Success"/> if the entry was enabled successfully, otherwise an error result.</returns>
+    public static Task<HostsFileEntryModifyResult> DisableEntryAsync(HostsFileEntry entry)
     {
         return Task.Run(() => DisableEntry(entry));
     }
 
-    private static bool DisableEntry(HostsFileEntry entry)
+    /// <summary>
+    /// Disable a hosts file entry.
+    /// </summary>
+    /// <param name="entry">Entry to disable.</param>
+    /// <returns><see cref="HostsFileEntryModifyResult.Success"/> if the entry was enabled successfully, otherwise an error result.</returns>
+    private static HostsFileEntryModifyResult DisableEntry(HostsFileEntry entry)
     {
         // Create a backup of the hosts file before making changes
         if (CreateBackup() == false)
         {
             Log.Error("DisableEntry - Failed to create backup before disabling entry.");
-            return false;
+            return HostsFileEntryModifyResult.BackupError;
         }
 
         // Replace the entry in the hosts file
         var hostsFileLines = File.ReadAllLines(HostsFilePath).ToList();
 
+        bool entryFound = false;
+
         for (var i = 0; i < hostsFileLines.Count; i++)
         {
             if (hostsFileLines[i] == entry.Line)
+            {
+                entryFound = true;
+
                 hostsFileLines[i] = "# " + entry.Line;
+
+                break;
+            }
+        }
+
+        if (!entryFound)
+        {
+            Log.Warn($"DisableEntry - Entry not found in hosts file: {entry.Line}");
+            return HostsFileEntryModifyResult.NotFound;
         }
 
         try
@@ -233,15 +281,75 @@ public static class HostsFileEditor
         catch (Exception ex)
         {
             Log.Error($"DisableEntry - Failed to write changes to hosts file: {HostsFilePath}", ex);
-
-            return false;
+            return HostsFileEntryModifyResult.WriteError;
         }
 
-        return true;
+        return HostsFileEntryModifyResult.Success;
     }
 
     /// <summary>
-    /// Create a daily backup of the hosts file (before making a change).
+    /// Delete a hosts file entry asynchronously.
+    /// </summary>
+    /// <param name="entry">Entry to delete.</param>"/>
+    /// <returns><see cref="HostsFileEntryModifyResult.Success"/> if the entry was enabled successfully, otherwise an error result.</returns>s
+    public static Task<HostsFileEntryModifyResult> DeleteEntryAsync(HostsFileEntry entry)
+    {
+        return Task.Run(() => DeleteEntry(entry));
+    }
+
+    /// <summary>
+    /// Delete a hosts file entry.
+    /// </summary>
+    /// <param name="entry">Entry to delete.</param>"/>
+    /// <returns><see cref="HostsFileEntryModifyResult.Success"/> if the entry was enabled successfully, otherwise an error result.</returns>
+    private static HostsFileEntryModifyResult DeleteEntry(HostsFileEntry entry)
+    {
+        // Create a backup of the hosts file before making changes
+        if (CreateBackup() == false)
+        {
+            Log.Error("DeleteEntry - Failed to create backup before deleting entry.");
+            return HostsFileEntryModifyResult.BackupError;
+        }
+
+        // Remove the entry from the hosts file
+        var hostsFileLines = File.ReadAllLines(HostsFilePath).ToList();
+
+        bool entryFound = false;
+
+        for (var i = 0; i < hostsFileLines.Count; i++)
+        {
+            if (hostsFileLines[i] == entry.Line)
+            {
+                entryFound = true;
+
+                hostsFileLines.RemoveAt(i);
+
+                break;
+            }
+        }
+
+        if (!entryFound)
+        {
+            Log.Warn($"DeleteEntry - Entry not found in hosts file: {entry.Line}");
+            return HostsFileEntryModifyResult.NotFound;
+        }
+
+        try
+        {
+            Log.Debug($"DeleteEntry - Writing changes to hosts file: {HostsFilePath}");
+            File.WriteAllLines(HostsFilePath, hostsFileLines);
+        }
+        catch (Exception ex)
+        {
+            Log.Error($"DeleteEntry - Failed to write changes to hosts file: {HostsFilePath}", ex);
+            return HostsFileEntryModifyResult.WriteError;
+        }
+        OnHostsFileChanged();
+        return HostsFileEntryModifyResult.Success;
+    }
+
+    /// <summary>
+    /// Create a "daily" backup of the hosts file (before making a change).
     /// </summary>
     private static bool CreateBackup()
     {
