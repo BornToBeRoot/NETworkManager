@@ -4031,4 +4031,9 @@ Per tutti i  dettagli consulta l'elenco modifiche</value>
   <data name="Entries" xml:space="preserve">
     <value>Voci</value>
   </data>
+  <data name="DeleteHostsFileEntryMessage" xml:space="preserve">
+    <value>La voce selezionata è stata eliminata permanentemente:
+
+{0} {1} {2}</value>
+  </data>
 </root>
