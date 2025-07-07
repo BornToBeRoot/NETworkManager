@@ -295,10 +295,18 @@ public class HostsFileEditorViewModel : ViewModelBase
 
         var childWindow = new HostsFileEditorEntryChildWindow();
 
-        var childWindowViewModel = new HostsFileEditorEntryViewModel(async _ =>
+        var childWindowViewModel = new HostsFileEditorEntryViewModel(async instance =>
         {
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            await HostsFileEditor.AddEntryAsync(new HostsFileEntry
+            {
+                IsEnabled = instance.IsEnabled,
+                IPAddress = instance.IPAddress,
+                Hostname = instance.Hostname,
+                Comment = instance.Comment
+            });
 
             IsModifying = false;
         }, _ =>
@@ -326,10 +334,18 @@ public class HostsFileEditorViewModel : ViewModelBase
 
         var childWindow = new HostsFileEditorEntryChildWindow();
 
-        var childWindowViewModel = new HostsFileEditorEntryViewModel(async _ =>
+        var childWindowViewModel = new HostsFileEditorEntryViewModel(async instance =>
         {
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            await HostsFileEditor.EditEntryAsync(instance.Entry, new HostsFileEntry
+            {
+                IsEnabled = instance.IsEnabled,
+                IPAddress = instance.IPAddress,
+                Hostname = instance.Hostname,
+                Comment = instance.Comment
+            });
 
             IsModifying = false;
         }, _ =>

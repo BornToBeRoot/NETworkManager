@@ -288,6 +288,113 @@ public static class HostsFileEditor
     }
 
     /// <summary>
+    /// Add a hosts file entry asynchronously.
+    /// </summary>
+    /// <param name="entry">Entry to add.</param>
+    /// <returns><see cref="HostsFileEntryModifyResult.Success"/> if the entry was added successfully, otherwise an error result.</returns>"/>
+    public static Task<HostsFileEntryModifyResult> AddEntryAsync(HostsFileEntry entry)
+    {
+        return Task.Run(() => AddEntry(entry));
+    }
+
+    /// <summary>
+    /// Add a hosts file entry.
+    /// </summary>
+    /// <param name="entry">Entry to add.</param>
+    /// <returns><see cref="HostsFileEntryModifyResult.Success"/> if the entry was added successfully, otherwise an error result.</returns>"/>
+    private static HostsFileEntryModifyResult AddEntry(HostsFileEntry entry)
+    {
+        // Create a backup of the hosts file before making changes
+        if (CreateBackup() == false)
+        {
+            Log.Error("AddEntry - Failed to create backup before adding entry.");
+            return HostsFileEntryModifyResult.BackupError;
+        }
+
+        // Add the entry to the hosts file
+        var hostsFileLines = File.ReadAllLines(HostsFilePath).ToList();
+
+        hostsFileLines.Add(CreateEntryLine(entry));
+
+        try
+        {
+            Log.Debug($"AddEntry - Writing changes to hosts file: {HostsFilePath}");
+            File.WriteAllLines(HostsFilePath, hostsFileLines);
+        }
+        catch (Exception ex)
+        {
+            Log.Error($"AddEntry - Failed to write changes to hosts file: {HostsFilePath}", ex);
+            return HostsFileEntryModifyResult.WriteError;
+        }
+
+        return HostsFileEntryModifyResult.Success;
+    }
+
+    /// <summary>
+    /// Edit a hosts file entry asynchronously.
+    /// </summary>
+    /// <param name="entry">Entry to edit.</param>
+    /// <param name="newEntry">New entry to replace the old one.</param>
+    /// <returns><see cref="HostsFileEntryModifyResult.Success"/> if the entry was edited successfully, otherwise an error result.</returns>"/>
+    public static Task<HostsFileEntryModifyResult> EditEntryAsync(HostsFileEntry entry, HostsFileEntry newEntry)
+    {
+        return Task.Run(() => EditEntry(entry, newEntry));
+    }
+
+    /// <summary>
+    /// Edit a hosts file entry.
+    /// </summary>
+    /// <param name="entry">Entry to edit.</param>
+    /// <param name="newEntry">New entry to replace the old one.</param>
+    /// <returns><see cref="HostsFileEntryModifyResult.Success"/> if the entry was edited successfully, otherwise an error result.</returns>"/>
+    public static HostsFileEntryModifyResult EditEntry(HostsFileEntry entry, HostsFileEntry newEntry)
+    {
+        // Create a backup of the hosts file before making changes
+        if (CreateBackup() == false)
+        {
+            Log.Error("EditEntry - Failed to create backup before editing entry.");
+            return HostsFileEntryModifyResult.BackupError;
+        }
+
+        // Replace the entry from the hosts file
+        var hostsFileLines = File.ReadAllLines(HostsFilePath).ToList();
+
+        bool entryFound = false;
+
+        for (var i = 0; i < hostsFileLines.Count; i++)
+        {
+            if (hostsFileLines[i] == entry.Line)
+            {
+                entryFound = true;
+
+                hostsFileLines.RemoveAt(i);
+                hostsFileLines.Insert(i, CreateEntryLine(newEntry));
+
+                break;
+            }
+        }
+
+        if (!entryFound)
+        {
+            Log.Warn($"EditEntry - Entry not found in hosts file: {entry.Line}");
+            return HostsFileEntryModifyResult.NotFound;
+        }
+
+        try
+        {
+            Log.Debug($"EditEntry - Writing changes to hosts file: {HostsFilePath}");
+            File.WriteAllLines(HostsFilePath, hostsFileLines);
+        }
+        catch (Exception ex)
+        {
+            Log.Error($"EditEntry - Failed to write changes to hosts file: {HostsFilePath}", ex);
+            return HostsFileEntryModifyResult.WriteError;
+        }
+
+        return HostsFileEntryModifyResult.Success;
+    }
+
+    /// <summary>
     /// Delete a hosts file entry asynchronously.
     /// </summary>
     /// <param name="entry">Entry to delete.</param>"/>
@@ -344,8 +451,27 @@ public static class HostsFileEditor
             Log.Error($"DeleteEntry - Failed to write changes to hosts file: {HostsFilePath}", ex);
             return HostsFileEntryModifyResult.WriteError;
         }
-        OnHostsFileChanged();
+
         return HostsFileEntryModifyResult.Success;
+    }
+
+    /// <summary>
+    /// Create a line for the hosts file entry.
+    /// </summary>
+    /// <param name="entry">Entry to create the line for.</param>
+    /// <returns>Line for the hosts file entry.</returns>
+    private static string CreateEntryLine(HostsFileEntry entry)
+    {
+        var line = entry.IsEnabled ? "" : "# ";
+
+        line += $"{entry.IPAddress}    {entry.Hostname}";
+
+        if (!string.IsNullOrWhiteSpace(entry.Comment))
+        {
+            line += $"        # {entry.Comment}";
+        }
+
+        return line.Trim();
     }
 
     /// <summary>
