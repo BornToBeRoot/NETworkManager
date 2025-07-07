@@ -189,11 +189,11 @@ public static class HostsFileEditor
         }
 
         // Enable the entry in the hosts file
-        List<string> hostsFileLines = [];
+        List<string> hostsFileLines;
 
         try
         {
-            hostsFileLines = File.ReadAllLines(HostsFilePath).ToList();
+            hostsFileLines = [.. File.ReadAllLines(HostsFilePath)];
         }
         catch (Exception ex)
         {
@@ -269,11 +269,11 @@ public static class HostsFileEditor
         }
 
         // Disable the entry in the hosts file
-        List<string> hostsFileLines = [];
+        List<string> hostsFileLines;
 
         try
         {
-            hostsFileLines = File.ReadAllLines(HostsFilePath).ToList();
+            hostsFileLines = [.. File.ReadAllLines(HostsFilePath)];
         }
         catch (Exception ex)
         {
@@ -348,11 +348,11 @@ public static class HostsFileEditor
         }
 
         // Add the entry to the hosts file       
-        List<string> hostsFileLines = [];
+        List<string> hostsFileLines;
 
         try
         {
-            hostsFileLines = File.ReadAllLines(HostsFilePath).ToList();
+            hostsFileLines = [.. File.ReadAllLines(HostsFilePath)];
         }
         catch (Exception ex)
         {
@@ -393,7 +393,7 @@ public static class HostsFileEditor
     /// <param name="entry">Entry to edit.</param>
     /// <param name="newEntry">New entry to replace the old one.</param>
     /// <returns><see cref="HostsFileEntryModifyResult.Success"/> if the entry was edited successfully, otherwise an error result.</returns>"/>
-    public static HostsFileEntryModifyResult EditEntry(HostsFileEntry entry, HostsFileEntry newEntry)
+    private static HostsFileEntryModifyResult EditEntry(HostsFileEntry entry, HostsFileEntry newEntry)
     {
         // Create a backup of the hosts file before making changes
         if (CreateBackup() == false)
@@ -403,11 +403,11 @@ public static class HostsFileEditor
         }
 
         // Replace the entry from the hosts file
-        List<string> hostsFileLines = [];
+        List<string> hostsFileLines;
 
         try
         {
-            hostsFileLines = File.ReadAllLines(HostsFilePath).ToList();
+            hostsFileLines = [.. File.ReadAllLines(HostsFilePath)];
         }
         catch (Exception ex)
         {
@@ -475,11 +475,11 @@ public static class HostsFileEditor
         }
 
         // Remove the entry from the hosts file
-        List<string> hostsFileLines = [];
+        List<string> hostsFileLines;
 
         try
         {
-            hostsFileLines = File.ReadAllLines(HostsFilePath).ToList();
+            hostsFileLines = [.. File.ReadAllLines(HostsFilePath)];
         }
         catch (Exception ex)
         {
