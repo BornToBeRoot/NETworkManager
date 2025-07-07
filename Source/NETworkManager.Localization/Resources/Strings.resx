@@ -3944,4 +3944,16 @@ Right-click for more options.</value>
   <data name="EnterValidHostsFileEntryHostname" xml:space="preserve">
     <value>Enter a valid hostname (e.g., "server-01" or "example.com")! Multiple hostnames can be separated with a space.</value>
   </data>
+  <data name="HostsFileReadErrorMessage" xml:space="preserve">
+    <value>The "hosts" file could not be read! See log file for more details.</value>
+  </data>
+  <data name="HostsFileWriteErrorMessage" xml:space="preserve">
+    <value>The "hosts" file could not be written to. See log file for more details.</value>
+  </data>
+  <data name="HostsFileEntryNotFoundMessage" xml:space="preserve">
+    <value>The entry was not found in the "hosts" file! Maybe the file has been modified.</value>
+  </data>
+  <data name="HostsFileBackupErrorMessage" xml:space="preserve">
+    <value>A backup of the "hosts" file could not be created! See log file for more details.</value>
+  </data>
 </root>
