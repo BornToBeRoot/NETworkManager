@@ -172,7 +172,7 @@ public class SettingsProfilesViewModel : ViewModelBase
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
             },
-            Strings.DeleteProfileFileMessage);
+            Strings.DeleteProfileFileMessage, Strings.Delete);
 
         childWindow.Title = Strings.DeleteProfileFile;
 

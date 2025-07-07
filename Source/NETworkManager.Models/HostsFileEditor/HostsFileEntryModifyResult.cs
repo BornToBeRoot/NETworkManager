@@ -16,6 +16,11 @@
         NotFound,
 
         /// <summary>
+        ///     An error occurred while reading the hosts file.
+        /// </summary>
+        ReadError,
+
+        /// <summary>
         ///     An error occurred while writing to the hosts file.
         /// </summary>
         WriteError,

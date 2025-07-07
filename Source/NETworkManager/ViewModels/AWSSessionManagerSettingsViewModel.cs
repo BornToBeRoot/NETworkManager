@@ -1,4 +1,11 @@
-﻿using System;
+﻿using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models.AWS;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -6,13 +13,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
-using MahApps.Metro.SimpleChildWindow;
-using NETworkManager.Localization.Resources;
-using NETworkManager.Models.AWS;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
@@ -213,7 +213,7 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
             Filter = GlobalStaticConfiguration.ApplicationFileExtensionFilter
         };
 
-        if (openFileDialog.ShowDialog() ==  System.Windows.Forms.DialogResult.OK)
+        if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             ApplicationFilePath = openFileDialog.FileName;
     }
 
@@ -290,15 +290,16 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
             },
-            Strings.DeleteAWSProfileMessage
-        );
+                Strings.DeleteAWSProfileMessage,
+                Strings.Delete
+            );
 
         childWindow.Title = Strings.DeleteAWSProfile;
-        
+
         childWindow.DataContext = childWindowViewModel;
-        
+
         ConfigurationManager.Current.IsChildWindowOpen = true;
-        
+
         return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 

@@ -188,8 +188,18 @@ public static class HostsFileEditor
             return HostsFileEntryModifyResult.BackupError;
         }
 
-        // Replace the entry in the hosts file
-        var hostsFileLines = File.ReadAllLines(HostsFilePath).ToList();
+        // Enable the entry in the hosts file
+        List<string> hostsFileLines = [];
+
+        try
+        {
+            hostsFileLines = File.ReadAllLines(HostsFilePath).ToList();
+        }
+        catch (Exception ex)
+        {
+            Log.Error($"EnableEntry - Failed to read hosts file: {HostsFilePath}", ex);
+            return HostsFileEntryModifyResult.ReadError;
+        }
 
         bool entryFound = false;
 
@@ -199,7 +209,15 @@ public static class HostsFileEditor
             {
                 entryFound = true;
 
-                hostsFileLines[i] = entry.Line.TrimStart('#', ' ');
+                hostsFileLines.RemoveAt(i);
+                hostsFileLines.Insert(i, CreateEntryLine(new HostsFileEntry
+                {
+                    IsEnabled = true,
+                    IPAddress = entry.IPAddress,
+                    Hostname = entry.Hostname,
+                    Comment = entry.Comment,
+                    Line = entry.Line
+                }));
 
                 break;
             }
@@ -250,8 +268,18 @@ public static class HostsFileEditor
             return HostsFileEntryModifyResult.BackupError;
         }
 
-        // Replace the entry in the hosts file
-        var hostsFileLines = File.ReadAllLines(HostsFilePath).ToList();
+        // Disable the entry in the hosts file
+        List<string> hostsFileLines = [];
+
+        try
+        {
+            hostsFileLines = File.ReadAllLines(HostsFilePath).ToList();
+        }
+        catch (Exception ex)
+        {
+            Log.Error($"DisableEntry - Failed to read hosts file: {HostsFilePath}", ex);
+            return HostsFileEntryModifyResult.ReadError;
+        }
 
         bool entryFound = false;
 
@@ -261,7 +289,15 @@ public static class HostsFileEditor
             {
                 entryFound = true;
 
-                hostsFileLines[i] = "# " + entry.Line;
+                hostsFileLines.RemoveAt(i);
+                hostsFileLines.Insert(i, CreateEntryLine(new HostsFileEntry
+                {
+                    IsEnabled = false,
+                    IPAddress = entry.IPAddress,
+                    Hostname = entry.Hostname,
+                    Comment = entry.Comment,
+                    Line = entry.Line
+                }));
 
                 break;
             }
@@ -311,8 +347,18 @@ public static class HostsFileEditor
             return HostsFileEntryModifyResult.BackupError;
         }
 
-        // Add the entry to the hosts file
-        var hostsFileLines = File.ReadAllLines(HostsFilePath).ToList();
+        // Add the entry to the hosts file       
+        List<string> hostsFileLines = [];
+
+        try
+        {
+            hostsFileLines = File.ReadAllLines(HostsFilePath).ToList();
+        }
+        catch (Exception ex)
+        {
+            Log.Error($"AddEntry - Failed to read hosts file: {HostsFilePath}", ex);
+            return HostsFileEntryModifyResult.ReadError;
+        }
 
         hostsFileLines.Add(CreateEntryLine(entry));
 
@@ -357,7 +403,17 @@ public static class HostsFileEditor
         }
 
         // Replace the entry from the hosts file
-        var hostsFileLines = File.ReadAllLines(HostsFilePath).ToList();
+        List<string> hostsFileLines = [];
+
+        try
+        {
+            hostsFileLines = File.ReadAllLines(HostsFilePath).ToList();
+        }
+        catch (Exception ex)
+        {
+            Log.Error($"EditEntry - Failed to read hosts file: {HostsFilePath}", ex);
+            return HostsFileEntryModifyResult.ReadError;
+        }
 
         bool entryFound = false;
 
@@ -419,7 +475,17 @@ public static class HostsFileEditor
         }
 
         // Remove the entry from the hosts file
-        var hostsFileLines = File.ReadAllLines(HostsFilePath).ToList();
+        List<string> hostsFileLines = [];
+
+        try
+        {
+            hostsFileLines = File.ReadAllLines(HostsFilePath).ToList();
+        }
+        catch (Exception ex)
+        {
+            Log.Error($"DeleteEntry - Failed to read hosts file: {HostsFilePath}", ex);
+            return HostsFileEntryModifyResult.ReadError;
+        }
 
         bool entryFound = false;
 

@@ -200,7 +200,7 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
             },
-            Strings.DeleteSNTPServerMessage);
+            Strings.DeleteSNTPServerMessage, Strings.Delete);
 
         childWindow.Title = Strings.DeleteSNTPServer;
 

@@ -4,23 +4,18 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
-public class OKCancelInfoMessageViewModel : ViewModelBase
+public class OKMessageViewModel : ViewModelBase
 {
-    public OKCancelInfoMessageViewModel(Action<OKCancelInfoMessageViewModel> okCommand,
-        Action<OKCancelInfoMessageViewModel> cancelHandler, string message, string okButtonText = null, string cancelButtonText = null)
+    public OKMessageViewModel(Action<OKMessageViewModel> okCommand, string message, string okButtonText = null)
     {
         OKCommand = new RelayCommand(_ => okCommand(this));
-        CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
         Message = message;
 
         OKButtonText = okButtonText ?? Localization.Resources.Strings.OK;
-        CancelButtonText = cancelButtonText ?? Localization.Resources.Strings.Cancel;
     }
 
     public ICommand OKCommand { get; }
-
-    public ICommand CancelCommand { get; }
 
     private readonly string _message;
 
@@ -48,21 +43,6 @@ public class OKCancelInfoMessageViewModel : ViewModelBase
                 return;
 
             _okButtonText = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private readonly string _cancelButtonText;
-
-    public string CancelButtonText
-    {
-        get => _cancelButtonText;
-        private init
-        {
-            if (value == _cancelButtonText)
-                return;
-
-            _cancelButtonText = value;
             OnPropertyChanged();
         }
     }
