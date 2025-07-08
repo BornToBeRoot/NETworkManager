@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Input;
-using Lextm.SharpSnmpLib.Messaging;
+﻿using Lextm.SharpSnmpLib.Messaging;
 using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
@@ -14,6 +6,14 @@ using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
@@ -204,7 +204,7 @@ public class SNMPSettingsViewModel : ViewModelBase
     private Task DeleteOIDProfile()
     {
         var childWindow = new OKCancelInfoMessageChildWindow();
-     
+
         var childWindowViewModel = new OKCancelInfoMessageViewModel(_ =>
             {
                 childWindow.IsOpen = false;
@@ -216,15 +216,14 @@ public class SNMPSettingsViewModel : ViewModelBase
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
             },
-            Strings.DeleteOIDProfileMessage
-        );
+            Strings.DeleteOIDProfileMessage, Strings.Delete);
 
         childWindow.Title = Strings.DeleteOIDProfile;
-        
+
         childWindow.DataContext = childWindowViewModel;
-        
+
         ConfigurationManager.Current.IsChildWindowOpen = true;
-        
+
         return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 

@@ -1,5 +1,6 @@
 ﻿using DnsClient;
 using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
@@ -13,7 +14,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using MahApps.Metro.SimpleChildWindow;
 
 namespace NETworkManager.ViewModels;
 
@@ -372,15 +372,16 @@ public class DNSLookupSettingsViewModel : ViewModelBase
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
             },
-            Strings.DeleteDNSServerMessage
-        );
+                Strings.DeleteDNSServerMessage,
+                Strings.Delete
+            );
 
         childWindow.Title = Strings.DeleteDNSServer;
-        
+
         childWindow.DataContext = childWindowViewModel;
-        
+
         ConfigurationManager.Current.IsChildWindowOpen = true;
-        
+
         return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 

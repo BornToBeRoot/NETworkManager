@@ -1,6 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace NETworkManager.Views;
 
@@ -18,7 +20,7 @@ public partial class ProfileChildWindow
         ChildWindowMaxHeight = 650;
         ChildWindowWidth = parentWindow.ActualWidth * 0.85;
         ChildWindowHeight = parentWindow.ActualHeight * 0.85;
-        
+
         // Update the size of the child window when the parent window is resized
         parentWindow.SizeChanged += (_, _) =>
             {
@@ -27,9 +29,13 @@ public partial class ProfileChildWindow
             };
     }
 
-    private void UserControl_Loaded(object sender, RoutedEventArgs e)
+    private void ChildWindow_OnLoaded(object sender, RoutedEventArgs e)
     {
-        TextBoxName.Focus();
+        // Focus the PasswordBox when the child window is loaded 
+        Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate
+        {
+            TextBoxName.Focus();
+        }));
     }
 
     private void TextBoxName_OnGotFocus(object sender, RoutedEventArgs e)

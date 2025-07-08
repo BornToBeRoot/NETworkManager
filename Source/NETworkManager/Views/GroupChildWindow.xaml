@@ -28,7 +28,7 @@
              TitleForeground="{DynamicResource MahApps.Brushes.Gray3}"
              CloseByEscape="False"             
              OverlayBrush="{DynamicResource ResourceKey=MahApps.Brushes.Gray.SemiTransparent}"
-             Loaded="UserControl_Loaded"
+             Loaded="ChildWindow_OnLoaded"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:GroupViewModel}">
     <simpleChildWindow:ChildWindow.Resources>
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />

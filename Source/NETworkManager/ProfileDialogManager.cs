@@ -583,9 +583,9 @@ public static class ProfileDialogManager
 
                 viewModel.OnProfileManagerDialogClose();
             },
-            profiles.Count == 1
-                ? Strings.DeleteProfileMessage
-                : Strings.DeleteProfilesMessage);
+                profiles.Count == 1 ? Strings.DeleteProfileMessage : Strings.DeleteProfilesMessage,
+                Strings.Delete
+            );
 
         childWindow.Title = Strings.DeleteProfile;
 
@@ -684,7 +684,10 @@ public static class ProfileDialogManager
             Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
 
             viewModel.OnProfileManagerDialogClose();
-        }, Strings.DeleteGroupMessage);
+        },
+            Strings.DeleteGroupMessage,
+            Strings.Delete
+        );
 
         childWindow.Title = Strings.DeleteGroup;
 

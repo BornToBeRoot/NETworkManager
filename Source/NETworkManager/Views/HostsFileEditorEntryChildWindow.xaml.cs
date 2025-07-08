@@ -4,9 +4,9 @@ using System.Windows.Threading;
 
 namespace NETworkManager.Views;
 
-public partial class CredentialsPasswordProfileFileChildWindow
+public partial class HostsFileEditorEntryChildWindow
 {
-    public CredentialsPasswordProfileFileChildWindow()
+    public HostsFileEditorEntryChildWindow()
     {
         InitializeComponent();
     }
@@ -16,7 +16,7 @@ public partial class CredentialsPasswordProfileFileChildWindow
         // Focus the PasswordBox when the child window is loaded 
         Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate
         {
-            PasswordBoxPassword.Focus();
+            TextBoxIPAddress.Focus();
         }));
     }
 }

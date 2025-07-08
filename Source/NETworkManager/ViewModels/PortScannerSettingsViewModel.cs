@@ -247,8 +247,7 @@ public class PortScannerSettingsViewModel : ViewModelBase
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
             },
-            Strings.DeletePortProfileMessage
-            );
+            Strings.DeletePortProfileMessage, Strings.Delete);
 
         childWindow.Title = Strings.DeletePortProfile;
 
