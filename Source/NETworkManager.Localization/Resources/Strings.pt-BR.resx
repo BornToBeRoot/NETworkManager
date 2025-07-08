@@ -1931,7 +1931,7 @@ Alterar esse valor requer uma reinicialização do aplicativo para entrar em vig
   <data name="WelcomeMessage" xml:space="preserve">
     <value>Obrigado por usar o NETworkManager!
 
-Se você gosta desta ferramenta, deixe uma estrela no GitHub e recomende-a a outras pessoas.</value>
+Se você gostou, considere apoiar o desenvolvimento — seja deixando uma estrela no GitHub, fazendo uma doação ou simplesmente compartilhando com outras pessoas. Seu apoio ajuda a manter o projeto funcionando e crescendo.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Ao iniciar o programa, ele verifica em segundo plano se uma nova versão do programa está disponível no GitHub.
@@ -2392,7 +2392,7 @@ $$hostname$$--&gt;Nome do host</value>
     <value>Reiniciar como Administrador</value>
   </data>
   <data name="NetworkPacketsCaptureAdminMessage" xml:space="preserve">
-    <value>Para analisar pacotes de rede, o aplicativo deve ser iniciado com direitos elevados!</value>
+    <value>Analisar pacotes de rede requer direitos elevados!</value>
   </data>
   <data name="Capture" xml:space="preserve">
     <value>Capturar</value>
@@ -3878,5 +3878,64 @@ Clique direito para mais opções.</value>
   </data>
   <data name="ProfileFile" xml:space="preserve">
     <value>Arquivo de perfil</value>
+  </data>
+  <data name="ApplicationName_HostsFileEditor" xml:space="preserve">
+    <value>Editor de arquivo hosts</value>
+  </data>
+  <data name="HostsFileEditor" xml:space="preserve">
+    <value>Editor de arquivo hosts</value>
+  </data>
+  <data name="HostsFileEditorAdminMessage" xml:space="preserve">
+    <value>Modo somente leitura. Modificar o arquivo hosts requer direitos elevados!</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Comentário</value>
+  </data>
+  <data name="Disable" xml:space="preserve">
+    <value>Desativar</value>
+  </data>
+  <data name="EditEntry" xml:space="preserve">
+    <value>Editar entrada</value>
+  </data>
+  <data name="EditEntryDots" xml:space="preserve">
+    <value>Editar entrada...</value>
+  </data>
+  <data name="EnableEntry" xml:space="preserve">
+    <value>Ativar entrada</value>
+  </data>
+  <data name="DisableEntry" xml:space="preserve">
+    <value>Desativar entrada</value>
+  </data>
+  <data name="RefreshingDots" xml:space="preserve">
+    <value>Atualizando...</value>
+  </data>
+  <data name="ReloadedAtX" xml:space="preserve">
+    <value>Recarregado às {0}</value>
+  </data>
+  <data name="FailedToLoadHostsFileMessage" xml:space="preserve">
+    <value>Falha ao carregar o arquivo hosts: {0}</value>
+  </data>
+  <data name="RetryingInXSecondsDots" xml:space="preserve">
+    <value>Repetindo em {0} segundos...</value>
+  </data>
+  <data name="WhatsNew" xml:space="preserve">
+    <value>O que há de novo?</value>
+  </data>
+  <data name="Changelog" xml:space="preserve">
+    <value>Registro de alterações</value>
+  </data>
+  <data name="UpgradedToXXX" xml:space="preserve">
+    <value>Atualizado para {0}</value>
+  </data>
+  <data name="WhatsNewMessage" xml:space="preserve">
+    <value>Esta versão inclui novos recursos, melhorias e correções de erros. Confira o registro de alterações para todos os detalhes!</value>
+  </data>
+  <data name="Entries" xml:space="preserve">
+    <value>Entradas</value>
+  </data>
+  <data name="DeleteHostsFileEntryMessage" xml:space="preserve">
+    <value>A entrada selecionada será excluída permanentemente:
+
+{0} {1} {2}</value>
   </data>
 </root>

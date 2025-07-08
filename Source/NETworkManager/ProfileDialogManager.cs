@@ -1,4 +1,4 @@
-﻿using MahApps.Metro.Controls.Dialogs;
+﻿using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.Network;
@@ -306,7 +306,7 @@ public static class ProfileDialogManager
         {
             Name = name,
             Description = instance.Description?.Trim(),
-            
+
             Profiles = profiles,
 
             // Remote Desktop
@@ -466,228 +466,238 @@ public static class ProfileDialogManager
 
     #region Dialog to add, edit, copy as and delete profile
 
-    public static Task ShowAddProfileDialog(object context, IProfileManagerMinimal viewModel,
-        IDialogCoordinator dialogCoordinator, ProfileInfo profile = null, string group = null,
+    public static Task ShowAddProfileDialog(Window parentWindow, IProfileManagerMinimal viewModel,
+        ProfileInfo profile = null, string group = null,
         ApplicationName applicationName = ApplicationName.None)
     {
-        CustomDialog customDialog = new()
-        {
-            Title = Strings.AddProfile,
-            Style = (Style)Application.Current.FindResource(DialogResourceKey)
-        };
+        var childWindow = new ProfileChildWindow(parentWindow);
 
-        ProfileViewModel profileViewModel = new(async instance =>
+        ProfileViewModel childWindowViewModel = new(instance =>
         {
-            await dialogCoordinator.HideMetroDialogAsync(context, customDialog);
+            childWindow.IsOpen = false;
+            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
+
             viewModel.OnProfileManagerDialogClose();
 
             ProfileManager.AddProfile(ParseProfileInfo(instance));
-        }, async _ =>
+        }, _ =>
         {
-            await dialogCoordinator.HideMetroDialogAsync(context, customDialog);
+            childWindow.IsOpen = false;
+            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
+
             viewModel.OnProfileManagerDialogClose();
         }, ProfileManager.GetGroupNames(), group, ProfileEditMode.Add, profile, applicationName);
 
-        customDialog.Content = new ProfileDialog
-        {
-            DataContext = profileViewModel
-        };
+        childWindow.Title = Strings.AddProfile;
+
+        childWindow.DataContext = childWindowViewModel;
 
         viewModel.OnProfileManagerDialogOpen();
 
-        return dialogCoordinator.ShowMetroDialogAsync(context, customDialog);
+        Settings.ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return parentWindow.ShowChildWindowAsync(childWindow);
     }
 
-    public static Task ShowEditProfileDialog(IProfileManagerMinimal viewModel,
-        IDialogCoordinator dialogCoordinator, ProfileInfo profile)
+    public static Task ShowEditProfileDialog(Window parentWindow, IProfileManagerMinimal viewModel,
+        ProfileInfo profile)
     {
-        CustomDialog customDialog = new()
-        {
-            Title = Strings.EditProfile,
-            Style = (Style)Application.Current.FindResource(DialogResourceKey)
-        };
+        var childWindow = new ProfileChildWindow(parentWindow);
 
-        ProfileViewModel profileViewModel = new(async instance =>
+        ProfileViewModel childWindowViewModel = new(instance =>
         {
-            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+            childWindow.IsOpen = false;
+            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
+
             viewModel.OnProfileManagerDialogClose();
 
             ProfileManager.ReplaceProfile(profile, ParseProfileInfo(instance));
-        }, async _ =>
+        }, _ =>
         {
-            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+            childWindow.IsOpen = false;
+            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
+
             viewModel.OnProfileManagerDialogClose();
         }, ProfileManager.GetGroupNames(), profile.Group, ProfileEditMode.Edit, profile);
 
-        customDialog.Content = new ProfileDialog
-        {
-            DataContext = profileViewModel
-        };
+        childWindow.Title = Strings.EditProfile;
+
+        childWindow.DataContext = childWindowViewModel;
 
         viewModel.OnProfileManagerDialogOpen();
 
-        return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
+        Settings.ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return parentWindow.ShowChildWindowAsync(childWindow);
     }
 
-    public static Task ShowCopyAsProfileDialog(IProfileManagerMinimal viewModel,
-        IDialogCoordinator dialogCoordinator, ProfileInfo profile)
+    public static Task ShowCopyAsProfileDialog(Window parentWindow, IProfileManagerMinimal viewModel,
+        ProfileInfo profile)
     {
-        CustomDialog customDialog = new()
-        {
-            Title = Strings.CopyProfile,
-            Style = (Style)Application.Current.FindResource(DialogResourceKey)
-        };
+        var childWindow = new ProfileChildWindow(parentWindow);
 
-        ProfileViewModel profileViewModel = new(async instance =>
+        ProfileViewModel childWindowViewModel = new(instance =>
         {
-            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+            childWindow.IsOpen = false;
+            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
+
             viewModel.OnProfileManagerDialogClose();
 
             ProfileManager.AddProfile(ParseProfileInfo(instance));
-        }, async _ =>
+        }, _ =>
         {
-            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+            childWindow.IsOpen = false;
+            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
+
             viewModel.OnProfileManagerDialogClose();
         }, ProfileManager.GetGroupNames(), profile.Group, ProfileEditMode.Copy, profile);
 
-        customDialog.Content = new ProfileDialog
-        {
-            DataContext = profileViewModel
-        };
+        childWindow.Title = Strings.CopyProfile;
+
+        childWindow.DataContext = childWindowViewModel;
 
         viewModel.OnProfileManagerDialogOpen();
 
-        return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
+        Settings.ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return parentWindow.ShowChildWindowAsync(childWindow);
     }
 
-    public static Task ShowDeleteProfileDialog(IProfileManagerMinimal viewModel,
-        IDialogCoordinator dialogCoordinator, IList<ProfileInfo> profiles)
+    public static Task ShowDeleteProfileDialog(Window parentWindow, IProfileManagerMinimal viewModel,
+        IList<ProfileInfo> profiles)
     {
-        CustomDialog customDialog = new()
-        {
-            Title = profiles.Count == 1
-                ? Strings.DeleteProfile
-                : Strings.DeleteProfiles
-        };
+        var childWindow = new OKCancelInfoMessageChildWindow();
 
-        ConfirmDeleteViewModel confirmDeleteViewModel = new(async _ =>
+        OKCancelInfoMessageViewModel childWindowViewModel = new(_ =>
             {
-                await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                childWindow.IsOpen = false;
+                Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
+
                 viewModel.OnProfileManagerDialogClose();
 
                 ProfileManager.RemoveProfiles(profiles);
-            }, async _ =>
+            }, _ =>
             {
-                await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                childWindow.IsOpen = false;
+                Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
+
                 viewModel.OnProfileManagerDialogClose();
             },
-            profiles.Count == 1
-                ? Strings.DeleteProfileMessage
-                : Strings.DeleteProfilesMessage);
+                profiles.Count == 1 ? Strings.DeleteProfileMessage : Strings.DeleteProfilesMessage,
+                Strings.Delete
+            );
 
-        customDialog.Content = new ConfirmDeleteDialog
-        {
-            DataContext = confirmDeleteViewModel
-        };
+        childWindow.Title = Strings.DeleteProfile;
+
+        childWindow.DataContext = childWindowViewModel;
 
         viewModel.OnProfileManagerDialogOpen();
 
-        return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
+        Settings.ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return parentWindow.ShowChildWindowAsync(childWindow);
     }
 
     #endregion
 
     #region Dialog to add, edit and delete group
 
-    public static Task ShowAddGroupDialog(IProfileManagerMinimal viewModel, IDialogCoordinator dialogCoordinator)
+    public static Task ShowAddGroupDialog(Window parentWindow, IProfileManagerMinimal viewModel)
     {
-        CustomDialog customDialog = new()
-        {
-            Title = Strings.AddGroup,
-            Style = (Style)Application.Current.FindResource(DialogResourceKey)
-        };
+        var childWindow = new GroupChildWindow(parentWindow);
 
-        GroupViewModel groupViewModel = new(async instance =>
+        GroupViewModel childWindowViewModel = new(instance =>
         {
-            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+            childWindow.IsOpen = false;
+            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
+
             viewModel.OnProfileManagerDialogClose();
 
             ProfileManager.AddGroup(ParseGroupInfo(instance));
-        }, async _ =>
+        }, _ =>
         {
-            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+            childWindow.IsOpen = false;
+            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
+
             viewModel.OnProfileManagerDialogClose();
         }, ProfileManager.GetGroupNames());
 
-        customDialog.Content = new GroupDialog
-        {
-            DataContext = groupViewModel
-        };
+        childWindow.Title = Strings.AddGroup;
+
+        childWindow.DataContext = childWindowViewModel;
 
         viewModel.OnProfileManagerDialogOpen();
 
-        return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
+        Settings.ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return parentWindow.ShowChildWindowAsync(childWindow);
     }
 
-    public static Task ShowEditGroupDialog(IProfileManagerMinimal viewModel, IDialogCoordinator dialogCoordinator,
+    public static Task ShowEditGroupDialog(Window parentWindow, IProfileManagerMinimal viewModel,
         GroupInfo group)
     {
-        CustomDialog customDialog = new()
-        {
-            Title = Strings.EditGroup,
-            Style = (Style)Application.Current.FindResource(DialogResourceKey)
-        };
+        var childWindow = new GroupChildWindow(parentWindow);
 
-        GroupViewModel groupViewModel = new(async instance =>
+        GroupViewModel childWindowViewModel = new(instance =>
         {
-            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+            childWindow.IsOpen = false;
+            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
+
             viewModel.OnProfileManagerDialogClose();
 
-            ProfileManager.ReplaceGroup(instance.Group, ParseGroupInfo(instance));
-        }, async _ =>
+            ProfileManager.ReplaceGroup(group, ParseGroupInfo(instance));
+        }, _ =>
         {
-            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+            childWindow.IsOpen = false;
+            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
+
             viewModel.OnProfileManagerDialogClose();
         }, ProfileManager.GetGroupNames(), GroupEditMode.Edit, group);
 
-        customDialog.Content = new GroupDialog
-        {
-            DataContext = groupViewModel
-        };
+        childWindow.Title = Strings.EditGroup;
+
+        childWindow.DataContext = childWindowViewModel;
 
         viewModel.OnProfileManagerDialogOpen();
 
-        return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
+        Settings.ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return parentWindow.ShowChildWindowAsync(childWindow);
     }
 
-    public static Task ShowDeleteGroupDialog(IProfileManagerMinimal viewModel,
-        IDialogCoordinator dialogCoordinator, GroupInfo group)
+    public static Task ShowDeleteGroupDialog(Window parentWindow, IProfileManagerMinimal viewModel,
+        GroupInfo group)
     {
-        CustomDialog customDialog = new()
-        {
-            Title = Strings.DeleteGroup
-        };
+        var childWindow = new OKCancelInfoMessageChildWindow();
 
-        ConfirmDeleteViewModel confirmDeleteViewModel = new(async _ =>
+        OKCancelInfoMessageViewModel childWindowViewModel = new(_ =>
         {
-            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+            childWindow.IsOpen = false;
+            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
+
             viewModel.OnProfileManagerDialogClose();
 
             ProfileManager.RemoveGroup(group);
-        }, async _ =>
+        }, _ =>
         {
-            await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileManagerDialogClose();
-        }, Strings.DeleteGroupMessage);
+            childWindow.IsOpen = false;
+            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
 
-        customDialog.Content = new ConfirmDeleteDialog
-        {
-            DataContext = confirmDeleteViewModel
-        };
+            viewModel.OnProfileManagerDialogClose();
+        },
+            Strings.DeleteGroupMessage,
+            Strings.Delete
+        );
+
+        childWindow.Title = Strings.DeleteGroup;
+
+        childWindow.DataContext = childWindowViewModel;
 
         viewModel.OnProfileManagerDialogOpen();
 
-        return dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
+        Settings.ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return parentWindow.ShowChildWindowAsync(childWindow);
     }
 
     #endregion

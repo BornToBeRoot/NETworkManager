@@ -1,13 +1,15 @@
-﻿using System.ComponentModel;
-using System.Threading.Tasks;
-using System.Windows.Data;
-using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
+﻿using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
@@ -230,27 +232,30 @@ public class PortScannerSettingsViewModel : ViewModelBase
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
-    private async Task DeletePortProfile()
+    private Task DeletePortProfile()
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.DeletePortProfile
-        };
+        var childWindow = new OKCancelInfoMessageChildWindow();
 
-        var confirmDeleteViewModel = new ConfirmDeleteViewModel(async _ =>
+        var childWindowViewModel = new OKCancelInfoMessageViewModel(_ =>
             {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                childWindow.IsOpen = false;
+                ConfigurationManager.Current.IsChildWindowOpen = false;
 
                 SettingsManager.Current.PortScanner_PortProfiles.Remove(SelectedPortProfile);
-            }, async _ => { await _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-            Strings.DeletePortProfileMessage);
+            }, _ =>
+            {
+                childWindow.IsOpen = false;
+                ConfigurationManager.Current.IsChildWindowOpen = false;
+            },
+            Strings.DeletePortProfileMessage, Strings.Delete);
 
-        customDialog.Content = new ConfirmDeleteDialog
-        {
-            DataContext = confirmDeleteViewModel
-        };
+        childWindow.Title = Strings.DeletePortProfile;
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     #endregion

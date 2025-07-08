@@ -1,7 +1,7 @@
-﻿using System;
-using System.Windows.Input;
-using NETworkManager.Settings;
+﻿using NETworkManager.Settings;
 using NETworkManager.Utilities;
+using System;
+using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
@@ -20,6 +20,13 @@ public class WelcomeViewModel : ViewModelBase
     public WelcomeViewModel(Action<WelcomeViewModel> continueCommand)
     {
         ContinueCommand = new RelayCommand(_ => continueCommand(this));
+    }
+
+    public ICommand OpenWebsiteCommand => new RelayCommand(OpenWebsiteAction);
+
+    private static void OpenWebsiteAction(object url)
+    {
+        ExternalProcessStarter.OpenUrl((string)url);
     }
 
     public ICommand ContinueCommand { get; }

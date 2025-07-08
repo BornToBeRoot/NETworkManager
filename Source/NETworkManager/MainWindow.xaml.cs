@@ -393,7 +393,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             {
                 if (!_isProfileFileUpdating)
                     LoadProfile(value);
-                
+
                 ConfigurationManager.Current.ProfileManagerShowUnlock = value.IsEncrypted && !value.IsPasswordValid;
                 SettingsManager.Current.Profiles_LastSelected = value.Name;
             }
@@ -472,7 +472,6 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         // Show welcome dialog
         if (SettingsManager.Current.WelcomeDialog_Show)
         {
-
             var childWindow = new WelcomeChildWindow();
 
             var viewModel = new WelcomeViewModel(instance =>
@@ -502,6 +501,29 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 SettingsManager.Current.WelcomeDialog_Show = false;
 
                 // Save it to create a settings file
+                SettingsManager.Save();
+
+                Load();
+            });
+
+            childWindow.DataContext = viewModel;
+
+            ConfigurationManager.Current.IsChildWindowOpen = true;
+
+            await this.ShowChildWindowAsync(childWindow);
+        }
+        else if (SettingsManager.Current.UpgradeDialog_Show)
+        {
+            var childWindow = new UpgradeChildWindow();
+
+            var viewModel = new UpgradeViewModel(instance =>
+            {
+                childWindow.IsOpen = false;
+
+                ConfigurationManager.Current.IsChildWindowOpen = false;
+
+                SettingsManager.Current.UpgradeDialog_Show = false;
+
                 SettingsManager.Save();
 
                 Load();
@@ -674,6 +696,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     private WebConsoleHostView _webConsoleHostView;
     private SNMPHostView _snmpHostView;
     private SNTPLookupHostView _sntpLookupHostView;
+    private HostsFileEditorView _hostsFileEditorView;
     private DiscoveryProtocolView _discoveryProtocolView;
     private WakeOnLANView _wakeOnLanView;
     private SubnetCalculatorHostView _subnetCalculatorHostView;
@@ -824,6 +847,14 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
                 ContentControlApplication.Content = _sntpLookupHostView;
                 break;
+            case ApplicationName.HostsFileEditor:
+                if (_hostsFileEditorView == null)
+                    _hostsFileEditorView = new HostsFileEditorView();
+                else
+                    _hostsFileEditorView.OnViewVisible();
+
+                ContentControlApplication.Content = _hostsFileEditorView;
+                break;
             case ApplicationName.DiscoveryProtocol:
                 if (_discoveryProtocolView == null)
                     _discoveryProtocolView = new DiscoveryProtocolView();
@@ -904,6 +935,10 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
                 ContentControlApplication.Content = _arpTableView;
                 break;
+
+            default:
+                Log.Error("Cannot show unknown application view: " + name);
+                break;
         }
     }
 
@@ -959,6 +994,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             case ApplicationName.SNTPLookup:
                 _sntpLookupHostView?.OnViewHide();
                 break;
+            case ApplicationName.HostsFileEditor:
+                _hostsFileEditorView?.OnViewHide();
+                break;
             case ApplicationName.DiscoveryProtocol:
                 _discoveryProtocolView?.OnViewHide();
                 break;
@@ -988,6 +1026,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 break;
             case ApplicationName.ARPTable:
                 _arpTableView?.OnViewHide();
+                break;
+            default:
+                Log.Error("Cannot hide unknown application view: " + name);
                 break;
         }
     }
@@ -1368,7 +1409,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             .FirstOrDefault(x => x.Name == SettingsManager.Current.Profiles_LastSelected);
         SelectedProfileFile ??= ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault();
     }
-    
+
     private async void LoadProfile(ProfileFileInfo info, bool showWrongPassword = false)
     {
         // Disable profile management while switching profiles
@@ -1401,6 +1442,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 ProfileManager.Unload();
             }, info.Name, showWrongPassword);
 
+            childWindow.Title = Strings.UnlockProfileFile;
+            
             childWindow.DataContext = viewModel;
 
             ConfigurationManager.OnDialogOpen();

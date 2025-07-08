@@ -1,4 +1,13 @@
-﻿using System;
+﻿using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models;
+using NETworkManager.Models.Network;
+using NETworkManager.Profiles;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -10,15 +19,6 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Localization.Resources;
-using NETworkManager.Models;
-using NETworkManager.Models.Network;
-using NETworkManager.Profiles;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
@@ -312,8 +312,8 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private bool Ping_CanExecute(object parameter)
     {
-        return Application.Current.MainWindow != null && 
-               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen && 
+        return Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
                !ConfigurationManager.Current.IsChildWindowOpen;
     }
 
@@ -357,7 +357,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     private void AddProfileAction()
     {
         ProfileDialogManager
-            .ShowAddProfileDialog(this, this, _dialogCoordinator, null, null, ApplicationName.PingMonitor)
+            .ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.PingMonitor)
             .ConfigureAwait(false);
     }
 
@@ -370,14 +370,14 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private void EditProfileAction()
     {
-        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
+        ProfileDialogManager.ShowEditProfileDialog(Application.Current.MainWindow, this, SelectedProfile).ConfigureAwait(false);
     }
 
     public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
+        ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile).ConfigureAwait(false);
     }
 
     public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
@@ -385,7 +385,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     private void DeleteProfileAction()
     {
         ProfileDialogManager
-            .ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile })
+            .ShowDeleteProfileDialog(Application.Current.MainWindow, this, new List<ProfileInfo> { SelectedProfile })
             .ConfigureAwait(false);
     }
 
@@ -393,7 +393,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()))
+        ProfileDialogManager.ShowEditGroupDialog(Application.Current.MainWindow, this, ProfileManager.GetGroupByName($"{group}"))
             .ConfigureAwait(false);
     }
 
@@ -594,11 +594,11 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
         Profiles.Filter = o =>
         {
-            if (o is not ProfileInfo info)
-                return false;
-
             if (string.IsNullOrEmpty(Search))
                 return true;
+
+            if (o is not ProfileInfo info)
+                return false;
 
             var search = Search.Trim();
 

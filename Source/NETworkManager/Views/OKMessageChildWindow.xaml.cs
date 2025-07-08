@@ -1,8 +1,8 @@
 ﻿namespace NETworkManager.Views;
 
-public partial class ExportDialog
+public partial class OKMessageChildWindow
 {
-    public ExportDialog()
+    public OKMessageChildWindow()
     {
         InitializeComponent();
     }

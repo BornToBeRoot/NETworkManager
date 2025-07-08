@@ -22,8 +22,18 @@ namespace NETworkManager.Settings;
 
 public class SettingsInfo : INotifyPropertyChanged
 {
+    /// <summary>
+    /// Occurs when a property value changes.
+    /// </summary>
+    /// <remarks>This event is typically used to notify subscribers that a property value has been updated. It
+    /// is commonly implemented in classes that support data binding or need to signal changes to property
+    /// values.</remarks>
     public event PropertyChangedEventHandler PropertyChanged;
 
+    /// <summary>
+    /// Helper method to raise the <see cref="PropertyChanged" /> event.
+    /// </summary>
+    /// <param name="propertyName">Name of the property that changed.</param>
     private void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         SettingsChanged = true;
@@ -35,8 +45,14 @@ public class SettingsInfo : INotifyPropertyChanged
 
     [XmlIgnore] public bool SettingsChanged { get; set; }
 
+    /// <summary>
+    /// Private field for the <see cref="WelcomeDialog_Show" /> property.
+    /// </summary>
     private bool _welcomeDialog_Show = true;
 
+    /// <summary>
+    /// Determines if the welcome dialog should be shown on application start.
+    /// </summary>
     public bool WelcomeDialog_Show
     {
         get => _welcomeDialog_Show;
@@ -50,8 +66,37 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Private field for the <see cref="UpgradeDialog_Show" /> property.
+    /// </summary>
+    private bool _upgradeDialog_Show;
+
+    /// <summary>
+    /// Indicates if the update dialog should be shown on application start.
+    /// Usually this is set to true if the application has been updated to a new version.
+    /// </summary>
+    public bool UpgradeDialog_Show
+    {
+        get => _upgradeDialog_Show;
+        set
+        {
+            if (value == _upgradeDialog_Show)
+                return;
+
+            _upgradeDialog_Show = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Private field for the <see cref="Version" /> property.    
+    /// </summary>
     private string _version;
 
+    /// <summary>
+    /// Version of the settings file. Should be identical to the version of the application.
+    /// It is used to determine if the settings file needs to be updated.
+    /// </summary>
     public string Version
     {
         get => _version;
@@ -1739,6 +1784,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
+    /*
     private bool _dnsLookup_ShowOnlyMostCommonQueryTypes = true;
 
     public bool DNSLookup_ShowOnlyMostCommonQueryTypes
@@ -1753,6 +1799,7 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+    */
 
     private QueryType _dnsLookup_QueryType = GlobalStaticConfiguration.DNSLookup_QueryType;
 
@@ -3584,7 +3631,7 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #region SNTP Lookup
 
-    private ObservableCollection<ServerConnectionInfoProfile> _sntpLookup_SNTPServers = new();
+    private ObservableCollection<ServerConnectionInfoProfile> _sntpLookup_SNTPServers = [];
 
     public ObservableCollection<ServerConnectionInfoProfile> SNTPLookup_SNTPServers
     {
@@ -3655,6 +3702,40 @@ public class SettingsInfo : INotifyPropertyChanged
                 return;
 
             _sntpLookup_ExportFileType = value;
+            OnPropertyChanged();
+        }
+    }
+
+    #endregion
+
+    #region Hosts File Editor
+
+    private string _hostsFileEditor_ExportFilePath;
+
+    public string HostsFileEditor_ExportFilePath
+    {
+        get => _hostsFileEditor_ExportFilePath;
+        set
+        {
+            if (value == _hostsFileEditor_ExportFilePath)
+                return;
+
+            _hostsFileEditor_ExportFilePath = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private ExportFileType _hostsFileEditor_ExportFileType = GlobalStaticConfiguration.HostsFileEditor_ExportFileType;
+
+    public ExportFileType HostsFileEditor_ExportFileType
+    {
+        get => _hostsFileEditor_ExportFileType;
+        set
+        {
+            if (value == _hostsFileEditor_ExportFileType)
+                return;
+
+            _hostsFileEditor_ExportFileType = value;
             OnPropertyChanged();
         }
     }

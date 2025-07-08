@@ -40,7 +40,7 @@
         <Style.Resources>
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
         </Style.Resources>
-        <Setter Property="Fill" Value="Orange" />
+        <Setter Property="Fill" Value="#f1b856" />
         <Setter Property="OpacityMask">
             <Setter.Value>
                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=AlertOutline}" />
@@ -54,7 +54,7 @@
         <Style.Resources>
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
         </Style.Resources>
-        <Setter Property="Fill" Value="Red" />
+        <Setter Property="Fill" Value="#b95353" />
         <Setter Property="OpacityMask">
             <Setter.Value>
                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=AlertOctagonOutline}" />
@@ -62,27 +62,6 @@
         </Setter>
         <Setter Property="ToolTipService.InitialShowDelay" Value="0" />
         <Setter Property="ToolTipService.ShowDuration" Value="600000" />
-    </Style>
-
-    <Style x:Key="ReloadAnimation" TargetType="{x:Type Rectangle}">
-        <Setter Property="Height" Value="24" />
-        <Setter Property="RenderTransform">
-            <Setter.Value>
-                <RotateTransform CenterX="12" CenterY="12" />
-            </Setter.Value>
-        </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsEnabled" Value="False">
-                <Trigger.EnterActions>
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" From="0" To="720"
-                                             Duration="0:0:2" />
-                        </Storyboard>
-                    </BeginStoryboard>
-                </Trigger.EnterActions>
-            </Trigger>
-        </Style.Triggers>
     </Style>
 
     <!-- @FutureMe Don't touch this! Converter "ConnectionStateToRectangleStyleConverter" returns to the x:Key -->
@@ -103,7 +82,7 @@
         <Style.Resources>
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
         </Style.Resources>
-        <Setter Property="Fill" Value="Orange" />
+        <Setter Property="Fill" Value="#f1b856" />
         <Setter Property="OpacityMask">
             <Setter.Value>
                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=AlertOutline}" />
@@ -116,7 +95,7 @@
         <Style.Resources>
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
         </Style.Resources>
-        <Setter Property="Fill" Value="Red" />
+        <Setter Property="Fill" Value="#b95353" />
         <Setter Property="OpacityMask">
             <Setter.Value>
                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
@@ -176,7 +155,7 @@
         <Style.Resources>
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
         </Style.Resources>
-        <Setter Property="Fill" Value="Red" />
+        <Setter Property="Fill" Value="#b95353" />
         <Setter Property="OpacityMask">
             <Setter.Value>
                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=LanDisconnect}" />
@@ -202,7 +181,7 @@
         <Style.Resources>
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
         </Style.Resources>
-        <Setter Property="Fill" Value="Red" />
+        <Setter Property="Fill" Value="#b95353" />
         <Setter Property="OpacityMask">
             <Setter.Value>
                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=NetworkPortDisconnect}" />

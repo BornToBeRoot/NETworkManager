@@ -26,17 +26,14 @@ public static class RegexHelper
     public const string IPv4AddressRangeRegex = $"^{IPv4AddressValues}-{IPv4AddressValues}$";
 
     // Match a MAC-Address 000000000000 00:00:00:00:00:00, 00-00-00-00-00-00-00 or 0000.0000.0000
-
     public const string MACAddressRegex =
         @"^^[A-Fa-f0-9]{12}$|^[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}$|^[A-Fa-f0-9]{4}.[A-Fa-f0-9]{4}.[A-Fa-f0-9]{4}$$";
 
     // Match the first 3 bytes of a MAC-Address 000000, 00:00:00, 00-00-00
-
     public const string MACAddressFirst3BytesRegex =
         @"^[A-Fa-f0-9]{6}$|^[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}$|^[A-Fa-f0-9]{4}.[A-Fa-f0-9]{2}$";
 
     // Private subnetmask / cidr values
-
     private const string SubnetmaskValues =
         @"(((255\.){3}(255|254|252|248|240|224|192|128|0+))|((255\.){2}(255|254|252|248|240|224|192|128|0+)\.0)|((255\.)(255|254|252|248|240|224|192|128|0+)(\.0+){2})|((255|254|252|248|240|224|192|128|0+)(\.0+){3}))";
 
@@ -111,4 +108,20 @@ public static class RegexHelper
 
     // Match an SNMP OID (like 1.3.6.1 or .1.3.6.2)
     public const string SnmpOidRegex = @"^\.?[012]\.(?:[0-9]|[1-3][0-9])(\.\d+)*$";
+
+    // Match a hosts file entry with optional comments, supporting IPv4, IPv6, and hostnames
+    // ^*                                    : Matches the beginning of the line
+    // (#)?                                  : Optionally matches a comment (#) at the start of the line
+    // \s*                                   : Matches any whitespace after the comment (or before the IP)
+    // ((?:(?:\d{1,3}\.){3}\d{1,3})          : Matches an IPv4 address (e.g., 192.168.1.1)
+    // |                                     : OR (alternation between IPv4 and IPv6)
+    // (?:(?:[A-Fa-f0-9:]+:+)+[A-Fa-f0-9]+)  : Matches an IPv6 address (e.g., 2001:db8::1)
+    // \s+                                   : Matches one or more spaces between the IP and the hostnames
+    // ([\w.-]+(?:\s+[\w.-]+)*)              : Matches one or more hostnames, separated by spaces
+    // \s*                                   : Matches optional whitespace after hostnames
+    // (#.*)?                                : Optionally matches a comment after hostnames
+    // $                                     : Anchors the match to the end of the line
+    public static string HostsEntryRegex =>
+        @"^(#)?\s*((?:(?:\d{1,3}\.){3}\d{1,3})|(?:(?:[A-Fa-f0-9:]+:+)+[A-Fa-f0-9]+))\s+([\w.-]+(?:\s+[\w.-]+)*)\s*(#.*)?$";
+
 }

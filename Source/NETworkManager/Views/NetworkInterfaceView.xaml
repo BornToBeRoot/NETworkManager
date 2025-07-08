@@ -16,6 +16,7 @@
              xmlns:controls="clr-namespace:NETworkManager.Controls"
              xmlns:liveChart="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:profiles="clr-namespace:NETworkManager.Profiles;assembly=NETworkManager.Profiles"
+             xmlns:wpfHelper="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              dialog:DialogParticipation.Register="{Binding}"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:NetworkInterfaceViewModel}">
     <UserControl.InputBindings>
@@ -160,13 +161,13 @@
                                         Style="{StaticResource CleanButton}"
                                         IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}"
                                         Margin="10,0,0,0">
-                                    <Rectangle Width="24" Height="24">
+                                    <Rectangle Width="24" Height="24"
+                                               wpfHelper:ReloadAnimationHelper.IsReloading="{Binding IsNetworkInterfaceLoading}">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
                                         </Rectangle.OpacityMask>
                                         <Rectangle.Style>
-                                            <Style TargetType="{x:Type Rectangle}"
-                                                   BasedOn="{StaticResource ReloadAnimation}">
+                                            <Style TargetType="{x:Type Rectangle}">
                                                 <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                                 <Style.Triggers>
                                                     <DataTrigger
@@ -581,13 +582,13 @@
                                         Style="{StaticResource CleanButton}"
                                         IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}"
                                         Margin="10,0,0,0">
-                                    <Rectangle Width="24" Height="24">
+                                    <Rectangle Width="24" Height="24"
+                                               wpfHelper:ReloadAnimationHelper.IsReloading="{Binding IsNetworkInterfaceLoading}">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
                                         </Rectangle.OpacityMask>
                                         <Rectangle.Style>
-                                            <Style TargetType="{x:Type Rectangle}"
-                                                   BasedOn="{StaticResource ReloadAnimation}">
+                                            <Style TargetType="{x:Type Rectangle}">
                                                 <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                                 <Style.Triggers>
                                                     <DataTrigger
@@ -820,14 +821,14 @@
                                             Style="{StaticResource CleanButton}"
                                             IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}"
                                             Margin="10,0,0,0">
-                                        <Rectangle Width="24" Height="24">
+                                        <Rectangle Width="24" Height="24"
+                                                   wpfHelper:ReloadAnimationHelper.IsReloading="{Binding IsNetworkInterfaceLoading}">
                                             <Rectangle.OpacityMask>
                                                 <VisualBrush Stretch="Uniform"
                                                              Visual="{iconPacks:Material Kind=Refresh}" />
                                             </Rectangle.OpacityMask>
                                             <Rectangle.Style>
-                                                <Style TargetType="{x:Type Rectangle}"
-                                                       BasedOn="{StaticResource ReloadAnimation}">
+                                                <Style TargetType="{x:Type Rectangle}">
                                                     <Setter Property="Fill"
                                                             Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                                     <Style.Triggers>

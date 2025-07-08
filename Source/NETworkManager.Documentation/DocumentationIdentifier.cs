@@ -203,5 +203,10 @@ public enum DocumentationIdentifier
     /// <summary>
     ///     Command line arguments.
     /// </summary>
-    CommandLineArguments
+    CommandLineArguments,
+    
+    /// <summary>
+    /// Changelog base documentation page.
+    /// </summary>
+    ChangelogBase
 }

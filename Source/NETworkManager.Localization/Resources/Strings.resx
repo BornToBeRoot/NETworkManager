@@ -679,7 +679,7 @@
     <value>Apply</value>
   </data>
   <data name="ApplyWindowsKeyCombinationsLikeAltTab" xml:space="preserve">
-    <value>Apply Windows key combinations (e.g. ALT+TAB):</value>
+    <value>Apply Windows key combinations (e.g., ALT+TAB):</value>
   </data>
   <data name="Auth" xml:space="preserve">
     <value>Auth</value>
@@ -1367,16 +1367,16 @@ Profile files are not affected!</value>
     <value>Enter a valid IPv4 address!</value>
   </data>
   <data name="EnterValidMACAddress" xml:space="preserve">
-    <value>Enter a valid MAC address (like 00:F1:23:AB:F2:35)!</value>
+    <value>Enter a valid MAC address (e.g., 00:F1:23:AB:F2:35)!</value>
   </data>
   <data name="EnterValidPort" xml:space="preserve">
     <value>Enter a valid port (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnetmask" xml:space="preserve">
-    <value>Enter a valid subnetmask (like 255.255.255.0)!</value>
+    <value>Enter a valid subnetmask (e.g., 255.255.255.0)!</value>
   </data>
   <data name="EnterValidSubnetmaskOrCIDR" xml:space="preserve">
-    <value>Enter a valid subnetmask or CIDR (like 255.255.255.0 or /24)!</value>
+    <value>Enter a valid subnetmask or CIDR (e.g., 255.255.255.0 or /24)!</value>
   </data>
   <data name="FieldCannotBeEmpty" xml:space="preserve">
     <value>Field cannot be empty!</value>
@@ -1448,10 +1448,10 @@ Profile files are not affected!</value>
     <value>Enter a valid port and/or port range (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnet" xml:space="preserve">
-    <value>Enter a valid subnet (like 192.168.178.133/26)!</value>
+    <value>Enter a valid subnet (e.g., 192.168.178.133/26)!</value>
   </data>
   <data name="EnterValidWebsiteUri" xml:space="preserve">
-    <value>Enter a valid website (like https://example.com/index.html)</value>
+    <value>Enter a valid website (e.g., https://example.com/index.html)</value>
   </data>
   <data name="Green" xml:space="preserve">
     <value>Green</value>
@@ -1742,7 +1742,7 @@ Profile files are not affected!</value>
     <value>Add a tab to query whois...</value>
   </data>
   <data name="EnterValidDomain" xml:space="preserve">
-    <value>Enter a valid domain (like "example.com")!</value>
+    <value>Enter a valid domain (e.g., "example.com")!</value>
   </data>
   <data name="WhoisServerNotFoundForTheDomain" xml:space="preserve">
     <value>Whois server not found for the domain: "{0}"</value>
@@ -1931,7 +1931,7 @@ Changes to this value will take effect after restarting the application.</value>
   <data name="WelcomeMessage" xml:space="preserve">
     <value>Thank you for using NETworkManager!
 
-If you like this tool, please leave a star on GitHub and recommend it to others.</value>
+If you enjoy it, please consider supporting its development — whether by leaving a star on GitHub, making a donation, or simply sharing it with others. Your support helps keep the project going and growing.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>When starting the program, it checks in the background whether a new program version is available on GitHub.
@@ -2032,7 +2032,7 @@ is disabled!</value>
     <value>Use custom IPv4 address API</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv4AddressAPI" xml:space="preserve">
-    <value>URL to a web service that can be reached via http or https and returns an IPv4 address like "xx.xx.xx.xx" as response.</value>
+    <value>URL to a web service that can be reached via http or https and returns an IPv4 address e.g., "xx.xx.xx.xx" as response.</value>
   </data>
   <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
     <value>Could not parse public ip address from "{0}"! Try another service or use the default... </value>
@@ -2392,7 +2392,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Restart as Administrator</value>
   </data>
   <data name="NetworkPacketsCaptureAdminMessage" xml:space="preserve">
-    <value>To analyze network packets, the application must be started with elevated rights!</value>
+    <value>Analysing network packets requires elevated rights!</value>
   </data>
   <data name="Capture" xml:space="preserve">
     <value>Capture</value>
@@ -3192,7 +3192,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>SNTP server(s)</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv6AddressAPI" xml:space="preserve">
-    <value>URL to a web service that can be reached via http or https and returns an IPv6 address like "xxxx:xx:xxx::xx" as response.</value>
+    <value>URL to a web service that can be reached via http or https and returns an IPv6 address e.g., "xxxx:xx:xxx::xx" as response.</value>
   </data>
   <data name="IPEndPoint" xml:space="preserve">
     <value>IP endpoint</value>
@@ -3234,7 +3234,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>An SNTP server with this name already exists!</value>
   </data>
   <data name="EnterValidHostnameOrIPAddress" xml:space="preserve">
-    <value>Enter a valid hostname (like "server-01" or "example.com") or a valid IP address (like 192.168.178.1)!</value>
+    <value>Enter a valid hostname (e.g., "server-01" or "example.com") or a valid IP address (e.g., 192.168.178.1)!</value>
   </data>
   <data name="Servers" xml:space="preserve">
     <value>Server(s)</value>
@@ -3528,10 +3528,10 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>The settings on this page contain errors. Correct them to be able to save.</value>
   </data>
   <data name="HelpMessage_PuTTYHostkey" xml:space="preserve">
-    <value>SSH hostkey to use for the connection (like "71:b8:f2:6e..."). Only available if the mode is "SSH".</value>
+    <value>SSH hostkey to use for the connection (e.g., "71:b8:f2:6e..."). Only available if the mode is "SSH".</value>
   </data>
   <data name="HelpMessage_PuTTYPrivateKeyFile" xml:space="preserve">
-    <value>Full path to the private key file (like "C:\Users\BornToBeRoot\SSH\private_key.ppk"). Only available if the mode is "SSH".</value>
+    <value>Full path to the private key file (e.g., "C:\Users\BornToBeRoot\SSH\private_key.ppk"). Only available if the mode is "SSH".</value>
   </data>
   <data name="HelpMessage_PuTTYUsername" xml:space="preserve">
     <value>Username that will be passed into the PuTTY session. Only available if the mode is "SSH", "Telnet" or "Rlogin".</value>
@@ -3878,5 +3878,82 @@ Right-click for more options.</value>
   </data>
   <data name="ProfileFile" xml:space="preserve">
     <value>Profile file</value>
+  </data>
+  <data name="ApplicationName_HostsFileEditor" xml:space="preserve">
+    <value>Hosts File Editor</value>
+  </data>
+  <data name="HostsFileEditor" xml:space="preserve">
+    <value>Hosts File Editor</value>
+  </data>
+  <data name="HostsFileEditorAdminMessage" xml:space="preserve">
+    <value>Read-only mode. Modifying the hosts file requires elevated rights!</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="Disable" xml:space="preserve">
+    <value>Disable</value>
+  </data>
+  <data name="EditEntry" xml:space="preserve">
+    <value>Edit entry</value>
+  </data>
+  <data name="EditEntryDots" xml:space="preserve">
+    <value>Edit entry...</value>
+  </data>
+  <data name="EnableEntry" xml:space="preserve">
+    <value>Enable entry</value>
+  </data>
+  <data name="DisableEntry" xml:space="preserve">
+    <value>Disable entry</value>
+  </data>
+  <data name="RefreshingDots" xml:space="preserve">
+    <value>Refreshing...</value>
+  </data>
+  <data name="ReloadedAtX" xml:space="preserve">
+    <value>Reloaded at {0}</value>
+  </data>
+  <data name="FailedToLoadHostsFileMessage" xml:space="preserve">
+    <value>Failed to load hosts file: {0}</value>
+  </data>
+  <data name="RetryingInXSecondsDots" xml:space="preserve">
+    <value>Retrying in {0} seconds...</value>
+  </data>
+  <data name="WhatsNew" xml:space="preserve">
+    <value>What's new?</value>
+  </data>
+  <data name="Changelog" xml:space="preserve">
+    <value>Changelog</value>
+  </data>
+  <data name="UpgradedToXXX" xml:space="preserve">
+    <value>Upgraded to {0}</value>
+  </data>
+  <data name="WhatsNewMessage" xml:space="preserve">
+    <value>This release includes new features, improvements, and bug fixes. Check out the changelog for all the details!</value>
+  </data>
+  <data name="Entries" xml:space="preserve">
+    <value>Entries</value>
+  </data>
+  <data name="DeleteHostsFileEntryMessage" xml:space="preserve">
+    <value>The selected entry is permanently deleted:
+
+{0} {1} {2}</value>
+  </data>
+  <data name="ExampleHostsFileEntryComment" xml:space="preserve">
+    <value>Primary DNS server</value>
+  </data>
+  <data name="EnterValidHostsFileEntryHostname" xml:space="preserve">
+    <value>Enter a valid hostname (e.g., "server-01" or "example.com")! Multiple hostnames can be separated with a space.</value>
+  </data>
+  <data name="HostsFileReadErrorMessage" xml:space="preserve">
+    <value>The "hosts" file could not be read! See log file for more details.</value>
+  </data>
+  <data name="HostsFileWriteErrorMessage" xml:space="preserve">
+    <value>The "hosts" file could not be written to. See log file for more details.</value>
+  </data>
+  <data name="HostsFileEntryNotFoundMessage" xml:space="preserve">
+    <value>The entry was not found in the "hosts" file! Maybe the file has been modified.</value>
+  </data>
+  <data name="HostsFileBackupErrorMessage" xml:space="preserve">
+    <value>A backup of the "hosts" file could not be created! See log file for more details.</value>
   </data>
 </root>

@@ -1,4 +1,20 @@
-﻿using System;
+﻿using LiveCharts;
+using LiveCharts.Configurations;
+using LiveCharts.Wpf;
+using log4net;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models;
+using NETworkManager.Models.EventSystem;
+using NETworkManager.Models.Export;
+using NETworkManager.Models.Network;
+using NETworkManager.Profiles;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -11,21 +27,6 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using LiveCharts;
-using LiveCharts.Configurations;
-using LiveCharts.Wpf;
-using log4net;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Localization.Resources;
-using NETworkManager.Models;
-using NETworkManager.Models.EventSystem;
-using NETworkManager.Models.Export;
-using NETworkManager.Models.Network;
-using NETworkManager.Profiles;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using NETworkManager.Views;
 using NetworkInterface = NETworkManager.Models.Network.NetworkInterface;
 
 namespace NETworkManager.ViewModels;
@@ -679,49 +680,51 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
 
-    private async Task ExportAction()
+    private Task ExportAction()
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.Export
-        };
+        var childWindow = new ExportChildWindow();
 
-        var exportViewModel = new ExportViewModel(async instance =>
+        var childWindowViewModel = new ExportViewModel(async instance =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            try
             {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                ExportManager.Export(instance.FilePath, instance.FileType,
+                    instance.ExportAll ? NetworkInterfaces : [SelectedNetworkInterface]);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-                try
-                {
-                    ExportManager.Export(instance.FilePath, instance.FileType,
-                        instance.ExportAll ? NetworkInterfaces : [SelectedNetworkInterface]);
-                }
-                catch (Exception ex)
-                {
-                    Log.Error("Error while exporting data as " + instance.FileType, ex);
+                var settings = AppearanceManager.MetroDialog;
+                settings.AffirmativeButtonText = Strings.OK;
 
-                    var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Strings.OK;
+                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+            }
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
-                        Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                        Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
-                }
-
-                SettingsManager.Current.NetworkInterface_ExportFileType = instance.FileType;
-                SettingsManager.Current.NetworkInterface_ExportFilePath = instance.FilePath;
-            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-            [
-                ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
-            ], true,
-            SettingsManager.Current.NetworkInterface_ExportFileType,
-            SettingsManager.Current.NetworkInterface_ExportFilePath);
-
-        customDialog.Content = new ExportDialog
+            SettingsManager.Current.NetworkInterface_ExportFileType = instance.FileType;
+            SettingsManager.Current.NetworkInterface_ExportFilePath = instance.FilePath;
+        }, _ =>
         {
-            DataContext = exportViewModel
-        };
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        }, [
+            ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
+        ], true,
+        SettingsManager.Current.NetworkInterface_ExportFileType,
+        SettingsManager.Current.NetworkInterface_ExportFilePath);
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.Title = Strings.Export;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     public ICommand ApplyConfigurationCommand =>
@@ -730,7 +733,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     private bool ApplyConfiguration_CanExecute(object parameter)
     {
         return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen  &&
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
                !ConfigurationManager.Current.IsChildWindowOpen;
     }
 
@@ -751,7 +754,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     private void AddProfileAction()
     {
         ProfileDialogManager
-            .ShowAddProfileDialog(this, this, _dialogCoordinator, null, null, ApplicationName.NetworkInterface)
+            .ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.NetworkInterface)
             .ConfigureAwait(false);
     }
 
@@ -764,14 +767,14 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void EditProfileAction()
     {
-        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
+        ProfileDialogManager.ShowEditProfileDialog(Application.Current.MainWindow, this, SelectedProfile).ConfigureAwait(false);
     }
 
     public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
+        ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile).ConfigureAwait(false);
     }
 
     public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
@@ -779,7 +782,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     private void DeleteProfileAction()
     {
         ProfileDialogManager
-            .ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile })
+            .ShowDeleteProfileDialog(Application.Current.MainWindow, this, new List<ProfileInfo> { SelectedProfile })
             .ConfigureAwait(false);
     }
 
@@ -787,7 +790,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()))
+        ProfileDialogManager.ShowEditGroupDialog(Application.Current.MainWindow, this, ProfileManager.GetGroupByName($"{group}"))
             .ConfigureAwait(false);
     }
 
@@ -938,20 +941,18 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private async void ReloadNetworkInterfaces()
     {
-        Debug.WriteLine("ReloadNetworkInterfaces.............");
-        
         // Avoid multiple reloads
-        if(IsNetworkInterfaceLoading)
+        if (IsNetworkInterfaceLoading)
             return;
-        
+
         IsNetworkInterfaceLoading = true;
 
         // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
-        await Task.Delay(2000);
+        await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
         // Store the last selected id
         var id = SelectedNetworkInterface?.Id ?? string.Empty;
-        
+
         // Get all network interfaces...
         var networkInterfaces = await NetworkInterface.GetNetworkInterfacesAsync();
 
@@ -960,7 +961,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         {
             // Clear the list            
             NetworkInterfaces.Clear();
-            
+
             // Add all network interfaces to the list
             networkInterfaces.ForEach(NetworkInterfaces.Add);
         });
@@ -969,7 +970,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         SelectedNetworkInterface = string.IsNullOrEmpty(id)
             ? NetworkInterfaces.FirstOrDefault()
             : NetworkInterfaces.FirstOrDefault(x => x.Id == id);
-        
+
         IsNetworkInterfaceLoading = false;
     }
 
@@ -1337,11 +1338,11 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
         Profiles.Filter = o =>
         {
-            if (o is not ProfileInfo info)
-                return false;
-
             if (string.IsNullOrEmpty(Search))
                 return true;
+
+            if (o is not ProfileInfo info)
+                return false;
 
             var search = Search.Trim();
 

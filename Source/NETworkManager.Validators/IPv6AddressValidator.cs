@@ -1,8 +1,7 @@
-﻿using System.Globalization;
-using System.Text.RegularExpressions;
+﻿using NETworkManager.Localization.Resources;
+using System.Globalization;
+using System.Net.Sockets;
 using System.Windows.Controls;
-using NETworkManager.Localization.Resources;
-using NETworkManager.Utilities;
 
 namespace NETworkManager.Validators;
 
@@ -10,13 +9,11 @@ public class IPv6AddressValidator : ValidationRule
 {
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
-        var ipAddress = (value as string)?.Trim();
+        var input = (value as string);
 
-        if (string.IsNullOrEmpty(ipAddress))
-            return new ValidationResult(false, Strings.EnterValidIPv6Address);
+        if (System.Net.IPAddress.TryParse(input, out var address) && address.AddressFamily == AddressFamily.InterNetworkV6)
+            return ValidationResult.ValidResult;
 
-        return Regex.IsMatch(ipAddress, RegexHelper.IPv6AddressRegex)
-            ? ValidationResult.ValidResult
-            : new ValidationResult(false, Strings.EnterValidIPv6Address);
+        return new ValidationResult(false, Strings.EnterValidIPv6Address);
     }
 }

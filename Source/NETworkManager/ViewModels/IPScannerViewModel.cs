@@ -1,4 +1,19 @@
-﻿using System;
+﻿using log4net;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
+using NETworkManager.Controls;
+using NETworkManager.Localization;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models;
+using NETworkManager.Models.EventSystem;
+using NETworkManager.Models.Export;
+using NETworkManager.Models.Network;
+using NETworkManager.Profiles;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,20 +28,6 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using log4net;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Controls;
-using NETworkManager.Localization;
-using NETworkManager.Localization.Resources;
-using NETworkManager.Models;
-using NETworkManager.Models.EventSystem;
-using NETworkManager.Models.Export;
-using NETworkManager.Models.Network;
-using NETworkManager.Profiles;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
@@ -34,11 +35,11 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 {
     #region Variables
     private static readonly ILog Log = LogManager.GetLogger(typeof(IPScannerViewModel));
-    
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private CancellationTokenSource _cancellationTokenSource;
-    
+
     private readonly Guid _tabId;
     private bool _firstLoad = true;
     private bool _closed;
@@ -272,7 +273,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private bool Scan_CanExecute(object parameter)
     {
-        return Application.Current.MainWindow != null && 
+        return Application.Current.MainWindow != null &&
                !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
                !ConfigurationManager.Current.IsChildWindowOpen;
     }
@@ -344,7 +345,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
-        await ProfileDialogManager.ShowAddProfileDialog(window, this, _dialogCoordinator, profileInfo, null,
+        await ProfileDialogManager.ShowAddProfileDialog(window, this, profileInfo, null,
             ApplicationName.IPScanner);
     }
 
@@ -515,7 +516,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             catch (Exception ex)
             {
                 Log.Error("Error trying to run custom command", ex);
-                
+
                 await _dialogCoordinator.ShowMessageAsync(this,
                     Strings.ResourceManager.GetString("Error",
                         LocalizationManager.GetInstance().Culture), ex.Message, MessageDialogStyle.Affirmative,
@@ -527,7 +528,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private void AddHostToHistory(string ipRange)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.IPScanner_HostHistory.ToList(), ipRange,
+        var list = ListHelper.Modify([.. SettingsManager.Current.IPScanner_HostHistory], ipRange,
             SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items
@@ -535,21 +536,19 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         OnPropertyChanged(nameof(Host)); // Raise property changed again, after the collection has been cleared
 
         // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.IPScanner_HostHistory.Add(x));
+        list.ForEach(SettingsManager.Current.IPScanner_HostHistory.Add);
     }
 
     private Task Export()
     {
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.Export
-        };
+        var childWindow = new ExportChildWindow();
 
-        var exportViewModel = new ExportViewModel(async instance =>
+        var childWindowViewModel = new ExportViewModel(async instance =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(window, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
 
             try
             {
@@ -562,7 +561,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             catch (Exception ex)
             {
                 Log.Error("Error while exporting data as " + instance.FileType, ex);
-                
+
                 var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = Strings.OK;
 
@@ -573,16 +572,21 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             SettingsManager.Current.IPScanner_ExportFileType = instance.FileType;
             SettingsManager.Current.IPScanner_ExportFilePath = instance.FilePath;
-        }, _ => { _dialogCoordinator.HideMetroDialogAsync(window, customDialog); }, [
+        }, _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        }, [
             ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
         ], true, SettingsManager.Current.IPScanner_ExportFileType, SettingsManager.Current.IPScanner_ExportFilePath);
 
-        customDialog.Content = new ExportDialog
-        {
-            DataContext = exportViewModel
-        };
+        childWindow.Title = Strings.Export;
 
-        return _dialogCoordinator.ShowMetroDialogAsync(window, customDialog);
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return window.ShowChildWindowAsync(childWindow);
     }
 
     public void OnClose()

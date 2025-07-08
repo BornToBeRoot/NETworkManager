@@ -8,6 +8,7 @@ using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Utilities;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -18,6 +19,9 @@ namespace NETworkManager.Settings;
 public static class GlobalStaticConfiguration
 {
     #region Global settings
+
+    // Application config
+    public static int ApplicationUIRefreshInterval => 2500;
 
     // Type to search (average type speed --> 187 chars/min)
     public static TimeSpan SearchDispatcherTimerTimeSpan => new(0, 0, 0, 0, 750);
@@ -139,7 +143,7 @@ public static class GlobalStaticConfiguration
 
     // Application: DNS Lookup
     public static QueryClass DNSLookup_QueryClass => QueryClass.IN;
-    public static QueryType DNSLookup_QueryType => QueryType.ANY;
+    public static QueryType DNSLookup_QueryType => QueryType.ANY;    
     public static bool DNSLookup_UseTCPOnly => false;
     public static int DNSLookup_Retries => 3;
     public static int DNSLookup_Timeout => 2;
@@ -219,6 +223,9 @@ public static class GlobalStaticConfiguration
     // Application: SNTP Lookup
     public static int SNTPLookup_Timeout => 4000;
     public static ExportFileType SNTPLookup_ExportFileType => ExportFileType.Csv;
+
+    // Application: Hosts File Editor
+    public static ExportFileType HostsFileEditor_ExportFileType => ExportFileType.Csv;
 
     // Application: Discovery Protocol
     public static DiscoveryProtocol DiscoveryProtocol_Protocol => DiscoveryProtocol.LldpCdp;

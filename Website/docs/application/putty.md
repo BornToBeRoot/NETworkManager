@@ -4,7 +4,9 @@ sidebar_position: 10
 
 # PuTTY
 
-With **PuTTY** you can connect to a remote computer via Secure Shell (SSH) or Telnet. In addition you can connect to a local serial port. The integration of PuTTY with NETworkManger supports tabs and profiles for hosts. The connection can be established via a profile (double-click, Enter key or right-click `Connect`) or directly via the [connection](#connect) dialog.
+With **PuTTY** you can connect to a remote computer via Secure Shell (SSH) or Telnet. In addition you can connect to a local serial port.
+
+The integration of PuTTY with NETworkManger supports tabs and profiles for hosts. You can establish a connection via a profile (double-click, Enter key or right-click `Connect`) or directly via the [connection](#connect) dialog.
 
 :::info
 

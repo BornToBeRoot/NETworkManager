@@ -1929,9 +1929,9 @@ Der Wert 0 deaktiviert diese Funktion.
     <value>Überprüfen der öffentlichen IP-Adresse</value>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
-    <value>Vielen Dank, dass Sie NETworkManager verwenden!
+    <value>Vielen Dank, dass du NETworkManager verwendest!
 
-Wenn Sie dieses Tool mögen, hinterlassen Sie bitte einen Stern auf GitHub und empfehlen Sie es weiter.</value>
+Wenn dir das Tool gefällt, kannst du die Entwicklung unterstützen – durch einen Stern auf GitHub, eine Spende oder indem du es mit anderen teilst. Deine Unterstützung hilft dabei, das Projekt am Leben zu halten und weiterzuentwickeln.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Beim Programmstart wird im Hintergrund geprüft, ob eine neue Programmversion auf GitHub verfügbar ist.
@@ -2392,7 +2392,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Neustart als Administrator</value>
   </data>
   <data name="NetworkPacketsCaptureAdminMessage" xml:space="preserve">
-    <value>Um Netzwerkpakete analysieren zu können, muss die Anwendung mit erhöhten Rechten gestartet werden!</value>
+    <value>Analysieren von Netzwerkpaketen erfordert erhöhte Rechte!</value>
   </data>
   <data name="Capture" xml:space="preserve">
     <value>Aufnehmen</value>
@@ -3878,5 +3878,59 @@ Rechtsklick für weitere Optionen.</value>
   </data>
   <data name="ProfileFile" xml:space="preserve">
     <value>Profildatei</value>
+  </data>
+  <data name="ApplicationName_HostsFileEditor" xml:space="preserve">
+    <value>Hosts File Editor</value>
+  </data>
+  <data name="HostsFileEditor" xml:space="preserve">
+    <value>Hosts File Editor</value>
+  </data>
+  <data name="HostsFileEditorAdminMessage" xml:space="preserve">
+    <value>Schreibgeschützter Modus. Das Ändern der hosts Datei erfordert erhöhte Rechte!</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Kommentar</value>
+  </data>
+  <data name="Disable" xml:space="preserve">
+    <value>Deaktivieren</value>
+  </data>
+  <data name="EditEntry" xml:space="preserve">
+    <value>Eintrag bearbeiten</value>
+  </data>
+  <data name="EditEntryDots" xml:space="preserve">
+    <value>Eintrag bearbeiten...</value>
+  </data>
+  <data name="EnableEntry" xml:space="preserve">
+    <value>Eintrag aktivieren</value>
+  </data>
+  <data name="DisableEntry" xml:space="preserve">
+    <value>Eintrag deaktivieren</value>
+  </data>
+  <data name="RefreshingDots" xml:space="preserve">
+    <value>Aktualisieren...</value>
+  </data>
+  <data name="ReloadedAtX" xml:space="preserve">
+    <value>Aktualisiert um {0}</value>
+  </data>
+  <data name="FailedToLoadHostsFileMessage" xml:space="preserve">
+    <value>Hosts-Datei konnte nicht geladen werden: {0}</value>
+  </data>
+  <data name="RetryingInXSecondsDots" xml:space="preserve">
+    <value>Wiederholung in {0} {0} Sekunden...</value>
+  </data>
+  <data name="WhatsNew" xml:space="preserve">
+    <value>Was ist neu?</value>
+  </data>
+  <data name="Changelog" xml:space="preserve">
+    <value>Changelog</value>
+  </data>
+  <data name="UpgradedToXXX" xml:space="preserve">
+    <value>Aktualisiert auf {0}</value>
+  </data>
+  <data name="WhatsNewMessage" xml:space="preserve">
+    <value>Diese Version enthält neue Funktionen, Verbesserungen und Fehlerbehebungen. Alle Details findest du im Changelog!</value>
+  </data>
+  <data name="Entries" xml:space="preserve">
+    <value>Einträge</value>
   </data>
 </root>

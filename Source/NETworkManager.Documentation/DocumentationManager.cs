@@ -137,13 +137,11 @@ public static class DocumentationManager
             @"Documentation/profiles"),
 
         new DocumentationInfo(DocumentationIdentifier.CommandLineArguments,
-            @"docs/commandline-arguments")
+            @"docs/commandline-arguments"),
+        
+        new DocumentationInfo(DocumentationIdentifier.ChangelogBase,
+        @"docs/changelog")
     ];
-
-    /// <summary>
-    ///     Command to open a documentation page based on <see cref="DocumentationIdentifier" />.
-    /// </summary>
-    public static ICommand OpenDocumentationCommand => new RelayCommand(OpenDocumentationAction);
 
     /// <summary>
     ///     Method to create the documentation url from <see cref="DocumentationIdentifier" />.
@@ -179,13 +177,15 @@ public static class DocumentationManager
     }
 
     /// <summary>
-    ///     Method to open a documentation page based on <see cref="DocumentationIdentifier" />.
+    /// Method to open the current changelog in the default web browser.
     /// </summary>
-    /// <param name="documentationIdentifier"></param>
-    private static void OpenDocumentationAction(object documentationIdentifier)
+    public static void OpenChangelog()
     {
-        if (documentationIdentifier != null)
-            OpenDocumentation((DocumentationIdentifier)documentationIdentifier);
+        var url = CreateUrl(DocumentationIdentifier.ChangelogBase);
+        
+        url += $"/{AssemblyManager.Current.Version.ToString().Replace('.', '-')}";
+        
+        ExternalProcessStarter.OpenUrl(url);
     }
 
     /// <summary>

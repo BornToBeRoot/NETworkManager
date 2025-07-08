@@ -1,4 +1,14 @@
-﻿using System;
+﻿using log4net;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models.Export;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,15 +19,6 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using log4net;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Localization.Resources;
-using NETworkManager.Models.Export;
-using NETworkManager.Models.Network;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
@@ -39,11 +40,11 @@ public class ListenersViewModel : ViewModelBase
 
         ResultsView.Filter = o =>
         {
-            if (o is not ListenerInfo info)
-                return false;
-
             if (string.IsNullOrEmpty(Search))
                 return true;
+
+            if (o is not ListenerInfo info)
+                return false;
 
             // Search by IP Address, Port and Protocol
             return info.IPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
@@ -52,7 +53,7 @@ public class ListenersViewModel : ViewModelBase
         };
 
         // Get listeners
-        Refresh().ConfigureAwait(false);
+        Refresh(true).ConfigureAwait(false);
 
         // Auto refresh
         _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
@@ -85,8 +86,9 @@ public class ListenersViewModel : ViewModelBase
     #endregion
 
     #region Variables
+
     private static readonly ILog Log = LogManager.GetLogger(typeof(ListenersViewModel));
-    
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly bool _isLoading;
@@ -269,7 +271,9 @@ public class ListenersViewModel : ViewModelBase
     {
         return Application.Current.MainWindow != null &&
                !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen;
+               !ConfigurationManager.Current.IsChildWindowOpen &&
+               !IsRefreshing &&
+               !AutoRefreshEnabled;
     }
 
     private async Task RefreshAction()
@@ -281,16 +285,14 @@ public class ListenersViewModel : ViewModelBase
 
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
 
-    private async Task ExportAction()
+    private Task ExportAction()
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.Export
-        };
+        var childWindow = new ExportChildWindow();
 
-        var exportViewModel = new ExportViewModel(async instance =>
+        var childWindowViewModel = new ExportViewModel(async instance =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
 
             try
             {
@@ -302,7 +304,7 @@ public class ListenersViewModel : ViewModelBase
             catch (Exception ex)
             {
                 Log.Error("Error while exporting data as " + instance.FileType, ex);
-                
+
                 var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = Strings.OK;
 
@@ -313,30 +315,43 @@ public class ListenersViewModel : ViewModelBase
 
             SettingsManager.Current.Listeners_ExportFileType = instance.FileType;
             SettingsManager.Current.Listeners_ExportFilePath = instance.FilePath;
-        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new[]
+        }, _ =>
         {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        }, [
             ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
-        }, true, SettingsManager.Current.Listeners_ExportFileType, SettingsManager.Current.Listeners_ExportFilePath);
+        ], true, SettingsManager.Current.Listeners_ExportFileType, SettingsManager.Current.Listeners_ExportFilePath);
 
-        customDialog.Content = new ExportDialog
-        {
-            DataContext = exportViewModel
-        };
+        childWindow.Title = Strings.Export;
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     #endregion
 
     #region Methods
 
-    private async Task Refresh()
+    private async Task Refresh(bool init = false)
     {
         IsRefreshing = true;
 
+        StatusMessage = Strings.RefreshingDots;
+        IsStatusMessageDisplayed = true;
+
+        if (init == false)
+            await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
+
         Results.Clear();
 
-        (await Listener.GetAllActiveListenersAsync()).ForEach(x => Results.Add(x));
+        (await Listener.GetAllActiveListenersAsync()).ForEach(Results.Add);
+
+        StatusMessage = string.Format(Strings.ReloadedAtX, DateTime.Now.ToShortTimeString());
+        IsStatusMessageDisplayed = true;
 
         IsRefreshing = false;
     }

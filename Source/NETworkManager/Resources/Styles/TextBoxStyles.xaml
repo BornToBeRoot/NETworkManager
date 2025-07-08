@@ -17,7 +17,6 @@
 
     <Style x:Key="ConsoleTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
         <Setter Property="FontFamily" Value="Consolas" />
-        <Setter Property="VerticalContentAlignment" Value="Top" />
     </Style>
 
     <Style x:Key="SearchTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource MahApps.Styles.TextBox.Search}">

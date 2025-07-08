@@ -1,4 +1,16 @@
-﻿using System;
+﻿using DnsClient;
+using log4net;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
+using NETworkManager.Controls;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models.Export;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,17 +21,6 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using DnsClient;
-using log4net;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Controls;
-using NETworkManager.Localization.Resources;
-using NETworkManager.Models.Export;
-using NETworkManager.Models.Network;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
@@ -254,17 +255,19 @@ public class DNSLookupViewModel : ViewModelBase
 
     private void LoadTypes()
     {
-        // Filter by common types...
-        QueryTypes = SettingsManager.Current.DNSLookup_ShowOnlyMostCommonQueryTypes
-            ? Enum.GetValues(typeof(QueryType)).Cast<QueryType>().Where(x =>
-                x is QueryType.A or QueryType.AAAA or QueryType.ANY or QueryType.CNAME or QueryType.MX or QueryType.NS
-                    or QueryType.PTR or QueryType.SOA or QueryType.TXT).OrderBy(x => x.ToString()).ToList()
-            : Enum.GetValues(typeof(QueryType)).Cast<QueryType>().OrderBy(x => x.ToString()).ToList();
+        var queryTypes = (QueryType[])Enum.GetValues(typeof(QueryType));
+
+        //if (SettingsManager.Current.DNSLookup_ShowOnlyMostCommonQueryTypes)
+        //    QueryTypes = [.. queryTypes.Where(GlobalStaticConfiguration.DNSLookup_CustomQueryTypes.Contains).OrderBy(x => x.ToString())];
+        //else
+        //    QueryTypes = [.. queryTypes.OrderBy(x => x.ToString())];
+
+        QueryTypes = [.. queryTypes.Where(DNSLookup.QueryTypes.Contains).OrderBy(x => x.ToString())];
         QueryType = QueryTypes.FirstOrDefault(x => x == SettingsManager.Current.DNSLookup_QueryType);
 
         // Fallback
         if (QueryType == 0)
-            QueryType = QueryType.ANY;
+            QueryType = GlobalStaticConfiguration.DNSLookup_QueryType;
     }
 
     #endregion
@@ -337,7 +340,7 @@ public class DNSLookupViewModel : ViewModelBase
         dnsLookup.LookupError += DNSLookup_LookupError;
         dnsLookup.LookupComplete += DNSLookup_LookupComplete;
 
-        dnsLookup.ResolveAsync(Host.Split(';').Select(x => x.Trim()).ToList());
+        dnsLookup.ResolveAsync([.. Host.Split(';').Select(x => x.Trim())]);
     }
 
     public void OnClose()
@@ -367,53 +370,56 @@ public class DNSLookupViewModel : ViewModelBase
     }
 
 
-    private async Task Export()
+    private Task Export()
     {
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
-        var customDialog = new CustomDialog
+        var childWindow = new ExportChildWindow();
+
+        var childWindowViewModel = new ExportViewModel(async instance =>
         {
-            Title = Strings.Export
-        };
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
 
-        var exportViewModel = new ExportViewModel(async instance =>
+            try
             {
-                await _dialogCoordinator.HideMetroDialogAsync(window, customDialog);
+                ExportManager.Export(instance.FilePath, instance.FileType,
+                    instance.ExportAll
+                        ? Results
+                        : new ObservableCollection<DNSLookupRecordInfo>(SelectedResults
+                            .Cast<DNSLookupRecordInfo>().ToArray()));
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-                try
-                {
-                    ExportManager.Export(instance.FilePath, instance.FileType,
-                        instance.ExportAll
-                            ? Results
-                            : new ObservableCollection<DNSLookupRecordInfo>(SelectedResults
-                                .Cast<DNSLookupRecordInfo>().ToArray()));
-                }
-                catch (Exception ex)
-                {
-                    Log.Error("Error while exporting data as " + instance.FileType, ex);
-                    
-                    var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Strings.OK;
+                var settings = AppearanceManager.MetroDialog;
+                settings.AffirmativeButtonText = Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(window, Strings.Error,
-                        Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                        Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
-                }
+                await _dialogCoordinator.ShowMessageAsync(window, Strings.Error,
+                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+            }
 
-                SettingsManager.Current.DNSLookup_ExportFileType = instance.FileType;
-                SettingsManager.Current.DNSLookup_ExportFilePath = instance.FilePath;
-            }, _ => { _dialogCoordinator.HideMetroDialogAsync(window, customDialog); },
+            SettingsManager.Current.DNSLookup_ExportFileType = instance.FileType;
+            SettingsManager.Current.DNSLookup_ExportFilePath = instance.FilePath;
+        }, _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        },
             [
                 ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
             ], true,
             SettingsManager.Current.DNSLookup_ExportFileType, SettingsManager.Current.DNSLookup_ExportFilePath);
 
-        customDialog.Content = new ExportDialog
-        {
-            DataContext = exportViewModel
-        };
+        childWindow.Title = Strings.Export;
 
-        await _dialogCoordinator.ShowMetroDialogAsync(window, customDialog);
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return window.ShowChildWindowAsync(childWindow);
     }
 
     #endregion
@@ -456,9 +462,9 @@ public class DNSLookupViewModel : ViewModelBase
     {
         switch (e.PropertyName)
         {
-            case nameof(SettingsInfo.DNSLookup_ShowOnlyMostCommonQueryTypes):
-                LoadTypes();
-                break;
+            //case nameof(SettingsInfo.DNSLookup_ShowOnlyMostCommonQueryTypes):
+            //    LoadTypes();
+            //    break;
         }
     }
 

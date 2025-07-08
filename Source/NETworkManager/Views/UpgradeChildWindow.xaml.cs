@@ -1,8 +1,8 @@
 ﻿namespace NETworkManager.Views;
 
-public partial class ConfirmDeleteDialog
+public partial class UpgradeChildWindow
 {
-    public ConfirmDeleteDialog()
+    public UpgradeChildWindow()
     {
         InitializeComponent();
     }

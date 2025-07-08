@@ -74,12 +74,17 @@ const config = {
             type: "docSidebar",
             sidebarId: "docsSidebar",
             position: "left",
-            label: "Documentation",
+            label: "Docs",
           },
           {
             to: "/blog",
             label: "Blog",
             position: "left",
+          },
+          {
+            href: "https://github.com/BornToBeRoot/NETworkManager?tab=readme-ov-file#-donate",
+            label: "Donate",
+            position: "right",
           },
           {
             href: "https://github.com/BornToBeRoot/NETworkManager",
@@ -99,7 +104,7 @@ const config = {
                 to: "/download",
               },
               {
-                label: "Documentation",
+                label: "Docs",
                 to: "/docs/introduction",
               },
               {
@@ -144,7 +149,22 @@ const config = {
     }),
 
   plugins: [
-    require.resolve("./plugins/gurubase-widget.js")
+    [
+      // Custom redirects
+      "@docusaurus/plugin-client-redirects",
+      {
+        redirects: [
+          {
+            from: ["/docs/changelog/latest"],
+            to: "/docs/changelog/2025-1-18-0",
+          },
+          {
+            from: ["/docs/changelog/2025-6-13-0"],
+            to: "/docs/changelog/next-release",
+          }
+        ],
+      },
+    ],
   ],
 };
 

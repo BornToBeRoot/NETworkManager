@@ -271,11 +271,15 @@
                         </StackPanel>
                     </Grid>
                 </Grid>
-                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
+                <Grid Background="{DynamicResource MahApps.Brushes.Gray10}"
+                      Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
                             Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                     <TextBlock Text="{x:Static localization:Strings.NetworkPacketsCaptureAdminMessage}"
-                               Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
-                    <Button Command="{Binding RestartAsAdminCommand}" HorizontalAlignment="Center"
+                               Style="{StaticResource MessageTextBlock}"
+                               Margin="0,0,0,10" />
+                    <Button Command="{Binding RestartAsAdminCommand}"
+                            HorizontalAlignment="Center"
                             Style="{StaticResource ImageWithTextButton}">
                         <Button.Content>
                             <Grid>
@@ -283,18 +287,23 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Rectangle Width="20" Height="20" Margin="10,5,0,5"
+                                <Rectangle Width="20" Height="20"
+                                           Margin="10,5,0,5"
                                            Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Shield}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
-                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.RestartAsAdmin}"
-                                           FontSize="14" Margin="10,5" TextAlignment="Center" />
+                                <TextBlock Grid.Column="1" Grid.Row="0"
+                                           Text="{x:Static localization:Strings.RestartAsAdmin}"
+                                           FontSize="14"
+                                           Margin="10,5"
+                                           TextAlignment="Center" />
                             </Grid>
                         </Button.Content>
                     </Button>
                 </StackPanel>
+                </Grid>
             </Grid>
         </TabItem>
     </TabControl>

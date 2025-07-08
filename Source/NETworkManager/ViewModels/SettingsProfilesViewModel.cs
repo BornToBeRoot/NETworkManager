@@ -1,16 +1,19 @@
-﻿using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Windows.Data;
-using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
+﻿using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
+using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
@@ -147,34 +150,37 @@ public class SettingsProfilesViewModel : ViewModelBase
     }
 
     public ICommand DeleteProfileFileCommand =>
-        new RelayCommand(_ => DeleteProfileFileAction(), DeleteProfileFile_CanExecute);
+        new RelayCommand(_ => DeleteProfileFileAction().ConfigureAwait(false), DeleteProfileFile_CanExecute);
 
     private bool DeleteProfileFile_CanExecute(object obj)
     {
         return ProfileFiles.Cast<ProfileFileInfo>().Count() > 1;
     }
 
-    private async void DeleteProfileFileAction()
+    private Task DeleteProfileFileAction()
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.DeleteProfileFile
-        };
+        var childWindow = new OKCancelInfoMessageChildWindow();
 
-        var confirmDeleteViewModel = new ConfirmDeleteViewModel(async _ =>
+        var childWindowViewModel = new OKCancelInfoMessageViewModel(_ =>
             {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                childWindow.IsOpen = false;
+                ConfigurationManager.Current.IsChildWindowOpen = false;
 
                 ProfileManager.DeleteProfileFile(SelectedProfileFile);
-            }, async _ => { await _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-            Strings.DeleteProfileFileMessage);
+            }, _ =>
+            {
+                childWindow.IsOpen = false;
+                ConfigurationManager.Current.IsChildWindowOpen = false;
+            },
+            Strings.DeleteProfileFileMessage, Strings.Delete);
 
-        customDialog.Content = new ConfirmDeleteDialog
-        {
-            DataContext = confirmDeleteViewModel
-        };
+        childWindow.Title = Strings.DeleteProfileFile;
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     public ICommand EnableEncryptionCommand => new RelayCommand(_ => EnableEncryptionAction());
@@ -187,9 +193,9 @@ public class SettingsProfilesViewModel : ViewModelBase
         settings.NegativeButtonText = Strings.Cancel;
         settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-        if (await _dialogCoordinator.ShowMessageAsync(this, Strings.Disclaimer, Strings.ProfileEncryptionDisclaimer, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative) 
+        if (await _dialogCoordinator.ShowMessageAsync(this, Strings.Disclaimer, Strings.ProfileEncryptionDisclaimer, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
             return;
-        
+
         var customDialog = new CustomDialog
         {
             Title = Strings.SetMasterPassword

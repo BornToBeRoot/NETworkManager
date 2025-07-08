@@ -443,7 +443,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     private void AddProfileAction()
     {
         ProfileDialogManager
-            .ShowAddProfileDialog(this, this, _dialogCoordinator, null, null, ApplicationName.AWSSessionManager)
+            .ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.AWSSessionManager)
             .ConfigureAwait(false);
     }
 
@@ -456,14 +456,14 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
     private void EditProfileAction()
     {
-        ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
+        ProfileDialogManager.ShowEditProfileDialog(Application.Current.MainWindow, this, SelectedProfile).ConfigureAwait(false);
     }
 
     public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile).ConfigureAwait(false);
+        ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile).ConfigureAwait(false);
     }
 
     public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
@@ -471,7 +471,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     private void DeleteProfileAction()
     {
         ProfileDialogManager
-            .ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile })
+            .ShowDeleteProfileDialog(Application.Current.MainWindow, this, new List<ProfileInfo> { SelectedProfile })
             .ConfigureAwait(false);
     }
 
@@ -479,7 +479,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()))
+        ProfileDialogManager.ShowEditGroupDialog(Application.Current.MainWindow, this, ProfileManager.GetGroupByName($"{group}"))
             .ConfigureAwait(false);
     }
 
@@ -650,7 +650,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         }
 
         // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
-        await Task.Delay(2000);
+        await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
         Log.Info("All Instance IDs synced from AWS!");
 
@@ -679,7 +679,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         }
 
         // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
-        await Task.Delay(2000);
+        await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
         Log.Info("Group synced!");
 
@@ -759,14 +759,14 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         if (groupInfo.Profiles.Count == 0)
         {
             if (ProfileManager.GroupExists(groupName))
-                ProfileManager.RemoveGroup(ProfileManager.GetGroup(groupName));
+                ProfileManager.RemoveGroup(ProfileManager.GetGroupByName(groupName));
 
             Log.Info("No EC2 Instance(s) found!");
         }
         else
         {
             if (ProfileManager.GroupExists(groupName))
-                ProfileManager.ReplaceGroup(ProfileManager.GetGroup(groupName), groupInfo);
+                ProfileManager.ReplaceGroup(ProfileManager.GetGroupByName(groupName), groupInfo);
             else
                 ProfileManager.AddGroup(groupInfo);
 
@@ -795,7 +795,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         ProfileManager.ProfilesChanged = false;
 
         if (ProfileManager.GroupExists(groupName))
-            ProfileManager.RemoveGroup(ProfileManager.GetGroup(groupName));
+            ProfileManager.RemoveGroup(ProfileManager.GetGroupByName(groupName));
 
         ProfileManager.ProfilesChanged = profilesChangedCurrentState;
     }
@@ -998,11 +998,11 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
         Profiles.Filter = o =>
         {
-            if (o is not ProfileInfo info)
-                return false;
-
             if (string.IsNullOrEmpty(Search))
                 return true;
+
+            if (o is not ProfileInfo info)
+                return false;
 
             var search = Search.Trim();
 

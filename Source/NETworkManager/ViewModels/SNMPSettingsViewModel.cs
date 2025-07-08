@@ -1,17 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Data;
-using System.Windows.Input;
-using Lextm.SharpSnmpLib.Messaging;
+﻿using Lextm.SharpSnmpLib.Messaging;
 using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
@@ -199,27 +201,30 @@ public class SNMPSettingsViewModel : ViewModelBase
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
-    private async Task DeleteOIDProfile()
+    private Task DeleteOIDProfile()
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.DeleteOIDProfile
-        };
+        var childWindow = new OKCancelInfoMessageChildWindow();
 
-        var confirmDeleteViewModel = new ConfirmDeleteViewModel(_ =>
+        var childWindowViewModel = new OKCancelInfoMessageViewModel(_ =>
             {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                childWindow.IsOpen = false;
+                ConfigurationManager.Current.IsChildWindowOpen = false;
 
                 SettingsManager.Current.SNMP_OidProfiles.Remove(SelectedOIDProfile);
-            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-            Strings.DeleteOIDProfileMessage);
+            }, _ =>
+            {
+                childWindow.IsOpen = false;
+                ConfigurationManager.Current.IsChildWindowOpen = false;
+            },
+            Strings.DeleteOIDProfileMessage, Strings.Delete);
 
-        customDialog.Content = new ConfirmDeleteDialog
-        {
-            DataContext = confirmDeleteViewModel
-        };
+        childWindow.Title = Strings.DeleteOIDProfile;
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     #endregion

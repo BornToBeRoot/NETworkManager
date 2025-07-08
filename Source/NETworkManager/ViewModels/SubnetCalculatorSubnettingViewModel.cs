@@ -1,4 +1,14 @@
-﻿using System;
+﻿using log4net;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models.Export;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
+using System;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -11,15 +21,6 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using log4net;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Localization.Resources;
-using NETworkManager.Models.Export;
-using NETworkManager.Models.Network;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using NETworkManager.Views;
 using IPAddress = System.Net.IPAddress;
 
 namespace NETworkManager.ViewModels;
@@ -47,7 +48,7 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
 
     #region Variables
     private static readonly ILog Log = LogManager.GetLogger(typeof(SubnetCalculatorSubnettingViewModel));
-    
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private string _subnet;
@@ -183,50 +184,52 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
 
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
 
-    private async Task ExportAction()
+    private Task ExportAction()
     {
-        var customDialog = new CustomDialog
+        var childWindow = new ExportChildWindow();
+
+        var childWindowViewModel = new ExportViewModel(async instance =>
         {
-            Title = Strings.Export
-        };
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
 
-        var exportViewModel = new ExportViewModel(async instance =>
+            try
             {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                try
-                {
-                    ExportManager.Export(instance.FilePath, instance.FileType,
-                        instance.ExportAll
-                            ? Results
-                            : new ObservableCollection<IPNetworkInfo>(SelectedResults.Cast<IPNetworkInfo>().ToArray()));
-                }
-                catch (Exception ex)
-                {
-                    Log.Error("Error while exporting data as " + instance.FileType, ex);
-                    
-                    var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Strings.OK;
-
-                    await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
-                        Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                        Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
-                }
-
-                SettingsManager.Current.SubnetCalculator_Subnetting_ExportFileType = instance.FileType;
-                SettingsManager.Current.SubnetCalculator_Subnetting_ExportFilePath = instance.FilePath;
-            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new[]
+                ExportManager.Export(instance.FilePath, instance.FileType,
+                    instance.ExportAll
+                        ? Results
+                        : new ObservableCollection<IPNetworkInfo>(SelectedResults.Cast<IPNetworkInfo>().ToArray()));
+            }
+            catch (Exception ex)
             {
-                ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
-            }, true, SettingsManager.Current.SubnetCalculator_Subnetting_ExportFileType,
-            SettingsManager.Current.SubnetCalculator_Subnetting_ExportFilePath);
+                Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-        customDialog.Content = new ExportDialog
+                var settings = AppearanceManager.MetroDialog;
+                settings.AffirmativeButtonText = Strings.OK;
+
+                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+            }
+
+            SettingsManager.Current.SubnetCalculator_Subnetting_ExportFileType = instance.FileType;
+            SettingsManager.Current.SubnetCalculator_Subnetting_ExportFilePath = instance.FilePath;
+        }, _ =>
         {
-            DataContext = exportViewModel
-        };
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        }, [
+            ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
+        ], true, SettingsManager.Current.SubnetCalculator_Subnetting_ExportFileType,
+        SettingsManager.Current.SubnetCalculator_Subnetting_ExportFilePath);
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.Title = Strings.Export;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     #endregion

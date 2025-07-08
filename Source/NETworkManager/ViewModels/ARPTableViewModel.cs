@@ -1,4 +1,14 @@
-﻿using System;
+﻿using log4net;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models.Export;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,15 +19,6 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using log4net;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Localization.Resources;
-using NETworkManager.Models.Export;
-using NETworkManager.Models.Network;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels;
 
@@ -38,11 +39,11 @@ public class ARPTableViewModel : ViewModelBase
 
         ResultsView.Filter = o =>
         {
-            if (o is not ARPInfo info)
-                return false;
-
             if (string.IsNullOrEmpty(Search))
                 return true;
+
+            if (o is not ARPInfo info)
+                return false;
 
             // Search by IPAddress and MACAddress
             return info.IPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
@@ -53,7 +54,7 @@ public class ARPTableViewModel : ViewModelBase
         };
 
         // Get ARP table
-        Refresh().ConfigureAwait(false);
+        Refresh(true).ConfigureAwait(false);
 
         // Auto refresh
         _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
@@ -70,8 +71,9 @@ public class ARPTableViewModel : ViewModelBase
     #endregion
 
     #region Variables
+
     private static readonly ILog Log = LogManager.GetLogger(typeof(ARPTableViewModel));
-    
+
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly bool _isLoading;
@@ -95,7 +97,7 @@ public class ARPTableViewModel : ViewModelBase
         }
     }
 
-    private ObservableCollection<ARPInfo> _results = new();
+    private ObservableCollection<ARPInfo> _results = [];
 
     public ObservableCollection<ARPInfo> Results
     {
@@ -252,9 +254,11 @@ public class ARPTableViewModel : ViewModelBase
 
     private bool Refresh_CanExecute(object parameter)
     {
-        return Application.Current.MainWindow != null && 
+        return Application.Current.MainWindow != null &&
                !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen;        
+               !ConfigurationManager.Current.IsChildWindowOpen &&
+               !IsRefreshing &&
+               !AutoRefreshEnabled;
     }
 
     private async Task RefreshAction()
@@ -301,8 +305,8 @@ public class ARPTableViewModel : ViewModelBase
     private bool DeleteEntry_CanExecute(object parameter)
     {
         return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen  &&
-               !ConfigurationManager.Current.IsChildWindowOpen;;
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
+               !ConfigurationManager.Current.IsChildWindowOpen;
     }
 
     private async Task DeleteEntryAction()
@@ -376,16 +380,14 @@ public class ARPTableViewModel : ViewModelBase
 
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
 
-    private async Task ExportAction()
+    private Task ExportAction()
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.Export
-        };
+        var childWindow = new ExportChildWindow();
 
-        var exportViewModel = new ExportViewModel(async instance =>
+        var childWindowViewModel = new ExportViewModel(async instance =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
 
             try
             {
@@ -397,7 +399,7 @@ public class ARPTableViewModel : ViewModelBase
             catch (Exception ex)
             {
                 Log.Error("Error while exporting data as " + instance.FileType, ex);
-                
+
                 var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = Strings.OK;
 
@@ -408,29 +410,44 @@ public class ARPTableViewModel : ViewModelBase
 
             SettingsManager.Current.ARPTable_ExportFileType = instance.FileType;
             SettingsManager.Current.ARPTable_ExportFilePath = instance.FilePath;
-        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, [
-            ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
-        ], true, SettingsManager.Current.ARPTable_ExportFileType, SettingsManager.Current.ARPTable_ExportFilePath);
-
-        customDialog.Content = new ExportDialog
+        }, _ =>
         {
-            DataContext = exportViewModel
-        };
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        }, [
+            ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
+        ], true, SettingsManager.Current.ARPTable_ExportFileType,
+        SettingsManager.Current.ARPTable_ExportFilePath);
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.Title = Strings.Export;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     #endregion
 
     #region Methods
 
-    private async Task Refresh()
+    private async Task Refresh(bool init = false)
     {
         IsRefreshing = true;
 
+        StatusMessage = Strings.RefreshingDots;
+        IsStatusMessageDisplayed = true;
+
+        if (init == false)
+            await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
+
         Results.Clear();
 
-        (await ARP.GetTableAsync()).ForEach(x => Results.Add(x));
+        (await ARP.GetTableAsync()).ForEach(Results.Add);
+
+        StatusMessage = string.Format(Strings.ReloadedAtX, DateTime.Now.ToShortTimeString());
+        IsStatusMessageDisplayed = true;
 
         IsRefreshing = false;
     }

@@ -238,16 +238,25 @@
                 </StackPanel>
             </Button>
             <Button Command="{Binding OpenWebsiteCommand}"
-          ToolTip="{x:Static localization:Strings.ToolTip_SupportThisProjectWithADonation}"
-          CommandParameter="{x:Static resources:Resources.NETworkManager_DonateUrl}"
-          Cursor="Hand"
-          Focusable="False">
+                    ToolTip="{x:Static localization:Strings.ToolTip_SupportThisProjectWithADonation}"
+                    CommandParameter="{x:Static resources:Resources.NETworkManager_DonateUrl}"
+                    Cursor="Hand"
+                    Focusable="False">
                 <StackPanel Orientation="Horizontal">
-                    <Rectangle Width="20" Height="20"
-                     Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                    <Rectangle Width="20" Height="20">
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Heart}" />
                         </Rectangle.OpacityMask>
+                        <Rectangle.Style>
+                            <Style TargetType="Rectangle">
+                                <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                        <Setter Property="Fill" Value="#b95353" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
                     </Rectangle>
                 </StackPanel>
             </Button>

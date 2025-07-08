@@ -52,7 +52,7 @@ public static class Connection
     }
 
     // Cache for remote host names with some default values
-    private static readonly Dictionary<IPAddress, string> _remoteHostNames = new()
+    private static readonly Dictionary<IPAddress, string> RemoteHostNames = new()
     {
         { IPAddress.Parse("127.0.0.1"), "localhost" },
         { IPAddress.Parse("::1"), "localhost" },
@@ -94,9 +94,9 @@ public static class Connection
                 var row = (MibTcpRowOwnerPid)Marshal.PtrToStructure(rowPtr, typeof(MibTcpRowOwnerPid))!;
 
                 var localAddress = new IPAddress(row.localAddr);
-                var localPort = BitConverter.ToUInt16(new[] { row.localPort2, row.localPort1 }, 0);
+                var localPort = BitConverter.ToUInt16([row.localPort2, row.localPort1], 0);
                 var remoteAddress = new IPAddress(row.remoteAddr);
-                var remotePort = BitConverter.ToUInt16(new[] { row.remotePort2, row.remotePort1 }, 0);
+                var remotePort = BitConverter.ToUInt16([row.remotePort2, row.remotePort1], 0);
                 var state = (TcpState)row.state;
 
                 // Get process info by PID
@@ -116,14 +116,14 @@ public static class Connection
                 }
 
                 // Resolve remote host name if not cached
-                if (!_remoteHostNames.ContainsKey(remoteAddress))
+                if (!RemoteHostNames.ContainsKey(remoteAddress))
                 {
                     var dnsResolverTask = DNSClient.GetInstance().ResolvePtrAsync(remoteAddress);
 
                     dnsResolverTask.Wait();
 
                     // Cache the result
-                    _remoteHostNames.Add(remoteAddress,
+                    RemoteHostNames.Add(remoteAddress,
                         !dnsResolverTask.Result.HasError ? dnsResolverTask.Result.Value : "-/-");
                 }
 
@@ -133,7 +133,7 @@ public static class Connection
                     localPort,
                     remoteAddress,
                     remotePort,
-                    _remoteHostNames.GetValueOrDefault(remoteAddress, "-/-"),
+                    RemoteHostNames.GetValueOrDefault(remoteAddress, "-/-"),
                     state,
                     processId,
                     processName,

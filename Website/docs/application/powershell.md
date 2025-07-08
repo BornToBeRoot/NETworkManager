@@ -4,7 +4,9 @@ sidebar_position: 9
 
 # PowerShell
 
-With **PowerShell** you can start PowerShell consoles on the local computer or connect to remote computers via [PowerShell Remoting](https://learn.microsoft.com/en-us/powershell/scripting/learn/ps101/08-powershell-remoting). The integration of PowerShell with NETworkManger supports tabs and profiles for hosts. The connection can be established via a profile (double-click, Enter key or right-click `Connect`) or directly via the [connection](#connect) dialog.
+With **PowerShell** you can launch PowerShell consoles locally or connect to remote computers using [PowerShell Remoting](https://learn.microsoft.com/en-us/powershell/scripting/learn/ps101/08-powershell-remoting). You can also execute command-line applications such as `wsl`, `k9s`, or any other tools typically accessible from a PowerShell session. In addition, you can run PowerShell scripts directly within the console.
+
+The integration of PuTTY with NETworkManger supports tabs and profiles for hosts (and tools). You can launch the console / establish a connection via a profile (double-click, Enter key or right-click `Connect`) or directly via the [connection](#connect) dialog.
 
 :::info
 
@@ -14,19 +16,23 @@ PowerShell is a command-line shell and scripting language developed by Microsoft
 
 :::note
 
-Windows PowerShell and PowerShell Core are supported. Indructions for installing PowerShell Core can be found on the [official website](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?).
+Windows PowerShell and PowerShell are supported. Indructions for installing PowerShell Core can be found on the [official website](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?).
 
 :::
 
 :::tip
 
-Windows Subsystem for Linux (WSL) can be used in PowerShell by passing the following [command](#command) to the PowerShell console:
+Launching a command-line application such as `wsl` or `k9s` can be done by passing the [command](#command) to the PowerShell console.
 
 ```powershell
+# Connect to WSL
 wsl -d <DISTRIBUTION>
+
+# Connect to Kubernetes
+k9s --readonly
 ```
 
-See [FAQ > How to use Windows Subsystem for Linux (WSL) in PowerShell?](../faq/powershell-wsl) for more information.
+See [FAQ > PowerShell with command-line applications](../faq/powershell-cmd-apps) for more information.
 
 :::
 
@@ -183,6 +189,8 @@ Only available if [Remote console](#remote-console-1) is disabled.
 
 Use `wsl -d <DISTRIBUTION>` to connect to Windows Subsystem for Linux.
 
+Use `k9s` or `k9s --readonly` to manage Kubernetes clusters.
+
 :::
 
 ### Additional command line
@@ -224,6 +232,8 @@ Command to execute when the PowerShell console is started locally.
 :::tip
 
 Use `wsl -d <DISTRIBUTION>` to connect to Windows Subsystem for Linux.
+
+Use `k9s` or `k9s --readonly` to manage Kubernetes clusters.
 
 :::
 
@@ -284,6 +294,8 @@ Default command to execute when the PowerShell console is started locally.
 :::tip
 
 Use `wsl -d <DISTRIBUTION>` to connect to Windows Subsystem for Linux.
+
+Use `k9s` or `k9s --readonly` to manage Kubernetes clusters.
 
 :::
 
