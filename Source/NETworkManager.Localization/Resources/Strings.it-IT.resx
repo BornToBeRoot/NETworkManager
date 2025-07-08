@@ -679,7 +679,7 @@
     <value>Applica</value>
   </data>
   <data name="ApplyWindowsKeyCombinationsLikeAltTab" xml:space="preserve">
-    <value>Applica le combinazioni di tasti Windows (ad esempio ALT + TAB):</value>
+    <value>Applica combinazioni tasti Windows (ad es. ALT+Tab):</value>
   </data>
   <data name="Auth" xml:space="preserve">
     <value>Aut</value>
@@ -1380,16 +1380,16 @@ Cerca per tag con "tag = xxx".</value>
     <value>Inserisci un indirizzo IPv4 valido!</value>
   </data>
   <data name="EnterValidMACAddress" xml:space="preserve">
-    <value>Inserisci un indirizzo MAC valido (es. 00: F1: 23: AB: F2: 35)!</value>
+    <value>Inserisci un indirizzo MAC valido (ad es. 00: F1: 23: AB: F2: 35)!</value>
   </data>
   <data name="EnterValidPort" xml:space="preserve">
     <value>Inserisci una porta valida (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnetmask" xml:space="preserve">
-    <value>Inserisci una sottorete valida (per esempio 255.255.255.0)!</value>
+    <value>Inserisci una maschera sottorete valida (ad es. 255.255.255.0)!</value>
   </data>
   <data name="EnterValidSubnetmaskOrCIDR" xml:space="preserve">
-    <value>Inserisci una sottorete o CIDR validi (per esempio 255.255.255.0 o /24)!</value>
+    <value>Inserisci una maschera sottorete o CIDR valida (ad es. 255.255.255.0 o /24)!</value>
   </data>
   <data name="FieldCannotBeEmpty" xml:space="preserve">
     <value>Il campo non può essere vuoto!</value>
@@ -1461,10 +1461,10 @@ Cerca per tag con "tag = xxx".</value>
     <value>Inserisci una porta e/o intervallo di porte validi (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnet" xml:space="preserve">
-    <value>Inserisci una sottorete valida (es. 192.168.178.133/26)!</value>
+    <value>Inserisci una sottorete valida (ad es. 192.168.178.133/26)!</value>
   </data>
   <data name="EnterValidWebsiteUri" xml:space="preserve">
-    <value>Inserisci un sito web valido (es. https://example.com/index.html)</value>
+    <value>Inserisci n sito web valido (ad es. https://example.com/index.html)</value>
   </data>
   <data name="Green" xml:space="preserve">
     <value>Verde</value>
@@ -1757,7 +1757,7 @@ Il nome di dominio della parte di autenticazione potrebbe essere errato, il domi
     <value>Aggiungi una scheda per interrogare whois...</value>
   </data>
   <data name="EnterValidDomain" xml:space="preserve">
-    <value>Inserisci un dominio valido (come "esempio.com")!</value>
+    <value>Inserisci un dominio valido (ad es. "esempio.com")!</value>
   </data>
   <data name="WhoisServerNotFoundForTheDomain" xml:space="preserve">
     <value>Server Whois non trovato per il dominio: "{0}"</value>
@@ -2051,7 +2051,7 @@ Controlla la connessione di rete (firewall, proxy, ecc.).</value>
     <value>Usa API indirizzo IPv4 personalizzato</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv4AddressAPI" xml:space="preserve">
-    <value>URL a un servizio Web che può essere raggiunto tramite http o https e restituisce un indirizzo IPv4 come "xx.xx.xx.xx" come risposta.</value>
+    <value>URL ad un servizio web che può essere raggiunto tramite HTTP o HTTPS e restituisce un indirizzo IPv4, ad es. "xx.xx.xx.xx" come risposta.</value>
   </data>
   <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
     <value>Impossibile analizzare l'indirizzo IP pubblico da "{0}"!
@@ -3224,7 +3224,7 @@ Tuttavia, i valori originali NON vengono ripristinati.</value>
     <value>Server SNTP</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv6AddressAPI" xml:space="preserve">
-    <value>URL a un servizio Web che può essere raggiunto tramite http o https e restituisce un indirizzo IPv6 come "xxxx:xx:xxx::xx" come risposta.</value>
+    <value>URL ad un servizio web che può essere raggiunto tramite HTTP o HTTPS e restituisce un indirizzo IPv6, ad es. "XXXX: XX: XXX :: XX" come risposta.</value>
   </data>
   <data name="IPEndPoint" xml:space="preserve">
     <value>Terminale IP</value>
@@ -3266,7 +3266,7 @@ Tuttavia, i valori originali NON vengono ripristinati.</value>
     <value>Esiste già un server SNTP con questo nome!</value>
   </data>
   <data name="EnterValidHostnameOrIPAddress" xml:space="preserve">
-    <value>Inserisci un nome host valido (esempio "server-01" o "esempio.com") o un indirizzo IP valido (esempio 192.168.178.1)!</value>
+    <value>Inserisci un nome host valido (ad es. "server-01" o "esempio.com") o un indirizzo IP valido (ad es. 192.168.178.1)!</value>
   </data>
   <data name="Servers" xml:space="preserve">
     <value>Server</value>
@@ -3616,11 +3616,11 @@ Per assistenza contattare l'amministratore di rete.</value>
     <value>Le impostazioni in questa pagina contengono errori. Correggili per poter salvare.</value>
   </data>
   <data name="HelpMessage_PuTTYHostkey" xml:space="preserve">
-    <value>Chiave host SSH da usare per la connessione (come "71:b8:f2:6e..."). 
+    <value>Chiave host SSH da usare per la connessione (ad es. "71: B8: F2: 6E ...").
 Disponibile solo se la modalità è "SSH".</value>
   </data>
   <data name="HelpMessage_PuTTYPrivateKeyFile" xml:space="preserve">
-    <value>Percorso completo file chiave privata (come "C:\Users\BornToBeRoot\SSH\private_key.ppk"). 
+    <value>Percorso completo per il file chiave privato (ad es. "C:\Users\Borntoberoot\ssh\private_key.ppk"). 
 Disponibile solo se la modalità è "SSH".</value>
   </data>
   <data name="HelpMessage_PuTTYUsername" xml:space="preserve">
@@ -4035,5 +4035,28 @@ Per tutti i  dettagli consulta l'elenco modifiche</value>
     <value>La voce selezionata è stata eliminata permanentemente:
 
 {0} {1} {2}</value>
+  </data>
+  <data name="ExampleHostsFileEntryComment" xml:space="preserve">
+    <value>Server DNS primario</value>
+  </data>
+  <data name="EnterValidHostsFileEntryHostname" xml:space="preserve">
+    <value>Inserisci un nome host valido (ad es. "server-01" o "esempio.com")! 
+Più nomi host possono essere separati con uno spazio.</value>
+  </data>
+  <data name="HostsFileReadErrorMessage" xml:space="preserve">
+    <value>Il file "host" non può essere letto! 
+Per maggiori dettagli consulta il file registro.</value>
+  </data>
+  <data name="HostsFileWriteErrorMessage" xml:space="preserve">
+    <value>Il file "host" non può essere scritto. 
+Per maggiori dettagli consulta il file registro.</value>
+  </data>
+  <data name="HostsFileEntryNotFoundMessage" xml:space="preserve">
+    <value>La voce non è stata trovata nel file "host"! 
+Forse il file è stato modificato.</value>
+  </data>
+  <data name="HostsFileBackupErrorMessage" xml:space="preserve">
+    <value>Non è stato possibile creare un backup del file "host"! 
+Per maggiori dettagli consulta il file registro.</value>
   </data>
 </root>
