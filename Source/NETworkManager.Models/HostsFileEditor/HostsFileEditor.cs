@@ -132,16 +132,16 @@ public static class HostsFileEditor
 
             if (result.Success)
             {
-                Log.Debug("GetHostsFileEntries - Line matched: " + line);
+                Log.Debug($"GetHostsFileEntries - Line matched: {line}");
 
                 var entry = new HostsFileEntry
-                {
-                    IsEnabled = !result.Groups[1].Value.Equals("#"),
-                    IPAddress = result.Groups[2].Value,
-                    Hostname = result.Groups[3].Value.Replace(@"\s", "").Trim(),
-                    Comment = result.Groups[4].Value.TrimStart('#', ' '),
-                    Line = line
-                };
+                (
+                    !result.Groups[1].Value.Equals("#"),
+                    result.Groups[2].Value,
+                    result.Groups[3].Value.Replace(@"\s", "").Trim(),
+                    result.Groups[4].Value.TrimStart('#', ' '),
+                    line
+                );
 
                 // Skip example entries
                 if (!entry.IsEnabled)
@@ -157,7 +157,7 @@ public static class HostsFileEditor
             }
             else
             {
-                Log.Debug("GetHostsFileEntries - Line not matched: " + line);
+                Log.Debug($"GetHostsFileEntries - Line not matched: {line}");
             }
         }
 
@@ -201,31 +201,34 @@ public static class HostsFileEditor
             return HostsFileEntryModifyResult.ReadError;
         }
 
-        bool entryFound = false;
+        var entryFound = false;
 
         for (var i = 0; i < hostsFileLines.Count; i++)
         {
-            if (hostsFileLines[i] == entry.Line)
-            {
-                entryFound = true;
+            if (hostsFileLines[i] != entry.Line)
+                continue;
 
-                hostsFileLines.RemoveAt(i);
-                hostsFileLines.Insert(i, CreateEntryLine(new HostsFileEntry
-                {
-                    IsEnabled = true,
-                    IPAddress = entry.IPAddress,
-                    Hostname = entry.Hostname,
-                    Comment = entry.Comment,
-                    Line = entry.Line
-                }));
+            entryFound = true;
 
-                break;
-            }
+            Log.Debug($"EnableEntry - Found entry: {hostsFileLines[i]}");
+            hostsFileLines.RemoveAt(i);
+
+            var newEntry = new HostsFileEntry(
+                true,
+                entry.IPAddress,
+                entry.Hostname,
+                entry.Comment
+            );
+
+            Log.Debug($"EnableEntry - Enabling entry: {newEntry.Line}");
+            hostsFileLines.Insert(i, newEntry.Line);
+
+            break;
         }
 
         if (!entryFound)
         {
-            Log.Warn($"EnableEntry - Entry not found in hosts file: {entry.Line}");
+            Log.Warn($"EnableEntry - Entry not found in hosts file: {entry}");
 
             return HostsFileEntryModifyResult.NotFound;
         }
@@ -281,26 +284,29 @@ public static class HostsFileEditor
             return HostsFileEntryModifyResult.ReadError;
         }
 
-        bool entryFound = false;
+        var entryFound = false;
 
         for (var i = 0; i < hostsFileLines.Count; i++)
         {
-            if (hostsFileLines[i] == entry.Line)
-            {
-                entryFound = true;
+            if (hostsFileLines[i] != entry.Line)
+                continue;
 
-                hostsFileLines.RemoveAt(i);
-                hostsFileLines.Insert(i, CreateEntryLine(new HostsFileEntry
-                {
-                    IsEnabled = false,
-                    IPAddress = entry.IPAddress,
-                    Hostname = entry.Hostname,
-                    Comment = entry.Comment,
-                    Line = entry.Line
-                }));
+            entryFound = true;
 
-                break;
-            }
+            Log.Debug($"DisableEntry - Found entry: {hostsFileLines[i]}");
+            hostsFileLines.RemoveAt(i);
+
+            var newEntry = new HostsFileEntry(
+                false,
+                entry.IPAddress,
+                entry.Hostname,
+                entry.Comment
+            );
+
+            Log.Debug($"DisableEntry - Disabling entry: {newEntry.Line}");
+            hostsFileLines.Insert(i, newEntry.Line);
+
+            break;
         }
 
         if (!entryFound)
@@ -360,7 +366,8 @@ public static class HostsFileEditor
             return HostsFileEntryModifyResult.ReadError;
         }
 
-        hostsFileLines.Add(CreateEntryLine(entry));
+        Log.Debug($"AddEntry - Adding entry: {entry.Line}");
+        hostsFileLines.Add(entry.Line);
 
         try
         {
@@ -415,19 +422,22 @@ public static class HostsFileEditor
             return HostsFileEntryModifyResult.ReadError;
         }
 
-        bool entryFound = false;
+        var entryFound = false;
 
         for (var i = 0; i < hostsFileLines.Count; i++)
         {
-            if (hostsFileLines[i] == entry.Line)
-            {
-                entryFound = true;
+            if (hostsFileLines[i] != entry.Line)
+                continue;
 
-                hostsFileLines.RemoveAt(i);
-                hostsFileLines.Insert(i, CreateEntryLine(newEntry));
+            entryFound = true;
 
-                break;
-            }
+            Log.Debug($"EditEntry - Found entry: {hostsFileLines[i]}");
+            hostsFileLines.RemoveAt(i);
+
+            Log.Debug($"EditEntry - Editing entry: {newEntry.Line}");
+            hostsFileLines.Insert(i, newEntry.Line);
+
+            break;
         }
 
         if (!entryFound)
@@ -487,18 +497,19 @@ public static class HostsFileEditor
             return HostsFileEntryModifyResult.ReadError;
         }
 
-        bool entryFound = false;
+        var entryFound = false;
 
         for (var i = 0; i < hostsFileLines.Count; i++)
         {
-            if (hostsFileLines[i] == entry.Line)
-            {
-                entryFound = true;
+            if (hostsFileLines[i] != entry.Line)
+                continue;
 
-                hostsFileLines.RemoveAt(i);
+            entryFound = true;
 
-                break;
-            }
+            Log.Debug($"DeleteEntry - Found entry: {hostsFileLines[i]}");
+            hostsFileLines.RemoveAt(i);
+
+            break;
         }
 
         if (!entryFound)
@@ -519,25 +530,6 @@ public static class HostsFileEditor
         }
 
         return HostsFileEntryModifyResult.Success;
-    }
-
-    /// <summary>
-    /// Create a line for the hosts file entry.
-    /// </summary>
-    /// <param name="entry">Entry to create the line for.</param>
-    /// <returns>Line for the hosts file entry.</returns>
-    private static string CreateEntryLine(HostsFileEntry entry)
-    {
-        var line = entry.IsEnabled ? "" : "# ";
-
-        line += $"{entry.IPAddress}    {entry.Hostname}";
-
-        if (!string.IsNullOrWhiteSpace(entry.Comment))
-        {
-            line += $"        # {entry.Comment}";
-        }
-
-        return line.Trim();
     }
 
     /// <summary>
