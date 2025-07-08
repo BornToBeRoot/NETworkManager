@@ -52,6 +52,15 @@ public class HostsFileEntry
         IPAddress = ipAddress;
         Hostname = hostname;
         Comment = comment;
+        
+        var line = isEnabled ? "" : "# ";
+
+        line += $"{ipAddress}    {hostname}";
+
+        if (!string.IsNullOrWhiteSpace(comment))
+            line += $"        # {comment}";
+        
+        Line = line;
     }
     
     /// <summary>
@@ -62,8 +71,21 @@ public class HostsFileEntry
     /// <param name="hostname">Host name(s) of the host.</param>
     /// <param name="comment">Comment of the host.</param>
     /// <param name="line">Line of the entry in the hosts file.</param>
-    public HostsFileEntry(bool isEnabled, string ipAddress, string hostname, string comment, string line) : this(isEnabled, ipAddress, hostname, comment)
+    public HostsFileEntry(bool isEnabled, string ipAddress, string hostname, string comment, string line)
     {
+        IsEnabled = isEnabled;
+        IPAddress = ipAddress;
+        Hostname = hostname;
+        Comment = comment;
         Line = line;
+    }
+    
+    /// <summary>
+    /// Overrides the ToString method to return the line of the entry in the hosts file.
+    /// </summary>
+    /// <returns>Line of the entry in the hosts file.</returns>
+    public override string ToString()
+    {
+        return Line;
     }
 }
