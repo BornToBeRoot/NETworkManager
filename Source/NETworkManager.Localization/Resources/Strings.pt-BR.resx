@@ -1367,16 +1367,16 @@ Os arquivos do perfil não foram afetados!</value>
     <value>Entre um endereço IPv4 válido!</value>
   </data>
   <data name="EnterValidMACAddress" xml:space="preserve">
-    <value>Entre um endereço MAC válido (como 00:F1:23:AB:F2:35)!</value>
+    <value>Entre um endereço MAC válido (ex.: 00:F1:23:AB:F2:35)!</value>
   </data>
   <data name="EnterValidPort" xml:space="preserve">
     <value>Entre uma porta válida (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnetmask" xml:space="preserve">
-    <value>Entre uma máscara de sub-rede válida (como 255.255.255.0)!</value>
+    <value>Entre uma máscara de sub-rede válida (ex.: 255.255.255.0)!</value>
   </data>
   <data name="EnterValidSubnetmaskOrCIDR" xml:space="preserve">
-    <value>Digite uma sub-máscara de rede ou CIDR válido (como 255.255.255.0 ou /24)!</value>
+    <value>Digite uma sub-máscara de rede ou CIDR válido (ex.: 255.255.255.0 ou /24)!</value>
   </data>
   <data name="FieldCannotBeEmpty" xml:space="preserve">
     <value>O campo não pode estar vazio!</value>
@@ -1448,10 +1448,10 @@ Os arquivos do perfil não foram afetados!</value>
     <value>Digite uma porta válida e/ou intervalo de portas (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnet" xml:space="preserve">
-    <value>Digite uma sub-rede válida (como 192.168.178.133/26)!</value>
+    <value>Digite uma sub-rede válida (ex.: 192.168.178.133/26)!</value>
   </data>
   <data name="EnterValidWebsiteUri" xml:space="preserve">
-    <value>Insira um site válido (como https://exemplo.com/index.html)</value>
+    <value>Insira um site válido (ex.: https://exemplo.com/index.html)</value>
   </data>
   <data name="Green" xml:space="preserve">
     <value>Verde</value>
@@ -1742,7 +1742,7 @@ Os arquivos do perfil não foram afetados!</value>
     <value>Adicionar aba para consultar whois...</value>
   </data>
   <data name="EnterValidDomain" xml:space="preserve">
-    <value>Entre um domínio válido (como "exemplo.com")!</value>
+    <value>Entre um domínio válido (ex.: "exemplo.com")!</value>
   </data>
   <data name="WhoisServerNotFoundForTheDomain" xml:space="preserve">
     <value>Servidor whois não encontrado para o domínio: "{0}"</value>
@@ -2032,7 +2032,7 @@ público está desabilitada!</value>
     <value>Usar API de endereço IPv4 personalizado</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv4AddressAPI" xml:space="preserve">
-    <value>URL para um serviço da web que pode ser acessado via http ou https e retorna um endereço IP do tipo "xx.xx.xx.xx" como resposta.</value>
+    <value>URL para um serviço da web que pode ser acessado via http ou https e retorna um endereço IPv4, exemplo: "xx.xx.xx.xx" como resposta.</value>
   </data>
   <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
     <value>Não foi possível analisar o endereço IP público de "{0}"! Tente outro serviço ou use o padrão...</value>
@@ -3192,7 +3192,7 @@ Se a opção for desativada novamente, os valores não serão mais modificados. 
     <value>Servidor(es) SNTP</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv6AddressAPI" xml:space="preserve">
-    <value>URL para um serviço da web que pode ser acessado via http ou https e retorna um endereço IPv6 do tipo "xxxx:xx:xxx::xx" como resposta.</value>
+    <value>URL para um serviço da web que pode ser acessado via http ou https e retorna um endereço IPv6, exemplo: "xxxx:xx:xxx::xx" como resposta.</value>
   </data>
   <data name="IPEndPoint" xml:space="preserve">
     <value>Ponto final de IP</value>
@@ -3234,7 +3234,7 @@ Se a opção for desativada novamente, os valores não serão mais modificados. 
     <value>Um servidor SNTP com este nome já existe!</value>
   </data>
   <data name="EnterValidHostnameOrIPAddress" xml:space="preserve">
-    <value>Digite um nome de host válido (como "servidor-01.com" ou "exemplo.com") ou um endereço de IP válido (como 192.168.178.1)!</value>
+    <value>Digite um nome de host válido (ex.: "servidor-01.com" ou "exemplo.com") ou um endereço de IP válido (ex.: 192.168.178.1)!</value>
   </data>
   <data name="Servers" xml:space="preserve">
     <value>Servidor(es)</value>
@@ -3528,10 +3528,10 @@ As alterações nesse valor entrarão em vigor depois que o aplicativo for reini
     <value>As configurações nesta página contêm erros. Corrija-os para poder salvar.</value>
   </data>
   <data name="HelpMessage_PuTTYHostkey" xml:space="preserve">
-    <value>Chave de host SSH a ser usada para a conexão (como "71:b8:f2:6e..."). Disponível apenas se o modo for "SSH".</value>
+    <value>Chave de host SSH a ser usada para a conexão (ex.: "71:b8:f2:6e..."). Disponível apenas se o modo for "SSH".</value>
   </data>
   <data name="HelpMessage_PuTTYPrivateKeyFile" xml:space="preserve">
-    <value>Caminho completo para o arquivo de chave privada (como "C:\Users\BornToBeRoot\SSH\private_key.ppk"). Disponível apenas se o modo for "SSH".</value>
+    <value>Caminho completo para o arquivo de chave privada (ex.: "C:\Users\BornToBeRoot\SSH\private_key.ppk"). Disponível apenas se o modo for "SSH".</value>
   </data>
   <data name="HelpMessage_PuTTYUsername" xml:space="preserve">
     <value>Nome de usuário que será passado para a sessão PuTTY. Disponível apenas se o modo for "SSH", "Telnet" ou "Rlogin".</value>
@@ -3937,5 +3937,23 @@ Clique direito para mais opções.</value>
     <value>A entrada selecionada será excluída permanentemente:
 
 {0} {1} {2}</value>
+  </data>
+  <data name="ExampleHostsFileEntryComment" xml:space="preserve">
+    <value>Servidor DNS primário</value>
+  </data>
+  <data name="EnterValidHostsFileEntryHostname" xml:space="preserve">
+    <value>Digite um nome de host válido (ex.: "servidor-01.com" ou "exemplo.com")! Vários nomes de hosts podem ser separados por espaços.</value>
+  </data>
+  <data name="HostsFileReadErrorMessage" xml:space="preserve">
+    <value>O arquivo "hosts" não pôde ser lido! Veja o log para maiores detalhes</value>
+  </data>
+  <data name="HostsFileWriteErrorMessage" xml:space="preserve">
+    <value>O arquivo "hosts" não pôde ser escrito. Veja o log para maiores detalhes</value>
+  </data>
+  <data name="HostsFileEntryNotFoundMessage" xml:space="preserve">
+    <value>A entrada não foi encontrada no arquivo "hosts"! Talvez o arquivo tenha sido modificado.</value>
+  </data>
+  <data name="HostsFileBackupErrorMessage" xml:space="preserve">
+    <value>Um backup do arquivo "hosts" não pôde ser criado! Veja o arquivo de log para maiores detalhes.</value>
   </data>
 </root>
