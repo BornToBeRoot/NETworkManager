@@ -11,7 +11,7 @@
           -->
         <Grid>
             <Polygon x:Name="ToolTipCorner" Grid.ZIndex="1" Margin="0" Points="12,12 12,0 0,0"
-                     Fill="{DynamicResource MahApps.Brushes.Accent}" HorizontalAlignment="Right"
+                     Fill="#b95353" HorizontalAlignment="Right"
                      VerticalAlignment="Top" IsHitTestVisible="True" />
             <AdornedElementPlaceholder x:Name="Adorner" />
             <Popup PlacementTarget="{Binding ElementName=Adorner}" PopupAnimation="Fade" HorizontalOffset="5">
