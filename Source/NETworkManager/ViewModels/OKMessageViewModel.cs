@@ -6,13 +6,14 @@ namespace NETworkManager.ViewModels;
 
 public class OKMessageViewModel : ViewModelBase
 {
-    public OKMessageViewModel(Action<OKMessageViewModel> okCommand, string message, string okButtonText = null)
+    public OKMessageViewModel(Action<OKMessageViewModel> okCommand, string message, string okButtonText = null, ChildWindowIcon icon = ChildWindowIcon.Info)
     {
         OKCommand = new RelayCommand(_ => okCommand(this));
 
         Message = message;
 
         OKButtonText = okButtonText ?? Localization.Resources.Strings.OK;
+        Icon = icon;
     }
 
     public ICommand OKCommand { get; }
@@ -43,6 +44,21 @@ public class OKMessageViewModel : ViewModelBase
                 return;
 
             _okButtonText = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private ChildWindowIcon _icon;
+
+    public ChildWindowIcon Icon
+    {
+        get => _icon;
+        private init
+        {
+            if (value == _icon)
+                return;
+
+            _icon = value;
             OnPropertyChanged();
         }
     }

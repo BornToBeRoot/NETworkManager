@@ -452,7 +452,7 @@ public class HostsFileEditorViewModel : ViewModelBase
         {
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
-        }, message);
+        }, message, Strings.OK, ChildWindowIcon.Error);
 
         childWindow.Title = Strings.Error;
 
