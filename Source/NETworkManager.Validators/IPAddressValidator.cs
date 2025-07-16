@@ -14,6 +14,6 @@ public class IPAddressValidator : ValidationRule
         if (System.Net.IPAddress.TryParse(input, out var address) && (address.AddressFamily == AddressFamily.InterNetwork || address.AddressFamily == AddressFamily.InterNetworkV6))
             return ValidationResult.ValidResult;
 
-        return new ValidationResult(false, Strings.EnterValidIPv6Address);
+        return new ValidationResult(false, Strings.EnterValidIPAddress);
     }
 }
