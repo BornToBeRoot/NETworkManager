@@ -15,6 +15,7 @@
                                CloseByEscape="False"               
                                Padding="20"
                                OverlayBrush="{DynamicResource MahApps.Brushes.Gray8}"
+                               Loaded="ChildWindow_Loaded"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:WelcomeViewModel}">
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -125,7 +126,8 @@
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
-        <Button Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" Content="{x:Static Member=localization:Strings.Continue}"
+        <Button x:Name="ButtonContinue"
+                Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" Content="{x:Static Member=localization:Strings.Continue}"
                 Command="{Binding ContinueCommand}" IsDefault="True"
                 Style="{StaticResource ResourceKey=HighlightedButton}" />   
           </Grid>

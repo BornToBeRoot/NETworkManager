@@ -473,8 +473,21 @@ public class HostsFileEditorViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            await _dialogCoordinator.ShowMessageAsync(this, Strings.Error, ex.Message,
-                MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+            var childWindow = new OKMessageChildWindow();
+
+            var childWindowViewModel = new OKMessageViewModel(_ =>
+            {
+                childWindow.IsOpen = false;
+                ConfigurationManager.Current.IsChildWindowOpen = false;
+            }, ex.Message, Strings.OK, ChildWindowIcon.Error);
+
+            childWindow.Title = Strings.Error;
+
+            childWindow.DataContext = childWindowViewModel;
+
+            ConfigurationManager.Current.IsChildWindowOpen = true;
+
+            await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
         }
     }
 

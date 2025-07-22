@@ -27,7 +27,6 @@ public partial class GroupChildWindow
 
     private void ChildWindow_OnLoaded(object sender, RoutedEventArgs e)
     {
-        // Focus the PasswordBox when the child window is loaded 
         Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate
         {
             TextBoxName.Focus();
