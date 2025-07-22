@@ -101,7 +101,7 @@ public sealed class SNTPLookup
                 // NTP requires an IP address to connect to
                 IPAddress serverIP = null;
 
-                if (IPAddress.TryParse(server.Server, out var address) && (address.AddressFamily == AddressFamily.InterNetwork || address.AddressFamily == AddressFamily.InterNetworkV6))
+                if (IPAddress.TryParse(server.Server, out var address) && address.AddressFamily is AddressFamily.InterNetwork or AddressFamily.InterNetworkV6)
                 {
                     serverIP = address;
                 }
