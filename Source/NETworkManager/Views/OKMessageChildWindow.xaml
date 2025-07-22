@@ -16,7 +16,8 @@
              AllowMove="True"
              TitleForeground="{DynamicResource MahApps.Brushes.Gray3}"
              CloseByEscape="False"                               
-             OverlayBrush="{DynamicResource ResourceKey=MahApps.Brushes.Gray.SemiTransparent}"                               
+             OverlayBrush="{DynamicResource ResourceKey=MahApps.Brushes.Gray.SemiTransparent}"      
+             Loaded="ChildWindow_Loaded"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:OKMessageViewModel}">
     <simpleChildWindow:ChildWindow.Resources>
         <converters:ChildWindowIconToRectangleStyleConverter x:Key="ChildWindowIconToRectangleStyleConverter" />
@@ -47,7 +48,8 @@
             </Grid>
         </ScrollViewer>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="{Binding OKButtonText}" Command="{Binding Path=OKCommand}" IsDefault="True"
+            <Button x:Name="ButtonOK"
+                    Content="{Binding OKButtonText}" Command="{Binding Path=OKCommand}" IsDefault="True"
                     Style="{StaticResource ResourceKey=HighlightedButton}" />            
         </StackPanel>
     </Grid>

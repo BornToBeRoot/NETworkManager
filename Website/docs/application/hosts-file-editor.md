@@ -36,6 +36,8 @@ In addition, further actions can be performed using the buttons below:
 
 With `F5` you can refresh the hosts file.
 
-Right-click on the result to enable, disable, edit or delete an entry, or to copy or export the information.
+Right-click on the result to `enable`, `disable`, `edit` or `delete` an entry, or to `copy` or `export` the information.
+
+You can also use the Hotkeys `F2` (`edit`) or `Del` (`delete`) on a selected entry.
 
 :::

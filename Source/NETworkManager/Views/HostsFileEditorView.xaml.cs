@@ -1,7 +1,7 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using MahApps.Metro.Controls.Dialogs;
+﻿using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace NETworkManager.Views;
 
@@ -29,5 +29,11 @@ public partial class HostsFileEditorView
     {
         if (sender is ContextMenu menu)
             menu.DataContext = _viewModel;
+    }
+
+    private void DataGridRow_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        if (_viewModel.EditEntryCommand.CanExecute(null))
+            _viewModel.EditEntryCommand.Execute(null);
     }
 }

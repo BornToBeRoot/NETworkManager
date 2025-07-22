@@ -1,8 +1,8 @@
-﻿using System.Windows;
+﻿using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.ViewModels;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
@@ -24,6 +24,7 @@ public partial class DNSLookupSettingsView
 
     private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        _viewModel.EditDNSServer().ConfigureAwait(false);
+        if (_viewModel.EditDNSServerCommand.CanExecute(null))
+            _viewModel.EditDNSServerCommand.Execute(null);
     }
 }
