@@ -46,6 +46,10 @@ Release date: **xx.xx.2025**
 - Redesign export dialog. [#3090](https://github.com/BornToBeRoot/NETworkManager/pull/3090)
 - Add upgrade dialog when updating from a previous version. [#3077](https://github.com/BornToBeRoot/NETworkManager/pull/3077)
 
+**Network Interface**
+
+- Hide (outdated) IPv4/IPv6, DHCP, and DNS informations if adapter is not connected (Status is `down`). [#3114](https://github.com/BornToBeRoot/NETworkManager/pull/3114)
+
 **WiFi**
 
 - Redesign refresh button/view. [#3012](https://github.com/BornToBeRoot/NETworkManager/pull/3012)
