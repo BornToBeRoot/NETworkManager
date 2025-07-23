@@ -24,7 +24,7 @@
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <converters:BooleanToVisibilityCollapsedMultiConverter x:Key="BooleanToVisibilityCollapsedMultiConverter" />
+        <converters:BooleansOrToVisibilityCollapsedConverter x:Key="BooleansOrToVisibilityCollapsedConverter" />
         <converters:HostUpStyleConverter x:Key="HostUpStyleConverter" />
         <converters:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
@@ -518,7 +518,7 @@
                                     SortMemberPath="Hostname"
                                     MinWidth="150">
                     <DataGridTextColumn.Visibility>
-                        <MultiBinding Converter="{StaticResource BooleanToVisibilityCollapsedMultiConverter}">
+                        <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
                             <Binding Source="{x:Static Member=settings:SettingsManager.Current}"
                                      Path="IPScanner_ResolveHostname" />
                             <Binding Source="{x:Static Member=settings:SettingsManager.Current}"
@@ -544,7 +544,7 @@
                                     SortMemberPath="MACAddress"
                                     MinWidth="150">
                     <DataGridTextColumn.Visibility>
-                        <MultiBinding Converter="{StaticResource BooleanToVisibilityCollapsedMultiConverter}">
+                        <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
                             <Binding Source="{x:Static Member=settings:SettingsManager.Current}"
                                      Path="IPScanner_ResolveMACAddress" />
                             <Binding Source="{x:Static Member=settings:SettingsManager.Current}"
@@ -557,7 +557,7 @@
                                     SortMemberPath="Vendor"
                                     MinWidth="200">
                     <DataGridTextColumn.Visibility>
-                        <MultiBinding Converter="{StaticResource BooleanToVisibilityCollapsedMultiConverter}">
+                        <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
                             <Binding Source="{x:Static Member=settings:SettingsManager.Current}"
                                      Path="IPScanner_ResolveMACAddress" />
                             <Binding Source="{x:Static Member=settings:SettingsManager.Current}"

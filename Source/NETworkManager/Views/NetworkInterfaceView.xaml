@@ -26,6 +26,7 @@
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:BooleansAndToVisibilityCollapsedConverter x:Key="BooleansAndToVisibilityCollapsedConverter" />
         <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
         <converters:Bytes1000ToSpeedConverter x:Key="Bytes1000ToSpeedConverter" />
         <converters:Bytes1000ToSizeConverter x:Key="Bytes1000ToSizeConverter" />
@@ -222,98 +223,302 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <GridSplitter Grid.Column="1" Grid.RowSpan="20" Background="Transparent"
+                                <GridSplitter Grid.Column="1" Grid.RowSpan="20"
+                                              Background="Transparent"
                                               HorizontalAlignment="Stretch" />
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Name}" />
-                                <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding SelectedNetworkInterface.Name}" />
+
+                                <TextBlock Grid.Column="0" Grid.Row="0"
+                                           Text="{x:Static localization:Strings.Name}" />
+                                <TextBox Grid.Column="2" Grid.Row="0"
+                                         Text="{Binding SelectedNetworkInterface.Name}" />
                                 <TextBlock Grid.Column="0" Grid.Row="1"
                                            Text="{x:Static localization:Strings.Description}" />
                                 <TextBox Grid.Column="2" Grid.Row="1"
                                          Text="{Binding SelectedNetworkInterface.Description}" />
-                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Type}" />
-                                <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding SelectedNetworkInterface.Type}" />
+                                <TextBlock Grid.Column="0" Grid.Row="2"
+                                           Text="{x:Static localization:Strings.Type}" />
+                                <TextBox Grid.Column="2" Grid.Row="2"
+                                         Text="{Binding SelectedNetworkInterface.Type}" />
                                 <TextBlock Grid.Column="0" Grid.Row="3"
                                            Text="{x:Static localization:Strings.PhysicalAddress}" />
                                 <TextBox Grid.Column="2" Grid.Row="3"
                                          Text="{Binding SelectedNetworkInterface.PhysicalAddress, Converter={StaticResource PhysicalAddressToStringConverter}}" />
-                                <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Status}" />
+                                <TextBlock Grid.Column="0" Grid.Row="4"
+                                           Text="{x:Static localization:Strings.Status}" />
                                 <TextBox Grid.Column="2" Grid.Row="4"
                                          Text="{Binding SelectedNetworkInterface.Status, Converter={StaticResource OperationalStatusToStringConverter}}" />
-                                <TextBlock Grid.Column="0" Grid.Row="5" Text="{x:Static localization:Strings.Speed}" />
+                                <TextBlock Grid.Column="0" Grid.Row="5"
+                                           Text="{x:Static localization:Strings.Speed}" />
                                 <TextBox Grid.Column="2" Grid.Row="5"
                                          Text="{Binding SelectedNetworkInterface.Speed, Converter={StaticResource Bytes1000ToSpeedConverter}}" />
                                 <TextBlock Grid.Column="0" Grid.Row="6"
-                                           Text="{x:Static localization:Strings.IPv4ProtocolAvailable}" />
+                                           Text="{x:Static localization:Strings.IPv4ProtocolAvailable}">
+                                    <TextBlock.Visibility>
+                                        <MultiBinding
+                                            Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                        </MultiBinding>
+                                    </TextBlock.Visibility>
+                                </TextBlock>
                                 <TextBox Grid.Column="2" Grid.Row="6"
-                                         Text="{Binding SelectedNetworkInterface.IPv4ProtocolAvailable, Converter={StaticResource BooleanToStringConverter}}" />
+                                         Text="{Binding SelectedNetworkInterface.IPv4ProtocolAvailable, Converter={StaticResource BooleanToStringConverter}}">
+                                    <TextBox.Visibility>
+                                        <MultiBinding
+                                            Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                        </MultiBinding>
+                                    </TextBox.Visibility>
+                                </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="7"
-                                           Text="{x:Static localization:Strings.IPv4Address}"
-                                           Visibility="{Binding SelectedNetworkInterface.IPv4ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                           Text="{x:Static localization:Strings.IPv4Address}">
+                                    <TextBlock.Visibility>
+                                        <MultiBinding
+                                            Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                            <Binding Path="SelectedNetworkInterface.IPv4ProtocolAvailable" />
+                                        </MultiBinding>
+                                    </TextBlock.Visibility>
+                                </TextBlock>
                                 <TextBox Grid.Column="2" Grid.Row="7"
-                                         Text="{Binding SelectedNetworkInterface.IPv4Address, Converter={StaticResource IPAddressSubnetmaskTupleArrayToStringConverter}}"
-                                         Visibility="{Binding SelectedNetworkInterface.IPv4ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                         Text="{Binding SelectedNetworkInterface.IPv4Address, Converter={StaticResource IPAddressSubnetmaskTupleArrayToStringConverter}}">
+                                    <TextBox.Visibility>
+                                        <MultiBinding
+                                            Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                            <Binding Path="SelectedNetworkInterface.IPv4ProtocolAvailable" />
+                                        </MultiBinding>
+                                    </TextBox.Visibility>
+                                </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="8"
-                                           Text="{x:Static localization:Strings.IPv4DefaultGateway}"
-                                           Visibility="{Binding SelectedNetworkInterface.IPv4ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                           Text="{x:Static localization:Strings.IPv4DefaultGateway}">
+                                    <TextBlock.Visibility>
+                                        <MultiBinding
+                                            Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                            <Binding Path="SelectedNetworkInterface.IPv4ProtocolAvailable" />
+                                        </MultiBinding>
+                                    </TextBlock.Visibility>
+                                </TextBlock>
                                 <TextBox Grid.Column="2" Grid.Row="8"
-                                         Text="{Binding SelectedNetworkInterface.IPv4Gateway, Converter={StaticResource IPAddressArrayToStringConverter}}"
-                                         Visibility="{Binding SelectedNetworkInterface.IPv4ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                         Text="{Binding SelectedNetworkInterface.IPv4Gateway, Converter={StaticResource IPAddressArrayToStringConverter}}">
+                                    <TextBox.Visibility>
+                                        <MultiBinding
+                                            Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                            <Binding Path="SelectedNetworkInterface.IPv4ProtocolAvailable" />
+                                        </MultiBinding>
+                                    </TextBox.Visibility>
+                                </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="9"
-                                           Text="{x:Static localization:Strings.DHCPEnabled}" />
+                                           Text="{x:Static localization:Strings.DHCPEnabled}">
+                                    <TextBlock.Visibility>
+                                        <MultiBinding
+                                            Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                        </MultiBinding>
+                                    </TextBlock.Visibility>
+                                </TextBlock>
                                 <TextBox Grid.Column="2" Grid.Row="9"
-                                         Text="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToStringConverter}}" />
+                                         Text="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToStringConverter}}">
+                                    <TextBox.Visibility>
+                                        <MultiBinding
+                                            Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                        </MultiBinding>
+                                    </TextBox.Visibility>
+                                </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="10"
-                                           Text="{x:Static localization:Strings.DHCPServer}"
-                                           Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                           Text="{x:Static localization:Strings.DHCPServer}">
+                                    <TextBlock.Visibility>
+                                        <MultiBinding
+                                            Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                            <Binding Path="SelectedNetworkInterface.DhcpEnabled" />
+                                        </MultiBinding>
+                                    </TextBlock.Visibility>
+                                </TextBlock>
                                 <TextBox Grid.Column="2" Grid.Row="10"
-                                         Text="{Binding SelectedNetworkInterface.DhcpServer, Converter={StaticResource IPAddressArrayToStringConverter}}"
-                                         Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                         Text="{Binding SelectedNetworkInterface.DhcpServer, Converter={StaticResource IPAddressArrayToStringConverter}}">
+                                    <TextBox.Visibility>
+                                        <MultiBinding
+                                            Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                            <Binding Path="SelectedNetworkInterface.DhcpEnabled" />
+                                        </MultiBinding>
+                                    </TextBox.Visibility>
+                                </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="11"
-                                           Text="{x:Static localization:Strings.DHCPLeaseObtained}"
-                                           Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                           Text="{x:Static localization:Strings.DHCPLeaseObtained}">
+                                    <TextBlock.Visibility>
+                                        <MultiBinding
+                                            Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                            <Binding Path="SelectedNetworkInterface.DhcpEnabled" />
+                                        </MultiBinding>
+                                    </TextBlock.Visibility>
+                                </TextBlock>
                                 <TextBox Grid.Column="2" Grid.Row="11"
-                                         Text="{Binding SelectedNetworkInterface.DhcpLeaseObtained}"
-                                         Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                         Text="{Binding SelectedNetworkInterface.DhcpLeaseObtained}">
+                                    <TextBox.Visibility>
+                                        <MultiBinding
+                                            Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                            <Binding Path="SelectedNetworkInterface.DhcpEnabled" />
+                                        </MultiBinding>
+                                    </TextBox.Visibility>
+                                </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="12"
-                                           Text="{x:Static localization:Strings.DHCPLeaseExpires}"
-                                           Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                           Text="{x:Static localization:Strings.DHCPLeaseExpires}">
+                                    <TextBlock.Visibility>
+                                        <MultiBinding
+                                            Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                            <Binding Path="SelectedNetworkInterface.DhcpEnabled" />
+                                        </MultiBinding>
+                                    </TextBlock.Visibility>
+                                </TextBlock>
                                 <TextBox Grid.Column="2" Grid.Row="12"
-                                         Text="{Binding SelectedNetworkInterface.DhcpLeaseExpires}"
-                                         Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                         Text="{Binding SelectedNetworkInterface.DhcpLeaseExpires}">
+                                    <TextBox.Visibility>
+                                        <MultiBinding
+                                            Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                            <Binding Path="SelectedNetworkInterface.DhcpEnabled" />
+                                        </MultiBinding>
+                                    </TextBox.Visibility>
+                                </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="13"
-                                           Text="{x:Static localization:Strings.IPv6ProtocolAvailable}" />
+                                           Text="{x:Static localization:Strings.IPv6ProtocolAvailable}">
+                                    <TextBlock.Visibility>
+                                        <MultiBinding
+                                            Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                        </MultiBinding>
+                                    </TextBlock.Visibility>
+                                </TextBlock>
                                 <TextBox Grid.Column="2" Grid.Row="13"
-                                         Text="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToStringConverter}}" />
+                                         Text="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToStringConverter}}">
+                                    <TextBox.Visibility>
+                                        <MultiBinding
+                                            Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                        </MultiBinding>
+                                    </TextBox.Visibility>
+                                </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="14"
-                                           Text="{x:Static localization:Strings.IPv6AddressLinkLocal}"
-                                           Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                           Text="{x:Static localization:Strings.IPv6AddressLinkLocal}">
+                                    <TextBlock.Visibility>
+                                        <MultiBinding
+                                            Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                            <Binding Path="SelectedNetworkInterface.IPv6ProtocolAvailable" />
+                                        </MultiBinding>
+                                    </TextBlock.Visibility>
+                                </TextBlock>
                                 <TextBox Grid.Column="2" Grid.Row="14"
-                                         Text="{Binding SelectedNetworkInterface.IPv6AddressLinkLocal, Converter={StaticResource IPAddressArrayToStringConverter}}"
-                                         Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                         Text="{Binding SelectedNetworkInterface.IPv6AddressLinkLocal, Converter={StaticResource IPAddressArrayToStringConverter}}">
+                                    <TextBox.Visibility>
+                                        <MultiBinding
+                                            Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                            <Binding Path="SelectedNetworkInterface.IPv6ProtocolAvailable" />
+                                        </MultiBinding>
+                                    </TextBox.Visibility>
+                                </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="15"
-                                           Text="{x:Static localization:Strings.IPv6Address}"
-                                           Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                           Text="{x:Static localization:Strings.IPv6Address}">
+                                    <TextBlock.Visibility>
+                                        <MultiBinding
+                                            Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                            <Binding Path="SelectedNetworkInterface.IPv6ProtocolAvailable" />
+                                        </MultiBinding>
+                                    </TextBlock.Visibility>
+                                </TextBlock>
                                 <TextBox Grid.Column="2" Grid.Row="15"
-                                         Text="{Binding SelectedNetworkInterface.IPv6Address, Converter={StaticResource IPAddressArrayToStringConverter}}"
-                                         Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                         Text="{Binding SelectedNetworkInterface.IPv6Address, Converter={StaticResource IPAddressArrayToStringConverter}}">
+                                    <TextBox.Visibility>
+                                        <MultiBinding
+                                            Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                            <Binding Path="SelectedNetworkInterface.IPv6ProtocolAvailable" />
+                                        </MultiBinding>
+                                    </TextBox.Visibility>
+                                </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="16"
-                                           Text="{x:Static localization:Strings.IPv6DefaultGateway}"
-                                           Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                           Text="{x:Static localization:Strings.IPv6DefaultGateway}">
+                                    <TextBlock.Visibility>
+                                        <MultiBinding
+                                            Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                            <Binding Path="SelectedNetworkInterface.IPv6ProtocolAvailable" />
+                                        </MultiBinding>
+                                    </TextBlock.Visibility>
+                                </TextBlock>
                                 <TextBox Grid.Column="2" Grid.Row="16"
-                                         Text="{Binding SelectedNetworkInterface.IPv6Gateway , Converter={StaticResource IPAddressArrayToStringConverter}}"
-                                         Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                         Text="{Binding SelectedNetworkInterface.IPv6Gateway , Converter={StaticResource IPAddressArrayToStringConverter}}">
+                                    <TextBox.Visibility>
+                                        <MultiBinding
+                                            Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                            <Binding Path="SelectedNetworkInterface.IPv6ProtocolAvailable" />
+                                        </MultiBinding>
+                                    </TextBox.Visibility>
+                                </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="17"
-                                           Text="{x:Static localization:Strings.DNSAutoconfiguration}" />
+                                           Text="{x:Static localization:Strings.DNSAutoconfiguration}">
+                                    <TextBlock.Visibility>
+                                        <MultiBinding
+                                            Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                        </MultiBinding>
+                                    </TextBlock.Visibility>
+                                </TextBlock>
                                 <TextBox Grid.Column="2" Grid.Row="17"
-                                         Text="{Binding SelectedNetworkInterface.DNSAutoconfigurationEnabled, Converter={StaticResource BooleanToStringConverter}}" />
+                                         Text="{Binding SelectedNetworkInterface.DNSAutoconfigurationEnabled, Converter={StaticResource BooleanToStringConverter}}">
+                                    <TextBox.Visibility>
+                                        <MultiBinding
+                                            Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                        </MultiBinding>
+                                    </TextBox.Visibility>
+                                </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="18"
-                                           Text="{x:Static localization:Strings.DNSSuffix}" />
+                                           Text="{x:Static localization:Strings.DNSSuffix}">
+                                    <TextBlock.Visibility>
+                                        <MultiBinding
+                                            Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                        </MultiBinding>
+                                    </TextBlock.Visibility>
+                                </TextBlock>
                                 <TextBox Grid.Column="2" Grid.Row="18"
-                                         Text="{Binding SelectedNetworkInterface.DNSSuffix}" />
+                                         Text="{Binding SelectedNetworkInterface.DNSSuffix}">
+                                    <TextBox.Visibility>
+                                        <MultiBinding
+                                            Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                        </MultiBinding>
+                                    </TextBox.Visibility>
+                                </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="19"
-                                           Text="{x:Static localization:Strings.DNSServers}" />
+                                           Text="{x:Static localization:Strings.DNSServers}">
+                                    <TextBlock.Visibility>
+                                        <MultiBinding
+                                            Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                        </MultiBinding>
+                                    </TextBlock.Visibility>
+                                </TextBlock>
                                 <TextBox Grid.Column="2" Grid.Row="19"
-                                         Text="{Binding SelectedNetworkInterface.DNSServer, Converter={StaticResource IPAddressArrayToStringConverter}}" />
+                                         Text="{Binding SelectedNetworkInterface.DNSServer, Converter={StaticResource IPAddressArrayToStringConverter}}">
+                                    <TextBox.Visibility>
+                                        <MultiBinding
+                                            Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                        </MultiBinding>
+                                    </TextBox.Visibility>
+                                </TextBox>
                             </Grid>
                         </ScrollViewer>
                         <mahAppsControls:MetroProgressBar Grid.Row="4"
@@ -1396,11 +1601,15 @@
                                         <Grid.ToolTip>
                                             <ToolTip MinWidth="250">
                                                 <StackPanel Margin="10">
-                                                    <TextBlock Text="{Binding Host}" Style="{StaticResource DefaultTextBlock}" />
-                                                    <Separator Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,10" />
-                                                    <TextBlock Text="{Binding Description}" Style="{StaticResource InfoTextBlock}" TextWrapping="Wrap" />
+                                                    <TextBlock Text="{Binding Host}"
+                                                               Style="{StaticResource DefaultTextBlock}" />
+                                                    <Separator Background="{DynamicResource MahApps.Brushes.Gray8}"
+                                                               Margin="0,10" />
+                                                    <TextBlock Text="{Binding Description}"
+                                                               Style="{StaticResource InfoTextBlock}"
+                                                               TextWrapping="Wrap" />
                                                 </StackPanel>
-                                            </ToolTip>                                        
+                                            </ToolTip>
                                         </Grid.ToolTip>
                                         <TextBlock Text="{Binding Name}" Style="{StaticResource CenterTextBlock}" />
                                     </Grid>
