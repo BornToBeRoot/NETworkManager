@@ -1,5 +1,6 @@
 ﻿using NETworkManager.Localization.Resources;
 using System.Globalization;
+using System.Net;
 using System.Net.Sockets;
 using System.Windows.Controls;
 
@@ -11,7 +12,7 @@ public class IPv6AddressValidator : ValidationRule
     {
         var input = (value as string);
 
-        if (System.Net.IPAddress.TryParse(input, out var address) && address.AddressFamily == AddressFamily.InterNetworkV6)
+        if (IPAddress.TryParse(input, out var address) && address.AddressFamily == AddressFamily.InterNetworkV6)
             return ValidationResult.ValidResult;
 
         return new ValidationResult(false, Strings.EnterValidIPv6Address);
