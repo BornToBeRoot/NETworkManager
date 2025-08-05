@@ -74,6 +74,14 @@ List of DNS server profiles. A profile can contain one or more DNS servers with 
 | Level3            | `209.244.0.3:53`  | `209.244.0.4:53`  |
 | Verisign          | `64.6.64.6:53`    | `64.6.65.6:53`    |
 
+:::note
+
+Right-click on a selected DNS server to `edit` or `delete` it.
+
+You can also use the Hotkeys `F2` (`edit`) or `Del` (`delete`) on a selected DNS server.
+
+:::
+
 ### Add DNS suffix (primary) to hostname
 
 Add the primary DNS suffix to the hostname.

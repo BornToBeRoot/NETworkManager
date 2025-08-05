@@ -119,6 +119,14 @@ List of common `tcp` ports to scan for.
 | LDAP              | `389; 636`                          |
 | HTTP proxy        | `3128`                              |
 
+:::note
+
+Right-click on a selected port profile to `edit` or `delete` it.
+
+You can also use the Hotkeys `F2` (`edit`) or `Del` (`delete`) on a selected port profile.
+
+:::
+
 ### Show closed ports
 
 Show closed ports in the result list.

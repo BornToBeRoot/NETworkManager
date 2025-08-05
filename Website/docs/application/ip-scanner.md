@@ -197,6 +197,14 @@ In the arguments you can use the following placeholders:
 | `$$ipaddress$$` | IP address  |
 | `$$hostname$$`  | Hostname    |
 
+:::note
+
+Right-click on a selected custom command to `edit` or `delete` it.
+
+You can also use the Hotkeys `F2` (`edit`) or `Del` (`delete`) on a selected custom command.
+
+:::
+
 ### Max. concurrent host threads
 
 Maximal number of threads used to scan for active hosts (1 thread = 1 host/ip address).
