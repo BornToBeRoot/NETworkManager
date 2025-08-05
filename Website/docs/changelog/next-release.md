@@ -57,6 +57,7 @@ Release date: **xx.xx.2025**
 **DNS Lookup**
 
 - Record types that are not implemented are now hidden in the user interface. [#3012](https://github.com/BornToBeRoot/NETworkManager/pull/3012)
+- Added priority to MX records. The result is now shown as `10 mail.example.com.` instead of `mail.example.com.`. [#3118](https://github.com/BornToBeRoot/NETworkManager/pull/3118)
 
 **PowerShell**
 
