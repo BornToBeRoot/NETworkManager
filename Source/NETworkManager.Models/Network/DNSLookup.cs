@@ -2,7 +2,6 @@
 using DnsClient.Protocol;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -34,6 +33,7 @@ public sealed class DNSLookup
     #endregion
 
     #region Variables
+
     /// <summary>
     ///     Query types that can be used.
     /// </summary>
@@ -137,7 +137,7 @@ public sealed class DNSLookup
     {
         Task.Run(() =>
         {
-            // Append dns suffix to hostname, if option is set, otherwise just copy the list
+            // Append dns suffix to hostname, if the option is set, otherwise copy the list
             var queries = _addSuffix && _settings.QueryType != QueryType.PTR ? GetHostWithSuffix(hosts) : hosts;
 
             // For each dns server
@@ -249,8 +249,10 @@ public sealed class DNSLookup
         // CAA
         foreach (var record in dnsResourceRecords.OfType<CaaRecord>())
             OnRecordReceived(new DNSLookupRecordReceivedArgs(
-                new DNSLookupRecordInfo(record.DomainName, record.TimeToLive, $"{record.RecordClass}", $"{record.RecordType}",
-                    $"{record.Flags} {record.Tag} {record.Value}", $"{nameServer.Address}", nameServerHostname, nameServer.Port)));
+                new DNSLookupRecordInfo(
+                    record.DomainName, record.TimeToLive, $"{record.RecordClass}", $"{record.RecordType}",
+                    $"{record.Flags} {record.Tag} {record.Value}", $"{nameServer.Address}", nameServerHostname,
+                    nameServer.Port)));
 
         // CNAME
         foreach (var record in dnsResourceRecords.OfType<CNameRecord>())
@@ -264,14 +266,16 @@ public sealed class DNSLookup
             OnRecordReceived(new DNSLookupRecordReceivedArgs(
                 new DNSLookupRecordInfo(
                     record.DomainName, record.TimeToLive, $"{record.RecordClass}", $"{record.RecordType}",
-                    $"{record.Flags} {record.Protocol} {record.Algorithm} {Convert.ToBase64String(record.PublicKey.ToArray())}", $"{nameServer.Address}", nameServerHostname, nameServer.Port)));
+                    $"{record.Flags} {record.Protocol} {record.Algorithm} {Convert.ToBase64String(record.PublicKey.ToArray())}",
+                    $"{nameServer.Address}", nameServerHostname, nameServer.Port)));
 
         // MX
         foreach (var record in dnsResourceRecords.OfType<MxRecord>())
             OnRecordReceived(new DNSLookupRecordReceivedArgs(
                 new DNSLookupRecordInfo(
                     record.DomainName, record.TimeToLive, $"{record.RecordClass}", $"{record.RecordType}",
-                    record.Exchange, $"{nameServer.Address}", nameServerHostname, nameServer.Port)));
+                    $"{record.Preference} {record.Exchange}", $"{nameServer.Address}", nameServerHostname,
+                    nameServer.Port)));
 
         // NS
         foreach (var record in dnsResourceRecords.OfType<NsRecord>())
@@ -299,7 +303,8 @@ public sealed class DNSLookup
             OnRecordReceived(new DNSLookupRecordReceivedArgs(
                 new DNSLookupRecordInfo(
                     record.DomainName, record.TimeToLive, $"{record.RecordClass}", $"{record.RecordType}",
-                    $"{record.Priority} {record.Weight} {record.Port} {record.Target}", $"{nameServer.Address}", nameServerHostname, nameServer.Port)));
+                    $"{record.Priority} {record.Weight} {record.Port} {record.Target}", $"{nameServer.Address}",
+                    nameServerHostname, nameServer.Port)));
 
         // TXT
         foreach (var record in dnsResourceRecords.OfType<TxtRecord>())
@@ -307,8 +312,6 @@ public sealed class DNSLookup
                 new DNSLookupRecordInfo(
                     record.DomainName, record.TimeToLive, $"{record.RecordClass}", $"{record.RecordType}",
                     string.Join(", ", record.Text), $"{nameServer.Address}", nameServerHostname, nameServer.Port)));
-
-
 
         // ToDo: implement more
     }
