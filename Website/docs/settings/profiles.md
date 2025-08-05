@@ -35,7 +35,11 @@ List of profile files.
 
 :::note
 
-Profile files can be encrypted with a master password. Right click on a profile and select `Encryption... > Enable encryption...`. See [FAQ > How to enable profile file encryption?](https://borntoberoot.net/NETworkManager/docs/faq/profile-file-encryption#how-to-enable-profile-file-encryption) for more details.
+Right-click on a profile file to `edit`, `encrypt/decrypt` or `delete` it.
+
+You can also use the Hotkeys `F2` (`edit`) or `Del` (`delete`) on a selected profile file.
+
+Profile files can be encrypted with a master password. See [FAQ > How to enable profile file encryption?](https://borntoberoot.net/NETworkManager/docs/faq/profile-file-encryption#how-to-enable-profile-file-encryption) for more details.
 
 At least one profile is required and must exist.
 

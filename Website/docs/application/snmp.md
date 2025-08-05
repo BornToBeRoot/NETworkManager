@@ -399,6 +399,14 @@ List of common OIDs for the `get`, `walk` or `set` SNMP request.
 | UDP-MIB                                                   | .1.3.6.1.2.1.7                                                                                      | Walk |
 | UCD-SNMP-MIB                                              | .1.3.6.1.4.1.2021                                                                                   | Walk |
 
+:::note
+
+Right-click on a selected OID profile to `edit` or `delete` it.
+
+You can also use the Hotkeys `F2` (`edit`) or `Del` (`delete`) on a selected OID profile.
+
+:::
+
 ### Walk mode
 
 Walk mode for the SNMP request.
