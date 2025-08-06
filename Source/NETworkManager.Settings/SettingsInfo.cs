@@ -3380,7 +3380,6 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-
     private bool _webConsole_ShowAddressBar = GlobalStaticConfiguration.WebConsole_ShowAddressBar;
 
     public bool WebConsole_ShowAddressBar
@@ -3392,6 +3391,36 @@ public class SettingsInfo : INotifyPropertyChanged
                 return;
 
             _webConsole_ShowAddressBar = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    private bool _webConsole_IsStatusBarEnabled = GlobalStaticConfiguration.WebConsole_IsStatusBarEnabled;
+    
+    public bool WebConsole_IsStatusBarEnabled
+    {
+        get => _webConsole_IsStatusBarEnabled;
+        set
+        {
+            if (value == _webConsole_IsStatusBarEnabled)
+                return;
+
+            _webConsole_IsStatusBarEnabled = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    private bool _webConsole_IsPasswordSaveEnabled = GlobalStaticConfiguration.WebConsole_IsPasswordSaveEnabled;
+    
+    public bool WebConsole_IsPasswordSaveEnabled
+    {
+        get => _webConsole_IsPasswordSaveEnabled;
+        set
+        {
+            if (value == _webConsole_IsPasswordSaveEnabled)
+                return;
+
+            _webConsole_IsPasswordSaveEnabled = value;
             OnPropertyChanged();
         }
     }
