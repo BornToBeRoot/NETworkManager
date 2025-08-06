@@ -149,7 +149,7 @@ public static class GlobalStaticConfiguration
     public static int DNSLookup_Timeout => 2;
     public static ExportFileType DNSLookup_ExportFileType => ExportFileType.Csv;
 
-    // Application: RemoteDesktop
+    // Application: Remote Desktop
     public static bool RemoteDesktop_UseCurrentViewSize => true;
     public static int RemoteDesktop_ScreenWidth => 1280;
     public static int RemoteDesktop_ScreenHeight => 768;
@@ -206,6 +206,10 @@ public static class GlobalStaticConfiguration
     // Application: WebConsole
     public static bool WebConsole_ShowAddressBar => true;
 
+    public static bool WebConsole_IsStatusBarEnabled = true;
+    
+    public static bool WebConsole_IsPasswordSaveEnabled = true;
+    
     public static string WebConsole_Cache =>
         Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             AssemblyManager.Current.Name, "WebConsole_Cache");

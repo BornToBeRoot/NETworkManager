@@ -12,6 +12,7 @@ public class LocalizationInfo
     /// </summary>
     public LocalizationInfo()
     {
+
     }
 
     /// <summary>

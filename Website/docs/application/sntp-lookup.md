@@ -40,7 +40,7 @@ List of SNTP server profiles. A profile can contain one or more SNTP servers wit
 
 :::note
 
-Right-click on a selected OID profile to `edit`, `copy` or `delete` it.
+Right-click on a selected OID profile to `edit` or `delete` it.
 
 You can also use the Hotkeys `F2` (`edit`) or `Del` (`delete`) on a selected OID profile.
 

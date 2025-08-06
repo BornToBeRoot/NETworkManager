@@ -1,4 +1,11 @@
-﻿using NETworkManager.Settings;
+﻿using MahApps.Metro.SimpleChildWindow;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
@@ -26,6 +33,42 @@ public class WebConsoleSettingsViewModel : ViewModelBase
         }
     }
 
+    private bool _isStatusBarEnabled;
+
+    public bool IsStatusBarEnabled
+    {
+        get => _isStatusBarEnabled;
+        set
+        {
+            if (value == _isStatusBarEnabled)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.WebConsole_IsStatusBarEnabled = value;
+
+            _isStatusBarEnabled = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _isPasswordSaveEnabled;
+
+    public bool IsPasswordSaveEnabled
+    {
+        get => _isPasswordSaveEnabled;
+        set
+        {
+            if (value == _isPasswordSaveEnabled)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.WebConsole_IsPasswordSaveEnabled = value;
+
+            _isPasswordSaveEnabled = value;
+            OnPropertyChanged();
+        }
+    }
+
     #endregion
 
     #region Constructor, load settings
@@ -42,7 +85,49 @@ public class WebConsoleSettingsViewModel : ViewModelBase
     private void LoadSettings()
     {
         ShowAddressBar = SettingsManager.Current.WebConsole_ShowAddressBar;
+        IsStatusBarEnabled = SettingsManager.Current.WebConsole_IsStatusBarEnabled;
+        IsPasswordSaveEnabled = SettingsManager.Current.WebConsole_IsPasswordSaveEnabled;
     }
 
+    #endregion
+
+    #region ICommands & Actions
+
+    public ICommand DeleteBrowsingDataCommand => new RelayCommand(_ => DeleteBrowsingDataAction());
+
+    private void DeleteBrowsingDataAction()
+    {
+        DeleteBrowsingData().ConfigureAwait(false);
+    }
+    #endregion
+
+    #region Methods
+    private Task DeleteBrowsingData()
+    {
+        var childWindow = new OKCancelInfoMessageChildWindow();
+
+        var childWindowViewModel = new OKCancelInfoMessageViewModel(_ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            //SettingsManager.Current.AWSSessionManager_AWSProfiles.Remove(SelectedAWSProfile);
+        }, _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        },
+            Strings.DeleteBrowsingDataMessage,
+            Strings.Delete
+        );
+
+        childWindow.Title = Strings.DeleteBrowsingData;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+    }
     #endregion
 }

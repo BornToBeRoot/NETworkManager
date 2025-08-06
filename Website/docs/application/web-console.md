@@ -51,3 +51,24 @@ Show or hide the navigation / address bar.
 **Type:** `Boolean`
 
 **Default:** `Enabled`
+
+### Show status bar
+
+Show or hide the status bar in the bottom-left corner (e.g. to show the URL on hover).
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
+### Save credentials
+
+Enable or disable the option to save credentials in the WebView2 browser. This will display 
+a dialog similar to the one in Microsoft Edge when a website requests to save the login informations.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
+### Delete browsing data
+
+Button to delete the browsing data (e.g. history, cookies, cache, credentials, etc.) of the current WebView2 profile.
