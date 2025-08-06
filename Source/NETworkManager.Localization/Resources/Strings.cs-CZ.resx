@@ -3864,13 +3864,19 @@ Right-click for more options.</value>
   <data name="HelpMessage_ShowStatusBar" xml:space="preserve">
     <value />
   </data>
-  <data name="ShowOptionToSavePasswords" xml:space="preserve">
+  <data name="SaveCredentials" xml:space="preserve">
     <value />
   </data>
-  <data name="HelpMessage_ShowOptionToSavePasswords" xml:space="preserve">
+  <data name="HelpMessage_SaveCredentials" xml:space="preserve">
     <value />
   </data>
-  <data name="ClearBrowsingData" xml:space="preserve">
+  <data name="DeleteBrowsingData" xml:space="preserve">
+    <value />
+  </data>
+  <data name="DeleteBrowsingDataMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="BrowsingData" xml:space="preserve">
     <value />
   </data>
 </root>

@@ -1330,6 +1330,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Browsing Data.
+        /// </summary>
+        public static string BrowsingData {
+            get {
+                return ResourceManager.GetString("BrowsingData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to BSSID.
         /// </summary>
         public static string BSSID {
@@ -1659,15 +1668,6 @@ namespace NETworkManager.Localization.Resources {
         public static string Class {
             get {
                 return ResourceManager.GetString("Class", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Clear browsing data.
-        /// </summary>
-        public static string ClearBrowsingData {
-            get {
-                return ResourceManager.GetString("ClearBrowsingData", resourceCulture);
             }
         }
         
@@ -2507,6 +2507,24 @@ namespace NETworkManager.Localization.Resources {
         public static string DeleteAWSProfileMessage {
             get {
                 return ResourceManager.GetString("DeleteAWSProfileMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete browsing data.
+        /// </summary>
+        public static string DeleteBrowsingData {
+            get {
+                return ResourceManager.GetString("DeleteBrowsingData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Permanently delete browsing data (history, cookies, cache, credentials, etc.) for the current WebView2 profile..
+        /// </summary>
+        public static string DeleteBrowsingDataMessage {
+            get {
+                return ResourceManager.GetString("DeleteBrowsingDataMessage", resourceCulture);
             }
         }
         
@@ -4522,9 +4540,9 @@ namespace NETworkManager.Localization.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Displays a dialog to save credentials after a successful sign-in..
         /// </summary>
-        public static string HelpMessage_ShowOptionToSavePasswords {
+        public static string HelpMessage_SaveCredentials {
             get {
-                return ResourceManager.GetString("HelpMessage_ShowOptionToSavePasswords", resourceCulture);
+                return ResourceManager.GetString("HelpMessage_SaveCredentials", resourceCulture);
             }
         }
         
@@ -8875,6 +8893,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save credentials.
+        /// </summary>
+        public static string SaveCredentials {
+            get {
+                return ResourceManager.GetString("SaveCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save settings in the application folder.
         /// </summary>
         public static string SaveSettingsInApplicationFolder {
@@ -9370,15 +9397,6 @@ namespace NETworkManager.Localization.Resources {
         public static string ShowOnlyMostCommonQueryTypes {
             get {
                 return ResourceManager.GetString("ShowOnlyMostCommonQueryTypes", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Show option to save passwords.
-        /// </summary>
-        public static string ShowOptionToSavePasswords {
-            get {
-                return ResourceManager.GetString("ShowOptionToSavePasswords", resourceCulture);
             }
         }
         

@@ -1,4 +1,11 @@
-﻿using NETworkManager.Settings;
+﻿using MahApps.Metro.SimpleChildWindow;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
@@ -49,7 +56,7 @@ public class WebConsoleSettingsViewModel : ViewModelBase
     public bool IsPasswordSaveEnabled
     {
         get => _isPasswordSaveEnabled;
-        set 
+        set
         {
             if (value == _isPasswordSaveEnabled)
                 return;
@@ -82,5 +89,45 @@ public class WebConsoleSettingsViewModel : ViewModelBase
         IsPasswordSaveEnabled = SettingsManager.Current.WebConsole_IsPasswordSaveEnabled;
     }
 
+    #endregion
+
+    #region ICommands & Actions
+
+    public ICommand DeleteBrowsingDataCommand => new RelayCommand(_ => DeleteBrowsingDataAction());
+
+    private void DeleteBrowsingDataAction()
+    {
+        DeleteBrowsingData().ConfigureAwait(false);
+    }
+    #endregion
+
+    #region Methods
+    private Task DeleteBrowsingData()
+    {
+        var childWindow = new OKCancelInfoMessageChildWindow();
+
+        var childWindowViewModel = new OKCancelInfoMessageViewModel(_ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            //SettingsManager.Current.AWSSessionManager_AWSProfiles.Remove(SelectedAWSProfile);
+        }, _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        },
+            Strings.DeleteBrowsingDataMessage,
+            Strings.Delete
+        );
+
+        childWindow.Title = Strings.DeleteBrowsingData;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+    }
     #endregion
 }

@@ -22,18 +22,22 @@
                 </Rectangle.Resources>
             </Rectangle>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-            <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowOptionToSavePasswords}" 
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+            <mah:ToggleSwitch Header="{x:Static localization:Strings.SaveCredentials}" 
                               IsOn="{Binding IsPasswordSaveEnabled}" />
             <Rectangle Width="24" Height="24" VerticalAlignment="Top"
-                       ToolTip="{x:Static localization:Strings.HelpMessage_ShowOptionToSavePasswords}"
+                       ToolTip="{x:Static localization:Strings.HelpMessage_SaveCredentials}"
                        Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
                 </Rectangle.Resources>
             </Rectangle>
         </StackPanel>
-        <Button Content="{x:Static localization:Strings.ClearBrowsingData}" Command="{Binding Path=ClearBrowsingDataCommand}"
+        <TextBlock Text="{x:Static localization:Strings.BrowsingData}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Text="{x:Static localization:Strings.DeleteBrowsingDataMessage}"
+                   Style="{StaticResource DefaultTextBlock}"
+                   Margin="0,0,0,10" />
+        <Button Content="{x:Static localization:Strings.DeleteBrowsingData}" Command="{Binding Path=DeleteBrowsingDataCommand}"
                 Style="{StaticResource DefaultButton}" HorizontalAlignment="Left"
                 Margin="0,0,0,10" />
     </StackPanel>

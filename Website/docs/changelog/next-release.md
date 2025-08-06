@@ -71,6 +71,12 @@ Release date: **xx.xx.2025**
 
 - Find `pwsh.exe` and `powershell.exe` executable by path, similar to `where.exe`. [#2962](https://github.com/BornToBeRoot/NETworkManager/pull/2962)
 
+**Web Console**
+
+- Setting `Show status bar` added to show or hide the status bar. [#3056](https://github.com/BornToBeRoot/NETworkManager/pull/3056)
+- Setting `Save credentials` added to display a dialog to save login informations in the WebView2 browser similar to Microsoft Edge. [#3056](https://github.com/BornToBeRoot/NETworkManager/pull/3056)
+- Button `Delete browsing data` added to delete the browsing data (history, cookies, cache, credentials, etc.) of the current WebView2 profile. [#3056](https://github.com/BornToBeRoot/NETworkManager/pull/3056)
+
 **Connections**
 
 - Redesign refresh button/view. [#3012](https://github.com/BornToBeRoot/NETworkManager/pull/3012)

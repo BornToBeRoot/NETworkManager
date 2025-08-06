@@ -3941,13 +3941,19 @@ Right-click for more options.</value>
   <data name="HelpMessage_ShowStatusBar" xml:space="preserve">
     <value>Displays the status bar in the bottom-left of the WebView when hovering over a link.</value>
   </data>
-  <data name="ShowOptionToSavePasswords" xml:space="preserve">
-    <value>Show option to save passwords</value>
+  <data name="SaveCredentials" xml:space="preserve">
+    <value>Save credentials</value>
   </data>
-  <data name="HelpMessage_ShowOptionToSavePasswords" xml:space="preserve">
+  <data name="HelpMessage_SaveCredentials" xml:space="preserve">
     <value>Displays a dialog to save credentials after a successful sign-in.</value>
   </data>
-  <data name="ClearBrowsingData" xml:space="preserve">
-    <value>Clear browsing data</value>
+  <data name="DeleteBrowsingData" xml:space="preserve">
+    <value>Delete browsing data</value>
+  </data>
+  <data name="DeleteBrowsingDataMessage" xml:space="preserve">
+    <value>Permanently delete browsing data (history, cookies, cache, credentials, etc.) for the current WebView2 profile.</value>
+  </data>
+  <data name="BrowsingData" xml:space="preserve">
+    <value>Browsing Data</value>
   </data>
 </root>
