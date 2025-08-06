@@ -422,6 +422,10 @@ Here you can specify a combination of AWS CLI profile and AWS region from where 
 
 :::note
 
+Right-click on a selected profile to `edit` or `delete` it.
+
+You can also use the Hotkeys `F2` (`edit`) or `Del` (`delete`) on a selected profile.
+
 Only enabled profiles are synchronized and [`Synchronize EC2 instances from AWS`](#synchronize-ec2-instances-from-aws) must be enabled!
 
 :::

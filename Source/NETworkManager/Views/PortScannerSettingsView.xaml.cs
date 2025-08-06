@@ -24,6 +24,7 @@ public partial class PortScannerSettingsView
 
     private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        _viewModel.EditPortProfile().ConfigureAwait(false);
+        if (_viewModel.EditPortProfileCommand.CanExecute(null))
+            _viewModel.EditPortProfileCommand.Execute(null);
     }
 }

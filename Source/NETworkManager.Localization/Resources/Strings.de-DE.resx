@@ -679,7 +679,7 @@
     <value>Anwenden</value>
   </data>
   <data name="ApplyWindowsKeyCombinationsLikeAltTab" xml:space="preserve">
-    <value>Windows Tastenkombinationen anwenden (z. B. ALT+TAB):</value>
+    <value>Windows-Tastenkombinationen anwenden (z. B. ALT+TAB):</value>
   </data>
   <data name="Auth" xml:space="preserve">
     <value>Auth</value>
@@ -1367,13 +1367,13 @@ Profildateien sind nicht betroffen!</value>
     <value>Geben Sie eine gültige IPv4-Adresse ein!</value>
   </data>
   <data name="EnterValidMACAddress" xml:space="preserve">
-    <value>Geben Sie eine gültige MAC-Addresse (z. B. 00:F1:23:AB:F2:35) ein!</value>
+    <value>Geben Sie eine gültige MAC-Adresse ein (z. B. 00:F1:23:AB:F2:35)!</value>
   </data>
   <data name="EnterValidPort" xml:space="preserve">
     <value>Geben Sie einen gültigen Port ein (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnetmask" xml:space="preserve">
-    <value>Geben Sie eine gültige Subnetzmaske ein (z. B. 255.255.255.0)!</value>
+    <value>Geben Sie eine gültige Subnetzmaske ein (z.B. 255.255.255.0)!</value>
   </data>
   <data name="EnterValidSubnetmaskOrCIDR" xml:space="preserve">
     <value>Geben Sie eine gültige Subnetzmaske oder CIDR ein (z. B. 255.255.255.0 oder /24)!</value>
@@ -1448,10 +1448,10 @@ Profildateien sind nicht betroffen!</value>
     <value>Geben Sie einen gültigen Port und/oder Port-Bereich ein (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnet" xml:space="preserve">
-    <value>Geben Sie ein gültiges Subnetz ein (z. B. 192.168.178.133/26)!</value>
+    <value>Geben Sie ein gültiges Subnetz ein (z.B. 192.168.178.133/26)!</value>
   </data>
   <data name="EnterValidWebsiteUri" xml:space="preserve">
-    <value>Geben Sie eine gültige Webseite ein (z. B. https://example.com/index.html)</value>
+    <value>Geben Sie eine gültige Website ein (z. B. https://example.com/index.html)</value>
   </data>
   <data name="Green" xml:space="preserve">
     <value>Grün</value>
@@ -1742,7 +1742,7 @@ Profildateien sind nicht betroffen!</value>
     <value>Füge eine Registerkarte hinzu, um eine Whois-Abfrage durchzuführen...</value>
   </data>
   <data name="EnterValidDomain" xml:space="preserve">
-    <value>Geben Sie eine gültige Domain ein (z. B. "example.com")!</value>
+    <value>Geben Sie eine gültige Domäne ein (z. B. "example.com")!</value>
   </data>
   <data name="WhoisServerNotFoundForTheDomain" xml:space="preserve">
     <value>Whois-Server nicht gefunden für die Domain: "{0}"</value>
@@ -2032,7 +2032,7 @@ ist deaktiviert!</value>
     <value>Benutzerdefinierte IPv4-Adressen-API verwenden</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv4AddressAPI" xml:space="preserve">
-    <value>URL zu einem Webdienst, der über http oder https erreicht werden kann und eine IPv4-Adresse wie "xx.xx.xx.xx" als Antwort zurückgibt.</value>
+    <value>URL zu einem Webdienst, der über http oder https erreichbar ist und eine IPv4-Adresse, z. B. "xx.xx.xx.xx", als Antwort zurückgibt.</value>
   </data>
   <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
     <value>Öffentliche IP-Adresse von "{0}" konnte nicht geparsed! Versuchen Sie es mit einem anderen Dienst oder verwenden Sie die Standardeinstellung ...</value>
@@ -3192,7 +3192,7 @@ Wenn die Option wieder deaktiviert wird, werden die Werte nicht mehr verändert.
     <value>SNTP-Server(s)</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv6AddressAPI" xml:space="preserve">
-    <value>URL zu einem Webdienst, der über http oder https erreicht werden kann und eine IPv6-Adresse wie "xxxx:xx:xxx::xx" als Antwort zurückgibt.</value>
+    <value>URL zu einem Webdienst, der über http oder https erreichbar ist und eine IPv6-Adresse als Antwort zurückgibt, z. B. "xxxx:xx:xxx::xx".</value>
   </data>
   <data name="IPEndPoint" xml:space="preserve">
     <value>IP-Endpunkt</value>
@@ -3234,7 +3234,7 @@ Wenn die Option wieder deaktiviert wird, werden die Werte nicht mehr verändert.
     <value>Ein SNTP-Server mit diesem Namen existiert bereits!</value>
   </data>
   <data name="EnterValidHostnameOrIPAddress" xml:space="preserve">
-    <value>Geben Sie einen gültigen Hostnamen (wie "server-01" oder "example.com") oder eine gültige IP-Adresse (wie 192.168.178.1) ein!</value>
+    <value>Geben Sie einen gültigen Hostnamen (z. B. "server-01" oder "example.com") oder eine gültige IP-Adresse (z. B. 192.168.178.1) ein!</value>
   </data>
   <data name="Servers" xml:space="preserve">
     <value>Server(s)</value>
@@ -3528,10 +3528,10 @@ Wenn der Wert zu hoch ist, können Leistungsprobleme auftreten.
     <value>Die Einstellungen auf dieser Seite enthalten Fehler. Korrigieren Sie diese, um speichern zu können.</value>
   </data>
   <data name="HelpMessage_PuTTYHostkey" xml:space="preserve">
-    <value>SSH-Hostkey, der für die Verbindung verwendet werden soll (wie "71:b8:f2:6e..."). Nur verfügbar, wenn der Modus "SSH" ist.</value>
+    <value>SSH-Hostkey, der für die Verbindung verwendet werden soll (z. B. "71:b8:f2:6e..."). Nur verfügbar, wenn der Modus "SSH" ist.</value>
   </data>
   <data name="HelpMessage_PuTTYPrivateKeyFile" xml:space="preserve">
-    <value>Vollständiger Pfad zur privaten Schlüsseldatei (z. B. "C:\Users\BornToBeRoot\SSH\private_key.ppk"). Nur verfügbar, wenn der Modus "SSH" ist.</value>
+    <value>Vollständiger Pfad zur privaten Schlüsseldatei (z. B. „C:\Users\BornToBeRoot\SSH\private_key.ppk“). Nur verfügbar, wenn der Modus "SSH" ist.</value>
   </data>
   <data name="HelpMessage_PuTTYUsername" xml:space="preserve">
     <value>Benutzername, der an die PuTTY-Sitzung übergeben wird. Nur verfügbar, wenn der Modus "SSH", "Telnet" oder "Rlogin" ist.</value>
@@ -3916,7 +3916,7 @@ Rechtsklick für weitere Optionen.</value>
     <value>Hosts-Datei konnte nicht geladen werden: {0}</value>
   </data>
   <data name="RetryingInXSecondsDots" xml:space="preserve">
-    <value>Wiederholung in {0} {0} Sekunden...</value>
+    <value>Wiederholung in {0} Sekunden...</value>
   </data>
   <data name="WhatsNew" xml:space="preserve">
     <value>Was ist neu?</value>
@@ -3932,5 +3932,28 @@ Rechtsklick für weitere Optionen.</value>
   </data>
   <data name="Entries" xml:space="preserve">
     <value>Einträge</value>
+  </data>
+  <data name="DeleteHostsFileEntryMessage" xml:space="preserve">
+    <value>Der ausgewählte Eintrag wird endgültig gelöscht:
+
+{0} {1} {2}</value>
+  </data>
+  <data name="ExampleHostsFileEntryComment" xml:space="preserve">
+    <value>Primärer DNS-Server</value>
+  </data>
+  <data name="EnterValidHostsFileEntryHostname" xml:space="preserve">
+    <value>Geben Sie einen gültigen Hostnamen ein (z.B. "server-01" oder "example.com")! Mehrere Hostnamen können durch ein Leerzeichen getrennt werden.</value>
+  </data>
+  <data name="HostsFileReadErrorMessage" xml:space="preserve">
+    <value>Die Datei "hosts" konnte nicht gelesen werden! Siehe Protokolldatei für weitere Details.</value>
+  </data>
+  <data name="HostsFileWriteErrorMessage" xml:space="preserve">
+    <value>In die Datei „hosts“ konnte nicht geschrieben werden. Siehe Protokolldatei für weitere Details.</value>
+  </data>
+  <data name="HostsFileEntryNotFoundMessage" xml:space="preserve">
+    <value>Der Eintrag wurde nicht in der Datei "hosts" gefunden!  Möglicherweise wurde die Datei geändert.</value>
+  </data>
+  <data name="HostsFileBackupErrorMessage" xml:space="preserve">
+    <value>Ein Backup der Datei "hosts" konnte nicht erstellt werden! Siehe Protokolldatei für weitere Details.</value>
   </data>
 </root>

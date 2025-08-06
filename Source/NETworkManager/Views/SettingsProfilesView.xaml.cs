@@ -35,6 +35,7 @@ public partial class SettingsProfilesView
 
     private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        _viewModel.EditProfileFileCommand.Execute(null);
+        if (_viewModel.EditProfileFileCommand.CanExecute(null))
+            _viewModel.EditProfileFileCommand.Execute(null);
     }
 }

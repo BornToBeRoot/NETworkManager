@@ -21,6 +21,7 @@ The following features are currently available:
 - [TigerVNC](./application/tigervnc) (requires [TigerVNC](https://tigervnc.org/))
 - [Web Console](./application/web-console) (requires [Microsoft Edge - WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/))
 - [SNMP](./application/snmp) - Get, Walk, Set
+- [Hosts File Editor](./application/hosts-file-editor)
 - [SNTP Lookup](./application/sntp-lookup)
 - [Discovery Protocol](./application/discovery-protocol) - LLDP, CDP
 - [Wake on LAN](./application/wake-on-lan)

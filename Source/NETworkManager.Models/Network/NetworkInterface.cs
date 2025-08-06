@@ -54,6 +54,7 @@ public sealed class NetworkInterface
             var ipProperties = networkInterface.GetIPProperties();
 
             foreach (var unicastIPAddrInfo in ipProperties.UnicastAddresses)
+            {
                 switch (unicastIPAddrInfo.Address.AddressFamily)
                 {
                     case AddressFamily.InterNetwork:
@@ -74,11 +75,13 @@ public sealed class NetworkInterface
                         listIPv6Address.Add(unicastIPAddrInfo.Address);
                         break;
                 }
+            }
 
             var listIPv4Gateway = new List<IPAddress>();
             var listIPv6Gateway = new List<IPAddress>();
 
             foreach (var gatewayIPAddrInfo in ipProperties.GatewayAddresses)
+            {
                 switch (gatewayIPAddrInfo.Address.AddressFamily)
                 {
                     case AddressFamily.InterNetwork:
@@ -88,6 +91,7 @@ public sealed class NetworkInterface
                         listIPv6Gateway.Add(gatewayIPAddrInfo.Address);
                         break;
                 }
+            }
 
             // Check if autoconfiguration for DNS is enabled (only via registry key)
             var nameServerKey =

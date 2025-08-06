@@ -23,6 +23,7 @@ namespace NETworkManager.ViewModels;
 public class HostsFileEditorViewModel : ViewModelBase
 {
     #region Variables
+
     private static readonly ILog Log = LogManager.GetLogger(typeof(HostsFileEditorViewModel));
 
     private readonly IDialogCoordinator _dialogCoordinator;
@@ -30,6 +31,7 @@ public class HostsFileEditorViewModel : ViewModelBase
     private readonly bool _isLoading;
 
     private string _search;
+
     public string Search
     {
         get => _search;
@@ -183,10 +185,7 @@ public class HostsFileEditorViewModel : ViewModelBase
         // Watch hosts file for changes
         HostsFileEditor.HostsFileChanged += (_, _) =>
         {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                Refresh().ConfigureAwait(false);
-            });
+            Application.Current.Dispatcher.Invoke(() => { Refresh().ConfigureAwait(false); });
         };
 
         _isLoading = false;
@@ -194,12 +193,12 @@ public class HostsFileEditorViewModel : ViewModelBase
 
     private void LoadSettings()
     {
-
     }
 
     #endregion
 
     #region ICommands & Actions
+
     public ICommand RefreshCommand => new RelayCommand(_ => RefreshAction().ConfigureAwait(false), Refresh_CanExecute);
 
     private bool Refresh_CanExecute(object parameter)
@@ -223,38 +222,40 @@ public class HostsFileEditorViewModel : ViewModelBase
         var childWindow = new ExportChildWindow();
 
         var childWindowViewModel = new ExportViewModel(async instance =>
-        {
-            childWindow.IsOpen = false;
-            ConfigurationManager.Current.IsChildWindowOpen = false;
-
-            try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType,
-                     instance.ExportAll
-                         ? Results
-                         : new ObservableCollection<HostsFileEntry>(SelectedResults.Cast<HostsFileEntry>().ToArray()));
-            }
-            catch (Exception ex)
+                childWindow.IsOpen = false;
+                ConfigurationManager.Current.IsChildWindowOpen = false;
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType,
+                        instance.ExportAll
+                            ? Results
+                            : new ObservableCollection<HostsFileEntry>(SelectedResults.Cast<HostsFileEntry>()
+                                .ToArray()));
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("Error while exporting data as " + instance.FileType, ex);
+
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                        Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                        Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.HostsFileEditor_ExportFileType = instance.FileType;
+                SettingsManager.Current.HostsFileEditor_ExportFilePath = instance.FilePath;
+            }, _ =>
             {
-                Log.Error("Error while exporting data as " + instance.FileType, ex);
-
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Strings.OK;
-
-                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
-                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
-            }
-
-            SettingsManager.Current.HostsFileEditor_ExportFileType = instance.FileType;
-            SettingsManager.Current.HostsFileEditor_ExportFilePath = instance.FilePath;
-        }, _ =>
-        {
-            childWindow.IsOpen = false;
-            ConfigurationManager.Current.IsChildWindowOpen = false;
-        }, [
-            ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
-        ], true, SettingsManager.Current.HostsFileEditor_ExportFileType, SettingsManager.Current.HostsFileEditor_ExportFilePath);
+                childWindow.IsOpen = false;
+                ConfigurationManager.Current.IsChildWindowOpen = false;
+            }, [
+                ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
+            ], true, SettingsManager.Current.HostsFileEditor_ExportFileType,
+            SettingsManager.Current.HostsFileEditor_ExportFilePath);
 
         childWindow.Title = Strings.Export;
 
@@ -265,7 +266,8 @@ public class HostsFileEditorViewModel : ViewModelBase
         return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
-    public ICommand EnableEntryCommand => new RelayCommand(_ => EnableEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
+    public ICommand EnableEntryCommand =>
+        new RelayCommand(_ => EnableEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
 
     private async Task EnableEntryAction()
     {
@@ -279,7 +281,8 @@ public class HostsFileEditorViewModel : ViewModelBase
         IsModifying = false;
     }
 
-    public ICommand DisableEntryCommand => new RelayCommand(_ => DisableEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
+    public ICommand DisableEntryCommand =>
+        new RelayCommand(_ => DisableEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
 
     private async Task DisableEntryAction()
     {
@@ -293,7 +296,8 @@ public class HostsFileEditorViewModel : ViewModelBase
         IsModifying = false;
     }
 
-    public ICommand AddEntryCommand => new RelayCommand(_ => AddEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
+    public ICommand AddEntryCommand =>
+        new RelayCommand(_ => AddEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
 
     private async Task AddEntryAction()
     {
@@ -307,12 +311,13 @@ public class HostsFileEditorViewModel : ViewModelBase
             ConfigurationManager.Current.IsChildWindowOpen = false;
 
             var result = await HostsFileEditor.AddEntryAsync(new HostsFileEntry
-            {
-                IsEnabled = instance.IsEnabled,
-                IPAddress = instance.IPAddress,
-                Hostname = instance.Hostname,
-                Comment = instance.Comment
-            });
+                (
+                    instance.IsEnabled,
+                    instance.IPAddress,
+                    instance.Hostname,
+                    instance.Comment
+                )
+            );
 
             if (result != HostsFileEntryModifyResult.Success)
                 await ShowErrorMessageAsync(result);
@@ -335,35 +340,8 @@ public class HostsFileEditorViewModel : ViewModelBase
         await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
-    private async Task ShowErrorMessageAsync(HostsFileEntryModifyResult result)
-    {
-        string message = result switch
-        {
-            HostsFileEntryModifyResult.ReadError => Strings.HostsFileReadErrorMessage,
-            HostsFileEntryModifyResult.WriteError => Strings.HostsFileWriteErrorMessage,
-            HostsFileEntryModifyResult.NotFound => Strings.HostsFileEntryNotFoundMessage,
-            HostsFileEntryModifyResult.BackupError => Strings.HostsFileBackupErrorMessage,
-            _ => Strings.UnkownError
-        };
-
-        var childWindow = new OKMessageChildWindow();
-
-        var childWindowViewModel = new OKMessageViewModel(_ =>
-         {
-             childWindow.IsOpen = false;
-             ConfigurationManager.Current.IsChildWindowOpen = false;
-         }, message);
-
-        childWindow.Title = Strings.Error;
-
-        childWindow.DataContext = childWindowViewModel;
-
-        ConfigurationManager.Current.IsChildWindowOpen = true;
-
-        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
-    }
-
-    public ICommand EditEntryCommand => new RelayCommand(_ => EditEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
+    public ICommand EditEntryCommand =>
+        new RelayCommand(_ => EditEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
 
     private async Task EditEntryAction()
     {
@@ -377,12 +355,13 @@ public class HostsFileEditorViewModel : ViewModelBase
             ConfigurationManager.Current.IsChildWindowOpen = false;
 
             var result = await HostsFileEditor.EditEntryAsync(instance.Entry, new HostsFileEntry
-            {
-                IsEnabled = instance.IsEnabled,
-                IPAddress = instance.IPAddress,
-                Hostname = instance.Hostname,
-                Comment = instance.Comment
-            });
+                (
+                    instance.IsEnabled,
+                    instance.IPAddress,
+                    instance.Hostname,
+                    instance.Comment
+                )
+            );
 
             if (result != HostsFileEntryModifyResult.Success)
                 await ShowErrorMessageAsync(result);
@@ -405,7 +384,8 @@ public class HostsFileEditorViewModel : ViewModelBase
         await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
-    public ICommand DeleteEntryCommand => new RelayCommand(_ => DeleteEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
+    public ICommand DeleteEntryCommand =>
+        new RelayCommand(_ => DeleteEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
 
     private async Task DeleteEntryAction()
     {
@@ -414,24 +394,25 @@ public class HostsFileEditorViewModel : ViewModelBase
         var childWindow = new OKCancelInfoMessageChildWindow();
 
         var childWindowViewModel = new OKCancelInfoMessageViewModel(async _ =>
-        {
-            childWindow.IsOpen = false;
-            ConfigurationManager.Current.IsChildWindowOpen = false;
+            {
+                childWindow.IsOpen = false;
+                ConfigurationManager.Current.IsChildWindowOpen = false;
 
-            var result = await HostsFileEditor.DeleteEntryAsync(SelectedResult);
+                var result = await HostsFileEditor.DeleteEntryAsync(SelectedResult);
 
-            if (result != HostsFileEntryModifyResult.Success)
-                await ShowErrorMessageAsync(result);
+                if (result != HostsFileEntryModifyResult.Success)
+                    await ShowErrorMessageAsync(result);
 
-            IsModifying = false;
-        }, _ =>
-        {
-            childWindow.IsOpen = false;
-            ConfigurationManager.Current.IsChildWindowOpen = false;
+                IsModifying = false;
+            }, _ =>
+            {
+                childWindow.IsOpen = false;
+                ConfigurationManager.Current.IsChildWindowOpen = false;
 
-            IsModifying = false;
-        },
-            string.Format(Strings.DeleteHostsFileEntryMessage, SelectedResult.IPAddress, SelectedResult.Hostname, string.IsNullOrEmpty(SelectedResult.Comment) ? "" : $"# {SelectedResult.Comment}"),
+                IsModifying = false;
+            },
+            string.Format(Strings.DeleteHostsFileEntryMessage, SelectedResult.IPAddress, SelectedResult.Hostname,
+                string.IsNullOrEmpty(SelectedResult.Comment) ? "" : $"# {SelectedResult.Comment}"),
             Strings.Delete
         );
 
@@ -447,11 +428,39 @@ public class HostsFileEditorViewModel : ViewModelBase
     private bool ModifyEntry_CanExecute(object obj)
     {
         return ConfigurationManager.Current.IsAdmin &&
-            Application.Current.MainWindow != null &&
-            !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-            !ConfigurationManager.Current.IsChildWindowOpen &&
-            !IsRefreshing &&
-            !IsModifying;
+               Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
+               !ConfigurationManager.Current.IsChildWindowOpen &&
+               !IsRefreshing &&
+               !IsModifying;
+    }
+
+    private async Task ShowErrorMessageAsync(HostsFileEntryModifyResult result)
+    {
+        var message = result switch
+        {
+            HostsFileEntryModifyResult.ReadError => Strings.HostsFileReadErrorMessage,
+            HostsFileEntryModifyResult.WriteError => Strings.HostsFileWriteErrorMessage,
+            HostsFileEntryModifyResult.NotFound => Strings.HostsFileEntryNotFoundMessage,
+            HostsFileEntryModifyResult.BackupError => Strings.HostsFileBackupErrorMessage,
+            _ => Strings.UnkownError
+        };
+
+        var childWindow = new OKMessageChildWindow();
+
+        var childWindowViewModel = new OKMessageViewModel(_ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        }, message, Strings.OK, ChildWindowIcon.Error);
+
+        childWindow.Title = Strings.Error;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     public ICommand RestartAsAdminCommand => new RelayCommand(_ => RestartAsAdminAction().ConfigureAwait(false));
@@ -464,10 +473,24 @@ public class HostsFileEditorViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            await _dialogCoordinator.ShowMessageAsync(this, Strings.Error, ex.Message,
-                MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+            var childWindow = new OKMessageChildWindow();
+
+            var childWindowViewModel = new OKMessageViewModel(_ =>
+            {
+                childWindow.IsOpen = false;
+                ConfigurationManager.Current.IsChildWindowOpen = false;
+            }, ex.Message, Strings.OK, ChildWindowIcon.Error);
+
+            childWindow.Title = Strings.Error;
+
+            childWindow.DataContext = childWindowViewModel;
+
+            ConfigurationManager.Current.IsChildWindowOpen = true;
+
+            await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
         }
     }
+
     #endregion
 
     #region Methods
@@ -509,7 +532,8 @@ public class HostsFileEditorViewModel : ViewModelBase
                 StatusMessage = string.Format(Strings.FailedToLoadHostsFileMessage, ex.Message);
 
                 if (i < 3)
-                    StatusMessage += Environment.NewLine + string.Format(Strings.RetryingInXSecondsDots, GlobalStaticConfiguration.ApplicationUIRefreshInterval / 1000);
+                    StatusMessage += Environment.NewLine + string.Format(Strings.RetryingInXSecondsDots,
+                        GlobalStaticConfiguration.ApplicationUIRefreshInterval / 1000);
 
                 IsStatusMessageDisplayed = true;
 
@@ -522,12 +546,11 @@ public class HostsFileEditorViewModel : ViewModelBase
 
     public void OnViewVisible()
     {
-
     }
 
     public void OnViewHide()
     {
-
     }
+
     #endregion
 }

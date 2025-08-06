@@ -23,7 +23,7 @@ Release date: **xx.xx.2025**
 
 **Hosts File Editor**
 
-- New feature to display (and edit) the `hosts` file. (See [documentation](https://borntoberoot.net/NETworkManager/docs/application/hosts-file-editor) for more details) [#3012](https://github.com/BornToBeRoot/NETworkManager/pull/3012) [#3092](https://github.com/BornToBeRoot/NETworkManager/pull/3092) [#3094](https://github.com/BornToBeRoot/NETworkManager/pull/3094) [#3098](https://github.com/BornToBeRoot/NETworkManager/pull/3098)
+- New feature to display (and edit) the `hosts` file. (See [documentation](https://borntoberoot.net/NETworkManager/docs/application/hosts-file-editor) for more details) [#3012](https://github.com/BornToBeRoot/NETworkManager/pull/3012) [#3092](https://github.com/BornToBeRoot/NETworkManager/pull/3092) [#3094](https://github.com/BornToBeRoot/NETworkManager/pull/3094) [#3098](https://github.com/BornToBeRoot/NETworkManager/pull/3098) [#3103](https://github.com/BornToBeRoot/NETworkManager/pull/3103)
 
   :::info
 
@@ -46,6 +46,10 @@ Release date: **xx.xx.2025**
 - Redesign export dialog. [#3090](https://github.com/BornToBeRoot/NETworkManager/pull/3090)
 - Add upgrade dialog when updating from a previous version. [#3077](https://github.com/BornToBeRoot/NETworkManager/pull/3077)
 
+**Network Interface**
+
+- Hide (outdated) IPv4/IPv6, DHCP, and DNS informations if adapter is not connected (Status is `down`). [#3114](https://github.com/BornToBeRoot/NETworkManager/pull/3114)
+
 **WiFi**
 
 - Redesign refresh button/view. [#3012](https://github.com/BornToBeRoot/NETworkManager/pull/3012)
@@ -53,6 +57,7 @@ Release date: **xx.xx.2025**
 **DNS Lookup**
 
 - Record types that are not implemented are now hidden in the user interface. [#3012](https://github.com/BornToBeRoot/NETworkManager/pull/3012)
+- Added priority to MX records. The result is now shown as `10 mail.example.com.` instead of `mail.example.com.`. [#3118](https://github.com/BornToBeRoot/NETworkManager/pull/3118)
 
 **PowerShell**
 
