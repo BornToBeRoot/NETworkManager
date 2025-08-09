@@ -36,6 +36,12 @@ Release date: **xx.xx.2025**
 - `DNSKEY` records are now supported. [#3060](https://github.com/BornToBeRoot/NETworkManager/pull/3060)
 - `SRV` records are now supported. [#3060](https://github.com/BornToBeRoot/NETworkManager/pull/3060)
 - `CAA` records are now supported. [#3012](https://github.com/BornToBeRoot/NETworkManager/pull/3012)
+- `MX` records now support priority. The result is now shown as `10 mail.example.com.` instead of `mail.example.com.`. [#3118](https://github.com/BornToBeRoot/NETworkManager/pull/3118)
+
+**Web Console**
+
+- Credentials can now be stored in the WebView2 browser, similar to Microsoft Edge. [#3056](https://github.com/BornToBeRoot/NETworkManager/pull/3056)
+- History, cookies, cache, credentials, etc. can now be deleted via the `Delete browsing data` button in the settings. [#3056](https://github.com/BornToBeRoot/NETworkManager/pull/3056)
 
 ## Improvements
 
@@ -57,7 +63,6 @@ Release date: **xx.xx.2025**
 **DNS Lookup**
 
 - Record types that are not implemented are now hidden in the user interface. [#3012](https://github.com/BornToBeRoot/NETworkManager/pull/3012)
-- Added priority to MX records. The result is now shown as `10 mail.example.com.` instead of `mail.example.com.`. [#3118](https://github.com/BornToBeRoot/NETworkManager/pull/3118)
 
 **PowerShell**
 
@@ -70,6 +75,12 @@ Release date: **xx.xx.2025**
 **AWS Session Manager**
 
 - Find `pwsh.exe` and `powershell.exe` executable by path, similar to `where.exe`. [#2962](https://github.com/BornToBeRoot/NETworkManager/pull/2962)
+
+**Web Console**
+
+- Setting `Show status bar` added to show or hide the status bar. [#3056](https://github.com/BornToBeRoot/NETworkManager/pull/3056)
+- Setting `Save credentials` added to display a dialog to save login informations in the WebView2 browser similar to Microsoft Edge. [#3056](https://github.com/BornToBeRoot/NETworkManager/pull/3056)
+- Button `Delete browsing data` added to delete the browsing data (history, cookies, cache, credentials, etc.) of the current WebView2 profile. [#3056](https://github.com/BornToBeRoot/NETworkManager/pull/3056)
 
 **Connections**
 

@@ -1,16 +1,19 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Input;
+﻿using log4net;
 using Microsoft.Web.WebView2.Core;
 using NETworkManager.Models.WebConsole;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
+using System;
+using System.Windows;
+using System.Windows.Input;
 
 namespace NETworkManager.Controls;
 
 public partial class WebConsoleControl : UserControlBase, IDragablzTabItem
 {
     #region Variables
+
+    private static readonly ILog Log = LogManager.GetLogger(typeof(WebConsoleControl));
 
     private bool _initialized;
     private bool _closed;
@@ -77,16 +80,19 @@ public partial class WebConsoleControl : UserControlBase, IDragablzTabItem
         _tabId = tabId;
         _sessionInfo = sessionInfo;
 
-        Browser2.NavigationStarting += Browser2_NavigationStarting;
-        Browser2.NavigationCompleted += Browser2_NavigationCompleted;
-        Browser2.SourceChanged += Browser2_SourceChanged;
+        Browser.NavigationStarting += Browser2_NavigationStarting;
+        Browser.NavigationCompleted += Browser2_NavigationCompleted;
+        Browser.SourceChanged += Browser2_SourceChanged;
 
         Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
+
+        // Detect if settings have changed...
+        SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
     }
 
     private void Browser2_SourceChanged(object sender, CoreWebView2SourceChangedEventArgs e)
     {
-        Url = Browser2.Source.ToString();
+        Url = Browser.Source.ToString();
     }
 
     private async void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -98,7 +104,15 @@ public partial class WebConsoleControl : UserControlBase, IDragablzTabItem
         // Set user data folder - Fix #382            
         var webView2Environment =
             await CoreWebView2Environment.CreateAsync(null, GlobalStaticConfiguration.WebConsole_Cache);
-        await Browser2.EnsureCoreWebView2Async(webView2Environment);
+
+        await Browser.EnsureCoreWebView2Async(webView2Environment);
+
+        Log.Debug($"UserControl_Loaded - WebView2 profile path: {Browser.CoreWebView2.Profile.ProfilePath}");
+
+        // Set the default settings
+        Browser.CoreWebView2.Settings.IsStatusBarEnabled = SettingsManager.Current.WebConsole_IsStatusBarEnabled;
+        Browser.CoreWebView2.Settings.IsPasswordAutosaveEnabled =
+            SettingsManager.Current.WebConsole_IsPasswordSaveEnabled;
 
         Navigate(_sessionInfo.Url);
 
@@ -142,31 +156,31 @@ public partial class WebConsoleControl : UserControlBase, IDragablzTabItem
 
     private void ReloadAction()
     {
-        Browser2.Reload();
+        Browser.Reload();
     }
 
     private bool GoBackCommand_CanExecute(object obj)
     {
-        return !IsLoading && Browser2.CanGoBack;
+        return !IsLoading && Browser.CanGoBack;
     }
 
     public ICommand GoBackCommand => new RelayCommand(_ => GoBackAction(), GoBackCommand_CanExecute);
 
     private void GoBackAction()
     {
-        Browser2.GoBack();
+        Browser.GoBack();
     }
 
     private bool GoForwardCommand_CanExecute(object obj)
     {
-        return !IsLoading && Browser2.CanGoForward;
+        return !IsLoading && Browser.CanGoForward;
     }
 
     public ICommand GoForwardCommand => new RelayCommand(_ => GoForwardAction(), GoForwardCommand_CanExecute);
 
     private void GoForwardAction()
     {
-        Browser2.GoForward();
+        Browser.GoForward();
     }
 
     #endregion
@@ -175,12 +189,12 @@ public partial class WebConsoleControl : UserControlBase, IDragablzTabItem
 
     private void Navigate(string url)
     {
-        Browser2.Source = new Uri(url);
+        Browser.Source = new Uri(url);
     }
 
     private void Stop()
     {
-        Browser2.Stop();
+        Browser.Stop();
     }
 
     public void CloseTab()
@@ -214,6 +228,21 @@ public partial class WebConsoleControl : UserControlBase, IDragablzTabItem
     private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
     {
         CloseTab();
+    }
+
+    private void Current_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+            case nameof(SettingsManager.Current.WebConsole_IsStatusBarEnabled):
+                Browser.CoreWebView2.Settings.IsStatusBarEnabled =
+                    SettingsManager.Current.WebConsole_IsStatusBarEnabled;
+                break;
+            case nameof(SettingsManager.Current.WebConsole_IsPasswordSaveEnabled):
+                Browser.CoreWebView2.Settings.IsPasswordAutosaveEnabled =
+                    SettingsManager.Current.WebConsole_IsPasswordSaveEnabled;
+                break;
+        }
     }
 
     #endregion

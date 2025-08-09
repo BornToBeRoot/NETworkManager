@@ -3852,27 +3852,6 @@ Right-click for more options.</value>
   <data name="OpenDocumentation" xml:space="preserve">
     <value>Open documentation</value>
   </data>
-  <data name="StarForkTheProjectOnGitHub" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ToolTip_GitHubProjectUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ToolTip_TransifexProjectUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ToolTip_TwitterContactUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ReportAnIssueOrCreateAFeatureRequest" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ToolTip_GithubNewIssueUrl" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ToolTip_GithubDocumentationUrl" xml:space="preserve">
-    <value />
-  </data>
   <data name="Donate" xml:space="preserve">
     <value>Donate</value>
   </data>
@@ -3955,5 +3934,32 @@ Right-click for more options.</value>
   </data>
   <data name="HostsFileBackupErrorMessage" xml:space="preserve">
     <value>A backup of the "hosts" file could not be created! See log file for more details.</value>
+  </data>
+  <data name="ShowStatusBar" xml:space="preserve">
+    <value>Show status bar</value>
+  </data>
+  <data name="HelpMessage_ShowStatusBar" xml:space="preserve">
+    <value>Displays the status bar in the bottom-left of the WebView when hovering over a link.</value>
+  </data>
+  <data name="SaveCredentials" xml:space="preserve">
+    <value>Save credentials</value>
+  </data>
+  <data name="HelpMessage_SaveCredentials" xml:space="preserve">
+    <value>Displays a dialog to save credentials after a successful sign-in.</value>
+  </data>
+  <data name="DeleteBrowsingData" xml:space="preserve">
+    <value>Delete browsing data</value>
+  </data>
+  <data name="DeleteBrowsingDataMessage" xml:space="preserve">
+    <value>Permanently delete browsing data (history, cookies, cache, credentials, etc.) for the current WebView2 profile.</value>
+  </data>
+  <data name="BrowsingData" xml:space="preserve">
+    <value>Browsing Data</value>
+  </data>
+  <data name="BrowsingDataSuccessfullyDeletedMessage" xml:space="preserve">
+    <value>Browsing data successfully deleted!</value>
+  </data>
+  <data name="BrowsingDataErrorMessage" xml:space="preserve">
+    <value>An error occurred while deleting browsing data. Feel free to report this issue on GitHub.</value>
   </data>
 </root>
