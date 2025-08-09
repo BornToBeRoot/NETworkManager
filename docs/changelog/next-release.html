@@ -5,7 +5,7 @@
 <meta name="generator" content="Docusaurus v3.8.1">
 <title data-rh="true">Next Release | NETworkManager</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://borntoberoot.net/NETworkManager/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://borntoberoot.net/NETworkManager/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://borntoberoot.net/NETworkManager/docs/changelog/next-release"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Next Release | NETworkManager"><meta data-rh="true" name="description" content="Version: Next release"><meta data-rh="true" property="og:description" content="Version: Next release"><link data-rh="true" rel="icon" href="/NETworkManager/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://borntoberoot.net/NETworkManager/docs/changelog/next-release"><link data-rh="true" rel="alternate" href="https://borntoberoot.net/NETworkManager/docs/changelog/next-release" hreflang="en"><link data-rh="true" rel="alternate" href="https://borntoberoot.net/NETworkManager/docs/changelog/next-release" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Changelog","item":"https://borntoberoot.net/NETworkManager/docs/category/changelog"},{"@type":"ListItem","position":2,"name":"Next Release","item":"https://borntoberoot.net/NETworkManager/docs/changelog/next-release"}]}</script><link rel="alternate" type="application/rss+xml" href="/NETworkManager/blog/rss.xml" title="NETworkManager RSS Feed">
 <link rel="alternate" type="application/atom+xml" href="/NETworkManager/blog/atom.xml" title="NETworkManager Atom Feed"><link rel="stylesheet" href="/NETworkManager/assets/css/styles.8fe67940.css">
-<script src="/NETworkManager/assets/js/runtime~main.eac753ec.js" defer="defer"></script>
+<script src="/NETworkManager/assets/js/runtime~main.b7e077bd.js" defer="defer"></script>
 <script src="/NETworkManager/assets/js/main.bae89c95.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -38,6 +38,12 @@ Release date: <strong>xx.xx.2025</strong></p>
 <li><code>DNSKEY</code> records are now supported. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3060" target="_blank" rel="noopener noreferrer">#3060</a></li>
 <li><code>SRV</code> records are now supported. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3060" target="_blank" rel="noopener noreferrer">#3060</a></li>
 <li><code>CAA</code> records are now supported. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3012" target="_blank" rel="noopener noreferrer">#3012</a></li>
+<li><code>MX</code> records now support priority. The result is now shown as <code>10 mail.example.com.</code> instead of <code>mail.example.com.</code>. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3118" target="_blank" rel="noopener noreferrer">#3118</a></li>
+</ul>
+<p><strong>Web Console</strong></p>
+<ul>
+<li>Credentials can now be stored in the WebView2 browser, similar to Microsoft Edge. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3056" target="_blank" rel="noopener noreferrer">#3056</a></li>
+<li>History, cookies, cache, credentials, etc. can now be deleted via the <code>Delete browsing data</code> button in the settings. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3056" target="_blank" rel="noopener noreferrer">#3056</a></li>
 </ul>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="improvements">Improvements<a href="#improvements" class="hash-link" aria-label="Direct link to Improvements" title="Direct link to Improvements">​</a></h2>
 <ul>
@@ -59,7 +65,6 @@ Release date: <strong>xx.xx.2025</strong></p>
 <p><strong>DNS Lookup</strong></p>
 <ul>
 <li>Record types that are not implemented are now hidden in the user interface. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3012" target="_blank" rel="noopener noreferrer">#3012</a></li>
-<li>Added priority to MX records. The result is now shown as <code>10 mail.example.com.</code> instead of <code>mail.example.com.</code>. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3118" target="_blank" rel="noopener noreferrer">#3118</a></li>
 </ul>
 <p><strong>PowerShell</strong></p>
 <ul>
@@ -72,6 +77,12 @@ Release date: <strong>xx.xx.2025</strong></p>
 <p><strong>AWS Session Manager</strong></p>
 <ul>
 <li>Find <code>pwsh.exe</code> and <code>powershell.exe</code> executable by path, similar to <code>where.exe</code>. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/2962" target="_blank" rel="noopener noreferrer">#2962</a></li>
+</ul>
+<p><strong>Web Console</strong></p>
+<ul>
+<li>Setting <code>Show status bar</code> added to show or hide the status bar. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3056" target="_blank" rel="noopener noreferrer">#3056</a></li>
+<li>Setting <code>Save credentials</code> added to display a dialog to save login informations in the WebView2 browser similar to Microsoft Edge. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3056" target="_blank" rel="noopener noreferrer">#3056</a></li>
+<li>Button <code>Delete browsing data</code> added to delete the browsing data (history, cookies, cache, credentials, etc.) of the current WebView2 profile. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3056" target="_blank" rel="noopener noreferrer">#3056</a></li>
 </ul>
 <p><strong>Connections</strong></p>
 <ul>
