@@ -3956,4 +3956,10 @@ Right-click for more options.</value>
   <data name="BrowsingData" xml:space="preserve">
     <value>Browsing Data</value>
   </data>
+  <data name="BrowsingDataSuccessfullyDeletedMessage" xml:space="preserve">
+    <value>Browsing data successfully deleted!</value>
+  </data>
+  <data name="BrowsingDataErrorMessage" xml:space="preserve">
+    <value>An error occurred while deleting browsing data. Feel free to report this issue on GitHub.</value>
+  </data>
 </root>

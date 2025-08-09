@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.SimpleChildWindow;
+﻿using System;
+using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
@@ -6,6 +7,8 @@ using NETworkManager.Views;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Microsoft.Web.WebView2.Core;
+using Microsoft.Web.WebView2.Wpf;
 
 namespace NETworkManager.ViewModels;
 
@@ -99,24 +102,33 @@ public class WebConsoleSettingsViewModel : ViewModelBase
     {
         DeleteBrowsingData().ConfigureAwait(false);
     }
+
     #endregion
 
     #region Methods
+
     private Task DeleteBrowsingData()
     {
         var childWindow = new OKCancelInfoMessageChildWindow();
 
-        var childWindowViewModel = new OKCancelInfoMessageViewModel(_ =>
-        {
-            childWindow.IsOpen = false;
-            ConfigurationManager.Current.IsChildWindowOpen = false;
+        var childWindowViewModel = new OKCancelInfoMessageViewModel(async _ =>
+            {
+                childWindow.IsOpen = false;
+                ConfigurationManager.Current.IsChildWindowOpen = false;
 
-            //SettingsManager.Current.AWSSessionManager_AWSProfiles.Remove(SelectedAWSProfile);
-        }, _ =>
-        {
-            childWindow.IsOpen = false;
-            ConfigurationManager.Current.IsChildWindowOpen = false;
-        },
+                // Create a temporary WebView2 instance to clear browsing data
+                var webView2Environment =
+                    await CoreWebView2Environment.CreateAsync(null, GlobalStaticConfiguration.WebConsole_Cache);
+                var webView2Controller = await webView2Environment.CreateCoreWebView2ControllerAsync(IntPtr.Zero);
+
+                await webView2Controller.CoreWebView2.Profile.ClearBrowsingDataAsync();
+
+                webView2Controller.Close();
+            }, _ =>
+            {
+                childWindow.IsOpen = false;
+                ConfigurationManager.Current.IsChildWindowOpen = false;
+            },
             Strings.DeleteBrowsingDataMessage,
             Strings.Delete
         );
@@ -129,5 +141,6 @@ public class WebConsoleSettingsViewModel : ViewModelBase
 
         return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
+
     #endregion
 }

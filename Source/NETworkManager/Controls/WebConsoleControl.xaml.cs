@@ -12,6 +12,7 @@ namespace NETworkManager.Controls;
 public partial class WebConsoleControl : UserControlBase, IDragablzTabItem
 {
     #region Variables
+
     private static readonly ILog Log = LogManager.GetLogger(typeof(WebConsoleControl));
 
     private bool _initialized;
@@ -110,7 +111,8 @@ public partial class WebConsoleControl : UserControlBase, IDragablzTabItem
 
         // Set the default settings
         Browser.CoreWebView2.Settings.IsStatusBarEnabled = SettingsManager.Current.WebConsole_IsStatusBarEnabled;
-        Browser.CoreWebView2.Settings.IsPasswordAutosaveEnabled = SettingsManager.Current.WebConsole_IsPasswordSaveEnabled;
+        Browser.CoreWebView2.Settings.IsPasswordAutosaveEnabled =
+            SettingsManager.Current.WebConsole_IsPasswordSaveEnabled;
 
         Navigate(_sessionInfo.Url);
 
@@ -193,8 +195,6 @@ public partial class WebConsoleControl : UserControlBase, IDragablzTabItem
     private void Stop()
     {
         Browser.Stop();
-
-
     }
 
     public void CloseTab()

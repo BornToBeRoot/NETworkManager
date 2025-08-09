@@ -1339,6 +1339,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error occurred while deleting browsing data. Feel free to report this issue on GitHub..
+        /// </summary>
+        public static string BrowsingDataErrorMessage {
+            get {
+                return ResourceManager.GetString("BrowsingDataErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browsing data successfully deleted!.
+        /// </summary>
+        public static string BrowsingDataSuccessfullyDeletedMessage {
+            get {
+                return ResourceManager.GetString("BrowsingDataSuccessfullyDeletedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to BSSID.
         /// </summary>
         public static string BSSID {
