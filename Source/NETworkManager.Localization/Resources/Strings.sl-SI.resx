@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -681,7 +681,7 @@
     <value>Uporabi</value>
   </data>
   <data name="ApplyWindowsKeyCombinationsLikeAltTab" xml:space="preserve">
-    <value>Uporabi kombinacije tipk Windows (npr. ALT + TAB):</value>
+    <value>Apply Windows key combinations (e.g., ALT+TAB):</value>
   </data>
   <data name="Auth" xml:space="preserve">
     <value>Poobl.</value>
@@ -1363,16 +1363,16 @@ Ustvarite enega...</value>
     <value>Vnesite veljaven naslov IPv4! </value>
   </data>
   <data name="EnterValidMACAddress" xml:space="preserve">
-    <value>Vnesite veljaven naslov MAC (kot 00:F1:23:AB:F2:35)!</value>
+    <value>Enter a valid MAC address (e.g., 00:F1:23:AB:F2:35)!</value>
   </data>
   <data name="EnterValidPort" xml:space="preserve">
     <value>Vnesite veljavna vrata (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnetmask" xml:space="preserve">
-    <value>Vnesite veljavno masko podomrežja (kot 255.255.255.0)!</value>
+    <value>Enter a valid subnetmask (e.g., 255.255.255.0)!</value>
   </data>
   <data name="EnterValidSubnetmaskOrCIDR" xml:space="preserve">
-    <value>Vnesite veljavno masko podomrežja ali CIDR (kot 255.255.255.0 ali /24)!</value>
+    <value>Enter a valid subnetmask or CIDR (e.g., 255.255.255.0 or /24)!</value>
   </data>
   <data name="FieldCannotBeEmpty" xml:space="preserve">
     <value>Polje ne sme biti prazno!</value>
@@ -1444,10 +1444,10 @@ Ustvarite enega...</value>
     <value>Vnesite veljavna vrata in/ali obseg vrat (1-65535)</value>
   </data>
   <data name="EnterValidSubnet" xml:space="preserve">
-    <value>Vnesite veljavno podomrežje (kot 192.168.178.133/26)!</value>
+    <value>Enter a valid subnet (e.g., 192.168.178.133/26)!</value>
   </data>
   <data name="EnterValidWebsiteUri" xml:space="preserve">
-    <value>Vnesite veljavno spletno stran (kot https://primer.com.index.html)</value>
+    <value>Enter a valid website (e.g., https://example.com/index.html)</value>
   </data>
   <data name="Green" xml:space="preserve">
     <value>Zelena</value>
@@ -1738,7 +1738,7 @@ Ustvarite enega...</value>
     <value>Dodaj zavihek za poizvedbo Whois...</value>
   </data>
   <data name="EnterValidDomain" xml:space="preserve">
-    <value>Vnesite veljavno domeno (kot 'primer.com')!</value>
+    <value>Enter a valid domain (e.g., "example.com")!</value>
   </data>
   <data name="WhoisServerNotFoundForTheDomain" xml:space="preserve">
     <value>Whois strežnika ni mogoče najti za domeno: "{0}"</value>
@@ -1925,9 +1925,9 @@ Spremembe te vrednosti bodo uveljavljene po ponovnem zagonu aplikacije.</value>
     <value>Preveri javni naslov IP</value>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
-    <value>Hvala, ker uporabljate NETworkManager!
+    <value>Thank you for using NETworkManager!
 
-Če vam je to orodje všeč, pustite zvezdico na GitHubu in ga priporočite drugim.</value>
+If you enjoy it, please consider supporting its development — whether by leaving a star on GitHub, making a donation, or simply sharing it with others. Your support helps keep the project going and growing.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Ob zagonu programa ta v ozadju preveri, če je na GitHubu na voljo nova različica programa.
@@ -2028,7 +2028,7 @@ je onemogočeno!</value>
     <value>Uporabi API poljubnega naslova IPv4</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv4AddressAPI" xml:space="preserve">
-    <value>URL do spletne storitve, ki je dosegljiva prek http ali https in kot odgovor vrne naslov IPv4, kot je "xx.xx.xx.xx".</value>
+    <value>URL to a web service that can be reached via http or https and returns an IPv4 address e.g., "xx.xx.xx.xx" as response.</value>
   </data>
   <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
     <value>Javnega naslova IP ni bilo mogoče razčleniti iz "{0}"! Poskusite drugo storitev ali uporabite privzeto...</value>
@@ -2388,7 +2388,7 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>Znova zaženi kot skrbnik</value>
   </data>
   <data name="NetworkPacketsCaptureAdminMessage" xml:space="preserve">
-    <value>Za analizo omrežnih paketov je potrebno program zagnati s povišanimi pravicami!</value>
+    <value>Analysing network packets requires elevated rights!</value>
   </data>
   <data name="Capture" xml:space="preserve">
     <value>Zajemi</value>
@@ -3183,7 +3183,7 @@ V zgornjem desnem kotu kliknite na gumb za Pomoč/Dokumentacijo (levo od gumba z
     <value>Strežniki SNTP</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv6AddressAPI" xml:space="preserve">
-    <value>URL do spletne storitve, ki je dosegljiva prek http ali https in kot odgovor vrne naslov IPv6, kot je "xxxx:xx:xxx::xx".</value>
+    <value>URL to a web service that can be reached via http or https and returns an IPv6 address e.g., "xxxx:xx:xxx::xx" as response.</value>
   </data>
   <data name="IPEndPoint" xml:space="preserve">
     <value>Končna točka IP</value>
@@ -3225,7 +3225,7 @@ V zgornjem desnem kotu kliknite na gumb za Pomoč/Dokumentacijo (levo od gumba z
     <value>Strežnik SNTP s tem imenom že obstaja!</value>
   </data>
   <data name="EnterValidHostnameOrIPAddress" xml:space="preserve">
-    <value>Vnesite veljavno ime gostitelja (na primer "server-01" ali "primer.com") ali veljaven naslov IP (na primer 192.168.178.1)!</value>
+    <value>Enter a valid hostname (e.g., "server-01" or "example.com") or a valid IP address (e.g., 192.168.178.1)!</value>
   </data>
   <data name="Servers" xml:space="preserve">
     <value>Strežniki</value>
@@ -3513,10 +3513,10 @@ V zgornjem desnem kotu kliknite na gumb za Pomoč/Dokumentacijo (levo od gumba z
     <value>Nastavitve na tej strani vsebujejo napake. Popravite jih, da jih lahko shranite.</value>
   </data>
   <data name="HelpMessage_PuTTYHostkey" xml:space="preserve">
-    <value>Ključ gostitelja SSH za povezavo (na primer "71:b8:f2:6e ..."). Na voljo samo, če je način "SSH".</value>
+    <value>SSH hostkey to use for the connection (e.g., "71:b8:f2:6e..."). Only available if the mode is "SSH".</value>
   </data>
   <data name="HelpMessage_PuTTYPrivateKeyFile" xml:space="preserve">
-    <value>Celotna pot do datoteke zasebnega ključa (na primer »C:\Users\BornToBeRoot\SSH\private_key.ppk«). Na voljo samo, če je način "SSH".</value>
+    <value>Full path to the private key file (e.g., "C:\Users\BornToBeRoot\SSH\private_key.ppk"). Only available if the mode is "SSH".</value>
   </data>
   <data name="HelpMessage_PuTTYUsername" xml:space="preserve">
     <value>Uporabniško ime, ki bo posredovano v sejo PuTTY. Na voljo samo, če je način "SSH", "Telnet" ali "Rlogin".</value>
@@ -3840,25 +3840,108 @@ Right-click for more options.</value>
   <data name="ProfileFile" xml:space="preserve">
     <value>Profile file</value>
   </data>
+  <data name="ApplicationName_HostsFileEditor" xml:space="preserve">
+    <value>Hosts File Editor</value>
+  </data>
+  <data name="HostsFileEditor" xml:space="preserve">
+    <value>Hosts File Editor</value>
+  </data>
+  <data name="HostsFileEditorAdminMessage" xml:space="preserve">
+    <value>Read-only mode. Modifying the hosts file requires elevated rights!</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="Disable" xml:space="preserve">
+    <value>Disable</value>
+  </data>
+  <data name="EditEntry" xml:space="preserve">
+    <value>Edit entry</value>
+  </data>
+  <data name="EditEntryDots" xml:space="preserve">
+    <value>Edit entry...</value>
+  </data>
+  <data name="EnableEntry" xml:space="preserve">
+    <value>Enable entry</value>
+  </data>
+  <data name="DisableEntry" xml:space="preserve">
+    <value>Disable entry</value>
+  </data>
+  <data name="RefreshingDots" xml:space="preserve">
+    <value>Refreshing...</value>
+  </data>
+  <data name="ReloadedAtX" xml:space="preserve">
+    <value>Reloaded at {0}</value>
+  </data>
+  <data name="FailedToLoadHostsFileMessage" xml:space="preserve">
+    <value>Failed to load hosts file: {0}</value>
+  </data>
+  <data name="RetryingInXSecondsDots" xml:space="preserve">
+    <value>Retrying in {0} seconds...</value>
+  </data>
+  <data name="WhatsNew" xml:space="preserve">
+    <value>What's new?</value>
+  </data>
+  <data name="Changelog" xml:space="preserve">
+    <value>Changelog</value>
+  </data>
+  <data name="UpgradedToXXX" xml:space="preserve">
+    <value>Upgraded to {0}</value>
+  </data>
+  <data name="WhatsNewMessage" xml:space="preserve">
+    <value>This release includes new features, improvements, and bug fixes. Check out the changelog for all the details!</value>
+  </data>
+  <data name="Entries" xml:space="preserve">
+    <value>Entries</value>
+  </data>
+  <data name="DeleteHostsFileEntryMessage" xml:space="preserve">
+    <value>The selected entry is permanently deleted:
+
+{0} {1} {2}</value>
+  </data>
+  <data name="ExampleHostsFileEntryComment" xml:space="preserve">
+    <value>Primary DNS server</value>
+  </data>
+  <data name="EnterValidHostsFileEntryHostname" xml:space="preserve">
+    <value>Enter a valid hostname (e.g., "server-01" or "example.com")! Multiple hostnames can be separated with a space.</value>
+  </data>
+  <data name="HostsFileReadErrorMessage" xml:space="preserve">
+    <value>The "hosts" file could not be read! See log file for more details.</value>
+  </data>
+  <data name="HostsFileWriteErrorMessage" xml:space="preserve">
+    <value>The "hosts" file could not be written to. See log file for more details.</value>
+  </data>
+  <data name="HostsFileEntryNotFoundMessage" xml:space="preserve">
+    <value>The entry was not found in the "hosts" file! Maybe the file has been modified.</value>
+  </data>
+  <data name="HostsFileBackupErrorMessage" xml:space="preserve">
+    <value>A backup of the "hosts" file could not be created! See log file for more details.</value>
+  </data>
   <data name="ShowStatusBar" xml:space="preserve">
-    <value />
+    <value>Show status bar</value>
   </data>
   <data name="HelpMessage_ShowStatusBar" xml:space="preserve">
-    <value />
+    <value>Displays the status bar in the bottom-left of the WebView when hovering over a link.</value>
   </data>
   <data name="SaveCredentials" xml:space="preserve">
-    <value />
+    <value>Save credentials</value>
   </data>
   <data name="HelpMessage_SaveCredentials" xml:space="preserve">
-    <value />
+    <value>Displays a dialog to save credentials after a successful sign-in.</value>
   </data>
   <data name="DeleteBrowsingData" xml:space="preserve">
-    <value />
+    <value>Delete browsing data</value>
   </data>
   <data name="DeleteBrowsingDataMessage" xml:space="preserve">
-    <value />
+    <value>Permanently delete browsing data (history, cookies, cache, credentials, etc.) for the current WebView2 profile.</value>
   </data>
   <data name="BrowsingData" xml:space="preserve">
-    <value />
+    <value>Browsing Data</value>
+  </data>
+  <data name="BrowsingDataSuccessfullyDeletedMessage" xml:space="preserve">
+    <value>Browsing data successfully deleted!</value>
+  </data>
+  <data name="BrowsingDataErrorMessage" xml:space="preserve">
+    <value>An error occurred while deleting browsing data. Feel free to report this issue on GitHub.</value>
   </data>
 </root>
