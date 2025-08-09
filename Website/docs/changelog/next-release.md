@@ -36,6 +36,12 @@ Release date: **xx.xx.2025**
 - `DNSKEY` records are now supported. [#3060](https://github.com/BornToBeRoot/NETworkManager/pull/3060)
 - `SRV` records are now supported. [#3060](https://github.com/BornToBeRoot/NETworkManager/pull/3060)
 - `CAA` records are now supported. [#3012](https://github.com/BornToBeRoot/NETworkManager/pull/3012)
+- `MX` records now support priority. The result is now shown as `10 mail.example.com.` instead of `mail.example.com.`. [#3118](https://github.com/BornToBeRoot/NETworkManager/pull/3118)
+
+**Web Console**
+
+- Credentials can now be stored in the WebView2 browser, similar to Microsoft Edge. [#3056](https://github.com/BornToBeRoot/NETworkManager/pull/3056)
+- History, cookies, cache, credentials, etc. can now be deleted via the `Delete browsing data` button in the settings. [#3056](https://github.com/BornToBeRoot/NETworkManager/pull/3056)
 
 ## Improvements
 
@@ -57,7 +63,6 @@ Release date: **xx.xx.2025**
 **DNS Lookup**
 
 - Record types that are not implemented are now hidden in the user interface. [#3012](https://github.com/BornToBeRoot/NETworkManager/pull/3012)
-- Added priority to MX records. The result is now shown as `10 mail.example.com.` instead of `mail.example.com.`. [#3118](https://github.com/BornToBeRoot/NETworkManager/pull/3118)
 
 **PowerShell**
 
