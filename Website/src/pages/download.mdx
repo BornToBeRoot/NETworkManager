@@ -10,27 +10,27 @@ import styles from "./styles.module.css";
 
 <div style={{ display: "flex", justifyContent: "space-between" }}>
   <div>
-    <h3>2025.1.18.0</h3>
+    <h3>2025.8.10.0</h3>
   </div>
-  <div>Release Date: 18.01.2025</div>
+  <div>Release Date: 10.08.2025</div>
 </div>
 
 <div className={`${styles.centerButtonContainer} margin-bottom--lg`}>
   <Link
     className={`button button--primary button--outline ${styles.downloadButton}`}
-    to="https://github.com/BornToBeRoot/NETworkManager/releases/download/2025.1.18.0/NETworkManager_2025.1.18.0_Setup.msi"
+    to="https://github.com/BornToBeRoot/NETworkManager/releases/download/2025.8.10.0/NETworkManager_2025.8.10.0_Setup.msi"
   >
     Setup
   </Link>
   <Link
     className={`button button--info button--outline ${styles.downloadButton}`}
-    to="https://github.com/BornToBeRoot/NETworkManager/releases/download/2025.1.18.0/NETworkManager_2025.1.18.0_Portable.zip"
+    to="https://github.com/BornToBeRoot/NETworkManager/releases/download/2025.8.10.0/NETworkManager_2025.8.10.0_Portable.zip"
   >
     Portable
   </Link>
   <Link
     className={`button button--info button--outline ${styles.downloadButton}`}
-    to="https://github.com/BornToBeRoot/NETworkManager/releases/download/2025.1.18.0/NETworkManager_2025.1.18.0_Archive.zip"
+    to="https://github.com/BornToBeRoot/NETworkManager/releases/download/2025.8.10.0/NETworkManager_2025.8.10.0_Archive.zip"
   >
     Archive
   </Link>
@@ -62,7 +62,7 @@ import styles from "./styles.module.css";
 <div className={`${styles.centerButtonContainer}`}>
   <Link
     className={`button button--secondary button--outline ${styles.additionalButton}`}
-    to="/docs/changelog/2025-1-18-0"
+    to="/docs/changelog/2025-8-10-0"
     target="_blank"
   >
     📃 What's new?
@@ -130,13 +130,15 @@ import styles from "./styles.module.css";
   <div>
     <p>SHA-256 checksums for the latest release:</p>
     <b>Setup</b> (MSI Installer)
-    <pre><code>0E8722AB821FDFC5079C8E914CDBC293F373F551924EFBA14CA4AF6E68B678F9</code></pre>
+    <pre><code>1F899FE5B3F4B162CACED4E933B3033734995D5CA6AD95F6BACE5BB5AB63A6AC</code></pre>
     <b>Portable</b> (ZIP Archive)
-    <pre><code>85000CC7E9892C14B3C1F7DE2D540A57E2C90CF5AE25E27960844751AADCF166</code></pre>
+    <pre><code>AA2DED2139C9D0FD39A9B20310FA1670549939FAA5E41818E6ADF6A941E98446</code></pre>
     <b>Archive</b> (ZIP Archive)
-    <pre><code>68FFC7A42F0CF27B83525BB6AE79C730C96C40A956869F5C45D60B97CCECAE74</code></pre>
+    <pre><code>2CC3C48F148657AF5CCF4E45587D50964B1E9EADFD8A771EC6FD12D168134504</code></pre>
     <p>You can verify the checksum with the following PowerShell command:</p>
     <pre><code class="language-powershell">Get-FileHash -Path .\NETworkManager_&#123;VERSION&#125;_Setup.msi -Algorithm SHA256</code></pre>
+    <p>Or with the linux command <code>sha256sum</code>:</p>
+    <pre><code class="language-bash">sha256sum -c NETworkManager_&#123;VERSION&#125;_SHA256SUMS</code></pre>
   </div>
 </details>
 
