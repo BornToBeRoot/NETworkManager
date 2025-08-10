@@ -19,7 +19,6 @@ public class OKMessageViewModel : ViewModelBase
     public ICommand OKCommand { get; }
 
     private readonly string _message;
-
     public string Message
     {
         get => _message;
@@ -34,7 +33,6 @@ public class OKMessageViewModel : ViewModelBase
     }
 
     private readonly string _okButtonText;
-
     public string OKButtonText
     {
         get => _okButtonText;
@@ -49,7 +47,6 @@ public class OKMessageViewModel : ViewModelBase
     }
 
     private ChildWindowIcon _icon;
-
     public ChildWindowIcon Icon
     {
         get => _icon;

@@ -11,6 +11,11 @@ public enum ChildWindowIcon
     Info,
 
     /// <summary>
+    /// Question icon.
+    /// </summary>
+    Question,
+
+    /// <summary>
     /// Warning icon.
     /// </summary>
     Warn,

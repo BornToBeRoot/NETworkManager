@@ -7,7 +7,7 @@ namespace NETworkManager.ViewModels;
 public class OKCancelInfoMessageViewModel : ViewModelBase
 {
     public OKCancelInfoMessageViewModel(Action<OKCancelInfoMessageViewModel> okCommand,
-        Action<OKCancelInfoMessageViewModel> cancelHandler, string message, string okButtonText = null, string cancelButtonText = null)
+        Action<OKCancelInfoMessageViewModel> cancelHandler, string message, string okButtonText = null, string cancelButtonText = null, ChildWindowIcon icon = ChildWindowIcon.Info)
     {
         OKCommand = new RelayCommand(_ => okCommand(this));
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
@@ -23,7 +23,6 @@ public class OKCancelInfoMessageViewModel : ViewModelBase
     public ICommand CancelCommand { get; }
 
     private readonly string _message;
-
     public string Message
     {
         get => _message;
@@ -38,7 +37,6 @@ public class OKCancelInfoMessageViewModel : ViewModelBase
     }
 
     private readonly string _okButtonText;
-
     public string OKButtonText
     {
         get => _okButtonText;
@@ -53,7 +51,6 @@ public class OKCancelInfoMessageViewModel : ViewModelBase
     }
 
     private readonly string _cancelButtonText;
-
     public string CancelButtonText
     {
         get => _cancelButtonText;
@@ -63,6 +60,20 @@ public class OKCancelInfoMessageViewModel : ViewModelBase
                 return;
 
             _cancelButtonText = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private ChildWindowIcon _icon;
+    public ChildWindowIcon Icon
+    {
+        get => _icon;
+        private init
+        {
+            if (value == _icon)
+                return;
+
+            _icon = value;
             OnPropertyChanged();
         }
     }

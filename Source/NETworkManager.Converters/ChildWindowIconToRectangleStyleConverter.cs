@@ -17,6 +17,8 @@ public sealed class ChildWindowIconToRectangleStyleConverter : IValueConverter
         {
             case ChildWindowIcon.Info:
                 return Application.Current.FindResource("InfoImageRectangle");
+            case ChildWindowIcon.Question:
+                return Application.Current.FindResource("QuestionImageRectangle");
             case ChildWindowIcon.Warn:
                 return Application.Current.FindResource("WarnImageRectangle");
             case ChildWindowIcon.Error:

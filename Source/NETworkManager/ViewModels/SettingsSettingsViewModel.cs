@@ -1,20 +1,19 @@
-﻿using System;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
+﻿using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
+using NETworkManager.Views;
+using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
 public class SettingsSettingsViewModel : ViewModelBase
 {
     #region Variables
-
-    private readonly IDialogCoordinator _dialogCoordinator;
-
     public Action CloseAction { get; set; }
 
     private string _location;
@@ -31,15 +30,12 @@ public class SettingsSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-
     #endregion
 
     #region Constructor, LoadSettings
 
-    public SettingsSettingsViewModel(IDialogCoordinator instance)
+    public SettingsSettingsViewModel()
     {
-        _dialogCoordinator = instance;
-
         LoadSettings();
     }
 
@@ -61,26 +57,47 @@ public class SettingsSettingsViewModel : ViewModelBase
 
     public ICommand ResetSettingsCommand => new RelayCommand(_ => ResetSettingsAction());
 
-    private async void ResetSettingsAction()
+    private void ResetSettingsAction()
     {
-        var settings = AppearanceManager.MetroDialog;
-
-        settings.AffirmativeButtonText = Strings.Reset;
-        settings.NegativeButtonText = Strings.Cancel;
-
-        settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
-
-        if (await _dialogCoordinator.ShowMessageAsync(this, Strings.ResetSettingsQuestion,
-                Strings.SettingsAreResetAndApplicationWillBeRestartedMessage,
-                MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
-            return;
-
-        // Init default settings
-        SettingsManager.Initialize();
-
-        // Restart the application
-        (Application.Current.MainWindow as MainWindow)?.RestartApplication();
+        ResetSettings().ConfigureAwait(false);
     }
 
+    #endregion
+
+    #region Methods
+
+    private Task ResetSettings()
+    {
+        var childWindow = new OKCancelInfoMessageChildWindow();
+
+        var childWindowViewModel = new OKCancelInfoMessageViewModel(_ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            // Init default settings
+            SettingsManager.Initialize();
+
+            // Restart the application
+            (Application.Current.MainWindow as MainWindow)?.RestartApplication();
+        }, _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        },
+            Strings.SettingsAreResetAndApplicationWillBeRestartedMessage,
+            Strings.Reset,
+            Strings.Cancel,
+            ChildWindowIcon.Question
+        );
+
+        childWindow.Title = Strings.ResetSettingsQuestion;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+    }
     #endregion
 }

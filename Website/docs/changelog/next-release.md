@@ -21,6 +21,8 @@ Release date: **xx.xx.2025**
 
 ## Improvements
 
+- Redesign settings reset dialog. [#3138](https://github.com/BornToBeRoot/NETworkManager/pull/3138)
+
 ## Bugfixes
 
 ## Dependencies, Refactoring & Documentation

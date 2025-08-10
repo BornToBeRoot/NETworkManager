@@ -1,12 +1,11 @@
-﻿using System.Windows;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.ViewModels;
+﻿using NETworkManager.ViewModels;
+using System.Windows;
 
 namespace NETworkManager.Views;
 
 public partial class SettingsSettingsView
 {
-    private readonly SettingsSettingsViewModel _viewModel = new(DialogCoordinator.Instance);
+    private readonly SettingsSettingsViewModel _viewModel = new();
 
     public SettingsSettingsView()
     {

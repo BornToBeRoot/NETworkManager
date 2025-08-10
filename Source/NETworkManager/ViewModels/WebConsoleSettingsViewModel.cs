@@ -1,14 +1,13 @@
-﻿using System;
-using MahApps.Metro.SimpleChildWindow;
+﻿using MahApps.Metro.SimpleChildWindow;
+using Microsoft.Web.WebView2.Core;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using Microsoft.Web.WebView2.Core;
-using Microsoft.Web.WebView2.Wpf;
 
 namespace NETworkManager.ViewModels;
 
