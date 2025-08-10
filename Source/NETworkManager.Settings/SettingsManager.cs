@@ -190,6 +190,10 @@ public static class SettingsManager
         if (fromVersion < new Version(2024, 11, 11, 0))
             UpgradeTo_2024_11_11_0();
 
+        // 2025.8.11.0
+        if (fromVersion < new Version(2025, 8, 11, 0))
+            UpgradeTo_2025_8_11_0();
+
         // Latest
         if (fromVersion < toVersion)
             UpgradeToLatest(toVersion);
@@ -311,12 +315,11 @@ public static class SettingsManager
     }
 
     /// <summary>
-    ///     Method to apply changes for the latest version.
+    ///     Method to apply changes for version 2025.8.11.0.
     /// </summary>
-    /// <param name="version">Latest version.</param>
-    private static void UpgradeToLatest(Version version)
+    private static void UpgradeTo_2025_8_11_0()
     {
-        Log.Info($"Apply upgrade to {version}...");
+        Log.Info("Apply upgrade to 2025.8.11.0...");
 
         // Add Hosts editor application
         Log.Info("Add new app \"Hosts File Editor\"...");
@@ -324,6 +327,15 @@ public static class SettingsManager
         Current.General_ApplicationList.Insert(
             ApplicationManager.GetDefaultList().ToList().FindIndex(x => x.Name == ApplicationName.HostsFileEditor),
             ApplicationManager.GetDefaultList().First(x => x.Name == ApplicationName.HostsFileEditor));
+    }
+
+    /// <summary>
+    ///     Method to apply changes for the latest version.
+    /// </summary>
+    /// <param name="version">Latest version.</param>
+    private static void UpgradeToLatest(Version version)
+    {
+        Log.Info($"Apply upgrade to {version}...");
     }
 
     #endregion

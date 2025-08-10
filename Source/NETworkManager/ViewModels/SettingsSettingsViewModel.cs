@@ -1,5 +1,4 @@
-﻿using MahApps.Metro.Controls.Dialogs;
-using MahApps.Metro.SimpleChildWindow;
+﻿using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
@@ -15,9 +14,6 @@ namespace NETworkManager.ViewModels;
 public class SettingsSettingsViewModel : ViewModelBase
 {
     #region Variables
-
-    private readonly IDialogCoordinator _dialogCoordinator;
-
     public Action CloseAction { get; set; }
 
     private string _location;
@@ -34,15 +30,12 @@ public class SettingsSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-
     #endregion
 
     #region Constructor, LoadSettings
 
-    public SettingsSettingsViewModel(IDialogCoordinator instance)
+    public SettingsSettingsViewModel()
     {
-        _dialogCoordinator = instance;
-
         LoadSettings();
     }
 
