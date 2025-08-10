@@ -135,10 +135,16 @@ import styles from "./styles.module.css";
     <pre><code>AA2DED2139C9D0FD39A9B20310FA1670549939FAA5E41818E6ADF6A941E98446</code></pre>
     <b>Archive</b> (ZIP Archive)
     <pre><code>2CC3C48F148657AF5CCF4E45587D50964B1E9EADFD8A771EC6FD12D168134504</code></pre>
-    <p>You can verify the checksum with the following PowerShell command:</p>
-    <pre><code class="language-powershell">Get-FileHash -Path .\NETworkManager_&#123;VERSION&#125;_Setup.msi -Algorithm SHA256</code></pre>
-    <p>Or with the linux command <code>sha256sum</code>:</p>
-    <pre><code class="language-bash">sha256sum -c NETworkManager_&#123;VERSION&#125;_SHA256SUMS</code></pre>
+    <p>You can verify the checksum with one of the following commands:</p>
+    <pre>
+      <code class="language-powershell">
+        # PowerShell
+        Get-FileHash -Path .\NETworkManager_&#123;VERSION&#125;_Setup.msi -Algorithm SHA256
+
+        # Linux
+        sha256sum -c NETworkManager_&#123;VERSION&#125;_SHA256SUMS
+      </code>
+    </pre>    
   </div>
 </details>
 
