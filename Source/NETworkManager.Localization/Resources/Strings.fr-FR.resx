@@ -679,7 +679,7 @@
     <value>Appliquer</value>
   </data>
   <data name="ApplyWindowsKeyCombinationsLikeAltTab" xml:space="preserve">
-    <value>Apply Windows key combinations (e.g., ALT+TAB):</value>
+    <value>Appliquer les combinaisons de touches Windows (par ex: ALT+TAB):</value>
   </data>
   <data name="Auth" xml:space="preserve">
     <value>Auth</value>
@@ -1367,16 +1367,16 @@ Les fichiers de profil ne sont pas affectés!</value>
     <value>Entrez une adresse IPv4 valide!</value>
   </data>
   <data name="EnterValidMACAddress" xml:space="preserve">
-    <value>Enter a valid MAC address (e.g., 00:F1:23:AB:F2:35)!</value>
+    <value>Entrez une adresse MAC valide (par ex: 00:F1:23:AB:F2:35)!</value>
   </data>
   <data name="EnterValidPort" xml:space="preserve">
     <value>Entrez un port valide (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnetmask" xml:space="preserve">
-    <value>Enter a valid subnetmask (e.g., 255.255.255.0)!</value>
+    <value>Entrez un masque de sous-réseau valide (par ex: 255.255.255.0)!</value>
   </data>
   <data name="EnterValidSubnetmaskOrCIDR" xml:space="preserve">
-    <value>Enter a valid subnetmask or CIDR (e.g., 255.255.255.0 or /24)!</value>
+    <value>Entrez un masque de sous-réseau ou un CIDR valide (par ex: 255.255.255.0 ou /24)!</value>
   </data>
   <data name="FieldCannotBeEmpty" xml:space="preserve">
     <value>Le champ ne peut pas être vide!</value>
@@ -1448,10 +1448,10 @@ Les fichiers de profil ne sont pas affectés!</value>
     <value>Entrez un port et/ou une plage de ports valide (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnet" xml:space="preserve">
-    <value>Enter a valid subnet (e.g., 192.168.178.133/26)!</value>
+    <value>Entrez un sous-réseau valide (par ex: 192.168.178.133/26)!</value>
   </data>
   <data name="EnterValidWebsiteUri" xml:space="preserve">
-    <value>Enter a valid website (e.g., https://example.com/index.html)</value>
+    <value>Entrez un site web valide (ex: https://example.com/index.html)</value>
   </data>
   <data name="Green" xml:space="preserve">
     <value>Vert</value>
@@ -1742,7 +1742,7 @@ Les fichiers de profil ne sont pas affectés!</value>
     <value>Ajouter un onglet pour interroger whois…</value>
   </data>
   <data name="EnterValidDomain" xml:space="preserve">
-    <value>Enter a valid domain (e.g., "example.com")!</value>
+    <value>Entrez un domaine valide (ex: "exemple.com")!</value>
   </data>
   <data name="WhoisServerNotFoundForTheDomain" xml:space="preserve">
     <value>Serveur Whois non trouvé pour le domaine: "{0}"</value>
@@ -1929,9 +1929,9 @@ Les modifications de cette valeur prendront effet après le redémarrage de l'ap
     <value>Vérifier l'adresse IP publique</value>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
-    <value>Thank you for using NETworkManager!
+    <value>Merci d'utiliser NETworkManager !
 
-If you enjoy it, please consider supporting its development — whether by leaving a star on GitHub, making a donation, or simply sharing it with others. Your support helps keep the project going and growing.</value>
+Si vous appréciez cet outil, pensez à soutenir son développement, que ce soit en lui attribuant une étoile sur GitHub, en faisant un don ou simplement en le partageant avec d'autres. Votre soutien contribue à la poursuite et au développement du projet.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Lors du démarrage du programme, il vérifie en arrière-plan si une nouvelle version du programme est disponible sur GitHub.
@@ -1953,13 +1953,13 @@ URL: https://api.ipify.org ou https://api6.ipify.org</value>
     <value>Services extérieurs</value>
   </data>
   <data name="ToolTip_StarForkProjectOnGitHub" xml:space="preserve">
-    <value>Star/Fork the Project on GitHub.</value>
+    <value>Ajoutez le projet à vos favoris sur GitHub.</value>
   </data>
   <data name="ToolTip_HelpTranslateOnTransifex" xml:space="preserve">
-    <value>Help translate the project on Transifex.</value>
+    <value>Aidez à traduire le projet sur Transifex.</value>
   </data>
   <data name="ToolTip_ContactOrContactMeViaX" xml:space="preserve">
-    <value>Follow or contact me via X.</value>
+    <value>Suivez-moi ou contactez-moi via X.</value>
   </data>
   <data name="Connection" xml:space="preserve">
     <value>Connexion</value>
@@ -2032,7 +2032,7 @@ est désactivée!</value>
     <value>Utiliser API d'adresse IPv4 personnalisée</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv4AddressAPI" xml:space="preserve">
-    <value>URL to a web service that can be reached via http or https and returns an IPv4 address e.g., "xx.xx.xx.xx" as response.</value>
+    <value>URL vers un service Web accessible via http ou https et renvoyant une adresse IPv4, par ex: "xx.xx.xx.xx" en réponse.</value>
   </data>
   <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
     <value>Impossible d'analyser l'adresse IP publique depuis "{0}"! Essayez un autre service ou utilisez la valeur par défaut… </value>
@@ -2278,7 +2278,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Délai (s)</value>
   </data>
   <data name="ToolTip_ReportIssueOrCreateFeatureRequest" xml:space="preserve">
-    <value>Report an issue or create a feature request.</value>
+    <value>Signalez un problème ou créez une demande de fonctionnalité.</value>
   </data>
   <data name="BeaconInterval" xml:space="preserve">
     <value>Intervalle des balises</value>
@@ -2338,7 +2338,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Est crypté</value>
   </data>
   <data name="ToolTip_OpenTheDocumentation" xml:space="preserve">
-    <value>Open the documentation.</value>
+    <value>Ouvrez la documentation.</value>
   </data>
   <data name="ExampleProfileFileName" xml:space="preserve">
     <value>Client 1</value>
@@ -2392,7 +2392,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Redémarrer en tant qu'administrateur</value>
   </data>
   <data name="NetworkPacketsCaptureAdminMessage" xml:space="preserve">
-    <value>Analysing network packets requires elevated rights!</value>
+    <value>L'analyse des paquets réseau nécessite des droits élevés!</value>
   </data>
   <data name="Capture" xml:space="preserve">
     <value>Capture</value>
@@ -3192,7 +3192,7 @@ Si l'option est à nouveau désactivée, les valeurs ne sont plus modifiées. Ce
     <value>Serveur(s) SNTP</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv6AddressAPI" xml:space="preserve">
-    <value>URL to a web service that can be reached via http or https and returns an IPv6 address e.g., "xxxx:xx:xxx::xx" as response.</value>
+    <value>URL vers un service Web accessible via http ou https et renvoyant une adresse IPv6, par ex: "xxxx:xx:xxx::xx" en réponse.</value>
   </data>
   <data name="IPEndPoint" xml:space="preserve">
     <value>Point final IP</value>
@@ -3234,7 +3234,7 @@ Si l'option est à nouveau désactivée, les valeurs ne sont plus modifiées. Ce
     <value>Un serveur SNTP portant ce nom existe déjà!</value>
   </data>
   <data name="EnterValidHostnameOrIPAddress" xml:space="preserve">
-    <value>Enter a valid hostname (e.g., "server-01" or "example.com") or a valid IP address (e.g., 192.168.178.1)!</value>
+    <value>Entrez un nom d'hôte valide (par ex: "server-01" ou "example.com") ou une adresse IP valide (par exemple, 192.168.178.1)!</value>
   </data>
   <data name="Servers" xml:space="preserve">
     <value>Serveur(s)</value>
@@ -3528,10 +3528,10 @@ Les modifications apportées à cette valeur prendront effet après le redémarr
     <value>Les réglages de cette page comportent des erreurs. Corrigez-les pour pouvoir sauvegarder.</value>
   </data>
   <data name="HelpMessage_PuTTYHostkey" xml:space="preserve">
-    <value>SSH hostkey to use for the connection (e.g., "71:b8:f2:6e..."). Only available if the mode is "SSH".</value>
+    <value>Clé d'hôte SSH à utiliser pour la connexion (par ex: "71:b8:f2:6e..."). Seulement disponible si le mode est "SSH".</value>
   </data>
   <data name="HelpMessage_PuTTYPrivateKeyFile" xml:space="preserve">
-    <value>Full path to the private key file (e.g., "C:\Users\BornToBeRoot\SSH\private_key.ppk"). Only available if the mode is "SSH".</value>
+    <value>Chemin d'accès complet au fichier de clé privée (par exemple, "C:\Users\BornToBeRoot\SSH\private_key.ppk"). Disponible seulement si le mode est "SSH".</value>
   </data>
   <data name="HelpMessage_PuTTYUsername" xml:space="preserve">
     <value>Nom d'utilisateur qui sera transmis à la session PuTTY. Seulement disponible si le mode est "SSH", "Telnet" ou "Rlogin".</value>
@@ -3847,16 +3847,16 @@ Clic droit pour plus d'options.</value>
     <value>6 GHz</value>
   </data>
   <data name="ToolTip_SupportThisProjectWithADonation" xml:space="preserve">
-    <value>Support this project with a donation.</value>
+    <value>Soutenez ce projet avec un don.</value>
   </data>
   <data name="OpenDocumentation" xml:space="preserve">
     <value>Ouvrir la documentation</value>
   </data>
   <data name="Donate" xml:space="preserve">
-    <value>Donate</value>
+    <value>Don</value>
   </data>
   <data name="ProfileFile" xml:space="preserve">
-    <value>Profile file</value>
+    <value>Fichier de profil</value>
   </data>
   <data name="ApplicationName_HostsFileEditor" xml:space="preserve">
     <value>Hosts File Editor</value>
@@ -3865,101 +3865,101 @@ Clic droit pour plus d'options.</value>
     <value>Hosts File Editor</value>
   </data>
   <data name="HostsFileEditorAdminMessage" xml:space="preserve">
-    <value>Read-only mode. Modifying the hosts file requires elevated rights!</value>
+    <value>Mode lecture seule. La modification du fichier hosts nécessite des droits élevés!</value>
   </data>
   <data name="Comment" xml:space="preserve">
-    <value>Comment</value>
+    <value>Commentaire</value>
   </data>
   <data name="Disable" xml:space="preserve">
-    <value>Disable</value>
+    <value>Désactiver</value>
   </data>
   <data name="EditEntry" xml:space="preserve">
-    <value>Edit entry</value>
+    <value>Éditer l'entrée</value>
   </data>
   <data name="EditEntryDots" xml:space="preserve">
-    <value>Edit entry...</value>
+    <value>Éditer l'entrée...</value>
   </data>
   <data name="EnableEntry" xml:space="preserve">
-    <value>Enable entry</value>
+    <value>Activer l'entrée</value>
   </data>
   <data name="DisableEntry" xml:space="preserve">
-    <value>Disable entry</value>
+    <value>Désactiver l'entrée</value>
   </data>
   <data name="RefreshingDots" xml:space="preserve">
-    <value>Refreshing...</value>
+    <value>Actualisation...</value>
   </data>
   <data name="ReloadedAtX" xml:space="preserve">
-    <value>Reloaded at {0}</value>
+    <value>Rechargé à {0}</value>
   </data>
   <data name="FailedToLoadHostsFileMessage" xml:space="preserve">
-    <value>Failed to load hosts file: {0}</value>
+    <value>Échec du chargement du fichier hosts: {0}</value>
   </data>
   <data name="RetryingInXSecondsDots" xml:space="preserve">
-    <value>Retrying in {0} seconds...</value>
+    <value>Réessayer dans {0}  secondes...</value>
   </data>
   <data name="WhatsNew" xml:space="preserve">
-    <value>What's new?</value>
+    <value>Quoi de neuf?</value>
   </data>
   <data name="Changelog" xml:space="preserve">
-    <value>Changelog</value>
+    <value>Journal des modifs</value>
   </data>
   <data name="UpgradedToXXX" xml:space="preserve">
-    <value>Upgraded to {0}</value>
+    <value>Mise à niveau vers {0}</value>
   </data>
   <data name="WhatsNewMessage" xml:space="preserve">
-    <value>This release includes new features, improvements, and bug fixes. Check out the changelog for all the details!</value>
+    <value>Cette version inclut de nouvelles fonctionnalités, des améliorations et des corrections de bugs. Consultez le journal des modifications pour plus de détails!</value>
   </data>
   <data name="Entries" xml:space="preserve">
-    <value>Entries</value>
+    <value>Entrées</value>
   </data>
   <data name="DeleteHostsFileEntryMessage" xml:space="preserve">
-    <value>The selected entry is permanently deleted:
+    <value>L'entrée sélectionnée est définitivement supprimée:
 
-{0} {1} {2}</value>
+{0}{1}{2}</value>
   </data>
   <data name="ExampleHostsFileEntryComment" xml:space="preserve">
-    <value>Primary DNS server</value>
+    <value>Serveur DNS principal</value>
   </data>
   <data name="EnterValidHostsFileEntryHostname" xml:space="preserve">
-    <value>Enter a valid hostname (e.g., "server-01" or "example.com")! Multiple hostnames can be separated with a space.</value>
+    <value>Entrez un nom d'hôte valide (par ex: "server-01" ou "example.com")! Plusieurs noms d'hôtes peuvent être séparés par un espace.</value>
   </data>
   <data name="HostsFileReadErrorMessage" xml:space="preserve">
-    <value>The "hosts" file could not be read! See log file for more details.</value>
+    <value>Fichier "hosts" est illisible! Consultez le fichier journal pour plus de détails.</value>
   </data>
   <data name="HostsFileWriteErrorMessage" xml:space="preserve">
-    <value>The "hosts" file could not be written to. See log file for more details.</value>
+    <value>Impossible d'écrire dans le fichier "hosts". Consultez le fichier journal pour plus de détails.</value>
   </data>
   <data name="HostsFileEntryNotFoundMessage" xml:space="preserve">
-    <value>The entry was not found in the "hosts" file! Maybe the file has been modified.</value>
+    <value>Entrée introuvable dans le fichier "hosts"! Le fichier a peut-être été modifié.</value>
   </data>
   <data name="HostsFileBackupErrorMessage" xml:space="preserve">
-    <value>A backup of the "hosts" file could not be created! See log file for more details.</value>
+    <value>Sauvegarde du fichier "hosts" n'a pas pu être créée! Consultez le fichier journal pour plus de détails.</value>
   </data>
   <data name="ShowStatusBar" xml:space="preserve">
-    <value>Show status bar</value>
+    <value>Afficher la barre d'état</value>
   </data>
   <data name="HelpMessage_ShowStatusBar" xml:space="preserve">
-    <value>Displays the status bar in the bottom-left of the WebView when hovering over a link.</value>
+    <value>Affiche la barre d'état en bas à gauche de WebView lorsque vous survolez un lien.</value>
   </data>
   <data name="SaveCredentials" xml:space="preserve">
-    <value>Save credentials</value>
+    <value>Enregistrer les identifiants</value>
   </data>
   <data name="HelpMessage_SaveCredentials" xml:space="preserve">
-    <value>Displays a dialog to save credentials after a successful sign-in.</value>
+    <value>Affiche une boîte de dialogue pour sauver les infos d'identification après une connexion réussie.</value>
   </data>
   <data name="DeleteBrowsingData" xml:space="preserve">
-    <value>Delete browsing data</value>
+    <value>Supprimer les données de navigation</value>
   </data>
   <data name="DeleteBrowsingDataMessage" xml:space="preserve">
-    <value>Permanently delete browsing data (history, cookies, cache, credentials, etc.) for the current WebView2 profile.</value>
+    <value>Supprimez définitivement les données de navigation (historique, cookies, cache, infos d'identification, etc.) pour le profil WebView2 actuel.</value>
   </data>
   <data name="BrowsingData" xml:space="preserve">
-    <value>Browsing Data</value>
+    <value>Données de navigation</value>
   </data>
   <data name="BrowsingDataSuccessfullyDeletedMessage" xml:space="preserve">
-    <value>Browsing data successfully deleted!</value>
+    <value>Données de navigation supprimées avec succès!</value>
   </data>
   <data name="BrowsingDataErrorMessage" xml:space="preserve">
-    <value>An error occurred while deleting browsing data. Feel free to report this issue on GitHub.</value>
+    <value>Une erreur s'est produite lors de la suppression des données de navigation. N'hésitez pas à signaler ce problème sur GitHub.</value>
   </data>
 </root>
