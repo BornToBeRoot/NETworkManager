@@ -610,6 +610,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add tag.
+        /// </summary>
+        public static string AddTag {
+            get {
+                return ResourceManager.GetString("AddTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adjust screen.
         /// </summary>
         public static string AdjustScreen {
@@ -3842,6 +3851,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ExampleProfileFileName {
             get {
                 return ResourceManager.GetString("ExampleProfileFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to production.
+        /// </summary>
+        public static string ExampleTag {
+            get {
+                return ResourceManager.GetString("ExampleTag", resourceCulture);
             }
         }
         

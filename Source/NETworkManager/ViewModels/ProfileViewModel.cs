@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Security;
-using System.Threading.Tasks;
-using System.Windows.Data;
-using System.Windows.Input;
-using NETworkManager.Localization.Resources;
+﻿using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.PowerShell;
@@ -15,6 +7,14 @@ using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Security;
+using System.Threading.Tasks;
+using System.Windows.Data;
+using System.Windows.Input;
 
 // ReSharper disable InconsistentNaming
 
@@ -45,17 +45,17 @@ public class ProfileViewModel : ViewModelBase
         Host = profileInfo.Host;
 
         Description = profileInfo.Description;
-        
+
         // Try to get group (name) as parameter, then from profile, then the first in the list of groups, then the default group            
         Group = group ?? (string.IsNullOrEmpty(profileInfo.Group)
             ? groups.Count > 0 ? groups.OrderBy(x => x).First() : Strings.Default
             : profileInfo.Group);
-        
+
         Groups = CollectionViewSource.GetDefaultView(groups);
         Groups.SortDescriptions.Add(new SortDescription());
 
         Tags = profileInfo.Tags;
-        
+
         // Network Interface
         NetworkInterface_Enabled = editMode == ProfileEditMode.Add
             ? applicationName == ApplicationName.NetworkInterface
@@ -335,7 +335,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     #endregion
-    
+
     #region Methods
 
     private void ChangeNetworkConnectionTypeSettings(NetworkConnectionType connectionSpeed)
@@ -454,7 +454,7 @@ public class ProfileViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+
     private string _description;
 
     public string Description
@@ -3287,6 +3287,8 @@ public class ProfileViewModel : ViewModelBase
     private async Task ResolveHostActionAsync()
     {
         IsResolveHostnameRunning = true;
+
+        await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
         var dnsResult =
             await DNSClientHelper.ResolveAorAaaaAsync(Host, SettingsManager.Current.Network_ResolveHostnamePreferIPv4);

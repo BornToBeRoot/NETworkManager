@@ -3962,4 +3962,10 @@ Right-click for more options.</value>
   <data name="BrowsingDataErrorMessage" xml:space="preserve">
     <value>An error occurred while deleting browsing data. Feel free to report this issue on GitHub.</value>
   </data>
+  <data name="ExampleTag" xml:space="preserve">
+    <value>production</value>
+  </data>
+  <data name="AddTag" xml:space="preserve">
+    <value>Add tag</value>
+  </data>
 </root>

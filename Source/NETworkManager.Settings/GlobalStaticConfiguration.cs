@@ -8,7 +8,6 @@ using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Utilities;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -143,7 +142,7 @@ public static class GlobalStaticConfiguration
 
     // Application: DNS Lookup
     public static QueryClass DNSLookup_QueryClass => QueryClass.IN;
-    public static QueryType DNSLookup_QueryType => QueryType.ANY;    
+    public static QueryType DNSLookup_QueryType => QueryType.ANY;
     public static bool DNSLookup_UseTCPOnly => false;
     public static int DNSLookup_Retries => 3;
     public static int DNSLookup_Timeout => 2;
@@ -207,9 +206,9 @@ public static class GlobalStaticConfiguration
     public static bool WebConsole_ShowAddressBar => true;
 
     public static bool WebConsole_IsStatusBarEnabled = true;
-    
+
     public static bool WebConsole_IsPasswordSaveEnabled = true;
-    
+
     public static string WebConsole_Cache =>
         Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             AssemblyManager.Current.Name, "WebConsole_Cache");
