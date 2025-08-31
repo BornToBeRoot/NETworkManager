@@ -657,12 +657,12 @@ public static class ProfileManager
         return (from groupSerializable in ((List<GroupInfoSerializable>)xmlSerializer.Deserialize(stream))!
                 let profiles = groupSerializable.Profiles.Select(profileSerializable => new ProfileInfo(profileSerializable)
                 {
-                    // Migrate old data
-                    NetworkInterface_Subnetmask =
-                            string.IsNullOrEmpty(profileSerializable.NetworkInterface_Subnetmask) &&
-                            !string.IsNullOrEmpty(profileSerializable.NetworkInterface_SubnetmaskOrCidr)
-                                ? profileSerializable.NetworkInterface_SubnetmaskOrCidr
-                                : profileSerializable.NetworkInterface_Subnetmask,
+                    // Migrate old tags to new tags list
+                    // if TagsList is null or empty and Tags is not null or empty, split Tags by ';' and create a new ObservableSetCollection
+                    // else use the existing TagsList
+                    TagsCollection = (profileSerializable.TagsCollection == null || profileSerializable.TagsCollection.Count == 0) && !string.IsNullOrEmpty(profileSerializable.Tags) ?
+                        new Controls.ObservableSetCollection<string>(profileSerializable.Tags.Split([';'], StringSplitOptions.RemoveEmptyEntries)) :
+                        profileSerializable.TagsCollection,
 
                     // Convert passwords to secure strings
                     RemoteDesktop_Password = !string.IsNullOrEmpty(profileSerializable.RemoteDesktop_Password)

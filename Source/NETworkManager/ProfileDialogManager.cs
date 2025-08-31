@@ -17,12 +17,6 @@ namespace NETworkManager;
 
 public static class ProfileDialogManager
 {
-    #region Variables
-
-    private static string DialogResourceKey => "LargeMetroDialog";
-
-    #endregion
-
     #region Methods to add and remove profile
 
     private static ProfileInfo ParseProfileInfo(ProfileViewModel instance)
@@ -33,7 +27,7 @@ public static class ProfileDialogManager
             Host = instance.Host.Trim(),
             Description = instance.Description?.Trim(),
             Group = instance.Group.Trim(),
-            Tags = instance.Tags?.Trim(),
+            TagsCollection = instance.TagsCollection,
 
             // Network Interface
             NetworkInterface_Enabled = instance.NetworkInterface_Enabled,

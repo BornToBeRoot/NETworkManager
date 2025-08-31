@@ -113,7 +113,7 @@ public class SettingsInfo : INotifyPropertyChanged
     #region General
 
     // General   
-    private ObservableSetCollection<ApplicationInfo> _general_ApplicationList = new();
+    private ObservableSetCollection<ApplicationInfo> _general_ApplicationList = [];
 
     public ObservableSetCollection<ApplicationInfo> General_ApplicationList
     {
@@ -3394,9 +3394,9 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    
+
     private bool _webConsole_IsStatusBarEnabled = GlobalStaticConfiguration.WebConsole_IsStatusBarEnabled;
-    
+
     public bool WebConsole_IsStatusBarEnabled
     {
         get => _webConsole_IsStatusBarEnabled;
@@ -3409,9 +3409,9 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    
+
     private bool _webConsole_IsPasswordSaveEnabled = GlobalStaticConfiguration.WebConsole_IsPasswordSaveEnabled;
-    
+
     public bool WebConsole_IsPasswordSaveEnabled
     {
         get => _webConsole_IsPasswordSaveEnabled;
@@ -4277,7 +4277,7 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #region Lookup
 
-    private ObservableCollection<string> _lookup_OUI_SearchHistory = new();
+    private ObservableCollection<string> _lookup_OUI_SearchHistory = [];
 
     public ObservableCollection<string> Lookup_OUI_SearchHistory
     {
@@ -4322,7 +4322,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ObservableCollection<string> _lookup_Port_SearchHistory = new();
+    private ObservableCollection<string> _lookup_Port_SearchHistory = [];
 
     public ObservableCollection<string> Lookup_Port_SearchHistory
     {

@@ -1292,6 +1292,8 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*" />
@@ -1349,13 +1351,13 @@
                                                 </Style.Triggers>
                                             </Style>
                                         </Button.Resources>
-                                        <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                             <Rectangle.OpacityMask>
                                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=SearchWeb}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </Button>
-                                </Grid>                              
+                                </Grid>
                                 <mah:ProgressRing Grid.Column="3" Grid.Row="2" Width="24" Height="24" Margin="10,0,0,0"
                                                   Visibility="{Binding IsResolveHostnameRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
                                 <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="2"
@@ -1424,13 +1426,13 @@
                                                 </Style.Triggers>
                                             </Style>
                                         </Button.Resources>
-                                        <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                             <Rectangle.OpacityMask>
                                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </Button>
-                                    </Grid>
+                                </Grid>
                                 <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="6"
                                            ToolTip="{x:Static Member=localization:Strings.HelpMessage_Tags}"
                                            Style="{StaticResource ResourceKey=HelpImageRectangle}" Margin="10,0,0,0">
@@ -1438,6 +1440,44 @@
                                         <Style TargetType="{x:Type TypeName=ToolTip}" BasedOn="{StaticResource ResourceKey=HelpToolTip}" />
                                     </Rectangle.Resources>
                                 </Rectangle>
+                                <ItemsControl Grid.Column="2" Grid.Row="10" ItemsSource="{Binding Path=Tags}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Margin="0,5,10,5" Padding="5" 
+                                                    BorderThickness="1" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" 
+                                                    CornerRadius="5">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding .}" Style="{StaticResource InfoTextBlock}" />
+                                                    <Button Style="{StaticResource CleanButton}"
+                                                            Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type simpleChildWindow:ChildWindow}}, Path=DataContext.RemoveTagCommand}" CommandParameter="{Binding .}"
+                                                            Margin="10,0,0,0">
+                                                        <Rectangle Width="12" Height="12">
+                                                            <Rectangle.OpacityMask>
+                                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=WindowClose}" />
+                                                            </Rectangle.OpacityMask>
+                                                            <Rectangle.Style>
+                                                                <Style TargetType="{x:Type Rectangle}">
+                                                                    <Setter Property="Fill"  Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
+                                                                                         Value="True">
+                                                                            <Setter Property="Fill" Value="Red" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Rectangle.Style>
+                                                        </Rectangle>
+                                                    </Button>
+                                                </StackPanel>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
                             </Grid>
                         </StackPanel>
                     </ScrollViewer>

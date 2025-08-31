@@ -22,6 +22,8 @@ public static class GlobalStaticConfiguration
     // Application config
     public static int ApplicationUIRefreshInterval => 2500;
 
+    public static int ApplicationUIDelayInterval => 1000;
+
     // Type to search (average type speed --> 187 chars/min)
     public static TimeSpan SearchDispatcherTimerTimeSpan => new(0, 0, 0, 0, 750);
 
