@@ -25,6 +25,9 @@ Release date: **xx.xx.2025**
 
 ## Bugfixes
 
+- **Profiles**
+  - Fixed an issue where only one profile was deleted in `Settings > Profiles` when multiple profiles were selected. [#3144](https://github.com/BornToBeRoot/NETworkManager/pull/3144) [#3145](https://github.com/BornToBeRoot/NETworkManager/issues/3145)
+
 ## Dependencies, Refactoring & Documentation
 
 - Code cleanup & refactoring
