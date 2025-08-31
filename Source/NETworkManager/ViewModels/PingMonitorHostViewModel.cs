@@ -265,7 +265,6 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #region Constructor, load settings
-
     public PingMonitorHostViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
@@ -281,12 +280,14 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         HostsView.SortDescriptions.Add(new SortDescription(nameof(PingMonitorView.Group), ListSortDirection.Ascending));
 
         // Profiles
-        SetProfilesView();
+        SetProfilesView(new ProfileFilterInfo());
 
         ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
 
         _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
         _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
+
+        CreateTagsList();
 
         LoadSettings();
 
@@ -402,6 +403,20 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     private void ClearSearchAction()
     {
         Search = string.Empty;
+    }
+
+    public ICommand SetFilterCommand => new RelayCommand(_ => SetFilterAction());
+
+    private void SetFilterAction()
+    {
+
+    }
+
+    public ICommand ClearFilterCommand => new RelayCommand(_ => ClearFilterAction());
+
+    private void ClearFilterAction()
+    {
+
     }
 
     #endregion
@@ -582,36 +597,17 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         _isViewActive = false;
     }
 
-    private void SetProfilesView(ProfileInfo profile = null)
+    private void SetProfilesView(ProfileFilterInfo filter, ProfileInfo profile = null)
     {
         Profiles = new CollectionViewSource
         {
-            Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.PingMonitor_Enabled)
-                .OrderBy(x => x.Group).ThenBy(x => x.Name)
+            Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.PingMonitor_Enabled && (
+            string.IsNullOrEmpty(filter.Search) || x.Name.IndexOf(filter.Search) > -1 || x.PingMonitor_Host.IndexOf(filter.Search) > -1) && (
+            filter.Tags.Count() == 0 || filter.Tags.All(tag => x.TagsCollection.Contains(tag)))
+            ).OrderBy(x => x.Group).ThenBy(x => x.Name)
         }.View;
 
         Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
-
-        Profiles.Filter = o =>
-        {
-            if (string.IsNullOrEmpty(Search))
-                return true;
-
-            if (o is not ProfileInfo info)
-                return false;
-
-            var search = Search.Trim();
-
-            // Search by: Tag=xxx (exact match, ignore case)
-            /*
-            if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
-                return !string.IsNullOrEmpty(info.Tags) && info.PingMonitor_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
-            */
-
-            // Search by: Name, PingMonitor_Host
-            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   info.PingMonitor_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
-        };
 
         // Set specific profile or first if null
         SelectedProfile = null;
@@ -628,9 +624,12 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         if (!_isViewActive)
             return;
 
-        SetProfilesView(SelectedProfile);
+        SetProfilesView(new ProfileFilterInfo
+        {
+            Search = Search,
+            Tags = ["web", "prod"]
+        }, SelectedProfile);
     }
-
     #endregion
 
     #region Event

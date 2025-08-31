@@ -301,6 +301,8 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="10" />
                             <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <ToggleButton Grid.Column="0" Grid.Row="0"
                                       Focusable="False"
@@ -346,11 +348,11 @@
                         <Button Grid.Column="4" Grid.Row="0"
                                 Focusable="False"
                                 Style="{StaticResource ResourceKey=CleanButton}"
-                                Command="{Binding Path=AddProfileCommand}"
+                                Command="{Binding Path=SetFilterCommand}"
                                 ToolTip="{x:Static Member=localization:Strings.AddProfileDots}">
                             <Rectangle Width="16" Height="16">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FilterOutline}" />
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type TypeName=Rectangle}">
@@ -362,6 +364,31 @@
                                                 Value="True">
                                                 <Setter Property="Fill"
                                                         Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
+                            </Rectangle>
+                        </Button>
+                        <Button Grid.Column="6" Grid.Row="0"
+        Focusable="False"
+        Style="{StaticResource ResourceKey=CleanButton}"
+        Command="{Binding Path=AddProfileCommand}"
+        ToolTip="{x:Static Member=localization:Strings.AddProfileDots}">
+                            <Rectangle Width="16" Height="16">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                                </Rectangle.OpacityMask>
+                                <Rectangle.Style>
+                                    <Style TargetType="{x:Type TypeName=Rectangle}">
+                                        <Setter Property="Fill"
+                        Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
+                                        <Style.Triggers>
+                                            <DataTrigger
+                        Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=Button}}, Path=IsMouseOver}"
+                        Value="True">
+                                                <Setter Property="Fill"
+                                Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>

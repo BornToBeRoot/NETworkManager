@@ -50,7 +50,7 @@ public static class ProfileManager
     /// <summary>
     ///     ObservableCollection of all profile files.
     /// </summary>
-    public static ObservableCollection<ProfileFileInfo> ProfileFiles { get; set; } = new();
+    public static ObservableCollection<ProfileFileInfo> ProfileFiles { get; set; } = [];
 
     /// <summary>
     ///     Currently loaded profile file.
@@ -75,7 +75,7 @@ public static class ProfileManager
     /// <summary>
     ///     Currently loaded groups with profiles.
     /// </summary>
-    public static List<GroupInfo> Groups { get; set; } = new();
+    public static List<GroupInfo> Groups { get; set; } = [];
 
     /// <summary>
     ///     Indicates if profiles have changed.

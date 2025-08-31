@@ -56,6 +56,7 @@ public class ProfileViewModel : ViewModelBase
         Groups.SortDescriptions.Add(new SortDescription());
 
         TagsCollection = profileInfo.TagsCollection;
+
         Tags = CollectionViewSource.GetDefaultView(TagsCollection);
         Tags.SortDescriptions.Add(new SortDescription("", ListSortDirection.Ascending));
 
