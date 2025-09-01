@@ -1006,6 +1006,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apply filter.
+        /// </summary>
+        public static string ApplyFilter {
+            get {
+                return ResourceManager.GetString("ApplyFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Apply theme to PowerShell console.
         /// </summary>
         public static string ApplyThemeToPowerShellConsole {
@@ -4053,11 +4062,29 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filter by tags.
+        /// </summary>
+        public static string FilterByTags {
+            get {
+                return ResourceManager.GetString("FilterByTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter....
         /// </summary>
         public static string FilterDots {
             get {
                 return ResourceManager.GetString("FilterDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter profiles....
+        /// </summary>
+        public static string FilterProfilesDots {
+            get {
+                return ResourceManager.GetString("FilterProfilesDots", resourceCulture);
             }
         }
         

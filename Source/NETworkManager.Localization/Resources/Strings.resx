@@ -3968,4 +3968,13 @@ Right-click for more options.</value>
   <data name="AddTag" xml:space="preserve">
     <value>Add tag</value>
   </data>
+  <data name="ApplyFilter" xml:space="preserve">
+    <value>Apply filter</value>
+  </data>
+  <data name="FilterProfilesDots" xml:space="preserve">
+    <value>Filter profiles...</value>
+  </data>
+  <data name="FilterByTags" xml:space="preserve">
+    <value>Filter by tags</value>
+  </data>
 </root>
