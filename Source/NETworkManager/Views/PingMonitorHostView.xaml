@@ -12,7 +12,7 @@
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-             xmlns:profiles="clr-namespace:NETworkManager.Profiles;assembly=NETworkManager.Profiles"
+             xmlns:profiles="clr-namespace:NETworkManager.Profiles;assembly=NETworkManager.Profiles" xmlns:utilities="clr-namespace:NETworkManager.Utilities;assembly=NETworkManager.Utilities"
              dialogs:DialogParticipation.Register="{Binding}"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PingMonitorHostViewModel}">
     <UserControl.Resources>
@@ -346,19 +346,29 @@
                             </TextBox.InputBindings>
                         </TextBox>
                         <Button Grid.Column="4" Grid.Row="0"
+                                x:Name="ButtonFilter"
                                 Focusable="False"
                                 Style="{StaticResource ResourceKey=CleanButton}"
-                                Command="{Binding Path=SetFilterCommand}"
+                                Command="{Binding Path=OpenFilterCommand}"
                                 ToolTip="{x:Static Member=localization:Strings.AddProfileDots}">
                             <Rectangle Width="16" Height="16">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FilterOutline}" />
-                                </Rectangle.OpacityMask>
+                                <Rectangle.Resources>
+                                    <VisualBrush x:Key="VisualFilter" Stretch="Uniform"
+                                                 Visual="{iconPacks:Material Kind=FilterOutline}" />
+                                    <VisualBrush x:Key="VisualFilterRemove" Stretch="Uniform"
+                                                 Visual="{iconPacks:Material Kind=FilterMultipleOutline}" />
+                                </Rectangle.Resources>                                
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type TypeName=Rectangle}">
+                                        <Setter Property="OpacityMask"
+                                                Value="{StaticResource ResourceKey=VisualFilter}" />
                                         <Setter Property="Fill"
                                                 Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
                                         <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=IsFilterSet}" Value="True">
+                                                <Setter Property="OpacityMask"
+                                                        Value="{StaticResource ResourceKey=VisualFilterRemove}" />
+                                            </DataTrigger>
                                             <DataTrigger
                                                 Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=Button}}, Path=IsMouseOver}"
                                                 Value="True">
@@ -370,6 +380,62 @@
                                 </Rectangle.Style>
                             </Rectangle>
                         </Button>
+                        <Popup x:Name="FilterPopup"
+                               PlacementTarget="{Binding ElementName=ButtonFilter}" 
+                               Placement="Bottom" StaysOpen="False"
+                               IsOpen="{Binding FilterIsOpen}"
+                               >                            
+                            <Border Background="{DynamicResource MahApps.Brushes.Window.Background}" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="1">
+                                <Grid Margin="10">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="10" />
+                                        <RowDefinition Height="150" />
+                                        <RowDefinition Height="10" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>                                    
+                                    <TextBlock Grid.Column="0" Grid.Row="0" 
+                                               Text="Filter by Tags"
+                                               Style="{StaticResource InfoTextBlock}"/>
+                                    <ScrollViewer Grid.Column="0" Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden">
+                                        <ItemsControl ItemsSource="{Binding Tags}" MaxWidth="200">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="{x:Type utilities:FilterTag}">
+                                                <CheckBox Margin="0,5,10,5" Content="{Binding Name}"
+                                                          IsChecked="{Binding IsSelected}" Style="{StaticResource DefaultCheckBox}" />
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </ScrollViewer>
+                                    <StackPanel Grid.Column="0" Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Button Command="{Binding ApplyFilterCommand}" 
+                                                Style="{StaticResource ImageButton}"
+                                                ToolTip="{x:Static localization:Strings.AddServer}">
+                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                <Rectangle.OpacityMask>
+                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentSaveOutline}" />
+                                                </Rectangle.OpacityMask>
+                                            </Rectangle>
+                                        </Button>
+                                        <Button Command="{Binding ClearFilterCommand}" 
+                                                Style="{StaticResource ImageButton}"
+                                                ToolTip="{x:Static localization:Strings.AddServer}"
+                                                Margin="10,0,0,0">
+                                            <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                <Rectangle.OpacityMask>
+                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FilterRemoveOutline}" />
+                                                </Rectangle.OpacityMask>
+                                            </Rectangle>
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </Popup>
                         <Button Grid.Column="6" Grid.Row="0"
         Focusable="False"
         Style="{StaticResource ResourceKey=CleanButton}"
