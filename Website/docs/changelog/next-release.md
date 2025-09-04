@@ -23,6 +23,10 @@ Release date: **xx.xx.2025**
 
 - Redesign settings reset dialog. [#3138](https://github.com/BornToBeRoot/NETworkManager/pull/3138)
 
+**WiFi**
+
+- Documentation for Windows 11 24H2 location permission added. [#3148](https://github.com/BornToBeRoot/NETworkManager/pull/3148)
+
 ## Bugfixes
 
 ## Dependencies, Refactoring & Documentation
