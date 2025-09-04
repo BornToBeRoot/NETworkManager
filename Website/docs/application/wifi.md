@@ -10,7 +10,9 @@ Hidden wireless networks are displayed as `Hidden Network`.
 
 ## WiFi
 
-On the **WiFi** tab, you can select which wireless network adapter is used to scan for wireless networks. Wireless networks can be filtered by 2.4 Ghz, 5 Ghz and the SSID.
+On the **WiFi** tab, you can select which wireless network adapter is used to scan for wireless networks. Wireless networks can be filtered by 2.4 Ghz, 5 Ghz and 6 GHz.
+
+In the search field, you can filter the wireless networks by `SSID`, `Security`, `Frequency`, `Channel`, `BSSID (MAC Address)`, `Vendor` and `Phy kind`. The search is case insensitive.
 
 Right-click on a wireless network opens a context menu with the following options:
 
@@ -18,9 +20,13 @@ Right-click on a wireless network opens a context menu with the following option
 - **Disconnect**: Disconnect from the selected wireless network.
 - **Export...**: Opens a dialog to export the selected or all wireless network(s) to a file.
 
-In the search field, you can filter the wireless networks by `SSID`, `Security`, `Frequency`, `Channel`, `BSSID (MAC Address)`, `Vendor` and `Phy kind`. The search is case insensitive.
-
 :::note
+
+Starting with Windows 11 24H2, you’ll need to allow access to the Wi-Fi adapter.
+
+Open `Windows Settings > Privacy & security > Location`, enable access for Desktop Apps / NETworkManager, then restart the application.
+
+---
 
 Due to limitations of the `Windows.Devices.WiFi` API the channel bandwidth cannot be detected.
 

@@ -11241,11 +11241,9 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Access to the Wi-Fi adapter is not permitted by Windows.
+        ///   Looks up a localized string similar to Starting with Windows 11 24H2, you’ll need to allow access to the Wi-Fi adapter.
         ///
-        ///Open the Windows settings and allow Wi-Fi access for this application.
-        ///
-        ///Restart the application afterwards to use this feature..
+        ///Open Windows Settings &gt; Privacy &amp; security &gt; Location, enable access for Desktop Apps / NETworkManager, then restart the application..
         /// </summary>
         public static string WiFiAccessNotAvailableMessage {
             get {
