@@ -3815,11 +3815,9 @@ URL: http://ip-api.com/</value>
     <value>展開して検索を開く...</value>
   </data>
   <data name="WiFiAccessNotAvailableMessage" xml:space="preserve">
-    <value>Wi-Fi アダプターへのアクセスは Windows によって許可されていません。
+    <value>Starting with Windows 11 24H2, you’ll need to allow access to the Wi-Fi adapter.
 
-Windows 設定を開き、このアプリケーションの Wi-Fi アクセスを許可します。
-
-この機能を使用するには、後でアプリケーションを再起動してください。</value>
+Open Windows Settings &gt; Privacy &amp; security &gt; Location, enable access for Desktop Apps / NETworkManager, then restart the application.</value>
   </data>
   <data name="DragDropApplicationsToReorderRightClickForMoreOptions" xml:space="preserve">
     <value>アプリケーションをドラッグ アンド ドロップして順序を変更します。
