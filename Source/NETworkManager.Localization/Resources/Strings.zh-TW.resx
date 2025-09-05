@@ -3540,7 +3540,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>ASN</value>
   </data>
   <data name="ASName" xml:space="preserve">
-    <value>AS Name</value>
+    <value>自治系統名稱</value>
   </data>
   <data name="City" xml:space="preserve">
     <value>城市</value>
