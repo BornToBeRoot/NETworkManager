@@ -3647,7 +3647,7 @@ Try again in a few seconds.</value>
     <value>BSSID</value>
   </data>
   <data name="NoReachableHostsFound" xml:space="preserve">
-    <value>No reachable hosts found!</value>
+    <value>未發現可連線的主機！</value>
   </data>
   <data name="ProfileGroup_Application" xml:space="preserve">
     <value>應用程式</value>
