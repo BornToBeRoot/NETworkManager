@@ -3294,7 +3294,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>Could not find the application "{0}". Maybe the application was hidden in the settings?</value>
   </data>
   <data name="StatusWindow" xml:space="preserve">
-    <value>Status window</value>
+    <value>狀態視窗</value>
   </data>
   <data name="ShowAddressBar" xml:space="preserve">
     <value>Show address bar</value>
