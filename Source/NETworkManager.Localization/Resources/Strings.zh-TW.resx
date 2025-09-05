@@ -1427,7 +1427,7 @@
     <value>深綠色</value>
   </data>
   <data name="EnterOneOrMoreValidIPAddresses" xml:space="preserve">
-    <value>輸入一或多個有效的 IP 位址!</value>
+    <value>輸入一或多個有效的 IP 位址！</value>
   </data>
   <data name="EnterValidBaud" xml:space="preserve">
     <value>輸入有效的傳輸速率!</value>
