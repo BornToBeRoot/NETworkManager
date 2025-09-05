@@ -3249,7 +3249,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>逾時</value>
   </data>
   <data name="Hostkey" xml:space="preserve">
-    <value>Hostkey</value>
+    <value>主機金鑰</value>
   </data>
   <data name="SettingsAreResetAndApplicationWillBeRestartedMessage" xml:space="preserve">
     <value>The settings will be reset and the application will be restarted afterwards!</value>
