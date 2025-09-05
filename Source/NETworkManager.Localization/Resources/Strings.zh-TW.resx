@@ -3591,7 +3591,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>PTR record</value>
   </data>
   <data name="Timezone" xml:space="preserve">
-    <value>Timezone</value>
+    <value>時區</value>
   </data>
   <data name="ZipCode" xml:space="preserve">
     <value>Zip</value>
