@@ -1724,7 +1724,7 @@
     <value>打開</value>
   </data>
   <data name="AtLeastOneApplicationMustBeVisible" xml:space="preserve">
-    <value>At least one application must be visible!</value>
+    <value>至少要有一個應用程式可見！</value>
   </data>
   <data name="HiddenApplications" xml:space="preserve">
     <value>隱藏應用程式</value>
