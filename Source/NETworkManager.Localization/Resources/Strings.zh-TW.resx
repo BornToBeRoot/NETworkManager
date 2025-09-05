@@ -400,7 +400,7 @@
     <value>視窗</value>
   </data>
   <data name="WrongPassword" xml:space="preserve">
-    <value>密碼錯誤!</value>
+    <value>密碼錯誤！</value>
   </data>
   <data name="Client" xml:space="preserve">
     <value>用戶端</value>
