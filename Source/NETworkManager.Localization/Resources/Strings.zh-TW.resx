@@ -3309,7 +3309,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>啟用閘道伺服器</value>
   </data>
   <data name="LogonMethod" xml:space="preserve">
-    <value>Logon method</value>
+    <value>登入方式</value>
   </data>
   <data name="GatewayServer" xml:space="preserve">
     <value>閘道伺服器</value>
