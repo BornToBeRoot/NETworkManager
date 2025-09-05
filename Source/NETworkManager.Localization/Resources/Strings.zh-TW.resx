@@ -3896,7 +3896,7 @@ Right-click for more options.</value>
     <value>Retrying in {0} seconds...</value>
   </data>
   <data name="WhatsNew" xml:space="preserve">
-    <value>What's new?</value>
+    <value>有什麼新功能？</value>
   </data>
   <data name="Changelog" xml:space="preserve">
     <value>變更記錄</value>
