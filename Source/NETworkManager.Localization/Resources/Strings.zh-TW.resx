@@ -2898,7 +2898,7 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>Public IPv6 address reachable via ICMP.</value>
   </data>
   <data name="PublicIPv4Address" xml:space="preserve">
-    <value>Public IPv4 address</value>
+    <value>公開 IPv4 位址</value>
   </data>
   <data name="PublicIPv6Address" xml:space="preserve">
     <value>Public IPv6 address</value>
