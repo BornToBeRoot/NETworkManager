@@ -1127,7 +1127,7 @@
     <value>Telnet</value>
   </data>
   <data name="TheApplicationCanBeStartedWithoutParameters" xml:space="preserve">
-    <value>The application can be started without parameters!</value>
+    <value>此應用程式可以在未提供任何參數時啟動！</value>
   </data>
   <data name="TheFollowingHostnamesCouldNotBeResolved" xml:space="preserve">
     <value>The following hostnames could not be resolved:</value>
