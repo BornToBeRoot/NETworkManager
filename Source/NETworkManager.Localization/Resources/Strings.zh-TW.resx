@@ -2758,7 +2758,7 @@ Error message:
     <value>Could not encrpyt file. You may report this issue on GitHub.</value>
   </data>
   <data name="CurrentPassword" xml:space="preserve">
-    <value>Current password</value>
+    <value>目前密碼</value>
   </data>
   <data name="NewPassword" xml:space="preserve">
     <value>新密碼</value>
