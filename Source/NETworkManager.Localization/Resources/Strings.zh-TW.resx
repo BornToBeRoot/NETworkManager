@@ -2746,7 +2746,7 @@ Error message:
     <value>Edit group...</value>
   </data>
   <data name="DecryptionError" xml:space="preserve">
-    <value>Decryption error</value>
+    <value>解密錯誤</value>
   </data>
   <data name="DecryptionErrorMessage" xml:space="preserve">
     <value>Could not decrypt file. You may report this issue on GitHub.</value>
