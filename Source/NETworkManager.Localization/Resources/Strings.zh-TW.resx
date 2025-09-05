@@ -840,7 +840,7 @@
     <value>回應發生錯誤！</value>
   </data>
   <data name="ErrorInResponseCheckIfYouHaveWritePermissions" xml:space="preserve">
-    <value>Error in response! Check if you have write permissions.</value>
+    <value>回應出現錯誤！請檢查您是否擁有寫入權限。</value>
   </data>
   <data name="Expand" xml:space="preserve">
     <value>展開</value>
@@ -849,7 +849,7 @@
     <value>首先可使用 IP 位址</value>
   </data>
   <data name="FixedScreenSize" xml:space="preserve">
-    <value>固定螢幕尺寸:</value>
+    <value>固定螢幕尺寸：</value>
   </data>
   <data name="Found" xml:space="preserve">
     <value>找到了</value>
