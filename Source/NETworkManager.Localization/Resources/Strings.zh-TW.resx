@@ -463,7 +463,7 @@
     <value>動態 IPv4 位址</value>
   </data>
   <data name="DynamicIPv4DNSServer" xml:space="preserve">
-    <value>動態 IPv4 伺服器</value>
+    <value>動態 IPv4 DNS 伺服器</value>
   </data>
   <data name="Hop" xml:space="preserve">
     <value>躍點</value>
