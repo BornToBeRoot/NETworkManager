@@ -1097,7 +1097,7 @@
     <value>顯示目前應用程式標題</value>
   </data>
   <data name="ShowOnlyMostCommonQueryTypes" xml:space="preserve">
-    <value>Show only most common query types</value>
+    <value>僅顯示最常見的查詢類型</value>
   </data>
   <data name="ShowUnreachableIPAddressesAndPorts" xml:space="preserve">
     <value>Show unreachable IP addresses and ports</value>
