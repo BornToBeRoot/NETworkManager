@@ -3806,7 +3806,7 @@ Try again in a few seconds.</value>
     <value>Run command... (Ctrl+Shift+P)</value>
   </data>
   <data name="ProfileFiles" xml:space="preserve">
-    <value>Profile files</value>
+    <value>設定檔案</value>
   </data>
   <data name="OpenSettingsDots" xml:space="preserve">
     <value>打開設定</value>
