@@ -3510,7 +3510,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>Enter password...</value>
   </data>
   <data name="AddTab" xml:space="preserve">
-    <value>Add tab</value>
+    <value>新增標籤</value>
   </data>
   <data name="FromProfile" xml:space="preserve">
     <value>(from profile)</value>
