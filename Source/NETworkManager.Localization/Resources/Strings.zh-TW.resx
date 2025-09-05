@@ -3219,7 +3219,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>SNTP 查詢</value>
   </data>
   <data name="AddSNTPServer" xml:space="preserve">
-    <value>Add SNTP server</value>
+    <value>新增 SNTP 伺服器</value>
   </data>
   <data name="DeleteSNTPServer" xml:space="preserve">
     <value>Delete SNTP server</value>
