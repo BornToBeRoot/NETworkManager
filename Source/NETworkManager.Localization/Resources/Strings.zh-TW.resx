@@ -1045,7 +1045,7 @@
     <value>重複</value>
   </data>
   <data name="ResolveCNAMEOnANYRequests" xml:space="preserve">
-    <value>Resolve CNAME on ANY requests</value>
+    <value>對 ANY 請求解析 CNAME</value>
   </data>
   <data name="Responses" xml:space="preserve">
     <value>回應</value>
