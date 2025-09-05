@@ -3764,7 +3764,7 @@ Try again in a few seconds.</value>
     <value>進程路徑</value>
   </data>
   <data name="ProcessName" xml:space="preserve">
-    <value>Process name</value>
+    <value>進程名稱</value>
   </data>
   <data name="NetBIOS" xml:space="preserve">
     <value>NetBIOS</value>
