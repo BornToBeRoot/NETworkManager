@@ -3006,7 +3006,7 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>已啟用</value>
   </data>
   <data name="Region" xml:space="preserve">
-    <value>Region</value>
+    <value>區域</value>
   </data>
   <data name="SyncEC2InstancesFromAWS" xml:space="preserve">
     <value>Synchronize EC2 instances from AWS</value>
