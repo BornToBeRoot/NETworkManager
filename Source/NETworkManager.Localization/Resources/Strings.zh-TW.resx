@@ -1733,7 +1733,7 @@
     <value>可見應用程式</value>
   </data>
   <data name="VisibleApplicationsInTheBar" xml:space="preserve">
-    <value>Visible applications in the bar:</value>
+    <value>工具列中可見的應用程式：</value>
   </data>
   <data name="Whois" xml:space="preserve">
     <value>Whois</value>
