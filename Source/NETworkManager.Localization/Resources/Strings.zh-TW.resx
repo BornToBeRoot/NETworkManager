@@ -2620,7 +2620,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>一般</value>
   </data>
   <data name="SettingsName_HotKeys" xml:space="preserve">
-    <value>HotKeys</value>
+    <value>熱鍵</value>
   </data>
   <data name="SettingsName_Language" xml:space="preserve">
     <value>Language</value>
