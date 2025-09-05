@@ -1589,7 +1589,7 @@
     <value>遠端中斷連線由使用者。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_ServerCertificateUnpackErr" xml:space="preserve">
-    <value>Failed to unpack server certificate.</value>
+    <value>無法解壓縮伺服器證書。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SocketConnectFailed" xml:space="preserve">
     <value>Windows Sockets 連線失敗了。</value>
