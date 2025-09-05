@@ -2976,7 +2976,7 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>Use custom themes</value>
   </data>
   <data name="CustomThemes" xml:space="preserve">
-    <value>Custom themes</value>
+    <value>自訂主題</value>
   </data>
   <data name="ResetSettingsQuestion" xml:space="preserve">
     <value>Reset settings?</value>
