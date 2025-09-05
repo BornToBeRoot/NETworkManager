@@ -3555,7 +3555,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>貨幣</value>
   </data>
   <data name="District" xml:space="preserve">
-    <value>District</value>
+    <value>區域 / 行政區</value>
   </data>
   <data name="DNSResolver" xml:space="preserve">
     <value>DNS resolver</value>
