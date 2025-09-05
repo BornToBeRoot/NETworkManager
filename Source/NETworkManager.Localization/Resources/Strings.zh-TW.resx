@@ -1265,7 +1265,7 @@
     <value>排清 DNS 快取</value>
   </data>
   <data name="HelpMessage_Credentials" xml:space="preserve">
-    <value>Decrypt and load your credentials to select them.</value>
+    <value>請先將憑證解密並載入，然後再進行選取。</value>
   </data>
   <data name="HelpMessage_ParameterHelp" xml:space="preserve">
     <value>顯示這個對話方塊。</value>
