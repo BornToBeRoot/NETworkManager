@@ -1379,13 +1379,13 @@
     <value>請輸入有效的子網遮罩或 CIDR（例如：255.255.255.0 或 /24）！</value>
   </data>
   <data name="FieldCannotBeEmpty" xml:space="preserve">
-    <value>欄位不可空白!</value>
+    <value>欄位不可空白！</value>
   </data>
   <data name="FileDoesNotExist" xml:space="preserve">
-    <value>檔案不存在!</value>
+    <value>檔案不存在！</value>
   </data>
   <data name="FolderDoesNotExist" xml:space="preserve">
-    <value>資料夾不存在!</value>
+    <value>資料夾不存在！</value>
   </data>
   <data name="Listeners" xml:space="preserve">
     <value>接聽程式</value>
