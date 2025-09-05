@@ -1277,10 +1277,10 @@
     <value>在編輯時密碼不會被顯示，但可進行覆寫。</value>
   </data>
   <data name="HelpMessage_RDPAuthenticationLevel" xml:space="preserve">
-    <value>[0] If server authentication fails, connect to the computer without warning.
-[1] If server authentication fails, do not establish a connection.
-[2] If server authentication fails, show a warning and allow me to connect or refuse the connection.
-[3] No authentication requirement is specified.</value>
+    <value>[0] 若伺服器身份驗證失敗，將不顯示警告直接連線至電腦。
+[1] 若伺服器身份驗證失敗，不建立任何連線。
+[2] 若伺服器身份驗證失敗，會顯示警告並允許使用者選擇「連線」或「拒絕」。
+[3] 未設定任何身份驗證要求。</value>
   </data>
   <data name="HelpMessage_Tags" xml:space="preserve">
     <value>Tags help you organize profiles/Profiles by topics/projects. Multiple tags can be used with ";" be separated. Search by tags with "tag=xxx".</value>
