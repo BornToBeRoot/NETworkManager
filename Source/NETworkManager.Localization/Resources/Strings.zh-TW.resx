@@ -2629,7 +2629,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>設定檔</value>
   </data>
   <data name="SettingsName_Settings" xml:space="preserve">
-    <value>Settings</value>
+    <value>設定</value>
   </data>
   <data name="SettingsName_Status" xml:space="preserve">
     <value>Status</value>
