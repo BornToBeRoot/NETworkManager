@@ -1367,10 +1367,10 @@
     <value>輸入有效的 IPv4 位置！</value>
   </data>
   <data name="EnterValidMACAddress" xml:space="preserve">
-    <value>Enter a valid MAC address (e.g., 00:F1:23:AB:F2:35)!</value>
+    <value>請輸入有效的 MAC 位址（例如：00:F1:23:AB:F2:35）！</value>
   </data>
   <data name="EnterValidPort" xml:space="preserve">
-    <value>輸入有效的連接埠 (1 - 65535)!</value>
+    <value>輸入有效的連接埠 (1 - 65535)！</value>
   </data>
   <data name="EnterValidSubnetmask" xml:space="preserve">
     <value>Enter a valid subnetmask (e.g., 255.255.255.0)!</value>
