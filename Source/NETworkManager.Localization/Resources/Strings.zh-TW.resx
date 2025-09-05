@@ -3564,7 +3564,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>EDNS</value>
   </data>
   <data name="Geolocation" xml:space="preserve">
-    <value>Geolocation</value>
+    <value>地理位置定位</value>
   </data>
   <data name="Hosting" xml:space="preserve">
     <value>Hosting</value>
