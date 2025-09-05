@@ -2608,7 +2608,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>應用程式</value>
   </data>
   <data name="SettingsGroup_General" xml:space="preserve">
-    <value>General</value>
+    <value>一般</value>
   </data>
   <data name="SettingsName_Appearance" xml:space="preserve">
     <value>Appearance</value>
