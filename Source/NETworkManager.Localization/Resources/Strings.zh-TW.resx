@@ -589,7 +589,7 @@
     <value>動態 IPv4 DNS 伺服器</value>
   </data>
   <data name="SubnetMask" xml:space="preserve">
-    <value>Subnet mask</value>
+    <value>子網路遮罩</value>
   </data>
   <data name="Threads" xml:space="preserve">
     <value>執行緒</value>
