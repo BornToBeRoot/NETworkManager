@@ -2952,7 +2952,7 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>Groups</value>
   </data>
   <data name="AddGroup" xml:space="preserve">
-    <value>Add group</value>
+    <value>新增群組</value>
   </data>
   <data name="DeleteGroup" xml:space="preserve">
     <value>刪除群組</value>
