@@ -918,10 +918,10 @@
     <value>未找到「{0}」的 DNS 記錄！請檢查您的輸入與設定。</value>
   </data>
   <data name="NoEnabledNetworkAdaptersFound" xml:space="preserve">
-    <value>找不到啟用網路介面卡!</value>
+    <value>找不到啟用網路介面卡！</value>
   </data>
   <data name="NoPortsFoundCheckYourInput" xml:space="preserve">
-    <value>找不到連接埠。檢查您的輸入!</value>
+    <value>找不到連接埠。檢查您的輸入！</value>
   </data>
   <data name="NoProfilesFoundCreateOne" xml:space="preserve">
     <value>No profiles found!
