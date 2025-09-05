@@ -940,7 +940,7 @@
     <value>找不到任何有效的檔案可供匯入。</value>
   </data>
   <data name="NoVendorFoundCheckYourInput" xml:space="preserve">
-    <value>找不到廠商。檢查您的輸入!</value>
+    <value>找不到廠商。檢查您的輸入！</value>
   </data>
   <data name="NumberOfErrorsAfterWhichIsCanceled" xml:space="preserve">
     <value>Number of errors after which is canceled:</value>
