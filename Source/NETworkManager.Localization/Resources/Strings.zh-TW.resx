@@ -1610,7 +1610,7 @@
     <value>此帳戶已限制。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrCertExpired" xml:space="preserve">
-    <value>The received certificate is expired.</value>
+    <value>收到的證書已過期。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrDelegationPolicy" xml:space="preserve">
     <value>The policy does not support delegation of credentials to the target server.</value>
