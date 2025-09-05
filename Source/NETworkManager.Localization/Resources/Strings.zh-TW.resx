@@ -3117,7 +3117,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>位元計算器</value>
   </data>
   <data name="Notation" xml:space="preserve">
-    <value>符號表記／表示法</value>
+    <value>符號表記</value>
   </data>
   <data name="Input" xml:space="preserve">
     <value>輸入</value>
