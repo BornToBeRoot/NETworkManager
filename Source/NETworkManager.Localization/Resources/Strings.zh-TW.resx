@@ -3279,7 +3279,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>連接埠狀態</value>
   </data>
   <data name="PingDetails" xml:space="preserve">
-    <value>Ping details</value>
+    <value>Ping 詳情</value>
   </data>
   <data name="NoOpenPortsFound" xml:space="preserve">
     <value>No open ports found!</value>
