@@ -3012,7 +3012,7 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>Synchronize EC2 instances from AWS</value>
   </data>
   <data name="AddAWSProfile" xml:space="preserve">
-    <value>Add AWS profile</value>
+    <value>新增 AWS 設定檔</value>
   </data>
   <data name="DeleteAWSProfile" xml:space="preserve">
     <value>Delete AWS profile</value>
