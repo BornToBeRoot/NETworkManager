@@ -3306,7 +3306,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>Bypass for local addresses</value>
   </data>
   <data name="EnableGatewayServer" xml:space="preserve">
-    <value>Enable gateway server</value>
+    <value>啟用閘道伺服器</value>
   </data>
   <data name="LogonMethod" xml:space="preserve">
     <value>Logon method</value>
