@@ -1169,7 +1169,7 @@
     <value>使用認證</value>
   </data>
   <data name="UseCurrentViewSize" xml:space="preserve">
-    <value>Use the current view size as the screen size</value>
+    <value>以目前的檢視尺寸作為螢幕尺寸</value>
   </data>
   <data name="UseCustomDNSServer" xml:space="preserve">
     <value>使用自訂 DNS 伺服器</value>
