@@ -3558,7 +3558,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>區域 / 行政區</value>
   </data>
   <data name="DNSResolver" xml:space="preserve">
-    <value>DNS resolver</value>
+    <value>DNS 解析器</value>
   </data>
   <data name="EDNS" xml:space="preserve">
     <value>EDNS</value>
