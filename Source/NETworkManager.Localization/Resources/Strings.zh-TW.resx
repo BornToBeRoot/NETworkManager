@@ -758,7 +758,6 @@
   </data>
   <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
     <value>Proceed.設定檔案在磁碟上以 AES（256 位元密鑰、128 位元區塊大小）使用 CBC 模式加密。加密金鑰是透過 Rfc2898DeriveBytes（PBKDF2）從主密碼衍生出來，迭代次數為 1,000,000 次。執行階段時，載入設定檔案後的密碼會以 SecureString 儲存；但在某些功能中，必須將密碼轉成一般字串，此時它會暫時以未加密形式存在記憶體，直到垃圾回收器清除為止。
-
 在啟用加密之前，請先備份您的設定檔案！</value>
   </data>
   <data name="Custom" xml:space="preserve">
