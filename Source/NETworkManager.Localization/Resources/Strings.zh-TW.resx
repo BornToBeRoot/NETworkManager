@@ -3908,7 +3908,7 @@ Right-click for more options.</value>
     <value>This release includes new features, improvements, and bug fixes. Check out the changelog for all the details!</value>
   </data>
   <data name="Entries" xml:space="preserve">
-    <value>Entries</value>
+    <value>項目</value>
   </data>
   <data name="DeleteHostsFileEntryMessage" xml:space="preserve">
     <value>The selected entry is permanently deleted:
