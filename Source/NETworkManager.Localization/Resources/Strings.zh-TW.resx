@@ -3498,7 +3498,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>新增 OID 設定檔</value>
   </data>
   <data name="DeleteOIDProfile" xml:space="preserve">
-    <value>Delete OID profile</value>
+    <value>刪除 OID 設定檔</value>
   </data>
   <data name="DeleteOIDProfileMessage" xml:space="preserve">
     <value>The selected OID profile will be deleted permanently.</value>
