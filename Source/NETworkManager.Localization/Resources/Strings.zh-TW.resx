@@ -3899,7 +3899,7 @@ Right-click for more options.</value>
     <value>What's new?</value>
   </data>
   <data name="Changelog" xml:space="preserve">
-    <value>Changelog</value>
+    <value>變更記錄</value>
   </data>
   <data name="UpgradedToXXX" xml:space="preserve">
     <value>升級至 {0}</value>
