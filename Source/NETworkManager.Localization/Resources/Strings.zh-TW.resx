@@ -3755,7 +3755,7 @@ Try again in a few seconds.</value>
     <value>未找到符合的指令！</value>
   </data>
   <data name="RemoteHostname" xml:space="preserve">
-    <value>Remote hostname</value>
+    <value>遠端主機名稱</value>
   </data>
   <data name="ProcessID" xml:space="preserve">
     <value>進程 ID</value>
