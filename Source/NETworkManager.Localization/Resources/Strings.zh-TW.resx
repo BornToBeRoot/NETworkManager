@@ -2731,7 +2731,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>SSID</value>
   </data>
   <data name="ProfileFileCouldNotBeLoaded" xml:space="preserve">
-    <value>Profile file could not be loaded!</value>
+    <value>無法載入設定檔！</value>
   </data>
   <data name="ProfileFileCouldNotBeLoadedMessage" xml:space="preserve">
     <value>The profile file could not be loaded and may be corrupted. You can try to restore the file from a backup or delete it.
