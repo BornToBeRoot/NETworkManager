@@ -1292,7 +1292,7 @@
     <value>匯出檔案的位置...</value>
   </data>
   <data name="TimeUnit_Minute" xml:space="preserve">
-    <value>分鐘</value>
+    <value>分鐘(s)</value>
   </data>
   <data name="MoveAndRestart" xml:space="preserve">
     <value>移動 &amp; 重新啟動</value>
