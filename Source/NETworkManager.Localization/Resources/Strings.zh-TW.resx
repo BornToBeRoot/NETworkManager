@@ -867,7 +867,7 @@
     <value>主機名稱或 IP 位址</value>
   </data>
   <data name="Hosts" xml:space="preserve">
-    <value>Hosts</value>
+    <value>主機</value>
   </data>
   <data name="ID" xml:space="preserve">
     <value>ID</value>
