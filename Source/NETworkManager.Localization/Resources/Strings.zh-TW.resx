@@ -3480,7 +3480,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>Authentication protocol is not supported!</value>
   </data>
   <data name="CheckingWPSDots" xml:space="preserve">
-    <value>Checking WPS...</value>
+    <value>正在檢查 WPS...</value>
   </data>
   <data name="OpenOIDProfilesDots" xml:space="preserve">
     <value>Open OID profiles...</value>
