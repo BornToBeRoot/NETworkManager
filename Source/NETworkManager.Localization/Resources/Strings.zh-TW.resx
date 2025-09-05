@@ -2979,7 +2979,7 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>自訂主題</value>
   </data>
   <data name="ResetSettingsQuestion" xml:space="preserve">
-    <value>Reset settings?</value>
+    <value>重設設定？</value>
   </data>
   <data name="SettingsResetExclamationMark" xml:space="preserve">
     <value>Settings reset!</value>
