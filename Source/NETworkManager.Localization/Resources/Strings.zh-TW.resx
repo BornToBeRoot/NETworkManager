@@ -682,7 +682,7 @@
     <value>套用 Windows 快捷鍵組合（例如 ALT+TAB）:</value>
   </data>
   <data name="Auth" xml:space="preserve">
-    <value>驗證</value>
+    <value>身份驗證</value>
   </data>
   <data name="AuthenticationLevel" xml:space="preserve">
     <value>驗證等級</value>
