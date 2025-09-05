@@ -3588,7 +3588,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>機構</value>
   </data>
   <data name="PTRRecord" xml:space="preserve">
-    <value>PTR record</value>
+    <value>PTR 記錄</value>
   </data>
   <data name="Timezone" xml:space="preserve">
     <value>時區</value>
