@@ -544,7 +544,7 @@
     <value>實體位址</value>
   </data>
   <data name="PreferredProtocolWhenResolvingHostname" xml:space="preserve">
-    <value>Preferred protocol when resolving hostname:</value>
+    <value>解析主機名稱時的首選協定：</value>
   </data>
   <data name="PrimaryDNSServer" xml:space="preserve">
     <value>主要 DNS 伺服器</value>
