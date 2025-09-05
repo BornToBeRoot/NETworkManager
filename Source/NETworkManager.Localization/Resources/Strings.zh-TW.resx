@@ -837,7 +837,7 @@
     <value>無法連線至 'api.github.com'，請檢查您的網路連線！</value>
   </data>
   <data name="ErrorInResponse" xml:space="preserve">
-    <value>回應發生錯誤!</value>
+    <value>回應發生錯誤！</value>
   </data>
   <data name="ErrorInResponseCheckIfYouHaveWritePermissions" xml:space="preserve">
     <value>Error in response! Check if you have write permissions.</value>
