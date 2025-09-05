@@ -388,7 +388,7 @@
     <value>v3</value>
   </data>
   <data name="ValidationFailed" xml:space="preserve">
-    <value>驗證失敗!</value>
+    <value>驗證失敗！</value>
   </data>
   <data name="WakeOnLAN" xml:space="preserve">
     <value>網路喚醒</value>
