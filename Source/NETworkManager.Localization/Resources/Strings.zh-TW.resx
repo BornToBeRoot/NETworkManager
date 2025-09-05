@@ -3438,7 +3438,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>{0} disconnected!</value>
   </data>
   <data name="ConnectToXXX" xml:space="preserve">
-    <value>Connect to {0}</value>
+    <value>連接至{0}</value>
   </data>
   <data name="WPS" xml:space="preserve">
     <value>WPS</value>
