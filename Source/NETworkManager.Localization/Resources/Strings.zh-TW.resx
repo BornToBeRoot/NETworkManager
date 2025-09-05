@@ -2788,7 +2788,7 @@ Error message:
     <value>Last scan at {0}</value>
   </data>
   <data name="HiddenNetwork" xml:space="preserve">
-    <value>Hidden Network</value>
+    <value>隱藏網路</value>
   </data>
   <data name="DevelopedAndMaintainedByX" xml:space="preserve">
     <value>Developed and maintained by {0} with the help of the</value>
