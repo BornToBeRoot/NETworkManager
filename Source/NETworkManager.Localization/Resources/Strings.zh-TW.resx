@@ -1003,7 +1003,7 @@
     <value>通訊協定</value>
   </data>
   <data name="PuTTYProcessHasEnded" xml:space="preserve">
-    <value>PuTTY 處理程序已經結束!</value>
+    <value>PuTTY 程式已結束！</value>
   </data>
   <data name="Questions" xml:space="preserve">
     <value>問題</value>
