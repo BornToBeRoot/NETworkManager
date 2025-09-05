@@ -3635,7 +3635,7 @@ Try again in a few seconds.</value>
     <value>HTTP status code</value>
   </data>
   <data name="Accen_Steel" xml:space="preserve">
-    <value>Steel</value>
+    <value>鐵灰色</value>
   </data>
   <data name="RateLimitReachedTryAgainInXSeconds" xml:space="preserve">
     <value>Rate limit reached! Try again in {0} seconds...</value>
