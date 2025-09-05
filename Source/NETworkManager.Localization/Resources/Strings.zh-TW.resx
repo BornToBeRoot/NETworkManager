@@ -3776,7 +3776,7 @@ Try again in a few seconds.</value>
     <value>Error</value>
   </data>
   <data name="ConnectionState_OK" xml:space="preserve">
-    <value>OK</value>
+    <value>確定</value>
   </data>
   <data name="ConnectionState_Warning" xml:space="preserve">
     <value>Warning</value>
