@@ -2964,7 +2964,7 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>The name is already used!</value>
   </data>
   <data name="Resize" xml:space="preserve">
-    <value>Resize</value>
+    <value>調整大小</value>
   </data>
   <data name="DeleteProfiles" xml:space="preserve">
     <value>Delete profiles</value>
