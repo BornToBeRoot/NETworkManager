@@ -3044,7 +3044,7 @@ The profile is not removed from the ~\.aws\credentials file.</value>
     <value>預設設定檔</value>
   </data>
   <data name="DefaultRegion" xml:space="preserve">
-    <value>Default region</value>
+    <value>預設區域</value>
   </data>
   <data name="HelpMessage_AWSSessionManagerProfile" xml:space="preserve">
     <value>Profile which is used by manually created profiles to connect to an EC2 instance via AWS CLI.
