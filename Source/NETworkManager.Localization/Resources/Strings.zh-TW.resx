@@ -1442,10 +1442,10 @@
     <value>輸入有效的數量！</value>
   </data>
   <data name="EnterValidOID" xml:space="preserve">
-    <value>輸入有效的 OID!</value>
+    <value>輸入有效的 OID！</value>
   </data>
   <data name="EnterValidPortOrPortRange" xml:space="preserve">
-    <value>輸入有效的連接埠和/或連接埠範圍 (1 - 65535)!</value>
+    <value>輸入有效的連接埠和/或連接埠範圍 (1 - 65535)！</value>
   </data>
   <data name="EnterValidSubnet" xml:space="preserve">
     <value>Enter a valid subnet (e.g., 192.168.178.133/26)!</value>
