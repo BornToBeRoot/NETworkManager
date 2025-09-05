@@ -3881,7 +3881,7 @@ Right-click for more options.</value>
     <value>啟用項目</value>
   </data>
   <data name="DisableEntry" xml:space="preserve">
-    <value>Disable entry</value>
+    <value>停用項目</value>
   </data>
   <data name="RefreshingDots" xml:space="preserve">
     <value>重新整理中...</value>
