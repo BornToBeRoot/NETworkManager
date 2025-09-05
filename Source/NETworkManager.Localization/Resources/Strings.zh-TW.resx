@@ -1072,7 +1072,7 @@
     <value>選擇螢幕解析度</value>
   </data>
   <data name="ThisWillResetAllSettings" xml:space="preserve">
-    <value>此將重置所有設定!</value>
+    <value>此將重置所有設定！</value>
   </data>
   <data name="Serial" xml:space="preserve">
     <value>序列</value>
