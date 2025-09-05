@@ -3258,7 +3258,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>設定已經重設!</value>
   </data>
   <data name="PingStatus" xml:space="preserve">
-    <value>Ping status</value>
+    <value>Ping 狀態</value>
   </data>
   <data name="ThreadPoolAdditionalMinThreads" xml:space="preserve">
     <value>ThreadPool additional min. threads</value>
