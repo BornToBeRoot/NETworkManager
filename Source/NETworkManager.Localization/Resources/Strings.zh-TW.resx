@@ -2857,7 +2857,7 @@ Error message:
     <value>MIT License</value>
   </data>
   <data name="License_Unlicense" xml:space="preserve">
-    <value>Unlicense</value>
+    <value>未授權</value>
   </data>
   <data name="Library_CsWinRT_Description" xml:space="preserve">
     <value>C#/WinRT provides packaged WinRT projection support for the C# language.</value>
