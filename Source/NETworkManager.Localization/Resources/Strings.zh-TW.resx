@@ -199,7 +199,7 @@
     <value>DNS</value>
   </data>
   <data name="DNSLookup" xml:space="preserve">
-    <value>DNS 查閱</value>
+    <value>DNS 查詢</value>
   </data>
   <data name="DontFragment" xml:space="preserve">
     <value>不要片段</value>
