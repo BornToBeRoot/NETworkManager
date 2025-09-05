@@ -3189,7 +3189,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>Add a tab to perform a SNTP lookup...</value>
   </data>
   <data name="SNTPServers" xml:space="preserve">
-    <value>SNTP 伺服器</value>
+    <value>SNTP 伺服器(s)</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv6AddressAPI" xml:space="preserve">
     <value>URL to a web service that can be reached via http or https and returns an IPv6 address e.g., "xxxx:xx:xxx::xx" as response.</value>
