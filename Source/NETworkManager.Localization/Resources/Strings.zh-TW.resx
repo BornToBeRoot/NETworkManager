@@ -1655,7 +1655,7 @@
     <value>赭色</value>
   </data>
   <data name="SpacesAreNotAllowed" xml:space="preserve">
-    <value>不允許有空格!</value>
+    <value>不允許有空格！</value>
   </data>
   <data name="Steel" xml:space="preserve">
     <value>鐵灰色</value>
