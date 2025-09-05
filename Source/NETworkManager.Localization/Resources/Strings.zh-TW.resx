@@ -3072,7 +3072,7 @@ If not set, the default AWS CLI settings are used.</value>
     <value>已安裝 AWS CLI v2！</value>
   </data>
   <data name="AWSCLIv2IsNotInstalled" xml:space="preserve">
-    <value>AWS CLI v2 is not installed!</value>
+    <value>未安裝 AWS CLI v2！</value>
   </data>
   <data name="AWSSessionManagerPluginIsInstalled" xml:space="preserve">
     <value>AWS Session Manager Plugin is installed!</value>
