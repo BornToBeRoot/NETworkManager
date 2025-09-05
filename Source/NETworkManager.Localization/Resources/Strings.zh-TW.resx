@@ -1565,7 +1565,7 @@
     <value>伺服器安全性資料無效。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_LicensingFailed" xml:space="preserve">
-    <value>License negotiation failed.</value>
+    <value>授權協商失敗。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_LicensingTimeout" xml:space="preserve">
     <value>授權逾時。</value>
