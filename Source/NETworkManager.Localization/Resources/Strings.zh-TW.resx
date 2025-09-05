@@ -3120,7 +3120,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>符號表記／表示法</value>
   </data>
   <data name="Input" xml:space="preserve">
-    <value>Input</value>
+    <value>輸入</value>
   </data>
   <data name="Unit" xml:space="preserve">
     <value>Unit</value>
