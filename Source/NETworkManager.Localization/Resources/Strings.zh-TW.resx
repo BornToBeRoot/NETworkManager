@@ -3659,7 +3659,7 @@ Try again in a few seconds.</value>
     <value>Experimental features</value>
   </data>
   <data name="Experimental" xml:space="preserve">
-    <value>Experimental</value>
+    <value>實驗性功能</value>
   </data>
   <data name="Watermark_RunCommand" xml:space="preserve">
     <value>執行指令…</value>
