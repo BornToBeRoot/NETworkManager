@@ -730,7 +730,7 @@
     <value>確認關閉</value>
   </data>
   <data name="ConfirmCloseMessage" xml:space="preserve">
-    <value>你確定要關閉應用程式嗎?</value>
+    <value>你確定要關閉應用程式嗎？</value>
   </data>
   <data name="ConnectAsDots" xml:space="preserve">
     <value>連線身分...</value>
