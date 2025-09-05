@@ -3213,7 +3213,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>Round trip delay</value>
   </data>
   <data name="Server" xml:space="preserve">
-    <value>Server</value>
+    <value>伺服器</value>
   </data>
   <data name="SNTPLookup" xml:space="preserve">
     <value>SNTP Lookup</value>
