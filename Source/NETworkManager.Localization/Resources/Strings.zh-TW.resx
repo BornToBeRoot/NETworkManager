@@ -3677,7 +3677,7 @@ Try again in a few seconds.</value>
     <value>Enter host to query IP geolocation...</value>
   </data>
   <data name="SNMPV3ErrorCode_UnknownUserName" xml:space="preserve">
-    <value>Unknown user name.</value>
+    <value>未知的使用者名稱。</value>
   </data>
   <data name="SNMPV3ErrorCode_AuthenticationFailed" xml:space="preserve">
     <value>Authentication failure (incorrect password, community or key).</value>
