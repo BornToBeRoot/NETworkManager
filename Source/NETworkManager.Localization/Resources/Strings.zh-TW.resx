@@ -3081,7 +3081,7 @@ If not set, the default AWS CLI settings are used.</value>
     <value>AWS Session Manager Plugin is not installed!</value>
   </data>
   <data name="CheckForPreReleases" xml:space="preserve">
-    <value>Check for pre-releases</value>
+    <value>檢查預發佈版本</value>
   </data>
   <data name="SyncIsDisabled" xml:space="preserve">
     <value>Synchronization is disabled!</value>
