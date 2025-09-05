@@ -1148,7 +1148,7 @@
     <value>SNMP 查詢逾時。可能主機無法連線，或社群字串／密碼錯誤。</value>
   </data>
   <data name="TimeoutWhenQueryingDNSServerMessage" xml:space="preserve">
-    <value>Timeout when querying the DNS server with the IP address "{0}"!</value>
+    <value>使用 IP 位址「{0}」查詢 DNS 伺服器時逾時！</value>
   </data>
   <data name="Timestamp" xml:space="preserve">
     <value>時間戳記</value>
