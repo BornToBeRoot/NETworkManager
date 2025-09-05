@@ -3456,7 +3456,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>無法連接到 {0}（{1}）！</value>
   </data>
   <data name="SuccessfullyConnectedToXXX" xml:space="preserve">
-    <value>Successfully connected to {0}!</value>
+    <value>已成功連接到 {0}！</value>
   </data>
   <data name="WiFiConnectionStatus_AccessRevoked" xml:space="preserve">
     <value>Access to the network has been revoked</value>
