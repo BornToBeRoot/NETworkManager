@@ -3327,7 +3327,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>Smart card or Windows Hello for Business</value>
   </data>
   <data name="RemoteDesktopGatewayServerLogonMethod_Userpass" xml:space="preserve">
-    <value>請求 NTLM 密碼</value>
+    <value>請求密碼（NTLM）</value>
   </data>
   <data name="UseGatewayCredentials" xml:space="preserve">
     <value>Use gateway credentials</value>
