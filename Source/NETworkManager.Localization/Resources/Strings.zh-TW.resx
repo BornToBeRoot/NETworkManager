@@ -3770,7 +3770,7 @@ Try again in a few seconds.</value>
     <value>NetBIOS</value>
   </data>
   <data name="ComputerName" xml:space="preserve">
-    <value>Computer name</value>
+    <value>電腦名稱</value>
   </data>
   <data name="ConnectionState_Error" xml:space="preserve">
     <value>錯誤</value>
