@@ -3916,7 +3916,7 @@ Right-click for more options.</value>
 {0} {1} {2}</value>
   </data>
   <data name="ExampleHostsFileEntryComment" xml:space="preserve">
-    <value>Primary DNS server</value>
+    <value>主要 DNS 伺服器</value>
   </data>
   <data name="EnterValidHostsFileEntryHostname" xml:space="preserve">
     <value>Enter a valid hostname (e.g., "server-01" or "example.com")! Multiple hostnames can be separated with a space.</value>
