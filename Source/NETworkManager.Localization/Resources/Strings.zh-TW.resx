@@ -1286,7 +1286,7 @@
     <value>標籤可協助您依主題／專案組織設定檔。多個標籤以分號 ";" 分隔。使用 'tag=xxx' 進行搜尋。</value>
   </data>
   <data name="TimeUnit_Hour" xml:space="preserve">
-    <value>小時</value>
+    <value>小時(s)</value>
   </data>
   <data name="LocationOfTheImport" xml:space="preserve">
     <value>匯出檔案的位置...</value>
