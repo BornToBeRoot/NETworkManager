@@ -1388,7 +1388,7 @@
     <value>資料夾不存在！</value>
   </data>
   <data name="Listeners" xml:space="preserve">
-    <value>接聽程式</value>
+    <value>監聽器</value>
   </data>
   <data name="Amber" xml:space="preserve">
     <value>琥珀色</value>
