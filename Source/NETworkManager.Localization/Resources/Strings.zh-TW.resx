@@ -679,7 +679,7 @@
     <value>套用</value>
   </data>
   <data name="ApplyWindowsKeyCombinationsLikeAltTab" xml:space="preserve">
-    <value>Apply Windows key combinations (e.g., ALT+TAB):</value>
+    <value>套用 Windows 快捷鍵組合（例如 ALT+TAB）:</value>
   </data>
   <data name="Auth" xml:space="preserve">
     <value>驗證</value>
