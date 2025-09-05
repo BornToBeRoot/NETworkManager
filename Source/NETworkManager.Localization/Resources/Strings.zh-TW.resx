@@ -3519,7 +3519,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>New subnet mask</value>
   </data>
   <data name="AddServer" xml:space="preserve">
-    <value>Add server</value>
+    <value>新增伺服器</value>
   </data>
   <data name="SNTPServer" xml:space="preserve">
     <value>SNTP 伺服器</value>
