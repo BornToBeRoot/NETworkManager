@@ -3576,7 +3576,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>ISP</value>
   </data>
   <data name="Latitude" xml:space="preserve">
-    <value>Latitude</value>
+    <value>緯度</value>
   </data>
   <data name="Longitude" xml:space="preserve">
     <value>經度</value>
