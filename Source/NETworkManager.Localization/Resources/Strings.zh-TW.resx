@@ -685,7 +685,7 @@
     <value>身份驗證</value>
   </data>
   <data name="AuthenticationLevel" xml:space="preserve">
-    <value>驗證等級</value>
+    <value>身份驗證等級</value>
   </data>
   <data name="Authorities" xml:space="preserve">
     <value>法律</value>
