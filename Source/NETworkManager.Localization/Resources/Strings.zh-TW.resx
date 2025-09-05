@@ -2761,7 +2761,7 @@ Error message:
     <value>Current password</value>
   </data>
   <data name="NewPassword" xml:space="preserve">
-    <value>New password</value>
+    <value>新密碼</value>
   </data>
   <data name="ChangeMasterPassword" xml:space="preserve">
     <value>Change master password</value>
