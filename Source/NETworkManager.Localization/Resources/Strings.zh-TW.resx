@@ -3743,7 +3743,7 @@ Try again in a few seconds.</value>
     <value>關閉全部</value>
   </data>
   <data name="ExpandHostView" xml:space="preserve">
-    <value>Expand host view</value>
+    <value>展開主機檢視</value>
   </data>
   <data name="CannotSetHostWhileRunningMessage" xml:space="preserve">
     <value>Host cannot be set while other hosts are being added. Please wait until the process is complete and try again.</value>
