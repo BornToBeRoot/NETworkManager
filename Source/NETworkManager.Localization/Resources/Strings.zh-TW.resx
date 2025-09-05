@@ -828,7 +828,7 @@
     <value>結束時間</value>
   </data>
   <data name="EnterASubnetToCalculateItDots" xml:space="preserve">
-    <value>Enter a subnet to calculate it...</value>
+    <value>請輸入子網路以進行計算…</value>
   </data>
   <data name="EnterSubnetAndANewSubnetmaskToCreateSubnets" xml:space="preserve">
     <value>Enter subnet and a new subnet mask to create subnets...</value>
