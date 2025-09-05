@@ -268,7 +268,7 @@
     <value>位置</value>
   </data>
   <data name="Lookup" xml:space="preserve">
-    <value>查閱</value>
+    <value>查詢</value>
   </data>
   <data name="MACAddress" xml:space="preserve">
     <value>MAC 位址</value>
