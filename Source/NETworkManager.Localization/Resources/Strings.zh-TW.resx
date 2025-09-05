@@ -2743,7 +2743,7 @@ Error message:
 "{0}"</value>
   </data>
   <data name="EditGroupDots" xml:space="preserve">
-    <value>Edit group...</value>
+    <value>編輯群組...</value>
   </data>
   <data name="DecryptionError" xml:space="preserve">
     <value>解密錯誤</value>
