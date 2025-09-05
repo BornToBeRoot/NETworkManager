@@ -1063,7 +1063,7 @@
     <value>已搜尋語系未找到！</value>
   </data>
   <data name="SearchedSettingNotFound" xml:space="preserve">
-    <value>已搜尋設定未找到·</value>
+    <value>已搜尋設定未找到！</value>
   </data>
   <data name="Security" xml:space="preserve">
     <value>安全性</value>
