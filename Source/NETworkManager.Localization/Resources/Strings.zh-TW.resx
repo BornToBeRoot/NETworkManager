@@ -2851,7 +2851,7 @@ Error message:
     <value>Apache 許可證 2.0</value>
   </data>
   <data name="License_BDS2Clause" xml:space="preserve">
-    <value>BSD-2-Clause</value>
+    <value>BSD-2 條款</value>
   </data>
   <data name="License_MITLicense" xml:space="preserve">
     <value>MIT 授權協議</value>
