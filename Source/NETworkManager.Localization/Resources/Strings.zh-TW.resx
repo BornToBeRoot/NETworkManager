@@ -1649,7 +1649,7 @@
     <value>內部計時器錯誤。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_WinsockSendFailed" xml:space="preserve">
-    <value>Windows Sockets send call failed.</value>
+    <value>Windows Sockets 的 send 呼叫失敗。</value>
   </data>
   <data name="Sienna" xml:space="preserve">
     <value>赭色</value>
