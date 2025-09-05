@@ -1526,7 +1526,7 @@
     <value>解密錯誤。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_DNSLookupFailed" xml:space="preserve">
-    <value>DNS 名稱查閱失敗</value>
+    <value>DNS 名稱查詢失敗。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_DNSLookupFailed2" xml:space="preserve">
     <value>DNS 查閱失敗。</value>
