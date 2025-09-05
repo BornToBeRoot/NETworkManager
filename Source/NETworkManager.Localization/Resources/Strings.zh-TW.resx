@@ -205,7 +205,7 @@
     <value>不要分段</value>
   </data>
   <data name="EditCredentials" xml:space="preserve">
-    <value>編輯認證</value>
+    <value>編輯憑證</value>
   </data>
   <data name="EditGroup" xml:space="preserve">
     <value>編輯群組</value>
