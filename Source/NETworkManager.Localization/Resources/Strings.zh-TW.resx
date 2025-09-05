@@ -3432,7 +3432,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>Error while scanning WiFi adapter "{0}" with error: "{1}"</value>
   </data>
   <data name="ConnectDots" xml:space="preserve">
-    <value>Connect...</value>
+    <value>連接…</value>
   </data>
   <data name="XXXDisconnected" xml:space="preserve">
     <value>{0}已斷開連線！</value>
