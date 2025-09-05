@@ -3216,7 +3216,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>伺服器</value>
   </data>
   <data name="SNTPLookup" xml:space="preserve">
-    <value>SNTP Lookup</value>
+    <value>SNTP 查詢</value>
   </data>
   <data name="AddSNTPServer" xml:space="preserve">
     <value>Add SNTP server</value>
