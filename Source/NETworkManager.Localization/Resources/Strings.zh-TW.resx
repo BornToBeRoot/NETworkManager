@@ -1340,7 +1340,7 @@
     <value>搜尋...</value>
   </data>
   <data name="TimeUnit_Second" xml:space="preserve">
-    <value>秒(s)</value>
+    <value>秒(S)</value>
   </data>
   <data name="Send" xml:space="preserve">
     <value>發送</value>
