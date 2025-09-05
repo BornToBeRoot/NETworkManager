@@ -622,7 +622,7 @@
     <value>類型</value>
   </data>
   <data name="UseTheFollowingDNSServerAddresses" xml:space="preserve">
-    <value>使用下列的 DNS 伺服器位址:</value>
+    <value>使用下列的 DNS 伺服器位址：</value>
   </data>
   <data name="UseTheFollowingIPAddress" xml:space="preserve">
     <value>使用下列的 IP 位址:</value>
