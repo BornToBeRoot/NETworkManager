@@ -1133,7 +1133,7 @@
     <value>以下主機名稱無法解析：</value>
   </data>
   <data name="TheFollowingParametersAreAvailable" xml:space="preserve">
-    <value>The following parameters are available:</value>
+    <value>以下參數可用：</value>
   </data>
   <data name="TheFollowingParametersCanNotBeProcesses" xml:space="preserve">
     <value>The following parameters can not be processed:</value>
