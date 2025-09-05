@@ -1688,7 +1688,7 @@
     <value>LastAck</value>
   </data>
   <data name="TcpState_Listen" xml:space="preserve">
-    <value>接聽</value>
+    <value>監聽</value>
   </data>
   <data name="TcpState_SynReceived" xml:space="preserve">
     <value>SynReceived</value>
