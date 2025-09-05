@@ -3111,7 +3111,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>Input does not contain any text!</value>
   </data>
   <data name="ApplicationName_BitCalculator" xml:space="preserve">
-    <value>Bit Calculator</value>
+    <value>位元計算器</value>
   </data>
   <data name="BitCalculator" xml:space="preserve">
     <value>Bit Calculator</value>
