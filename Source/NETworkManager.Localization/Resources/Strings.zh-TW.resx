@@ -3153,7 +3153,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>Petabytes</value>
   </data>
   <data name="Terabits" xml:space="preserve">
-    <value>Terabits</value>
+    <value>兆位元（Tb）</value>
   </data>
   <data name="Terabytes" xml:space="preserve">
     <value>兆位元組（TB）</value>
