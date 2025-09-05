@@ -3003,7 +3003,7 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>AWS Session Manager</value>
   </data>
   <data name="Enabled" xml:space="preserve">
-    <value>Enabled</value>
+    <value>已啟用</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>Region</value>
