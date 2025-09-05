@@ -1739,7 +1739,7 @@
     <value>Whois</value>
   </data>
   <data name="AddATabToQueryWhois" xml:space="preserve">
-    <value>Add a tab to query whois...</value>
+    <value>新增「Whois 查詢」分頁</value>
   </data>
   <data name="EnterValidDomain" xml:space="preserve">
     <value>Enter a valid domain (e.g., "example.com")!</value>
