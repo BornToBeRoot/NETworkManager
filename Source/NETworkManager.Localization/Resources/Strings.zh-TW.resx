@@ -3000,7 +3000,7 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>log4net is a tool to help the programmer output log statements to a variety of output targets.</value>
   </data>
   <data name="AWSSessionManager" xml:space="preserve">
-    <value>AWS Session Manager</value>
+    <value>AWS 會話管理器</value>
   </data>
   <data name="Enabled" xml:space="preserve">
     <value>已啟用</value>
