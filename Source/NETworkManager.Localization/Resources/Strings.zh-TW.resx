@@ -3426,7 +3426,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>The RD Gateway connection ended because periodic user authorization failed. Your computer or device didn't pass the Network Access Protection (NAP) requirements set by your network administrator. Contact your network administrator for assistance.</value>
   </data>
   <data name="Connected" xml:space="preserve">
-    <value>Connected</value>
+    <value>已連接</value>
   </data>
   <data name="ErrorWhileScanningWiFiAdapterXXXWithErrorXXX" xml:space="preserve">
     <value>Error while scanning WiFi adapter "{0}" with error: "{1}"</value>
