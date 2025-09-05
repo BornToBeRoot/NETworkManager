@@ -2614,10 +2614,10 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>外觀</value>
   </data>
   <data name="SettingsName_Autostart" xml:space="preserve">
-    <value>Autostart</value>
+    <value>自動啟動</value>
   </data>
   <data name="SettingsName_General" xml:space="preserve">
-    <value>General</value>
+    <value>一般</value>
   </data>
   <data name="SettingsName_HotKeys" xml:space="preserve">
     <value>HotKeys</value>
