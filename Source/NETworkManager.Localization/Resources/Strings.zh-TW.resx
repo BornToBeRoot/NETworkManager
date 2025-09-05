@@ -1853,7 +1853,7 @@
     <value>最大同時主機執行緒數</value>
   </data>
   <data name="MaxPortThreads" xml:space="preserve">
-    <value>Max. concurrent port threads</value>
+    <value>最大同時連接埠執行緒數</value>
   </data>
   <data name="PowerShell" xml:space="preserve">
     <value>PowerShell</value>
