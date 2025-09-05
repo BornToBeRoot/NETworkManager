@@ -3087,7 +3087,7 @@ If not set, the default AWS CLI settings are used.</value>
     <value>Synchronization is disabled!</value>
   </data>
   <data name="Command" xml:space="preserve">
-    <value>Command</value>
+    <value>指令</value>
   </data>
   <data name="ApplyThemeToPowerShellConsole" xml:space="preserve">
     <value>Apply theme to PowerShell console</value>
