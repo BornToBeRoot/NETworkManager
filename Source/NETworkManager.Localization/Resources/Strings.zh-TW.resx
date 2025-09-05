@@ -894,7 +894,7 @@
     <value>Magic 封包傳送成功!</value>
   </data>
   <data name="MaximumNumberOfHopsReached" xml:space="preserve">
-    <value>Maximum number ({0}) of hops/router reached!</value>
+    <value>已達到最大跳數（{0}）或路由器！</value>
   </data>
   <data name="MessageSize" xml:space="preserve">
     <value>訊息大小</value>
