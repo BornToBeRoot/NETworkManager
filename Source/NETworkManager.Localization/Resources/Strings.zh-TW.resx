@@ -613,7 +613,7 @@
     <value>逾時 (ms)</value>
   </data>
   <data name="TimeMSToWaitBetweenEachPing" xml:space="preserve">
-    <value>Time (ms) to wait between each ping</value>
+    <value>每次 Ping 之間等待時間（毫秒）</value>
   </data>
   <data name="TTL" xml:space="preserve">
     <value>TTL</value>
