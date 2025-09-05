@@ -3237,7 +3237,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>Enter a valid hostname (e.g., "server-01" or "example.com") or a valid IP address (e.g., 192.168.178.1)!</value>
   </data>
   <data name="Servers" xml:space="preserve">
-    <value>Server(s)</value>
+    <value>伺服器</value>
   </data>
   <data name="EnterMasterPasswordToUnlockProfile" xml:space="preserve">
     <value>Enter master password to unlock the profile file:</value>
