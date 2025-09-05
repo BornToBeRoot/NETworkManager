@@ -3934,7 +3934,7 @@ Right-click for more options.</value>
     <value>A backup of the "hosts" file could not be created! See log file for more details.</value>
   </data>
   <data name="ShowStatusBar" xml:space="preserve">
-    <value>Show status bar</value>
+    <value>顯示狀態列</value>
   </data>
   <data name="HelpMessage_ShowStatusBar" xml:space="preserve">
     <value>Displays the status bar in the bottom-left of the WebView when hovering over a link.</value>
