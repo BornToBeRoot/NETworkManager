@@ -1364,7 +1364,7 @@
     <value>請輸入有效的 IP 範圍！</value>
   </data>
   <data name="EnterValidIPv4Address" xml:space="preserve">
-    <value>輸入有效的 IPv4 位置!</value>
+    <value>輸入有效的 IPv4 位置！</value>
   </data>
   <data name="EnterValidMACAddress" xml:space="preserve">
     <value>Enter a valid MAC address (e.g., 00:F1:23:AB:F2:35)!</value>
