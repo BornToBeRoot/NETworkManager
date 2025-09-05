@@ -873,7 +873,7 @@
     <value>ID</value>
   </data>
   <data name="InheritHostFromGeneral" xml:space="preserve">
-    <value>Inherit host from general</value>
+    <value>從一般設定繼承主機</value>
   </data>
   <data name="IPRange" xml:space="preserve">
     <value>IP 範圍</value>
