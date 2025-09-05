@@ -3207,7 +3207,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>Network time</value>
   </data>
   <data name="Offset" xml:space="preserve">
-    <value>Offset</value>
+    <value>偏移</value>
   </data>
   <data name="RoundTripDelay" xml:space="preserve">
     <value>Round trip delay</value>
