@@ -979,7 +979,7 @@
     <value>密碼</value>
   </data>
   <data name="PasswordsDoNotMatch" xml:space="preserve">
-    <value>密碼不相符!</value>
+    <value>密碼不相符！</value>
   </data>
   <data name="Path" xml:space="preserve">
     <value>路徑</value>
