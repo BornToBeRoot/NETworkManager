@@ -771,7 +771,7 @@
     <value>資料已更新！</value>
   </data>
   <data name="DecryptAndLoadCredentialsMessage" xml:space="preserve">
-    <value>Credentials must be decrypted and loaded to manage them.</value>
+    <value>必須先將憑證解密並載入，才能進行管理。</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>預設值</value>
