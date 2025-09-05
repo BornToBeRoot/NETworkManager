@@ -706,7 +706,7 @@
     <value>使用者已取消作業。</value>
   </data>
   <data name="CapsLockIsEnabled" xml:space="preserve">
-    <value>Caps lock 已啟用!</value>
+    <value>Caps lock 已啟用！</value>
   </data>
   <data name="CheckForUpdatesAtStartup" xml:space="preserve">
     <value>在啟動時檢查更新</value>
