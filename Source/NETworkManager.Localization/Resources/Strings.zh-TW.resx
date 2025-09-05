@@ -1376,7 +1376,7 @@
     <value>請輸入有效的子網遮罩（例如：255.255.255.0）！</value>
   </data>
   <data name="EnterValidSubnetmaskOrCIDR" xml:space="preserve">
-    <value>Enter a valid subnetmask or CIDR (e.g., 255.255.255.0 or /24)!</value>
+    <value>請輸入有效的子網遮罩或 CIDR（例如：255.255.255.0 或 /24）！</value>
   </data>
   <data name="FieldCannotBeEmpty" xml:space="preserve">
     <value>欄位不可空白!</value>
