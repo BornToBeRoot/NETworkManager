@@ -412,7 +412,7 @@
     <value>永遠顯示系統匣中圖示</value>
   </data>
   <data name="Attempts" xml:space="preserve">
-    <value>嘗試</value>
+    <value>嘗試次數</value>
   </data>
   <data name="AverageTime" xml:space="preserve">
     <value>平均時間</value>
