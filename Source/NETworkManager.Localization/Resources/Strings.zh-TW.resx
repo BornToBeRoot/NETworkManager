@@ -798,7 +798,7 @@
     <value>刪除項目</value>
   </data>
   <data name="DeleteProfileMessage" xml:space="preserve">
-    <value>Selected profile will be deleted permanently.</value>
+    <value>所選擇的設定檔將被永久刪除。</value>
   </data>
   <data name="DNSAutoconfiguration" xml:space="preserve">
     <value>DNS 自動配置</value>
