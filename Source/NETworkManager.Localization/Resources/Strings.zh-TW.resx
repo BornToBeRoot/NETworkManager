@@ -1283,7 +1283,7 @@
 [3] 未設定任何身份驗證要求。</value>
   </data>
   <data name="HelpMessage_Tags" xml:space="preserve">
-    <value>標籤可協助您依主題／專案組織設定檔。多個標籤以分號 (;) 分隔。使用 'tag=xxx' 進行搜尋。</value>
+    <value>標籤可協助您依主題／專案組織設定檔。多個標籤以分號 ";" 分隔。使用 'tag=xxx' 進行搜尋。</value>
   </data>
   <data name="TimeUnit_Hour" xml:space="preserve">
     <value>小時</value>
