@@ -3465,7 +3465,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>Invalid credentials</value>
   </data>
   <data name="WiFiConnectionStatus_NetworkNotAvailable" xml:space="preserve">
-    <value>Network not available</value>
+    <value>網路不可用</value>
   </data>
   <data name="WiFiConnectionStatus_Success" xml:space="preserve">
     <value>成功</value>
