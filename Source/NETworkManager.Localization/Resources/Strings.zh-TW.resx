@@ -3662,7 +3662,7 @@ Try again in a few seconds.</value>
     <value>Experimental</value>
   </data>
   <data name="Watermark_RunCommand" xml:space="preserve">
-    <value>Run command...</value>
+    <value>執行指令…</value>
   </data>
   <data name="ApplicationName_IPGeolocation" xml:space="preserve">
     <value>IP 地理位置定位</value>
