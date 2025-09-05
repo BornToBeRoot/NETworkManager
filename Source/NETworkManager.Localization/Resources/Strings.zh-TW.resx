@@ -2632,10 +2632,10 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>設定</value>
   </data>
   <data name="SettingsName_Status" xml:space="preserve">
-    <value>Status</value>
+    <value>狀態</value>
   </data>
   <data name="SettingsName_Update" xml:space="preserve">
-    <value>Update</value>
+    <value>更新</value>
   </data>
   <data name="SettingsName_Window" xml:space="preserve">
     <value>Window</value>
