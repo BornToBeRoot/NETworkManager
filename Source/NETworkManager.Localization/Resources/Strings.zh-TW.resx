@@ -3015,7 +3015,7 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>新增 AWS 設定檔</value>
   </data>
   <data name="DeleteAWSProfile" xml:space="preserve">
-    <value>Delete AWS profile</value>
+    <value>刪除 AWS 設定檔</value>
   </data>
   <data name="DeleteAWSProfileMessage" xml:space="preserve">
     <value>The selected AWS profile is permanently deleted.
