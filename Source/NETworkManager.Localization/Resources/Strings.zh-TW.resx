@@ -3749,7 +3749,7 @@ Try again in a few seconds.</value>
     <value>Host cannot be set while other hosts are being added. Please wait until the process is complete and try again.</value>
   </data>
   <data name="Watermark_RunCommandWithHotKey" xml:space="preserve">
-    <value>Run command... (Ctrl+Shift+P)</value>
+    <value>執行指令…（Ctrl+Shift+P）</value>
   </data>
   <data name="NoMatchingCommands" xml:space="preserve">
     <value>No matching commands!</value>
