@@ -3444,7 +3444,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>WPS</value>
   </data>
   <data name="ConnectAutomatically" xml:space="preserve">
-    <value>Connect automatically</value>
+    <value>自動連線</value>
   </data>
   <data name="PreSharedKey" xml:space="preserve">
     <value>Pre-shared key</value>
