@@ -739,7 +739,7 @@
     <value>連線外部</value>
   </data>
   <data name="ConnectTheNetworkCardToConfigureIt" xml:space="preserve">
-    <value>Connect the network card to a network to configure it!</value>
+    <value>將網路卡連接到網路以進行配置！</value>
   </data>
   <data name="Copy" xml:space="preserve">
     <value>複製</value>
