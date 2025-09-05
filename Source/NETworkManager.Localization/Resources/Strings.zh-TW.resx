@@ -1112,7 +1112,7 @@
     <value>開始時間</value>
   </data>
   <data name="State" xml:space="preserve">
-    <value>State</value>
+    <value>狀態</value>
   </data>
   <data name="Subnet1" xml:space="preserve">
     <value>子網路 1</value>
