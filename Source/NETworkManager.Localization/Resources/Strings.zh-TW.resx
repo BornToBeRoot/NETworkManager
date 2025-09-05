@@ -1202,7 +1202,7 @@
     <value>寬度</value>
   </data>
   <data name="WrongPasswordDecryptionFailedMessage" xml:space="preserve">
-    <value>Profile file could not be decrypted with the given password.</value>
+    <value>無法使用所給的密碼解密設定檔。</value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
     <value>輸入密碼有錯。</value>
