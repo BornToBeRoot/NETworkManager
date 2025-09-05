@@ -3135,7 +3135,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>Gigabytes</value>
   </data>
   <data name="Kilobits" xml:space="preserve">
-    <value>Kilobits</value>
+    <value>千位元（Kb）</value>
   </data>
   <data name="Kilobytes" xml:space="preserve">
     <value>千位元組（KB）</value>
