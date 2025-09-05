@@ -3492,7 +3492,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>OID 設定檔</value>
   </data>
   <data name="SelectOIDProfile" xml:space="preserve">
-    <value>Select OID profile</value>
+    <value>選擇OID 設定檔...</value>
   </data>
   <data name="AddOIDProfile" xml:space="preserve">
     <value>Add OID profile</value>
