@@ -3854,7 +3854,7 @@ Right-click for more options.</value>
     <value>Donate</value>
   </data>
   <data name="ProfileFile" xml:space="preserve">
-    <value>Profile file</value>
+    <value>設定檔案</value>
   </data>
   <data name="ApplicationName_HostsFileEditor" xml:space="preserve">
     <value>Hosts File Editor</value>
