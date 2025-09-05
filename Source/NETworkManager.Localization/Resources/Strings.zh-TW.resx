@@ -3809,7 +3809,7 @@ Try again in a few seconds.</value>
     <value>Profile files</value>
   </data>
   <data name="OpenSettingsDots" xml:space="preserve">
-    <value>Open settings...</value>
+    <value>打開設定</value>
   </data>
   <data name="ExpandAndOpenSearchDots" xml:space="preserve">
     <value>Expand and open search...</value>
