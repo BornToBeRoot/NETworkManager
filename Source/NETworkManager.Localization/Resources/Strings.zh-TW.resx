@@ -577,7 +577,7 @@
     <value>速度</value>
   </data>
   <data name="StartMinimizedInTray" xml:space="preserve">
-    <value>在系統匣啟動最小化</value>
+    <value>啟動時最小化至系統匣</value>
   </data>
   <data name="StartWithWindows" xml:space="preserve">
     <value>隨 Windows 啟動 (目前使用者)</value>
