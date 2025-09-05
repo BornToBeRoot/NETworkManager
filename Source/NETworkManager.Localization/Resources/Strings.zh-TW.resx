@@ -834,7 +834,7 @@
     <value>請輸入子網路及新子網遮罩以產生子網路…</value>
   </data>
   <data name="ErrorCheckingApiGithubComVerifyYourNetworkConnection" xml:space="preserve">
-    <value>Couldn't connect to 'api.github.com', check your network connection!</value>
+    <value>無法連線至 'api.github.com'，請檢查您的網路連線！</value>
   </data>
   <data name="ErrorInResponse" xml:space="preserve">
     <value>回應發生錯誤!</value>
