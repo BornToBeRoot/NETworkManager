@@ -765,10 +765,10 @@
     <value>自訂</value>
   </data>
   <data name="CustomScreenSize" xml:space="preserve">
-    <value>自訂螢幕尺寸:</value>
+    <value>自訂螢幕尺寸：</value>
   </data>
   <data name="DataHasBeenUpdated" xml:space="preserve">
-    <value>資料已更新!</value>
+    <value>資料已更新！</value>
   </data>
   <data name="DecryptAndLoadCredentialsMessage" xml:space="preserve">
     <value>Credentials must be decrypted and loaded to manage them.</value>
