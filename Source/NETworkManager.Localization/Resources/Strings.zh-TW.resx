@@ -1181,7 +1181,7 @@
     <value>使用解析快取</value>
   </data>
   <data name="UserInterfaceLocked" xml:space="preserve">
-    <value>使用已鎖定介面!</value>
+    <value>使用已鎖定介面！</value>
   </data>
   <data name="Username" xml:space="preserve">
     <value>使用者名稱</value>
