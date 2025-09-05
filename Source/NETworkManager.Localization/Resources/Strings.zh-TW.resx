@@ -3090,7 +3090,7 @@ If not set, the default AWS CLI settings are used.</value>
     <value>指令</value>
   </data>
   <data name="ApplyThemeToPowerShellConsole" xml:space="preserve">
-    <value>Apply theme to PowerShell console</value>
+    <value>將主題套用至 PowerShell 主控台</value>
   </data>
   <data name="PowerShellConsoleColorCanBeChangedUnderSettingsGeneralApperance" xml:space="preserve">
     <value>The color of the PowerShell console can be changed to the application theme under Settings &gt; General &gt; Appearance</value>
