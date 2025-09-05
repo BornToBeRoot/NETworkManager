@@ -3582,7 +3582,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>Longitude</value>
   </data>
   <data name="Mobile" xml:space="preserve">
-    <value>Mobile</value>
+    <value>行動</value>
   </data>
   <data name="Organization" xml:space="preserve">
     <value>機構</value>
