@@ -3833,7 +3833,7 @@ Right-click for more options.</value>
     <value>BSD-3-Clause</value>
   </data>
   <data name="SetDefault" xml:space="preserve">
-    <value>Set default</value>
+    <value>設定為預設</value>
   </data>
   <data name="ExampleProfileDescription" xml:space="preserve">
     <value>Ubuntu Server running Docker with Nextcloud and Traefik...</value>
