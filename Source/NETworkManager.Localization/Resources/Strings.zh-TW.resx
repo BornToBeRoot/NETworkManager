@@ -909,7 +909,7 @@
     <value>多重執行個體</value>
   </data>
   <data name="NetworkLocationCannotBeReachedMessage" xml:space="preserve">
-    <value>The network address cannot be reached. Check if your computer is connected to the network. For information about network troubleshooting, see Windows Help.</value>
+    <value>無法連線至網路位址。請檢查您的電腦是否已連接到網路。如需了解網路疑難排解資訊，請參閱 Windows 幫助。</value>
   </data>
   <data name="NewConnectionDots" xml:space="preserve">
     <value>新連線...</value>
