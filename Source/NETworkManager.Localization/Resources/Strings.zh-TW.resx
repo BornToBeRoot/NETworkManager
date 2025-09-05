@@ -3228,7 +3228,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>The selected SNTP server will be deleted permanently.</value>
   </data>
   <data name="EditSNTPServer" xml:space="preserve">
-    <value>Edit SNTP server</value>
+    <value>編輯 SNTP 伺服器</value>
   </data>
   <data name="SNTPServerWithThisNameAlreadyExists" xml:space="preserve">
     <value>An SNTP server with this name already exists!</value>
