@@ -3450,7 +3450,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>Pre-shared key</value>
   </data>
   <data name="ConnectingToXXX" xml:space="preserve">
-    <value>Connecting to {0}...</value>
+    <value>正在連接到 {0}……</value>
   </data>
   <data name="CouldNotConnectToXXXReasonXXX" xml:space="preserve">
     <value>Could not connect to {0} ({1})!</value>
