@@ -1550,7 +1550,7 @@
     <value>內部安全性錯誤。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InvalidEncryption" xml:space="preserve">
-    <value>The encryption method specified is not valid.</value>
+    <value>所指定的加密方式無效。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InvalidIP" xml:space="preserve">
     <value>指定了錯誤的 IP 位址。</value>
