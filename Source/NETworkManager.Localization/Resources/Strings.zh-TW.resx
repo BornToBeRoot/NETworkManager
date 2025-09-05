@@ -3459,7 +3459,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>已成功連接到 {0}！</value>
   </data>
   <data name="WiFiConnectionStatus_AccessRevoked" xml:space="preserve">
-    <value>Access to the network has been revoked</value>
+    <value>已撤銷對網路的存取權限</value>
   </data>
   <data name="WiFiConnectionStatus_InvalidCredential" xml:space="preserve">
     <value>無效憑證</value>
