@@ -3622,7 +3622,7 @@ URL: http://ip-api.com/</value>
     <value>Checking DNS resolver...</value>
   </data>
   <data name="CheckingIPGeolocationDots" xml:space="preserve">
-    <value>Checking IP geolocation...</value>
+    <value>正在檢查 IP 地理位置定位…</value>
   </data>
   <data name="CheckNetworkConnectionTryAgainMessage" xml:space="preserve">
     <value>Check your network connection and try again in a few seconds.</value>
