@@ -1478,7 +1478,7 @@
     <value>要求已逾時。</value>
   </data>
   <data name="IPStatus_TtlExpired" xml:space="preserve">
-    <value>TTL expired in transit.</value>
+    <value>TTL 在傳輸途中已逾時。</value>
   </data>
   <data name="KeyMustHave8CharactersOrMore" xml:space="preserve">
     <value>金鑰必須有8個字元或以上!</value>
