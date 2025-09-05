@@ -391,7 +391,7 @@
     <value>驗證失敗！</value>
   </data>
   <data name="WakeOnLAN" xml:space="preserve">
-    <value>網路喚醒</value>
+    <value>LAN 遠端喚醒</value>
   </data>
   <data name="Website" xml:space="preserve">
     <value>網站</value>
