@@ -3546,7 +3546,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>City</value>
   </data>
   <data name="Continent" xml:space="preserve">
-    <value>Continent</value>
+    <value>大陸</value>
   </data>
   <data name="Country" xml:space="preserve">
     <value>國家</value>
