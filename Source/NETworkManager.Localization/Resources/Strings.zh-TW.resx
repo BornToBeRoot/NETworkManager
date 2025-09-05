@@ -943,7 +943,7 @@
     <value>找不到廠商。檢查您的輸入！</value>
   </data>
   <data name="NumberOfErrorsAfterWhichIsCanceled" xml:space="preserve">
-    <value>Number of errors after which is canceled:</value>
+    <value>錯誤次數超過此值即取消：</value>
   </data>
   <data name="NumberOfStoredEntries" xml:space="preserve">
     <value>Number of stored entries</value>
