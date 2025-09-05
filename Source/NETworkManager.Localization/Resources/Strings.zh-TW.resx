@@ -3504,7 +3504,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>The selected OID profile will be deleted permanently.</value>
   </data>
   <data name="EditOIDProfile" xml:space="preserve">
-    <value>Edit OID profile</value>
+    <value>編輯 OID 設定檔</value>
   </data>
   <data name="EnterPasswordDots" xml:space="preserve">
     <value>輸入密碼...</value>
