@@ -751,7 +751,7 @@
     <value>複製...</value>
   </data>
   <data name="CouldNotResolveHostnameFor" xml:space="preserve">
-    <value>Could not resolve hostname for: "{0}"</value>
+    <value>無法解析主機名稱："{0}"</value>
   </data>
   <data name="Credential" xml:space="preserve">
     <value>認證</value>
