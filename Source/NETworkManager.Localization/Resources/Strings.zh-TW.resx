@@ -3866,7 +3866,7 @@ Right-click for more options.</value>
     <value>Read-only mode. Modifying the hosts file requires elevated rights!</value>
   </data>
   <data name="Comment" xml:space="preserve">
-    <value>Comment</value>
+    <value>註解</value>
   </data>
   <data name="Disable" xml:space="preserve">
     <value>停用</value>
