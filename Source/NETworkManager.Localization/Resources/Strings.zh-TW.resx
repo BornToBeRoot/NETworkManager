@@ -505,7 +505,7 @@
     <value>最大</value>
   </data>
   <data name="MaximumHops" xml:space="preserve">
-    <value>Maximum hops</value>
+    <value>最大跳點</value>
   </data>
   <data name="MinimizeInsteadOfTerminating" xml:space="preserve">
     <value>最小化視窗而不關閉</value>
