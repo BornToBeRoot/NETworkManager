@@ -3872,7 +3872,7 @@ Right-click for more options.</value>
     <value>停用</value>
   </data>
   <data name="EditEntry" xml:space="preserve">
-    <value>Edit entry</value>
+    <value>編輯項目</value>
   </data>
   <data name="EditEntryDots" xml:space="preserve">
     <value>Edit entry...</value>
