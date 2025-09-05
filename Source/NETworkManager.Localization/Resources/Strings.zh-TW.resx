@@ -1139,7 +1139,7 @@
     <value>以下參數無法處理：</value>
   </data>
   <data name="TheProcessCanTakeUpSomeTimeAndResources" xml:space="preserve">
-    <value>The process can take up some time and resources (CPU / RAM).</value>
+    <value>此過程可能會佔用較長時間及系統資源（CPU／RAM）。</value>
   </data>
   <data name="TheSettingsLocationIsNotAffected" xml:space="preserve">
     <value>The settings location is not affected!</value>
