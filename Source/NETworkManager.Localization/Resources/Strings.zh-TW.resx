@@ -3246,7 +3246,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>Unlock profile file</value>
   </data>
   <data name="PortState_TimedOut" xml:space="preserve">
-    <value>Timed out</value>
+    <value>逾時</value>
   </data>
   <data name="Hostkey" xml:space="preserve">
     <value>Hostkey</value>
