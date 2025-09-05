@@ -1373,7 +1373,7 @@
     <value>輸入有效的連接埠 (1 - 65535)！</value>
   </data>
   <data name="EnterValidSubnetmask" xml:space="preserve">
-    <value>Enter a valid subnetmask (e.g., 255.255.255.0)!</value>
+    <value>請輸入有效的子網遮罩（例如：255.255.255.0）！</value>
   </data>
   <data name="EnterValidSubnetmaskOrCIDR" xml:space="preserve">
     <value>Enter a valid subnetmask or CIDR (e.g., 255.255.255.0 or /24)!</value>
