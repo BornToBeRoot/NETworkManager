@@ -3585,7 +3585,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>Mobile</value>
   </data>
   <data name="Organization" xml:space="preserve">
-    <value>Organization</value>
+    <value>機構</value>
   </data>
   <data name="PTRRecord" xml:space="preserve">
     <value>PTR record</value>
