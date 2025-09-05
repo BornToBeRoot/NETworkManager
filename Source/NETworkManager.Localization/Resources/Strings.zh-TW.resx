@@ -1274,7 +1274,7 @@
     <value>重置所有應用程式的設定。</value>
   </data>
   <data name="HelpMessage_PasswordNotDisplayedCanBeOverwritten" xml:space="preserve">
-    <value>The password is not displayed when editing, but can be overwritten.</value>
+    <value>在編輯時密碼不會被顯示，但可進行覆寫。</value>
   </data>
   <data name="HelpMessage_RDPAuthenticationLevel" xml:space="preserve">
     <value>[0] If server authentication fails, connect to the computer without warning.
