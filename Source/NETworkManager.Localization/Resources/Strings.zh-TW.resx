@@ -1613,7 +1613,7 @@
     <value>收到的證書已過期。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrDelegationPolicy" xml:space="preserve">
-    <value>The policy does not support delegation of credentials to the target server.</value>
+    <value>此政策不支援將憑證委派至目標伺服器。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrFreshCredRequiredByServer" xml:space="preserve">
     <value>The server authentication policy does not allow connection requests using saved credentials. The user must enter new credentials.</value>
