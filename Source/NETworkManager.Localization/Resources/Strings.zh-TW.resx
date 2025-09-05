@@ -655,7 +655,7 @@
     <value>新增標籤執行來追蹤...</value>
   </data>
   <data name="AddDNSSuffixToHostname" xml:space="preserve">
-    <value>Add DNS suffix (primary) to hostname</value>
+    <value>為主機名稱加入 DNS 後綴（主要）</value>
   </data>
   <data name="AdditionalCommandLine" xml:space="preserve">
     <value>其他命令列</value>
