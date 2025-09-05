@@ -2611,7 +2611,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>一般</value>
   </data>
   <data name="SettingsName_Appearance" xml:space="preserve">
-    <value>Appearance</value>
+    <value>外觀</value>
   </data>
   <data name="SettingsName_Autostart" xml:space="preserve">
     <value>Autostart</value>
