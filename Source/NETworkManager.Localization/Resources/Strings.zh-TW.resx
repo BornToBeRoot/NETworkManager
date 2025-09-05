@@ -1400,10 +1400,10 @@
     <value>應用程式</value>
   </data>
   <data name="Theme_Dark" xml:space="preserve">
-    <value>Dark</value>
+    <value>深色</value>
   </data>
   <data name="Theme_Light" xml:space="preserve">
-    <value>Light</value>
+    <value>淺色</value>
   </data>
   <data name="Black" xml:space="preserve">
     <value>黑色</value>
