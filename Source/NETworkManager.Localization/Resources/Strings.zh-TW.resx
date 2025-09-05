@@ -3641,7 +3641,7 @@ Try again in a few seconds.</value>
     <value>Rate limit reached! Try again in {0} seconds...</value>
   </data>
   <data name="ProfileGroup_General" xml:space="preserve">
-    <value>General</value>
+    <value>一般</value>
   </data>
   <data name="BSSID" xml:space="preserve">
     <value>BSSID</value>
