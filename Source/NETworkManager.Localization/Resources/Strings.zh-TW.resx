@@ -178,7 +178,7 @@
     <value>預設應用程式</value>
   </data>
   <data name="DeleteCredentials" xml:space="preserve">
-    <value>刪除認證</value>
+    <value>刪除憑證</value>
   </data>
   <data name="DeleteProfile" xml:space="preserve">
     <value>刪除設定檔</value>
