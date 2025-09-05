@@ -3740,7 +3740,7 @@ Try again in a few seconds.</value>
     <value>The object's state is inconsistent, preventing the set operation!</value>
   </data>
   <data name="CloseAll" xml:space="preserve">
-    <value>Close all</value>
+    <value>關閉全部</value>
   </data>
   <data name="ExpandHostView" xml:space="preserve">
     <value>Expand host view</value>
