@@ -946,7 +946,7 @@
     <value>錯誤次數超過此值即取消：</value>
   </data>
   <data name="NumberOfStoredEntries" xml:space="preserve">
-    <value>Number of stored entries</value>
+    <value>已儲存項目數</value>
   </data>
   <data name="OID" xml:space="preserve">
     <value>OID</value>
