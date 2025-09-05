@@ -1451,7 +1451,7 @@
     <value>輸入有效的子網路 (如 192.168.178.133/26)！</value>
   </data>
   <data name="EnterValidWebsiteUri" xml:space="preserve">
-    <value>Enter a valid website (e.g., https://example.com/index.html)</value>
+    <value>輸入有效的網站 (如 https://example.com/index.html)</value>
   </data>
   <data name="Green" xml:space="preserve">
     <value>綠色</value>
