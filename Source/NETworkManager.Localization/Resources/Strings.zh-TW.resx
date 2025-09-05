@@ -2991,7 +2991,7 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>實例編號</value>
   </data>
   <data name="LocalConnection" xml:space="preserve">
-    <value>Local connection</value>
+    <value>本地連線</value>
   </data>
   <data name="LocalInterface" xml:space="preserve">
     <value>本地介面</value>
