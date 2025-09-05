@@ -3761,7 +3761,7 @@ Try again in a few seconds.</value>
     <value>進程 ID</value>
   </data>
   <data name="ProcessPath" xml:space="preserve">
-    <value>Process path</value>
+    <value>進程路徑</value>
   </data>
   <data name="ProcessName" xml:space="preserve">
     <value>Process name</value>
