@@ -1625,7 +1625,7 @@
     <value>無法連線至授權機構進行驗證。認證方的網域名稱可能錯誤、網域不可達，或信任關係失敗。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrNoSuchUser" xml:space="preserve">
-    <value>The specified user has no account.</value>
+    <value>指定使用者沒有帳號。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrPasswordExpired" xml:space="preserve">
     <value>此密碼已到期。</value>
