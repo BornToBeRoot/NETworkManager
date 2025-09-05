@@ -3483,7 +3483,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>正在檢查 WPS...</value>
   </data>
   <data name="OpenOIDProfilesDots" xml:space="preserve">
-    <value>Open OID profiles...</value>
+    <value>開啟 OID 設定檔…</value>
   </data>
   <data name="MIB" xml:space="preserve">
     <value>MIB</value>
