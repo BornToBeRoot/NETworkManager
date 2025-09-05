@@ -3315,7 +3315,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>Gateway server</value>
   </data>
   <data name="ServerName" xml:space="preserve">
-    <value>Server name</value>
+    <value>伺服器名稱</value>
   </data>
   <data name="ShareGatewayCredentialsWithRemoteComputer" xml:space="preserve">
     <value>Share Gateway credentials with remote computer</value>
