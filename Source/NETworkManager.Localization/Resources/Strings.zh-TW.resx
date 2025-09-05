@@ -1130,7 +1130,7 @@
     <value>此應用程式可以在未提供任何參數時啟動！</value>
   </data>
   <data name="TheFollowingHostnamesCouldNotBeResolved" xml:space="preserve">
-    <value>The following hostnames could not be resolved:</value>
+    <value>以下主機名稱無法解析：</value>
   </data>
   <data name="TheFollowingParametersAreAvailable" xml:space="preserve">
     <value>The following parameters are available:</value>
