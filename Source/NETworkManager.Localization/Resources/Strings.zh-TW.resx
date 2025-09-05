@@ -822,7 +822,7 @@
     <value>啟用</value>
   </data>
   <data name="EnableCredentialSecuritySupportProvider" xml:space="preserve">
-    <value>Enable Credential Security Support Provider</value>
+    <value>啟用憑證安全支援提供者</value>
   </data>
   <data name="EndTime" xml:space="preserve">
     <value>結束時間</value>
