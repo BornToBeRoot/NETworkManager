@@ -1481,7 +1481,7 @@
     <value>TTL 在傳輸途中已逾時。</value>
   </data>
   <data name="KeyMustHave8CharactersOrMore" xml:space="preserve">
-    <value>金鑰必須有8個字元或以上!</value>
+    <value>金鑰必須有 8 個字元或以上！</value>
   </data>
   <data name="Lime" xml:space="preserve">
     <value>亮綠色</value>
@@ -1496,7 +1496,7 @@
     <value>橄欖色</value>
   </data>
   <data name="OnlyNumbersCanBeEntered" xml:space="preserve">
-    <value>只能輸入數字!</value>
+    <value>只能輸入數字！</value>
   </data>
   <data name="Orange" xml:space="preserve">
     <value>橙色</value>
