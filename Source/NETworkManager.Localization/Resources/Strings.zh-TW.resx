@@ -3594,7 +3594,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>時區</value>
   </data>
   <data name="ZipCode" xml:space="preserve">
-    <value>Zip</value>
+    <value>郵遞區號</value>
   </data>
   <data name="ExternalService_ip_api_Description" xml:space="preserve">
     <value>IP Geolocation API - Fast, accurate, reliable</value>
