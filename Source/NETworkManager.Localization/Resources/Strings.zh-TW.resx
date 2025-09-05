@@ -724,7 +724,7 @@
     <value>社群</value>
   </data>
   <data name="ConfigureThePathToPuTTYInTheSettingsDots" xml:space="preserve">
-    <value>Configure the path to PuTTY in the settings...</value>
+    <value>在設定中配置 PuTTY 的路徑…</value>
   </data>
   <data name="ConfirmClose" xml:space="preserve">
     <value>確認關閉</value>
