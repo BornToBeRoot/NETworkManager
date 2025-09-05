@@ -804,7 +804,7 @@
     <value>DNS 自動配置</value>
   </data>
   <data name="DNSLookupDots" xml:space="preserve">
-    <value>DNS 查閱...</value>
+    <value>DNS 查詢...</value>
   </data>
   <data name="DNSServer" xml:space="preserve">
     <value>DNS 伺服器</value>
