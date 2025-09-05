@@ -3222,7 +3222,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>新增 SNTP 伺服器</value>
   </data>
   <data name="DeleteSNTPServer" xml:space="preserve">
-    <value>Delete SNTP server</value>
+    <value>刪除 SNTP 伺服器</value>
   </data>
   <data name="DeleteSNTPServerMessage" xml:space="preserve">
     <value>The selected SNTP server will be deleted permanently.</value>
