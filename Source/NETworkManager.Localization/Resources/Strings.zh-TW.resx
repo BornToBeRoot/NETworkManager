@@ -2967,7 +2967,7 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>調整大小</value>
   </data>
   <data name="DeleteProfiles" xml:space="preserve">
-    <value>Delete profiles</value>
+    <value>刪除設定檔</value>
   </data>
   <data name="DeleteProfilesMessage" xml:space="preserve">
     <value>Selected profiles will be deleted permanently.</value>
