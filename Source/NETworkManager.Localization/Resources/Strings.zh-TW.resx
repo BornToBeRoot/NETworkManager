@@ -3297,7 +3297,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>狀態視窗</value>
   </data>
   <data name="ShowAddressBar" xml:space="preserve">
-    <value>Show address bar</value>
+    <value>顯示地址列</value>
   </data>
   <data name="WarnMessage_MultipleInstances" xml:space="preserve">
     <value>Enabling this setting is not recommended. Multiple instances of the application share the same settings and profile files. The last instance to be closed may overwrite changes made by other instances.</value>
