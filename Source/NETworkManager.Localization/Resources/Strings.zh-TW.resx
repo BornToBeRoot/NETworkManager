@@ -3180,7 +3180,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>A valid path to TigerVNC should end with "vncviewer-*.exe" or "vncviewer64-*.exe"!</value>
   </data>
   <data name="ApplicationName_SNTPLookup" xml:space="preserve">
-    <value>SNTP Lookup</value>
+    <value>SNTP 查詢</value>
   </data>
   <data name="Library_nulastudioNetBeauty_Description" xml:space="preserve">
     <value>Move a .NET Framework/.NET Core app runtime components and dependencies into a sub-directory and make it beauty.</value>
