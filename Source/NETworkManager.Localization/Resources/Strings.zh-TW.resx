@@ -3312,7 +3312,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>Logon method</value>
   </data>
   <data name="GatewayServer" xml:space="preserve">
-    <value>Gateway server</value>
+    <value>閘道伺服器</value>
   </data>
   <data name="ServerName" xml:space="preserve">
     <value>伺服器名稱</value>
