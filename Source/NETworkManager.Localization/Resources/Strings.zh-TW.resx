@@ -3857,7 +3857,7 @@ Right-click for more options.</value>
     <value>設定檔案</value>
   </data>
   <data name="ApplicationName_HostsFileEditor" xml:space="preserve">
-    <value>Hosts File Editor</value>
+    <value>主機檔編輯器</value>
   </data>
   <data name="HostsFileEditor" xml:space="preserve">
     <value>Hosts File Editor</value>
