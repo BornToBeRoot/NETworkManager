@@ -3156,7 +3156,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>Terabits</value>
   </data>
   <data name="Terabytes" xml:space="preserve">
-    <value>Terabytes</value>
+    <value>兆位元組（TB）</value>
   </data>
   <data name="EnterANumberAndSelectAUnitToCalculateTheUnitsDots" xml:space="preserve">
     <value>Enter a number and select a unit to calculate the units...</value>
