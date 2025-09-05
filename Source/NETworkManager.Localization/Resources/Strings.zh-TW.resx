@@ -292,7 +292,7 @@
     <value>OUI</value>
   </data>
   <data name="OverwriteQuestion" xml:space="preserve">
-    <value>覆寫?</value>
+    <value>覆寫？</value>
   </data>
   <data name="Ping" xml:space="preserve">
     <value>Ping</value>
