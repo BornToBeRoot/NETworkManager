@@ -3860,7 +3860,7 @@ Right-click for more options.</value>
     <value>主機檔編輯器</value>
   </data>
   <data name="HostsFileEditor" xml:space="preserve">
-    <value>Hosts File Editor</value>
+    <value>主機檔編輯器</value>
   </data>
   <data name="HostsFileEditorAdminMessage" xml:space="preserve">
     <value>Read-only mode. Modifying the hosts file requires elevated rights!</value>
