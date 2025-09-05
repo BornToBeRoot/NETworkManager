@@ -3243,7 +3243,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>Enter master password to unlock the profile file:</value>
   </data>
   <data name="UnlockProfileFile" xml:space="preserve">
-    <value>Unlock profile file</value>
+    <value>解鎖設定檔案</value>
   </data>
   <data name="PortState_TimedOut" xml:space="preserve">
     <value>逾時</value>
