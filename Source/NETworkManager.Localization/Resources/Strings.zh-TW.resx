@@ -3884,7 +3884,7 @@ Right-click for more options.</value>
     <value>Disable entry</value>
   </data>
   <data name="RefreshingDots" xml:space="preserve">
-    <value>Refreshing...</value>
+    <value>重新整理中...</value>
   </data>
   <data name="ReloadedAtX" xml:space="preserve">
     <value>Reloaded at {0}</value>
