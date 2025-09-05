@@ -1136,7 +1136,7 @@
     <value>以下參數可用：</value>
   </data>
   <data name="TheFollowingParametersCanNotBeProcesses" xml:space="preserve">
-    <value>The following parameters can not be processed:</value>
+    <value>以下參數無法處理：</value>
   </data>
   <data name="TheProcessCanTakeUpSomeTimeAndResources" xml:space="preserve">
     <value>The process can take up some time and resources (CPU / RAM).</value>
