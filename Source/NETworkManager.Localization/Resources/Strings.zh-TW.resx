@@ -3619,7 +3619,7 @@ URL: http://ip-api.com/</value>
     <value>To provide additional features, third party services are used that are not operated by me. You can deselect them below. No data is transferred to me at any time.</value>
   </data>
   <data name="CheckingDNSResolverDots" xml:space="preserve">
-    <value>Checking DNS resolver...</value>
+    <value>正在檢查 DNS 解析器</value>
   </data>
   <data name="CheckingIPGeolocationDots" xml:space="preserve">
     <value>正在檢查 IP 地理位置定位…</value>
