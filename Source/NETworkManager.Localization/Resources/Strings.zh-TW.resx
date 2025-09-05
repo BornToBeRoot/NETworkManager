@@ -780,7 +780,7 @@
     <value>傳輸速率</value>
   </data>
   <data name="DefaultPort" xml:space="preserve">
-    <value>預設連接埠:</value>
+    <value>預設連接埠：</value>
   </data>
   <data name="RloginPort" xml:space="preserve">
     <value>Rlogin 連接埠</value>
