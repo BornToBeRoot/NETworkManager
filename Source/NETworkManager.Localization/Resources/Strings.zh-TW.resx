@@ -133,7 +133,7 @@
     <value>新增設定檔</value>
   </data>
   <data name="AreYouSure" xml:space="preserve">
-    <value>是否確定?</value>
+    <value>您確定嗎？</value>
   </data>
   <data name="ARP" xml:space="preserve">
     <value>ARP</value>
