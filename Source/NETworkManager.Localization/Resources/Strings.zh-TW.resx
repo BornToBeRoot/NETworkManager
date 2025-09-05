@@ -2892,7 +2892,7 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>Enter a valid IPv6 address!</value>
   </data>
   <data name="HelpMessage_PublicIPv4Address" xml:space="preserve">
-    <value>Public IPv4 address reachable via ICMP.</value>
+    <value>可通過 ICMP 連線的公開 IPv4 位址。</value>
   </data>
   <data name="HelpMessage_PublicIPv6Address" xml:space="preserve">
     <value>Public IPv6 address reachable via ICMP.</value>
