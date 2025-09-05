@@ -3549,7 +3549,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>Continent</value>
   </data>
   <data name="Country" xml:space="preserve">
-    <value>Country</value>
+    <value>國家</value>
   </data>
   <data name="Currency" xml:space="preserve">
     <value>Currency</value>
