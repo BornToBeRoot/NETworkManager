@@ -3579,7 +3579,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>Latitude</value>
   </data>
   <data name="Longitude" xml:space="preserve">
-    <value>Longitude</value>
+    <value>經度</value>
   </data>
   <data name="Mobile" xml:space="preserve">
     <value>行動</value>
