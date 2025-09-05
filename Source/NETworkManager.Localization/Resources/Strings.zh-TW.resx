@@ -3522,7 +3522,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>Add server</value>
   </data>
   <data name="SNTPServer" xml:space="preserve">
-    <value>SNTP server</value>
+    <value>SNTP 伺服器</value>
   </data>
   <data name="ErrorMessage_TabPageHasError" xml:space="preserve">
     <value>The settings on this page contain errors. Correct them to be able to save.</value>
