@@ -3875,7 +3875,7 @@ Right-click for more options.</value>
     <value>編輯項目</value>
   </data>
   <data name="EditEntryDots" xml:space="preserve">
-    <value>Edit entry...</value>
+    <value>編輯項目...</value>
   </data>
   <data name="EnableEntry" xml:space="preserve">
     <value>Enable entry</value>
