@@ -937,7 +937,7 @@ Create one...</value>
     <value>沒有可用的更新!</value>
   </data>
   <data name="NoValidFileFoundToImport" xml:space="preserve">
-    <value>No valid file found to import.</value>
+    <value>找不到任何有效的檔案可供匯入。</value>
   </data>
   <data name="NoVendorFoundCheckYourInput" xml:space="preserve">
     <value>找不到廠商。檢查您的輸入!</value>
