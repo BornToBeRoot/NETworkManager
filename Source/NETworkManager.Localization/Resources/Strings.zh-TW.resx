@@ -3041,7 +3041,7 @@ The profile is not removed from the ~\.aws\credentials file.</value>
     <value>AWS SDK for .NET to work with Amazon Elastic Compute Cloud (Amazon EC2) in Amazon Web Services (AWS).</value>
   </data>
   <data name="DefaultProfile" xml:space="preserve">
-    <value>Default profile</value>
+    <value>預設設定檔</value>
   </data>
   <data name="DefaultRegion" xml:space="preserve">
     <value>Default region</value>
