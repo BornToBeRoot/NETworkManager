@@ -3507,7 +3507,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>Edit OID profile</value>
   </data>
   <data name="EnterPasswordDots" xml:space="preserve">
-    <value>Enter password...</value>
+    <value>輸入密碼...</value>
   </data>
   <data name="AddTab" xml:space="preserve">
     <value>新增標籤</value>
