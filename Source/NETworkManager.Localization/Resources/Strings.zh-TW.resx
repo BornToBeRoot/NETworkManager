@@ -304,7 +304,7 @@
     <value>可攜式</value>
   </data>
   <data name="PortScanner" xml:space="preserve">
-    <value>網路埠掃描器</value>
+    <value>連接埠掃描器</value>
   </data>
   <data name="Profiles" xml:space="preserve">
     <value>設定檔</value>
