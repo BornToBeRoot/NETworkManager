@@ -3204,7 +3204,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>本地開始時間</value>
   </data>
   <data name="NetworkTime" xml:space="preserve">
-    <value>Network time</value>
+    <value>網路時間</value>
   </data>
   <data name="Offset" xml:space="preserve">
     <value>偏移</value>
