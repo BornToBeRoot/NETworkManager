@@ -2725,7 +2725,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Microsoft Edge WebView2 Runtime is not available!</value>
   </data>
   <data name="Frequency" xml:space="preserve">
-    <value>Frequency</value>
+    <value>頻率</value>
   </data>
   <data name="SSID" xml:space="preserve">
     <value>SSID</value>
