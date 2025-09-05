@@ -1142,7 +1142,7 @@
     <value>此過程可能會佔用較長時間及系統資源（CPU／RAM）。</value>
   </data>
   <data name="TheSettingsLocationIsNotAffected" xml:space="preserve">
-    <value>The settings location is not affected!</value>
+    <value>設定位置不會被改動！</value>
   </data>
   <data name="TimeoutOnSNMPQuery" xml:space="preserve">
     <value>Timeout on SNMP query. Maybe the host is not reachable or the community / password is wrong.</value>
