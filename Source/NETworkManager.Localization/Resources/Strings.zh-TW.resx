@@ -3282,7 +3282,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>Ping 詳情</value>
   </data>
   <data name="NoOpenPortsFound" xml:space="preserve">
-    <value>No open ports found!</value>
+    <value>未發現開啟的連接埠！</value>
   </data>
   <data name="PortScanIsDisabled" xml:space="preserve">
     <value>連接埠掃描已被停用！</value>
