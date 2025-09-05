@@ -1595,7 +1595,7 @@
     <value>Windows Sockets 連線失敗了。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SocketRecvFailed" xml:space="preserve">
-    <value>Windows Sockets recv call failed.</value>
+    <value>Windows Sockets 的 recv 呼叫失敗。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrAccountDisabled" xml:space="preserve">
     <value>此帳戶已停用。</value>
