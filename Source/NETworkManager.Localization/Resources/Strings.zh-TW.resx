@@ -1715,7 +1715,7 @@
     <value>黃色</value>
   </data>
   <data name="ProfileWithThisNameAlreadyExists" xml:space="preserve">
-    <value>A profile with this name already exists!</value>
+    <value>已存在同名設定檔！</value>
   </data>
   <data name="PortState_Closed" xml:space="preserve">
     <value>已關閉</value>
