@@ -3201,7 +3201,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>本地結束時間</value>
   </data>
   <data name="LocalStartTime" xml:space="preserve">
-    <value>Local start time</value>
+    <value>本地開始時間</value>
   </data>
   <data name="NetworkTime" xml:space="preserve">
     <value>Network time</value>
