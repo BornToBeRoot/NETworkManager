@@ -610,7 +610,7 @@
     <value>逾時</value>
   </data>
   <data name="TimeoutMS" xml:space="preserve">
-    <value>逾時 (ms)</value>
+    <value>逾時（毫秒）</value>
   </data>
   <data name="TimeMSToWaitBetweenEachPing" xml:space="preserve">
     <value>每次 Ping 之間等待時間（毫秒）</value>
