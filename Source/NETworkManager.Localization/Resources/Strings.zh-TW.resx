@@ -2848,7 +2848,7 @@ Error message:
     <value>Service Name and Transport Protocol Port Number Registry from iana.org.</value>
   </data>
   <data name="License_ApacheLicense2dot0" xml:space="preserve">
-    <value>Apache License 2.0</value>
+    <value>Apache 許可證 2.0</value>
   </data>
   <data name="License_BDS2Clause" xml:space="preserve">
     <value>BSD-2-Clause</value>
