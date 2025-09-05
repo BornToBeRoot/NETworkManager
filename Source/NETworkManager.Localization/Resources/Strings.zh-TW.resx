@@ -1448,7 +1448,7 @@
     <value>輸入有效的連接埠和/或連接埠範圍 (1 - 65535)！</value>
   </data>
   <data name="EnterValidSubnet" xml:space="preserve">
-    <value>Enter a valid subnet (e.g., 192.168.178.133/26)!</value>
+    <value>輸入有效的子網路 (如 192.168.178.133/26)！</value>
   </data>
   <data name="EnterValidWebsiteUri" xml:space="preserve">
     <value>Enter a valid website (e.g., https://example.com/index.html)</value>
