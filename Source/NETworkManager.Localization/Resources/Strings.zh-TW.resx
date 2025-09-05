@@ -3758,7 +3758,7 @@ Try again in a few seconds.</value>
     <value>Remote hostname</value>
   </data>
   <data name="ProcessID" xml:space="preserve">
-    <value>Process ID</value>
+    <value>進程 ID</value>
   </data>
   <data name="ProcessPath" xml:space="preserve">
     <value>Process path</value>
