@@ -3471,7 +3471,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>成功</value>
   </data>
   <data name="WiFiConnectionStatus_Timeout" xml:space="preserve">
-    <value>Connection attempt timed out</value>
+    <value>連線嘗試逾時</value>
   </data>
   <data name="WiFiConnectionStatus_UnspecifiedFailure" xml:space="preserve">
     <value>-/-</value>
