@@ -1622,7 +1622,7 @@
     <value>登入失敗。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrNoAuthenticatingAuthority" xml:space="preserve">
-    <value>No authority could be contacted for authentication. The domain name of the authenticating party could be wrong, the domain could be unreachable, or there might have been a trust relationship failure.</value>
+    <value>無法連線至授權機構進行驗證。認證方的網域名稱可能錯誤、網域不可達，或信任關係失敗。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrNoSuchUser" xml:space="preserve">
     <value>The specified user has no account.</value>
