@@ -1433,13 +1433,13 @@
     <value>輸入有效的傳輸速率!</value>
   </data>
   <data name="EnterValidHosts" xml:space="preserve">
-    <value>輸入有效的主機 (多主機不能以 ";" 結尾)!</value>
+    <value>輸入有效的主機 (多主機不能以 ";" 結尾)！</value>
   </data>
   <data name="EnterValidIPAddress" xml:space="preserve">
     <value>輸入有效的 IP 位址!</value>
   </data>
   <data name="EnterValidNumber" xml:space="preserve">
-    <value>輸入有效的數量!</value>
+    <value>輸入有效的數量！</value>
   </data>
   <data name="EnterValidOID" xml:space="preserve">
     <value>輸入有效的 OID!</value>
