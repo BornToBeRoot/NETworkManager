@@ -3210,7 +3210,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>偏移</value>
   </data>
   <data name="RoundTripDelay" xml:space="preserve">
-    <value>Round trip delay</value>
+    <value>往返延遲</value>
   </data>
   <data name="Server" xml:space="preserve">
     <value>伺服器</value>
