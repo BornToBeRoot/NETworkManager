@@ -3276,7 +3276,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>These settings only change the maximum number of concurrently executed threads per host/port scan. Go to Settings &gt; General &gt; General to adjust the (min) threads of the application.</value>
   </data>
   <data name="PortStatus" xml:space="preserve">
-    <value>Port status</value>
+    <value>連接埠狀態</value>
   </data>
   <data name="PingDetails" xml:space="preserve">
     <value>Ping details</value>
