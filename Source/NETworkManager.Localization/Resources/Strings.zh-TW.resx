@@ -1616,7 +1616,7 @@
     <value>此政策不支援將憑證委派至目標伺服器。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrFreshCredRequiredByServer" xml:space="preserve">
-    <value>The server authentication policy does not allow connection requests using saved credentials. The user must enter new credentials.</value>
+    <value>伺服器身份驗證政策不允許使用已儲存的憑證進行連線請求。使用者必須輸入新的憑證。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrLogonFailure" xml:space="preserve">
     <value>登入失敗。</value>
