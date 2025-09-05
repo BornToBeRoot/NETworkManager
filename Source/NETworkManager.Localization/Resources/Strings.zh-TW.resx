@@ -915,7 +915,7 @@
     <value>新連線...</value>
   </data>
   <data name="NoDNSRecordFoundCheckYourInputAndSettings" xml:space="preserve">
-    <value>No DNS record found for "{0}"! Check your input and the settings.</value>
+    <value>未找到「{0}」的 DNS 記錄！請檢查您的輸入與設定。</value>
   </data>
   <data name="NoEnabledNetworkAdaptersFound" xml:space="preserve">
     <value>找不到啟用網路介面卡!</value>
