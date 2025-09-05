@@ -924,8 +924,8 @@
     <value>找不到連接埠。檢查您的輸入！</value>
   </data>
   <data name="NoProfilesFoundCreateOne" xml:space="preserve">
-    <value>No profiles found!
-Create one...</value>
+    <value>未找到任何設定檔！
+請先建立一個…</value>
   </data>
   <data name="NothingFound" xml:space="preserve">
     <value>沒有找到!</value>
