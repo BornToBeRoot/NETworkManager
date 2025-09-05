@@ -1051,7 +1051,7 @@
     <value>回應</value>
   </data>
   <data name="Rlogin" xml:space="preserve">
-    <value>Rlogin</value>
+    <value>遠端登入</value>
   </data>
   <data name="Scanned" xml:space="preserve">
     <value>已掃描</value>
