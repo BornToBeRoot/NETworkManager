@@ -3023,7 +3023,7 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
 The profile is not removed from the ~\.aws\credentials file.</value>
   </data>
   <data name="EditAWSProfile" xml:space="preserve">
-    <value>Edit AWS profile</value>
+    <value>編輯 AWS 設定檔</value>
   </data>
   <data name="SyncAllEC2InstancesFromAWS" xml:space="preserve">
     <value>Synchronize all EC2 instances from AWS</value>
