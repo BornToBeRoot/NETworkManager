@@ -1850,7 +1850,7 @@
     <value>新增 IPv4 位址</value>
   </data>
   <data name="MaxHostThreads" xml:space="preserve">
-    <value>Max. concurrent host threads</value>
+    <value>最大同時主機執行緒數</value>
   </data>
   <data name="MaxPortThreads" xml:space="preserve">
     <value>Max. concurrent port threads</value>
