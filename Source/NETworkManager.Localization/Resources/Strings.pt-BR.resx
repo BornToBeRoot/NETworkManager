@@ -3815,11 +3815,9 @@ Tente novamente em alguns segundos.</value>
     <value>Expandir e abrir pesquisa...</value>
   </data>
   <data name="WiFiAccessNotAvailableMessage" xml:space="preserve">
-    <value>O acesso ao adaptador Wi-Fi não é permitido pelo Windows.
+    <value>A partir do Windows 11 24H2, você precisará permitir o acesso ao adaptador Wi-Fi.
 
-Abra as configurações do Windows e permita o acesso Wi-Fi para este aplicativo.
-
-Reinicie o aplicativo posteriormente para usar este recurso.</value>
+Abra Configurações do Windows &gt; Privacidade e segurança &gt; Localização, habilite o acesso para Aplicativos da Área de Trabalho / NETworkManager e reinicie o aplicativo.</value>
   </data>
   <data name="DragDropApplicationsToReorderRightClickForMoreOptions" xml:space="preserve">
     <value>Arraste e solte os aplicativos para reordená-los.

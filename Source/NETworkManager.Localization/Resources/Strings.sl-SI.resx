@@ -3797,11 +3797,9 @@ URL: https://edns.ip-api.com/</value>
     <value>Expand and open search...</value>
   </data>
   <data name="WiFiAccessNotAvailableMessage" xml:space="preserve">
-    <value>Access to the Wi-Fi adapter is not permitted by Windows.
+    <value>Starting with Windows 11 24H2, you’ll need to allow access to the Wi-Fi adapter.
 
-Open the Windows settings and allow Wi-Fi access for this application.
-
-Restart the application afterwards to use this feature.</value>
+Open Windows Settings &gt; Privacy &amp; security &gt; Location, enable access for Desktop Apps / NETworkManager, then restart the application.</value>
   </data>
   <data name="DragDropApplicationsToReorderRightClickForMoreOptions" xml:space="preserve">
     <value>Drag and drop the applications to reorder them.
