@@ -3162,7 +3162,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>Enter a number and select a unit to calculate the units...</value>
   </data>
   <data name="SettingsName_Network" xml:space="preserve">
-    <value>Network</value>
+    <value>網路</value>
   </data>
   <data name="Proxy" xml:space="preserve">
     <value>代理</value>
