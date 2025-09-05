@@ -2668,7 +2668,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>SSH 記錄</value>
   </data>
   <data name="PuTTYLogMode_SSHRawLog" xml:space="preserve">
-    <value>SSH and Raw log</value>
+    <value>SSH 和原始記錄</value>
   </data>
   <data name="EnterValidFileName" xml:space="preserve">
     <value>輸入有效的檔案名稱!</value>
