@@ -3198,7 +3198,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>IP 終端點</value>
   </data>
   <data name="LocalEndTime" xml:space="preserve">
-    <value>Local end time</value>
+    <value>本地結束時間</value>
   </data>
   <data name="LocalStartTime" xml:space="preserve">
     <value>Local start time</value>
