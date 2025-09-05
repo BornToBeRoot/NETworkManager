@@ -1160,7 +1160,7 @@
     <value>不明錯誤!</value>
   </data>
   <data name="UntrayBringWindowToForeground" xml:space="preserve">
-    <value>Untray / Bring window to foreground</value>
+    <value>從托盤移除／將視窗提升至前景</value>
   </data>
   <data name="URL" xml:space="preserve">
     <value>網址</value>
