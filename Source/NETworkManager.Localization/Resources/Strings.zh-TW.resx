@@ -1084,11 +1084,11 @@
     <value>服務</value>
   </data>
   <data name="SettingsFileFoundWasCorruptOrNotCompatibleMessage" xml:space="preserve">
-    <value>The found settings file was corrupted or is not compatible with this version! You may report this issue on GitHub.
+    <value>找到的設定檔已損毀或與此版本不相容！您可在 GitHub 上回報此問題。
 
-A backup of the settings file was created in the settings folder and the settings were reset.
+已在設定資料夾中建立設定檔備份，並將設定重置。
 
-Profile files are not affected!</value>
+設定檔案未受到任何影響！</value>
   </data>
   <data name="ShowClosedPorts" xml:space="preserve">
     <value>顯示關閉連接埠</value>
