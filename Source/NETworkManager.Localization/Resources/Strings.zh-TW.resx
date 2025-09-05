@@ -831,7 +831,7 @@
     <value>請輸入子網路以進行計算…</value>
   </data>
   <data name="EnterSubnetAndANewSubnetmaskToCreateSubnets" xml:space="preserve">
-    <value>Enter subnet and a new subnet mask to create subnets...</value>
+    <value>請輸入子網路及新子網遮罩以產生子網路…</value>
   </data>
   <data name="ErrorCheckingApiGithubComVerifyYourNetworkConnection" xml:space="preserve">
     <value>Couldn't connect to 'api.github.com', check your network connection!</value>
