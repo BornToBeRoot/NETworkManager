@@ -1057,7 +1057,7 @@
     <value>已掃描</value>
   </data>
   <data name="SearchedApplicationNotFound" xml:space="preserve">
-    <value>已搜尋應用程式未找到!</value>
+    <value>已搜尋應用程式未找到！</value>
   </data>
   <data name="SearchedLanguageNotFound" xml:space="preserve">
     <value>已搜尋語系未找到!</value>
