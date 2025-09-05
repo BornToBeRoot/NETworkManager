@@ -2988,7 +2988,7 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>AWS 會話管理器</value>
   </data>
   <data name="InstanceId" xml:space="preserve">
-    <value>Instance ID</value>
+    <value>實例編號</value>
   </data>
   <data name="LocalConnection" xml:space="preserve">
     <value>Local connection</value>
