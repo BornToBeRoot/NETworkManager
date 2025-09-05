@@ -2626,7 +2626,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>語言</value>
   </data>
   <data name="SettingsName_Profiles" xml:space="preserve">
-    <value>Profiles</value>
+    <value>設定檔</value>
   </data>
   <data name="SettingsName_Settings" xml:space="preserve">
     <value>Settings</value>
