@@ -3195,7 +3195,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>URL to a web service that can be reached via http or https and returns an IPv6 address e.g., "xxxx:xx:xxx::xx" as response.</value>
   </data>
   <data name="IPEndPoint" xml:space="preserve">
-    <value>IP endpoint</value>
+    <value>IP 終端點</value>
   </data>
   <data name="LocalEndTime" xml:space="preserve">
     <value>Local end time</value>
