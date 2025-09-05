@@ -3435,7 +3435,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>Connect...</value>
   </data>
   <data name="XXXDisconnected" xml:space="preserve">
-    <value>{0} disconnected!</value>
+    <value>{0}已斷開連線！</value>
   </data>
   <data name="ConnectToXXX" xml:space="preserve">
     <value>連接至{0}</value>
