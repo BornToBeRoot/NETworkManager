@@ -511,7 +511,7 @@
     <value>將主視窗最小化，而非結束應用程式</value>
   </data>
   <data name="MinimizeToTrayInsteadOfTaskbar" xml:space="preserve">
-    <value>Minimize to tray instead of taskbar</value>
+    <value>最小化至系統匣，而非工作列</value>
   </data>
   <data name="Minimum" xml:space="preserve">
     <value>最小</value>
