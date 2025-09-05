@@ -673,7 +673,7 @@
     <value>答案</value>
   </data>
   <data name="ApplicationWillBeRestartedAfterwards" xml:space="preserve">
-    <value>The application will be restarted afterwards!</value>
+    <value>應用程式將在此後重新啟動！</value>
   </data>
   <data name="Apply" xml:space="preserve">
     <value>套用</value>
