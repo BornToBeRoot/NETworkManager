@@ -3303,7 +3303,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>Enabling this setting is not recommended. Multiple instances of the application share the same settings and profile files. The last instance to be closed may overwrite changes made by other instances.</value>
   </data>
   <data name="BypassForLocalAddresses" xml:space="preserve">
-    <value>Bypass for local addresses</value>
+    <value>本機位址的繞過</value>
   </data>
   <data name="EnableGatewayServer" xml:space="preserve">
     <value>啟用閘道伺服器</value>
