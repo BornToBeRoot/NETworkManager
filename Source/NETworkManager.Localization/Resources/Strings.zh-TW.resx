@@ -3552,7 +3552,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>國家</value>
   </data>
   <data name="Currency" xml:space="preserve">
-    <value>Currency</value>
+    <value>貨幣</value>
   </data>
   <data name="District" xml:space="preserve">
     <value>District</value>
