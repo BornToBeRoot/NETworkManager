@@ -2973,7 +2973,7 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>Selected profiles will be deleted permanently.</value>
   </data>
   <data name="UseCustomThemes" xml:space="preserve">
-    <value>Use custom themes</value>
+    <value>使用自訂主題</value>
   </data>
   <data name="CustomThemes" xml:space="preserve">
     <value>自訂主題</value>
