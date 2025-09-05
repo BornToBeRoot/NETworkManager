@@ -3632,7 +3632,7 @@ URL: http://ip-api.com/</value>
 Try again in a few seconds.</value>
   </data>
   <data name="HTTPStatusCode" xml:space="preserve">
-    <value>HTTP status code</value>
+    <value>HTTP 狀態碼</value>
   </data>
   <data name="Accen_Steel" xml:space="preserve">
     <value>鐵灰色</value>
