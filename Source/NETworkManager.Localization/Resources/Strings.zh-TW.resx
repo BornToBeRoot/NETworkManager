@@ -3462,7 +3462,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>Access to the network has been revoked</value>
   </data>
   <data name="WiFiConnectionStatus_InvalidCredential" xml:space="preserve">
-    <value>Invalid credentials</value>
+    <value>無效憑證</value>
   </data>
   <data name="WiFiConnectionStatus_NetworkNotAvailable" xml:space="preserve">
     <value>網路不可用</value>
