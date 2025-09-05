@@ -3911,9 +3911,9 @@ Attendi il completamento del processo e riprova.</value>
     <value>Espandi e apri ricerca...</value>
   </data>
   <data name="WiFiAccessNotAvailableMessage" xml:space="preserve">
-    <value>Starting with Windows 11 24H2, you’ll need to allow access to the Wi-Fi adapter.
+    <value>A partire da Windows 11 24H2, dovrai consentire l'accesso all'adattatore Wi-Fi.
 
-Open Windows Settings &gt; Privacy &amp; security &gt; Location, enable access for Desktop Apps / NETworkManager, then restart the application.</value>
+Apri 'Impostazioni Windows' -&gt; 'Privacy e sicurezza'-&gt; 'Posizione', abilita l'accesso per le app desktop / NetworkManager, quindi riavvia l'applicazione.</value>
   </data>
   <data name="DragDropApplicationsToReorderRightClickForMoreOptions" xml:space="preserve">
     <value>Trascina e rilascia le applicazioni per riordinarle.
