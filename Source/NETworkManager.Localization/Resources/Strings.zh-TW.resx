@@ -3084,7 +3084,7 @@ If not set, the default AWS CLI settings are used.</value>
     <value>檢查預發佈版本</value>
   </data>
   <data name="SyncIsDisabled" xml:space="preserve">
-    <value>Synchronization is disabled!</value>
+    <value>同步已停用！</value>
   </data>
   <data name="Command" xml:space="preserve">
     <value>指令</value>
