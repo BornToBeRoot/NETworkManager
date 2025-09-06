@@ -4,10 +4,36 @@
         <title>NETworkManager Blog</title>
         <link>https://borntoberoot.net/NETworkManager/blog</link>
         <description>NETworkManager Blog</description>
-        <lastBuildDate>Fri, 24 May 2024 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 06 Sep 2025 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Hosts File Editor]]></title>
+            <link>https://borntoberoot.net/NETworkManager/blog/hosts-file-editor</link>
+            <guid>https://borntoberoot.net/NETworkManager/blog/hosts-file-editor</guid>
+            <pubDate>Sat, 06 Sep 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[NETworkManager 2025.8.10.0 introduced a new feature, the Hosts File Editor. You can now easily manage and edit your system's hosts file in a user-friendly interface.]]></description>
+            <content:encoded><![CDATA[<p>NETworkManager 2025.8.10.0 introduced a new feature, the <code>Hosts File Editor</code>. You can now easily manage and edit your system's hosts file in a user-friendly interface.</p>
+<p>As a sysadmin or developer, you often need to modify the hosts file in order to override DNS settings for specific domains, redirect traffic, or test websites locally.</p>
+<p><img decoding="async" loading="lazy" alt="Hosts File Editor" src="https://borntoberoot.net/NETworkManager/assets/images/hosts-file-editor-0432db59fcbe6e5d34fb3ea1fcb2ea84.gif" width="1200" height="800" class="img_ev3q"></p>
+<p>The hosts file is a plain text file used by the operating system to map hostnames to IP addresses. It is typically located at:</p>
+<ul>
+<li>Windows: <code>C:\Windows\System32\drivers\etc\hosts</code></li>
+<li>Linux: <code>/etc/hosts</code></li>
+</ul>
+<p>Editing this file usually requires administrative privileges and can be cumbersome using traditional text editors.
+With the new Hosts File Editor in NETworkManager, you can now easily add, edit, enable, disable, or delete entries
+in your hosts file without needing to manually open and edit the file.</p>
+<p>A daily backup (up to 5 versions) of the hosts file is created automatically before any changes are applied,
+allowing you to restore previous versions if needed.</p>
+<p>Upgrade now to the <a href="https://borntoberoot.net/NETworkManager/download" target="_blank" rel="noopener noreferrer">latest version of NETworkManager</a> to use this feature.</p>
+<p>More information is available in the <a href="https://borntoberoot.net/NETworkManager/download/docs/application/hosts-file-editor" target="_blank" rel="noopener noreferrer">official documentation</a>.</p>
+<p>If you find any issues or have suggestions for improvement, please open an <a href="https://github.com/BornToBeRoot/NETworkManager/issues" target="_blank" rel="noopener noreferrer">issue on GitHub</a>:</p>]]></content:encoded>
+            <category>hosts file</category>
+            <category>dns</category>
+            <category>new feature</category>
+        </item>
         <item>
             <title><![CDATA[Binaries are now signed with a code signing certificate]]></title>
             <link>https://borntoberoot.net/NETworkManager/blog/binaries-are-now-signed-with-a-code-signing-certificate</link>
