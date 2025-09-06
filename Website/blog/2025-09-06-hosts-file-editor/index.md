@@ -25,9 +25,8 @@ in your hosts file without needing to manually open and edit the file.
 A daily backup (up to 5 versions) of the hosts file is created automatically before any changes are applied,
 allowing you to restore previous versions if needed.
 
-Upgrade now to the latest version of NETworkManager to use this feature: <https://borntoberoot.net/NETworkManager/download>
+Upgrade now to the [latest version of NETworkManager](../../download) to use this feature.
 
-More information is available in the official documentation: <https://borntoberoot.net/NETworkManager/docs/application/hosts-file-editor>
+More information is available in the [official documentation](../../docs/application/hosts-file-editor).
 
-If you find any issues or have suggestions for improvement, please open an issue on GitHub:
-<https://github.com/BornToBeRoot/NETworkManager/issues>
+If you find any issues or have suggestions for improvement, please open an [issue on GitHub](https://github.com/BornToBeRoot/NETworkManager/issues):
