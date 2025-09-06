@@ -148,7 +148,7 @@
     <value>自動啟動</value>
   </data>
   <data name="Calculator" xml:space="preserve">
-    <value>計算機</value>
+    <value>計算器</value>
   </data>
   <data name="CommandLineArguments" xml:space="preserve">
     <value>命令列參數</value>
@@ -454,7 +454,7 @@
     <value>DHCP 伺服器</value>
   </data>
   <data name="DNSServers" xml:space="preserve">
-    <value>DNS 伺服器</value>
+    <value>DNS 伺服器(s)</value>
   </data>
   <data name="DNSSuffix" xml:space="preserve">
     <value>DNS 尾碼</value>
@@ -757,7 +757,7 @@
     <value>認證</value>
   </data>
   <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
-    <value>設定檔會以 AES 加密（256‑bit 金鑰、128‑bit 塊長，CBC 模式）存放於磁碟。加密金鑰由主密碼透過 Rfc2898DeriveBytes（PBKDF2）經 1,000,000 次迭代所推導。執行時，密碼會在設定檔載入後以 SecureString 儲存；但某些功能需要將其轉成普通字串，在此期間內密碼會保持未加密狀態，直至垃圾回收器清理。
+    <value>設定檔會以 AES 加密，256‑bit 金鑰、128‑bit 塊長，CBC 模式，存放於磁碟。加密金鑰由主密碼透過 Rfc2898DeriveBytes（PBKDF2）經 1,000,000 次迭代所推導。執行時，密碼會在設定檔載入後以 SecureString 儲存；但某些功能需要將其轉成普通字串，在此期間內密碼會保持未加密狀態，直至垃圾回收器清理。
 
 請先備份您的設定檔，再啟用加密！</value>
   </data>
@@ -1193,10 +1193,10 @@
     <value>版本</value>
   </data>
   <data name="VersionxxIsAvailable" xml:space="preserve">
-    <value>有新的 {0} 版本!</value>
+    <value>「{0}」版本現已可用！</value>
   </data>
   <data name="WalkMode" xml:space="preserve">
-    <value>步行模式</value>
+    <value>行走模式</value>
   </data>
   <data name="Width" xml:space="preserve">
     <value>寬度</value>
@@ -1205,7 +1205,7 @@
     <value>無法使用所給的密碼解密設定檔。</value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
-    <value>輸入密碼有錯。</value>
+    <value>輸入的密碼不正確。</value>
   </data>
   <data name="AddDots" xml:space="preserve">
     <value>新增...</value>
@@ -1214,7 +1214,7 @@
     <value>新增項目...</value>
   </data>
   <data name="Calculate" xml:space="preserve">
-    <value>計算機</value>
+    <value>計算</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
@@ -2497,7 +2497,7 @@ $$hostname$$	--&gt;	主機名稱</value>
     <value>Ping 監控</value>
   </data>
   <data name="ApplicationName_PortScanner" xml:space="preserve">
-    <value>Port 掃瞄器</value>
+    <value>Port 掃描器</value>
   </data>
   <data name="ApplicationName_PowerShell" xml:space="preserve">
     <value>PowerShell</value>
@@ -3096,13 +3096,12 @@ $$hostname$$	--&gt;	主機名稱</value>
     <value>PowerShell 控制台的配色可以在「設定 &gt; 一般 &gt; 外觀」中，改成與應用程式主題相同。</value>
   </data>
   <data name="HelpMessage_ApplyThemeToPowerShellConsole" xml:space="preserve">
-    <value>If you enable this option, the default PowerShell console settings in the registry under HKCU:\Console are overridden so that the PowerShell console window matches the application theme. This is a global system setting that may affect the appearance of the normal PowerShell window.
+    <value>若啟用此選項，將覆蓋 HKCU:\Console 中預設的 PowerShell 主控台設定，使主控台視窗與本程式主題保持一致。這是一個全域系統設定，可能會影響到一般 PowerShell 視窗的外觀。
 
-Only the PowerShell consoles configured in the PowerShell and AWS Session Manager settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
+只會修改在 PowerShell 與 AWS Session Manager 設定中的 PowerShell 主控台。同時支援 Windows PowerShell 以及 PWSH（PowerShell 7+）。
+點擊右上角的「說明 / 文件」按鈕（最小化圖示左側），或前往 https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance 獲取更多資訊。此處列出了將被調整的值。
 
-Click in the upper right corner on the help / documentation button (left of the minimize button) or navigate to https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance for more details. Here are the values documented which will be adjusted.
-
-If the option is disabled again, the values are no longer modified. However, the original values are NOT restored.</value>
+若再次關閉該選項，已修改的值不會自動回復到原始設定；亦即「原始值並未還原」。</value>
   </data>
   <data name="InputCannotEndWithSemicolon" xml:space="preserve">
     <value>輸入不能以「;」結尾！</value>
@@ -3234,7 +3233,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>已存在此名稱的 SNTP 伺服器！</value>
   </data>
   <data name="EnterValidHostnameOrIPAddress" xml:space="preserve">
-    <value>Enter a valid hostname (e.g., "server-01" or "example.com") or a valid IP address (e.g., 192.168.178.1)!</value>
+    <value>請輸入一個有效的主機名稱（例如 server-01 或 example.com），或是有效的 IP 位址（例如 192.168.178.1）。</value>
   </data>
   <data name="Servers" xml:space="preserve">
     <value>伺服器（數）</value>
@@ -3264,13 +3263,13 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>執行緒池額外最小執行緒數。</value>
   </data>
   <data name="HelpMessage_ThreadPoolAdditionalMinThreads" xml:space="preserve">
-    <value>This setting specifies the minimum number of threads that will be created from the application's ThreadPool on demand. This can improve the performance for example of the IP scanner or port scanner.
+    <value>此設定指定應用程式 ThreadPool 在需要時所產生的最小執行緒數。對於 IP 掃描器或埠掃描器等功能，調整此值可提升效能。
 	
-The value is added to the default min. threads (number of CPU threads). The value 0 leaves the default settings. If the value is higher than the default max. threads of the ThreadPool, this value is used.
+此值會加到預設的「最小執行緒」上（即 CPU 執行緒數）。設為 0 時使用系統預設設定。若該值高於 ThreadPool 的預設最大執行緒，則以此值作為最大值。
 
-If the value is too high, performance problems may occur.
+過度調整可能會造成效能下降。
 
-Changes to this value will take effect after the application is restarted. Whether the value was set successfully can be seen in the log file under %LocalAppData%\NETworkManager\NETworkManager.log</value>
+更改後需重新啟動程式才能生效；是否成功設定可在 %LocalAppData%\NETworkManager\NETworkManager.log 中查閱。</value>
   </data>
   <data name="MaxThreadsOnlyGoToSettingsGeneralGeneral" xml:space="preserve">
     <value>此設定僅調整每個主機／埠掃描時同時執行的最大執行緒數。請至 設定 &gt; 一般 &gt; 一般，調整應用程式的（最小）執行緒數。</value>
@@ -3339,91 +3338,91 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>您的電腦無法連線至遠端主機，原因可能為下列之一：1) 請求的遠端桌面閘道伺服器位址與其 SSL 憑證主旨名稱不符。2) 憑證已過期或被吊銷。3) 根憑證機構不信任該憑證。  請聯絡網路管理員以獲得協助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331653" xml:space="preserve">
-    <value>此電腦無法驗證 RD 閘道「」的身份。連線至無法確認身分的伺服器並不安全，請聯絡網路管理員以獲得協助。</value>
+    <value>此電腦無法驗證 RD Gateway "" 的身份。連線至無法確認身分的伺服器並不安全，請聯絡網路管理員以獲得協助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331654" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server address requested and the certificate subject name do not match. Contact your network administrator for assistance.</value>
+    <value>您的電腦無法連線至遠端主機，因為請求的遠端桌面閘道伺服器位址與憑證主旨名稱不符。請聯絡網路管理員以獲得協助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331655" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server's certificate has expired or has been revoked. Contact your network administrator for assistance.</value>
+    <value>您的電腦無法連線至遠端主機，因為遠端桌面閘道伺服器的憑證已過期或被吊銷。請聯絡網路管理員以獲得協助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331657" xml:space="preserve">
-    <value>An error occurred while sending data to the Remote Desktop Gateway server. The server is temporarily unavailable or a network connection is down. Try again later, or contact your network administrator for assistance.</value>
+    <value>發送資料至遠端桌面閘道伺服器時出錯。伺服器暫時無法使用，或網路連線中斷。請稍後重試，或聯絡網路管理員以獲得協助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331658" xml:space="preserve">
-    <value>An error occurred while receiving data from the Remote Desktop Gateway server. Either the server is temporarily unavailable or a network connection is down. Try again later, or contact your network administrator for assistance.</value>
+    <value>從遠端桌面閘道伺服器接收資料時發生錯誤。伺服器可能暫時無法使用，或網路連線中斷。請稍後再試，或聯絡網路管理員以獲得協助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331660" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server address is unreachable or incorrect. Type a valid Remote Desktop Gateway server address.</value>
+    <value>您的電腦無法連線至遠端主機，因為遠端桌面閘道伺服器位址不可達或不正確。請輸入一個有效的遠端桌面閘道伺服器位址。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331663" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server is running low on server resources and is temporarily unavailable. Try reconnecting later or contact your network administrator for assistance.</value>
+    <value>由於遠端桌面閘道伺服器資源不足，暫時無法使用，您的電腦無法連線至遠端主機。請稍後再試或聯絡網路管理員以獲得協助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331672" xml:space="preserve">
-    <value>The Remote Desktop Gateway server has ended the connection. Try reconnecting later or contact your network administrator for assistance.</value>
+    <value>遠端桌面閘道伺服器已終止連線。請稍後再嘗試重新連線，或聯絡網路管理員以獲得協助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331673" xml:space="preserve">
-    <value>The Remote Desktop Gateway server administrator has ended the connection. Try reconnecting later or contact your network administrator for assistance.</value>
+    <value>遠端桌面閘道伺服器的管理員已終止連線。請稍後再嘗試重新連線，或聯絡網路管理員以獲得協助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331675" xml:space="preserve">
-    <value>Remote Desktop can't connect to the remote computer "" for one of these reasons:  1) Your user account is not listed in the RD Gateway's permission list 2) You might have specified the remote computer in NetBIOS format (for example, computer1), but the RD Gateway is expecting an FQDN or IP address format (for example, computer1.fabrikam.com or 157.60.0.1).  Contact your network administrator for assistance.</value>
+    <value>遠端桌面無法連線至 "" 主機，原因可能為下列之一：1) 您的帳號不在 RD 閘道的授權清單中。2) 您以 NetBIOS 格式（如 computer1）指定了遠端主機，但 RD 閘道預期使用 FQDN 或 IP 位址格式（例如 computer1.fabrikam.com 或 157.60.0.1）。  請聯絡網路管理員以獲得協助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331676" xml:space="preserve">
-    <value>Remote Desktop can't connect to the remote computer "" for one of these reasons:  1) Your user account is not authorized to access the RD Gateway "" 2) Your computer is not authorized to access the RD Gateway "" 3) You are using an incompatible authentication method (for example, the RD Gateway might be expecting a smart card but you provided a password)  Contact your network administrator for assistance.</value>
+    <value>遠端桌面無法連線至 "" 主機，原因可能為下列之一：1) 您的帳號未被授權存取 RD 閘道 ""。2) 您的電腦未被授權存取 RD 閘道 ""。3) 您使用了不相容的驗證方式（例如，RD 閘道可能要求智慧卡，但您提供的是密碼）。  請聯絡網路管理員以獲得協助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331679" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because your network administrator has restricted access to this RD Gateway server. Contact your network administrator for assistance.</value>
+    <value>您的電腦無法連線至遠端主機，因為網路管理員已限制存取此 RD 閘道伺服器。請聯絡網路管理員以獲得協助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331680" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the web proxy server requires authentication. To allow unauthenticated traffic to an RD Gateway server through your web proxy server, contact your network administrator.</value>
+    <value>您的電腦無法連線至遠端主機，因為網頁代理伺服器需要驗證。若要允許未經驗證的流量透過網頁代理到 RD 閘道伺服器，請聯絡網路管理員。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331682" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server reached its maximum allowed connections. Try reconnecting later or contact your network administrator for assistance.</value>
+    <value>由於遠端桌面閘道伺服器已達到允許的最大連線數，您的電腦無法連線至遠端主機。請稍後再試或聯絡網路管理員以獲得協助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331683" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server does not support the request. Contact your network administrator for assistance.</value>
+    <value>您的電腦無法連線至遠端主機，因為遠端桌面閘道伺服器不支援此請求。請聯絡網路管理員以獲得協助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331684" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the client does not support one of the Remote Desktop Gateway's capabilities. Contact your network administrator for assistance.</value>
+    <value>您的電腦無法連線至遠端主機，因為客戶端不支援遠端桌面閘道的某項功能。請聯絡網路管理員以獲得協助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331685" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server and this computer are incompatible. Contact your network administrator for assistance.</value>
+    <value>您的電腦無法連線至遠端主機，因為遠端桌面閘道伺服器與此電腦不相容。請聯絡網路管理員以獲得協助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331688" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because no certificate was configured to use at the Remote Desktop Gateway server. Contact your network administrator for assistance.</value>
+    <value>您的電腦無法連線至遠端主機，因為在遠端桌面閘道伺服器上未設定任何憑證可供使用。請聯絡網路管理員以獲得協助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331689" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the RD Gateway server that you are trying to connect to is not allowed by your computer administrator. If you are the administrator, add this Remote Desktop Gateway server name to the trusted Remote Desktop Gateway server list on your computer and then try connecting again.</value>
+    <value>您的電腦無法連線至遠端主機，因為您嘗試存取的 RD 閘道伺服器未被此電腦管理員允許。若您是該管理員，請將此遠端桌面閘道伺服器名稱加入電腦上「受信任的遠端桌面閘道伺服器」清單，再重新嘗試連線。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331690" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because your computer or device did not meet the Network Access Protection requirements set by your network administrator, for one of the following reasons:  1) The Remote Desktop Gateway server name and the server's public key certificate subject name do not match. 2) The certificate has expired or has been revoked. 3) The certificate root authority does not trust the certificate. 4) The certificate key extension does not support encryption. 5) Your computer cannot verify the certificate revocation list.  Contact your network administrator for assistance.</value>
+    <value>您的電腦無法連線至遠端主機，因為您的電腦或裝置未符合網路存取保護設定的要求，原因可能為下列之一：1) RD 閘道伺服器名稱與其公開金鑰憑證主旨不符。2) 憑證已過期或被吊銷。3) 根憑證機構不信任該憑證。4) 憑證關鍵延伸不支援加密。5) 您的電腦無法驗證憑證撤銷清單。  請聯絡網路管理員以獲得協助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331691" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because a user name and password are required to authenticate to the Remote Desktop Gateway server instead of smart card credentials.</value>
+    <value>您的電腦無法連線至遠端主機，因為需使用帳號與密碼以驗證至 RD 閘道伺服器，而非智慧卡憑證。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331692" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because smart card credentials are required to authenticate to the Remote Desktop Gateway server instead of a user name and password.</value>
+    <value>您的電腦無法連線至遠端主機，因為需要使用智慧卡憑證以驗證至 RD 閘道伺服器，而非帳號與密碼。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331700" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because an invalid cookie was sent to the Remote Desktop Gateway server. Contact your network administrator for assistance.</value>
+    <value>您的電腦無法連線至遠端主機，因為送往 RD 閘道伺服器的 Cookie 無效。請聯絡網路管理員以獲得協助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331701" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the cookie was rejected by the Remote Desktop Gateway server. Contact your network administrator for assistance.</value>
+    <value>您的電腦無法連線至遠端主機，因為 RD 閘道伺服器拒絕了 Cookie。請聯絡網路管理員以獲得協助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331703" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server is expecting an authentication method different from the one attempted. Contact your network administrator for assistance.</value>
+    <value>您的電腦無法連線至遠端主機，因為 RD 閘道伺服器預期的驗證方式與您所使用的不符。請聯絡網路管理員以獲得協助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331704" xml:space="preserve">
-    <value>The RD Gateway connection ended because periodic user authentication failed. Try reconnecting with a correct user name and password. If the reconnection fails, contact your network administrator for further assistance.</value>
+    <value>RD 閘道連線已結束，原因是周期性使用者驗證失敗。請重新以正確的帳號與密碼進行連線；若仍無法成功，請聯絡網路管理員進一步協助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331705" xml:space="preserve">
-    <value>The RD Gateway connection ended because periodic user authorization failed. Try reconnecting with a correct user name and password. If the reconnection fails, contact your network administrator for further assistance.</value>
+    <value>RD 閘道連線已結束，原因是周期性使用者授權失敗。請重新以正確的帳號與密碼進行連線；若仍無法成功，請聯絡網路管理員進一步協助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331707" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway and the remote computer are unable to exchange policies. This could happen due to one of the following reasons:     1. The remote computer is not capable of exchanging policies with the Remote Desktop Gateway.     2. The remote computer's configuration does not permit a new connection.     3. The connection between the Remote Desktop Gateway and the remote computer ended.    Contact your network administrator for assistance.</value>
+    <value>您的電腦無法連線至遠端主機，因為 RD 閘道與遠端主機未能交換政策。可能的原因包括：     1. 遠端主機不支援與 RD 閘道交換政策。      2. 遠端主機設定不允許建立新連線。     3. RD 閘道與遠端主機之間的連線已中斷。     請聯絡網路管理員以獲得協助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331713" xml:space="preserve">
-    <value>The RD Gateway connection ended because periodic user authorization failed. Your computer or device didn't pass the Network Access Protection (NAP) requirements set by your network administrator. Contact your network administrator for assistance.</value>
+    <value>RD 閘道連線已結束，原因是周期性使用者授權失敗。您的電腦或裝置未符合網路存取保護（NAP）設定的要求。請聯絡網路管理員以獲得協助。</value>
   </data>
   <data name="Connected" xml:space="preserve">
     <value>已連接</value>
@@ -3525,16 +3524,16 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>SNTP 伺服器</value>
   </data>
   <data name="ErrorMessage_TabPageHasError" xml:space="preserve">
-    <value>The settings on this page contain errors. Correct them to be able to save.</value>
+    <value>此頁面的設定有錯誤。請先更正，以便能夠儲存。</value>
   </data>
   <data name="HelpMessage_PuTTYHostkey" xml:space="preserve">
-    <value>SSH hostkey to use for the connection (e.g., "71:b8:f2:6e..."). Only available if the mode is "SSH".</value>
+    <value>SSH 主機金鑰（如 71:b8:f2:6e...） 只能於「SSH」模式下使用。</value>
   </data>
   <data name="HelpMessage_PuTTYPrivateKeyFile" xml:space="preserve">
-    <value>Full path to the private key file (e.g., "C:\Users\BornToBeRoot\SSH\private_key.ppk"). Only available if the mode is "SSH".</value>
+    <value>私鑰檔案的完整路徑（如 C:\Users\BornToBeRoot\SSH\private_key.ppk） 僅於「SSH」模式下可使用。</value>
   </data>
   <data name="HelpMessage_PuTTYUsername" xml:space="preserve">
-    <value>Username that will be passed into the PuTTY session. Only available if the mode is "SSH", "Telnet" or "Rlogin".</value>
+    <value>PuTTY 會話所使用的帳號。僅於「SSH」、「Telnet」或「Rlogin」模式下可設定。</value>
   </data>
   <data name="ASN" xml:space="preserve">
     <value>ASN</value>
@@ -3616,7 +3615,7 @@ Changes to this value will take effect after the application is restarted. Wheth
 網址：http://ip-api.com/</value>
   </data>
   <data name="WelcomePrivacyMessage" xml:space="preserve">
-    <value>To provide additional features, third party services are used that are not operated by me. You can deselect them below. No data is transferred to me at any time.</value>
+    <value>為提供額外功能，我會使用第三方服務，並非由我運營。您可以在下方取消選取它們。我永遠不會將任何資料傳送給我。</value>
   </data>
   <data name="CheckingDNSResolverDots" xml:space="preserve">
     <value>正在檢查 DNS 解析器...</value>
@@ -3628,8 +3627,8 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>請檢查您的網路連線，稍後再嘗試幾秒鐘。</value>
   </data>
   <data name="IPApiRateLimitMessage" xml:space="preserve">
-    <value>ip-api.com rate limit reached (too many requests from your network)!
-Try again in a few seconds.</value>
+    <value>已超過 ip‑api.com 的速率上限（來自您所在網路的請求數量過多）。
+請等候數秒後再重試。</value>
   </data>
   <data name="HTTPStatusCode" xml:space="preserve">
     <value>HTTP 狀態碼</value>
@@ -3653,7 +3652,7 @@ Try again in a few seconds.</value>
     <value>應用程式</value>
   </data>
   <data name="HelpMessage_ExperimentalFeatures" xml:space="preserve">
-    <value>Enable experimental features to test new functions. These are not yet complete, contain bugs, can crash the application and may change again until release.</value>
+    <value>啟用實驗功能以測試新功能。這些尚未完成，可能含錯誤、可能導致應用程式崩潰，並且在正式發佈前可能再次更改。</value>
   </data>
   <data name="ExperimentalFeatures" xml:space="preserve">
     <value>實驗性功能</value>
@@ -3701,7 +3700,7 @@ Try again in a few seconds.</value>
     <value>發生了無法提供具體訊息的錯誤！</value>
   </data>
   <data name="SNMPErrorCode_NoAccess" xml:space="preserve">
-    <value>所請求的物件無法被修改（不可存取）。</value>
+    <value>所請求的對象不可被修改！</value>
   </data>
   <data name="SNMPErrorCode_WrongType" xml:space="preserve">
     <value>該物件被設定為不相容的資料型別！</value>
@@ -3719,25 +3718,25 @@ Try again in a few seconds.</value>
     <value>所請求的物件不存在且無法建立！</value>
   </data>
   <data name="SNMPErrorCode_InconsistentValue" xml:space="preserve">
-    <value>The MIB variable is currently in an inconsistent state and cannot be modified!</value>
+    <value>MIB 變數目前處於不一致狀態，無法進行修改！</value>
   </data>
   <data name="SNMPErrorCode_ResourceUnavailable" xml:space="preserve">
-    <value>There are no available system resources to perform the requested operation!</value>
+    <value>目前尚無足夠系統資源以完成此項操作！</value>
   </data>
   <data name="SNMPErrorCode_CommitFailed" xml:space="preserve">
-    <value>An error occurred during the set operation!</value>
+    <value>目前尚無足夠系統資源以完成此項操作！</value>
   </data>
   <data name="SNMPErrorCode_UndoFailed" xml:space="preserve">
-    <value>A set operation failed, and previous changes could not be rolled back!</value>
+    <value>設定操作失敗，且無法還原至之前的狀態！</value>
   </data>
   <data name="SNMPErrorCode_AuthorizationError" xml:space="preserve">
-    <value>Authentication failed. Please check the community string!</value>
+    <value>驗證失敗，請確認社區字串是否正確！</value>
   </data>
   <data name="SNMPErrorCode_NotWritable" xml:space="preserve">
-    <value>The requested object is not writable and cannot be modified!</value>
+    <value>所請求的對象不可寫入，無法進行修改！</value>
   </data>
   <data name="SNMPErrorCode_InconsistentName" xml:space="preserve">
-    <value>The object's state is inconsistent, preventing the set operation!</value>
+    <value>物件狀態不一致，導致設定操作失敗！</value>
   </data>
   <data name="CloseAll" xml:space="preserve">
     <value>關閉全部</value>
@@ -3746,7 +3745,7 @@ Try again in a few seconds.</value>
     <value>展開主機檢視</value>
   </data>
   <data name="CannotSetHostWhileRunningMessage" xml:space="preserve">
-    <value>Host cannot be set while other hosts are being added. Please wait until the process is complete and try again.</value>
+    <value>在其他主機正在被加入時，無法設定此主機。請等候流程完成後再試一次。</value>
   </data>
   <data name="Watermark_RunCommandWithHotKey" xml:space="preserve">
     <value>執行命令…（Ctrl+Shift+P）</value>
@@ -3791,13 +3790,13 @@ Try again in a few seconds.</value>
     <value>掃描 NetBIOS</value>
   </data>
   <data name="NetBIOSIsDisabled" xml:space="preserve">
-    <value>已停用 NetBIOS 掃描！</value>
+    <value>NetBIOS 掃描已停用！</value>
   </data>
   <data name="ResolveHostnameIsDisabled" xml:space="preserve">
-    <value>已停用「解析主機名稱」功能！</value>
+    <value>解析主機名稱已停用！</value>
   </data>
   <data name="ResolveMACAddressIsDisabled" xml:space="preserve">
-    <value>已停用「解析 MAC 位址」功能！</value>
+    <value>解析 MAC 位址已停用！</value>
   </data>
   <data name="CloseGroup" xml:space="preserve">
     <value>關閉群組</value>
@@ -3815,13 +3814,13 @@ Try again in a few seconds.</value>
     <value>展開並打開搜尋功能...</value>
   </data>
   <data name="WiFiAccessNotAvailableMessage" xml:space="preserve">
-    <value>Starting with Windows 11 24H2, you’ll need to allow access to the Wi-Fi adapter.
+    <value>自 Windows 11 24H2 起，您需要允許對 Wi‑Fi 介面卡的存取。
 
-Open Windows Settings &gt; Privacy &amp; security &gt; Location, enable access for Desktop Apps / NETworkManager, then restart the application.</value>
+開啟 Windows 設定 &gt; 隱私與安全性 &gt; 位置，將桌面應用程式 / NETworkManager 的存取權限打勾，重新啟動本程式。</value>
   </data>
   <data name="DragDropApplicationsToReorderRightClickForMoreOptions" xml:space="preserve">
-    <value>Drag and drop the applications to reorder them.
-Right-click for more options.</value>
+    <value>將程式拖曳至重新排序。
+右鍵單擊即可查看其他選項。</value>
   </data>
   <data name="RestoreDefaults" xml:space="preserve">
     <value>恢復預設值</value>
@@ -3905,7 +3904,7 @@ Right-click for more options.</value>
     <value>升級至 {0}</value>
   </data>
   <data name="WhatsNewMessage" xml:space="preserve">
-    <value>This release includes new features, improvements, and bug fixes. Check out the changelog for all the details!</value>
+    <value>此版本包含新功能、改進及錯誤修正。請檢閱更新日誌以取得完整資訊！</value>
   </data>
   <data name="Entries" xml:space="preserve">
     <value>項目</value>
@@ -3919,25 +3918,25 @@ Right-click for more options.</value>
     <value>主要 DNS 伺服器</value>
   </data>
   <data name="EnterValidHostsFileEntryHostname" xml:space="preserve">
-    <value>Enter a valid hostname (e.g., "server-01" or "example.com")! Multiple hostnames can be separated with a space.</value>
+    <value>請輸入一個有效的主機名稱（如 server-01 或 example.com）！若有多個主機名稱，請以空格分隔。</value>
   </data>
   <data name="HostsFileReadErrorMessage" xml:space="preserve">
-    <value>The "hosts" file could not be read! See log file for more details.</value>
+    <value>無法閱讀「hosts」檔案！請參閱記錄檔以獲得更詳細資訊。</value>
   </data>
   <data name="HostsFileWriteErrorMessage" xml:space="preserve">
-    <value>The "hosts" file could not be written to. See log file for more details.</value>
+    <value>無法將資料寫入「hosts」檔案！請參閱記錄檔以取得更詳細資訊。</value>
   </data>
   <data name="HostsFileEntryNotFoundMessage" xml:space="preserve">
-    <value>The entry was not found in the "hosts" file! Maybe the file has been modified.</value>
+    <value>在「hosts」檔案中未找到此項目！可能是檔案已被更動。</value>
   </data>
   <data name="HostsFileBackupErrorMessage" xml:space="preserve">
-    <value>A backup of the "hosts" file could not be created! See log file for more details.</value>
+    <value>無法建立「hosts」檔案的備份！請參閱記錄檔以取得更詳細資訊。</value>
   </data>
   <data name="ShowStatusBar" xml:space="preserve">
     <value>顯示狀態列</value>
   </data>
   <data name="HelpMessage_ShowStatusBar" xml:space="preserve">
-    <value>Displays the status bar in the bottom-left of the WebView when hovering over a link.</value>
+    <value>當滑鼠懸停在連結上時，在 WebView 的左下角顯示狀態列。</value>
   </data>
   <data name="SaveCredentials" xml:space="preserve">
     <value>儲存憑證</value>
