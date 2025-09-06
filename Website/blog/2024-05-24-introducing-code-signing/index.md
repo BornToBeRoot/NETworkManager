@@ -1,6 +1,6 @@
 ---
-slug: binaries-are-now-signed-with-a-code-signing-certificate
-title: Binaries are now signed with a code signing certificate
+slug: introducing-code-signing
+title: Indroducing Code Signing (Binaries & Installer)
 authors: [borntoberoot]
 tags: [code-signing, binaries, installer]
 ---
