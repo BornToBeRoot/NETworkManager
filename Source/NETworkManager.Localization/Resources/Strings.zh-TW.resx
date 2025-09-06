@@ -580,7 +580,7 @@
     <value>啟動時最小化至系統匣</value>
   </data>
   <data name="StartWithWindows" xml:space="preserve">
-    <value>隨 Windows 啟動 (目前使用者)</value>
+    <value>隨 Windows 啟動 （目前使用者）</value>
   </data>
   <data name="StaticIPv4Address" xml:space="preserve">
     <value>靜態 IPv4 位址</value>
@@ -637,10 +637,10 @@
     <value>新增</value>
   </data>
   <data name="AddATabToPerformADNSLookup" xml:space="preserve">
-    <value>新增標籤執行來 DNS 查閱...</value>
+    <value>新增分頁以執行 DNS 查詢...</value>
   </data>
   <data name="AddATabToPerformANetworkScan" xml:space="preserve">
-    <value>新增標籤執行來網路掃瞄...</value>
+    <value>新增標籤執行來網路掃描...</value>
   </data>
   <data name="AddATabToPerformAnSNMPAction" xml:space="preserve">
     <value>新增標籤執行來 SNMP 動作...</value>
@@ -649,7 +649,7 @@
     <value>新增標籤執行來 ping...</value>
   </data>
   <data name="AddATabToPerformAPortScan" xml:space="preserve">
-    <value>新增標籤執行來連接埠掃瞄...</value>
+    <value>新增標籤執行來連接埠掃描...</value>
   </data>
   <data name="AddATabToPerformATrace" xml:space="preserve">
     <value>新增標籤執行來追蹤...</value>
@@ -688,7 +688,7 @@
     <value>身份驗證等級</value>
   </data>
   <data name="Authorities" xml:space="preserve">
-    <value>法律</value>
+    <value>授權伺服器</value>
   </data>
   <data name="AutomaticallyUpdateEvery" xml:space="preserve">
     <value>每次自動更新</value>
@@ -718,7 +718,7 @@
     <value>清除篩選</value>
   </data>
   <data name="ColorDepthBit" xml:space="preserve">
-    <value>色彩深度 (位元)</value>
+    <value>色彩深度（位元）</value>
   </data>
   <data name="Community" xml:space="preserve">
     <value>社群</value>
@@ -757,9 +757,9 @@
     <value>認證</value>
   </data>
   <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
-    <value>Proceed.設定檔案在磁碟上以 AES（256 位元密鑰、128 位元區塊大小）使用 CBC 模式加密。加密金鑰是透過 Rfc2898DeriveBytes（PBKDF2）從主密碼衍生出來，迭代次數為 1,000,000 次。執行階段時，載入設定檔案後的密碼會以 SecureString 儲存；但在某些功能中，必須將密碼轉成一般字串，此時它會暫時以未加密形式存在記憶體，直到垃圾回收器清除為止。
+    <value>設定檔會以 AES 加密（256‑bit 金鑰、128‑bit 塊長，CBC 模式）存放於磁碟。加密金鑰由主密碼透過 Rfc2898DeriveBytes（PBKDF2）經 1,000,000 次迭代所推導。執行時，密碼會在設定檔載入後以 SecureString 儲存；但某些功能需要將其轉成普通字串，在此期間內密碼會保持未加密狀態，直至垃圾回收器清理。
 
-在啟用加密之前，請先備份您的設定檔案！</value>
+請先備份您的設定檔，再啟用加密！</value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>自訂</value>
@@ -1100,7 +1100,7 @@
     <value>僅顯示最常見的查詢類型</value>
   </data>
   <data name="ShowUnreachableIPAddressesAndPorts" xml:space="preserve">
-    <value>Show unreachable IP addresses and ports</value>
+    <value>顯示不可達的 IP 位址與連接埠。</value>
   </data>
   <data name="ShowStatistics" xml:space="preserve">
     <value>顯示統計資料</value>
@@ -1742,7 +1742,7 @@
     <value>新增「Whois 查詢」分頁</value>
   </data>
   <data name="EnterValidDomain" xml:space="preserve">
-    <value>Enter a valid domain (e.g., "example.com")!</value>
+    <value>請輸入一個有效的網域名稱（例如 example.com）以進行檢查！</value>
   </data>
   <data name="WhoisServerNotFoundForTheDomain" xml:space="preserve">
     <value>無法為域名「{0}」找到對應的 Whois 伺服器。</value>
@@ -1923,7 +1923,7 @@ Changes to this value will take effect after restarting the application.</value>
     <value>儀表板</value>
   </data>
   <data name="AllSettingsCanBeChangedLaterInTheSettings" xml:space="preserve">
-    <value>All settings can be changed later in the settings!</value>
+    <value>所有設定都可以稍後在設定頁面中更改！</value>
   </data>
   <data name="CheckPublicIPAddress" xml:space="preserve">
     <value>檢查公用 IP 位址</value>
@@ -1953,13 +1953,13 @@ URL: https://api.ipify.org/</value>
     <value>外部服務</value>
   </data>
   <data name="ToolTip_StarForkProjectOnGitHub" xml:space="preserve">
-    <value>Star/Fork the Project on GitHub.</value>
+    <value>在 GitHub 上「星標」/「分支」此專案。</value>
   </data>
   <data name="ToolTip_HelpTranslateOnTransifex" xml:space="preserve">
-    <value>Help translate the project on Transifex.</value>
+    <value>協助將專案翻譯到 Transifex。</value>
   </data>
   <data name="ToolTip_ContactOrContactMeViaX" xml:space="preserve">
-    <value>Follow or contact me via X.</value>
+    <value>在 X 上關注或聯繫我。</value>
   </data>
   <data name="Connection" xml:space="preserve">
     <value>連線</value>
@@ -2164,7 +2164,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>重新啟動</value>
   </data>
   <data name="WarningMessage_CouldNotResolveIPAddressForHostname" xml:space="preserve">
-    <value>Could not resolve ip address for hostname!</value>
+    <value>無法為主機名稱解析 IP 位址！</value>
   </data>
   <data name="CtrlAltDel" xml:space="preserve">
     <value>Ctrl+Alt+Del</value>
@@ -2206,7 +2206,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Show status window on network change</value>
   </data>
   <data name="TimeInSecondsHowLongTheStatusWindowIsShown" xml:space="preserve">
-    <value>Time in seconds how long the status window is shown</value>
+    <value>以秒為單位，表示狀態窗口顯示的時長。</value>
   </data>
   <data name="WiFi" xml:space="preserve">
     <value>WiFi</value>
@@ -2278,7 +2278,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>逾時 (s)</value>
   </data>
   <data name="ToolTip_ReportIssueOrCreateFeatureRequest" xml:space="preserve">
-    <value>Report an issue or create a feature request.</value>
+    <value>報告問題或提出功能需求。</value>
   </data>
   <data name="BeaconInterval" xml:space="preserve">
     <value>Beacon interval</value>
@@ -2338,7 +2338,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>已加密</value>
   </data>
   <data name="ToolTip_OpenTheDocumentation" xml:space="preserve">
-    <value>Open the documentation.</value>
+    <value>開啟文件說明。</value>
   </data>
   <data name="ExampleProfileFileName" xml:space="preserve">
     <value>客戶 1</value>
@@ -2392,7 +2392,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>系統管理員身分重新啟動</value>
   </data>
   <data name="NetworkPacketsCaptureAdminMessage" xml:space="preserve">
-    <value>Analysing network packets requires elevated rights!</value>
+    <value>分析網路封包需要提升權限！</value>
   </data>
   <data name="Capture" xml:space="preserve">
     <value>擷取</value>
@@ -2842,7 +2842,7 @@ Error message:
     <value>List of Top-Level-Domains from iana.org, which is used to query whois servers of the TLD from whois.iana.org via port 43</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
-    <value>OUI data from ieee.org.</value>
+    <value>來自 IEEE.org 的 OUI 資料。</value>
   </data>
   <data name="Resource_ServiceNamePortNumber_Description" xml:space="preserve">
     <value>Service Name and Transport Protocol Port Number Registry from iana.org.</value>
@@ -2895,7 +2895,7 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>可通過 ICMP 連線的公開 IPv4 位址。</value>
   </data>
   <data name="HelpMessage_PublicIPv6Address" xml:space="preserve">
-    <value>Public IPv6 address reachable via ICMP.</value>
+    <value>可通過 ICMP 連線的公開 IPv6 位址。</value>
   </data>
   <data name="PublicIPv4Address" xml:space="preserve">
     <value>公開 IPv4 位址</value>
@@ -3009,7 +3009,7 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>區域</value>
   </data>
   <data name="SyncEC2InstancesFromAWS" xml:space="preserve">
-    <value>Synchronize EC2 instances from AWS</value>
+    <value>同步 AWS 上的 EC2 實例。</value>
   </data>
   <data name="AddAWSProfile" xml:space="preserve">
     <value>新增 AWS 設定檔</value>
@@ -3026,13 +3026,13 @@ The profile is not removed from the ~\.aws\credentials file.</value>
     <value>編輯 AWS 設定檔</value>
   </data>
   <data name="SyncAllEC2InstancesFromAWS" xml:space="preserve">
-    <value>Synchronize all EC2 instances from AWS</value>
+    <value>同步所有來自 AWS 的 EC2 實例。</value>
   </data>
   <data name="SyncGroupEC2InstancesFromAWS" xml:space="preserve">
-    <value>Synchronize group EC2 instances from AWS</value>
+    <value>同步 AWS 上指定群組的 EC2 實例。</value>
   </data>
   <data name="ProfilesAndRegionsToSync" xml:space="preserve">
-    <value>Profiles and regions to synchronize</value>
+    <value>要同步的設定檔與區域</value>
   </data>
   <data name="HelpMessage_AWSSessionManagerProfilesAndRegionsToSync" xml:space="preserve">
     <value>To synchronize EC2 instances from AWS, the AWS CLI must be configured on the system. The EC2 instances can be queried for multiple AWS accounts (profiles) and multiple regions. To do this, the profile stored in the file "~/.aws/credentials" must be configured along with the region to query.</value>
@@ -3057,16 +3057,16 @@ If not set, the default AWS CLI settings are used.</value>
 If not set, the default AWS CLI settings are used.</value>
   </data>
   <data name="HelpMessage_AWSCLIDefaultsAreUsedIfNotSet" xml:space="preserve">
-    <value>If not set, the default AWS CLI settings are used.</value>
+    <value>若未設定，將使用預設的 AWS CLI 設定。</value>
   </data>
   <data name="GroupNameCannotStartWithX" xml:space="preserve">
-    <value>Group name cannot start with "{0}"!</value>
+    <value>群組名稱不能以「{0}」開頭！</value>
   </data>
   <data name="SyncOnlyRunningEC2InstancesFromAWS" xml:space="preserve">
-    <value>Synchronize only running EC2 instances from AWS</value>
+    <value>僅同步正在執行的 AWS EC2 實例。</value>
   </data>
   <data name="AnAWSRegionNamedXDoesNotExist" xml:space="preserve">
-    <value>An AWS region named "{0}" does not exist!</value>
+    <value>不存在名為「{0}」的 AWS 區域！</value>
   </data>
   <data name="AWSCLIv2IsInstalled" xml:space="preserve">
     <value>已安裝 AWS CLI v2！</value>
@@ -3075,10 +3075,10 @@ If not set, the default AWS CLI settings are used.</value>
     <value>未安裝 AWS CLI v2！</value>
   </data>
   <data name="AWSSessionManagerPluginIsInstalled" xml:space="preserve">
-    <value>AWS Session Manager Plugin is installed!</value>
+    <value>已安裝 AWS Session Manager 插件。</value>
   </data>
   <data name="AWSSessionManagerPluginIsNotInstalled" xml:space="preserve">
-    <value>AWS Session Manager Plugin is not installed!</value>
+    <value>未安裝 AWS Session Manager 插件！</value>
   </data>
   <data name="CheckForPreReleases" xml:space="preserve">
     <value>檢查預發佈版本</value>
@@ -3105,10 +3105,10 @@ Click in the upper right corner on the help / documentation button (left of the 
 If the option is disabled again, the values are no longer modified. However, the original values are NOT restored.</value>
   </data>
   <data name="InputCannotEndWithSemicolon" xml:space="preserve">
-    <value>Input cannot end with a ";"!</value>
+    <value>輸入不能以「;」結尾！</value>
   </data>
   <data name="InputDoesNotContainAnyText" xml:space="preserve">
-    <value>Input does not contain any text!</value>
+    <value>輸入不包含任何文字！</value>
   </data>
   <data name="ApplicationName_BitCalculator" xml:space="preserve">
     <value>位元計算器</value>
@@ -3159,7 +3159,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>兆位元組（TB）</value>
   </data>
   <data name="EnterANumberAndSelectAUnitToCalculateTheUnitsDots" xml:space="preserve">
-    <value>Enter a number and select a unit to calculate the units...</value>
+    <value>請輸入一個數值並選擇單位以進行單位換算…</value>
   </data>
   <data name="SettingsName_Network" xml:space="preserve">
     <value>網路</value>
@@ -3168,16 +3168,16 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>代理</value>
   </data>
   <data name="ResolveIPAddressForThisHost" xml:space="preserve">
-    <value>Resolve IP address for this host (IPv4 is preferred)</value>
+    <value>為此主機解析 IP 位址（首選 IPv4）。</value>
   </data>
   <data name="NoValidPowerShellPath" xml:space="preserve">
-    <value>A valid path to PowerShell should end with "pwsh.exe" or "powershell.exe"!</value>
+    <value>有效的 PowerShell 路徑必須以「pwsh.exe」或「powershell.exe」結尾！</value>
   </data>
   <data name="NoValidPuTTYPath" xml:space="preserve">
-    <value>A valid path to PuTTY should end with "PuTTY.exe"!</value>
+    <value>有效的 PuTTY 路徑必須以「PuTTY.exe」結尾！</value>
   </data>
   <data name="NoValidTigerVNCPath" xml:space="preserve">
-    <value>A valid path to TigerVNC should end with "vncviewer-*.exe" or "vncviewer64-*.exe"!</value>
+    <value>有效的 TigerVNC 路徑必須以「vncviewer-*.exe」或「vncviewer64-*.exe」結尾！</value>
   </data>
   <data name="ApplicationName_SNTPLookup" xml:space="preserve">
     <value>SNTP 查詢</value>
@@ -3186,7 +3186,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>Move a .NET Framework/.NET Core app runtime components and dependencies into a sub-directory and make it beauty.</value>
   </data>
   <data name="AddATabToPerformASNTPLookup" xml:space="preserve">
-    <value>Add a tab to perform a SNTP lookup...</value>
+    <value>新增一個分頁以執行 SNTP 查詢……</value>
   </data>
   <data name="SNTPServers" xml:space="preserve">
     <value>SNTP 伺服器(s)</value>
@@ -3225,13 +3225,13 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>刪除 SNTP 伺服器</value>
   </data>
   <data name="DeleteSNTPServerMessage" xml:space="preserve">
-    <value>The selected SNTP server will be deleted permanently.</value>
+    <value>所選的 SNTP 伺服器將被永久刪除。</value>
   </data>
   <data name="EditSNTPServer" xml:space="preserve">
     <value>編輯 SNTP 伺服器</value>
   </data>
   <data name="SNTPServerWithThisNameAlreadyExists" xml:space="preserve">
-    <value>An SNTP server with this name already exists!</value>
+    <value>已存在此名稱的 SNTP 伺服器！</value>
   </data>
   <data name="EnterValidHostnameOrIPAddress" xml:space="preserve">
     <value>Enter a valid hostname (e.g., "server-01" or "example.com") or a valid IP address (e.g., 192.168.178.1)!</value>
@@ -3240,7 +3240,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>伺服器</value>
   </data>
   <data name="EnterMasterPasswordToUnlockProfile" xml:space="preserve">
-    <value>Enter master password to unlock the profile file:</value>
+    <value>輸入主密碼以解鎖設定檔：</value>
   </data>
   <data name="UnlockProfileFile" xml:space="preserve">
     <value>解鎖設定檔案</value>
@@ -3252,16 +3252,16 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>主機金鑰</value>
   </data>
   <data name="SettingsAreResetAndApplicationWillBeRestartedMessage" xml:space="preserve">
-    <value>The settings will be reset and the application will be restarted afterwards!</value>
+    <value>設定將被重設，之後程式會重新啟動！</value>
   </data>
   <data name="SettingsHaveBeenReset" xml:space="preserve">
-    <value>設定已經重設!</value>
+    <value>設定已經重設！</value>
   </data>
   <data name="PingStatus" xml:space="preserve">
     <value>Ping 狀態</value>
   </data>
   <data name="ThreadPoolAdditionalMinThreads" xml:space="preserve">
-    <value>ThreadPool additional min. threads</value>
+    <value>執行緒池額外最小執行緒數。</value>
   </data>
   <data name="HelpMessage_ThreadPoolAdditionalMinThreads" xml:space="preserve">
     <value>This setting specifies the minimum number of threads that will be created from the application's ThreadPool on demand. This can improve the performance for example of the IP scanner or port scanner.
@@ -3318,19 +3318,19 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>伺服器名稱</value>
   </data>
   <data name="ShareGatewayCredentialsWithRemoteComputer" xml:space="preserve">
-    <value>Share Gateway credentials with remote computer</value>
+    <value>與遠端電腦共用網關憑證。</value>
   </data>
   <data name="RemoteDesktopGatewayServerLogonMethod_Any" xml:space="preserve">
-    <value>Allow me to select later</value>
+    <value>允許我稍後再選擇</value>
   </data>
   <data name="RemoteDesktopGatewayServerLogonMethod_Smartcard" xml:space="preserve">
-    <value>Smart card or Windows Hello for Business</value>
+    <value>智慧卡或 Windows Hello 商業版</value>
   </data>
   <data name="RemoteDesktopGatewayServerLogonMethod_Userpass" xml:space="preserve">
     <value>請求密碼（NTLM）</value>
   </data>
   <data name="UseGatewayCredentials" xml:space="preserve">
-    <value>Use gateway credentials</value>
+    <value>使用網關憑證。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331661" xml:space="preserve">
     <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server is temporarily unavailable. Try reconnecting later or contact your network administrator for assistance.</value>
@@ -3429,7 +3429,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>已連接</value>
   </data>
   <data name="ErrorWhileScanningWiFiAdapterXXXWithErrorXXX" xml:space="preserve">
-    <value>Error while scanning WiFi adapter "{0}" with error: "{1}"</value>
+    <value>掃描 WiFi 介面「{0}」時發生錯誤：「{1}」。</value>
   </data>
   <data name="ConnectDots" xml:space="preserve">
     <value>連接…</value>
@@ -3450,7 +3450,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>預共享金鑰</value>
   </data>
   <data name="ConnectingToXXX" xml:space="preserve">
-    <value>正在連接到 {0}……</value>
+    <value>正在連接到 {0}…</value>
   </data>
   <data name="CouldNotConnectToXXXReasonXXX" xml:space="preserve">
     <value>無法連接到 {0}（{1}）！</value>
@@ -3477,7 +3477,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>-/-</value>
   </data>
   <data name="WiFiConnectionStatus_UnsupportedAuthenticationProtocol" xml:space="preserve">
-    <value>Authentication protocol is not supported!</value>
+    <value>不支援此驗證協定！</value>
   </data>
   <data name="CheckingWPSDots" xml:space="preserve">
     <value>正在檢查 WPS...</value>
@@ -3492,7 +3492,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>OID 設定檔</value>
   </data>
   <data name="SelectOIDProfile" xml:space="preserve">
-    <value>選擇OID 設定檔...</value>
+    <value>選擇 OID 設定檔</value>
   </data>
   <data name="AddOIDProfile" xml:space="preserve">
     <value>新增 OID 設定檔</value>
@@ -3501,7 +3501,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>刪除 OID 設定檔</value>
   </data>
   <data name="DeleteOIDProfileMessage" xml:space="preserve">
-    <value>The selected OID profile will be deleted permanently.</value>
+    <value>所選的 OID 設定檔將被永久刪除。</value>
   </data>
   <data name="EditOIDProfile" xml:space="preserve">
     <value>編輯 OID 設定檔</value>
@@ -3513,10 +3513,10 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>新增標籤</value>
   </data>
   <data name="FromProfile" xml:space="preserve">
-    <value>(from profile)</value>
+    <value>（從設定檔）</value>
   </data>
   <data name="NewSubnetMask" xml:space="preserve">
-    <value>New subnet mask</value>
+    <value>新子網遮罩</value>
   </data>
   <data name="AddServer" xml:space="preserve">
     <value>新增伺服器</value>
@@ -3555,7 +3555,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>貨幣</value>
   </data>
   <data name="District" xml:space="preserve">
-    <value>區域 / 行政區</value>
+    <value>行政區</value>
   </data>
   <data name="DNSResolver" xml:space="preserve">
     <value>DNS 解析器</value>
@@ -3597,7 +3597,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>郵遞區號</value>
   </data>
   <data name="ExternalService_ip_api_Description" xml:space="preserve">
-    <value>IP Geolocation API - Fast, accurate, reliable</value>
+    <value>IP 地理位置定位 API — 快速、精確、可靠</value>
   </data>
   <data name="CheckDNSResolver" xml:space="preserve">
     <value>檢查 DNS 解析器</value>
@@ -3606,26 +3606,26 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>檢查 IP 地理位置定位</value>
   </data>
   <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
-    <value>The DNS resolver is determined via ip-api.com.
+    <value>DNS 解析器由 ip‑api.com 決定。
 
-URL: https://edns.ip-api.com/</value>
+網址：https://edns.ip-api.com/</value>
   </data>
   <data name="HelpMessage_CheckIPGeolocation" xml:space="preserve">
-    <value>The IP geolocation is determined via ip-api.com.
+    <value>IP 地理位置定位是透過 ip‑api.com 確定的。
 
-URL: http://ip-api.com/</value>
+網址：http://ip-api.com/</value>
   </data>
   <data name="WelcomePrivacyMessage" xml:space="preserve">
     <value>To provide additional features, third party services are used that are not operated by me. You can deselect them below. No data is transferred to me at any time.</value>
   </data>
   <data name="CheckingDNSResolverDots" xml:space="preserve">
-    <value>正在檢查 DNS 解析器</value>
+    <value>正在檢查 DNS 解析器...</value>
   </data>
   <data name="CheckingIPGeolocationDots" xml:space="preserve">
     <value>正在檢查 IP 地理位置定位…</value>
   </data>
   <data name="CheckNetworkConnectionTryAgainMessage" xml:space="preserve">
-    <value>Check your network connection and try again in a few seconds.</value>
+    <value>請檢查您的網路連線，稍後再嘗試幾秒鐘。</value>
   </data>
   <data name="IPApiRateLimitMessage" xml:space="preserve">
     <value>ip-api.com rate limit reached (too many requests from your network)!
@@ -3638,7 +3638,7 @@ Try again in a few seconds.</value>
     <value>鐵灰色</value>
   </data>
   <data name="RateLimitReachedTryAgainInXSeconds" xml:space="preserve">
-    <value>Rate limit reached! Try again in {0} seconds...</value>
+    <value>已達到速率限制！請在 {0} 秒後重試…</value>
   </data>
   <data name="ProfileGroup_General" xml:space="preserve">
     <value>一般</value>
@@ -3668,55 +3668,55 @@ Try again in a few seconds.</value>
     <value>IP 地理位置定位</value>
   </data>
   <data name="AddATabToQueryTheIPGeolocation" xml:space="preserve">
-    <value>Add a tab to query the IP geolocation...</value>
+    <value>新增一個分頁以查詢 IP 地理位置…</value>
   </data>
   <data name="EnterADomainToQueryWhoisDots" xml:space="preserve">
-    <value>Enter a domain to query whois...</value>
+    <value>輸入要查詢 WhoIs 的網域名稱...</value>
   </data>
   <data name="EnterHostToQueryIPGeolocationDots" xml:space="preserve">
-    <value>Enter host to query IP geolocation...</value>
+    <value>輸入要查詢 IP 地理位置的主機名稱...</value>
   </data>
   <data name="SNMPV3ErrorCode_UnknownUserName" xml:space="preserve">
     <value>未知的使用者名稱。</value>
   </data>
   <data name="SNMPV3ErrorCode_AuthenticationFailed" xml:space="preserve">
-    <value>Authentication failure (incorrect password, community or key).</value>
+    <value>驗證失敗（密碼、社群或金鑰不正確）。</value>
   </data>
   <data name="SNMPErrorCode_NoError" xml:space="preserve">
-    <value>The operation was successful without any errors.</value>
+    <value>操作成功，未發生任何錯誤。</value>
   </data>
   <data name="SNMPErrorCode_TooBig" xml:space="preserve">
-    <value>The response to your request was too large to fit into a single response!</value>
+    <value>您的請求回應內容過大，無法一次完整顯示！</value>
   </data>
   <data name="SNMPErrorCode_NoSuchName" xml:space="preserve">
-    <value>The requested OID could not be found!</value>
+    <value>所請求的 OID 無法找到！</value>
   </data>
   <data name="SNMPErrorCode_BadValue" xml:space="preserve">
-    <value>A read-write or write-only object was set to an inconsistent value!</value>
+    <value>一個可讀寫或僅可寫的物件被設定為不一致的值！</value>
   </data>
   <data name="SNMPErrorCode_ReadOnly" xml:space="preserve">
-    <value>The requested OID does not exist and is not writable!</value>
+    <value>所請求的 OID 不存在且不可寫入！</value>
   </data>
   <data name="SNMPErrorCode_GenError" xml:space="preserve">
-    <value>An error occurred for which no specific message is available!</value>
+    <value>發生了無法提供具體訊息的錯誤！</value>
   </data>
   <data name="SNMPErrorCode_NoAccess" xml:space="preserve">
-    <value>The requested object is not accessible for modification!</value>
+    <value>所請求的物件無法被修改（不可存取）。</value>
   </data>
   <data name="SNMPErrorCode_WrongType" xml:space="preserve">
-    <value>The object was set to an incompatible data type!</value>
+    <value>該物件被設定為不相容的資料型別！</value>
   </data>
   <data name="SNMPErrorCode_WrongLength" xml:space="preserve">
-    <value>The value assigned to the object exceeds its maximum length!</value>
+    <value>所設定的值超過物件允許的最大長度！</value>
   </data>
   <data name="SNMPErrorCode_WrongEncoding" xml:space="preserve">
-    <value>The encoding used for the object is incorrect!</value>
+    <value>物件使用的編碼不正確！</value>
   </data>
   <data name="SNMPErrorCode_WrongValue" xml:space="preserve">
-    <value>The value assigned to the object is not a valid choice!</value>
+    <value>所設定的值不是有效選項！</value>
   </data>
   <data name="SNMPErrorCode_NoCreation" xml:space="preserve">
-    <value>The requested object does not exist and cannot be created!</value>
+    <value>所請求的物件不存在且無法建立！</value>
   </data>
   <data name="SNMPErrorCode_InconsistentValue" xml:space="preserve">
     <value>The MIB variable is currently in an inconsistent state and cannot be modified!</value>
@@ -3782,28 +3782,28 @@ Try again in a few seconds.</value>
     <value>警告</value>
   </data>
   <data name="GroupDomainName" xml:space="preserve">
-    <value>Group / domain name</value>
+    <value>群組／網域名稱</value>
   </data>
   <data name="NetBIOSReachable" xml:space="preserve">
-    <value>NetBIOS reachable</value>
+    <value>可達的 NetBIOS</value>
   </data>
   <data name="ScanForNetBIOS" xml:space="preserve">
-    <value>Scan for NetBIOS</value>
+    <value>掃描 NetBIOS</value>
   </data>
   <data name="NetBIOSIsDisabled" xml:space="preserve">
-    <value>NetBIOS scan is disabled!</value>
+    <value>已停用 NetBIOS 掃描！</value>
   </data>
   <data name="ResolveHostnameIsDisabled" xml:space="preserve">
-    <value>Resolve Hostname is disabled!</value>
+    <value>已停用「解析主機名稱」功能！</value>
   </data>
   <data name="ResolveMACAddressIsDisabled" xml:space="preserve">
-    <value>Resolve MAC address is disabled!</value>
+    <value>已停用「解析 MAC 位址」功能！</value>
   </data>
   <data name="CloseGroup" xml:space="preserve">
     <value>關閉群組</value>
   </data>
   <data name="ToolTip_RunCommandWithHotKey" xml:space="preserve">
-    <value>Run command... (Ctrl+Shift+P)</value>
+    <value>執行指令…（Ctrl+Shift+P）</value>
   </data>
   <data name="ProfileFiles" xml:space="preserve">
     <value>設定檔案</value>
@@ -3812,7 +3812,7 @@ Try again in a few seconds.</value>
     <value>打開設定</value>
   </data>
   <data name="ExpandAndOpenSearchDots" xml:space="preserve">
-    <value>Expand and open search...</value>
+    <value>展開並打開搜尋功能...</value>
   </data>
   <data name="WiFiAccessNotAvailableMessage" xml:space="preserve">
     <value>Starting with Windows 11 24H2, you’ll need to allow access to the Wi-Fi adapter.
@@ -3824,34 +3824,34 @@ Open Windows Settings &gt; Privacy &amp; security &gt; Location, enable access f
 Right-click for more options.</value>
   </data>
   <data name="RestoreDefaults" xml:space="preserve">
-    <value>Restore defaults</value>
+    <value>恢復預設值</value>
   </data>
   <data name="Library_GongSolutionsWpfDragDrop_Description" xml:space="preserve">
-    <value>An easy to use drag'n'drop framework for WPF.</value>
+    <value>一個易於使用的拖曳式框架，適用於 WPF。</value>
   </data>
   <data name="License_BDS3Clause" xml:space="preserve">
-    <value>BSD-3-Clause</value>
+    <value>BSD-3-條款</value>
   </data>
   <data name="SetDefault" xml:space="preserve">
     <value>設定為預設</value>
   </data>
   <data name="ExampleProfileDescription" xml:space="preserve">
-    <value>Ubuntu Server running Docker with Nextcloud and Traefik...</value>
+    <value>在 Ubuntu Server 上執行 Docker，搭配 Nextcloud 與 Traefik…</value>
   </data>
   <data name="ExampleGroupDescription" xml:space="preserve">
-    <value>Linux servers running in AWS...</value>
+    <value>執行於 AWS 的 Linux 伺服器...</value>
   </data>
   <data name="GHz6" xml:space="preserve">
     <value>6 GHz</value>
   </data>
   <data name="ToolTip_SupportThisProjectWithADonation" xml:space="preserve">
-    <value>Support this project with a donation.</value>
+    <value>支持此專案，請進行捐款。</value>
   </data>
   <data name="OpenDocumentation" xml:space="preserve">
     <value>打開文件</value>
   </data>
   <data name="Donate" xml:space="preserve">
-    <value>捐贈 / 贊助</value>
+    <value>捐贈</value>
   </data>
   <data name="ProfileFile" xml:space="preserve">
     <value>設定檔案</value>
@@ -3863,7 +3863,7 @@ Right-click for more options.</value>
     <value>主機檔編輯器</value>
   </data>
   <data name="HostsFileEditorAdminMessage" xml:space="preserve">
-    <value>Read-only mode. Modifying the hosts file requires elevated rights!</value>
+    <value>只讀模式。修改 hosts 檔案需要提升權限！</value>
   </data>
   <data name="Comment" xml:space="preserve">
     <value>註解</value>
@@ -3887,13 +3887,13 @@ Right-click for more options.</value>
     <value>重新整理中...</value>
   </data>
   <data name="ReloadedAtX" xml:space="preserve">
-    <value>Reloaded at {0}</value>
+    <value>重新載入於{0}</value>
   </data>
   <data name="FailedToLoadHostsFileMessage" xml:space="preserve">
-    <value>Failed to load hosts file: {0}</value>
+    <value>無法載入 hosts 檔案：{0}</value>
   </data>
   <data name="RetryingInXSecondsDots" xml:space="preserve">
-    <value>Retrying in {0} seconds...</value>
+    <value>將於 {0} 秒後重試...</value>
   </data>
   <data name="WhatsNew" xml:space="preserve">
     <value>有什麼新功能？</value>
@@ -3911,9 +3911,9 @@ Right-click for more options.</value>
     <value>項目</value>
   </data>
   <data name="DeleteHostsFileEntryMessage" xml:space="preserve">
-    <value>The selected entry is permanently deleted:
+    <value>所選項目已永久刪除：
 
-{0} {1} {2}</value>
+{0}{1}{2}</value>
   </data>
   <data name="ExampleHostsFileEntryComment" xml:space="preserve">
     <value>主要 DNS 伺服器</value>
@@ -3940,24 +3940,24 @@ Right-click for more options.</value>
     <value>Displays the status bar in the bottom-left of the WebView when hovering over a link.</value>
   </data>
   <data name="SaveCredentials" xml:space="preserve">
-    <value>Save credentials</value>
+    <value>儲存憑證</value>
   </data>
   <data name="HelpMessage_SaveCredentials" xml:space="preserve">
-    <value>Displays a dialog to save credentials after a successful sign-in.</value>
+    <value>在成功登入後顯示對話框以儲存憑證。</value>
   </data>
   <data name="DeleteBrowsingData" xml:space="preserve">
-    <value>Delete browsing data</value>
+    <value>刪除瀏覽資料</value>
   </data>
   <data name="DeleteBrowsingDataMessage" xml:space="preserve">
-    <value>Permanently delete browsing data (history, cookies, cache, credentials, etc.) for the current WebView2 profile.</value>
+    <value>永久刪除當前 WebView2 配置檔中的瀏覽資料（歷史紀錄、Cookies、快取、憑證等）。</value>
   </data>
   <data name="BrowsingData" xml:space="preserve">
-    <value>Browsing Data</value>
+    <value>瀏覽資料</value>
   </data>
   <data name="BrowsingDataSuccessfullyDeletedMessage" xml:space="preserve">
-    <value>Browsing data successfully deleted!</value>
+    <value>瀏覽資料已成功刪除！</value>
   </data>
   <data name="BrowsingDataErrorMessage" xml:space="preserve">
-    <value>An error occurred while deleting browsing data. Feel free to report this issue on GitHub.</value>
+    <value>刪除瀏覽資料時發生錯誤。歡迎在 GitHub 上回報此問題。</value>
   </data>
 </root>
