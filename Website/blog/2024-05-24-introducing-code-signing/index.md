@@ -1,6 +1,6 @@
 ---
 slug: introducing-code-signing
-title: Indroducing Code Signing (Binaries & Installer)
+title: Indroducing Code Signing
 authors: [borntoberoot]
 tags: [code-signing, binaries, installer]
 ---
