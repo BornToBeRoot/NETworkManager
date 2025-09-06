@@ -595,16 +595,16 @@
     <value>執行緒</value>
   </data>
   <data name="Time" xml:space="preserve">
-    <value>次</value>
+    <value>時間</value>
   </data>
   <data name="Time1" xml:space="preserve">
-    <value>1 次</value>
+    <value>時間 1</value>
   </data>
   <data name="Time2" xml:space="preserve">
-    <value>2 次</value>
+    <value>時間 2</value>
   </data>
   <data name="Time3" xml:space="preserve">
-    <value>3 次</value>
+    <value>時間 3</value>
   </data>
   <data name="Timeout" xml:space="preserve">
     <value>逾時</value>
@@ -691,7 +691,7 @@
     <value>授權伺服器</value>
   </data>
   <data name="AutomaticallyUpdateEvery" xml:space="preserve">
-    <value>每次自動更新</value>
+    <value>自動更新，每</value>
   </data>
   <data name="Back" xml:space="preserve">
     <value>返回</value>
@@ -828,10 +828,10 @@
     <value>結束時間</value>
   </data>
   <data name="EnterASubnetToCalculateItDots" xml:space="preserve">
-    <value>請輸入子網路以進行計算…</value>
+    <value>輸入子網路以進行計算…</value>
   </data>
   <data name="EnterSubnetAndANewSubnetmaskToCreateSubnets" xml:space="preserve">
-    <value>請輸入子網路及新子網遮罩以產生子網路…</value>
+    <value>輸入子網路及新子網遮罩以產生子網路…</value>
   </data>
   <data name="ErrorCheckingApiGithubComVerifyYourNetworkConnection" xml:space="preserve">
     <value>無法連線至 'api.github.com'，請檢查您的網路連線！</value>
@@ -1256,13 +1256,13 @@
     <value>輸入位置...</value>
   </data>
   <data name="Everything" xml:space="preserve">
-    <value>所有內容</value>
+    <value>所有事物</value>
   </data>
   <data name="FilterDots" xml:space="preserve">
     <value>篩選...</value>
   </data>
   <data name="FlushDNSCache" xml:space="preserve">
-    <value>排清 DNS 快取</value>
+    <value>清除 DNS 快取</value>
   </data>
   <data name="HelpMessage_Credentials" xml:space="preserve">
     <value>請先將憑證解密並載入，然後再進行選取。</value>
@@ -1361,22 +1361,22 @@
     <value>連線</value>
   </data>
   <data name="EnterValidIPScanRange" xml:space="preserve">
-    <value>請輸入有效的 IP 範圍！</value>
+    <value>輸入有效的 IP 範圍！</value>
   </data>
   <data name="EnterValidIPv4Address" xml:space="preserve">
     <value>輸入有效的 IPv4 位址！</value>
   </data>
   <data name="EnterValidMACAddress" xml:space="preserve">
-    <value>請輸入有效的 MAC 位址（例如：00:F1:23:AB:F2:35）！</value>
+    <value>輸入有效的 MAC 位址（例如：00:F1:23:AB:F2:35）！</value>
   </data>
   <data name="EnterValidPort" xml:space="preserve">
     <value>輸入有效的連接埠 (1 - 65535)！</value>
   </data>
   <data name="EnterValidSubnetmask" xml:space="preserve">
-    <value>請輸入有效的子網遮罩（例如：255.255.255.0）！</value>
+    <value>輸入有效的子網遮罩（例如：255.255.255.0）！</value>
   </data>
   <data name="EnterValidSubnetmaskOrCIDR" xml:space="preserve">
-    <value>請輸入有效的子網遮罩或 CIDR（例如：255.255.255.0 或 /24）！</value>
+    <value>輸入有效的子網遮罩或 CIDR（例如：255.255.255.0 或 /24）！</value>
   </data>
   <data name="FieldCannotBeEmpty" xml:space="preserve">
     <value>欄位不可空白！</value>
@@ -1445,7 +1445,7 @@
     <value>輸入有效的 OID！</value>
   </data>
   <data name="EnterValidPortOrPortRange" xml:space="preserve">
-    <value>輸入有效的連接埠和/或連接埠範圍 (1 - 65535)！</value>
+    <value>輸入有效的連接埠和 / 或連接埠範圍 (1 - 65535)！</value>
   </data>
   <data name="EnterValidSubnet" xml:space="preserve">
     <value>輸入有效的子網路 (如 192.168.178.133/26)！</value>
@@ -1742,7 +1742,7 @@
     <value>新增「Whois 查詢」分頁</value>
   </data>
   <data name="EnterValidDomain" xml:space="preserve">
-    <value>請輸入一個有效的網域名稱（例如 example.com）以進行檢查！</value>
+    <value>輸入有效的網域名稱（例如 example.com）以進行檢查！</value>
   </data>
   <data name="WhoisServerNotFoundForTheDomain" xml:space="preserve">
     <value>無法為域名「{0}」找到對應的 Whois 伺服器。</value>
@@ -2934,10 +2934,10 @@ $$hostname$$	--&gt;	主機名稱</value>
     <value>遠端會話因達到總登入時長上限而結束。此限制由伺服器管理員或網路政策設定。</value>
   </data>
   <data name="EnterValidHostname" xml:space="preserve">
-    <value>請輸入有效的主機名稱！</value>
+    <value>輸入有效的主機名稱！</value>
   </data>
   <data name="EnterValidHostnameAndPort" xml:space="preserve">
-    <value>請輸入有效的主機名稱與埠號！</value>
+    <value>輸入有效的主機名稱與埠號！</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_UnableToReconnectToRemoteSession" xml:space="preserve">
     <value>無法重新連線至遠端會話。</value>
@@ -3158,7 +3158,7 @@ $$hostname$$	--&gt;	主機名稱</value>
     <value>兆位元組 TB</value>
   </data>
   <data name="EnterANumberAndSelectAUnitToCalculateTheUnitsDots" xml:space="preserve">
-    <value>請輸入一個數值並選擇單位以進行單位換算…</value>
+    <value>輸入一個數值並選擇單位以進行單位換算…</value>
   </data>
   <data name="SettingsName_Network" xml:space="preserve">
     <value>網路</value>
@@ -3233,7 +3233,7 @@ $$hostname$$	--&gt;	主機名稱</value>
     <value>已存在此名稱的 SNTP 伺服器！</value>
   </data>
   <data name="EnterValidHostnameOrIPAddress" xml:space="preserve">
-    <value>請輸入一個有效的主機名稱（例如 server-01 或 example.com），或是有效的 IP 位址（例如 192.168.178.1）。</value>
+    <value>輸入有效的主機名稱（例如 server-01 或 example.com），或是有效的 IP 位址（例如 192.168.178.1）。</value>
   </data>
   <data name="Servers" xml:space="preserve">
     <value>伺服器（數）</value>
@@ -3353,7 +3353,7 @@ $$hostname$$	--&gt;	主機名稱</value>
     <value>從遠端桌面閘道伺服器接收資料時發生錯誤。伺服器可能暫時無法使用，或網路連線中斷。請稍後再試，或聯絡網路管理員以獲得協助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331660" xml:space="preserve">
-    <value>您的電腦無法連線至遠端主機，因為遠端桌面閘道伺服器位址不可達或不正確。請輸入一個有效的遠端桌面閘道伺服器位址。</value>
+    <value>您的電腦無法連線至遠端主機，因為遠端桌面閘道伺服器位址不可達或不正確。輸入有效的遠端桌面閘道伺服器位址。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331663" xml:space="preserve">
     <value>由於遠端桌面閘道伺服器資源不足，暫時無法使用，您的電腦無法連線至遠端主機。請稍後再試或聯絡網路管理員以獲得協助。</value>
@@ -3918,7 +3918,7 @@ $$hostname$$	--&gt;	主機名稱</value>
     <value>主要 DNS 伺服器</value>
   </data>
   <data name="EnterValidHostsFileEntryHostname" xml:space="preserve">
-    <value>請輸入一個有效的主機名稱（如 server-01 或 example.com）！若有多個主機名稱，請以空格分隔。</value>
+    <value>輸入有效的主機名稱（如 server-01 或 example.com）！若有多個主機名稱，請以空格分隔。</value>
   </data>
   <data name="HostsFileReadErrorMessage" xml:space="preserve">
     <value>無法閱讀「hosts」檔案！請參閱記錄檔以獲得更詳細資訊。</value>
