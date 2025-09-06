@@ -35,9 +35,9 @@ allowing you to restore previous versions if needed.</p>
             <category>new feature</category>
         </item>
         <item>
-            <title><![CDATA[Binaries are now signed with a code signing certificate]]></title>
-            <link>https://borntoberoot.net/NETworkManager/blog/binaries-are-now-signed-with-a-code-signing-certificate</link>
-            <guid>https://borntoberoot.net/NETworkManager/blog/binaries-are-now-signed-with-a-code-signing-certificate</guid>
+            <title><![CDATA[Indroducing Code Signing (Binaries & Installer)]]></title>
+            <link>https://borntoberoot.net/NETworkManager/blog/introducing-code-signing</link>
+            <guid>https://borntoberoot.net/NETworkManager/blog/introducing-code-signing</guid>
             <pubDate>Fri, 24 May 2024 00:00:00 GMT</pubDate>
             <description><![CDATA[Starting with NETworkManager version 2024.5.24.0, the binaries and the installer are now signed with a code signing certificate.]]></description>
             <content:encoded><![CDATA[<p>Starting with NETworkManager version 2024.5.24.0, the binaries and the installer are now signed with a code signing certificate.</p>
