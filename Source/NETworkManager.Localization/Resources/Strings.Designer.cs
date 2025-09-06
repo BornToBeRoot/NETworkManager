@@ -610,6 +610,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add tag.
+        /// </summary>
+        public static string AddTag {
+            get {
+                return ResourceManager.GetString("AddTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adjust screen.
         /// </summary>
         public static string AdjustScreen {
@@ -993,6 +1002,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Apply {
             get {
                 return ResourceManager.GetString("Apply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply filter.
+        /// </summary>
+        public static string ApplyFilter {
+            get {
+                return ResourceManager.GetString("ApplyFilter", resourceCulture);
             }
         }
         
@@ -3846,6 +3864,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to production.
+        /// </summary>
+        public static string ExampleTag {
+            get {
+                return ResourceManager.GetString("ExampleTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Execution Policy.
         /// </summary>
         public static string ExecutionPolicy {
@@ -4035,11 +4062,29 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filter by tags.
+        /// </summary>
+        public static string FilterByTags {
+            get {
+                return ResourceManager.GetString("FilterByTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter....
         /// </summary>
         public static string FilterDots {
             get {
                 return ResourceManager.GetString("FilterDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter profiles....
+        /// </summary>
+        public static string FilterProfilesDots {
+            get {
+                return ResourceManager.GetString("FilterProfilesDots", resourceCulture);
             }
         }
         

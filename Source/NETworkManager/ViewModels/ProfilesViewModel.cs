@@ -199,7 +199,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     private void DeleteProfileAction()
     {
         ProfileDialogManager
-            .ShowDeleteProfileDialog(Application.Current.MainWindow, this, new List<ProfileInfo> { SelectedProfile })
+            .ShowDeleteProfileDialog(Application.Current.MainWindow, this, [.. SelectedProfiles.Cast<ProfileInfo>()])
             .ConfigureAwait(false);
     }
 

@@ -212,6 +212,40 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
+    private bool _filterIsOpen;
+
+    public bool FilterIsOpen
+    {
+        get => _filterIsOpen;
+        set
+        {
+            if (value == _filterIsOpen)
+                return;
+
+            _filterIsOpen = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public ICollectionView Tags { get; set; }
+
+    public ObservableCollection<FilterTag> FilterTags { get; set; } = [];
+
+    private bool _isFilterSet;
+
+    public bool IsFilterSet
+    {
+        get => _isFilterSet;
+        set
+        {
+            if (value == _isFilterSet)
+                return;
+
+            _isFilterSet = value;
+            OnPropertyChanged();
+        }
+    }
+
     private bool _canProfileWidthChange = true;
     private double _tempProfileWidth;
 
@@ -265,7 +299,6 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #region Constructor, load settings
-
     public PingMonitorHostViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
@@ -281,7 +314,12 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         HostsView.SortDescriptions.Add(new SortDescription(nameof(PingMonitorView.Group), ListSortDirection.Ascending));
 
         // Profiles
-        SetProfilesView();
+        CreateTags();
+
+        Tags = CollectionViewSource.GetDefaultView(FilterTags);
+        Tags.SortDescriptions.Add(new SortDescription(nameof(FilterTag.Name), ListSortDirection.Ascending));
+
+        SetProfilesView(new ProfileFilterInfo());
 
         ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
 
@@ -402,6 +440,36 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     private void ClearSearchAction()
     {
         Search = string.Empty;
+    }
+
+    public ICommand OpenFilterCommand => new RelayCommand(_ => OpenFilterAction());
+
+    private void OpenFilterAction()
+    {
+        FilterIsOpen = true;
+    }
+
+    public ICommand ApplyFilterCommand => new RelayCommand(_ => ApplyFilterAction());
+
+    private void ApplyFilterAction()
+    {
+        RefreshProfiles();
+
+        IsFilterSet = true;
+        FilterIsOpen = false;
+    }
+
+    public ICommand ClearFilterCommand => new RelayCommand(_ => ClearFilterAction());
+
+    private void ClearFilterAction()
+    {
+        foreach (var tag in FilterTags)
+            tag.IsSelected = false;
+
+        RefreshProfiles();
+
+        IsFilterSet = false;
+        FilterIsOpen = false;
     }
 
     #endregion
@@ -582,36 +650,40 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         _isViewActive = false;
     }
 
-    private void SetProfilesView(ProfileInfo profile = null)
+    private void CreateTags()
+    {
+        var tags = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.PingMonitor_Enabled).SelectMany(x => x.TagsCollection).Distinct().ToList();
+
+        var tagSet = new HashSet<string>(tags);
+
+        for (var i = FilterTags.Count - 1; i >= 0; i--)
+        {
+            if (!tagSet.Contains(FilterTags[i].Name))
+                FilterTags.RemoveAt(i);
+        }
+
+        var existingTagNames = new HashSet<string>(FilterTags.Select(ft => ft.Name));
+
+        foreach (var tag in tags)
+        {
+            if (!existingTagNames.Contains(tag))
+                FilterTags.Add(new FilterTag(false, tag));
+        }
+    }
+
+    private void SetProfilesView(ProfileFilterInfo filter, ProfileInfo profile = null)
     {
         Profiles = new CollectionViewSource
         {
-            Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.PingMonitor_Enabled)
-                .OrderBy(x => x.Group).ThenBy(x => x.Name)
+            Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.PingMonitor_Enabled && (
+            string.IsNullOrEmpty(filter.Search) || x.Name.IndexOf(filter.Search) > -1 || x.PingMonitor_Host.IndexOf(filter.Search) > -1) && (
+            !filter.Tags.Any() || filter.Tags.All(tag => x.TagsCollection.Contains(tag)))
+            ).OrderBy(x => x.Group).ThenBy(x => x.Name)
         }.View;
 
+        // Add "Any" based in selection
+
         Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
-
-        Profiles.Filter = o =>
-        {
-            if (string.IsNullOrEmpty(Search))
-                return true;
-
-            if (o is not ProfileInfo info)
-                return false;
-
-            var search = Search.Trim();
-
-            // Search by: Tag=xxx (exact match, ignore case)
-            /*
-            if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
-                return !string.IsNullOrEmpty(info.Tags) && info.PingMonitor_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
-            */
-
-            // Search by: Name, PingMonitor_Host
-            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   info.PingMonitor_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
-        };
 
         // Set specific profile or first if null
         SelectedProfile = null;
@@ -628,15 +700,20 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         if (!_isViewActive)
             return;
 
-        SetProfilesView(SelectedProfile);
+        SetProfilesView(new ProfileFilterInfo
+        {
+            Search = Search,
+            Tags = [.. FilterTags.Where(x => x.IsSelected).Select(x => x.Name)]
+        }, SelectedProfile);
     }
-
     #endregion
 
     #region Event
 
     private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
     {
+        CreateTags();
+
         RefreshProfiles();
     }
 
@@ -657,6 +734,5 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         IsCanceling = false;
         IsRunning = false;
     }
-
     #endregion
 }

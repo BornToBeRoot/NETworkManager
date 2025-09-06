@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Security;
-using System.Threading.Tasks;
-using System.Windows.Data;
-using System.Windows.Input;
+﻿using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.Network;
@@ -15,6 +8,14 @@ using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Security;
+using System.Threading.Tasks;
+using System.Windows.Data;
+using System.Windows.Input;
 
 // ReSharper disable InconsistentNaming
 
@@ -45,17 +46,20 @@ public class ProfileViewModel : ViewModelBase
         Host = profileInfo.Host;
 
         Description = profileInfo.Description;
-        
+
         // Try to get group (name) as parameter, then from profile, then the first in the list of groups, then the default group            
         Group = group ?? (string.IsNullOrEmpty(profileInfo.Group)
             ? groups.Count > 0 ? groups.OrderBy(x => x).First() : Strings.Default
             : profileInfo.Group);
-        
+
         Groups = CollectionViewSource.GetDefaultView(groups);
         Groups.SortDescriptions.Add(new SortDescription());
 
-        Tags = profileInfo.Tags;
-        
+        TagsCollection = profileInfo.TagsCollection;
+
+        Tags = CollectionViewSource.GetDefaultView(TagsCollection);
+        Tags.SortDescriptions.Add(new SortDescription("", ListSortDirection.Ascending));
+
         // Network Interface
         NetworkInterface_Enabled = editMode == ProfileEditMode.Add
             ? applicationName == ApplicationName.NetworkInterface
@@ -335,7 +339,7 @@ public class ProfileViewModel : ViewModelBase
     }
 
     #endregion
-    
+
     #region Methods
 
     private void ChangeNetworkConnectionTypeSettings(NetworkConnectionType connectionSpeed)
@@ -454,7 +458,7 @@ public class ProfileViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+
     private string _description;
 
     public string Description
@@ -487,21 +491,37 @@ public class ProfileViewModel : ViewModelBase
 
     public ICollectionView Groups { get; }
 
-    private string _tags;
+    private string _tag;
 
-    public string Tags
+    public string Tag
     {
-        get => _tags;
+        get => _tag;
         set
         {
-            if (value == _tags)
+            if (value == _tag)
                 return;
 
-            _tags = value;
+            _tag = value;
             OnPropertyChanged();
         }
     }
 
+    public ICollectionView Tags { get; }
+
+    private ObservableSetCollection<string> _tagsCollection = [];
+
+    public ObservableSetCollection<string> TagsCollection
+    {
+        get => _tagsCollection;
+        set
+        {
+            if (Equals(value, _tagsCollection))
+                return;
+
+            _tagsCollection = value;
+            OnPropertyChanged();
+        }
+    }
     #endregion
 
     #region Network Interface
@@ -3288,6 +3308,8 @@ public class ProfileViewModel : ViewModelBase
     {
         IsResolveHostnameRunning = true;
 
+        await Task.Delay(GlobalStaticConfiguration.ApplicationUIDelayInterval);
+
         var dnsResult =
             await DNSClientHelper.ResolveAorAaaaAsync(Host, SettingsManager.Current.Network_ResolveHostnamePreferIPv4);
 
@@ -3299,5 +3321,26 @@ public class ProfileViewModel : ViewModelBase
         IsResolveHostnameRunning = false;
     }
 
+    public ICommand AddTagCommand => new RelayCommand(_ => AddTagAction());
+
+    private void AddTagAction()
+    {
+        var tagsToAdd = Tag.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+        foreach (var tag in tagsToAdd)
+            TagsCollection.Add(tag);
+
+        Tag = string.Empty;
+    }
+
+    public ICommand RemoveTagCommand => new RelayCommand(RemoveTagAction);
+
+    private void RemoveTagAction(object param)
+    {
+        if (param is not string tag)
+            return;
+
+        TagsCollection.Remove(tag);
+    }
     #endregion
 }
