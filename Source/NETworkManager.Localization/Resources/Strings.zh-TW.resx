@@ -1364,7 +1364,7 @@
     <value>請輸入有效的 IP 範圍！</value>
   </data>
   <data name="EnterValidIPv4Address" xml:space="preserve">
-    <value>輸入有效的 IPv4 位置！</value>
+    <value>輸入有效的 IPv4 位址！</value>
   </data>
   <data name="EnterValidMACAddress" xml:space="preserve">
     <value>請輸入有效的 MAC 位址（例如：00:F1:23:AB:F2:35）！</value>
@@ -2512,7 +2512,7 @@ $$hostname$$	--&gt;	主機名稱</value>
     <value>SNMP</value>
   </data>
   <data name="ApplicationName_SubnetCalculator" xml:space="preserve">
-    <value>IP 子網路計算機</value>
+    <value>子網路計算器</value>
   </data>
   <data name="ApplicationName_TigerVNC" xml:space="preserve">
     <value>TigerVNC</value>
@@ -2662,7 +2662,7 @@ $$hostname$$	--&gt;	主機名稱</value>
     <value>SSH 原始記錄</value>
   </data>
   <data name="PuTTYLogMode_SessionLog" xml:space="preserve">
-    <value>Session 記錄</value>
+    <value>會話記錄</value>
   </data>
   <data name="PuTTYLogMode_SSHLog" xml:space="preserve">
     <value>SSH 記錄</value>
@@ -2671,10 +2671,10 @@ $$hostname$$	--&gt;	主機名稱</value>
     <value>SSH 和原始記錄</value>
   </data>
   <data name="EnterValidFileName" xml:space="preserve">
-    <value>輸入有效的檔案名稱!</value>
+    <value>輸入有效的檔案名稱！</value>
   </data>
   <data name="Lost" xml:space="preserve">
-    <value>失敗</value>
+    <value>遺失</value>
   </data>
   <data name="Received" xml:space="preserve">
     <value>已接收</value>
@@ -2683,46 +2683,46 @@ $$hostname$$	--&gt;	主機名稱</value>
     <value>狀態變更</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
-    <value>有可用的更新!</value>
+    <value>有可用的更新！</value>
   </data>
   <data name="PrivateKeyFile" xml:space="preserve">
     <value>私密金鑰檔案</value>
   </data>
   <data name="Preview" xml:space="preserve">
-    <value>Preview</value>
+    <value>預覽</value>
   </data>
   <data name="PortProfiles" xml:space="preserve">
-    <value>Port profiles</value>
+    <value>連接埠設定檔</value>
   </data>
   <data name="AddPortProfile" xml:space="preserve">
-    <value>Add port profile</value>
+    <value>新增連接埠設定檔</value>
   </data>
   <data name="DeletePortProfile" xml:space="preserve">
-    <value>Delete port profile</value>
+    <value>刪除連接埠設定檔</value>
   </data>
   <data name="EditPortProfile" xml:space="preserve">
-    <value>Edit port profile</value>
+    <value>編輯連接埠設定檔</value>
   </data>
   <data name="DeletePortProfileMessage" xml:space="preserve">
-    <value>The selected port profile will be deleted permanently.</value>
+    <value>所選的連接埠設定檔將被永久刪除。</value>
   </data>
   <data name="SelectPortProfile" xml:space="preserve">
-    <value>Select port profile</value>
+    <value>選擇連接埠設定檔</value>
   </data>
   <data name="OpenPortProfilesDots" xml:space="preserve">
-    <value>Open port profiles...</value>
+    <value>開啟連接埠設定檔...</value>
   </data>
   <data name="ShowSplashScreenOnStart" xml:space="preserve">
-    <value>Show SplashScreen on start</value>
+    <value>啟動時顯示啟動畫面</value>
   </data>
   <data name="SplashScreen" xml:space="preserve">
-    <value>SplashScreen</value>
+    <value>啟動畫面</value>
   </data>
   <data name="DownloadMicrosoftEdgeWebView2Runtime" xml:space="preserve">
-    <value>Download Microsoft Edge WebView2 Runtime</value>
+    <value>下載 Microsoft Edge WebView2 Runtime</value>
   </data>
   <data name="MicrosoftEdgeWebView2RuntimeIsNotAvailable" xml:space="preserve">
-    <value>Microsoft Edge WebView2 Runtime is not available!</value>
+    <value>Microsoft Edge WebView2 Runtime 無法使用！</value>
   </data>
   <data name="Frequency" xml:space="preserve">
     <value>頻率</value>
@@ -2734,13 +2734,13 @@ $$hostname$$	--&gt;	主機名稱</value>
     <value>無法載入設定檔！</value>
   </data>
   <data name="ProfileFileCouldNotBeLoadedMessage" xml:space="preserve">
-    <value>The profile file could not be loaded and may be corrupted. You can try to restore the file from a backup or delete it.
+    <value>設定檔無法載入，可能已損毀。您可以嘗試從備份還原該檔案或將其刪除。
 
-If this happens unexpectedly or after an update, please report the error on GitHub.
+如果此情況在未預期時發生，或於更新後出現，請至 GitHub 報告錯誤。
 
 
-Error message:
-"{0}"</value>
+錯誤訊息：
+「{0}」</value>
   </data>
   <data name="EditGroupDots" xml:space="preserve">
     <value>編輯群組...</value>
@@ -2749,13 +2749,13 @@ Error message:
     <value>解密錯誤</value>
   </data>
   <data name="DecryptionErrorMessage" xml:space="preserve">
-    <value>Could not decrypt file. You may report this issue on GitHub.</value>
+    <value>無法解密檔案。您可至 GitHub 報告此問題。</value>
   </data>
   <data name="EncryptionError" xml:space="preserve">
     <value>加密錯誤</value>
   </data>
   <data name="EncryptionErrorMessage" xml:space="preserve">
-    <value>Could not encrpyt file. You may report this issue on GitHub.</value>
+    <value>無法加密檔案。您可至 GitHub 報告此問題。</value>
   </data>
   <data name="CurrentPassword" xml:space="preserve">
     <value>目前密碼</value>
@@ -2767,91 +2767,91 @@ Error message:
     <value>更改主密碼</value>
   </data>
   <data name="UnlockProfile" xml:space="preserve">
-    <value>Unlock profile</value>
+    <value>解鎖設定檔</value>
   </data>
   <data name="UnlockTheProfileFileMessage" xml:space="preserve">
-    <value>Unlock the profile file to use the profiles!</value>
+    <value>請先解鎖設定檔案才能使用設定檔！</value>
   </data>
   <data name="Disclaimer" xml:space="preserve">
-    <value>Disclaimer</value>
+    <value>免責聲明</value>
   </data>
   <data name="Merge" xml:space="preserve">
-    <value>Merge</value>
+    <value>合併</value>
   </data>
   <data name="UseOther" xml:space="preserve">
     <value>使用其他</value>
   </data>
   <data name="Move" xml:space="preserve">
-    <value>Move</value>
+    <value>移動</value>
   </data>
   <data name="LastScanAtX" xml:space="preserve">
-    <value>Last scan at {0}</value>
+    <value>上一次掃描時間：{0}</value>
   </data>
   <data name="HiddenNetwork" xml:space="preserve">
     <value>隱藏網路</value>
   </data>
   <data name="DevelopedAndMaintainedByX" xml:space="preserve">
-    <value>Developed and maintained by {0} with the help of the</value>
+    <value>由 {0} 進行開發與維護，並在此感謝…</value>
   </data>
   <data name="ExternalService_ipify_Description" xml:space="preserve">
-    <value>A Simple Public IP Address API</value>
+    <value>簡易公共 IP 位址 API</value>
   </data>
   <data name="Library_AirspaceFixer_Description" xml:space="preserve">
-    <value>AirspacePanel fixes all Airspace issues with WPF-hosted Winforms.</value>
+    <value>AirspacePanel 可解決在 WPF 主機中使用 WinForms 時所遇到的所有 Airspace 問題。</value>
   </data>
   <data name="Library_ControlzEx_Description" xml:space="preserve">
-    <value>Shared Controlz for WPF and ... more</value>
+    <value>為 WPF 共享的 Controlz 和…更多</value>
   </data>
   <data name="Library_DnsClientNET_Description" xml:space="preserve">
-    <value>DnsClient.NET is a simple yet very powerful and high performant open source library for the .NET Framework to do DNS lookups</value>
+    <value>DnsClient.NET 是一個簡潔而又強大、效能極佳的開源函式庫，為 .NET Framework 設計，可用於執行 DNS 查詢</value>
   </data>
   <data name="Library_Dragablz_Description" xml:space="preserve">
-    <value>Dragable and tearable tab control for WPF</value>
+    <value>WPF 可拖曳與分離標籤控制項</value>
   </data>
   <data name="Library_IPNetwork_Description" xml:space="preserve">
-    <value>C# library take care of complex network, IP, IPv4, IPv6, netmask, CIDR, subnet, subnetting, supernet, and supernetting calculation for .NET developers.</value>
+    <value>這是一個 C# 函式庫，為 .NET 開發者提供複雜網路、IP、IPv4 / IPv6、子網遮罩、CIDR、子網、分割子網、超網及其計算等功能。</value>
   </data>
   <data name="Library_LiveCharts_Description" xml:space="preserve">
-    <value>Simple, flexible, interactive &amp; powerful charts, maps and gauges for .Net</value>
+    <value>簡潔、彈性、交互式且功能強大的圖表、地圖與儀表，供 .NET 使用</value>
   </data>
   <data name="Library_LoadingIndicatorsWPF_Description" xml:space="preserve">
-    <value>A collection of loading indicators for WPF</value>
+    <value>WPF 載入指示器集合</value>
   </data>
   <data name="Library_MahAppsMetroIconPacks_Description" xml:space="preserve">
-    <value>Some awesome icons for WPF and UWP all together...</value>
+    <value>WPF 與 UWP 統一套的優秀圖示集...</value>
   </data>
   <data name="Library_MahAppsMetro_Description" xml:space="preserve">
-    <value>A toolkit for creating Metro / Modern UI styled WPF apps.</value>
+    <value>Metro / Modern UI 樣式 WPF 應用程式開發工具包。</value>
   </data>
   <data name="Library_NewtonsoftJson_Description" xml:space="preserve">
-    <value>Json.NET is a popular high-performance JSON framework for .NET</value>
+    <value>Json.NET 是一款流行且極速的 JSON 框架，供 .NET 開發使用</value>
   </data>
   <data name="Library_Octokit_Description" xml:space="preserve">
-    <value>A GitHub API client library for .NET</value>
+    <value>用於 .NET 的 GitHub API 客戶端函式庫</value>
   </data>
   <data name="Library_PSDicoveryProtocol_Description" xml:space="preserve">
-    <value>Capture and parse CDP and LLDP packets on local or remote computers</value>
+    <value>捕捉並解析本機或遠端電腦上的 CDP 與 LLDP 封包</value>
   </data>
   <data name="Library_SharpSNMP_Description" xml:space="preserve">
-    <value>Sharp SNMP Library - Open Source SNMP for .NET and Mono</value>
+    <value>Sharp SNMP 函式庫 — 供 .NET 與 Mono 使用的開源 SNMP</value>
   </data>
   <data name="Resource_Flag_Description" xml:space="preserve">
-    <value>A collection of all country flags in SVG</value>
+    <value>SVG 格式的全球國旗圖集。</value>
   </data>
   <data name="Resource_ListTLD_Description" xml:space="preserve">
-    <value>List of Top-Level-Domains from iana.org, which is used to query whois servers of the TLD from whois.iana.org via port 43</value>
+    <value>來自 iana.org 的頂級網域列表，用於從 whois.iana.org 通過連接埠 43 查詢各 TLD 的 whois 伺服器</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
     <value>來自 IEEE.org 的 OUI 資料。</value>
   </data>
   <data name="Resource_ServiceNamePortNumber_Description" xml:space="preserve">
-    <value>Service Name and Transport Protocol Port Number Registry from iana.org.</value>
+    <value>由 iana.org 所維護之「服務名稱及傳輸協議埠號註冊表」。</value>
   </data>
   <data name="License_ApacheLicense2dot0" xml:space="preserve">
     <value>Apache 許可證 2.0</value>
   </data>
   <data name="License_BDS2Clause" xml:space="preserve">
-    <value>BSD-2 條款</value>
+    <value>BSD-2-條款</value>
   </data>
   <data name="License_MITLicense" xml:space="preserve">
     <value>MIT 授權協議</value>
@@ -2860,24 +2860,24 @@ Error message:
     <value>未授權</value>
   </data>
   <data name="Library_CsWinRT_Description" xml:space="preserve">
-    <value>C#/WinRT provides packaged WinRT projection support for the C# language.</value>
+    <value>C#/WinRT 為 C# 語言提供打包好的 WinRT 投影支援</value>
   </data>
   <data name="Library_PowerShellSDK_Description" xml:space="preserve">
-    <value>Runtime for hosting PowerShell</value>
+    <value>PowerShell 主機執行環境</value>
   </data>
   <data name="Library_WebView2_Description" xml:space="preserve">
-    <value>The WebView2 control enables you to embed web technologies (HTML, CSS, and JavaScript) in your native applications powered by Microsoft Edge (Chromium).</value>
+    <value>WebView2 控制項允許您在本機應用程式中嵌入 Web 技術（HTML、CSS 和 JavaScript），並由 Microsoft Edge（Chromium）提供支援。</value>
   </data>
   <data name="Library_XamlBehaviorsWpf_Description" xml:space="preserve">
-    <value>Easily add interactivity to your apps using XAML Behaviors for WPF.</value>
+    <value>使用 WPF 的 XAML 行為輕鬆為您的應用程式添加互動性。</value>
   </data>
   <data name="License_MicrosoftWebView2License" xml:space="preserve">
-    <value>Microsoft WebView2 License</value>
+    <value>Microsoft WebView2 許可協議</value>
   </data>
   <data name="WarningMessage_ProfileFileNotEncryptedStoringPasswords" xml:space="preserve">
-    <value>The current profile file is not encrypted and passwords will stored unencrypted on disk! 
+    <value>目前的設定檔未加密，密碼將以純文字形式存放於磁碟上！ 
 
-Enable profile file encryption in Settings&gt;Profile to store credentials securely.</value>
+請至 設定 &gt; Profile 啟用設定檔加密，以安全方式儲存憑證。</value>
   </data>
   <data name="ICMPv4" xml:space="preserve">
     <value>ICMPv4</value>
@@ -2886,10 +2886,10 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>ICMPv6</value>
   </data>
   <data name="CheckIsDisabled" xml:space="preserve">
-    <value>Check is disabled!</value>
+    <value>檢查已停用！</value>
   </data>
   <data name="EnterValidIPv6Address" xml:space="preserve">
-    <value>Enter a valid IPv6 address!</value>
+    <value>輸入有效的 IPv6 位址！</value>
   </data>
   <data name="HelpMessage_PublicIPv4Address" xml:space="preserve">
     <value>可通過 ICMP 連線的公開 IPv4 位址。</value>
@@ -2901,49 +2901,49 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>公開 IPv4 位址</value>
   </data>
   <data name="PublicIPv6Address" xml:space="preserve">
-    <value>Public IPv6 address</value>
+    <value>公開 IPv6 位址</value>
   </data>
   <data name="UseCustomIPv6AddressAPI" xml:space="preserve">
-    <value>Use custom IPv6 address API</value>
+    <value>使用自訂 IPv6 位址 API</value>
   </data>
   <data name="TimeToLive" xml:space="preserve">
-    <value>Time to live</value>
+    <value>存活時間</value>
   </data>
   <data name="ChassisId" xml:space="preserve">
-    <value>Chassis Id</value>
+    <value>機箱 Id</value>
   </data>
   <data name="Management" xml:space="preserve">
-    <value>Management</value>
+    <value>管理</value>
   </data>
   <data name="DeviceDescription" xml:space="preserve">
-    <value>Device description</value>
+    <value>裝置描述</value>
   </data>
   <data name="PortDescription" xml:space="preserve">
-    <value>Port description</value>
+    <value>連接埠描述</value>
   </data>
   <data name="RemoveIPv4Address" xml:space="preserve">
-    <value>Remove IPv4 address</value>
+    <value>移除 IPv4 位址</value>
   </data>
   <data name="AdditionalConfigDots" xml:space="preserve">
-    <value>Additional config...</value>
+    <value>額外設定...</value>
   </data>
   <data name="RemoveIPv4AddressDots" xml:space="preserve">
-    <value>Remove IPv4 address...</value>
+    <value>移除 IPv4 位址…</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached" xml:space="preserve">
-    <value>The remote session ended because the total login time limit was reached. This limit is set by the server administrator or by network policies.</value>
+    <value>遠端會話因達到總登入時長上限而結束。此限制由伺服器管理員或網路政策設定。</value>
   </data>
   <data name="EnterValidHostname" xml:space="preserve">
-    <value>Enter a valid hostname!</value>
+    <value>請輸入有效的主機名稱！</value>
   </data>
   <data name="EnterValidHostnameAndPort" xml:space="preserve">
-    <value>Enter a valid hostname and port!</value>
+    <value>請輸入有效的主機名稱與埠號！</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_UnableToReconnectToRemoteSession" xml:space="preserve">
-    <value>Unable to reconnect to the remote session.</value>
+    <value>無法重新連線至遠端會話。</value>
   </data>
   <data name="Migrate" xml:space="preserve">
-    <value>Migrate</value>
+    <value>遷移</value>
   </data>
   <data name="ReportOnGitHub" xml:space="preserve">
     <value>在 GitHub 上回報問題</value>
@@ -2958,10 +2958,10 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>刪除群組</value>
   </data>
   <data name="DeleteGroupMessage" xml:space="preserve">
-    <value>Selected group and all profiles inside this group will be deleted permanently.</value>
+    <value>所選的群組與其中所有設定檔將被永久刪除。</value>
   </data>
   <data name="ErrorMessage_NameIsAlreadyUsed" xml:space="preserve">
-    <value>The name is already used!</value>
+    <value>此名稱已被使用！</value>
   </data>
   <data name="Resize" xml:space="preserve">
     <value>調整大小</value>
@@ -2970,7 +2970,7 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>刪除設定檔</value>
   </data>
   <data name="DeleteProfilesMessage" xml:space="preserve">
-    <value>Selected profiles will be deleted permanently.</value>
+    <value>所選的設定檔將被永久刪除。</value>
   </data>
   <data name="UseCustomThemes" xml:space="preserve">
     <value>使用自訂主題</value>
@@ -2997,7 +2997,7 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>本地介面</value>
   </data>
   <data name="Library_log4net_Description" xml:space="preserve">
-    <value>log4net is a tool to help the programmer output log statements to a variety of output targets.</value>
+    <value>log4net 是一款協助程式開發者將記錄輸出至多種目標的工具。</value>
   </data>
   <data name="AWSSessionManager" xml:space="preserve">
     <value>AWS 會話管理器</value>
@@ -3018,9 +3018,9 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>刪除 AWS 設定檔</value>
   </data>
   <data name="DeleteAWSProfileMessage" xml:space="preserve">
-    <value>The selected AWS profile is permanently deleted.
+    <value>所選的 AWS 設定檔將被永久刪除。
 
-The profile is not removed from the ~\.aws\credentials file.</value>
+此設定檔並未從 ~/.aws/credentials 檔案中移除。</value>
   </data>
   <data name="EditAWSProfile" xml:space="preserve">
     <value>編輯 AWS 設定檔</value>
@@ -3035,10 +3035,10 @@ The profile is not removed from the ~\.aws\credentials file.</value>
     <value>要同步的設定檔與區域</value>
   </data>
   <data name="HelpMessage_AWSSessionManagerProfilesAndRegionsToSync" xml:space="preserve">
-    <value>To synchronize EC2 instances from AWS, the AWS CLI must be configured on the system. The EC2 instances can be queried for multiple AWS accounts (profiles) and multiple regions. To do this, the profile stored in the file "~/.aws/credentials" must be configured along with the region to query.</value>
+    <value>若要同步 AWS 上的 EC2 實例，系統必須先安裝並設定好 AWS CLI。可針對多個帳號（profile）及多個區域查詢 EC2；因此需在 ~/.aws/credentials 檔案中設定相應的 profile 與欲查詢之區域。</value>
   </data>
   <data name="Library_AWSSDKdotEC2_Description" xml:space="preserve">
-    <value>AWS SDK for .NET to work with Amazon Elastic Compute Cloud (Amazon EC2) in Amazon Web Services (AWS).</value>
+    <value>AWS SDK for .NET：協助您在 Amazon Web Services（AWS）中使用 Amazon Elastic Compute Cloud (Amazon EC2)。</value>
   </data>
   <data name="DefaultProfile" xml:space="preserve">
     <value>預設設定檔</value>
@@ -3047,14 +3047,14 @@ The profile is not removed from the ~\.aws\credentials file.</value>
     <value>預設區域</value>
   </data>
   <data name="HelpMessage_AWSSessionManagerProfile" xml:space="preserve">
-    <value>Profile which is used by manually created profiles to connect to an EC2 instance via AWS CLI.
+    <value>用於手動建立的設定檔，以透過 AWS CLI 連線至 EC2。
 
-If not set, the default AWS CLI settings are used.</value>
+若未設定，將使用預設的 AWS CLI 設定。</value>
   </data>
   <data name="HelpMessage_AWSSessionManagerRegion" xml:space="preserve">
-    <value>Region which is used by manually created profiles to connect to an EC2 instance via AWS CLI .
+    <value>區域用於手動建立設定檔，透過 AWS CLI 連線至 EC2。
 
-If not set, the default AWS CLI settings are used.</value>
+若未設定，則使用預設的 AWS CLI 設定。</value>
   </data>
   <data name="HelpMessage_AWSCLIDefaultsAreUsedIfNotSet" xml:space="preserve">
     <value>若未設定，將使用預設的 AWS CLI 設定。</value>
@@ -3093,7 +3093,7 @@ If not set, the default AWS CLI settings are used.</value>
     <value>將主題套用至 PowerShell 主控台</value>
   </data>
   <data name="PowerShellConsoleColorCanBeChangedUnderSettingsGeneralApperance" xml:space="preserve">
-    <value>The color of the PowerShell console can be changed to the application theme under Settings &gt; General &gt; Appearance</value>
+    <value>PowerShell 控制台的配色可以在「設定 &gt; 一般 &gt; 外觀」中，改成與應用程式主題相同。</value>
   </data>
   <data name="HelpMessage_ApplyThemeToPowerShellConsole" xml:space="preserve">
     <value>If you enable this option, the default PowerShell console settings in the registry under HKCU:\Console are overridden so that the PowerShell console window matches the application theme. This is a global system setting that may affect the appearance of the normal PowerShell window.
@@ -3129,34 +3129,34 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>位元</value>
   </data>
   <data name="Gigabits" xml:space="preserve">
-    <value>十億位元（Gb）</value>
+    <value>十億位元 Gb</value>
   </data>
   <data name="Gigabytes" xml:space="preserve">
-    <value>十億位元組（GB）</value>
+    <value>十億位元組 GB</value>
   </data>
   <data name="Kilobits" xml:space="preserve">
-    <value>千位元（Kb）</value>
+    <value>千位元 Kb</value>
   </data>
   <data name="Kilobytes" xml:space="preserve">
-    <value>千位元組（KB）</value>
+    <value>千位元組 KB</value>
   </data>
   <data name="Megabits" xml:space="preserve">
-    <value>百萬位元（Mb）</value>
+    <value>百萬位元 Mb</value>
   </data>
   <data name="Megabytes" xml:space="preserve">
-    <value>百萬位元組（MB）</value>
+    <value>百萬位元組 MB</value>
   </data>
   <data name="Petabits" xml:space="preserve">
-    <value>千兆位元（Pb）</value>
+    <value>千兆位元 Pb</value>
   </data>
   <data name="Petabytes" xml:space="preserve">
-    <value>千兆位元組（PB）</value>
+    <value>千兆位元組 PB</value>
   </data>
   <data name="Terabits" xml:space="preserve">
-    <value>兆位元（Tb）</value>
+    <value>兆位元 Tb</value>
   </data>
   <data name="Terabytes" xml:space="preserve">
-    <value>兆位元組（TB）</value>
+    <value>兆位元組 TB</value>
   </data>
   <data name="EnterANumberAndSelectAUnitToCalculateTheUnitsDots" xml:space="preserve">
     <value>請輸入一個數值並選擇單位以進行單位換算…</value>
@@ -3183,7 +3183,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>SNTP 查詢</value>
   </data>
   <data name="Library_nulastudioNetBeauty_Description" xml:space="preserve">
-    <value>Move a .NET Framework/.NET Core app runtime components and dependencies into a sub-directory and make it beauty.</value>
+    <value>將 .NET Framework / .NET Core 應用程式的執行元件及其相依套件搬到子目錄中，提升結構整潔與外觀。</value>
   </data>
   <data name="AddATabToPerformASNTPLookup" xml:space="preserve">
     <value>新增一個分頁以執行 SNTP 查詢……</value>
@@ -3192,7 +3192,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>SNTP 伺服器(s)</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv6AddressAPI" xml:space="preserve">
-    <value>URL to a web service that can be reached via http or https and returns an IPv6 address e.g., "xxxx:xx:xxx::xx" as response.</value>
+    <value>可透過 HTTP/HTTPS 訪問、且回傳 IPv6 位址「如 xxxx:xx:xxx::xx」的網路服務 URL。</value>
   </data>
   <data name="IPEndPoint" xml:space="preserve">
     <value>IP 終端點</value>
@@ -3237,7 +3237,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>Enter a valid hostname (e.g., "server-01" or "example.com") or a valid IP address (e.g., 192.168.178.1)!</value>
   </data>
   <data name="Servers" xml:space="preserve">
-    <value>伺服器</value>
+    <value>伺服器（數）</value>
   </data>
   <data name="EnterMasterPasswordToUnlockProfile" xml:space="preserve">
     <value>輸入主密碼以解鎖設定檔：</value>
@@ -3273,7 +3273,7 @@ If the value is too high, performance problems may occur.
 Changes to this value will take effect after the application is restarted. Whether the value was set successfully can be seen in the log file under %LocalAppData%\NETworkManager\NETworkManager.log</value>
   </data>
   <data name="MaxThreadsOnlyGoToSettingsGeneralGeneral" xml:space="preserve">
-    <value>These settings only change the maximum number of concurrently executed threads per host/port scan. Go to Settings &gt; General &gt; General to adjust the (min) threads of the application.</value>
+    <value>此設定僅調整每個主機／埠掃描時同時執行的最大執行緒數。請至 設定 &gt; 一般 &gt; 一般，調整應用程式的（最小）執行緒數。</value>
   </data>
   <data name="PortStatus" xml:space="preserve">
     <value>連接埠狀態</value>
@@ -3291,7 +3291,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>掃描連接埠</value>
   </data>
   <data name="CouldNotFindApplicationXXXMessage" xml:space="preserve">
-    <value>Could not find the application "{0}". Maybe the application was hidden in the settings?</value>
+    <value>未能找到「{0}」此應用程式。也許該項目已被隱藏於設定內？</value>
   </data>
   <data name="StatusWindow" xml:space="preserve">
     <value>狀態視窗</value>
@@ -3300,7 +3300,7 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>顯示地址列</value>
   </data>
   <data name="WarnMessage_MultipleInstances" xml:space="preserve">
-    <value>Enabling this setting is not recommended. Multiple instances of the application share the same settings and profile files. The last instance to be closed may overwrite changes made by other instances.</value>
+    <value>不建議啟用此設定。多個程式實例會共用相同的設定與使用者檔；最後關閉的實例可能覆蓋其他實例所作的更改。</value>
   </data>
   <data name="BypassForLocalAddresses" xml:space="preserve">
     <value>本機位址的繞過</value>
@@ -3333,13 +3333,13 @@ Changes to this value will take effect after the application is restarted. Wheth
     <value>使用網關憑證。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331661" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server is temporarily unavailable. Try reconnecting later or contact your network administrator for assistance.</value>
+    <value>由於遠端桌面閘道伺服器暫時無法使用，您的電腦無法連線至遠端主機。請稍後再試或聯絡網路管理員尋求協助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331651" xml:space="preserve">
-    <value>Your computer can't connect to the remote computer due to one of the following reasons:  1) The requested Remote Desktop Gateway server address and the server SSL certificate subject name do not match. 2) The certificate is expired or revoked. 3) The certificate root authority does not trust the certificate.  Contact your network administrator for assistance.</value>
+    <value>您的電腦無法連線至遠端主機，原因可能為下列之一：1) 請求的遠端桌面閘道伺服器位址與其 SSL 憑證主旨名稱不符。2) 憑證已過期或被吊銷。3) 根憑證機構不信任該憑證。  請聯絡網路管理員以獲得協助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331653" xml:space="preserve">
-    <value>This computer can't verify the identity of the RD Gateway "". It's not safe to connect to servers that can't be identified. Contact your network administrator for assistance.</value>
+    <value>此電腦無法驗證 RD 閘道「」的身份。連線至無法確認身分的伺服器並不安全，請聯絡網路管理員以獲得協助。</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331654" xml:space="preserve">
     <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server address requested and the certificate subject name do not match. Contact your network administrator for assistance.</value>
