@@ -11,6 +11,8 @@ As a sysadmin or developer, you often need to modify the hosts file in order to 
 
 <!-- truncate -->
 
+![Hosts File Editor](./hosts-file-editor.gif)
+
 The hosts file is a plain text file used by the operating system to map hostnames to IP addresses. It is typically located at:
 
 - Windows: `C:\Windows\System32\drivers\etc\hosts`
@@ -23,9 +25,9 @@ in your hosts file without needing to manually open and edit the file.
 A daily backup (up to 5 versions) of the hosts file is created automatically before any changes are applied,
 allowing you to restore previous versions if needed.
 
-Upgrade now to the latest version of NETworkManager to use this feature: </download>
+Upgrade now to the latest version of NETworkManager to use this feature: <https://borntoberoot.net/NETworkManager/download>
 
-More information is available in the official documentation: </docs/application/hosts-file-editor>
+More information is available in the official documentation: <https://borntoberoot.net/NETworkManager/docs/application/hosts-file-editor>
 
 If you find any issues or have suggestions for improvement, please open an issue on GitHub:
 <https://github.com/BornToBeRoot/NETworkManager/issues>
