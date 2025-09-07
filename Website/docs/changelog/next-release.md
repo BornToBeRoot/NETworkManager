@@ -19,6 +19,8 @@ Release date: **xx.xx.2025**
 
 ## What's new?
 
+- Profile's can now be filtered by tags. Next to the search textbox, a new filter button is available. [#3144](https://github.com/BornToBeRoot/NETworkManager/pull/3144)
+
 ## Improvements
 
 - Redesign settings reset dialog. [#3138](https://github.com/BornToBeRoot/NETworkManager/pull/3138)
