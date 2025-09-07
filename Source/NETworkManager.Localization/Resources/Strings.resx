@@ -3975,4 +3975,13 @@ Right-click for more options.</value>
   <data name="FilterByTags" xml:space="preserve">
     <value>Filter by tags</value>
   </data>
+  <data name="NoTagsFound" xml:space="preserve">
+    <value>No tags found!</value>
+  </data>
+  <data name="Match" xml:space="preserve">
+    <value>Match</value>
+  </data>
+  <data name="Any" xml:space="preserve">
+    <value>Any</value>
+  </data>
 </root>

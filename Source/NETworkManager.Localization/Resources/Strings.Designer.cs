@@ -709,6 +709,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Any.
+        /// </summary>
+        public static string Any {
+            get {
+                return ResourceManager.GetString("Any", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Appearance.
         /// </summary>
         public static string Appearance {
@@ -5796,6 +5805,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Match.
+        /// </summary>
+        public static string Match {
+            get {
+                return ResourceManager.GetString("Match", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mauve.
         /// </summary>
         public static string Mauve {
@@ -6333,6 +6351,15 @@ namespace NETworkManager.Localization.Resources {
         public static string NoReachableHostsFound {
             get {
                 return ResourceManager.GetString("NoReachableHostsFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No tags found!.
+        /// </summary>
+        public static string NoTagsFound {
+            get {
+                return ResourceManager.GetString("NoTagsFound", resourceCulture);
             }
         }
         

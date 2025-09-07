@@ -212,36 +212,66 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    private bool _filterIsOpen;
+    private bool _profileFilterIsOpen;
 
-    public bool FilterIsOpen
+    public bool ProfileFilterIsOpen
     {
-        get => _filterIsOpen;
+        get => _profileFilterIsOpen;
         set
         {
-            if (value == _filterIsOpen)
+            if (value == _profileFilterIsOpen)
                 return;
 
-            _filterIsOpen = value;
+            _profileFilterIsOpen = value;
             OnPropertyChanged();
         }
     }
 
-    public ICollectionView Tags { get; set; }
+    public ICollectionView ProfileTagsFilterView { get; set; }
 
-    public ObservableCollection<FilterTag> FilterTags { get; set; } = [];
+    public ObservableCollection<ProfileTagsFilterInfo> ProfileTagsFilter { get; set; } = [];
 
-    private bool _isFilterSet;
+    private bool _profileTagsMatchAny = GlobalStaticConfiguration.Profile_TagsMatchAny;
 
-    public bool IsFilterSet
+    public bool ProfileTagsMatchAny
     {
-        get => _isFilterSet;
+        get => _profileTagsMatchAny;
         set
         {
-            if (value == _isFilterSet)
+            if (value == _profileTagsMatchAny)
                 return;
 
-            _isFilterSet = value;
+            _profileTagsMatchAny = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _profileTagsMatchAll;
+
+    public bool ProfileTagsMatchAll
+    {
+        get => _profileTagsMatchAll;
+        set
+        {
+            if (value == _profileTagsMatchAll)
+                return;
+
+            _profileTagsMatchAll = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _isProfileFilterSet;
+
+    public bool IsProfileFilterSet
+    {
+        get => _isProfileFilterSet;
+        set
+        {
+            if (value == _isProfileFilterSet)
+                return;
+
+            _isProfileFilterSet = value;
             OnPropertyChanged();
         }
     }
@@ -316,8 +346,8 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         // Profiles
         CreateTags();
 
-        Tags = CollectionViewSource.GetDefaultView(FilterTags);
-        Tags.SortDescriptions.Add(new SortDescription(nameof(FilterTag.Name), ListSortDirection.Ascending));
+        ProfileTagsFilterView = CollectionViewSource.GetDefaultView(ProfileTagsFilter);
+        ProfileTagsFilterView.SortDescriptions.Add(new SortDescription(nameof(ProfileTagsFilterInfo.Name), ListSortDirection.Ascending));
 
         SetProfilesView(new ProfileFilterInfo());
 
@@ -442,34 +472,34 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         Search = string.Empty;
     }
 
-    public ICommand OpenFilterCommand => new RelayCommand(_ => OpenFilterAction());
+    public ICommand OpenProfileFilterCommand => new RelayCommand(_ => OpenProfileFilterAction());
 
-    private void OpenFilterAction()
+    private void OpenProfileFilterAction()
     {
-        FilterIsOpen = true;
+        ProfileFilterIsOpen = true;
     }
 
-    public ICommand ApplyFilterCommand => new RelayCommand(_ => ApplyFilterAction());
+    public ICommand ApplyProfileFilterCommand => new RelayCommand(_ => ApplyProfileFilterAction());
 
-    private void ApplyFilterAction()
+    private void ApplyProfileFilterAction()
     {
         RefreshProfiles();
 
-        IsFilterSet = true;
-        FilterIsOpen = false;
+        IsProfileFilterSet = true;
+        ProfileFilterIsOpen = false;
     }
 
-    public ICommand ClearFilterCommand => new RelayCommand(_ => ClearFilterAction());
+    public ICommand ClearProfileFilterCommand => new RelayCommand(_ => ClearProfileFilterAction());
 
-    private void ClearFilterAction()
+    private void ClearProfileFilterAction()
     {
-        foreach (var tag in FilterTags)
+        foreach (var tag in ProfileTagsFilter)
             tag.IsSelected = false;
 
         RefreshProfiles();
 
-        IsFilterSet = false;
-        FilterIsOpen = false;
+        IsProfileFilterSet = false;
+        ProfileFilterIsOpen = false;
     }
 
     #endregion
@@ -656,18 +686,18 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
         var tagSet = new HashSet<string>(tags);
 
-        for (var i = FilterTags.Count - 1; i >= 0; i--)
+        for (var i = ProfileTagsFilter.Count - 1; i >= 0; i--)
         {
-            if (!tagSet.Contains(FilterTags[i].Name))
-                FilterTags.RemoveAt(i);
+            if (!tagSet.Contains(ProfileTagsFilter[i].Name))
+                ProfileTagsFilter.RemoveAt(i);
         }
 
-        var existingTagNames = new HashSet<string>(FilterTags.Select(ft => ft.Name));
+        var existingTagNames = new HashSet<string>(ProfileTagsFilter.Select(ft => ft.Name));
 
         foreach (var tag in tags)
         {
             if (!existingTagNames.Contains(tag))
-                FilterTags.Add(new FilterTag(false, tag));
+                ProfileTagsFilter.Add(new ProfileTagsFilterInfo(false, tag));
         }
     }
 
@@ -677,11 +707,14 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         {
             Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.PingMonitor_Enabled && (
             string.IsNullOrEmpty(filter.Search) || x.Name.IndexOf(filter.Search) > -1 || x.PingMonitor_Host.IndexOf(filter.Search) > -1) && (
-            !filter.Tags.Any() || filter.Tags.All(tag => x.TagsCollection.Contains(tag)))
+            // If no tags are selected, show all profiles
+            (!filter.Tags.Any()) ||
+            // Any tag can match
+            (filter.TagsFilterMatch == ProfileTagsFilterMatch.Any && filter.Tags.Any(tag => x.TagsCollection.Contains(tag))) ||
+            // All tags must match
+            (filter.TagsFilterMatch == ProfileTagsFilterMatch.All && filter.Tags.All(tag => x.TagsCollection.Contains(tag))))
             ).OrderBy(x => x.Group).ThenBy(x => x.Name)
         }.View;
-
-        // Add "Any" based in selection
 
         Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
 
@@ -703,7 +736,8 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         SetProfilesView(new ProfileFilterInfo
         {
             Search = Search,
-            Tags = [.. FilterTags.Where(x => x.IsSelected).Select(x => x.Name)]
+            Tags = [.. ProfileTagsFilter.Where(x => x.IsSelected).Select(x => x.Name)],
+            TagsFilterMatch = ProfileTagsMatchAny ? ProfileTagsFilterMatch.Any : ProfileTagsFilterMatch.All
         }, SelectedProfile);
     }
     #endregion

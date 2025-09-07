@@ -31,6 +31,7 @@ public static class GlobalStaticConfiguration
     public static int NetworkChangeDetectionDelay => 5000;
 
     // Profile config
+    public static bool Profile_TagsMatchAny => true;
     public static bool Profile_ExpandProfileView => true;
     public static double Profile_WidthCollapsed => 40;
     public static double Profile_DefaultWidthExpanded => 250;

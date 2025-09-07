@@ -16,4 +16,9 @@ public class ProfileFilterInfo
     /// Tags for filtering profiles.
     /// </summary>
     public IEnumerable<string> Tags { get; set; } = [];
+
+    /// <summary>
+    /// Indicates whether to match any or all tags in the filter.
+    /// </summary>
+    public ProfileTagsFilterMatch TagsFilterMatch { get; set; } = ProfileTagsFilterMatch.Any;
 }
