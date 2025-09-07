@@ -5,6 +5,7 @@ using NETworkManager.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -158,6 +159,69 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
         }
     }
 
+    private bool _profileFilterIsOpen;
+
+    public bool ProfileFilterIsOpen
+    {
+        get => _profileFilterIsOpen;
+        set
+        {
+            if (value == _profileFilterIsOpen)
+                return;
+
+            _profileFilterIsOpen = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public ICollectionView ProfileFilterTagsView { get; set; }
+
+    public ObservableCollection<ProfileFilterTagsInfo> ProfileFilterTags { get; set; } = [];
+
+    private bool _profileFilterTagsMatchAny = GlobalStaticConfiguration.Profile_TagsMatchAny;
+
+    public bool ProfileFilterTagsMatchAny
+    {
+        get => _profileFilterTagsMatchAny;
+        set
+        {
+            if (value == _profileFilterTagsMatchAny)
+                return;
+
+            _profileFilterTagsMatchAny = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _profileFilterTagsMatchAll;
+
+    public bool ProfileFilterTagsMatchAll
+    {
+        get => _profileFilterTagsMatchAll;
+        set
+        {
+            if (value == _profileFilterTagsMatchAll)
+                return;
+
+            _profileFilterTagsMatchAll = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _isProfileFilterSet;
+
+    public bool IsProfileFilterSet
+    {
+        get => _isProfileFilterSet;
+        set
+        {
+            if (value == _isProfileFilterSet)
+                return;
+
+            _isProfileFilterSet = value;
+            OnPropertyChanged();
+        }
+    }
     #endregion
 
     #region Commands & Actions
@@ -222,6 +286,36 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     private void DeleteGroupAction()
     {
         ProfileDialogManager.ShowDeleteGroupDialog(Application.Current.MainWindow, this, SelectedGroup).ConfigureAwait(false);
+    }
+
+    public ICommand OpenProfileFilterCommand => new RelayCommand(_ => OpenProfileFilterAction());
+
+    private void OpenProfileFilterAction()
+    {
+        ProfileFilterIsOpen = true;
+    }
+
+    public ICommand ApplyProfileFilterCommand => new RelayCommand(_ => ApplyProfileFilterAction());
+
+    private void ApplyProfileFilterAction()
+    {
+        RefreshProfiles();
+
+        IsProfileFilterSet = true;
+        ProfileFilterIsOpen = false;
+    }
+
+    public ICommand ClearProfileFilterCommand => new RelayCommand(_ => ClearProfileFilterAction());
+
+    private void ClearProfileFilterAction()
+    {
+        foreach (var tag in ProfileFilterTags)
+            tag.IsSelected = false;
+
+        RefreshProfiles();
+
+        IsProfileFilterSet = false;
+        ProfileFilterIsOpen = false;
     }
 
     #endregion

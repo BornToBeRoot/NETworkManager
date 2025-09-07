@@ -581,7 +581,7 @@ public static class ProfileDialogManager
                 Strings.Delete
             );
 
-        childWindow.Title = Strings.DeleteProfile;
+        childWindow.Title = profiles.Count == 1 ? Strings.DeleteProfile : Strings.DeleteProfiles;
 
         childWindow.DataContext = childWindowViewModel;
 
