@@ -328,7 +328,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         WriteDefaultProfileToRegistry();
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.AWSSessionManager);
-        InterTabPartition = ApplicationName.AWSSessionManager.ToString();
+        InterTabPartition = nameof(ApplicationName.AWSSessionManager);
 
         TabItems = [];
 

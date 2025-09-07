@@ -214,7 +214,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
         CheckSettings();
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.TigerVNC);
-        InterTabPartition = ApplicationName.TigerVNC.ToString();
+        InterTabPartition = nameof(ApplicationName.TigerVNC);
 
         TabItems = [];
 

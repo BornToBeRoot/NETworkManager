@@ -195,7 +195,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
         _dialogCoordinator = instance;
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.RemoteDesktop);
-        InterTabPartition = ApplicationName.RemoteDesktop.ToString();
+        InterTabPartition = nameof(ApplicationName.RemoteDesktop);
 
         TabItems = [];
 

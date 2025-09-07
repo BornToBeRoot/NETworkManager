@@ -193,7 +193,7 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
         _dialogCoordinator = instance;
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.SNMP);
-        InterTabPartition = ApplicationName.SNMP.ToString();
+        InterTabPartition = nameof(ApplicationName.SNMP);
 
         TabItems = [];
         AddTab();

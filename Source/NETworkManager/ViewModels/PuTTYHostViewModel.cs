@@ -255,7 +255,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         WriteDefaultProfileToRegistry();
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.PuTTY);
-        InterTabPartition = ApplicationName.PuTTY.ToString();
+        InterTabPartition = nameof(ApplicationName.PuTTY);
 
         TabItems = [];
 

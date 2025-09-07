@@ -191,7 +191,7 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
         _dialogCoordinator = instance;
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.Whois);
-        InterTabPartition = ApplicationName.Whois.ToString();
+        InterTabPartition = nameof(ApplicationName.Whois);
 
         var tabId = Guid.NewGuid();
 

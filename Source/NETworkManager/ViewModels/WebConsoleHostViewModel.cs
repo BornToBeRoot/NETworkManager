@@ -227,7 +227,7 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         }
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.WebConsole);
-        InterTabPartition = ApplicationName.WebConsole.ToString();
+        InterTabPartition = nameof(ApplicationName.WebConsole);
 
         TabItems = [];
 
