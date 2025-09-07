@@ -3815,11 +3815,9 @@ Versuchen Sie es in einigen Sekunden erneut.</value>
     <value>Erweitern und Suche öffnen...</value>
   </data>
   <data name="WiFiAccessNotAvailableMessage" xml:space="preserve">
-    <value>Der Zugriff auf den Wi-Fi-Adapter wird von Windows nicht zugelassen.
+    <value>Ab Windows 11 24H2 müssen Sie den Zugriff auf den WLAN-Adapter erlauben.
 
-Öffnen Sie die Windows-Einstellungen und erlauben Sie den Wi-Fi-Zugriff für diese Anwendung.
-
-Starten Sie die Anwendung anschließend neu, um das Feature zu nutzen.</value>
+Öffnen Sie Windows-Einstellungen &gt; Datenschutz &amp; Sicherheit &gt; Standort, aktivieren Sie den Zugriff für Desktop-Apps / NETworkManager und starten Sie die Anwendung anschließend neu.</value>
   </data>
   <data name="DragDropApplicationsToReorderRightClickForMoreOptions" xml:space="preserve">
     <value>Mit Drag &amp; Drop können Sie die Anwendungen neu anordnen.

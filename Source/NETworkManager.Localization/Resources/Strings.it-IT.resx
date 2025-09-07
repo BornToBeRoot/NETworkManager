@@ -3911,11 +3911,9 @@ Attendi il completamento del processo e riprova.</value>
     <value>Espandi e apri ricerca...</value>
   </data>
   <data name="WiFiAccessNotAvailableMessage" xml:space="preserve">
-    <value>L'accesso alla scheda Wi-Fi non è consentito da Windows.
+    <value>A partire da Windows 11 24H2, dovrai consentire l'accesso all'adattatore Wi-Fi.
 
-Apri le impostazioni di Windows e consenti l'accesso Wi-Fi per questa applicazione.
-
-Per usare questa funzionalità riavvia l'applicazione.</value>
+Apri 'Impostazioni Windows' -&gt; 'Privacy e sicurezza'-&gt; 'Posizione', abilita l'accesso per le app desktop / NetworkManager, quindi riavvia l'applicazione.</value>
   </data>
   <data name="DragDropApplicationsToReorderRightClickForMoreOptions" xml:space="preserve">
     <value>Trascina e rilascia le applicazioni per riordinarle.
