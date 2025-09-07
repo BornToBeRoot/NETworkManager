@@ -227,36 +227,36 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    public ICollectionView ProfileTagsFilterView { get; set; }
+    public ICollectionView ProfileFilterTagsView { get; set; }
 
-    public ObservableCollection<ProfileTagsFilterInfo> ProfileTagsFilter { get; set; } = [];
+    public ObservableCollection<ProfileFilterTagsInfo> ProfileFilterTags { get; set; } = [];
 
-    private bool _profileTagsMatchAny = GlobalStaticConfiguration.Profile_TagsMatchAny;
+    private bool _profileFilterTagsMatchAny = GlobalStaticConfiguration.Profile_TagsMatchAny;
 
-    public bool ProfileTagsMatchAny
+    public bool ProfileFilterTagsMatchAny
     {
-        get => _profileTagsMatchAny;
+        get => _profileFilterTagsMatchAny;
         set
         {
-            if (value == _profileTagsMatchAny)
+            if (value == _profileFilterTagsMatchAny)
                 return;
 
-            _profileTagsMatchAny = value;
+            _profileFilterTagsMatchAny = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _profileTagsMatchAll;
+    private bool _profileFilterTagsMatchAll;
 
-    public bool ProfileTagsMatchAll
+    public bool ProfileFilterTagsMatchAll
     {
-        get => _profileTagsMatchAll;
+        get => _profileFilterTagsMatchAll;
         set
         {
-            if (value == _profileTagsMatchAll)
+            if (value == _profileFilterTagsMatchAll)
                 return;
 
-            _profileTagsMatchAll = value;
+            _profileFilterTagsMatchAll = value;
             OnPropertyChanged();
         }
     }
@@ -323,7 +323,6 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-
     #endregion
 
     #endregion
@@ -346,8 +345,8 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         // Profiles
         CreateTags();
 
-        ProfileTagsFilterView = CollectionViewSource.GetDefaultView(ProfileTagsFilter);
-        ProfileTagsFilterView.SortDescriptions.Add(new SortDescription(nameof(ProfileTagsFilterInfo.Name), ListSortDirection.Ascending));
+        ProfileFilterTagsView = CollectionViewSource.GetDefaultView(ProfileFilterTags);
+        ProfileFilterTagsView.SortDescriptions.Add(new SortDescription(nameof(ProfileFilterTagsInfo.Name), ListSortDirection.Ascending));
 
         SetProfilesView(new ProfileFilterInfo());
 
@@ -493,7 +492,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private void ClearProfileFilterAction()
     {
-        foreach (var tag in ProfileTagsFilter)
+        foreach (var tag in ProfileFilterTags)
             tag.IsSelected = false;
 
         RefreshProfiles();
@@ -686,18 +685,18 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
         var tagSet = new HashSet<string>(tags);
 
-        for (var i = ProfileTagsFilter.Count - 1; i >= 0; i--)
+        for (var i = ProfileFilterTags.Count - 1; i >= 0; i--)
         {
-            if (!tagSet.Contains(ProfileTagsFilter[i].Name))
-                ProfileTagsFilter.RemoveAt(i);
+            if (!tagSet.Contains(ProfileFilterTags[i].Name))
+                ProfileFilterTags.RemoveAt(i);
         }
 
-        var existingTagNames = new HashSet<string>(ProfileTagsFilter.Select(ft => ft.Name));
+        var existingTagNames = new HashSet<string>(ProfileFilterTags.Select(ft => ft.Name));
 
         foreach (var tag in tags)
         {
             if (!existingTagNames.Contains(tag))
-                ProfileTagsFilter.Add(new ProfileTagsFilterInfo(false, tag));
+                ProfileFilterTags.Add(new ProfileFilterTagsInfo(false, tag));
         }
     }
 
@@ -710,9 +709,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
             // If no tags are selected, show all profiles
             (!filter.Tags.Any()) ||
             // Any tag can match
-            (filter.TagsFilterMatch == ProfileTagsFilterMatch.Any && filter.Tags.Any(tag => x.TagsCollection.Contains(tag))) ||
+            (filter.TagsFilterMatch == ProfileFilterTagsMatch.Any && filter.Tags.Any(tag => x.TagsCollection.Contains(tag))) ||
             // All tags must match
-            (filter.TagsFilterMatch == ProfileTagsFilterMatch.All && filter.Tags.All(tag => x.TagsCollection.Contains(tag))))
+            (filter.TagsFilterMatch == ProfileFilterTagsMatch.All && filter.Tags.All(tag => x.TagsCollection.Contains(tag))))
             ).OrderBy(x => x.Group).ThenBy(x => x.Name)
         }.View;
 
@@ -736,8 +735,8 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         SetProfilesView(new ProfileFilterInfo
         {
             Search = Search,
-            Tags = [.. ProfileTagsFilter.Where(x => x.IsSelected).Select(x => x.Name)],
-            TagsFilterMatch = ProfileTagsMatchAny ? ProfileTagsFilterMatch.Any : ProfileTagsFilterMatch.All
+            Tags = [.. ProfileFilterTags.Where(x => x.IsSelected).Select(x => x.Name)],
+            TagsFilterMatch = ProfileFilterTagsMatchAny ? ProfileFilterTagsMatch.Any : ProfileFilterTagsMatch.All
         }, SelectedProfile);
     }
     #endregion

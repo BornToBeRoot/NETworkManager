@@ -20,5 +20,5 @@ public class ProfileFilterInfo
     /// <summary>
     /// Indicates whether to match any or all tags in the filter.
     /// </summary>
-    public ProfileTagsFilterMatch TagsFilterMatch { get; set; } = ProfileTagsFilterMatch.Any;
+    public ProfileFilterTagsMatch TagsFilterMatch { get; set; } = ProfileFilterTagsMatch.Any;
 }

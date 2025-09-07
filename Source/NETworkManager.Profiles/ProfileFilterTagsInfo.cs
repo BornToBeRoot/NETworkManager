@@ -5,7 +5,7 @@ namespace NETworkManager.Profiles;
 /// <summary>
 /// Class used to represent a tag filter in the UI (Popup).
 /// </summary>
-public class ProfileTagsFilterInfo : PropertyChangedBase
+public class ProfileFilterTagsInfo : PropertyChangedBase
 {
     /// <summary>
     /// Private field for <see cref="IsSelected"/>.
@@ -34,11 +34,11 @@ public class ProfileTagsFilterInfo : PropertyChangedBase
     public string Name { get; set; }
 
     /// <summary>
-    /// Creates a new instance of <see cref="ProfileTagsFilterInfo"/> with parameters.
+    /// Creates a new instance of <see cref="ProfileFilterTagsInfo"/> with parameters.
     /// </summary>
     /// <param name="isSelected">Indicates whether the tag is selected for filtering.</param>
     /// <param name="name">Tag name.</param>
-    public ProfileTagsFilterInfo(bool isSelected, string name)
+    public ProfileFilterTagsInfo(bool isSelected, string name)
     {
         IsSelected = isSelected;
         Name = name;

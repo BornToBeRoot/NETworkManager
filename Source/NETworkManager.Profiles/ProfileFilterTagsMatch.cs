@@ -3,7 +3,7 @@
 /// <summary>
 /// Enumeration for tag filtering options.
 /// </summary>
-public enum ProfileTagsFilterMatch
+public enum ProfileFilterTagsMatch
 {
     /// <summary>
     /// Any of the tags can match.
