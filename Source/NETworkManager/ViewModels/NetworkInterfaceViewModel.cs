@@ -1439,10 +1439,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
         var existingTagNames = new HashSet<string>(ProfileFilterTags.Select(ft => ft.Name));
 
-        foreach (var tag in tags)
+        foreach (var tag in tags.Where(tag => !existingTagNames.Contains(tag)))
         {
-            if (!existingTagNames.Contains(tag))
-                ProfileFilterTags.Add(new ProfileFilterTagsInfo(false, tag));
+            ProfileFilterTags.Add(new ProfileFilterTagsInfo(false, tag));
         }
     }
 
@@ -1451,7 +1450,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         Profiles = new CollectionViewSource
         {
             Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.NetworkInterface_Enabled && (
-            string.IsNullOrEmpty(filter.Search) || x.Name.IndexOf(filter.Search) > -1) && (
+            string.IsNullOrEmpty(filter.Search) || x.Name.IndexOf(filter.Search, StringComparison.Ordinal) > -1) && (
             // If no tags are selected, show all profiles
             (!filter.Tags.Any()) ||
             // Any tag can match
@@ -1492,6 +1491,8 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
     {
+        CreateTags();
+        
         RefreshProfiles();
     }
 

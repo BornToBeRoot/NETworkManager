@@ -227,9 +227,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    public ICollectionView ProfileFilterTagsView { get; set; }
+    public ICollectionView ProfileFilterTagsView { get; }
 
-    public ObservableCollection<ProfileFilterTagsInfo> ProfileFilterTags { get; set; } = [];
+    private ObservableCollection<ProfileFilterTagsInfo> ProfileFilterTags { get; } = [];
 
     private bool _profileFilterTagsMatchAny = GlobalStaticConfiguration.Profile_TagsMatchAny;
 
@@ -693,10 +693,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
         var existingTagNames = new HashSet<string>(ProfileFilterTags.Select(ft => ft.Name));
 
-        foreach (var tag in tags)
+        foreach (var tag in tags.Where(tag => !existingTagNames.Contains(tag)))
         {
-            if (!existingTagNames.Contains(tag))
-                ProfileFilterTags.Add(new ProfileFilterTagsInfo(false, tag));
+            ProfileFilterTags.Add(new ProfileFilterTagsInfo(false, tag));
         }
     }
 
@@ -705,7 +704,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         Profiles = new CollectionViewSource
         {
             Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.PingMonitor_Enabled && (
-            string.IsNullOrEmpty(filter.Search) || x.Name.IndexOf(filter.Search) > -1 || x.PingMonitor_Host.IndexOf(filter.Search) > -1) && (
+            string.IsNullOrEmpty(filter.Search) || x.Name.IndexOf(filter.Search, StringComparison.Ordinal) > -1 || x.PingMonitor_Host.IndexOf(filter.Search, StringComparison.Ordinal) > -1) && (
             // If no tags are selected, show all profiles
             (!filter.Tags.Any()) ||
             // Any tag can match
