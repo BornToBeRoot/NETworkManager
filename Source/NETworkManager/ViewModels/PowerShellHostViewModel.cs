@@ -255,7 +255,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         WriteDefaultProfileToRegistry();
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.PowerShell);
-        InterTabPartition = ApplicationName.PowerShell.ToString();
+        InterTabPartition = nameof(ApplicationName.PowerShell);
 
         TabItems = [];
 
