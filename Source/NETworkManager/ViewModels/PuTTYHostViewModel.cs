@@ -29,10 +29,13 @@ namespace NETworkManager.ViewModels;
 public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
+
     private static readonly ILog Log = LogManager.GetLogger(typeof(PuTTYHostViewModel));
 
     private readonly IDialogCoordinator _dialogCoordinator;
+
     private readonly DispatcherTimer _searchDispatcherTimer = new();
+    private bool _searchDisabled;
 
     public IInterTabClient InterTabClient { get; }
 
@@ -146,8 +149,11 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
             _search = value;
 
             // Start searching...
-            IsSearching = true;
-            _searchDispatcherTimer.Start();
+            if (!_searchDisabled)
+            {
+                IsSearching = true;
+                _searchDispatcherTimer.Start();
+            }
 
             OnPropertyChanged();
         }
@@ -233,7 +239,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-    
+
     private bool _canProfileWidthChange = true;
     private double _tempProfileWidth;
 
@@ -327,7 +333,8 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         CreateTags();
 
         ProfileFilterTagsView = CollectionViewSource.GetDefaultView(ProfileFilterTags);
-        ProfileFilterTagsView.SortDescriptions.Add(new SortDescription(nameof(ProfileFilterTagsInfo.Name), ListSortDirection.Ascending));
+        ProfileFilterTagsView.SortDescriptions.Add(new SortDescription(nameof(ProfileFilterTagsInfo.Name),
+            ListSortDirection.Ascending));
 
         SetProfilesView(new ProfileFilterInfo());
 
@@ -435,7 +442,8 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.PuTTY)
+        ProfileDialogManager
+            .ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.PuTTY)
             .ConfigureAwait(false);
     }
 
@@ -448,14 +456,16 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
     private void EditProfileAction()
     {
-        ProfileDialogManager.ShowEditProfileDialog(Application.Current.MainWindow, this, SelectedProfile).ConfigureAwait(false);
+        ProfileDialogManager.ShowEditProfileDialog(Application.Current.MainWindow, this, SelectedProfile)
+            .ConfigureAwait(false);
     }
 
     public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile).ConfigureAwait(false);
+        ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile)
+            .ConfigureAwait(false);
     }
 
     public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
@@ -471,7 +481,8 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(Application.Current.MainWindow, this, ProfileManager.GetGroupByName($"{group}"))
+        ProfileDialogManager
+            .ShowEditGroupDialog(Application.Current.MainWindow, this, ProfileManager.GetGroupByName($"{group}"))
             .ConfigureAwait(false);
     }
 
@@ -483,13 +494,6 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     public ICommand TextBoxSearchLostFocusCommand
     {
         get { return new RelayCommand(_ => _textBoxSearchIsFocused = false); }
-    }
-
-    public ICommand ClearSearchCommand => new RelayCommand(_ => ClearSearchAction());
-
-    private void ClearSearchAction()
-    {
-        Search = string.Empty;
     }
 
     public ICommand OpenProfileFilterCommand => new RelayCommand(_ => OpenProfileFilterAction());
@@ -505,7 +509,6 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     {
         RefreshProfiles();
 
-        IsProfileFilterSet = true;
         ProfileFilterIsOpen = false;
     }
 
@@ -513,6 +516,10 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
     private void ClearProfileFilterAction()
     {
+        _searchDisabled = true;
+        Search = string.Empty;
+        _searchDisabled = false;
+        
         foreach (var tag in ProfileFilterTags)
             tag.IsSelected = false;
 
@@ -521,7 +528,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         IsProfileFilterSet = false;
         ProfileFilterIsOpen = false;
     }
-    
+
     public ICommand OpenSettingsCommand => new RelayCommand(_ => OpenSettingsAction());
 
     private static void OpenSettingsAction()
@@ -532,13 +539,14 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #region Methods
+
     /// <summary>
     /// Check if executable is configured and exists.
     /// </summary>
     private void CheckExecutable()
     {
         IsExecutableConfigured = !string.IsNullOrEmpty(SettingsManager.Current.PuTTY_ApplicationFilePath) &&
-                       File.Exists(SettingsManager.Current.PuTTY_ApplicationFilePath);
+                                 File.Exists(SettingsManager.Current.PuTTY_ApplicationFilePath);
 
         if (IsExecutableConfigured)
             Log.Info($"PuTTY executable configured: \"{SettingsManager.Current.PuTTY_ApplicationFilePath}\"");
@@ -803,7 +811,8 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
     private void CreateTags()
     {
-        var tags = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.PuTTY_Enabled).SelectMany(x => x.TagsCollection).Distinct().ToList();
+        var tags = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.PuTTY_Enabled)
+            .SelectMany(x => x.TagsCollection).Distinct().ToList();
 
         var tagSet = new HashSet<string>(tags);
 
@@ -820,19 +829,23 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
             ProfileFilterTags.Add(new ProfileFilterTagsInfo(false, tag));
         }
     }
-    
+
     private void SetProfilesView(ProfileFilterInfo filter, ProfileInfo profile = null)
     {
         Profiles = new CollectionViewSource
         {
             Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.PuTTY_Enabled && (
-                    string.IsNullOrEmpty(filter.Search) || x.Name.IndexOf(filter.Search, StringComparison.Ordinal) > -1 || x.PuTTY_HostOrSerialLine.IndexOf(filter.Search, StringComparison.Ordinal) > -1) && (
+                    string.IsNullOrEmpty(filter.Search) ||
+                    x.Name.IndexOf(filter.Search, StringComparison.Ordinal) > -1 ||
+                    x.PuTTY_HostOrSerialLine.IndexOf(filter.Search, StringComparison.Ordinal) > -1) && (
                     // If no tags are selected, show all profiles
                     (!filter.Tags.Any()) ||
                     // Any tag can match
-                    (filter.TagsFilterMatch == ProfileFilterTagsMatch.Any && filter.Tags.Any(tag => x.TagsCollection.Contains(tag))) ||
+                    (filter.TagsFilterMatch == ProfileFilterTagsMatch.Any &&
+                     filter.Tags.Any(tag => x.TagsCollection.Contains(tag))) ||
                     // All tags must match
-                    (filter.TagsFilterMatch == ProfileFilterTagsMatch.All && filter.Tags.All(tag => x.TagsCollection.Contains(tag))))
+                    (filter.TagsFilterMatch == ProfileFilterTagsMatch.All &&
+                     filter.Tags.All(tag => x.TagsCollection.Contains(tag))))
             ).OrderBy(x => x.Group).ThenBy(x => x.Name)
         }.View;
 
@@ -853,12 +866,16 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         if (!_isViewActive)
             return;
 
-        SetProfilesView(new ProfileFilterInfo
+        var filter = new ProfileFilterInfo
         {
             Search = Search,
             Tags = [.. ProfileFilterTags.Where(x => x.IsSelected).Select(x => x.Name)],
             TagsFilterMatch = ProfileFilterTagsMatchAny ? ProfileFilterTagsMatch.Any : ProfileFilterTagsMatch.All
-        }, SelectedProfile);
+        };
+
+        SetProfilesView(filter, SelectedProfile);
+
+        IsProfileFilterSet = !string.IsNullOrEmpty(filter.Search) || filter.Tags.Any();
     }
 
     public void OnProfileManagerDialogOpen()
@@ -901,7 +918,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
     {
         CreateTags();
-        
+
         RefreshProfiles();
     }
 

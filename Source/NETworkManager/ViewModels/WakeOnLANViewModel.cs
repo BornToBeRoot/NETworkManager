@@ -25,6 +25,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
     #region Variables
 
     private readonly DispatcherTimer _searchDispatcherTimer = new();
+    private bool _searchDisabled;
 
     private readonly bool _isLoading;
     private bool _isViewActive = true;
@@ -159,8 +160,11 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
             _search = value;
 
             // Start searching...
-            IsSearching = true;
-            _searchDispatcherTimer.Start();
+            if (!_searchDisabled)
+            {
+                IsSearching = true;
+                _searchDispatcherTimer.Start();
+            }
 
             OnPropertyChanged();
         }
@@ -420,13 +424,6 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
-    public ICommand ClearSearchCommand => new RelayCommand(_ => ClearSearchAction());
-
-    private void ClearSearchAction()
-    {
-        Search = string.Empty;
-    }
-
     public ICommand OpenProfileFilterCommand => new RelayCommand(_ => OpenProfileFilterAction());
 
     private void OpenProfileFilterAction()
@@ -440,7 +437,6 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
     {
         RefreshProfiles();
 
-        IsProfileFilterSet = true;
         ProfileFilterIsOpen = false;
     }
 
@@ -448,6 +444,10 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     private void ClearProfileFilterAction()
     {
+        _searchDisabled = true;
+        Search = string.Empty;
+        _searchDisabled = false;
+        
         foreach (var tag in ProfileFilterTags)
             tag.IsSelected = false;
 
@@ -611,12 +611,16 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
         if (!_isViewActive)
             return;
 
-        SetProfilesView(new ProfileFilterInfo
+        var filter = new ProfileFilterInfo
         {
             Search = Search,
             Tags = [.. ProfileFilterTags.Where(x => x.IsSelected).Select(x => x.Name)],
             TagsFilterMatch = ProfileFilterTagsMatchAny ? ProfileFilterTagsMatch.Any : ProfileFilterTagsMatch.All
-        }, SelectedProfile);
+        };
+
+        SetProfilesView(filter, SelectedProfile);
+
+        IsProfileFilterSet = !string.IsNullOrEmpty(filter.Search) || filter.Tags.Any();
     }
 
     #endregion
