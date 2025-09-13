@@ -511,9 +511,9 @@
                                     <Setter Property="ToolTip" Value="{x:Static localization:Strings.AddProfileDots}" />
                                     <Style.Triggers>
                                         <DataTrigger
-                                            Binding="{Binding Search, Converter={StaticResource StringNullOrEmptyToBoolConverter}}"
-                                            Value="False">
-                                            <Setter Property="Command" Value="{Binding ClearSearchCommand}" />
+                                            Binding="{Binding Path=IsProfileFilterSet}"
+                                            Value="True">
+                                            <Setter Property="Command" Value="{Binding Path=ClearProfileFilterCommand}" />
                                             <Setter Property="ToolTip"
                                                     Value="{x:Static localization:Strings.ClearFilter}" />
                                         </DataTrigger>
@@ -544,8 +544,8 @@
                                                             Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                 </DataTrigger>
                                                 <DataTrigger
-                                                    Binding="{Binding Search, Converter={StaticResource StringNullOrEmptyToBoolConverter}}"
-                                                    Value="False">
+                                                    Binding="{Binding Path=IsProfileFilterSet}"
+                                                    Value="True">
                                                     <Setter Property="OpacityMask" Value="{StaticResource VisualClear}" />
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -566,8 +566,8 @@
                                                             Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                 </DataTrigger>
                                                 <DataTrigger
-                                                    Binding="{Binding Search, Converter={StaticResource StringNullOrEmptyToBoolConverter}}"
-                                                    Value="False">
+                                                    Binding="{Binding Path=IsProfileFilterSet}"
+                                                    Value="True">
                                                     <Setter Property="Text"
                                                             Value="{x:Static localization:Strings.NothingFound}" />
                                                 </DataTrigger>
