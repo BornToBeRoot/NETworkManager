@@ -8,9 +8,9 @@
     <subtitle>NETworkManager Blog</subtitle>
     <icon>https://borntoberoot.net/NETworkManager/img/favicon.ico</icon>
     <entry>
-        <title type="html"><![CDATA[Hosts File Editor]]></title>
-        <id>https://borntoberoot.net/NETworkManager/blog/hosts-file-editor</id>
-        <link href="https://borntoberoot.net/NETworkManager/blog/hosts-file-editor"/>
+        <title type="html"><![CDATA[Indroducing <code>Hosts File Editor</code>]]></title>
+        <id>https://borntoberoot.net/NETworkManager/blog/indroducing-hosts-file-editor</id>
+        <link href="https://borntoberoot.net/NETworkManager/blog/indroducing-hosts-file-editor"/>
         <updated>2025-09-06T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[NETworkManager 2025.8.10.0 introduced a new feature, the Hosts File Editor. You can now easily manage and edit your system's hosts file in a user-friendly interface.]]></summary>
         <content type="html"><![CDATA[<p>NETworkManager 2025.8.10.0 introduced a new feature, the <code>Hosts File Editor</code>. You can now easily manage and edit your system's hosts file in a user-friendly interface.</p>
@@ -38,9 +38,9 @@ allowing you to restore previous versions if needed.</p>
         <category label="new feature" term="new feature"/>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Indroducing Code Signing]]></title>
-        <id>https://borntoberoot.net/NETworkManager/blog/introducing-code-signing</id>
-        <link href="https://borntoberoot.net/NETworkManager/blog/introducing-code-signing"/>
+        <title type="html"><![CDATA[Introducing Code Signing for Binaries]]></title>
+        <id>https://borntoberoot.net/NETworkManager/blog/added-code-signing-to-binaries</id>
+        <link href="https://borntoberoot.net/NETworkManager/blog/added-code-signing-to-binaries"/>
         <updated>2024-05-24T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Starting with NETworkManager version 2024.5.24.0, the binaries and the installer are now signed with a code signing certificate.]]></summary>
         <content type="html"><![CDATA[<p>Starting with NETworkManager version 2024.5.24.0, the binaries and the installer are now signed with a code signing certificate.</p>
@@ -61,8 +61,8 @@ The signed binaries are then uploaded to the <a href="https://github.com/BornToB
         <id>https://borntoberoot.net/NETworkManager/blog/welcome</id>
         <link href="https://borntoberoot.net/NETworkManager/blog/welcome"/>
         <updated>2024-01-01T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Welcome to the new NETworkManager website and documentation.]]></summary>
-        <content type="html"><![CDATA[<p>Welcome to the new NETworkManager website and documentation.</p>
+        <summary type="html"><![CDATA[Welcome to the new NETworkManager website, blod and documentation.]]></summary>
+        <content type="html"><![CDATA[<p>Welcome to the new NETworkManager website, blod and documentation.</p>
 <p>It's build with <a href="https://docusaurus.io/" target="_blank" rel="noopener noreferrer">Docusaurus</a>, a static website generator, and hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a>.</p>
 <p>You can help to improve the documentation by submitting a <a href="https://github.com/BornToBeRoot/NETworkManager" target="_blank" rel="noopener noreferrer">pull request</a>.</p>]]></content>
         <author>
