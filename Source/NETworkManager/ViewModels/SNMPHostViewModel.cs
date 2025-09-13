@@ -24,8 +24,6 @@ namespace NETworkManager.ViewModels;
 public class SNMPHostViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
-
-    private readonly IDialogCoordinator _dialogCoordinator;
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
     public IInterTabClient InterTabClient { get; }
@@ -250,11 +248,9 @@ public class SNMPHostViewModel : ViewModelBase, IProfileManager
 
     #region Constructor, load settings
 
-    public SNMPHostViewModel(IDialogCoordinator instance)
+    public SNMPHostViewModel()
     {
         _isLoading = true;
-
-        _dialogCoordinator = instance;
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.SNMP);
         InterTabPartition = nameof(ApplicationName.SNMP);

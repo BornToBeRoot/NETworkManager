@@ -1,14 +1,13 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
 public partial class WhoisHostView
 {
-    private readonly WhoisHostViewModel _viewModel = new(DialogCoordinator.Instance);
+    private readonly WhoisHostViewModel _viewModel = new();
 
     public WhoisHostView()
     {

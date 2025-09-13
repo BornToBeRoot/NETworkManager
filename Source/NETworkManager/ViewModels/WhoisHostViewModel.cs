@@ -23,7 +23,6 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
 
-    private readonly IDialogCoordinator _dialogCoordinator;
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
     public IInterTabClient InterTabClient { get; }
@@ -248,11 +247,9 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
 
     #region Constructor
 
-    public WhoisHostViewModel(IDialogCoordinator instance)
+    public WhoisHostViewModel()
     {
         _isLoading = true;
-
-        _dialogCoordinator = instance;
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.Whois);
         InterTabPartition = nameof(ApplicationName.Whois);

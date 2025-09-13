@@ -23,7 +23,6 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
 
-    private readonly IDialogCoordinator _dialogCoordinator;
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
     public IInterTabClient InterTabClient { get; }
@@ -248,12 +247,10 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
 
     #region Constructor
 
-    public IPGeolocationHostViewModel(IDialogCoordinator instance)
+    public IPGeolocationHostViewModel()
     {
         _isLoading = true;
-
-        _dialogCoordinator = instance;
-
+        
         InterTabClient = new DragablzInterTabClient(ApplicationName.IPGeolocation);
         InterTabPartition = nameof(ApplicationName.IPGeolocation);
 

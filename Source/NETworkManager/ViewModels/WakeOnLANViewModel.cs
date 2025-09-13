@@ -24,7 +24,6 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
 
-    private readonly IDialogCoordinator _dialogCoordinator;
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
     private readonly bool _isLoading;
@@ -245,7 +244,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-    
+
     private bool _canProfileWidthChange = true;
     private double _tempProfileWidth;
 
@@ -300,11 +299,9 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     #region Constructor, load settings
 
-    public WakeOnLANViewModel(IDialogCoordinator instance)
+    public WakeOnLANViewModel()
     {
         _isLoading = true;
-
-        _dialogCoordinator = instance;
 
         MACAddressHistoryView =
             CollectionViewSource.GetDefaultView(SettingsManager.Current.WakeOnLan_MACAddressHistory);
@@ -314,7 +311,8 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
         CreateTags();
 
         ProfileFilterTagsView = CollectionViewSource.GetDefaultView(ProfileFilterTags);
-        ProfileFilterTagsView.SortDescriptions.Add(new SortDescription(nameof(ProfileFilterTagsInfo.Name), ListSortDirection.Ascending));
+        ProfileFilterTagsView.SortDescriptions.Add(new SortDescription(nameof(ProfileFilterTagsInfo.Name),
+            ListSortDirection.Ascending));
 
         SetProfilesView(new ProfileFilterInfo());
 
@@ -378,7 +376,8 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.WakeOnLAN)
+        ProfileDialogManager
+            .ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.WakeOnLAN)
             .ConfigureAwait(false);
     }
 
@@ -391,14 +390,16 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     private void EditProfileAction()
     {
-        ProfileDialogManager.ShowEditProfileDialog(Application.Current.MainWindow, this, SelectedProfile).ConfigureAwait(false);
+        ProfileDialogManager.ShowEditProfileDialog(Application.Current.MainWindow, this, SelectedProfile)
+            .ConfigureAwait(false);
     }
 
     public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile).ConfigureAwait(false);
+        ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile)
+            .ConfigureAwait(false);
     }
 
     public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
@@ -414,7 +415,8 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(Application.Current.MainWindow, this, ProfileManager.GetGroupByName($"{group}"))
+        ProfileDialogManager
+            .ShowEditGroupDialog(Application.Current.MainWindow, this, ProfileManager.GetGroupByName($"{group}"))
             .ConfigureAwait(false);
     }
 
@@ -424,7 +426,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
     {
         Search = string.Empty;
     }
-    
+
     public ICommand OpenProfileFilterCommand => new RelayCommand(_ => OpenProfileFilterAction());
 
     private void OpenProfileFilterAction()
@@ -554,7 +556,8 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     private void CreateTags()
     {
-        var tags = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.WakeOnLAN_Enabled).SelectMany(x => x.TagsCollection).Distinct().ToList();
+        var tags = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.WakeOnLAN_Enabled)
+            .SelectMany(x => x.TagsCollection).Distinct().ToList();
 
         var tagSet = new HashSet<string>(tags);
 
@@ -571,19 +574,23 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
             ProfileFilterTags.Add(new ProfileFilterTagsInfo(false, tag));
         }
     }
-    
+
     private void SetProfilesView(ProfileFilterInfo filter, ProfileInfo profile = null)
     {
         Profiles = new CollectionViewSource
         {
             Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.WakeOnLAN_Enabled && (
-                    string.IsNullOrEmpty(filter.Search) || x.Name.IndexOf(filter.Search, StringComparison.Ordinal) > -1 || x.WakeOnLAN_MACAddress.IndexOf(filter.Search, StringComparison.Ordinal) > -1) && (
+                    string.IsNullOrEmpty(filter.Search) ||
+                    x.Name.IndexOf(filter.Search, StringComparison.Ordinal) > -1 ||
+                    x.WakeOnLAN_MACAddress.IndexOf(filter.Search, StringComparison.Ordinal) > -1) && (
                     // If no tags are selected, show all profiles
                     (!filter.Tags.Any()) ||
                     // Any tag can match
-                    (filter.TagsFilterMatch == ProfileFilterTagsMatch.Any && filter.Tags.Any(tag => x.TagsCollection.Contains(tag))) ||
+                    (filter.TagsFilterMatch == ProfileFilterTagsMatch.Any &&
+                     filter.Tags.Any(tag => x.TagsCollection.Contains(tag))) ||
                     // All tags must match
-                    (filter.TagsFilterMatch == ProfileFilterTagsMatch.All && filter.Tags.All(tag => x.TagsCollection.Contains(tag))))
+                    (filter.TagsFilterMatch == ProfileFilterTagsMatch.All &&
+                     filter.Tags.All(tag => x.TagsCollection.Contains(tag))))
             ).OrderBy(x => x.Group).ThenBy(x => x.Name)
         }.View;
 
@@ -619,7 +626,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
     private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
     {
         CreateTags();
-        
+
         RefreshProfiles();
     }
 
