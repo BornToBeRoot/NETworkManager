@@ -5,7 +5,7 @@ authors: [borntoberoot]
 tags: [welcome, docusaurus]
 ---
 
-Welcome to the new NETworkManager website and documentation.
+Welcome to the new NETworkManager website, blod and documentation.
 
 It's build with [Docusaurus](https://docusaurus.io/), a static website generator, and hosted on [GitHub Pages](https://pages.github.com/).
 
