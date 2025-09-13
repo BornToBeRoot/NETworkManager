@@ -19,6 +19,8 @@ Release date: **xx.xx.2025**
 
 ## What's new?
 
+- Profile's can now be filtered by tags. Next to the search textbox, a new filter button is available. [#3144](https://github.com/BornToBeRoot/NETworkManager/pull/3144)
+
 ## Improvements
 
 - Redesign settings reset dialog. [#3138](https://github.com/BornToBeRoot/NETworkManager/pull/3138)
@@ -28,6 +30,9 @@ Release date: **xx.xx.2025**
 - Documentation for Windows 11 24H2 location permission added. [#3148](https://github.com/BornToBeRoot/NETworkManager/pull/3148)
 
 ## Bugfixes
+
+- **Profiles**
+  - Fixed an issue where only one profile was deleted in `Settings > Profiles` when multiple profiles were selected. [#3144](https://github.com/BornToBeRoot/NETworkManager/pull/3144) [#3145](https://github.com/BornToBeRoot/NETworkManager/issues/3145)
 
 ## Dependencies, Refactoring & Documentation
 

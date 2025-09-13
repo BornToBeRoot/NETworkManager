@@ -8,7 +8,7 @@ namespace NETworkManager.Views;
 
 public partial class PortScannerHostView
 {
-    private readonly PortScannerHostViewModel _viewModel = new(DialogCoordinator.Instance);
+    private readonly PortScannerHostViewModel _viewModel = new();
 
     public PortScannerHostView()
     {

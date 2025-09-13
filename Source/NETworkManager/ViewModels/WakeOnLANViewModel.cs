@@ -8,6 +8,7 @@ using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Net;
@@ -181,6 +182,70 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
         }
     }
 
+    private bool _profileFilterIsOpen;
+
+    public bool ProfileFilterIsOpen
+    {
+        get => _profileFilterIsOpen;
+        set
+        {
+            if (value == _profileFilterIsOpen)
+                return;
+
+            _profileFilterIsOpen = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public ICollectionView ProfileFilterTagsView { get; }
+
+    private ObservableCollection<ProfileFilterTagsInfo> ProfileFilterTags { get; } = [];
+
+    private bool _profileFilterTagsMatchAny = GlobalStaticConfiguration.Profile_TagsMatchAny;
+
+    public bool ProfileFilterTagsMatchAny
+    {
+        get => _profileFilterTagsMatchAny;
+        set
+        {
+            if (value == _profileFilterTagsMatchAny)
+                return;
+
+            _profileFilterTagsMatchAny = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _profileFilterTagsMatchAll;
+
+    public bool ProfileFilterTagsMatchAll
+    {
+        get => _profileFilterTagsMatchAll;
+        set
+        {
+            if (value == _profileFilterTagsMatchAll)
+                return;
+
+            _profileFilterTagsMatchAll = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _isProfileFilterSet;
+
+    public bool IsProfileFilterSet
+    {
+        get => _isProfileFilterSet;
+        set
+        {
+            if (value == _isProfileFilterSet)
+                return;
+
+            _isProfileFilterSet = value;
+            OnPropertyChanged();
+        }
+    }
+    
     private bool _canProfileWidthChange = true;
     private double _tempProfileWidth;
 
@@ -246,7 +311,12 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
         BroadcastHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.WakeOnLan_BroadcastHistory);
 
         // Profiles
-        SetProfilesView();
+        CreateTags();
+
+        ProfileFilterTagsView = CollectionViewSource.GetDefaultView(ProfileFilterTags);
+        ProfileFilterTagsView.SortDescriptions.Add(new SortDescription(nameof(ProfileFilterTagsInfo.Name), ListSortDirection.Ascending));
+
+        SetProfilesView(new ProfileFilterInfo());
 
         ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
 
@@ -354,6 +424,36 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
     {
         Search = string.Empty;
     }
+    
+    public ICommand OpenProfileFilterCommand => new RelayCommand(_ => OpenProfileFilterAction());
+
+    private void OpenProfileFilterAction()
+    {
+        ProfileFilterIsOpen = true;
+    }
+
+    public ICommand ApplyProfileFilterCommand => new RelayCommand(_ => ApplyProfileFilterAction());
+
+    private void ApplyProfileFilterAction()
+    {
+        RefreshProfiles();
+
+        IsProfileFilterSet = true;
+        ProfileFilterIsOpen = false;
+    }
+
+    public ICommand ClearProfileFilterCommand => new RelayCommand(_ => ClearProfileFilterAction());
+
+    private void ClearProfileFilterAction()
+    {
+        foreach (var tag in ProfileFilterTags)
+            tag.IsSelected = false;
+
+        RefreshProfiles();
+
+        IsProfileFilterSet = false;
+        ProfileFilterIsOpen = false;
+    }
 
     #endregion
 
@@ -452,36 +552,42 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
         _isViewActive = false;
     }
 
-    private void SetProfilesView(ProfileInfo profile = null)
+    private void CreateTags()
+    {
+        var tags = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.WakeOnLAN_Enabled).SelectMany(x => x.TagsCollection).Distinct().ToList();
+
+        var tagSet = new HashSet<string>(tags);
+
+        for (var i = ProfileFilterTags.Count - 1; i >= 0; i--)
+        {
+            if (!tagSet.Contains(ProfileFilterTags[i].Name))
+                ProfileFilterTags.RemoveAt(i);
+        }
+
+        var existingTagNames = new HashSet<string>(ProfileFilterTags.Select(ft => ft.Name));
+
+        foreach (var tag in tags.Where(tag => !existingTagNames.Contains(tag)))
+        {
+            ProfileFilterTags.Add(new ProfileFilterTagsInfo(false, tag));
+        }
+    }
+    
+    private void SetProfilesView(ProfileFilterInfo filter, ProfileInfo profile = null)
     {
         Profiles = new CollectionViewSource
         {
-            Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.WakeOnLAN_Enabled)
-                .OrderBy(x => x.Group).ThenBy(x => x.Name)
+            Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.WakeOnLAN_Enabled && (
+                    string.IsNullOrEmpty(filter.Search) || x.Name.IndexOf(filter.Search, StringComparison.Ordinal) > -1 || x.WakeOnLAN_MACAddress.IndexOf(filter.Search, StringComparison.Ordinal) > -1) && (
+                    // If no tags are selected, show all profiles
+                    (!filter.Tags.Any()) ||
+                    // Any tag can match
+                    (filter.TagsFilterMatch == ProfileFilterTagsMatch.Any && filter.Tags.Any(tag => x.TagsCollection.Contains(tag))) ||
+                    // All tags must match
+                    (filter.TagsFilterMatch == ProfileFilterTagsMatch.All && filter.Tags.All(tag => x.TagsCollection.Contains(tag))))
+            ).OrderBy(x => x.Group).ThenBy(x => x.Name)
         }.View;
 
         Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
-
-        Profiles.Filter = o =>
-        {
-            if (string.IsNullOrEmpty(Search))
-                return true;
-
-            if (o is not ProfileInfo info)
-                return false;
-
-            var search = Search.Trim();
-
-            // Search by: Tag=xxx (exact match, ignore case)
-            /*
-            if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
-                return !string.IsNullOrEmpty(info.Tags) && info.PingMonitor_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
-            */
-
-            // Search by: Name, WakeOnLAN_MACAddress
-            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   info.WakeOnLAN_MACAddress.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
-        };
 
         // Set specific profile or first if null
         SelectedProfile = null;
@@ -498,7 +604,12 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
         if (!_isViewActive)
             return;
 
-        SetProfilesView(SelectedProfile);
+        SetProfilesView(new ProfileFilterInfo
+        {
+            Search = Search,
+            Tags = [.. ProfileFilterTags.Where(x => x.IsSelected).Select(x => x.Name)],
+            TagsFilterMatch = ProfileFilterTagsMatchAny ? ProfileFilterTagsMatch.Any : ProfileFilterTagsMatch.All
+        }, SelectedProfile);
     }
 
     #endregion
@@ -507,6 +618,8 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
     {
+        CreateTags();
+        
         RefreshProfiles();
     }
 
