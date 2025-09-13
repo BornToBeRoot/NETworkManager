@@ -24,6 +24,7 @@ namespace NETworkManager.ViewModels;
 public class ProfileViewModel : ViewModelBase
 {
     #region Constructor
+
     public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler,
         IReadOnlyCollection<string> groups, string group = null, ProfileEditMode editMode = ProfileEditMode.Add,
         ProfileInfo profile = null, ApplicationName applicationName = ApplicationName.None)
@@ -55,8 +56,8 @@ public class ProfileViewModel : ViewModelBase
         Groups = CollectionViewSource.GetDefaultView(groups);
         Groups.SortDescriptions.Add(new SortDescription());
 
-        TagsCollection = profileInfo.TagsCollection;
-
+        TagsCollection = new ObservableSetCollection<string>(profileInfo.TagsCollection);
+        
         Tags = CollectionViewSource.GetDefaultView(TagsCollection);
         Tags.SortDescriptions.Add(new SortDescription("", ListSortDirection.Ascending));
 
@@ -522,6 +523,7 @@ public class ProfileViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Network Interface
@@ -3342,5 +3344,6 @@ public class ProfileViewModel : ViewModelBase
 
         TagsCollection.Remove(tag);
     }
+
     #endregion
 }

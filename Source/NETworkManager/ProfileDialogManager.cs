@@ -9,9 +9,11 @@ using NETworkManager.ViewModels;
 using NETworkManager.Views;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Security;
 using System.Threading.Tasks;
 using System.Windows;
+using NETworkManager.Controls;
 
 namespace NETworkManager;
 
@@ -21,13 +23,18 @@ public static class ProfileDialogManager
 
     private static ProfileInfo ParseProfileInfo(ProfileViewModel instance)
     {
+        foreach (var tag in instance.TagsCollection)
+        {
+            Debug.WriteLine(tag);    
+        }
+        
         return new ProfileInfo
         {
             Name = instance.Name.Trim(),
             Host = instance.Host.Trim(),
             Description = instance.Description?.Trim(),
             Group = instance.Group.Trim(),
-            TagsCollection = instance.TagsCollection,
+            TagsCollection = new ObservableSetCollection<string> (instance.TagsCollection),
 
             // Network Interface
             NetworkInterface_Enabled = instance.NetworkInterface_Enabled,
