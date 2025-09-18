@@ -42,7 +42,9 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     private static readonly ILog Log = LogManager.GetLogger(typeof(AWSSessionManagerHostViewModel));
 
     private readonly IDialogCoordinator _dialogCoordinator;
+
     private readonly DispatcherTimer _searchDispatcherTimer = new();
+    private bool _searchDisabled;
 
     public IInterTabClient InterTabClient { get; }
 
@@ -216,8 +218,11 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
             _search = value;
 
             // Start searching...
-            IsSearching = true;
-            _searchDispatcherTimer.Start();
+            if (!_searchDisabled)
+            {
+                IsSearching = true;
+                _searchDispatcherTimer.Start();
+            }
 
             OnPropertyChanged();
         }
@@ -236,6 +241,70 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
                 return;
 
             _isSearching = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _profileFilterIsOpen;
+
+    public bool ProfileFilterIsOpen
+    {
+        get => _profileFilterIsOpen;
+        set
+        {
+            if (value == _profileFilterIsOpen)
+                return;
+
+            _profileFilterIsOpen = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public ICollectionView ProfileFilterTagsView { get; }
+
+    private ObservableCollection<ProfileFilterTagsInfo> ProfileFilterTags { get; } = [];
+
+    private bool _profileFilterTagsMatchAny = GlobalStaticConfiguration.Profile_TagsMatchAny;
+
+    public bool ProfileFilterTagsMatchAny
+    {
+        get => _profileFilterTagsMatchAny;
+        set
+        {
+            if (value == _profileFilterTagsMatchAny)
+                return;
+
+            _profileFilterTagsMatchAny = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _profileFilterTagsMatchAll;
+
+    public bool ProfileFilterTagsMatchAll
+    {
+        get => _profileFilterTagsMatchAll;
+        set
+        {
+            if (value == _profileFilterTagsMatchAll)
+                return;
+
+            _profileFilterTagsMatchAll = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _isProfileFilterSet;
+
+    public bool IsProfileFilterSet
+    {
+        get => _isProfileFilterSet;
+        set
+        {
+            if (value == _isProfileFilterSet)
+                return;
+
+            _isProfileFilterSet = value;
             OnPropertyChanged();
         }
     }
@@ -328,12 +397,18 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         WriteDefaultProfileToRegistry();
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.AWSSessionManager);
-        InterTabPartition = ApplicationName.AWSSessionManager.ToString();
+        InterTabPartition = nameof(ApplicationName.AWSSessionManager);
 
         TabItems = [];
 
         // Profiles
-        SetProfilesView();
+        CreateTags();
+
+        ProfileFilterTagsView = CollectionViewSource.GetDefaultView(ProfileFilterTags);
+        ProfileFilterTagsView.SortDescriptions.Add(new SortDescription(nameof(ProfileFilterTagsInfo.Name),
+            ListSortDirection.Ascending));
+
+        SetProfilesView(new ProfileFilterInfo());
 
         ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
 
@@ -456,14 +531,16 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
     private void EditProfileAction()
     {
-        ProfileDialogManager.ShowEditProfileDialog(Application.Current.MainWindow, this, SelectedProfile).ConfigureAwait(false);
+        ProfileDialogManager.ShowEditProfileDialog(Application.Current.MainWindow, this, SelectedProfile)
+            .ConfigureAwait(false);
     }
 
     public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile).ConfigureAwait(false);
+        ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile)
+            .ConfigureAwait(false);
     }
 
     public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
@@ -479,7 +556,8 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager.ShowEditGroupDialog(Application.Current.MainWindow, this, ProfileManager.GetGroupByName($"{group}"))
+        ProfileDialogManager
+            .ShowEditGroupDialog(Application.Current.MainWindow, this, ProfileManager.GetGroupByName($"{group}"))
             .ConfigureAwait(false);
     }
 
@@ -514,11 +592,37 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         get { return new RelayCommand(_ => _textBoxSearchIsFocused = false); }
     }
 
-    public ICommand ClearSearchCommand => new RelayCommand(_ => ClearSearchAction());
+    public ICommand OpenProfileFilterCommand => new RelayCommand(_ => OpenProfileFilterAction());
 
-    private void ClearSearchAction()
+    private void OpenProfileFilterAction()
     {
+        ProfileFilterIsOpen = true;
+    }
+
+    public ICommand ApplyProfileFilterCommand => new RelayCommand(_ => ApplyProfileFilterAction());
+
+    private void ApplyProfileFilterAction()
+    {
+        RefreshProfiles();
+
+        ProfileFilterIsOpen = false;
+    }
+
+    public ICommand ClearProfileFilterCommand => new RelayCommand(_ => ClearProfileFilterAction());
+
+    private void ClearProfileFilterAction()
+    {
+        _searchDisabled = true;
         Search = string.Empty;
+        _searchDisabled = false;
+        
+        foreach (var tag in ProfileFilterTags)
+            tag.IsSelected = false;
+
+        RefreshProfiles();
+
+        IsProfileFilterSet = false;
+        ProfileFilterIsOpen = false;
     }
 
     public ICommand OpenDocumentationCommand
@@ -579,7 +683,8 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
                                  File.Exists(SettingsManager.Current.AWSSessionManager_ApplicationFilePath);
 
         if (IsExecutableConfigured)
-            Log.Info($"PowerShell executable found: \"{SettingsManager.Current.AWSSessionManager_ApplicationFilePath}\"");
+            Log.Info(
+                $"PowerShell executable found: \"{SettingsManager.Current.AWSSessionManager_ApplicationFilePath}\"");
         else
             Log.Warn("PowerShell executable not found!");
     }
@@ -724,33 +829,33 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         };
 
         foreach (var reservation in response.Reservations)
-            foreach (var instance in reservation.Instances)
+        foreach (var instance in reservation.Instances)
+        {
+            if (SettingsManager.Current.AWSSessionManager_SyncOnlyRunningInstancesFromAWS &&
+                instance.State.Name.Value != "running")
+                continue;
+
+            var tagName = instance.Tags.FirstOrDefault(x => x.Key == "Name");
+
+            var name = tagName == null || tagName.Value == null
+                ? instance.InstanceId
+                : $"{tagName.Value} ({instance.InstanceId})";
+
+            groupInfo.Profiles.Add(new ProfileInfo
             {
-                if (SettingsManager.Current.AWSSessionManager_SyncOnlyRunningInstancesFromAWS &&
-                    instance.State.Name.Value != "running")
-                    continue;
+                Name = name,
+                Host = instance.InstanceId,
+                Group = $"~ [{profile}\\{region}]",
+                IsDynamic = true,
 
-                var tagName = instance.Tags.FirstOrDefault(x => x.Key == "Name");
-
-                var name = tagName == null || tagName.Value == null
-                    ? instance.InstanceId
-                    : $"{tagName.Value} ({instance.InstanceId})";
-
-                groupInfo.Profiles.Add(new ProfileInfo
-                {
-                    Name = name,
-                    Host = instance.InstanceId,
-                    Group = $"~ [{profile}\\{region}]",
-                    IsDynamic = true,
-
-                    AWSSessionManager_Enabled = true,
-                    AWSSessionManager_InstanceID = instance.InstanceId,
-                    AWSSessionManager_OverrideProfile = true,
-                    AWSSessionManager_Profile = profile,
-                    AWSSessionManager_OverrideRegion = true,
-                    AWSSessionManager_Region = region
-                });
-            }
+                AWSSessionManager_Enabled = true,
+                AWSSessionManager_InstanceID = instance.InstanceId,
+                AWSSessionManager_OverrideProfile = true,
+                AWSSessionManager_Profile = profile,
+                AWSSessionManager_OverrideRegion = true,
+                AWSSessionManager_Region = region
+            });
+        }
 
         // Remove, replace or add group
         var profilesChangedCurrentState = ProfileManager.ProfilesChanged;
@@ -986,36 +1091,47 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         SyncAllInstanceIDsFromAWS().ConfigureAwait(false);
     }
 
-    private void SetProfilesView(ProfileInfo profile = null)
+    private void CreateTags()
+    {
+        var tags = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.AWSSessionManager_Enabled)
+            .SelectMany(x => x.TagsCollection).Distinct().ToList();
+
+        var tagSet = new HashSet<string>(tags);
+
+        for (var i = ProfileFilterTags.Count - 1; i >= 0; i--)
+        {
+            if (!tagSet.Contains(ProfileFilterTags[i].Name))
+                ProfileFilterTags.RemoveAt(i);
+        }
+
+        var existingTagNames = new HashSet<string>(ProfileFilterTags.Select(ft => ft.Name));
+
+        foreach (var tag in tags.Where(tag => !existingTagNames.Contains(tag)))
+        {
+            ProfileFilterTags.Add(new ProfileFilterTagsInfo(false, tag));
+        }
+    }
+
+    private void SetProfilesView(ProfileFilterInfo filter, ProfileInfo profile = null)
     {
         Profiles = new CollectionViewSource
         {
-            Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.AWSSessionManager_Enabled)
-                .OrderBy(x => x.Group).ThenBy(x => x.Name)
+            Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.AWSSessionManager_Enabled && (
+                    string.IsNullOrEmpty(filter.Search) ||
+                    x.Name.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                    x.AWSSessionManager_InstanceID.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) > -1) && (
+                    // If no tags are selected, show all profiles
+                    (!filter.Tags.Any()) ||
+                    // Any tag can match
+                    (filter.TagsFilterMatch == ProfileFilterTagsMatch.Any &&
+                     filter.Tags.Any(tag => x.TagsCollection.Contains(tag))) ||
+                    // All tags must match
+                    (filter.TagsFilterMatch == ProfileFilterTagsMatch.All &&
+                     filter.Tags.All(tag => x.TagsCollection.Contains(tag))))
+            ).OrderBy(x => x.Group).ThenBy(x => x.Name)
         }.View;
 
         Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
-
-        Profiles.Filter = o =>
-        {
-            if (string.IsNullOrEmpty(Search))
-                return true;
-
-            if (o is not ProfileInfo info)
-                return false;
-
-            var search = Search.Trim();
-
-            // Search by: Tag=xxx (exact match, ignore case)
-            /*
-            if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
-                return !string.IsNullOrEmpty(info.Tags) && info.PingMonitor_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
-            */
-
-            // Search by: Name, AWSSessionManager_InstanceID
-            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   info.AWSSessionManager_InstanceID.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
-        };
 
         // Set specific profile or first if null
         SelectedProfile = null;
@@ -1032,7 +1148,16 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         if (!_isViewActive)
             return;
 
-        SetProfilesView(SelectedProfile);
+        var filter = new ProfileFilterInfo
+        {
+            Search = Search,
+            Tags = [.. ProfileFilterTags.Where(x => x.IsSelected).Select(x => x.Name)],
+            TagsFilterMatch = ProfileFilterTagsMatchAny ? ProfileFilterTagsMatch.Any : ProfileFilterTagsMatch.All
+        };
+
+        SetProfilesView(filter, SelectedProfile);
+
+        IsProfileFilterSet = !string.IsNullOrEmpty(filter.Search) || filter.Tags.Any();
     }
 
     public void OnProfileManagerDialogOpen()
@@ -1053,7 +1178,7 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         if (!IsExecutableConfigured)
             return;
 
-        Log.Info("Write PowerShell profile to registry...");
+        Log.Debug("Write PowerShell profile to registry...");
 
         PowerShell.WriteDefaultProfileToRegistry(
             SettingsManager.Current.Appearance_Theme,
@@ -1069,15 +1194,15 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         switch (e.PropertyName)
         {
             case nameof(SettingsInfo.AWSSessionManager_EnableSyncInstanceIDsFromAWS):
-                {
-                    IsSyncEnabled = SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS;
+            {
+                IsSyncEnabled = SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS;
 
-                    if (IsSyncEnabled)
-                        SyncAllInstanceIDsFromAWS().ConfigureAwait(false);
-                    else
-                        RemoveDynamicGroups();
-                    break;
-                }
+                if (IsSyncEnabled)
+                    SyncAllInstanceIDsFromAWS().ConfigureAwait(false);
+                else
+                    RemoveDynamicGroups();
+                break;
+            }
             case nameof(SettingsInfo.AWSSessionManager_SyncOnlyRunningInstancesFromAWS):
                 SyncAllInstanceIDsFromAWS().ConfigureAwait(false);
                 break;
@@ -1111,6 +1236,8 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
     private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
     {
+        CreateTags();
+
         RefreshProfiles();
     }
 

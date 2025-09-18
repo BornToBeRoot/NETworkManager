@@ -475,6 +475,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add group....
+        /// </summary>
+        public static string AddGroupDots {
+            get {
+                return ResourceManager.GetString("AddGroupDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add host.
         /// </summary>
         public static string AddHost {
@@ -610,6 +619,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add tag.
+        /// </summary>
+        public static string AddTag {
+            get {
+                return ResourceManager.GetString("AddTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adjust screen.
         /// </summary>
         public static string AdjustScreen {
@@ -696,6 +714,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Answers {
             get {
                 return ResourceManager.GetString("Answers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any.
+        /// </summary>
+        public static string Any {
+            get {
+                return ResourceManager.GetString("Any", resourceCulture);
             }
         }
         
@@ -993,6 +1020,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Apply {
             get {
                 return ResourceManager.GetString("Apply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply filter.
+        /// </summary>
+        public static string ApplyFilter {
+            get {
+                return ResourceManager.GetString("ApplyFilter", resourceCulture);
             }
         }
         
@@ -3846,6 +3882,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to production.
+        /// </summary>
+        public static string ExampleTag {
+            get {
+                return ResourceManager.GetString("ExampleTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Execution Policy.
         /// </summary>
         public static string ExecutionPolicy {
@@ -4035,11 +4080,29 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filter by tags.
+        /// </summary>
+        public static string FilterByTags {
+            get {
+                return ResourceManager.GetString("FilterByTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter....
         /// </summary>
         public static string FilterDots {
             get {
                 return ResourceManager.GetString("FilterDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter profiles....
+        /// </summary>
+        public static string FilterProfilesDots {
+            get {
+                return ResourceManager.GetString("FilterProfilesDots", resourceCulture);
             }
         }
         
@@ -5751,6 +5814,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Match.
+        /// </summary>
+        public static string Match {
+            get {
+                return ResourceManager.GetString("Match", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mauve.
         /// </summary>
         public static string Mauve {
@@ -6288,6 +6360,15 @@ namespace NETworkManager.Localization.Resources {
         public static string NoReachableHostsFound {
             get {
                 return ResourceManager.GetString("NoReachableHostsFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No tags found!.
+        /// </summary>
+        public static string NoTagsFound {
+            get {
+                return ResourceManager.GetString("NoTagsFound", resourceCulture);
             }
         }
         

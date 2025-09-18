@@ -1,10 +1,11 @@
-﻿using System.Security;
-using System.Xml.Serialization;
+﻿using NETworkManager.Controls;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
+using System.Security;
+using System.Xml.Serialization;
 
 // ReSharper disable InconsistentNaming
 // ReSharper disable PropertyCanBeMadeInitOnly.Global
@@ -33,7 +34,7 @@ public class ProfileInfo
         Host = profile.Host;
         Description = profile.Description;
         Group = profile.Group;
-        Tags = profile.Tags;
+        TagsCollection = profile.TagsCollection;
 
         IsDynamic = profile.IsDynamic;
 
@@ -42,7 +43,6 @@ public class ProfileInfo
         NetworkInterface_EnableStaticIPAddress = profile.NetworkInterface_EnableStaticIPAddress;
         NetworkInterface_IPAddress = profile.NetworkInterface_IPAddress;
         NetworkInterface_Subnetmask = profile.NetworkInterface_Subnetmask;
-        NetworkInterface_SubnetmaskOrCidr = profile.NetworkInterface_SubnetmaskOrCidr;
         NetworkInterface_Gateway = profile.NetworkInterface_Gateway;
         NetworkInterface_EnableStaticDNS = profile.NetworkInterface_EnableStaticDNS;
         NetworkInterface_PrimaryDNSServer = profile.NetworkInterface_PrimaryDNSServer;
@@ -253,16 +253,22 @@ public class ProfileInfo
     ///     Description of the profile.
     /// </summary>
     public string Description { get; set; }
-    
+
     /// <summary>
     ///     Name of the group. Profiles are grouped based on the name.
     /// </summary>
     public string Group { get; set; }
-    
+
     /// <summary>
     ///     Tags to classify the profiles and to filter by it.
     /// </summary>
+    //[Obsolete("Replaced with TagsList")]
     public string Tags { get; set; }
+
+    /// <summary>
+    /// Tags collection to classify the profiles and to filter by it.
+    /// </summary>
+    public ObservableSetCollection<string> TagsCollection { get; set; } = [];
 
     /// <summary>
     ///     Dynamic profiles (e.g. AWS) are not save to file.
@@ -273,9 +279,6 @@ public class ProfileInfo
     public bool NetworkInterface_Enabled { get; set; }
     public bool NetworkInterface_EnableStaticIPAddress { get; set; }
     public string NetworkInterface_IPAddress { get; set; }
-
-    //[Obsolete("Replaced by NetworkInterface_Subnetmask")]
-    public string NetworkInterface_SubnetmaskOrCidr { get; set; }
     public string NetworkInterface_Subnetmask { get; set; }
     public string NetworkInterface_Gateway { get; set; }
     public bool NetworkInterface_EnableStaticDNS { get; set; }

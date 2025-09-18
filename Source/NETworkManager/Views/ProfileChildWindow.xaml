@@ -1292,6 +1292,8 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*" />
@@ -1312,54 +1314,50 @@
                                     </TextBox.Text>
                                 </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
-                                <TextBox x:Name="TextBoxHost" Grid.Column="2" Grid.Row="2"
-                                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameOrIPAddress}">
-                                    <TextBox.Text>
-                                        <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                            <Binding.ValidationRules>
-                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                <validators:IPAddressOrHostnameValidator
-                                                    ValidatesOnTargetUpdated="True" />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
-                                <Button Grid.Column="3" Grid.Row="2" Command="{Binding ResolveHostCommand}"
-                                        ToolTip="{x:Static localization:Strings.ResolveIPAddressForThisHost}"
-                                        IsEnabled="{Binding Host, Converter={StaticResource StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter}}"
-                                        Margin="10,0,0,0">
-                                    <Button.Style>
-                                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding IsResolveHostnameRunning}" Value="True">
-                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{Binding ShowCouldNotResolveHostnameWarning}"
-                                                             Value="True">
-                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                    <Rectangle Width="24" Height="24">
-                                        <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=SearchWeb}" />
-                                        </Rectangle.OpacityMask>
-                                        <Rectangle.Style>
-                                            <Style TargetType="{x:Type Rectangle}">
-                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                <Grid Grid.Column="2" Grid.Row="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="10" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox x:Name="TextBoxHost" Grid.Column="0" Grid.Row="0"
+         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameOrIPAddress}">
+                                        <TextBox.Text>
+                                            <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                    <validators:IPAddressOrHostnameValidator
+                    ValidatesOnTargetUpdated="True" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                    <Button Grid.Column="2" Grid.Row="0"
+                                            Command="{Binding ResolveHostCommand}"
+                                            ToolTip="{x:Static localization:Strings.ResolveIPAddressForThisHost}">
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageButton}">
+                                                <Setter Property="MinHeight" Value="0" />
+                                                <Setter Property="MinWidth" Value="0" />
+                                                <Setter Property="Width" Value="{Binding ElementName=TextBoxHost, Path=ActualHeight}" />
+                                                <Setter Property="Height" Value="{Binding ElementName=TextBoxHost, Path=ActualHeight}" />
                                                 <Style.Triggers>
-                                                    <DataTrigger
-                                                        Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
-                                                        Value="True">
-                                                        <Setter Property="Fill"
-                                                                Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                                    <DataTrigger Binding="{Binding Host, Converter={StaticResource StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter}}" Value="False">
+                                                        <Setter Property="IsEnabled" Value="False" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding IsResolveHostnameRunning}" Value="True">
+                                                        <Setter Property="IsEnabled" Value="False" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
-                                        </Rectangle.Style>
-                                    </Rectangle>
-                                </Button>
+                                        </Button.Resources>
+                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=SearchWeb}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                    </Button>
+                                </Grid>
                                 <mah:ProgressRing Grid.Column="3" Grid.Row="2" Width="24" Height="24" Margin="10,0,0,0"
                                                   Visibility="{Binding IsResolveHostnameRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
                                 <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="2"
@@ -1396,9 +1394,45 @@
                                     </ComboBox.Text>
                                 </ComboBox>
                                 <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static Member=localization:Strings.Tags}" />
-                                <TextBox Grid.Column="2" Grid.Row="8"
-                                         Text="{Binding Path=Tags, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                         mah:TextBoxHelper.Watermark="{x:Static Member=localization:StaticStrings.ExampleTags}" />
+                                <Grid Grid.Column="2" Grid.Row="8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="10" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Grid.Column="0" Grid.Row="0"
+                                             x:Name="TextBoxTag"
+                                             Text="{Binding Path=Tag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                             mah:TextBoxHelper.Watermark="{x:Static Member=localization:Strings.ExampleTag}" />
+                                    <Button Grid.Column="2" Grid.Row="0" Command="{Binding AddTagCommand}"
+                                            ToolTip="{x:Static localization:Strings.AddTag}">
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageButton}">
+                                                <Setter Property="MinHeight" Value="0" />
+                                                <Setter Property="MinWidth" Value="0" />
+                                                <Setter Property="Width" Value="{Binding ElementName=TextBoxTag, Path=ActualHeight}" />
+                                                <Setter Property="Height" Value="{Binding ElementName=TextBoxTag, Path=ActualHeight}" />
+                                                <Style.Triggers>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition
+                                                                Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxTag}"
+                                                                Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="IsEnabled" Value="False" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Resources>
+                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                    </Button>
+                                </Grid>
                                 <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="6"
                                            ToolTip="{x:Static Member=localization:Strings.HelpMessage_Tags}"
                                            Style="{StaticResource ResourceKey=HelpImageRectangle}" Margin="10,0,0,0">
@@ -1406,6 +1440,44 @@
                                         <Style TargetType="{x:Type TypeName=ToolTip}" BasedOn="{StaticResource ResourceKey=HelpToolTip}" />
                                     </Rectangle.Resources>
                                 </Rectangle>
+                                <ItemsControl Grid.Column="2" Grid.Row="10" ItemsSource="{Binding Path=Tags}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Margin="0,5,10,5" Padding="5" 
+                                                    BorderThickness="1" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" 
+                                                    CornerRadius="5">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding .}" Style="{StaticResource InfoTextBlock}" />
+                                                    <Button Style="{StaticResource CleanButton}"
+                                                            Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type simpleChildWindow:ChildWindow}}, Path=DataContext.RemoveTagCommand}" CommandParameter="{Binding .}"
+                                                            Margin="10,0,0,0">
+                                                        <Rectangle Width="12" Height="12">
+                                                            <Rectangle.OpacityMask>
+                                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=WindowClose}" />
+                                                            </Rectangle.OpacityMask>
+                                                            <Rectangle.Style>
+                                                                <Style TargetType="{x:Type Rectangle}">
+                                                                    <Setter Property="Fill"  Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
+                                                                                         Value="True">
+                                                                            <Setter Property="Fill" Value="Red" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Rectangle.Style>
+                                                        </Rectangle>
+                                                    </Button>
+                                                </StackPanel>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
                             </Grid>
                         </StackPanel>
                     </ScrollViewer>

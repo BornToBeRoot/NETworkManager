@@ -8,7 +8,7 @@ namespace NETworkManager.Views;
 
 public partial class SNMPHostView
 {
-    private readonly SNMPHostViewModel _viewModel = new(DialogCoordinator.Instance);
+    private readonly SNMPHostViewModel _viewModel = new();
 
     public SNMPHostView()
     {

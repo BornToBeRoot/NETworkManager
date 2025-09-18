@@ -9,31 +9,32 @@ using NETworkManager.ViewModels;
 using NETworkManager.Views;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Security;
 using System.Threading.Tasks;
 using System.Windows;
+using NETworkManager.Controls;
 
 namespace NETworkManager;
 
 public static class ProfileDialogManager
 {
-    #region Variables
-
-    private static string DialogResourceKey => "LargeMetroDialog";
-
-    #endregion
-
     #region Methods to add and remove profile
 
     private static ProfileInfo ParseProfileInfo(ProfileViewModel instance)
     {
+        foreach (var tag in instance.TagsCollection)
+        {
+            Debug.WriteLine(tag);    
+        }
+        
         return new ProfileInfo
         {
             Name = instance.Name.Trim(),
             Host = instance.Host.Trim(),
             Description = instance.Description?.Trim(),
             Group = instance.Group.Trim(),
-            Tags = instance.Tags?.Trim(),
+            TagsCollection = new ObservableSetCollection<string> (instance.TagsCollection),
 
             // Network Interface
             NetworkInterface_Enabled = instance.NetworkInterface_Enabled,
@@ -297,7 +298,7 @@ public static class ProfileDialogManager
         // Update group in profiles
         if (profiles.Count > 0)
             if (!string.IsNullOrEmpty(instance.Group.Name) &&
-                !string.Equals(instance.Group.Name, name, StringComparison.Ordinal))
+                !string.Equals(instance.Group.Name, name, StringComparison.OrdinalIgnoreCase))
                 foreach (var profile in profiles)
                     profile.Group = name;
         //else
@@ -587,7 +588,7 @@ public static class ProfileDialogManager
                 Strings.Delete
             );
 
-        childWindow.Title = Strings.DeleteProfile;
+        childWindow.Title = profiles.Count == 1 ? Strings.DeleteProfile : Strings.DeleteProfiles;
 
         childWindow.DataContext = childWindowViewModel;
 

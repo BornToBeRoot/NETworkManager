@@ -55,7 +55,7 @@ public class SNTPLookupHostViewModel : ViewModelBase
     public SNTPLookupHostViewModel()
     {
         InterTabClient = new DragablzInterTabClient(ApplicationName.SNTPLookup);
-        InterTabPartition = ApplicationName.SNTPLookup.ToString();
+        InterTabPartition = nameof(ApplicationName.SNTPLookup);
 
         var tabId = Guid.NewGuid();
 

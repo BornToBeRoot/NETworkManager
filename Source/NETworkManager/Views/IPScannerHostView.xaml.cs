@@ -8,7 +8,7 @@ namespace NETworkManager.Views;
 
 public partial class IPScannerHostView
 {
-    private readonly IPScannerHostViewModel _viewModel = new(DialogCoordinator.Instance);
+    private readonly IPScannerHostViewModel _viewModel = new();
 
     public IPScannerHostView()
     {

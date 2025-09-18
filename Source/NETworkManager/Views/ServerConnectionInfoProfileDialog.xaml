@@ -133,6 +133,10 @@
                     ToolTip="{x:Static localization:Strings.AddServer}">
                 <Button.Resources>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageButton}">
+                        <Setter Property="MinHeight" Value="0" />
+                        <Setter Property="MinWidth" Value="0" />
+                        <Setter Property="Width" Value="{Binding ElementName=TextBoxPort, Path=ActualHeight}" />
+                        <Setter Property="Height" Value="{Binding ElementName=TextBoxPort, Path=ActualHeight}" />
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
@@ -156,7 +160,7 @@
                         </Style.Triggers>
                     </Style>
                 </Button.Resources>
-                <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
                     </Rectangle.OpacityMask>

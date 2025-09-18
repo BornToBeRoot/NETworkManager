@@ -8,7 +8,7 @@ namespace NETworkManager.Views;
 
 public partial class ProfilesView
 {
-    private readonly ProfilesViewModel _viewModel = new(DialogCoordinator.Instance);
+    private readonly ProfilesViewModel _viewModel = new();
 
     public ProfilesView()
     {
