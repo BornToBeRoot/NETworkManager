@@ -283,7 +283,6 @@
                     </Button>
                 </Grid>
                 <controls:MultiSelectDataGrid x:Name="DataGridProfiles" Grid.Column="0" Grid.Row="1"
-                                              Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
                                               ItemsSource="{Binding Profiles}" SelectedItem="{Binding SelectedProfile}"
                                               SelectedItemsList="{Binding SelectedProfiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               AutoGenerateColumns="false"
@@ -354,6 +353,11 @@
                                     Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
                                     Value="1">
                                     <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}" />
+                                </DataTrigger>
+                                <DataTrigger
+                                    Binding="{Binding DataContext.IsSearching, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                    Value="True">
+                                    <Setter Property="Visibility" Value="Collapsed" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -426,6 +430,109 @@
                 <mah:ProgressRing Grid.Column="0" Grid.Row="1"
                                   Height="50" Width="50"
                                   IsActive="{Binding Path=IsSearching}" />
+                <Grid Grid.Row="1" VerticalAlignment="Center">
+                        <Grid.Style>
+                            <Style TargetType="{x:Type TypeName=Grid}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding Path=Groups.Count}" Value="0" />
+                                            <Condition Binding="{Binding Path=IsSearching}" Value="False" />
+                                        </MultiDataTrigger.Conditions>
+                                        <MultiDataTrigger.Setters>
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </MultiDataTrigger.Setters>
+                                    </MultiDataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding Path=Profiles.Count}" Value="0" />
+                                            <Condition Binding="{Binding Path=IsSearching}" Value="False" />
+                                        </MultiDataTrigger.Conditions>
+                                        <MultiDataTrigger.Setters>
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </MultiDataTrigger.Setters>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Button HorizontalAlignment="Center" Focusable="False">
+                            <Button.Style>
+                                <Style TargetType="{x:Type TypeName=Button}"
+                                       BasedOn="{StaticResource ResourceKey=CleanButton}">
+                                    <Setter Property="Command" Value="{Binding Path=AddProfileCommand}" />
+                                    <Style.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding Path=IsProfileFilterSet}"
+                                            Value="True">
+                                            <Setter Property="Command" Value="{Binding Path=ClearProfileFilterCommand}" />
+                                            <Setter Property="ToolTip"
+                                                    Value="{x:Static Member=localization:Strings.ClearFilter}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Grid.Column="0" Width="20" Height="20">
+                                    <Rectangle.Resources>
+                                        <VisualBrush x:Key="VisualPlus" Stretch="Uniform"
+                                                     Visual="{iconPacks:Material Kind=Plus}" />
+                                        <VisualBrush x:Key="VisualClear" Stretch="Uniform"
+                                                     Visual="{iconPacks:Material Kind=FilterRemoveOutline}" />
+                                    </Rectangle.Resources>
+                                    <Rectangle.Style>
+                                        <Style TargetType="{x:Type TypeName=Rectangle}">
+                                            <Setter Property="OpacityMask"
+                                                    Value="{StaticResource ResourceKey=VisualPlus}" />
+                                            <Setter Property="Fill"
+                                                    Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
+                                            <Style.Triggers>
+                                                <DataTrigger
+                                                    Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=Button}}, Path=IsMouseOver}"
+                                                    Value="True">
+                                                    <Setter Property="Fill"
+                                                            Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}" />
+                                                </DataTrigger>
+                                                <DataTrigger
+                                                    Binding="{Binding Path=IsProfileFilterSet}"
+                                                    Value="True">
+                                                    <Setter Property="OpacityMask"
+                                                            Value="{StaticResource ResourceKey=VisualClear}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Rectangle.Style>
+                                </Rectangle>
+                                <TextBlock Grid.Column="1">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TypeName=TextBlock}"
+                                               BasedOn="{StaticResource ResourceKey=MessageTextBlock}">
+                                            <Setter Property="Text"
+                                                    Value="{x:Static Member=localization:Strings.NoProfilesFoundCreateOne}" />
+                                            <Style.Triggers>
+                                                <DataTrigger
+                                                    Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=Button}}, Path=IsMouseOver}"
+                                                    Value="True">
+                                                    <Setter Property="Foreground"
+                                                            Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}" />
+                                                </DataTrigger>
+                                                <DataTrigger
+                                                    Binding="{Binding Path=IsProfileFilterSet}"
+                                                    Value="True">
+                                                    <Setter Property="Text"
+                                                            Value="{x:Static Member=localization:Strings.NothingFound}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                        </Button>
+                    </Grid>
             </Grid>
         </Grid>
         <Grid Grid.Column="0" Grid.Row="0">

@@ -298,7 +298,7 @@ public static class ProfileDialogManager
         // Update group in profiles
         if (profiles.Count > 0)
             if (!string.IsNullOrEmpty(instance.Group.Name) &&
-                !string.Equals(instance.Group.Name, name, StringComparison.Ordinal))
+                !string.Equals(instance.Group.Name, name, StringComparison.OrdinalIgnoreCase))
                 foreach (var profile in profiles)
                     profile.Group = name;
         //else
