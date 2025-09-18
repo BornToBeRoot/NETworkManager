@@ -749,7 +749,9 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         Profiles = new CollectionViewSource
         {
             Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.PowerShell_Enabled && (
-                    string.IsNullOrEmpty(filter.Search) || x.Name.IndexOf(filter.Search, StringComparison.Ordinal) > -1 || x.PowerShell_Host.IndexOf(filter.Search, StringComparison.Ordinal) > -1) && (
+                    string.IsNullOrEmpty(filter.Search) ||
+                    x.Name.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                    x.PowerShell_Host.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) > -1) && (
                     // If no tags are selected, show all profiles
                     (!filter.Tags.Any()) ||
                     // Any tag can match

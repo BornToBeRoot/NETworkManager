@@ -836,8 +836,8 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         {
             Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.PuTTY_Enabled && (
                     string.IsNullOrEmpty(filter.Search) ||
-                    x.Name.IndexOf(filter.Search, StringComparison.Ordinal) > -1 ||
-                    x.PuTTY_HostOrSerialLine.IndexOf(filter.Search, StringComparison.Ordinal) > -1) && (
+                    x.Name.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                    x.PuTTY_HostOrSerialLine.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) > -1) && (
                     // If no tags are selected, show all profiles
                     (!filter.Tags.Any()) ||
                     // Any tag can match

@@ -601,8 +601,8 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         {
             Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.WebConsole_Enabled && (
                     string.IsNullOrEmpty(filter.Search) ||
-                    x.Name.IndexOf(filter.Search, StringComparison.Ordinal) > -1 ||
-                    x.WebConsole_Url.IndexOf(filter.Search, StringComparison.Ordinal) > -1) && (
+                    x.Name.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                    x.WebConsole_Url.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) > -1) && (
                     // If no tags are selected, show all profiles
                     (!filter.Tags.Any()) ||
                     // Any tag can match
