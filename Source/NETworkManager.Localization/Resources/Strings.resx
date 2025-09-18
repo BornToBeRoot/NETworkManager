@@ -3984,4 +3984,7 @@ Right-click for more options.</value>
   <data name="Any" xml:space="preserve">
     <value>Any</value>
   </data>
+  <data name="AddGroupDots" xml:space="preserve">
+    <value>Add group...</value>
+  </data>
 </root>

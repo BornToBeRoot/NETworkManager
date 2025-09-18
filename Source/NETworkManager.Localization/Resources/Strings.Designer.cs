@@ -475,6 +475,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add group....
+        /// </summary>
+        public static string AddGroupDots {
+            get {
+                return ResourceManager.GetString("AddGroupDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add host.
         /// </summary>
         public static string AddHost {
