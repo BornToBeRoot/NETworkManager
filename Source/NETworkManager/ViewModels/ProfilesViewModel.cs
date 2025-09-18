@@ -4,6 +4,7 @@ using NETworkManager.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -19,8 +20,12 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
     public ProfilesViewModel()
     {
-        SetGroupsView();
+        ProfileFilterTagsView = CollectionViewSource.GetDefaultView(ProfileFilterTags);
+        ProfileFilterTagsView.SortDescriptions.Add(new SortDescription(nameof(ProfileFilterTagsInfo.Name),
+            ListSortDirection.Ascending));
 
+        SetGroupsView();
+        
         ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
 
         _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
@@ -32,6 +37,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     #region Variables
     
     private readonly DispatcherTimer _searchDispatcherTimer = new();
+    private bool _searchDisabled;
 
     private bool _isViewActive = true;
 
@@ -66,14 +72,30 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
             // NullReferenceException occurs if profile file is changed            
             if (value != null)
-                SetProfilesView(value, _lastSelectedProfileOnRefresh);
+            {
+                // Set/update tags based on current group
+                CreateTags();
+                
+                var filter = new ProfileFilterInfo
+                {
+                    Search = Search,
+                    Tags = [.. ProfileFilterTags.Where(x => x.IsSelected).Select(x => x.Name)],
+                    TagsFilterMatch = ProfileFilterTagsMatchAny ? ProfileFilterTagsMatch.Any : ProfileFilterTagsMatch.All
+                };
+                
+                SetProfilesView(filter ,value, _lastSelectedProfileOnRefresh);
+                
+                IsProfileFilterSet = !string.IsNullOrEmpty(filter.Search) || filter.Tags.Any();
+            }
             else
+            {
                 Profiles = null;
+            }
 
             OnPropertyChanged();
         }
     }
-
+    
     private ICollectionView _profiles;
 
     public ICollectionView Profiles
@@ -132,8 +154,11 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
             _search = value;
 
             // Start searching...
-            IsSearching = true;
-            _searchDispatcherTimer.Start();
+            if (!_searchDisabled)
+            {
+                IsSearching = true;
+                _searchDispatcherTimer.Start();
+            }
 
             OnPropertyChanged();
         }
@@ -154,11 +179,94 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    
+    private bool _profileFilterIsOpen;
+
+    public bool ProfileFilterIsOpen
+    {
+        get => _profileFilterIsOpen;
+        set
+        {
+            if (value == _profileFilterIsOpen)
+                return;
+
+            _profileFilterIsOpen = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public ICollectionView ProfileFilterTagsView { get; }
+
+    private ObservableCollection<ProfileFilterTagsInfo> ProfileFilterTags { get; } = [];
+
+    private bool _profileFilterTagsMatchAny = GlobalStaticConfiguration.Profile_TagsMatchAny;
+
+    public bool ProfileFilterTagsMatchAny
+    {
+        get => _profileFilterTagsMatchAny;
+        set
+        {
+            if (value == _profileFilterTagsMatchAny)
+                return;
+
+            _profileFilterTagsMatchAny = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _profileFilterTagsMatchAll;
+
+    public bool ProfileFilterTagsMatchAll
+    {
+        get => _profileFilterTagsMatchAll;
+        set
+        {
+            if (value == _profileFilterTagsMatchAll)
+                return;
+
+            _profileFilterTagsMatchAll = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _isProfileFilterSet;
+
+    public bool IsProfileFilterSet
+    {
+        get => _isProfileFilterSet;
+        set
+        {
+            if (value == _isProfileFilterSet)
+                return;
+
+            _isProfileFilterSet = value;
+            OnPropertyChanged();
+        }
+    }
     #endregion
 
     #region Commands & Actions
 
+    public ICommand AddGroupCommand => new RelayCommand(_ => AddGroupAction());
+
+    private void AddGroupAction()
+    {
+        ProfileDialogManager.ShowAddGroupDialog(Application.Current.MainWindow, this).ConfigureAwait(false);
+    }
+
+    public ICommand EditGroupCommand => new RelayCommand(_ => EditGroupAction());
+
+    private void EditGroupAction()
+    {
+        ProfileDialogManager.ShowEditGroupDialog(Application.Current.MainWindow, this, SelectedGroup).ConfigureAwait(false);
+    }
+
+    public ICommand DeleteGroupCommand => new RelayCommand(_ => DeleteGroupAction());
+
+    private void DeleteGroupAction()
+    {
+        ProfileDialogManager.ShowDeleteGroupDialog(Application.Current.MainWindow, this, SelectedGroup).ConfigureAwait(false);
+    }
+    
     public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
 
     private void AddProfileAction()
@@ -200,27 +308,38 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
-    public ICommand AddGroupCommand => new RelayCommand(_ => AddGroupAction());
+    public ICommand OpenProfileFilterCommand => new RelayCommand(_ => OpenProfileFilterAction());
 
-    private void AddGroupAction()
+    private void OpenProfileFilterAction()
     {
-        ProfileDialogManager.ShowAddGroupDialog(Application.Current.MainWindow, this).ConfigureAwait(false);
+        ProfileFilterIsOpen = true;
     }
 
-    public ICommand EditGroupCommand => new RelayCommand(_ => EditGroupAction());
+    public ICommand ApplyProfileFilterCommand => new RelayCommand(_ => ApplyProfileFilterAction());
 
-    private void EditGroupAction()
+    private void ApplyProfileFilterAction()
     {
-        ProfileDialogManager.ShowEditGroupDialog(Application.Current.MainWindow, this, SelectedGroup).ConfigureAwait(false);
+        RefreshProfiles();
+
+        ProfileFilterIsOpen = false;
     }
 
-    public ICommand DeleteGroupCommand => new RelayCommand(_ => DeleteGroupAction());
+    public ICommand ClearProfileFilterCommand => new RelayCommand(_ => ClearProfileFilterAction());
 
-    private void DeleteGroupAction()
+    private void ClearProfileFilterAction()
     {
-        ProfileDialogManager.ShowDeleteGroupDialog(Application.Current.MainWindow, this, SelectedGroup).ConfigureAwait(false);
+        _searchDisabled = true;
+        Search = string.Empty;
+        _searchDisabled = false;
+
+        foreach (var tag in ProfileFilterTags)
+            tag.IsSelected = false;
+
+        RefreshProfiles();
+
+        IsProfileFilterSet = false;
+        ProfileFilterIsOpen = false;
     }
-    
     #endregion
 
     #region Methods
@@ -240,7 +359,9 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     private void SetGroupsView(GroupInfo group = null)
     {
         Groups = new CollectionViewSource
-        { Source = ProfileManager.Groups.Where(x => !x.IsDynamic).OrderBy(x => x.Name) }.View;
+        {
+            Source = ProfileManager.Groups.Where(x => !x.IsDynamic).OrderBy(x => x.Name)
+        }.View;
 
         // Set specific group or first if null
         SelectedGroup = null;
@@ -252,34 +373,44 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
             SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().MinBy(x => x.Name);
     }
 
-    private void SetProfilesView(GroupInfo group, ProfileInfo profile = null)
+    private void CreateTags()
+    {
+        // Get all tags from profiles in the selected group
+        var tags = ProfileManager.Groups.First(x => x.Name == SelectedGroup.Name).Profiles
+            .SelectMany(x => x.TagsCollection).Distinct().ToList();
+      
+        var tagSet = new HashSet<string>(tags);
+
+        for (var i = ProfileFilterTags.Count - 1; i >= 0; i--)
+        {
+            if (!tagSet.Contains(ProfileFilterTags[i].Name))
+                ProfileFilterTags.RemoveAt(i);
+        }
+
+        var existingTagNames = new HashSet<string>(ProfileFilterTags.Select(ft => ft.Name));
+
+        foreach (var tag in tags.Where(tag => !existingTagNames.Contains(tag)))
+        {
+            ProfileFilterTags.Add(new ProfileFilterTagsInfo(false, tag));
+        }
+    }
+    
+    private void SetProfilesView(ProfileFilterInfo filter, GroupInfo group, ProfileInfo profile = null)
     {
         Profiles = new CollectionViewSource
         {
-            Source = ProfileManager.Groups.FirstOrDefault(x => x.Equals(group))?.Profiles.Where(x => !x.IsDynamic)
-                .OrderBy(x => x.Name)
+            Source = ProfileManager.Groups.FirstOrDefault(x => x.Equals(group))?.Profiles.Where(x => !x.IsDynamic && (
+                string.IsNullOrEmpty(Search) || x.Name.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) > -1) && (
+                    // If no tags are selected, show all profiles
+                    (!filter.Tags.Any()) ||
+                    // Any tag can match
+                    (filter.TagsFilterMatch == ProfileFilterTagsMatch.Any &&
+                     filter.Tags.Any(tag => x.TagsCollection.Contains(tag))) ||
+                    // All tags must match
+                    (filter.TagsFilterMatch == ProfileFilterTagsMatch.All &&
+                     filter.Tags.All(tag => x.TagsCollection.Contains(tag))))
+                ).OrderBy(x => x.Name)
         }.View;
-
-        Profiles.Filter = o =>
-        {
-            if (string.IsNullOrEmpty(Search))
-                return true;
-
-            if (o is not ProfileInfo info)
-                return false;
-
-            var search = Search.Trim();
-
-            // Search by: Tag=xxx (exact match, ignore case)
-            /*
-            if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
-                return !string.IsNullOrEmpty(info.Tags) && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
-            */
-
-            // Search by: Name, Host
-            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   info.Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
-        };
 
         // Set specific profile or first if null
         SelectedProfile = null;
