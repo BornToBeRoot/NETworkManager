@@ -3815,9 +3815,9 @@ Réessayez dans quelques secondes.</value>
     <value>Développer et ouvrir la recherche...</value>
   </data>
   <data name="WiFiAccessNotAvailableMessage" xml:space="preserve">
-    <value>Starting with Windows 11 24H2, you’ll need to allow access to the Wi-Fi adapter.
+    <value>À partir de Windows 11 24H2, vous devrez autoriser l’accès à l’adaptateur Wi-Fi.
 
-Open Windows Settings &gt; Privacy &amp; security &gt; Location, enable access for Desktop Apps / NETworkManager, then restart the application.</value>
+Ouvrir les paramètres Windows &gt; Confidentialité et sécurité &gt; Emplacement, activer l'accès pour les applications de bureau / NETworkManager, puis redémarrez l'application.</value>
   </data>
   <data name="DragDropApplicationsToReorderRightClickForMoreOptions" xml:space="preserve">
     <value>Glissez-déposez les applications pour les réorganiser.
@@ -3959,5 +3959,32 @@ Clic droit pour plus d'options.</value>
   </data>
   <data name="BrowsingDataErrorMessage" xml:space="preserve">
     <value>Une erreur s'est produite lors de la suppression des données de navigation. N'hésitez pas à signaler ce problème sur GitHub.</value>
+  </data>
+  <data name="ExampleTag" xml:space="preserve">
+    <value>production</value>
+  </data>
+  <data name="AddTag" xml:space="preserve">
+    <value>Add tag</value>
+  </data>
+  <data name="ApplyFilter" xml:space="preserve">
+    <value>Apply filter</value>
+  </data>
+  <data name="FilterProfilesDots" xml:space="preserve">
+    <value>Filter profiles...</value>
+  </data>
+  <data name="FilterByTags" xml:space="preserve">
+    <value>Filter by tags</value>
+  </data>
+  <data name="NoTagsFound" xml:space="preserve">
+    <value>No tags found!</value>
+  </data>
+  <data name="Match" xml:space="preserve">
+    <value>Match</value>
+  </data>
+  <data name="Any" xml:space="preserve">
+    <value>Any</value>
+  </data>
+  <data name="AddGroupDots" xml:space="preserve">
+    <value>Add group...</value>
   </data>
 </root>
