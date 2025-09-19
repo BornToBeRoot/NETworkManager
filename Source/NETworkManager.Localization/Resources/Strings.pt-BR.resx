@@ -3961,30 +3961,30 @@ Clique direito para mais opções.</value>
     <value>Ocorreu um erro ao excluir dados de navegação. Sinta-se à vontade para relatar o problema no GitHub.</value>
   </data>
   <data name="ExampleTag" xml:space="preserve">
-    <value>production</value>
+    <value>produção</value>
   </data>
   <data name="AddTag" xml:space="preserve">
-    <value>Add tag</value>
+    <value>Adicionar etiqueta</value>
   </data>
   <data name="ApplyFilter" xml:space="preserve">
-    <value>Apply filter</value>
+    <value>Aplicar filtro</value>
   </data>
   <data name="FilterProfilesDots" xml:space="preserve">
-    <value>Filter profiles...</value>
+    <value>Filtrar perfis...</value>
   </data>
   <data name="FilterByTags" xml:space="preserve">
-    <value>Filter by tags</value>
+    <value>Filtrar por etiquetas</value>
   </data>
   <data name="NoTagsFound" xml:space="preserve">
-    <value>No tags found!</value>
+    <value>Nenhuma etiqueta encontrada!</value>
   </data>
   <data name="Match" xml:space="preserve">
-    <value>Match</value>
+    <value>Corresponder</value>
   </data>
   <data name="Any" xml:space="preserve">
-    <value>Any</value>
+    <value>Qualquer</value>
   </data>
   <data name="AddGroupDots" xml:space="preserve">
-    <value>Add group...</value>
+    <value>Adicionar grupo...</value>
   </data>
 </root>
