@@ -3961,4 +3961,31 @@ Open Windows Settings &gt; Privacy &amp; security &gt; Location, enable access f
   <data name="BrowsingDataErrorMessage" xml:space="preserve">
     <value>An error occurred while deleting browsing data. Feel free to report this issue on GitHub.</value>
   </data>
+  <data name="ExampleTag" xml:space="preserve">
+    <value>production</value>
+  </data>
+  <data name="AddTag" xml:space="preserve">
+    <value>Add tag</value>
+  </data>
+  <data name="ApplyFilter" xml:space="preserve">
+    <value>Apply filter</value>
+  </data>
+  <data name="FilterProfilesDots" xml:space="preserve">
+    <value>Filter profiles...</value>
+  </data>
+  <data name="FilterByTags" xml:space="preserve">
+    <value>Filter by tags</value>
+  </data>
+  <data name="NoTagsFound" xml:space="preserve">
+    <value>No tags found!</value>
+  </data>
+  <data name="Match" xml:space="preserve">
+    <value>Match</value>
+  </data>
+  <data name="Any" xml:space="preserve">
+    <value>Any</value>
+  </data>
+  <data name="AddGroupDots" xml:space="preserve">
+    <value>Add group...</value>
+  </data>
 </root>
