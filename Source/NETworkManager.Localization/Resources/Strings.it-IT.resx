@@ -4064,30 +4064,30 @@ Per maggiori dettagli consulta il file registro.</value>
     <value>Si è verificato un errore durante l'eliminazione dei dati di navigazione. Sentiti libero di segnalare questo problema su GitHub.</value>
   </data>
   <data name="ExampleTag" xml:space="preserve">
-    <value>production</value>
+    <value>produzione</value>
   </data>
   <data name="AddTag" xml:space="preserve">
-    <value>Add tag</value>
+    <value>Aggiungi etichetta</value>
   </data>
   <data name="ApplyFilter" xml:space="preserve">
-    <value>Apply filter</value>
+    <value>Applica filtro</value>
   </data>
   <data name="FilterProfilesDots" xml:space="preserve">
-    <value>Filter profiles...</value>
+    <value>Profili filtro...</value>
   </data>
   <data name="FilterByTags" xml:space="preserve">
-    <value>Filter by tags</value>
+    <value>Filtra per etichetta</value>
   </data>
   <data name="NoTagsFound" xml:space="preserve">
-    <value>No tags found!</value>
+    <value>Nessuna etichetta trovata!</value>
   </data>
   <data name="Match" xml:space="preserve">
-    <value>Match</value>
+    <value>Corrispondenza</value>
   </data>
   <data name="Any" xml:space="preserve">
-    <value>Any</value>
+    <value>Qualsiasi</value>
   </data>
   <data name="AddGroupDots" xml:space="preserve">
-    <value>Add group...</value>
+    <value>Aggiungi gruppo...</value>
   </data>
 </root>
