@@ -31,6 +31,9 @@ Release date: **xx.xx.2025**
 
 ## Bugfixes
 
+- **Web Console**
+  - Fixed an issue where clearing the Browser cache crashed the application. [#3169](https://github.com/BornToBeRoot/NETworkManager/pull/3169)
+
 - **Profiles**
   - Fixed an issue where only one profile was deleted in `Settings > Profiles` when multiple profiles were selected. [#3144](https://github.com/BornToBeRoot/NETworkManager/pull/3144) [#3145](https://github.com/BornToBeRoot/NETworkManager/issues/3145)
 
