@@ -4,10 +4,10 @@ using NETworkManager.Localization.Resources;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
-using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interop;
 
 namespace NETworkManager.ViewModels;
 
@@ -118,7 +118,10 @@ public class WebConsoleSettingsViewModel : ViewModelBase
                 // Create a temporary WebView2 instance to clear browsing data
                 var webView2Environment =
                     await CoreWebView2Environment.CreateAsync(null, GlobalStaticConfiguration.WebConsole_Cache);
-                var webView2Controller = await webView2Environment.CreateCoreWebView2ControllerAsync(IntPtr.Zero);
+
+                var windowHwnd = new WindowInteropHelper(Application.Current.MainWindow).Handle;
+
+                var webView2Controller = await webView2Environment.CreateCoreWebView2ControllerAsync(windowHwnd);
 
                 await webView2Controller.CoreWebView2.Profile.ClearBrowsingDataAsync();
 
