@@ -8,6 +8,7 @@
              xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
+             xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
@@ -569,8 +570,9 @@
                                         <Setter Property="Template">
                                             <Setter.Value>
                                                 <ControlTemplate>
-                                                    <Expander IsExpanded="True"
-                                                              Style="{StaticResource ResourceKey=DefaultExpander}">
+                                                    <controls:GroupExpander Style="{StaticResource DefaultExpander}"
+                                                                            StateStore="{Binding Path=DataContext.GroupExpanderStateStore, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                                                            GroupName="{Binding Path=(CollectionViewGroup.Name)}">
                                                         <Expander.Header>
                                                             <Grid>
                                                                 <Grid.ColumnDefinitions>
@@ -578,8 +580,38 @@
                                                                     <ColumnDefinition Width="10" />
                                                                     <ColumnDefinition Width="Auto" />
                                                                 </Grid.ColumnDefinitions>
+                                                                <Grid.ContextMenu>
+                                                                    <ContextMenu Style="{StaticResource DefaultContextMenu}">
+                                                                        <MenuItem Header="{x:Static Member=localization:Strings.ExpandAll}"                                                                                  
+                                                                                  Command="{Binding Path=DataContext.ExpandAllProfileGroupsCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=ListBox}}}">
+                                                                            <MenuItem.Icon>
+                                                                                <Rectangle Width="16" Height="16"
+                         Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
+                                                                                    <Rectangle.OpacityMask>
+                                                                                        <VisualBrush Stretch="Uniform"
+                                   Visual="{iconPacks:Material Kind=PlusBoxMultipleOutline}" />
+                                                                                    </Rectangle.OpacityMask>
+                                                                                </Rectangle>
+                                                                            </MenuItem.Icon>
+                                                                        </MenuItem>
+                                                                        <MenuItem Header="{x:Static Member=localization:Strings.CollapseAll}"
+                                                                                  Command="{Binding Path=DataContext.CollapseAllProfileGroupsCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=ListBox}}}">
+                                                                            <MenuItem.Icon>
+                                                                                <Rectangle Width="16" Height="16"
+Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
+                                                                                    <Rectangle.OpacityMask>
+                                                                                        <VisualBrush Stretch="Uniform"
+          Visual="{iconPacks:Material Kind=MinusBoxMultipleOutline}" />
+                                                                                    </Rectangle.OpacityMask>
+                                                                                </Rectangle>
+                                                                            </MenuItem.Icon>
+                                                                        </MenuItem>
+                                                                    </ContextMenu>
+                                                                </Grid.ContextMenu>
                                                                 <Rectangle Grid.Column="0" Grid.ColumnSpan="3"
-                                                                           Fill="Transparent" />
+                                                                           Fill="Transparent">
+                                                                    
+                                                                </Rectangle>
                                                                 <TextBlock Grid.Column="0"
                                                                            Text="{Binding Path=(CollectionViewGroup.Name)}"
                                                                            Style="{DynamicResource ResourceKey=ProfileGroupTextBlock}" />
@@ -614,7 +646,7 @@
                                                             </Grid>
                                                         </Expander.Header>
                                                         <ItemsPresenter />
-                                                    </Expander>
+                                                    </controls:GroupExpander>
                                                 </ControlTemplate>
                                             </Setter.Value>
                                         </Setter>
