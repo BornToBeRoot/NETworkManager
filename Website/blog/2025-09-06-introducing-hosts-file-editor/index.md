@@ -1,6 +1,6 @@
 ---
 slug: indroducing-hosts-file-editor
-title: Indroducing <code>Hosts File Editor</code>
+title: Indroducing Hosts File Editor
 authors: [borntoberoot]
 tags: [hosts file, dns, new feature]
 ---
