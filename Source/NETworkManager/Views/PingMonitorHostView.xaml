@@ -14,7 +14,9 @@
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
              xmlns:profiles="clr-namespace:NETworkManager.Profiles;assembly=NETworkManager.Profiles"
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:utilities="clr-namespace:NETworkManager.Utilities;assembly=NETworkManager.Utilities"
+             xmlns:networkManager="clr-namespace:NETworkManager"
              dialogs:DialogParticipation.Register="{Binding}"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PingMonitorHostViewModel}">
     <UserControl.Resources>
@@ -24,6 +26,7 @@
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
         <converters:StringNullOrEmptyToBoolConverter x:Key="StringNullOrEmptyToBoolConverter" />
+        <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -581,27 +584,30 @@
                                                                     <ColumnDefinition Width="Auto" />
                                                                 </Grid.ColumnDefinitions>
                                                                 <Grid.ContextMenu>
-                                                                    <ContextMenu Style="{StaticResource DefaultContextMenu}">
-                                                                        <MenuItem Header="{x:Static Member=localization:Strings.ExpandAll}"                                                                                  
-                                                                                  Command="{Binding Path=DataContext.ExpandAllProfileGroupsCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=ListBox}}}">
+                                                                    <ContextMenu
+                                                                        Style="{StaticResource DefaultContextMenu}">
+                                                                        <MenuItem
+                                                                            Header="{x:Static Member=localization:Strings.ExpandAll}"
+                                                                            Command="{Binding Path=Data.(viewModels:PingMonitorHostViewModel.ExpandAllProfileGroupsCommand), Source={StaticResource BindingProxy}}">
                                                                             <MenuItem.Icon>
                                                                                 <Rectangle Width="16" Height="16"
-                         Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
+                                                                                    Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                                                                     <Rectangle.OpacityMask>
                                                                                         <VisualBrush Stretch="Uniform"
-                                   Visual="{iconPacks:Material Kind=PlusBoxMultipleOutline}" />
+                                                                                            Visual="{iconPacks:Material Kind=PlusBoxMultipleOutline}" />
                                                                                     </Rectangle.OpacityMask>
                                                                                 </Rectangle>
                                                                             </MenuItem.Icon>
                                                                         </MenuItem>
-                                                                        <MenuItem Header="{x:Static Member=localization:Strings.CollapseAll}"
-                                                                                  Command="{Binding Path=DataContext.CollapseAllProfileGroupsCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=ListBox}}}">
+                                                                        <MenuItem
+                                                                            Header="{x:Static Member=localization:Strings.CollapseAll}"
+                                                                            Command="{Binding Path=Data.(viewModels:PingMonitorHostViewModel.CollapseAllProfileGroupsCommand), Source={StaticResource BindingProxy}}">
                                                                             <MenuItem.Icon>
                                                                                 <Rectangle Width="16" Height="16"
-Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
+                                                                                    Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                                                                     <Rectangle.OpacityMask>
                                                                                         <VisualBrush Stretch="Uniform"
-          Visual="{iconPacks:Material Kind=MinusBoxMultipleOutline}" />
+                                                                                            Visual="{iconPacks:Material Kind=MinusBoxMultipleOutline}" />
                                                                                     </Rectangle.OpacityMask>
                                                                                 </Rectangle>
                                                                             </MenuItem.Icon>
@@ -610,7 +616,7 @@ Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                                                 </Grid.ContextMenu>
                                                                 <Rectangle Grid.Column="0" Grid.ColumnSpan="3"
                                                                            Fill="Transparent">
-                                                                    
+
                                                                 </Rectangle>
                                                                 <TextBlock Grid.Column="0"
                                                                            Text="{Binding Path=(CollectionViewGroup.Name)}"
@@ -825,7 +831,7 @@ Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                         <!-- Unlock profile button -->
                         <Button HorizontalAlignment="Center" VerticalAlignment="Center"
                                 Focusable="False"
-                                Command="{Binding Path=UnlockProfileCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=mah:MetroWindow}}}"
+                                Command="{Binding Path=(networkManager:MainWindow.UnlockProfileCommand), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=mah:MetroWindow}}}"
                                 Style="{StaticResource ResourceKey=CleanButton}"
                                 Visibility="{Binding Source={x:Static Member=settings:ConfigurationManager.Current}, Path=ProfileManagerShowUnlock, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                             <Grid>

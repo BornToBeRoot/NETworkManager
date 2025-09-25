@@ -12,6 +12,7 @@
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              xmlns:profiles="clr-namespace:NETworkManager.Profiles;assembly=NETworkManager.Profiles"
+             xmlns:networkManager="clr-namespace:NETworkManager"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:WakeOnLANViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
@@ -632,7 +633,7 @@
                         <!-- Unlock profile button -->
                         <Button HorizontalAlignment="Center" VerticalAlignment="Center"
                                 Focusable="False"
-                                Command="{Binding UnlockProfileCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type mah:MetroWindow}}}"
+                                Command="{Binding Path=(networkManager:MainWindow.UnlockProfileCommand), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=mah:MetroWindow}}}"
                                 Style="{StaticResource CleanButton}"
                                 Visibility="{Binding Source={x:Static Member=settings:ConfigurationManager.Current}, Path=ProfileManagerShowUnlock, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                             <Grid>

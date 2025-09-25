@@ -16,6 +16,7 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:controls="clr-namespace:NETworkManager.Controls"
              xmlns:profiles="clr-namespace:NETworkManager.Profiles;assembly=NETworkManager.Profiles"
+             xmlns:networkManager="clr-namespace:NETworkManager"
              dialogs:DialogParticipation.Register="{Binding}"
              Loaded="UserControl_Loaded"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PowerShellHostViewModel}">
@@ -781,7 +782,7 @@
                             <!-- Unlock profile button -->
                             <Button HorizontalAlignment="Center" VerticalAlignment="Center"
                                     Focusable="False"
-                                    Command="{Binding UnlockProfileCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type mah:MetroWindow}}}"
+                                    Command="{Binding Path=(networkManager:MainWindow.UnlockProfileCommand), RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=mah:MetroWindow}}}"
                                     Style="{StaticResource CleanButton}"
                                     Visibility="{Binding Source={x:Static Member=settings:ConfigurationManager.Current}, Path=ProfileManagerShowUnlock, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                 <Grid>
