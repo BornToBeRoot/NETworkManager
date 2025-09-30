@@ -6,6 +6,7 @@
              xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
+             xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
              xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
@@ -13,10 +14,10 @@
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
-             xmlns:controls="clr-namespace:NETworkManager.Controls"
+             xmlns:internalControls="clr-namespace:NETworkManager.Controls"
              xmlns:liveChart="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:profiles="clr-namespace:NETworkManager.Profiles;assembly=NETworkManager.Profiles"
-             xmlns:wpfHelper="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:networkManager="clr-namespace:NETworkManager"
              dialog:DialogParticipation.Register="{Binding}"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:NetworkInterfaceViewModel}">
@@ -42,6 +43,7 @@
         <converters:OperationalStatusToStringConverter x:Key="OperationalStatusToStringConverter" />
         <converters:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
         <converters:ValidateNetworkInterfaceConfigConverter x:Key="ValidateNetworkInterfaceConfigConverter" />
+        <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
     </UserControl.Resources>
     <Grid>
         <Grid
@@ -164,7 +166,7 @@
                                         IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}"
                                         Margin="10,0,0,0">
                                     <Rectangle Width="24" Height="24"
-                                               wpfHelper:ReloadAnimationHelper.IsReloading="{Binding IsNetworkInterfaceLoading}">
+                                               wpfHelpers:ReloadAnimationHelper.IsReloading="{Binding IsNetworkInterfaceLoading}">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
                                         </Rectangle.OpacityMask>
@@ -789,7 +791,7 @@
                                         IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}"
                                         Margin="10,0,0,0">
                                     <Rectangle Width="24" Height="24"
-                                               wpfHelper:ReloadAnimationHelper.IsReloading="{Binding IsNetworkInterfaceLoading}">
+                                               wpfHelpers:ReloadAnimationHelper.IsReloading="{Binding IsNetworkInterfaceLoading}">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
                                         </Rectangle.OpacityMask>
@@ -825,7 +827,7 @@
                         <liveChart:CartesianChart Grid.Row="2" Series="{Binding Series}" LegendLocation="Right"
                                                   Margin="0,0,0,20" DisableAnimations="True">
                             <liveChart:CartesianChart.DataTooltip>
-                                <controls:LvlChartsBandwidthTooltip Background="Transparent" />
+                                <internalControls:LvlChartsBandwidthTooltip Background="Transparent" />
                             </liveChart:CartesianChart.DataTooltip>
                             <liveChart:CartesianChart.AxisX>
                                 <liveChart:Axis LabelFormatter="{Binding FormatterDate}">
@@ -1028,7 +1030,7 @@
                                             IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}"
                                             Margin="10,0,0,0">
                                         <Rectangle Width="24" Height="24"
-                                                   wpfHelper:ReloadAnimationHelper.IsReloading="{Binding IsNetworkInterfaceLoading}">
+                                                   wpfHelpers:ReloadAnimationHelper.IsReloading="{Binding IsNetworkInterfaceLoading}">
                                             <Rectangle.OpacityMask>
                                                 <VisualBrush Stretch="Uniform"
                                                              Visual="{iconPacks:Material Kind=Refresh}" />
@@ -1659,8 +1661,10 @@
                                             <Setter Property="Template">
                                                 <Setter.Value>
                                                     <ControlTemplate>
-                                                        <Expander IsExpanded="True"
-                                                                  Style="{StaticResource DefaultExpander}">
+                                                        <controls:GroupExpander
+                                                            Style="{StaticResource DefaultExpander}"
+                                                            StateStore="{Binding Path=DataContext.GroupExpanderStateStore, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                                            GroupName="{Binding Path=(CollectionViewGroup.Name)}">
                                                             <Expander.Header>
                                                                 <Grid>
                                                                     <Grid.ColumnDefinitions>
@@ -1668,6 +1672,39 @@
                                                                         <ColumnDefinition Width="10" />
                                                                         <ColumnDefinition Width="Auto" />
                                                                     </Grid.ColumnDefinitions>
+                                                                    <Grid.ContextMenu>
+                                                                        <ContextMenu
+                                                                            Style="{StaticResource DefaultContextMenu}">
+                                                                            <MenuItem
+                                                                                Header="{x:Static Member=localization:Strings.ExpandAll}"
+                                                                                Command="{Binding Path=Data.(viewModels:NetworkInterfaceViewModel.ExpandAllProfileGroupsCommand), Source={StaticResource BindingProxy}}">
+                                                                                <MenuItem.Icon>
+                                                                                    <Rectangle Width="16" Height="16"
+                                                                                        Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
+                                                                                        <Rectangle.OpacityMask>
+                                                                                            <VisualBrush
+                                                                                                Stretch="Uniform"
+                                                                                                Visual="{iconPacks:Material Kind=PlusBoxMultipleOutline}" />
+                                                                                        </Rectangle.OpacityMask>
+                                                                                    </Rectangle>
+                                                                                </MenuItem.Icon>
+                                                                            </MenuItem>
+                                                                            <MenuItem
+                                                                                Header="{x:Static Member=localization:Strings.CollapseAll}"
+                                                                                Command="{Binding Path=Data.(viewModels:NetworkInterfaceViewModel.CollapseAllProfileGroupsCommand), Source={StaticResource BindingProxy}}">
+                                                                                <MenuItem.Icon>
+                                                                                    <Rectangle Width="16" Height="16"
+                                                                                        Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
+                                                                                        <Rectangle.OpacityMask>
+                                                                                            <VisualBrush
+                                                                                                Stretch="Uniform"
+                                                                                                Visual="{iconPacks:Material Kind=MinusBoxMultipleOutline}" />
+                                                                                        </Rectangle.OpacityMask>
+                                                                                    </Rectangle>
+                                                                                </MenuItem.Icon>
+                                                                            </MenuItem>
+                                                                        </ContextMenu>
+                                                                    </Grid.ContextMenu>
                                                                     <Rectangle Grid.Column="0" Grid.ColumnSpan="3"
                                                                                Fill="Transparent" />
                                                                     <TextBlock Grid.Column="0"
@@ -1703,7 +1740,7 @@
                                                                 </Grid>
                                                             </Expander.Header>
                                                             <ItemsPresenter />
-                                                        </Expander>
+                                                        </controls:GroupExpander>
                                                     </ControlTemplate>
                                                 </Setter.Value>
                                             </Setter>
