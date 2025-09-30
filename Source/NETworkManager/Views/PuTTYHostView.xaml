@@ -7,15 +7,16 @@
              xmlns:dockablz="clr-namespace:Dragablz.Dockablz;assembly=Dragablz"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
+             xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-             xmlns:controls="clr-namespace:NETworkManager.Controls"
-             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
+             xmlns:internalControls="clr-namespace:NETworkManager.Controls"
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              xmlns:interactivity="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:profiles="clr-namespace:NETworkManager.Profiles;assembly=NETworkManager.Profiles"
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:networkManager="clr-namespace:NETworkManager"
              dialogs:DialogParticipation.Register="{Binding}"
              Loaded="UserControl_Loaded"
@@ -52,7 +53,7 @@
             <dockablz:Layout Grid.Column="0" Grid.Row="0"
                              Partition="{Binding InterTabPartition}">
                 <dockablz:Layout.Resources>
-                    <DataTemplate x:Key="TabHeaderTemplate" DataType="{x:Type controls:DragablzTabItem}">
+                    <DataTemplate x:Key="TabHeaderTemplate" DataType="{x:Type internalControls:DragablzTabItem}">
                         <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0,0,1,0">
                             <Grid Height="32">
                                 <Grid.ContextMenu>
@@ -573,8 +574,10 @@
                                             <Setter Property="Template">
                                                 <Setter.Value>
                                                     <ControlTemplate>
-                                                        <Expander IsExpanded="True"
-                                                                  Style="{StaticResource DefaultExpander}">
+                                                        <controls:GroupExpander
+                                                            Style="{StaticResource DefaultExpander}"
+                                                            StateStore="{Binding Path=DataContext.GroupExpanderStateStore, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                                            GroupName="{Binding Path=(CollectionViewGroup.Name)}">
                                                             <Expander.Header>
                                                                 <Grid>
                                                                     <Grid.ColumnDefinitions>
@@ -582,7 +585,40 @@
                                                                         <ColumnDefinition Width="10" />
                                                                         <ColumnDefinition Width="Auto" />
                                                                     </Grid.ColumnDefinitions>
-                                                                    <Rectangle Grid.Column="0" Grid.ColumnSpan="4"
+                                                                    <Grid.ContextMenu>
+                                                                        <ContextMenu
+                                                                            Style="{StaticResource DefaultContextMenu}">
+                                                                            <MenuItem
+                                                                                Header="{x:Static Member=localization:Strings.ExpandAll}"
+                                                                                Command="{Binding Path=Data.(viewModels:PuTTYHostViewModel.ExpandAllProfileGroupsCommand), Source={StaticResource BindingProxy}}">
+                                                                                <MenuItem.Icon>
+                                                                                    <Rectangle Width="16" Height="16"
+                                                                                        Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
+                                                                                        <Rectangle.OpacityMask>
+                                                                                            <VisualBrush
+                                                                                                Stretch="Uniform"
+                                                                                                Visual="{iconPacks:Material Kind=PlusBoxMultipleOutline}" />
+                                                                                        </Rectangle.OpacityMask>
+                                                                                    </Rectangle>
+                                                                                </MenuItem.Icon>
+                                                                            </MenuItem>
+                                                                            <MenuItem
+                                                                                Header="{x:Static Member=localization:Strings.CollapseAll}"
+                                                                                Command="{Binding Path=Data.(viewModels:PuTTYHostViewModel.CollapseAllProfileGroupsCommand), Source={StaticResource BindingProxy}}">
+                                                                                <MenuItem.Icon>
+                                                                                    <Rectangle Width="16" Height="16"
+                                                                                        Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
+                                                                                        <Rectangle.OpacityMask>
+                                                                                            <VisualBrush
+                                                                                                Stretch="Uniform"
+                                                                                                Visual="{iconPacks:Material Kind=MinusBoxMultipleOutline}" />
+                                                                                        </Rectangle.OpacityMask>
+                                                                                    </Rectangle>
+                                                                                </MenuItem.Icon>
+                                                                            </MenuItem>
+                                                                        </ContextMenu>
+                                                                    </Grid.ContextMenu>
+                                                                    <Rectangle Grid.Column="0" Grid.ColumnSpan="3"
                                                                                Fill="Transparent" />
                                                                     <TextBlock Grid.Column="0"
                                                                                Text="{Binding (CollectionViewGroup.Name)}"
@@ -617,7 +653,7 @@
                                                                 </Grid>
                                                             </Expander.Header>
                                                             <ItemsPresenter />
-                                                        </Expander>
+                                                        </controls:GroupExpander>
                                                     </ControlTemplate>
                                                 </Setter.Value>
                                             </Setter>
