@@ -196,6 +196,9 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
+    
+    private readonly GroupExpanderStateStore _groupExpanderStateStore = new();
+    public GroupExpanderStateStore GroupExpanderStateStore => _groupExpanderStateStore;
 
     private bool _canProfileWidthChange = true;
     private double _tempProfileWidth;
@@ -398,6 +401,20 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
         IsProfileFilterSet = false;
         ProfileFilterIsOpen = false;
     }
+    
+    public ICommand ExpandAllProfileGroupsCommand => new RelayCommand(_ => ExpandAllProfileGroupsAction());
+
+    private void ExpandAllProfileGroupsAction()
+    {
+        SetIsExpandedForAllProfileGroups(true);
+    }
+
+    public ICommand CollapseAllProfileGroupsCommand => new RelayCommand(_ => CollapseAllProfileGroupsAction());
+
+    private void CollapseAllProfileGroupsAction()
+    {
+        SetIsExpandedForAllProfileGroups(false);
+    }
 
     public ItemActionCallback CloseItemCommand => CloseItemAction;
 
@@ -409,7 +426,12 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #region Methods
-
+    private void SetIsExpandedForAllProfileGroups(bool isExpanded)
+    {
+        foreach (var group in Profiles.Groups.Cast<CollectionViewGroup>())
+            GroupExpanderStateStore[group.Name.ToString()] = isExpanded;
+    }
+    
     private void ResizeProfile(bool dueToChangedSize)
     {
         _canProfileWidthChange = false;

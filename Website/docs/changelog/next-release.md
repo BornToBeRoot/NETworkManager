@@ -19,23 +19,28 @@ Release date: **xx.xx.2025**
 
 ## What's new?
 
-- Profile's can now be filtered by tags. Next to the search textbox, a new filter button is available. [#3144](https://github.com/BornToBeRoot/NETworkManager/pull/3144)
+**Profiles**
+
+- Added the ability to filter profiles by tags using the filter button next to the search field. [#3144](https://github.com/BornToBeRoot/NETworkManager/pull/3144)
+- Introduced a context menu for profile groups to collapse or expand all groups at once. [#3171](https://github.com/BornToBeRoot/NETworkManager/pull/3171)
 
 ## Improvements
 
-- Redesign settings reset dialog. [#3138](https://github.com/BornToBeRoot/NETworkManager/pull/3138)
+- Redesigned the settings reset dialog for a clearer and more user-friendly experience. [#3138](https://github.com/BornToBeRoot/NETworkManager/pull/3138)
 
 **WiFi**
 
-- Documentation for Windows 11 24H2 location permission added. [#3148](https://github.com/BornToBeRoot/NETworkManager/pull/3148)
+- Added documentation for Windows 11 24H2 location permission requirements. [#3148](https://github.com/BornToBeRoot/NETworkManager/pull/3148)
 
-## Bugfixes
+## Bug Fixes
 
-- **Web Console**
-  - Fixed an issue where clearing the Browser cache crashed the application. [#3169](https://github.com/BornToBeRoot/NETworkManager/pull/3169)
+**Web Console**
 
-- **Profiles**
-  - Fixed an issue where only one profile was deleted in `Settings > Profiles` when multiple profiles were selected. [#3144](https://github.com/BornToBeRoot/NETworkManager/pull/3144) [#3145](https://github.com/BornToBeRoot/NETworkManager/issues/3145)
+- Fixed a crash that occurred when clearing the browser cache. [#3169](https://github.com/BornToBeRoot/NETworkManager/pull/3169)
+
+**Profiles**
+
+- Fixed an issue where only one profile was deleted in `Settings > Profiles` when multiple profiles were selected. [#3144](https://github.com/BornToBeRoot/NETworkManager/pull/3144) [#3145](https://github.com/BornToBeRoot/NETworkManager/issues/3145)
 
 ## Dependencies, Refactoring & Documentation
 
