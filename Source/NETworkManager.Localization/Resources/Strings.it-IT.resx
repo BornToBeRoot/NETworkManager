@@ -4090,4 +4090,10 @@ Per maggiori dettagli consulta il file registro.</value>
   <data name="AddGroupDots" xml:space="preserve">
     <value>Aggiungi gruppo...</value>
   </data>
+  <data name="ExpandAll" xml:space="preserve">
+    <value>Expand all</value>
+  </data>
+  <data name="CollapseAll" xml:space="preserve">
+    <value>Collapse all</value>
+  </data>
 </root>
