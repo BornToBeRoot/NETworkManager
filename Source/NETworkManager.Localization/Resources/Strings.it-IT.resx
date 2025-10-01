@@ -4091,9 +4091,9 @@ Per maggiori dettagli consulta il file registro.</value>
     <value>Aggiungi gruppo...</value>
   </data>
   <data name="ExpandAll" xml:space="preserve">
-    <value>Expand all</value>
+    <value>Espandi tutto</value>
   </data>
   <data name="CollapseAll" xml:space="preserve">
-    <value>Collapse all</value>
+    <value>Riduci tutto</value>
   </data>
 </root>
