@@ -3987,4 +3987,10 @@ Right-click for more options.</value>
   <data name="AddGroupDots" xml:space="preserve">
     <value>Add group...</value>
   </data>
+  <data name="ExpandAll" xml:space="preserve">
+    <value>Expand all</value>
+  </data>
+  <data name="CollapseAll" xml:space="preserve">
+    <value>Collapse all</value>
+  </data>
 </root>

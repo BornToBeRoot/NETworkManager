@@ -3960,30 +3960,36 @@ $$hostname$$	--&gt;	主機名稱</value>
     <value>刪除瀏覽資料時發生錯誤。歡迎在 GitHub 上回報此問題。</value>
   </data>
   <data name="ExampleTag" xml:space="preserve">
-    <value>production</value>
+    <value>生產</value>
   </data>
   <data name="AddTag" xml:space="preserve">
-    <value>Add tag</value>
+    <value>新增標籤</value>
   </data>
   <data name="ApplyFilter" xml:space="preserve">
-    <value>Apply filter</value>
+    <value>套用篩選</value>
   </data>
   <data name="FilterProfilesDots" xml:space="preserve">
-    <value>Filter profiles...</value>
+    <value>篩選設定檔...</value>
   </data>
   <data name="FilterByTags" xml:space="preserve">
-    <value>Filter by tags</value>
+    <value>依標籤篩選</value>
   </data>
   <data name="NoTagsFound" xml:space="preserve">
-    <value>No tags found!</value>
+    <value>找不到標籤！</value>
   </data>
   <data name="Match" xml:space="preserve">
-    <value>Match</value>
+    <value>匹配</value>
   </data>
   <data name="Any" xml:space="preserve">
-    <value>Any</value>
+    <value>任何</value>
   </data>
   <data name="AddGroupDots" xml:space="preserve">
-    <value>Add group...</value>
+    <value>新增群組...</value>
+  </data>
+  <data name="ExpandAll" xml:space="preserve">
+    <value>擴展全部</value>
+  </data>
+  <data name="CollapseAll" xml:space="preserve">
+    <value>全部摺疊</value>
   </data>
 </root>

@@ -3988,4 +3988,10 @@ Open Windows Settings &gt; Privacy &amp; security &gt; Location, enable access f
   <data name="AddGroupDots" xml:space="preserve">
     <value>Add group...</value>
   </data>
+  <data name="ExpandAll" xml:space="preserve">
+    <value>Expand all</value>
+  </data>
+  <data name="CollapseAll" xml:space="preserve">
+    <value>Collapse all</value>
+  </data>
 </root>
