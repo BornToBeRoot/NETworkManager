@@ -3988,9 +3988,9 @@ Rechtsklick für weitere Optionen.</value>
     <value>Gruppe hinzufügen...</value>
   </data>
   <data name="ExpandAll" xml:space="preserve">
-    <value>Expand all</value>
+    <value>Alle erweitern</value>
   </data>
   <data name="CollapseAll" xml:space="preserve">
-    <value>Collapse all</value>
+    <value>Alle einklappen</value>
   </data>
 </root>
