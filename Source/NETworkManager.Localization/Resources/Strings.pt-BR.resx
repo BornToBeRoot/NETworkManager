@@ -3988,9 +3988,9 @@ Clique direito para mais opções.</value>
     <value>Adicionar grupo...</value>
   </data>
   <data name="ExpandAll" xml:space="preserve">
-    <value>Expand all</value>
+    <value>Exportar tudo</value>
   </data>
   <data name="CollapseAll" xml:space="preserve">
-    <value>Collapse all</value>
+    <value>Fechar todos</value>
   </data>
 </root>
