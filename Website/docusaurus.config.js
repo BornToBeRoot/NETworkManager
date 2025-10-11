@@ -154,9 +154,9 @@ const config = {
       "@docusaurus/plugin-client-redirects",
       {
         redirects: [
-          {
+          {            
             from: ["/docs/changelog/latest"],
-            to: "/docs/changelog/2025-1-18-0",
+            to: "/docs/changelog/2025-8-10-0",
           },
           {
             from: ["/docs/changelog/2025-6-13-0"],
