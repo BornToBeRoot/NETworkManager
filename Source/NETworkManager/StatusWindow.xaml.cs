@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -43,7 +44,7 @@ public partial class StatusWindow : INotifyPropertyChanged
     #endregion
 
     #region Variables
-    
+
     // Set priority to make the ui smoother
     private readonly DispatcherTimer _dispatcherTimerClose = new(DispatcherPriority.Normal);
 
@@ -142,16 +143,18 @@ public partial class StatusWindow : INotifyPropertyChanged
         // ToDo: User setting...
         if (Screen.PrimaryScreen != null)
         {
-            Left = Screen.PrimaryScreen.WorkingArea.Right - Width - 10;
-            Top = Screen.PrimaryScreen.WorkingArea.Bottom - Height - 10;
+            var scaleFactor = System.Windows.Media.VisualTreeHelper.GetDpi(this).DpiScaleX;
+
+            Left = Screen.PrimaryScreen.WorkingArea.Right / scaleFactor - Width - 10;
+            Top = Screen.PrimaryScreen.WorkingArea.Bottom / scaleFactor - Height - 10;
         }
 
         // Show the window
         Show();
-        
+
         // Check the network connection
         Check();
-        
+
         // Close the window after a certain time
         if (enableCloseTimer)
         {
