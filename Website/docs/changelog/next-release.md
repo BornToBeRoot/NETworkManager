@@ -34,6 +34,8 @@ Release date: **xx.xx.2025**
 
 ## Bug Fixes
 
+- Fixed an issue where the status window was out of screen when a display scale other than 100% was set. [#3185](https://github.com/BornToBeRoot/NETworkManager/pull/3185)
+
 **Web Console**
 
 - Fixed a crash that occurred when clearing the browser cache. [#3169](https://github.com/BornToBeRoot/NETworkManager/pull/3169)
