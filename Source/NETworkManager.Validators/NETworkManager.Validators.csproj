@@ -13,13 +13,13 @@
         <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
     </PropertyGroup>
     <ItemGroup>
-        <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs"/>
+        <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.5"/>
+        <PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.6" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\NETworkManager.Localization\NETworkManager.Localization.csproj"/>
-        <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj"/>
+        <ProjectReference Include="..\NETworkManager.Localization\NETworkManager.Localization.csproj" />
+        <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj" />
     </ItemGroup>
 </Project>
