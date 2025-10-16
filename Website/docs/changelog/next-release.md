@@ -21,7 +21,7 @@ Release date: **xx.xx.2025**
 
 **Profiles**
 
-- Added the ability to filter profiles by tags using the filter button next to the search field. [#3144](https://github.com/BornToBeRoot/NETworkManager/pull/3144)
+- Added the ability to filter profiles by tags using the filter button next to the search field. [#3144](https://github.com/BornToBeRoot/NETworkManager/pull/3144) [#3187](https://github.com/BornToBeRoot/NETworkManager/pull/3187)
 - Introduced a context menu for profile groups to collapse or expand all groups at once. [#3171](https://github.com/BornToBeRoot/NETworkManager/pull/3171)
 
 ## Improvements
@@ -46,6 +46,7 @@ Release date: **xx.xx.2025**
 
 ## Dependencies, Refactoring & Documentation
 
+- Documentation updated [#3187](https://github.com/BornToBeRoot/NETworkManager/pull/3187)
 - Code cleanup & refactoring
 - Language files updated via [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration)
 - Dependencies updated via [#dependabot](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot)
