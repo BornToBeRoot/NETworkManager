@@ -17,17 +17,17 @@
         <NoWarn>1701;1702;CS1591</NoWarn>
     </PropertyGroup>
     <ItemGroup>
-        <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs"/>
+        <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\NETworkManager.Localization\NETworkManager.Localization.csproj"/>
-        <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj"/>
-        <ProjectReference Include="..\NETworkManager.Profiles\NETworkManager.Profiles.csproj"/>
-        <ProjectReference Include="..\NETworkManager.Settings\NETworkManager.Settings.csproj"/>
-        <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj"/>
+        <ProjectReference Include="..\NETworkManager.Localization\NETworkManager.Localization.csproj" />
+        <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj" />
+        <ProjectReference Include="..\NETworkManager.Profiles\NETworkManager.Profiles.csproj" />
+        <ProjectReference Include="..\NETworkManager.Settings\NETworkManager.Settings.csproj" />
+        <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="LiveCharts.Wpf" Version="0.9.7"/>
-        <PackageReference Include="MahApps.Metro" Version="2.4.10"/>
+        <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
+        <PackageReference Include="MahApps.Metro" Version="2.4.11" />
     </ItemGroup>
 </Project>

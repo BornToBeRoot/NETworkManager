@@ -13,13 +13,13 @@
         <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
     </PropertyGroup>
     <ItemGroup>
-        <Page Remove="Themes\Dark.Accent1.xaml"/>
-        <Page Remove="Themes\Dark.Accent2.xaml"/>
-        <Page Remove="Themes\Light.Accent1.xaml"/>
-        <Page Remove="Themes\Light.Accent2.xaml"/>
+        <Page Remove="Themes\Dark.Accent1.xaml" />
+        <Page Remove="Themes\Dark.Accent2.xaml" />
+        <Page Remove="Themes\Light.Accent1.xaml" />
+        <Page Remove="Themes\Light.Accent2.xaml" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs"/>
+        <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="Themes\Dark.Accent1.xaml">
@@ -44,19 +44,19 @@
         </Content>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="DnsClient" Version="1.8.0"/>
-        <PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.5"/>
-        <PackageReference Include="log4net" Version="3.0.3"/>
-        <PackageReference Include="MahApps.Metro" Version="2.4.10"/>
-        <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="5.1.0"/>
-        <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="5.1.0"/>
-        <PackageReference Include="MahApps.Metro.IconPacks.MaterialLight" Version="5.1.0"/>
-        <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="5.1.0"/>
-        <PackageReference Include="MahApps.Metro.IconPacks.Octicons" Version="5.1.0"/>
+        <PackageReference Include="DnsClient" Version="1.8.0" />
+        <PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.6" />
+        <PackageReference Include="log4net" Version="3.2.0" />
+        <PackageReference Include="MahApps.Metro" Version="2.4.11" />
+        <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="6.1.0" />
+        <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="6.1.0" />
+        <PackageReference Include="MahApps.Metro.IconPacks.MaterialLight" Version="6.1.0" />
+        <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="6.1.0" />
+        <PackageReference Include="MahApps.Metro.IconPacks.Octicons" Version="6.1.0" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\NETworkManager.Controls\NETworkManager.Controls.csproj"/>
-        <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj"/>
-        <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj"/>
+        <ProjectReference Include="..\NETworkManager.Controls\NETworkManager.Controls.csproj" />
+        <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj" />
+        <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj" />
     </ItemGroup>
 </Project>
