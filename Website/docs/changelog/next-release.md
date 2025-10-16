@@ -49,5 +49,5 @@ Release date: **xx.xx.2025**
 - Documentation updated [#3187](https://github.com/BornToBeRoot/NETworkManager/pull/3187)
 - Code cleanup & refactoring
 - Language files updated via [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration)
-- Dependencies updated via [#dependabot](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot)
+- Dependencies updated via [#dependabot](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot) [#3190](https://github.com/BornToBeRoot/NETworkManager/pull/3190)
 - Gurubase Widget removed [#3059](https://github.com/BornToBeRoot/NETworkManager/pull/3059)
