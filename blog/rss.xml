@@ -16,7 +16,7 @@
             <description><![CDATA[NETworkManager 2025.8.10.0 introduced a new feature, the Hosts File Editor. You can now easily manage and edit your system's hosts file in a user-friendly interface.]]></description>
             <content:encoded><![CDATA[<p>NETworkManager 2025.8.10.0 introduced a new feature, the <code>Hosts File Editor</code>. You can now easily manage and edit your system's hosts file in a user-friendly interface.</p>
 <p>As a sysadmin or developer, you often need to modify the hosts file in order to override DNS settings for specific domains, redirect traffic, or test websites locally.</p>
-<p><img decoding="async" loading="lazy" alt="Hosts File Editor" src="https://borntoberoot.net/NETworkManager/assets/images/hosts-file-editor-0432db59fcbe6e5d34fb3ea1fcb2ea84.gif" width="1200" height="800" class="img_ev3q"></p>
+<p><img decoding="async" loading="lazy" alt="Hosts File Editor" src="https://borntoberoot.net/NETworkManager/assets/images/hosts-file-editor-30d579f84578d3c768a537ec0d71e1e7.gif" width="1200" height="800" class="img_ev3q"></p>
 <p>The hosts file is a plain text file used by the operating system to map hostnames to IP addresses. It is typically located at:</p>
 <ul>
 <li>Windows: <code>C:\Windows\System32\drivers\etc\hosts</code></li>
