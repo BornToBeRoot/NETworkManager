@@ -25,7 +25,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
             ListSortDirection.Ascending));
 
         SetGroupsView();
-        
+
         ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
 
         _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
@@ -35,7 +35,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #region Variables
-    
+
     private readonly DispatcherTimer _searchDispatcherTimer = new();
     private bool _searchDisabled;
 
@@ -56,6 +56,8 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
         }
     }
 
+    private bool _disableProfileRefresh;
+    
     private ProfileInfo _lastSelectedProfileOnRefresh;
 
     private GroupInfo _selectedGroup = new();
@@ -70,21 +72,22 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
             _selectedGroup = value;
 
-            // NullReferenceException occurs if profile file is changed            
-            if (value != null)
+            // Check for null, because a NullReferenceException can occur when a profile file is changed
+            // Temporarily disable profile refresh to avoid multiple refreshes and prevent the filter from being reset.
+            if (value != null && !_disableProfileRefresh)
             {
                 // Set/update tags based on current group
                 CreateTags();
-                
+
                 var filter = new ProfileFilterInfo
                 {
                     Search = Search,
                     Tags = [.. ProfileFilterTags.Where(x => x.IsSelected).Select(x => x.Name)],
                     TagsFilterMatch = ProfileFilterTagsMatchAny ? ProfileFilterTagsMatch.Any : ProfileFilterTagsMatch.All
                 };
-                
-                SetProfilesView(filter ,value, _lastSelectedProfileOnRefresh);
-                
+
+                SetProfilesView(filter, value, _lastSelectedProfileOnRefresh);
+
                 IsProfileFilterSet = !string.IsNullOrEmpty(filter.Search) || filter.Tags.Any();
             }
             else
@@ -95,7 +98,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-    
+
     private ICollectionView _profiles;
 
     public ICollectionView Profiles
@@ -266,7 +269,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     {
         ProfileDialogManager.ShowDeleteGroupDialog(Application.Current.MainWindow, this, SelectedGroup).ConfigureAwait(false);
     }
-    
+
     public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
 
     private void AddProfileAction()
@@ -358,14 +361,19 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
     private void SetGroupsView(GroupInfo group = null)
     {
+        _disableProfileRefresh = true;
+        
         Groups = new CollectionViewSource
         {
             Source = ProfileManager.Groups.Where(x => !x.IsDynamic).OrderBy(x => x.Name)
         }.View;
-
-        // Set specific group or first if null
+        
+        // Set to null, so even when the same group is selected, the profiles get refreshed
         SelectedGroup = null;
 
+        _disableProfileRefresh = false;
+
+        // Set specific group or first if null
         if (group != null)
             SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().FirstOrDefault(x => x.Equals(group)) ??
                             Groups.SourceCollection.Cast<GroupInfo>().MinBy(x => x.Name);
@@ -378,7 +386,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
         // Get all tags from profiles in the selected group
         var tags = ProfileManager.Groups.First(x => x.Name == SelectedGroup.Name).Profiles
             .SelectMany(x => x.TagsCollection).Distinct().ToList();
-      
+
         var tagSet = new HashSet<string>(tags);
 
         for (var i = ProfileFilterTags.Count - 1; i >= 0; i--)
@@ -394,7 +402,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
             ProfileFilterTags.Add(new ProfileFilterTagsInfo(false, tag));
         }
     }
-    
+
     private void SetProfilesView(ProfileFilterInfo filter, GroupInfo group, ProfileInfo profile = null)
     {
         Profiles = new CollectionViewSource

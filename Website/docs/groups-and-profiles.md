@@ -34,6 +34,8 @@ Right-click on a selected profile to `edit`, `copy` or `delete` it.
 
 You can also use the Hotkeys `F2` (`edit`) or `Del` (`delete`) on a selected profile.
 
+Right-click on a group header to `expand` or `collapse` all groups. The button to edit the group will be shown when hovering over the group header.
+
 :::
 
 ## Group
@@ -49,6 +51,8 @@ In the profile settings you can define general settings and feature specific set
 :::note
 
 Profiles are only displayed in the specific features if they have been enabled via the checkbox. The [`Profiles` tab in the `Settings`](#overview) will show all profiles.
+
+Use `tags` to organize profiles and filter by them. For example, tag profiles as `prod` or `dns` to group related ones. You can filter by `any` or `all` tags.
 
 :::
 
