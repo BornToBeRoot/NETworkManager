@@ -1,8 +1,8 @@
-﻿using System.ComponentModel;
+﻿using NETworkManager.Models.Appearance;
+using NETworkManager.Settings;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
-using NETworkManager.Models.Appearance;
-using NETworkManager.Settings;
 
 namespace NETworkManager.ViewModels;
 
@@ -26,7 +26,7 @@ public class SettingsAppearanceViewModel : ViewModelBase
 
             if (!_isLoading && !UseCustomTheme)
             {
-                AppearanceManager.ChangeTheme(value.Name);
+                AppearanceManager.ChangeTheme(value.Name, SelectedAccent.Name);
                 SettingsManager.Current.Appearance_Theme = value.Name;
             }
 
@@ -34,7 +34,6 @@ public class SettingsAppearanceViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-
 
     public ICollectionView Accents { get; }
 
@@ -50,7 +49,7 @@ public class SettingsAppearanceViewModel : ViewModelBase
 
             if (!_isLoading && !UseCustomTheme)
             {
-                AppearanceManager.ChangeAccent(value.Name);
+                AppearanceManager.ChangeTheme(SelectedTheme.Name, value.Name);
                 SettingsManager.Current.Appearance_Accent = value.Name;
             }
 
@@ -95,7 +94,7 @@ public class SettingsAppearanceViewModel : ViewModelBase
 
             if (!_isLoading && UseCustomTheme)
             {
-                AppearanceManager.ChangeTheme(value);
+                AppearanceManager.ChangeTheme(value.Name);
                 SettingsManager.Current.Appearance_CustomThemeName = value.Name;
             }
 
