@@ -4096,4 +4096,7 @@ Per maggiori dettagli consulta il file registro.</value>
   <data name="CollapseAll" xml:space="preserve">
     <value>Riduci tutto</value>
   </data>
+  <data name="HelpMessage_UseCustomThemes" xml:space="preserve">
+    <value>Use custom themes to personalize the appearance of the application. You can edit or add theme in the "Program Folder &gt; Themes" directory. For more details, refer to the documentation.</value>
+  </data>
 </root>
