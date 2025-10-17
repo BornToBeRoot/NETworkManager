@@ -26,6 +26,7 @@ Release date: **xx.xx.2025**
 
 ## Improvements
 
+- Improved light theme for enhanced readability and contrast. [#3191](https://github.com/BornToBeRoot/NETworkManager/pull/3191)
 - Redesigned the settings reset dialog for a clearer and more user-friendly experience. [#3138](https://github.com/BornToBeRoot/NETworkManager/pull/3138)
 
 **WiFi**
