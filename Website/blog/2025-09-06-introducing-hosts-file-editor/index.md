@@ -1,6 +1,6 @@
 ---
-slug: indroducing-hosts-file-editor
-title: Indroducing Hosts File Editor
+slug: introducing-hosts-file-editor
+title: Introducing Hosts File Editor
 authors: [borntoberoot]
 tags: [hosts file, dns, new feature]
 ---
