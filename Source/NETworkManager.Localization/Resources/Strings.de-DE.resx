@@ -3994,6 +3994,6 @@ Rechtsklick für weitere Optionen.</value>
     <value>Alle einklappen</value>
   </data>
   <data name="HelpMessage_UseCustomThemes" xml:space="preserve">
-    <value>Use custom themes to personalize the appearance of the application. You can edit or add theme in the "Program Folder &gt; Themes" directory. For more details, refer to the documentation.</value>
+    <value>Verwenden Sie benutzerdefinierte Themes, um das Erscheinungsbild der Anwendung anzupassen. Sie können Themes im Verzeichnis „Program Folder &gt; Themes“ bearbeiten oder hinzufügen. Weitere Informationen finden Sie in der Dokumentation.</value>
   </data>
 </root>
