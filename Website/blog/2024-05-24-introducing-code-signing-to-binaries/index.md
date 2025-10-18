@@ -1,5 +1,5 @@
 ---
-slug: added-code-signing-to-binaries
+slug: introducing-code-signing-for-binaries
 title: Introducing Code Signing for Binaries
 authors: [borntoberoot]
 tags: [code-signing, binaries, installer]
