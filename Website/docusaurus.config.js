@@ -154,11 +154,13 @@ const config = {
       "@docusaurus/plugin-client-redirects",
       {
         redirects: [
-          {            
+          { 
+            // Redirect latest changelog to the newest version           
             from: ["/docs/changelog/latest"],
-            to: "/docs/changelog/2025-8-10-0",
+            to: "/docs/changelog/2025-10-18-0",
           },
-          {
+          // Redirect pre-versions to the corresponding new versions
+          {            
             from: ["/docs/changelog/2025-6-13-0"],
             to: "/docs/changelog/2025-8-10-0",
           },
@@ -168,7 +170,7 @@ const config = {
           },
           {
             from: ["/docs/changelog/2025-10-4-0"],
-            to: "/docs/changelog/next-release",
+            to: "/docs/changelog/2025-10-18-0",
           },
         ],
       },
