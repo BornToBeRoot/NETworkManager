@@ -4,14 +4,38 @@
         <title>NETworkManager Blog</title>
         <link>https://borntoberoot.net/NETworkManager/blog</link>
         <description>NETworkManager Blog</description>
-        <lastBuildDate>Sat, 06 Sep 2025 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 19 Oct 2025 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <item>
-            <title><![CDATA[Indroducing Hosts File Editor]]></title>
-            <link>https://borntoberoot.net/NETworkManager/blog/indroducing-hosts-file-editor</link>
-            <guid>https://borntoberoot.net/NETworkManager/blog/indroducing-hosts-file-editor</guid>
+            <title><![CDATA[Streamlined Profile Management with Tags & Filters]]></title>
+            <link>https://borntoberoot.net/NETworkManager/blog/streamlined-profile-management-with-tags-and-filters</link>
+            <guid>https://borntoberoot.net/NETworkManager/blog/streamlined-profile-management-with-tags-and-filters</guid>
+            <pubDate>Sun, 19 Oct 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[NETworkManager 2025.10.18.0 brings a streamlined approach to profile management with the introduction of Tags and Filtering.]]></description>
+            <content:encoded><![CDATA[<p>NETworkManager 2025.10.18.0 brings a streamlined approach to profile management with the introduction of Tags and Filtering.</p>
+<p>You can now add or remove tags directly within each profile, making it effortless to organize and quickly locate your hosts and networks.</p>
+<p><img decoding="async" loading="lazy" alt="Profile Tags &amp;amp; Filters" src="https://borntoberoot.net/NETworkManager/assets/images/profile-tags-and-filters-1a89df7ee62801d4b5890ec1f61f0619.gif" width="1024" height="768" class="img_ev3q"></p>
+<p>Easily filter profiles across features using the new filter button next to the search box.</p>
+<p>Choose between two filter modes:</p>
+<ul>
+<li>Match All: Display profiles containing all selected tags (e.g., <code>prod</code> and <code>dns</code>).</li>
+<li>Match Any: Display profiles containing at least one selected tag (e.g., <code>prod</code> or <code>dev</code>).</li>
+</ul>
+<p>Additionally, profile groups are now more manageable. Right-click any group header to access a new context menu, allowing you to expand or collapse all groups with a single click.</p>
+<p>These enhancements make managing large profile sets faster, cleaner, and more intuitive than ever.</p>
+<p>Upgrade now to the <a href="https://borntoberoot.net/NETworkManager/download" target="_blank" rel="noopener noreferrer">latest version of NETworkManager</a> to use this feature.</p>
+<p>More information is available in the <a href="https://borntoberoot.net/NETworkManager/docs/groups-and-profiles" target="_blank" rel="noopener noreferrer">official documentation</a>.</p>
+<p>If you find any issues or have suggestions for improvement, please open an <a href="https://github.com/BornToBeRoot/NETworkManager/issues" target="_blank" rel="noopener noreferrer">issue on GitHub</a>:</p>]]></content:encoded>
+            <category>profile management</category>
+            <category>tags</category>
+            <category>new feature</category>
+        </item>
+        <item>
+            <title><![CDATA[Introducing Hosts File Editor]]></title>
+            <link>https://borntoberoot.net/NETworkManager/blog/introducing-hosts-file-editor</link>
+            <guid>https://borntoberoot.net/NETworkManager/blog/introducing-hosts-file-editor</guid>
             <pubDate>Sat, 06 Sep 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[NETworkManager 2025.8.10.0 introduced a new feature, the Hosts File Editor. You can now easily manage and edit your system's hosts file in a user-friendly interface.]]></description>
             <content:encoded><![CDATA[<p>NETworkManager 2025.8.10.0 introduced a new feature, the <code>Hosts File Editor</code>. You can now easily manage and edit your system's hosts file in a user-friendly interface.</p>
@@ -36,8 +60,8 @@ allowing you to restore previous versions if needed.</p>
         </item>
         <item>
             <title><![CDATA[Introducing Code Signing for Binaries]]></title>
-            <link>https://borntoberoot.net/NETworkManager/blog/added-code-signing-to-binaries</link>
-            <guid>https://borntoberoot.net/NETworkManager/blog/added-code-signing-to-binaries</guid>
+            <link>https://borntoberoot.net/NETworkManager/blog/introducing-code-signing-for-binaries</link>
+            <guid>https://borntoberoot.net/NETworkManager/blog/introducing-code-signing-for-binaries</guid>
             <pubDate>Fri, 24 May 2024 00:00:00 GMT</pubDate>
             <description><![CDATA[Starting with NETworkManager version 2024.5.24.0, the binaries and the installer are now signed with a code signing certificate.]]></description>
             <content:encoded><![CDATA[<p>Starting with NETworkManager version 2024.5.24.0, the binaries and the installer are now signed with a code signing certificate.</p>
