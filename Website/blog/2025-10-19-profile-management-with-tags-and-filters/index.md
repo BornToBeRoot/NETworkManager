@@ -1,6 +1,6 @@
 ---
-slug: streamlined-profile-management-with-tags-and-filters
-title: Streamlined Profile Management with Tags & Filters
+slug: profile-management-with-tags-and-filters
+title: Profile Management with Tags & Filters
 authors: [borntoberoot]
 tags: [profile management, tags, new feature]
 ---
