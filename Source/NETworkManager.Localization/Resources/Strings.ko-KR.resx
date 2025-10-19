@@ -259,7 +259,7 @@
     <value>라이브러리</value>
   </data>
   <data name="License" xml:space="preserve">
-    <value>라이센스</value>
+    <value>라이선스</value>
   </data>
   <data name="LocalDevicesAndResources" xml:space="preserve">
     <value>로컬 장치 및 리소스</value>
@@ -526,7 +526,7 @@
     <value>새 서브넷 마스크 또는 CIDR</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>아니오</value>
+    <value>아니요</value>
   </data>
   <data name="ObtainAnIPAddressAutomatically" xml:space="preserve">
     <value>자동으로 IP 주소 가져오기</value>
@@ -964,7 +964,7 @@
     <value>열기</value>
   </data>
   <data name="OpenLicense" xml:space="preserve">
-    <value>오픈 라이센스</value>
+    <value>오픈 라이선스</value>
   </data>
   <data name="OpenProject" xml:space="preserve">
     <value>프로젝트 열기</value>
@@ -1346,7 +1346,7 @@
     <value>마스터 암호 설정...</value>
   </data>
   <data name="ShowLocalLicenses" xml:space="preserve">
-    <value>로컬 라이센스 표시</value>
+    <value>로컬 라이선스 표시</value>
   </data>
   <data name="SubnetCalculator" xml:space="preserve">
     <value>서브넷 계산기</value>
@@ -1562,10 +1562,10 @@
     <value>서버 보안 데이터가 잘못되었습니다.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_LicensingFailed" xml:space="preserve">
-    <value>라이센스 협상에 실패했습니다.</value>
+    <value>라이선스 협상에 실패했습니다.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_LicensingTimeout" xml:space="preserve">
-    <value>라이센스 제한 시간이 초과되었습니다.</value>
+    <value>라이선스 제한 시간이 초과되었습니다.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_LocalNotError" xml:space="preserve">
     <value>로컬 연결이 끊어졌습니다.</value>
@@ -2845,16 +2845,16 @@ $$hostname$$	--&gt;	호스트이름</value>
     <value>iana.org의 서비스 이름 및 전송 프로토콜 포트 번호 레지스트리</value>
   </data>
   <data name="License_ApacheLicense2dot0" xml:space="preserve">
-    <value>Apache 라이센스 2.0</value>
+    <value>Apache 라이선스 2.0</value>
   </data>
   <data name="License_BDS2Clause" xml:space="preserve">
     <value>BSD-2-조항</value>
   </data>
   <data name="License_MITLicense" xml:space="preserve">
-    <value>MIT 라이센스</value>
+    <value>MIT 라이선스</value>
   </data>
   <data name="License_Unlicense" xml:space="preserve">
-    <value>라이센스 취소</value>
+    <value>라이선스 취소</value>
   </data>
   <data name="Library_CsWinRT_Description" xml:space="preserve">
     <value>C#/WinRT는 C# 언어에 대한 패키지 WinRT 예상 지원을 제공합니다.</value>
@@ -2869,7 +2869,7 @@ $$hostname$$	--&gt;	호스트이름</value>
     <value>WPF의 XAML 동작을 사용하여 앱에 상호 작용을 쉽게 추가할 수 있습니다.</value>
   </data>
   <data name="License_MicrosoftWebView2License" xml:space="preserve">
-    <value>Microsoft WebView2 라이센스</value>
+    <value>Microsoft WebView2 라이선스</value>
   </data>
   <data name="WarningMessage_ProfileFileNotEncryptedStoringPasswords" xml:space="preserve">
     <value>현재 프로파일 파일은 암호화되지 않고 암호가 디스크에 암호화되지 않은 상태로 저장됩니다!
@@ -3812,9 +3812,9 @@ URL: http://ip-api.com/</value>
     <value>검색을 확장하고 열기...</value>
   </data>
   <data name="WiFiAccessNotAvailableMessage" xml:space="preserve">
-    <value>Starting with Windows 11 24H2, you’ll need to allow access to the Wi-Fi adapter.
+    <value>Windows 11 24H2부터는 Wi-Fi 어댑터에 대한 액세스를 허용해야 합니다.
 
-Open Windows Settings &gt; Privacy &amp; security &gt; Location, enable access for Desktop Apps / NETworkManager, then restart the application.</value>
+Windows 설정 &gt; 개인정보 보호 및 보안 &gt; 위치를 열고 데스크톱 앱 / NETworkManager에 대한 액세스를 활성화한 다음 응용 프로그램을 재시작하세요.</value>
   </data>
   <data name="DragDropApplicationsToReorderRightClickForMoreOptions" xml:space="preserve">
     <value>응용 프로그램을 끌어서 놓기하여 재정렬합니다.
@@ -3958,39 +3958,39 @@ Open Windows Settings &gt; Privacy &amp; security &gt; Location, enable access f
     <value>브라우징 데이터를 삭제하는 동안 오류가 발생했습니다. 이 문제를 GitHub에 자유롭게 신고해 주세요.</value>
   </data>
   <data name="ExampleTag" xml:space="preserve">
-    <value>production</value>
+    <value>제품</value>
   </data>
   <data name="AddTag" xml:space="preserve">
-    <value>Add tag</value>
+    <value>태그 추가</value>
   </data>
   <data name="ApplyFilter" xml:space="preserve">
-    <value>Apply filter</value>
+    <value>필터 적용</value>
   </data>
   <data name="FilterProfilesDots" xml:space="preserve">
-    <value>Filter profiles...</value>
+    <value>필터 프로필...</value>
   </data>
   <data name="FilterByTags" xml:space="preserve">
-    <value>Filter by tags</value>
+    <value>태그로 필터링</value>
   </data>
   <data name="NoTagsFound" xml:space="preserve">
-    <value>No tags found!</value>
+    <value>태그를 찾을 수 없습니다!</value>
   </data>
   <data name="Match" xml:space="preserve">
-    <value>Match</value>
+    <value>일치</value>
   </data>
   <data name="Any" xml:space="preserve">
-    <value>Any</value>
+    <value>모든</value>
   </data>
   <data name="AddGroupDots" xml:space="preserve">
-    <value>Add group...</value>
+    <value>그룹 추가...</value>
   </data>
   <data name="ExpandAll" xml:space="preserve">
-    <value>Expand all</value>
+    <value>모두 확장</value>
   </data>
   <data name="CollapseAll" xml:space="preserve">
-    <value>Collapse all</value>
+    <value>모두 축소</value>
   </data>
   <data name="HelpMessage_UseCustomThemes" xml:space="preserve">
-    <value>Use custom themes to personalize the appearance of the application. You can edit or add theme in the "Program Folder &gt; Themes" directory. For more details, refer to the documentation.</value>
+    <value>사용자 지정 테마를 사용하여 응용 프로그램의 모양을 개인화합니다. "프로그램 폴더 &gt; 테마" 디렉터리에서 테마를 편집하거나 추가할 수 있습니다. 자세한 내용은 설명서를 참조하세요.</value>
   </data>
 </root>
