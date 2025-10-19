@@ -762,10 +762,10 @@
 암호화를 활성화하기 전에 먼저 프로필 파일의 백업 복사본을 만드십시오!</value>
   </data>
   <data name="Custom" xml:space="preserve">
-    <value>사용자 정의</value>
+    <value>사용자 지정</value>
   </data>
   <data name="CustomScreenSize" xml:space="preserve">
-    <value>사용자 정의 화면 크기:</value>
+    <value>사용자 지정 화면 크기:</value>
   </data>
   <data name="DataHasBeenUpdated" xml:space="preserve">
     <value>데이터가 업데이트되었습니다!</value>
