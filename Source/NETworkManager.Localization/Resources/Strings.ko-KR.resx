@@ -1926,7 +1926,7 @@
     <value>공용 IP 주소 확인</value>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
-    <value>ETworkManager를 이용해 주셔서 감사합니다!
+    <value>NETworkManager를 이용해 주셔서 감사합니다!
 
 GitHub에 별을 남기거나 기부를 하거나 단순히 다른 사람들과 공유하는 등 개발을 지원하는 것을 고려해 보세요. 여러분의 지원은 프로젝트가 계속 성장할 수 있도록 도와줍니다.</value>
   </data>
@@ -3591,7 +3591,7 @@ PowerShell 및 AWS Session Manager 설정에 구성된 PowerShell 콘솔만 수�
     <value>시간대</value>
   </data>
   <data name="ZipCode" xml:space="preserve">
-    <value>Zip</value>
+    <value>우편번호</value>
   </data>
   <data name="ExternalService_ip_api_Description" xml:space="preserve">
     <value>IP 지리적 위치 API - 빠르고, 정확하며, 신뢰할 수 있음</value>
@@ -3613,7 +3613,7 @@ URL: https://edns.ip-api.com/</value>
 URL: http://ip-api.com/</value>
   </data>
   <data name="WelcomePrivacyMessage" xml:space="preserve">
-    <value>추가 기능을 제공하기 위해 제가 운영하지 않는 타사 서비스가 사용됩니다. 아래에서 선택 취소할 수 있습니다. 데이터는 언제든지 저에게 전송되지 않습니다.</value>
+    <value>추가 기능을 제공하기 위해 제가 운영하지 않는 타사 서비스가 사용됩니다. 아래에서 선택을 해제할 수 있습니다. 어떠한 데이터도 저에게 전송되지 않습니다.</value>
   </data>
   <data name="CheckingDNSResolverDots" xml:space="preserve">
     <value>DNS 해결기를 확인하는 중...</value>
