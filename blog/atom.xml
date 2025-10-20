@@ -19,14 +19,14 @@
 <p>Easily filter profiles across features using the new filter button next to the search box.</p>
 <p>Choose between two filter modes:</p>
 <ul>
-<li>Match All: Display profiles containing all selected tags (e.g., <code>prod</code> and <code>dns</code>).</li>
-<li>Match Any: Display profiles containing at least one selected tag (e.g., <code>prod</code> or <code>dev</code>).</li>
+<li class="">Match All: Display profiles containing all selected tags (e.g., <code>prod</code> and <code>dns</code>).</li>
+<li class="">Match Any: Display profiles containing at least one selected tag (e.g., <code>prod</code> or <code>dev</code>).</li>
 </ul>
 <p>Additionally, profile groups are now more manageable. Right-click any group header to access a new context menu, allowing you to expand or collapse all groups with a single click.</p>
 <p>These enhancements make managing large profile sets faster, cleaner, and more intuitive than ever.</p>
-<p>Upgrade now to the <a href="https://borntoberoot.net/NETworkManager/download" target="_blank" rel="noopener noreferrer">latest version of NETworkManager</a> to use this feature.</p>
-<p>More information is available in the <a href="https://borntoberoot.net/NETworkManager/docs/groups-and-profiles" target="_blank" rel="noopener noreferrer">official documentation</a>.</p>
-<p>If you find any issues or have suggestions for improvement, please open an <a href="https://github.com/BornToBeRoot/NETworkManager/issues" target="_blank" rel="noopener noreferrer">issue on GitHub</a>:</p>]]></content>
+<p>Upgrade now to the <a href="https://borntoberoot.net/NETworkManager/download" target="_blank" rel="noopener noreferrer" class="">latest version of NETworkManager</a> to use this feature.</p>
+<p>More information is available in the <a href="https://borntoberoot.net/NETworkManager/docs/groups-and-profiles" target="_blank" rel="noopener noreferrer" class="">official documentation</a>.</p>
+<p>If you find any issues or have suggestions for improvement, please open an <a href="https://github.com/BornToBeRoot/NETworkManager/issues" target="_blank" rel="noopener noreferrer" class="">issue on GitHub</a>:</p>]]></content>
         <author>
             <name>BornToBeRoot</name>
             <uri>https://github.com/BornToBeRoot</uri>
@@ -46,17 +46,17 @@
 <p><img decoding="async" loading="lazy" alt="Hosts File Editor" src="https://borntoberoot.net/NETworkManager/assets/images/hosts-file-editor-30d579f84578d3c768a537ec0d71e1e7.gif" width="1200" height="800" class="img_ev3q"></p>
 <p>The hosts file is a plain text file used by the operating system to map hostnames to IP addresses. It is typically located at:</p>
 <ul>
-<li>Windows: <code>C:\Windows\System32\drivers\etc\hosts</code></li>
-<li>Linux: <code>/etc/hosts</code></li>
+<li class="">Windows: <code>C:\Windows\System32\drivers\etc\hosts</code></li>
+<li class="">Linux: <code>/etc/hosts</code></li>
 </ul>
 <p>Editing this file usually requires administrative privileges and can be cumbersome using traditional text editors.
 With the new Hosts File Editor in NETworkManager, you can now easily add, edit, enable, disable, or delete entries
 in your hosts file without needing to manually open and edit the file.</p>
 <p>A daily backup (up to 5 versions) of the hosts file is created automatically before any changes are applied,
 allowing you to restore previous versions if needed.</p>
-<p>Upgrade now to the <a href="https://borntoberoot.net/NETworkManager/download" target="_blank" rel="noopener noreferrer">latest version of NETworkManager</a> to use this feature.</p>
-<p>More information is available in the <a href="https://borntoberoot.net/NETworkManager/download/docs/application/hosts-file-editor" target="_blank" rel="noopener noreferrer">official documentation</a>.</p>
-<p>If you find any issues or have suggestions for improvement, please open an <a href="https://github.com/BornToBeRoot/NETworkManager/issues" target="_blank" rel="noopener noreferrer">issue on GitHub</a>:</p>]]></content>
+<p>Upgrade now to the <a href="https://borntoberoot.net/NETworkManager/download" target="_blank" rel="noopener noreferrer" class="">latest version of NETworkManager</a> to use this feature.</p>
+<p>More information is available in the <a href="https://borntoberoot.net/NETworkManager/download/docs/application/hosts-file-editor" target="_blank" rel="noopener noreferrer" class="">official documentation</a>.</p>
+<p>If you find any issues or have suggestions for improvement, please open an <a href="https://github.com/BornToBeRoot/NETworkManager/issues" target="_blank" rel="noopener noreferrer" class="">issue on GitHub</a>:</p>]]></content>
         <author>
             <name>BornToBeRoot</name>
             <uri>https://github.com/BornToBeRoot</uri>
@@ -72,10 +72,10 @@ allowing you to restore previous versions if needed.</p>
         <updated>2024-05-24T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Starting with NETworkManager version 2024.5.24.0, the binaries and the installer are now signed with a code signing certificate.]]></summary>
         <content type="html"><![CDATA[<p>Starting with NETworkManager version 2024.5.24.0, the binaries and the installer are now signed with a code signing certificate.</p>
-<p>The binaries and installer are built on <a href="https://ci.appveyor.com/project/BornToBeRoot/networkmanager" target="_blank" rel="noopener noreferrer">AppVeyor</a> directly from the <a href="https://github.com/BornToBeRoot/NETworkManager/blob/main/appveyor.yml" target="_blank" rel="noopener noreferrer">GitHub repository</a>.
-Build artifacts are automatically sent to <a href="https://signpath.io/" target="_blank" rel="noopener noreferrer">SignPath.io</a> via webhook, where they are signed after manual approval by the maintainer.
-The signed binaries are then uploaded to the <a href="https://github.com/BornToBeRoot/NETworkManager/releases" target="_blank" rel="noopener noreferrer">GitHub releases</a> page.</p>
-<p>Special thanks goes to <a href="https://signpath.io/" target="_blank" rel="noopener noreferrer">SignPath.io</a> for providing free code signing and the <a href="https://signpath.org/" target="_blank" rel="noopener noreferrer">SignPath Foundation</a> for the free code signing certificate.</p>]]></content>
+<p>The binaries and installer are built on <a href="https://ci.appveyor.com/project/BornToBeRoot/networkmanager" target="_blank" rel="noopener noreferrer" class="">AppVeyor</a> directly from the <a href="https://github.com/BornToBeRoot/NETworkManager/blob/main/appveyor.yml" target="_blank" rel="noopener noreferrer" class="">GitHub repository</a>.
+Build artifacts are automatically sent to <a href="https://signpath.io/" target="_blank" rel="noopener noreferrer" class="">SignPath.io</a> via webhook, where they are signed after manual approval by the maintainer.
+The signed binaries are then uploaded to the <a href="https://github.com/BornToBeRoot/NETworkManager/releases" target="_blank" rel="noopener noreferrer" class="">GitHub releases</a> page.</p>
+<p>Special thanks goes to <a href="https://signpath.io/" target="_blank" rel="noopener noreferrer" class="">SignPath.io</a> for providing free code signing and the <a href="https://signpath.org/" target="_blank" rel="noopener noreferrer" class="">SignPath Foundation</a> for the free code signing certificate.</p>]]></content>
         <author>
             <name>BornToBeRoot</name>
             <uri>https://github.com/BornToBeRoot</uri>
@@ -91,8 +91,8 @@ The signed binaries are then uploaded to the <a href="https://github.com/BornToB
         <updated>2024-01-01T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Welcome to the new NETworkManager website, blod and documentation.]]></summary>
         <content type="html"><![CDATA[<p>Welcome to the new NETworkManager website, blod and documentation.</p>
-<p>It's build with <a href="https://docusaurus.io/" target="_blank" rel="noopener noreferrer">Docusaurus</a>, a static website generator, and hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a>.</p>
-<p>You can help to improve the documentation by submitting a <a href="https://github.com/BornToBeRoot/NETworkManager" target="_blank" rel="noopener noreferrer">pull request</a>.</p>]]></content>
+<p>It's build with <a href="https://docusaurus.io/" target="_blank" rel="noopener noreferrer" class="">Docusaurus</a>, a static website generator, and hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer" class="">GitHub Pages</a>.</p>
+<p>You can help to improve the documentation by submitting a <a href="https://github.com/BornToBeRoot/NETworkManager" target="_blank" rel="noopener noreferrer" class="">pull request</a>.</p>]]></content>
         <author>
             <name>BornToBeRoot</name>
             <uri>https://github.com/BornToBeRoot</uri>
