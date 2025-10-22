@@ -24,9 +24,8 @@
             <name>BornToBeRoot</name>
             <uri>https://github.com/BornToBeRoot</uri>
         </author>
-        <category label="profile management" term="profile management"/>
-        <category label="tags" term="tags"/>
-        <category label="new feature" term="new feature"/>
+        <category label="theme" term="theme"/>
+        <category label="ui" term="ui"/>
     </entry>
     <entry>
         <title type="html"><![CDATA[Streamlined Profile Management with Tags & Filters]]></title>
