@@ -2,7 +2,7 @@
 slug: improved-light-theme-readability
 title: Improved light theme readability
 authors: [borntoberoot]
-tags: [profile management, tags, new feature]
+tags: [theme, ui]
 ---
 
 The latest release of NETworkManager (version 2025.10.18.0) introduces major enhancements to the light theme, improving both readability and overall user experience.
