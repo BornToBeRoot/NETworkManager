@@ -28,4 +28,4 @@ Upgrade now to the [latest version of NETworkManager](https://borntoberoot.net/N
 
 More information is available in the [official documentation](https://borntoberoot.net/NETworkManager/docs/groups-and-profiles).
 
-If you find any issues or have suggestions for improvement, please open an [issue on GitHub](https://github.com/BornToBeRoot/NETworkManager/issues):
+If you find any issues or have suggestions for improvement, please open an [issue on GitHub](https://github.com/BornToBeRoot/NETworkManager/issues).
