@@ -9,9 +9,9 @@ NETworkManager 2025.10.18.0 brings a streamlined approach to profile management 
 
 You can now add or remove tags directly within each profile, making it effortless to organize and quickly locate your hosts and networks.
 
-<!-- truncate -->
-
 ![Profile Tags & Filters](./profile-tags-and-filters.gif)
+
+<!-- truncate -->
 
 Easily filter profiles across features using the new filter button next to the search box.
 

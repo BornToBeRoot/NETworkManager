@@ -9,9 +9,9 @@ NETworkManager 2025.8.10.0 introduced a new feature, the `Hosts File Editor`. Yo
 
 As a sysadmin or developer, you often need to modify the hosts file in order to override DNS settings for specific domains, redirect traffic, or test websites locally.
 
-<!-- truncate -->
-
 ![Hosts File Editor](./hosts-file-editor.gif)
+
+<!-- truncate -->
 
 The hosts file is a plain text file used by the operating system to map hostnames to IP addresses. It is typically located at:
 
