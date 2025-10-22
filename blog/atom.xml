@@ -2,11 +2,32 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://borntoberoot.net/NETworkManager/blog</id>
     <title>NETworkManager Blog</title>
-    <updated>2025-10-19T00:00:00.000Z</updated>
+    <updated>2025-10-23T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://borntoberoot.net/NETworkManager/blog"/>
     <subtitle>NETworkManager Blog</subtitle>
     <icon>https://borntoberoot.net/NETworkManager/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Improved light theme readability]]></title>
+        <id>https://borntoberoot.net/NETworkManager/blog/improved-light-theme-readability</id>
+        <link href="https://borntoberoot.net/NETworkManager/blog/improved-light-theme-readability"/>
+        <updated>2025-10-23T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[The latest release of NETworkManager (version 2025.10.18.0) introduces major enhancements to the light theme, improving both readability and overall user experience.]]></summary>
+        <content type="html"><![CDATA[<p>The latest release of NETworkManager (version 2025.10.18.0) introduces major enhancements to the light theme, improving both readability and overall user experience.</p>
+<p>In this version, the code that handles theming has been completely rewritten, providing granular control over colors and styles. This allows users to fine-tune the light and dark themes independently, ensuring better contrast, visibility, and accessibility across the interface.</p>
+<p>The light theme has already received several improvements to enhance readability, and more adjustments are planned for future releases based on user feedback. So please don’t hesitate to share your thoughts on the <a href="https://github.com/BornToBeRoot/NETworkManager/issues" target="_blank" rel="noopener noreferrer" class="">GitHub issue tracker</a>.</p>
+<p><img decoding="async" loading="lazy" alt="Light theme preview" src="https://borntoberoot.net/NETworkManager/assets/images/light-theme-preview-24c73f0d7ec9bc4129a5d61c47b07321.png" width="1024" height="768" class="img_ev3q"></p>
+<p>Upgrade now to the <a href="https://borntoberoot.net/NETworkManager/download" target="_blank" rel="noopener noreferrer" class="">latest version of NETworkManager</a> to use this feature.</p>
+<p>More information is available in the <a href="https://borntoberoot.net/NETworkManager/docs/settings/appearance" target="_blank" rel="noopener noreferrer" class="">official documentation</a>.</p>
+<p>If you find any issues or have suggestions for improvement, please open an <a href="https://github.com/BornToBeRoot/NETworkManager/issues" target="_blank" rel="noopener noreferrer" class="">issue on GitHub</a>.</p>]]></content>
+        <author>
+            <name>BornToBeRoot</name>
+            <uri>https://github.com/BornToBeRoot</uri>
+        </author>
+        <category label="profile management" term="profile management"/>
+        <category label="tags" term="tags"/>
+        <category label="new feature" term="new feature"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Streamlined Profile Management with Tags & Filters]]></title>
         <id>https://borntoberoot.net/NETworkManager/blog/streamlined-profile-management-with-tags-and-filters</id>
@@ -26,7 +47,7 @@
 <p>These enhancements make managing large profile sets faster, cleaner, and more intuitive than ever.</p>
 <p>Upgrade now to the <a href="https://borntoberoot.net/NETworkManager/download" target="_blank" rel="noopener noreferrer" class="">latest version of NETworkManager</a> to use this feature.</p>
 <p>More information is available in the <a href="https://borntoberoot.net/NETworkManager/docs/groups-and-profiles" target="_blank" rel="noopener noreferrer" class="">official documentation</a>.</p>
-<p>If you find any issues or have suggestions for improvement, please open an <a href="https://github.com/BornToBeRoot/NETworkManager/issues" target="_blank" rel="noopener noreferrer" class="">issue on GitHub</a>:</p>]]></content>
+<p>If you find any issues or have suggestions for improvement, please open an <a href="https://github.com/BornToBeRoot/NETworkManager/issues" target="_blank" rel="noopener noreferrer" class="">issue on GitHub</a>.</p>]]></content>
         <author>
             <name>BornToBeRoot</name>
             <uri>https://github.com/BornToBeRoot</uri>
@@ -56,7 +77,7 @@ in your hosts file without needing to manually open and edit the file.</p>
 allowing you to restore previous versions if needed.</p>
 <p>Upgrade now to the <a href="https://borntoberoot.net/NETworkManager/download" target="_blank" rel="noopener noreferrer" class="">latest version of NETworkManager</a> to use this feature.</p>
 <p>More information is available in the <a href="https://borntoberoot.net/NETworkManager/download/docs/application/hosts-file-editor" target="_blank" rel="noopener noreferrer" class="">official documentation</a>.</p>
-<p>If you find any issues or have suggestions for improvement, please open an <a href="https://github.com/BornToBeRoot/NETworkManager/issues" target="_blank" rel="noopener noreferrer" class="">issue on GitHub</a>:</p>]]></content>
+<p>If you find any issues or have suggestions for improvement, please open an <a href="https://github.com/BornToBeRoot/NETworkManager/issues" target="_blank" rel="noopener noreferrer" class="">issue on GitHub</a>.</p>]]></content>
         <author>
             <name>BornToBeRoot</name>
             <uri>https://github.com/BornToBeRoot</uri>
