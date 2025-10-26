@@ -4,8 +4,8 @@ namespace NETworkManager.Models.RemoteDesktop;
 
 public static class RemoteDesktop
 {
-    public static List<string> ScreenResolutions => new()
-    {
+    public static List<string> ScreenResolutions =>
+    [
         "640x480",
         "800x600",
         "1024x768",
@@ -18,15 +18,15 @@ public static class RemoteDesktop
         "1400x1050",
         "1680x1050",
         "1920x1080"
-    };
+    ];
 
-    public static List<int> ColorDepths => new()
-    {
+    public static List<int> ColorDepths =>
+    [
         15,
         16,
         24,
         32
-    };
+    ];
 
     public static RemoteDesktopKeystrokeInfo GetKeystroke(Keystroke keystroke)
     {
@@ -35,8 +35,8 @@ public static class RemoteDesktop
         switch (keystroke)
         {
             case Keystroke.CtrlAltDel:
-                info.ArrayKeyUp = new[] { false, false, false, true, true, true };
-                info.KeyData = new[] { 0x1d, 0x38, 0x53, 0x53, 0x38, 0x1d };
+                info.ArrayKeyUp = [false, false, false, true, true, true];
+                info.KeyData = [0x1d, 0x38, 0x53, 0x53, 0x38, 0x1d];
                 break;
         }
 

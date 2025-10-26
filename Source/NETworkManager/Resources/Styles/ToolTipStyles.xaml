@@ -8,7 +8,7 @@
         <Setter Property="Background" Value="{DynamicResource  ResourceKey=MahApps.Brushes.Window.Background}" />
     </Style>
 
-    <Style TargetType="{x:Type TypeName=ToolTip}" BasedOn="{StaticResource  ResourceKey=DefaultToolTip}" />
+    <Style TargetType="{x:Type TypeName=ToolTip}" BasedOn="{StaticResource ResourceKey=DefaultToolTip}" />
 
     <Style x:Key="HelpToolTip" TargetType="{x:Type TypeName=ToolTip}" BasedOn="{StaticResource ResourceKey=DefaultToolTip}">
         <Setter Property="Template">

@@ -1,55 +1,17 @@
-﻿using System;
+﻿using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using System;
 using System.ComponentModel;
 using System.Security;
 using System.Windows.Data;
 using System.Windows.Input;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
 public class RemoteDesktopConnectViewModel : ViewModelBase
 {
+    #region Variables
     private bool _connectAs;
-
-    private string _domain;
-
-    private string _host;
-
-    private bool _isPasswordEmpty = true;
-
-    private string _name;
-
-    private SecureString _password = new();
-
-    private bool _useCredentials;
-
-    private string _username;
-
-    public RemoteDesktopConnectViewModel(Action<RemoteDesktopConnectViewModel> connectCommand,
-        Action<RemoteDesktopConnectViewModel> cancelHandler, (string Name, string Host)? connectAsOptions = null)
-    {
-        ConnectCommand = new RelayCommand(_ => connectCommand(this));
-        CancelCommand = new RelayCommand(_ => cancelHandler(this));
-
-        if (connectAsOptions == null)
-        {
-            HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.RemoteDesktop_HostHistory);
-        }
-        else
-        {
-            ConnectAs = true;
-
-            UseCredentials = true;
-
-            Name = connectAsOptions.Value.Name;
-            Host = connectAsOptions.Value.Host;
-        }
-    }
-
-    public ICommand ConnectCommand { get; }
-
-    public ICommand CancelCommand { get; }
 
     public bool ConnectAs
     {
@@ -64,6 +26,8 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
         }
     }
 
+    private string _name;
+
     public string Name
     {
         get => _name;
@@ -76,6 +40,8 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
+    private string _host;
 
     public string Host
     {
@@ -92,6 +58,8 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
 
     public ICollectionView HostHistoryView { get; }
 
+    private bool _useCredentials;
+
     public bool UseCredentials
     {
         get => _useCredentials;
@@ -104,6 +72,23 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
+    private string _domain;
+
+    public string Domain
+    {
+        get => _domain;
+        set
+        {
+            if (value == _domain)
+                return;
+
+            _domain = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _username;
 
     public string Username
     {
@@ -118,18 +103,22 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
         }
     }
 
-    public string Domain
+    private bool _isPasswordEmpty = true;
+
+    public bool IsPasswordEmpty
     {
-        get => _domain;
+        get => _isPasswordEmpty;
         set
         {
-            if (value == _domain)
+            if (value == _isPasswordEmpty)
                 return;
 
-            _domain = value;
+            _isPasswordEmpty = value;
             OnPropertyChanged();
         }
     }
+
+    private SecureString _password = new();
 
     public SecureString Password
     {
@@ -147,18 +136,57 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
         }
     }
 
-    public bool IsPasswordEmpty
+    private bool _adminSession;
+
+    public bool AdminSession
     {
-        get => _isPasswordEmpty;
+        get => _adminSession;
         set
         {
-            if (value == _isPasswordEmpty)
+            if (value == _adminSession)
                 return;
 
-            _isPasswordEmpty = value;
+            _adminSession = value;
             OnPropertyChanged();
         }
     }
+    #endregion
+
+    #region Constructor
+
+    public RemoteDesktopConnectViewModel(Action<RemoteDesktopConnectViewModel> connectCommand,
+        Action<RemoteDesktopConnectViewModel> cancelHandler, (string Name, string Host, bool AdminSession)? connectAsOptions = null)
+    {
+        ConnectCommand = new RelayCommand(_ => connectCommand(this));
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
+
+        if (connectAsOptions == null)
+        {
+            HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.RemoteDesktop_HostHistory);
+        }
+        else
+        {
+            ConnectAs = true;
+
+            UseCredentials = true;
+
+            Name = connectAsOptions.Value.Name;
+            Host = connectAsOptions.Value.Host;
+
+            AdminSession = connectAsOptions.Value.AdminSession;
+        }
+    }
+
+    #endregion
+
+    #region Commands
+
+    public ICommand ConnectCommand { get; }
+
+    public ICommand CancelCommand { get; }
+    #endregion
+
+    #region Methods
 
     /// <summary>
     ///     Check if the passwords are valid.
@@ -167,4 +195,5 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
     {
         IsPasswordEmpty = Password == null || Password.Length == 0;
     }
+    #endregion
 }

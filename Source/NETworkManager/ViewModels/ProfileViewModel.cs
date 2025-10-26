@@ -57,7 +57,7 @@ public class ProfileViewModel : ViewModelBase
         Groups.SortDescriptions.Add(new SortDescription());
 
         TagsCollection = new ObservableSetCollection<string>(profileInfo.TagsCollection);
-        
+
         Tags = CollectionViewSource.GetDefaultView(TagsCollection);
         Tags.SortDescriptions.Add(new SortDescription("", ListSortDirection.Ascending));
 
@@ -121,6 +121,7 @@ public class ProfileViewModel : ViewModelBase
         RemoteDesktop_Username = profileInfo.RemoteDesktop_Username;
         RemoteDesktop_Domain = profileInfo.RemoteDesktop_Domain;
         RemoteDesktop_Password = profileInfo.RemoteDesktop_Password;
+        RemoteDesktop_AdminSession = profileInfo.RemoteDesktop_AdminSession;
         RemoteDesktop_OverrideDisplay = profileInfo.RemoteDesktop_OverrideDisplay;
         RemoteDesktop_AdjustScreenAutomatically = profileInfo.RemoteDesktop_AdjustScreenAutomatically;
         RemoteDesktop_UseCurrentViewSize = profileInfo.RemoteDesktop_UseCurrentViewSize;
@@ -1072,6 +1073,21 @@ public class ProfileViewModel : ViewModelBase
                 value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
 
             _remoteDesktop_Password = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _remoteDesktop_AdminSession;
+
+    public bool RemoteDesktop_AdminSession
+    {
+        get => _remoteDesktop_AdminSession;
+        set
+        {
+            if (value == _remoteDesktop_AdminSession)
+                return;
+
+            _remoteDesktop_AdminSession = value;
             OnPropertyChanged();
         }
     }

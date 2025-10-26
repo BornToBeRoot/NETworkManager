@@ -212,6 +212,9 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
             RdpClient.AdvancedSettings9.ClearTextPassword = SecureStringHelper.ConvertToString(_sessionInfo.Password);
         }
 
+        // Admin (console) session
+        RdpClient.AdvancedSettings9.ConnectToAdministerServer = _sessionInfo.AdminSession;
+
         // Network
         RdpClient.AdvancedSettings9.RDPPort = _sessionInfo.Port;
 
@@ -716,8 +719,4 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
         AdjustScreen(force: true);
     }
     #endregion
-
-
-
-
 }

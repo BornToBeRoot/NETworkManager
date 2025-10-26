@@ -26,6 +26,7 @@
                 <!-- Styles -->
                 <ResourceDictionary Source="/Resources/Styles/ButtonStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/CheckBoxStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/ChildWindowStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ContextMenuStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/DataGridStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/DropDownButtonStyles.xaml" />

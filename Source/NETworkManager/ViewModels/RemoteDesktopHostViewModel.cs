@@ -1,5 +1,6 @@
 ﻿using Dragablz;
 using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
@@ -205,7 +206,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
     private readonly GroupExpanderStateStore _groupExpanderStateStore = new();
     public GroupExpanderStateStore GroupExpanderStateStore => _groupExpanderStateStore;
-    
+
     private bool _canProfileWidthChange = true;
     private double _tempProfileWidth;
 
@@ -407,7 +408,14 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
     private void ConnectProfileExternalAction()
     {
-        Process.Start("mstsc.exe", $"/V:{SelectedProfile.RemoteDesktop_Host}");
+        var args = new List<string>();
+
+        if (SelectedProfile.RemoteDesktop_AdminSession)
+            args.Add("/admin");
+
+        args.Add($"/V:{SelectedProfile.RemoteDesktop_Host}");
+
+        Process.Start("mstsc.exe", args);
     }
 
     public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
@@ -481,7 +489,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
         _searchDisabled = true;
         Search = string.Empty;
         _searchDisabled = false;
-        
+
         foreach (var tag in ProfileFilterTags)
             tag.IsSelected = false;
 
@@ -504,7 +512,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     {
         SetIsExpandedForAllProfileGroups(false);
     }
-    
+
     public ItemActionCallback CloseItemCommand => CloseItemAction;
 
     private static void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
@@ -517,16 +525,15 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     #region Methods
 
     // Connect via Dialog
-    private async Task Connect(string host = null)
+    private Task Connect(string host = null)
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.Connect
-        };
+        var childWindow = new RemoteDesktopConnectChildWindow(Application.Current.MainWindow);
 
-        var remoteDesktopConnectViewModel = new RemoteDesktopConnectViewModel(async instance =>
+        var childWindowViewModel = new RemoteDesktopConnectViewModel(instance =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
             ConfigurationManager.OnDialogClose();
 
             // Create new session info with default settings
@@ -552,28 +559,34 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
                 sessionInfo.Password = instance.Password;
             }
 
+            sessionInfo.AdminSession = instance.AdminSession;
+
             // Add to history
             // Note: The history can only be updated after the values have been read.
             //       Otherwise, in some cases, incorrect values are taken over.
             AddHostToHistory(instance.Host);
 
             Connect(sessionInfo);
-        }, async _ =>
+        }, _ =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
             ConfigurationManager.OnDialogClose();
         })
         {
             Host = host
         };
 
-        customDialog.Content = new RemoteDesktopConnectDialog
-        {
-            DataContext = remoteDesktopConnectViewModel
-        };
+        childWindow.Title = Strings.Connect;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
 
         ConfigurationManager.OnDialogOpen();
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     // Connect via Profile
@@ -587,20 +600,19 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     }
 
     // Connect via Profile with Credentials
-    private async Task ConnectProfileAs()
+    private Task ConnectProfileAs()
     {
         var profileInfo = SelectedProfile;
 
         var sessionInfo = RemoteDesktop.CreateSessionInfo(profileInfo);
 
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.ConnectAs
-        };
+        var childWindow = new RemoteDesktopConnectChildWindow(Application.Current.MainWindow);
 
-        var remoteDesktopConnectViewModel = new RemoteDesktopConnectViewModel(async instance =>
+        var childWindowViewModel = new RemoteDesktopConnectViewModel(instance =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
             ConfigurationManager.OnDialogClose();
 
             if (instance.UseCredentials)
@@ -612,20 +624,31 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
                 sessionInfo.Password = instance.Password;
             }
 
-            Connect(sessionInfo, instance.Name);
-        }, async _ =>
-        {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            ConfigurationManager.OnDialogClose();
-        }, (profileInfo.Name, profileInfo.RemoteDesktop_Host));
+            sessionInfo.AdminSession = instance.AdminSession;
 
-        customDialog.Content = new RemoteDesktopConnectDialog
+            Connect(sessionInfo, instance.Name);
+        }, _ =>
         {
-            DataContext = remoteDesktopConnectViewModel
-        };
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            ConfigurationManager.OnDialogClose();
+        },
+        (
+            profileInfo.Name,
+            profileInfo.RemoteDesktop_Host,
+            profileInfo.RemoteDesktop_AdminSession
+        ));
+
+        childWindow.Title = Strings.ConnectAs;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
 
         ConfigurationManager.OnDialogOpen();
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     private void Connect(RemoteDesktopSessionInfo sessionInfo, string header = null)
@@ -659,7 +682,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
         foreach (var group in Profiles.Groups.Cast<CollectionViewGroup>())
             GroupExpanderStateStore[group.Name.ToString()] = isExpanded;
     }
-    
+
     private void ResizeProfile(bool dueToChangedSize)
     {
         _canProfileWidthChange = false;

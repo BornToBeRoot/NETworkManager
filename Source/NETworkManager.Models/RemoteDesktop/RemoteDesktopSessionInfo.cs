@@ -9,6 +9,7 @@ public class RemoteDesktopSessionInfo
     public string Username { get; set; }
     public string Domain { get; set; }
     public SecureString Password { get; set; }
+    public bool AdminSession { get; set; }
     public int Port { get; set; }
     public bool AdjustScreenAutomatically { get; set; }
     public bool UseCurrentViewSize { get; set; }
