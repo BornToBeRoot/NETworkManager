@@ -205,7 +205,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
     private readonly GroupExpanderStateStore _groupExpanderStateStore = new();
     public GroupExpanderStateStore GroupExpanderStateStore => _groupExpanderStateStore;
-    
+
     private bool _canProfileWidthChange = true;
     private double _tempProfileWidth;
 
@@ -481,7 +481,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
         _searchDisabled = true;
         Search = string.Empty;
         _searchDisabled = false;
-        
+
         foreach (var tag in ProfileFilterTags)
             tag.IsSelected = false;
 
@@ -504,7 +504,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     {
         SetIsExpandedForAllProfileGroups(false);
     }
-    
+
     public ItemActionCallback CloseItemCommand => CloseItemAction;
 
     private static void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
@@ -551,6 +551,8 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
                 sessionInfo.Domain = instance.Domain;
                 sessionInfo.Password = instance.Password;
             }
+
+            sessionInfo.AdminSession = instance.AdminSession;
 
             // Add to history
             // Note: The history can only be updated after the values have been read.
@@ -612,12 +614,19 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
                 sessionInfo.Password = instance.Password;
             }
 
+            sessionInfo.AdminSession = instance.AdminSession;
+
             Connect(sessionInfo, instance.Name);
         }, async _ =>
         {
             await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             ConfigurationManager.OnDialogClose();
-        }, (profileInfo.Name, profileInfo.RemoteDesktop_Host));
+        },
+        (
+            profileInfo.Name,
+            profileInfo.RemoteDesktop_Host,
+            true
+        ));
 
         customDialog.Content = new RemoteDesktopConnectDialog
         {
@@ -659,7 +668,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
         foreach (var group in Profiles.Groups.Cast<CollectionViewGroup>())
             GroupExpanderStateStore[group.Name.ToString()] = isExpanded;
     }
-    
+
     private void ResizeProfile(bool dueToChangedSize)
     {
         _canProfileWidthChange = false;
