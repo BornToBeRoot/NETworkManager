@@ -19,6 +19,10 @@ Release date: **xx.xx.2025**
 
 ## What's new?
 
+**Remote Desktop**
+
+- Flag to enable `Admin (console) session` added to the RDP connect, profile and group dialogs. This flag allows connecting to the console session of the remote computer. [#3216](https://github.com/BornToBeRoot/NETworkManager/pull/3216)
+
 ## Improvements
 
 ## Bug Fixes
@@ -29,4 +33,4 @@ Release date: **xx.xx.2025**
 - Documentation updated
 - Code cleanup & refactoring
 - Language files updated via [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration)
-- Dependencies updated via [#dependabot](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot) [#3190](https://github.com/BornToBeRoot/NETworkManager/pull/3190)
+- Dependencies updated via [#dependabot](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot)
