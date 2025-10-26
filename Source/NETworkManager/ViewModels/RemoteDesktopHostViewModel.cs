@@ -408,7 +408,14 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
     private void ConnectProfileExternalAction()
     {
-        Process.Start("mstsc.exe", $"/V:{SelectedProfile.RemoteDesktop_Host}");
+        var args = new List<string>();
+
+        if (SelectedProfile.RemoteDesktop_AdminSession)
+            args.Add("/admin");
+
+        args.Add($"/V:{SelectedProfile.RemoteDesktop_Host}");
+
+        Process.Start("mstsc.exe", args);
     }
 
     public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
@@ -630,7 +637,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
         (
             profileInfo.Name,
             profileInfo.RemoteDesktop_Host,
-            true
+            profileInfo.RemoteDesktop_AdminSession
         ));
 
         childWindow.Title = Strings.ConnectAs;

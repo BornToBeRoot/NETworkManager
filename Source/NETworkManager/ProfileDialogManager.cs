@@ -91,6 +91,7 @@ public static class ProfileDialogManager
             RemoteDesktop_Password = instance.RemoteDesktop_UseCredentials
                 ? instance.RemoteDesktop_Password
                 : new SecureString(), // Remove sensitive info on disable
+            RemoteDesktop_AdminSession = instance.RemoteDesktop_AdminSession,
             RemoteDesktop_OverrideDisplay = instance.RemoteDesktop_OverrideDisplay,
             RemoteDesktop_AdjustScreenAutomatically = instance.RemoteDesktop_AdjustScreenAutomatically,
             RemoteDesktop_UseCurrentViewSize = instance.RemoteDesktop_UseCurrentViewSize,
@@ -317,6 +318,7 @@ public static class ProfileDialogManager
             RemoteDesktop_Password = instance.RemoteDesktop_UseCredentials
                 ? instance.RemoteDesktop_Password
                 : new SecureString(), // Remove sensitive info on disable
+            RemoteDesktop_AdminSession = instance.RemoteDesktop_AdminSession,
             RemoteDesktop_OverrideDisplay = instance.RemoteDesktop_OverrideDisplay,
             RemoteDesktop_AdjustScreenAutomatically = instance.RemoteDesktop_AdjustScreenAutomatically,
             RemoteDesktop_UseCurrentViewSize = instance.RemoteDesktop_UseCurrentViewSize,

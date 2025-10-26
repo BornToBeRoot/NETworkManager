@@ -25,8 +25,11 @@ Release date: **xx.xx.2025**
 
 ## Improvements
 
-## Bug Fixes
+**Remote Desktop**
 
+- Redesign RDP connect dialog (migrated from dialog to child window). [#3216](https://github.com/BornToBeRoot/NETworkManager/pull/3216)
+
+## Bug Fixes
 
 ## Dependencies, Refactoring & Documentation
 

@@ -1,16 +1,16 @@
-﻿using System;
+﻿using NETworkManager.Models.Network;
+using NETworkManager.Models.PowerShell;
+using NETworkManager.Models.PuTTY;
+using NETworkManager.Models.RemoteDesktop;
+using NETworkManager.Profiles;
+using NETworkManager.Utilities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Security;
 using System.Windows.Data;
 using System.Windows.Input;
-using NETworkManager.Models.Network;
-using NETworkManager.Models.PowerShell;
-using NETworkManager.Models.PuTTY;
-using NETworkManager.Models.RemoteDesktop;
-using NETworkManager.Profiles;
-using NETworkManager.Utilities;
 
 // ReSharper disable InconsistentNaming
 
@@ -162,6 +162,21 @@ public class GroupViewModel : ViewModelBase
                 value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
 
             _remoteDesktop_Password = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _remoteDesktop_AdminSession;
+
+    public bool RemoteDesktop_AdminSession
+    {
+        get => _remoteDesktop_AdminSession;
+        set
+        {
+            if (value == _remoteDesktop_AdminSession)
+                return;
+
+            _remoteDesktop_AdminSession = value;
             OnPropertyChanged();
         }
     }
@@ -1793,6 +1808,7 @@ public class GroupViewModel : ViewModelBase
         RemoteDesktop_Username = groupInfo.RemoteDesktop_Username;
         RemoteDesktop_Domain = groupInfo.RemoteDesktop_Domain;
         RemoteDesktop_Password = groupInfo.RemoteDesktop_Password;
+        RemoteDesktop_AdminSession = groupInfo.RemoteDesktop_AdminSession;
         RemoteDesktop_OverrideDisplay = groupInfo.RemoteDesktop_OverrideDisplay;
         RemoteDesktop_AdjustScreenAutomatically = groupInfo.RemoteDesktop_AdjustScreenAutomatically;
         RemoteDesktop_UseCurrentViewSize = groupInfo.RemoteDesktop_UseCurrentViewSize;
@@ -1900,18 +1916,16 @@ public class GroupViewModel : ViewModelBase
         // SNMP
         SNMP_OverrideOIDAndMode = groupInfo.SNMP_OverrideOIDAndMode;
         SNMP_OID = groupInfo.SNMP_OID;
-        SNMP_Modes = new List<SNMPMode> { SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set };
+        SNMP_Modes = [SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set];
         SNMP_Mode = SNMP_Modes.FirstOrDefault(x => x == groupInfo.SNMP_Mode);
         SNMP_OverrideVersionAndAuth = groupInfo.SNMP_OverrideVersionAndAuth;
         SNMP_Versions = Enum.GetValues(typeof(SNMPVersion)).Cast<SNMPVersion>().ToList();
         SNMP_Version = SNMP_Versions.FirstOrDefault(x => x == groupInfo.SNMP_Version);
         SNMP_Community = groupInfo.SNMP_Community;
-        SNMP_Securities = new List<SNMPV3Security>
-            { SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv };
+        SNMP_Securities = [SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv];
         SNMP_Security = SNMP_Securities.FirstOrDefault(x => x == groupInfo.SNMP_Security);
         SNMP_Username = groupInfo.SNMP_Username;
-        SNMP_AuthenticationProviders = Enum.GetValues(typeof(SNMPV3AuthenticationProvider))
-            .Cast<SNMPV3AuthenticationProvider>().ToList();
+        SNMP_AuthenticationProviders = [.. Enum.GetValues(typeof(SNMPV3AuthenticationProvider)).Cast<SNMPV3AuthenticationProvider>()];
         SNMP_AuthenticationProvider =
             SNMP_AuthenticationProviders.FirstOrDefault(x => x == groupInfo.SNMP_AuthenticationProvider);
         SNMP_Auth = groupInfo.SNMP_Auth;

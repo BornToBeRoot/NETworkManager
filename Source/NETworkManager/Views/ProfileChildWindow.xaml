@@ -18,16 +18,9 @@
                                xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
                                xmlns:profiles="clr-namespace:NETworkManager.Profiles;assembly=NETworkManager.Profiles"
                                xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-                               xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
-                               ShowTitleBar="True"
-                               TitleBarBackground="Transparent"
-                               TitleBarNonActiveBackground="Transparent"
-                               ShowCloseButton="True"
+                               xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"                               
                                CloseButtonCommand="{Binding CancelCommand}"
-                               AllowMove="True"
-                               TitleForeground="{DynamicResource MahApps.Brushes.Gray3}"
-                               CloseByEscape="False"
-                               OverlayBrush="{DynamicResource ResourceKey=MahApps.Brushes.Gray.SemiTransparent}"
+                               Style="{StaticResource DefaultChildWindow}"
                                Loaded="ChildWindow_OnLoaded"
                                mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ProfileViewModel}">
     <simpleChildWindow:ChildWindow.Resources>
@@ -91,7 +84,7 @@
                                                         Binding="{Binding Path=IsMouseOver,RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}"
                                                         Value="True">
                                                         <Setter Property="Fill"
-                                                                Value="{DynamicResource MahApps.Brushes.Graygs5}" />
+                                                                Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                     </DataTrigger>
                                                     <DataTrigger
                                                         Binding="{Binding Path=IsSelected,RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}"
@@ -2047,6 +2040,8 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*" />
@@ -2158,16 +2153,18 @@
                                         <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
                                     </Rectangle.Resources>
                                 </Rectangle>
-                                <TextBlock Grid.Column="0" Grid.Row="12" Grid.ColumnSpan="4"
+                                <TextBlock Grid.Column="0" Grid.Row="12" Text="{x:Static localization:Strings.AdminConsoleSession}" />
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="12" OffContent="" OnContent="" IsOn="{Binding RemoteDesktop_AdminSession}" />
+                                <TextBlock Grid.Column="0" Grid.Row="14" Grid.ColumnSpan="4"
                                            Text="{x:Static localization:Strings.OverrideDefaultSettings}"
                                            Style="{StaticResource HeaderTextBlock}" Margin="0,10,0,0" />
-                                <Separator Grid.Column="0" Grid.Row="14" Grid.ColumnSpan="4"
+                                <Separator Grid.Column="0" Grid.Row="16" Grid.ColumnSpan="4"
                                            Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,0,0,10" />
-                                <CheckBox Grid.Column="0" Grid.Row="16" VerticalAlignment="Top"
+                                <CheckBox Grid.Column="0" Grid.Row="18" VerticalAlignment="Top"
                                           Content="{x:Static localization:Strings.Display}"
                                           IsChecked="{Binding RemoteDesktop_OverrideDisplay}"
                                           Style="{StaticResource DefaultCheckBox}" />
-                                <StackPanel Grid.Column="2" Grid.Row="16"
+                                <StackPanel Grid.Column="2" Grid.Row="18"
                                             IsEnabled="{Binding RemoteDesktop_OverrideDisplay}">
                                     <RadioButton x:Name="RadioButtonAdjustScreenAutomatically"
                                                  Content="{x:Static localization:Strings.AdjustScreenAutomatically}"
@@ -2241,18 +2238,18 @@
                                         </Grid>
                                     </GroupBox>
                                 </StackPanel>
-                                <CheckBox Grid.Column="0" Grid.Row="18"
+                                <CheckBox Grid.Column="0" Grid.Row="20"
                                           Content="{x:Static localization:Strings.ColorDepthBit}"
                                           IsChecked="{Binding RemoteDesktop_OverrideColorDepth}"
                                           Style="{StaticResource DefaultCheckBox}" />
-                                <ComboBox Grid.Column="2" Grid.Row="18"
+                                <ComboBox Grid.Column="2" Grid.Row="20"
                                           ItemsSource="{Binding RemoteDesktop_ColorDepths}"
                                           SelectedItem="{Binding RemoteDesktop_SelectedColorDepth}"
                                           IsEnabled="{Binding RemoteDesktop_OverrideColorDepth}" />
-                                <CheckBox Grid.Column="0" Grid.Row="20" Content="{x:Static localization:Strings.Port}"
+                                <CheckBox Grid.Column="0" Grid.Row="22" Content="{x:Static localization:Strings.Port}"
                                           IsChecked="{Binding RemoteDesktop_OverridePort}"
                                           Style="{StaticResource DefaultCheckBox}" />
-                                <TextBox Grid.Column="2" Grid.Row="20" x:Name="TextBoxRemoteDesktopPort"
+                                <TextBox Grid.Column="2" Grid.Row="22" x:Name="TextBoxRemoteDesktopPort"
                                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort3389}"
                                          IsEnabled="{Binding RemoteDesktop_OverridePort}"
                                          Style="{StaticResource DefaultTextBox}">
@@ -2266,40 +2263,41 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <CheckBox Grid.Column="0" Grid.Row="22"
+                                <CheckBox Grid.Column="0" Grid.Row="24"
                                           Content="{x:Static localization:Strings.CredentialSecuritySupportProvider}"
                                           IsChecked="{Binding RemoteDesktop_OverrideCredSspSupport}"
                                           Style="{StaticResource DefaultCheckBox}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="22" OffContent="" OnContent=""
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="24" OffContent="" OnContent=""
                                                   IsOn="{Binding RemoteDesktop_EnableCredSspSupport}"
                                                   IsEnabled="{Binding RemoteDesktop_OverrideCredSspSupport}" />
-                                <CheckBox Grid.Column="0" Grid.Row="24"
+                                <CheckBox Grid.Column="0" Grid.Row="26"
                                           Content="{x:Static localization:Strings.AuthenticationLevel}"
                                           IsChecked="{Binding RemoteDesktop_OverrideAuthenticationLevel}"
                                           Style="{StaticResource DefaultCheckBox}" />
-                                <mah:NumericUpDown Grid.Column="2" Grid.Row="24"
+                                <mah:NumericUpDown Grid.Column="2" Grid.Row="26"
                                                    Value="{Binding RemoteDesktop_AuthenticationLevel}" Maximum="3"
                                                    Minimum="0" Interval="1"
                                                    IsEnabled="{Binding RemoteDesktop_OverrideAuthenticationLevel}" />
-                                <Rectangle Grid.Column="3" Grid.Row="24" Width="24" Height="24"
+                                <Rectangle Grid.Column="3" Grid.Row="26" 
+                                           Width="24" Height="24"
                                            ToolTip="{x:Static localization:Strings.HelpMessage_RDPAuthenticationLevel}"
                                            Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                                     <Rectangle.Resources>
                                         <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
                                     </Rectangle.Resources>
                                 </Rectangle>
-                                <CheckBox Grid.Column="0" Grid.Row="26"
+                                <CheckBox Grid.Column="0" Grid.Row="28"
                                           Content="{x:Static localization:Strings.EnableGatewayServer}"
                                           IsChecked="{Binding RemoteDesktop_OverrideGatewayServer}"
                                           Style="{StaticResource DefaultCheckBox}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="26" OffContent="" OnContent=""
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="28" OffContent="" OnContent=""
                                                   IsOn="{Binding RemoteDesktop_EnableGatewayServer}"
                                                   IsEnabled="{Binding RemoteDesktop_OverrideGatewayServer}" />
-                                <TextBlock Grid.Column="0" Grid.Row="28"
+                                <TextBlock Grid.Column="0" Grid.Row="30"
                                            Text="{x:Static localization:Strings.ServerName}" Margin="24,0,0,0"
                                            VerticalAlignment="Center" Style="{StaticResource DisabledTextBlock}" />
-                                <TextBox x:Name="TextBoxRemoteDesktopGatewayServerHostname" Grid.Column="2"
-                                         Grid.Row="28"
+                                <TextBox x:Name="TextBoxRemoteDesktopGatewayServerHostname" 
+                                         Grid.Column="2" Grid.Row="30"
                                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleGatewayDomain}">
                                     <TextBox.Style>
                                         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
@@ -2332,11 +2330,11 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="30"
+                                <TextBlock Grid.Column="0" Grid.Row="32"
                                            Text="{x:Static localization:Strings.BypassForLocalAddresses}"
                                            Margin="24,0,0,0" VerticalAlignment="Center"
                                            Style="{StaticResource DisabledTextBlock}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="30" Content="" OnContent=""
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="32" Content="" OnContent=""
                                                   IsOn="{Binding RemoteDesktop_GatewayServerBypassLocalAddresses}">
                                     <mah:ToggleSwitch.Style>
                                         <Style TargetType="{x:Type mah:ToggleSwitch}"
@@ -2360,10 +2358,10 @@
                                         </Style>
                                     </mah:ToggleSwitch.Style>
                                 </mah:ToggleSwitch>
-                                <TextBlock Grid.Column="0" Grid.Row="32"
+                                <TextBlock Grid.Column="0" Grid.Row="34"
                                            Text="{x:Static localization:Strings.LogonMethod}" Margin="24,0,0,0"
                                            VerticalAlignment="Center" Style="{StaticResource DisabledTextBlock}" />
-                                <ComboBox Grid.Column="2" Grid.Row="32"
+                                <ComboBox Grid.Column="2" Grid.Row="34"
                                           ItemsSource="{Binding RemoteDesktop_GatewayServerLogonMethods}"
                                           SelectedItem="{Binding RemoteDesktop_GatewayServerLogonMethod}">
                                     <ComboBox.Style>
@@ -2395,11 +2393,11 @@
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
-                                <TextBlock Grid.Column="0" Grid.Row="34"
+                                <TextBlock Grid.Column="0" Grid.Row="36"
                                            Text="{x:Static localization:Strings.ShareGatewayCredentialsWithRemoteComputer}"
                                            Margin="24,0,0,0" VerticalAlignment="Center"
                                            Style="{StaticResource DisabledTextBlock}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="34" Content="" OnContent=""
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="36" Content="" OnContent=""
                                                   IsOn="{Binding RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer}">
                                     <mah:ToggleSwitch.Style>
                                         <Style TargetType="{x:Type mah:ToggleSwitch}"
@@ -2423,11 +2421,11 @@
                                         </Style>
                                     </mah:ToggleSwitch.Style>
                                 </mah:ToggleSwitch>
-                                <TextBlock Grid.Column="0" Grid.Row="36"
+                                <TextBlock Grid.Column="0" Grid.Row="38"
                                            Text="{x:Static localization:Strings.UseGatewayCredentials}"
                                            Margin="24,0,0,0" VerticalAlignment="Center"
                                            Style="{StaticResource DisabledTextBlock}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="36" Content="" OnContent=""
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="38" Content="" OnContent=""
                                                   IsOn="{Binding RemoteDesktop_UseGatewayServerCredentials}">
                                     <mah:ToggleSwitch.Style>
                                         <Style TargetType="{x:Type mah:ToggleSwitch}"
@@ -2454,10 +2452,10 @@
                                         </Style>
                                     </mah:ToggleSwitch.Style>
                                 </mah:ToggleSwitch>
-                                <TextBlock Grid.Column="0" Grid.Row="38"
+                                <TextBlock Grid.Column="0" Grid.Row="40"
                                            Text="{x:Static localization:Strings.Username}" Margin="24,0,0,0"
                                            VerticalAlignment="Center" Style="{StaticResource DisabledTextBlock}" />
-                                <TextBox Grid.Column="2" Grid.Row="38"
+                                <TextBox Grid.Column="2" Grid.Row="40"
                                          x:Name="TextBoxRemoteDesktopGatewayServerUsername"
                                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleUsername}">
                                     <TextBox.Style>
@@ -2493,10 +2491,10 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="40" Text="{x:Static localization:Strings.Domain}"
+                                <TextBlock Grid.Column="0" Grid.Row="42" Text="{x:Static localization:Strings.Domain}"
                                            Margin="24,0,0,0" VerticalAlignment="Center"
                                            Style="{StaticResource DisabledTextBlock}" />
-                                <TextBox Grid.Column="2" Grid.Row="40" x:Name="TextBoxRemoteDesktopGatewayServerDomain"
+                                <TextBox Grid.Column="2" Grid.Row="42" x:Name="TextBoxRemoteDesktopGatewayServerDomain"
                                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleDomain}">
                                     <TextBox.Style>
                                         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
@@ -2531,10 +2529,10 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="42"
+                                <TextBlock Grid.Column="0" Grid.Row="44"
                                            Text="{x:Static localization:Strings.Password}" Margin="24,0,0,0"
                                            VerticalAlignment="Center" Style="{StaticResource DisabledTextBlock}" />
-                                <PasswordBox Grid.Column="2" Grid.Row="42"
+                                <PasswordBox Grid.Column="2" Grid.Row="44"
                                              x:Name="PasswordBoxRemoteDesktopGatewayServerPassword">
                                     <PasswordBox.Style>
                                         <Style TargetType="{x:Type PasswordBox}"
@@ -2573,7 +2571,7 @@
                                             Password="{Binding RemoteDesktop_GatewayServerPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </interactivity:Interaction.Behaviors>
                                 </PasswordBox>
-                                <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="42"
+                                <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="44"
                                            ToolTip="{x:Static localization:Strings.WarningMessage_ProfileFileNotEncryptedStoringPasswords}"
                                            Visibility="{Binding IsProfileFileEncrypted, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
                                            Style="{StaticResource WarnImageRectangle}" Margin="10,0,0,0">
@@ -2581,11 +2579,11 @@
                                         <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
                                     </Rectangle.Resources>
                                 </Rectangle>
-                                <CheckBox Grid.Column="0" Grid.Row="44"
+                                <CheckBox Grid.Column="0" Grid.Row="46"
                                           Content="{x:Static localization:Strings.RemoteAudioPlayback}"
                                           IsChecked="{Binding RemoteDesktop_OverrideAudioRedirectionMode}"
                                           Style="{StaticResource DefaultCheckBox}" />
-                                <ComboBox Grid.Column="2" Grid.Row="44"
+                                <ComboBox Grid.Column="2" Grid.Row="46"
                                           ItemsSource="{Binding RemoteDesktop_AudioRedirectionModes}"
                                           SelectedItem="{Binding RemoteDesktop_AudioRedirectionMode}"
                                           IsEnabled="{Binding RemoteDesktop_OverrideAudioRedirectionMode}">
@@ -2597,11 +2595,11 @@
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
-                                <CheckBox Grid.Column="0" Grid.Row="46"
+                                <CheckBox Grid.Column="0" Grid.Row="48"
                                           Content="{x:Static localization:Strings.RemoteAudioRecording}"
                                           IsChecked="{Binding RemoteDesktop_OverrideAudioCaptureRedirectionMode}"
                                           Style="{StaticResource DefaultCheckBox}" />
-                                <ComboBox Grid.Column="2" Grid.Row="46"
+                                <ComboBox Grid.Column="2" Grid.Row="48"
                                           ItemsSource="{Binding RemoteDesktop_AudioCaptureRedirectionModes}"
                                           SelectedItem="{Binding RemoteDesktop_AudioCaptureRedirectionMode}"
                                           IsEnabled="{Binding RemoteDesktop_OverrideAudioCaptureRedirectionMode}">
@@ -2613,11 +2611,11 @@
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
-                                <CheckBox Grid.Column="0" Grid.Row="48"
+                                <CheckBox Grid.Column="0" Grid.Row="50"
                                           Content="{x:Static localization:Strings.ApplyWindowsKeyCombinations}"
                                           IsChecked="{Binding RemoteDesktop_OverrideApplyWindowsKeyCombinations}"
                                           Style="{StaticResource DefaultCheckBox}" />
-                                <ComboBox Grid.Column="2" Grid.Row="48"
+                                <ComboBox Grid.Column="2" Grid.Row="50"
                                           ItemsSource="{Binding RemoteDesktop_KeyboardHookModes}"
                                           SelectedItem="{Binding RemoteDesktop_KeyboardHookMode}"
                                           IsEnabled="{Binding RemoteDesktop_OverrideApplyWindowsKeyCombinations}">
@@ -2629,67 +2627,67 @@
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
-                                <CheckBox Grid.Column="0" Grid.Row="50"
+                                <CheckBox Grid.Column="0" Grid.Row="52"
                                           Content="{x:Static localization:Strings.RedirectClipboard}"
                                           IsChecked="{Binding RemoteDesktop_OverrideRedirectClipboard}"
                                           Style="{StaticResource DefaultCheckBox}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="50" OffContent="" OnContent=""
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="52" OffContent="" OnContent=""
                                                   IsOn="{Binding RemoteDesktop_RedirectClipboard}"
                                                   IsEnabled="{Binding RemoteDesktop_OverrideRedirectClipboard}" />
-                                <CheckBox Grid.Column="0" Grid.Row="52"
+                                <CheckBox Grid.Column="0" Grid.Row="54"
                                           Content="{x:Static localization:Strings.RedirectDevices}"
                                           IsChecked="{Binding RemoteDesktop_OverrideRedirectDevices}"
                                           Style="{StaticResource DefaultCheckBox}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="52" OffContent="" OnContent=""
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="54" OffContent="" OnContent=""
                                                   IsOn="{Binding RemoteDesktop_RedirectDevices}"
                                                   IsEnabled="{Binding RemoteDesktop_OverrideRedirectDevices}" />
-                                <CheckBox Grid.Column="0" Grid.Row="54"
+                                <CheckBox Grid.Column="0" Grid.Row="56"
                                           Content="{x:Static localization:Strings.RedirectDrives}"
                                           IsChecked="{Binding RemoteDesktop_OverrideRedirectDrives}"
                                           Style="{StaticResource DefaultCheckBox}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="54" OffContent="" OnContent=""
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="56" OffContent="" OnContent=""
                                                   IsOn="{Binding RemoteDesktop_RedirectDrives}"
                                                   IsEnabled="{Binding RemoteDesktop_OverrideRedirectDrives}" />
-                                <CheckBox Grid.Column="0" Grid.Row="56"
+                                <CheckBox Grid.Column="0" Grid.Row="58"
                                           Content="{x:Static localization:Strings.RedirectPorts}"
                                           IsChecked="{Binding RemoteDesktop_OverrideRedirectPorts}"
                                           Style="{StaticResource DefaultCheckBox}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="56" OffContent="" OnContent=""
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="58" OffContent="" OnContent=""
                                                   IsOn="{Binding RemoteDesktop_RedirectPorts}"
                                                   IsEnabled="{Binding RemoteDesktop_OverrideRedirectPorts}" />
-                                <CheckBox Grid.Column="0" Grid.Row="58"
+                                <CheckBox Grid.Column="0" Grid.Row="60"
                                           Content="{x:Static localization:Strings.RedirectSmartcards}"
                                           IsChecked="{Binding RemoteDesktop_OverrideRedirectSmartcards}"
                                           Style="{StaticResource DefaultCheckBox}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="58" OffContent="" OnContent=""
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="60" OffContent="" OnContent=""
                                                   IsOn="{Binding RemoteDesktop_RedirectSmartCards}"
                                                   IsEnabled="{Binding RemoteDesktop_OverrideRedirectSmartcards}" />
-                                <CheckBox Grid.Column="0" Grid.Row="60"
+                                <CheckBox Grid.Column="0" Grid.Row="62"
                                           Content="{x:Static localization:Strings.RedirectPrinters}"
                                           IsChecked="{Binding RemoteDesktop_OverrideRedirectPrinters}"
                                           Style="{StaticResource DefaultCheckBox}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="60" OffContent="" OnContent=""
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="62" OffContent="" OnContent=""
                                                   IsOn="{Binding RemoteDesktop_RedirectPrinters}"
                                                   IsEnabled="{Binding RemoteDesktop_OverrideRedirectPrinters}" />
-                                <CheckBox Grid.Column="0" Grid.Row="62"
+                                <CheckBox Grid.Column="0" Grid.Row="64"
                                           Content="{x:Static localization:Strings.PersistentBitmapCaching}"
                                           IsChecked="{Binding RemoteDesktop_OverridePersistentBitmapCaching}"
                                           Style="{StaticResource DefaultCheckBox}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="62" OffContent="" OnContent=""
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="64" OffContent="" OnContent=""
                                                   IsOn="{Binding RemoteDesktop_PersistentBitmapCaching}"
                                                   IsEnabled="{Binding RemoteDesktop_OverridePersistentBitmapCaching}" />
-                                <CheckBox Grid.Column="0" Grid.Row="64"
+                                <CheckBox Grid.Column="0" Grid.Row="66"
                                           Content="{x:Static localization:Strings.ReconnectIfTheConnectionIsDropped}"
                                           IsChecked="{Binding RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped}"
                                           Style="{StaticResource DefaultCheckBox}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="64" OffContent="" OnContent=""
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="66" OffContent="" OnContent=""
                                                   IsOn="{Binding RemoteDesktop_ReconnectIfTheConnectionIsDropped}"
                                                   IsEnabled="{Binding RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped}" />
-                                <CheckBox Grid.Column="0" Grid.Row="66"
+                                <CheckBox Grid.Column="0" Grid.Row="68"
                                           Content="{x:Static localization:Strings.NetworkConnectionType}"
                                           IsChecked="{Binding RemoteDesktop_OverrideNetworkConnectionType}"
                                           Style="{StaticResource DefaultCheckBox}" />
-                                <ComboBox Grid.Column="2" Grid.Row="66"
+                                <ComboBox Grid.Column="2" Grid.Row="68"
                                           ItemsSource="{Binding RemoteDesktop_NetworkConnectionTypes}"
                                           SelectedItem="{Binding RemoteDesktop_NetworkConnectionType}"
                                           IsEnabled="{Binding RemoteDesktop_OverrideNetworkConnectionType}">
@@ -2701,42 +2699,42 @@
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
-                                <TextBlock Grid.Column="0" Grid.Row="68"
+                                <TextBlock Grid.Column="0" Grid.Row="70"
                                            Text="{x:Static localization:Strings.DesktopBackground}" Margin="24,0,0,0"
                                            VerticalAlignment="Center" Style="{StaticResource DisabledTextBlock}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="68" OffContent="" OnContent=""
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="70" OffContent="" OnContent=""
                                                   IsOn="{Binding RemoteDesktop_DesktopBackground}"
                                                   IsEnabled="{Binding RemoteDesktop_OverrideNetworkConnectionType}" />
-                                <TextBlock Grid.Column="0" Grid.Row="70"
+                                <TextBlock Grid.Column="0" Grid.Row="72"
                                            Text="{x:Static localization:Strings.FontSmoothing}" Margin="24,0,0,0"
                                            VerticalAlignment="Center" Style="{StaticResource DisabledTextBlock}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="70" OffContent="" OnContent=""
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="72" OffContent="" OnContent=""
                                                   IsOn="{Binding RemoteDesktop_FontSmoothing}"
                                                   IsEnabled="{Binding RemoteDesktop_OverrideNetworkConnectionType}" />
-                                <TextBlock Grid.Column="0" Grid.Row="72"
+                                <TextBlock Grid.Column="0" Grid.Row="74"
                                            Text="{x:Static localization:Strings.DesktopComposition}" Margin="24,0,0,0"
                                            VerticalAlignment="Center" Style="{StaticResource DisabledTextBlock}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="72" OffContent="" OnContent=""
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="74" OffContent="" OnContent=""
                                                   IsOn="{Binding RemoteDesktop_DesktopComposition}"
                                                   IsEnabled="{Binding RemoteDesktop_OverrideNetworkConnectionType}" />
-                                <TextBlock Grid.Column="0" Grid.Row="74"
+                                <TextBlock Grid.Column="0" Grid.Row="76"
                                            Text="{x:Static localization:Strings.ShowWindowContentsWhileDragging}"
                                            Margin="24,0,0,0" VerticalAlignment="Center"
                                            Style="{StaticResource DisabledTextBlock}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="74" OffContent="" OnContent=""
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="76" OffContent="" OnContent=""
                                                   IsOn="{Binding RemoteDesktop_ShowWindowContentsWhileDragging}"
                                                   IsEnabled="{Binding RemoteDesktop_OverrideNetworkConnectionType}" />
-                                <TextBlock Grid.Column="0" Grid.Row="76"
+                                <TextBlock Grid.Column="0" Grid.Row="78"
                                            Text="{x:Static localization:Strings.MenuAndWindowAnimation}"
                                            Margin="24,0,0,0" VerticalAlignment="Center"
                                            Style="{StaticResource DisabledTextBlock}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="76" OffContent="" OnContent=""
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="78" OffContent="" OnContent=""
                                                   IsOn="{Binding RemoteDesktop_MenuAndWindowAnimation}"
                                                   IsEnabled="{Binding RemoteDesktop_OverrideNetworkConnectionType}" />
-                                <TextBlock Grid.Column="0" Grid.Row="78"
+                                <TextBlock Grid.Column="0" Grid.Row="80"
                                            Text="{x:Static localization:Strings.VisualStyles}" Margin="24,0,0,0"
                                            VerticalAlignment="Center" Style="{StaticResource DisabledTextBlock}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="78" OffContent="" OnContent=""
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="80" OffContent="" OnContent=""
                                                   IsOn="{Binding RemoteDesktop_VisualStyles}"
                                                   IsEnabled="{Binding RemoteDesktop_OverrideNetworkConnectionType}" />
                             </Grid>

@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Security;
-using System.Xml.Serialization;
-using NETworkManager.Models.Network;
+﻿using NETworkManager.Models.Network;
 using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
+using System.Collections.Generic;
+using System.Security;
+using System.Xml.Serialization;
 
 namespace NETworkManager.Profiles;
 
@@ -37,7 +37,7 @@ public class GroupInfo
     {
         // General
         Description = group.Description;
-        
+
         // Profiles
         Profiles = group.Profiles;
 
@@ -46,6 +46,7 @@ public class GroupInfo
         RemoteDesktop_Username = group.RemoteDesktop_Username;
         RemoteDesktop_Domain = group.RemoteDesktop_Domain;
         RemoteDesktop_Password = group.RemoteDesktop_Password;
+        RemoteDesktop_AdminSession = group.RemoteDesktop_AdminSession;
         RemoteDesktop_OverrideDisplay = group.RemoteDesktop_OverrideDisplay;
         RemoteDesktop_AdjustScreenAutomatically = group.RemoteDesktop_AdjustScreenAutomatically;
         RemoteDesktop_UseCurrentViewSize = group.RemoteDesktop_UseCurrentViewSize;
@@ -168,7 +169,7 @@ public class GroupInfo
     ///     Name of the group.
     /// </summary>
     public string Name { get; set; }
-    
+
     /// <summary>
     ///    Description of the group.
     /// </summary>
@@ -183,6 +184,8 @@ public class GroupInfo
     public string RemoteDesktop_Domain { get; set; }
 
     [XmlIgnore] public SecureString RemoteDesktop_Password { get; set; }
+
+    public bool RemoteDesktop_AdminSession { get; set; }
     public bool RemoteDesktop_OverrideDisplay { get; set; }
     public bool RemoteDesktop_AdjustScreenAutomatically { get; set; }
 
