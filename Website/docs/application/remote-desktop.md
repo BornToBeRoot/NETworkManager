@@ -106,6 +106,14 @@ Only available if [Use credentials](#use-credentials) is enabled.
 
 :::
 
+### Admin (console) session
+
+Connect to the admin (console) session of the remote computer.
+
+**Type:** `Boolean`
+
+**Default:** `Disabled`
+
 ## Profile
 
 ### Inherit host from general
@@ -196,6 +204,14 @@ Only available if [Use credentials](#use-credentials-1) is enabled.
 Passwords are stored in plain text in the profile file unless [Profile file encryption](../faq/profile-file-encryption) is enabled.
 
 :::
+
+### Admin (console) session
+
+Connect to the admin (console) session of the remote computer.
+
+**Type:** `Boolean`
+
+**Default:** `Disabled`
 
 ### Display
 
@@ -596,6 +612,14 @@ Only available if [Use credentials](#use-credentials-2) is enabled.
 Passwords are stored in plain text in the profile file unless [Profile file encryption](../faq/profile-file-encryption) is enabled.
 
 :::
+
+### Admin (console) session
+
+Connect to the admin (console) session of the remote computer.
+
+**Type:** `Boolean`
+
+**Default:** `Disabled`
 
 ### Display
 
