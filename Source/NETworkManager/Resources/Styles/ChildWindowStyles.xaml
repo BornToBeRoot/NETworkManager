@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow">
+    <Style x:Key="DefaultChildWindow" TargetType="{x:Type simpleChildWindow:ChildWindow}">
+        <Setter Property="ShowTitleBar" Value="True" />        
+        <Setter Property="ShowCloseButton" Value="True" />
+        <Setter Property="CloseByEscape" Value="False" />
+        <Setter Property="AllowMove" Value="True" />
+        <Setter Property="TitleBarBackground" Value="Transparent" />
+        <Setter Property="TitleBarNonActiveBackground" Value="Transparent" />
+        <Setter Property="OverlayBrush" Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray.SemiTransparent}" />
+        <Setter Property="TitleForeground" Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
+        <Setter Property="ChildWindowWidth" Value="450" />
+        <Setter Property="ChildWindowMaxHeight" Value="500" />
+    </Style>
+</ResourceDictionary>

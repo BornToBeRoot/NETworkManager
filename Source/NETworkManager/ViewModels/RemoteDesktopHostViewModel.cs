@@ -1,5 +1,6 @@
 ﻿using Dragablz;
 using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
@@ -517,16 +518,15 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     #region Methods
 
     // Connect via Dialog
-    private async Task Connect(string host = null)
+    private Task Connect(string host = null)
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.Connect
-        };
+        var childWindow = new RemoteDesktopConnectChildWindow(Application.Current.MainWindow);
 
-        var remoteDesktopConnectViewModel = new RemoteDesktopConnectViewModel(async instance =>
+        var childWindowViewModel = new RemoteDesktopConnectViewModel(instance =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
             ConfigurationManager.OnDialogClose();
 
             // Create new session info with default settings
@@ -560,22 +560,26 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
             AddHostToHistory(instance.Host);
 
             Connect(sessionInfo);
-        }, async _ =>
+        }, _ =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
             ConfigurationManager.OnDialogClose();
         })
         {
             Host = host
         };
 
-        customDialog.Content = new RemoteDesktopConnectDialog
-        {
-            DataContext = remoteDesktopConnectViewModel
-        };
+        childWindow.Title = Strings.Connect;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
 
         ConfigurationManager.OnDialogOpen();
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     // Connect via Profile
@@ -589,20 +593,19 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     }
 
     // Connect via Profile with Credentials
-    private async Task ConnectProfileAs()
+    private Task ConnectProfileAs()
     {
         var profileInfo = SelectedProfile;
 
         var sessionInfo = RemoteDesktop.CreateSessionInfo(profileInfo);
 
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.ConnectAs
-        };
+        var childWindow = new RemoteDesktopConnectChildWindow(Application.Current.MainWindow);
 
-        var remoteDesktopConnectViewModel = new RemoteDesktopConnectViewModel(async instance =>
+        var childWindowViewModel = new RemoteDesktopConnectViewModel(instance =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
             ConfigurationManager.OnDialogClose();
 
             if (instance.UseCredentials)
@@ -617,9 +620,11 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
             sessionInfo.AdminSession = instance.AdminSession;
 
             Connect(sessionInfo, instance.Name);
-        }, async _ =>
+        }, _ =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
             ConfigurationManager.OnDialogClose();
         },
         (
@@ -628,13 +633,15 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
             true
         ));
 
-        customDialog.Content = new RemoteDesktopConnectDialog
-        {
-            DataContext = remoteDesktopConnectViewModel
-        };
+        childWindow.Title = Strings.ConnectAs;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
 
         ConfigurationManager.OnDialogOpen();
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     private void Connect(RemoteDesktopSessionInfo sessionInfo, string header = null)

@@ -8,18 +8,8 @@
              xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
-             ChildWindowWidth="450"
-             ChildWindowMaxHeight="500"
-             ShowTitleBar="True"
-             TitleBarBackground="Transparent"
-             TitleBarNonActiveBackground="Transparent"
-             ShowCloseButton="True"
-             CloseButtonCommand="{Binding CancelCommand}"
-             AllowMove="True"
-             TitleForeground="{DynamicResource MahApps.Brushes.Gray3}"
-             CloseByEscape="False"                               
-             OverlayBrush="{DynamicResource ResourceKey=MahApps.Brushes.Gray.SemiTransparent}"         
              Loaded="ChildWindow_Loaded"
+             Style="{StaticResource DefaultChildWindow}"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:OKCancelInfoMessageViewModel}">
     <simpleChildWindow:ChildWindow.Resources>
         <converters:ChildWindowIconToRectangleStyleConverter x:Key="ChildWindowIconToRectangleStyleConverter" />

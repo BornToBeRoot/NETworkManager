@@ -8,12 +8,12 @@
              xmlns:resources="clr-namespace:NETworkManager.Properties"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
-                               ShowTitleBar="False" 
-                               ChildWindowMaxWidth="650"
-                               ChildWindowMaxHeight="800"
-                               CloseByEscape="False"               
-                               Padding="20"
-                               OverlayBrush="{DynamicResource ResourceKey=MahApps.Brushes.Gray8}"
+             ShowTitleBar="False" 
+             ChildWindowMaxWidth="650"
+             ChildWindowMaxHeight="800"
+             CloseByEscape="False"               
+             Padding="20"
+             OverlayBrush="{DynamicResource ResourceKey=MahApps.Brushes.Gray8}"
              Loaded="ChildWindow_Loaded"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:UpgradeViewModel}">
     <Grid Margin="10">

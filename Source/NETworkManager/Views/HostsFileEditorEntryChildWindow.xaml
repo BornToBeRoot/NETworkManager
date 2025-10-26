@@ -12,17 +12,8 @@
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             ChildWindowWidth="450"
-             ChildWindowMaxHeight="500"
-             ShowTitleBar="True"
-             TitleBarBackground="Transparent"
-             TitleBarNonActiveBackground="Transparent"
-             ShowCloseButton="True"
              CloseButtonCommand="{Binding Path=CancelCommand}"
-             AllowMove="True"
-             TitleForeground="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}"
-             CloseByEscape="False" 
-             OverlayBrush="{DynamicResource ResourceKey=MahApps.Brushes.Gray.SemiTransparent}"
+             Style="{StaticResource DefaultChildWindow}"
              Loaded="ChildWindow_OnLoaded"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:HostsFileEditorEntryViewModel}">
     <simpleChildWindow:ChildWindow.Resources>

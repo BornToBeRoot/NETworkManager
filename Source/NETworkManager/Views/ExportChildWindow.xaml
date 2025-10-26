@@ -12,17 +12,8 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             ChildWindowWidth="450"
-             ChildWindowMaxHeight="500"
-             ShowTitleBar="True"
-             TitleBarBackground="Transparent"
-             TitleBarNonActiveBackground="Transparent"
-             ShowCloseButton="True"
              CloseButtonCommand="{Binding Path=CancelCommand}"
-             AllowMove="True"
-             TitleForeground="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}"
-             CloseByEscape="False" 
-             OverlayBrush="{DynamicResource ResourceKey=MahApps.Brushes.Gray.SemiTransparent}"             
+             Style="{StaticResource DefaultChildWindow}"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ExportViewModel}">
     <simpleChildWindow:ChildWindow.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
