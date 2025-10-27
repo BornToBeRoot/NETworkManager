@@ -3993,4 +3993,7 @@ Windows 설정 &gt; 개인정보 보호 및 보안 &gt; 위치를 열고 데스�
   <data name="HelpMessage_UseCustomThemes" xml:space="preserve">
     <value>사용자 지정 테마를 사용하여 응용 프로그램의 모양을 개인화합니다. "프로그램 폴더 &gt; 테마" 디렉터리에서 테마를 편집하거나 추가할 수 있습니다. 자세한 내용은 설명서를 참조하세요.</value>
   </data>
+  <data name="AdminConsoleSession" xml:space="preserve">
+    <value>Admin (console) session</value>
+  </data>
 </root>

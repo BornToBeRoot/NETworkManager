@@ -3996,4 +3996,7 @@ Right-click for more options.</value>
   <data name="HelpMessage_UseCustomThemes" xml:space="preserve">
     <value>Use custom themes to personalize the appearance of the application. You can edit or add theme in the "Program Folder &gt; Themes" directory. For more details, refer to the documentation.</value>
   </data>
+  <data name="AdminConsoleSession" xml:space="preserve">
+    <value>Admin (console) session</value>
+  </data>
 </root>

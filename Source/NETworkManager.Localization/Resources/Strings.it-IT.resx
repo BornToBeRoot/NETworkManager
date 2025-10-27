@@ -4099,4 +4099,7 @@ Per maggiori dettagli consulta il file registro.</value>
   <data name="HelpMessage_UseCustomThemes" xml:space="preserve">
     <value>Per personalizzare l'aspetto dell'applicazione usa i temi personalizzati . È possibile modificare o aggiungere temi nella cartella "Cartella programmi &gt; Temi". Per maggiori dettagli fai riferimento alla documentazione.</value>
   </data>
+  <data name="AdminConsoleSession" xml:space="preserve">
+    <value>Admin (console) session</value>
+  </data>
 </root>
