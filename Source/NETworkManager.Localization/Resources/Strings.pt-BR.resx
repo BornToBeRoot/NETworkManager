@@ -3996,4 +3996,7 @@ Clique direito para mais opções.</value>
   <data name="HelpMessage_UseCustomThemes" xml:space="preserve">
     <value>Use temas personalizados para personalizar a aparência do aplicativo. Você pode editar ou adicionar temas na pasta "Temas" dentro da pasta do programa. Para mais detalhes, consulte a documentação.</value>
   </data>
+  <data name="AdminConsoleSession" xml:space="preserve">
+    <value>Sessão de administração (console)</value>
+  </data>
 </root>
