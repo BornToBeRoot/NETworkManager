@@ -13,6 +13,6 @@
 - Fork the repo, do your changes in the `Website` folder and send me a pull request. You can also click on the `Edit this page` in the footer of each documentation page.
 
 ## Translation
-- Translation is hosted on [Transifex](https://www.transifex.com/BornToBeRoot/NETworkManager/).
+- Translation is hosted on [Transifex](https://app.transifex.com/BornToBeRoot/NETworkManager/dashboard/).
 - If you want to join the language team as translator or reviewer, you need to have a Transifex account and join the team on Transifex.
 - You can request a new language via Transifex (or create a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new/choose)).
