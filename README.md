@@ -39,7 +39,7 @@
     </a>     
   </p> 
   <p> 
-    <a href="https://transifex.com/BornToBeRoot/NETworkManager/">
+    <a href="https://app.transifex.com/BornToBeRoot/NETworkManager/dashboard/">
       <img alt="Transifex" src="https://img.shields.io/badge/transifex-translate-green.svg?style=for-the-badge" />
     </a>   
     <a href="https://github.com/BornToBeRoot/NETworkManager/issues/new?labels=Feature-Request&template=Feature_request.md">
