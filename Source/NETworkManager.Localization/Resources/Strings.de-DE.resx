@@ -3997,6 +3997,6 @@ Rechtsklick für weitere Optionen.</value>
     <value>Verwenden Sie benutzerdefinierte Themes, um das Erscheinungsbild der Anwendung anzupassen. Sie können Themes im Verzeichnis „Program Folder &gt; Themes“ bearbeiten oder hinzufügen. Weitere Informationen finden Sie in der Dokumentation.</value>
   </data>
   <data name="AdminConsoleSession" xml:space="preserve">
-    <value>Admin (console) session</value>
+    <value>Admin-Sitzung (Konsole)</value>
   </data>
 </root>
