@@ -233,10 +233,10 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-    
+
     private readonly GroupExpanderStateStore _groupExpanderStateStore = new();
     public GroupExpanderStateStore GroupExpanderStateStore => _groupExpanderStateStore;
-    
+
     private bool _canProfileWidthChange = true;
     private double _tempProfileWidth;
 
@@ -492,6 +492,8 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
     private void OpenProfileFilterAction()
     {
+        ConfigurationManager.Current.IsProfileFilterPopupOpen = true;
+
         ProfileFilterIsOpen = true;
     }
 
@@ -517,7 +519,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         IsProfileFilterSet = false;
         ProfileFilterIsOpen = false;
     }
-    
+
     public ICommand ExpandAllProfileGroupsCommand => new RelayCommand(_ => ExpandAllProfileGroupsAction());
 
     private void ExpandAllProfileGroupsAction()
@@ -531,7 +533,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     {
         SetIsExpandedForAllProfileGroups(false);
     }
-    
+
     public ICommand OpenSettingsCommand => new RelayCommand(_ => OpenSettingsAction());
 
     private static void OpenSettingsAction()
@@ -674,7 +676,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         foreach (var group in Profiles.Groups.Cast<CollectionViewGroup>())
             GroupExpanderStateStore[group.Name.ToString()] = isExpanded;
     }
-    
+
     private void ResizeProfile(bool dueToChangedSize)
     {
         _canProfileWidthChange = false;
@@ -766,7 +768,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
             ProfileFilterTags.Add(new ProfileFilterTagsInfo(false, tag));
         }
     }
-    
+
     private void SetProfilesView(ProfileFilterInfo filter, ProfileInfo profile = null)
     {
         Profiles = new CollectionViewSource
@@ -809,6 +811,11 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         }, SelectedProfile);
     }
 
+    public void OnProfileFilterClosed()
+    {
+        ConfigurationManager.Current.IsProfileFilterPopupOpen = false;
+    }
+
     public void OnProfileManagerDialogOpen()
     {
         ConfigurationManager.OnDialogOpen();
@@ -841,7 +848,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
     {
         CreateTags();
-        
+
         RefreshProfiles();
     }
 

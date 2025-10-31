@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
@@ -53,5 +54,10 @@ public partial class AWSSessionManagerHostView
     public void FocusEmbeddedWindow()
     {
         _viewModel.FocusEmbeddedWindow();
+    }
+
+    private void PopupProfileFilter_Closed(object sender, EventArgs e)
+    {
+        _viewModel.OnProfileFilterClosed();
     }
 }

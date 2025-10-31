@@ -452,6 +452,27 @@ public class ConfigurationInfo : PropertyChangedBase
     }
 
     /// <summary>
+    /// Private variable for <see cref="IsProfileFilterPopupOpen" />.
+    /// </summary>
+    private bool _isProfileFilterPopupOpen;
+
+    /// <summary>
+    /// Indicates if a profile filter popup is open.
+    /// </summary>
+    public bool IsProfileFilterPopupOpen
+    {
+        get => _isProfileFilterPopupOpen;
+        set
+        {
+            if (value == _isProfileFilterPopupOpen)
+                return;
+
+            _isProfileFilterPopupOpen = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     ///     Private variable for <see cref="FixAirspace" />.
     /// </summary>
     private bool _fixAirspace;

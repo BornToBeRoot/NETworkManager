@@ -1443,7 +1443,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             }, info.Name, showWrongPassword);
 
             childWindow.Title = Strings.UnlockProfileFile;
-            
+
             childWindow.DataContext = viewModel;
 
             ConfigurationManager.OnDialogOpen();
@@ -2004,10 +2004,16 @@ public sealed partial class MainWindow : INotifyPropertyChanged
            - Settings are opened
            - Profile file DropDown is opened
            - Application search TextBox is opened
+           - Profile filter (tags) popup is opened
            - Dialog over an embedded window is opened (FixAirspace)
         */
-        if (SelectedApplication == null || SettingsViewIsOpen || IsProfileFileDropDownOpened ||
+        if (SelectedApplication == null ||
+            // MainWindow
+            SettingsViewIsOpen ||
+            IsProfileFileDropDownOpened ||
             TextBoxApplicationSearchIsFocused ||
+            // Global dialogs
+            ConfigurationManager.Current.IsProfileFilterPopupOpen ||
             ConfigurationManager.Current.FixAirspace)
             return;
 

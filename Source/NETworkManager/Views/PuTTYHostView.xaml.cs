@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -60,5 +61,10 @@ public partial class PuTTYHostView
     public void FocusEmbeddedWindow()
     {
         _viewModel.FocusEmbeddedWindow();
+    }
+
+    private void PopupProfileFilter_Closed(object sender, EventArgs e)
+    {
+        _viewModel.OnProfileFilterClosed();
     }
 }

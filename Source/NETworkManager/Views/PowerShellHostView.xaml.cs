@@ -61,4 +61,9 @@ public partial class PowerShellHostView
     {
         _viewModel.FocusEmbeddedWindow();
     }
+
+    private void PopupProfileFilter_Closed(object sender, System.EventArgs e)
+    {
+        _viewModel.OnProfileFilterClosed();
+    }
 }

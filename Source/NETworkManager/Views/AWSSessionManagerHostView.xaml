@@ -402,6 +402,7 @@
                             </Button>
                             <Popup PlacementTarget="{Binding ElementName=ButtonProfileFilter}"
                                    Placement="Bottom" StaysOpen="False"
+                                   Closed="PopupProfileFilter_Closed"
                                    IsOpen="{Binding ProfileFilterIsOpen}"
                                    Width="220">
                                 <Border Background="{DynamicResource MahApps.Brushes.Window.Background}"
