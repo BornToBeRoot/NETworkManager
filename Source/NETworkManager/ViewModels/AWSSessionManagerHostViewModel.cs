@@ -599,6 +599,8 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
 
     private void OpenProfileFilterAction()
     {
+        ConfigurationManager.Current.IsProfileFilterPopupOpen = true;
+        
         ProfileFilterIsOpen = true;
     }
 
@@ -1183,6 +1185,11 @@ public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
         IsProfileFilterSet = !string.IsNullOrEmpty(filter.Search) || filter.Tags.Any();
     }
 
+    public void OnProfileFilterClosed()
+    {
+        ConfigurationManager.Current.IsProfileFilterPopupOpen = false;
+    }
+    
     public void OnProfileManagerDialogOpen()
     {
         ConfigurationManager.OnDialogOpen();
