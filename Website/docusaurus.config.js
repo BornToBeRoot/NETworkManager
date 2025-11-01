@@ -160,18 +160,22 @@ const config = {
             to: "/docs/changelog/2025-10-18-0",
           },
           // Redirect pre-versions to the corresponding new versions
-          {            
+          {           
+            from: ["/docs/changelog/2025-11-1-0"],
+            to: "/docs/changelog/next-release",
+          },
+          {           
             from: ["/docs/changelog/2025-6-13-0"],
             to: "/docs/changelog/2025-8-10-0",
-          },
+          },          
           {
             from: ["/docs/changelog/2025-7-9-0"],
             to: "/docs/changelog/2025-8-10-0",
           },
-          {
-            from: ["/docs/changelog/2025-10-4-0"],
-            to: "/docs/changelog/2025-10-18-0",
-          },
+          {           
+            from: ["/docs/changelog/2025-6-13-0"],
+            to: "/docs/changelog/2025-8-10-0",
+          },          
         ],
       },
     ],
