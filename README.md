@@ -64,17 +64,17 @@ NETworkManager is your go-to tool for simplifying network administration and tro
 
 Here's why you'll love it:
 
-- 🧰 **Unified Experience**: All your essential network tools in one sleek interface — no more juggling apps.
-- 🖥️ **Remote System Management**: Connect to remote systems seamlessly via RDP, PuTTY (SSH, Telnet, Serial), PowerShell (WinRM), TigerVNC (VNC), or AWS Session Manager.
-- 🔍 **Analyze & Troubleshoot**: Deep network diagnostics with WiFi Analyzer, IP/Port Scanners, Ping Monitor, Traceroute, DNS Lookup, LLDP/CDP Capture, and <a href="https://borntoberoot.net/NETworkManager/docs/features">many more</a>.
-- 🔐 **Secure Profiles**: Organize hosts and networks in encrypted profiles with seamless access across all features.
+- 🧰 **Unified Experience** - All your essential network tools in one sleek interface — no more juggling apps.
+- 🖥️ **Remote System Management** - Connect to remote systems seamlessly via RDP, PuTTY (SSH, Telnet, Serial), PowerShell (WinRM), TigerVNC (VNC), or AWS Session Manager.
+- 🔍 **Analyze & Troubleshoot** - Deep network diagnostics with WiFi Analyzer, IP/Port Scanners, Ping Monitor, Traceroute, DNS Lookup, LLDP/CDP Capture, and <a href="https://borntoberoot.net/NETworkManager/docs/features">many more</a>.
+- 🔐 **Secure Profiles** - Organize hosts and networks in encrypted profiles with seamless access across all features.
   <details>
   <summary>See it in Action</summary>
     tbd
   </details>
-- 💎 **Open Source & Free**: No ads, no subscriptions, fully community-driven.
-- 🏢 **Enterprise-Ready**: MSI installer, signed binaries, and package manager support (Chocolatey, WinGet, Evergreen).
-- 🎨 **Personalized Experience**: Available in 16+ languages, with customizable light/dark themes and accent colors.
+- 💎 **Open Source & Free** - No ads, no subscriptions, fully community-driven.
+- 🏢 **Enterprise-Ready** - MSI installer, signed binaries, and package manager support (Chocolatey, WinGet, Evergreen).
+- 🎨 **Personalized Experience** - Available in 16+ languages, with customizable light/dark themes and accent colors.
   <details>
     <summary>Theme preview</summary>
     <img alt="NETworkManager Light Theme" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Website/static/img/preview-light-theme.png?raw=true" />   
