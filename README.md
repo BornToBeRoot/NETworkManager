@@ -60,7 +60,7 @@
 
 ## 🚀 Why NETworkManager?
 
-NETworkManager is your go-to tool for simplifying network administration and troubleshooting. Whether you're a sysadmin maintaining multiple servers, a network engineer in a large enterprise, or an IT enthusiast running your home lab, NETworkManager provides a powerful suite of tools to manage and diagnose your network infrastructure efficiently.
+NETworkManager is your go-to tool for simplifying network administration and troubleshooting. Whether you're a sysadmin maintaining company network with multiple servers, a network engineer in a large enterprise, or an IT enthusiast running your home lab, NETworkManager provides a powerful suite of tools to manage and diagnose your network infrastructure efficiently.
 
 Here's why you'll love it:
 
@@ -108,6 +108,8 @@ Install via package managers for a hassle-free setup:
   Get-EvergreenApp -Name NETworkManager | Save-EvergreenApp -Path C:\Users\$env:Username\Downloads\
   ```
   Evergreen PowerShell module: <https://github.com/aaronparker/evergreen>
+
+> Pre-release versions with the latest features and fixes are (sometimes) available for testing on [GitHub Releases](https://github.com/BornToBeRoot/NETworkManager/releases).
 
 ## 💖 Donate
 
@@ -208,15 +210,19 @@ Star these projects to show your support!
 
 ## 🔒 Code Signing Policy
 
-NETworkManager binaries are signed using [SignPath.io](https://signpath.io/) and a free certificate from [SignPath Foundation](https://signpath.org/). Builds are generated on [AppVeyor](https://ci.appveyor.com/project/BornToBeRoot/networkmanager) from the [GitHub repository](https://github.com/BornToBeRoot/NETworkManager/blob/main/appveyor.yml), signed via webhook after maintainer approval, and uploaded to [GitHub Releases](https://github.com/BornToBeRoot/NETworkManager/releases).
+NETworkManager uses free code signing services from [SignPath.io](https://signpath.io/) and a free code signing certificate provided by the [SignPath Foundation](https://signpath.org/) to sign all official binaries and installers, ensuring the authenticity and integrity of your downloads.
+
+The binaries and installers are built on [AppVeyor](https://ci.appveyor.com/project/BornToBeRoot/networkmanager) directly from the [GitHub repository](https://github.com/BornToBeRoot/NETworkManager/blob/main/appveyor.yml). After each build, the artifacts are automatically sent to [SignPath.io](https://signpath.io/) via webhook, where they are signed following manual approval by the maintainer. Once signed, the binaries are uploaded to the [GitHub releases page](https://github.com/BornToBeRoot/NETworkManager/releases).
 
 ## 🔐 Privacy Policy
 
-Your privacy matters. NETworkManager does not transfer data unless explicitly requested. Optional services (configurable at startup or in settings) include:
+Your privacy matters. NETworkManager will not transfer any information to other networked systems unless specifically requested by the user or the person installing or operating it.
 
-- [api.github.com](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement) - Check for updates.
-- [ipify.org](https://www.ipify.org/) - Retrieve public IP.
-- [ip-api.com](https://ip-api.com/docs/legal) - Network information (e.g., geolocation, ISP).
+NETworManager has integrated some optional third-party services to enhance functionality. You can choose to enable or disable these services at the first startup or later in the settings:
+
+- [api.github.com](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement) - Check for application updates.
+- [ipify.org](https://www.ipify.org/) - Retrieve the public IP address used by the client.
+- [ip-api.com](https://ip-api.com/docs/legal) - Retrieve network information (e.g., geolocation, ISP, DNS resolver) used by the client.
 
 ## 📝 License
 
