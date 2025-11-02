@@ -111,7 +111,7 @@ Install via package managers for a hassle-free setup:
 
 ## 💖 Donate
 
-NETworkManager is free, open source, and ad-free — developed in my spare time for you.
+NETworkManager is open source, free and without ads — developed in my spare time for you.
 
 If you find it useful, here are ways to support the project:
 
