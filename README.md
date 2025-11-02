@@ -54,7 +54,9 @@
   </p>
 </div>
 
-<img alt="NETworkManager Preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Website/static/img/preview.gif?raw=true" />
+<img alt="NETworkManager Preview - Features" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Website/static/img/preview-features.gif?raw=true" />
+
+<img alt="NETworkManager Preview - Light Theme" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Website/static/img/preview-light-theme.png?raw=true" />
 
 ## 📦 Download
 

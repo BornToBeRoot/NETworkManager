@@ -11,7 +11,7 @@ In this version, the code that handles theming has been completely rewritten, pr
 
 The light theme has already received several improvements to enhance readability, and more adjustments are planned for future releases based on user feedback. So please don’t hesitate to share your thoughts on the [GitHub issue tracker](https://github.com/BornToBeRoot/NETworkManager/issues).
 
-![Light theme preview](./light-theme-preview.png)
+![Preview - Light theme](./preview-light-theme.png)
 
 <!-- truncate -->
 
