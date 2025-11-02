@@ -37,11 +37,11 @@ If you have any suggestions for new features, please submit a [feature request](
 
 ## Profiles
 
-Save your hosts with specific configurations in profiles and use them across all features. You can separate them in different profile files for each environment (e.g. work, home, customer, etc.) and encrypt them with a master password to protect your sensitive data.
+Organize your hosts and networks with specific configurations in profiles and use them seamless across all features. You can separate them in different profile files for each environment (e.g. work, home, customer, etc.) and encrypt them with a master password to protect your sensitive data and credentials.
 
 ## Languages
 
-Thanks to the community, NETworkManager is available in more than 15 [languages](https://app.transifex.com/BornToBeRoot/NETworkManager/dashboard/). If you would like to help with the translation and improve it, you can join the translation team on [Transifex](https://app.transifex.com/BornToBeRoot/NETworkManager/dashboard/).
+Thanks to the community, NETworkManager is available in more than 16 [languages](https://app.transifex.com/BornToBeRoot/NETworkManager/dashboard/). If you would like to help with the translation and improve it, you can join the translation team on [Transifex](https://app.transifex.com/BornToBeRoot/NETworkManager/dashboard/).
 
 New languages must be requested on GitHub via a [feature request](https://github.com/BornToBeRoot/NETworkManager/issues/new/choose) before you can join the translation team and start translating.
 
