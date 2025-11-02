@@ -54,7 +54,7 @@
     </a>
   </p>
   <p>
-    <a href="#-features">Features</a> • <a href="#-download">Download</a> • <a href="#-donate">Donate</a> • <a href="#-changelog">Changelog</a> • <a href="#-documentation">Documentation</a> • <a href="#-contributing">Contributing</a> • <a href="#-build">Build</a> • <a href="#-license">License</a>
+    <a href="#-download">Download</a> • <a href="#-donate">Donate</a> • <a href="#-changelog">Changelog</a> • <a href="#-documentation">Documentation</a> • <a href="#-contributing">Contributing</a> • <a href="#-build">Build</a> • <a href="#-thanks">Thanks</a> • <a href="#-license">License</a>
   </p>
 </div>
 
