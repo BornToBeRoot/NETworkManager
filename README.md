@@ -190,19 +190,19 @@ A huge thank you to our supporters and contributors who make NETworkManager poss
   - [Transifex](https://www.transifex.com/) - Localization platform.
 
 - **Libraries**:
-  - [#SNMP Library](https://github.com/lextudio/sharpsnmplib) - SNMP library for .NET
+  - [#SNMP Library](https://github.com/lextudio/sharpsnmplib) - SNMP library for .NET.
   - [AirspaceFixer](https://github.com/chris84948/AirspaceFixer) - AirspacePanel fixes all Airspace issues with WPF-hosted Winforms.
-  - [ControlzEx](https://github.com/ControlzEx/ControlzEx) - Shared Controlz for WPF and more
-  - [DnsClient.NET](https://github.com/MichaCo/DnsClient.NET) - Powerful, high-performance open-source library for DNS lookups
+  - [ControlzEx](https://github.com/ControlzEx/ControlzEx) - Shared Controlz for WPF and more.
+  - [DnsClient.NET](https://github.com/MichaCo/DnsClient.NET) - Powerful, high-performance open-source library for DNS lookups.
   - [Docusaurus](https://docusaurus.io/) - Easy to maintain open source documentation websites.
-  - [Dragablz](https://dragablz.net/) - Tearable TabControl for WPF
-  - [GongSolutions.Wpf.DragDrop](https://github.com/punker76/gong-wpf-dragdrop) - An easy to use drag'n'drop framework for WPF
-  - [IPNetwork](https://github.com/lduchosal/ipnetwork) - .NET library for complex network, IP, and subnet calculations
-  - [LoadingIndicators.WPF](https://github.com/zeluisping/LoadingIndicators.WPF) - A collection of loading indicators for WPF
-  - [MahApps.Metro](https://mahapps.com/) - UI toolkit for WPF applications
-  - [MahApps.Metro.IconPacks](https://github.com/MahApps/MahApps.Metro.IconPacks) - Awesome icon packs for WPF and UWP in one library
-  - [NetBeauty2](https://github.com/nulastudio/NetBeauty2) - Move .NET app runtime components and dependencies into a sub-directory
-  - [PSDiscoveryProtocol](https://github.com/lahell/PSDiscoveryProtocol) - PowerShell module for LLDP/CDP discovery
+  - [Dragablz](https://dragablz.net/) - Tearable TabControl for WPF.
+  - [GongSolutions.Wpf.DragDrop](https://github.com/punker76/gong-wpf-dragdrop) - An easy to use drag'n'drop framework for WPF.
+  - [IPNetwork](https://github.com/lduchosal/ipnetwork) - .NET library for complex network, IP, and subnet calculations.
+  - [LoadingIndicators.WPF](https://github.com/zeluisping/LoadingIndicators.WPF) - A collection of loading indicators for WPF.
+  - [MahApps.Metro](https://mahapps.com/) - UI toolkit for WPF applications.
+  - [MahApps.Metro.IconPacks](https://github.com/MahApps/MahApps.Metro.IconPacks) - Awesome icon packs for WPF and UWP in one library.
+  - [NetBeauty2](https://github.com/nulastudio/NetBeauty2) - Move .NET app runtime components and dependencies into a sub-directory.
+  - [PSDiscoveryProtocol](https://github.com/lahell/PSDiscoveryProtocol) - PowerShell module for LLDP/CDP discovery.
 
 Star these projects to show your support!
 
