@@ -6,7 +6,7 @@ sidebar_position: 9
 
 With **PowerShell** you can launch PowerShell consoles locally or connect to remote computers using [PowerShell Remoting](https://learn.microsoft.com/en-us/powershell/scripting/learn/ps101/08-powershell-remoting). You can also execute command-line applications such as `wsl`, `k9s`, or any other tools typically accessible from a PowerShell session. In addition, you can run PowerShell scripts directly within the console.
 
-The integration of PuTTY with NETworkManger supports tabs and profiles for hosts (and tools). You can launch the console / establish a connection via a profile (double-click, Enter key or right-click `Connect`) or directly via the [connection](#connect) dialog.
+The integration of PowerShell with NETworkManger supports tabs and profiles for hosts (and tools). You can launch the console / establish a connection via a profile (double-click, Enter key or right-click `Connect`) or directly via the [connection](#connect) dialog.
 
 :::info
 
