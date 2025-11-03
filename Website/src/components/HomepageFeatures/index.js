@@ -4,13 +4,14 @@ import styles from "./styles.module.css";
 
 const FeatureList = [
   {
-    title: "Network Analysis",
+    title: "Unified Experience",
     Svg: require("@site/static/img/undraw_connected_world_wuay.svg").default,
     description: (
       <>
-        Analyze your network and gather detailed information using built-in
-        tools such as the WiFi Analyzer, IP Scanner, Port Scanner, Traceroute,
-        DNS Lookup, Ping Monitor, LLDP Capture, and many more.
+        All your essential network tools in one sleek interface — no more
+        juggling apps. Perform in-depth network diagnostics with WiFi Analyzer,
+        IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup,
+        LLDP/CDP Capture, and many more.
       </>
     ),
   },
@@ -19,42 +20,41 @@ const FeatureList = [
     Svg: require("@site/static/img/undraw_server_cluster_jwwq.svg").default,
     description: (
       <>
-        Connect to remote systems and manage your network and server
-        infrastructure with integrated clients such as Remote Desktop (RDP),
-        PuTTY (SSH, Telnet, Serial), PowerShell (WinRM, WSL, Custom Tools),
-        TigerVNC (VNC), and AWS SSM.
+        Connect to remote systems seamlessly via RDP, PuTTY (SSH, Telnet,
+        Serial), PowerShell (WinRM), TigerVNC (VNC), or AWS Session Manager.
+        Manage your network and server infrastructure efficiently.
       </>
     ),
   },
   {
-    title: "Profile Management",
+    title: "Secure Profiles",
     Svg: require("@site/static/img/undraw_personal_settings_re_i6w4.svg")
       .default,
     description: (
       <>
-        Save hosts and networks with custom configurations in encrypted 
-        profile files to protect sensitive data, organize them by customers
-        or environments, and use them seamlessly across features.        
+        Organize hosts and networks in encrypted profiles with seamless access
+        across all features. Protect sensitive data while maintaining easy
+        access to your infrastructure.
       </>
     ),
   },
   {
-    title: "Effortless Troubleshooting",
+    title: "Enterprise-Ready",
     Svg: require("@site/static/img/undraw_server_down_s-4-lk.svg").default,
     description: (
       <>
-        Diagnose and resolve issues effectively with a comprehensive suite of
-        tools within a unified application.
+        MSI installer, signed binaries, and support for package managers like
+        Chocolatey, Evergreen, and WinGet. Built for professional environments.
       </>
     ),
-  },  
+  },
   {
-    title: "Open Source",
+    title: "Open Source & Free",
     Svg: require("@site/static/img/undraw_version_control_re_mg66.svg").default,
     description: (
       <>
-        NETworkManager is fully open source on GitHub. Review the code, build it
-        yourself, or contribute to make it even better.
+        No ads, no subscriptions, fully community-driven. Review the code,
+        build it yourself, or contribute to make it even better.
       </>
     ),
   },
