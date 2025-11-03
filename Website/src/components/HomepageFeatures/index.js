@@ -32,9 +32,9 @@ const FeatureList = [
       .default,
     description: (
       <>
-        Organize hosts and networks in encrypted profiles with seamless access
-        across all features. Protect sensitive data while maintaining easy
-        access to your infrastructure.
+        Organize hosts and networks in encrypted profiles for seamless access
+        across all features while protecting sensitive data and maintaining
+        easy access to your infrastructure.
       </>
     ),
   },
@@ -43,8 +43,9 @@ const FeatureList = [
     Svg: require("@site/static/img/undraw_server_down_s-4-lk.svg").default,
     description: (
       <>
-        MSI installer, signed binaries, and support for package managers like
-        Chocolatey, Evergreen, and WinGet. Built for professional environments.
+        Professional deployment ready with MSI installer, signed binaries, and
+        package manager support (Chocolatey, Evergreen, WinGet). Built for
+        enterprise environments.
       </>
     ),
   },
