@@ -1,14 +1,12 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Data;
-using System.Windows.Input;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Settings;
-using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
-public class PuTTYConnectViewModel : ViewModelBase
+public class PuTTYConnectViewModel : ConnectDialogViewModelBase<PuTTYConnectViewModel>
 {
     private string _additionalCommandLine;
 
@@ -41,10 +39,8 @@ public class PuTTYConnectViewModel : ViewModelBase
 
     public PuTTYConnectViewModel(Action<PuTTYConnectViewModel> connectCommand,
         Action<PuTTYConnectViewModel> cancelHandler, string host = null)
+        : base(connectCommand, cancelHandler)
     {
-        ConnectCommand = new RelayCommand(_ => connectCommand(this));
-        CancelCommand = new RelayCommand(_ => cancelHandler(this));
-
         if (!string.IsNullOrEmpty(host))
             Host = host;
 
@@ -60,9 +56,7 @@ public class PuTTYConnectViewModel : ViewModelBase
         LoadSettings();
     }
 
-    public ICommand ConnectCommand { get; }
-
-    public ICommand CancelCommand { get; }
+    // Commands are inherited from ConnectDialogViewModelBase
 
     public ConnectionMode ConnectionMode
     {

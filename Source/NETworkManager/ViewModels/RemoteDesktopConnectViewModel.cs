@@ -4,11 +4,10 @@ using System;
 using System.ComponentModel;
 using System.Security;
 using System.Windows.Data;
-using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
-public class RemoteDesktopConnectViewModel : ViewModelBase
+public class RemoteDesktopConnectViewModel : ConnectDialogViewModelBase<RemoteDesktopConnectViewModel>
 {
     #region Variables
     private bool _connectAs;
@@ -16,14 +15,7 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
     public bool ConnectAs
     {
         get => _connectAs;
-        set
-        {
-            if (value == _connectAs)
-                return;
-
-            _connectAs = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _connectAs, value);
     }
 
     private string _name;
@@ -31,14 +23,7 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
     public string Name
     {
         get => _name;
-        set
-        {
-            if (value == _name)
-                return;
-
-            _name = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _name, value);
     }
 
     private string _host;
@@ -46,14 +31,7 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
     public string Host
     {
         get => _host;
-        set
-        {
-            if (value == _host)
-                return;
-
-            _host = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _host, value);
     }
 
     public ICollectionView HostHistoryView { get; }
@@ -63,14 +41,7 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
     public bool UseCredentials
     {
         get => _useCredentials;
-        set
-        {
-            if (value == _useCredentials)
-                return;
-
-            _useCredentials = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _useCredentials, value);
     }
 
     private string _domain;
@@ -78,6 +49,8 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
     public string Domain
     {
         get => _domain;
+        set => SetProperty(ref _domain, value);
+    }
         set
         {
             if (value == _domain)
@@ -93,14 +66,7 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
     public string Username
     {
         get => _username;
-        set
-        {
-            if (value == _username)
-                return;
-
-            _username = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _username, value);
     }
 
     private bool _isPasswordEmpty = true;
@@ -108,14 +74,7 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
     public bool IsPasswordEmpty
     {
         get => _isPasswordEmpty;
-        set
-        {
-            if (value == _isPasswordEmpty)
-                return;
-
-            _isPasswordEmpty = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _isPasswordEmpty, value);
     }
 
     private SecureString _password = new();
@@ -141,14 +100,7 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
     public bool AdminSession
     {
         get => _adminSession;
-        set
-        {
-            if (value == _adminSession)
-                return;
-
-            _adminSession = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _adminSession, value);
     }
     #endregion
 
@@ -156,10 +108,8 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
 
     public RemoteDesktopConnectViewModel(Action<RemoteDesktopConnectViewModel> connectCommand,
         Action<RemoteDesktopConnectViewModel> cancelHandler, (string Name, string Host, bool AdminSession)? connectAsOptions = null)
+        : base(connectCommand, cancelHandler)
     {
-        ConnectCommand = new RelayCommand(_ => connectCommand(this));
-        CancelCommand = new RelayCommand(_ => cancelHandler(this));
-
         if (connectAsOptions == null)
         {
             HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.RemoteDesktop_HostHistory);
@@ -180,8 +130,7 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
     #endregion
 
     #region Commands
-
-    public ICommand ConnectCommand { get; }
+    // Commands are inherited from ConnectDialogViewModelBase
 
     public ICommand CancelCommand { get; }
     #endregion
