@@ -100,17 +100,7 @@ public static class IPv4Address
     /// <returns>IP addresses as string.</returns>
     public static object ConvertIPAddressListToString(IEnumerable<IPAddress> ipAddresses, string delimiter = null)
     {
-        var result = string.Empty;
-
-        foreach (var ipAddr in ipAddresses)
-        {
-            if (!string.IsNullOrEmpty(result))
-                result += delimiter ?? Environment.NewLine;
-
-            result += ipAddr.ToString();
-        }
-
-        return result;
+        return string.Join(delimiter ?? Environment.NewLine, ipAddresses);
     }
 
     /// <summary>
@@ -121,16 +111,7 @@ public static class IPv4Address
     public static object ConvertIPAddressWithSubnetmaskListToString(Tuple<IPAddress, IPAddress>[] ipAddresses,
         string delimiter = null)
     {
-        var result = string.Empty;
-
-        foreach (var ipAddr in ipAddresses)
-        {
-            if (!string.IsNullOrEmpty(result))
-                result += delimiter ?? Environment.NewLine;
-
-            result += ipAddr.Item1 + "/" + Subnetmask.ConvertSubnetmaskToCidr(ipAddr.Item2);
-        }
-
-        return result;
+        return string.Join(delimiter ?? Environment.NewLine,
+            ipAddresses.Select(ipAddr => $"{ipAddr.Item1}/{Subnetmask.ConvertSubnetmaskToCidr(ipAddr.Item2)}"));
     }
 }

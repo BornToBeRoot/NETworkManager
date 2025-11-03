@@ -28,10 +28,7 @@ public static class Subnetmask
 
     public static string ConvertCidrToSubnetmask(int cidr)
     {
-        var bits = string.Empty;
-
-        for (var i = 0; i < cidr; i++)
-            bits += "1";
+        var bits = new string('1', cidr);
 
         return IPv4Address.ToHumanString(bits.PadRight(32, '0'));
     }
