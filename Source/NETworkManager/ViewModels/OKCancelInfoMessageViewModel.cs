@@ -1,26 +1,19 @@
-﻿using NETworkManager.Utilities;
-using System;
-using System.Windows.Input;
+﻿using System;
 
 namespace NETworkManager.ViewModels;
 
-public class OKCancelInfoMessageViewModel : ViewModelBase
+public class OKCancelInfoMessageViewModel : DialogViewModelBase<OKCancelInfoMessageViewModel>
 {
     public OKCancelInfoMessageViewModel(Action<OKCancelInfoMessageViewModel> okCommand,
         Action<OKCancelInfoMessageViewModel> cancelHandler, string message, string okButtonText = null, string cancelButtonText = null, ChildWindowIcon icon = ChildWindowIcon.Info)
+        : base(okCommand, cancelHandler)
     {
-        OKCommand = new RelayCommand(_ => okCommand(this));
-        CancelCommand = new RelayCommand(_ => cancelHandler(this));
-
         Message = message;
 
         OKButtonText = okButtonText ?? Localization.Resources.Strings.OK;
         CancelButtonText = cancelButtonText ?? Localization.Resources.Strings.Cancel;
+        Icon = icon;
     }
-
-    public ICommand OKCommand { get; }
-
-    public ICommand CancelCommand { get; }
 
     private readonly string _message;
     public string Message

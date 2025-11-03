@@ -1,14 +1,12 @@
 ﻿using NETworkManager.Models.HostsFileEditor;
-using NETworkManager.Utilities;
 using System;
-using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
 /// <summary>
 /// ViewModel for adding or editing a hosts file entry in the HostsFileEditor dialog.
 /// </summary>
-public class HostsFileEditorEntryViewModel : ViewModelBase
+public class HostsFileEditorEntryViewModel : DialogViewModelBase<HostsFileEditorEntryViewModel>
 {
     /// <summary>
     /// Creates a new instance of <see cref="HostsFileEditorEntryViewModel" /> for adding or
@@ -19,10 +17,8 @@ public class HostsFileEditorEntryViewModel : ViewModelBase
     /// <param name="entry">Entry to edit, if null a new entry will be created.</param>
     public HostsFileEditorEntryViewModel(Action<HostsFileEditorEntryViewModel> okCommand,
         Action<HostsFileEditorEntryViewModel> cancelHandler, HostsFileEntry entry = null)
+        : base(okCommand, cancelHandler)
     {
-        OKCommand = new RelayCommand(_ => okCommand(this));
-        CancelCommand = new RelayCommand(_ => cancelHandler(this));
-
         Entry = entry;
 
         // Add entry
@@ -40,16 +36,6 @@ public class HostsFileEditorEntryViewModel : ViewModelBase
         }
     }
 
-    /// <summary>
-    /// OK command to save the entry.
-    /// </summary>
-    public ICommand OKCommand { get; }
-
-    /// <summary>
-    /// Cancel command to discard the entry.
-    /// </summary>
-    public ICommand CancelCommand { get; }
-
     public HostsFileEntry Entry { get; } = null;
 
     /// <summary>
@@ -63,14 +49,7 @@ public class HostsFileEditorEntryViewModel : ViewModelBase
     public bool IsEnabled
     {
         get => _isEnabled;
-        set
-        {
-            if (value == _isEnabled)
-                return;
-
-            _isEnabled = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _isEnabled, value);
     }
 
     /// <summary>
@@ -84,14 +63,7 @@ public class HostsFileEditorEntryViewModel : ViewModelBase
     public string IPAddress
     {
         get => _ipAddress;
-        set
-        {
-            if (value == _ipAddress)
-                return;
-
-            _ipAddress = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _ipAddress, value);
     }
 
     /// <summary>
@@ -106,14 +78,7 @@ public class HostsFileEditorEntryViewModel : ViewModelBase
     public string Hostname
     {
         get => _hostname;
-        set
-        {
-            if (value == _hostname)
-                return;
-
-            _hostname = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _hostname, value);
     }
 
     /// <summary>
@@ -127,13 +92,6 @@ public class HostsFileEditorEntryViewModel : ViewModelBase
     public string Comment
     {
         get => _comment;
-        set
-        {
-            if (value == _comment)
-                return;
-
-            _comment = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _comment, value);
     }
 }
