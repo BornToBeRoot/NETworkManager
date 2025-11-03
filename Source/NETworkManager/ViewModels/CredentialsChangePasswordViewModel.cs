@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Security;
-using System.Windows.Input;
 using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
-public class CredentialsChangePasswordViewModel : ViewModelBase
+public class CredentialsChangePasswordViewModel : DialogViewModelBase<CredentialsChangePasswordViewModel>
 {
     /// <summary>
     ///     Private variable for <see cref="IsPasswordEmpty" />.
@@ -40,20 +39,9 @@ public class CredentialsChangePasswordViewModel : ViewModelBase
     /// <param name="cancelHandler"><see cref="CancelCommand" /> which is executed on cancel click.</param>
     public CredentialsChangePasswordViewModel(Action<CredentialsChangePasswordViewModel> okCommand,
         Action<CredentialsChangePasswordViewModel> cancelHandler)
+        : base(okCommand, cancelHandler)
     {
-        OKCommand = new RelayCommand(_ => okCommand(this));
-        CancelCommand = new RelayCommand(_ => cancelHandler(this));
     }
-
-    /// <summary>
-    ///     Command which is called when the OK button is clicked.
-    /// </summary>
-    public ICommand OKCommand { get; }
-
-    /// <summary>
-    ///     Command which is called when the cancel button is clicked.
-    /// </summary>
-    public ICommand CancelCommand { get; }
 
     /// <summary>
     ///     Password as <see cref="SecureString" />.
@@ -118,14 +106,7 @@ public class CredentialsChangePasswordViewModel : ViewModelBase
     public bool IsPasswordEmpty
     {
         get => _isPasswordEmpty;
-        set
-        {
-            if (value == _isPasswordEmpty)
-                return;
-
-            _isPasswordEmpty = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _isPasswordEmpty, value);
     }
 
     /// <summary>
@@ -134,14 +115,7 @@ public class CredentialsChangePasswordViewModel : ViewModelBase
     public bool IsRepeatedPasswordEqual
     {
         get => _isRepeatedPasswordEqual;
-        set
-        {
-            if (value == _isRepeatedPasswordEqual)
-                return;
-
-            _isRepeatedPasswordEqual = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _isRepeatedPasswordEqual, value);
     }
 
     /// <summary>

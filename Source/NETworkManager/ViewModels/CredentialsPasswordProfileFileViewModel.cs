@@ -1,11 +1,9 @@
-﻿using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Security;
-using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
-public class CredentialsPasswordProfileFileViewModel : ViewModelBase
+public class CredentialsPasswordProfileFileViewModel : DialogViewModelBase<CredentialsPasswordProfileFileViewModel>
 {
     /// <summary>
     ///     Private variable for <see cref="IsPasswordEmpty" />.
@@ -38,23 +36,11 @@ public class CredentialsPasswordProfileFileViewModel : ViewModelBase
     public CredentialsPasswordProfileFileViewModel(Action<CredentialsPasswordProfileFileViewModel> okCommand,
         Action<CredentialsPasswordProfileFileViewModel> cancelHandler, string profileName,
         bool showWrongPassword = false)
+        : base(okCommand, cancelHandler)
     {
-        OKCommand = new RelayCommand(_ => okCommand(this));
-        CancelCommand = new RelayCommand(_ => cancelHandler(this));
-
         ProfileName = profileName;
         ShowWrongPassword = showWrongPassword;
     }
-
-    /// <summary>
-    ///     Command which is called when the OK button is clicked.
-    /// </summary>
-    public ICommand OKCommand { get; }
-
-    /// <summary>
-    ///     Command which is called when the cancel button is clicked.
-    /// </summary>
-    public ICommand CancelCommand { get; }
 
     /// <summary>
     ///     Name of the profile file.
@@ -62,14 +48,7 @@ public class CredentialsPasswordProfileFileViewModel : ViewModelBase
     public string ProfileName
     {
         get => _profileName;
-        set
-        {
-            if (value == _profileName)
-                return;
-
-            _profileName = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _profileName, value);
     }
 
     /// <summary>
@@ -78,14 +57,7 @@ public class CredentialsPasswordProfileFileViewModel : ViewModelBase
     public bool ShowWrongPassword
     {
         get => _showWrongPassword;
-        set
-        {
-            if (value == _showWrongPassword)
-                return;
-
-            _showWrongPassword = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _showWrongPassword, value);
     }
 
     /// <summary>
@@ -113,14 +85,7 @@ public class CredentialsPasswordProfileFileViewModel : ViewModelBase
     public bool IsPasswordEmpty
     {
         get => _isPasswordEmpty;
-        set
-        {
-            if (value == _isPasswordEmpty)
-                return;
-
-            _isPasswordEmpty = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _isPasswordEmpty, value);
     }
 
     /// <summary>

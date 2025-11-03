@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Security;
-using System.Windows.Input;
-using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
-public class CredentialsPasswordViewModel : ViewModelBase
+public class CredentialsPasswordViewModel : DialogViewModelBase<CredentialsPasswordViewModel>
 {
     /// <summary>
     ///     Private variable for <see cref="IsPasswordEmpty" />.
@@ -25,20 +23,9 @@ public class CredentialsPasswordViewModel : ViewModelBase
     /// <param name="cancelHandler"><see cref="CancelCommand" /> which is executed on cancel click.</param>
     public CredentialsPasswordViewModel(Action<CredentialsPasswordViewModel> okCommand,
         Action<CredentialsPasswordViewModel> cancelHandler)
+        : base(okCommand, cancelHandler)
     {
-        OKCommand = new RelayCommand(_ => okCommand(this));
-        CancelCommand = new RelayCommand(_ => cancelHandler(this));
     }
-
-    /// <summary>
-    ///     Command which is called when the OK button is clicked.
-    /// </summary>
-    public ICommand OKCommand { get; }
-
-    /// <summary>
-    ///     Command which is called when the cancel button is clicked.
-    /// </summary>
-    public ICommand CancelCommand { get; }
 
     /// <summary>
     ///     Password as <see cref="SecureString" />.
@@ -65,14 +52,7 @@ public class CredentialsPasswordViewModel : ViewModelBase
     public bool IsPasswordEmpty
     {
         get => _isPasswordEmpty;
-        set
-        {
-            if (value == _isPasswordEmpty)
-                return;
-
-            _isPasswordEmpty = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _isPasswordEmpty, value);
     }
 
     /// <summary>
