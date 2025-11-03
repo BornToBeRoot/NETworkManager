@@ -4,24 +4,20 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
-using System.Windows.Input;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
-using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
-public class PortProfilesViewModel : ViewModelBase
+public class PortProfilesViewModel : DialogViewModelBase<PortProfilesViewModel>
 {
     private string _search;
 
     private IList _selectedPortProfiles = new ArrayList();
 
     public PortProfilesViewModel(Action<PortProfilesViewModel> okCommand, Action<PortProfilesViewModel> cancelHandler)
+        : base(okCommand, cancelHandler)
     {
-        OKCommand = new RelayCommand(_ => okCommand(this));
-        CancelCommand = new RelayCommand(_ => cancelHandler(this));
-
         PortProfiles = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_PortProfiles);
         PortProfiles.SortDescriptions.Add(
             new SortDescription(nameof(PortProfileInfo.Name), ListSortDirection.Ascending));
@@ -40,10 +36,6 @@ public class PortProfilesViewModel : ViewModelBase
                    info.Ports.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
     }
-
-    public ICommand OKCommand { get; }
-
-    public ICommand CancelCommand { get; }
 
     public string Search
     {

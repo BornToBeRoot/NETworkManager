@@ -43,14 +43,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     public string Host
     {
         get => _host;
-        set
-        {
-            if (value == _host)
-                return;
-
-            _host = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _host, value);
     }
 
     public ICollectionView HostHistoryView { get; }
@@ -60,14 +53,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     public bool IsRunning
     {
         get => _isRunning;
-        set
-        {
-            if (value == _isRunning)
-                return;
-
-            _isRunning = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _isRunning, value);
     }
 
     private bool _isCanceling;
@@ -75,14 +61,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     public bool IsCanceling
     {
         get => _isCanceling;
-        set
-        {
-            if (value == _isCanceling)
-                return;
-
-            _isCanceling = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _isCanceling, value);
     }
 
     private bool _isStatusMessageDisplayed;
@@ -90,14 +69,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     public bool IsStatusMessageDisplayed
     {
         get => _isStatusMessageDisplayed;
-        set
-        {
-            if (value == _isStatusMessageDisplayed)
-                return;
-
-            _isStatusMessageDisplayed = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _isStatusMessageDisplayed, value);
     }
 
     private string _statusMessage;
@@ -136,14 +108,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     public PingMonitorView SelectedHost
     {
         get => _selectedHost;
-        set
-        {
-            if (value == _selectedHost)
-                return;
-
-            _selectedHost = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _selectedHost, value);
     }
 
     #region Profiles
@@ -153,14 +118,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     public ICollectionView Profiles
     {
         get => _profiles;
-        private set
-        {
-            if (value == _profiles)
-                return;
-
-            _profiles = value;
-            OnPropertyChanged();
-        }
+        private set => SetProperty(ref _profiles, value);
     }
 
     private ProfileInfo _selectedProfile;
@@ -168,14 +126,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     public ProfileInfo SelectedProfile
     {
         get => _selectedProfile;
-        set
-        {
-            if (value == _selectedProfile)
-                return;
-
-            _selectedProfile = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _selectedProfile, value);
     }
 
     private string _search;
@@ -206,14 +157,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     public bool IsSearching
     {
         get => _isSearching;
-        set
-        {
-            if (value == _isSearching)
-                return;
-
-            _isSearching = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _isSearching, value);
     }
 
     private bool _profileFilterIsOpen;
@@ -221,10 +165,8 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     public bool ProfileFilterIsOpen
     {
         get => _profileFilterIsOpen;
-        set
-        {
-            if (value == _profileFilterIsOpen)
-                return;
+        set => SetProperty(ref _profileFilterIsOpen, value);
+    }
 
             _profileFilterIsOpen = value;
             OnPropertyChanged();

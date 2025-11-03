@@ -1,14 +1,12 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Data;
-using System.Windows.Input;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
-using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
-public class SNMPOIDProfilesViewModel : ViewModelBase
+public class SNMPOIDProfilesViewModel : DialogViewModelBase<SNMPOIDProfilesViewModel>
 {
     private string _search;
 
@@ -16,10 +14,8 @@ public class SNMPOIDProfilesViewModel : ViewModelBase
 
     public SNMPOIDProfilesViewModel(Action<SNMPOIDProfilesViewModel> okCommand,
         Action<SNMPOIDProfilesViewModel> cancelHandler)
+        : base(okCommand, cancelHandler)
     {
-        OKCommand = new RelayCommand(_ => okCommand(this));
-        CancelCommand = new RelayCommand(_ => cancelHandler(this));
-
         OIDProfiles = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_OidProfiles);
         OIDProfiles.SortDescriptions.Add(new SortDescription(nameof(SNMPOIDProfileInfo.Name),
             ListSortDirection.Ascending));
@@ -38,9 +34,6 @@ public class SNMPOIDProfilesViewModel : ViewModelBase
                    info.OID.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
     }
-
-    public ICommand OKCommand { get; }
-    public ICommand CancelCommand { get; }
 
     public string Search
     {
