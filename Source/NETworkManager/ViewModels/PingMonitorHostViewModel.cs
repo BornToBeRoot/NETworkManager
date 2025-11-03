@@ -168,11 +168,6 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         set => SetProperty(ref _profileFilterIsOpen, value);
     }
 
-            _profileFilterIsOpen = value;
-            OnPropertyChanged();
-        }
-    }
-
     public ICollectionView ProfileFilterTagsView { get; }
 
     private ObservableCollection<ProfileFilterTagsInfo> ProfileFilterTags { get; } = [];

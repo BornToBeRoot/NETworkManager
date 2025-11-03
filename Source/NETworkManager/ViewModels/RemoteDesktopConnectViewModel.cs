@@ -51,15 +51,6 @@ public class RemoteDesktopConnectViewModel : ConnectDialogViewModelBase<RemoteDe
         get => _domain;
         set => SetProperty(ref _domain, value);
     }
-        set
-        {
-            if (value == _domain)
-                return;
-
-            _domain = value;
-            OnPropertyChanged();
-        }
-    }
 
     private string _username;
 
@@ -131,8 +122,6 @@ public class RemoteDesktopConnectViewModel : ConnectDialogViewModelBase<RemoteDe
 
     #region Commands
     // Commands are inherited from ConnectDialogViewModelBase
-
-    public ICommand CancelCommand { get; }
     #endregion
 
     #region Methods
