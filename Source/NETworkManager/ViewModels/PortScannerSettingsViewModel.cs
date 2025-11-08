@@ -234,9 +234,9 @@ public class PortScannerSettingsViewModel : ViewModelBase
 
     private Task DeletePortProfile()
     {
-        var childWindow = new OKCancelInfoMessageChildWindow();
+        var childWindow = new OKCancelMessageChildWindow();
 
-        var childWindowViewModel = new OKCancelInfoMessageViewModel(_ =>
+        var childWindowViewModel = new OKCancelMessageViewModel(_ =>
             {
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
@@ -247,7 +247,7 @@ public class PortScannerSettingsViewModel : ViewModelBase
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
             },
-            Strings.DeletePortProfileMessage, Strings.Delete);
+            Strings.DeletePortProfileMessage, ChildWindowIcon.Info, Strings.Delete);
 
         childWindow.Title = Strings.DeletePortProfile;
 

@@ -187,9 +187,9 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
 
     private Task DeleteServer()
     {
-        var childWindow = new OKCancelInfoMessageChildWindow();
+        var childWindow = new OKCancelMessageChildWindow();
 
-        var childWindowViewModel = new OKCancelInfoMessageViewModel(_ =>
+        var childWindowViewModel = new OKCancelMessageViewModel(_ =>
             {
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
@@ -200,7 +200,7 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
             },
-            Strings.DeleteSNTPServerMessage, Strings.Delete);
+            Strings.DeleteSNTPServerMessage, ChildWindowIcon.Info, Strings.Delete);
 
         childWindow.Title = Strings.DeleteSNTPServer;
 

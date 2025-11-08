@@ -3,9 +3,9 @@ using System.Windows.Threading;
 
 namespace NETworkManager.Views;
 
-public partial class OKCancelInfoMessageChildWindow
+public partial class OKCancelMessageChildWindow
 {
-    public OKCancelInfoMessageChildWindow()
+    public OKCancelMessageChildWindow()
     {
         InitializeComponent();
     }

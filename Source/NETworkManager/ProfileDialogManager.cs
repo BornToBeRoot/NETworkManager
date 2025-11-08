@@ -6,6 +6,7 @@ using NETworkManager.Models.Network;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Profiles;
+using NETworkManager.Utilities;
 using NETworkManager.ViewModels;
 using NETworkManager.Views;
 using System;
@@ -563,9 +564,9 @@ public static class ProfileDialogManager
     public static Task ShowDeleteProfileDialog(Window parentWindow, IProfileManagerMinimal viewModel,
         IList<ProfileInfo> profiles)
     {
-        var childWindow = new OKCancelInfoMessageChildWindow();
+        var childWindow = new OKCancelMessageChildWindow();
 
-        OKCancelInfoMessageViewModel childWindowViewModel = new(_ =>
+        OKCancelMessageViewModel childWindowViewModel = new(_ =>
             {
                 childWindow.IsOpen = false;
                 Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
@@ -581,6 +582,7 @@ public static class ProfileDialogManager
                 viewModel.OnProfileManagerDialogClose();
             },
                 profiles.Count == 1 ? Strings.DeleteProfileMessage : Strings.DeleteProfilesMessage,
+                Utilities.ChildWindowIcon.Info,
                 Strings.Delete
             );
 
@@ -665,9 +667,9 @@ public static class ProfileDialogManager
     public static Task ShowDeleteGroupDialog(Window parentWindow, IProfileManagerMinimal viewModel,
         GroupInfo group)
     {
-        var childWindow = new OKCancelInfoMessageChildWindow();
+        var childWindow = new OKCancelMessageChildWindow();
 
-        OKCancelInfoMessageViewModel childWindowViewModel = new(_ =>
+        OKCancelMessageViewModel childWindowViewModel = new(_ =>
         {
             childWindow.IsOpen = false;
             Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
@@ -683,6 +685,7 @@ public static class ProfileDialogManager
             viewModel.OnProfileManagerDialogClose();
         },
             Strings.DeleteGroupMessage,
+            ChildWindowIcon.Info, 
             Strings.Delete
         );
 

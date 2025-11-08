@@ -203,9 +203,9 @@ public class SNMPSettingsViewModel : ViewModelBase
 
     private Task DeleteOIDProfile()
     {
-        var childWindow = new OKCancelInfoMessageChildWindow();
+        var childWindow = new OKCancelMessageChildWindow();
 
-        var childWindowViewModel = new OKCancelInfoMessageViewModel(_ =>
+        var childWindowViewModel = new OKCancelMessageViewModel(_ =>
             {
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
@@ -216,7 +216,7 @@ public class SNMPSettingsViewModel : ViewModelBase
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
             },
-            Strings.DeleteOIDProfileMessage, Strings.Delete);
+            Strings.DeleteOIDProfileMessage, ChildWindowIcon.Info, Strings.Delete);
 
         childWindow.Title = Strings.DeleteOIDProfile;
 

@@ -391,9 +391,9 @@ public class HostsFileEditorViewModel : ViewModelBase
     {
         IsModifying = true;
 
-        var childWindow = new OKCancelInfoMessageChildWindow();
+        var childWindow = new OKCancelMessageChildWindow();
 
-        var childWindowViewModel = new OKCancelInfoMessageViewModel(async _ =>
+        var childWindowViewModel = new OKCancelMessageViewModel(async _ =>
             {
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
@@ -413,6 +413,7 @@ public class HostsFileEditorViewModel : ViewModelBase
             },
             string.Format(Strings.DeleteHostsFileEntryMessage, SelectedResult.IPAddress, SelectedResult.Hostname,
                 string.IsNullOrEmpty(SelectedResult.Comment) ? "" : $"# {SelectedResult.Comment}"),
+            ChildWindowIcon.Info,
             Strings.Delete
         );
 
@@ -452,7 +453,7 @@ public class HostsFileEditorViewModel : ViewModelBase
         {
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
-        }, message, Strings.OK, ChildWindowIcon.Error);
+        }, message, ChildWindowIcon.Error, Strings.OK);
 
         childWindow.Title = Strings.Error;
 
@@ -479,7 +480,7 @@ public class HostsFileEditorViewModel : ViewModelBase
             {
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
-            }, ex.Message, Strings.OK, ChildWindowIcon.Error);
+            }, ex.Message, ChildWindowIcon.Error, Strings.OK);
 
             childWindow.Title = Strings.Error;
 

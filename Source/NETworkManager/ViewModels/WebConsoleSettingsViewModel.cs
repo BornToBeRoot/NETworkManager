@@ -108,9 +108,9 @@ public class WebConsoleSettingsViewModel : ViewModelBase
 
     private Task DeleteBrowsingData()
     {
-        var childWindow = new OKCancelInfoMessageChildWindow();
+        var childWindow = new OKCancelMessageChildWindow();
 
-        var childWindowViewModel = new OKCancelInfoMessageViewModel(async _ =>
+        var childWindowViewModel = new OKCancelMessageViewModel(async _ =>
             {
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
@@ -132,6 +132,7 @@ public class WebConsoleSettingsViewModel : ViewModelBase
                 ConfigurationManager.Current.IsChildWindowOpen = false;
             },
             Strings.DeleteBrowsingDataMessage,
+            ChildWindowIcon.Info, 
             Strings.Delete
         );
 

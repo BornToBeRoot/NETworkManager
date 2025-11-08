@@ -6,7 +6,7 @@ namespace NETworkManager.ViewModels;
 
 public class OKMessageViewModel : ViewModelBase
 {
-    public OKMessageViewModel(Action<OKMessageViewModel> okCommand, string message, string okButtonText = null, ChildWindowIcon icon = ChildWindowIcon.Info)
+    public OKMessageViewModel(Action<OKMessageViewModel> okCommand, string message, ChildWindowIcon icon = ChildWindowIcon.Info, string okButtonText = null)
     {
         OKCommand = new RelayCommand(_ => okCommand(this));
 

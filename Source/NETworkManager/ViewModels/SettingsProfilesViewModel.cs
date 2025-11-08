@@ -140,39 +140,12 @@ public class SettingsProfilesViewModel : ViewModelBase
             .FirstOrDefault(p => p.Name.Equals(profileName, StringComparison.OrdinalIgnoreCase));
 
         // Ask to enable encryption for the new profile file
-        if (await ShowEnableEncryptionMessage())
+        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow, 
+            Strings.EnableEncryptionQuestion, 
+            Strings.EnableEncryptionForProfileFileMessage);
+
+        if (result)
             EnableEncryptionAction();
-    }
-
-    private async Task<bool> ShowEnableEncryptionMessage()
-    {
-        var result = false;
-
-        var childWindow = new OKCancelInfoMessageChildWindow();
-
-        var childWindowViewModel = new OKCancelInfoMessageViewModel(_ =>
-        {
-            childWindow.IsOpen = false;
-            ConfigurationManager.Current.IsChildWindowOpen = false;
-
-            result = true;
-        }, _ =>
-        {
-            childWindow.IsOpen = false;
-            ConfigurationManager.Current.IsChildWindowOpen = false;
-        },
-            Strings.EnableEncryptionForProfileFileMessage
-        );
-
-        childWindow.Title = Strings.EnableEncryptionQuestion;
-
-        childWindow.DataContext = childWindowViewModel;
-
-        ConfigurationManager.Current.IsChildWindowOpen = true;
-
-        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
-
-        return result;
     }
 
     public ICommand EditProfileFileCommand => new RelayCommand(async _ => await EditProfileFileAction().ConfigureAwait(false));
@@ -222,9 +195,9 @@ public class SettingsProfilesViewModel : ViewModelBase
 
     private Task DeleteProfileFileAction()
     {
-        var childWindow = new OKCancelInfoMessageChildWindow();
+        var childWindow = new OKCancelMessageChildWindow();
 
-        var childWindowViewModel = new OKCancelInfoMessageViewModel(_ =>
+        var childWindowViewModel = new OKCancelMessageViewModel(_ =>
             {
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
@@ -235,7 +208,7 @@ public class SettingsProfilesViewModel : ViewModelBase
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
             },
-           string.Format(Strings.DeleteProfileFileXMessage, SelectedProfileFile.Name), Strings.Delete);
+           string.Format(Strings.DeleteProfileFileXMessage, SelectedProfileFile.Name), ChildWindowIcon.Info, Strings.Delete);
 
         childWindow.Title = Strings.DeleteProfileFile;
 
@@ -289,9 +262,9 @@ public class SettingsProfilesViewModel : ViewModelBase
     {
         var result = false;
 
-        var childWindow = new OKCancelInfoMessageChildWindow();
+        var childWindow = new OKCancelMessageChildWindow();
 
-        var childWindowViewModel = new OKCancelInfoMessageViewModel(_ =>
+        var childWindowViewModel = new OKCancelMessageViewModel(_ =>
         {
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
@@ -391,11 +364,11 @@ public class SettingsProfilesViewModel : ViewModelBase
                     ChildWindowIcon.Error).ConfigureAwait(false);
             }
 
-            }, _ =>
-        {
-            childWindow.IsOpen = false;
-            ConfigurationManager.Current.IsChildWindowOpen = false;
-        });
+        }, _ =>
+    {
+        childWindow.IsOpen = false;
+        ConfigurationManager.Current.IsChildWindowOpen = false;
+    });
 
         childWindow.Title = Strings.MasterPassword;
 
@@ -404,7 +377,7 @@ public class SettingsProfilesViewModel : ViewModelBase
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
         return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
-    }    
+    }
 
     #endregion
 }

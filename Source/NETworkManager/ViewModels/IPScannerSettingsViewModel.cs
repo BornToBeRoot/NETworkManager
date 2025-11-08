@@ -387,9 +387,9 @@ public class IPScannerSettingsViewModel : ViewModelBase
 
     private Task DeleteCustomCommand()
     {
-        var childWindow = new OKCancelInfoMessageChildWindow();
+        var childWindow = new OKCancelMessageChildWindow();
 
-        var childWindowViewModel = new OKCancelInfoMessageViewModel(_ =>
+        var childWindowViewModel = new OKCancelMessageViewModel(_ =>
             {
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
@@ -401,6 +401,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
                 ConfigurationManager.Current.IsChildWindowOpen = false;
             },
                 Strings.DeleteCustomCommandMessage,
+                ChildWindowIcon.Info,
                 Strings.Delete
             );
 

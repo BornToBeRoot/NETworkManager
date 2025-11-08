@@ -359,9 +359,9 @@ public class DNSLookupSettingsViewModel : ViewModelBase
 
     private Task DeleteDNSServer()
     {
-        var childWindow = new OKCancelInfoMessageChildWindow();
+        var childWindow = new OKCancelMessageChildWindow();
 
-        var childWindowViewModel = new OKCancelInfoMessageViewModel(_ =>
+        var childWindowViewModel = new OKCancelMessageViewModel(_ =>
             {
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
@@ -373,6 +373,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
                 ConfigurationManager.Current.IsChildWindowOpen = false;
             },
                 Strings.DeleteDNSServerMessage,
+                ChildWindowIcon.Info,
                 Strings.Delete
             );
 

@@ -68,9 +68,9 @@ public class SettingsSettingsViewModel : ViewModelBase
 
     private Task ResetSettings()
     {
-        var childWindow = new OKCancelInfoMessageChildWindow();
+        var childWindow = new OKCancelMessageChildWindow();
 
-        var childWindowViewModel = new OKCancelInfoMessageViewModel(_ =>
+        var childWindowViewModel = new OKCancelMessageViewModel(_ =>
         {
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
@@ -86,9 +86,9 @@ public class SettingsSettingsViewModel : ViewModelBase
             ConfigurationManager.Current.IsChildWindowOpen = false;
         },
             Strings.SettingsAreResetAndApplicationWillBeRestartedMessage,
+            ChildWindowIcon.Question,
             Strings.Reset,
-            Strings.Cancel,
-            ChildWindowIcon.Question
+            Strings.Cancel            
         );
 
         childWindow.Title = Strings.ResetSettingsQuestion;
