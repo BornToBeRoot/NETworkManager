@@ -213,7 +213,7 @@ public class SettingsProfilesViewModel : ViewModelBase
     }
 
     public ICommand DeleteProfileFileCommand =>
-        new RelayCommand(_ => DeleteProfileFileAction().ConfigureAwait(false), DeleteProfileFile_CanExecute);
+        new RelayCommand(async _ => await DeleteProfileFileAction().ConfigureAwait(false), DeleteProfileFile_CanExecute);
 
     private bool DeleteProfileFile_CanExecute(object obj)
     {
@@ -361,18 +361,16 @@ public class SettingsProfilesViewModel : ViewModelBase
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
-    public ICommand DisableEncryptionCommand => new RelayCommand(_ => DisableEncryptionAction());
+    public ICommand DisableEncryptionCommand => new RelayCommand(async _ => await DisableEncryptionAction().ConfigureAwait(false));
 
-    private async void DisableEncryptionAction()
+    private Task DisableEncryptionAction()
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.MasterPassword
-        };
+        var childWindow = new CredentialsPasswordChildWindow();
 
-        var credentialsPasswordViewModel = new CredentialsPasswordViewModel(async instance =>
+        var childWindowViewModel = new CredentialsPasswordViewModel(async instance =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
 
             try
             {
@@ -380,31 +378,33 @@ public class SettingsProfilesViewModel : ViewModelBase
             }
             catch (CryptographicException)
             {
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Strings.OK;
-
-                await _dialogCoordinator.ShowMessageAsync(this, Strings.WrongPassword,
-                    Strings.WrongPasswordDecryptionFailedMessage, MessageDialogStyle.Affirmative,
-                    settings);
+                await DialogHelper.ShowOKMessageAsync(Application.Current.MainWindow,
+                    Strings.WrongPassword,
+                    Strings.WrongPasswordDecryptionFailedMessage,
+                    ChildWindowIcon.Error).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Strings.OK;
-
-                await _dialogCoordinator.ShowMessageAsync(this, Strings.DecryptionError,
+                await DialogHelper.ShowOKMessageAsync(Application.Current.MainWindow,
+                    Strings.DecryptionError,
                     $"{Strings.DecryptionErrorMessage}\n\n{ex.Message}",
-                    MessageDialogStyle.Affirmative, settings);
+                    ChildWindowIcon.Error).ConfigureAwait(false);
             }
-        }, async _1 => { await _dialogCoordinator.HideMetroDialogAsync(this, customDialog); });
 
-        customDialog.Content = new CredentialsPasswordDialog
+            }, _ =>
         {
-            DataContext = credentialsPasswordViewModel
-        };
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        });
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-    }
+        childWindow.Title = Strings.MasterPassword;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+    }    
 
     #endregion
 }

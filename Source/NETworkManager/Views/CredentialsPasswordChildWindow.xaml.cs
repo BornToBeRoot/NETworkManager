@@ -4,9 +4,9 @@ using System.Windows.Threading;
 
 namespace NETworkManager.Views;
 
-public partial class CredentialsChangePasswordDialog
+public partial class CredentialsPasswordChildWindow
 {
-    public CredentialsChangePasswordDialog()
+    public CredentialsPasswordChildWindow()
     {
         InitializeComponent();
     }
