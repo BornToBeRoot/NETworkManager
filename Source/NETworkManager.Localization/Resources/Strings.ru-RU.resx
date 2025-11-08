@@ -2367,9 +2367,6 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="DeleteProfileFile" xml:space="preserve">
     <value>Delete profile file</value>
   </data>
-  <data name="DeleteProfileFileMessage" xml:space="preserve">
-    <value>Selected profile file will be deleted permanently.</value>
-  </data>
   <data name="ResetProfilesMessage" xml:space="preserve">
     <value>All profiles in this profile file will be permanently deleted!</value>
   </data>
@@ -3998,5 +3995,17 @@ Right-click for more options.</value>
   </data>
   <data name="AdminConsoleSession" xml:space="preserve">
     <value>Admin (console) session</value>
+  </data>
+  <data name="DeleteProfileFileXMessage" xml:space="preserve">
+    <value>Profile file "{0}" will be deleted permanently.</value>
+  </data>
+  <data name="EnableEncryptionQuestion" xml:space="preserve">
+    <value>Enable encryption?</value>
+  </data>
+  <data name="EnableEncryptionForProfileFileMessage" xml:space="preserve">
+    <value>Do you want to enable profile file encryption to protect sensitive data such as hosts, IP addresses, URLs, and stored credentials?
+
+You can enable or disable encryption later at any time by right-clicking the profile file to manage encryption settings.
+If you click Cancel, the profile file will remain unencrypted.</value>
   </data>
 </root>

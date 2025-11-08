@@ -2389,9 +2389,6 @@ Vedi messaggio errore: "{0}"</value>
   <data name="DeleteProfileFile" xml:space="preserve">
     <value>Elimina file profilo</value>
   </data>
-  <data name="DeleteProfileFileMessage" xml:space="preserve">
-    <value>Il file profilo selezionato verra eliminato permanentemente.</value>
-  </data>
   <data name="ResetProfilesMessage" xml:space="preserve">
     <value>Tutti profili in questo file profilo verranno permanentemente eliminati!</value>
   </data>
@@ -4101,5 +4098,17 @@ Per maggiori dettagli consulta il file registro.</value>
   </data>
   <data name="AdminConsoleSession" xml:space="preserve">
     <value>Admin (console) session</value>
+  </data>
+  <data name="DeleteProfileFileXMessage" xml:space="preserve">
+    <value>Profile file "{0}" will be deleted permanently.</value>
+  </data>
+  <data name="EnableEncryptionQuestion" xml:space="preserve">
+    <value>Enable encryption?</value>
+  </data>
+  <data name="EnableEncryptionForProfileFileMessage" xml:space="preserve">
+    <value>Do you want to enable profile file encryption to protect sensitive data such as hosts, IP addresses, URLs, and stored credentials?
+
+You can enable or disable encryption later at any time by right-clicking the profile file to manage encryption settings.
+If you click Cancel, the profile file will remain unencrypted.</value>
   </data>
 </root>
