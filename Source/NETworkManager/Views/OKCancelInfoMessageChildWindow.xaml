@@ -8,7 +8,7 @@
              xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
-             Loaded="ChildWindow_Loaded"
+             Loaded="ChildWindow_OnLoaded"
              Style="{StaticResource DefaultChildWindow}"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:OKCancelInfoMessageViewModel}">
     <simpleChildWindow:ChildWindow.Resources>

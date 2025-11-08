@@ -14,7 +14,7 @@
              CloseByEscape="False"               
              Padding="20"
              OverlayBrush="{DynamicResource ResourceKey=MahApps.Brushes.Gray8}"
-             Loaded="ChildWindow_Loaded"
+             Loaded="ChildWindow_OnLoaded"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:UpgradeViewModel}">
     <Grid Margin="10">
         <Grid.RowDefinitions>

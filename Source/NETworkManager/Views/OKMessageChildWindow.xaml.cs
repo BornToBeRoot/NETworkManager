@@ -10,7 +10,7 @@ public partial class OKMessageChildWindow
         InitializeComponent();
     }
 
-    private void ChildWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
+    private void ChildWindow_OnLoaded(object sender, System.Windows.RoutedEventArgs e)
     {
         Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate
         {

@@ -15,7 +15,7 @@
              CloseByEscape="False"               
              Padding="20"
              OverlayBrush="{DynamicResource MahApps.Brushes.Gray8}"
-             Loaded="ChildWindow_Loaded"
+             Loaded="ChildWindow_OnLoaded"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:WelcomeViewModel}">
     <Grid Margin="10">
         <Grid.RowDefinitions>

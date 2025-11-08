@@ -2756,11 +2756,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Selected profile file will be deleted permanently..
+        ///   Looks up a localized string similar to Profile file &quot;{0}&quot; will be deleted permanently..
         /// </summary>
-        public static string DeleteProfileFileMessage {
+        public static string DeleteProfileFileXMessage {
             get {
-                return ResourceManager.GetString("DeleteProfileFileMessage", resourceCulture);
+                return ResourceManager.GetString("DeleteProfileFileXMessage", resourceCulture);
             }
         }
         
@@ -3419,6 +3419,27 @@ namespace NETworkManager.Localization.Resources {
         public static string EnableEncryptionDots {
             get {
                 return ResourceManager.GetString("EnableEncryptionDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to enable profile file encryption to protect sensitive data such as hosts, IP addresses, URLs, and stored credentials?
+        ///
+        ///You can enable or disable encryption later at any time by right-clicking the profile file to manage encryption settings.
+        ///If you click Cancel, the profile file will remain unencrypted..
+        /// </summary>
+        public static string EnableEncryptionForProfileFileMessage {
+            get {
+                return ResourceManager.GetString("EnableEncryptionForProfileFileMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable encryption?.
+        /// </summary>
+        public static string EnableEncryptionQuestion {
+            get {
+                return ResourceManager.GetString("EnableEncryptionQuestion", resourceCulture);
             }
         }
         
