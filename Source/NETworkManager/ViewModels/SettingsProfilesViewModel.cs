@@ -103,7 +103,7 @@ public class SettingsProfilesViewModel : ViewModelBase
         Process.Start("explorer.exe", ProfileManager.GetProfilesFolderLocation());
     }
 
-    public ICommand AddProfileFileCommand => new RelayCommand(_ => AddProfileFileAction().ConfigureAwait(false));
+    public ICommand AddProfileFileCommand => new RelayCommand(async _ => await AddProfileFileAction().ConfigureAwait(false));
 
     private async Task AddProfileFileAction()
     {
@@ -175,7 +175,7 @@ public class SettingsProfilesViewModel : ViewModelBase
         return result;
     }
 
-    public ICommand EditProfileFileCommand => new RelayCommand(_ => EditProfileFileAction().ConfigureAwait(false));
+    public ICommand EditProfileFileCommand => new RelayCommand(async _ => await EditProfileFileAction().ConfigureAwait(false));
 
     private async Task EditProfileFileAction()
     {
@@ -250,7 +250,7 @@ public class SettingsProfilesViewModel : ViewModelBase
 
     private async void EnableEncryptionAction()
     {
-        if (await ShowEncryptionDisclaimerAsync() == false)
+        if (!await ShowEncryptionDisclaimerAsync())
             return;
 
         var customDialog = new CustomDialog
