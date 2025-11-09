@@ -133,15 +133,16 @@ public class SettingsProfilesViewModel : ViewModelBase
 
         await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
 
+        // Re-select the profile file
         if (string.IsNullOrEmpty(profileName))
             return;
 
         SelectedProfileFile = ProfileFiles.Cast<ProfileFileInfo>()
             .FirstOrDefault(p => p.Name.Equals(profileName, StringComparison.OrdinalIgnoreCase));
 
-        // Ask to enable encryption for the new profile file
-        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow, 
-            Strings.EnableEncryptionQuestion, 
+        // Ask the user if they want to enable encryption for the new profile file
+        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+            Strings.EnableEncryptionQuestion,
             Strings.EnableEncryptionForProfileFileMessage);
 
         if (result)
@@ -178,6 +179,7 @@ public class SettingsProfilesViewModel : ViewModelBase
 
         await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
 
+        // Re-select the profile file
         if (string.IsNullOrEmpty(profileName))
             return;
 
@@ -193,7 +195,7 @@ public class SettingsProfilesViewModel : ViewModelBase
         return ProfileFiles.Cast<ProfileFileInfo>().Count() > 1;
     }
 
-    private Task DeleteProfileFileAction()
+    private async Task DeleteProfileFileAction()
     {
         var childWindow = new OKCancelMessageChildWindow();
 
@@ -216,14 +218,20 @@ public class SettingsProfilesViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+
+        // Select the first profile file
+        SelectedProfileFile = ProfileFiles.Cast<ProfileFileInfo>().FirstOrDefault();
     }
 
     public ICommand EnableEncryptionCommand => new RelayCommand(_ => EnableEncryptionAction());
 
     private async void EnableEncryptionAction()
     {
-        if (!await ShowEncryptionDisclaimerAsync())
+        // Show encryption disclaimer
+        if (!await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+             Strings.Disclaimer,
+             Strings.ProfileEncryptionDisclaimer))
             return;
 
         var customDialog = new CustomDialog
@@ -257,50 +265,19 @@ public class SettingsProfilesViewModel : ViewModelBase
 
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
+   
+    public ICommand ChangeMasterPasswordCommand => new RelayCommand(async _ => await ChangeMasterPasswordAction().ConfigureAwait(false));
 
-    private async Task<bool> ShowEncryptionDisclaimerAsync()
+    private async Task ChangeMasterPasswordAction()
     {
-        var result = false;
+        var profileName = SelectedProfileFile.Name;
 
-        var childWindow = new OKCancelMessageChildWindow();
+        var childWindow = new CredentialsChangePasswordChildWindow();
 
-        var childWindowViewModel = new OKCancelMessageViewModel(_ =>
+        var childWindowViewModel = new CredentialsChangePasswordViewModel(async instance =>
         {
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
-
-            result = true;
-        }, _ =>
-        {
-            childWindow.IsOpen = false;
-            ConfigurationManager.Current.IsChildWindowOpen = false;
-        },
-            Strings.ProfileEncryptionDisclaimer
-        );
-
-        childWindow.Title = Strings.Disclaimer;
-
-        childWindow.DataContext = childWindowViewModel;
-
-        ConfigurationManager.Current.IsChildWindowOpen = true;
-
-        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
-
-        return result;
-    }
-
-    public ICommand ChangeMasterPasswordCommand => new RelayCommand(_ => ChangeMasterPasswordAction());
-
-    private async void ChangeMasterPasswordAction()
-    {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.ChangeMasterPassword
-        };
-
-        var credentialsPasswordViewModel = new CredentialsChangePasswordViewModel(async instance =>
-        {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
             try
             {
@@ -308,36 +285,46 @@ public class SettingsProfilesViewModel : ViewModelBase
             }
             catch (CryptographicException)
             {
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Strings.OK;
-
-                await _dialogCoordinator.ShowMessageAsync(this, Strings.WrongPassword,
-                    Strings.WrongPasswordDecryptionFailedMessage, MessageDialogStyle.Affirmative,
-                    settings);
+                await DialogHelper.ShowOKMessageAsync(Application.Current.MainWindow,
+                    Strings.WrongPassword,
+                    Strings.WrongPasswordDecryptionFailedMessage,
+                    ChildWindowIcon.Error).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Strings.OK;
-
-                await _dialogCoordinator.ShowMessageAsync(this, Strings.DecryptionError,
+                await DialogHelper.ShowOKMessageAsync(Application.Current.MainWindow,
+                    Strings.DecryptionError,
                     $"{Strings.DecryptionErrorMessage}\n\n{ex.Message}",
-                    MessageDialogStyle.Affirmative, settings);
+                    ChildWindowIcon.Error).ConfigureAwait(false);
             }
-        }, async _ => { await _dialogCoordinator.HideMetroDialogAsync(this, customDialog); });
-
-        customDialog.Content = new CredentialsChangePasswordDialog
+        }, _ =>
         {
-            DataContext = credentialsPasswordViewModel
-        };
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        });
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.Title = Strings.ChangeMasterPassword;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+
+        // Re-select the profile file
+        if (string.IsNullOrEmpty(profileName))
+            return;
+
+        SelectedProfileFile = ProfileFiles.Cast<ProfileFileInfo>()
+            .FirstOrDefault(p => p.Name.Equals(profileName, StringComparison.OrdinalIgnoreCase));
     }
 
     public ICommand DisableEncryptionCommand => new RelayCommand(async _ => await DisableEncryptionAction().ConfigureAwait(false));
 
-    private Task DisableEncryptionAction()
+    private async Task DisableEncryptionAction()
     {
+        var profileName = SelectedProfileFile.Name;
+
         var childWindow = new CredentialsPasswordChildWindow();
 
         var childWindowViewModel = new CredentialsPasswordViewModel(async instance =>
@@ -376,7 +363,14 @@ public class SettingsProfilesViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+
+        // Re-select the profile file
+        if (string.IsNullOrEmpty(profileName))
+            return;
+                
+        SelectedProfileFile = ProfileFiles.Cast<ProfileFileInfo>()
+            .FirstOrDefault(p => p.Name.Equals(profileName, StringComparison.OrdinalIgnoreCase));
     }
 
     #endregion
