@@ -385,33 +385,18 @@ public class IPScannerSettingsViewModel : ViewModelBase
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
-    private Task DeleteCustomCommand()
+    private async Task DeleteCustomCommand()
     {
-        var childWindow = new OKCancelMessageChildWindow();
+        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+            Strings.DeleteCustomCommand,
+            Strings.DeleteCustomCommandMessage,
+            ChildWindowIcon.Info,
+            Strings.Delete);
 
-        var childWindowViewModel = new OKCancelMessageViewModel(_ =>
-            {
-                childWindow.IsOpen = false;
-                ConfigurationManager.Current.IsChildWindowOpen = false;
+        if (!result)
+            return;
 
-                SettingsManager.Current.IPScanner_CustomCommands.Remove(SelectedCustomCommand);
-            }, _ =>
-            {
-                childWindow.IsOpen = false;
-                ConfigurationManager.Current.IsChildWindowOpen = false;
-            },
-                Strings.DeleteCustomCommandMessage,
-                ChildWindowIcon.Info,
-                Strings.Delete
-            );
-
-        childWindow.Title = Strings.DeleteCustomCommand;
-
-        childWindow.DataContext = childWindowViewModel;
-
-        ConfigurationManager.Current.IsChildWindowOpen = true;
-
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        SettingsManager.Current.IPScanner_CustomCommands.Remove(SelectedCustomCommand);
     }
 
     #endregion

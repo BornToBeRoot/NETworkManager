@@ -66,38 +66,22 @@ public class SettingsSettingsViewModel : ViewModelBase
 
     #region Methods
 
-    private Task ResetSettings()
+    private async Task ResetSettings()
     {
-        var childWindow = new OKCancelMessageChildWindow();
-
-        var childWindowViewModel = new OKCancelMessageViewModel(_ =>
-        {
-            childWindow.IsOpen = false;
-            ConfigurationManager.Current.IsChildWindowOpen = false;
-
-            // Init default settings
-            SettingsManager.Initialize();
-
-            // Restart the application
-            (Application.Current.MainWindow as MainWindow)?.RestartApplication();
-        }, _ =>
-        {
-            childWindow.IsOpen = false;
-            ConfigurationManager.Current.IsChildWindowOpen = false;
-        },
+        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+            Strings.ResetSettingsQuestion,
             Strings.SettingsAreResetAndApplicationWillBeRestartedMessage,
             ChildWindowIcon.Question,
-            Strings.Reset,
-            Strings.Cancel            
-        );
+            Strings.Reset);
 
-        childWindow.Title = Strings.ResetSettingsQuestion;
+        if (!result)
+            return;
 
-        childWindow.DataContext = childWindowViewModel;
+        // Init default settings
+        SettingsManager.Initialize();
 
-        ConfigurationManager.Current.IsChildWindowOpen = true;
-
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        // Restart the application
+        (Application.Current.MainWindow as MainWindow)?.RestartApplication();
     }
     #endregion
 }

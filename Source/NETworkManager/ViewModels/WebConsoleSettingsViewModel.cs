@@ -106,43 +106,28 @@ public class WebConsoleSettingsViewModel : ViewModelBase
 
     #region Methods
 
-    private Task DeleteBrowsingData()
+    private async Task DeleteBrowsingData()
     {
-        var childWindow = new OKCancelMessageChildWindow();
-
-        var childWindowViewModel = new OKCancelMessageViewModel(async _ =>
-            {
-                childWindow.IsOpen = false;
-                ConfigurationManager.Current.IsChildWindowOpen = false;
-
-                // Create a temporary WebView2 instance to clear browsing data
-                var webView2Environment =
-                    await CoreWebView2Environment.CreateAsync(null, GlobalStaticConfiguration.WebConsole_Cache);
-
-                var windowHwnd = new WindowInteropHelper(Application.Current.MainWindow).Handle;
-
-                var webView2Controller = await webView2Environment.CreateCoreWebView2ControllerAsync(windowHwnd);
-
-                await webView2Controller.CoreWebView2.Profile.ClearBrowsingDataAsync();
-
-                webView2Controller.Close();
-            }, _ =>
-            {
-                childWindow.IsOpen = false;
-                ConfigurationManager.Current.IsChildWindowOpen = false;
-            },
+        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+            Strings.DeleteBrowsingData,
             Strings.DeleteBrowsingDataMessage,
-            ChildWindowIcon.Info, 
-            Strings.Delete
-        );
+            ChildWindowIcon.Info,
+            Strings.Delete);
 
-        childWindow.Title = Strings.DeleteBrowsingData;
+        if (!result)
+            return;
 
-        childWindow.DataContext = childWindowViewModel;
+        // Create a temporary WebView2 instance to clear browsing data
+        var webView2Environment =
+            await CoreWebView2Environment.CreateAsync(null, GlobalStaticConfiguration.WebConsole_Cache);
 
-        ConfigurationManager.Current.IsChildWindowOpen = true;
+        var windowHwnd = new WindowInteropHelper(Application.Current.MainWindow).Handle;
 
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        var webView2Controller = await webView2Environment.CreateCoreWebView2ControllerAsync(windowHwnd);
+
+        await webView2Controller.CoreWebView2.Profile.ClearBrowsingDataAsync();
+
+        webView2Controller.Close();
     }
 
     #endregion

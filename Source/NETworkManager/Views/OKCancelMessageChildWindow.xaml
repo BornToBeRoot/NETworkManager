@@ -9,7 +9,8 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              Loaded="ChildWindow_OnLoaded"
-             Style="{StaticResource DefaultChildWindow}"
+             CloseButtonCommand="{Binding Path=CancelCommand}"
+             Style="{StaticResource DefaultChildWindow}"                               
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:OKCancelMessageViewModel}">
     <simpleChildWindow:ChildWindow.Resources>
         <converters:ChildWindowIconToRectangleStyleConverter x:Key="ChildWindowIconToRectangleStyleConverter" />

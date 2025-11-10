@@ -275,33 +275,19 @@ public class AWSSessionManagerSettingsViewModel : ViewModelBase
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
-    private Task DeleteAWSProfile()
+    private async Task DeleteAWSProfile()
     {
-        var childWindow = new OKCancelMessageChildWindow();
+        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+            Strings.DeleteAWSProfile,
+            Strings.DeleteAWSProfileMessage,
+            ChildWindowIcon.Info,
+            Strings.Delete);
 
-        var childWindowViewModel = new OKCancelMessageViewModel(_ =>
-            {
-                childWindow.IsOpen = false;
-                ConfigurationManager.Current.IsChildWindowOpen = false;
 
-                SettingsManager.Current.AWSSessionManager_AWSProfiles.Remove(SelectedAWSProfile);
-            }, _ =>
-            {
-                childWindow.IsOpen = false;
-                ConfigurationManager.Current.IsChildWindowOpen = false;
-            },
-                Strings.DeleteAWSProfileMessage,
-                ChildWindowIcon.Info,
-                Strings.Delete
-            );
+        if (!result)
+            return;
 
-        childWindow.Title = Strings.DeleteAWSProfile;
-
-        childWindow.DataContext = childWindowViewModel;
-
-        ConfigurationManager.Current.IsChildWindowOpen = true;
-
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        SettingsManager.Current.AWSSessionManager_AWSProfiles.Remove(SelectedAWSProfile);
     }
 
     private async Task Configure()

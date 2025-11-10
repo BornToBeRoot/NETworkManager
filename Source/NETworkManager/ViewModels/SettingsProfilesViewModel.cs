@@ -197,28 +197,16 @@ public class SettingsProfilesViewModel : ViewModelBase
 
     private async Task DeleteProfileFileAction()
     {
-        var childWindow = new OKCancelMessageChildWindow();
+        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+            Strings.DeleteProfileFile,
+            string.Format(Strings.DeleteProfileFileXMessage, SelectedProfileFile.Name),
+            ChildWindowIcon.Info,
+            Strings.Delete);
 
-        var childWindowViewModel = new OKCancelMessageViewModel(_ =>
-            {
-                childWindow.IsOpen = false;
-                ConfigurationManager.Current.IsChildWindowOpen = false;
+        if (!result)
+            return;
 
-                ProfileManager.DeleteProfileFile(SelectedProfileFile);
-            }, _ =>
-            {
-                childWindow.IsOpen = false;
-                ConfigurationManager.Current.IsChildWindowOpen = false;
-            },
-           string.Format(Strings.DeleteProfileFileXMessage, SelectedProfileFile.Name), ChildWindowIcon.Info, Strings.Delete);
-
-        childWindow.Title = Strings.DeleteProfileFile;
-
-        childWindow.DataContext = childWindowViewModel;
-
-        ConfigurationManager.Current.IsChildWindowOpen = true;
-
-        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        ProfileManager.DeleteProfileFile(SelectedProfileFile);
 
         // Select the first profile file
         SelectedProfileFile = ProfileFiles.Cast<ProfileFileInfo>().FirstOrDefault();

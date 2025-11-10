@@ -185,30 +185,18 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
-    private Task DeleteServer()
+    private async Task DeleteServer()
     {
-        var childWindow = new OKCancelMessageChildWindow();
+        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+            Strings.DeleteSNTPServer,
+            Strings.DeleteSNTPServerMessage,
+            ChildWindowIcon.Info,
+            Strings.Delete);
 
-        var childWindowViewModel = new OKCancelMessageViewModel(_ =>
-            {
-                childWindow.IsOpen = false;
-                ConfigurationManager.Current.IsChildWindowOpen = false;
+        if (!result)
+            return;
 
-                SettingsManager.Current.SNTPLookup_SNTPServers.Remove(SelectedSNTPServer);
-            }, _ =>
-            {
-                childWindow.IsOpen = false;
-                ConfigurationManager.Current.IsChildWindowOpen = false;
-            },
-            Strings.DeleteSNTPServerMessage, ChildWindowIcon.Info, Strings.Delete);
-
-        childWindow.Title = Strings.DeleteSNTPServer;
-
-        childWindow.DataContext = childWindowViewModel;
-
-        ConfigurationManager.Current.IsChildWindowOpen = true;
-
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        SettingsManager.Current.SNTPLookup_SNTPServers.Remove(SelectedSNTPServer);
     }
 
     #endregion

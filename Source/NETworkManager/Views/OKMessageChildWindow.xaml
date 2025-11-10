@@ -9,6 +9,7 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"             
              Loaded="ChildWindow_OnLoaded"
+             CloseButtonCommand="{Binding Path=OKCommand}"
              Style="{StaticResource DefaultChildWindow}"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:OKMessageViewModel}">
     <simpleChildWindow:ChildWindow.Resources>
