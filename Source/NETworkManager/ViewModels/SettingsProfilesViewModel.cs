@@ -350,10 +350,10 @@ public class SettingsProfilesViewModel : ViewModelBase
             }
 
         }, _ =>
-    {
-        childWindow.IsOpen = false;
-        ConfigurationManager.Current.IsChildWindowOpen = false;
-    });
+            {
+                childWindow.IsOpen = false;
+                ConfigurationManager.Current.IsChildWindowOpen = false;
+            });
 
         childWindow.Title = Strings.MasterPassword;
 
