@@ -29,6 +29,7 @@ Release date: **xx.xx.2025**
 
 - Profile file creation flow improved — when adding a new profile you are now prompted to enable profile-file encryption to protect stored credentials and settings. [#3227](https://github.com/BornToBeRoot/NETworkManager/pull/3227)
 - Profile file dialog migrated to a child window to improve usability. [#3227](https://github.com/BornToBeRoot/NETworkManager/pull/3227)
+- Credential dialogs migrated to child windows to improve usability. [#3231](https://github.com/BornToBeRoot/NETworkManager/pull/3231)
 
 **Remote Desktop**
 
@@ -41,6 +42,8 @@ Release date: **xx.xx.2025**
 ## Dependencies, Refactoring & Documentation
 
 - Documentation updated
-- Code cleanup & refactoring
+- Code cleanup & refactoring 
+    - Introduced a new DialogHelper utility to centralize creation of `OK` and `OK/Cancel` dialogs. This reduces duplication and enforces a consistent layout. [#3231](https://github.com/BornToBeRoot/NETworkManager/pull/3231)
+- Migrated existing credential and profile dialogs to use DialogHelper, improving usability, accessibility and maintainability across the app. [#3231](https://github.com/BornToBeRoot/NETworkManager/pull/3231)
 - Language files updated via [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration)
 - Dependencies updated via [#dependabot](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot)

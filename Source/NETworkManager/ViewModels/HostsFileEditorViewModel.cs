@@ -391,38 +391,28 @@ public class HostsFileEditorViewModel : ViewModelBase
     {
         IsModifying = true;
 
-        var childWindow = new OKCancelInfoMessageChildWindow();
-
-        var childWindowViewModel = new OKCancelInfoMessageViewModel(async _ =>
-            {
-                childWindow.IsOpen = false;
-                ConfigurationManager.Current.IsChildWindowOpen = false;
-
-                var result = await HostsFileEditor.DeleteEntryAsync(SelectedResult);
-
-                if (result != HostsFileEntryModifyResult.Success)
-                    await ShowErrorMessageAsync(result);
-
-                IsModifying = false;
-            }, _ =>
-            {
-                childWindow.IsOpen = false;
-                ConfigurationManager.Current.IsChildWindowOpen = false;
-
-                IsModifying = false;
-            },
+        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+            Strings.DeleteEntry,
             string.Format(Strings.DeleteHostsFileEntryMessage, SelectedResult.IPAddress, SelectedResult.Hostname,
                 string.IsNullOrEmpty(SelectedResult.Comment) ? "" : $"# {SelectedResult.Comment}"),
+            ChildWindowIcon.Info,
             Strings.Delete
-        );
+            );
 
-        childWindow.Title = Strings.DeleteEntry;
 
-        childWindow.DataContext = childWindowViewModel;
+        if (!result)
+        {
+            IsModifying = false;
+            return;
+        }
 
-        ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        var modifyResult = await HostsFileEditor.DeleteEntryAsync(SelectedResult);
+
+        if (modifyResult != HostsFileEntryModifyResult.Success)
+            await ShowErrorMessageAsync(modifyResult);
+
+        IsModifying = false;
     }
 
     private bool ModifyEntry_CanExecute(object obj)
@@ -452,7 +442,7 @@ public class HostsFileEditorViewModel : ViewModelBase
         {
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
-        }, message, Strings.OK, ChildWindowIcon.Error);
+        }, message, ChildWindowIcon.Error, Strings.OK);
 
         childWindow.Title = Strings.Error;
 
@@ -479,7 +469,7 @@ public class HostsFileEditorViewModel : ViewModelBase
             {
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
-            }, ex.Message, Strings.OK, ChildWindowIcon.Error);
+            }, ex.Message, ChildWindowIcon.Error, Strings.OK);
 
             childWindow.Title = Strings.Error;
 

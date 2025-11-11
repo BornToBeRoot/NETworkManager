@@ -6,6 +6,7 @@ using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
@@ -142,6 +143,8 @@ public class PortScannerSettingsViewModel : ViewModelBase
         PortProfiles.SortDescriptions.Add(
             new SortDescription(nameof(PortProfileInfo.Name), ListSortDirection.Ascending));
 
+        SelectedPortProfile = PortProfiles.Cast<PortProfileInfo>().FirstOrDefault();
+
         LoadSettings();
 
         _isLoading = false;
@@ -232,30 +235,21 @@ public class PortScannerSettingsViewModel : ViewModelBase
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
-    private Task DeletePortProfile()
+    private async Task DeletePortProfile()
     {
-        var childWindow = new OKCancelInfoMessageChildWindow();
+        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+            Strings.DeletePortProfile,
+            Strings.DeletePortProfileMessage,
+            ChildWindowIcon.Info,
+            Strings.Delete);
 
-        var childWindowViewModel = new OKCancelInfoMessageViewModel(_ =>
-            {
-                childWindow.IsOpen = false;
-                ConfigurationManager.Current.IsChildWindowOpen = false;
+        if (!result)
+            return;
 
-                SettingsManager.Current.PortScanner_PortProfiles.Remove(SelectedPortProfile);
-            }, _ =>
-            {
-                childWindow.IsOpen = false;
-                ConfigurationManager.Current.IsChildWindowOpen = false;
-            },
-            Strings.DeletePortProfileMessage, Strings.Delete);
+        SettingsManager.Current.PortScanner_PortProfiles.Remove(SelectedPortProfile);
 
-        childWindow.Title = Strings.DeletePortProfile;
-
-        childWindow.DataContext = childWindowViewModel;
-
-        ConfigurationManager.Current.IsChildWindowOpen = true;
-
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        // Select first item after deletion
+        SelectedPortProfile = PortProfiles.Cast<PortProfileInfo>().FirstOrDefault();
     }
 
     #endregion

@@ -6,6 +6,7 @@ using NETworkManager.Models.Network;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Profiles;
+using NETworkManager.Utilities;
 using NETworkManager.ViewModels;
 using NETworkManager.Views;
 using System;
@@ -560,39 +561,24 @@ public static class ProfileDialogManager
         return parentWindow.ShowChildWindowAsync(childWindow);
     }
 
-    public static Task ShowDeleteProfileDialog(Window parentWindow, IProfileManagerMinimal viewModel,
+    public static async Task ShowDeleteProfileDialog(Window parentWindow, IProfileManagerMinimal viewModel,
         IList<ProfileInfo> profiles)
     {
-        var childWindow = new OKCancelInfoMessageChildWindow();
-
-        OKCancelInfoMessageViewModel childWindowViewModel = new(_ =>
-            {
-                childWindow.IsOpen = false;
-                Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
-
-                viewModel.OnProfileManagerDialogClose();
-
-                ProfileManager.RemoveProfiles(profiles);
-            }, _ =>
-            {
-                childWindow.IsOpen = false;
-                Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
-
-                viewModel.OnProfileManagerDialogClose();
-            },
-                profiles.Count == 1 ? Strings.DeleteProfileMessage : Strings.DeleteProfilesMessage,
-                Strings.Delete
-            );
-
-        childWindow.Title = profiles.Count == 1 ? Strings.DeleteProfile : Strings.DeleteProfiles;
-
-        childWindow.DataContext = childWindowViewModel;
 
         viewModel.OnProfileManagerDialogOpen();
 
-        Settings.ConfigurationManager.Current.IsChildWindowOpen = true;
+        var result = await DialogHelper.ShowOKCancelMessageAsync(parentWindow,
+            profiles.Count == 1 ? Strings.DeleteProfile : Strings.DeleteProfiles,
+            profiles.Count == 1 ? Strings.DeleteProfileMessage : Strings.DeleteProfilesMessage,
+            ChildWindowIcon.Info,
+            Strings.Delete);
 
-        return parentWindow.ShowChildWindowAsync(childWindow);
+        viewModel.OnProfileManagerDialogClose();
+
+        if (!result)
+            return;
+
+        ProfileManager.RemoveProfiles(profiles);
     }
 
     #endregion
@@ -662,39 +648,23 @@ public static class ProfileDialogManager
         return parentWindow.ShowChildWindowAsync(childWindow);
     }
 
-    public static Task ShowDeleteGroupDialog(Window parentWindow, IProfileManagerMinimal viewModel,
+    public static async Task ShowDeleteGroupDialog(Window parentWindow, IProfileManagerMinimal viewModel,
         GroupInfo group)
     {
-        var childWindow = new OKCancelInfoMessageChildWindow();
-
-        OKCancelInfoMessageViewModel childWindowViewModel = new(_ =>
-        {
-            childWindow.IsOpen = false;
-            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
-
-            viewModel.OnProfileManagerDialogClose();
-
-            ProfileManager.RemoveGroup(group);
-        }, _ =>
-        {
-            childWindow.IsOpen = false;
-            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
-
-            viewModel.OnProfileManagerDialogClose();
-        },
-            Strings.DeleteGroupMessage,
-            Strings.Delete
-        );
-
-        childWindow.Title = Strings.DeleteGroup;
-
-        childWindow.DataContext = childWindowViewModel;
-
         viewModel.OnProfileManagerDialogOpen();
 
-        Settings.ConfigurationManager.Current.IsChildWindowOpen = true;
+        var result = await DialogHelper.ShowOKCancelMessageAsync(parentWindow,
+            Strings.DeleteGroup,
+            Strings.DeleteGroupMessage,
+            ChildWindowIcon.Info,
+            Strings.Delete);
 
-        return parentWindow.ShowChildWindowAsync(childWindow);
+        viewModel.OnProfileManagerDialogClose();
+
+        if (!result)
+            return;
+
+        ProfileManager.RemoveGroup(group);
     }
 
     #endregion

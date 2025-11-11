@@ -1,20 +1,21 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Threading;
 
 namespace NETworkManager.Views;
 
-public partial class OKCancelInfoMessageChildWindow
+public partial class CredentialsSetPasswordChildWindow
 {
-    public OKCancelInfoMessageChildWindow()
+    public CredentialsSetPasswordChildWindow()
     {
         InitializeComponent();
     }
 
-    private void ChildWindow_OnLoaded(object sender, System.Windows.RoutedEventArgs e)
+    private void ChildWindow_OnLoaded(object sender, RoutedEventArgs e)
     {
         Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate
         {
-            ButtonOK.Focus();
+            PasswordBoxPassword.Focus();
         }));
     }
 }

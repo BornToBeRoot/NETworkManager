@@ -11,10 +11,10 @@ public class ProfileFileViewModel : ViewModelBase
 
     private string _name;
 
-    public ProfileFileViewModel(Action<ProfileFileViewModel> addCommand, Action<ProfileFileViewModel> cancelHandler,
+    public ProfileFileViewModel(Action<ProfileFileViewModel> okCommand, Action<ProfileFileViewModel> cancelHandler,
         ProfileFileInfo info = null)
     {
-        AcceptCommand = new RelayCommand(_ => addCommand(this));
+        OKCommand = new RelayCommand(_ => okCommand(this));
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
         if (info == null)
@@ -25,7 +25,7 @@ public class ProfileFileViewModel : ViewModelBase
         IsEdit = true;
     }
 
-    public ICommand AcceptCommand { get; }
+    public ICommand OKCommand { get; }
 
     public ICommand CancelCommand { get; }
 

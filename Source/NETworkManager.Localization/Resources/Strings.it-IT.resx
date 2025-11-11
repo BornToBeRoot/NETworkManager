@@ -2389,9 +2389,6 @@ Vedi messaggio errore: "{0}"</value>
   <data name="DeleteProfileFile" xml:space="preserve">
     <value>Elimina file profilo</value>
   </data>
-  <data name="DeleteProfileFileMessage" xml:space="preserve">
-    <value>Il file profilo selezionato verra eliminato permanentemente.</value>
-  </data>
   <data name="ResetProfilesMessage" xml:space="preserve">
     <value>Tutti profili in questo file profilo verranno permanentemente eliminati!</value>
   </data>
@@ -4100,6 +4097,18 @@ Per maggiori dettagli consulta il file registro.</value>
     <value>Per personalizzare l'aspetto dell'applicazione usa i temi personalizzati . È possibile modificare o aggiungere temi nella cartella "Cartella programmi &gt; Temi". Per maggiori dettagli fai riferimento alla documentazione.</value>
   </data>
   <data name="AdminConsoleSession" xml:space="preserve">
-    <value>Admin (console) session</value>
+    <value>Sessione amministrazione (console).</value>
+  </data>
+  <data name="DeleteProfileFileXMessage" xml:space="preserve">
+    <value>Il file profilo "{0}" verrà aggiunto permanentemente.</value>
+  </data>
+  <data name="EnableEncryptionQuestion" xml:space="preserve">
+    <value>Vuoi abilitare la crittografia?</value>
+  </data>
+  <data name="EnableEncryptionForProfileFileMessage" xml:space="preserve">
+    <value>Vuoi abilitare la crittografia dei file del profilo per proteggere i dati sensibili come host, indirizzi IP, URL e credenziali archiviate?
+
+Puoi abilitare/disabilitare la crittografia in qualsiasi momento facendo clic con il pulsante destro del mouse sul file del profilo e gestire le impostazioni di crittografia.
+Se selezioni 'Annulla', il file del profilo non verrà crittografato.</value>
   </data>
 </root>

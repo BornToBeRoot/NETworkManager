@@ -201,30 +201,18 @@ public class SNMPSettingsViewModel : ViewModelBase
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
-    private Task DeleteOIDProfile()
+    private async Task DeleteOIDProfile()
     {
-        var childWindow = new OKCancelInfoMessageChildWindow();
+        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+            Strings.DeleteOIDProfile,
+            Strings.DeleteOIDProfileMessage,
+            ChildWindowIcon.Info,
+            Strings.Delete);
 
-        var childWindowViewModel = new OKCancelInfoMessageViewModel(_ =>
-            {
-                childWindow.IsOpen = false;
-                ConfigurationManager.Current.IsChildWindowOpen = false;
+        if (!result)
+            return;
 
-                SettingsManager.Current.SNMP_OidProfiles.Remove(SelectedOIDProfile);
-            }, _ =>
-            {
-                childWindow.IsOpen = false;
-                ConfigurationManager.Current.IsChildWindowOpen = false;
-            },
-            Strings.DeleteOIDProfileMessage, Strings.Delete);
-
-        childWindow.Title = Strings.DeleteOIDProfile;
-
-        childWindow.DataContext = childWindowViewModel;
-
-        ConfigurationManager.Current.IsChildWindowOpen = true;
-
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        SettingsManager.Current.SNMP_OidProfiles.Remove(SelectedOIDProfile);
     }
 
     #endregion
