@@ -357,32 +357,18 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
-    private Task DeleteDNSServer()
+    private async Task DeleteDNSServer()
     {
-        var childWindow = new OKCancelInfoMessageChildWindow();
+        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+            Strings.DeleteDNSServer,
+            Strings.DeleteDNSServerMessage,
+            ChildWindowIcon.Info,
+            Strings.Delete);
 
-        var childWindowViewModel = new OKCancelInfoMessageViewModel(_ =>
-            {
-                childWindow.IsOpen = false;
-                ConfigurationManager.Current.IsChildWindowOpen = false;
+        if (!result)
+            return;
 
-                SettingsManager.Current.DNSLookup_DNSServers.Remove(SelectedDNSServer);
-            }, _ =>
-            {
-                childWindow.IsOpen = false;
-                ConfigurationManager.Current.IsChildWindowOpen = false;
-            },
-                Strings.DeleteDNSServerMessage,
-                Strings.Delete
-            );
-
-        childWindow.Title = Strings.DeleteDNSServer;
-
-        childWindow.DataContext = childWindowViewModel;
-
-        ConfigurationManager.Current.IsChildWindowOpen = true;
-
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        SettingsManager.Current.DNSLookup_DNSServers.Remove(SelectedDNSServer);
     }
 
     #endregion

@@ -9,6 +9,7 @@ public static class SecureStringHelper
     public static string ConvertToString(SecureString secureString)
     {
         var valuePtr = IntPtr.Zero;
+
         try
         {
             valuePtr = Marshal.SecureStringToGlobalAllocUnicode(secureString);

@@ -4,10 +4,10 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
-public class OKCancelInfoMessageViewModel : ViewModelBase
+public class OKCancelMessageViewModel : ViewModelBase
 {
-    public OKCancelInfoMessageViewModel(Action<OKCancelInfoMessageViewModel> okCommand,
-        Action<OKCancelInfoMessageViewModel> cancelHandler, string message, string okButtonText = null, string cancelButtonText = null, ChildWindowIcon icon = ChildWindowIcon.Info)
+    public OKCancelMessageViewModel(Action<OKCancelMessageViewModel> okCommand,
+        Action<OKCancelMessageViewModel> cancelHandler, string message, ChildWindowIcon icon = ChildWindowIcon.Info, string okButtonText = null, string cancelButtonText = null)
     {
         OKCommand = new RelayCommand(_ => okCommand(this));
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
