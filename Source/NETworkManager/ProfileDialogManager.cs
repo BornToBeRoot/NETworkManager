@@ -659,10 +659,10 @@ public static class ProfileDialogManager
             ChildWindowIcon.Info,
             Strings.Delete);
 
+        viewModel.OnProfileManagerDialogClose();
+        
         if (!result)
             return;
-
-        viewModel.OnProfileManagerDialogClose();
 
         ProfileManager.RemoveGroup(group);
     }
