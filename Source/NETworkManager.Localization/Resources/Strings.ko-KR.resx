@@ -373,7 +373,7 @@
     <value>테마</value>
   </data>
   <data name="Traceroute" xml:space="preserve">
-    <value>추적 경로</value>
+    <value>경로 추적</value>
   </data>
   <data name="Tray" xml:space="preserve">
     <value>트레이</value>
@@ -828,7 +828,7 @@
     <value>종료시간</value>
   </data>
   <data name="EnterASubnetToCalculateItDots" xml:space="preserve">
-    <value>서브넷을 입력하여 계산...</value>
+    <value>계산할 서브넷을 입력하세요...</value>
   </data>
   <data name="EnterSubnetAndANewSubnetmaskToCreateSubnets" xml:space="preserve">
     <value>서브넷과 새 서브넷 마스크를 입력하여 서브넷을 만듭니다...</value>
@@ -888,7 +888,7 @@
     <value>로컬 포트</value>
   </data>
   <data name="MACAddressOrVendor" xml:space="preserve">
-    <value>MAC 주소 또는 공급 업체</value>
+    <value>MAC 주소 또는 공급업체</value>
   </data>
   <data name="MagicPacketSentMessage" xml:space="preserve">
     <value>매직 패킷이 성공적으로 전송되었습니다!</value>
@@ -1184,7 +1184,7 @@
     <value>사용자 이름</value>
   </data>
   <data name="Vendor" xml:space="preserve">
-    <value>공급 업체</value>
+    <value>공급업체</value>
   </data>
   <data name="Version" xml:space="preserve">
     <value>버전</value>
@@ -2512,7 +2512,7 @@ $$hostname$$	--&gt;	호스트이름</value>
     <value>TigerVNC</value>
   </data>
   <data name="ApplicationName_Traceroute" xml:space="preserve">
-    <value>추적 경로</value>
+    <value>경로 추적</value>
   </data>
   <data name="ApplicationName_WakeOnLAN" xml:space="preserve">
     <value>Wake on LAN</value>
@@ -3153,7 +3153,7 @@ PowerShell 및 AWS Session Manager 설정에 구성된 PowerShell 콘솔만 수�
     <value>테라바이트</value>
   </data>
   <data name="EnterANumberAndSelectAUnitToCalculateTheUnitsDots" xml:space="preserve">
-    <value>숫자를 입력하고 단위를 선택하여 단위를 계산하세요...</value>
+    <value>계산할 숫자를 입력하고 단위를 선택하세요...</value>
   </data>
   <data name="SettingsName_Network" xml:space="preserve">
     <value>네트워크</value>
@@ -3991,18 +3991,18 @@ Windows 설정 &gt; 개인정보 보호 및 보안 &gt; 위치를 열고 데스�
     <value>사용자 지정 테마를 사용하여 응용 프로그램의 모양을 개인화합니다. "프로그램 폴더 &gt; 테마" 디렉터리에서 테마를 편집하거나 추가할 수 있습니다. 자세한 내용은 설명서를 참조하세요.</value>
   </data>
   <data name="AdminConsoleSession" xml:space="preserve">
-    <value>Admin (console) session</value>
+    <value>관리자 (콘솔) 세션</value>
   </data>
   <data name="DeleteProfileFileXMessage" xml:space="preserve">
-    <value>Profile file "{0}" will be deleted permanently.</value>
+    <value>프로필 파일 "{0}"이 영구적으로 삭제됩니다.</value>
   </data>
   <data name="EnableEncryptionQuestion" xml:space="preserve">
-    <value>Enable encryption?</value>
+    <value>암호화를 활성화하시겠습니까?</value>
   </data>
   <data name="EnableEncryptionForProfileFileMessage" xml:space="preserve">
-    <value>Do you want to enable profile file encryption to protect sensitive data such as hosts, IP addresses, URLs, and stored credentials?
+    <value>호스트, IP 주소, URL, 저장된 자격 증명과 같은 민감한 데이터를 보호하기 위해 프로필 파일 암호화를 활성화하시겠습니까?
 
-You can enable or disable encryption later at any time by right-clicking the profile file to manage encryption settings.
-If you click Cancel, the profile file will remain unencrypted.</value>
+나중에 언제든지 프로필 파일을 마우스 오른쪽 버튼으로 클릭하여 암호화 설정을 관리하여 암호화를 활성화 또는 비활성화할 수 있습니다.
+"취소"를 클릭하면 프로필 파일은 암호화되지 않은 상태로 유지됩니다.</value>
   </data>
 </root>
