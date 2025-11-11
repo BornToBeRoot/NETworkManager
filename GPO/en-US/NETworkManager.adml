@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+                          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                          revision="1.0" 
+                          schemaVersion="1.0" 
+                          xmlns="http://www.microsoft.com/GroupPolicy/PolicyDefinitions">
+  <displayName>NETworkManager Policy Settings</displayName>
+  <description>Policy settings for NETworkManager</description>
+  <resources>
+    <stringTable>      
+      <string id="RequiresNETworkManager20251111">At least NETworkManager 2025.11.11.0</string>
+      <string id="DisableUpdateCheck">Disable Update Check</string>
+      <string id="DisableUpdateCheckMessage">When enabled, this policy prevents NETworkManager from checking for updates on startup. When disabled or not configured, update checks are performed.</string>
+    </stringTable>
+  </resources>
+</policyDefinitionResources>
