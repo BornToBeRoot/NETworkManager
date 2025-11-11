@@ -660,7 +660,7 @@ public static class ProfileDialogManager
             Strings.Delete);
 
         viewModel.OnProfileManagerDialogClose();
-        
+
         if (!result)
             return;
 

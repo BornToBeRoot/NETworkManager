@@ -366,7 +366,7 @@ public class SettingsProfilesViewModel : ViewModelBase
         // Re-select the profile file
         if (string.IsNullOrEmpty(profileName))
             return;
-                
+
         SelectedProfileFile = ProfileFiles.Cast<ProfileFileInfo>()
             .FirstOrDefault(p => p.Name.Equals(profileName, StringComparison.OrdinalIgnoreCase));
     }

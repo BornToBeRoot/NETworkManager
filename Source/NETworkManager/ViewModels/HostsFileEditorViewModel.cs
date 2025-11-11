@@ -396,7 +396,7 @@ public class HostsFileEditorViewModel : ViewModelBase
             string.Format(Strings.DeleteHostsFileEntryMessage, SelectedResult.IPAddress, SelectedResult.Hostname,
                 string.IsNullOrEmpty(SelectedResult.Comment) ? "" : $"# {SelectedResult.Comment}"),
             ChildWindowIcon.Info,
-                        Strings.Delete
+            Strings.Delete
             );
 
 

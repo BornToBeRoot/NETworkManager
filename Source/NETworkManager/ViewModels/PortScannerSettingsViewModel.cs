@@ -238,10 +238,10 @@ public class PortScannerSettingsViewModel : ViewModelBase
     private async Task DeletePortProfile()
     {
         var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
-               Strings.DeletePortProfile,
-               Strings.DeletePortProfileMessage,
-               ChildWindowIcon.Info,
-               Strings.Delete);
+            Strings.DeletePortProfile,
+            Strings.DeletePortProfileMessage,
+            ChildWindowIcon.Info,
+            Strings.Delete);
 
         if (!result)
             return;
