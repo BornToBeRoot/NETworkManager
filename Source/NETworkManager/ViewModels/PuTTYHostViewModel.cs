@@ -1,6 +1,7 @@
 ﻿using Dragablz;
 using log4net;
 using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
@@ -239,7 +240,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-    
+
     private readonly GroupExpanderStateStore _groupExpanderStateStore = new();
     public GroupExpanderStateStore GroupExpanderStateStore => _groupExpanderStateStore;
 
@@ -504,7 +505,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     private void OpenProfileFilterAction()
     {
         ConfigurationManager.Current.IsProfileFilterPopupOpen = true;
-        
+
         ProfileFilterIsOpen = true;
     }
 
@@ -524,7 +525,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         _searchDisabled = true;
         Search = string.Empty;
         _searchDisabled = false;
-        
+
         foreach (var tag in ProfileFilterTags)
             tag.IsSelected = false;
 
@@ -547,7 +548,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     {
         SetIsExpandedForAllProfileGroups(false);
     }
-    
+
     public ICommand OpenSettingsCommand => new RelayCommand(_ => OpenSettingsAction());
 
     private static void OpenSettingsAction()
@@ -588,16 +589,15 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
             Log.Warn("Install PuTTY or configure the path in the settings.");
     }
 
-    private async Task Connect(string host = null)
+    private Task Connect(string host = null)
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.Connect
-        };
+        var childWindow = new PuTTYConnectChildWindow();
 
-        var connectViewModel = new PuTTYConnectViewModel(async instance =>
+        var childWindowViewModel = new PuTTYConnectViewModel(instance =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
             ConfigurationManager.OnDialogClose();
 
             // Create profile info
@@ -630,19 +630,23 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
             AddProfileToHistory(instance.Profile);
 
             Connect(sessionInfo);
-        }, async _ =>
-        {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            ConfigurationManager.OnDialogClose();
-        }, host);
+        }, _ =>
+         {
+             childWindow.IsOpen = false;
+             ConfigurationManager.Current.IsChildWindowOpen = false;
 
-        customDialog.Content = new PuTTYConnectDialog
-        {
-            DataContext = connectViewModel
-        };
+             ConfigurationManager.OnDialogClose();
+         }, host);
+
+        childWindow.Title = Strings.Connect;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
 
         ConfigurationManager.OnDialogOpen();
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     private void ConnectProfile()
@@ -660,7 +664,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         ProcessStartInfo info = new()
         {
             FileName = SettingsManager.Current.PuTTY_ApplicationFilePath,
-            Arguments = Models.PuTTY.PuTTY.BuildCommandLine(sessionInfo)
+            Arguments = PuTTY.BuildCommandLine(sessionInfo)
         };
 
         Process.Start(info);
@@ -761,7 +765,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         foreach (var group in Profiles.Groups.Cast<CollectionViewGroup>())
             GroupExpanderStateStore[group.Name.ToString()] = isExpanded;
     }
-    
+
     private void ResizeProfile(bool dueToChangedSize)
     {
         _canProfileWidthChange = false;
@@ -907,7 +911,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     {
         ConfigurationManager.Current.IsProfileFilterPopupOpen = false;
     }
-    
+
     public void OnProfileManagerDialogOpen()
     {
         ConfigurationManager.OnDialogOpen();

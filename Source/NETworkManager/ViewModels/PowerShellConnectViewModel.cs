@@ -18,7 +18,7 @@ public class PowerShellConnectViewModel : ViewModelBase
 
     private bool _enableRemoteConsole;
 
-    private List<ExecutionPolicy> _executionPolicies = new();
+    private List<ExecutionPolicy> _executionPolicies = [];
 
     private ExecutionPolicy _executionPolicy;
 
