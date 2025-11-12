@@ -269,7 +269,7 @@ export default function Home() {
           <div className="gallery-container2">
             <img
               src="/img/preview_tabs_drag_drop.gif"
-              alt="NETworkManager animation"
+              alt="NETworkManager Tabs and Drag & Drop"
               className={styles.image}
             />
           </div>
