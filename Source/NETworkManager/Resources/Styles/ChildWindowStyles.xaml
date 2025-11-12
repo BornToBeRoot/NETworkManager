@@ -10,7 +10,7 @@
         <Setter Property="TitleBarNonActiveBackground" Value="Transparent" />
         <Setter Property="OverlayBrush" Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray.SemiTransparent}" />
         <Setter Property="TitleForeground" Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
-        <Setter Property="ChildWindowWidth" Value="450" />
+        <Setter Property="ChildWindowWidth" Value="500" />
         <Setter Property="ChildWindowMaxHeight" Value="500" />
     </Style>
 </ResourceDictionary>

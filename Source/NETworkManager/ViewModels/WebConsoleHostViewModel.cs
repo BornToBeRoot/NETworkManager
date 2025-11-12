@@ -1,5 +1,6 @@
 ﻿using Dragablz;
 using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
 using Microsoft.Web.WebView2.Core;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
@@ -485,16 +486,15 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
 
     #region Methods
 
-    private async Task Connect()
+    private Task Connect()
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.Connect
-        };
+        var childWindow = new WebConsoleConnectChildWindow();
 
-        var connectViewModel = new WebConsoleConnectViewModel(async instance =>
+        var childWindowViewModel = new WebConsoleConnectViewModel(instance =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
             ConfigurationManager.OnDialogClose();
 
             // Create profile info
@@ -509,19 +509,23 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
             AddUrlToHistory(instance.Url);
 
             Connect(info);
-        }, async _ =>
+        }, _ =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
             ConfigurationManager.OnDialogClose();
         });
 
-        customDialog.Content = new WebConsoleConnectDialog
-        {
-            DataContext = connectViewModel
-        };
+        childWindow.Title = Strings.Connect;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
 
         ConfigurationManager.OnDialogOpen();
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     private void ConnectProfile()

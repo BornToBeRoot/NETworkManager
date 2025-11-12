@@ -527,7 +527,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     // Connect via Dialog
     private Task Connect(string host = null)
     {
-        var childWindow = new RemoteDesktopConnectChildWindow(Application.Current.MainWindow);
+        var childWindow = new RemoteDesktopConnectChildWindow();
 
         var childWindowViewModel = new RemoteDesktopConnectViewModel(instance =>
         {
@@ -606,7 +606,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
         var sessionInfo = RemoteDesktop.CreateSessionInfo(profileInfo);
 
-        var childWindow = new RemoteDesktopConnectChildWindow(Application.Current.MainWindow);
+        var childWindow = new RemoteDesktopConnectChildWindow();
 
         var childWindowViewModel = new RemoteDesktopConnectViewModel(instance =>
         {

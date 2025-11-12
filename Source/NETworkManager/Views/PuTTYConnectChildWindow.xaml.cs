@@ -4,9 +4,9 @@ using System.Windows.Threading;
 
 namespace NETworkManager.Views;
 
-public partial class RemoteDesktopConnectChildWindow
+public partial class PuTTYConnectChildWindow
 {
-    public RemoteDesktopConnectChildWindow()
+    public PuTTYConnectChildWindow()
     {
         InitializeComponent();
     }

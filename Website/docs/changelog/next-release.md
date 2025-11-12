@@ -13,9 +13,12 @@ Release date: **xx.xx.2025**
 **System requirements**
 
 - Windows 10 / Server x64 (22H2 or later)
-- [.NET Desktop Runtime 8.0 (LTS) - x64](https://dotnet.microsoft.com/en-us/download/dotnet/8.0/runtime)
+- [.NET Desktop Runtime 10.0 (LTS) - x64](https://dotnet.microsoft.com/en-us/download/dotnet/10.0/runtime)
 
 ## Breaking Changes
+
+- Migrated from .NET 8.0 (LTS) to .NET 10.0 (LTS).
+  Upgrade your [.NET Desktop Runtime to version 10.0 (LTS) - x64](https://dotnet.microsoft.com/en-us/download/dotnet/10.0/runtime) before you install this version. [#3229](https://github.com/BornToBeRoot/NETworkManager/pull/3229)
 
 ## What's new?
 
@@ -35,15 +38,27 @@ Release date: **xx.xx.2025**
 
 - Redesign RDP connect dialog (migrated from dialog to child window). [#3216](https://github.com/BornToBeRoot/NETworkManager/pull/3216)
 
+**PowerShell**
+
+- Redesign PowerShell connect dialog (migrated from dialog to child window). [#3234](https://github.com/BornToBeRoot/NETworkManager/pull/3234)
+
+**PuTTY**
+
+- Redesign PuTTY connect dialog (migrated from dialog to child window). [#3234](https://github.com/BornToBeRoot/NETworkManager/pull/3234)
+
+**Web Console**
+
+- Redesign Web Console connect dialog (migrated from dialog to child window). [#3234](https://github.com/BornToBeRoot/NETworkManager/pull/3234)
+
 ## Bug Fixes
 
-- The new profile filter popup indroduced in version `2025.10.18.0` was instantly closed when a `PuTTY`, `PowerShell` or `AWS Session Manager` session was opened and the respective application / view was selected. [#3219](https://github.com/BornToBeRoot/NETworkManager/pull/3219)
+- The new profile filter popup introduced in version `2025.10.18.0` was instantly closed when a `PuTTY`, `PowerShell` or `AWS Session Manager` session was opened and the respective application / view was selected. [#3219](https://github.com/BornToBeRoot/NETworkManager/pull/3219)
 
 ## Dependencies, Refactoring & Documentation
 
 - Documentation updated
-- Code cleanup & refactoring 
-    - Introduced a new DialogHelper utility to centralize creation of `OK` and `OK/Cancel` dialogs. This reduces duplication and enforces a consistent layout. [#3231](https://github.com/BornToBeRoot/NETworkManager/pull/3231)
+- Code cleanup & refactoring
+  - Introduced a new DialogHelper utility to centralize creation of `OK` and `OK/Cancel` dialogs. This reduces duplication and enforces a consistent layout. [#3231](https://github.com/BornToBeRoot/NETworkManager/pull/3231)
 - Migrated existing credential and profile dialogs to use DialogHelper, improving usability, accessibility and maintainability across the app. [#3231](https://github.com/BornToBeRoot/NETworkManager/pull/3231)
 - Language files updated via [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration)
 - Dependencies updated via [#dependabot](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot)
