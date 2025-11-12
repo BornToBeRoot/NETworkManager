@@ -58,6 +58,15 @@
   </p>
 </div>
 
+<div align="center">
+  <img alt="NETworkManager Features Preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Website/static/img/preview-features.gif?raw=true" />
+  <details>
+    <summary>See more screenshots and NETworkManager in action!</summary>  
+    <img alt="" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Website/static/img/preview_tabs_drag_drop.gif?raw=true" />
+    <img alt="NETworkManager dark/light theme preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Website/static/img/preview-light-theme.png?raw=true" />
+  </details>
+</div>
+
 ## 🚀 Why NETworkManager?
 
 NETworkManager is your go-to tool for simplifying network administration and troubleshooting. Whether you're a sysadmin maintaining company network with multiple servers, a network engineer in a large enterprise, or an IT enthusiast running your home lab, NETworkManager provides a powerful suite of tools to manage and diagnose your network infrastructure efficiently.
@@ -68,23 +77,11 @@ Here's why you'll love it:
 - 🖥️ **Remote System Management** - Connect to remote systems seamlessly via RDP, PuTTY (SSH, Telnet, Serial), PowerShell (WinRM), TigerVNC (VNC), or AWS Session Manager.
 - 🔍 **Analyze & Troubleshoot** - Deep network diagnostics with WiFi Analyzer, IP/Port Scanners, Ping Monitor, Traceroute, DNS Lookup, LLDP/CDP Capture, and <a href="https://borntoberoot.net/NETworkManager/docs/features">many more</a>.
 - 🔐 **Secure Profiles** - Organize hosts and networks in encrypted profiles with seamless access across all features.
-  <details>
-  <summary>See it in Action</summary>
-    tbd
-  </details>
 - 💎 **Open Source & Free** - No ads, no subscriptions, fully community-driven.
 - 🏢 **Enterprise-Ready** - MSI installer, signed binaries, and package manager support (Chocolatey, WinGet, Evergreen).
 - 🎨 **Personalized Experience** - Available in 16+ languages, with customizable light/dark themes and accent colors.
-  <details>
-    <summary>Theme preview</summary>
-    <img alt="NETworkManager Light Theme" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Website/static/img/preview-light-theme.png?raw=true" />   
-  </details>
 
 📖 Explore all features in detail on our [documentation page](https://borntoberoot.net/NETworkManager/docs/features).
-
-<div align="center">
-  <img alt="NETworkManager Features Preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Website/static/img/preview-features.gif?raw=true" />
-</div>
 
 ## 📦 Download
 
