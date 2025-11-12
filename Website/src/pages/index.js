@@ -26,7 +26,7 @@ import ImageGalleryWhois from "@site/docs/img/whois.png";
 import ImageGalleryIPGeolocation from "@site/docs/img/ip-geolocation.png";
 import ImageGallerySubnetCalculatorCalculator from "@site/docs/img/subnet-calculator--calculator.png";
 
-import ImageGalleryTabsDragDrop from "./img/preview_tabs_drag_drop.gif";
+const ImageGalleryTabsDragDrop = "/img/preview_tabs_drag_drop.gif";
 
 import ImageGalleryProfilesOverView from "@site/docs/img/profiles--overview.png";
 import ImageGalleryProfilesProfileSettings from "@site/docs/img/profiles--profile-settings.png";
