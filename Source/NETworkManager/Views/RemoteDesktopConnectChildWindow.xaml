@@ -15,7 +15,7 @@
                                CloseButtonCommand="{Binding Path=CancelCommand}"
                                Style="{StaticResource DefaultChildWindow}"                               
                                Loaded="ChildWindow_OnLoaded"
-                               mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ProfileViewModel}">
+                               mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:RemoteDesktopConnectViewModel}">
     <simpleChildWindow:ChildWindow.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />

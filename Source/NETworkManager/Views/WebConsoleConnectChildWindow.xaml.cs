@@ -4,9 +4,9 @@ using System.Windows.Threading;
 
 namespace NETworkManager.Views;
 
-public partial class RemoteDesktopConnectChildWindow
+public partial class WebConsoleConnectChildWindow
 {
-    public RemoteDesktopConnectChildWindow()
+    public WebConsoleConnectChildWindow()
     {
         InitializeComponent();
     }
@@ -15,7 +15,7 @@ public partial class RemoteDesktopConnectChildWindow
     {
         Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate
         {
-            ComboBoxHost.Focus();
+            ComboBoxUrl.Focus();
         }));
     }
 }

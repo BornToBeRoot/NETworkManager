@@ -1,6 +1,7 @@
 ﻿using Dragablz;
 using log4net;
 using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
@@ -579,16 +580,15 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
             Log.Warn("Install PowerShell or configure the path in the settings.");
     }
 
-    private async Task Connect(string host = null)
+    private Task Connect(string host = null)
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.Connect
-        };
+        var childWindow = new PowerShellConnectChildWindow();
 
-        var connectViewModel = new PowerShellConnectViewModel(async instance =>
+        var childWindowViewModel = new PowerShellConnectViewModel(instance =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
             ConfigurationManager.OnDialogClose();
 
             // Create profile info
@@ -606,21 +606,24 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
             //       Otherwise, in some cases, incorrect values are taken over.
             AddHostToHistory(instance.Host);
 
-            // Connect
             Connect(sessionInfo);
-        }, async _ =>
+        }, _ =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
             ConfigurationManager.OnDialogClose();
         }, host);
 
-        customDialog.Content = new PowerShellConnectDialog
-        {
-            DataContext = connectViewModel
-        };
+        childWindow.Title = Strings.Connect;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
 
         ConfigurationManager.OnDialogOpen();
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+
+        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     private void ConnectProfile()
