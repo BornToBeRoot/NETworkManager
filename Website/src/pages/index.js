@@ -268,8 +268,8 @@ export default function Home() {
           </Heading>
           <div className="gallery-container2">
             <img
-              src="/img/preview_tabs_drag_drop.gif"
-              alt="NETworkManager Tabs and Drag & Drop"
+              src="./img/preview_tabs_drag_drop.gif"
+              alt="NETworkManager tabs and drag & drop preview"
               className={styles.image}
             />
           </div>
