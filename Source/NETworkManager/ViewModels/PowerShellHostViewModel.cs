@@ -606,9 +606,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
             //       Otherwise, in some cases, incorrect values are taken over.
             AddHostToHistory(instance.Host);
 
-            // Connect
             Connect(sessionInfo);
-
         }, _ =>
         {
             childWindow.IsOpen = false;

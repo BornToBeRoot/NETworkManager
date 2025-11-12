@@ -631,12 +631,12 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
             Connect(sessionInfo);
         }, _ =>
-         {
-             childWindow.IsOpen = false;
-             ConfigurationManager.Current.IsChildWindowOpen = false;
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
 
-             ConfigurationManager.OnDialogClose();
-         }, host);
+            ConfigurationManager.OnDialogClose();
+        }, host);
 
         childWindow.Title = Strings.Connect;
 
