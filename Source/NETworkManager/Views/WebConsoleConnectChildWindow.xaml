@@ -1,17 +1,19 @@
-﻿<UserControl x:Class="NETworkManager.Views.WebConsoleConnectDialog"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
-             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-             xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-             mc:Ignorable="d" Loaded="UserControl_Loaded"
-             d:DataContext="{d:DesignInstance viewModels:WebConsoleConnectViewModel}">
-    <UserControl.Resources>
-    </UserControl.Resources>
-    <Grid Margin="0,20">
+﻿<simpleChildWindow:ChildWindow x:Class="NETworkManager.Views.WebConsoleConnectChildWindow"
+                               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                               xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
+                               xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                               xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+                               xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+                               xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
+                               xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"                               
+                               CloseButtonCommand="{Binding Path=CancelCommand}"
+                               Style="{StaticResource DefaultChildWindow}"                               
+                               Loaded="ChildWindow_OnLoaded"
+                               mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:WebConsoleConnectViewModel}">    
+    <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -33,10 +35,10 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.URL}" />
             <ComboBox x:Name="ComboBoxUrl"
-                      Grid.Column="2" Grid.Row="0"
-                      ItemsSource="{Binding UrlHistoryView}"
-                      mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleWebsiteUri}"
-                      Style="{StaticResource EditableComboBox}">
+               Grid.Column="2" Grid.Row="0"
+               ItemsSource="{Binding UrlHistoryView}"
+               mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleWebsiteUri}"
+               Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Url" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -49,7 +51,7 @@
         </Grid>
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{x:Static localization:Strings.Connect}" Command="{Binding ConnectCommand}"
-                    IsDefault="True" Margin="0,0,10,0">
+             IsDefault="True" Margin="0,0,10,0">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
                         <Setter Property="IsEnabled" Value="False" />
@@ -57,7 +59,7 @@
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxUrl}"
-                                               Value="False" />
+                                        Value="False" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="True" />
@@ -68,7 +70,7 @@
                 </Button.Style>
             </Button>
             <Button Content="{x:Static localization:Strings.Cancel}" Command="{Binding CancelCommand}" IsCancel="True"
-                    Style="{StaticResource DefaultButton}" />
+             Style="{StaticResource DefaultButton}" />
         </StackPanel>
     </Grid>
-</UserControl>
+</simpleChildWindow:ChildWindow>

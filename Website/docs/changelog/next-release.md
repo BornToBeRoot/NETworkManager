@@ -46,6 +46,10 @@ Release date: **xx.xx.2025**
 
 - Redesign PuTTY connect dialog (migrated from dialog to child window). [#3234](https://github.com/BornToBeRoot/NETworkManager/pull/3234)
 
+**Web Console**
+
+- Redesign Web Console connect dialog (migrated from dialog to child window). [#3234](https://github.com/BornToBeRoot/NETworkManager/pull/3234)
+
 ## Bug Fixes
 
 - The new profile filter popup indroduced in version `2025.10.18.0` was instantly closed when a `PuTTY`, `PowerShell` or `AWS Session Manager` session was opened and the respective application / view was selected. [#3219](https://github.com/BornToBeRoot/NETworkManager/pull/3219)
@@ -53,8 +57,8 @@ Release date: **xx.xx.2025**
 ## Dependencies, Refactoring & Documentation
 
 - Documentation updated
-- Code cleanup & refactoring 
-    - Introduced a new DialogHelper utility to centralize creation of `OK` and `OK/Cancel` dialogs. This reduces duplication and enforces a consistent layout. [#3231](https://github.com/BornToBeRoot/NETworkManager/pull/3231)
+- Code cleanup & refactoring
+  - Introduced a new DialogHelper utility to centralize creation of `OK` and `OK/Cancel` dialogs. This reduces duplication and enforces a consistent layout. [#3231](https://github.com/BornToBeRoot/NETworkManager/pull/3231)
 - Migrated existing credential and profile dialogs to use DialogHelper, improving usability, accessibility and maintainability across the app. [#3231](https://github.com/BornToBeRoot/NETworkManager/pull/3231)
 - Language files updated via [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration)
 - Dependencies updated via [#dependabot](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot)
