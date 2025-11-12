@@ -254,7 +254,7 @@ export default function Home() {
         <HomepageFeatures />
         <div className="container text--center margin-top--xl margin-bottom--xl">
           <Heading as="h2">
-            Explore the powerful features of NETworkManager...
+            Explore the powerful features...
           </Heading>
           <div className="gallery-container1">
             <ImageGallery
