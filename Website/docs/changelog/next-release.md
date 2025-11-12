@@ -13,9 +13,12 @@ Release date: **xx.xx.2025**
 **System requirements**
 
 - Windows 10 / Server x64 (22H2 or later)
-- [.NET Desktop Runtime 8.0 (LTS) - x64](https://dotnet.microsoft.com/en-us/download/dotnet/8.0/runtime)
+- [.NET Desktop Runtime 10.0 (LTS) - x64](https://dotnet.microsoft.com/en-us/download/dotnet/10.0/runtime)
 
 ## Breaking Changes
+
+- Migrated from .NET 8.0 (LTS) to .NET 10.0 (LTS).
+  Upgrade your [.NET Desktop Runtime to version 10.0 (LTS) - x64](https://dotnet.microsoft.com/en-us/download/dotnet/10.0/runtime) before you install this version. [#3229](https://github.com/BornToBeRoot/NETworkManager/pull/3229)
 
 ## What's new?
 
