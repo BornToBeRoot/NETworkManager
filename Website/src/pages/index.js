@@ -26,7 +26,7 @@ import ImageGalleryWhois from "@site/docs/img/whois.png";
 import ImageGalleryIPGeolocation from "@site/docs/img/ip-geolocation.png";
 import ImageGallerySubnetCalculatorCalculator from "@site/docs/img/subnet-calculator--calculator.png";
 
-import ImageGalleryDragDrop from "@site/docs/img/changelog-2669.gif";
+import ImageGalleryTabsDragDrop from "./img/preview_tabs_drag_drop.gif";
 
 import ImageGalleryProfilesOverView from "@site/docs/img/profiles--overview.png";
 import ImageGalleryProfilesProfileSettings from "@site/docs/img/profiles--profile-settings.png";
@@ -224,8 +224,8 @@ export default function Home() {
 
   const images2 = [
     {
-      original: ImageGalleryDragDrop,
-      thumbnail: ImageGalleryDragDrop,
+      original: ImageGalleryTabsDragDrop,
+      thumbnail: ImageGalleryTabsDragDrop,
       originalAlt: "Tabs, drag & drop",
       description: "Tabs, drag & drop",
       thumbnailAlt: "Tabs, drag & drop",
@@ -265,7 +265,7 @@ export default function Home() {
       <main>
         <HomepageFeatures />
         <div className="container text--center margin-top--xl margin-bottom--xl">
-          <Heading as="h2">Preview of some features...</Heading>
+          <Heading as="h2">Explore the powerful features of NETworkManager...</Heading>
           <div className="gallery-container1">
             <ImageGallery
               autoPlay="true"
@@ -284,7 +284,7 @@ export default function Home() {
             />
           </div>
           <Heading as="h2" className="margin-top--xl">
-            ...and (encrypted) profiles...
+            ...and encrypted profiles...
           </Heading>
           <div className="gallery-container3">
             <ImageGallery
@@ -292,7 +292,7 @@ export default function Home() {
               items={images3}
               additionalClass={styles.image}
             />
-          </div>
+          </div>          
         </div>
       </main>
     </Layout>

@@ -61,7 +61,7 @@
 <div align="center">
   <img alt="NETworkManager Features Preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Website/static/img/preview-features.gif?raw=true" />
   <details>
-    <summary>See more screenshots and NETworkManager in action!</summary>  
+    <summary>View additional NETworkManager previews — drag & drop tabs, themes, and features in action!</summary>  
     <img alt="" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Website/static/img/preview_tabs_drag_drop.gif?raw=true" />
     <img alt="NETworkManager dark/light theme preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Website/static/img/preview-light-theme.png?raw=true" />
   </details>
