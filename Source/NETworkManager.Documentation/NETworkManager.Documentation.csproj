@@ -1,11 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <ProjectGuid>{95CE4AD5-14C0-4486-9C11-5D6A5EC48176}</ProjectGuid>
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
         <RootNamespace>NETworkManager.Documentation</RootNamespace>
         <AssemblyName>NETworkManager.Documentation</AssemblyName>
-        <TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
+        <TargetFramework>net10.0-windows10.0.22621.0</TargetFramework>
         <RuntimeIdentifier>win-x64</RuntimeIdentifier>
         <PlatformTarget>x64</PlatformTarget>
         <SelfContained>false</SelfContained>
@@ -114,3 +114,4 @@
         <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj"/>
     </ItemGroup>
 </Project>
+

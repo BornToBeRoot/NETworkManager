@@ -3,6 +3,9 @@ configuration: Release
 platform: x64
 install:
   - git submodule update --init
+  - ps: |
+      Invoke-WebRequest -Uri 'https://dot.net/v1/dotnet-install.ps1' -UseBasicParsing -OutFile "$env:temp\dotnet-install.ps1"
+      & $env:temp\dotnet-install.ps1 -Architecture x64 -Version '10.0.100' -InstallDir "$env:ProgramFiles\dotnet"
 before_build:
   - dotnet restore %APPVEYOR_BUILD_FOLDER%\Source\NETworkManager.sln
   - ps: |
@@ -47,7 +50,7 @@ after_build:
       }
 
       # Build path
-      $BuildPath = "$($env:APPVEYOR_BUILD_FOLDER)\Source\NETworkManager\bin\Release\net8.0-windows10.0.22621.0\win-x64"
+      $BuildPath = "$($env:APPVEYOR_BUILD_FOLDER)\Source\NETworkManager\bin\Release\net10.0-windows10.0.22621.0\win-x64"
       $SetupPath = "$($env:APPVEYOR_BUILD_FOLDER)\Source\NETworkManager.Setup\bin\x64\Release\en-US\NETworkManager.Setup.msi"
       $ArtifactsPath = "$($env:APPVEYOR_BUILD_FOLDER)\Artifacts"
 
