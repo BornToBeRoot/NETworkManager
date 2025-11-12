@@ -52,7 +52,7 @@ Release date: **xx.xx.2025**
 
 ## Bug Fixes
 
-- The new profile filter popup indroduced in version `2025.10.18.0` was instantly closed when a `PuTTY`, `PowerShell` or `AWS Session Manager` session was opened and the respective application / view was selected. [#3219](https://github.com/BornToBeRoot/NETworkManager/pull/3219)
+- The new profile filter popup introduced in version `2025.10.18.0` was instantly closed when a `PuTTY`, `PowerShell` or `AWS Session Manager` session was opened and the respective application / view was selected. [#3219](https://github.com/BornToBeRoot/NETworkManager/pull/3219)
 
 ## Dependencies, Refactoring & Documentation
 
