@@ -2978,9 +2978,6 @@ $$hostname$$	--&gt;	호스트이름</value>
   <data name="SettingsResetExclamationMark" xml:space="preserve">
     <value>설정이 재설정되었습니다!</value>
   </data>
-  <data name="ApplicationName_AWSSessionManager" xml:space="preserve">
-    <value>AWS 세션 관리자</value>
-  </data>
   <data name="InstanceId" xml:space="preserve">
     <value>인스턴스 ID</value>
   </data>
@@ -2993,46 +2990,14 @@ $$hostname$$	--&gt;	호스트이름</value>
   <data name="Library_log4net_Description" xml:space="preserve">
     <value>log4net은 프로그래머가 다양한 출력 대상에 로그 문장을 출력하는 데 도움이 되는 도구입니다.</value>
   </data>
-  <data name="AWSSessionManager" xml:space="preserve">
-    <value>AWS 세션 관리자</value>
-  </data>
   <data name="Enabled" xml:space="preserve">
     <value>사용함</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>지역</value>
   </data>
-  <data name="SyncEC2InstancesFromAWS" xml:space="preserve">
-    <value>AWS에서 EC2 인스턴스 동기화</value>
-  </data>
-  <data name="AddAWSProfile" xml:space="preserve">
-    <value>AWS 프로필 추가</value>
-  </data>
-  <data name="DeleteAWSProfile" xml:space="preserve">
-    <value>AWS 프로필 삭제</value>
-  </data>
-  <data name="DeleteAWSProfileMessage" xml:space="preserve">
-    <value>선택한 AWS 프로필이 영구적으로 삭제됩니다.
-
-~\.aws\credentials 파일에서는 프로필이 제거되지 않습니다.</value>
-  </data>
-  <data name="EditAWSProfile" xml:space="preserve">
-    <value>AWS 프로필 편집</value>
-  </data>
-  <data name="SyncAllEC2InstancesFromAWS" xml:space="preserve">
-    <value>AWS에서 모든 EC2 인스턴스 동기화</value>
-  </data>
-  <data name="SyncGroupEC2InstancesFromAWS" xml:space="preserve">
-    <value>AWS에서 그룹 EC2 인스턴스 동기화</value>
-  </data>
   <data name="ProfilesAndRegionsToSync" xml:space="preserve">
     <value>동기화할 프로필 및 지역</value>
-  </data>
-  <data name="HelpMessage_AWSSessionManagerProfilesAndRegionsToSync" xml:space="preserve">
-    <value>AWS에서 EC2 인스턴스를 동기화하려면 시스템에 AWS CLI를 구성해야 합니다. EC2 인스턴스는 여러 AWS 계정 (프로필)과 여러 리전에 대해 쿼리될 수 있습니다. 이를 위해 "~/.aws/credentials" 파일에 저장된 프로필과 쿼리할 리전을 함께 구성해야 합니다.</value>
-  </data>
-  <data name="Library_AWSSDKdotEC2_Description" xml:space="preserve">
-    <value>Amazon 웹 서비스 (AWS)의 Amazon 엘라스틱 컴퓨트 클라우드 (Amazon EC2)와 함께 작동하기 위한 .NET용 AWS SDK입니다.</value>
   </data>
   <data name="DefaultProfile" xml:space="preserve">
     <value>기본 프로필</value>
@@ -3040,39 +3005,8 @@ $$hostname$$	--&gt;	호스트이름</value>
   <data name="DefaultRegion" xml:space="preserve">
     <value>기본 지역</value>
   </data>
-  <data name="HelpMessage_AWSSessionManagerProfile" xml:space="preserve">
-    <value>AWS CLI를 통해 EC2 인스턴스에 연결할 때 수동으로 생성된 프로필에 사용되는 프로필입니다.
-
-설정하지 않으면 기본 AWS CLI 설정이 사용됩니다.</value>
-  </data>
-  <data name="HelpMessage_AWSSessionManagerRegion" xml:space="preserve">
-    <value>AWS CLI를 통해 EC2 인스턴스에 연결하기 위해 수동으로 생성된 프로필에서 사용하는 리전입니다.
-
-설정하지 않으면 기본 AWS CLI 설정이 사용됩니다.</value>
-  </data>
-  <data name="HelpMessage_AWSCLIDefaultsAreUsedIfNotSet" xml:space="preserve">
-    <value>설정하지 않으면 기본 AWS CLI 설정이 사용됩니다.</value>
-  </data>
   <data name="GroupNameCannotStartWithX" xml:space="preserve">
     <value>그룹 이름은 "{0}"로 시작할 수 없습니다!</value>
-  </data>
-  <data name="SyncOnlyRunningEC2InstancesFromAWS" xml:space="preserve">
-    <value>AWS에서 실행 중인 EC2 인스턴스만 동기화</value>
-  </data>
-  <data name="AnAWSRegionNamedXDoesNotExist" xml:space="preserve">
-    <value>"{0}" 라는 AWS 지역이 존재하지 않습니다!</value>
-  </data>
-  <data name="AWSCLIv2IsInstalled" xml:space="preserve">
-    <value>AWS CLI v2가 설치되었습니다!</value>
-  </data>
-  <data name="AWSCLIv2IsNotInstalled" xml:space="preserve">
-    <value>AWS CLI v2가 설치되지 않았습니다!</value>
-  </data>
-  <data name="AWSSessionManagerPluginIsInstalled" xml:space="preserve">
-    <value>AWS 세션 관리자 플러그인이 설치되었습니다!</value>
-  </data>
-  <data name="AWSSessionManagerPluginIsNotInstalled" xml:space="preserve">
-    <value>AWS 세션 플러그인이 포함되었습니다!</value>
   </data>
   <data name="CheckForPreReleases" xml:space="preserve">
     <value>사전 릴리스 확인</value>
