@@ -2982,9 +2982,6 @@ $$hostname$$	--&gt;	主机名</value>
   <data name="SettingsResetExclamationMark" xml:space="preserve">
     <value>设置已重置！</value>
   </data>
-  <data name="ApplicationName_AWSSessionManager" xml:space="preserve">
-    <value>AWS 会话管理器</value>
-  </data>
   <data name="InstanceId" xml:space="preserve">
     <value>实例 ID</value>
   </data>
@@ -2997,46 +2994,14 @@ $$hostname$$	--&gt;	主机名</value>
   <data name="Library_log4net_Description" xml:space="preserve">
     <value>log4net 是一款帮助程序员向各种输出目标输出日志语句的工具。</value>
   </data>
-  <data name="AWSSessionManager" xml:space="preserve">
-    <value>AWS 会话管理器</value>
-  </data>
   <data name="Enabled" xml:space="preserve">
     <value>启用</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>区域</value>
   </data>
-  <data name="SyncEC2InstancesFromAWS" xml:space="preserve">
-    <value>从 AWS 同步 EC2 实例</value>
-  </data>
-  <data name="AddAWSProfile" xml:space="preserve">
-    <value>添加 AWS 配置文件</value>
-  </data>
-  <data name="DeleteAWSProfile" xml:space="preserve">
-    <value>删除 AWS 配置文件</value>
-  </data>
-  <data name="DeleteAWSProfileMessage" xml:space="preserve">
-    <value>所选 AWS 配置文件将被永久删除。
-
-配置文件不会从 ~\.aws\credentials 文件中删除。</value>
-  </data>
-  <data name="EditAWSProfile" xml:space="preserve">
-    <value>编辑 AWS 配置文件</value>
-  </data>
-  <data name="SyncAllEC2InstancesFromAWS" xml:space="preserve">
-    <value>从 AWS 同步所有 EC2 实例</value>
-  </data>
-  <data name="SyncGroupEC2InstancesFromAWS" xml:space="preserve">
-    <value>从 AWS 同步 EC2 实例组</value>
-  </data>
   <data name="ProfilesAndRegionsToSync" xml:space="preserve">
     <value>要同步的配置文件和区域</value>
-  </data>
-  <data name="HelpMessage_AWSSessionManagerProfilesAndRegionsToSync" xml:space="preserve">
-    <value>要从 AWS 同步 EC2 实例，必须在系统上配置 AWS CLI。EC2 实例可通过多个 AWS 账户（配置文件）和多个区域进行查询。为此，必须配置存储在"~/.aws/credentials "文件中的配置文件以及要查询的区域。</value>
-  </data>
-  <data name="Library_AWSSDKdotEC2_Description" xml:space="preserve">
-    <value>AWS SDK for .NET 可与亚马逊网络服务（AWS）中的亚马逊弹性计算云（Amazon EC2）协同工作。</value>
   </data>
   <data name="DefaultProfile" xml:space="preserve">
     <value>默认配置文件</value>
@@ -3044,39 +3009,8 @@ $$hostname$$	--&gt;	主机名</value>
   <data name="DefaultRegion" xml:space="preserve">
     <value>默认区域</value>
   </data>
-  <data name="HelpMessage_AWSSessionManagerProfile" xml:space="preserve">
-    <value>手动创建用于通过 AWS CLI 连接 EC2 实例的配置文件。
-
-如果未设置，则使用默认的 AWS CLI 设置。</value>
-  </data>
-  <data name="HelpMessage_AWSSessionManagerRegion" xml:space="preserve">
-    <value>手动创建的配置文件用于通过AWS CLI连接到EC2实例的区域。
-
-如果未设置，则使用默认的AWS CLI设置。</value>
-  </data>
-  <data name="HelpMessage_AWSCLIDefaultsAreUsedIfNotSet" xml:space="preserve">
-    <value>如果未设置，则使用默认的AWS CLI设置。</value>
-  </data>
   <data name="GroupNameCannotStartWithX" xml:space="preserve">
     <value>组名不能以“{0}”开头！</value>
-  </data>
-  <data name="SyncOnlyRunningEC2InstancesFromAWS" xml:space="preserve">
-    <value>只同步 AWS 正在运行的 EC2 实例</value>
-  </data>
-  <data name="AnAWSRegionNamedXDoesNotExist" xml:space="preserve">
-    <value>名为"{0}"的 AWS 区域不存在！</value>
-  </data>
-  <data name="AWSCLIv2IsInstalled" xml:space="preserve">
-    <value>已安装 AWS CLI v2！</value>
-  </data>
-  <data name="AWSCLIv2IsNotInstalled" xml:space="preserve">
-    <value>未安装 AWS CLI v2！</value>
-  </data>
-  <data name="AWSSessionManagerPluginIsInstalled" xml:space="preserve">
-    <value>已安装 AWS 会话管理器插件！</value>
-  </data>
-  <data name="AWSSessionManagerPluginIsNotInstalled" xml:space="preserve">
-    <value>未安装 AWS 会话管理器插件！</value>
   </data>
   <data name="CheckForPreReleases" xml:space="preserve">
     <value>检查预发布版本</value>
