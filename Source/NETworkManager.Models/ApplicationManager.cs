@@ -27,7 +27,7 @@ public static class ApplicationManager
     /// <returns>IEnumerable with <see cref="ApplicationInfo" />.</returns>
     public static IEnumerable<ApplicationInfo> GetDefaultList()
     {
-        return [.. GetNames().Where(x => x != ApplicationName.None || x != ApplicationName.AWSSessionManager).Select(name => new ApplicationInfo(name, true, name == ApplicationName.Dashboard))];
+        return [.. GetNames().Where(x => x != ApplicationName.None && x != ApplicationName.AWSSessionManager).Select(name => new ApplicationInfo(name, true, name == ApplicationName.Dashboard))];
     }
 
     /// <summary>
