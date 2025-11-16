@@ -3007,9 +3007,6 @@ Questo limite è impostato dall'amministratore del server o dai criteri di rete.
   <data name="SettingsResetExclamationMark" xml:space="preserve">
     <value>Impostazioni ripristinate!</value>
   </data>
-  <data name="ApplicationName_AWSSessionManager" xml:space="preserve">
-    <value>Gestione sessioni AWS</value>
-  </data>
   <data name="InstanceId" xml:space="preserve">
     <value>ID istanza</value>
   </data>
@@ -3022,48 +3019,14 @@ Questo limite è impostato dall'amministratore del server o dai criteri di rete.
   <data name="Library_log4net_Description" xml:space="preserve">
     <value>log4net è uno strumento per creare un registro delle istruzioni di output del programmatore per una varietà di destinazioni di output.</value>
   </data>
-  <data name="AWSSessionManager" xml:space="preserve">
-    <value>Gestione sessioni AWS</value>
-  </data>
   <data name="Enabled" xml:space="preserve">
     <value>Abilitato</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>Regione</value>
   </data>
-  <data name="SyncEC2InstancesFromAWS" xml:space="preserve">
-    <value>Sincronizza istanze EC2 da AWS</value>
-  </data>
-  <data name="AddAWSProfile" xml:space="preserve">
-    <value>Aggiungi profilo AWS</value>
-  </data>
-  <data name="DeleteAWSProfile" xml:space="preserve">
-    <value>Elimina profilo AWS</value>
-  </data>
-  <data name="DeleteAWSProfileMessage" xml:space="preserve">
-    <value>Il profilo AWS selezionato verrà eliminato definitivamente.
-
-Il profilo non verrà rimosso dal file ~\.aws\credentials.</value>
-  </data>
-  <data name="EditAWSProfile" xml:space="preserve">
-    <value>Modifica profilo AWS</value>
-  </data>
-  <data name="SyncAllEC2InstancesFromAWS" xml:space="preserve">
-    <value>Sincronizza tutte le istanze EC2 da AWS</value>
-  </data>
-  <data name="SyncGroupEC2InstancesFromAWS" xml:space="preserve">
-    <value>Sincronizza istanze EC2 del gruppo da AWS</value>
-  </data>
   <data name="ProfilesAndRegionsToSync" xml:space="preserve">
     <value>Profili e regioni da sincronizzare</value>
-  </data>
-  <data name="HelpMessage_AWSSessionManagerProfilesAndRegionsToSync" xml:space="preserve">
-    <value>Per sincronizzare le istanze EC2 da AWS nel sistema deve essere configurata la CLI AWS. 
-Le istanze EC2 possono essere interrogate per più account AWS (profili) e più regioni. 
-Per fare ciò, il profilo memorizzato nel file "~/.aws/credentials" deve essere configurato insieme alla regione da interrogare.</value>
-  </data>
-  <data name="Library_AWSSDKdotEC2_Description" xml:space="preserve">
-    <value>SDK AWS per .NET per funzionare con Amazon Elastic Compute Cloud (Amazon EC2) in Amazon Web Services (AWS).</value>
   </data>
   <data name="DefaultProfile" xml:space="preserve">
     <value>Profilo predefinito</value>
@@ -3071,39 +3034,8 @@ Per fare ciò, il profilo memorizzato nel file "~/.aws/credentials" deve essere 
   <data name="DefaultRegion" xml:space="preserve">
     <value>Regione predefinita</value>
   </data>
-  <data name="HelpMessage_AWSSessionManagerProfile" xml:space="preserve">
-    <value>Profilo che verrà usato dai profili creati manualmente per connettersi a un'istanza EC2 tramite CLI AWS..
-
-Se non impostato, verranno usate le impostazioni predefinite della CLI AWS.</value>
-  </data>
-  <data name="HelpMessage_AWSSessionManagerRegion" xml:space="preserve">
-    <value>Regione usata dai profili creati manualmente per connettersi a un'istanza EC2 tramite CLI AWS .
-
-Se non impostata, verranno usate le impostazioni predefinite della CLI AWS.</value>
-  </data>
-  <data name="HelpMessage_AWSCLIDefaultsAreUsedIfNotSet" xml:space="preserve">
-    <value>Se non viene impostata, verranno usate le impostazioni CLI AWS predefinite.</value>
-  </data>
   <data name="GroupNameCannotStartWithX" xml:space="preserve">
     <value>Il nome gruppo non può iniziare con "{0}"!</value>
-  </data>
-  <data name="SyncOnlyRunningEC2InstancesFromAWS" xml:space="preserve">
-    <value>Sincronizza solo le istanze EC2 in esecuzione da AWS</value>
-  </data>
-  <data name="AnAWSRegionNamedXDoesNotExist" xml:space="preserve">
-    <value>Non esiste una regione AWS denominata "{0}"!</value>
-  </data>
-  <data name="AWSCLIv2IsInstalled" xml:space="preserve">
-    <value>CLI AWS v2 è installato!</value>
-  </data>
-  <data name="AWSCLIv2IsNotInstalled" xml:space="preserve">
-    <value>CLI AWS v2 non è installato!</value>
-  </data>
-  <data name="AWSSessionManagerPluginIsInstalled" xml:space="preserve">
-    <value>Il plugin Gestione sessioni AWS è installato!</value>
-  </data>
-  <data name="AWSSessionManagerPluginIsNotInstalled" xml:space="preserve">
-    <value>Il plugin Gestione sessioni AWS non è installato!</value>
   </data>
   <data name="CheckForPreReleases" xml:space="preserve">
     <value>Controlla disponibilità pre-release</value>
