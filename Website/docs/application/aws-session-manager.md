@@ -4,10 +4,20 @@ sidebar_position: 11
 
 # AWS Session Manager
 
+:::danger
+
+This feature has been removed! NETworkManager **2025.10.18.0** will be the last version to support the **AWS Session Manager** feature.
+
+The [AWS Session Manager Plugin](https://github.com/aws/session-manager-plugin) is not actively maintained and contains several bugs (e.g. German / Spain keyboard layout issues). The current code base was also difficult to maintain and extend, and I currently have no test environment.
+
+You can still use AWS Session Manager within NETworkManager with the [PowerShell](./powershell.md) feature by using the `aws ssm start-session --target <instance-id>` command.
+
+:::
+
 With **AWS** (Systems Manager) **Session Manager**, you can connect to and manage an EC2 instance without opening inbound ports, running a bastion host, or managing SSH keys. The integration of AWS Session Manager with NETworkManger supports tabs and profiles for hosts. The connection can be established via a profile (double-click, Enter key or right-click `Connect`) or directly via the [connection](#connect) dialog. You can also synchronize your EC2 instances from AWS. To connect to the instances a PowerShell console is used with the AWS CLI and the AWS Session Manager plugin. The connection to the instances is established via the following command:
 
 ```PowerShell
-aws ssm start-session --target <INSTANCE_ID>
+aws ssm start-session --target <instance-id>
 ```
 
 :::note
@@ -281,7 +291,7 @@ Sensitive data like the API keys are stored in plain text in the file `~\.aws\cr
 You can verify the connection to the EC2 instance through AWS Systems Manager Session Manager by opening a PowerShell and connecting to the instance through AWS CLI:
 
 ```
-aws ssm start-session --target instance-id <INSTANCE_ID>
+aws ssm start-session --target instance-id <instance-id>
 ```
 
 ## Connect

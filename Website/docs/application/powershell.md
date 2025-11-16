@@ -4,7 +4,7 @@ sidebar_position: 9
 
 # PowerShell
 
-With **PowerShell** you can launch PowerShell consoles locally or connect to remote computers using [PowerShell Remoting](https://learn.microsoft.com/en-us/powershell/scripting/learn/ps101/08-powershell-remoting). You can also execute command-line applications such as `wsl`, `k9s`, or any other tools typically accessible from a PowerShell session. In addition, you can run PowerShell scripts directly within the console.
+With **PowerShell** you can launch PowerShell consoles locally or connect to remote computers using [PowerShell Remoting](https://learn.microsoft.com/en-us/powershell/scripting/learn/ps101/08-powershell-remoting). You can also execute command-line applications such as `wsl`, `aws ssm`, `k9s`, or any other tools typically accessible from a PowerShell session. In addition, you can run PowerShell scripts directly within the console.
 
 The integration of PowerShell with NETworkManger supports tabs and profiles for hosts (and tools). You can launch the console / establish a connection via a profile (double-click, Enter key or right-click `Connect`) or directly via the [connection](#connect) dialog.
 
@@ -22,11 +22,14 @@ Windows PowerShell and PowerShell are supported. Indructions for installing Powe
 
 :::tip
 
-Launching a command-line application such as `wsl` or `k9s` can be done by passing the [command](#command) to the PowerShell console.
+Launching a command-line application such as `wsl`, `aws ssm` or `k9s` can be done by passing the [command](#command) to the PowerShell console.
 
 ```powershell
 # Connect to WSL
 wsl -d <DISTRIBUTION>
+
+# Connect to an EC2 instance via AWS Session Manager
+aws ssm start-session --target <instance-id>
 
 # Connect to Kubernetes
 k9s --readonly
