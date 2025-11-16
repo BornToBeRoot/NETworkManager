@@ -95,8 +95,7 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
     private readonly HashSet<ApplicationName> _embeddedWindowApplicationNames =
     [
         ApplicationName.PowerShell,
-        ApplicationName.PuTTY,
-        ApplicationName.AWSSessionManager
+        ApplicationName.PuTTY
     ];
 
     private ApplicationName _applicationName;
@@ -306,36 +305,6 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
 
     #endregion
 
-    #region AWSSessionManager commands
-
-    private bool AWSSessionManager_IsConnected_CanExecute(object view)
-    {
-        if (view is AWSSessionManagerControl control)
-            return control.IsConnected;
-
-        return false;
-    }
-
-    public ICommand AWSSessionManager_ReconnectCommand => new RelayCommand(AWSSessionManager_ReconnectAction);
-
-    private void AWSSessionManager_ReconnectAction(object view)
-    {
-        if (view is AWSSessionManagerControl control)
-            if (control.ReconnectCommand.CanExecute(null))
-                control.ReconnectCommand.Execute(null);
-    }
-
-    public ICommand AWSSessionManager_ResizeWindowCommand => new RelayCommand(AWSSessionManager_ResizeWindowAction,
-        AWSSessionManager_IsConnected_CanExecute);
-
-    private void AWSSessionManager_ResizeWindowAction(object view)
-    {
-        if (view is AWSSessionManagerControl control)
-            control.ResizeEmbeddedWindow();
-    }
-
-    #endregion
-
     #region TigerVNC commands
 
     public ICommand TigerVNC_ReconnectCommand => new RelayCommand(TigerVNC_ReconnectAction);
@@ -389,10 +358,7 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
                 break;
             case ApplicationName.PuTTY:
                 ConfigurationManager.Current.IsPuTTYWindowDragging = false;
-                break;
-            case ApplicationName.AWSSessionManager:
-                ConfigurationManager.Current.IsAWSSessionManagerWindowDragging = false;
-                break;
+                break;            
             case ApplicationName.TigerVNC:
                 ConfigurationManager.Current.IsTigerVNCWindowDragging = false;
                 break;
@@ -415,10 +381,7 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
                 break;
             case ApplicationName.PuTTY:
                 ConfigurationManager.Current.IsPuTTYWindowDragging = e.NewValue;
-                break;
-            case ApplicationName.AWSSessionManager:
-                ConfigurationManager.Current.IsAWSSessionManagerWindowDragging = e.NewValue;
-                break;
+                break;            
             case ApplicationName.TigerVNC:
                 ConfigurationManager.Current.IsTigerVNCWindowDragging = e.NewValue;
                 break;

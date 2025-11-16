@@ -7,7 +7,6 @@ using NETworkManager.Documentation;
 using NETworkManager.Localization;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
-using NETworkManager.Models.AWS;
 using NETworkManager.Models.EventSystem;
 using NETworkManager.Models.Network;
 using NETworkManager.Profiles;
@@ -494,8 +493,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 SettingsManager.Current.General_ApplicationList = [.. ApplicationManager.GetDefaultList()];
                 SettingsManager.Current.IPScanner_CustomCommands = [.. IPScannerCustomCommand.GetDefaultList()];
                 SettingsManager.Current.PortScanner_PortProfiles = [.. PortProfile.GetDefaultList()];
-                SettingsManager.Current.DNSLookup_DNSServers = [.. DNSServer.GetDefaultList()];
-                SettingsManager.Current.AWSSessionManager_AWSProfiles = [.. AWSProfile.GetDefaultList()];
+                SettingsManager.Current.DNSLookup_DNSServers = [.. DNSServer.GetDefaultList()];                
                 SettingsManager.Current.SNMP_OidProfiles = [.. SNMPOIDProfile.GetDefaultList()];
                 SettingsManager.Current.SNTPLookup_SNTPServers = [.. SNTPServer.GetDefaultList()];
                 SettingsManager.Current.WelcomeDialog_Show = false;
@@ -690,8 +688,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     private DNSLookupHostView _dnsLookupHostView;
     private RemoteDesktopHostView _remoteDesktopHostView;
     private PowerShellHostView _powerShellHostView;
-    private PuTTYHostView _puttyHostView;
-    private AWSSessionManagerHostView _awsSessionManagerHostView;
+    private PuTTYHostView _puttyHostView;    
     private TigerVNCHostView _tigerVNCHostView;
     private WebConsoleHostView _webConsoleHostView;
     private SNMPHostView _snmpHostView;
@@ -806,15 +803,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                     _puttyHostView.OnViewVisible();
 
                 ContentControlApplication.Content = _puttyHostView;
-                break;
-            case ApplicationName.AWSSessionManager:
-                if (_awsSessionManagerHostView == null)
-                    _awsSessionManagerHostView = new AWSSessionManagerHostView();
-                else
-                    _awsSessionManagerHostView.OnViewVisible(fromSettings);
-
-                ContentControlApplication.Content = _awsSessionManagerHostView;
-                break;
+                break;            
             case ApplicationName.TigerVNC:
                 if (_tigerVNCHostView == null)
                     _tigerVNCHostView = new TigerVNCHostView();
@@ -978,10 +967,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 break;
             case ApplicationName.PuTTY:
                 _puttyHostView?.OnViewHide();
-                break;
-            case ApplicationName.AWSSessionManager:
-                _awsSessionManagerHostView?.OnViewHide();
-                break;
+                break;            
             case ApplicationName.TigerVNC:
                 _tigerVNCHostView?.OnViewHide();
                 break;
@@ -1109,9 +1095,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 break;
             case ApplicationName.PuTTY:
                 _puttyHostView.AddTab(data.Args);
-                break;
-            case ApplicationName.AWSSessionManager:
-                break;
+                break;            
             case ApplicationName.TigerVNC:
                 _tigerVNCHostView.AddTab(data.Args);
                 break;
@@ -1486,21 +1470,18 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
             ConfigurationManager.OnDialogOpen();
+
             await this.ShowMessageAsync(Strings.ProfileFileCouldNotBeLoaded,
                 string.Format(Strings.ProfileFileCouldNotBeLoadedMessage, ex.Message),
                 MessageDialogStyle.Affirmative, settings);
+
             ConfigurationManager.OnDialogClose();
         }
     }
 
     private void OnProfilesLoaded(ApplicationName name)
     {
-        switch (name)
-        {
-            case ApplicationName.AWSSessionManager:
-                _awsSessionManagerHostView?.OnProfileLoaded();
-                break;
-        }
+        
     }
 
     /// <summary>
@@ -2025,9 +2006,6 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 break;
             case ApplicationName.PuTTY:
                 _puttyHostView?.FocusEmbeddedWindow();
-                break;
-            case ApplicationName.AWSSessionManager:
-                _awsSessionManagerHostView?.FocusEmbeddedWindow();
                 break;
         }
     }

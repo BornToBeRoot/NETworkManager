@@ -17,7 +17,7 @@ public static class ApplicationManager
     /// <returns>IEnumerable with <see cref="ApplicationName" />.</returns>
     public static IEnumerable<ApplicationName> GetNames()
     {
-        return (ApplicationName[])Enum.GetValues(typeof(ApplicationName));
+        return Enum.GetValues<ApplicationName>();
     }
 
     /// <summary>
@@ -27,8 +27,7 @@ public static class ApplicationManager
     /// <returns>IEnumerable with <see cref="ApplicationInfo" />.</returns>
     public static IEnumerable<ApplicationInfo> GetDefaultList()
     {
-        return GetNames().Where(x => x != ApplicationName.None)
-            .Select(name => new ApplicationInfo(name, true, name == ApplicationName.Dashboard)).ToList();
+        return [.. GetNames().Where(x => x != ApplicationName.None || x != ApplicationName.AWSSessionManager).Select(name => new ApplicationInfo(name, true, name == ApplicationName.Dashboard))];
     }
 
     /// <summary>
@@ -76,10 +75,7 @@ public static class ApplicationManager
                 break;
             case ApplicationName.PuTTY:
                 canvas.Children.Add(new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.TerminalSolid });
-                break;
-            case ApplicationName.AWSSessionManager:
-                canvas.Children.Add(new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.AwsBrands });
-                break;
+                break;            
             case ApplicationName.TigerVNC:
                 canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.EyeOutline });
                 break;

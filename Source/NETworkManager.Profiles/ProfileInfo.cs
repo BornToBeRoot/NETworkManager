@@ -188,14 +188,6 @@ public class ProfileInfo
         PuTTY_OverrideAdditionalCommandLine = profile.PuTTY_OverrideAdditionalCommandLine;
         PuTTY_AdditionalCommandLine = profile.PuTTY_AdditionalCommandLine;
 
-        // AWS Session Manager
-        AWSSessionManager_Enabled = profile.AWSSessionManager_Enabled;
-        AWSSessionManager_InstanceID = profile.AWSSessionManager_InstanceID;
-        AWSSessionManager_OverrideProfile = profile.AWSSessionManager_OverrideProfile;
-        AWSSessionManager_Profile = profile.AWSSessionManager_Profile;
-        AWSSessionManager_OverrideRegion = profile.AWSSessionManager_OverrideRegion;
-        AWSSessionManager_Region = profile.AWSSessionManager_Region;
-
         // TigerVNC
         TigerVNC_Enabled = profile.TigerVNC_Enabled;
         TigerVNC_InheritHost = profile.TigerVNC_InheritHost;
@@ -441,13 +433,6 @@ public class ProfileInfo
     public string PuTTY_LogFileName { get; set; } = GlobalStaticConfiguration.PuTTY_LogFileName;
     public bool PuTTY_OverrideAdditionalCommandLine { get; set; }
     public string PuTTY_AdditionalCommandLine { get; set; }
-
-    public bool AWSSessionManager_Enabled { get; set; }
-    public string AWSSessionManager_InstanceID { get; set; }
-    public bool AWSSessionManager_OverrideProfile { get; set; }
-    public string AWSSessionManager_Profile { get; set; }
-    public bool AWSSessionManager_OverrideRegion { get; set; }
-    public string AWSSessionManager_Region { get; set; }
 
     public bool TigerVNC_Enabled { get; set; }
     public bool TigerVNC_InheritHost { get; set; } = true;

@@ -771,62 +771,7 @@
                                                         <MultiDataTrigger.Setters>
                                                             <Setter Property="Visibility" Value="Visible" />
                                                         </MultiDataTrigger.Setters>
-                                                    </MultiDataTrigger>
-                                                    <!-- AWS Session Manager -->
-                                                    <MultiDataTrigger>
-                                                        <MultiDataTrigger.Conditions>
-                                                            <Condition
-                                                                Binding="{Binding (profiles:ProfileViewInfo.Name)}"
-                                                                Value="{x:Static profiles:ProfileName.AWSSessionManager}" />
-                                                            <Condition
-                                                                Binding="{Binding Data.AWSSessionManager_Enabled, Source={StaticResource BindingProxy}}"
-                                                                Value="True" />
-                                                            <Condition
-                                                                Binding="{Binding ElementName=TextBoxAwsSessionManagerInstanceId, Path=(Validation.HasError)}"
-                                                                Value="True" />
-                                                        </MultiDataTrigger.Conditions>
-                                                        <MultiDataTrigger.Setters>
-                                                            <Setter Property="Visibility" Value="Visible" />
-                                                        </MultiDataTrigger.Setters>
-                                                    </MultiDataTrigger>
-                                                    <MultiDataTrigger>
-                                                        <MultiDataTrigger.Conditions>
-                                                            <Condition
-                                                                Binding="{Binding (profiles:ProfileViewInfo.Name)}"
-                                                                Value="{x:Static profiles:ProfileName.AWSSessionManager}" />
-                                                            <Condition
-                                                                Binding="{Binding Data.AWSSessionManager_Enabled, Source={StaticResource BindingProxy}}"
-                                                                Value="True" />
-                                                            <Condition
-                                                                Binding="{Binding Data.AWSSessionManager_OverrideProfile, Source={StaticResource BindingProxy}}"
-                                                                Value="True" />
-                                                            <Condition
-                                                                Binding="{Binding ElementName=TextBoxAwsSessionManagerProfile, Path=(Validation.HasError)}"
-                                                                Value="True" />
-                                                        </MultiDataTrigger.Conditions>
-                                                        <MultiDataTrigger.Setters>
-                                                            <Setter Property="Visibility" Value="Visible" />
-                                                        </MultiDataTrigger.Setters>
-                                                    </MultiDataTrigger>
-                                                    <MultiDataTrigger>
-                                                        <MultiDataTrigger.Conditions>
-                                                            <Condition
-                                                                Binding="{Binding (profiles:ProfileViewInfo.Name)}"
-                                                                Value="{x:Static profiles:ProfileName.AWSSessionManager}" />
-                                                            <Condition
-                                                                Binding="{Binding Data.AWSSessionManager_Enabled, Source={StaticResource BindingProxy}}"
-                                                                Value="True" />
-                                                            <Condition
-                                                                Binding="{Binding Data.AWSSessionManager_OverrideRegion, Source={StaticResource BindingProxy}}"
-                                                                Value="True" />
-                                                            <Condition
-                                                                Binding="{Binding ElementName=TextBoxAwsSessionManagerRegion, Path=(Validation.HasError)}"
-                                                                Value="True" />
-                                                        </MultiDataTrigger.Conditions>
-                                                        <MultiDataTrigger.Setters>
-                                                            <Setter Property="Visibility" Value="Visible" />
-                                                        </MultiDataTrigger.Setters>
-                                                    </MultiDataTrigger>
+                                                    </MultiDataTrigger>                                                    
                                                     <!-- TigerVNC -->
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
@@ -1193,12 +1138,7 @@
                                                                  Value="{x:Static profiles:ProfileName.PuTTY}">
                                                         <Setter Property="IsChecked"
                                                                 Value="{Binding DataContext.PuTTY_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type simpleChildWindow:ChildWindow}}}" />
-                                                    </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}"
-                                                                 Value="{x:Static profiles:ProfileName.AWSSessionManager}">
-                                                        <Setter Property="IsChecked"
-                                                                Value="{Binding DataContext.AWSSessionManager_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type simpleChildWindow:ChildWindow}}}" />
-                                                    </DataTrigger>
+                                                    </DataTrigger>                                                    
                                                     <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}"
                                                                  Value="{x:Static profiles:ProfileName.TigerVNC}">
                                                         <Setter Property="IsChecked"
@@ -3187,88 +3127,7 @@
                             </Grid>
                         </StackPanel>
                     </ScrollViewer>
-                </TabItem>
-                <TabItem Header="{x:Static localization:Strings.AWSSessionManager}">
-                    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
-                        <StackPanel IsEnabled="{Binding AWSSessionManager_Enabled}" Margin="0,0,0,20">
-                            <Grid>
-                                <Grid.Resources>
-                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
-                                </Grid.Resources>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="10" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="10" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="10" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="10" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="10" />
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="34" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0"
-                                           Text="{x:Static localization:Strings.InstanceId}" />
-                                <TextBox x:Name="TextBoxAwsSessionManagerInstanceId" Grid.Column="2" Grid.Row="0"
-                                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleAWSInstanceId}">
-                                    <TextBox.Text>
-                                        <Binding Path="AWSSessionManager_InstanceID" Mode="TwoWay"
-                                                 UpdateSourceTrigger="PropertyChanged">
-                                            <Binding.ValidationRules>
-                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4"
-                                           Text="{x:Static localization:Strings.OverrideDefaultSettings}"
-                                           Style="{StaticResource HeaderTextBlock}" Margin="0,10,0,0" />
-                                <Separator Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="4"
-                                           Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,0,0,10" />
-                                <CheckBox Grid.Column="0" Grid.Row="6"
-                                          Content="{x:Static localization:Strings.Profile}"
-                                          IsChecked="{Binding AWSSessionManager_OverrideProfile}"
-                                          Style="{StaticResource DefaultCheckBox}" />
-                                <TextBox x:Name="TextBoxAwsSessionManagerProfile" Grid.Column="2" Grid.Row="6"
-                                         IsEnabled="{Binding AWSSessionManager_OverrideProfile}"
-                                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleAWSProfile}">
-                                    <TextBox.Text>
-                                        <Binding Path="AWSSessionManager_Profile" Mode="TwoWay"
-                                                 UpdateSourceTrigger="PropertyChanged">
-                                            <Binding.ValidationRules>
-                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
-                                <CheckBox Grid.Column="0" Grid.Row="8" Content="{x:Static localization:Strings.Region}"
-                                          IsChecked="{Binding AWSSessionManager_OverrideRegion}"
-                                          Style="{StaticResource DefaultCheckBox}" />
-                                <TextBox x:Name="TextBoxAwsSessionManagerRegion" Grid.Column="2" Grid.Row="8"
-                                         IsEnabled="{Binding AWSSessionManager_OverrideRegion}"
-                                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleAWSRegion}">
-                                    <TextBox.Text>
-                                        <Binding Path="AWSSessionManager_Region" Mode="TwoWay"
-                                                 UpdateSourceTrigger="PropertyChanged">
-                                            <Binding.ValidationRules>
-                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                <validators:AWSRegionExistsValidator ValidatesOnTargetUpdated="True" />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
-                            </Grid>
-                        </StackPanel>
-                    </ScrollViewer>
-                </TabItem>
+                </TabItem>               
                 <TabItem Header="{x:Static localization:Strings.TigerVNC}">
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled">
                         <StackPanel IsEnabled="{Binding TigerVNC_Enabled}" Margin="0,0,0,20">
@@ -4482,43 +4341,7 @@
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />
                                 </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>
-                            <!-- AWS Session Manager -->
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding AWSSessionManager_Enabled}" Value="True" />
-                                    <Condition
-                                        Binding="{Binding ElementName=TextBoxAwsSessionManagerInstanceId, Path=(Validation.HasError)}"
-                                        Value="True" />
-                                </MultiDataTrigger.Conditions>
-                                <MultiDataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding AWSSessionManager_Enabled}" Value="True" />
-                                    <Condition Binding="{Binding AWSSessionManager_OverrideProfile}" Value="True" />
-                                    <Condition
-                                        Binding="{Binding ElementName=TextBoxAwsSessionManagerProfile, Path=(Validation.HasError)}"
-                                        Value="True" />
-                                </MultiDataTrigger.Conditions>
-                                <MultiDataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding AWSSessionManager_Enabled}" Value="True" />
-                                    <Condition Binding="{Binding AWSSessionManager_OverrideRegion}" Value="True" />
-                                    <Condition
-                                        Binding="{Binding ElementName=TextBoxAwsSessionManagerRegion, Path=(Validation.HasError)}"
-                                        Value="True" />
-                                </MultiDataTrigger.Conditions>
-                                <MultiDataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>
+                            </MultiDataTrigger>                            
                             <!-- TigerVNC -->
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>

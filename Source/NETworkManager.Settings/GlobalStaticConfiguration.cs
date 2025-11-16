@@ -198,10 +198,6 @@ public static class GlobalStaticConfiguration
     public static int PuTTY_RloginPort => 513;
     public static int PuTTY_RawPort => 23;
 
-    // Application: AWSSessionManager
-    public static bool AWSSessionManager_EnableSyncInstanceIDsFromAWS => false;
-    public static bool AWSSessionManager_SyncOnlyRunningInstancesFromAWS => true;
-
     // Application: TigerVNC
     public static int TigerVNC_DefaultVNCPort => 5900;
 

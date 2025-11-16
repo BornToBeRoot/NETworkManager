@@ -264,16 +264,6 @@ public class ProfileViewModel : ViewModelBase
         PuTTY_OverrideAdditionalCommandLine = profileInfo.PuTTY_OverrideAdditionalCommandLine;
         PuTTY_AdditionalCommandLine = profileInfo.PuTTY_AdditionalCommandLine;
 
-        // AWS Session Manager
-        AWSSessionManager_Enabled = editMode == ProfileEditMode.Add
-            ? applicationName == ApplicationName.AWSSessionManager
-            : profileInfo.AWSSessionManager_Enabled;
-        AWSSessionManager_InstanceID = profileInfo.AWSSessionManager_InstanceID;
-        AWSSessionManager_OverrideProfile = profileInfo.AWSSessionManager_OverrideProfile;
-        AWSSessionManager_Profile = profileInfo.AWSSessionManager_Profile;
-        AWSSessionManager_OverrideRegion = profileInfo.AWSSessionManager_OverrideRegion;
-        AWSSessionManager_Region = profileInfo.AWSSessionManager_Region;
-
         // TigerVNC
         TigerVNC_Enabled = editMode == ProfileEditMode.Add
             ? applicationName == ApplicationName.TigerVNC
@@ -2651,100 +2641,6 @@ public class ProfileViewModel : ViewModelBase
                 return;
 
             _puTTY_ConnectionMode = value;
-            OnPropertyChanged();
-        }
-    }
-
-    #endregion
-
-    #region AWS Session Manager
-
-    private bool _awsSessionManager_Enabled;
-
-    public bool AWSSessionManager_Enabled
-    {
-        get => _awsSessionManager_Enabled;
-        set
-        {
-            if (value == _awsSessionManager_Enabled)
-                return;
-
-            _awsSessionManager_Enabled = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private string _awsSessionManager_InstanceID;
-
-    public string AWSSessionManager_InstanceID
-    {
-        get => _awsSessionManager_InstanceID;
-        set
-        {
-            if (value == _awsSessionManager_InstanceID)
-                return;
-
-            _awsSessionManager_InstanceID = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private bool _awsSessionManager_OverrideProfile;
-
-    public bool AWSSessionManager_OverrideProfile
-    {
-        get => _awsSessionManager_OverrideProfile;
-        set
-        {
-            if (value == _awsSessionManager_OverrideProfile)
-                return;
-
-            _awsSessionManager_OverrideProfile = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private string _awsSessionManager_Profile;
-
-    public string AWSSessionManager_Profile
-    {
-        get => _awsSessionManager_Profile;
-        set
-        {
-            if (value == _awsSessionManager_Profile)
-                return;
-
-            _awsSessionManager_Profile = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private bool _awsSessionManager_OverrideRegion;
-
-    public bool AWSSessionManager_OverrideRegion
-    {
-        get => _awsSessionManager_OverrideRegion;
-        set
-        {
-            if (value == _awsSessionManager_OverrideRegion)
-                return;
-
-            _awsSessionManager_OverrideRegion = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private string _awsSessionManager_Region;
-
-    public string AWSSessionManager_Region
-    {
-        get => _awsSessionManager_Region;
-        set
-        {
-            if (value == _awsSessionManager_Region)
-                return;
-
-            _awsSessionManager_Region = value;
             OnPropertyChanged();
         }
     }

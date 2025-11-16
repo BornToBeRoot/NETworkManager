@@ -1,4 +1,6 @@
-﻿namespace NETworkManager.Models;
+﻿using Windows.Foundation.Metadata;
+
+namespace NETworkManager.Models;
 
 /// <summary>
 ///     Represents all available applications.
@@ -66,8 +68,8 @@ public enum ApplicationName
     PuTTY,
 
     /// <summary>
-    ///     AWS Systems Manager Session Manager.
-    /// </summary>
+    ///     AWS Session Manager application.
+    /// </summary>    
     AWSSessionManager,
 
     /// <summary>
