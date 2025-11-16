@@ -55,9 +55,6 @@ public static class DocumentationManager
         new DocumentationInfo(DocumentationIdentifier.ApplicationPutty,
             @"docs/application/putty"),
 
-        new DocumentationInfo(DocumentationIdentifier.ApplicationAWSSessionManager,
-            @"docs/application/aws-session-manager"),
-
         new DocumentationInfo(DocumentationIdentifier.ApplicationTigerVNC,
             @"docs/application/tigervnc"),
 
@@ -210,8 +207,7 @@ public static class DocumentationManager
             ApplicationName.DNSLookup => DocumentationIdentifier.ApplicationDnsLookup,
             ApplicationName.RemoteDesktop => DocumentationIdentifier.ApplicationRemoteDesktop,
             ApplicationName.PowerShell => DocumentationIdentifier.ApplicationPowerShell,
-            ApplicationName.PuTTY => DocumentationIdentifier.ApplicationPutty,
-            ApplicationName.AWSSessionManager => DocumentationIdentifier.ApplicationAWSSessionManager,
+            ApplicationName.PuTTY => DocumentationIdentifier.ApplicationPutty,            
             ApplicationName.TigerVNC => DocumentationIdentifier.ApplicationTigerVNC,
             ApplicationName.WebConsole => DocumentationIdentifier.ApplicationWebConsole,
             ApplicationName.SNMP => DocumentationIdentifier.ApplicationSnmp,
@@ -259,8 +255,7 @@ public static class DocumentationManager
             SettingsName.DNSLookup => GetIdentifierByApplicationName(ApplicationName.DNSLookup),
             SettingsName.RemoteDesktop => GetIdentifierByApplicationName(ApplicationName.RemoteDesktop),
             SettingsName.PowerShell => GetIdentifierByApplicationName(ApplicationName.PowerShell),
-            SettingsName.PuTTY => GetIdentifierByApplicationName(ApplicationName.PuTTY),
-            SettingsName.AWSSessionManager => GetIdentifierByApplicationName(ApplicationName.AWSSessionManager),
+            SettingsName.PuTTY => GetIdentifierByApplicationName(ApplicationName.PuTTY),            
             SettingsName.TigerVNC => GetIdentifierByApplicationName(ApplicationName.TigerVNC),
             SettingsName.SNMP => GetIdentifierByApplicationName(ApplicationName.SNMP),
             SettingsName.SNTPLookup => GetIdentifierByApplicationName(ApplicationName.SNTPLookup),

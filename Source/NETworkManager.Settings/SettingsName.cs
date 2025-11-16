@@ -22,7 +22,6 @@ public enum SettingsName
     RemoteDesktop,
     PowerShell,
     PuTTY,
-    AWSSessionManager,
     TigerVNC,
     WebConsole,
     SNMP,

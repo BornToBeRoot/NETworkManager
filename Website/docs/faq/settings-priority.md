@@ -1,21 +1,21 @@
-# Setting priority
+# Settings Priority
 
-## In which priority are settings applied?
+## How does NETworkManager prioritize settings across different levels (global, group, profile)?
 
-There are three levels of settings:
+NETworkManager uses a clear hierarchy to apply settings, allowing you to configure profiles with flexibility and precision. Settings are prioritized across three levels, from broadest to most specific:
 
-- **Global settings**
+1. **Global Settings**  
+   Default settings applied across all profiles in NETworkManager unless overridden.  
+   _Example_: A default SSH key file used for all network devices.
 
-  Global settings are the default settings of the application. They are used if no other settings are available.
+2. **Group Settings**  
+   Applied to all profiles within a specific group, overriding global settings. Use these to customize settings for a set of devices.  
+   _Example_: A unique SSH key file for a group of servers in a data center.
 
-- **Group settings**
+3. **Profile Settings**  
+   Specific to an individual profile, overriding both group and global settings. Use these for fine-tuned configurations on a single device.  
+   _Example_: A custom SSH key file for a critical server.
 
-  Group settings are applied to all profiles in a group. They overwrite global settings. E.g. for a specific group of servers to overwrite the SSH key file or Windows credentials.
+Settings are applied in this order:
 
-- **Profile settings**
-
-  Profile settings are applied to a specific profile. They overwrite group settings. E.g. for a specific server to overwrite the SSH key file or Windows credentials.
-
-The priority is as follows:
-
-`Global settings (default) → Group settings (overwrites global) → Profile settings (overwrites group)`
+**Global Settings (default) → Group Settings (overrides Global) → Profile Settings (overrides Group)**

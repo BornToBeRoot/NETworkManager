@@ -140,12 +140,6 @@ public class GroupInfo
         PuTTY_OverrideAdditionalCommandLine = group.PuTTY_OverrideAdditionalCommandLine;
         PuTTY_AdditionalCommandLine = group.PuTTY_AdditionalCommandLine;
 
-        // AWS Session Manager
-        AWSSessionManager_OverrideProfile = group.AWSSessionManager_OverrideProfile;
-        AWSSessionManager_Profile = group.AWSSessionManager_Profile;
-        AWSSessionManager_OverrideRegion = group.AWSSessionManager_OverrideRegion;
-        AWSSessionManager_Region = group.AWSSessionManager_Region;
-
         // TigerVNC
         TigerVNC_OverridePort = group.TigerVNC_OverridePort;
         TigerVNC_Port = group.TigerVNC_Port;
@@ -298,11 +292,6 @@ public class GroupInfo
     public string PuTTY_LogFileName { get; set; } = GlobalStaticConfiguration.PuTTY_LogFileName;
     public bool PuTTY_OverrideAdditionalCommandLine { get; set; }
     public string PuTTY_AdditionalCommandLine { get; set; }
-
-    public bool AWSSessionManager_OverrideProfile { get; set; }
-    public string AWSSessionManager_Profile { get; set; }
-    public bool AWSSessionManager_OverrideRegion { get; set; }
-    public string AWSSessionManager_Region { get; set; }
 
     public bool TigerVNC_OverridePort { get; set; }
     public int TigerVNC_Port { get; set; } = GlobalStaticConfiguration.TigerVNC_DefaultVNCPort;

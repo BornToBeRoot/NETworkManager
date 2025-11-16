@@ -20,6 +20,15 @@ Release date: **xx.xx.2025**
 - Migrated from .NET 8.0 (LTS) to .NET 10.0 (LTS).
   Upgrade your [.NET Desktop Runtime to version 10.0 (LTS) - x64](https://dotnet.microsoft.com/en-us/download/dotnet/10.0/runtime) before you install this version. [#3229](https://github.com/BornToBeRoot/NETworkManager/pull/3229)
 
+- `AWS Session Manager` feature has been removed. The [AWS Session Manager Plugin](https://github.com/aws/session-manager-plugin) is not actively maintained and contains several bugs (e.g. German / Spain keyboard layout issues). The current code base was also difficult to maintain and extend, and I currently have no test environment.
+  The Sync feature (EC2 instances -> Profiles) has been removed as well, because it was limited to AWS Session Manager only. This will be re-introduced in a future release to support multiple providers (`AWS`, `Azure`, etc.) and more features like `Ping Monitor`, `PuTTY` or `Remote Desktop`.
+
+  :::note
+
+  You can still use AWS Session Manager within NETworkManager with the PowerShell feature by using the `aws ssm start-session --target <instance-id>` command.
+
+  :::
+
 ## What's new?
 
 **Remote Desktop**

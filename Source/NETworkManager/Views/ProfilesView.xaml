@@ -405,11 +405,7 @@
                         <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}"
                                                 Header="{x:Static localization:Strings.PuTTY}"
                                                 Binding="{Binding (profiles:ProfileInfo.PuTTY_Enabled)}"
-                                                SortMemberPath="PuTTY_Enabled" MinWidth="80" Width="Auto" />
-                        <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}"
-                                                Header="{x:Static localization:Strings.AWSSessionManager}"
-                                                Binding="{Binding (profiles:ProfileInfo.AWSSessionManager_Enabled)}"
-                                                SortMemberPath="AWSSessionManager_Enabled" MinWidth="80" Width="Auto" />
+                                                SortMemberPath="PuTTY_Enabled" MinWidth="80" Width="Auto" />                        
                         <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}"
                                                 Header="{x:Static localization:Strings.TigerVNC}"
                                                 Binding="{Binding (profiles:ProfileInfo.TigerVNC_Enabled)}"

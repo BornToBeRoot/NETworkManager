@@ -217,36 +217,6 @@ public class ConfigurationInfo : PropertyChangedBase
         }
     }
 
-    private int _awsSessionManagerTabCount;
-
-    public int AWSSessionManagerTabCount
-    {
-        get => _awsSessionManagerTabCount;
-        set
-        {
-            if (value == _awsSessionManagerTabCount)
-                return;
-
-            _awsSessionManagerTabCount = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private bool _isAWSSessionManagerWindowDragging;
-
-    public bool IsAWSSessionManagerWindowDragging
-    {
-        get => _isAWSSessionManagerWindowDragging;
-        set
-        {
-            if (value == _isAWSSessionManagerWindowDragging)
-                return;
-
-            _isAWSSessionManagerWindowDragging = value;
-            OnPropertyChanged();
-        }
-    }
-
     private int _tigerVNCTabCount;
 
     public int TigerVNCTabCount
