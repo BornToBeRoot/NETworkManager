@@ -2981,9 +2981,6 @@ Activez le cryptage des fichiers de profil dans Paramètres&gt; Profil pour stoc
   <data name="SettingsResetExclamationMark" xml:space="preserve">
     <value>Paramètres réinitialisés !</value>
   </data>
-  <data name="ApplicationName_AWSSessionManager" xml:space="preserve">
-    <value>Gestionnaire de sessions AWS</value>
-  </data>
   <data name="InstanceId" xml:space="preserve">
     <value>ID d'instance</value>
   </data>
@@ -2996,46 +2993,14 @@ Activez le cryptage des fichiers de profil dans Paramètres&gt; Profil pour stoc
   <data name="Library_log4net_Description" xml:space="preserve">
     <value>log4net est un outil pour aider le programmeur à produire des instructions de journal vers une variété de cibles de sortie.</value>
   </data>
-  <data name="AWSSessionManager" xml:space="preserve">
-    <value>Gestionnaire de sessions AWS</value>
-  </data>
   <data name="Enabled" xml:space="preserve">
     <value>Activée</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>Région</value>
   </data>
-  <data name="SyncEC2InstancesFromAWS" xml:space="preserve">
-    <value>Synchroniser les instances EC2 depuis AWS</value>
-  </data>
-  <data name="AddAWSProfile" xml:space="preserve">
-    <value>Ajouter un profil AWS</value>
-  </data>
-  <data name="DeleteAWSProfile" xml:space="preserve">
-    <value>Supprimer un profil AWS</value>
-  </data>
-  <data name="DeleteAWSProfileMessage" xml:space="preserve">
-    <value>Le profil AWS sélectionné est supprimé définitivement. 
-
-Le profil n'est pas supprimé du fichier ~\.aws\credentials.</value>
-  </data>
-  <data name="EditAWSProfile" xml:space="preserve">
-    <value>Éditer le profil AWS</value>
-  </data>
-  <data name="SyncAllEC2InstancesFromAWS" xml:space="preserve">
-    <value>Synchronisez toutes les instances EC2 d'AWS</value>
-  </data>
-  <data name="SyncGroupEC2InstancesFromAWS" xml:space="preserve">
-    <value>Synchroniser les instances EC2 du groupe depuis AWS</value>
-  </data>
   <data name="ProfilesAndRegionsToSync" xml:space="preserve">
     <value>Profils et régions à synchroniser</value>
-  </data>
-  <data name="HelpMessage_AWSSessionManagerProfilesAndRegionsToSync" xml:space="preserve">
-    <value>Pour synchroniser les instances EC2 d'AWS, l'AWS CLI doit être configurée sur le système. Les instances EC2 peuvent être interrogées pour plusieurs comptes AWS (profils) et plusieurs régions. Pour cela, le profil stocké dans le fichier "~/.aws/credentials" doit être configuré ainsi que la région à interroger.</value>
-  </data>
-  <data name="Library_AWSSDKdotEC2_Description" xml:space="preserve">
-    <value>AWS SDK pour .NET pour fonctionner avec Amazon Elastic Compute Cloud (Amazon EC2) dans Amazon Web Services (AWS).</value>
   </data>
   <data name="DefaultProfile" xml:space="preserve">
     <value>Profil par défaut</value>
@@ -3043,39 +3008,8 @@ Le profil n'est pas supprimé du fichier ~\.aws\credentials.</value>
   <data name="DefaultRegion" xml:space="preserve">
     <value>Région par défaut</value>
   </data>
-  <data name="HelpMessage_AWSSessionManagerProfile" xml:space="preserve">
-    <value>Profil utilisé par les profils créés manuellement pour se connecter à une instance EC2 via AWS CLI.
-
-S'il n'est pas défini, les paramètres AWS CLI par défaut sont utilisés.</value>
-  </data>
-  <data name="HelpMessage_AWSSessionManagerRegion" xml:space="preserve">
-    <value>Région utilisée par les profils créés manuellement pour se connecter à une instance EC2 via AWS CLI.
-
-Si elle n'est pas définie, les paramètres AWS CLI par défaut sont utilisés.</value>
-  </data>
-  <data name="HelpMessage_AWSCLIDefaultsAreUsedIfNotSet" xml:space="preserve">
-    <value>S'ils ne sont pas définis, les paramètres AWS CLI par défaut sont utilisés.</value>
-  </data>
   <data name="GroupNameCannotStartWithX" xml:space="preserve">
     <value>Le nom du groupe ne peut pas commencer par "{0}"!</value>
-  </data>
-  <data name="SyncOnlyRunningEC2InstancesFromAWS" xml:space="preserve">
-    <value>Synchroniser seulement les instances EC2 en cours d'exécution depuis AWS</value>
-  </data>
-  <data name="AnAWSRegionNamedXDoesNotExist" xml:space="preserve">
-    <value>Une région AWS nommée "{0}" n'existe pas !</value>
-  </data>
-  <data name="AWSCLIv2IsInstalled" xml:space="preserve">
-    <value>AWS CLI v2 est installé!</value>
-  </data>
-  <data name="AWSCLIv2IsNotInstalled" xml:space="preserve">
-    <value>AWS CLI v2 n'est pas installé!</value>
-  </data>
-  <data name="AWSSessionManagerPluginIsInstalled" xml:space="preserve">
-    <value>Le plugin AWS Session Manager est installé!</value>
-  </data>
-  <data name="AWSSessionManagerPluginIsNotInstalled" xml:space="preserve">
-    <value>Le plugin AWS Session Manager n'est pas installé!</value>
   </data>
   <data name="CheckForPreReleases" xml:space="preserve">
     <value>Vérifiez les pré-versions</value>

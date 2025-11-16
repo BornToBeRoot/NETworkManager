@@ -2981,9 +2981,6 @@ Aktivieren Sie die Verschlüsselung der Profildatei in Einstellungen&gt;Profile,
   <data name="SettingsResetExclamationMark" xml:space="preserve">
     <value>Einstellungen zurückgesetzt!</value>
   </data>
-  <data name="ApplicationName_AWSSessionManager" xml:space="preserve">
-    <value>AWS Session Manager</value>
-  </data>
   <data name="InstanceId" xml:space="preserve">
     <value>Instanz ID</value>
   </data>
@@ -2996,46 +2993,14 @@ Aktivieren Sie die Verschlüsselung der Profildatei in Einstellungen&gt;Profile,
   <data name="Library_log4net_Description" xml:space="preserve">
     <value>log4net ist ein Tool, das den Programmierer bei der Ausgabe von Log-Statements an eine Vielzahl von Ausgabezielen unterstützt.</value>
   </data>
-  <data name="AWSSessionManager" xml:space="preserve">
-    <value>AWS Session Manager</value>
-  </data>
   <data name="Enabled" xml:space="preserve">
     <value>Aktiviert</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>Region</value>
   </data>
-  <data name="SyncEC2InstancesFromAWS" xml:space="preserve">
-    <value>EC2-Instanzen von AWS synchronisieren</value>
-  </data>
-  <data name="AddAWSProfile" xml:space="preserve">
-    <value>AWS-Profil hinzufügen</value>
-  </data>
-  <data name="DeleteAWSProfile" xml:space="preserve">
-    <value>AWS-Profil löschen</value>
-  </data>
-  <data name="DeleteAWSProfileMessage" xml:space="preserve">
-    <value>Das ausgewählte AWS-Profil wird dauerhaft gelöscht.
-
-Das Profil wird nicht aus der Datei ~\.aws\credentials entfernt.</value>
-  </data>
-  <data name="EditAWSProfile" xml:space="preserve">
-    <value>AWS-Profil bearbeiten</value>
-  </data>
-  <data name="SyncAllEC2InstancesFromAWS" xml:space="preserve">
-    <value>Alle EC2-Instanzen von AWS synchronisieren</value>
-  </data>
-  <data name="SyncGroupEC2InstancesFromAWS" xml:space="preserve">
-    <value>EC2-Instanzen der Gruppe von AWS synchronisieren</value>
-  </data>
   <data name="ProfilesAndRegionsToSync" xml:space="preserve">
     <value>Zu synchronisierende Profile und Regionen</value>
-  </data>
-  <data name="HelpMessage_AWSSessionManagerProfilesAndRegionsToSync" xml:space="preserve">
-    <value>Um EC2-Instanzen von AWS zu synchronisieren, muss die AWS CLI auf dem System konfiguriert werden. Die EC2-Instanzen können für mehrere AWS-Konten (Profile) und mehrere Regionen abgefragt werden. Dazu muss das in der Datei "~/.aws/credentials" gespeicherte Profil zusammen mit der abzufragenden Region konfiguriert werden.</value>
-  </data>
-  <data name="Library_AWSSDKdotEC2_Description" xml:space="preserve">
-    <value>AWS SDK für .NET für die Nutzung der Amazon Elastic Compute Cloud (Amazon EC2) in Amazon Web Services (AWS).</value>
   </data>
   <data name="DefaultProfile" xml:space="preserve">
     <value>Standard-Profil</value>
@@ -3043,39 +3008,8 @@ Das Profil wird nicht aus der Datei ~\.aws\credentials entfernt.</value>
   <data name="DefaultRegion" xml:space="preserve">
     <value>Standard-Region</value>
   </data>
-  <data name="HelpMessage_AWSSessionManagerProfile" xml:space="preserve">
-    <value>Profil, das von manuell erstellten Profilen für die Verbindung mit einer EC2-Instanz über AWS CLI verwendet wird.
-
-Wenn nicht festgelegt, werden die Standardeinstellungen für AWS CLI verwendet.</value>
-  </data>
-  <data name="HelpMessage_AWSSessionManagerRegion" xml:space="preserve">
-    <value>Region, die von manuell erstellten Profilen für die Verbindung mit einer EC2-Instanz über AWS CLI verwendet wird.
-
-Wenn nicht festgelegt, werden die Standardeinstellungen für AWS CLI verwendet.</value>
-  </data>
-  <data name="HelpMessage_AWSCLIDefaultsAreUsedIfNotSet" xml:space="preserve">
-    <value>Ist diese Einstellung nicht gesetzt, werden die Standardeinstellungen der AWS CLI verwendet.</value>
-  </data>
   <data name="GroupNameCannotStartWithX" xml:space="preserve">
     <value>Der Gruppenname darf nicht mit "{0}" beginnen!</value>
-  </data>
-  <data name="SyncOnlyRunningEC2InstancesFromAWS" xml:space="preserve">
-    <value>Nur laufende EC2-Instanzen von AWS synchronisieren</value>
-  </data>
-  <data name="AnAWSRegionNamedXDoesNotExist" xml:space="preserve">
-    <value>Eine AWS-Region mit dem Namen "{0}" existiert nicht!</value>
-  </data>
-  <data name="AWSCLIv2IsInstalled" xml:space="preserve">
-    <value>AWS CLI v2 ist installiert!</value>
-  </data>
-  <data name="AWSCLIv2IsNotInstalled" xml:space="preserve">
-    <value>AWS CLI v2 ist nicht installiert!</value>
-  </data>
-  <data name="AWSSessionManagerPluginIsInstalled" xml:space="preserve">
-    <value>AWS Session Manager Plugin ist installiert!</value>
-  </data>
-  <data name="AWSSessionManagerPluginIsNotInstalled" xml:space="preserve">
-    <value>AWS Session Manager Plugin ist nicht installiert!</value>
   </data>
   <data name="CheckForPreReleases" xml:space="preserve">
     <value>Nach Vorabversionen suchen</value>
@@ -3997,15 +3931,15 @@ Rechtsklick für weitere Optionen.</value>
     <value>Admin-Sitzung (Konsole)</value>
   </data>
   <data name="DeleteProfileFileXMessage" xml:space="preserve">
-    <value>Profile file "{0}" will be deleted permanently.</value>
+    <value>Die Profildatei "{0}" wird dauerhaft gelöscht.</value>
   </data>
   <data name="EnableEncryptionQuestion" xml:space="preserve">
-    <value>Enable encryption?</value>
+    <value>Verschlüsselung aktivieren?</value>
   </data>
   <data name="EnableEncryptionForProfileFileMessage" xml:space="preserve">
-    <value>Do you want to enable profile file encryption to protect sensitive data such as hosts, IP addresses, URLs, and stored credentials?
+    <value>Möchten Sie die Verschlüsselung von Profildateien aktivieren, um sensible Daten wie Hosts, IP-Adressen, URLs und gespeicherte Anmeldedaten zu schützen?
 
-You can enable or disable encryption later at any time by right-clicking the profile file to manage encryption settings.
-If you click Cancel, the profile file will remain unencrypted.</value>
+Sie können die Verschlüsselung später jederzeit aktivieren oder deaktivieren, indem Sie mit der rechten Maustaste auf die Profildatei klicken, um die Verschlüsselungseinstellungen zu verwalten.
+Wenn Sie auf „Abbrechen“ klicken, bleibt die Profildatei unverschlüsselt.</value>
   </data>
 </root>

@@ -2981,9 +2981,6 @@ $$hostname$$	--&gt;	ホスト名</value>
   <data name="SettingsResetExclamationMark" xml:space="preserve">
     <value>設定をリセットしました!</value>
   </data>
-  <data name="ApplicationName_AWSSessionManager" xml:space="preserve">
-    <value>AWSセッションマネージャー</value>
-  </data>
   <data name="InstanceId" xml:space="preserve">
     <value>インスタンスID</value>
   </data>
@@ -2996,46 +2993,14 @@ $$hostname$$	--&gt;	ホスト名</value>
   <data name="Library_log4net_Description" xml:space="preserve">
     <value>log4net は、プログラマがさまざまな出力ターゲットにログ ステートメントを出力するのに役立つツールです。</value>
   </data>
-  <data name="AWSSessionManager" xml:space="preserve">
-    <value>AWSセッションマネージャー</value>
-  </data>
   <data name="Enabled" xml:space="preserve">
     <value>有効</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>地域</value>
   </data>
-  <data name="SyncEC2InstancesFromAWS" xml:space="preserve">
-    <value>AWSからEC2インスタンスを同期する</value>
-  </data>
-  <data name="AddAWSProfile" xml:space="preserve">
-    <value>AWSプロファイルの追加</value>
-  </data>
-  <data name="DeleteAWSProfile" xml:space="preserve">
-    <value>AWSプロファイルを削除</value>
-  </data>
-  <data name="DeleteAWSProfileMessage" xml:space="preserve">
-    <value>選択した AWS プロファイルは完全に削除されます。
-
-プロファイルは ~\.aws\credentials ファイルから削除されません。</value>
-  </data>
-  <data name="EditAWSProfile" xml:space="preserve">
-    <value>AWSプロファイルの編集</value>
-  </data>
-  <data name="SyncAllEC2InstancesFromAWS" xml:space="preserve">
-    <value>AWSからすべてのEC2インスタンスを同期する</value>
-  </data>
-  <data name="SyncGroupEC2InstancesFromAWS" xml:space="preserve">
-    <value>AWSからグループEC2インスタンスを同期する</value>
-  </data>
   <data name="ProfilesAndRegionsToSync" xml:space="preserve">
     <value>同期するプロファイルと地域</value>
-  </data>
-  <data name="HelpMessage_AWSSessionManagerProfilesAndRegionsToSync" xml:space="preserve">
-    <value>AWSからEC2インスタンスを同期するには、システム上でAWS CLIを設定する必要があります。EC2インスタンスに対して、複数のAWSアカウント（プロファイル）と複数のリージョンをクエリできます。そのためには、「~/.aws/credentials」ファイルに保存されているプロファイルと、クエリ対象のリージョンを設定する必要があります。</value>
-  </data>
-  <data name="Library_AWSSDKdotEC2_Description" xml:space="preserve">
-    <value>Amazon Web Services (AWS) の Amazon Elastic Compute Cloud (Amazon EC2) と連携するための AWS SDK for .NET。</value>
   </data>
   <data name="DefaultProfile" xml:space="preserve">
     <value>既定のプロファイル</value>
@@ -3043,39 +3008,8 @@ $$hostname$$	--&gt;	ホスト名</value>
   <data name="DefaultRegion" xml:space="preserve">
     <value>既定の地域</value>
   </data>
-  <data name="HelpMessage_AWSSessionManagerProfile" xml:space="preserve">
-    <value>AWS CLI 経由で EC2 インスタンスに接続するために手動で作成されたプロファイルで使用されるプロファイル。
-
-設定されていない場合は、デフォルトの AWS CLI 設定が使用されます。</value>
-  </data>
-  <data name="HelpMessage_AWSSessionManagerRegion" xml:space="preserve">
-    <value>AWS CLI 経由で EC2 インスタンスに接続するために手動で作成されたプロファイルで使用される地域。
-
-設定されていない場合は、デフォルトの AWS CLI 設定が使用されます。</value>
-  </data>
-  <data name="HelpMessage_AWSCLIDefaultsAreUsedIfNotSet" xml:space="preserve">
-    <value>設定されていない場合は、デフォルトの AWS CLI 設定が使用されます。</value>
-  </data>
   <data name="GroupNameCannotStartWithX" xml:space="preserve">
     <value>グループ名は"{0}"で始めることはできません!</value>
-  </data>
-  <data name="SyncOnlyRunningEC2InstancesFromAWS" xml:space="preserve">
-    <value>AWSから実行中のEC2インスタンスのみを同期する</value>
-  </data>
-  <data name="AnAWSRegionNamedXDoesNotExist" xml:space="preserve">
-    <value>"{0}"という名前の AWS リージョンが存在しません!</value>
-  </data>
-  <data name="AWSCLIv2IsInstalled" xml:space="preserve">
-    <value>AWS CLI v2 がインストールされました!</value>
-  </data>
-  <data name="AWSCLIv2IsNotInstalled" xml:space="preserve">
-    <value>AWS CLI v2 がインストールされていません!</value>
-  </data>
-  <data name="AWSSessionManagerPluginIsInstalled" xml:space="preserve">
-    <value>AWS Session Manager プラグインがインストールされました!</value>
-  </data>
-  <data name="AWSSessionManagerPluginIsNotInstalled" xml:space="preserve">
-    <value>AWS Session Manager プラグインがインストールされていません!</value>
   </data>
   <data name="CheckForPreReleases" xml:space="preserve">
     <value>プレリリース版をチェックする</value>

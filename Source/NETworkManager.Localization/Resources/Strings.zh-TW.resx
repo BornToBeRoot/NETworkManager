@@ -2981,9 +2981,6 @@ $$hostname$$	--&gt;	主機名稱</value>
   <data name="SettingsResetExclamationMark" xml:space="preserve">
     <value>已重設設定！</value>
   </data>
-  <data name="ApplicationName_AWSSessionManager" xml:space="preserve">
-    <value>AWS 會話管理器</value>
-  </data>
   <data name="InstanceId" xml:space="preserve">
     <value>實例編號</value>
   </data>
@@ -2996,46 +2993,14 @@ $$hostname$$	--&gt;	主機名稱</value>
   <data name="Library_log4net_Description" xml:space="preserve">
     <value>log4net 是一款協助程式開發者將記錄輸出至多種目標的工具。</value>
   </data>
-  <data name="AWSSessionManager" xml:space="preserve">
-    <value>AWS 會話管理器</value>
-  </data>
   <data name="Enabled" xml:space="preserve">
     <value>已啟用</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>區域</value>
   </data>
-  <data name="SyncEC2InstancesFromAWS" xml:space="preserve">
-    <value>同步 AWS 上的 EC2 實例。</value>
-  </data>
-  <data name="AddAWSProfile" xml:space="preserve">
-    <value>新增 AWS 設定檔</value>
-  </data>
-  <data name="DeleteAWSProfile" xml:space="preserve">
-    <value>刪除 AWS 設定檔</value>
-  </data>
-  <data name="DeleteAWSProfileMessage" xml:space="preserve">
-    <value>所選的 AWS 設定檔將被永久刪除。
-
-此設定檔並未從 ~/.aws/credentials 檔案中移除。</value>
-  </data>
-  <data name="EditAWSProfile" xml:space="preserve">
-    <value>編輯 AWS 設定檔</value>
-  </data>
-  <data name="SyncAllEC2InstancesFromAWS" xml:space="preserve">
-    <value>同步所有來自 AWS 的 EC2 實例。</value>
-  </data>
-  <data name="SyncGroupEC2InstancesFromAWS" xml:space="preserve">
-    <value>同步 AWS 上指定群組的 EC2 實例。</value>
-  </data>
   <data name="ProfilesAndRegionsToSync" xml:space="preserve">
     <value>要同步的設定檔與區域</value>
-  </data>
-  <data name="HelpMessage_AWSSessionManagerProfilesAndRegionsToSync" xml:space="preserve">
-    <value>若要同步 AWS 上的 EC2 實例，系統必須先安裝並設定好 AWS CLI。可針對多個帳號（profile）及多個區域查詢 EC2；因此需在 ~/.aws/credentials 檔案中設定相應的 profile 與欲查詢之區域。</value>
-  </data>
-  <data name="Library_AWSSDKdotEC2_Description" xml:space="preserve">
-    <value>AWS SDK for .NET：協助您在 Amazon Web Services（AWS）中使用 Amazon Elastic Compute Cloud (Amazon EC2)。</value>
   </data>
   <data name="DefaultProfile" xml:space="preserve">
     <value>預設設定檔</value>
@@ -3043,39 +3008,8 @@ $$hostname$$	--&gt;	主機名稱</value>
   <data name="DefaultRegion" xml:space="preserve">
     <value>預設區域</value>
   </data>
-  <data name="HelpMessage_AWSSessionManagerProfile" xml:space="preserve">
-    <value>用於手動建立的設定檔，以透過 AWS CLI 連線至 EC2。
-
-若未設定，將使用預設的 AWS CLI 設定。</value>
-  </data>
-  <data name="HelpMessage_AWSSessionManagerRegion" xml:space="preserve">
-    <value>區域用於手動建立設定檔，透過 AWS CLI 連線至 EC2。
-
-若未設定，則使用預設的 AWS CLI 設定。</value>
-  </data>
-  <data name="HelpMessage_AWSCLIDefaultsAreUsedIfNotSet" xml:space="preserve">
-    <value>若未設定，將使用預設的 AWS CLI 設定。</value>
-  </data>
   <data name="GroupNameCannotStartWithX" xml:space="preserve">
     <value>群組名稱不能以「{0}」開頭！</value>
-  </data>
-  <data name="SyncOnlyRunningEC2InstancesFromAWS" xml:space="preserve">
-    <value>僅同步正在執行的 AWS EC2 實例。</value>
-  </data>
-  <data name="AnAWSRegionNamedXDoesNotExist" xml:space="preserve">
-    <value>不存在名為「{0}」的 AWS 區域！</value>
-  </data>
-  <data name="AWSCLIv2IsInstalled" xml:space="preserve">
-    <value>已安裝 AWS CLI v2！</value>
-  </data>
-  <data name="AWSCLIv2IsNotInstalled" xml:space="preserve">
-    <value>未安裝 AWS CLI v2！</value>
-  </data>
-  <data name="AWSSessionManagerPluginIsInstalled" xml:space="preserve">
-    <value>已安裝 AWS Session Manager 插件。</value>
-  </data>
-  <data name="AWSSessionManagerPluginIsNotInstalled" xml:space="preserve">
-    <value>未安裝 AWS Session Manager 插件！</value>
   </data>
   <data name="CheckForPreReleases" xml:space="preserve">
     <value>檢查預發佈版本</value>
