@@ -2974,9 +2974,6 @@ $$hostname$$--&gt;Ime gostitelja</value>
   <data name="SettingsResetExclamationMark" xml:space="preserve">
     <value>Nastavitve so ponastavljene!</value>
   </data>
-  <data name="ApplicationName_AWSSessionManager" xml:space="preserve">
-    <value>Upravitelj sej AWS</value>
-  </data>
   <data name="InstanceId" xml:space="preserve">
     <value>ID primerka</value>
   </data>
@@ -2989,44 +2986,14 @@ $$hostname$$--&gt;Ime gostitelja</value>
   <data name="Library_log4net_Description" xml:space="preserve">
     <value>log4net je orodje, ki programerju pomaga pri izpisovanju dnevniških stavkov v različne izhodne cilje.</value>
   </data>
-  <data name="AWSSessionManager" xml:space="preserve">
-    <value>Upravitelj sej AWS</value>
-  </data>
   <data name="Enabled" xml:space="preserve">
     <value>Omogočen</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>Regija</value>
   </data>
-  <data name="SyncEC2InstancesFromAWS" xml:space="preserve">
-    <value>Sinhroniziraj primerke EC2 iz AWS</value>
-  </data>
-  <data name="AddAWSProfile" xml:space="preserve">
-    <value>Dodaj profil AWS</value>
-  </data>
-  <data name="DeleteAWSProfile" xml:space="preserve">
-    <value>Izbriši profil AWS</value>
-  </data>
-  <data name="DeleteAWSProfileMessage" xml:space="preserve">
-    <value>Izbrani profil AWS je trajno izbrisan. Profil ni odstranjen iz datoteke ~\.aws\credentials.</value>
-  </data>
-  <data name="EditAWSProfile" xml:space="preserve">
-    <value>Uredi profil AWS</value>
-  </data>
-  <data name="SyncAllEC2InstancesFromAWS" xml:space="preserve">
-    <value>Sinhroniziraj vse primerke EC2 iz AWS</value>
-  </data>
-  <data name="SyncGroupEC2InstancesFromAWS" xml:space="preserve">
-    <value>Sinhroniziraj skupino primerkov EC2 iz AWS</value>
-  </data>
   <data name="ProfilesAndRegionsToSync" xml:space="preserve">
     <value>Profili in regije za sinhronizacijo</value>
-  </data>
-  <data name="HelpMessage_AWSSessionManagerProfilesAndRegionsToSync" xml:space="preserve">
-    <value>Za sinhronizacijo primerkov EC2 iz AWS mora biti v sistemu nastavljen AWS CLI. Po primerkih EC2 je mogoče poizvedovati za več računov (profilov) AWS in več regij. Da to lahko naredite, mora biti profil, shranjen v datoteki "~/.aws/credentials", nastavljen skupaj z regijo za poizvedbo.</value>
-  </data>
-  <data name="Library_AWSSDKdotEC2_Description" xml:space="preserve">
-    <value>AWS SDK za .NET za delo z Amazon Elastični računalniški oblak (Amazon EC2) v Amazon Spletne storitve (AWS).</value>
   </data>
   <data name="DefaultProfile" xml:space="preserve">
     <value>Privzeti profil</value>
@@ -3034,39 +3001,8 @@ $$hostname$$--&gt;Ime gostitelja</value>
   <data name="DefaultRegion" xml:space="preserve">
     <value>Privzeta regija</value>
   </data>
-  <data name="HelpMessage_AWSSessionManagerProfile" xml:space="preserve">
-    <value>Profil, ki ga uporabljajo ročno ustvarjeni profili za povezavo s primerkom EC2 prek AWS CLI.
-
-Če ni nastavljeno, se uporabijo privzete nastavitve CLI AWS.</value>
-  </data>
-  <data name="HelpMessage_AWSSessionManagerRegion" xml:space="preserve">
-    <value>Regija, ki jo uporabljajo ročno ustvarjeni profili za povezavo s primerkom EC2 prek AWS CLI.
-
-Če ni nastavljeno, se uporabijo privzete nastavitve CLI AWS.</value>
-  </data>
-  <data name="HelpMessage_AWSCLIDefaultsAreUsedIfNotSet" xml:space="preserve">
-    <value>Če ni nastavljeno, se uporabijo privzete nastavitve CLI AWS.</value>
-  </data>
   <data name="GroupNameCannotStartWithX" xml:space="preserve">
     <value>Ime skupine se ne sme začeti z "{0}"!</value>
-  </data>
-  <data name="SyncOnlyRunningEC2InstancesFromAWS" xml:space="preserve">
-    <value>Sinhroniziraj samo delujoče primerke EC2 iz AWS</value>
-  </data>
-  <data name="AnAWSRegionNamedXDoesNotExist" xml:space="preserve">
-    <value>Ne obstaja oimenovana regija AWS {0}!</value>
-  </data>
-  <data name="AWSCLIv2IsInstalled" xml:space="preserve">
-    <value>AWS CLI v2 je nameščen!</value>
-  </data>
-  <data name="AWSCLIv2IsNotInstalled" xml:space="preserve">
-    <value>AWS CLI v2 ni nameščen!</value>
-  </data>
-  <data name="AWSSessionManagerPluginIsInstalled" xml:space="preserve">
-    <value>Vtičnik AWS Upravitelj sej je nameščen!</value>
-  </data>
-  <data name="AWSSessionManagerPluginIsNotInstalled" xml:space="preserve">
-    <value>Vtičnik AWS Upravitelj sej ni nameščen!</value>
   </data>
   <data name="CheckForPreReleases" xml:space="preserve">
     <value>Preveri obstoj predizdaj</value>
