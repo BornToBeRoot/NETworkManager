@@ -30,6 +30,7 @@ Language for the user interface of the application.
 - `Russian (Russia)` (`ru-RU`)
 - `Slovenian (Slovenia)` (`sl-SI`)
 - `Spanish (Spain)` (`es-ES`)
+- `Ukrainian (Ukraine)` (`uk-UA`)
 
 :::note
 
