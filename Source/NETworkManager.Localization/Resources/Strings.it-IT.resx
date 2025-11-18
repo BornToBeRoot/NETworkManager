@@ -4043,4 +4043,7 @@ Per maggiori dettagli consulta il file registro.</value>
 Puoi abilitare/disabilitare la crittografia in qualsiasi momento facendo clic con il pulsante destro del mouse sul file del profilo e gestire le impostazioni di crittografia.
 Se selezioni 'Annulla', il file del profilo non verrà crittografato.</value>
   </data>
+  <data name="ToolTip_RestartRequired" xml:space="preserve">
+    <value>A restart is required to apply changes such as language settings.</value>
+  </data>
 </root>
