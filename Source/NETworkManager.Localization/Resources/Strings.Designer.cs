@@ -10514,6 +10514,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die A restart is required to apply changes such as language settings. ähnelt.
+        /// </summary>
+        public static string ToolTip_RestartRequired {
+            get {
+                return ResourceManager.GetString("ToolTip_RestartRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Run command... (Ctrl+Shift+P) ähnelt.
         /// </summary>
         public static string ToolTip_RunCommandWithHotKey {

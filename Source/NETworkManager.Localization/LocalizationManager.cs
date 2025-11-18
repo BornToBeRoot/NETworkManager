@@ -71,7 +71,8 @@ public class LocalizationManager
         new LocalizationInfo("Portuguese (Brazil)", "português brasileiro", GetImageUri("pt-BR"), "pt-BR"),
         new LocalizationInfo("Russian (Russia)", "Русский", GetImageUri("ru-RU"), "ru-RU"),
         new LocalizationInfo("Slovenian (Slovenia)", "slovenski jezik", GetImageUri("sl-SI"), "sl-SI"),
-        new LocalizationInfo("Spanish (Spain)", "Español", GetImageUri("es-ES"), "es-ES")
+        new LocalizationInfo("Spanish (Spain)", "Español", GetImageUri("es-ES"), "es-ES"),
+        new LocalizationInfo("Ukrainian (Ukraine)", "Українська", GetImageUri("uk-UA"), "uk-UA"),
     ];
 
     /// <summary>
