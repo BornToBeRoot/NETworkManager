@@ -4044,6 +4044,6 @@ Puoi abilitare/disabilitare la crittografia in qualsiasi momento facendo clic co
 Se selezioni 'Annulla', il file del profilo non verrà crittografato.</value>
   </data>
   <data name="ToolTip_RestartRequired" xml:space="preserve">
-    <value>A restart is required to apply changes such as language settings.</value>
+    <value>Per applicare le modifiche come le impostazioni della lingua è necessario un riavvio.</value>
   </data>
 </root>
