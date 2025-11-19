@@ -118,268 +118,268 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>NETworkManager について</value>
+    <value>درباره</value>
   </data>
   <data name="Accent" xml:space="preserve">
-    <value>強調</value>
+    <value>لهجه</value>
   </data>
   <data name="AddCredentials" xml:space="preserve">
-    <value>資格情報の追加</value>
+    <value>افزودن داده های احراز هویت</value>
   </data>
   <data name="AddEntry" xml:space="preserve">
-    <value>エントリの追加</value>
+    <value>افزودن ورودی</value>
   </data>
   <data name="AddProfile" xml:space="preserve">
-    <value>プロファイルの追加</value>
+    <value>افزودن پروفایل</value>
   </data>
   <data name="AreYouSure" xml:space="preserve">
-    <value>よろしいですか?</value>
+    <value>آیا مطمئن هستید؟</value>
   </data>
   <data name="ARP" xml:space="preserve">
     <value>ARP</value>
   </data>
   <data name="ARPTable" xml:space="preserve">
-    <value>ARP テーブル</value>
+    <value>جدول ARP</value>
   </data>
   <data name="Authentication" xml:space="preserve">
-    <value>認証</value>
+    <value>احراز هویت</value>
   </data>
   <data name="Autostart" xml:space="preserve">
-    <value>自動起動</value>
+    <value>شروع خودکار</value>
   </data>
   <data name="Calculator" xml:space="preserve">
-    <value>計算機</value>
+    <value>ماشین حساب</value>
   </data>
   <data name="CommandLineArguments" xml:space="preserve">
-    <value>コマンドライン引数</value>
+    <value>پارامترهای خط فرمان</value>
   </data>
   <data name="Configure" xml:space="preserve">
-    <value>設定</value>
+    <value>پیکربندی</value>
   </data>
   <data name="Confirm" xml:space="preserve">
-    <value>確認</value>
+    <value>تایید</value>
   </data>
   <data name="Connect" xml:space="preserve">
-    <value>接続</value>
+    <value>اتصال</value>
   </data>
   <data name="ConnectAs" xml:space="preserve">
-    <value>連絡先</value>
+    <value>اتصال به عنوان</value>
   </data>
   <data name="CopyProfile" xml:space="preserve">
-    <value>プロファイルのコピー</value>
+    <value>نسخه برداری پروفایل</value>
   </data>
   <data name="Credentials" xml:space="preserve">
-    <value>資格</value>
+    <value>داده های احراز هویت</value>
   </data>
   <data name="Data" xml:space="preserve">
-    <value>データ</value>
+    <value>داده</value>
   </data>
   <data name="DefaultApplication" xml:space="preserve">
-    <value>既定のアプリ</value>
+    <value>برنامه پیش فرض</value>
   </data>
   <data name="DeleteCredentials" xml:space="preserve">
-    <value>資格情報の削除</value>
+    <value>حذف داده های احراز هویت</value>
   </data>
   <data name="DeleteProfile" xml:space="preserve">
-    <value>プロファイルの削除</value>
+    <value>Delete profile</value>
   </data>
   <data name="Destination" xml:space="preserve">
-    <value>対象</value>
+    <value>مقصد</value>
   </data>
   <data name="Details" xml:space="preserve">
-    <value>詳細</value>
+    <value>جزئیات</value>
   </data>
   <data name="Disconnected" xml:space="preserve">
-    <value>切断</value>
+    <value>قطع شده</value>
   </data>
   <data name="Display" xml:space="preserve">
-    <value>表示</value>
+    <value>نمایش</value>
   </data>
   <data name="DNS" xml:space="preserve">
     <value>DNS</value>
   </data>
   <data name="DNSLookup" xml:space="preserve">
-    <value>DNS Lookup</value>
+    <value>پرس و جوی DNS</value>
   </data>
   <data name="DontFragment" xml:space="preserve">
-    <value>断片化しない</value>
+    <value>تکه تکه نکنید</value>
   </data>
   <data name="EditCredentials" xml:space="preserve">
-    <value>資格情報の編集</value>
+    <value>ویرایش داده های احراز هویت</value>
   </data>
   <data name="EditGroup" xml:space="preserve">
-    <value>グループの編集</value>
+    <value>ویرایش گروه</value>
   </data>
   <data name="EditProfile" xml:space="preserve">
-    <value>プロファイルの編集</value>
+    <value>Edit profile</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>エラー</value>
+    <value>خطا</value>
   </data>
   <data name="Export" xml:space="preserve">
-    <value>エクスポート</value>
+    <value>صادر کردن</value>
   </data>
   <data name="Filter" xml:space="preserve">
-    <value>フィルター</value>
+    <value>پالایش</value>
   </data>
   <data name="General" xml:space="preserve">
-    <value>全般</value>
+    <value>عمومی</value>
   </data>
   <data name="Headers" xml:space="preserve">
-    <value>ヘッダ</value>
+    <value>سرآمدها</value>
   </data>
   <data name="History" xml:space="preserve">
-    <value>履歴</value>
+    <value>تاریخچه</value>
   </data>
   <data name="HotKeys" xml:space="preserve">
-    <value>ホットキー</value>
+    <value>کلیدهای میانبر</value>
   </data>
   <data name="HTTPHeaders" xml:space="preserve">
-    <value>HTTP ヘッダ</value>
+    <value>سرآمدهای HTTP</value>
   </data>
   <data name="Import" xml:space="preserve">
-    <value>インポート</value>
+    <value>وارد کردن</value>
   </data>
   <data name="Information" xml:space="preserve">
-    <value>情報</value>
+    <value>اطلاعات</value>
   </data>
   <data name="Interface" xml:space="preserve">
-    <value>インタフェース</value>
+    <value>رابط</value>
   </data>
   <data name="IPScanner" xml:space="preserve">
-    <value>IP スキャナ</value>
+    <value>پویشگر IP</value>
   </data>
   <data name="Keyboard" xml:space="preserve">
-    <value>キーボード</value>
+    <value>صفحه کلید</value>
   </data>
   <data name="Language" xml:space="preserve">
-    <value>言語</value>
+    <value>زبان</value>
   </data>
   <data name="Libraries" xml:space="preserve">
-    <value>ライブラリ</value>
+    <value>کتابخانه ها</value>
   </data>
   <data name="License" xml:space="preserve">
-    <value>ライセンス</value>
+    <value>مجوز</value>
   </data>
   <data name="LocalDevicesAndResources" xml:space="preserve">
-    <value>ローカルデバイスとリソース</value>
+    <value>دستگاه ها و منابع محلی</value>
   </data>
   <data name="Location" xml:space="preserve">
-    <value>場所</value>
+    <value>موقعیت</value>
   </data>
   <data name="Lookup" xml:space="preserve">
-    <value>Lookup</value>
+    <value>پرس و جو</value>
   </data>
   <data name="MACAddress" xml:space="preserve">
-    <value>MAC アドレス</value>
+    <value>نشانی MAC</value>
   </data>
   <data name="MasterPassword" xml:space="preserve">
-    <value>マスター パスワード</value>
+    <value>گذرواژه اصلی</value>
   </data>
   <data name="Multithreading" xml:space="preserve">
-    <value>マルチスレッド</value>
+    <value>چند نخی</value>
   </data>
   <data name="Network" xml:space="preserve">
-    <value>ネットワーク</value>
+    <value>شبکه</value>
   </data>
   <data name="NetworkInterface" xml:space="preserve">
-    <value>ネットワーク インタフェース</value>
+    <value>رابط شبکه</value>
   </data>
   <data name="NewTab" xml:space="preserve">
-    <value>新しいタブ</value>
+    <value>سربرگ جدید</value>
   </data>
   <data name="OUI" xml:space="preserve">
     <value>OUI</value>
   </data>
   <data name="OverwriteQuestion" xml:space="preserve">
-    <value>上書きしますか?</value>
+    <value>رونویسی؟</value>
   </data>
   <data name="Ping" xml:space="preserve">
-    <value>Ping</value>
+    <value>پینگ</value>
   </data>
   <data name="Port" xml:space="preserve">
-    <value>ポート</value>
+    <value>درگاه</value>
   </data>
   <data name="Portable" xml:space="preserve">
-    <value>ポータブル</value>
+    <value>جابجایی پذیر</value>
   </data>
   <data name="PortScanner" xml:space="preserve">
-    <value>ポート スキャナ</value>
+    <value>پویشگر درگاه</value>
   </data>
   <data name="Profiles" xml:space="preserve">
-    <value>プロファイル</value>
+    <value>Profiles</value>
   </data>
   <data name="PuTTY" xml:space="preserve">
     <value>PuTTY</value>
   </data>
   <data name="Query" xml:space="preserve">
-    <value>クエリ</value>
+    <value>Query</value>
   </data>
   <data name="RemoteDesktop" xml:space="preserve">
-    <value>リモートデスクトップ Desktop</value>
+    <value>Remote Desktop</value>
   </data>
   <data name="Reset" xml:space="preserve">
-    <value>リセット</value>
+    <value>راه اندازی مجدد</value>
   </data>
   <data name="ResolvePTR" xml:space="preserve">
-    <value>PTRの解決</value>
+    <value>Resolve PTR</value>
   </data>
   <data name="Resources" xml:space="preserve">
-    <value>リソース</value>
+    <value>منابع</value>
   </data>
   <data name="Result" xml:space="preserve">
-    <value>結果</value>
+    <value>نتیجه</value>
   </data>
   <data name="Route" xml:space="preserve">
-    <value>ルート</value>
+    <value>مسیریابی</value>
   </data>
   <data name="Scan" xml:space="preserve">
-    <value>スキャン</value>
+    <value>پویش</value>
   </data>
   <data name="Search" xml:space="preserve">
-    <value>検索</value>
+    <value>جستجو</value>
   </data>
   <data name="SelectAProfileDots" xml:space="preserve">
-    <value>プロファイルの選択...</value>
+    <value>Select a profile...</value>
   </data>
   <data name="SetMasterPassword" xml:space="preserve">
-    <value>マスター パスワードの設定</value>
+    <value>تنظیم گذرواژه اصلی</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value>設定</value>
+    <value>تنظیمات</value>
   </data>
   <data name="SNMP" xml:space="preserve">
     <value>SNMP</value>
   </data>
   <data name="Socket" xml:space="preserve">
-    <value>ソケット</value>
+    <value>سوکت</value>
   </data>
   <data name="Statistics" xml:space="preserve">
-    <value>統計</value>
+    <value>آمار</value>
   </data>
   <data name="Status" xml:space="preserve">
-    <value>状態</value>
+    <value>وضعیت</value>
   </data>
   <data name="Subnet" xml:space="preserve">
-    <value>サブネット</value>
+    <value>زیر شبکه</value>
   </data>
   <data name="Subnetting" xml:space="preserve">
-    <value>サブネット化</value>
+    <value>تقسیم شبکه</value>
   </data>
   <data name="Success" xml:space="preserve">
-    <value>成功!</value>
+    <value>موفقیت!</value>
   </data>
   <data name="Theme" xml:space="preserve">
-    <value>テーマ</value>
+    <value>شمایل</value>
   </data>
   <data name="Traceroute" xml:space="preserve">
-    <value>トレースルート</value>
+    <value>Traceroute</value>
   </data>
   <data name="Tray" xml:space="preserve">
-    <value>トレイ</value>
+    <value>سینی</value>
   </data>
   <data name="Update" xml:space="preserve">
-    <value>更新</value>
+    <value>بروز رسانی</value>
   </data>
   <data name="v1v2c" xml:space="preserve">
     <value>v1/v2c</value>
@@ -388,920 +388,918 @@
     <value>v3</value>
   </data>
   <data name="ValidationFailed" xml:space="preserve">
-    <value>検証失敗!</value>
+    <value>اعتبار سنجی نا موفق بود!</value>
   </data>
   <data name="WakeOnLAN" xml:space="preserve">
-    <value>Wake on LAN</value>
+    <value>بیدار شدن با شبکه</value>
   </data>
   <data name="Website" xml:space="preserve">
-    <value>ウェブサイト</value>
+    <value>پایگاه وب</value>
   </data>
   <data name="Window" xml:space="preserve">
-    <value>Window</value>
+    <value>پنجره</value>
   </data>
   <data name="WrongPassword" xml:space="preserve">
-    <value>パスワードが違います！</value>
+    <value>گذرواژه اشتباه</value>
   </data>
   <data name="Client" xml:space="preserve">
-    <value>クライアント</value>
+    <value>مشتری</value>
   </data>
   <data name="Administrator" xml:space="preserve">
-    <value>Administrator</value>
+    <value>مدیر</value>
   </data>
   <data name="AlwaysShowIconInTray" xml:space="preserve">
-    <value>トレイにアイコンを常に表示</value>
+    <value>همیشه آیکن را در سینی نشان بده</value>
   </data>
   <data name="Attempts" xml:space="preserve">
-    <value>試行回数</value>
+    <value>تلاش ها</value>
   </data>
   <data name="AverageTime" xml:space="preserve">
-    <value>平均時間</value>
+    <value>زمان میانگین</value>
   </data>
   <data name="Broadcast" xml:space="preserve">
-    <value>ブロードキャスト</value>
+    <value>پخش</value>
   </data>
   <data name="Buffer" xml:space="preserve">
-    <value>バッファ</value>
+    <value>میانگیر</value>
   </data>
   <data name="Bytes" xml:space="preserve">
-    <value>バイト</value>
+    <value>بایت ها</value>
   </data>
   <data name="CIDR" xml:space="preserve">
     <value>CIDR</value>
   </data>
   <data name="Close" xml:space="preserve">
-    <value>閉じる</value>
+    <value>بسته</value>
   </data>
   <data name="DefaultGateway" xml:space="preserve">
-    <value>デフォルト ゲートウェイ</value>
+    <value>دروازه پیش فرض</value>
   </data>
   <data name="DeleteDots" xml:space="preserve">
-    <value>削除...</value>
+    <value>حذف...</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>説明</value>
+    <value>توضیحات</value>
   </data>
   <data name="DHCPEnabled" xml:space="preserve">
-    <value>DHCP 有効</value>
+    <value>DHCP فعال</value>
   </data>
   <data name="DHCPLeaseExpires" xml:space="preserve">
-    <value>DHCP リースの有効期限</value>
+    <value>اجاره DHCP منقضی می شود</value>
   </data>
   <data name="DHCPLeaseObtained" xml:space="preserve">
-    <value>DHCP リースの取得</value>
+    <value>اجاره DHCP اخذ شده است</value>
   </data>
   <data name="DHCPServer" xml:space="preserve">
-    <value>DHCP サーバー</value>
+    <value>کارگزار DHCP</value>
   </data>
   <data name="DNSServers" xml:space="preserve">
-    <value>DNS サーバー</value>
+    <value>کارگزار(های) DHCP</value>
   </data>
   <data name="DNSSuffix" xml:space="preserve">
-    <value>DNS サフィックス</value>
+    <value>پسوند DNS</value>
   </data>
   <data name="DynamicIPv4Address" xml:space="preserve">
-    <value>動的 IPv4 アドレス</value>
+    <value>نشانی IPv4 پویا</value>
   </data>
   <data name="DynamicIPv4DNSServer" xml:space="preserve">
-    <value>動的 IPv4 DNS サーバー</value>
+    <value>کارگزار DNS متعلق به IPv4 پویا</value>
   </data>
   <data name="Hop" xml:space="preserve">
-    <value>ホップ</value>
+    <value>گام</value>
   </data>
   <data name="Hops" xml:space="preserve">
-    <value>ホップ</value>
+    <value>گام ها</value>
   </data>
   <data name="Hostname" xml:space="preserve">
-    <value>ホスト名</value>
+    <value>نام میزبان</value>
   </data>
   <data name="IPAddress" xml:space="preserve">
-    <value>IP アドレス</value>
+    <value>نشانی IP</value>
   </data>
   <data name="IPAddresses" xml:space="preserve">
-    <value>IP アドレス</value>
+    <value>نشانی های IP</value>
   </data>
   <data name="IPv4" xml:space="preserve">
     <value>IPv4</value>
   </data>
   <data name="IPv4Address" xml:space="preserve">
-    <value>IPv4 アドレス</value>
+    <value>نشانی IPv4</value>
   </data>
   <data name="IPv4DefaultGateway" xml:space="preserve">
-    <value>IPv4-デフォルト-ゲートウェイ</value>
+    <value>دروازه-پیش فرض-IPv4</value>
   </data>
   <data name="IPv6" xml:space="preserve">
     <value>IPv6</value>
   </data>
   <data name="IPv6Address" xml:space="preserve">
-    <value>IPv6 アドレス</value>
+    <value>نشانی IPv6</value>
   </data>
   <data name="IPv6AddressLinkLocal" xml:space="preserve">
-    <value>リンク-ローカル IPv6 アドレス</value>
+    <value>Link-local IPv6 address</value>
   </data>
   <data name="IPv6DefaultGateway" xml:space="preserve">
-    <value>IPv6-デフォルト-ゲートウェイ</value>
+    <value>دروازه-پیش فرض-IPv6</value>
   </data>
   <data name="Maximum" xml:space="preserve">
-    <value>最大</value>
+    <value>بیشینه</value>
   </data>
   <data name="MaximumHops" xml:space="preserve">
-    <value>最大 ホップ</value>
+    <value>بیشینه گام ها</value>
   </data>
   <data name="MinimizeInsteadOfTerminating" xml:space="preserve">
-    <value>アプリケーションを終了せずにメインウィンドウを最小化</value>
+    <value>کمینه کردن پنجره به جای خاتمه دادن برنامه</value>
   </data>
   <data name="MinimizeToTrayInsteadOfTaskbar" xml:space="preserve">
-    <value>タスクバーではなくトレイに最小化</value>
+    <value>کمینه در سینی به جای نوار وظیفه</value>
   </data>
   <data name="Minimum" xml:space="preserve">
-    <value>最小</value>
+    <value>کمینه</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>名前</value>
+    <value>نام</value>
   </data>
   <data name="NetworkAddress" xml:space="preserve">
-    <value>ネットワーク アドレス</value>
+    <value>نشانی شبکه</value>
   </data>
   <data name="NewSubnetmaskOrCIDR" xml:space="preserve">
-    <value>新しいサブネットマスクまたは CIDR</value>
+    <value>نقاب زیر شبکه جدید یا CIDR</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>いいえ</value>
+    <value>خیر</value>
   </data>
   <data name="ObtainAnIPAddressAutomatically" xml:space="preserve">
-    <value>IPアドレスを自動的に取得</value>
+    <value>اخذ نشانی IP به طور خودکار</value>
   </data>
   <data name="ObtainDNSServerAddressAutomatically" xml:space="preserve">
-    <value>DNSサーバーのアドレスを自動的に取得</value>
+    <value>اخذ نشانی کارگزار DNS به طور خودکار</value>
   </data>
   <data name="PacketLoss" xml:space="preserve">
-    <value>パケット損失</value>
+    <value>از دست دادن بسته</value>
   </data>
   <data name="PacketsTransmitted" xml:space="preserve">
-    <value>送信済パケット</value>
+    <value>بسته ها منتقل شدند</value>
   </data>
   <data name="PhysicalAddress" xml:space="preserve">
-    <value>物理アドレス</value>
+    <value>نشانی فیزیکی</value>
   </data>
   <data name="PreferredProtocolWhenResolvingHostname" xml:space="preserve">
-    <value>ホスト名解決時の優先プロトコル :</value>
+    <value>پروتکل ترجیحی هنگام بازیابی نام میزبان:</value>
   </data>
   <data name="PrimaryDNSServer" xml:space="preserve">
-    <value>プライマリ DNS サーバー</value>
+    <value>کارگزار DNS اصلی</value>
   </data>
   <data name="ReceivedLost" xml:space="preserve">
-    <value>受信 / 損失</value>
+    <value>دریافت شده / از دست رفته</value>
   </data>
   <data name="ResolveHostname" xml:space="preserve">
-    <value>ホスト名の解決</value>
+    <value>بازیابی نام میزبان</value>
   </data>
   <data name="RestartRequired" xml:space="preserve">
-    <value>要再起動</value>
+    <value>راه اندازی مجدد نیاز است</value>
   </data>
   <data name="SaveSettingsInApplicationFolder" xml:space="preserve">
-    <value>アプリケーションフォルダーに設定を保存</value>
+    <value>ذخیره تنظیمات در پوشه برنامه</value>
   </data>
   <data name="SecondaryDNSServer" xml:space="preserve">
-    <value>セカンダリ DNS サーバー</value>
+    <value>کارگزار DNS ثانویه</value>
   </data>
   <data name="Show" xml:space="preserve">
-    <value>表示</value>
+    <value>نمایش</value>
   </data>
   <data name="ShowTheFollowingApplicationOnStartup" xml:space="preserve">
-    <value>起動時に次のアプリを表示 :</value>
+    <value>برنامه های زیر را هنگام راه اندازی نمایش بده:</value>
   </data>
   <data name="Slogan" xml:space="preserve">
-    <value>ネットワークを管理し、ネットワークの問題を解決するための強力なツールです!</value>
+    <value>ابزاری قدرتمند برای مدیریت شبکه ها و عیب یابی مشکلات شبکه!</value>
   </data>
   <data name="Speed" xml:space="preserve">
-    <value>速度</value>
+    <value>سرعت</value>
   </data>
   <data name="StartMinimizedInTray" xml:space="preserve">
-    <value>トレイに最小化状態で起動</value>
+    <value>شروع به صورت کمینه در سینی</value>
   </data>
   <data name="StartWithWindows" xml:space="preserve">
-    <value>ウィンドウで起動 (現在のユーザー)</value>
+    <value>شروع با ویندوز (کاربر جاری)</value>
   </data>
   <data name="StaticIPv4Address" xml:space="preserve">
-    <value>静的 IPv4 アドレス</value>
+    <value>Static IPv4 address</value>
   </data>
   <data name="StaticIPv4DNSServer" xml:space="preserve">
-    <value>静的 IPv4 DNS サーバー</value>
+    <value>Static IPv4 DNS server</value>
   </data>
   <data name="SubnetMask" xml:space="preserve">
-    <value>サブネットマスク</value>
+    <value>Subnet mask</value>
   </data>
   <data name="Threads" xml:space="preserve">
-    <value>スレッド</value>
+    <value>Threads</value>
   </data>
   <data name="Time" xml:space="preserve">
-    <value>時間</value>
+    <value>زمان</value>
   </data>
   <data name="Time1" xml:space="preserve">
-    <value>時間 1</value>
+    <value>زمان 1</value>
   </data>
   <data name="Time2" xml:space="preserve">
-    <value>時間 2</value>
+    <value>زمان 2</value>
   </data>
   <data name="Time3" xml:space="preserve">
-    <value>時間 3</value>
+    <value>زمان 3</value>
   </data>
   <data name="Timeout" xml:space="preserve">
-    <value>タイムアウト</value>
+    <value>Timeout</value>
   </data>
   <data name="TimeoutMS" xml:space="preserve">
-    <value>タイムアウト (ミリ秒)</value>
+    <value>Timeout (ms)</value>
   </data>
   <data name="TimeMSToWaitBetweenEachPing" xml:space="preserve">
-    <value>各ping間の待機時間 (ミリ秒)</value>
+    <value>زمان (م.ث) انتظار بین هر پینگ</value>
   </data>
   <data name="TTL" xml:space="preserve">
     <value>TTL</value>
   </data>
   <data name="Type" xml:space="preserve">
-    <value>種類</value>
+    <value>Type</value>
   </data>
   <data name="UseTheFollowingDNSServerAddresses" xml:space="preserve">
-    <value>次の DNS サーバーアドレスを使用 :</value>
+    <value>Use the following DNS server addresses:</value>
   </data>
   <data name="UseTheFollowingIPAddress" xml:space="preserve">
-    <value>次の IP アドレスを使用 :</value>
+    <value>Use the following IP address:</value>
   </data>
   <data name="WakeUp" xml:space="preserve">
-    <value>ウェイクアップ</value>
+    <value>Wake up</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>はい</value>
+    <value>Yes</value>
   </data>
   <data name="Add" xml:space="preserve">
-    <value>追加</value>
+    <value>Add</value>
   </data>
   <data name="AddATabToPerformADNSLookup" xml:space="preserve">
-    <value>DNS Lookupを実行するタブの追加...</value>
+    <value>Add a tab to perform a DNS lookup...</value>
   </data>
   <data name="AddATabToPerformANetworkScan" xml:space="preserve">
-    <value>ネットワークスキャンを実行するタブの追加...</value>
+    <value>Add a tab to perform a network scan...</value>
   </data>
   <data name="AddATabToPerformAnSNMPAction" xml:space="preserve">
-    <value>SNMPアクションを実行するタブの追加...</value>
+    <value>Add a tab to perform an SNMP action...</value>
   </data>
   <data name="AddATabToPerformAPing" xml:space="preserve">
-    <value>pingを実行するタブの追加...</value>
+    <value>اضافه کردن یک سربرگ برای انجام پینگ</value>
   </data>
   <data name="AddATabToPerformAPortScan" xml:space="preserve">
-    <value>ポートスキャンを実行するタブの追加...</value>
+    <value>Add a tab to perform a port scan...</value>
   </data>
   <data name="AddATabToPerformATrace" xml:space="preserve">
-    <value>トレースを実行するタブの追加...</value>
+    <value>Add a tab to perform a trace...</value>
   </data>
   <data name="AddDNSSuffixToHostname" xml:space="preserve">
-    <value>ホスト名にDNSサフィックス(プライマリ)を追加</value>
+    <value>Add DNS suffix (primary) to hostname</value>
   </data>
   <data name="AdditionalCommandLine" xml:space="preserve">
-    <value>追加のコマンドライン</value>
+    <value>Additional command line</value>
   </data>
   <data name="Additionals" xml:space="preserve">
-    <value>追加</value>
+    <value>Additionals</value>
   </data>
   <data name="AddProfileDots" xml:space="preserve">
-    <value>プロファイルの追加...</value>
+    <value>Add profile...</value>
   </data>
   <data name="AdjustScreenAutomatically" xml:space="preserve">
-    <value>画面の自動調整</value>
+    <value>Adjust screen automatically</value>
   </data>
   <data name="Answers" xml:space="preserve">
-    <value>応答</value>
+    <value>Answers</value>
   </data>
   <data name="ApplicationWillBeRestartedAfterwards" xml:space="preserve">
-    <value>アプリケーションは後で再起動されます!</value>
+    <value>The application will be restarted afterwards!</value>
   </data>
   <data name="Apply" xml:space="preserve">
-    <value>適用</value>
+    <value>Apply</value>
   </data>
   <data name="ApplyWindowsKeyCombinationsLikeAltTab" xml:space="preserve">
     <value>Apply Windows key combinations (e.g., ALT+TAB):</value>
   </data>
   <data name="Auth" xml:space="preserve">
-    <value>認証</value>
+    <value>Auth</value>
   </data>
   <data name="AuthenticationLevel" xml:space="preserve">
-    <value>認証レベル</value>
+    <value>Authentication level</value>
   </data>
   <data name="Authorities" xml:space="preserve">
-    <value>権限</value>
+    <value>Authorities</value>
   </data>
   <data name="AutomaticallyUpdateEvery" xml:space="preserve">
-    <value>自動更新の間隔</value>
+    <value>Automatically update every</value>
   </data>
   <data name="Back" xml:space="preserve">
-    <value>戻る</value>
+    <value>back</value>
   </data>
   <data name="Backup" xml:space="preserve">
-    <value>バックアップ</value>
+    <value>Backup</value>
   </data>
   <data name="Baud" xml:space="preserve">
-    <value>ボーレート</value>
+    <value>Baud</value>
   </data>
   <data name="CanceledByUserMessage" xml:space="preserve">
-    <value>操作はユーザーによってキャンセルされました!</value>
+    <value>The operation has been canceled by the user!</value>
   </data>
   <data name="CapsLockIsEnabled" xml:space="preserve">
-    <value>Caps Lockが有効になりました!</value>
+    <value>Caps lock is enabled!</value>
   </data>
   <data name="CheckForUpdatesAtStartup" xml:space="preserve">
-    <value>起動時に更新を確認</value>
+    <value>Check for updates at startup</value>
   </data>
   <data name="Class" xml:space="preserve">
-    <value>クラス</value>
+    <value>Class</value>
   </data>
   <data name="ClearFilter" xml:space="preserve">
-    <value>フィルターの消去</value>
+    <value>Clear filter</value>
   </data>
   <data name="ColorDepthBit" xml:space="preserve">
-    <value>色深度 (bit)</value>
+    <value>Color depth (bit)</value>
   </data>
   <data name="Community" xml:space="preserve">
-    <value>コミュニティ</value>
+    <value>Community</value>
   </data>
   <data name="ConfigureThePathToPuTTYInTheSettingsDots" xml:space="preserve">
-    <value>PuTTYへのパスを設定...</value>
+    <value>Configure the path to PuTTY in the settings...</value>
   </data>
   <data name="ConfirmClose" xml:space="preserve">
-    <value>閉じるの確認</value>
+    <value>Confirm close</value>
   </data>
   <data name="ConfirmCloseMessage" xml:space="preserve">
-    <value>アプリケーションを閉じますか?</value>
+    <value>Are you sure you want to close the application?</value>
   </data>
   <data name="ConnectAsDots" xml:space="preserve">
-    <value>接続形式...</value>
+    <value>Connect as...</value>
   </data>
   <data name="ConnectExternal" xml:space="preserve">
-    <value>外部接続</value>
+    <value>Connect external</value>
   </data>
   <data name="ConnectTheNetworkCardToConfigureIt" xml:space="preserve">
-    <value>ネットワークカードをネットワークに接続して設定!</value>
+    <value>Connect the network card to a network to configure it!</value>
   </data>
   <data name="Copy" xml:space="preserve">
-    <value>コピー</value>
+    <value>نسخه برداری</value>
   </data>
   <data name="CopyAsDots" xml:space="preserve">
-    <value>コピー形式...</value>
+    <value>نسخه برداری به عنوان</value>
   </data>
   <data name="CopyDots" xml:space="preserve">
-    <value>コピー...</value>
+    <value>نسخه برداری...</value>
   </data>
   <data name="CouldNotResolveHostnameFor" xml:space="preserve">
-    <value>解決できなかったホスト名 : "{0}"</value>
+    <value>Could not resolve hostname for: "{0}"</value>
   </data>
   <data name="Credential" xml:space="preserve">
-    <value>資格情報</value>
+    <value>داده احراز هویت</value>
   </data>
   <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
-    <value>プロファイルファイルは、ディスク上でAES（鍵長256ビット、ブロックサイズ128ビット、CBCモード）を使用して暗号化されます。暗号化鍵は、マスターパスワードからRFC2898DeriveBytes（PBKDF2）を用いて1,000,000回の反復処理で生成されます。実行時には、プロファイルファイルが読み込まれると、パスワードはSecureStringとして保存されます。一部の関数では、パスワードを通常の文字列に変換する必要があり、ガベージコレクタによってクリーンアップされるまで、暗号化されていない状態でメモリ内に残ります。
-
-暗号化を有効にする前に、まずプロファイル ファイルのバックアップ コピーを作成してください!</value>
+    <value>فایل های پروفایل بر روی دیسک با استفاده از پروتکل AES و اندازه کلید 256 بیت و اندازه بلوک 128 بیت در حالت CBC رمزنگاری می شوند. کلید رمزنگاری از گذرواژه اصلی با استفاده از Rfc2898DeriveBytes (PBKDF2) به همراه 1,000,000 تکرار منتج می شود. در زمان اجرا، پس از بارگذاری فایل پروفایل گذرواژه ها به عنوان رشته امن SecureString ذخیره می شوند. برای برخی از توابع، رمز عبور باید به یک رشته معمولی تبدیل شود و تا زمانی که زباله جمع کن آنها را پاک کند، رمزگذاری نشده در حافظه باقی می ماند.</value>
   </data>
   <data name="Custom" xml:space="preserve">
-    <value>カスタム</value>
+    <value>سفارشی</value>
   </data>
   <data name="CustomScreenSize" xml:space="preserve">
-    <value>カスタム 画面サイズ :</value>
+    <value>اندازه صفحه سفارشی:</value>
   </data>
   <data name="DataHasBeenUpdated" xml:space="preserve">
-    <value>データが更新されました!</value>
+    <value>داده ها بروز رسانی شد!</value>
   </data>
   <data name="DecryptAndLoadCredentialsMessage" xml:space="preserve">
-    <value>資格情報を管理するには、それを復号化して読み込む必要があります。</value>
+    <value>داده های احراز هویت باید رمزنگاری گردیده و برای مدیریت آنها بارگذاری شوند.</value>
   </data>
   <data name="Default" xml:space="preserve">
-    <value>既定</value>
+    <value>پیش فرض</value>
   </data>
   <data name="BaudRate" xml:space="preserve">
-    <value>ボーレート</value>
+    <value>Baud rate</value>
   </data>
   <data name="DefaultPort" xml:space="preserve">
-    <value>既定のポート :</value>
+    <value>درگاه پیش فرض:</value>
   </data>
   <data name="RloginPort" xml:space="preserve">
-    <value>Rlogin ポート</value>
+    <value>درگاه RLogin:</value>
   </data>
   <data name="SSHPort" xml:space="preserve">
-    <value>SSH ポート</value>
+    <value>درگاه SSH</value>
   </data>
   <data name="TelnetPort" xml:space="preserve">
-    <value>Telnet ポート</value>
+    <value>درگاه Telnet</value>
   </data>
   <data name="DeleteCredentialMessage" xml:space="preserve">
-    <value>選択した資格情報は完全に削除されます。</value>
+    <value>داده احراز هویت منتخب بطور دائم حذف خواهد شد.</value>
   </data>
   <data name="DeleteEntry" xml:space="preserve">
-    <value>エントリを削除</value>
+    <value>حذف ورودی</value>
   </data>
   <data name="DeleteProfileMessage" xml:space="preserve">
-    <value>選択したプロファイルは完全に削除されます。</value>
+    <value>پروفایل منتخب به طور دائمی حذف میگردد.</value>
   </data>
   <data name="DNSAutoconfiguration" xml:space="preserve">
-    <value>DNS 自動設定</value>
+    <value>پیکربندی خودکار DNS</value>
   </data>
   <data name="DNSLookupDots" xml:space="preserve">
-    <value>DNS Lookup...</value>
+    <value>پرس و جوی DNS</value>
   </data>
   <data name="DNSServer" xml:space="preserve">
-    <value>DNS サーバー</value>
+    <value>کارگزار DNS</value>
   </data>
   <data name="Domain" xml:space="preserve">
-    <value>ドメイン</value>
+    <value>دامنه</value>
   </data>
   <data name="Duration" xml:space="preserve">
-    <value>間隔</value>
+    <value>جریان</value>
   </data>
   <data name="EditDots" xml:space="preserve">
-    <value>編集...</value>
+    <value>ویرایش...</value>
   </data>
   <data name="Enable" xml:space="preserve">
-    <value>有効</value>
+    <value>فعال سازی</value>
   </data>
   <data name="EnableCredentialSecuritySupportProvider" xml:space="preserve">
-    <value>資格情報セキュリティサポートプロバイダーを有効にする</value>
+    <value>فعال سازی فراهم کننده پشتیبانی ایمنی داده احراز هویت</value>
   </data>
   <data name="EndTime" xml:space="preserve">
-    <value>終了時間</value>
+    <value>End time</value>
   </data>
   <data name="EnterASubnetToCalculateItDots" xml:space="preserve">
-    <value>計算するサブネットの入力...</value>
+    <value>Enter a subnet to calculate it...</value>
   </data>
   <data name="EnterSubnetAndANewSubnetmaskToCreateSubnets" xml:space="preserve">
-    <value>サブネットと新しいサブネットマスクを入力してサブネットを作成...</value>
+    <value>Enter subnet and a new subnet mask to create subnets...</value>
   </data>
   <data name="ErrorCheckingApiGithubComVerifyYourNetworkConnection" xml:space="preserve">
-    <value>'api.github.com' に接続できませんでした。ネットワーク接続を確認してください!</value>
+    <value>Couldn't connect to 'api.github.com', check your network connection!</value>
   </data>
   <data name="ErrorInResponse" xml:space="preserve">
-    <value>応答エラー!</value>
+    <value>Error in response!</value>
   </data>
   <data name="ErrorInResponseCheckIfYouHaveWritePermissions" xml:space="preserve">
-    <value>応答エラー! 書き込み権限があるか確認してください。</value>
+    <value>Error in response! Check if you have write permissions.</value>
   </data>
   <data name="Expand" xml:space="preserve">
-    <value>拡張</value>
+    <value>Expand</value>
   </data>
   <data name="FirstUsableIPAddress" xml:space="preserve">
-    <value>最初の使用可能なIPアドレス</value>
+    <value>First usable IP address</value>
   </data>
   <data name="FixedScreenSize" xml:space="preserve">
-    <value>固定画面サイズ :</value>
+    <value>Fixed screen size:</value>
   </data>
   <data name="Found" xml:space="preserve">
-    <value>検索</value>
+    <value>Found</value>
   </data>
   <data name="Group" xml:space="preserve">
-    <value>グループ</value>
+    <value>Group</value>
   </data>
   <data name="Height" xml:space="preserve">
-    <value>高さ</value>
+    <value>Height</value>
   </data>
   <data name="Host" xml:space="preserve">
-    <value>ホスト</value>
+    <value>Host</value>
   </data>
   <data name="HostnameOrIPAddress" xml:space="preserve">
-    <value>ホスト名 または IP アップ</value>
+    <value>Hostname or IP address</value>
   </data>
   <data name="Hosts" xml:space="preserve">
-    <value>ホスト</value>
+    <value>Hosts</value>
   </data>
   <data name="ID" xml:space="preserve">
     <value>ID</value>
   </data>
   <data name="InheritHostFromGeneral" xml:space="preserve">
-    <value>一般からホストを継承</value>
+    <value>Inherit host from general</value>
   </data>
   <data name="IPRange" xml:space="preserve">
-    <value>IP 範囲</value>
+    <value>IP range</value>
   </data>
   <data name="LastUsableIPAddress" xml:space="preserve">
-    <value>利用可能な最後の IP アドレス</value>
+    <value>Last usable IP address</value>
   </data>
   <data name="LocalIPAddress" xml:space="preserve">
-    <value>ローカル IP アドレス</value>
+    <value>Local IP address</value>
   </data>
   <data name="LocalPort" xml:space="preserve">
-    <value>ローカル ポート</value>
+    <value>Local port</value>
   </data>
   <data name="MACAddressOrVendor" xml:space="preserve">
-    <value>MAC アドレス または ベンダー</value>
+    <value>MAC address or vendor</value>
   </data>
   <data name="MagicPacketSentMessage" xml:space="preserve">
-    <value>マジックパケットが正常に送信されました!</value>
+    <value>Magic packet successfully sent!</value>
   </data>
   <data name="MaximumNumberOfHopsReached" xml:space="preserve">
-    <value>ルーターあたりの最大ホップ数 ({0}) に達しました!</value>
+    <value>Maximum number ({0}) of hops/router reached!</value>
   </data>
   <data name="MessageSize" xml:space="preserve">
-    <value>メッセージ サイズ</value>
+    <value>Message size</value>
   </data>
   <data name="Mode" xml:space="preserve">
-    <value>モード</value>
+    <value>Mode</value>
   </data>
   <data name="Multicast" xml:space="preserve">
-    <value>マルチキャスト</value>
+    <value>Multicast</value>
   </data>
   <data name="MultipleInstances" xml:space="preserve">
-    <value>複数インスタンス</value>
+    <value>Multiple instances</value>
   </data>
   <data name="NetworkLocationCannotBeReachedMessage" xml:space="preserve">
-    <value>ネットワークアドレスにアクセスできません。コンピュータがネットワークに接続されているかどうかを確認してください。ネットワークのトラブルシューティングについては、Windowsヘルプを参照してください。</value>
+    <value>The network address cannot be reached. Check if your computer is connected to the network. For information about network troubleshooting, see Windows Help.</value>
   </data>
   <data name="NewConnectionDots" xml:space="preserve">
-    <value>新しい接続...</value>
+    <value>New connection...</value>
   </data>
   <data name="NoDNSRecordFoundCheckYourInputAndSettings" xml:space="preserve">
-    <value>"{0}" の DNS レコードが見つかりません! 入力内容と設定を確認してください。</value>
+    <value>No DNS record found for "{0}"! Check your input and the settings.</value>
   </data>
   <data name="NoEnabledNetworkAdaptersFound" xml:space="preserve">
-    <value>有効なネットワーク アダプターが見つかりません!</value>
+    <value>No enabled network adapters found!</value>
   </data>
   <data name="NoPortsFoundCheckYourInput" xml:space="preserve">
-    <value>ポートが見つかりません。入力内容を確認してください!</value>
+    <value>No ports found. Check your input!</value>
   </data>
   <data name="NoProfilesFoundCreateOne" xml:space="preserve">
-    <value>プロファイルが見つかりません!
-作成...</value>
+    <value>No profiles found!
+Create one...</value>
   </data>
   <data name="NothingFound" xml:space="preserve">
-    <value>何も見つかりません!</value>
+    <value>Nothing found!</value>
   </data>
   <data name="NothingToDoCheckYourInput" xml:space="preserve">
-    <value>何もすることはありません。入力を確認してください。</value>
+    <value>Nothing to do. Check your input!</value>
   </data>
   <data name="NoUpdateAvailable" xml:space="preserve">
-    <value>更新プログラムはありません!</value>
+    <value>No update available!</value>
   </data>
   <data name="NoValidFileFoundToImport" xml:space="preserve">
-    <value>インポートする有効なファイルが見つかりません。</value>
+    <value>No valid file found to import.</value>
   </data>
   <data name="NoVendorFoundCheckYourInput" xml:space="preserve">
-    <value>ベンダーが見つかりません。入力内容を確認してください!</value>
+    <value>No vendor found. Check your input!</value>
   </data>
   <data name="NumberOfErrorsAfterWhichIsCanceled" xml:space="preserve">
-    <value>キャンセルされるまでのエラー数 :</value>
+    <value>Number of errors after which is canceled:</value>
   </data>
   <data name="NumberOfStoredEntries" xml:space="preserve">
-    <value>保存されたエントリの数</value>
+    <value>Number of stored entries</value>
   </data>
   <data name="OID" xml:space="preserve">
     <value>OID</value>
   </data>
   <data name="OnlyWhenUsingTheFullScreen" xml:space="preserve">
-    <value>全画面表示時のみ</value>
+    <value>Only when using the full screen</value>
   </data>
   <data name="RemoteDesktopKeyboardHookMode_OnTheRemoteComputer" xml:space="preserve">
-    <value>リモートコンピューター上</value>
+    <value>On the remote computer</value>
   </data>
   <data name="RemoteDesktopKeyboardHookMode_OnThisComputer" xml:space="preserve">
-    <value>このコンピューター</value>
+    <value>On this computer</value>
   </data>
   <data name="Open" xml:space="preserve">
-    <value>開く</value>
+    <value>Open</value>
   </data>
   <data name="OpenLicense" xml:space="preserve">
-    <value>ライセンスを開く</value>
+    <value>Open license</value>
   </data>
   <data name="OpenProject" xml:space="preserve">
-    <value>プロジェクトを開く</value>
+    <value>Open project</value>
   </data>
   <data name="OpenWebsite" xml:space="preserve">
-    <value>ウェブサイトを開く</value>
+    <value>Open website</value>
   </data>
   <data name="Override" xml:space="preserve">
-    <value>上書き</value>
+    <value>override</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>パスワード</value>
+    <value>Password</value>
   </data>
   <data name="PasswordsDoNotMatch" xml:space="preserve">
-    <value>パスワードが一致しません!</value>
+    <value>Passwords do not match!</value>
   </data>
   <data name="Path" xml:space="preserve">
-    <value>パス</value>
+    <value>Path</value>
   </data>
   <data name="PortOrService" xml:space="preserve">
-    <value>ポート または サービス</value>
+    <value>Port or service</value>
   </data>
   <data name="Ports" xml:space="preserve">
-    <value>ポート</value>
+    <value>Ports</value>
   </data>
   <data name="Priv" xml:space="preserve">
-    <value>プライベート</value>
+    <value>Priv</value>
   </data>
   <data name="Profile" xml:space="preserve">
-    <value>プロファイル</value>
+    <value>Profile</value>
   </data>
   <data name="ProfilesReloaded" xml:space="preserve">
-    <value>再読み込みされたプロファイル</value>
+    <value>Profiles reloaded</value>
   </data>
   <data name="Protocol" xml:space="preserve">
-    <value>プロトコル</value>
+    <value>Protocol</value>
   </data>
   <data name="PuTTYProcessHasEnded" xml:space="preserve">
-    <value>PuTTYプロセスが終了しました！</value>
+    <value>PuTTY process has ended!</value>
   </data>
   <data name="Questions" xml:space="preserve">
-    <value>質問</value>
+    <value>Questions</value>
   </data>
   <data name="RAW" xml:space="preserve">
     <value>RAW</value>
   </data>
   <data name="Recursion" xml:space="preserve">
-    <value>再帰</value>
+    <value>Recursion</value>
   </data>
   <data name="RedirectClipboard" xml:space="preserve">
-    <value>クリップボードのリダイレクト</value>
+    <value>Redirect clipboard</value>
   </data>
   <data name="RedirectDevices" xml:space="preserve">
-    <value>デバイスのリダイレクト</value>
+    <value>Redirect devices</value>
   </data>
   <data name="RedirectDrives" xml:space="preserve">
-    <value>ドライブのリダイレクト</value>
+    <value>Redirect drives</value>
   </data>
   <data name="RedirectPorts" xml:space="preserve">
-    <value>ポートのリダイレクト</value>
+    <value>Redirect ports</value>
   </data>
   <data name="RedirectPrinters" xml:space="preserve">
-    <value>プリンタのリダイレクト</value>
+    <value>Redirect printers</value>
   </data>
   <data name="RedirectSmartcards" xml:space="preserve">
-    <value>スマートカードのリダイレクト</value>
+    <value>Redirect smartcards</value>
   </data>
   <data name="RemainingTime" xml:space="preserve">
-    <value>残り時間</value>
+    <value>Remaining time</value>
   </data>
   <data name="RemoteIPAddress" xml:space="preserve">
-    <value>リモート IP アドレス</value>
+    <value>Remote IP address</value>
   </data>
   <data name="RemotePort" xml:space="preserve">
-    <value>リモート ポート</value>
+    <value>Remote port</value>
   </data>
   <data name="Repeat" xml:space="preserve">
-    <value>繰り返し</value>
+    <value>Repeat</value>
   </data>
   <data name="ResolveCNAMEOnANYRequests" xml:space="preserve">
-    <value>すべてのリクエストでCNAMEを解決</value>
+    <value>Resolve CNAME on ANY requests</value>
   </data>
   <data name="Responses" xml:space="preserve">
-    <value>応答</value>
+    <value>Responses</value>
   </data>
   <data name="Rlogin" xml:space="preserve">
     <value>Rlogin</value>
   </data>
   <data name="Scanned" xml:space="preserve">
-    <value>スキャン済み</value>
+    <value>Scanned</value>
   </data>
   <data name="SearchedApplicationNotFound" xml:space="preserve">
-    <value>検索したアプリが見つかりません!</value>
+    <value>Searched application not found!</value>
   </data>
   <data name="SearchedLanguageNotFound" xml:space="preserve">
-    <value>検索した言語が見つかりません!</value>
+    <value>Searched language not found!</value>
   </data>
   <data name="SearchedSettingNotFound" xml:space="preserve">
-    <value>検索した設定が見つかりません!</value>
+    <value>Searched setting not found!</value>
   </data>
   <data name="Security" xml:space="preserve">
-    <value>セキュリティ</value>
+    <value>Security</value>
   </data>
   <data name="SelectAScreenResolution" xml:space="preserve">
-    <value>画面解像度の選択</value>
+    <value>Select a screen resolution</value>
   </data>
   <data name="ThisWillResetAllSettings" xml:space="preserve">
-    <value>すべての設定がリセットされます!</value>
+    <value>This will reset all settings!</value>
   </data>
   <data name="Serial" xml:space="preserve">
-    <value>シリアル</value>
+    <value>Serial</value>
   </data>
   <data name="SerialLine" xml:space="preserve">
-    <value>シリアル回線</value>
+    <value>Serial line</value>
   </data>
   <data name="Service" xml:space="preserve">
-    <value>サービス</value>
+    <value>Service</value>
   </data>
   <data name="SettingsFileFoundWasCorruptOrNotCompatibleMessage" xml:space="preserve">
-    <value>見つかった設定ファイルは破損しているか、このバージョンと互換性がありません! この問題は GitHub で報告できます。
+    <value>The found settings file was corrupted or is not compatible with this version! You may report this issue on GitHub.
 
-設定ファイルのバックアップを設定フォルダに作成し、設定をリセットしました。
+A backup of the settings file was created in the settings folder and the settings were reset.
 
-プロファイルファイルは影響を受けません!</value>
+Profile files are not affected!</value>
   </data>
   <data name="ShowClosedPorts" xml:space="preserve">
-    <value>閉じたポートを表示</value>
+    <value>Show closed ports</value>
   </data>
   <data name="ShowCurrentApplicationTitle" xml:space="preserve">
-    <value>現在のアプリのタイトルを表示</value>
+    <value>Show current application title</value>
   </data>
   <data name="ShowOnlyMostCommonQueryTypes" xml:space="preserve">
-    <value>最も一般的なクエリタイプのみを表示</value>
+    <value>Show only most common query types</value>
   </data>
   <data name="ShowUnreachableIPAddressesAndPorts" xml:space="preserve">
-    <value>到達不能なIPアドレスとポートを表示</value>
+    <value>Show unreachable IP addresses and ports</value>
   </data>
   <data name="ShowStatistics" xml:space="preserve">
-    <value>統計を表示</value>
+    <value>Show statistics</value>
   </data>
   <data name="SSH" xml:space="preserve">
     <value>SSH</value>
   </data>
   <data name="StartTime" xml:space="preserve">
-    <value>開始時間</value>
+    <value>Start time</value>
   </data>
   <data name="State" xml:space="preserve">
-    <value>状態</value>
+    <value>State</value>
   </data>
   <data name="Subnet1" xml:space="preserve">
-    <value>サブネット 1</value>
+    <value>Subnet 1</value>
   </data>
   <data name="Subnet2" xml:space="preserve">
-    <value>サブネット 2</value>
+    <value>Subnet 2</value>
   </data>
   <data name="Tags" xml:space="preserve">
-    <value>タグ</value>
+    <value>Tags</value>
   </data>
   <data name="Telnet" xml:space="preserve">
     <value>Telnet</value>
   </data>
   <data name="TheApplicationCanBeStartedWithoutParameters" xml:space="preserve">
-    <value>アプリはパラメータなしで起動できます!</value>
+    <value>The application can be started without parameters!</value>
   </data>
   <data name="TheFollowingHostnamesCouldNotBeResolved" xml:space="preserve">
-    <value>解決できなかったホスト名 :</value>
+    <value>The following hostnames could not be resolved:</value>
   </data>
   <data name="TheFollowingParametersAreAvailable" xml:space="preserve">
-    <value>使用可能なパラメータ :</value>
+    <value>The following parameters are available:</value>
   </data>
   <data name="TheFollowingParametersCanNotBeProcesses" xml:space="preserve">
-    <value>処理できないパラメータ :</value>
+    <value>The following parameters can not be processed:</value>
   </data>
   <data name="TheProcessCanTakeUpSomeTimeAndResources" xml:space="preserve">
-    <value>このプロセスには時間とリソースがかかる場合があります。 (CPU / RAM)</value>
+    <value>The process can take up some time and resources (CPU / RAM).</value>
   </data>
   <data name="TheSettingsLocationIsNotAffected" xml:space="preserve">
-    <value>設定場所は影響を受けません!</value>
+    <value>The settings location is not affected!</value>
   </data>
   <data name="TimeoutOnSNMPQuery" xml:space="preserve">
-    <value>SNMPクエリがタイムアウトしました。ホストにアクセスできないか、コミュニティ/パスワードが間違っている可能性があります。</value>
+    <value>Timeout on SNMP query. Maybe the host is not reachable or the community / password is wrong.</value>
   </data>
   <data name="TimeoutWhenQueryingDNSServerMessage" xml:space="preserve">
-    <value>IP アドレス "{0}" で DNS サーバーにクエリを実行中にタイムアウトが発生しました!</value>
+    <value>Timeout when querying the DNS server with the IP address "{0}"!</value>
   </data>
   <data name="Timestamp" xml:space="preserve">
-    <value>タイムスタンプ</value>
+    <value>Timestamp</value>
   </data>
   <data name="Trace" xml:space="preserve">
-    <value>トレース</value>
+    <value>Trace</value>
   </data>
   <data name="UnkownError" xml:space="preserve">
-    <value>不明なエラー!</value>
+    <value>Unkown error!</value>
   </data>
   <data name="UntrayBringWindowToForeground" xml:space="preserve">
-    <value>トレイ解除/ウィンドウを前面に移動</value>
+    <value>Untray / Bring window to foreground</value>
   </data>
   <data name="URL" xml:space="preserve">
     <value>URL</value>
   </data>
   <data name="UseCredentials" xml:space="preserve">
-    <value>資格情報の使用</value>
+    <value>استفاده از داده های احراز هویت</value>
   </data>
   <data name="UseCurrentViewSize" xml:space="preserve">
-    <value>現在の表示サイズを画面サイズとして使用</value>
+    <value>Use the current view size as the screen size</value>
   </data>
   <data name="UseCustomDNSServer" xml:space="preserve">
-    <value>カスタム DNS サーバーを使用</value>
+    <value>Use custom DNS server</value>
   </data>
   <data name="UseCustomDNSSuffix" xml:space="preserve">
-    <value>カスタム DNS サフィックスを使用</value>
+    <value>Use custom DNS suffix</value>
   </data>
   <data name="UseResolverCache" xml:space="preserve">
-    <value>リゾルバーキャッシュを使用</value>
+    <value>Use resolver cache</value>
   </data>
   <data name="UserInterfaceLocked" xml:space="preserve">
-    <value>ユーザーインタフェースがロックされました!</value>
+    <value>User interface locked!</value>
   </data>
   <data name="Username" xml:space="preserve">
-    <value>ユーザー名</value>
+    <value>Username</value>
   </data>
   <data name="Vendor" xml:space="preserve">
-    <value>ベンダー</value>
+    <value>Vendor</value>
   </data>
   <data name="Version" xml:space="preserve">
-    <value>バージョン</value>
+    <value>Version</value>
   </data>
   <data name="VersionxxIsAvailable" xml:space="preserve">
-    <value>バージョン {0} が利用可能です!</value>
+    <value>Version {0} is available!</value>
   </data>
   <data name="WalkMode" xml:space="preserve">
-    <value>ウォークモード</value>
+    <value>Walk mode</value>
   </data>
   <data name="Width" xml:space="preserve">
-    <value>幅</value>
+    <value>Width</value>
   </data>
   <data name="WrongPasswordDecryptionFailedMessage" xml:space="preserve">
-    <value>指定されたパスワードではプロファイル ファイルを復号化できませんでした。</value>
+    <value>Profile file could not be decrypted with the given password.</value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
-    <value>入力したパスワードが間違っています。</value>
+    <value>The entered password is wrong.</value>
   </data>
   <data name="AddDots" xml:space="preserve">
-    <value>追加...</value>
+    <value>Add...</value>
   </data>
   <data name="AddEntryDots" xml:space="preserve">
-    <value>エントリーの追加...</value>
+    <value>Add entry...</value>
   </data>
   <data name="Calculate" xml:space="preserve">
-    <value>計算</value>
+    <value>Calculate</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>キャンセル</value>
+    <value>Cancel</value>
   </data>
   <data name="Change" xml:space="preserve">
-    <value>変更</value>
+    <value>Change</value>
   </data>
   <data name="ChangeMasterPasswordDots" xml:space="preserve">
-    <value>マスターパスワードの変更...</value>
+    <value>Change Master Password...</value>
   </data>
   <data name="Check" xml:space="preserve">
-    <value>確認</value>
+    <value>Check</value>
   </data>
   <data name="CheckForUpdates" xml:space="preserve">
-    <value>更新の確認</value>
+    <value>Check for updates</value>
   </data>
   <data name="Closed" xml:space="preserve">
-    <value>閉じる</value>
+    <value>Closed</value>
   </data>
   <data name="Continue" xml:space="preserve">
-    <value>続行</value>
+    <value>Continue</value>
   </data>
   <data name="CustomColon" xml:space="preserve">
-    <value>カスタム :</value>
+    <value>Custom:</value>
   </data>
   <data name="Cut" xml:space="preserve">
-    <value>切り取り</value>
+    <value>Cut</value>
   </data>
   <data name="DecryptAndLoadDots" xml:space="preserve">
-    <value>復号化と読み込み...</value>
+    <value>Decrypt and load...</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>削除</value>
+    <value>Delete</value>
   </data>
   <data name="DeleteTable" xml:space="preserve">
-    <value>テーブルの削除</value>
+    <value>Delete table</value>
   </data>
   <data name="EnterLocationDots" xml:space="preserve">
-    <value>場所の入力...</value>
+    <value>Enter location...</value>
   </data>
   <data name="Everything" xml:space="preserve">
-    <value>すべて</value>
+    <value>Everything</value>
   </data>
   <data name="FilterDots" xml:space="preserve">
-    <value>フィルター...</value>
+    <value>Filter...</value>
   </data>
   <data name="FlushDNSCache" xml:space="preserve">
-    <value>DNS キャッシュの消去</value>
+    <value>Flush DNS cache</value>
   </data>
   <data name="HelpMessage_Credentials" xml:space="preserve">
-    <value>資格情報を復号化して読み込み、選択します。</value>
+    <value>رمزگشایی و بارگذاری داده های احراز هویت شما  برای انتخاب آنها</value>
   </data>
   <data name="HelpMessage_ParameterHelp" xml:space="preserve">
-    <value>このダイアログを表示。</value>
+    <value>Displays this dialog.</value>
   </data>
   <data name="HelpMessage_ParameterResetSettings" xml:space="preserve">
-    <value>すべてのアプリケーション設定をリセット。</value>
+    <value>Resets all application settings.</value>
   </data>
   <data name="HelpMessage_PasswordNotDisplayedCanBeOverwritten" xml:space="preserve">
-    <value>編集時にパスワードは表示されませんが、上書きすることは可能です。</value>
+    <value>The password is not displayed when editing, but can be overwritten.</value>
   </data>
   <data name="HelpMessage_RDPAuthenticationLevel" xml:space="preserve">
-    <value>[0] サーバー認証に失敗した場合は、警告なしでコンピューターに接続する。
-[1] サーバー認証に失敗した場合は、接続を確立しない。
-[2] サーバー認証に失敗した場合は警告を表示し、接続を許可するか接続を拒否する。
-[3] 認証要件は指定されていません。</value>
+    <value>[0] If server authentication fails, connect to the computer without warning.
+[1] If server authentication fails, do not establish a connection.
+[2] If server authentication fails, show a warning and allow me to connect or refuse the connection.
+[3] No authentication requirement is specified.</value>
   </data>
   <data name="HelpMessage_Tags" xml:space="preserve">
-    <value>タグは、トピックやプロジェクトごとにプロフィールを整理するのに役立ちます。複数のタグを使用する場合は、";"で区切ります。 "tag=xxx"でタグ検索します。</value>
+    <value>Tags help you organize profiles/Profiles by topics/projects. Multiple tags can be used with ";" be separated. Search by tags with "tag=xxx".</value>
   </data>
   <data name="TimeUnit_Hour" xml:space="preserve">
-    <value>時間</value>
+    <value>Hour(s)</value>
   </data>
   <data name="LocationOfTheImport" xml:space="preserve">
-    <value>インポート ファイルの場所...</value>
+    <value>Location of the import file...</value>
   </data>
   <data name="TimeUnit_Minute" xml:space="preserve">
-    <value>分</value>
+    <value>Minute(s)</value>
   </data>
   <data name="MoveAndRestart" xml:space="preserve">
-    <value>移動と再起動</value>
+    <value>Move &amp; Restart</value>
   </data>
   <data name="NetworkConnectionsDots" xml:space="preserve">
-    <value>ネットワーク接続....</value>
+    <value>Network connections....</value>
   </data>
   <data name="NotChanged" xml:space="preserve">
-    <value>(変更なし)</value>
+    <value>(not changed)</value>
   </data>
   <data name="Off" xml:space="preserve">
     <value>Off</value>
@@ -1313,64 +1311,64 @@
     <value>On</value>
   </data>
   <data name="OpenLocation" xml:space="preserve">
-    <value>場所を開く</value>
+    <value>Open location</value>
   </data>
   <data name="OpenSettings" xml:space="preserve">
-    <value>設定を開く</value>
+    <value>Open settings</value>
   </data>
   <data name="Overwrite" xml:space="preserve">
-    <value>上書き</value>
+    <value>Overwrite</value>
   </data>
   <data name="Paste" xml:space="preserve">
-    <value>貼り付け</value>
+    <value>Paste</value>
   </data>
   <data name="Reconnect" xml:space="preserve">
-    <value>再接続</value>
+    <value>Reconnect</value>
   </data>
   <data name="Refresh" xml:space="preserve">
-    <value>更新</value>
+    <value>Refresh</value>
   </data>
   <data name="RestartNow" xml:space="preserve">
-    <value>今すぐ再起動</value>
+    <value>Restart now</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>保存</value>
+    <value>Save</value>
   </data>
   <data name="SearchDots" xml:space="preserve">
-    <value>検索...</value>
+    <value>Search...</value>
   </data>
   <data name="TimeUnit_Second" xml:space="preserve">
-    <value>秒</value>
+    <value>Second(s)</value>
   </data>
   <data name="Send" xml:space="preserve">
-    <value>送信</value>
+    <value>Send</value>
   </data>
   <data name="SetMasterPasswordDots" xml:space="preserve">
-    <value>マスター パスワードの設定...</value>
+    <value>Set Master Password...</value>
   </data>
   <data name="ShowLocalLicenses" xml:space="preserve">
-    <value>ローカル ライセンスの表示</value>
+    <value>Show local licenses</value>
   </data>
   <data name="SubnetCalculator" xml:space="preserve">
-    <value>サブネット計算機</value>
+    <value>Subnet Calculator</value>
   </data>
   <data name="Validate" xml:space="preserve">
-    <value>検証</value>
+    <value>Validate</value>
   </data>
   <data name="Connections" xml:space="preserve">
-    <value>接続</value>
+    <value>Connections</value>
   </data>
   <data name="EnterValidIPScanRange" xml:space="preserve">
-    <value>有効な IP 範囲を入力してください!</value>
+    <value>Enter a valid IP range!</value>
   </data>
   <data name="EnterValidIPv4Address" xml:space="preserve">
-    <value>有効な IPv4 アドレスを入力してください!</value>
+    <value>Enter a valid IPv4 address!</value>
   </data>
   <data name="EnterValidMACAddress" xml:space="preserve">
     <value>Enter a valid MAC address (e.g., 00:F1:23:AB:F2:35)!</value>
   </data>
   <data name="EnterValidPort" xml:space="preserve">
-    <value>有効なポートを入力してください (1 - 65535)!</value>
+    <value>Enter a valid port (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnetmask" xml:space="preserve">
     <value>Enter a valid subnetmask (e.g., 255.255.255.0)!</value>
@@ -1379,73 +1377,73 @@
     <value>Enter a valid subnetmask or CIDR (e.g., 255.255.255.0 or /24)!</value>
   </data>
   <data name="FieldCannotBeEmpty" xml:space="preserve">
-    <value>フィールドを空にすることはできません!</value>
+    <value>Field cannot be empty!</value>
   </data>
   <data name="FileDoesNotExist" xml:space="preserve">
-    <value>ファイルが存在しません!</value>
+    <value>File does not exists!</value>
   </data>
   <data name="FolderDoesNotExist" xml:space="preserve">
-    <value>フォルダーが存在しません!</value>
+    <value>Folder does not exists!</value>
   </data>
   <data name="Listeners" xml:space="preserve">
-    <value>リスナー</value>
+    <value>Listeners</value>
   </data>
   <data name="Amber" xml:space="preserve">
-    <value>アンバー</value>
+    <value>Amber</value>
   </data>
   <data name="Appearance" xml:space="preserve">
-    <value>外観</value>
+    <value>Appearance</value>
   </data>
   <data name="Applications" xml:space="preserve">
-    <value>アプリ</value>
+    <value>Applications</value>
   </data>
   <data name="Theme_Dark" xml:space="preserve">
-    <value>ダーク</value>
+    <value>Dark</value>
   </data>
   <data name="Theme_Light" xml:space="preserve">
-    <value>ライト</value>
+    <value>Light</value>
   </data>
   <data name="Black" xml:space="preserve">
-    <value>黒</value>
+    <value>Black</value>
   </data>
   <data name="Blue" xml:space="preserve">
-    <value>青</value>
+    <value>Blue</value>
   </data>
   <data name="Brown" xml:space="preserve">
-    <value>茶</value>
+    <value>Brown</value>
   </data>
   <data name="Cobalt" xml:space="preserve">
-    <value>コバルト</value>
+    <value>Cobalt</value>
   </data>
   <data name="Crimson" xml:space="preserve">
-    <value>クリムゾン</value>
+    <value>Crimson</value>
   </data>
   <data name="Cyan" xml:space="preserve">
-    <value>シアン</value>
+    <value>Cyan</value>
   </data>
   <data name="Emerald" xml:space="preserve">
-    <value>エメラルド</value>
+    <value>Emerald</value>
   </data>
   <data name="EnterOneOrMoreValidIPAddresses" xml:space="preserve">
-    <value>有効な IP アドレスを 1 つ以上入力してください!</value>
+    <value>Enter one or more valid IP addresses!</value>
   </data>
   <data name="EnterValidBaud" xml:space="preserve">
-    <value>有効なボーレートを入力してください!</value>
+    <value>Enter a valid baud!</value>
   </data>
   <data name="EnterValidHosts" xml:space="preserve">
-    <value>有効なホストを入力してください (複数のホストは";"で終わることはできません)!</value>
+    <value>Enter valid hosts (multiple hosts can not end with ";")!</value>
   </data>
   <data name="EnterValidIPAddress" xml:space="preserve">
-    <value>有効な IP アドレスを入力してください!</value>
+    <value>Enter a valid IP address!</value>
   </data>
   <data name="EnterValidNumber" xml:space="preserve">
-    <value>有効な数値を入力してください!</value>
+    <value>Enter a valid number!</value>
   </data>
   <data name="EnterValidOID" xml:space="preserve">
-    <value>有効な OID を入力してください!</value>
+    <value>Enter a valid OID!</value>
   </data>
   <data name="EnterValidPortOrPortRange" xml:space="preserve">
-    <value>有効なポートまたはポート範囲を入力してください (1 - 65535)!</value>
+    <value>Enter a valid port and/or port range (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnet" xml:space="preserve">
     <value>Enter a valid subnet (e.g., 192.168.178.133/26)!</value>
@@ -1454,214 +1452,214 @@
     <value>Enter a valid website (e.g., https://example.com/index.html)</value>
   </data>
   <data name="Green" xml:space="preserve">
-    <value>緑</value>
+    <value>Green</value>
   </data>
   <data name="ImportExport" xml:space="preserve">
-    <value>インポート / エクスポート</value>
+    <value>Import / Export</value>
   </data>
   <data name="Indigo" xml:space="preserve">
-    <value>インディゴ</value>
+    <value>Indigo</value>
   </data>
   <data name="IPStatus_DestinationHostUnreachable" xml:space="preserve">
-    <value>宛先ホストに到達できません。</value>
+    <value>Destination host unreachable.</value>
   </data>
   <data name="IPStatus_DestinationNetworkUnreachable" xml:space="preserve">
-    <value>宛先ネットワークに到達できません。</value>
+    <value>Destination network unreachable.</value>
   </data>
   <data name="IPStatus_DestinationPortUnreachable" xml:space="preserve">
-    <value>宛先ポートに到達できません。</value>
+    <value>Destination port unreachable.</value>
   </data>
   <data name="IPStatus_Success" xml:space="preserve">
-    <value>成功</value>
+    <value>Success</value>
   </data>
   <data name="IPStatus_TimedOut" xml:space="preserve">
-    <value>リクエストがタイムアウトしました。</value>
+    <value>Request timed out.</value>
   </data>
   <data name="IPStatus_TtlExpired" xml:space="preserve">
-    <value>転送中にTTLが期限切れになりました。</value>
+    <value>TTL expired in transit.</value>
   </data>
   <data name="KeyMustHave8CharactersOrMore" xml:space="preserve">
-    <value>キーは 8 文字以上である必要があります!</value>
+    <value>Key must have 8 characters or more!</value>
   </data>
   <data name="Lime" xml:space="preserve">
-    <value>ライム</value>
+    <value>Lime</value>
   </data>
   <data name="Magenta" xml:space="preserve">
-    <value>マゼンタ</value>
+    <value>Magenta</value>
   </data>
   <data name="Mauve" xml:space="preserve">
-    <value>モーブ</value>
+    <value>Mauve</value>
   </data>
   <data name="Olive" xml:space="preserve">
-    <value>オリーブ</value>
+    <value>Olive</value>
   </data>
   <data name="OnlyNumbersCanBeEntered" xml:space="preserve">
-    <value>数字のみ入力できます!</value>
+    <value>Only numbers can be entered!</value>
   </data>
   <data name="Orange" xml:space="preserve">
-    <value>オレンジ</value>
+    <value>Orange</value>
   </data>
   <data name="Pink" xml:space="preserve">
-    <value>ピンク</value>
+    <value>Pink</value>
   </data>
   <data name="Purple" xml:space="preserve">
-    <value>紫</value>
+    <value>Purple</value>
   </data>
   <data name="Red" xml:space="preserve">
-    <value>赤</value>
+    <value>Red</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_AtClientWinsockFDCLOSE" xml:space="preserve">
-    <value>ソケットが閉じられました。</value>
+    <value>Socket closed.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_ByServer" xml:space="preserve">
-    <value>サーバーによるリモート切断。</value>
+    <value>Remote disconnect by server.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_ClientDecompressionError" xml:space="preserve">
-    <value>解凍エラー。</value>
+    <value>Decompression error.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_ConnectionTimedOut" xml:space="preserve">
-    <value>接続がタイムアウトしました。</value>
+    <value>Connection timed out.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_DecryptionError" xml:space="preserve">
-    <value>復号化エラー。</value>
+    <value>Decryption error.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_DNSLookupFailed" xml:space="preserve">
-    <value>DNS 名 Lookupに失敗しました。</value>
+    <value>DNS name lookup failure.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_DNSLookupFailed2" xml:space="preserve">
-    <value>DNS Lookupに失敗しました。</value>
+    <value>DNS lookup failed.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_EncryptionError" xml:space="preserve">
-    <value>暗号化エラー。</value>
+    <value>Encryption error.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_GetHostByNameFailed" xml:space="preserve">
-    <value>Windows Sockets gethostbyname 呼び出しに失敗しました。</value>
+    <value>Windows Sockets gethostbyname call failed.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_HostNotFound" xml:space="preserve">
-    <value>ホストが見つかりません。</value>
+    <value>Host not found.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InternalError" xml:space="preserve">
-    <value>内部エラーです。</value>
+    <value>Internal error.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InternalSecurityError" xml:space="preserve">
-    <value>内部セキュリティ エラー。</value>
+    <value>Internal security error.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InternalSecurityError2" xml:space="preserve">
-    <value>内部セキュリティ エラー。</value>
+    <value>Internal security error.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InvalidEncryption" xml:space="preserve">
-    <value>指定された暗号化方法が無効です。</value>
+    <value>The encryption method specified is not valid.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InvalidIP" xml:space="preserve">
-    <value>指定された IP アドレスが間違っています。</value>
+    <value>Bad IP address specified.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InvalidIPAddr" xml:space="preserve">
-    <value>指定された IP アドレスは無効です。</value>
+    <value>The IP address specified is not valid.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InvalidSecurityData" xml:space="preserve">
-    <value>セキュリティデータが無効です。</value>
+    <value>Security data is not valid.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InvalidServerSecurityInfo" xml:space="preserve">
-    <value>サーバー セキュリティ データが無効です。</value>
+    <value>Server security data is not valid.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_LicensingFailed" xml:space="preserve">
-    <value>ライセンスネゴシエーションに失敗しました。</value>
+    <value>License negotiation failed.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_LicensingTimeout" xml:space="preserve">
-    <value>ライセンスのタイムアウト。</value>
+    <value>Licensing time-out.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_LocalNotError" xml:space="preserve">
-    <value>ローカル切断。</value>
+    <value>Local disconnection.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_NoInfo" xml:space="preserve">
-    <value>情報はありません。</value>
+    <value>No information is available.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_OutOfMemory" xml:space="preserve">
-    <value>メモリ不足です。</value>
+    <value>Out of memory.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_OutOfMemory2" xml:space="preserve">
-    <value>メモリ不足です。</value>
+    <value>Out of memory.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_OutOfMemory3" xml:space="preserve">
-    <value>メモリ不足です。</value>
+    <value>Out of memory.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_RemoteByUser" xml:space="preserve">
-    <value>ユーザーによるリモート切断。</value>
+    <value>Remote disconnect by user.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_ServerCertificateUnpackErr" xml:space="preserve">
-    <value>サーバー証明書の解凍に失敗しました。</value>
+    <value>Failed to unpack server certificate.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SocketConnectFailed" xml:space="preserve">
-    <value>Windows ソケットの接続に失敗しました。</value>
+    <value>Windows Sockets connect failed.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SocketRecvFailed" xml:space="preserve">
-    <value>Windows Sockets の recv 呼び出しに失敗しました。</value>
+    <value>Windows Sockets recv call failed.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrAccountDisabled" xml:space="preserve">
-    <value>アカウントは無効です。</value>
+    <value>The account is disabled.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrAccountExpired" xml:space="preserve">
-    <value>アカウントの有効期限が切れています。</value>
+    <value>The account is expired.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrAccountLockedOut" xml:space="preserve">
-    <value>アカウントがロックアウトされています。</value>
+    <value>The account is locked out.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrAccountRestriction" xml:space="preserve">
-    <value>アカウントが制限されています。</value>
+    <value>The account is restricted.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrCertExpired" xml:space="preserve">
-    <value>受信した証明書の有効期限が切れています。</value>
+    <value>The received certificate is expired.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrDelegationPolicy" xml:space="preserve">
-    <value>ポリシーは、ターゲット サーバーへの資格情報の委任をサポートしていません。</value>
+    <value>این سیاست از تفویض داده های احراز هویت به کارگزار مقصد پشیبانی نمی کند.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrFreshCredRequiredByServer" xml:space="preserve">
-    <value>サーバーの認証ポリシーにより、保存された資格情報を使用した接続要求は許可されません。ユーザーは新しい資格情報を入力する必要があります。</value>
+    <value>The server authentication policy does not allow connection requests using saved credentials. The user must enter new credentials.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrLogonFailure" xml:space="preserve">
-    <value>ログインに失敗しました。</value>
+    <value>Login failed.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrNoAuthenticatingAuthority" xml:space="preserve">
-    <value>認証のために認証機関に接続できませんでした。認証側のドメイン名が間違っているか、ドメインにアクセスできないか、信頼関係に問題がある可能性があります。</value>
+    <value>No authority could be contacted for authentication. The domain name of the authenticating party could be wrong, the domain could be unreachable, or there might have been a trust relationship failure.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrNoSuchUser" xml:space="preserve">
-    <value>指定されたユーザーにはアカウントがありません。</value>
+    <value>The specified user has no account.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrPasswordExpired" xml:space="preserve">
-    <value>パスワードの有効期限が切れています。</value>
+    <value>The password is expired.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrPasswordMustChange" xml:space="preserve">
-    <value>初めてログオンする前に、ユーザー パスワードを変更する必要があります。</value>
+    <value>The user password must be changed before logging on for the first time.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrPolicyNTLMOnly" xml:space="preserve">
-    <value>相互認証が達成されない限り、ターゲット サーバーへの資格情報の委任は許可されません。</value>
+    <value>Delegation of credentials to the target server is not allowed unless mutual authentication has been achieved.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrSmartcardCardBlocked" xml:space="preserve">
-    <value>スマートカードがブロックされています。</value>
+    <value>The smart card is blocked.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrSmartcardWrongPIN" xml:space="preserve">
-    <value>スマート カードに誤った PIN が提示されました。</value>
+    <value>An incorrect PIN was presented to the smart card.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_TimeoutOccurred" xml:space="preserve">
-    <value>タイムアウトが発生しました。</value>
+    <value>Timeout occurred.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_TimerError" xml:space="preserve">
-    <value>内部タイマー エラー。</value>
+    <value>Internal timer error.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_WinsockSendFailed" xml:space="preserve">
-    <value>Windows ソケットの送信呼び出しに失敗しました。</value>
+    <value>Windows Sockets send call failed.</value>
   </data>
   <data name="Sienna" xml:space="preserve">
-    <value>シエナ</value>
+    <value>Sienna</value>
   </data>
   <data name="SpacesAreNotAllowed" xml:space="preserve">
-    <value>スペースは使用できません!</value>
+    <value>Spaces are not allowed!</value>
   </data>
   <data name="Steel" xml:space="preserve">
-    <value>スチール</value>
+    <value>Steel</value>
   </data>
   <data name="Taupe" xml:space="preserve">
-    <value>トープ</value>
+    <value>Taupe</value>
   </data>
   <data name="TcpState_Closed" xml:space="preserve">
     <value>Closed</value>
@@ -1700,233 +1698,233 @@
     <value>TimeWait</value>
   </data>
   <data name="TcpState_Unknown" xml:space="preserve">
-    <value>不明</value>
+    <value>Unkown</value>
   </data>
   <data name="Teal" xml:space="preserve">
-    <value>ティール</value>
+    <value>Teal</value>
   </data>
   <data name="Violet" xml:space="preserve">
-    <value>バイオレット</value>
+    <value>Violet</value>
   </data>
   <data name="White" xml:space="preserve">
-    <value>白</value>
+    <value>White</value>
   </data>
   <data name="Yellow" xml:space="preserve">
-    <value>黄</value>
+    <value>Yellow</value>
   </data>
   <data name="ProfileWithThisNameAlreadyExists" xml:space="preserve">
-    <value>この名前のプロファイルは既に存在します!</value>
+    <value>A profile with this name already exists!</value>
   </data>
   <data name="PortState_Closed" xml:space="preserve">
-    <value>閉じる</value>
+    <value>Closed</value>
   </data>
   <data name="PortState_Open" xml:space="preserve">
-    <value>開く</value>
+    <value>Open</value>
   </data>
   <data name="AtLeastOneApplicationMustBeVisible" xml:space="preserve">
-    <value>少なくとも 1 つのアプリケーションが表示されている必要があります!</value>
+    <value>At least one application must be visible!</value>
   </data>
   <data name="HiddenApplications" xml:space="preserve">
-    <value>非表示のアプリ</value>
+    <value>Hidden applications</value>
   </data>
   <data name="VisibleApplications" xml:space="preserve">
-    <value>表示のアプリ</value>
+    <value>Visible applications</value>
   </data>
   <data name="VisibleApplicationsInTheBar" xml:space="preserve">
-    <value>バーに表示するアプリ :</value>
+    <value>Visible applications in the bar:</value>
   </data>
   <data name="Whois" xml:space="preserve">
     <value>Whois</value>
   </data>
   <data name="AddATabToQueryWhois" xml:space="preserve">
-    <value>whois を照会するためのタブを追加...</value>
+    <value>Add a tab to query whois...</value>
   </data>
   <data name="EnterValidDomain" xml:space="preserve">
     <value>Enter a valid domain (e.g., "example.com")!</value>
   </data>
   <data name="WhoisServerNotFoundForTheDomain" xml:space="preserve">
-    <value>ドメインのWhoisサーバーが見つかりません : "{0}"</value>
+    <value>Whois server not found for the domain: "{0}"</value>
   </data>
   <data name="Routing" xml:space="preserve">
-    <value>ルーティング</value>
+    <value>Routing</value>
   </data>
   <data name="Release" xml:space="preserve">
-    <value>リリース</value>
+    <value>Release</value>
   </data>
   <data name="ReleaseRenew" xml:space="preserve">
-    <value>リリースと更新</value>
+    <value>Release &amp; Renew</value>
   </data>
   <data name="Renew" xml:space="preserve">
-    <value>更新</value>
+    <value>Renew</value>
   </data>
   <data name="WindowsDNSSettings" xml:space="preserve">
-    <value>Windows DNS 設定</value>
+    <value>Windows DNS settings</value>
   </data>
   <data name="DeleteDNSServer" xml:space="preserve">
-    <value>DNS サーバーの削除</value>
+    <value>Delete DNS server</value>
   </data>
   <data name="DeleteDNSServerMessage" xml:space="preserve">
-    <value>選択した DNS サーバーは完全に削除されます。</value>
+    <value>The selected DNS server will be deleted permanently.</value>
   </data>
   <data name="AddDNSServer" xml:space="preserve">
-    <value>DNS サーバーの追加</value>
+    <value>Add DNS server</value>
   </data>
   <data name="EditDNSServer" xml:space="preserve">
-    <value>DNS サーバーの編集</value>
+    <value>Edit DNS server</value>
   </data>
   <data name="DNSServerWithThisNameAlreadyExists" xml:space="preserve">
-    <value>この名前の DNS サーバーは既に存在します!</value>
+    <value>A DNS server with this name already exists!</value>
   </data>
   <data name="RestartSession" xml:space="preserve">
-    <value>セッションの再起動</value>
+    <value>Restart session</value>
   </data>
   <data name="TigerVNC" xml:space="preserve">
     <value>TigerVNC</value>
   </data>
   <data name="ConfigureThePathToTigerVNCInTheSettingsDots" xml:space="preserve">
-    <value>TigerVNC へのパスを設定...</value>
+    <value>Configure the path to TigerVNC in the settings...</value>
   </data>
   <data name="TigerVNCProcessHasEnded" xml:space="preserve">
-    <value>TigerVNCプロセスが終了しました!</value>
+    <value>TigerVNC process has ended!</value>
   </data>
   <data name="ConnectingDots" xml:space="preserve">
-    <value>接続中...</value>
+    <value>Connecting...</value>
   </data>
   <data name="ResolveMACAddressAndVendor" xml:space="preserve">
-    <value>MACアドレスとベンダーを解決</value>
+    <value>Resolve MAC address and vendor</value>
   </data>
   <data name="Note" xml:space="preserve">
-    <value>注記</value>
+    <value>Note</value>
   </data>
   <data name="ExportAll" xml:space="preserve">
-    <value>すべてエクスポート</value>
+    <value>Export all</value>
   </data>
   <data name="ExportDots" xml:space="preserve">
-    <value>エクスポート...</value>
+    <value>Export...</value>
   </data>
   <data name="ExportSelected" xml:space="preserve">
-    <value>選択項目をエクスポート</value>
+    <value>Export selected</value>
   </data>
   <data name="LocationDots" xml:space="preserve">
-    <value>場所...</value>
+    <value>Location...</value>
   </data>
   <data name="File" xml:space="preserve">
     <value>File</value>
   </data>
   <data name="EnterValidFilePath" xml:space="preserve">
-    <value>有効なファイル パスを入力してください!</value>
+    <value>Enter a valid file path!</value>
   </data>
   <data name="All" xml:space="preserve">
-    <value>すべて</value>
+    <value>All</value>
   </data>
   <data name="Format" xml:space="preserve">
-    <value>形式</value>
+    <value>Format</value>
   </data>
   <data name="Selected" xml:space="preserve">
-    <value>選択済み</value>
+    <value>Selected</value>
   </data>
   <data name="AnErrorOccurredWhileExportingTheData" xml:space="preserve">
-    <value>データのエクスポート中にエラーが発生しました。詳細はエラーメッセージをご覧ください :</value>
+    <value>An error occurred while exporting the data. See error message for details:</value>
   </data>
   <data name="Design" xml:space="preserve">
-    <value>デザイン</value>
+    <value>Design</value>
   </data>
   <data name="HighlightTimeouts" xml:space="preserve">
-    <value>タイムアウトの強調表示</value>
+    <value>Highlight timeouts</value>
   </data>
   <data name="EnterSubnetsToCreateAWideSubnet" xml:space="preserve">
-    <value>サブネットを入力してワイドサブネットを作成...</value>
+    <value>Enter subnets to create a wide subnet...</value>
   </data>
   <data name="WideSubnet" xml:space="preserve">
-    <value>ワイドサブネット</value>
+    <value>Wide Subnet</value>
   </data>
   <data name="AddTabDots" xml:space="preserve">
-    <value>タブの追加...</value>
+    <value>Add tab...</value>
   </data>
   <data name="AddIPv4AddressDots" xml:space="preserve">
-    <value>IPv4 アドレスの追加...</value>
+    <value>Add IPv4 address...</value>
   </data>
   <data name="AddIPv4Address" xml:space="preserve">
-    <value>IPv4 アドレスの追加</value>
+    <value>Add IPv4 address</value>
   </data>
   <data name="MaxHostThreads" xml:space="preserve">
-    <value>最大同時ホスト スレッド数</value>
+    <value>Max. concurrent host threads</value>
   </data>
   <data name="MaxPortThreads" xml:space="preserve">
-    <value>最大同時ポート スレッド数</value>
+    <value>Max. concurrent port threads</value>
   </data>
   <data name="PowerShell" xml:space="preserve">
     <value>PowerShell</value>
   </data>
   <data name="ConfigureThePathToPowerShellInTheSettingsDots" xml:space="preserve">
-    <value>PowerShellへのパスを設定...</value>
+    <value>Configure the path to PowerShell in the settings...</value>
   </data>
   <data name="PowerShellProcessHasEnded" xml:space="preserve">
-    <value>PowerShell プロセスが終了しました!</value>
+    <value>PowerShell process has ended!</value>
   </data>
   <data name="ExecutionPolicy" xml:space="preserve">
-    <value>実行ポリシー</value>
+    <value>Execution Policy</value>
   </data>
   <data name="RemoteConsole" xml:space="preserve">
-    <value>リモート コンソール</value>
+    <value>Remote console</value>
   </data>
   <data name="FilePath" xml:space="preserve">
-    <value>ファイルのパス</value>
+    <value>File path</value>
   </data>
   <data name="OverrideDefaultSettings" xml:space="preserve">
-    <value>既定の設定を上書き</value>
+    <value>Override default settings</value>
   </data>
   <data name="ResolveIPv4AddressForThisHost" xml:space="preserve">
-    <value>このホストの IPv4 アドレスを解決</value>
+    <value>Resolve IPv4 address for this host</value>
   </data>
   <data name="Hide" xml:space="preserve">
-    <value>非表示</value>
+    <value>Hide</value>
   </data>
   <data name="TotalBytesReceived" xml:space="preserve">
-    <value>受信した合計バイト数</value>
+    <value>Total bytes received</value>
   </data>
   <data name="TotalBytesSent" xml:space="preserve">
-    <value>送信した合計バイト数</value>
+    <value>Total bytes sent</value>
   </data>
   <data name="Download" xml:space="preserve">
-    <value>ダウンロード</value>
+    <value>Download</value>
   </data>
   <data name="Bandwidth" xml:space="preserve">
-    <value>帯域幅</value>
+    <value>Bandwidth</value>
   </data>
   <data name="Upload" xml:space="preserve">
-    <value>アップロード</value>
+    <value>Upload</value>
   </data>
   <data name="ApplyWindowsKeyCombinations" xml:space="preserve">
-    <value>Windowsキーの組み合わせを適用</value>
+    <value>Apply Windows key combinations</value>
   </data>
   <data name="CredentialSecuritySupportProvider" xml:space="preserve">
-    <value>認証情報セキュリティサポートプロバイダー</value>
+    <value>فراهم کننده پشتیبانی ایمنی داده احراز هویت</value>
   </data>
   <data name="BackgroundJob" xml:space="preserve">
-    <value>バックグラウンド ジョブ</value>
+    <value>Background job</value>
   </data>
   <data name="HelpMessage_BackgroundJob" xml:space="preserve">
-    <value>バックグラウンド ジョブは、x 分ごとに設定とプロファイルを保存します。
+    <value>The background job will save settings and profiles every x-minutes.
 
-値が 0 の場合、この機能は無効になります。
+Value 0 will disable this feature.
 
-この値の変更は、アプリを再起動した後に有効になります。</value>
+Changes to this value will take effect after restarting the application.</value>
   </data>
   <data name="RunBackgroundJobEveryXMinute" xml:space="preserve">
-    <value>x 分ごとにバックグラウンドジョブを実行する</value>
+    <value>Run background job every x-minute</value>
   </data>
   <data name="YourSystemOSIsIncompatibleWithTheLatestRelease" xml:space="preserve">
-    <value>お使いのシステム OS は最新リリースと互換性がありません!</value>
+    <value>Your system OS is incompatible with the latest release!</value>
   </data>
   <data name="Dashboard" xml:space="preserve">
-    <value>ダッシュボード</value>
+    <value>Dashboard</value>
   </data>
   <data name="AllSettingsCanBeChangedLaterInTheSettings" xml:space="preserve">
-    <value>すべての設定は後から設定で変更できます!</value>
+    <value>All settings can be changed later in the settings!</value>
   </data>
   <data name="CheckPublicIPAddress" xml:space="preserve">
-    <value>パブリックIPアドレスの確認</value>
+    <value>Check public IP address</value>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
     <value>Thank you for using NETworkManager!
@@ -1934,303 +1932,303 @@
 If you enjoy it, please consider supporting its development — whether by leaving a star on GitHub, making a donation, or simply sharing it with others. Your support helps keep the project going and growing.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
-    <value>プログラムを起動すると、バックグラウンドで GitHub 上に新しいバージョンがあるかどうかがチェックされます。
+    <value>When starting the program, it checks in the background whether a new program version is available on GitHub.
 
 URL: https://api.github.com/</value>
   </data>
   <data name="HelpMessage_CheckPublicIPAddress" xml:space="preserve">
-    <value>パブリック IP アドレスは ipify.org によって決定されます。
+    <value>The public IP address is determined via ipify.org.
 
 URL: https://api.ipify.org and https://api6.ipify.org</value>
   </data>
   <data name="Privacy" xml:space="preserve">
-    <value>プライバシー</value>
+    <value>Privacy</value>
   </data>
   <data name="Welcome" xml:space="preserve">
-    <value>ようこそ</value>
+    <value>Welcome</value>
   </data>
   <data name="ExternalServices" xml:space="preserve">
-    <value>外部サービス</value>
+    <value>External services</value>
   </data>
   <data name="ToolTip_StarForkProjectOnGitHub" xml:space="preserve">
-    <value>GitHub でプロジェクトにスター/フォークを付ける。</value>
+    <value>Star/Fork the Project on GitHub.</value>
   </data>
   <data name="ToolTip_HelpTranslateOnTransifex" xml:space="preserve">
-    <value>Transifex のプロジェクトの翻訳を手伝ってください。</value>
+    <value>Help translate the project on Transifex.</value>
   </data>
   <data name="ToolTip_ContactOrContactMeViaX" xml:space="preserve">
-    <value>フォローするか、Xから連絡してください。</value>
+    <value>Follow or contact me via X.</value>
   </data>
   <data name="Connection" xml:space="preserve">
-    <value>接続</value>
+    <value>Connection</value>
   </data>
   <data name="Computer" xml:space="preserve">
-    <value>コンピューター</value>
+    <value>Computer</value>
   </data>
   <data name="GatewayRouter" xml:space="preserve">
-    <value>ゲートウェイ / ルーター</value>
+    <value>Gateway / Router</value>
   </data>
   <data name="Internet" xml:space="preserve">
-    <value>インターネット</value>
+    <value>Internet</value>
   </data>
   <data name="CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage" xml:space="preserve">
-    <value>ネットワーク アダプターの構成 (DNS) を確認し、DNS サーバーが正しく構成されているか確認する。</value>
+    <value>Check your network adapter configuration (dns) and if your dns server is configured correctly.</value>
   </data>
   <data name="CheckNetworkAdapterConfigurationAndNetworkConnectionMessage" xml:space="preserve">
-    <value>ネットワークアダプターの設定（dhcp、static ip）と、ネットワークに接続されているかどうかを確認してください。</value>
+    <value>Check your network adapter configuration (dhcp, static ip) and if you are connected to a network.</value>
   </data>
   <data name="CouldNotDetectGatewayIPAddressMessage" xml:space="preserve">
-    <value>ゲートウェイ IP アドレスを検出できませんでした!</value>
+    <value>Could not detect gateway ip address!</value>
   </data>
   <data name="CouldNotDetectLocalIPAddressMessage" xml:space="preserve">
-    <value>ローカル IP アドレスを検出できませんでした!</value>
+    <value>Could not detect local ip address!</value>
   </data>
   <data name="CouldNotGetPublicIPAddressFromXXXMessage" xml:space="preserve">
-    <value>"{0}" から WebRequest (http/https) 経由でパブリック IP アドレスを取得できませんでした! ネットワーク接続 (ファイアウォール、プロキシなど) を確認してください。</value>
+    <value>Could not get public ip address via WebRequest (http/https) from "{0}"! Check your network connection (firewall, proxy, etc.).</value>
   </data>
   <data name="NoADNSRecordsResolvedForXXXMessage" xml:space="preserve">
-    <value>"{0}" の DNS レコードが解決されませんでした!</value>
+    <value>No A dns records resolved for "{0}"!</value>
   </data>
   <data name="NoPTRDNSRecordResolvedForXXXMessage" xml:space="preserve">
-    <value>"{0}" の PTR DNS レコードが解決されません!</value>
+    <value>No PTR dns record resolved for "{0}"!</value>
   </data>
   <data name="XADNSRecordsResolvedForXXXMessage" xml:space="preserve">
-    <value>"{0}" DNS レコードが "{1}" に対して解決されました!</value>
+    <value>"{0}" A dns records resolved for "{1}"!</value>
   </data>
   <data name="PTRDNSRecordResolvedForXXXMessage" xml:space="preserve">
-    <value>"{0}" の PTR DNS レコードが解決されました!</value>
+    <value>PTR dns record resolved for "{0}"!</value>
   </data>
   <data name="GotXXXAsPublicIPAddressFromXXXMessage" xml:space="preserve">
-    <value>"{1}" からパブリック IP アドレスとして "{0}" を取得しました!</value>
+    <value>Got "{0}" as public ip address from "{1}"!</value>
   </data>
   <data name="ResolvedXXXAsHostnameForIPAddressXXXMessage" xml:space="preserve">
-    <value>"{0}" を IP アドレス "{1}" のホスト名として解決しました!</value>
+    <value>Resolved "{0}" as hostname for ip address "{1}"!</value>
   </data>
   <data name="PublicIPAddressCheckIsDisabled" xml:space="preserve">
-    <value>パブリックIPアドレスのチェック
-は無効になっています!</value>
+    <value>Public IP address check
+is disabled!</value>
   </data>
   <data name="TCPIPStackIsAvailableMessage" xml:space="preserve">
-    <value>TCP/IP スタックが利用可能です。"{0}" は ICMP 経由で到達可能です!</value>
+    <value>TCP/IP stack is available. "{0}" is reachable via ICMP!</value>
   </data>
   <data name="TCPIPStackIsNotAvailableMessage" xml:space="preserve">
-    <value>TCP/IP スタックが利用できません... "{0}" は ICMP 経由では到達できません!</value>
+    <value>TCP/IP stack is not available... "{0}" is not reachable via ICMP!</value>
   </data>
   <data name="XXXDetectedAsGatewayIPAddress" xml:space="preserve">
-    <value>ゲートウェイ IP アドレスとして "{0}" が検出されました!</value>
+    <value>"{0}" detected as gateway ip address!</value>
   </data>
   <data name="XXXDetectedAsLocalIPAddressMessage" xml:space="preserve">
-    <value>"{0}" がローカル IP アドレスとして検出されました!</value>
+    <value>"{0}" detected as local ip address!</value>
   </data>
   <data name="XXXIsNotReachableViaICMPMessage" xml:space="preserve">
-    <value>"{0}" は ICMP 経由では到達できません!</value>
+    <value>"{0}" is not reachable via ICMP!</value>
   </data>
   <data name="XXXIsReachableViaICMPMessage" xml:space="preserve">
-    <value>"{0}" は ICMP 経由で到達可能です!</value>
+    <value>"{0}" is reachable via ICMP!</value>
   </data>
   <data name="UseCustomIPv4AddressAPI" xml:space="preserve">
-    <value>カスタム IPv4 アドレス API を使用する</value>
+    <value>Use custom IPv4 address API</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv4AddressAPI" xml:space="preserve">
     <value>URL to a web service that can be reached via http or https and returns an IPv4 address e.g., "xx.xx.xx.xx" as response.</value>
   </data>
   <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
-    <value>"{0}" からパブリック IP アドレスを解析できませんでした! 別のサービスを試すか、デフォルトを使用してください... </value>
+    <value>Could not parse public ip address from "{0}"! Try another service or use the default... </value>
   </data>
   <data name="CouldNotConnectToXXXMessage" xml:space="preserve">
-    <value>「{0}」に接続できませんでした!</value>
+    <value>Could not connect to "{0}"!</value>
   </data>
   <data name="IPv4ProtocolAvailable" xml:space="preserve">
-    <value>IPv4プロトコルが利用可能</value>
+    <value>IPv4 protocol available</value>
   </data>
   <data name="IPv6ProtocolAvailable" xml:space="preserve">
-    <value>IPv6プロトコルが利用可能</value>
+    <value>IPv6 protocol available</value>
   </data>
   <data name="CopyNoun" xml:space="preserve">
-    <value>コピー</value>
+    <value>نسخه برداری</value>
   </data>
   <data name="Official" xml:space="preserve">
-    <value>公式</value>
+    <value>Official</value>
   </data>
   <data name="NetworkConnectionType" xml:space="preserve">
-    <value>ネットワーク接続タイプ</value>
+    <value>Network connection type</value>
   </data>
   <data name="DesktopBackground" xml:space="preserve">
-    <value>デスクトップの背景</value>
+    <value>Desktop background</value>
   </data>
   <data name="DesktopComposition" xml:space="preserve">
-    <value>デスクトップ構成</value>
+    <value>Desktop composition</value>
   </data>
   <data name="Experience" xml:space="preserve">
-    <value>経験</value>
+    <value>Experience</value>
   </data>
   <data name="FontSmoothing" xml:space="preserve">
-    <value>フォントスムージング</value>
+    <value>Font smoothing</value>
   </data>
   <data name="MenuAndWindowAnimation" xml:space="preserve">
-    <value>メニューとウィンドウのアニメーション</value>
+    <value>Menu and window animation</value>
   </data>
   <data name="Performance" xml:space="preserve">
-    <value>パフォーマンス</value>
+    <value>Performance</value>
   </data>
   <data name="PersistentBitmapCaching" xml:space="preserve">
-    <value>永続的なビットマップキャッシュ</value>
+    <value>Persistent bitmap caching</value>
   </data>
   <data name="ReconnectIfTheConnectionIsDropped" xml:space="preserve">
-    <value>接続が切断された場合は再接続する</value>
+    <value>Reconnect if the connection is dropped</value>
   </data>
   <data name="RemoteDesktopNetworkConnectionType_BroadbandHigh" xml:space="preserve">
-    <value>高速ブロードバンド (2 Mbps - 10 Mbps)</value>
+    <value>High-speed broadband (2 Mbps - 10 Mbps)</value>
   </data>
   <data name="RemoteDesktopNetworkConnectionType_BroadbandLow" xml:space="preserve">
-    <value>低速ブロードバンド (256 kbps - 2 Mbps)</value>
+    <value>Low-speed broadband (256 kbps - 2 Mbps)</value>
   </data>
   <data name="RemoteDesktopNetworkConnectionType_DetectAutomatically" xml:space="preserve">
-    <value>接続品質を自動的に検出</value>
+    <value>Detect connection quality automatically</value>
   </data>
   <data name="RemoteDesktopNetworkConnectionType_LAN" xml:space="preserve">
-    <value>LAN (10 Mbps または それ以上)</value>
+    <value>LAN (10 Mbps or higher)</value>
   </data>
   <data name="RemoteDesktopNetworkConnectionType_Modem" xml:space="preserve">
     <value>Modem (56 kbps)</value>
   </data>
   <data name="RemoteDesktopNetworkConnectionType_Satellite" xml:space="preserve">
-    <value>サテライト (2 Mbps - 16 Mbps with high latency)</value>
+    <value>Satellite (2 Mbps - 16 Mbps with high latency)</value>
   </data>
   <data name="RemoteDesktopNetworkConnectionType_WAN" xml:space="preserve">
     <value>WAN (10 Mbps or higher with high latency)</value>
   </data>
   <data name="ShowWindowContentsWhileDragging" xml:space="preserve">
-    <value>ドラッグ中にウィンドウの内容を表示する</value>
+    <value>Show window contents while dragging</value>
   </data>
   <data name="VisualStyles" xml:space="preserve">
-    <value>ビジュアルスタイル</value>
+    <value>Visual styles</value>
   </data>
   <data name="RemoteAudio" xml:space="preserve">
-    <value>リモート オーディオ</value>
+    <value>Remote audio</value>
   </data>
   <data name="RemoteAudioPlayback" xml:space="preserve">
-    <value>リモート オーディオ再生</value>
+    <value>Remote audio playback</value>
   </data>
   <data name="RemoteAudioRecording" xml:space="preserve">
-    <value>リモート オーディオ録音</value>
+    <value>Remote audio recording</value>
   </data>
   <data name="RemoteDesktopAudioCaptureRedirectionMode_DoNotRecord" xml:space="preserve">
-    <value>記録しない</value>
+    <value>Do not record</value>
   </data>
   <data name="RemoteDesktopAudioCaptureRedirectionMode_RecordFromThisComputer" xml:space="preserve">
-    <value>このコンピューターから録音する</value>
+    <value>Record from this computer</value>
   </data>
   <data name="RemoteDesktopAudioRedirectionMode_DoNotPlay" xml:space="preserve">
-    <value>再生しない</value>
+    <value>Do not play</value>
   </data>
   <data name="RemoteDesktopAudioRedirectionMode_PlayOnRemoteComputer" xml:space="preserve">
-    <value>リモートコンピュータで再生</value>
+    <value>Play on remote computer</value>
   </data>
   <data name="RemoteDesktopAudioRedirectionMode_PlayOnThisComputer" xml:space="preserve">
-    <value>このコンピュータで再生</value>
+    <value>Play on this computer</value>
   </data>
   <data name="Gateway" xml:space="preserve">
-    <value>ゲートウェイ</value>
+    <value>Gateway</value>
   </data>
   <data name="CustomCommands" xml:space="preserve">
-    <value>カスタム コマンド</value>
+    <value>Custom commands</value>
   </data>
   <data name="AddCustomCommand" xml:space="preserve">
-    <value>カスタム コマンドの追加</value>
+    <value>Add custom command</value>
   </data>
   <data name="Arguments" xml:space="preserve">
-    <value>引数</value>
+    <value>Arguments</value>
   </data>
   <data name="DeleteCustomCommand" xml:space="preserve">
-    <value>カスタムコマンドの削除</value>
+    <value>Delete custom command</value>
   </data>
   <data name="EditCustomCommand" xml:space="preserve">
-    <value>カスタムコマンドの編集</value>
+    <value>Edit custom command</value>
   </data>
   <data name="Program" xml:space="preserve">
-    <value>プログラム</value>
+    <value>Program</value>
   </data>
   <data name="DeleteCustomCommandMessage" xml:space="preserve">
-    <value>選択したカスタム コマンドは完全に削除されます。</value>
+    <value>The selected custom command will be deleted permanently.</value>
   </data>
   <data name="HelpMessage_CustomCommandVariables" xml:space="preserve">
-    <value>以下の変数が利用可能です :
+    <value>The following variables are available:
 
-$$ipaddress$$	--&gt;	IP アドレス
-$$hostname$$	--&gt;	ホスト名</value>
+$$ipaddress$$	--&gt;	IP adresse
+$$hostname$$	--&gt;	Hostname</value>
   </data>
   <data name="Restart" xml:space="preserve">
-    <value>再起動</value>
+    <value>Restart</value>
   </data>
   <data name="WarningMessage_CouldNotResolveIPAddressForHostname" xml:space="preserve">
-    <value>ホスト名の IP アドレスを解決できませんでした!</value>
+    <value>Could not resolve ip address for hostname!</value>
   </data>
   <data name="CtrlAltDel" xml:space="preserve">
     <value>Ctrl+Alt+Del</value>
   </data>
   <data name="KeyboardShortcuts" xml:space="preserve">
-    <value>キーボード ショートカット</value>
+    <value>Keyboard shortcuts</value>
   </data>
   <data name="AdjustScreen" xml:space="preserve">
-    <value>画面の調整</value>
+    <value>Adjust screen</value>
   </data>
   <data name="Fullscreen" xml:space="preserve">
-    <value>全画面</value>
+    <value>Fullscreen</value>
   </data>
   <data name="CouldNotSendKeystroke" xml:space="preserve">
-    <value>キーストロークを送信できませんでした!</value>
+    <value>Could not send keystroke!</value>
   </data>
   <data name="Disconnect" xml:space="preserve">
-    <value>切断</value>
+    <value>Disconnect</value>
   </data>
   <data name="DetectLocalIPAddressAndSubnetmask" xml:space="preserve">
-    <value>ローカルIPアドレスとサブネットマスクの検出</value>
+    <value>Detect local ip address and subnetmask</value>
   </data>
   <data name="CouldNotDetectSubnetmask" xml:space="preserve">
-    <value>サブネットマスクを検出できませんでした!</value>
+    <value>Could not detect subnetmask!</value>
   </data>
   <data name="DetectingNetworkDots" xml:space="preserve">
-    <value>ネットワークの検出...</value>
+    <value>Detecting  network...</value>
   </data>
   <data name="ClosingInXSecondsDots" xml:space="preserve">
-    <value>{0} 秒後に終了...</value>
+    <value>Closing in {0} seconds...</value>
   </data>
   <data name="NetworkUnavailable" xml:space="preserve">
-    <value>ネットワークが利用できません!</value>
+    <value>Network unavailable!</value>
   </data>
   <data name="IPAddressToDetectLocalIPAddressBasedOnRouting" xml:space="preserve">
-    <value>ルーティングに基づいてローカルIPアドレスを検出するIPアドレス</value>
+    <value>IP address to detect local ip address based on routing</value>
   </data>
   <data name="ShowStatusWindowOnNetworkChange" xml:space="preserve">
-    <value>ネットワーク変更時にステータスウィンドウを表示する</value>
+    <value>Show status window on network change</value>
   </data>
   <data name="TimeInSecondsHowLongTheStatusWindowIsShown" xml:space="preserve">
-    <value>ステータスウィンドウの表示時間（秒)</value>
+    <value>Time in seconds how long the status window is shown</value>
   </data>
   <data name="WiFi" xml:space="preserve">
     <value>WiFi</value>
   </data>
   <data name="Networks" xml:space="preserve">
-    <value>ネットワーク</value>
+    <value>Networks</value>
   </data>
   <data name="SearchingForNetworksDots" xml:space="preserve">
-    <value>ネットワークを検索しています...</value>
+    <value>Searching for networks...</value>
   </data>
   <data name="NoWiFiAdaptersFound" xml:space="preserve">
-    <value>WiFi アダプターが見つかりません!</value>
+    <value>No WiFi adapters found!</value>
   </data>
   <data name="SearchingWiFiAdaptersDots" xml:space="preserve">
-    <value>WiFi アダプターを検索しています...</value>
+    <value>Searching for WiFi adapters...</value>
   </data>
   <data name="NoWiFiNetworksFound" xml:space="preserve">
-    <value>WiFi ネットワークが見つかりません!</value>
+    <value>No WiFi networks found!</value>
   </data>
   <data name="Channels" xml:space="preserve">
-    <value>チャンネル</value>
+    <value>Channels</value>
   </data>
   <data name="Channel" xml:space="preserve">
-    <value>チャンネル</value>
+    <value>Channel</value>
   </data>
   <data name="GHz2dot4" xml:space="preserve">
     <value>2.4 GHz</value>
@@ -2239,184 +2237,184 @@ $$hostname$$	--&gt;	ホスト名</value>
     <value>5 GHz</value>
   </data>
   <data name="SignalStrength" xml:space="preserve">
-    <value>信号強度</value>
+    <value>Signal strength</value>
   </data>
   <data name="CurrentDownloadSpeed" xml:space="preserve">
-    <value>現在のダウンロード速度</value>
+    <value>Current download speed</value>
   </data>
   <data name="CurrentUploadSpeed" xml:space="preserve">
-    <value>現在のアップロード速度</value>
+    <value>Current upload speed</value>
   </data>
   <data name="MeasuredTime" xml:space="preserve">
-    <value>測定時間</value>
+    <value>Measured time</value>
   </data>
   <data name="NetworkUsage" xml:space="preserve">
-    <value>ネットワークの使用状況</value>
+    <value>Network usage</value>
   </data>
   <data name="TotalDownload" xml:space="preserve">
-    <value>合計ダウンロード数</value>
+    <value>مجموع دانلود</value>
   </data>
   <data name="TotalUpload" xml:space="preserve">
-    <value>合計アップロード</value>
+    <value>مجموع بارگذاری</value>
   </data>
   <data name="Retries" xml:space="preserve">
-    <value>再試行</value>
+    <value>تلاش ها</value>
   </data>
   <data name="UseCache" xml:space="preserve">
-    <value>キャッシュを使用</value>
+    <value>از میانگیر استفاده کن</value>
   </data>
   <data name="UseOnlyTCP" xml:space="preserve">
-    <value>TCPのみ使用</value>
+    <value>فقط از TCP استفاده کن</value>
   </data>
   <data name="QueryClass" xml:space="preserve">
-    <value>クエリ クラス</value>
+    <value>کلاس پرس و جو</value>
   </data>
   <data name="DomainName" xml:space="preserve">
-    <value>ドメイン名</value>
+    <value>نام دامنه</value>
   </data>
   <data name="TimeoutS" xml:space="preserve">
-    <value>タイムアウト (秒)</value>
+    <value>مهلت زمانی (ث)</value>
   </data>
   <data name="ToolTip_ReportIssueOrCreateFeatureRequest" xml:space="preserve">
-    <value>問題を報告するか、機能リクエストを作成。</value>
+    <value>Report an issue or create a feature request.</value>
   </data>
   <data name="BeaconInterval" xml:space="preserve">
-    <value>ビーコン間隔</value>
+    <value>Beacon interval</value>
   </data>
   <data name="Encryption" xml:space="preserve">
-    <value>暗号化</value>
+    <value>رمزنگاری</value>
   </data>
   <data name="Infrastructure" xml:space="preserve">
-    <value>インフラストラクチャー</value>
+    <value>زیرساخت</value>
   </data>
   <data name="NetworkKind" xml:space="preserve">
-    <value>ネットワークの種類</value>
+    <value>نوع شبکه</value>
   </data>
   <data name="PhyKind" xml:space="preserve">
-    <value>Phy の種類</value>
+    <value>Phy kind</value>
   </data>
   <data name="Uptime" xml:space="preserve">
-    <value>稼働時間</value>
+    <value>زمان فعال بودن</value>
   </data>
   <data name="ShowErrorMessage" xml:space="preserve">
-    <value>エラーメッセージを表示</value>
+    <value>نمایش پیغام خطا</value>
   </data>
   <data name="PingMonitor" xml:space="preserve">
-    <value>Ping モニター</value>
+    <value>نمایش پینگ</value>
   </data>
   <data name="AddHost" xml:space="preserve">
-    <value>ホストの追加</value>
+    <value>افزودن میزبان</value>
   </data>
   <data name="AddAHostToMonitor" xml:space="preserve">
-    <value>監視するホストの追加</value>
+    <value>افزودن یک میزبان جهت نمایش</value>
   </data>
   <data name="Pause" xml:space="preserve">
-    <value>一時停止</value>
+    <value>مکث</value>
   </data>
   <data name="Resume" xml:space="preserve">
-    <value>再開</value>
+    <value>ادامه</value>
   </data>
   <data name="CouldNotResolveIPAddressFor" xml:space="preserve">
-    <value>IPアドレスを解決できませんでした : "{0}"</value>
+    <value>عدم امکان بازیابی نشانی IP برای:"{0}"</value>
   </data>
   <data name="TheApplicationWillBeRestarted" xml:space="preserve">
-    <value>アプリケーションが再起動されます...</value>
+    <value>برنامه راه اندازی مجدد خواهد شد...</value>
   </data>
   <data name="ClouldNotExportFileSeeErrorMessageXX" xml:space="preserve">
-    <value>ファイルをエクスポートできませんでした! エラーメッセージを参照してください : "{0}"</value>
+    <value>امکان صدور فایل نیست! پیغام خطا را ببینید:"{0}"</value>
   </data>
   <data name="FileExportedToXX" xml:space="preserve">
-    <value>ファイルが"{0}"にエクスポートされました!</value>
+    <value>فایل به "{0}" صادر شد!</value>
   </data>
   <data name="ClouldNotImportFileSeeErrorMessageXX" xml:space="preserve">
-    <value>ファイルをインポートできませんでした! エラーメッセージを参照してください : "{0}"</value>
+    <value>امکان ورود فایل نیست! پیغام خطا را ببینید:"{0}"</value>
   </data>
   <data name="LocationCannotBeChangedInThePortableVersion" xml:space="preserve">
-    <value>ポータブル版では場所を変更できません!</value>
+    <value>موقعیت در نسخه قابل جابجایی نمی تواند تغییر کند!</value>
   </data>
   <data name="IsEncrypted" xml:space="preserve">
-    <value>暗号化されています</value>
+    <value>آیا رمزنگاری شده</value>
   </data>
   <data name="ToolTip_OpenTheDocumentation" xml:space="preserve">
-    <value>ドキュメントを開く。</value>
+    <value>Open the documentation.</value>
   </data>
   <data name="ExampleProfileFileName" xml:space="preserve">
-    <value>カスタマー 1</value>
+    <value>مشتری 1</value>
   </data>
   <data name="AddProfileFile" xml:space="preserve">
-    <value>プロファイルファイルの追加</value>
+    <value>افزودن فایل پروفایل</value>
   </data>
   <data name="DisableEncryptionDots" xml:space="preserve">
-    <value>暗号化を無効...</value>
+    <value>Disable encryption...</value>
   </data>
   <data name="EditProfileFile" xml:space="preserve">
-    <value>プロファイルファイルの編集</value>
+    <value>Edit profile file</value>
   </data>
   <data name="EnableEncryptionDots" xml:space="preserve">
-    <value>暗号化を有効...</value>
+    <value>Enable encryption...</value>
   </data>
   <data name="EncryptionDots" xml:space="preserve">
-    <value>暗号化...</value>
+    <value>Encryption...</value>
   </data>
   <data name="ProfileNameAlreadyExists" xml:space="preserve">
-    <value>プロファイル名は既に存在します!</value>
+    <value>Profile name already exists!</value>
   </data>
   <data name="Rename" xml:space="preserve">
-    <value>名前の変更</value>
+    <value>Rename</value>
   </data>
   <data name="DeleteProfileFile" xml:space="preserve">
-    <value>プロファイルファイルを削除</value>
+    <value>Delete profile file</value>
   </data>
   <data name="ResetProfilesMessage" xml:space="preserve">
-    <value>このプロファイル ファイル内のすべてのプロファイルは完全に削除されます!</value>
+    <value>All profiles in this profile file will be permanently deleted!</value>
   </data>
   <data name="Patch" xml:space="preserve">
-    <value>パッチ</value>
+    <value>Patch</value>
   </data>
   <data name="RestartTheApplicationToChangeTheLanguage" xml:space="preserve">
-    <value>言語を変更するには、アプリケーションを再起動してください!</value>
+    <value>Restart the application to change the language!</value>
   </data>
   <data name="CurrentlyDownloaded" xml:space="preserve">
-    <value>現在ダウンロード済み</value>
+    <value>Currently downloaded</value>
   </data>
   <data name="CurrentlyUploaded" xml:space="preserve">
-    <value>現在アップロード済み</value>
+    <value>Currently uploaded</value>
   </data>
   <data name="LldpCdp" xml:space="preserve">
     <value>LLDP / CDP</value>
   </data>
   <data name="RestartAsAdmin" xml:space="preserve">
-    <value>管理者として再起動</value>
+    <value>Restart as Administrator</value>
   </data>
   <data name="NetworkPacketsCaptureAdminMessage" xml:space="preserve">
     <value>Analysing network packets requires elevated rights!</value>
   </data>
   <data name="Capture" xml:space="preserve">
-    <value>キャプチャ</value>
+    <value>Capture</value>
   </data>
   <data name="Device" xml:space="preserve">
-    <value>デバイス</value>
+    <value>Device</value>
   </data>
   <data name="DurationS" xml:space="preserve">
-    <value>間隔 (秒)</value>
+    <value>Duration (s)</value>
   </data>
   <data name="Model" xml:space="preserve">
-    <value>モデル</value>
+    <value>Model</value>
   </data>
   <data name="VLAN" xml:space="preserve">
     <value>VLAN</value>
   </data>
   <data name="CaptureNetworkPacketsToViewLLDPorCDPInformation" xml:space="preserve">
-    <value>ネットワークパケットをキャプチャしてLLDPまたはCDP情報を表示!</value>
+    <value>Capture network packets to view LLDP or CDP information!</value>
   </data>
   <data name="NoDiscoveryProtocolPackagesReceived" xml:space="preserve">
-    <value>検出プロトコル パッケージを受信できませんでした!</value>
+    <value>No discovery protocol packages received!</value>
   </data>
   <data name="CapturingNetworkPackagesDots" xml:space="preserve">
-    <value>ネットワーク パッケージをキャプチャしています...</value>
+    <value>Capturing network packages...</value>
   </data>
   <data name="DiscoveryProtocol" xml:space="preserve">
-    <value>検出プロトコル</value>
+    <value>Discovery Protocol</value>
   </data>
   <data name="DiscoveryProtocol_Cdp" xml:space="preserve">
     <value>CDP</value>
@@ -2428,73 +2426,73 @@ $$hostname$$	--&gt;	ホスト名</value>
     <value>LLDP / CDP</value>
   </data>
   <data name="XXSecondsRemainingDots" xml:space="preserve">
-    <value>残り{0}秒...</value>
+    <value>{0} seconds remaining...</value>
   </data>
   <data name="Help" xml:space="preserve">
-    <value>ヘルプ</value>
+    <value>Help</value>
   </data>
   <data name="HelpMessage_ParameterApplication" xml:space="preserve">
-    <value>起動時に表示されるアプリケーション。</value>
+    <value>Application that is displayed at startup.</value>
   </data>
   <data name="Parameter" xml:space="preserve">
-    <value>パラメータ</value>
+    <value>Parameter</value>
   </data>
   <data name="Value" xml:space="preserve">
-    <value>値</value>
+    <value>Value</value>
   </data>
   <data name="WebConsole" xml:space="preserve">
-    <value>Web コンソール</value>
+    <value>Web Console</value>
   </data>
   <data name="Reload" xml:space="preserve">
-    <value>再読み込み</value>
+    <value>Reload</value>
   </data>
   <data name="Browser" xml:space="preserve">
-    <value>ブラウザ</value>
+    <value>Browser</value>
   </data>
   <data name="WebViewControlCertificateIsInvalidMessage" xml:space="preserve">
-    <value>WebView コントロール (Microsoft Edge) は、証明書が無効な Web サイトに接続できません!</value>
+    <value>The WebView control (Microsoft Edge) cannot connect to websites with an invalid certificate!</value>
   </data>
   <data name="MicrosoftWindowsSDKContractsIsNotAvailable" xml:space="preserve">
-    <value>この機能には Microsoft.Windows.SDK.Contracts が必要ですが、このシステム (Windows Server など) では使用できません。</value>
+    <value>Microsoft.Windows.SDK.Contracts is required for this feature but not available on this system (e.g. on Windows Server).</value>
   </data>
   <data name="ApplicationName_ARPTable" xml:space="preserve">
-    <value>ARP テーブル</value>
+    <value>ARP Table</value>
   </data>
   <data name="ApplicationName_Connections" xml:space="preserve">
-    <value>接続</value>
+    <value>Connections</value>
   </data>
   <data name="ApplicationName_Dashboard" xml:space="preserve">
-    <value>ダッシュボード</value>
+    <value>Dashboard</value>
   </data>
   <data name="ApplicationName_DiscoveryProtocol" xml:space="preserve">
-    <value>検出プロトコル</value>
+    <value>Discovery Protocol</value>
   </data>
   <data name="ApplicationName_DNSLookup" xml:space="preserve">
     <value>DNS Lookup</value>
   </data>
   <data name="ApplicationName_HTTPHeaders" xml:space="preserve">
-    <value>HTTP ヘッダ</value>
+    <value>HTTP Headers</value>
   </data>
   <data name="ApplicationName_IPScanner" xml:space="preserve">
-    <value>IP スキャナ</value>
+    <value>IP Scanner</value>
   </data>
   <data name="ApplicationName_Listeners" xml:space="preserve">
-    <value>リスナー</value>
+    <value>Listeners</value>
   </data>
   <data name="ApplicationName_Lookup" xml:space="preserve">
     <value>Lookup</value>
   </data>
   <data name="ApplicationName_NetworkInterface" xml:space="preserve">
-    <value>ネットワーク インターフェース</value>
+    <value>Network Interface</value>
   </data>
   <data name="ApplicationName_Ping" xml:space="preserve">
-    <value>Ping</value>
+    <value>پینگ</value>
   </data>
   <data name="ApplicationName_PingMonitor" xml:space="preserve">
-    <value>Ping モニター</value>
+    <value>نمایش پینگ</value>
   </data>
   <data name="ApplicationName_PortScanner" xml:space="preserve">
-    <value>ポート スキャナ</value>
+    <value>Port Scanner</value>
   </data>
   <data name="ApplicationName_PowerShell" xml:space="preserve">
     <value>PowerShell</value>
@@ -2503,25 +2501,25 @@ $$hostname$$	--&gt;	ホスト名</value>
     <value>PuTTY</value>
   </data>
   <data name="ApplicationName_RemoteDesktop" xml:space="preserve">
-    <value>リモート デスクトップ</value>
+    <value>Remote Desktop</value>
   </data>
   <data name="ApplicationName_SNMP" xml:space="preserve">
     <value>SNMP</value>
   </data>
   <data name="ApplicationName_SubnetCalculator" xml:space="preserve">
-    <value>サブネット 計算機</value>
+    <value>Subnet Calculator</value>
   </data>
   <data name="ApplicationName_TigerVNC" xml:space="preserve">
     <value>TigerVNC</value>
   </data>
   <data name="ApplicationName_Traceroute" xml:space="preserve">
-    <value>トレースルート</value>
+    <value>Traceroute</value>
   </data>
   <data name="ApplicationName_WakeOnLAN" xml:space="preserve">
     <value>Wake on LAN</value>
   </data>
   <data name="ApplicationName_WebConsole" xml:space="preserve">
-    <value>Web コンソール</value>
+    <value>Web Console</value>
   </data>
   <data name="ApplicationName_Whois" xml:space="preserve">
     <value>Whois</value>
@@ -2530,319 +2528,319 @@ $$hostname$$	--&gt;	ホスト名</value>
     <value>WiFi</value>
   </data>
   <data name="Accent_Amber" xml:space="preserve">
-    <value>アンバー</value>
+    <value>Amber</value>
   </data>
   <data name="Accent_Black" xml:space="preserve">
-    <value>黒</value>
+    <value>Black</value>
   </data>
   <data name="Accent_Blue" xml:space="preserve">
-    <value>青</value>
+    <value>Blue</value>
   </data>
   <data name="Accent_Brown" xml:space="preserve">
-    <value>茶</value>
+    <value>Brown</value>
   </data>
   <data name="Accent_Cobalt" xml:space="preserve">
-    <value>コバルト</value>
+    <value>Cobalt</value>
   </data>
   <data name="Accent_Crimson" xml:space="preserve">
-    <value>クリムゾン</value>
+    <value>Crimson</value>
   </data>
   <data name="Accent_Cyan" xml:space="preserve">
-    <value>シアン</value>
+    <value>Cyan</value>
   </data>
   <data name="Accent_Emerald" xml:space="preserve">
-    <value>エメラルド</value>
+    <value>Emerald</value>
   </data>
   <data name="Accent_Green" xml:space="preserve">
-    <value>緑</value>
+    <value>Green</value>
   </data>
   <data name="Accent_Indigo" xml:space="preserve">
-    <value>インディゴ</value>
+    <value>Indigo</value>
   </data>
   <data name="Accent_Lime" xml:space="preserve">
-    <value>ライム</value>
+    <value>Lime</value>
   </data>
   <data name="Accent_Magenta" xml:space="preserve">
-    <value>マゼンタ</value>
+    <value>Magenta</value>
   </data>
   <data name="Accent_Mauve" xml:space="preserve">
-    <value>モーブ</value>
+    <value>Mauve</value>
   </data>
   <data name="Accent_Olive" xml:space="preserve">
-    <value>オリーブ</value>
+    <value>Olive</value>
   </data>
   <data name="Accent_Orange" xml:space="preserve">
-    <value>オレンジ</value>
+    <value>Orange</value>
   </data>
   <data name="Accent_Purple" xml:space="preserve">
-    <value>紫</value>
+    <value>Purple</value>
   </data>
   <data name="Accent_Red" xml:space="preserve">
-    <value>赤</value>
+    <value>Red</value>
   </data>
   <data name="Accent_Sienna" xml:space="preserve">
-    <value>シエナ</value>
+    <value>Sienna</value>
   </data>
   <data name="Accent_Taupe" xml:space="preserve">
-    <value>トープ</value>
+    <value>Taupe</value>
   </data>
   <data name="Accent_Teal" xml:space="preserve">
-    <value>ティール</value>
+    <value>Teal</value>
   </data>
   <data name="Accent_Violet" xml:space="preserve">
-    <value>ピンク</value>
+    <value>Pink</value>
   </data>
   <data name="Accent_Yellow" xml:space="preserve">
-    <value>黄</value>
+    <value>Yellow</value>
   </data>
   <data name="Accent_Steel" xml:space="preserve">
-    <value>スチール</value>
+    <value>Steel</value>
   </data>
   <data name="ProfileName_General" xml:space="preserve">
-    <value>全般</value>
+    <value>General</value>
   </data>
   <data name="SettingsGroup_Application" xml:space="preserve">
-    <value>アプリケーション</value>
+    <value>Applications</value>
   </data>
   <data name="SettingsGroup_General" xml:space="preserve">
-    <value>全般</value>
+    <value>General</value>
   </data>
   <data name="SettingsName_Appearance" xml:space="preserve">
-    <value>外観</value>
+    <value>Appearance</value>
   </data>
   <data name="SettingsName_Autostart" xml:space="preserve">
-    <value>自動起動</value>
+    <value>Autostart</value>
   </data>
   <data name="SettingsName_General" xml:space="preserve">
-    <value>全般</value>
+    <value>General</value>
   </data>
   <data name="SettingsName_HotKeys" xml:space="preserve">
-    <value>ホットキー</value>
+    <value>HotKeys</value>
   </data>
   <data name="SettingsName_Language" xml:space="preserve">
-    <value>言語</value>
+    <value>Language</value>
   </data>
   <data name="SettingsName_Profiles" xml:space="preserve">
-    <value>プロファイ</value>
+    <value>Profiles</value>
   </data>
   <data name="SettingsName_Settings" xml:space="preserve">
-    <value>設定</value>
+    <value>Settings</value>
   </data>
   <data name="SettingsName_Status" xml:space="preserve">
-    <value>状態</value>
+    <value>Status</value>
   </data>
   <data name="SettingsName_Update" xml:space="preserve">
-    <value>更新</value>
+    <value>Update</value>
   </data>
   <data name="SettingsName_Window" xml:space="preserve">
-    <value>ウィンドウ</value>
+    <value>Window</value>
   </data>
   <data name="EnableLog" xml:space="preserve">
-    <value>ログを有効</value>
+    <value>Enable log</value>
   </data>
   <data name="LogFileName" xml:space="preserve">
-    <value>ログファイル名</value>
+    <value>Log file name</value>
   </data>
   <data name="LogPath" xml:space="preserve">
-    <value>ログのパス</value>
+    <value>Log path</value>
   </data>
   <data name="LogMode" xml:space="preserve">
-    <value>ログ モード</value>
+    <value>Log mode</value>
   </data>
   <data name="Log" xml:space="preserve">
-    <value>ログ</value>
+    <value>Log</value>
   </data>
   <data name="SSHLog" xml:space="preserve">
-    <value>SSH ログ</value>
+    <value>SSH log</value>
   </data>
   <data name="SSHRawLog" xml:space="preserve">
-    <value>SSH Raw ログ</value>
+    <value>SSH Raw log</value>
   </data>
   <data name="PuTTYLogMode_SessionLog" xml:space="preserve">
-    <value>セッション ログ</value>
+    <value>Session log</value>
   </data>
   <data name="PuTTYLogMode_SSHLog" xml:space="preserve">
-    <value>SSH ログ</value>
+    <value>SSH log</value>
   </data>
   <data name="PuTTYLogMode_SSHRawLog" xml:space="preserve">
-    <value>SSH and Raw ログ</value>
+    <value>SSH and Raw log</value>
   </data>
   <data name="EnterValidFileName" xml:space="preserve">
-    <value>有効なファイル名を入力してください!</value>
+    <value>Enter a valid file name!</value>
   </data>
   <data name="Lost" xml:space="preserve">
-    <value>損失</value>
+    <value>Lost</value>
   </data>
   <data name="Received" xml:space="preserve">
-    <value>受信済み</value>
+    <value>Received</value>
   </data>
   <data name="StatusChange" xml:space="preserve">
-    <value>状態の変更</value>
+    <value>Status change</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
-    <value>更新が利用可能です!</value>
+    <value>Update available!</value>
   </data>
   <data name="PrivateKeyFile" xml:space="preserve">
-    <value>プライベート キー ファイル</value>
+    <value>Private key file</value>
   </data>
   <data name="Preview" xml:space="preserve">
-    <value>プレビュー</value>
+    <value>Preview</value>
   </data>
   <data name="PortProfiles" xml:space="preserve">
-    <value>ポートのプロファイル</value>
+    <value>Port profiles</value>
   </data>
   <data name="AddPortProfile" xml:space="preserve">
-    <value>ポートのプロファイルを追加</value>
+    <value>Add port profile</value>
   </data>
   <data name="DeletePortProfile" xml:space="preserve">
-    <value>ポートのプロファイルを削除</value>
+    <value>Delete port profile</value>
   </data>
   <data name="EditPortProfile" xml:space="preserve">
-    <value>ポートのプロファイルを編集</value>
+    <value>Edit port profile</value>
   </data>
   <data name="DeletePortProfileMessage" xml:space="preserve">
-    <value>選択したポート プロファイルは完全に削除されます。</value>
+    <value>The selected port profile will be deleted permanently.</value>
   </data>
   <data name="SelectPortProfile" xml:space="preserve">
-    <value>ポートプロファイルの選択</value>
+    <value>Select port profile</value>
   </data>
   <data name="OpenPortProfilesDots" xml:space="preserve">
-    <value>ポート プロファイルを開く...</value>
+    <value>Open port profiles...</value>
   </data>
   <data name="ShowSplashScreenOnStart" xml:space="preserve">
-    <value>起動時にスプラッシュスクリーンを表示</value>
+    <value>Show SplashScreen on start</value>
   </data>
   <data name="SplashScreen" xml:space="preserve">
-    <value>スプラッシュスクリーン</value>
+    <value>SplashScreen</value>
   </data>
   <data name="DownloadMicrosoftEdgeWebView2Runtime" xml:space="preserve">
-    <value>Microsoft Edge WebView2 Runtime をダウンロード</value>
+    <value>Download Microsoft Edge WebView2 Runtime</value>
   </data>
   <data name="MicrosoftEdgeWebView2RuntimeIsNotAvailable" xml:space="preserve">
-    <value>Microsoft Edge WebView2 ランタイムは利用できません!</value>
+    <value>Microsoft Edge WebView2 Runtime is not available!</value>
   </data>
   <data name="Frequency" xml:space="preserve">
-    <value>周波数</value>
+    <value>Frequency</value>
   </data>
   <data name="SSID" xml:space="preserve">
     <value>SSID</value>
   </data>
   <data name="ProfileFileCouldNotBeLoaded" xml:space="preserve">
-    <value>プロファイルファイルを読み込めませんでした!</value>
+    <value>Profile file could not be loaded!</value>
   </data>
   <data name="ProfileFileCouldNotBeLoadedMessage" xml:space="preserve">
-    <value>プロファイルファイルを読み込めませんでした。破損している可能性があります。バックアップからファイルを復元するか、削除してください。
+    <value>The profile file could not be loaded and may be corrupted. You can try to restore the file from a backup or delete it.
 
-これが予期せず発生した場合、またはアップデート後に発生した場合は、GitHub でエラーを報告してください。
+If this happens unexpectedly or after an update, please report the error on GitHub.
 
 
-エラーメッセージ :
+Error message:
 "{0}"</value>
   </data>
   <data name="EditGroupDots" xml:space="preserve">
-    <value>グループの編集...</value>
+    <value>Edit group...</value>
   </data>
   <data name="DecryptionError" xml:space="preserve">
-    <value>復号化エラー</value>
+    <value>Decryption error</value>
   </data>
   <data name="DecryptionErrorMessage" xml:space="preserve">
-    <value>ファイルを復号できませんでした。この問題はGitHubで報告できます。</value>
+    <value>Could not decrypt file. You may report this issue on GitHub.</value>
   </data>
   <data name="EncryptionError" xml:space="preserve">
-    <value>暗号化エラー</value>
+    <value>Encryption error</value>
   </data>
   <data name="EncryptionErrorMessage" xml:space="preserve">
-    <value>ファイルを暗号化できませんでした。この問題はGitHubで報告できます。</value>
+    <value>Could not encrpyt file. You may report this issue on GitHub.</value>
   </data>
   <data name="CurrentPassword" xml:space="preserve">
-    <value>現在のパスワード</value>
+    <value>Current password</value>
   </data>
   <data name="NewPassword" xml:space="preserve">
-    <value>新しいパスワード</value>
+    <value>New password</value>
   </data>
   <data name="ChangeMasterPassword" xml:space="preserve">
-    <value>マスターパスワードの変更</value>
+    <value>Change master password</value>
   </data>
   <data name="UnlockProfile" xml:space="preserve">
-    <value>プロファイルのロック解除</value>
+    <value>Unlock profile</value>
   </data>
   <data name="UnlockTheProfileFileMessage" xml:space="preserve">
-    <value>プロファイルを使用するには、プロファイル ファイルをロック解除してください!</value>
+    <value>Unlock the profile file to use the profiles!</value>
   </data>
   <data name="Disclaimer" xml:space="preserve">
-    <value>免責事項</value>
+    <value>Disclaimer</value>
   </data>
   <data name="Merge" xml:space="preserve">
-    <value>結合</value>
+    <value>Merge</value>
   </data>
   <data name="UseOther" xml:space="preserve">
-    <value>その他を使用</value>
+    <value>Use other</value>
   </data>
   <data name="Move" xml:space="preserve">
-    <value>移動</value>
+    <value>Move</value>
   </data>
   <data name="LastScanAtX" xml:space="preserve">
-    <value>最終スキャン : {0}</value>
+    <value>Last scan at {0}</value>
   </data>
   <data name="HiddenNetwork" xml:space="preserve">
-    <value>非表示のネットワーク</value>
+    <value>Hidden Network</value>
   </data>
   <data name="DevelopedAndMaintainedByX" xml:space="preserve">
-    <value>{0}によって開発および保守</value>
+    <value>Developed and maintained by {0} with the help of the</value>
   </data>
   <data name="ExternalService_ipify_Description" xml:space="preserve">
-    <value>シンプルなパブリックIPアドレスAPI</value>
+    <value>A Simple Public IP Address API</value>
   </data>
   <data name="Library_AirspaceFixer_Description" xml:space="preserve">
-    <value>AirspacePanel は、WPF でホストされる Winforms のすべての Airspace の問題を修正します。</value>
+    <value>AirspacePanel fixes all Airspace issues with WPF-hosted Winforms.</value>
   </data>
   <data name="Library_ControlzEx_Description" xml:space="preserve">
-    <value>WPF 用の Shared Controlz および ... 詳細</value>
+    <value>Shared Controlz for WPF and ... more</value>
   </data>
   <data name="Library_DnsClientNET_Description" xml:space="preserve">
-    <value>DnsClient.NETは、.NET FrameworkでDNS Lookupsを行うためのシンプルでありながら非常に強力で高性能なオープンソースライブラリです</value>
+    <value>DnsClient.NET is a simple yet very powerful and high performant open source library for the .NET Framework to do DNS lookups</value>
   </data>
   <data name="Library_Dragablz_Description" xml:space="preserve">
-    <value>WPF 用のドラッグおよび切り取り可能なタブ コントロール</value>
+    <value>Dragable and tearable tab control for WPF</value>
   </data>
   <data name="Library_IPNetwork_Description" xml:space="preserve">
-    <value>C# ライブラリは、.NET 開発者向けに、複雑なネットワーク、IP、IPv4、IPv6、ネットマスク、CIDR、サブネット、サブネット化、スーパーネット、スーパーネット化の計算を処理します。</value>
+    <value>C# library take care of complex network, IP, IPv4, IPv6, netmask, CIDR, subnet, subnetting, supernet, and supernetting calculation for .NET developers.</value>
   </data>
   <data name="Library_LiveCharts_Description" xml:space="preserve">
-    <value>.Net 用のシンプルで柔軟性が高く、インタラクティブで強力なチャート、マップ、ゲージ</value>
+    <value>Simple, flexible, interactive &amp; powerful charts, maps and gauges for .Net</value>
   </data>
   <data name="Library_LoadingIndicatorsWPF_Description" xml:space="preserve">
-    <value>WPF の読み込みインジケーターのコレクション</value>
+    <value>A collection of loading indicators for WPF</value>
   </data>
   <data name="Library_MahAppsMetroIconPacks_Description" xml:space="preserve">
-    <value>WPF と UWP 用のすばらしいアイコン集...</value>
+    <value>Some awesome icons for WPF and UWP all together...</value>
   </data>
   <data name="Library_MahAppsMetro_Description" xml:space="preserve">
-    <value>Metro / Modern UI スタイルの WPF アプリを作成するためのツールキット。</value>
+    <value>A toolkit for creating Metro / Modern UI styled WPF apps.</value>
   </data>
   <data name="Library_NewtonsoftJson_Description" xml:space="preserve">
-    <value>Json.NETは、.NET向けの人気の高い高性能JSONフレームワークです。</value>
+    <value>Json.NET is a popular high-performance JSON framework for .NET</value>
   </data>
   <data name="Library_Octokit_Description" xml:space="preserve">
-    <value>.NET 用の GitHub API クライアント ライブラリ</value>
+    <value>A GitHub API client library for .NET</value>
   </data>
   <data name="Library_PSDicoveryProtocol_Description" xml:space="preserve">
-    <value>ローカルまたはリモート コンピュータ上の CDP および LLDP パケットをキャプチャして解析します</value>
+    <value>Capture and parse CDP and LLDP packets on local or remote computers</value>
   </data>
   <data name="Library_SharpSNMP_Description" xml:space="preserve">
-    <value>Sharp SNMP ライブラリ - .NET および Mono 用のオープンソース SNMP</value>
+    <value>Sharp SNMP Library - Open Source SNMP for .NET and Mono</value>
   </data>
   <data name="Resource_Flag_Description" xml:space="preserve">
-    <value>SVG形式のすべての国旗のコレクション</value>
+    <value>A collection of all country flags in SVG</value>
   </data>
   <data name="Resource_ListTLD_Description" xml:space="preserve">
-    <value>iana.org のトップレベルドメインのリスト。これは、ポート 43 経由で whois.iana.org から TLD の whois サーバーを照会するために使用されます。</value>
+    <value>List of Top-Level-Domains from iana.org, which is used to query whois servers of the TLD from whois.iana.org via port 43</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
-    <value>ieee.org からの OUI データ。</value>
+    <value>OUI data from ieee.org.</value>
   </data>
   <data name="Resource_ServiceNamePortNumber_Description" xml:space="preserve">
-    <value>iana.org からのサービス名およびトランスポート プロトコル ポート番号レジストリ。</value>
+    <value>Service Name and Transport Protocol Port Number Registry from iana.org.</value>
   </data>
   <data name="License_ApacheLicense2dot0" xml:space="preserve">
     <value>Apache License 2.0</value>
@@ -2857,24 +2855,24 @@ $$hostname$$	--&gt;	ホスト名</value>
     <value>Unlicense</value>
   </data>
   <data name="Library_CsWinRT_Description" xml:space="preserve">
-    <value>C#/WinRT は、C# 言語用のパッケージ化された WinRT プロジェクション サポートを提供します。</value>
+    <value>C#/WinRT provides packaged WinRT projection support for the C# language.</value>
   </data>
   <data name="Library_PowerShellSDK_Description" xml:space="preserve">
     <value>Runtime for hosting PowerShell</value>
   </data>
   <data name="Library_WebView2_Description" xml:space="preserve">
-    <value>WebView2 コントロールを使用すると、Microsoft Edge (Chromium) を搭載したネイティブ アプリケーションに Web テクノロジ (HTML、CSS、JavaScript) を埋め込むことができます。</value>
+    <value>The WebView2 control enables you to embed web technologies (HTML, CSS, and JavaScript) in your native applications powered by Microsoft Edge (Chromium).</value>
   </data>
   <data name="Library_XamlBehaviorsWpf_Description" xml:space="preserve">
-    <value>WPF の XAML ビヘイビアを使用して、アプリにインタラクティブ機能を簡単に追加できます。</value>
+    <value>Easily add interactivity to your apps using XAML Behaviors for WPF.</value>
   </data>
   <data name="License_MicrosoftWebView2License" xml:space="preserve">
     <value>Microsoft WebView2 License</value>
   </data>
   <data name="WarningMessage_ProfileFileNotEncryptedStoringPasswords" xml:space="preserve">
-    <value>現在のプロファイル ファイルは暗号化されておらず、パスワードは暗号化されずにディスクに保存されます!
+    <value>The current profile file is not encrypted and passwords will stored unencrypted on disk! 
 
-資格情報を安全に保存するには、[設定] &gt; [プロファイル] でプロファイル ファイルの暗号化を有効にします。</value>
+Enable profile file encryption in Settings&gt;Profile to store credentials securely.</value>
   </data>
   <data name="ICMPv4" xml:space="preserve">
     <value>ICMPv4</value>
@@ -2883,178 +2881,178 @@ $$hostname$$	--&gt;	ホスト名</value>
     <value>ICMPv6</value>
   </data>
   <data name="CheckIsDisabled" xml:space="preserve">
-    <value>チェックは無効です!</value>
+    <value>Check is disabled!</value>
   </data>
   <data name="EnterValidIPv6Address" xml:space="preserve">
-    <value>有効な IPv6 アドレスを入力してください!</value>
+    <value>Enter a valid IPv6 address!</value>
   </data>
   <data name="HelpMessage_PublicIPv4Address" xml:space="preserve">
-    <value>ICMP 経由で到達可能なパブリック IPv4 アドレス。</value>
+    <value>Public IPv4 address reachable via ICMP.</value>
   </data>
   <data name="HelpMessage_PublicIPv6Address" xml:space="preserve">
-    <value>ICMP 経由で到達可能なパブリック IPv6 アドレス。</value>
+    <value>Public IPv6 address reachable via ICMP.</value>
   </data>
   <data name="PublicIPv4Address" xml:space="preserve">
-    <value>パブリック IPv4 アドレス</value>
+    <value>Public IPv4 address</value>
   </data>
   <data name="PublicIPv6Address" xml:space="preserve">
-    <value>パブリック IPv6 アドレス</value>
+    <value>Public IPv6 address</value>
   </data>
   <data name="UseCustomIPv6AddressAPI" xml:space="preserve">
-    <value>カスタム IPv6 アドレス API を使用</value>
+    <value>Use custom IPv6 address API</value>
   </data>
   <data name="TimeToLive" xml:space="preserve">
-    <value>有効期限</value>
+    <value>Time to live</value>
   </data>
   <data name="ChassisId" xml:space="preserve">
-    <value>シャーシ ID</value>
+    <value>Chassis Id</value>
   </data>
   <data name="Management" xml:space="preserve">
-    <value>管理</value>
+    <value>Management</value>
   </data>
   <data name="DeviceDescription" xml:space="preserve">
-    <value>デバイスの説明</value>
+    <value>Device description</value>
   </data>
   <data name="PortDescription" xml:space="preserve">
-    <value>ポートの説明</value>
+    <value>Port description</value>
   </data>
   <data name="RemoveIPv4Address" xml:space="preserve">
-    <value>IPv4 アドレスを削除</value>
+    <value>Remove IPv4 address</value>
   </data>
   <data name="AdditionalConfigDots" xml:space="preserve">
-    <value>追加設定...</value>
+    <value>Additional config...</value>
   </data>
   <data name="RemoveIPv4AddressDots" xml:space="preserve">
-    <value>IPv4 アドレスを削除...</value>
+    <value>Remove IPv4 address...</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached" xml:space="preserve">
-    <value>ログイン時間制限に達したため、リモートセッションが終了しました。この制限は、サーバー管理者またはネットワークポリシーによって設定されています。</value>
+    <value>The remote session ended because the total login time limit was reached. This limit is set by the server administrator or by network policies.</value>
   </data>
   <data name="EnterValidHostname" xml:space="preserve">
-    <value>有効なホスト名を入力してください!</value>
+    <value>Enter a valid hostname!</value>
   </data>
   <data name="EnterValidHostnameAndPort" xml:space="preserve">
-    <value>有効なホスト名とポートを入力してください!</value>
+    <value>Enter a valid hostname and port!</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_UnableToReconnectToRemoteSession" xml:space="preserve">
-    <value>リモート セッションに再接続できません。</value>
+    <value>Unable to reconnect to the remote session.</value>
   </data>
   <data name="Migrate" xml:space="preserve">
-    <value>移行</value>
+    <value>Migrate</value>
   </data>
   <data name="ReportOnGitHub" xml:space="preserve">
-    <value>GitHubで報告</value>
+    <value>Report on GitHub</value>
   </data>
   <data name="Groups" xml:space="preserve">
-    <value>グループ</value>
+    <value>Groups</value>
   </data>
   <data name="AddGroup" xml:space="preserve">
-    <value>グループの追加</value>
+    <value>Add group</value>
   </data>
   <data name="DeleteGroup" xml:space="preserve">
-    <value>グループを削除</value>
+    <value>Delete group</value>
   </data>
   <data name="DeleteGroupMessage" xml:space="preserve">
-    <value>選択したグループと、このグループ内のすべてのプロファイルが完全に削除されます。</value>
+    <value>Selected group and all profiles inside this group will be deleted permanently.</value>
   </data>
   <data name="ErrorMessage_NameIsAlreadyUsed" xml:space="preserve">
-    <value>この名前はすでに使用されています!</value>
+    <value>The name is already used!</value>
   </data>
   <data name="Resize" xml:space="preserve">
-    <value>サイズ変更</value>
+    <value>Resize</value>
   </data>
   <data name="DeleteProfiles" xml:space="preserve">
-    <value>プロファイルを削除</value>
+    <value>Delete profiles</value>
   </data>
   <data name="DeleteProfilesMessage" xml:space="preserve">
-    <value>選択したプロファイルは完全に削除されます。</value>
+    <value>Selected profiles will be deleted permanently.</value>
   </data>
   <data name="UseCustomThemes" xml:space="preserve">
-    <value>カスタムテーマの使用</value>
+    <value>Use custom themes</value>
   </data>
   <data name="CustomThemes" xml:space="preserve">
-    <value>カスタムテーマ</value>
+    <value>Custom themes</value>
   </data>
   <data name="ResetSettingsQuestion" xml:space="preserve">
-    <value>設定をリセットしますか?</value>
+    <value>Reset settings?</value>
   </data>
   <data name="SettingsResetExclamationMark" xml:space="preserve">
-    <value>設定をリセットしました!</value>
+    <value>Settings reset!</value>
   </data>
   <data name="InstanceId" xml:space="preserve">
-    <value>インスタンスID</value>
+    <value>Instance ID</value>
   </data>
   <data name="LocalConnection" xml:space="preserve">
-    <value>ローカル接続</value>
+    <value>Local connection</value>
   </data>
   <data name="LocalInterface" xml:space="preserve">
-    <value>ローカル インターフェース</value>
+    <value>Local interface</value>
   </data>
   <data name="Library_log4net_Description" xml:space="preserve">
-    <value>log4net は、プログラマがさまざまな出力ターゲットにログ ステートメントを出力するのに役立つツールです。</value>
+    <value>log4net is a tool to help the programmer output log statements to a variety of output targets.</value>
   </data>
   <data name="Enabled" xml:space="preserve">
-    <value>有効</value>
+    <value>Enabled</value>
   </data>
   <data name="Region" xml:space="preserve">
-    <value>地域</value>
+    <value>Region</value>
   </data>
   <data name="ProfilesAndRegionsToSync" xml:space="preserve">
-    <value>同期するプロファイルと地域</value>
+    <value>Profiles and regions to synchronize</value>
   </data>
   <data name="DefaultProfile" xml:space="preserve">
-    <value>既定のプロファイル</value>
+    <value>Default profile</value>
   </data>
   <data name="DefaultRegion" xml:space="preserve">
-    <value>既定の地域</value>
+    <value>Default region</value>
   </data>
   <data name="GroupNameCannotStartWithX" xml:space="preserve">
-    <value>グループ名は"{0}"で始めることはできません!</value>
+    <value>Group name cannot start with "{0}"!</value>
   </data>
   <data name="CheckForPreReleases" xml:space="preserve">
-    <value>プレリリース版をチェックする</value>
+    <value>Check for pre-releases</value>
   </data>
   <data name="SyncIsDisabled" xml:space="preserve">
-    <value>同期が無効になっています!</value>
+    <value>Synchronization is disabled!</value>
   </data>
   <data name="Command" xml:space="preserve">
-    <value>コマンド</value>
+    <value>Command</value>
   </data>
   <data name="ApplyThemeToPowerShellConsole" xml:space="preserve">
-    <value>PowerShellコンソールにテーマを適用する</value>
+    <value>Apply theme to PowerShell console</value>
   </data>
   <data name="PowerShellConsoleColorCanBeChangedUnderSettingsGeneralApperance" xml:space="preserve">
-    <value>PowerShellコンソールの色は、「設定」&gt;「全般」&gt;「外観」でアプリケーションテーマに変更できます。</value>
+    <value>The color of the PowerShell console can be changed to the application theme under Settings &gt; General &gt; Appearance</value>
   </data>
   <data name="HelpMessage_ApplyThemeToPowerShellConsole" xml:space="preserve">
-    <value>このオプションを有効にすると、HKCU:\Console レジストリ内のデフォルトの PowerShell コンソール設定が上書きされ、PowerShell コンソールウィンドウがアプリケーションのテーマと一致するようになります。これはグローバルシステム設定であり、通常の PowerShell ウィンドウの外観に影響を与える可能性があります。
+    <value>If you enable this option, the default PowerShell console settings in the registry under HKCU:\Console are overridden so that the PowerShell console window matches the application theme. This is a global system setting that may affect the appearance of the normal PowerShell window.
 
-PowerShell および AWS Session Manager 設定で設定された PowerShell コンソールのみが変更されます。Windows PowerShell と PWSH (PowerShell 7 以降) の両方がサポートされています。
+Only the PowerShell consoles configured in the PowerShell and AWS Session Manager settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
 
-詳細については、右上隅のヘルプ/ドキュメントボタン（最小化ボタンの左）をクリックするか、https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance にアクセスしてください。調整対象となる値は以下に記載されています。
+Click in the upper right corner on the help / documentation button (left of the minimize button) or navigate to https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance for more details. Here are the values documented which will be adjusted.
 
-オプションを再度無効にすると、値は変更されなくなります。ただし、元の値は復元されません。</value>
+If the option is disabled again, the values are no longer modified. However, the original values are NOT restored.</value>
   </data>
   <data name="InputCannotEndWithSemicolon" xml:space="preserve">
-    <value>入力は";"で終わることはできません!</value>
+    <value>Input cannot end with a ";"!</value>
   </data>
   <data name="InputDoesNotContainAnyText" xml:space="preserve">
-    <value>入力にテキストが含まれていません!</value>
+    <value>Input does not contain any text!</value>
   </data>
   <data name="ApplicationName_BitCalculator" xml:space="preserve">
-    <value>ビット計算機</value>
+    <value>Bit Calculator</value>
   </data>
   <data name="BitCalculator" xml:space="preserve">
-    <value>ビット計算機</value>
+    <value>Bit Calculator</value>
   </data>
   <data name="Notation" xml:space="preserve">
-    <value>表記</value>
+    <value>Notation</value>
   </data>
   <data name="Input" xml:space="preserve">
-    <value>入力</value>
+    <value>Input</value>
   </data>
   <data name="Unit" xml:space="preserve">
-    <value>単位</value>
+    <value>Unit</value>
   </data>
   <data name="Bits" xml:space="preserve">
     <value>Bits</value>
@@ -3090,55 +3088,55 @@ PowerShell および AWS Session Manager 設定で設定された PowerShell コ
     <value>Terabytes</value>
   </data>
   <data name="EnterANumberAndSelectAUnitToCalculateTheUnitsDots" xml:space="preserve">
-    <value>数値を入力し、単位を選択して単位を計算...</value>
+    <value>Enter a number and select a unit to calculate the units...</value>
   </data>
   <data name="SettingsName_Network" xml:space="preserve">
-    <value>ネットワーク</value>
+    <value>Network</value>
   </data>
   <data name="Proxy" xml:space="preserve">
-    <value>プロキシ</value>
+    <value>Proxy</value>
   </data>
   <data name="ResolveIPAddressForThisHost" xml:space="preserve">
-    <value>このホストのIPアドレスを解決します（IPv4が推奨されます）</value>
+    <value>Resolve IP address for this host (IPv4 is preferred)</value>
   </data>
   <data name="NoValidPowerShellPath" xml:space="preserve">
-    <value>PowerShell への有効なパスは、「pwsh.exe」または「powershell.exe」で終わる必要があります!</value>
+    <value>A valid path to PowerShell should end with "pwsh.exe" or "powershell.exe"!</value>
   </data>
   <data name="NoValidPuTTYPath" xml:space="preserve">
-    <value>PuTTY への有効なパスは「PuTTY.exe」で終わる必要があります!</value>
+    <value>A valid path to PuTTY should end with "PuTTY.exe"!</value>
   </data>
   <data name="NoValidTigerVNCPath" xml:space="preserve">
-    <value>TigerVNC への有効なパスは、「vncviewer-*.exe」または「vncviewer64-*.exe」で終わる必要があります!</value>
+    <value>A valid path to TigerVNC should end with "vncviewer-*.exe" or "vncviewer64-*.exe"!</value>
   </data>
   <data name="ApplicationName_SNTPLookup" xml:space="preserve">
     <value>SNTP Lookup</value>
   </data>
   <data name="Library_nulastudioNetBeauty_Description" xml:space="preserve">
-    <value>.NET Framework/.NET Core アプリのランタイム コンポーネントと依存関係をサブディレクトリに移動して整理します。</value>
+    <value>Move a .NET Framework/.NET Core app runtime components and dependencies into a sub-directory and make it beauty.</value>
   </data>
   <data name="AddATabToPerformASNTPLookup" xml:space="preserve">
-    <value>SNTP Lookupを実行するためのタブを追加...</value>
+    <value>Add a tab to perform a SNTP lookup...</value>
   </data>
   <data name="SNTPServers" xml:space="preserve">
-    <value>SNTP サーバー(s)</value>
+    <value>SNTP server(s)</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv6AddressAPI" xml:space="preserve">
     <value>URL to a web service that can be reached via http or https and returns an IPv6 address e.g., "xxxx:xx:xxx::xx" as response.</value>
   </data>
   <data name="IPEndPoint" xml:space="preserve">
-    <value>IPエンドポイント</value>
+    <value>IP endpoint</value>
   </data>
   <data name="LocalEndTime" xml:space="preserve">
-    <value>ローカル終了時刻</value>
+    <value>Local end time</value>
   </data>
   <data name="LocalStartTime" xml:space="preserve">
-    <value>ローカル開始時刻</value>
+    <value>Local start time</value>
   </data>
   <data name="NetworkTime" xml:space="preserve">
-    <value>ネットワーク時刻</value>
+    <value>Network time</value>
   </data>
   <data name="Offset" xml:space="preserve">
-    <value>オフセット</value>
+    <value>Offset</value>
   </data>
   <data name="RoundTripDelay" xml:space="preserve">
     <value>Round trip delay</value>
@@ -3150,313 +3148,314 @@ PowerShell および AWS Session Manager 設定で設定された PowerShell コ
     <value>SNTP Lookup</value>
   </data>
   <data name="AddSNTPServer" xml:space="preserve">
-    <value>SNTP サーバーの追加</value>
+    <value>Add SNTP server</value>
   </data>
   <data name="DeleteSNTPServer" xml:space="preserve">
-    <value>SNTP サーバーを削除</value>
+    <value>Delete SNTP server</value>
   </data>
   <data name="DeleteSNTPServerMessage" xml:space="preserve">
-    <value>選択した SNTP サーバーは完全に削除されます。</value>
+    <value>The selected SNTP server will be deleted permanently.</value>
   </data>
   <data name="EditSNTPServer" xml:space="preserve">
-    <value>SNTP サーバーの編集</value>
+    <value>Edit SNTP server</value>
   </data>
   <data name="SNTPServerWithThisNameAlreadyExists" xml:space="preserve">
-    <value>この名前の SNTP サーバーは既に存在します!</value>
+    <value>An SNTP server with this name already exists!</value>
   </data>
   <data name="EnterValidHostnameOrIPAddress" xml:space="preserve">
     <value>Enter a valid hostname (e.g., "server-01" or "example.com") or a valid IP address (e.g., 192.168.178.1)!</value>
   </data>
   <data name="Servers" xml:space="preserve">
-    <value>サーバー</value>
+    <value>Server(s)</value>
   </data>
   <data name="EnterMasterPasswordToUnlockProfile" xml:space="preserve">
-    <value>プロファイルファイルのロックを解除するにはマスターパスワードを入力してください :</value>
+    <value>Enter master password to unlock the profile file:</value>
   </data>
   <data name="UnlockProfileFile" xml:space="preserve">
-    <value>プロファイルファイルのロック解除</value>
+    <value>Unlock profile file</value>
   </data>
   <data name="PortState_TimedOut" xml:space="preserve">
-    <value>タイムアウト</value>
+    <value>Timed out</value>
   </data>
   <data name="Hostkey" xml:space="preserve">
-    <value>ホストキー</value>
+    <value>Hostkey</value>
   </data>
   <data name="SettingsAreResetAndApplicationWillBeRestartedMessage" xml:space="preserve">
-    <value>設定がリセットされ、その後アプリケーションが再起動されます!</value>
+    <value>The settings will be reset and the application will be restarted afterwards!</value>
   </data>
   <data name="SettingsHaveBeenReset" xml:space="preserve">
-    <value>設定がリセットされました!</value>
+    <value>Settings have been reset!</value>
   </data>
   <data name="PingStatus" xml:space="preserve">
-    <value>Pingの状態</value>
+    <value>وضعیت پینگ</value>
   </data>
   <data name="ThreadPoolAdditionalMinThreads" xml:space="preserve">
-    <value>ThreadPool 追加最小スレッド数</value>
+    <value>ThreadPool additional min. threads</value>
   </data>
   <data name="HelpMessage_ThreadPoolAdditionalMinThreads" xml:space="preserve">
-    <value>この設定は、アプリケーションのスレッドプールからオンデマンドで作成されるスレッドの最小数を指定します。これにより、例えばIPスキャナーやポートスキャナーのパフォーマンスが向上します。
-	
-この値はデフォルトの最小スレッド数（CPUスレッド数）に追加されます。値が0の場合、デフォルト設定のままとなります。この値がThreadPoolのデフォルトの最大スレッド数よりも大きい場合は、この値が使用されます。
+    <value>این پیکربندی کمینه تعداد نخ هایی که در استخر نخ برنامه بر حسب تقاضا ایجاد می شوند را مشخص می کند. این می تواند باعث بهبود راندمان گردد به عنوان مثال پویشگر IP یا پویشگر درگاه.
 
-値が高すぎると、パフォーマンスの問題が発生する可能性があります。
+این مقدار به مقدار پیش فرض کمینه نخ ها (تعداد نخ های پردازشگر مرکزی) اضافه می گردد. مقدار 0 پیکربندی پیش فرض را تغییری نمی دهد. اگر مقدار بیشتر از بیشنه پیش فرض نخ های استخر نخ ها باشد ، این مقدار امورد استفاده قرار میگیرد.
 
-この値の変更は、アプリケーションの再起動後に有効になります。値が正常に設定されたかどうかは、%LocalAppData%\NETworkManager\NETworkManager.log のログファイルで確認できます。</value>
+اگر مقدار بسیار بالا باشد، مشکلات راندمان پیش می آید.
+
+تغییرات در این مقدار بعد از راه اندازی مجدد برنامه اثر خواهند گذاشت. اینکه آیا مقدار با موفقیت تنظیم شده است را می توان در فایل گزارش زیر مشاهده کرد.
+ %LocalAppData%\NETworkManager\NETworkManager.log</value>
   </data>
   <data name="MaxThreadsOnlyGoToSettingsGeneralGeneral" xml:space="preserve">
-    <value>これらの設定は、ホスト/ポートスキャンごとに同時に実行されるスレッドの最大数のみを変更します。アプリケーションのスレッド数（最小）を調整するには、「設定」&gt;「一般」&gt;「一般」に移動してください。</value>
+    <value>These settings only change the maximum number of concurrently executed threads per host/port scan. Go to Settings &gt; General &gt; General to adjust the (min) threads of the application.</value>
   </data>
   <data name="PortStatus" xml:space="preserve">
-    <value>ポートの状態</value>
+    <value>Port status</value>
   </data>
   <data name="PingDetails" xml:space="preserve">
-    <value>Ping の詳細</value>
+    <value>جزئیات پینگ</value>
   </data>
   <data name="NoOpenPortsFound" xml:space="preserve">
-    <value>開いているポートが見つかりません!</value>
+    <value>No open ports found!</value>
   </data>
   <data name="PortScanIsDisabled" xml:space="preserve">
-    <value>ポートスキャンは無効です!</value>
+    <value>Port scan is disabled!</value>
   </data>
   <data name="ScanPorts" xml:space="preserve">
-    <value>スキャン ポート</value>
+    <value>Scan ports</value>
   </data>
   <data name="CouldNotFindApplicationXXXMessage" xml:space="preserve">
-    <value>アプリケーション"{0}"が見つかりませんでした。設定でアプリケーションが非表示になっている可能性があります。</value>
+    <value>برنامه "{0}" پیدا نشد. شاید برنامه در تنظیمات مخفی شده باشد؟</value>
   </data>
   <data name="StatusWindow" xml:space="preserve">
-    <value>状態ウィンドウ</value>
+    <value>پنجره وضعیت</value>
   </data>
   <data name="ShowAddressBar" xml:space="preserve">
-    <value>アドレスバーを表示</value>
+    <value>نمایش نوار آدرس</value>
   </data>
   <data name="WarnMessage_MultipleInstances" xml:space="preserve">
-    <value>この設定を有効にすることは推奨されません。アプリケーションの複数のインスタンスは同じ設定とプロファイルファイルを共有します。最後に閉じられたインスタンスによって、他のインスタンスによる変更が上書きされる可能性があります。</value>
+    <value>فعال کردن این پیکربندی پیشنهاد نمی شود. اجرای های مختلف برنامه همان پیکربندی ها و فایل های پروفایل را استفاده می کنند. با بسته شدن آخرین نسخه در حال اجرا ممکن است تغییرات ایجاد شده توسط سایر اجرا ها رونویسی شود.</value>
   </data>
   <data name="BypassForLocalAddresses" xml:space="preserve">
-    <value>ローカルアドレスのバイパス</value>
+    <value>نادیده گرفتن نشانی های محلی </value>
   </data>
   <data name="EnableGatewayServer" xml:space="preserve">
-    <value>ゲートウェイサーバーを有効にする</value>
+    <value>فعال کردن کارگزار دروازه</value>
   </data>
   <data name="LogonMethod" xml:space="preserve">
-    <value>ログオン方法</value>
+    <value>روش ورود</value>
   </data>
   <data name="GatewayServer" xml:space="preserve">
-    <value>ゲートウェイ サーバー</value>
+    <value>کارگزار دروازه</value>
   </data>
   <data name="ServerName" xml:space="preserve">
-    <value>サーバー名</value>
+    <value>نام کارگزار</value>
   </data>
   <data name="ShareGatewayCredentialsWithRemoteComputer" xml:space="preserve">
-    <value>ゲートウェイの資格情報をリモート コンピュータと共有する</value>
+    <value>اشتراک گذاری داده های احراز هویت دروازه با کامپیوتر راه دور</value>
   </data>
   <data name="RemoteDesktopGatewayServerLogonMethod_Any" xml:space="preserve">
-    <value>後で選択できるようにする</value>
+    <value>اجازه بده بعداً انتخاب کنم</value>
   </data>
   <data name="RemoteDesktopGatewayServerLogonMethod_Smartcard" xml:space="preserve">
-    <value>スマートカードまたはWindows Hello for Business</value>
+    <value>کارت هوشمند یا Windows Hello برای مشتریان تجاری</value>
   </data>
   <data name="RemoteDesktopGatewayServerLogonMethod_Userpass" xml:space="preserve">
-    <value>パスワードを要求する(NTLM)</value>
+    <value>درخواست برای کلمه عبور (NTLM)</value>
   </data>
   <data name="UseGatewayCredentials" xml:space="preserve">
-    <value>ゲートウェイ資格情報を使用する</value>
+    <value>استفاده از داده های احراز هویت دروازه</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331661" xml:space="preserve">
-    <value>リモートデスクトップゲートウェイサーバーが一時的に利用できないため、お使いのコンピューターはリモートコンピューターに接続できません。しばらくしてから再接続するか、ネットワーク管理者にお問い合わせください。</value>
+    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server is temporarily unavailable. Try reconnecting later or contact your network administrator for assistance.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331651" xml:space="preserve">
-    <value>お使いのコンピューターは、次のいずれかの理由によりリモートコンピューターに接続できません。1) 要求されたリモートデスクトップゲートウェイサーバーのアドレスとサーバーのSSL証明書のサブジェクト名が一致しません。2) 証明書の有効期限が切れているか、失効しています。3) 証明機関が証明書を信頼していません。ネットワーク管理者にお問い合わせください。</value>
+    <value>Your computer can't connect to the remote computer due to one of the following reasons:  1) The requested Remote Desktop Gateway server address and the server SSL certificate subject name do not match. 2) The certificate is expired or revoked. 3) The certificate root authority does not trust the certificate.  Contact your network administrator for assistance.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331653" xml:space="preserve">
-    <value>このコンピューターはRDゲートウェイ「」のIDを確認できません。識別できないサーバーへの接続は安全ではありません。ネットワーク管理者にお問い合わせください。</value>
+    <value>This computer can't verify the identity of the RD Gateway "". It's not safe to connect to servers that can't be identified. Contact your network administrator for assistance.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331654" xml:space="preserve">
-    <value>要求されたリモートデスクトップゲートウェイサーバーのアドレスと証明書のサブジェクト名が一致しないため、コンピューターはリモートコンピューターに接続できません。ネットワーク管理者にお問い合わせください。</value>
+    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server address requested and the certificate subject name do not match. Contact your network administrator for assistance.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331655" xml:space="preserve">
-    <value>リモートデスクトップゲートウェイサーバーの証明書の有効期限が切れているか失効しているため、お使いのコンピューターはリモートコンピューターに接続できません。ネットワーク管理者にお問い合わせください。</value>
+    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server's certificate has expired or has been revoked. Contact your network administrator for assistance.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331657" xml:space="preserve">
-    <value>リモートデスクトップゲートウェイサーバーへのデータ送信中にエラーが発生しました。サーバーが一時的に利用できないか、ネットワーク接続がダウンしています。しばらくしてからもう一度お試しいただくか、ネットワーク管理者にお問い合わせください。</value>
+    <value>An error occurred while sending data to the Remote Desktop Gateway server. The server is temporarily unavailable or a network connection is down. Try again later, or contact your network administrator for assistance.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331658" xml:space="preserve">
-    <value>リモートデスクトップゲートウェイサーバーからデータを受信中にエラーが発生しました。サーバーが一時的に利用できないか、ネットワーク接続がダウンしています。しばらくしてからもう一度お試しいただくか、ネットワーク管理者にお問い合わせください。</value>
+    <value>An error occurred while receiving data from the Remote Desktop Gateway server. Either the server is temporarily unavailable or a network connection is down. Try again later, or contact your network administrator for assistance.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331660" xml:space="preserve">
-    <value>リモートデスクトップゲートウェイサーバーのアドレスが到達不能または正しくないため、コンピューターはリモートコンピューターに接続できません。有効なリモートデスクトップゲートウェイサーバーのアドレスを入力してください。</value>
+    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server address is unreachable or incorrect. Type a valid Remote Desktop Gateway server address.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331663" xml:space="preserve">
-    <value>リモートデスクトップゲートウェイサーバーのサーバーリソースが不足しており、一時的に利用できないため、コンピューターはリモートコンピューターに接続できません。しばらくしてから再接続するか、ネットワーク管理者にお問い合わせください。</value>
+    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server is running low on server resources and is temporarily unavailable. Try reconnecting later or contact your network administrator for assistance.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331672" xml:space="preserve">
-    <value>リモートデスクトップゲートウェイサーバーは接続を終了しました。しばらくしてから再接続するか、ネットワーク管理者にお問い合わせください。</value>
+    <value>The Remote Desktop Gateway server has ended the connection. Try reconnecting later or contact your network administrator for assistance.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331673" xml:space="preserve">
-    <value>リモートデスクトップゲートウェイサーバーの管理者が接続を終了しました。しばらくしてから再接続するか、ネットワーク管理者にお問い合わせください。</value>
+    <value>The Remote Desktop Gateway server administrator has ended the connection. Try reconnecting later or contact your network administrator for assistance.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331675" xml:space="preserve">
-    <value>リモートデスクトップは、次のいずれかの理由により、リモートコンピューター "" に接続できません。1) RDゲートウェイのアクセス許可リストにユーザーアカウントが登録されていない。2) リモートコンピューターをNetBIOS形式（例：computer1）で指定したが、RDゲートウェイではFQDNまたはIPアドレス形式（例：computer1.fabrikam.comまたは157.60.0.1）が想定されている。ネットワーク管理者にお問い合わせください。</value>
+    <value>Remote Desktop can't connect to the remote computer "" for one of these reasons:  1) Your user account is not listed in the RD Gateway's permission list 2) You might have specified the remote computer in NetBIOS format (for example, computer1), but the RD Gateway is expecting an FQDN or IP address format (for example, computer1.fabrikam.com or 157.60.0.1).  Contact your network administrator for assistance.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331676" xml:space="preserve">
-    <value>リモート デスクトップは、次のいずれかの理由により、リモート コンピューター "" に接続できません。1) ユーザー アカウントに RD ゲートウェイ "" へのアクセスが許可されていません。2) コンピューターに RD ゲートウェイ "" へのアクセスが許可されていません。3) 互換性のない認証方法を使用しています (たとえば、RD ゲートウェイがスマート カードを必要としているのに、パスワードを入力したなど)。サポートについては、ネットワーク管理者に問い合わせてください。</value>
+    <value>Remote Desktop can't connect to the remote computer "" for one of these reasons:  1) Your user account is not authorized to access the RD Gateway "" 2) Your computer is not authorized to access the RD Gateway "" 3) You are using an incompatible authentication method (for example, the RD Gateway might be expecting a smart card but you provided a password)  Contact your network administrator for assistance.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331679" xml:space="preserve">
-    <value>ネットワーク管理者がこのRDゲートウェイサーバーへのアクセスを制限しているため、お使いのコンピューターはリモートコンピューターに接続できません。ネットワーク管理者にお問い合わせください。</value>
+    <value>Your computer can't connect to the remote computer because your network administrator has restricted access to this RD Gateway server. Contact your network administrator for assistance.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331680" xml:space="preserve">
-    <value>Webプロキシサーバーが認証を必要とするため、お使いのコンピューターはリモートコンピューターに接続できません。Webプロキシサーバー経由でRDゲートウェイサーバーへの認証されていないトラフィックを許可するには、ネットワーク管理者にお問い合わせください。</value>
+    <value>Your computer can't connect to the remote computer because the web proxy server requires authentication. To allow unauthenticated traffic to an RD Gateway server through your web proxy server, contact your network administrator.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331682" xml:space="preserve">
-    <value>リモートデスクトップゲートウェイサーバーの接続数が上限に達したため、お使いのコンピューターはリモートコンピューターに接続できません。しばらくしてから再接続するか、ネットワーク管理者にお問い合わせください。</value>
+    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server reached its maximum allowed connections. Try reconnecting later or contact your network administrator for assistance.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331683" xml:space="preserve">
-    <value>リモートデスクトップゲートウェイサーバーが要求をサポートしていないため、お使いのコンピューターはリモートコンピューターに接続できません。ネットワーク管理者にお問い合わせください。</value>
+    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server does not support the request. Contact your network administrator for assistance.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331684" xml:space="preserve">
-    <value>クライアントがリモートデスクトップゲートウェイの機能の1つをサポートしていないため、コンピューターはリモートコンピューターに接続できません。ネットワーク管理者にお問い合わせください。</value>
+    <value>Your computer can't connect to the remote computer because the client does not support one of the Remote Desktop Gateway's capabilities. Contact your network administrator for assistance.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331685" xml:space="preserve">
-    <value>リモートデスクトップゲートウェイサーバーとこのコンピューターに互換性がないため、このコンピューターはリモートコンピューターに接続できません。ネットワーク管理者にお問い合わせください。</value>
+    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server and this computer are incompatible. Contact your network administrator for assistance.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331688" xml:space="preserve">
-    <value>リモートデスクトップゲートウェイサーバーで使用する証明書が構成されていないため、コンピューターはリモートコンピューターに接続できません。ネットワーク管理者にお問い合わせください。</value>
+    <value>Your computer can't connect to the remote computer because no certificate was configured to use at the Remote Desktop Gateway server. Contact your network administrator for assistance.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331689" xml:space="preserve">
-    <value>接続しようとしているRDゲートウェイサーバーがコンピューターの管理者によって許可されていないため、コンピューターはリモートコンピューターに接続できません。管理者の場合は、このリモートデスクトップゲートウェイサーバー名をコンピューターの信頼できるリモートデスクトップゲートウェイサーバー一覧に追加してから、再度接続してください。</value>
+    <value>Your computer can't connect to the remote computer because the RD Gateway server that you are trying to connect to is not allowed by your computer administrator. If you are the administrator, add this Remote Desktop Gateway server name to the trusted Remote Desktop Gateway server list on your computer and then try connecting again.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331690" xml:space="preserve">
-    <value>お使いのコンピューターまたはデバイスがネットワーク管理者によって設定されたネットワークアクセス保護の要件を満たしていないため、リモートコンピューターに接続できません。原因としては、次のいずれかが挙げられます。1) リモートデスクトップゲートウェイのサーバー名とサーバーの公開キー証明書のサブジェクト名が一致しません。2) 証明書の有効期限が切れているか、失効しています。3) 証明書ルート証明機関が証明書を信頼していません。4) 証明書キーの拡張が暗号化をサポートしていません。5) お使いのコンピューターが証明書失効リストを検証できません。ネットワーク管理者にお問い合わせください。</value>
+    <value>Your computer can't connect to the remote computer because your computer or device did not meet the Network Access Protection requirements set by your network administrator, for one of the following reasons:  1) The Remote Desktop Gateway server name and the server's public key certificate subject name do not match. 2) The certificate has expired or has been revoked. 3) The certificate root authority does not trust the certificate. 4) The certificate key extension does not support encryption. 5) Your computer cannot verify the certificate revocation list.  Contact your network administrator for assistance.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331691" xml:space="preserve">
-    <value>リモート デスクトップ ゲートウェイ サーバーへの認証にはスマート カードの資格情報ではなくユーザー名とパスワードが必要なため、コンピューターはリモート コンピューターに接続できません。</value>
+    <value>رایانه شما امکان اتصال به رایانه راه دور را ندارد زیرا نام کاربری و گذرواژه مورد نیاز است برای احراز هویت کارگزار دروازه Remote Desktop به جای داده های احراز هویت کارت هوشمند.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331692" xml:space="preserve">
-    <value>リモート デスクトップ ゲートウェイ サーバーに認証するには、ユーザー名とパスワードではなく、スマート カードの資格情報が必要であるため、コンピューターはリモート コンピューターに接続できません。</value>
+    <value>رایانه شما امکان اتصال به رایانه راه دور را ندارد زیرا داده های احراز هویت کارت هوشمند مورد نیاز است برای احراز هویت کارگزار دروازه Remote Desktop به جای نام کاربری و گذرواژه.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331700" xml:space="preserve">
-    <value>リモートデスクトップゲートウェイサーバーに無効なCookieが送信されたため、お使いのコンピューターはリモートコンピューターに接続できません。ネットワーク管理者にお問い合わせください。</value>
+    <value>Your computer can't connect to the remote computer because an invalid cookie was sent to the Remote Desktop Gateway server. Contact your network administrator for assistance.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331701" xml:space="preserve">
-    <value>リモートデスクトップゲートウェイサーバーによってCookieが拒否されたため、コンピューターはリモートコンピューターに接続できません。ネットワーク管理者にお問い合わせください。</value>
+    <value>Your computer can't connect to the remote computer because the cookie was rejected by the Remote Desktop Gateway server. Contact your network administrator for assistance.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331703" xml:space="preserve">
-    <value>リモートデスクトップゲートウェイサーバーが、試行した認証方法とは異なる認証方法を要求しているため、お使いのコンピューターはリモートコンピューターに接続できません。ネットワーク管理者にお問い合わせください。</value>
+    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway server is expecting an authentication method different from the one attempted. Contact your network administrator for assistance.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331704" xml:space="preserve">
-    <value>定期的なユーザー認証に失敗したため、RDゲートウェイ接続が終了しました。正しいユーザー名とパスワードで再接続してください。再接続に失敗した場合は、ネットワーク管理者にお問い合わせください。</value>
+    <value>The RD Gateway connection ended because periodic user authentication failed. Try reconnecting with a correct user name and password. If the reconnection fails, contact your network administrator for further assistance.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331705" xml:space="preserve">
-    <value>定期的なユーザー認証に失敗したため、RDゲートウェイ接続が終了しました。正しいユーザー名とパスワードで再接続してください。再接続に失敗した場合は、ネットワーク管理者にお問い合わせください。</value>
+    <value>The RD Gateway connection ended because periodic user authorization failed. Try reconnecting with a correct user name and password. If the reconnection fails, contact your network administrator for further assistance.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331707" xml:space="preserve">
-    <value>リモートデスクトップゲートウェイとリモートコンピュータがポリシーを交換できないため、コンピュータはリモートコンピュータに接続できません。これは、次のいずれかの理由により発生する可能性があります。1. リモートコンピュータがリモートデスクトップゲートウェイとポリシーを交換できない。2. リモートコンピュータの構成で新しい接続が許可されていない。3. リモートデスクトップゲートウェイとリモートコンピュータ間の接続が終了している。ネットワーク管理者に問い合わせてください。</value>
+    <value>Your computer can't connect to the remote computer because the Remote Desktop Gateway and the remote computer are unable to exchange policies. This could happen due to one of the following reasons:     1. The remote computer is not capable of exchanging policies with the Remote Desktop Gateway.     2. The remote computer's configuration does not permit a new connection.     3. The connection between the Remote Desktop Gateway and the remote computer ended.    Contact your network administrator for assistance.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_50331713" xml:space="preserve">
-    <value>定期的なユーザー認証に失敗したため、RDゲートウェイ接続が終了しました。お使いのコンピューターまたはデバイスは、ネットワーク管理者が設定したネットワークアクセス保護（NAP）の要件を満たしていませんでした。ネットワーク管理者にお問い合わせください。</value>
+    <value>The RD Gateway connection ended because periodic user authorization failed. Your computer or device didn't pass the Network Access Protection (NAP) requirements set by your network administrator. Contact your network administrator for assistance.</value>
   </data>
   <data name="Connected" xml:space="preserve">
-    <value>接続済み</value>
+    <value>Connected</value>
   </data>
   <data name="ErrorWhileScanningWiFiAdapterXXXWithErrorXXX" xml:space="preserve">
-    <value>WiFi アダプタ"{0}"のスキャン中にエラー : "{1}"</value>
+    <value>Error while scanning WiFi adapter "{0}" with error: "{1}"</value>
   </data>
   <data name="ConnectDots" xml:space="preserve">
-    <value>接続...</value>
+    <value>Connect...</value>
   </data>
   <data name="XXXDisconnected" xml:space="preserve">
-    <value>{0} 切断されました！</value>
+    <value>{0} disconnected!</value>
   </data>
   <data name="ConnectToXXX" xml:space="preserve">
-    <value>{0} に接続</value>
+    <value>Connect to {0}</value>
   </data>
   <data name="WPS" xml:space="preserve">
     <value>WPS</value>
   </data>
   <data name="ConnectAutomatically" xml:space="preserve">
-    <value>自動的に接続</value>
+    <value>Connect automatically</value>
   </data>
   <data name="PreSharedKey" xml:space="preserve">
-    <value>Pre-shared キー</value>
+    <value>Pre-shared key</value>
   </data>
   <data name="ConnectingToXXX" xml:space="preserve">
-    <value>{0} に接続しています...</value>
+    <value>Connecting to {0}...</value>
   </data>
   <data name="CouldNotConnectToXXXReasonXXX" xml:space="preserve">
-    <value>{0} ({1}) に接続できませんでした!</value>
+    <value>Could not connect to {0} ({1})!</value>
   </data>
   <data name="SuccessfullyConnectedToXXX" xml:space="preserve">
-    <value>{0} に正常に接続しました!</value>
+    <value>Successfully connected to {0}!</value>
   </data>
   <data name="WiFiConnectionStatus_AccessRevoked" xml:space="preserve">
-    <value>ネットワークへのアクセスが取り消されました</value>
+    <value>Access to the network has been revoked</value>
   </data>
   <data name="WiFiConnectionStatus_InvalidCredential" xml:space="preserve">
-    <value>無効な資格情報</value>
+    <value>داده های احراز هویت بی اعتبار</value>
   </data>
   <data name="WiFiConnectionStatus_NetworkNotAvailable" xml:space="preserve">
-    <value>ネットワークが利用できません</value>
+    <value>Network not available</value>
   </data>
   <data name="WiFiConnectionStatus_Success" xml:space="preserve">
-    <value>成功</value>
+    <value>Successful</value>
   </data>
   <data name="WiFiConnectionStatus_Timeout" xml:space="preserve">
-    <value>接続試行がタイムアウトしました</value>
+    <value>Connection attempt timed out</value>
   </data>
   <data name="WiFiConnectionStatus_UnspecifiedFailure" xml:space="preserve">
     <value>-/-</value>
   </data>
   <data name="WiFiConnectionStatus_UnsupportedAuthenticationProtocol" xml:space="preserve">
-    <value>認証プロトコルはサポートされていません!</value>
+    <value>Authentication protocol is not supported!</value>
   </data>
   <data name="CheckingWPSDots" xml:space="preserve">
-    <value>WPS を確認しています...</value>
+    <value>Checking WPS...</value>
   </data>
   <data name="OpenOIDProfilesDots" xml:space="preserve">
-    <value>OID プロファイルを開く...</value>
+    <value>Open OID profiles...</value>
   </data>
   <data name="MIB" xml:space="preserve">
     <value>MIB</value>
   </data>
   <data name="OIDProfiles" xml:space="preserve">
-    <value>OID プロファイル</value>
+    <value>OID profiles</value>
   </data>
   <data name="SelectOIDProfile" xml:space="preserve">
-    <value>OID プロファイルの選択</value>
+    <value>Select OID profile</value>
   </data>
   <data name="AddOIDProfile" xml:space="preserve">
-    <value>OID プロファイルの追加</value>
+    <value>Add OID profile</value>
   </data>
   <data name="DeleteOIDProfile" xml:space="preserve">
-    <value>OID プロファイルを削除</value>
+    <value>Delete OID profile</value>
   </data>
   <data name="DeleteOIDProfileMessage" xml:space="preserve">
-    <value>選択した OID プロファイルは完全に削除されます。</value>
+    <value>The selected OID profile will be deleted permanently.</value>
   </data>
   <data name="EditOIDProfile" xml:space="preserve">
-    <value>OID プロファイルの編集</value>
+    <value>Edit OID profile</value>
   </data>
   <data name="EnterPasswordDots" xml:space="preserve">
-    <value>パスワードの入力...</value>
+    <value>Enter password...</value>
   </data>
   <data name="AddTab" xml:space="preserve">
-    <value>タブの追加</value>
+    <value>Add tab</value>
   </data>
   <data name="FromProfile" xml:space="preserve">
-    <value>(プロファイルから)</value>
+    <value>(from profile)</value>
   </data>
   <data name="NewSubnetMask" xml:space="preserve">
-    <value>新しいサブネットマスク</value>
+    <value>New subnet mask</value>
   </data>
   <data name="AddServer" xml:space="preserve">
-    <value>サーバーの追加</value>
+    <value>Add server</value>
   </data>
   <data name="SNTPServer" xml:space="preserve">
-    <value>SNTP サーバー</value>
+    <value>SNTP server</value>
   </data>
   <data name="ErrorMessage_TabPageHasError" xml:space="preserve">
-    <value>このページの設定にはエラーがあります。修正して保存してください。</value>
+    <value>The settings on this page contain errors. Correct them to be able to save.</value>
   </data>
   <data name="HelpMessage_PuTTYHostkey" xml:space="preserve">
     <value>SSH hostkey to use for the connection (e.g., "71:b8:f2:6e..."). Only available if the mode is "SSH".</value>
@@ -3465,28 +3464,28 @@ PowerShell および AWS Session Manager 設定で設定された PowerShell コ
     <value>Full path to the private key file (e.g., "C:\Users\BornToBeRoot\SSH\private_key.ppk"). Only available if the mode is "SSH".</value>
   </data>
   <data name="HelpMessage_PuTTYUsername" xml:space="preserve">
-    <value>PuTTYセッションに渡されるユーザー名。モードが「SSH」、「Telnet」、または「Rlogin」の場合にのみ使用できます。</value>
+    <value>Username that will be passed into the PuTTY session. Only available if the mode is "SSH", "Telnet" or "Rlogin".</value>
   </data>
   <data name="ASN" xml:space="preserve">
     <value>ASN</value>
   </data>
   <data name="ASName" xml:space="preserve">
-    <value>AS 名</value>
+    <value>AS Name</value>
   </data>
   <data name="City" xml:space="preserve">
-    <value>市</value>
+    <value>City</value>
   </data>
   <data name="Continent" xml:space="preserve">
-    <value>大陸</value>
+    <value>Continent</value>
   </data>
   <data name="Country" xml:space="preserve">
-    <value>国</value>
+    <value>Country</value>
   </data>
   <data name="Currency" xml:space="preserve">
-    <value>通貨</value>
+    <value>Currency</value>
   </data>
   <data name="District" xml:space="preserve">
-    <value>区</value>
+    <value>District</value>
   </data>
   <data name="DNSResolver" xml:space="preserve">
     <value>DNS resolver</value>
@@ -3513,237 +3512,237 @@ PowerShell および AWS Session Manager 設定で設定された PowerShell コ
     <value>Longitude</value>
   </data>
   <data name="Mobile" xml:space="preserve">
-    <value>モバイル</value>
+    <value>Mobile</value>
   </data>
   <data name="Organization" xml:space="preserve">
-    <value>組織</value>
+    <value>Organization</value>
   </data>
   <data name="PTRRecord" xml:space="preserve">
-    <value>PTRレコード</value>
+    <value>PTR record</value>
   </data>
   <data name="Timezone" xml:space="preserve">
-    <value>タイムゾーン</value>
+    <value>ناحیه زمانی</value>
   </data>
   <data name="ZipCode" xml:space="preserve">
-    <value>郵便番号</value>
+    <value>Zip</value>
   </data>
   <data name="ExternalService_ip_api_Description" xml:space="preserve">
-    <value>IP位置情報API - 高速、正確、信頼性</value>
+    <value>IP Geolocation API - Fast, accurate, reliable</value>
   </data>
   <data name="CheckDNSResolver" xml:space="preserve">
-    <value>DNSリゾルバの確認</value>
+    <value>Check DNS resolver</value>
   </data>
   <data name="CheckIPGeolocation" xml:space="preserve">
-    <value>IP位置情報の確認</value>
+    <value>Check IP geolocation</value>
   </data>
   <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
-    <value>DNS リゾルバは ip-api.com によって決定されます。
+    <value>The DNS resolver is determined via ip-api.com.
 
 URL: https://edns.ip-api.com/</value>
   </data>
   <data name="HelpMessage_CheckIPGeolocation" xml:space="preserve">
-    <value>IP の地理位置は ip-api.com によって決定されます。
+    <value>The IP geolocation is determined via ip-api.com.
 
 URL: http://ip-api.com/</value>
   </data>
   <data name="WelcomePrivacyMessage" xml:space="preserve">
-    <value>追加機能を提供するために、私が運営していないサードパーティのサービスが利用されています。以下の選択を解除できます。いかなる場合も、私にデータが転送されることはありません。</value>
+    <value>To provide additional features, third party services are used that are not operated by me. You can deselect them below. No data is transferred to me at any time.</value>
   </data>
   <data name="CheckingDNSResolverDots" xml:space="preserve">
-    <value>DNS リゾルバを確認しています...</value>
+    <value>Checking DNS resolver...</value>
   </data>
   <data name="CheckingIPGeolocationDots" xml:space="preserve">
-    <value>IP 地理位置情報を確認しています...</value>
+    <value>Checking IP geolocation...</value>
   </data>
   <data name="CheckNetworkConnectionTryAgainMessage" xml:space="preserve">
-    <value>ネットワーク接続を確認し、数秒後にもう一度お試しください。</value>
+    <value>Check your network connection and try again in a few seconds.</value>
   </data>
   <data name="IPApiRateLimitMessage" xml:space="preserve">
-    <value>ip-api.com のレート制限に達しました (ネットワークからのリクエストが多すぎます)!
-数秒後にもう一度お試しください。</value>
+    <value>ip-api.com rate limit reached (too many requests from your network)!
+Try again in a few seconds.</value>
   </data>
   <data name="HTTPStatusCode" xml:space="preserve">
-    <value>HTTP 状態コード</value>
+    <value>HTTP status code</value>
   </data>
   <data name="Accen_Steel" xml:space="preserve">
-    <value>スチール</value>
+    <value>Steel</value>
   </data>
   <data name="RateLimitReachedTryAgainInXSeconds" xml:space="preserve">
-    <value>レート制限に達しました。{0} 秒後にもう一度お試しください...</value>
+    <value>Rate limit reached! Try again in {0} seconds...</value>
   </data>
   <data name="ProfileGroup_General" xml:space="preserve">
-    <value>全般</value>
+    <value>عمومی</value>
   </data>
   <data name="BSSID" xml:space="preserve">
     <value>BSSID</value>
   </data>
   <data name="NoReachableHostsFound" xml:space="preserve">
-    <value>アクセス可能なホストが見つかりません!</value>
+    <value>No reachable hosts found!</value>
   </data>
   <data name="ProfileGroup_Application" xml:space="preserve">
-    <value>アプリケーション</value>
+    <value>Application</value>
   </data>
   <data name="HelpMessage_ExperimentalFeatures" xml:space="preserve">
-    <value>新しい機能をテストするために、試験的な機能を有効にしてください。これらの機能はまだ完成しておらず、バグが含まれており、アプリケーションをクラッシュさせる可能性があり、リリースまでに変更される可能性があります。</value>
+    <value>Enable experimental features to test new functions. These are not yet complete, contain bugs, can crash the application and may change again until release.</value>
   </data>
   <data name="ExperimentalFeatures" xml:space="preserve">
-    <value>実験的な機能</value>
+    <value>Experimental features</value>
   </data>
   <data name="Experimental" xml:space="preserve">
-    <value>実験的</value>
+    <value>Experimental</value>
   </data>
   <data name="Watermark_RunCommand" xml:space="preserve">
-    <value>コマンドを実行...</value>
+    <value>Run command...</value>
   </data>
   <data name="ApplicationName_IPGeolocation" xml:space="preserve">
-    <value>IP 位置情報</value>
+    <value>IP Geolocation</value>
   </data>
   <data name="AddATabToQueryTheIPGeolocation" xml:space="preserve">
-    <value>IP 位置情報を照会するためのタブを追加...</value>
+    <value>Add a tab to query the IP geolocation...</value>
   </data>
   <data name="EnterADomainToQueryWhoisDots" xml:space="preserve">
-    <value>whois を照会するドメインの入力...</value>
+    <value>Enter a domain to query whois...</value>
   </data>
   <data name="EnterHostToQueryIPGeolocationDots" xml:space="preserve">
-    <value>IP 位置情報を照会するにはホストの入力...</value>
+    <value>Enter host to query IP geolocation...</value>
   </data>
   <data name="SNMPV3ErrorCode_UnknownUserName" xml:space="preserve">
-    <value>ユーザー名が不明です。</value>
+    <value>Unknown user name.</value>
   </data>
   <data name="SNMPV3ErrorCode_AuthenticationFailed" xml:space="preserve">
-    <value>認証に失敗しました (パスワード、コミュニティ、またはキーが正しくありません)。</value>
+    <value>Authentication failure (incorrect password, community or key).</value>
   </data>
   <data name="SNMPErrorCode_NoError" xml:space="preserve">
-    <value>操作はエラーなく成功しました。</value>
+    <value>The operation was successful without any errors.</value>
   </data>
   <data name="SNMPErrorCode_TooBig" xml:space="preserve">
-    <value>リクエストに対する応答が大きすぎて、1 つの応答に収まりきりません。</value>
+    <value>The response to your request was too large to fit into a single response!</value>
   </data>
   <data name="SNMPErrorCode_NoSuchName" xml:space="preserve">
-    <value>要求された OID が見つかりませんでした!</value>
+    <value>The requested OID could not be found!</value>
   </data>
   <data name="SNMPErrorCode_BadValue" xml:space="preserve">
-    <value>読み取り/書き込みまたは書き込み専用オブジェクトに矛盾した値が設定されました!</value>
+    <value>A read-write or write-only object was set to an inconsistent value!</value>
   </data>
   <data name="SNMPErrorCode_ReadOnly" xml:space="preserve">
-    <value>要求された OID は存在せず、書き込み可能ではありません!</value>
+    <value>The requested OID does not exist and is not writable!</value>
   </data>
   <data name="SNMPErrorCode_GenError" xml:space="preserve">
-    <value>特定のメッセージがないエラーが発生しました!</value>
+    <value>An error occurred for which no specific message is available!</value>
   </data>
   <data name="SNMPErrorCode_NoAccess" xml:space="preserve">
-    <value>要求されたオブジェクトは変更のためにアクセスできません!</value>
+    <value>The requested object is not accessible for modification!</value>
   </data>
   <data name="SNMPErrorCode_WrongType" xml:space="preserve">
-    <value>オブジェクトが互換性のないデータ型に設定されました!</value>
+    <value>The object was set to an incompatible data type!</value>
   </data>
   <data name="SNMPErrorCode_WrongLength" xml:space="preserve">
-    <value>オブジェクトに割り当てられた値が最大長を超えています!</value>
+    <value>The value assigned to the object exceeds its maximum length!</value>
   </data>
   <data name="SNMPErrorCode_WrongEncoding" xml:space="preserve">
-    <value>オブジェクトに使用されているエンコーディングが正しくありません!</value>
+    <value>The encoding used for the object is incorrect!</value>
   </data>
   <data name="SNMPErrorCode_WrongValue" xml:space="preserve">
-    <value>オブジェクトに割り当てられた値は有効な選択ではありません!</value>
+    <value>The value assigned to the object is not a valid choice!</value>
   </data>
   <data name="SNMPErrorCode_NoCreation" xml:space="preserve">
-    <value>要求されたオブジェクトは存在しないため、作成できません!</value>
+    <value>The requested object does not exist and cannot be created!</value>
   </data>
   <data name="SNMPErrorCode_InconsistentValue" xml:space="preserve">
-    <value>MIB 変数は現在不整合な状態にあるため、変更できません!</value>
+    <value>The MIB variable is currently in an inconsistent state and cannot be modified!</value>
   </data>
   <data name="SNMPErrorCode_ResourceUnavailable" xml:space="preserve">
-    <value>要求された操作を実行するために利用可能なシステム リソースがありません!</value>
+    <value>There are no available system resources to perform the requested operation!</value>
   </data>
   <data name="SNMPErrorCode_CommitFailed" xml:space="preserve">
-    <value>設定操作中にエラーが発生しました!</value>
+    <value>An error occurred during the set operation!</value>
   </data>
   <data name="SNMPErrorCode_UndoFailed" xml:space="preserve">
-    <value>設定操作が失敗し、以前の変更をロールバックできませんでした!</value>
+    <value>A set operation failed, and previous changes could not be rolled back!</value>
   </data>
   <data name="SNMPErrorCode_AuthorizationError" xml:space="preserve">
-    <value>認証に失敗しました。コミュニティ文字列を確認してください!</value>
+    <value>Authentication failed. Please check the community string!</value>
   </data>
   <data name="SNMPErrorCode_NotWritable" xml:space="preserve">
-    <value>要求されたオブジェクトは書き込み可能ではなく、変更もできません!</value>
+    <value>The requested object is not writable and cannot be modified!</value>
   </data>
   <data name="SNMPErrorCode_InconsistentName" xml:space="preserve">
-    <value>オブジェクトの状態が矛盾しているため、設定操作を実行できません!</value>
+    <value>The object's state is inconsistent, preventing the set operation!</value>
   </data>
   <data name="CloseAll" xml:space="preserve">
-    <value>すべて閉じる</value>
+    <value>Close all</value>
   </data>
   <data name="ExpandHostView" xml:space="preserve">
-    <value>ホストビューを展開</value>
+    <value>Expand host view</value>
   </data>
   <data name="CannotSetHostWhileRunningMessage" xml:space="preserve">
-    <value>他のホストを追加している間は、ホストを設定できません。処理が完了するまでお待ちいただき、もう一度お試しください。</value>
+    <value>Host cannot be set while other hosts are being added. Please wait until the process is complete and try again.</value>
   </data>
   <data name="Watermark_RunCommandWithHotKey" xml:space="preserve">
-    <value>実行コマンド... (Ctrl+Shift+P)</value>
+    <value>Run command... (Ctrl+Shift+P)</value>
   </data>
   <data name="NoMatchingCommands" xml:space="preserve">
-    <value>一致するコマンドがありません!</value>
+    <value>No matching commands!</value>
   </data>
   <data name="RemoteHostname" xml:space="preserve">
-    <value>リモートホスト名</value>
+    <value>Remote hostname</value>
   </data>
   <data name="ProcessID" xml:space="preserve">
-    <value>プロセス ID</value>
+    <value>Process ID</value>
   </data>
   <data name="ProcessPath" xml:space="preserve">
-    <value>プロセスのパス</value>
+    <value>Process path</value>
   </data>
   <data name="ProcessName" xml:space="preserve">
-    <value>プロセス名</value>
+    <value>Process name</value>
   </data>
   <data name="NetBIOS" xml:space="preserve">
     <value>NetBIOS</value>
   </data>
   <data name="ComputerName" xml:space="preserve">
-    <value>コンピューター名</value>
+    <value>Computer name</value>
   </data>
   <data name="ConnectionState_Error" xml:space="preserve">
-    <value>エラー</value>
+    <value>Error</value>
   </data>
   <data name="ConnectionState_OK" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="ConnectionState_Warning" xml:space="preserve">
-    <value>警告</value>
+    <value>Warning</value>
   </data>
   <data name="GroupDomainName" xml:space="preserve">
-    <value>グループ / ドメイン名</value>
+    <value>Group / domain name</value>
   </data>
   <data name="NetBIOSReachable" xml:space="preserve">
-    <value>NetBIOS 到達可能</value>
+    <value>NetBIOS reachable</value>
   </data>
   <data name="ScanForNetBIOS" xml:space="preserve">
-    <value>NetBIOS のスキャン</value>
+    <value>Scan for NetBIOS</value>
   </data>
   <data name="NetBIOSIsDisabled" xml:space="preserve">
-    <value>NetBIOS スキャンが無効です!</value>
+    <value>NetBIOS scan is disabled!</value>
   </data>
   <data name="ResolveHostnameIsDisabled" xml:space="preserve">
-    <value>ホスト名の解決が無効です!</value>
+    <value>Resolve Hostname is disabled!</value>
   </data>
   <data name="ResolveMACAddressIsDisabled" xml:space="preserve">
-    <value>MAC アドレスの解決が無効です!</value>
+    <value>Resolve MAC address is disabled!</value>
   </data>
   <data name="CloseGroup" xml:space="preserve">
-    <value>グループを閉じる</value>
+    <value>Close group</value>
   </data>
   <data name="ToolTip_RunCommandWithHotKey" xml:space="preserve">
-    <value>実行コマンド... (Ctrl+Shift+P)</value>
+    <value>Run command... (Ctrl+Shift+P)</value>
   </data>
   <data name="ProfileFiles" xml:space="preserve">
-    <value>プロファイル ファイル</value>
+    <value>Profile files</value>
   </data>
   <data name="OpenSettingsDots" xml:space="preserve">
-    <value>設定を開く...</value>
+    <value>Open settings...</value>
   </data>
   <data name="ExpandAndOpenSearchDots" xml:space="preserve">
-    <value>展開して検索を開く...</value>
+    <value>Expand and open search...</value>
   </data>
   <data name="WiFiAccessNotAvailableMessage" xml:space="preserve">
     <value>Starting with Windows 11 24H2, you’ll need to allow access to the Wi-Fi adapter.
@@ -3751,41 +3750,41 @@ URL: http://ip-api.com/</value>
 Open Windows Settings &gt; Privacy &amp; security &gt; Location, enable access for Desktop Apps / NETworkManager, then restart the application.</value>
   </data>
   <data name="DragDropApplicationsToReorderRightClickForMoreOptions" xml:space="preserve">
-    <value>アプリケーションをドラッグ アンド ドロップして順序を変更します。
-右クリックすると、さらにオプションが表示されます。</value>
+    <value>Drag and drop the applications to reorder them.
+Right-click for more options.</value>
   </data>
   <data name="RestoreDefaults" xml:space="preserve">
-    <value>デフォルトに戻す</value>
+    <value>Restore defaults</value>
   </data>
   <data name="Library_GongSolutionsWpfDragDrop_Description" xml:space="preserve">
-    <value>WPF 用の使いやすいドラッグ アンド ドロップ フレームワーク。</value>
+    <value>An easy to use drag'n'drop framework for WPF.</value>
   </data>
   <data name="License_BDS3Clause" xml:space="preserve">
     <value>BSD-3-Clause</value>
   </data>
   <data name="SetDefault" xml:space="preserve">
-    <value>デフォルトの設定</value>
+    <value>Set default</value>
   </data>
   <data name="ExampleProfileDescription" xml:space="preserve">
-    <value>Nextcloud と Traefik を使って Docker を実行する Ubuntu Server...</value>
+    <value>Ubuntu Server running Docker with Nextcloud and Traefik...</value>
   </data>
   <data name="ExampleGroupDescription" xml:space="preserve">
-    <value>AWS で実行されている Linux サーバー...</value>
+    <value>Linux servers running in AWS...</value>
   </data>
   <data name="GHz6" xml:space="preserve">
     <value>6 GHz</value>
   </data>
   <data name="ToolTip_SupportThisProjectWithADonation" xml:space="preserve">
-    <value>寄付を通じてこのプロジェクトを支援してください。</value>
+    <value>Support this project with a donation.</value>
   </data>
   <data name="OpenDocumentation" xml:space="preserve">
-    <value>ドキュメントを開く</value>
+    <value>بازکردن اسناد</value>
   </data>
   <data name="Donate" xml:space="preserve">
-    <value>寄付</value>
+    <value>Donate</value>
   </data>
   <data name="ProfileFile" xml:space="preserve">
-    <value>プロファイル ファイル</value>
+    <value>Profile file</value>
   </data>
   <data name="ApplicationName_HostsFileEditor" xml:space="preserve">
     <value>Hosts File Editor</value>

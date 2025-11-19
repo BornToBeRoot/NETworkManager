@@ -3942,4 +3942,7 @@ Rechtsklick für weitere Optionen.</value>
 Sie können die Verschlüsselung später jederzeit aktivieren oder deaktivieren, indem Sie mit der rechten Maustaste auf die Profildatei klicken, um die Verschlüsselungseinstellungen zu verwalten.
 Wenn Sie auf „Abbrechen“ klicken, bleibt die Profildatei unverschlüsselt.</value>
   </data>
+  <data name="ToolTip_RestartRequired" xml:space="preserve">
+    <value>Ein Neustart ist erforderlich, um Änderungen wie Spracheinstellungen zu übernehmen.</value>
+  </data>
 </root>

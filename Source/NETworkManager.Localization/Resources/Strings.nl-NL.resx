@@ -3939,4 +3939,7 @@ Right-click for more options.</value>
 You can enable or disable encryption later at any time by right-clicking the profile file to manage encryption settings.
 If you click Cancel, the profile file will remain unencrypted.</value>
   </data>
+  <data name="ToolTip_RestartRequired" xml:space="preserve">
+    <value>A restart is required to apply changes such as language settings.</value>
+  </data>
 </root>

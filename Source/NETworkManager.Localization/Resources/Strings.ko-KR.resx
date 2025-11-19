@@ -3939,4 +3939,7 @@ Windows 설정 &gt; 개인정보 보호 및 보안 &gt; 위치를 열고 데스�
 나중에 언제든지 프로필 파일을 마우스 오른쪽 버튼으로 클릭하여 암호화 설정을 관리하여 암호화를 활성화 또는 비활성화할 수 있습니다.
 "취소"를 클릭하면 프로필 파일은 암호화되지 않은 상태로 유지됩니다.</value>
   </data>
+  <data name="ToolTip_RestartRequired" xml:space="preserve">
+    <value>A restart is required to apply changes such as language settings.</value>
+  </data>
 </root>
