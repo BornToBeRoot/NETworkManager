@@ -32,7 +32,6 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     #region Variables
     private static readonly ILog Log = LogManager.GetLogger(typeof(PowerShellHostViewModel));
 
-    private readonly IDialogCoordinator _dialogCoordinator;
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
     public IInterTabClient InterTabClient { get; }
@@ -307,16 +306,15 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
     #region Constructor, load settings
 
-    public PowerShellHostViewModel(IDialogCoordinator instance)
+    public PowerShellHostViewModel()
     {
         _isLoading = true;
-
-        _dialogCoordinator = instance;
 
         // Check if PowerShell executable is configured
         CheckExecutable();
 
         // Try to find PowerShell executable
+
         if (!IsExecutableConfigured)
             TryFindExecutable();
 
@@ -569,8 +567,20 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
         var applicationFilePath = ApplicationHelper.Find(PowerShell.PwshFileName);
 
-        if (string.IsNullOrEmpty(applicationFilePath))
+        // Workaround for: https://github.com/BornToBeRoot/NETworkManager/issues/3223
+        if (applicationFilePath.EndsWith("AppData\\Local\\Microsoft\\WindowsApps\\pwsh.exe"))
+        {
+            Log.Info("Found pwsh.exe in AppData (Microsoft Store installation). Trying to resolve real path...");
+
+            var realPwshPath = FindRealPwshPath(applicationFilePath);
+
+            if (realPwshPath != null)
+                applicationFilePath = realPwshPath;
+        }
+        else if (string.IsNullOrEmpty(applicationFilePath))
+        {
             applicationFilePath = ApplicationHelper.Find(PowerShell.WindowsPowerShellFileName);
+        }
 
         SettingsManager.Current.PowerShell_ApplicationFilePath = applicationFilePath;
 
@@ -578,6 +588,61 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
         if (!IsExecutableConfigured)
             Log.Warn("Install PowerShell or configure the path in the settings.");
+    }
+
+    /// <summary>
+    /// Resolves the actual installation path of a PowerShell executable that was installed via the
+    /// Microsoft Store / WindowsApps and therefore appears as a proxy stub in the user's AppData.
+    /// 
+    /// Typical input is a path like:
+    /// <c>C:\Users\{USERNAME}\AppData\Local\Microsoft\WindowsApps\pwsh.exe</c>
+    /// 
+    /// This helper attempts to locate the corresponding real executable under the Program Files
+    /// WindowsApps package layout, e.g.:
+    /// <c>C:\Program Files\WindowsApps\Microsoft.PowerShell_7.*_8wekyb3d8bbwe\pwsh.exe</c>.
+    /// 
+    /// Workaround for: https://github.com/BornToBeRoot/NETworkManager/issues/3223
+    /// </summary>
+    /// <param name="path">Path to the pwsh proxy stub, typically located under the current user's <c>%LocalAppData%\Microsoft\WindowsApps\pwsh.exe</c>.</param>
+    /// <returns>Full path to the real pwsh executable under Program Files WindowsApps when found; otherwise null.</returns>
+    private string FindRealPwshPath(string path)
+    {
+        try
+        {
+            var command = "(Get-Command pwsh).Source";
+
+            ProcessStartInfo psi = new()
+            {
+                FileName = path,
+                Arguments = $"-NoProfile -ExecutionPolicy Bypass -Command \"{command}\"",
+                RedirectStandardOutput = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+
+            using Process process = Process.Start(psi);
+
+            string output = process.StandardOutput.ReadToEnd();
+
+            process.WaitForExit();
+
+            if (string.IsNullOrEmpty(output))
+                return null;
+
+            output = output.Replace(@"\\", @"\")
+                           .Replace(@"\r", string.Empty)
+                           .Replace(@"\n", string.Empty)
+                           .Replace("\r\n", string.Empty)
+                           .Replace("\n", string.Empty)
+                           .Replace("\r", string.Empty)
+                           .Trim();
+
+            return output;
+        }
+        catch
+        {
+            return null;
+        }
     }
 
     private Task Connect(string host = null)
