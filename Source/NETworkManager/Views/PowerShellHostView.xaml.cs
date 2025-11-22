@@ -1,5 +1,4 @@
-﻿using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.ViewModels;
+﻿using NETworkManager.ViewModels;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,7 +8,7 @@ namespace NETworkManager.Views;
 
 public partial class PowerShellHostView
 {
-    private readonly PowerShellHostViewModel _viewModel = new(DialogCoordinator.Instance);
+    private readonly PowerShellHostViewModel _viewModel = new();
 
     private bool _loaded;
 

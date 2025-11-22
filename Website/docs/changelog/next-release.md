@@ -63,7 +63,14 @@ Release date: **xx.xx.2025**
 
 ## Bug Fixes
 
-- The new profile filter popup introduced in version `2025.10.18.0` was instantly closed when a `PuTTY`, `PowerShell` or `AWS Session Manager` session was opened and the respective application / view was selected. [#3219](https://github.com/BornToBeRoot/NETworkManager/pull/3219)
+**PowerShell**
+
+- Resolve the actual path to `pwsh.exe` under `C:\Program Files\WindowsApps\` instead of relying on the stub located at `%LocalAppData%\Microsoft\WindowsApps\`. The stub simply redirects to the real executable, and settings such as themes are applied only to the real binary via the registry. [#3246](https://github.com/BornToBeRoot/NETworkManager/pull/3246)
+- The new profile filter popup introduced in version `2025.10.18.0` was instantly closed when a `PowerShell` session was opened and the respective application / view was selected. [#3219](https://github.com/BornToBeRoot/NETworkManager/pull/3219)
+
+**PuTTY**
+
+- The new profile filter popup introduced in version `2025.10.18.0` was instantly closed when a `PuTTY` session was opened and the respective application / view was selected. [#3219](https://github.com/BornToBeRoot/NETworkManager/pull/3219)
 
 ## Dependencies, Refactoring & Documentation
 
