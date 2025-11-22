@@ -577,8 +577,12 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
             if (realPwshPath != null)
                 applicationFilePath = realPwshPath;
         }
-        else if (string.IsNullOrEmpty(applicationFilePath))
+
+        // Fallback to Windows PowerShell
+        if (string.IsNullOrEmpty(applicationFilePath))
         {
+            Log.Warn("Failed to resolve pwsh.exe path. Falling back to Windows PowerShell.");
+
             applicationFilePath = ApplicationHelper.Find(PowerShell.WindowsPowerShellFileName);
         }
 
@@ -624,7 +628,13 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
             string output = process.StandardOutput.ReadToEnd();
 
-            process.WaitForExit();
+            if(!process.WaitForExit(10000))
+            {
+                process.Kill();
+                Log.Warn("Timeout while trying to resolve real pwsh path.");
+
+                return null;
+            }
 
             if (string.IsNullOrEmpty(output))
                 return null;
@@ -634,13 +644,14 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
                            .Replace(@"\n", string.Empty)
                            .Replace("\r\n", string.Empty)
                            .Replace("\n", string.Empty)
-                           .Replace("\r", string.Empty)
-                           .Trim();
+                           .Replace("\r", string.Empty);
 
-            return output;
+            return output.Trim();
         }
-        catch
+        catch (Exception ex)
         {
+            Log.Error($"Failed to resolve real pwsh path: {ex.Message}");
+
             return null;
         }
     }
