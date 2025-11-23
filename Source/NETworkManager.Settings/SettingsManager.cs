@@ -336,7 +336,33 @@ public static class SettingsManager
     private static void UpgradeToLatest(Version version)
     {
         Log.Info($"Apply upgrade to {version}...");
-    }
 
+        Log.Info("Removing deprecated app \"AWS Session Manager\", if it exists...");
+
+        var appToRemove = Current.General_ApplicationList
+            .FirstOrDefault(x => x.Name == ApplicationName.AWSSessionManager);
+
+        if (appToRemove != null)
+        {
+            if (appToRemove.IsDefault)
+            {
+                Log.Info("\"AWS Session Manager\" is set as the default app. Setting the new default app to the first visible app...");
+
+                var newDefaultApp = Current.General_ApplicationList.FirstOrDefault(x => x.IsVisible);
+
+                if (newDefaultApp != null)
+                {
+                    Log.Info($"Set \"{newDefaultApp.Name}\" as the new default app");
+                    newDefaultApp.IsDefault = true;
+                }
+                else
+                {
+                    Log.Error("No visible app found to set as the new default app.");
+                }
+            }
+
+            Current.General_ApplicationList.Remove(appToRemove);
+        }
+    }
     #endregion
 }

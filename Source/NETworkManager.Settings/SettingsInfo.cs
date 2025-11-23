@@ -2,7 +2,6 @@
 using Lextm.SharpSnmpLib.Messaging;
 using NETworkManager.Controls;
 using NETworkManager.Models;
-using NETworkManager.Models.AWS;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.PowerShell;
@@ -3068,177 +3067,6 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #endregion
 
-    #region AWS Session Manager
-
-    private bool _awsSessionManager_EnableSyncInstanceIDsFromAWS =
-        GlobalStaticConfiguration.AWSSessionManager_EnableSyncInstanceIDsFromAWS;
-
-    public bool AWSSessionManager_EnableSyncInstanceIDsFromAWS
-    {
-        get => _awsSessionManager_EnableSyncInstanceIDsFromAWS;
-        set
-        {
-            if (value == _awsSessionManager_EnableSyncInstanceIDsFromAWS)
-                return;
-
-            _awsSessionManager_EnableSyncInstanceIDsFromAWS = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private ObservableCollection<AWSProfileInfo> _awsSessionManager_AWSProfiles = new();
-
-    public ObservableCollection<AWSProfileInfo> AWSSessionManager_AWSProfiles
-    {
-        get => _awsSessionManager_AWSProfiles;
-        set
-        {
-            if (value == _awsSessionManager_AWSProfiles)
-                return;
-
-            _awsSessionManager_AWSProfiles = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private bool awsSessionManager_SyncOnlyRunningInstancesFromAWS =
-        GlobalStaticConfiguration.AWSSessionManager_SyncOnlyRunningInstancesFromAWS;
-
-    public bool AWSSessionManager_SyncOnlyRunningInstancesFromAWS
-    {
-        get => awsSessionManager_SyncOnlyRunningInstancesFromAWS;
-        set
-        {
-            if (value == awsSessionManager_SyncOnlyRunningInstancesFromAWS)
-                return;
-
-            awsSessionManager_SyncOnlyRunningInstancesFromAWS = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private string _awsSessionManager_Profile;
-
-    public string AWSSessionManager_Profile
-    {
-        get => _awsSessionManager_Profile;
-        set
-        {
-            if (value == _awsSessionManager_Profile)
-                return;
-
-            _awsSessionManager_Profile = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private string _awsSessionManager_Region;
-
-    public string AWSSessionManager_Region
-    {
-        get => _awsSessionManager_Region;
-        set
-        {
-            if (value == _awsSessionManager_Region)
-                return;
-
-            _awsSessionManager_Region = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private string _awsSessionManager_ApplicationFilePath;
-
-    public string AWSSessionManager_ApplicationFilePath
-    {
-        get => _awsSessionManager_ApplicationFilePath;
-        set
-        {
-            if (value == _awsSessionManager_ApplicationFilePath)
-                return;
-
-            _awsSessionManager_ApplicationFilePath = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private ObservableCollection<string> _awsSessionManager_InstanceIDHistory = new();
-
-    public ObservableCollection<string> AWSSessionManager_InstanceIDHistory
-    {
-        get => _awsSessionManager_InstanceIDHistory;
-        set
-        {
-            if (value == _awsSessionManager_InstanceIDHistory)
-                return;
-
-            _awsSessionManager_InstanceIDHistory = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private ObservableCollection<string> _awsSessionManager_ProfileHistory = new();
-
-    public ObservableCollection<string> AWSSessionManager_ProfileHistory
-    {
-        get => _awsSessionManager_ProfileHistory;
-        set
-        {
-            if (value == _awsSessionManager_ProfileHistory)
-                return;
-
-            _awsSessionManager_ProfileHistory = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private ObservableCollection<string> _awsSessionManager_RegionHistory = new();
-
-    public ObservableCollection<string> AWSSessionManager_RegionHistory
-    {
-        get => _awsSessionManager_RegionHistory;
-        set
-        {
-            if (value == _awsSessionManager_RegionHistory)
-                return;
-
-            _awsSessionManager_RegionHistory = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private bool _awsSessionManager_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
-
-    public bool AWSSessionManager_ExpandProfileView
-    {
-        get => _awsSessionManager_ExpandProfileView;
-        set
-        {
-            if (value == _awsSessionManager_ExpandProfileView)
-                return;
-
-            _awsSessionManager_ExpandProfileView = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private double _awsSessionManager_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
-
-    public double AWSSessionManager_ProfileWidth
-    {
-        get => _awsSessionManager_ProfileWidth;
-        set
-        {
-            if (Math.Abs(value - _awsSessionManager_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
-                return;
-
-            _awsSessionManager_ProfileWidth = value;
-            OnPropertyChanged();
-        }
-    }
-
-    #endregion
-
     #region TigerVNC
 
     private ObservableCollection<string> _tigerVNC_HostHistory = new();
@@ -4603,12 +4431,6 @@ public class SettingsInfo : INotifyPropertyChanged
         PuTTY_UsernameHistory.CollectionChanged += CollectionChanged;
         PuTTY_PrivateKeyFileHistory.CollectionChanged += CollectionChanged;
         PuTTY_ProfileHistory.CollectionChanged += CollectionChanged;
-
-        // AWSSessionManager
-        AWSSessionManager_AWSProfiles.CollectionChanged += CollectionChanged;
-        AWSSessionManager_InstanceIDHistory.CollectionChanged += CollectionChanged;
-        AWSSessionManager_ProfileHistory.CollectionChanged += CollectionChanged;
-        AWSSessionManager_RegionHistory.CollectionChanged += CollectionChanged;
 
         // TigerVNC
         TigerVNC_HostHistory.CollectionChanged += CollectionChanged;

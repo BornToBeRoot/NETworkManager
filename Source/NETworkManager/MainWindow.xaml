@@ -108,14 +108,19 @@
             <Button Command="{Binding Path=RestartApplicationCommand}"
                     Opacity="1"
                     Visibility="{Binding Path=IsRestartRequired, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                    ToolTip="{x:Static Member=localization:Strings.RestartRequired}"
+                    ToolTip="{x:Static Member=localization:Strings.ToolTip_RestartRequired}"
                     Cursor="Hand">
-                <Rectangle Width="20" Height="20"
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Rectangle Width="20" Height="20"
                            Fill="{DynamicResource ResourceKey=MahApps.Brushes.Accent}">
-                    <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ReloadAlert}" />
-                    </Rectangle.OpacityMask>
-                </Rectangle>
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ProgressCheck}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                    <TextBlock Text="{x:Static Member=localization:Strings.RestartRequired}"
+                               VerticalAlignment="Center"
+                               Style="{StaticResource LinkTextBlock}" Margin="5,0,0,0"/>
+                </StackPanel>
             </Button>
             <Button Command="{Binding Path=OpenWebsiteCommand}"
                     Opacity="1"
@@ -194,7 +199,7 @@
                         </Grid>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
-            </ComboBox>           
+            </ComboBox>
             <Button Command="{Binding Path=OpenWebsiteCommand}"
                     ToolTip="{x:Static Member=localization:Strings.ToolTip_StarForkProjectOnGitHub}"
                     CommandParameter="{x:Static Member=resources:Resources.NETworkManager_GitHubRepoUrl}"
@@ -209,7 +214,7 @@
                     </Rectangle>
                 </StackPanel>
             </Button>
-          
+
             <Button Command="{Binding Path=OpenWebsiteCommand}"
                     ToolTip="{x:Static Member=localization:Strings.ToolTip_ReportIssueOrCreateFeatureRequest}"
                     CommandParameter="{x:Static Member=resources:Resources.NETworkManager_GitHubNewIssueUrl}"

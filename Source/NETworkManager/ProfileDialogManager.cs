@@ -215,14 +215,6 @@ public static class ProfileDialogManager
             PuTTY_OverrideAdditionalCommandLine = instance.PuTTY_OverrideAdditionalCommandLine,
             PuTTY_AdditionalCommandLine = instance.PuTTY_AdditionalCommandLine?.Trim(),
 
-            // AWS Session Manager
-            AWSSessionManager_Enabled = instance.AWSSessionManager_Enabled,
-            AWSSessionManager_InstanceID = instance.AWSSessionManager_InstanceID,
-            AWSSessionManager_OverrideProfile = instance.AWSSessionManager_OverrideProfile,
-            AWSSessionManager_Profile = instance.AWSSessionManager_Profile,
-            AWSSessionManager_OverrideRegion = instance.AWSSessionManager_OverrideRegion,
-            AWSSessionManager_Region = instance.AWSSessionManager_Region,
-
             // TigerVNC
             TigerVNC_Enabled = instance.TigerVNC_Enabled,
             TigerVNC_InheritHost = instance.TigerVNC_InheritHost,
@@ -422,12 +414,6 @@ public static class ProfileDialogManager
             PuTTY_LogFileName = instance.PuTTY_LogFileName,
             PuTTY_OverrideAdditionalCommandLine = instance.PuTTY_OverrideAdditionalCommandLine,
             PuTTY_AdditionalCommandLine = instance.PuTTY_AdditionalCommandLine?.Trim(),
-
-            // AWS Session Manager
-            AWSSessionManager_OverrideProfile = instance.AWSSessionManager_OverrideProfile,
-            AWSSessionManager_Profile = instance.AWSSessionManager_Profile,
-            AWSSessionManager_OverrideRegion = instance.AWSSessionManager_OverrideRegion,
-            AWSSessionManager_Region = instance.AWSSessionManager_Region,
 
             // TigerVNC
             TigerVNC_OverridePort = instance.TigerVNC_OverridePort,

@@ -2981,9 +2981,6 @@ Habilite a criptografia do arquivo de perfil em Configurações &gt; Perfil para
   <data name="SettingsResetExclamationMark" xml:space="preserve">
     <value>Configurações redefinidas!</value>
   </data>
-  <data name="ApplicationName_AWSSessionManager" xml:space="preserve">
-    <value>Gerenciador de sessão AWS</value>
-  </data>
   <data name="InstanceId" xml:space="preserve">
     <value>ID da instância</value>
   </data>
@@ -2996,46 +2993,14 @@ Habilite a criptografia do arquivo de perfil em Configurações &gt; Perfil para
   <data name="Library_log4net_Description" xml:space="preserve">
     <value>log4net é uma ferramenta para ajudar o programador a enviar instruções de log para uma variedade de destinos de saída.</value>
   </data>
-  <data name="AWSSessionManager" xml:space="preserve">
-    <value>Gerenciador de sessão AWS</value>
-  </data>
   <data name="Enabled" xml:space="preserve">
     <value>Habilitado</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>Região</value>
   </data>
-  <data name="SyncEC2InstancesFromAWS" xml:space="preserve">
-    <value>Sincronizar instâncias EC2 do AWS</value>
-  </data>
-  <data name="AddAWSProfile" xml:space="preserve">
-    <value>Adicionar perfil AWS</value>
-  </data>
-  <data name="DeleteAWSProfile" xml:space="preserve">
-    <value>Excluir perfil AWS</value>
-  </data>
-  <data name="DeleteAWSProfileMessage" xml:space="preserve">
-    <value>O perfil AWS selecionado foi excluído permanentemente.
-
-O perfil não foi removido do arquivo ~\.aws\credentials.</value>
-  </data>
-  <data name="EditAWSProfile" xml:space="preserve">
-    <value>Editar perfil AWS</value>
-  </data>
-  <data name="SyncAllEC2InstancesFromAWS" xml:space="preserve">
-    <value>Sincronizar todas as instâncias EC2 do AWS</value>
-  </data>
-  <data name="SyncGroupEC2InstancesFromAWS" xml:space="preserve">
-    <value>Sincronizar todas as instâncias EC2 de grupo do AWS</value>
-  </data>
   <data name="ProfilesAndRegionsToSync" xml:space="preserve">
     <value>Perfis e regiões para sincronizar</value>
-  </data>
-  <data name="HelpMessage_AWSSessionManagerProfilesAndRegionsToSync" xml:space="preserve">
-    <value>Para sincronizar instâncias EC2 do AWS, o CLI do AWS deve ser configurado no sistema. As instâncias EC2 podem ser consultados de múltiplas contas AWS (perfis) e múltiplas regiões. Para fazer isto, o perfil armazenado em ~\.aws\credentials deve ser configurado junto com a região a ser consultada.</value>
-  </data>
-  <data name="Library_AWSSDKdotEC2_Description" xml:space="preserve">
-    <value>AWS SDK para .NET para funcionar com Amazon Elastic Compute Cloud (Amazon EC2) no Amazon Web Services (AWS).</value>
   </data>
   <data name="DefaultProfile" xml:space="preserve">
     <value>Perfil padrão</value>
@@ -3043,39 +3008,8 @@ O perfil não foi removido do arquivo ~\.aws\credentials.</value>
   <data name="DefaultRegion" xml:space="preserve">
     <value>Região padrão</value>
   </data>
-  <data name="HelpMessage_AWSSessionManagerProfile" xml:space="preserve">
-    <value>O perfil que é usado para criar perfis para conectar a uma instância EC2 pelo CLI do AWS.
-
-Se não definidas, as configurações CLI padrão do AWS serão usadas.</value>
-  </data>
-  <data name="HelpMessage_AWSSessionManagerRegion" xml:space="preserve">
-    <value>A região que é usada para criar perfis para conectar a uma instância EC2 pelo CLI do AWS.
-
-Se não definidas, as configurações CLI padrão do AWS serão usadas.</value>
-  </data>
-  <data name="HelpMessage_AWSCLIDefaultsAreUsedIfNotSet" xml:space="preserve">
-    <value>Se não definidas, as configurações CLI padrão do AWS serão usadas.</value>
-  </data>
   <data name="GroupNameCannotStartWithX" xml:space="preserve">
     <value>O nome do grupo não pode iniciar com "{0}"!</value>
-  </data>
-  <data name="SyncOnlyRunningEC2InstancesFromAWS" xml:space="preserve">
-    <value>Sincronizar somente instâncias EC2 em execução do AWS</value>
-  </data>
-  <data name="AnAWSRegionNamedXDoesNotExist" xml:space="preserve">
-    <value>Uma região AWS nomeada "{0}" não existe!</value>
-  </data>
-  <data name="AWSCLIv2IsInstalled" xml:space="preserve">
-    <value>CLI v2 do AWS está instalado!</value>
-  </data>
-  <data name="AWSCLIv2IsNotInstalled" xml:space="preserve">
-    <value>CLI v2 do AWS não está instalado!</value>
-  </data>
-  <data name="AWSSessionManagerPluginIsInstalled" xml:space="preserve">
-    <value>O plugin do Gerenciador de sessão AWS está instalado!</value>
-  </data>
-  <data name="AWSSessionManagerPluginIsNotInstalled" xml:space="preserve">
-    <value>O plugin do Gerenciador de sessão AWS não está instalado!</value>
   </data>
   <data name="CheckForPreReleases" xml:space="preserve">
     <value>Verificar por pré-lançamentos</value>
@@ -4007,5 +3941,8 @@ Clique direito para mais opções.</value>
 
 You can enable or disable encryption later at any time by right-clicking the profile file to manage encryption settings.
 If you click Cancel, the profile file will remain unencrypted.</value>
+  </data>
+  <data name="ToolTip_RestartRequired" xml:space="preserve">
+    <value>A restart is required to apply changes such as language settings.</value>
   </data>
 </root>
