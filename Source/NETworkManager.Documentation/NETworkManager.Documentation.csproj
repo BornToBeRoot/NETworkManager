@@ -5,8 +5,8 @@
         <AppDesignerFolder>Properties</AppDesignerFolder>
         <RootNamespace>NETworkManager.Documentation</RootNamespace>
         <AssemblyName>NETworkManager.Documentation</AssemblyName>
-        <TargetFramework>net10.0-windows10.0.22621.0</TargetFramework>
-        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+        <TargetFrameworks>net10.0-windows10.0.22621.0</TargetFrameworks>
+        <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
         <PlatformTarget>x64</PlatformTarget>
         <SelfContained>false</SelfContained>
         <UseWPF>true</UseWPF>
@@ -110,4 +110,3 @@
         <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj" />
     </ItemGroup>
 </Project>
-
