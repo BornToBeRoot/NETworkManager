@@ -1,9 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net10.0-windows</TargetFramework>
-        <WindowsSdkPackageVersion>10.0.22621.755</WindowsSdkPackageVersion>
+		<RootNamespace>NETworkManager</RootNamespace>
+		<AssemblyName>NETworkManager</AssemblyName>
+		<TargetFrameworks>net10.0-windows10.0.22621</TargetFrameworks>
         <RuntimeIdentifier>win-x64</RuntimeIdentifier>
         <PlatformTarget>x64</PlatformTarget>
         <SelfContained>false</SelfContained>
@@ -11,9 +12,7 @@
         <PublishSingleFile>true</PublishSingleFile>
         <PublishReadyToRun>true</PublishReadyToRun>
         -->		
-        <CsWinRTWindowsMetadata>sdk</CsWinRTWindowsMetadata>
-        <RootNamespace>NETworkManager</RootNamespace>
-        <AssemblyName>NETworkManager</AssemblyName>
+        <CsWinRTWindowsMetadata>sdk</CsWinRTWindowsMetadata>        
         <UseWPF>true</UseWPF>
         <UseWindowsForms>true</UseWindowsForms>		
         <StartupObject>NETworkManager.App</StartupObject>
@@ -76,6 +75,7 @@
         <PackageReference Include="MahApps.Metro.SimpleChildWindow" Version="2.2.1" />
         <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3537.50" />
         <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
+        
         <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
         <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.4.12" />
