@@ -4,12 +4,26 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
+/// <summary>
+/// View model for adding an ARP table entry.
+/// </summary>
 public class ArpTableAddEntryViewModel : ViewModelBase
 {
+    /// <summary>
+    /// Backing field for <see cref="IPAddress"/>.
+    /// </summary>
     private string _ipAddress;
 
+    /// <summary>
+    /// Backing field for <see cref="MACAddress"/>.
+    /// </summary>
     private string _macAddress;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ArpTableAddEntryViewModel"/> class.
+    /// </summary>
+    /// <param name="addCommand">The action to execute when the add command is invoked.</param>
+    /// <param name="cancelHandler">The action to execute when the cancel command is invoked.</param>
     public ArpTableAddEntryViewModel(Action<ArpTableAddEntryViewModel> addCommand,
         Action<ArpTableAddEntryViewModel> cancelHandler)
     {
@@ -17,10 +31,19 @@ public class ArpTableAddEntryViewModel : ViewModelBase
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
     }
 
+    /// <summary>
+    /// Gets the command to add the entry.
+    /// </summary>
     public ICommand AddCommand { get; }
 
+    /// <summary>
+    /// Gets the command to cancel the operation.
+    /// </summary>
     public ICommand CancelCommand { get; }
 
+    /// <summary>
+    /// Gets or sets the IP address.
+    /// </summary>
     public string IPAddress
     {
         get => _ipAddress;
@@ -34,6 +57,9 @@ public class ArpTableAddEntryViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets or sets the MAC address.
+    /// </summary>
     public string MACAddress
     {
         get => _macAddress;

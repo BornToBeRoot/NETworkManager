@@ -23,10 +23,17 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
+/// <summary>
+/// View model for the port lookup view.
+/// </summary>
 public class LookupPortLookupViewModel : ViewModelBase
 {
     #region Constructor, Load settings
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="LookupPortLookupViewModel"/> class.
+    /// </summary>
+    /// <param name="instance">The dialog coordinator instance.</param>
     public LookupPortLookupViewModel(IDialogCoordinator instance)
     {
         _dialogCoordinator = instance;
@@ -39,6 +46,10 @@ public class LookupPortLookupViewModel : ViewModelBase
 
     #region Methods
 
+    /// <summary>
+    /// Adds the search term to the history.
+    /// </summary>
+    /// <param name="portOrService">The port or service.</param>
     private void AddSearchToHistory(string portOrService)
     {
         // Create the new list
@@ -56,12 +67,25 @@ public class LookupPortLookupViewModel : ViewModelBase
     #endregion
 
     #region Variables
+    
+    /// <summary>
+    /// The logger.
+    /// </summary>
     private static readonly ILog Log = LogManager.GetLogger(typeof(LookupPortLookupViewModel));
 
+    /// <summary>
+    /// The dialog coordinator.
+    /// </summary>
     private readonly IDialogCoordinator _dialogCoordinator;
 
+    /// <summary>
+    /// Backing field for <see cref="Search"/>.
+    /// </summary>
     private string _search;
 
+    /// <summary>
+    /// Gets or sets the search query.
+    /// </summary>
     public string Search
     {
         get => _search;
@@ -75,8 +99,14 @@ public class LookupPortLookupViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="HasError"/>.
+    /// </summary>
     private bool _hasError;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether there is a validation error.
+    /// </summary>
     public bool HasError
     {
         get => _hasError;
@@ -89,10 +119,19 @@ public class LookupPortLookupViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the search history view.
+    /// </summary>
     public ICollectionView SearchHistoryView { get; }
 
+    /// <summary>
+    /// Backing field for <see cref="IsRunning"/>.
+    /// </summary>
     private bool _isRunning;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the lookup is running.
+    /// </summary>
     public bool IsRunning
     {
         get => _isRunning;
@@ -106,8 +145,14 @@ public class LookupPortLookupViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="Results"/>.
+    /// </summary>
     private ObservableCollection<PortLookupInfo> _results = new();
 
+    /// <summary>
+    /// Gets or sets the search results.
+    /// </summary>
     public ObservableCollection<PortLookupInfo> Results
     {
         get => _results;
@@ -121,10 +166,19 @@ public class LookupPortLookupViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the results view.
+    /// </summary>
     public ICollectionView ResultsView { get; }
 
+    /// <summary>
+    /// Backing field for <see cref="SelectedResult"/>.
+    /// </summary>
     private PortLookupInfo _selectedResult;
 
+    /// <summary>
+    /// Gets or sets the selected result.
+    /// </summary>
     public PortLookupInfo SelectedResult
     {
         get => _selectedResult;
@@ -138,8 +192,14 @@ public class LookupPortLookupViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="SelectedResults"/>.
+    /// </summary>
     private IList _selectedResults = new ArrayList();
 
+    /// <summary>
+    /// Gets or sets the list of selected results.
+    /// </summary>
     public IList SelectedResults
     {
         get => _selectedResults;
@@ -154,8 +214,14 @@ public class LookupPortLookupViewModel : ViewModelBase
     }
 
 
+    /// <summary>
+    /// Backing field for <see cref="NothingFound"/>.
+    /// </summary>
     private bool _nothingFound;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether no results were found.
+    /// </summary>
     public bool NothingFound
     {
         get => _nothingFound;
@@ -173,9 +239,17 @@ public class LookupPortLookupViewModel : ViewModelBase
 
     #region ICommands & Actions
 
+    /// <summary>
+    /// Gets the command to perform the port lookup.
+    /// </summary>
     public ICommand PortLookupCommand =>
         new RelayCommand(_ => PortLookupAction().ConfigureAwait(false), PortLookup_CanExecute);
 
+    /// <summary>
+    /// Checks if the port lookup command can be executed.
+    /// </summary>
+    /// <param name="parameter">The command parameter.</param>
+    /// <returns><c>true</c> if the command can be executed; otherwise, <c>false</c>.</returns>
     private bool PortLookup_CanExecute(object parameter)
     {
         return Application.Current.MainWindow != null &&
@@ -183,6 +257,9 @@ public class LookupPortLookupViewModel : ViewModelBase
                !ConfigurationManager.Current.IsChildWindowOpen && !HasError;
     }
 
+    /// <summary>
+    /// Performs the port lookup.
+    /// </summary>
     private async Task PortLookupAction()
     {
         IsRunning = true;
@@ -292,8 +369,15 @@ public class LookupPortLookupViewModel : ViewModelBase
         IsRunning = false;
     }
 
+    /// <summary>
+    /// Gets the command to export the results.
+    /// </summary>
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
 
+    /// <summary>
+    /// Exports the results.
+    /// </summary>
+    /// <returns>A task representing the asynchronous operation.</returns>
     private Task ExportAction()
     {
         var childWindow = new ExportChildWindow();

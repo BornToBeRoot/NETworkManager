@@ -17,19 +17,41 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
+/// <summary>
+/// View model for the DNS lookup settings.
+/// </summary>
 public class DNSLookupSettingsViewModel : ViewModelBase
 {
     #region Variables
 
+    /// <summary>
+    /// Indicates whether the view model is loading.
+    /// </summary>
     private readonly bool _isLoading;
+
+    /// <summary>
+    /// Default values for the profile dialog.
+    /// </summary>
     private readonly ServerConnectionInfo _profileDialogDefaultValues = new("10.0.0.1", 53, TransportProtocol.Udp);
 
+    /// <summary>
+    /// The dialog coordinator instance.
+    /// </summary>
     private readonly IDialogCoordinator _dialogCoordinator;
 
+    /// <summary>
+    /// Gets the collection view of DNS servers.
+    /// </summary>
     public ICollectionView DNSServers { get; }
 
+    /// <summary>
+    /// Backing field for <see cref="SelectedDNSServer"/>.
+    /// </summary>
     private DNSServerConnectionInfoProfile _selectedDNSServer = new();
 
+    /// <summary>
+    /// Gets or sets the selected DNS server.
+    /// </summary>
     public DNSServerConnectionInfoProfile SelectedDNSServer
     {
         get => _selectedDNSServer;
@@ -43,14 +65,23 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the list of server info profile names.
+    /// </summary>
     private List<string> ServerInfoProfileNames =>
     [
         .. SettingsManager.Current.DNSLookup_DNSServers
             .Where(x => !x.UseWindowsDNSServer).Select(x => x.Name)
     ];
 
+    /// <summary>
+    /// Backing field for <see cref="AddDNSSuffix"/>.
+    /// </summary>
     private bool _addDNSSuffix;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether to add DNS suffix.
+    /// </summary>
     public bool AddDNSSuffix
     {
         get => _addDNSSuffix;
@@ -67,8 +98,14 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="UseCustomDNSSuffix"/>.
+    /// </summary>
     private bool _useCustomDNSSuffix;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether to use a custom DNS suffix.
+    /// </summary>
     public bool UseCustomDNSSuffix
     {
         get => _useCustomDNSSuffix;
@@ -85,8 +122,14 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="CustomDNSSuffix"/>.
+    /// </summary>
     private string _customDNSSuffix;
 
+    /// <summary>
+    /// Gets or sets the custom DNS suffix.
+    /// </summary>
     public string CustomDNSSuffix
     {
         get => _customDNSSuffix;
@@ -103,8 +146,14 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="Recursion"/>.
+    /// </summary>
     private bool _recursion;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether recursion is enabled.
+    /// </summary>
     public bool Recursion
     {
         get => _recursion;
@@ -121,8 +170,14 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="UseCache"/>.
+    /// </summary>
     private bool _useCache;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether to use cache.
+    /// </summary>
     public bool UseCache
     {
         get => _useCache;
@@ -139,10 +194,19 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the list of available query classes.
+    /// </summary>
     public List<QueryClass> QueryClasses { get; private set; }
 
+    /// <summary>
+    /// Backing field for <see cref="QueryClass"/>.
+    /// </summary>
     private QueryClass _queryClass;
 
+    /// <summary>
+    /// Gets or sets the selected query class.
+    /// </summary>
     public QueryClass QueryClass
     {
         get => _queryClass;
@@ -182,8 +246,14 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     }
     */
 
+    /// <summary>
+    /// Backing field for <see cref="UseTCPOnly"/>.
+    /// </summary>
     private bool _useTCPOnly;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether to use TCP only.
+    /// </summary>
     public bool UseTCPOnly
     {
         get => _useTCPOnly;
@@ -200,8 +270,14 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="Retries"/>.
+    /// </summary>
     private int _retries;
 
+    /// <summary>
+    /// Gets or sets the number of retries.
+    /// </summary>
     public int Retries
     {
         get => _retries;
@@ -218,8 +294,14 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="Timeout"/>.
+    /// </summary>
     private int _timeout;
 
+    /// <summary>
+    /// Gets or sets the timeout in milliseconds.
+    /// </summary>
     public int Timeout
     {
         get => _timeout;
@@ -240,6 +322,10 @@ public class DNSLookupSettingsViewModel : ViewModelBase
 
     #region Constructor, load settings
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DNSLookupSettingsViewModel"/> class.
+    /// </summary>
+    /// <param name="instance">The dialog coordinator instance.</param>
     public DNSLookupSettingsViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
@@ -262,6 +348,9 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         _isLoading = false;
     }
 
+    /// <summary>
+    /// Loads the settings.
+    /// </summary>
     private void LoadSettings()
     {
         AddDNSSuffix = SettingsManager.Current.DNSLookup_AddDNSSuffix;
@@ -281,22 +370,40 @@ public class DNSLookupSettingsViewModel : ViewModelBase
 
     #region ICommand & Actions
 
+    /// <summary>
+    /// Gets the command to add a DNS server.
+    /// </summary>
     public ICommand AddDNSServerCommand => new RelayCommand(_ => AddDNSServerAction());
 
+    /// <summary>
+    /// Action to add a DNS server.
+    /// </summary>
     private void AddDNSServerAction()
     {
         AddDNSServer().ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to edit a DNS server.
+    /// </summary>
     public ICommand EditDNSServerCommand => new RelayCommand(_ => EditDNSServerAction());
 
+    /// <summary>
+    /// Action to edit a DNS server.
+    /// </summary>
     private void EditDNSServerAction()
     {
         EditDNSServer().ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to delete a DNS server.
+    /// </summary>
     public ICommand DeleteDNSServerCommand => new RelayCommand(_ => DeleteDNSServerAction());
 
+    /// <summary>
+    /// Action to delete a DNS server.
+    /// </summary>
     private void DeleteDNSServerAction()
     {
         DeleteDNSServer().ConfigureAwait(false);
@@ -306,6 +413,9 @@ public class DNSLookupSettingsViewModel : ViewModelBase
 
     #region Methods
 
+    /// <summary>
+    /// Adds a new DNS server.
+    /// </summary>
     private async Task AddDNSServer()
     {
         var customDialog = new CustomDialog
@@ -331,6 +441,9 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
+    /// <summary>
+    /// Edits the selected DNS server.
+    /// </summary>
     public async Task EditDNSServer()
     {
         var customDialog = new CustomDialog
@@ -357,6 +470,9 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
+    /// <summary>
+    /// Deletes the selected DNS server.
+    /// </summary>
     private async Task DeleteDNSServer()
     {
         var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,

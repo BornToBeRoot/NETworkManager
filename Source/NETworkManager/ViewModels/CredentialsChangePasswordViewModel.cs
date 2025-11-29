@@ -5,6 +5,9 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
+/// <summary>
+/// View model for changing the credentials password.
+/// </summary>
 public class CredentialsChangePasswordViewModel : ViewModelBase
 {
     /// <summary>
@@ -33,7 +36,7 @@ public class CredentialsChangePasswordViewModel : ViewModelBase
     private SecureString _password = new();
 
     /// <summary>
-    ///     Initialize a new class <see cref="CredentialsSetPasswordViewModel" /> with <see cref="OKCommand" /> and
+    ///     Initialize a new class <see cref="CredentialsChangePasswordViewModel" /> with <see cref="OKCommand" /> and
     ///     <see cref="CancelCommand" />.
     /// </summary>
     /// <param name="okCommand"><see cref="OKCommand" /> which is executed on OK click.</param>

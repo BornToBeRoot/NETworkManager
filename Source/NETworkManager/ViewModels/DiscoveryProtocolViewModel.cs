@@ -18,20 +18,47 @@ using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels;
 
+/// <summary>
+/// View model for the discovery protocol view.
+/// </summary>
 public class DiscoveryProtocolViewModel : ViewModelBase
 {
     #region Variables
     private static readonly ILog Log = LogManager.GetLogger(typeof(DiscoveryProtocolViewModel));
 
+    /// <summary>
+    /// The dialog coordinator instance.
+    /// </summary>
     private readonly IDialogCoordinator _dialogCoordinator;
 
+    /// <summary>
+    /// The discovery protocol capture instance.
+    /// </summary>
     private readonly DiscoveryProtocolCapture _discoveryProtocolCapture = new();
+
+    /// <summary>
+    /// Indicates whether the view model is loading.
+    /// </summary>
     private readonly bool _isLoading;
+
+    /// <summary>
+    /// The timer for the remaining time.
+    /// </summary>
     private readonly Timer _remainingTimer;
+
+    /// <summary>
+    /// The seconds remaining for the capture.
+    /// </summary>
     private int _secondsRemaining;
 
+    /// <summary>
+    /// Backing field for <see cref="FirstRun"/>.
+    /// </summary>
     private bool _firstRun = true;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether this is the first run.
+    /// </summary>
     public bool FirstRun
     {
         get => _firstRun;
@@ -45,8 +72,14 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="Protocols"/>.
+    /// </summary>
     private List<DiscoveryProtocol> _protocols = new();
 
+    /// <summary>
+    /// Gets the list of available discovery protocols.
+    /// </summary>
     public List<DiscoveryProtocol> Protocols
     {
         get => _protocols;
@@ -60,8 +93,14 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="SelectedProtocol"/>.
+    /// </summary>
     private DiscoveryProtocol _selectedProtocol;
 
+    /// <summary>
+    /// Gets or sets the selected discovery protocol.
+    /// </summary>
     public DiscoveryProtocol SelectedProtocol
     {
         get => _selectedProtocol;
@@ -78,8 +117,14 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="Durations"/>.
+    /// </summary>
     private List<int> _durations;
 
+    /// <summary>
+    /// Gets the list of available durations.
+    /// </summary>
     public List<int> Durations
     {
         get => _durations;
@@ -93,8 +138,14 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="SelectedDuration"/>.
+    /// </summary>
     private int _selectedDuration;
 
+    /// <summary>
+    /// Gets or sets the selected duration.
+    /// </summary>
     public int SelectedDuration
     {
         get => _selectedDuration;
@@ -111,8 +162,14 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="IsCapturing"/>.
+    /// </summary>
     private bool _isCapturing;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the capture is running.
+    /// </summary>
     public bool IsCapturing
     {
         get => _isCapturing;
@@ -126,8 +183,14 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="TimeRemainingMessage"/>.
+    /// </summary>
     private string _timeRemainingMessage;
 
+    /// <summary>
+    /// Gets the message for the remaining time.
+    /// </summary>
     public string TimeRemainingMessage
     {
         get => _timeRemainingMessage;
@@ -141,8 +204,14 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="IsStatusMessageDisplayed"/>.
+    /// </summary>
     private bool _isStatusMessageDisplayed;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the status message is displayed.
+    /// </summary>
     public bool IsStatusMessageDisplayed
     {
         get => _isStatusMessageDisplayed;
@@ -156,8 +225,14 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="StatusMessage"/>.
+    /// </summary>
     private string _statusMessage;
 
+    /// <summary>
+    /// Gets the status message.
+    /// </summary>
     public string StatusMessage
     {
         get => _statusMessage;
@@ -171,8 +246,14 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="DiscoveryPackageReceived"/>.
+    /// </summary>
     private bool _discoveryPackageReceived;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether a discovery package has been received.
+    /// </summary>
     public bool DiscoveryPackageReceived
     {
         get => _discoveryPackageReceived;
@@ -186,8 +267,14 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="DiscoveryPackage"/>.
+    /// </summary>
     private DiscoveryProtocolPackageInfo _discoveryPackage;
 
+    /// <summary>
+    /// Gets the received discovery package.
+    /// </summary>
     public DiscoveryProtocolPackageInfo DiscoveryPackage
     {
         get => _discoveryPackage;
@@ -205,6 +292,10 @@ public class DiscoveryProtocolViewModel : ViewModelBase
 
     #region Constructor, LoadSettings
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DiscoveryProtocolViewModel"/> class.
+    /// </summary>
+    /// <param name="instance">The dialog coordinator instance.</param>
     public DiscoveryProtocolViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
@@ -228,6 +319,9 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         _isLoading = false;
     }
 
+    /// <summary>
+    /// Loads the settings.
+    /// </summary>
     private void LoadSettings()
     {
         Protocols = Enum.GetValues(typeof(DiscoveryProtocol)).Cast<DiscoveryProtocol>().OrderBy(x => x.ToString())
@@ -241,8 +335,14 @@ public class DiscoveryProtocolViewModel : ViewModelBase
 
     #region ICommands & Actions
 
+    /// <summary>
+    /// Gets the command to restart the application as administrator.
+    /// </summary>
     public ICommand RestartAsAdminCommand => new RelayCommand(_ => RestartAsAdminAction().ConfigureAwait(false));
 
+    /// <summary>
+    /// Action to restart the application as administrator.
+    /// </summary>
     private async Task RestartAsAdminAction()
     {
         try
@@ -256,8 +356,14 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the command to start the capture.
+    /// </summary>
     public ICommand CaptureCommand => new RelayCommand(_ => CaptureAction().ConfigureAwait(false));
 
+    /// <summary>
+    /// Action to start the capture.
+    /// </summary>
     private async Task CaptureAction()
     {
         if (FirstRun)
@@ -291,8 +397,14 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the command to export the result.
+    /// </summary>
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
 
+    /// <summary>
+    /// Action to export the result.
+    /// </summary>
     private Task ExportAction()
     {
         var childWindow = new ExportChildWindow();
@@ -344,6 +456,9 @@ public class DiscoveryProtocolViewModel : ViewModelBase
 
     #region Methods
 
+    /// <summary>
+    /// Handles the elapsed event of the remaining time timer.
+    /// </summary>
     private void Timer_Elapsed(object sender, ElapsedEventArgs e)
     {
         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
@@ -356,10 +471,16 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         }));
     }
 
+    /// <summary>
+    /// Called when the view becomes visible.
+    /// </summary>
     public void OnViewVisible()
     {
     }
 
+    /// <summary>
+    /// Called when the view is hidden.
+    /// </summary>
     public void OnViewHide()
     {
     }
@@ -368,6 +489,9 @@ public class DiscoveryProtocolViewModel : ViewModelBase
 
     #region Events
 
+    /// <summary>
+    /// Handles the PackageReceived event of the discovery protocol capture.
+    /// </summary>
     private void DiscoveryProtocol_PackageReceived(object sender, DiscoveryProtocolPackageArgs e)
     {
         DiscoveryPackage = e.PackageInfo;
@@ -375,6 +499,9 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         DiscoveryPackageReceived = true;
     }
 
+    /// <summary>
+    /// Handles the WarningReceived event of the discovery protocol capture.
+    /// </summary>
     private void DiscoveryProtocol_WarningReceived(object sender, DiscoveryProtocolWarningArgs e)
     {
         if (!string.IsNullOrEmpty(StatusMessage))
@@ -385,6 +512,9 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         IsStatusMessageDisplayed = true;
     }
 
+    /// <summary>
+    /// Handles the ErrorReceived event of the discovery protocol capture.
+    /// </summary>
     private void DiscoveryProtocol_ErrorReceived(object sender, DiscoveryProtocolErrorArgs e)
     {
         if (!string.IsNullOrEmpty(StatusMessage))
@@ -395,6 +525,9 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         IsStatusMessageDisplayed = true;
     }
 
+    /// <summary>
+    /// Handles the Complete event of the discovery protocol capture.
+    /// </summary>
     private void DiscoveryProtocol_Complete(object sender, EventArgs e)
     {
         _remainingTimer.Stop();

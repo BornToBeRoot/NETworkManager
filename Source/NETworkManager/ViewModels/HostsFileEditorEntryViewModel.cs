@@ -50,6 +50,9 @@ public class HostsFileEditorEntryViewModel : ViewModelBase
     /// </summary>
     public ICommand CancelCommand { get; }
 
+    /// <summary>
+    /// Gets the hosts file entry.
+    /// </summary>
     public HostsFileEntry Entry { get; } = null;
 
     /// <summary>
