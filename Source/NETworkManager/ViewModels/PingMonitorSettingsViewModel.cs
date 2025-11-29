@@ -2,6 +2,9 @@
 
 namespace NETworkManager.ViewModels;
 
+/// <summary>
+/// Represents the settings for the Ping Monitor.
+/// </summary>
 public class PingMonitorSettingsViewModel : ViewModelBase
 {
     #region Variables
@@ -10,6 +13,9 @@ public class PingMonitorSettingsViewModel : ViewModelBase
 
     private int _timeout;
 
+    /// <summary>
+    /// Gets or sets the timeout in milliseconds.
+    /// </summary>
     public int Timeout
     {
         get => _timeout;
@@ -28,6 +34,9 @@ public class PingMonitorSettingsViewModel : ViewModelBase
 
     private int _buffer;
 
+    /// <summary>
+    /// Gets or sets the buffer size in bytes.
+    /// </summary>
     public int Buffer
     {
         get => _buffer;
@@ -46,6 +55,9 @@ public class PingMonitorSettingsViewModel : ViewModelBase
 
     private int _ttl;
 
+    /// <summary>
+    /// Gets or sets the time to live (TTL).
+    /// </summary>
     public int TTL
     {
         get => _ttl;
@@ -64,6 +76,9 @@ public class PingMonitorSettingsViewModel : ViewModelBase
 
     private bool _dontFragment;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the Don't Fragment flag is set.
+    /// </summary>
     public bool DontFragment
     {
         get => _dontFragment;
@@ -82,6 +97,9 @@ public class PingMonitorSettingsViewModel : ViewModelBase
 
     private int _waitTime;
 
+    /// <summary>
+    /// Gets or sets the wait time between pings in milliseconds.
+    /// </summary>
     public int WaitTime
     {
         get => _waitTime;
@@ -100,6 +118,9 @@ public class PingMonitorSettingsViewModel : ViewModelBase
 
     private bool _expandHostView;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the host view is expanded.
+    /// </summary>
     public bool ExpandHostView
     {
         get => _expandHostView;
@@ -120,6 +141,9 @@ public class PingMonitorSettingsViewModel : ViewModelBase
 
     #region Contructor, load settings
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PingMonitorSettingsViewModel"/> class.
+    /// </summary>
     public PingMonitorSettingsViewModel()
     {
         _isLoading = true;

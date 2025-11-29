@@ -5,6 +5,9 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
+/// <summary>
+/// View model for entering the password for a profile file.
+/// </summary>
 public class CredentialsPasswordProfileFileViewModel : ViewModelBase
 {
     /// <summary>

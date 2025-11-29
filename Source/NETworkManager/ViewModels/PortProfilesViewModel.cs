@@ -11,12 +11,20 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
+/// <summary>
+/// Represents the view model for managing port profiles.
+/// </summary>
 public class PortProfilesViewModel : ViewModelBase
 {
     private string _search;
 
     private IList _selectedPortProfiles = new ArrayList();
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PortProfilesViewModel"/> class.
+    /// </summary>
+    /// <param name="okCommand">The action to execute when the OK command is invoked.</param>
+    /// <param name="cancelHandler">The action to execute when the Cancel command is invoked.</param>
     public PortProfilesViewModel(Action<PortProfilesViewModel> okCommand, Action<PortProfilesViewModel> cancelHandler)
     {
         OKCommand = new RelayCommand(_ => okCommand(this));
@@ -41,10 +49,19 @@ public class PortProfilesViewModel : ViewModelBase
         };
     }
 
+    /// <summary>
+    /// Gets the command to confirm the selection.
+    /// </summary>
     public ICommand OKCommand { get; }
 
+    /// <summary>
+    /// Gets the command to cancel the operation.
+    /// </summary>
     public ICommand CancelCommand { get; }
 
+    /// <summary>
+    /// Gets or sets the search text to filter the port profiles.
+    /// </summary>
     public string Search
     {
         get => _search;
@@ -61,8 +78,14 @@ public class PortProfilesViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the collection of port profiles.
+    /// </summary>
     public ICollectionView PortProfiles { get; }
 
+    /// <summary>
+    /// Gets or sets the list of selected port profiles.
+    /// </summary>
     public IList SelectedPortProfiles
     {
         get => _selectedPortProfiles;
@@ -76,6 +99,10 @@ public class PortProfilesViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the selected port profiles as a typed collection.
+    /// </summary>
+    /// <returns>A collection of selected <see cref="PortProfileInfo"/>.</returns>
     public IEnumerable<PortProfileInfo> GetSelectedPortProfiles()
     {
         return new List<PortProfileInfo>(SelectedPortProfiles.Cast<PortProfileInfo>());

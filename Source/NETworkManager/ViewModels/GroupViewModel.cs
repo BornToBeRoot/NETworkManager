@@ -16,23 +16,48 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
+/// <summary>
+/// View model for a profile group.
+/// </summary>
 public class GroupViewModel : ViewModelBase
 {
     #region Variables
 
+    /// <summary>
+    /// Indicates whether the view model is loading.
+    /// </summary>
     private readonly bool _isLoading = true;
 
+    /// <summary>
+    /// Gets a value indicating whether the profile file is encrypted.
+    /// </summary>
     public bool IsProfileFileEncrypted => ProfileManager.LoadedProfileFile.IsEncrypted;
 
+    /// <summary>
+    /// Gets the collection view of group views.
+    /// </summary>
     public ICollectionView GroupViews { get; }
+
+    /// <summary>
+    /// Gets the group info.
+    /// </summary>
     public GroupInfo Group { get; }
 
+    /// <summary>
+    /// The list of existing group names.
+    /// </summary>
     private IReadOnlyCollection<string> _groups { get; }
 
     #region General
 
+    /// <summary>
+    /// Backing field for <see cref="NameIsValid"/>.
+    /// </summary>
     private bool _nameIsValid = true;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the name is valid.
+    /// </summary>
     public bool NameIsValid
     {
         get => _nameIsValid;
@@ -46,8 +71,14 @@ public class GroupViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="Name"/>.
+    /// </summary>
     private string _name;
 
+    /// <summary>
+    /// Gets or sets the name of the group.
+    /// </summary>
     public string Name
     {
         get => _name;
@@ -68,8 +99,14 @@ public class GroupViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="Description"/>.
+    /// </summary>
     private string _description;
 
+    /// <summary>
+    /// Gets or sets the description of the group.
+    /// </summary>
     public string Description
     {
         get => _description;
@@ -87,8 +124,14 @@ public class GroupViewModel : ViewModelBase
 
     #region Remote Desktop
 
+    /// <summary>
+    /// Backing field for <see cref="RemoteDesktop_UseCredentials"/>.
+    /// </summary>
     private bool _remoteDesktop_UseCredentials;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether to use credentials for Remote Desktop.
+    /// </summary>
     public bool RemoteDesktop_UseCredentials
     {
         get => _remoteDesktop_UseCredentials;
@@ -102,8 +145,14 @@ public class GroupViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="RemoteDesktop_Username"/>.
+    /// </summary>
     private string _remoteDesktop_Username;
 
+    /// <summary>
+    /// Gets or sets the username for Remote Desktop.
+    /// </summary>
     public string RemoteDesktop_Username
     {
         get => _remoteDesktop_Username;
@@ -117,8 +166,14 @@ public class GroupViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="RemoteDesktop_Domain"/>.
+    /// </summary>
     private string _remoteDesktop_Domain;
 
+    /// <summary>
+    /// Gets or sets the domain for Remote Desktop.
+    /// </summary>
     public string RemoteDesktop_Domain
     {
         get => _remoteDesktop_Domain;

@@ -8,14 +8,36 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
+/// <summary>
+///     Provides functionality to ping a network host.
+/// </summary>
 public sealed class Ping
 {
     #region Variables
 
+    /// <summary>
+    ///     The time in milliseconds to wait between ping requests. Default is 1000ms.
+    /// </summary>
     public int WaitTime = 1000;
+
+    /// <summary>
+    ///     The time in milliseconds to wait for a reply. Default is 4000ms.
+    /// </summary>
     public int Timeout = 4000;
+
+    /// <summary>
+    ///     The buffer to send with the ping request. Default is 32 bytes.
+    /// </summary>
     public byte[] Buffer = new byte[32];
+
+    /// <summary>
+    ///     The Time to Live (TTL) value for the ping request. Default is 64.
+    /// </summary>
     public int TTL = 64;
+
+    /// <summary>
+    ///     Indicates whether to prevent fragmentation of the data packets. Default is true.
+    /// </summary>
     public bool DontFragment = true;
 
     private const int ExceptionCancelCount = 3;
@@ -24,6 +46,9 @@ public sealed class Ping
 
     #region Events
 
+    /// <summary>
+    ///     Occurs when a ping reply is received.
+    /// </summary>
     public event EventHandler<PingReceivedArgs> PingReceived;
 
     private void OnPingReceived(PingReceivedArgs e)
@@ -31,6 +56,9 @@ public sealed class Ping
         PingReceived?.Invoke(this, e);
     }
 
+    /// <summary>
+    ///     Occurs when the ping operation is completed.
+    /// </summary>
     public event EventHandler PingCompleted;
 
     private void OnPingCompleted()
@@ -38,6 +66,9 @@ public sealed class Ping
         PingCompleted?.Invoke(this, EventArgs.Empty);
     }
 
+    /// <summary>
+    ///     Occurs when a ping exception is thrown.
+    /// </summary>
     public event EventHandler<PingExceptionArgs> PingException;
 
     private void OnPingException(PingExceptionArgs e)
@@ -45,6 +76,9 @@ public sealed class Ping
         PingException?.Invoke(this, e);
     }
 
+    /// <summary>
+    ///     Occurs when the hostname is resolved.
+    /// </summary>
     public event EventHandler<HostnameArgs> HostnameResolved;
 
     private void OnHostnameResolved(HostnameArgs e)
@@ -52,6 +86,9 @@ public sealed class Ping
         HostnameResolved?.Invoke(this, e);
     }
 
+    /// <summary>
+    ///     Occurs when the user has canceled the operation.
+    /// </summary>
     public event EventHandler UserHasCanceled;
 
     private void OnUserHasCanceled()
@@ -63,6 +100,11 @@ public sealed class Ping
 
     #region Methods
 
+    /// <summary>
+    ///     Sends ping requests to the specified IP address asynchronously.
+    /// </summary>
+    /// <param name="ipAddress">The IP address to ping.</param>
+    /// <param name="cancellationToken">The token to monitor for cancellation requests.</param>
     public void SendAsync(IPAddress ipAddress, CancellationToken cancellationToken)
     {
         Task.Run(async () =>
@@ -153,6 +195,13 @@ public sealed class Ping
     }
 
     // Param: disableSpecialChar --> ExportManager --> "<" this char cannot be displayed in xml
+    /// <summary>
+    ///     Converts the ping time to a string representation.
+    /// </summary>
+    /// <param name="status">The IP status of the ping reply.</param>
+    /// <param name="time">The round-trip time in milliseconds.</param>
+    /// <param name="disableSpecialChar">If true, disables special characters like '&lt;' in the output (e.g., for XML export).</param>
+    /// <returns>The formatted time string.</returns>
     public static string TimeToString(IPStatus status, long time, bool disableSpecialChar = false)
     {
         if (status != IPStatus.Success && status != IPStatus.TtlExpired)

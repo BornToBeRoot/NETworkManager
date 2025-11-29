@@ -5,6 +5,9 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
+/// <summary>
+/// View model for setting a password.
+/// </summary>
 public class CredentialsSetPasswordViewModel : ViewModelBase
 {
     /// <summary>

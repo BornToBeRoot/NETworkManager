@@ -18,6 +18,9 @@ using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels;
 
+/// <summary>
+/// The view model for the Port Scanner host, managing tabs and profiles.
+/// </summary>
 public class PortScannerHostViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
@@ -25,10 +28,16 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
     private readonly DispatcherTimer _searchDispatcherTimer = new();
     private bool _searchDisabled;
 
+    /// <summary>
+    /// Gets the InterTabClient for Dragablz.
+    /// </summary>
     public IInterTabClient InterTabClient { get; }
 
     private string _interTabPartition;
 
+    /// <summary>
+    /// Gets or sets the InterTab partition identifier.
+    /// </summary>
     public string InterTabPartition
     {
         get => _interTabPartition;
@@ -42,6 +51,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
+    /// <summary>
+    /// Gets the collection of tab items.
+    /// </summary>
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
     private readonly bool _isLoading;
@@ -49,6 +61,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
 
     private int _selectedTabIndex;
 
+    /// <summary>
+    /// Gets or sets the index of the selected tab.
+    /// </summary>
     public int SelectedTabIndex
     {
         get => _selectedTabIndex;
@@ -66,6 +81,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
 
     private ICollectionView _profiles;
 
+    /// <summary>
+    /// Gets the collection of filtered profiles.
+    /// </summary>
     public ICollectionView Profiles
     {
         get => _profiles;
@@ -81,6 +99,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
 
     private ProfileInfo _selectedProfile = new();
 
+    /// <summary>
+    /// Gets or sets the selected profile.
+    /// </summary>
     public ProfileInfo SelectedProfile
     {
         get => _selectedProfile;
@@ -96,6 +117,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
 
     private string _search;
 
+    /// <summary>
+    /// Gets or sets the search query for filtering profiles.
+    /// </summary>
     public string Search
     {
         get => _search;
@@ -119,6 +143,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
 
     private bool _isSearching;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether a search is currently active.
+    /// </summary>
     public bool IsSearching
     {
         get => _isSearching;
@@ -134,6 +161,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
 
     private bool _profileFilterIsOpen;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the profile filter flyout is open.
+    /// </summary>
     public bool ProfileFilterIsOpen
     {
         get => _profileFilterIsOpen;
@@ -147,12 +177,18 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
+    /// <summary>
+    /// Gets the collection view for profile filter tags.
+    /// </summary>
     public ICollectionView ProfileFilterTagsView { get; }
 
     private ObservableCollection<ProfileFilterTagsInfo> ProfileFilterTags { get; } = [];
 
     private bool _profileFilterTagsMatchAny = GlobalStaticConfiguration.Profile_TagsMatchAny;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether to match any selected tag in the filter.
+    /// </summary>
     public bool ProfileFilterTagsMatchAny
     {
         get => _profileFilterTagsMatchAny;
@@ -168,6 +204,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
 
     private bool _profileFilterTagsMatchAll;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether to match all selected tags in the filter.
+    /// </summary>
     public bool ProfileFilterTagsMatchAll
     {
         get => _profileFilterTagsMatchAll;
@@ -183,6 +222,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
 
     private bool _isProfileFilterSet;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether a profile filter is currently applied.
+    /// </summary>
     public bool IsProfileFilterSet
     {
         get => _isProfileFilterSet;
@@ -197,6 +239,10 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
     }
     
     private readonly GroupExpanderStateStore _groupExpanderStateStore = new();
+
+    /// <summary>
+    /// Gets the store for group expander states.
+    /// </summary>
     public GroupExpanderStateStore GroupExpanderStateStore => _groupExpanderStateStore;
 
     private bool _canProfileWidthChange = true;
@@ -204,6 +250,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
 
     private bool _expandProfileView;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the profile view is expanded.
+    /// </summary>
     public bool ExpandProfileView
     {
         get => _expandProfileView;
@@ -226,6 +275,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
 
     private GridLength _profileWidth;
 
+    /// <summary>
+    /// Gets or sets the width of the profile view.
+    /// </summary>
     public GridLength ProfileWidth
     {
         get => _profileWidth;
@@ -253,6 +305,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
 
     #region Constructor, load settings
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PortScannerHostViewModel"/> class.
+    /// </summary>
     public PortScannerHostViewModel()
     {
         _isLoading = true;
@@ -301,6 +356,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
 
     #region ICommand & Actions
 
+    /// <summary>
+    /// Gets the command to add a new tab.
+    /// </summary>
     public ICommand AddTabCommand => new RelayCommand(_ => AddTabAction());
 
     private void AddTabAction()
@@ -308,6 +366,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
         AddTab();
     }
 
+    /// <summary>
+    /// Gets the command to scan the selected profile.
+    /// </summary>
     public ICommand ScanProfileCommand => new RelayCommand(_ => ScanProfileAction(), ScanProfile_CanExecute);
 
     private bool ScanProfile_CanExecute(object obj)
@@ -320,6 +381,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
         AddTab(SelectedProfile);
     }
 
+    /// <summary>
+    /// Gets the command to add a new profile.
+    /// </summary>
     public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
 
     private void AddProfileAction()
@@ -334,6 +398,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
         return SelectedProfile is { IsDynamic: false };
     }
 
+    /// <summary>
+    /// Gets the command to edit the selected profile.
+    /// </summary>
     public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
     private void EditProfileAction()
@@ -342,6 +409,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to copy the selected profile.
+    /// </summary>
     public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
     private void CopyAsProfileAction()
@@ -350,6 +420,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to delete the selected profile.
+    /// </summary>
     public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
 
     private void DeleteProfileAction()
@@ -359,6 +432,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to edit a profile group.
+    /// </summary>
     public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
     private void EditGroupAction(object group)
@@ -368,6 +444,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to open the profile filter.
+    /// </summary>
     public ICommand OpenProfileFilterCommand => new RelayCommand(_ => OpenProfileFilterAction());
 
     private void OpenProfileFilterAction()
@@ -375,6 +454,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
         ProfileFilterIsOpen = true;
     }
 
+    /// <summary>
+    /// Gets the command to apply the profile filter.
+    /// </summary>
     public ICommand ApplyProfileFilterCommand => new RelayCommand(_ => ApplyProfileFilterAction());
 
     private void ApplyProfileFilterAction()
@@ -384,6 +466,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
         ProfileFilterIsOpen = false;
     }
 
+    /// <summary>
+    /// Gets the command to clear the profile filter.
+    /// </summary>
     public ICommand ClearProfileFilterCommand => new RelayCommand(_ => ClearProfileFilterAction());
 
     private void ClearProfileFilterAction()
@@ -401,6 +486,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
         ProfileFilterIsOpen = false;
     }
 
+    /// <summary>
+    /// Gets the command to expand all profile groups.
+    /// </summary>
     public ICommand ExpandAllProfileGroupsCommand => new RelayCommand(_ => ExpandAllProfileGroupsAction());
 
     private void ExpandAllProfileGroupsAction()
@@ -408,6 +496,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
         SetIsExpandedForAllProfileGroups(true);
     }
 
+    /// <summary>
+    /// Gets the command to collapse all profile groups.
+    /// </summary>
     public ICommand CollapseAllProfileGroupsCommand => new RelayCommand(_ => CollapseAllProfileGroupsAction());
 
     private void CollapseAllProfileGroupsAction()
@@ -415,6 +506,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
         SetIsExpandedForAllProfileGroups(false);
     }
     
+    /// <summary>
+    /// Gets the callback for closing a tab item.
+    /// </summary>
     public ItemActionCallback CloseItemCommand => CloseItemAction;
 
     private static void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
@@ -461,6 +555,11 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
         _canProfileWidthChange = true;
     }
 
+    /// <summary>
+    /// Adds a new tab with the specified host and ports.
+    /// </summary>
+    /// <param name="host">The host to scan.</param>
+    /// <param name="ports">The ports to scan.</param>
     public void AddTab(string host = null, string ports = null)
     {
         var tabId = Guid.NewGuid();
@@ -476,6 +575,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
         AddTab(profile.PortScanner_Host, profile.PortScanner_Ports);
     }
 
+    /// <summary>
+    /// Called when the view becomes visible.
+    /// </summary>
     public void OnViewVisible()
     {
         _isViewActive = true;
@@ -483,6 +585,9 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
         RefreshProfiles();
     }
 
+    /// <summary>
+    /// Called when the view is hidden.
+    /// </summary>
     public void OnViewHide()
     {
         _isViewActive = false;
