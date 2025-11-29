@@ -5,6 +5,9 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
+/// <summary>
+/// ViewModel for managing a port profile.
+/// </summary>
 public class PortProfileViewModel : ViewModelBase
 {
     private readonly PortProfileInfo _info;
@@ -20,6 +23,13 @@ public class PortProfileViewModel : ViewModelBase
 
     private string _ports;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PortProfileViewModel"/> class.
+    /// </summary>
+    /// <param name="saveCommand">The action to execute when saving.</param>
+    /// <param name="cancelHandler">The action to execute when cancelling.</param>
+    /// <param name="isEdited">Indicates whether the profile is being edited.</param>
+    /// <param name="info">The port profile information.</param>
     public PortProfileViewModel(Action<PortProfileViewModel> saveCommand, Action<PortProfileViewModel> cancelHandler,
         bool isEdited = false, PortProfileInfo info = null)
     {
@@ -43,10 +53,19 @@ public class PortProfileViewModel : ViewModelBase
         _isLoading = false;
     }
 
+    /// <summary>
+    /// Gets the command to save the profile.
+    /// </summary>
     public ICommand SaveCommand { get; }
 
+    /// <summary>
+    /// Gets the command to cancel the operation.
+    /// </summary>
     public ICommand CancelCommand { get; }
 
+    /// <summary>
+    /// Gets or sets the name of the profile.
+    /// </summary>
     public string Name
     {
         get => _name;
@@ -64,6 +83,9 @@ public class PortProfileViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets or sets the ports associated with the profile.
+    /// </summary>
     public string Ports
     {
         get => _ports;
@@ -81,6 +103,9 @@ public class PortProfileViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the profile information has changed.
+    /// </summary>
     public bool InfoChanged
     {
         get => _infoChanged;
@@ -94,6 +119,9 @@ public class PortProfileViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the profile is being edited.
+    /// </summary>
     public bool IsEdited
     {
         get => _isEdited;
