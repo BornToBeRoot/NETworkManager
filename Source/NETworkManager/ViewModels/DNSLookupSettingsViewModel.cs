@@ -225,7 +225,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
 
     /*
      * Disabled until more query types are implemented.
-     *
+
 
     private bool _showOnlyMostCommonQueryTypes;
 
@@ -367,7 +367,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     }
 
     #endregion
-
+    
     #region ICommand & Actions
 
     /// <summary>
