@@ -80,3 +80,4 @@ Release date: **xx.xx.2025**
 - Migrated existing credential and profile dialogs to use DialogHelper, improving usability, accessibility and maintainability across the app. [#3231](https://github.com/BornToBeRoot/NETworkManager/pull/3231)
 - Language files updated via [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration)
 - Dependencies updated via [#dependabot](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot)
+- Generate project guidelines for Rider's coding agent Junie using itself as generator. [#3250](https://github.com/BornToBeRoot/NETworkManager/pull/3250)
