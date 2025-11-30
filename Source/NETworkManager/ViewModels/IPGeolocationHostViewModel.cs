@@ -274,7 +274,7 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
 
     private readonly GroupExpanderStateStore _groupExpanderStateStore = new();
     public GroupExpanderStateStore GroupExpanderStateStore => _groupExpanderStateStore;
-    
+
     private bool _canProfileWidthChange = true;
     private double _tempProfileWidth;
 
@@ -551,7 +551,7 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
         _searchDisabled = true;
         Search = string.Empty;
         _searchDisabled = false;
-        
+
         foreach (var tag in ProfileFilterTags)
             tag.IsSelected = false;
 

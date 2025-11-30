@@ -24,7 +24,7 @@ public partial class SNMPSettingsView
 
     private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        if(_viewModel.EditOIDProfileCommand.CanExecute(null))
+        if (_viewModel.EditOIDProfileCommand.CanExecute(null))
             _viewModel.EditOIDProfileCommand.Execute(null);
     }
 }

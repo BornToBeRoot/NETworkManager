@@ -358,7 +358,7 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
                 break;
             case ApplicationName.PuTTY:
                 ConfigurationManager.Current.IsPuTTYWindowDragging = false;
-                break;            
+                break;
             case ApplicationName.TigerVNC:
                 ConfigurationManager.Current.IsTigerVNCWindowDragging = false;
                 break;
@@ -381,7 +381,7 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
                 break;
             case ApplicationName.PuTTY:
                 ConfigurationManager.Current.IsPuTTYWindowDragging = e.NewValue;
-                break;            
+                break;
             case ApplicationName.TigerVNC:
                 ConfigurationManager.Current.IsTigerVNCWindowDragging = e.NewValue;
                 break;

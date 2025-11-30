@@ -17,7 +17,7 @@ namespace NETworkManager.Views;
 public partial class IPScannerView : IDragablzTabItem
 {
     private readonly IPScannerViewModel _viewModel;
-    
+
     public IPScannerView(Guid tabId, string hostOrIPRange = null)
     {
         InitializeComponent();

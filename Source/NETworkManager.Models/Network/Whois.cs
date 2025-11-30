@@ -18,9 +18,9 @@ public static class Whois
         document.Load(WhoisServerFilePath);
 
         var whoisServerList = (from XmlNode node in document.SelectNodes("/WhoisServers/WhoisServer")!
-            where node != null
-            select new WhoisServerInfo(node.SelectSingleNode("Server")?.InnerText,
-                node.SelectSingleNode("TLD")?.InnerText)).ToList();
+                               where node != null
+                               select new WhoisServerInfo(node.SelectSingleNode("Server")?.InnerText,
+                                   node.SelectSingleNode("TLD")?.InnerText)).ToList();
 
         WhoisServers = (Lookup<string, WhoisServerInfo>)whoisServerList.ToLookup(x => x.Tld);
     }

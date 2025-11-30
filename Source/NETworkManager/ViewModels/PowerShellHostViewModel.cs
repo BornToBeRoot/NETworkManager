@@ -628,7 +628,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
             string output = process.StandardOutput.ReadToEnd();
 
-            if(!process.WaitForExit(10000))
+            if (!process.WaitForExit(10000))
             {
                 process.Kill();
                 Log.Warn("Timeout while trying to resolve real pwsh path.");

@@ -34,6 +34,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		GlobalAssemblyInfo.cs = GlobalAssemblyInfo.cs
+		..\agent.md = ..\agent.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3rdparty", "3rdparty", "{B44F92AE-A764-4EA0-B663-FA2B82DA1E80}"

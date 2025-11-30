@@ -27,7 +27,7 @@ public static class LibraryManager
         new LibraryInfo("AirspaceFixer", "https://github.com/chris84948/AirspaceFixer",
             Strings.Library_AirspaceFixer_Description,
             Strings.License_MITLicense,
-            "https://github.com/chris84948/AirspaceFixer/blob/master/LICENSE"),        
+            "https://github.com/chris84948/AirspaceFixer/blob/master/LICENSE"),
         new LibraryInfo("ControlzEx", "https://github.com/ControlzEx/ControlzEx",
             Strings.Library_ControlzEx_Description,
             Strings.License_MITLicense,

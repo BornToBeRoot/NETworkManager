@@ -11,7 +11,7 @@ namespace NETworkManager.Utilities;
 public class DNSClient : SingletonBase<DNSClient>
 {
     private static readonly ILog Log = LogManager.GetLogger(typeof(DNSClient));
-    
+
     /// <summary>
     ///     Error message which is returned when the DNS client is not configured.
     /// </summary>
@@ -41,11 +41,11 @@ public class DNSClient : SingletonBase<DNSClient>
         _settings = settings;
 
         Log.Debug("Configure - Configuring DNS client...");
-        
+
         if (_settings.UseCustomDNSServers)
         {
             Log.Debug("Configure - Using custom DNS servers...");
-            
+
             // Setup custom DNS servers
             List<NameServer> servers = [];
 
@@ -63,7 +63,7 @@ public class DNSClient : SingletonBase<DNSClient>
             Log.Debug("Configure - Creating LookupClient with Windows default DNS servers...");
             _client = new LookupClient();
         }
-        
+
         Log.Debug("Configure - DNS client configured.");
         _isConfigured = true;
     }

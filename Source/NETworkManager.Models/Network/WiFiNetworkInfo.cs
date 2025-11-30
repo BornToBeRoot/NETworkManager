@@ -51,12 +51,12 @@ public class WiFiNetworkInfo
     /// Human-readable network authentication type.
     /// </summary>
     public string NetworkAuthenticationType { get; set; }
-    
+
     /// <summary>
     /// Vendor of the Wi-Fi network like Cisco, Netgear, etc.
     /// </summary>
     public string Vendor { get; set; }
-    
+
     /// <summary>
     /// Human-readable phy kind.
     /// </summary>

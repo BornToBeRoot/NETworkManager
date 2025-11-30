@@ -31,7 +31,7 @@ public static class ProfileViewManager
         new ProfileViewInfo(ProfileName.PowerShell, ApplicationManager.GetIcon(ApplicationName.PowerShell),
             ProfileGroup.Application),
         new ProfileViewInfo(ProfileName.PuTTY, ApplicationManager.GetIcon(ApplicationName.PuTTY),
-            ProfileGroup.Application),        
+            ProfileGroup.Application),
         new ProfileViewInfo(ProfileName.TigerVNC, ApplicationManager.GetIcon(ApplicationName.TigerVNC),
             ProfileGroup.Application),
         new ProfileViewInfo(ProfileName.WebConsole, ApplicationManager.GetIcon(ApplicationName.WebConsole),

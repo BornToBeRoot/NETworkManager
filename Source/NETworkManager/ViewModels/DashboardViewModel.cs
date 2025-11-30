@@ -18,7 +18,7 @@ public class DashboardViewModel : ViewModelBase
     /// </summary>
     private void LoadSettings()
     {
-        
+
     }
 
     /// <summary>
@@ -26,7 +26,7 @@ public class DashboardViewModel : ViewModelBase
     /// </summary>
     public void OnViewVisible()
     {
-        
+
     }
 
     /// <summary>
@@ -34,6 +34,6 @@ public class DashboardViewModel : ViewModelBase
     /// </summary>
     public void OnViewHide()
     {
-        
+
     }
 }
