@@ -86,7 +86,7 @@ The solution is divided into multiple projects to separate concerns:
 | **NETworkManager.Utilities** | General purpose utility classes and helpers |
 | **NETworkManager.Utilities.WPF** | WPF-specific utility classes |
 | **NETworkManager.Settings** | Application settings and configuration persistence |
-| **NETworkManager.Profiles** | Network profile handling logic |
+| **NETworkManager.Profiles** | Profile handling logic |
 | **NETworkManager.Localization** | Localization resources (`Strings.resx`) |
 | **NETworkManager.Validators** | Input validation logic |
 | **NETworkManager.Documentation** | Application documentation resources |
