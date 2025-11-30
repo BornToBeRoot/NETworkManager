@@ -249,7 +249,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-    
+
     private readonly GroupExpanderStateStore _groupExpanderStateStore = new();
     public GroupExpanderStateStore GroupExpanderStateStore => _groupExpanderStateStore;
 
@@ -451,7 +451,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
         _searchDisabled = true;
         Search = string.Empty;
         _searchDisabled = false;
-        
+
         foreach (var tag in ProfileFilterTags)
             tag.IsSelected = false;
 
@@ -535,7 +535,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
         foreach (var group in Profiles.Groups.Cast<CollectionViewGroup>())
             GroupExpanderStateStore[group.Name.ToString()] = isExpanded;
     }
-    
+
     private void ResizeProfile(bool dueToChangedSize)
     {
         _canProfileWidthChange = false;

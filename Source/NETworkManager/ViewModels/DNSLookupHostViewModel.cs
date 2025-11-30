@@ -198,7 +198,7 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
 
     private readonly GroupExpanderStateStore _groupExpanderStateStore = new();
     public GroupExpanderStateStore GroupExpanderStateStore => _groupExpanderStateStore;
-    
+
     private bool _canProfileWidthChange = true;
     private double _tempProfileWidth;
 
@@ -392,7 +392,7 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
         _searchDisabled = true;
         Search = string.Empty;
         _searchDisabled = false;
-        
+
         foreach (var tag in ProfileFilterTags)
             tag.IsSelected = false;
 
@@ -415,7 +415,7 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
     {
         SetIsExpandedForAllProfileGroups(false);
     }
-    
+
     public ItemActionCallback CloseItemCommand => CloseItemAction;
 
     private static void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
@@ -432,7 +432,7 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
         foreach (var group in Profiles.Groups.Cast<CollectionViewGroup>())
             GroupExpanderStateStore[group.Name.ToString()] = isExpanded;
     }
-    
+
     private void ResizeProfile(bool dueToChangedSize)
     {
         _canProfileWidthChange = false;

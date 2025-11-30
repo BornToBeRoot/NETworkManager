@@ -584,7 +584,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-    
+
     private readonly GroupExpanderStateStore _groupExpanderStateStore = new();
     public GroupExpanderStateStore GroupExpanderStateStore => _groupExpanderStateStore;
 
@@ -898,7 +898,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         _searchDisabled = true;
         Search = string.Empty;
         _searchDisabled = false;
-        
+
         foreach (var tag in ProfileFilterTags)
             tag.IsSelected = false;
 
@@ -921,7 +921,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     {
         SetIsExpandedForAllProfileGroups(false);
     }
-    
+
     #region Additional commands
 
     private bool AdditionalCommands_CanExecute(object parameter)
@@ -1353,7 +1353,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         foreach (var group in Profiles.Groups.Cast<CollectionViewGroup>())
             GroupExpanderStateStore[group.Name.ToString()] = isExpanded;
     }
-    
+
     private void ResizeProfile(bool dueToChangedSize)
     {
         _canProfileWidthChange = false;

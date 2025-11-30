@@ -11,7 +11,7 @@ public enum ProfileName
     DNSLookup,
     RemoteDesktop,
     PowerShell,
-    PuTTY,    
+    PuTTY,
     TigerVNC,
     WebConsole,
     SNMP,

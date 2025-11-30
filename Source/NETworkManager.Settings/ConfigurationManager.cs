@@ -49,7 +49,7 @@ public static class ConfigurationManager
         {
             case ApplicationName.RemoteDesktop when Current.RemoteDesktopTabCount > 0:
             case ApplicationName.PowerShell when Current.PowerShellTabCount > 0:
-            case ApplicationName.PuTTY when Current.PuTTYTabCount > 0:            
+            case ApplicationName.PuTTY when Current.PuTTYTabCount > 0:
             case ApplicationName.TigerVNC when Current.TigerVNCTabCount > 0:
             case ApplicationName.WebConsole when Current.WebConsoleTabCount > 0:
                 Current.FixAirspace = true;

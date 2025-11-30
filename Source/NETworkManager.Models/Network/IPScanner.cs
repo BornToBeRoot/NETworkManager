@@ -216,7 +216,7 @@ public sealed class IPScanner(IPScannerOptions options)
             {
                 // Get timestamp 
                 var timestamp = DateTime.Now;
-                
+
                 try
                 {
                     var pingReply = ping.Send(ipAddress, options.ICMPTimeout, options.ICMPBuffer);
@@ -227,20 +227,20 @@ public sealed class IPScanner(IPScannerOptions options)
                         switch (ipAddress.AddressFamily)
                         {
                             case AddressFamily.InterNetwork:
-                               return new PingInfo(
-                                                            timestamp,
-                                                            pingReply.Address, 
-                                                            pingReply.Buffer.Length,
-                                                            pingReply.RoundtripTime,
-                                                            pingReply.Options!.Ttl, 
-                                                            pingReply.Status);
+                                return new PingInfo(
+                                                             timestamp,
+                                                             pingReply.Address,
+                                                             pingReply.Buffer.Length,
+                                                             pingReply.RoundtripTime,
+                                                             pingReply.Options!.Ttl,
+                                                             pingReply.Status);
                             case AddressFamily.InterNetworkV6:
-                                   return new PingInfo(
-                                                            timestamp, 
-                                                            pingReply.Address,
-                                                            pingReply.Buffer.Length,
-                                                            pingReply.RoundtripTime,
-                                                            pingReply.Status);
+                                return new PingInfo(
+                                                         timestamp,
+                                                         pingReply.Address,
+                                                         pingReply.Buffer.Length,
+                                                         pingReply.RoundtripTime,
+                                                         pingReply.Status);
                         }
                     }
 

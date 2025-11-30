@@ -225,7 +225,7 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-    
+
     private readonly GroupExpanderStateStore _groupExpanderStateStore = new();
     public GroupExpanderStateStore GroupExpanderStateStore => _groupExpanderStateStore;
 
@@ -444,7 +444,7 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         _searchDisabled = true;
         Search = string.Empty;
         _searchDisabled = false;
-        
+
         foreach (var tag in ProfileFilterTags)
             tag.IsSelected = false;
 
@@ -453,7 +453,7 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         IsProfileFilterSet = false;
         ProfileFilterIsOpen = false;
     }
-    
+
     public ICommand ExpandAllProfileGroupsCommand => new RelayCommand(_ => ExpandAllProfileGroupsAction());
 
     private void ExpandAllProfileGroupsAction()
@@ -553,7 +553,7 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
             ListHelper.Modify(SettingsManager.Current.WebConsole_UrlHistory.ToList(), url,
                 SettingsManager.Current.General_HistoryListEntries));
     }
-    
+
     private void SetIsExpandedForAllProfileGroups(bool isExpanded)
     {
         foreach (var group in Profiles.Groups.Cast<CollectionViewGroup>())

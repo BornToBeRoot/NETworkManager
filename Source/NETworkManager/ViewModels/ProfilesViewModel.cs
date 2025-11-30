@@ -57,7 +57,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     }
 
     private bool _disableProfileRefresh;
-    
+
     private ProfileInfo _lastSelectedProfileOnRefresh;
 
     private GroupInfo _selectedGroup = new();
@@ -362,12 +362,12 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     private void SetGroupsView(GroupInfo group = null)
     {
         _disableProfileRefresh = true;
-        
+
         Groups = new CollectionViewSource
         {
             Source = ProfileManager.Groups.Where(x => !x.IsDynamic).OrderBy(x => x.Name)
         }.View;
-        
+
         // Set to null, so even when the same group is selected, the profiles get refreshed
         SelectedGroup = null;
 

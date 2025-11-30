@@ -64,7 +64,7 @@ namespace NETworkManager
         /// clicks OK; otherwise, <see langword="false"/>.</returns>
         public static async Task<bool> ShowOKCancelMessageAsync(Window parentWindow, string title, string message, ChildWindowIcon icon = ChildWindowIcon.Info, string buttonOKText = null, string buttonCancelText = null)
         {
-            buttonOKText ??= Strings.OK;            
+            buttonOKText ??= Strings.OK;
             buttonCancelText ??= Strings.Cancel;
 
             var result = false;
@@ -84,10 +84,10 @@ namespace NETworkManager
                 ConfigurationManager.Current.IsChildWindowOpen = false;
             },
             message, icon, buttonOKText, buttonCancelText);
-            
+
             childWindow.Title = title;
             childWindow.DataContext = childWindowViewModel;
-            
+
             ConfigurationManager.Current.IsChildWindowOpen = true;
 
             await parentWindow.ShowChildWindowAsync(childWindow);

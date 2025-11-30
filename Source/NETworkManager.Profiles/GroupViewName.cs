@@ -5,7 +5,7 @@ public enum GroupViewName
     General,
     RemoteDesktop,
     PowerShell,
-    PuTTY,    
+    PuTTY,
     TigerVNC,
     SNMP
 }

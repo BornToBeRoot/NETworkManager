@@ -470,25 +470,25 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     {
         CheckAsync().ConfigureAwait(false);
     }
-    
+
     private CancellationTokenSource _cancellationTokenSource;
     private Task _checkTask = Task.CompletedTask;
-    
+
     private async Task CheckAsync()
     {
         Log.Info("Checking network connection...");
-        
+
         // Cancel previous checks if running
-        if(!_checkTask.IsCompleted)
+        if (!_checkTask.IsCompleted)
         {
             Log.Info("Cancelling previous checks...");
             await _cancellationTokenSource.CancelAsync();
-            
+
             try
             {
                 await _checkTask;
             }
-            catch(OperationCanceledException)
+            catch (OperationCanceledException)
             {
                 Log.Info("Task was cancelled from previous checks.");
             }
@@ -497,7 +497,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
                 _cancellationTokenSource.Dispose();
             }
         }
-        
+
         _cancellationTokenSource = new CancellationTokenSource();
         var wasCanceled = false;
 
@@ -517,7 +517,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
                 Log.Info("Network connection check completed.");
         }
     }
-    
+
     private async Task RunTask(CancellationToken ct)
     {
         await Task.WhenAll(
@@ -526,29 +526,29 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             CheckConnectionInternetAsync(ct)
         );
     }
-    
+
     private Task CheckConnectionComputerAsync(CancellationToken ct)
     {
         return Task.Run(async () =>
         {
             Log.Debug("CheckConnectionComputerAsync - Checking local connection...");
-            
+
             // Init variables
             IsComputerIPv4Checking = true;
             ComputerIPv4 = "";
             ComputerIPv4State = ConnectionState.None;
-            
+
             IsComputerIPv6Checking = true;
             ComputerIPv6 = "";
             ComputerIPv6State = ConnectionState.None;
-            
+
             IsComputerDNSChecking = true;
             ComputerDNS = "";
             ComputerDNSState = ConnectionState.None;
 
             // Detect local IPv4 address
             Log.Debug("CheckConnectionComputerAsync - Detecting local IPv4 address...");
-            
+
             var detectedLocalIPv4Address =
                 await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(
                     IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv4Address));
@@ -556,14 +556,14 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             if (detectedLocalIPv4Address != null)
             {
                 Log.Debug("CheckConnectionComputerAsync - Local IPv4 address detected: " + detectedLocalIPv4Address);
-                
+
                 ComputerIPv4 = detectedLocalIPv4Address.ToString();
                 ComputerIPv4State = string.IsNullOrEmpty(ComputerIPv4) ? ConnectionState.Critical : ConnectionState.OK;
             }
             else
             {
                 Log.Debug("CheckConnectionComputerAsync - Local IPv4 address not detected.");
-                
+
                 ComputerIPv4 = "-/-";
                 ComputerIPv4State = ConnectionState.Critical;
             }
@@ -575,7 +575,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
 
             // Detect local IPv6 address
             Log.Debug("CheckConnectionComputerAsync - Detecting local IPv6 address...");
-            
+
             var detectedLocalIPv6Address =
                 await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(
                     IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv6Address));
@@ -583,14 +583,14 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             if (detectedLocalIPv6Address != null)
             {
                 Log.Debug("CheckConnectionComputerAsync - Local IPv6 address detected: " + detectedLocalIPv6Address);
-                
+
                 ComputerIPv6 = detectedLocalIPv6Address.ToString();
                 ComputerIPv6State = string.IsNullOrEmpty(ComputerIPv6) ? ConnectionState.Critical : ConnectionState.OK;
             }
             else
             {
                 Log.Debug("CheckConnectionComputerAsync - Local IPv6 address not detected.");
-                
+
                 ComputerIPv6 = "-/-";
                 ComputerIPv6State = ConnectionState.Critical;
             }
@@ -604,19 +604,19 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             if (ComputerIPv4State == ConnectionState.OK)
             {
                 Log.Debug("CheckConnectionComputerAsync - Resolving local DNS based on IPv4...");
-                
+
                 var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(IPAddress.Parse(ComputerIPv4));
 
                 if (!dnsResult.HasError)
                 {
                     Log.Debug("CheckConnectionComputerAsync - Local DNS based on IPv4 resolved: " + dnsResult.Value);
-                    
+
                     ComputerDNS = dnsResult.Value;
                     ComputerDNSState = ConnectionState.OK;
                 }
                 else
                 {
-                    Log.Debug("CheckConnectionComputerAsync - Local DNS based on IPv4 not resolved.");    
+                    Log.Debug("CheckConnectionComputerAsync - Local DNS based on IPv4 not resolved.");
                 }
             }
             else
@@ -628,13 +628,13 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             if (string.IsNullOrEmpty(ComputerDNS) && ComputerIPv6State == ConnectionState.OK)
             {
                 Log.Debug("CheckConnectionComputerAsync - Resolving local DNS based on IPv6...");
-                
+
                 var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(IPAddress.Parse(ComputerIPv6));
 
                 if (!dnsResult.HasError)
                 {
                     Log.Debug("CheckConnectionComputerAsync - Local DNS based on IPv6 resolved: " + dnsResult.Value);
-                    
+
                     ComputerDNS = dnsResult.Value;
                     ComputerDNSState = ConnectionState.OK;
                 }
@@ -655,7 +655,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             }
 
             IsComputerDNSChecking = false;
-            
+
             Log.Debug("CheckConnectionComputerAsync - Local connection check completed.");
         }, ct);
     }
@@ -665,7 +665,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         return Task.Run(async () =>
         {
             Log.Debug("CheckConnectionRouterAsync - Checking router connection...");
-            
+
             // Init variables
             IsRouterIPv4Checking = true;
             RouterIPv4 = "";
@@ -679,7 +679,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
 
             // Detect router IPv4 and if it is reachable
             Log.Debug("CheckConnectionRouterAsync - Detecting computer and router IPv4 address...");
-            
+
             var detectedLocalIPv4Address =
                 await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(
                     IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv4Address));
@@ -687,22 +687,22 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             if (detectedLocalIPv4Address != null)
             {
                 Log.Debug("CheckConnectionRouterAsync - Computer IPv4 address detected: " + detectedLocalIPv4Address);
-                
+
                 var detectedRouterIPv4 =
                     await NetworkInterface.DetectGatewayBasedOnLocalIPAddressAsync(
                         detectedLocalIPv4Address);
-                
+
                 if (detectedRouterIPv4 != null)
                 {
                     Log.Debug("CheckConnectionRouterAsync - Router IPv4 address detected: " + detectedRouterIPv4);
-                    
+
                     RouterIPv4 = detectedRouterIPv4.ToString();
                     RouterIPv4State = string.IsNullOrEmpty(RouterIPv4) ? ConnectionState.Critical : ConnectionState.OK;
                 }
                 else
                 {
                     Log.Debug("CheckConnectionRouterAsync - Router IPv4 address not detected.");
-                    
+
                     RouterIPv4 = "-/-";
                     RouterIPv4State = ConnectionState.Critical;
                 }
@@ -710,7 +710,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             else
             {
                 Log.Debug("CheckConnectionRouterAsync - Computer IPv4 address not detected.");
-                
+
                 RouterIPv4 = "-/-";
                 RouterIPv4State = ConnectionState.Critical;
             }
@@ -722,7 +722,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
 
             // Detect router IPv6 and if it is reachable
             Log.Debug("CheckConnectionRouterAsync - Detecting computer and router IPv6 address...");
-            
+
             var detectedComputerIPv6 =
                 await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(
                     IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv6Address));
@@ -730,21 +730,21 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             if (detectedComputerIPv6 != null)
             {
                 Log.Debug("CheckConnectionRouterAsync - Computer IPv6 address detected: " + detectedComputerIPv6);
-                
+
                 var detectedRouterIPv6 =
                     await NetworkInterface.DetectGatewayBasedOnLocalIPAddressAsync(detectedComputerIPv6);
 
                 if (detectedRouterIPv6 != null)
                 {
                     Log.Debug("CheckConnectionRouterAsync - Router IPv6 address detected: " + detectedRouterIPv6);
-                    
+
                     RouterIPv6 = detectedRouterIPv6.ToString();
                     RouterIPv6State = string.IsNullOrEmpty(RouterIPv6) ? ConnectionState.Critical : ConnectionState.OK;
                 }
                 else
                 {
                     Log.Debug("CheckConnectionRouterAsync - Router IPv6 address not detected.");
-                    
+
                     RouterIPv6 = "-/-";
                     RouterIPv6State = ConnectionState.Critical;
                 }
@@ -752,7 +752,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             else
             {
                 Log.Debug("CheckConnectionRouterAsync - Computer IPv6 address not detected.");
-                
+
                 RouterIPv6 = "-/-";
                 RouterIPv6State = ConnectionState.Critical;
             }
@@ -766,13 +766,13 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             if (RouterIPv4State == ConnectionState.OK)
             {
                 Log.Debug("CheckConnectionRouterAsync - Resolving router DNS based on IPv4...");
-                
+
                 var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(IPAddress.Parse(RouterIPv4));
 
                 if (!dnsResult.HasError)
                 {
                     Log.Debug("CheckConnectionRouterAsync - Router DNS based on IPv4 resolved: " + dnsResult.Value);
-                    
+
                     RouterDNS = dnsResult.Value;
                     RouterDNSState = ConnectionState.OK;
                 }
@@ -790,13 +790,13 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             if (string.IsNullOrEmpty(RouterDNS) && RouterIPv6State == ConnectionState.OK)
             {
                 Log.Debug("CheckConnectionRouterAsync - Resolving router DNS based on IPv6...");
-                
+
                 var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(IPAddress.Parse(RouterIPv6));
 
                 if (!dnsResult.HasError)
                 {
                     Log.Debug("CheckConnectionRouterAsync - Router DNS based on IPv6 resolved: " + dnsResult.Value);
-                    
+
                     RouterDNS = dnsResult.Value;
                     RouterDNSState = ConnectionState.OK;
                 }
@@ -817,7 +817,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             }
 
             IsRouterDNSChecking = false;
-            
+
             Log.Debug("CheckConnectionRouterAsync - Router connection check completed.");
         }, ct);
     }
@@ -831,7 +831,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
                 return;
 
             Log.Debug("CheckConnectionInternetAsync - Checking internet connection...");
-            
+
             // Init variables
             IsInternetIPv4Checking = true;
             InternetIPv4 = "";
@@ -845,7 +845,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
 
             // Detect public IPv4 and if it is reachable
             Log.Debug("Detecting public IPv4 address...");
-            
+
             var publicIPv4AddressAPI = SettingsManager.Current.Dashboard_UseCustomPublicIPv4AddressAPI
                 ? SettingsManager.Current.Dashboard_CustomPublicIPv4AddressAPI
                 : GlobalStaticConfiguration.Dashboard_PublicIPv4AddressAPI;
@@ -853,7 +853,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             try
             {
                 Log.Debug("CheckConnectionInternetAsync - Checking public IPv4 address from: " + publicIPv4AddressAPI);
-                
+
                 HttpClient httpClient = new();
                 var httpResponse = await httpClient.GetAsync(publicIPv4AddressAPI, ct);
 
@@ -864,22 +864,22 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
                 if (match.Success)
                 {
                     Log.Debug("CheckConnectionInternetAsync - Public IPv4 address detected: " + match.Value);
-                    
+
                     InternetIPv4 = match.Value;
                     InternetIPv4State = ConnectionState.OK;
                 }
                 else
                 {
                     Log.Debug("CheckConnectionInternetAsync - Public IPv4 address not detected due to invalid format.");
-                    
+
                     InternetIPv4 = "-/-";
                     InternetIPv4State = ConnectionState.Critical;
                 }
             }
             catch
             {
-                Log.Debug("CheckConnectionInternetAsync - Public IPv4 address not detected due to exception.");   
-                
+                Log.Debug("CheckConnectionInternetAsync - Public IPv4 address not detected due to exception.");
+
                 InternetIPv4 = "-/-";
                 InternetIPv4State = ConnectionState.Critical;
             }
@@ -891,7 +891,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
 
             // Detect public IPv6 and if it is reachable
             Log.Debug("CheckConnectionInternetAsync - Detecting public IPv6 address...");
-            
+
             var publicIPv6AddressAPI = SettingsManager.Current.Dashboard_UseCustomPublicIPv6AddressAPI
                 ? SettingsManager.Current.Dashboard_CustomPublicIPv6AddressAPI
                 : GlobalStaticConfiguration.Dashboard_PublicIPv6AddressAPI;
@@ -899,7 +899,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             try
             {
                 Log.Debug("CheckConnectionInternetAsync - Checking public IPv6 address from: " + publicIPv6AddressAPI);
-                
+
                 HttpClient httpClient = new();
                 var httpResponse = await httpClient.GetAsync(publicIPv6AddressAPI, ct);
 
@@ -910,14 +910,14 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
                 if (match.Success)
                 {
                     Log.Debug("CheckConnectionInternetAsync - Public IPv6 address detected: " + match.Value);
-                    
+
                     InternetIPv6 = match.Value;
                     InternetIPv6State = ConnectionState.OK;
                 }
                 else
                 {
                     Log.Debug("CheckConnectionInternetAsync - Public IPv6 address not detected due to invalid format.");
-                    
+
                     InternetIPv6 = "-/-";
                     InternetIPv6State = ConnectionState.Critical;
                 }
@@ -925,7 +925,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             catch
             {
                 Log.Debug("CheckConnectionInternetAsync - Public IPv6 address not detected due to exception.");
-                
+
                 InternetIPv6 = "-/-";
                 InternetIPv6State = ConnectionState.Critical;
             }
@@ -939,13 +939,13 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             if (InternetIPv4State == ConnectionState.OK)
             {
                 Log.Debug("CheckConnectionInternetAsync - Resolving public DNS based on IPv4...");
-                
+
                 var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(IPAddress.Parse(InternetIPv4));
 
                 if (!dnsResult.HasError)
                 {
                     Log.Debug("CheckConnectionInternetAsync - Public DNS based on IPv4 resolved: " + dnsResult.Value);
-                    
+
                     InternetDNS = dnsResult.Value;
                     InternetDNSState = ConnectionState.OK;
                 }
@@ -963,13 +963,13 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             if (string.IsNullOrEmpty(InternetDNS) && InternetIPv6State == ConnectionState.OK)
             {
                 Log.Debug("CheckConnectionInternetAsync - Resolving public DNS based on IPv6...");
-                
+
                 var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(IPAddress.Parse(InternetIPv6));
 
                 if (!dnsResult.HasError)
                 {
                     Log.Debug("CheckConnectionInternetAsync - Public DNS based on IPv6 resolved: " + dnsResult.Value);
-                    
+
                     InternetDNS = dnsResult.Value;
                     InternetDNSState = ConnectionState.OK;
                 }
@@ -990,7 +990,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             }
 
             IsInternetDNSChecking = false;
-            
+
             Log.Debug("CheckConnectionInternetAsync - Internet connection check completed.");
         }, ct);
     }

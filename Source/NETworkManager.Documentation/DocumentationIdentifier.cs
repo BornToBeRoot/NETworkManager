@@ -199,7 +199,7 @@ public enum DocumentationIdentifier
     ///     Command line arguments.
     /// </summary>
     CommandLineArguments,
-    
+
     /// <summary>
     /// Changelog base documentation page.
     /// </summary>

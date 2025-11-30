@@ -15,7 +15,7 @@ public static class GroupViewManager
         // Applications
         new GroupViewInfo(GroupViewName.RemoteDesktop, ApplicationManager.GetIcon(ApplicationName.RemoteDesktop)),
         new GroupViewInfo(GroupViewName.PowerShell, ApplicationManager.GetIcon(ApplicationName.PowerShell)),
-        new GroupViewInfo(GroupViewName.PuTTY, ApplicationManager.GetIcon(ApplicationName.PuTTY)),        
+        new GroupViewInfo(GroupViewName.PuTTY, ApplicationManager.GetIcon(ApplicationName.PuTTY)),
         new GroupViewInfo(GroupViewName.TigerVNC, ApplicationManager.GetIcon(ApplicationName.TigerVNC)),
         new GroupViewInfo(GroupViewName.SNMP, ApplicationManager.GetIcon(ApplicationName.SNMP))
     ];

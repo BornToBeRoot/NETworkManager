@@ -51,7 +51,7 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
 
     private void LoadSettings()
     {
-        
+
     }
 
     #endregion

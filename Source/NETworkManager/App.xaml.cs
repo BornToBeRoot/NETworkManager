@@ -245,7 +245,7 @@ public partial class App
             return;
 
         Log.Info("Stop background job, if it exists...");
-        
+
         _dispatcherTimer?.Stop();
 
         Save();

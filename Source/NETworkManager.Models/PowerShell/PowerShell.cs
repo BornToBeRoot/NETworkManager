@@ -12,17 +12,17 @@ namespace NETworkManager.Models.PowerShell;
 public static class PowerShell
 {
     private static readonly ILog Log = LogManager.GetLogger(typeof(PowerShell));
-    
+
     /// <summary>
     /// Windows PowerShell file name.
     /// </summary>
     public const string WindowsPowerShellFileName = "powershell.exe";
-    
+
     /// <summary>
     /// PowerShell Core file name.
     /// </summary>
     public const string PwshFileName = "pwsh.exe";
-    
+
     /// <summary>
     ///     Default SZ registry keys for the global PowerShell profile.
     /// </summary>
@@ -96,7 +96,7 @@ public static class PowerShell
             registryPath += powerShellPath.Replace(@"\", "_");
 
         Log.Info($"Registry path for PowerShell profile: \"{registryPath}\"");
-        
+
         var registryKey = Registry.CurrentUser.OpenSubKey(registryPath, true);
 
         registryKey ??= Registry.CurrentUser.CreateSubKey(registryPath);
