@@ -166,17 +166,17 @@ Build NETworkManager yourself with these steps:
 
    - Clone with submodules:
      ```powershell
-     git clone https://github.com/BornToBeRoot/NETworkManager
+     git clone https://github.com/BornToBeRoot/NETworkManager.git
      cd NETworkManager
-     git submodule update --init
+     git submodule update --init --recursive
      ```
 
 3. **Build**:
    - Open `.\Source\NETworkManager.sln` in Visual Studio or JetBrains Rider.
    - Alternatively, build via command line:
      ```powershell
-     dotnet restore .\Source\NETworkManager.sln
-     dotnet build .\Source\NETworkManager.sln --configuration Release --no-restore
+    dotnet restore .\Source\NETworkManager.sln
+    dotnet build .\Source\NETworkManager.sln --configuration Release --no-restore
      ```
 
 ## 🙏 Thanks
