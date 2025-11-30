@@ -17,11 +17,11 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="MahApps.Metro" Version="2.4.11" />
-        <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="6.1.0" />
-        <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="6.1.0" />
-        <PackageReference Include="MahApps.Metro.IconPacks.MaterialLight" Version="6.1.0" />
-        <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="6.1.0" />
-        <PackageReference Include="MahApps.Metro.IconPacks.Octicons" Version="6.1.0" />
+        <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="6.2.1" />
+        <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="6.2.1" />
+        <PackageReference Include="MahApps.Metro.IconPacks.MaterialLight" Version="6.2.1" />
+        <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="6.2.1" />
+        <PackageReference Include="MahApps.Metro.IconPacks.Octicons" Version="6.2.1" />
         
     </ItemGroup>
     <ItemGroup>
