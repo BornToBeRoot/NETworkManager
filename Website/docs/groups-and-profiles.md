@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 4
 ---
 
 # Groups and Profiles
@@ -60,7 +60,7 @@ Use `tags` to organize profiles and filter by them. For example, tag profiles as
 
 Some settings like the `host` can be inherited from the general settings in the feature specific settings.
 
-See also the profile section in the specific [feature documentation](./features.md) for more information.
+See also the profile section in the specific [feature documentation](./introduction.md) for more information.
 
 :::
 

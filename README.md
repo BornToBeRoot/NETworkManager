@@ -5,10 +5,10 @@
     <b>A powerful tool for managing networks and troubleshoot network problems!</b>
   </p>
   <p>
-    Streamline and simplify your network administration and troubleshooting with <strong>NETworkManager</strong>. Connect, monitor, and troubleshoot your network and server infrastructure using built-in tools like Remote Desktop (RDP), PuTTY (SSH, Telnet, Serial), PowerShell (WinRM), TigerVNC (VNC), and AWS Session Manager. Perform in-depth network diagnostics with features including WiFi Analyzer, IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup, LLDP/CDP Capture, and <a href="https://borntoberoot.net/NETworkManager/docs/features">many more</a> — all in a clean, unified interface.
+    Streamline and simplify your network administration and troubleshooting with <strong>NETworkManager</strong>. Connect, monitor, and troubleshoot your network and server infrastructure using built-in tools like Remote Desktop (RDP), PuTTY (SSH, Serial, etc.), PowerShell (WSL, K9s, etc.) and TigerVNC (VNC). Perform in-depth network diagnostics with features including WiFi Analyzer, IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup, LLDP/CDP Capture, and <a href="https://borntoberoot.net/NETworkManager/docs/introduction">many more</a> — all in a clean, unified interface.
   </p>
   <p>
-    Organize hosts and networks in encrypted profiles with seamless access across all features. Built for professional environments, NETworkManager is enterprise-ready with an MSI installer, signed binaries, and support for package managers like Chocolatey, Evergreen, and WinGet. Available in over 16 languages with customizable light/dark themes and accent colors.
+    Organize hosts and networks in profiles with seamless access across all features. Profile files can be encrypted to protect your sensitive data and used to separate different customers or environments. NETworkManager is enterprise-ready with an MSI installer, signed binaries, and support for package managers like Chocolatey, Evergreen, and WinGet. Available in over 16 languages with customizable light/dark themes and accent colors.
   </p>
   <p>
     <a href="https://borntoberoot.net/NETworkManager/download" target="_blank">
@@ -73,21 +73,21 @@ NETworkManager is your go-to tool for simplifying network administration and tro
 
 Here's why you'll love it:
 
-- 🧰 **Unified Experience** - All your essential network tools in one sleek interface — no more juggling apps.
-- 🖥️ **Remote System Management** - Connect to remote systems seamlessly via RDP, PuTTY (SSH, Telnet, Serial), PowerShell (WinRM), TigerVNC (VNC), or AWS Session Manager.
-- 🔍 **Analyze & Troubleshoot** - Deep network diagnostics with WiFi Analyzer, IP/Port Scanners, Ping Monitor, Traceroute, DNS Lookup, LLDP/CDP Capture, and <a href="https://borntoberoot.net/NETworkManager/docs/features">many more</a>.
-- 🔐 **Secure Profiles** - Organize hosts and networks in encrypted profiles with seamless access across all features.
-- 💎 **Open Source & Free** - No ads, no subscriptions, fully community-driven.
-- 🏢 **Enterprise-Ready** - MSI installer, signed binaries, and package manager support (Chocolatey, WinGet, Evergreen).
+- 🧰 **Unified Experience** - All your essential network tools together in a clean, unified interface.
+- 🖥️ **Remote System Management** - Seamlessly conncet via Remote Desktop (RDP), PuTTY (SSH, Serial, etc.), PowerShell (WSL, K9s, etc.) or TigerVNC (VNC).
+- 🔍 **Analyze & Troubleshoot** - Deep network diagnostics with WiFi Analyzer, IP Scanner, Port Scanners, Ping Monitor, Traceroute, DNS Lookup, LLDP/CDP Capture, and <a href="https://borntoberoot.net/NETworkManager/docs/introduction">many more</a>.
+- 🔐 **Secure Profiles** - Organize hosts and networks in profiles with seamless access across all features. Encrypt profile files and separate them by customer or environment.
+- 💎 **Open Source & Free** - No ads, no subscriptions, no selling your data, fully community-driven.
+- 🏢 **Enterprise-Ready** - MSI installer, signed binaries, and package manager support (Chocolatey, Evergreen, and WinGet).
 - 🎨 **Personalized Experience** - Available in 16+ languages, with customizable light/dark themes and accent colors.
 
-📖 Explore all features in detail on our [documentation page](https://borntoberoot.net/NETworkManager/docs/features).
+📖 Explore all features in detail in our [documentation](https://borntoberoot.net/NETworkManager/docs/introduction).
 
 ## 📦 Download
 
 Get started with NETworkManager today! Download pre-built, [signed](https://borntoberoot.net/NETworkManager/download#code-signing-policy) binaries (setup, portable, or archive) from our [download page](https://borntoberoot.net/NETworkManager/download) with detailed install instructions (e.g., silent install). Files are hosted on [GitHub Releases](https://github.com/BornToBeRoot/NETworkManager/releases/latest).
 
-Install via package managers for a hassle-free setup:
+Install and update via package managers for a hassle-free setup:
 
 - **Chocolatey**:
 
@@ -102,15 +102,17 @@ Install via package managers for a hassle-free setup:
   ```
 
 - **Evergreen**:
+
   ```powershell
   # Get latest release
   Get-EvergreenApp -Name NETworkManager
   # Save setup file
   Get-EvergreenApp -Name NETworkManager | Save-EvergreenApp -Path C:\Users\$env:Username\Downloads\
   ```
-  Evergreen PowerShell module: <https://github.com/aaronparker/evergreen>
 
-> Pre-release versions with the latest features and fixes are (sometimes) available for testing on [GitHub Releases](https://github.com/BornToBeRoot/NETworkManager/releases).
+  Evergreen PowerShell module (e.g. to automate image building or SCCM/Intune updates): <https://github.com/eucpilots/evergreen-module>
+
+> Pre-release versions with the latest features and fixes are (sometimes) available for testing on [GitHub Releases](https://github.com/BornToBeRoot/NETworkManager/releases). Please note that pre-release versions may be unstable and are not recommended for production use. Please report any issues you encounter on [GitHub Issues](https://github.com/BornToBeRoot/NETworkManager/issues/new/choose)
 
 ## 💖 Donate
 
@@ -159,8 +161,8 @@ Build NETworkManager yourself with these steps:
 
 1. **Prerequisites**:
 
-   - [.NET 8.x SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
-   - Visual Studio 2022 with `.NET desktop development` and `Universal Windows Platform development`
+   - [.NET 10.x SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
+   - [Visual Studio 2026](https://visualstudio.microsoft.com/) with `.NET desktop development` and `Universal Windows Platform development` (or [JetBrains Rider](https://www.jetbrains.com/rider/) - you still need to install the UWP workload via Visual Studio Installer)
 
 2. **Clone the Repository**:
 
@@ -175,8 +177,8 @@ Build NETworkManager yourself with these steps:
    - Open `.\Source\NETworkManager.sln` in Visual Studio or JetBrains Rider.
    - Alternatively, build via command line:
      ```powershell
-    dotnet restore .\Source\NETworkManager.sln
-    dotnet build .\Source\NETworkManager.sln --configuration Release --no-restore
+     dotnet restore .\Source\NETworkManager.sln
+     dotnet build .\Source\NETworkManager.sln --configuration Release --no-restore
      ```
 
 ## 🙏 Thanks
@@ -211,7 +213,7 @@ Star these projects to show your support!
 
 ## 🔒 Code Signing Policy
 
-NETworkManager uses free code signing services from [SignPath.io](https://signpath.io/) and a free code signing certificate provided by the [SignPath Foundation](https://signpath.org/) to sign all official binaries and installers, ensuring the authenticity and integrity of your downloads.
+NETworkManager uses free code signing services from [SignPath.io](https://signpath.io/) and a free code signing certificate provided by the [SignPath Foundation](https://signpath.org/) to sign all official binaries and installers, ensuring the authenticity and integrity.
 
 The binaries and installers are built on [AppVeyor](https://ci.appveyor.com/project/BornToBeRoot/networkmanager) directly from the [GitHub repository](https://github.com/BornToBeRoot/NETworkManager/blob/main/appveyor.yml). After each build, the artifacts are automatically sent to [SignPath.io](https://signpath.io/) via webhook, where they are signed following manual approval by the maintainer. Once signed, the binaries are uploaded to the [GitHub releases page](https://github.com/BornToBeRoot/NETworkManager/releases).
 
@@ -219,7 +221,7 @@ The binaries and installers are built on [AppVeyor](https://ci.appveyor.com/proj
 
 Your privacy matters. NETworkManager will not transfer any information to other networked systems unless specifically requested by the user or the person installing or operating it.
 
-NETworManager has integrated some optional third-party services to enhance functionality. You can choose to enable or disable these services at the first startup or later in the settings:
+NETworManager has integrated some **optional** third-party services to enhance functionality. You can choose to enable or disable these services at the first startup or later in the settings:
 
 - [api.github.com](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement) - Check for application updates.
 - [ipify.org](https://www.ipify.org/) - Retrieve the public IP address used by the client.
