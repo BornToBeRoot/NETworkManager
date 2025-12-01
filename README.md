@@ -74,7 +74,7 @@ NETworkManager is your go-to tool for simplifying network administration and tro
 Here's why you'll love it:
 
 - 🧰 **Unified Experience** - All your essential network tools together in a clean, unified interface.
-- 🖥️ **Remote System Management** - Seamlessly conncet via Remote Desktop (RDP), PuTTY (SSH, Serial, etc.), PowerShell (WSL, K9s, etc.) or TigerVNC (VNC).
+- 🖥️ **Remote System Management** - Seamlessly connect via Remote Desktop (RDP), PuTTY (SSH, Serial, etc.), PowerShell (WSL, K9s, etc.) or TigerVNC (VNC).
 - 🔍 **Analyze & Troubleshoot** - Deep network diagnostics with WiFi Analyzer, IP Scanner, Port Scanners, Ping Monitor, Traceroute, DNS Lookup, LLDP/CDP Capture, and <a href="https://borntoberoot.net/NETworkManager/docs/introduction">many more</a>.
 - 🔐 **Secure Profiles** - Organize hosts and networks in profiles with seamless access across all features. Encrypt profile files and separate them by customer or environment.
 - 💎 **Open Source & Free** - No ads, no subscriptions, no selling your data, fully community-driven.
