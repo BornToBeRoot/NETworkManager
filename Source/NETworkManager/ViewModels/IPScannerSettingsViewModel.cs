@@ -12,16 +12,31 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
+/// <summary>
+/// View model for the IP scanner settings.
+/// </summary>
 public class IPScannerSettingsViewModel : ViewModelBase
 {
     #region Variables
 
+    /// <summary>
+    /// Indicates whether the view model is loading.
+    /// </summary>
     private readonly bool _isLoading;
 
+    /// <summary>
+    /// The dialog coordinator instance.
+    /// </summary>
     private readonly IDialogCoordinator _dialogCoordinator;
 
+    /// <summary>
+    /// Backing field for <see cref="ShowAllResults"/>.
+    /// </summary>
     private bool _showAllResults;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether to show all results.
+    /// </summary>
     public bool ShowAllResults
     {
         get => _showAllResults;
@@ -38,8 +53,14 @@ public class IPScannerSettingsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="ICMPAttempts"/>.
+    /// </summary>
     private int _icmpAttempts;
 
+    /// <summary>
+    /// Gets or sets the number of ICMP attempts.
+    /// </summary>
     public int ICMPAttempts
     {
         get => _icmpAttempts;
@@ -56,8 +77,14 @@ public class IPScannerSettingsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="ICMPTimeout"/>.
+    /// </summary>
     private int _icmpTimeout;
 
+    /// <summary>
+    /// Gets or sets the ICMP timeout in milliseconds.
+    /// </summary>
     public int ICMPTimeout
     {
         get => _icmpTimeout;
@@ -74,8 +101,14 @@ public class IPScannerSettingsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="ICMPBuffer"/>.
+    /// </summary>
     private int _icmpBuffer;
 
+    /// <summary>
+    /// Gets or sets the ICMP buffer size.
+    /// </summary>
     public int ICMPBuffer
     {
         get => _icmpBuffer;
@@ -92,8 +125,14 @@ public class IPScannerSettingsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="ResolveHostname"/>.
+    /// </summary>
     private bool _resolveHostname;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether to resolve the hostname.
+    /// </summary>
     public bool ResolveHostname
     {
         get => _resolveHostname;
@@ -110,8 +149,14 @@ public class IPScannerSettingsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="PortScanEnabled"/>.
+    /// </summary>
     private bool _portScanEnabled;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether port scanning is enabled.
+    /// </summary>
     public bool PortScanEnabled
     {
         get => _portScanEnabled;
@@ -128,8 +173,14 @@ public class IPScannerSettingsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="PortScanPorts"/>.
+    /// </summary>
     private string _portScanPorts;
 
+    /// <summary>
+    /// Gets or sets the ports to scan.
+    /// </summary>
     public string PortScanPorts
     {
         get => _portScanPorts;
@@ -146,13 +197,17 @@ public class IPScannerSettingsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="PortScanTimeout"/>.
+    /// </summary>
     private int _portScanTimeout;
 
+    /// <summary>
+    /// Gets or sets the port scan timeout in milliseconds.
+    /// </summary>
     public int PortScanTimeout
-
     {
         get => _portScanTimeout;
-
         set
         {
             if (value == _portScanTimeout)
@@ -166,8 +221,14 @@ public class IPScannerSettingsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="NetBIOSEnabled"/>.
+    /// </summary>
     private bool _netBIOSEnabled;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether NetBIOS is enabled.
+    /// </summary>
     public bool NetBIOSEnabled
     {
         get => _netBIOSEnabled;
@@ -184,8 +245,14 @@ public class IPScannerSettingsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="NetBIOSTimeout"/>.
+    /// </summary>
     private int _netBIOSTimeout;
 
+    /// <summary>
+    /// Gets or sets the NetBIOS timeout in milliseconds.
+    /// </summary>
     public int NetBIOSTimeout
     {
         get => _netBIOSTimeout;
@@ -202,8 +269,14 @@ public class IPScannerSettingsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="ResolveMACAddress"/>.
+    /// </summary>
     private bool _resolveMACAddress;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether to resolve the MAC address.
+    /// </summary>
     public bool ResolveMACAddress
     {
         get => _resolveMACAddress;
@@ -220,10 +293,19 @@ public class IPScannerSettingsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the collection view of custom commands.
+    /// </summary>
     public ICollectionView CustomCommands { get; }
 
+    /// <summary>
+    /// Backing field for <see cref="SelectedCustomCommand"/>.
+    /// </summary>
     private CustomCommandInfo _selectedCustomCommand = new();
 
+    /// <summary>
+    /// Gets or sets the selected custom command.
+    /// </summary>
     public CustomCommandInfo SelectedCustomCommand
     {
         get => _selectedCustomCommand;
@@ -237,8 +319,14 @@ public class IPScannerSettingsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="MaxHostThreads"/>.
+    /// </summary>
     private int _maxHostThreads;
 
+    /// <summary>
+    /// Gets or sets the maximum number of host threads.
+    /// </summary>
     public int MaxHostThreads
     {
         get => _maxHostThreads;
@@ -255,8 +343,14 @@ public class IPScannerSettingsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="MaxPortThreads"/>.
+    /// </summary>
     private int _maxPortThreads;
 
+    /// <summary>
+    /// Gets or sets the maximum number of port threads.
+    /// </summary>
     public int MaxPortThreads
     {
         get => _maxPortThreads;
@@ -277,6 +371,10 @@ public class IPScannerSettingsViewModel : ViewModelBase
 
     #region Constructor, load settings
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="IPScannerSettingsViewModel"/> class.
+    /// </summary>
+    /// <param name="instance">The dialog coordinator instance.</param>
     public IPScannerSettingsViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
@@ -292,6 +390,9 @@ public class IPScannerSettingsViewModel : ViewModelBase
         _isLoading = false;
     }
 
+    /// <summary>
+    /// Loads the settings.
+    /// </summary>
     private void LoadSettings()
     {
         ShowAllResults = SettingsManager.Current.IPScanner_ShowAllResults;
@@ -313,22 +414,40 @@ public class IPScannerSettingsViewModel : ViewModelBase
 
     #region ICommand & Actions
 
+    /// <summary>
+    /// Gets the command to add a custom command.
+    /// </summary>
     public ICommand AddCustomCommandCommand => new RelayCommand(_ => AddCustomCommandAction());
 
+    /// <summary>
+    /// Action to add a custom command.
+    /// </summary>
     private void AddCustomCommandAction()
     {
         AddCustomCommand();
     }
 
+    /// <summary>
+    /// Gets the command to edit a custom command.
+    /// </summary>
     public ICommand EditCustomCommandCommand => new RelayCommand(_ => EditCustomCommandAction());
 
+    /// <summary>
+    /// Action to edit a custom command.
+    /// </summary>
     private void EditCustomCommandAction()
     {
         EditCustomCommand();
     }
 
+    /// <summary>
+    /// Gets the command to delete a custom command.
+    /// </summary>
     public ICommand DeleteCustomCommandCommand => new RelayCommand(_ => DeleteCustomCommandAction());
 
+    /// <summary>
+    /// Action to delete a custom command.
+    /// </summary>
     private void DeleteCustomCommandAction()
     {
         DeleteCustomCommand().ConfigureAwait(false);
@@ -338,6 +457,9 @@ public class IPScannerSettingsViewModel : ViewModelBase
 
     #region Methods
 
+    /// <summary>
+    /// Adds a new custom command.
+    /// </summary>
     private async void AddCustomCommand()
     {
         var customDialog = new CustomDialog
@@ -361,6 +483,9 @@ public class IPScannerSettingsViewModel : ViewModelBase
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
+    /// <summary>
+    /// Edits the selected custom command.
+    /// </summary>
     public async void EditCustomCommand()
     {
         var customDialog = new CustomDialog
@@ -385,6 +510,9 @@ public class IPScannerSettingsViewModel : ViewModelBase
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
+    /// <summary>
+    /// Deletes the selected custom command.
+    /// </summary>
     private async Task DeleteCustomCommand()
     {
         var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,

@@ -32,6 +32,9 @@ using NetworkInterface = NETworkManager.Models.Network.NetworkInterface;
 
 namespace NETworkManager.ViewModels;
 
+/// <summary>
+/// ViewModel for the Network Interface feature, allowing management of network adapters.
+/// </summary>
 public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
@@ -48,6 +51,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private bool _isNetworkInterfaceLoading;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether network interfaces are currently loading.
+    /// </summary>
     public bool IsNetworkInterfaceLoading
     {
         get => _isNetworkInterfaceLoading;
@@ -63,6 +69,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private bool _canConfigure;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether configuration is allowed.
+    /// </summary>
     public bool CanConfigure
     {
         get => _canConfigure;
@@ -78,6 +87,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private bool _isConfigurationRunning;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether a configuration operation is running.
+    /// </summary>
     public bool IsConfigurationRunning
     {
         get => _isConfigurationRunning;
@@ -93,6 +105,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private bool _isStatusMessageDisplayed;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the status message is displayed.
+    /// </summary>
     public bool IsStatusMessageDisplayed
     {
         get => _isStatusMessageDisplayed;
@@ -108,6 +123,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private string _statusMessage;
 
+    /// <summary>
+    /// Gets the status message.
+    /// </summary>
     public string StatusMessage
     {
         get => _statusMessage;
@@ -125,6 +143,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private ObservableCollection<NetworkInterfaceInfo> _networkInterfaces = [];
 
+    /// <summary>
+    /// Gets the collection of network interfaces.
+    /// </summary>
     public ObservableCollection<NetworkInterfaceInfo> NetworkInterfaces
     {
         get => _networkInterfaces;
@@ -140,6 +161,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private NetworkInterfaceInfo _selectedNetworkInterface;
 
+    /// <summary>
+    /// Gets or sets the currently selected network interface.
+    /// </summary>
     public NetworkInterfaceInfo SelectedNetworkInterface
     {
         get => _selectedNetworkInterface;
@@ -176,6 +200,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private long _bandwidthTotalBytesSent;
 
+    /// <summary>
+    /// Gets or sets the total bytes sent.
+    /// </summary>
     public long BandwidthTotalBytesSent
     {
         get => _bandwidthTotalBytesSent;
@@ -192,6 +219,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     private long _bandwidthTotalBytesReceivedTemp;
     private long _bandwidthTotalBytesReceived;
 
+    /// <summary>
+    /// Gets or sets the total bytes received.
+    /// </summary>
     public long BandwidthTotalBytesReceived
     {
         get => _bandwidthTotalBytesReceived;
@@ -207,6 +237,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private long _bandwidthDiffBytesSent;
 
+    /// <summary>
+    /// Gets or sets the difference in bytes sent.
+    /// </summary>
     public long BandwidthDiffBytesSent
     {
         get => _bandwidthDiffBytesSent;
@@ -222,6 +255,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private long _bandwidthDiffBytesReceived;
 
+    /// <summary>
+    /// Gets or sets the difference in bytes received.
+    /// </summary>
     public long BandwidthDiffBytesReceived
     {
         get => _bandwidthDiffBytesReceived;
@@ -237,6 +273,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private long _bandwidthBytesReceivedSpeed;
 
+    /// <summary>
+    /// Gets or sets the speed of bytes received.
+    /// </summary>
     public long BandwidthBytesReceivedSpeed
     {
         get => _bandwidthBytesReceivedSpeed;
@@ -252,6 +291,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private long _bandwidthBytesSentSpeed;
 
+    /// <summary>
+    /// Gets or sets the speed of bytes sent.
+    /// </summary>
     public long BandwidthBytesSentSpeed
     {
         get => _bandwidthBytesSentSpeed;
@@ -267,6 +309,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private DateTime _bandwidthStartTime;
 
+    /// <summary>
+    /// Gets or sets the start time of the bandwidth measurement.
+    /// </summary>
     public DateTime BandwidthStartTime
     {
         get => _bandwidthStartTime;
@@ -282,6 +327,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private TimeSpan _bandwidthMeasuredTime;
 
+    /// <summary>
+    /// Gets or sets the duration of the bandwidth measurement.
+    /// </summary>
     public TimeSpan BandwidthMeasuredTime
     {
         get => _bandwidthMeasuredTime;
@@ -301,6 +349,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private bool _configEnableDynamicIPAddress = true;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether to enable dynamic IP address (DHCP).
+    /// </summary>
     public bool ConfigEnableDynamicIPAddress
     {
         get => _configEnableDynamicIPAddress;
@@ -316,6 +367,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private bool _configEnableStaticIPAddress;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether to enable static IP address.
+    /// </summary>
     public bool ConfigEnableStaticIPAddress
     {
         get => _configEnableStaticIPAddress;
@@ -333,6 +387,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private string _configIPAddress;
 
+    /// <summary>
+    /// Gets or sets the static IP address.
+    /// </summary>
     public string ConfigIPAddress
     {
         get => _configIPAddress;
@@ -348,6 +405,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private string _configSubnetmask;
 
+    /// <summary>
+    /// Gets or sets the subnet mask.
+    /// </summary>
     public string ConfigSubnetmask
     {
         get => _configSubnetmask;
@@ -363,6 +423,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private string _configGateway;
 
+    /// <summary>
+    /// Gets or sets the default gateway.
+    /// </summary>
     public string ConfigGateway
     {
         get => _configGateway;
@@ -378,6 +441,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private bool _configEnableDynamicDNS = true;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether to enable dynamic DNS (DHCP).
+    /// </summary>
     public bool ConfigEnableDynamicDNS
     {
         get => _configEnableDynamicDNS;
@@ -393,6 +459,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private bool _configEnableStaticDNS;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether to enable static DNS.
+    /// </summary>
     public bool ConfigEnableStaticDNS
     {
         get => _configEnableStaticDNS;
@@ -408,6 +477,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private string _configPrimaryDNSServer;
 
+    /// <summary>
+    /// Gets or sets the primary DNS server.
+    /// </summary>
     public string ConfigPrimaryDNSServer
     {
         get => _configPrimaryDNSServer;
@@ -423,6 +495,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private string _configSecondaryDNSServer;
 
+    /// <summary>
+    /// Gets or sets the secondary DNS server.
+    /// </summary>
     public string ConfigSecondaryDNSServer
     {
         get => _configSecondaryDNSServer;
@@ -442,6 +517,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private ICollectionView _profiles;
 
+    /// <summary>
+    /// Gets the collection of profiles.
+    /// </summary>
     public ICollectionView Profiles
     {
         get => _profiles;
@@ -457,6 +535,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private ProfileInfo _selectedProfile = new();
 
+    /// <summary>
+    /// Gets or sets the selected profile.
+    /// </summary>
     public ProfileInfo SelectedProfile
     {
         get => _selectedProfile;
@@ -485,6 +566,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private string _search;
 
+    /// <summary>
+    /// Gets or sets the search text.
+    /// </summary>
     public string Search
     {
         get => _search;
@@ -508,6 +592,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private bool _isSearching;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether a search is in progress.
+    /// </summary>
     public bool IsSearching
     {
         get => _isSearching;
@@ -523,6 +610,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private bool _profileFilterIsOpen;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the profile filter is open.
+    /// </summary>
     public bool ProfileFilterIsOpen
     {
         get => _profileFilterIsOpen;
@@ -536,12 +626,21 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         }
     }
 
+    /// <summary>
+    /// Gets or sets the view for profile filter tags.
+    /// </summary>
     public ICollectionView ProfileFilterTagsView { get; set; }
 
+    /// <summary>
+    /// Gets or sets the collection of profile filter tags.
+    /// </summary>
     public ObservableCollection<ProfileFilterTagsInfo> ProfileFilterTags { get; set; } = [];
 
     private bool _profileFilterTagsMatchAny = GlobalStaticConfiguration.Profile_TagsMatchAny;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether to match any profile filter tag.
+    /// </summary>
     public bool ProfileFilterTagsMatchAny
     {
         get => _profileFilterTagsMatchAny;
@@ -557,6 +656,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private bool _profileFilterTagsMatchAll;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether to match all profile filter tags.
+    /// </summary>
     public bool ProfileFilterTagsMatchAll
     {
         get => _profileFilterTagsMatchAll;
@@ -572,6 +674,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private bool _isProfileFilterSet;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether a profile filter is set.
+    /// </summary>
     public bool IsProfileFilterSet
     {
         get => _isProfileFilterSet;
@@ -586,6 +691,10 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     }
 
     private readonly GroupExpanderStateStore _groupExpanderStateStore = new();
+
+    /// <summary>
+    /// Gets the store for group expander states.
+    /// </summary>
     public GroupExpanderStateStore GroupExpanderStateStore => _groupExpanderStateStore;
 
     private bool _canProfileWidthChange = true;
@@ -593,6 +702,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private bool _expandProfileView;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether to expand the profile view.
+    /// </summary>
     public bool ExpandProfileView
     {
         get => _expandProfileView;
@@ -615,6 +727,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private GridLength _profileWidth;
 
+    /// <summary>
+    /// Gets or sets the width of the profile view.
+    /// </summary>
     public GridLength ProfileWidth
     {
         get => _profileWidth;
@@ -642,6 +757,10 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     #region Constructor, LoadSettings, OnShutdown
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="NetworkInterfaceViewModel"/> class.
+    /// </summary>
+    /// <param name="instance">The dialog coordinator instance.</param>
     public NetworkInterfaceViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
@@ -675,6 +794,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         _isLoading = false;
     }
 
+    /// <summary>
+    /// Initializes the bandwidth chart configuration.
+    /// </summary>
     private void InitialBandwidthChart()
     {
         var dayConfig = Mappers.Xy<LvlChartsDefaultInfo>()
@@ -706,6 +828,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     public Func<double, string> FormatterSpeed { get; set; }
     public SeriesCollection Series { get; set; }
 
+    /// <summary>
+    /// Loads the network interfaces.
+    /// </summary>
     private async Task LoadNetworkInterfaces()
     {
         IsNetworkInterfaceLoading = true;
@@ -725,6 +850,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         IsNetworkInterfaceLoading = false;
     }
 
+    /// <summary>
+    /// Loads the settings.
+    /// </summary>
     private void LoadSettings()
     {
         ExpandProfileView = SettingsManager.Current.NetworkInterface_ExpandProfileView;
@@ -740,9 +868,15 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     #region ICommands & Actions
 
+    /// <summary>
+    /// Gets the command to reload the network interfaces.
+    /// </summary>
     public ICommand ReloadNetworkInterfacesCommand =>
         new RelayCommand(_ => ReloadNetworkInterfacesAction(), ReloadNetworkInterfaces_CanExecute);
 
+    /// <summary>
+    /// Determines whether the ReloadNetworkInterfaces command can execute.
+    /// </summary>
     private bool ReloadNetworkInterfaces_CanExecute(object obj)
     {
         return !IsNetworkInterfaceLoading &&
@@ -751,13 +885,22 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
                !ConfigurationManager.Current.IsChildWindowOpen;
     }
 
+    /// <summary>
+    /// Action to reload the network interfaces.
+    /// </summary>
     private void ReloadNetworkInterfacesAction()
     {
         ReloadNetworkInterfaces();
     }
 
+    /// <summary>
+    /// Gets the command to export the network interfaces.
+    /// </summary>
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
 
+    /// <summary>
+    /// Action to export the network interfaces.
+    /// </summary>
     private Task ExportAction()
     {
         var childWindow = new ExportChildWindow();
@@ -805,9 +948,15 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
+    /// <summary>
+    /// Gets the command to apply the network configuration.
+    /// </summary>
     public ICommand ApplyConfigurationCommand =>
         new RelayCommand(_ => ApplyConfigurationAction(), ApplyConfiguration_CanExecute);
 
+    /// <summary>
+    /// Determines whether the ApplyConfiguration command can execute.
+    /// </summary>
     private bool ApplyConfiguration_CanExecute(object parameter)
     {
         return Application.Current.MainWindow != null &&
@@ -815,11 +964,17 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
                !ConfigurationManager.Current.IsChildWindowOpen;
     }
 
+    /// <summary>
+    /// Action to apply the network configuration.
+    /// </summary>
     private void ApplyConfigurationAction()
     {
         ApplyConfiguration().ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to apply the profile configuration.
+    /// </summary>
     public ICommand ApplyProfileConfigCommand => new RelayCommand(_ => ApplyProfileProfileAction());
 
     private void ApplyProfileProfileAction()
@@ -827,6 +982,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         ApplyConfigurationFromProfile().ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to add a new profile.
+    /// </summary>
     public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
 
     private void AddProfileAction()
@@ -841,6 +999,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         return SelectedProfile is { IsDynamic: false };
     }
 
+    /// <summary>
+    /// Gets the command to edit the selected profile.
+    /// </summary>
     public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
     private void EditProfileAction()
@@ -849,6 +1010,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to copy the selected profile as a new profile.
+    /// </summary>
     public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
     private void CopyAsProfileAction()
@@ -857,6 +1021,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to delete the selected profile.
+    /// </summary>
     public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
 
     private void DeleteProfileAction()
@@ -866,6 +1033,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to edit a profile group.
+    /// </summary>
     public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
     private void EditGroupAction(object group)
@@ -875,6 +1045,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to open the profile filter.
+    /// </summary>
     public ICommand OpenProfileFilterCommand => new RelayCommand(_ => OpenProfileFilterAction());
 
     private void OpenProfileFilterAction()
@@ -882,6 +1055,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         ProfileFilterIsOpen = true;
     }
 
+    /// <summary>
+    /// Gets the command to apply the profile filter.
+    /// </summary>
     public ICommand ApplyProfileFilterCommand => new RelayCommand(_ => ApplyProfileFilterAction());
 
     private void ApplyProfileFilterAction()
@@ -891,6 +1067,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         ProfileFilterIsOpen = false;
     }
 
+    /// <summary>
+    /// Gets the command to clear the profile filter.
+    /// </summary>
     public ICommand ClearProfileFilterCommand => new RelayCommand(_ => ClearProfileFilterAction());
 
     private void ClearProfileFilterAction()
@@ -908,6 +1087,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         ProfileFilterIsOpen = false;
     }
 
+    /// <summary>
+    /// Gets the command to expand all profile groups.
+    /// </summary>
     public ICommand ExpandAllProfileGroupsCommand => new RelayCommand(_ => ExpandAllProfileGroupsAction());
 
     private void ExpandAllProfileGroupsAction()
@@ -915,6 +1097,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         SetIsExpandedForAllProfileGroups(true);
     }
 
+    /// <summary>
+    /// Gets the command to collapse all profile groups.
+    /// </summary>
     public ICommand CollapseAllProfileGroupsCommand => new RelayCommand(_ => CollapseAllProfileGroupsAction());
 
     private void CollapseAllProfileGroupsAction()
@@ -931,6 +1116,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
                !ConfigurationManager.Current.IsChildWindowOpen;
     }
 
+    /// <summary>
+    /// Gets the command to open network connections.
+    /// </summary>
     public ICommand OpenNetworkConnectionsCommand =>
         new RelayCommand(_ => OpenNetworkConnectionsAction(), AdditionalCommands_CanExecute);
 
@@ -939,6 +1127,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         OpenNetworkConnectionsAsync().ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to open IP Scanner.
+    /// </summary>
     public ICommand IPScannerCommand => new RelayCommand(_ => IPScannerAction(), AdditionalCommands_CanExecute);
 
     private void IPScannerAction()
@@ -953,6 +1144,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
             $"{ipTuple.Item1}/{Subnetmask.ConvertSubnetmaskToCidr(ipTuple.Item2)}");
     }
 
+    /// <summary>
+    /// Gets the command to flush DNS.
+    /// </summary>
     public ICommand FlushDNSCommand => new RelayCommand(_ => FlushDNSAction(), AdditionalCommands_CanExecute);
 
     private void FlushDNSAction()
@@ -960,6 +1154,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         FlushDNSAsync().ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to release and renew IP address.
+    /// </summary>
     public ICommand ReleaseRenewCommand => new RelayCommand(_ => ReleaseRenewAction(), AdditionalCommands_CanExecute);
 
     private void ReleaseRenewAction()
@@ -967,6 +1164,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         ReleaseRenewAsync(IPConfigReleaseRenewMode.ReleaseRenew).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to release IP address.
+    /// </summary>
     public ICommand ReleaseCommand => new RelayCommand(_ => ReleaseAction(), AdditionalCommands_CanExecute);
 
     private void ReleaseAction()
@@ -974,6 +1174,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         ReleaseRenewAsync(IPConfigReleaseRenewMode.Release).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to renew IP address.
+    /// </summary>
     public ICommand RenewCommand => new RelayCommand(_ => RenewAction(), AdditionalCommands_CanExecute);
 
     private void RenewAction()
@@ -981,6 +1184,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         ReleaseRenewAsync(IPConfigReleaseRenewMode.Renew).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to release and renew IPv6 address.
+    /// </summary>
     public ICommand ReleaseRenew6Command => new RelayCommand(_ => ReleaseRenew6Action(), AdditionalCommands_CanExecute);
 
     private void ReleaseRenew6Action()
@@ -988,6 +1194,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         ReleaseRenewAsync(IPConfigReleaseRenewMode.ReleaseRenew6).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to release IPv6 address.
+    /// </summary>
     public ICommand Release6Command => new RelayCommand(_ => Release6Action(), AdditionalCommands_CanExecute);
 
     private void Release6Action()
@@ -995,6 +1204,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         ReleaseRenewAsync(IPConfigReleaseRenewMode.Release6).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to renew IPv6 address.
+    /// </summary>
     public ICommand Renew6Command => new RelayCommand(_ => Renew6Action(), AdditionalCommands_CanExecute);
 
     private void Renew6Action()
@@ -1002,6 +1214,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         ReleaseRenewAsync(IPConfigReleaseRenewMode.Renew).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to add an IPv4 address.
+    /// </summary>
     public ICommand AddIPv4AddressCommand => new RelayCommand(_ => AddIPv4AddressAction().ConfigureAwait(false),
         AdditionalCommands_CanExecute);
 
@@ -1027,6 +1242,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
     }
 
+    /// <summary>
+    /// Gets the command to remove an IPv4 address.
+    /// </summary>
     public ICommand RemoveIPv4AddressCommand => new RelayCommand(_ => RemoveIPv4AddressAction().ConfigureAwait(false),
         AdditionalCommands_CanExecute);
 
@@ -1437,6 +1655,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         _bandwidthMeter.Stop();
     }
 
+    /// <summary>
+    /// Called when the view becomes visible.
+    /// </summary>
     public void OnViewVisible()
     {
         _isViewActive = true;
@@ -1446,6 +1667,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         ResumeBandwidthMeter();
     }
 
+    /// <summary>
+    /// Called when the view is hidden.
+    /// </summary>
     public void OnViewHide()
     {
         StopBandwidthMeter();

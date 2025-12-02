@@ -25,6 +25,9 @@ using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels;
 
+/// <summary>
+/// ViewModel for the Port Scanner feature.
+/// </summary>
 public class PortScannerViewModel : ViewModelBase
 {
     #region Variables
@@ -40,6 +43,9 @@ public class PortScannerViewModel : ViewModelBase
 
     private string _host;
 
+    /// <summary>
+    /// Gets or sets the host to scan.
+    /// </summary>
     public string Host
     {
         get => _host;
@@ -53,10 +59,16 @@ public class PortScannerViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the collection view for the host history.
+    /// </summary>
     public ICollectionView HostHistoryView { get; }
 
     private string _ports;
 
+    /// <summary>
+    /// Gets or sets the ports to scan (e.g., "80, 443, 1-100").
+    /// </summary>
     public string Ports
     {
         get => _ports;
@@ -70,10 +82,16 @@ public class PortScannerViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the collection view for the ports history.
+    /// </summary>
     public ICollectionView PortsHistoryView { get; }
 
     private bool _isRunning;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the scan is currently running.
+    /// </summary>
     public bool IsRunning
     {
         get => _isRunning;
@@ -90,6 +108,9 @@ public class PortScannerViewModel : ViewModelBase
 
     private bool _isCanceling;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the scan is being canceled.
+    /// </summary>
     public bool IsCanceling
     {
         get => _isCanceling;
@@ -105,6 +126,9 @@ public class PortScannerViewModel : ViewModelBase
 
     private ObservableCollection<PortScannerPortInfo> _results = [];
 
+    /// <summary>
+    /// Gets or sets the collection of scan results.
+    /// </summary>
     public ObservableCollection<PortScannerPortInfo> Results
     {
         get => _results;
@@ -117,10 +141,16 @@ public class PortScannerViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the collection view for the scan results.
+    /// </summary>
     public ICollectionView ResultsView { get; }
 
     private PortScannerPortInfo _selectedResult;
 
+    /// <summary>
+    /// Gets or sets the currently selected scan result.
+    /// </summary>
     public PortScannerPortInfo SelectedResult
     {
         get => _selectedResult;
@@ -136,6 +166,9 @@ public class PortScannerViewModel : ViewModelBase
 
     private IList _selectedResults = new ArrayList();
 
+    /// <summary>
+    /// Gets or sets the list of currently selected scan results (for multi-selection).
+    /// </summary>
     public IList SelectedResults
     {
         get => _selectedResults;
@@ -151,6 +184,9 @@ public class PortScannerViewModel : ViewModelBase
 
     private int _portsToScan;
 
+    /// <summary>
+    /// Gets or sets the total number of ports to scan.
+    /// </summary>
     public int PortsToScan
     {
         get => _portsToScan;
@@ -166,6 +202,9 @@ public class PortScannerViewModel : ViewModelBase
 
     private int _portsScanned;
 
+    /// <summary>
+    /// Gets or sets the number of ports already scanned.
+    /// </summary>
     public int PortsScanned
     {
         get => _portsScanned;
@@ -181,6 +220,9 @@ public class PortScannerViewModel : ViewModelBase
 
     private bool _preparingScan;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the scan is being prepared.
+    /// </summary>
     public bool PreparingScan
     {
         get => _preparingScan;
@@ -196,6 +238,9 @@ public class PortScannerViewModel : ViewModelBase
 
     private bool _isStatusMessageDisplayed;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the status message is displayed.
+    /// </summary>
     public bool IsStatusMessageDisplayed
     {
         get => _isStatusMessageDisplayed;
@@ -211,6 +256,9 @@ public class PortScannerViewModel : ViewModelBase
 
     private string _statusMessage;
 
+    /// <summary>
+    /// Gets the status message to display.
+    /// </summary>
     public string StatusMessage
     {
         get => _statusMessage;
@@ -228,6 +276,13 @@ public class PortScannerViewModel : ViewModelBase
 
     #region Constructor, load settings, shutdown
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PortScannerViewModel"/> class.
+    /// </summary>
+    /// <param name="instance">The dialog coordinator instance.</param>
+    /// <param name="tabId">The unique identifier for the tab.</param>
+    /// <param name="host">The initial host to scan.</param>
+    /// <param name="port">The initial ports to scan.</param>
     public PortScannerViewModel(IDialogCoordinator instance, Guid tabId, string host, string port)
     {
         _dialogCoordinator = instance;

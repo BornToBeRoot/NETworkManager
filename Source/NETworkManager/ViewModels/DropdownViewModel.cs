@@ -6,14 +6,33 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
+/// <summary>
+/// View model for a dropdown dialog.
+/// </summary>
 public class DropdownViewModel : ViewModelBase
 {
+    /// <summary>
+    /// Backing field for <see cref="ValueDescription"/>.
+    /// </summary>
     private readonly string _valueDescription;
 
+    /// <summary>
+    /// Backing field for <see cref="Values"/>.
+    /// </summary>
     private readonly List<string> _values;
 
+    /// <summary>
+    /// Backing field for <see cref="SelectedValue"/>.
+    /// </summary>
     private string _selectedValue;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DropdownViewModel"/> class.
+    /// </summary>
+    /// <param name="okCommand">The action to execute when OK is clicked.</param>
+    /// <param name="cancelHandler">The action to execute when Cancel is clicked.</param>
+    /// <param name="values">The list of values to display in the dropdown.</param>
+    /// <param name="valueDescription">The description of the value.</param>
     public DropdownViewModel(Action<DropdownViewModel> okCommand, Action<DropdownViewModel> cancelHandler,
         List<string> values, string valueDescription)
     {
@@ -26,10 +45,19 @@ public class DropdownViewModel : ViewModelBase
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
     }
 
+    /// <summary>
+    /// Gets the command to confirm the selection.
+    /// </summary>
     public ICommand OKCommand { get; }
 
+    /// <summary>
+    /// Gets the command to cancel the operation.
+    /// </summary>
     public ICommand CancelCommand { get; }
 
+    /// <summary>
+    /// Gets the description of the value.
+    /// </summary>
     public string ValueDescription
     {
         get => _valueDescription;
@@ -43,6 +71,9 @@ public class DropdownViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the list of values.
+    /// </summary>
     public List<string> Values
     {
         get => _values;
@@ -56,6 +87,9 @@ public class DropdownViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets or sets the selected value.
+    /// </summary>
     public string SelectedValue
     {
         get => _selectedValue;

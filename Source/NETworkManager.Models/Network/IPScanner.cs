@@ -12,6 +12,10 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
+/// <summary>
+///     Class to scan for IP addresses in a network.
+/// </summary>
+/// <param name="options">The scan options.</param>
 public sealed class IPScanner(IPScannerOptions options)
 {
     #region Variables
@@ -22,6 +26,9 @@ public sealed class IPScanner(IPScannerOptions options)
 
     #region Events
 
+    /// <summary>
+    ///     Occurs when a host has been scanned.
+    /// </summary>
     public event EventHandler<IPScannerHostScannedArgs> HostScanned;
 
     private void OnHostScanned(IPScannerHostScannedArgs e)
@@ -29,6 +36,9 @@ public sealed class IPScanner(IPScannerOptions options)
         HostScanned?.Invoke(this, e);
     }
 
+    /// <summary>
+    ///     Occurs when the scan is complete.
+    /// </summary>
     public event EventHandler ScanComplete;
 
     private void OnScanComplete()
@@ -36,6 +46,9 @@ public sealed class IPScanner(IPScannerOptions options)
         ScanComplete?.Invoke(this, EventArgs.Empty);
     }
 
+    /// <summary>
+    ///     Occurs when the scan progress has changed.
+    /// </summary>
     public event EventHandler<ProgressChangedArgs> ProgressChanged;
 
     private void OnProgressChanged()
@@ -43,6 +56,9 @@ public sealed class IPScanner(IPScannerOptions options)
         ProgressChanged?.Invoke(this, new ProgressChangedArgs(_progressValue));
     }
 
+    /// <summary>
+    ///     Occurs when the user has canceled the scan.
+    /// </summary>
     public event EventHandler UserHasCanceled;
 
     private void OnUserHasCanceled()
@@ -54,6 +70,11 @@ public sealed class IPScanner(IPScannerOptions options)
 
     #region Methods
 
+    /// <summary>
+    ///     Starts the IP scan asynchronously.
+    /// </summary>
+    /// <param name="hosts">The list of hosts to scan.</param>
+    /// <param name="cancellationToken">The token to monitor for cancellation requests.</param>
     public void ScanAsync(IEnumerable<(IPAddress ipAddress, string hostname)> hosts,
         CancellationToken cancellationToken)
     {

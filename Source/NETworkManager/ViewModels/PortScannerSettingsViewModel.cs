@@ -14,6 +14,9 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
+/// <summary>
+/// ViewModel for the Port Scanner settings.
+/// </summary>
 public class PortScannerSettingsViewModel : ViewModelBase
 {
     #region Variables
@@ -22,10 +25,16 @@ public class PortScannerSettingsViewModel : ViewModelBase
 
     private readonly IDialogCoordinator _dialogCoordinator;
 
+    /// <summary>
+    /// Gets the collection view of port profiles.
+    /// </summary>
     public ICollectionView PortProfiles { get; }
 
     private PortProfileInfo _selectedPortProfile = new();
 
+    /// <summary>
+    /// Gets or sets the selected port profile.
+    /// </summary>
     public PortProfileInfo SelectedPortProfile
     {
         get => _selectedPortProfile;
@@ -41,6 +50,9 @@ public class PortScannerSettingsViewModel : ViewModelBase
 
     private bool _showAllResults;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether to show all results (open and closed ports).
+    /// </summary>
     public bool ShowAllResults
     {
         get => _showAllResults;
@@ -59,6 +71,9 @@ public class PortScannerSettingsViewModel : ViewModelBase
 
     private int _timeout;
 
+    /// <summary>
+    /// Gets or sets the timeout for port scanning in milliseconds.
+    /// </summary>
     public int Timeout
     {
         get => _timeout;
@@ -77,6 +92,9 @@ public class PortScannerSettingsViewModel : ViewModelBase
 
     private bool _resolveHostname;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether to resolve hostnames.
+    /// </summary>
     public bool ResolveHostname
     {
         get => _resolveHostname;
@@ -95,6 +113,9 @@ public class PortScannerSettingsViewModel : ViewModelBase
 
     private int _maxHostThreads;
 
+    /// <summary>
+    /// Gets or sets the maximum number of threads for scanning hosts.
+    /// </summary>
     public int MaxHostThreads
     {
         get => _maxHostThreads;
@@ -113,6 +134,9 @@ public class PortScannerSettingsViewModel : ViewModelBase
 
     private int _maxPortThreads;
 
+    /// <summary>
+    /// Gets or sets the maximum number of threads for scanning ports.
+    /// </summary>
     public int MaxPortThreads
     {
         get => _maxPortThreads;
@@ -133,6 +157,10 @@ public class PortScannerSettingsViewModel : ViewModelBase
 
     #region Constructor, load settings
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PortScannerSettingsViewModel"/> class.
+    /// </summary>
+    /// <param name="instance">The dialog coordinator instance.</param>
     public PortScannerSettingsViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
