@@ -13,6 +13,7 @@ public class DNSServerConnectionInfoProfile : ServerConnectionInfoProfile
     /// </summary>
     public DNSServerConnectionInfoProfile()
     {
+        Name = "[Windows DNS]";
         UseWindowsDNSServer = true;
     }
 
@@ -28,5 +29,5 @@ public class DNSServerConnectionInfoProfile : ServerConnectionInfoProfile
     /// <summary>
     ///     Use the DNS server from Windows.
     /// </summary>
-    public bool UseWindowsDNSServer { get; set; }
+    public bool UseWindowsDNSServer { get; set; }        
 }

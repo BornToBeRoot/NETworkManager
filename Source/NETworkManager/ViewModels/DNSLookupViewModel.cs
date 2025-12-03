@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
@@ -57,24 +58,69 @@ public class DNSLookupViewModel : ViewModelBase
     public ICollectionView DNSServers { get; }
 
     private DNSServerConnectionInfoProfile _dnsServer = new();
-
     public DNSServerConnectionInfoProfile DNSServer
     {
         get => _dnsServer;
-        set
+        private set
         {
-            if (value == _dnsServer)
+            if (_dnsServer == value)
                 return;
+            
+            _dnsServer = value ?? new DNSServerConnectionInfoProfile();
 
             if (!_isLoading)
-                SettingsManager.Current.DNSLookup_SelectedDNSServer = value;
+                SettingsManager.Current.DNSLookup_SelectedDNSServer = _dnsServer;
 
-            _dnsServer = value;
             OnPropertyChanged();
         }
     }
 
-    private List<QueryType> _queryTypes = new();
+    private DNSServerConnectionInfoProfile _selectedListProfile;
+    public DNSServerConnectionInfoProfile SelectedListProfile
+    {
+        get => _selectedListProfile;
+        set
+        {
+            if (_selectedListProfile == value)
+                return;
+                        
+            if (value != null)
+            {
+                DNSServer = value;
+                DNSServerQuickInput = value.ToString();  // uses your override
+            }
+
+            _selectedListProfile = value;
+            OnPropertyChanged();
+        }
+    }
+
+    // Text box content
+    private string _dnsServerQuickInput = string.Empty;
+    public string DNSServerQuickInput
+    {
+        get => _dnsServerQuickInput;
+        set
+        {
+            if (_dnsServerQuickInput == value) 
+                return;
+
+            _dnsServerQuickInput = value?.Trim() ?? string.Empty;
+            OnPropertyChanged();
+
+            // As soon as user types → deselect any list item
+            SelectedListProfile = null;
+
+            // Create custom profile from raw IP
+            if (IPAddress.TryParse(_dnsServerQuickInput, out IPAddress x))
+            {
+                // Temporarily switch to this custom profile               
+                DNSServer = new DNSServerConnectionInfoProfile("CUSTOM", [new ServerConnectionInfo(x.ToString(), 53)]);
+            }
+        }
+    }
+
+    private List<QueryType> _queryTypes = [];
 
     public List<QueryType> QueryTypes
     {
@@ -220,9 +266,13 @@ public class DNSLookupViewModel : ViewModelBase
             ListSortDirection.Descending));
         DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerConnectionInfoProfile.Name),
             ListSortDirection.Ascending));
-        DNSServer = DNSServers.SourceCollection.Cast<DNSServerConnectionInfoProfile>()
+        var initialDNSServer = DNSServers.SourceCollection.Cast<DNSServerConnectionInfoProfile>()
                         .FirstOrDefault(x => x.Name == SettingsManager.Current.DNSLookup_SelectedDNSServer.Name) ??
                     DNSServers.SourceCollection.Cast<DNSServerConnectionInfoProfile>().First();
+
+        DNSServer = initialDNSServer;
+        SelectedListProfile = initialDNSServer;
+        DNSServerQuickInput = initialDNSServer.ToString();
 
         ResultsView = CollectionViewSource.GetDefaultView(Results);
         ResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(DNSLookupRecordInfo.NameServerAsString)));
