@@ -1753,7 +1753,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private DNSServerConnectionInfoProfile _dnsLookup_SelectedDNSServer = new();
+    private DNSServerConnectionInfoProfile _dnsLookup_SelectedDNSServer = null;
 
     public DNSServerConnectionInfoProfile DNSLookup_SelectedDNSServer
     {

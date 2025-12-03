@@ -28,7 +28,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
 
     public ICollectionView DNSServers { get; }
 
-    private DNSServerConnectionInfoProfile _selectedDNSServer = new();
+    private DNSServerConnectionInfoProfile _selectedDNSServer = null;
 
     public DNSServerConnectionInfoProfile SelectedDNSServer
     {
