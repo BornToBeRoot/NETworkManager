@@ -33,7 +33,7 @@ const FeatureList = [
       .default,
     description: (
       <>
-        Organize hosts and networks in profiles with individual settings,
+        Organize hosts and networks in profiles with specific configurations,
         and use them seamlessly across all features. Keep your sensitive
         data secure with encrypted profile files, and manage customers
         or environments by using different profile files.
