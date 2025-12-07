@@ -236,9 +236,7 @@ export default function Home() {
             />
           </div>
           <p>Overview of various features and tools in NETworkManager.</p>
-          {/* <Heading as="h2" className="margin-top--xl">
-            ...with tabs, drag & drop...
-          </Heading> */}
+          <br />          
           <div className="gallery-container2">
             <img
               src="./img/preview_tabs_drag_drop.gif"
@@ -247,6 +245,7 @@ export default function Home() {
             />
           </div>
           <p>Preview of tabs and drag & drop functionality.</p>
+          <br />
           <div className="gallery-container3">
             <img
               src="./img/preview-light-theme.png"
