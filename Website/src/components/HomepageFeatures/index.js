@@ -35,8 +35,8 @@ const FeatureList = [
       <>
         Organize hosts and networks in profiles with individual settings,
         and use them seamlessly across all features. Keep your sensitive
-        data secure with encrypted profile files, and manage multiple
-        customers or environments by using different profile files.
+        data secure with encrypted profile files, and manage customers
+        or environments by using different profile files.
       </>
     ),
   },
@@ -59,7 +59,7 @@ const FeatureList = [
       <>
         NETworkManager is fully open source on GitHub — no ads, no subscriptions,
         no selling your data. Review the code, build it yourself, or contribute
-        to make it even better."
+        to make it even better.
       </>
     ),
   },
