@@ -14,7 +14,7 @@ table {
   position: relative;
   overflow: hidden;
 
-  background-color: #2b3137;
+  background-color: var(--ifm-background-dark);
 }
 
 @media screen and (max-width: 996px) {
@@ -30,7 +30,7 @@ table {
 }
 
 .hero {
-  background-color: #2b3137;
+  background-color: var(--ifm-background-dark);
   padding: 48px;
 }
 
