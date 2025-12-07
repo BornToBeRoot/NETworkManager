@@ -16,7 +16,9 @@ PowerShell is a command-line shell and scripting language developed by Microsoft
 
 :::note
 
-Windows PowerShell and PowerShell are supported. Indructions for installing PowerShell Core can be found on the [official website](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?).
+Windows PowerShell (`powershell`) and PowerShell (`pwsh`) are supported. **Use PowerShell (`pwsh`) for the best experience.**
+
+Indructions for installing PowerShell (`pwsh`) can be found on the [official website](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?).
 
 :::
 
