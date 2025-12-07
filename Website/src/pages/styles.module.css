@@ -97,7 +97,7 @@ table {
 .imageScreenshot {
   display: block;
   margin: auto;
-  max-width: 1060px;
+  max-width: var(--content-max-width);
   width: 100%;
   height: auto;
 }
