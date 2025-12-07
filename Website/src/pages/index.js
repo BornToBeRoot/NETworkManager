@@ -232,7 +232,7 @@ export default function Home() {
             <ImageGallery
               autoPlay="true"
               items={images1}
-              additionalClass={styles.image}
+              additionalClass={styles.imageScreenshot}
             />
           </div>
           <p>Overview of various features and tools in NETworkManager.</p>
@@ -241,7 +241,7 @@ export default function Home() {
             <img
               src="./img/preview_tabs_drag_drop.gif"
               alt="NETworkManager tabs and drag & drop preview"
-              className={styles.image}
+              className={styles.imageScreenshot}
             />
           </div>
           <p>Preview of tabs and drag & drop functionality.</p>
@@ -250,7 +250,7 @@ export default function Home() {
             <img
               src="./img/preview-light-theme.png"
               alt="NETworkManager tabs and drag & drop preview"
-              className={styles.image}
+              className={styles.imageScreenshot}
             />
           </div>
           <p>Preview of tabs and drag & drop functionality.</p>

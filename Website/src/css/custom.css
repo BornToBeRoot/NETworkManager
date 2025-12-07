@@ -39,7 +39,5 @@
 .image {
   display: block;
   margin: auto;
-  max-width: 1060px;
-  width: 100%;
-  height: auto;
+  max-width: 1060px;  
 }

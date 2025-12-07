@@ -94,6 +94,14 @@ table {
   height: auto;
 }
 
+.imageScreenshot {
+  display: block;
+  margin: auto;
+  max-width: 1060px;
+  width: 100%;
+  height: auto;
+}
+
 .indexCtas {
   --ifm-button-size-multiplier: 1.6;
   display: flex;
