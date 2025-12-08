@@ -24,10 +24,21 @@ using Ping = NETworkManager.Models.Network.Ping;
 
 namespace NETworkManager.ViewModels;
 
+/// <summary>
+/// ViewModel for the Ping Monitor feature, representing a single monitored host.
+/// </summary>
 public class PingMonitorViewModel : ViewModelBase
 {
     #region Contructor, load settings
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PingMonitorViewModel"/> class.
+    /// </summary>
+    /// <param name="instance">The dialog coordinator instance.</param>
+    /// <param name="hostId">The unique identifier for the host.</param>
+    /// <param name="removeHostByGuid">Action to remove the host by its GUID.</param>
+    /// <param name="host">Tuple containing the IP address and hostname.</param>
+    /// <param name="group">The group name the host belongs to.</param>
     public PingMonitorViewModel(IDialogCoordinator instance, Guid hostId, Action<Guid> removeHostByGuid,
         (IPAddress ipAddress, string hostname) host, string group)
     {
@@ -62,6 +73,9 @@ public class PingMonitorViewModel : ViewModelBase
 
     private string _title;
 
+    /// <summary>
+    /// Gets the title of the monitor, typically "Hostname # IP".
+    /// </summary>
     public string Title
     {
         get => _title;
@@ -77,6 +91,9 @@ public class PingMonitorViewModel : ViewModelBase
 
     private string _hostname;
 
+    /// <summary>
+    /// Gets the hostname of the monitored host.
+    /// </summary>
     public string Hostname
     {
         get => _hostname;
@@ -92,6 +109,9 @@ public class PingMonitorViewModel : ViewModelBase
 
     private readonly IPAddress _ipAddress;
 
+    /// <summary>
+    /// Gets the IP address of the monitored host.
+    /// </summary>
     public IPAddress IPAddress
     {
         get => _ipAddress;
@@ -107,6 +127,9 @@ public class PingMonitorViewModel : ViewModelBase
 
     private string _group;
 
+    /// <summary>
+    /// Gets or sets the group the monitored host belongs to.
+    /// </summary>
     public string Group
     {
         get => _group;
@@ -122,6 +145,9 @@ public class PingMonitorViewModel : ViewModelBase
 
     private bool _isRunning;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the ping monitoring is currently running.
+    /// </summary>
     public bool IsRunning
     {
         get => _isRunning;
@@ -137,6 +163,9 @@ public class PingMonitorViewModel : ViewModelBase
 
     private bool _isReachable;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the host is reachable (responds to ping).
+    /// </summary>
     public bool IsReachable
     {
         get => _isReachable;
@@ -152,6 +181,9 @@ public class PingMonitorViewModel : ViewModelBase
 
     private DateTime _statusTime;
 
+    /// <summary>
+    /// Gets the time of the last status update.
+    /// </summary>
     public DateTime StatusTime
     {
         get => _statusTime;
@@ -167,6 +199,9 @@ public class PingMonitorViewModel : ViewModelBase
 
     private int _transmitted;
 
+    /// <summary>
+    /// Gets or sets the total number of ping packets transmitted.
+    /// </summary>
     public int Transmitted
     {
         get => _transmitted;
@@ -182,6 +217,9 @@ public class PingMonitorViewModel : ViewModelBase
 
     private int _received;
 
+    /// <summary>
+    /// Gets the total number of ping packets received.
+    /// </summary>
     public int Received
     {
         get => _received;
@@ -197,6 +235,9 @@ public class PingMonitorViewModel : ViewModelBase
 
     private int _lost;
 
+    /// <summary>
+    /// Gets or sets the total number of ping packets lost.
+    /// </summary>
     public int Lost
     {
         get => _lost;
@@ -212,6 +253,9 @@ public class PingMonitorViewModel : ViewModelBase
 
     private double _packetLoss;
 
+    /// <summary>
+    /// Gets or sets the percentage of packet loss.
+    /// </summary>
     public double PacketLoss
     {
         get => _packetLoss;
@@ -227,6 +271,9 @@ public class PingMonitorViewModel : ViewModelBase
 
     private long _timeMs;
 
+    /// <summary>
+    /// Gets or sets the round-trip time in milliseconds of the last ping.
+    /// </summary>
     public long TimeMs
     {
         get => _timeMs;
@@ -240,6 +287,9 @@ public class PingMonitorViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Initializes the time chart configuration.
+    /// </summary>
     private void InitialTimeChart()
     {
         var dayConfig = Mappers.Xy<LvlChartsDefaultInfo>()
@@ -261,12 +311,26 @@ public class PingMonitorViewModel : ViewModelBase
         FormatterPingTime = value => $"{value} ms";
     }
 
+    /// <summary>
+    /// Gets or sets the formatter for the date axis.
+    /// </summary>
     public Func<double, string> FormatterDate { get; set; }
+
+    /// <summary>
+    /// Gets or sets the formatter for the ping time axis.
+    /// </summary>
     public Func<double, string> FormatterPingTime { get; set; }
+
+    /// <summary>
+    /// Gets or sets the series collection for the chart.
+    /// </summary>
     public SeriesCollection Series { get; set; }
 
     private string _errorMessage;
 
+    /// <summary>
+    /// Gets the error message if an error occurs.
+    /// </summary>
     public string ErrorMessage
     {
         get => _errorMessage;
@@ -282,6 +346,9 @@ public class PingMonitorViewModel : ViewModelBase
 
     private bool _isErrorMessageDisplayed;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the error message is displayed.
+    /// </summary>
     public bool IsErrorMessageDisplayed
     {
         get => _isErrorMessageDisplayed;
@@ -297,6 +364,9 @@ public class PingMonitorViewModel : ViewModelBase
 
     private bool _expandHostView;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the host view is expanded.
+    /// </summary>
     public bool ExpandHostView
     {
         get => _expandHostView;
@@ -314,8 +384,14 @@ public class PingMonitorViewModel : ViewModelBase
 
     #region ICommands & Actions
 
+    /// <summary>
+    /// Gets the command to start or stop the ping monitoring.
+    /// </summary>
     public ICommand PingCommand => new RelayCommand(_ => PingAction());
 
+    /// <summary>
+    /// Action to start or stop the ping monitoring.
+    /// </summary>
     private void PingAction()
     {
         if (IsRunning)
@@ -324,6 +400,9 @@ public class PingMonitorViewModel : ViewModelBase
             Start();
     }
 
+    /// <summary>
+    /// Gets the command to close the monitor and remove the host.
+    /// </summary>
     public ICommand CloseCommand => new RelayCommand(_ => CloseAction());
 
     private void CloseAction()
@@ -335,6 +414,9 @@ public class PingMonitorViewModel : ViewModelBase
 
     #region Methods
 
+    /// <summary>
+    /// Starts the ping monitoring.
+    /// </summary>
     public void Start()
     {
         IsErrorMessageDisplayed = false;
@@ -372,6 +454,9 @@ public class PingMonitorViewModel : ViewModelBase
         ping.SendAsync(IPAddress, _cancellationTokenSource.Token);
     }
 
+    /// <summary>
+    /// Stops the ping monitoring.
+    /// </summary>
     public void Stop()
     {
         if (!IsRunning)
@@ -380,6 +465,9 @@ public class PingMonitorViewModel : ViewModelBase
         _cancellationTokenSource?.Cancel();
     }
 
+    /// <summary>
+    /// Resets the time chart with empty values.
+    /// </summary>
     private void ResetTimeChart()
     {
         if (Series == null)
@@ -397,6 +485,10 @@ public class PingMonitorViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Exports the ping monitoring results to a file.
+    /// </summary>
+    /// <returns>A task that represents the asynchronous operation.</returns>
     public Task Export()
     {
         var childWindow = new ExportChildWindow();
@@ -448,6 +540,11 @@ public class PingMonitorViewModel : ViewModelBase
 
     #region Events
 
+    /// <summary>
+    /// Handles the PingReceived event. Updates statistics and the chart.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="PingReceivedArgs"/> instance containing the event data.</param>
     private void Ping_PingReceived(object sender, PingReceivedArgs e)
     {
         // Calculate statistics
@@ -496,11 +593,21 @@ public class PingMonitorViewModel : ViewModelBase
         _pingInfoList.Add(e.Args);
     }
 
+    /// <summary>
+    /// Handles the UserHasCanceled event. Stops the monitoring.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
     private void Ping_UserHasCanceled(object sender, EventArgs e)
     {
         IsRunning = false;
     }
 
+    /// <summary>
+    /// Handles the HostnameResolved event. Updates the hostname and title if necessary.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="HostnameArgs"/> instance containing the event data.</param>
     private void Ping_HostnameResolved(object sender, HostnameArgs e)
     {
         // Update title if name was not set in the constructor
@@ -510,6 +617,11 @@ public class PingMonitorViewModel : ViewModelBase
         Hostname = e.Hostname;
     }
 
+    /// <summary>
+    /// Handles the PingException event. Stops the monitoring and displays the error.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="PingExceptionArgs"/> instance containing the event data.</param>
     private void Ping_PingException(object sender, PingExceptionArgs e)
     {
         IsRunning = false;

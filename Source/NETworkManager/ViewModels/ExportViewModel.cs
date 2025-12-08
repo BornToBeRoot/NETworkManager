@@ -10,38 +10,78 @@ using NETworkManager.Utilities;
 namespace NETworkManager.ViewModels;
 
 /// <summary>
+/// View model for exporting data.
 /// </summary>
 public class ExportViewModel : ViewModelBase
 {
     /// <summary>
+    /// Backing field for <see cref="ExportAll"/>.
     /// </summary>
     private bool _exportAll = true;
 
+    /// <summary>
+    /// Backing field for <see cref="ExportSelected"/>.
+    /// </summary>
     private bool _exportSelected;
 
+    /// <summary>
+    /// Backing field for <see cref="FilePath"/>.
+    /// </summary>
     private string _filePath;
 
+    /// <summary>
+    /// Backing field for <see cref="ShowCsv"/>.
+    /// </summary>
     private bool _showCsv;
 
     /// <summary>
+    /// Backing field for <see cref="ShowExportSelected"/>.
     /// </summary>
     private bool _showExportSelected;
 
 
+    /// <summary>
+    /// Backing field for <see cref="ShowJson"/>.
+    /// </summary>
     private bool _showJson;
 
+    /// <summary>
+    /// Backing field for <see cref="ShowTxt"/>.
+    /// </summary>
     private bool _showTxt;
 
+    /// <summary>
+    /// Backing field for <see cref="ShowXml"/>.
+    /// </summary>
     private bool _showXml;
 
+    /// <summary>
+    /// Backing field for <see cref="UseCsv"/>.
+    /// </summary>
     private bool _useCsv;
 
+    /// <summary>
+    /// Backing field for <see cref="UseJson"/>.
+    /// </summary>
     private bool _useJson;
 
+    /// <summary>
+    /// Backing field for <see cref="UseTxt"/>.
+    /// </summary>
     private bool _useTxt;
 
+    /// <summary>
+    /// Backing field for <see cref="UseXml"/>.
+    /// </summary>
     private bool _useXml;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ExportViewModel"/> class.
+    /// </summary>
+    /// <param name="deleteCommand">The action to execute when export is confirmed.</param>
+    /// <param name="cancelHandler">The action to execute when cancel is clicked.</param>
+    /// <param name="showFilesTypes">The array of file types to show.</param>
+    /// <param name="showExportSelected">Indicates whether to show the "Export selected" option.</param>
     private ExportViewModel(Action<ExportViewModel> deleteCommand, Action<ExportViewModel> cancelHandler,
         ExportFileType[] showFilesTypes, bool showExportSelected)
     {
@@ -56,6 +96,15 @@ public class ExportViewModel : ViewModelBase
         ShowExportSelected = showExportSelected;
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ExportViewModel"/> class.
+    /// </summary>
+    /// <param name="deleteCommand">The action to execute when export is confirmed.</param>
+    /// <param name="cancelHandler">The action to execute when cancel is clicked.</param>
+    /// <param name="showFilesTypes">The array of file types to show.</param>
+    /// <param name="showExportSelected">Indicates whether to show the "Export selected" option.</param>
+    /// <param name="fileType">The initial file type.</param>
+    /// <param name="filePath">The initial file path.</param>
     public ExportViewModel(Action<ExportViewModel> deleteCommand, Action<ExportViewModel> cancelHandler,
         ExportFileType[] showFilesTypes, bool showExportSelected, ExportFileType fileType, string filePath) :
         this(deleteCommand, cancelHandler, showFilesTypes, showExportSelected)
@@ -82,14 +131,17 @@ public class ExportViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets the command to export data.
     /// </summary>
     public ICommand ExportCommand { get; }
 
     /// <summary>
+    /// Gets the command to cancel the operation.
     /// </summary>
     public ICommand CancelCommand { get; }
 
     /// <summary>
+    /// Gets or sets a value indicating whether to export all data.
     /// </summary>
     public bool ExportAll
     {
@@ -105,6 +157,7 @@ public class ExportViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets or sets a value indicating whether to show the "Export selected" option.
     /// </summary>
     public bool ShowExportSelected
     {
@@ -119,6 +172,9 @@ public class ExportViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether to export only selected data.
+    /// </summary>
     public bool ExportSelected
     {
         get => _exportSelected;
@@ -132,8 +188,14 @@ public class ExportViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the selected file type for export.
+    /// </summary>
     public ExportFileType FileType { get; private set; }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether to show the CSV option.
+    /// </summary>
     public bool ShowCsv
     {
         get => _showCsv;
@@ -147,6 +209,9 @@ public class ExportViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether CSV format is selected.
+    /// </summary>
     public bool UseCsv
     {
         get => _useCsv;
@@ -166,6 +231,9 @@ public class ExportViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether to show the XML option.
+    /// </summary>
     public bool ShowXml
     {
         get => _showXml;
@@ -179,6 +247,9 @@ public class ExportViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether XML format is selected.
+    /// </summary>
     public bool UseXml
     {
         get => _useXml;
@@ -198,6 +269,9 @@ public class ExportViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether to show the JSON option.
+    /// </summary>
     public bool ShowJson
     {
         get => _showJson;
@@ -211,6 +285,9 @@ public class ExportViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether JSON format is selected.
+    /// </summary>
     public bool UseJson
     {
         get => _useJson;
@@ -230,6 +307,9 @@ public class ExportViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether to show the TXT option.
+    /// </summary>
     public bool ShowTxt
     {
         get => _showTxt;
@@ -243,6 +323,9 @@ public class ExportViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether TXT format is selected.
+    /// </summary>
     public bool UseTxt
     {
         get => _useTxt;
@@ -262,6 +345,9 @@ public class ExportViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets or sets the file path for export.
+    /// </summary>
     public string FilePath
     {
         get => _filePath;
@@ -275,8 +361,14 @@ public class ExportViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the command to browse for a file.
+    /// </summary>
     public ICommand BrowseFileCommand => new RelayCommand(_ => BrowseFileAction());
 
+    /// <summary>
+    /// Action to browse for a file.
+    /// </summary>
     private void BrowseFileAction()
     {
         var saveFileDialog = new SaveFileDialog();
@@ -288,6 +380,10 @@ public class ExportViewModel : ViewModelBase
         if (saveFileDialog.ShowDialog() == DialogResult.OK) FilePath = saveFileDialog.FileName;
     }
 
+    /// <summary>
+    /// Changes the file path extension based on the selected file type.
+    /// </summary>
+    /// <param name="fileType">The new file type.</param>
     private void ChangeFilePathExtension(ExportFileType fileType)
     {
         if (string.IsNullOrEmpty(FilePath))

@@ -11,10 +11,16 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
+/// <summary>
+///     Provides functionality to manage network interfaces.
+/// </summary>
 public sealed class NetworkInterface
 {
     #region Events
 
+    /// <summary>
+    ///     Occurs when the user has canceled an operation (e.g. UAC prompt).
+    /// </summary>
     public event EventHandler UserHasCanceled;
 
     private void OnUserHasCanceled()
@@ -26,11 +32,19 @@ public sealed class NetworkInterface
 
     #region Methods
 
+    /// <summary>
+    ///     Gets a list of all available network interfaces asynchronously.
+    /// </summary>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="NetworkInterfaceInfo"/>.</returns>
     public static Task<List<NetworkInterfaceInfo>> GetNetworkInterfacesAsync()
     {
         return Task.Run(GetNetworkInterfaces);
     }
 
+    /// <summary>
+    ///     Gets a list of all available network interfaces.
+    /// </summary>
+    /// <returns>A list of <see cref="NetworkInterfaceInfo"/> describing the available network interfaces.</returns>
     public static List<NetworkInterfaceInfo> GetNetworkInterfaces()
     {
         List<NetworkInterfaceInfo> listNetworkInterfaceInfo = new();
@@ -156,11 +170,21 @@ public sealed class NetworkInterface
         return listNetworkInterfaceInfo;
     }
 
+    /// <summary>
+    ///     Detects the local IP address based on routing to a remote IP address asynchronously.
+    /// </summary>
+    /// <param name="remoteIPAddress">The remote IP address to check routing against.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the local <see cref="IPAddress"/> used to reach the remote address.</returns>
     public static Task<IPAddress> DetectLocalIPAddressBasedOnRoutingAsync(IPAddress remoteIPAddress)
     {
         return Task.Run(() => DetectLocalIPAddressBasedOnRouting(remoteIPAddress));
     }
 
+    /// <summary>
+    ///     Detects the local IP address based on routing to a remote IP address.
+    /// </summary>
+    /// <param name="remoteIPAddress">The remote IP address to check routing against.</param>
+    /// <returns>The local <see cref="IPAddress"/> used to reach the remote address.</returns>
     private static IPAddress DetectLocalIPAddressBasedOnRouting(IPAddress remoteIPAddress)
     {
         var isIPv4 = remoteIPAddress.AddressFamily == AddressFamily.InterNetwork;
@@ -184,11 +208,21 @@ public sealed class NetworkInterface
         return null;
     }
 
+    /// <summary>
+    ///     Detects the gateway IP address based on a local IP address asynchronously.
+    /// </summary>
+    /// <param name="localIPAddress">The local IP address to find the gateway for.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the gateway <see cref="IPAddress"/>.</returns>
     public static Task<IPAddress> DetectGatewayBasedOnLocalIPAddressAsync(IPAddress localIPAddress)
     {
         return Task.Run(() => DetectGatewayBasedOnLocalIPAddress(localIPAddress));
     }
 
+    /// <summary>
+    ///     Detects the gateway IP address based on a local IP address.
+    /// </summary>
+    /// <param name="localIPAddress">The local IP address to find the gateway for.</param>
+    /// <returns>The gateway <see cref="IPAddress"/>.</returns>
     private static IPAddress DetectGatewayBasedOnLocalIPAddress(IPAddress localIPAddress)
     {
         foreach (var networkInterface in GetNetworkInterfaces())
@@ -210,11 +244,20 @@ public sealed class NetworkInterface
         return null;
     }
 
+    /// <summary>
+    ///     Configures a network interface with the specified configuration asynchronously.
+    /// </summary>
+    /// <param name="config">The configuration to apply.</param>
+    /// <returns>A task that represents the asynchronous operation.</returns>
     public Task ConfigureNetworkInterfaceAsync(NetworkInterfaceConfig config)
     {
         return Task.Run(() => ConfigureNetworkInterface(config));
     }
 
+    /// <summary>
+    ///     Configures a network interface with the specified configuration.
+    /// </summary>
+    /// <param name="config">The configuration to apply.</param>
     private void ConfigureNetworkInterface(NetworkInterfaceConfig config)
     {
         // IP

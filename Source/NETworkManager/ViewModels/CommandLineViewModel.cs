@@ -8,10 +8,16 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
+/// <summary>
+/// View model for the command line view.
+/// </summary>
 public class CommandLineViewModel : ViewModelBase
 {
     #region Constructor, load settings
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CommandLineViewModel"/> class.
+    /// </summary>
     public CommandLineViewModel()
     {
         if (!string.IsNullOrEmpty(CommandLineManager.Current.WrongParameter))
@@ -32,8 +38,14 @@ public class CommandLineViewModel : ViewModelBase
 
     #region Variables
 
+    /// <summary>
+    /// Backing field for <see cref="DisplayWrongParameter"/>.
+    /// </summary>
     private bool _displayWrongParameter;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether to display the wrong parameter message.
+    /// </summary>
     public bool DisplayWrongParameter
     {
         get => _displayWrongParameter;
@@ -47,8 +59,14 @@ public class CommandLineViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="WrongParameter"/>.
+    /// </summary>
     private string _wrongParameter;
 
+    /// <summary>
+    /// Gets or sets the wrong parameter.
+    /// </summary>
     public string WrongParameter
     {
         get => _wrongParameter;
@@ -62,8 +80,14 @@ public class CommandLineViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="ParameterHelp"/>.
+    /// </summary>
     private string _parameterHelp;
 
+    /// <summary>
+    /// Gets or sets the help parameter.
+    /// </summary>
     public string ParameterHelp
     {
         get => _parameterHelp;
@@ -77,8 +101,14 @@ public class CommandLineViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="ParameterResetSettings"/>.
+    /// </summary>
     private string _parameterResetSettings;
 
+    /// <summary>
+    /// Gets or sets the reset settings parameter.
+    /// </summary>
     public string ParameterResetSettings
     {
         get => _parameterResetSettings;
@@ -92,8 +122,14 @@ public class CommandLineViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="ParameterApplication"/>.
+    /// </summary>
     private string _parameterApplication;
 
+    /// <summary>
+    /// Gets or sets the application parameter.
+    /// </summary>
     public string ParameterApplication
     {
         get => _parameterApplication;
@@ -107,8 +143,14 @@ public class CommandLineViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="ParameterApplicationValues"/>.
+    /// </summary>
     private string _parameterApplicationValues;
 
+    /// <summary>
+    /// Gets or sets the available application parameter values.
+    /// </summary>
     public string ParameterApplicationValues
     {
         get => _parameterApplicationValues;
@@ -126,11 +168,17 @@ public class CommandLineViewModel : ViewModelBase
 
     #region ICommand & Actions
 
+    /// <summary>
+    /// Gets the command to open the documentation.
+    /// </summary>
     public ICommand OpenDocumentationCommand
     {
         get { return new RelayCommand(_ => OpenDocumentationAction()); }
     }
 
+    /// <summary>
+    /// Action to open the documentation.
+    /// </summary>
     private void OpenDocumentationAction()
     {
         DocumentationManager.OpenDocumentation(DocumentationIdentifier.CommandLineArguments);

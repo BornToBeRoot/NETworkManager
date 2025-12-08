@@ -19,17 +19,33 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
+/// <summary>
+/// View model for the bit calculator view.
+/// </summary>
 public class BitCalculatorViewModel : ViewModelBase
 {
     #region Variables
+
+    /// <summary>
+    /// The dialog coordinator instance.
+    /// </summary>
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private static readonly ILog Log = LogManager.GetLogger(typeof(BitCalculatorViewModel));
 
+    /// <summary>
+    /// Indicates whether the view model is loading.
+    /// </summary>
     private readonly bool _isLoading;
 
+    /// <summary>
+    /// Backing field for <see cref="Input"/>.
+    /// </summary>
     private string _input;
 
+    /// <summary>
+    /// Gets or sets the input value.
+    /// </summary>
     public string Input
     {
         get => _input;
@@ -43,10 +59,19 @@ public class BitCalculatorViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the collection view for the input history.
+    /// </summary>
     public ICollectionView InputHistoryView { get; }
 
+    /// <summary>
+    /// Backing field for <see cref="Units"/>.
+    /// </summary>
     private readonly List<BitCaluclatorUnit> _units = new();
 
+    /// <summary>
+    /// Gets the list of available units.
+    /// </summary>
     public List<BitCaluclatorUnit> Units
     {
         get => _units;
@@ -60,8 +85,14 @@ public class BitCalculatorViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="Unit"/>.
+    /// </summary>
     private BitCaluclatorUnit _unit;
 
+    /// <summary>
+    /// Gets or sets the selected unit.
+    /// </summary>
     public BitCaluclatorUnit Unit
     {
         get => _unit;
@@ -78,8 +109,14 @@ public class BitCalculatorViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="IsRunning"/>.
+    /// </summary>
     private bool _isRunning;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the calculation is running.
+    /// </summary>
     public bool IsRunning
     {
         get => _isRunning;
@@ -93,8 +130,14 @@ public class BitCalculatorViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="IsResultVisible"/>.
+    /// </summary>
     private bool _isResultVisible;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the result is visible.
+    /// </summary>
     public bool IsResultVisible
     {
         get => _isResultVisible;
@@ -109,8 +152,14 @@ public class BitCalculatorViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="Result"/>.
+    /// </summary>
     private BitCaluclatorInfo _result = new();
 
+    /// <summary>
+    /// Gets the calculation result.
+    /// </summary>
     public BitCaluclatorInfo Result
     {
         get => _result;
@@ -128,6 +177,10 @@ public class BitCalculatorViewModel : ViewModelBase
 
     #region Constructor, load settings
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="BitCalculatorViewModel"/> class.
+    /// </summary>
+    /// <param name="instance">The dialog coordinator instance.</param>
     public BitCalculatorViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
@@ -143,6 +196,9 @@ public class BitCalculatorViewModel : ViewModelBase
         _isLoading = false;
     }
 
+    /// <summary>
+    /// Loads the settings.
+    /// </summary>
     private void LoadSettings()
     {
     }
@@ -151,8 +207,16 @@ public class BitCalculatorViewModel : ViewModelBase
 
     #region ICommands & Actions
 
+    /// <summary>
+    /// Gets the command to calculate the result.
+    /// </summary>
     public ICommand CalculateCommand => new RelayCommand(_ => CalculateAction(), Calculate_CanExecute);
 
+    /// <summary>
+    /// Checks if the calculate command can be executed.
+    /// </summary>
+    /// <param name="parameter">The command parameter.</param>
+    /// <returns><c>true</c> if the command can be executed; otherwise, <c>false</c>.</returns>
     private bool Calculate_CanExecute(object parameter)
     {
         return Application.Current.MainWindow != null &&
@@ -160,13 +224,22 @@ public class BitCalculatorViewModel : ViewModelBase
                !ConfigurationManager.Current.IsChildWindowOpen;
     }
 
+    /// <summary>
+    /// Action to calculate the result.
+    /// </summary>
     private void CalculateAction()
     {
         Calculate();
     }
 
+    /// <summary>
+    /// Gets the command to export the result.
+    /// </summary>
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
 
+    /// <summary>
+    /// Action to export the result.
+    /// </summary>
     private Task ExportAction()
     {
         var childWindow = new ExportChildWindow();
@@ -217,6 +290,9 @@ public class BitCalculatorViewModel : ViewModelBase
 
     #region Methods
 
+    /// <summary>
+    /// Calculates the result based on the input.
+    /// </summary>
     private async void Calculate()
     {
         IsResultVisible = false;
@@ -234,6 +310,10 @@ public class BitCalculatorViewModel : ViewModelBase
         IsRunning = false;
     }
 
+    /// <summary>
+    /// Adds the input to the history.
+    /// </summary>
+    /// <param name="input">The input string.</param>
     private void AddInputToHistory(string input)
     {
         // Create the new list
@@ -248,10 +328,16 @@ public class BitCalculatorViewModel : ViewModelBase
         list.ForEach(x => SettingsManager.Current.BitCalculator_InputHistory.Add(x));
     }
 
+    /// <summary>
+    /// Called when the view becomes visible.
+    /// </summary>
     public void OnViewVisible()
     {
     }
 
+    /// <summary>
+    /// Called when the view is hidden.
+    /// </summary>
     public void OnViewHide()
     {
     }
