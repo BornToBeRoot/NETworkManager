@@ -81,77 +81,50 @@ public class DNSLookupViewModel : ViewModelBase
     /// <summary>
     /// Backing field for <see cref="DNSServer"/>.
     /// </summary>
-    private DNSServerConnectionInfoProfile _dnsServer = new();
+    private string _dnsServer;
 
     /// <summary>
     /// Gets or sets the selected DNS server.
+    /// This can either be an ip/host:port or a profile name.
     /// </summary>
-    public DNSServerConnectionInfoProfile DNSServer
+    public string DNSServer
     {
         get => _dnsServer;
-        private set
+        set
         {
             if (_dnsServer == value)
                 return;
-            
-            _dnsServer = value ?? new DNSServerConnectionInfoProfile();
+
+            // Try finding matching dns server profile by name, otherwise set to null (de-select)
+            SelectedDNSServer = SettingsManager.Current.DNSLookup_DNSServers
+                .FirstOrDefault(x => x.Name == value);
 
             if (!_isLoading)
-                SettingsManager.Current.DNSLookup_SelectedDNSServer = _dnsServer;
+                SettingsManager.Current.DNSLookup_SelectedDNSServer_v2 = value;
 
+            _dnsServer = value;
             OnPropertyChanged();
         }
     }
 
-    private DNSServerConnectionInfoProfile _selectedListProfile;
-    public DNSServerConnectionInfoProfile SelectedListProfile
+    private DNSServerConnectionInfoProfile _selectedDNSServer;
+    public DNSServerConnectionInfoProfile SelectedDNSServer
     {
-        get => _selectedListProfile;
+        get => _selectedDNSServer;
         set
         {
-            if (_selectedListProfile == value)
-                return;
-                        
-            if (value != null)
-            {
-                DNSServer = value;
-                DNSServerQuickInput = value.ToString();  // uses your override
-            }
-
-            _selectedListProfile = value;
-            OnPropertyChanged();
-        }
-    }
-
-    // Text box content
-    private string _dnsServerQuickInput = string.Empty;
-    public string DNSServerQuickInput
-    {
-        get => _dnsServerQuickInput;
-        set
-        {
-            if (_dnsServerQuickInput == value) 
+            if (_selectedDNSServer == value)
                 return;
 
-            _dnsServerQuickInput = value?.Trim() ?? string.Empty;
+            _selectedDNSServer = value;
             OnPropertyChanged();
-
-            // As soon as user types → deselect any list item
-            SelectedListProfile = null;
-
-            // Create custom profile from raw IP
-            if (IPAddress.TryParse(_dnsServerQuickInput, out IPAddress x))
-            {
-                // Temporarily switch to this custom profile               
-                DNSServer = new DNSServerConnectionInfoProfile("CUSTOM", [new ServerConnectionInfo(x.ToString(), 53)]);
-            }
         }
     }
     
     /// <summary>
     /// Backing field for <see cref="QueryTypes"/>.
     /// </summary>
-    private List<QueryType> _queryTypes = new();
+    private List<QueryType> _queryTypes = [];
 
     /// <summary>
     /// Gets the list of available query types.
@@ -217,7 +190,7 @@ public class DNSLookupViewModel : ViewModelBase
     /// <summary>
     /// Backing field for <see cref="Results"/>.
     /// </summary>
-    private ObservableCollection<DNSLookupRecordInfo> _results = new();
+    private ObservableCollection<DNSLookupRecordInfo> _results = [];
 
     /// <summary>
     /// Gets or sets the collection of lookup results.
@@ -351,13 +324,10 @@ public class DNSLookupViewModel : ViewModelBase
             ListSortDirection.Descending));
         DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerConnectionInfoProfile.Name),
             ListSortDirection.Ascending));
-        var initialDNSServer = DNSServers.SourceCollection.Cast<DNSServerConnectionInfoProfile>()
-                        .FirstOrDefault(x => x.Name == SettingsManager.Current.DNSLookup_SelectedDNSServer.Name) ??
-                    DNSServers.SourceCollection.Cast<DNSServerConnectionInfoProfile>().First();
-
-        DNSServer = initialDNSServer;
-        SelectedListProfile = initialDNSServer;
-        DNSServerQuickInput = initialDNSServer.ToString();
+        
+        DNSServer = string.IsNullOrEmpty(SettingsManager.Current.DNSLookup_SelectedDNSServer_v2)
+            ? SettingsManager.Current.DNSLookup_DNSServers.FirstOrDefault()?.Name
+            : SettingsManager.Current.DNSLookup_SelectedDNSServer_v2;
 
         ResultsView = CollectionViewSource.GetDefaultView(Results);
         ResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(DNSLookupRecordInfo.NameServerAsString)));
@@ -381,7 +351,7 @@ public class DNSLookupViewModel : ViewModelBase
             return;
 
         if (!string.IsNullOrEmpty(Host))
-            Query();
+            QueryAsync();
 
         _firstLoad = false;
     }
@@ -441,7 +411,7 @@ public class DNSLookupViewModel : ViewModelBase
     private void QueryAction()
     {
         if (!IsRunning)
-            Query();
+            QueryAsync();
     }
 
     /// <summary>
@@ -464,7 +434,7 @@ public class DNSLookupViewModel : ViewModelBase
     /// <summary>
     /// Performs the DNS query.
     /// </summary>
-    private void Query()
+    private async Task QueryAsync()
     {
         IsStatusMessageDisplayed = false;
         StatusMessage = string.Empty;
@@ -496,9 +466,67 @@ public class DNSLookupViewModel : ViewModelBase
             dnsSettings.CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix?.TrimStart('.');
         }
 
-        var dnsLookup = DNSServer.UseWindowsDNSServer
-            ? new DNSLookup(dnsSettings)
-            : new DNSLookup(dnsSettings, DNSServer.Servers);
+
+        DNSLookup dnsLookup;
+
+        // Try find existing dns server profile
+        var dnsServerProfile = SettingsManager.Current.DNSLookup_DNSServers
+            .FirstOrDefault(x => x.Name == DNSServer);
+
+        // Use profile if found
+        if (dnsServerProfile != null)
+        {
+            dnsLookup = dnsServerProfile.UseWindowsDNSServer 
+                ? new DNSLookup(dnsSettings) 
+                : new DNSLookup(dnsSettings, dnsServerProfile.Servers);
+        }
+        // Otherwise try to parse custom server string
+        else
+        {            
+            List<ServerConnectionInfo> customDNSServers = [];
+
+            foreach (var customDNSServer in DNSServer.Split(';').Select(x => x.Trim()))
+            {                
+                var customDNSServerArgs = customDNSServer.Split(':');
+
+                var server = customDNSServerArgs[0];
+                var port = customDNSServerArgs.Length == 2 && int.TryParse(customDNSServerArgs[1], out var p) ? p : 53;
+
+                // Resolve hostname to IP address
+                if (!IPAddress.TryParse(server, out _))
+                {
+                    var dnsResult = await DNSClientHelper.ResolveAorAaaaAsync(server,
+                    SettingsManager.Current.Network_ResolveHostnamePreferIPv4);
+
+                    if (dnsResult.HasError)
+                    {
+                        var dnsErrorMessage = DNSClientHelper.FormatDNSClientResultError(server, dnsResult);
+
+                        if(!string.IsNullOrEmpty(StatusMessage))
+                            StatusMessage += Environment.NewLine;
+
+                        StatusMessage += $"{Strings.DNSServer}: {dnsErrorMessage}";
+                        IsStatusMessageDisplayed = true;
+
+                        continue; // Skip this server, try next one
+                    }
+
+                    server = dnsResult.Value.ToString();
+                }
+
+                customDNSServers.Add(new ServerConnectionInfo(server, port, TransportProtocol.Udp));
+            }
+
+            // Check if we have any valid custom dns servers
+            if (customDNSServers.Count == 0)
+            {
+                IsRunning = false;
+                
+                return;
+            }
+
+            dnsLookup = new DNSLookup(dnsSettings, customDNSServers);
+        }
 
         dnsLookup.RecordReceived += DNSLookup_RecordReceived;
         dnsLookup.LookupError += DNSLookup_LookupError;

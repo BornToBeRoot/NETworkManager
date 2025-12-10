@@ -1723,7 +1723,7 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #region DNS Lookup
 
-    private ObservableCollection<string> _dnsLookup_HostHistory = new();
+    private ObservableCollection<string> _dnsLookup_HostHistory = [];
 
     public ObservableCollection<string> DNSLookup_HostHistory
     {
@@ -1738,7 +1738,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ObservableCollection<DNSServerConnectionInfoProfile> _dnsLookup_DNSServers = new();
+    private ObservableCollection<DNSServerConnectionInfoProfile> _dnsLookup_DNSServers = [];
 
     public ObservableCollection<DNSServerConnectionInfoProfile> DNSLookup_DNSServers
     {
@@ -1753,8 +1753,10 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
+    [Obsolete("Use DNSLookup_SelectedDNSServer_v2 instead.")]
     private DNSServerConnectionInfoProfile _dnsLookup_SelectedDNSServer = null;
 
+    [Obsolete("Use DNSLookup_SelectedDNSServer_v2 instead.")]
     public DNSServerConnectionInfoProfile DNSLookup_SelectedDNSServer
     {
         get => _dnsLookup_SelectedDNSServer;
@@ -1764,6 +1766,21 @@ public class SettingsInfo : INotifyPropertyChanged
                 return;
 
             _dnsLookup_SelectedDNSServer = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _dnsLookup_SelectedDNSServer_v2;
+
+    public string DNSLookup_SelectedDNSServer_v2
+    {
+        get => _dnsLookup_SelectedDNSServer_v2;
+        set
+        {
+            if (value == _dnsLookup_SelectedDNSServer_v2)
+                return;
+
+            _dnsLookup_SelectedDNSServer_v2 = value;
             OnPropertyChanged();
         }
     }
@@ -1782,23 +1799,6 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-
-    /*
-    private bool _dnsLookup_ShowOnlyMostCommonQueryTypes = true;
-
-    public bool DNSLookup_ShowOnlyMostCommonQueryTypes
-    {
-        get => _dnsLookup_ShowOnlyMostCommonQueryTypes;
-        set
-        {
-            if (value == _dnsLookup_ShowOnlyMostCommonQueryTypes)
-                return;
-
-            _dnsLookup_ShowOnlyMostCommonQueryTypes = value;
-            OnPropertyChanged();
-        }
-    }
-    */
 
     private QueryType _dnsLookup_QueryType = GlobalStaticConfiguration.DNSLookup_QueryType;
 

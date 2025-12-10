@@ -71,10 +71,10 @@
                 <TextBlock Grid.Column="4" Grid.Row="0" Text="{x:Static localization:Strings.DNSServer}"
                            Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
                 <ComboBox x:Name="ComboBoxDNSServers" 
-                          Grid.Column="6" Grid.Row="0"
-                          ItemsSource="{Binding DNSServers}"
-                          SelectedItem="{Binding SelectedListProfile}"
-                          Text="{Binding DNSServerQuickInput, UpdateSourceTrigger=PropertyChanged}"
+                          Grid.Column="6" Grid.Row="0"                          
+                          ItemsSource="{Binding DNSServers}"                          
+                          SelectedItem="{Binding SelectedDNSServer}"
+                          Text="{Binding Path=DNSServer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                           IsEditable="True"
                           IsTextSearchEnabled="False">                    
                 </ComboBox>
