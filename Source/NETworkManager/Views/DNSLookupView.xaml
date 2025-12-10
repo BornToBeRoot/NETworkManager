@@ -73,10 +73,15 @@
                 <ComboBox x:Name="ComboBoxDNSServers" 
                           Grid.Column="6" Grid.Row="0"                          
                           ItemsSource="{Binding DNSServers}"                          
-                          SelectedItem="{Binding SelectedDNSServer}"
-                          Text="{Binding Path=DNSServer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                          IsEditable="True"
-                          IsTextSearchEnabled="False">                    
+                          SelectedItem="{Binding SelectedDNSServer}"                          
+                          IsEditable="True">
+                    <ComboBox.Text>
+                        <Binding Path="DNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </ComboBox.Text>
                 </ComboBox>
                 <TextBlock Grid.Column="8" Grid.Row="0" Text="{x:Static localization:Strings.Type}"
                            Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
@@ -93,7 +98,7 @@
                                              Value="True">
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxTypes}"
+                                <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxDNSServers}"
                                              Value="True">
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
