@@ -16,7 +16,7 @@ public class IPAddressOrHostnameValidator : ValidationRule
             return new ValidationResult(false, Strings.EnterValidHostnameOrIPAddress);
 
         // Check if it is a valid IPv4 address like 192.168.0.1
-        if (Regex.IsMatch(input, RegexHelper.IPv4AddressRegex))
+        if (RegexHelper.IPv4AddressRegex().IsMatch(input))
             return ValidationResult.ValidResult;
 
         // Check if it is a valid IPv6 address like ::1

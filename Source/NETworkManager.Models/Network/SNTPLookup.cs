@@ -1,10 +1,11 @@
-﻿using System;
+﻿using ControlzEx.Standard;
+using NETworkManager.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
@@ -102,7 +103,7 @@ public sealed class SNTPLookup
                 // NTP requires an IP address to connect to
                 IPAddress serverIP = null;
 
-                if (Regex.IsMatch(server.Server, RegexHelper.IPv4AddressRegex) ||
+                if (RegexHelper.IPv4AddressRegex().IsMatch(server.Server) ||
                     Regex.IsMatch(server.Server, RegexHelper.IPv6AddressRegex))
                 {
                     serverIP = IPAddress.Parse(server.Server);

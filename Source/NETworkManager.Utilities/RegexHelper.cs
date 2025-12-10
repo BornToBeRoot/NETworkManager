@@ -1,6 +1,8 @@
-﻿namespace NETworkManager.Utilities;
+﻿using System.Text.RegularExpressions;
 
-public static class RegexHelper
+namespace NETworkManager.Utilities;
+
+public static partial class RegexHelper
 {
     /// <summary>
     ///     Match an IPv4-Address like 192.168.178.1
@@ -10,20 +12,36 @@ public static class RegexHelper
         @"((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
 
     /// <summary>
-    ///     Match exactly an IPv4-Address like 192.168.178.1
+    /// Provides a compiled regular expression that matches valid IPv4 addresses in dot-decimal notation.
     /// </summary>
-    // ReSharper disable once InconsistentNaming
-    public const string IPv4AddressRegex = $"^{IPv4AddressValues}$";
+    /// <remarks>The returned regular expression is compiled for performance. Use this regex to validate or
+    /// extract IPv4 addresses from text. The pattern enforces correct octet ranges and dot separators.</remarks>
+    /// <returns>A <see cref="Regex"/> instance that matches IPv4 addresses in the format "x.x.x.x", where each x is a number
+    /// from 0 to 255.</returns>
+    [GeneratedRegex($"^{IPv4AddressValues}$")]
+    public static partial Regex IPv4AddressRegex();
 
     /// <summary>
-    ///     Match IPv4-Address within a string
+    /// Provides a compiled regular expression that matches valid IPv4 addresses within input text.
     /// </summary>
-    // ReSharper disable once InconsistentNaming
-    public const string IPv4AddressExtractRegex = IPv4AddressValues;
+    /// <remarks>The returned regular expression matches IPv4 addresses in standard dotted-decimal notation
+    /// (e.g., "192.168.1.1"). The regular expression is compiled for improved performance when used
+    /// repeatedly.</remarks>
+    /// <returns>A <see cref="Regex"/> instance that can be used to extract IPv4 addresses from strings.</returns>
+    [GeneratedRegex(IPv4AddressValues)]
+    public static partial Regex IPv4AddressExtractRegex();
 
-    // Match IPv4-Address Range like 192.168.178.1-192.168.178.127
-    // ReSharper disable once InconsistentNaming
-    public const string IPv4AddressRangeRegex = $"^{IPv4AddressValues}-{IPv4AddressValues}$";
+    /// <summary>
+    /// Gets a regular expression that matches an IPv4 address range in the format "start-end", where both start and end
+    /// are valid IPv4 addresses.
+    /// </summary>
+    /// <remarks>The regular expression expects the input to consist of two IPv4 addresses separated by a
+    /// hyphen, with no additional whitespace or characters. Both addresses must be valid IPv4 addresses. This can be
+    /// used to validate or parse address range strings in network configuration scenarios.</remarks>
+    /// <returns>A <see cref="Regex"/> instance that matches strings representing IPv4 address ranges, such as
+    /// "192.168.1.1-192.168.1.100".</returns>
+    [GeneratedRegex($"^{IPv4AddressValues}-{IPv4AddressValues}$")]
+    public static partial Regex IPv4AddressRangeRegex();
 
     // Match a MAC-Address 000000000000 00:00:00:00:00:00, 00-00-00-00-00-00-00 or 0000.0000.0000
     public const string MACAddressRegex =

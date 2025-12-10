@@ -1,10 +1,10 @@
-﻿using System.Globalization;
+﻿using NETworkManager.Localization.Resources;
+using NETworkManager.Models.Network;
+using NETworkManager.Utilities;
+using System.Globalization;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
-using NETworkManager.Localization.Resources;
-using NETworkManager.Models.Network;
-using NETworkManager.Utilities;
 
 namespace NETworkManager.Validators;
 
@@ -20,7 +20,7 @@ public class MultipleHostsRangeValidator : ValidationRule
         foreach (var ipHostOrRange in ((string)value).Replace(" ", "").Split(';'))
         {
             // 192.168.0.1
-            if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressRegex))
+            if (RegexHelper.IPv4AddressRegex().IsMatch(ipHostOrRange))
                 continue;
 
             // 192.168.0.0/24
@@ -32,7 +32,7 @@ public class MultipleHostsRangeValidator : ValidationRule
                 continue;
 
             // 192.168.0.0 - 192.168.0.100
-            if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressRangeRegex))
+            if (RegexHelper.IPv4AddressRangeRegex().IsMatch(ipHostOrRange))
             {
                 var range = ipHostOrRange.Split('-');
 

@@ -1,4 +1,6 @@
-﻿using System.Collections.Concurrent;
+﻿using ControlzEx.Standard;
+using NETworkManager.Utilities;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -6,7 +8,6 @@ using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
@@ -46,7 +47,7 @@ public static class HostRangeHelper
             switch (host)
             {
                 // 192.168.0.1
-                case var _ when Regex.IsMatch(host, RegexHelper.IPv4AddressRegex):
+                case var _ when RegexHelper.IPv4AddressRegex().IsMatch(host):
                 // 2001:db8:85a3::8a2e:370:7334
                 case var _ when Regex.IsMatch(host, RegexHelper.IPv6AddressRegex):
                     hostsBag.Add((IPAddress.Parse(host), string.Empty));
@@ -71,7 +72,7 @@ public static class HostRangeHelper
                     break;
 
                 // 192.168.0.0 - 192.168.0.100
-                case var _ when Regex.IsMatch(host, RegexHelper.IPv4AddressRangeRegex):
+                case var _ when RegexHelper.IPv4AddressRangeRegex().IsMatch(host):
                     var range = host.Split('-');
 
                     Parallel.For(IPv4Address.ToInt32(IPAddress.Parse(range[0])),
