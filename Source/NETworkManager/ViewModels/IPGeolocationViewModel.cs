@@ -19,20 +19,32 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
+/// <summary>
+/// View model for the IP geolocation view.
+/// </summary>
 public class IPGeolocationViewModel : ViewModelBase
 {
     #region Variables
 
     private static readonly ILog Log = LogManager.GetLogger(typeof(IPGeolocationViewModel));
 
+    /// <summary>
+    /// The dialog coordinator instance.
+    /// </summary>
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly Guid _tabId;
     private bool _firstLoad = true;
     private bool _closed;
 
+    /// <summary>
+    /// Backing field for <see cref="Host"/>.
+    /// </summary>
     private string _host;
 
+    /// <summary>
+    /// Gets or sets the host to query.
+    /// </summary>
     public string Host
     {
         get => _host;
@@ -46,10 +58,19 @@ public class IPGeolocationViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the collection view of host history.
+    /// </summary>
     public ICollectionView HostHistoryView { get; }
 
+    /// <summary>
+    /// Backing field for <see cref="IsRunning"/>.
+    /// </summary>
     private bool _isRunning;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the query is running.
+    /// </summary>
     public bool IsRunning
     {
         get => _isRunning;
@@ -63,8 +84,14 @@ public class IPGeolocationViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="IsResultVisible"/>.
+    /// </summary>
     private bool _isResultVisible;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the result is visible.
+    /// </summary>
     public bool IsResultVisible
     {
         get => _isResultVisible;
@@ -78,8 +105,14 @@ public class IPGeolocationViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="Result"/>.
+    /// </summary>
     private IPGeolocationInfo _result;
 
+    /// <summary>
+    /// Gets the IP geolocation result.
+    /// </summary>
     public IPGeolocationInfo Result
     {
         get => _result;
@@ -93,8 +126,14 @@ public class IPGeolocationViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="IsStatusMessageDisplayed"/>.
+    /// </summary>
     private bool _isStatusMessageDisplayed;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the status message is displayed.
+    /// </summary>
     public bool IsStatusMessageDisplayed
     {
         get => _isStatusMessageDisplayed;
@@ -108,8 +147,14 @@ public class IPGeolocationViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="StatusMessage"/>.
+    /// </summary>
     private string _statusMessage;
 
+    /// <summary>
+    /// Gets the status message.
+    /// </summary>
     public string StatusMessage
     {
         get => _statusMessage;
@@ -127,6 +172,12 @@ public class IPGeolocationViewModel : ViewModelBase
 
     #region Contructor, load settings
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="IPGeolocationViewModel"/> class.
+    /// </summary>
+    /// <param name="instance">The dialog coordinator instance.</param>
+    /// <param name="tabId">The ID of the tab.</param>
+    /// <param name="host">The host to query.</param>
     public IPGeolocationViewModel(IDialogCoordinator instance, Guid tabId, string host)
     {
         _dialogCoordinator = instance;
@@ -142,6 +193,9 @@ public class IPGeolocationViewModel : ViewModelBase
         LoadSettings();
     }
 
+    /// <summary>
+    /// Called when the view is loaded.
+    /// </summary>
     public void OnLoaded()
     {
         if (!_firstLoad)
@@ -153,6 +207,9 @@ public class IPGeolocationViewModel : ViewModelBase
         _firstLoad = false;
     }
 
+    /// <summary>
+    /// Loads the settings.
+    /// </summary>
     private void LoadSettings()
     {
     }
@@ -161,8 +218,16 @@ public class IPGeolocationViewModel : ViewModelBase
 
     #region ICommands & Actions
 
+    /// <summary>
+    /// Gets the command to start the query.
+    /// </summary>
     public ICommand QueryCommand => new RelayCommand(_ => QueryAction(), Query_CanExecute);
 
+    /// <summary>
+    /// Checks if the query command can be executed.
+    /// </summary>
+    /// <param name="parameter">The command parameter.</param>
+    /// <returns><c>true</c> if the command can be executed; otherwise, <c>false</c>.</returns>
     private bool Query_CanExecute(object parameter)
     {
         return Application.Current.MainWindow != null &&
@@ -170,13 +235,22 @@ public class IPGeolocationViewModel : ViewModelBase
                !ConfigurationManager.Current.IsChildWindowOpen;
     }
 
+    /// <summary>
+    /// Action to start the query.
+    /// </summary>
     private void QueryAction()
     {
         Query().ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to export the result.
+    /// </summary>
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
 
+    /// <summary>
+    /// Action to export the result.
+    /// </summary>
     private void ExportAction()
     {
         Export().ConfigureAwait(false);
@@ -186,6 +260,9 @@ public class IPGeolocationViewModel : ViewModelBase
 
     #region Methods
 
+    /// <summary>
+    /// Performs the IP geolocation query.
+    /// </summary>
     private async Task Query()
     {
         IsStatusMessageDisplayed = false;
@@ -235,6 +312,9 @@ public class IPGeolocationViewModel : ViewModelBase
         IsRunning = false;
     }
 
+    /// <summary>
+    /// Exports the result.
+    /// </summary>
     private Task Export()
     {
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
@@ -283,6 +363,9 @@ public class IPGeolocationViewModel : ViewModelBase
         return window.ShowChildWindowAsync(childWindow);
     }
 
+    /// <summary>
+    /// Called when the view is closed.
+    /// </summary>
     public void OnClose()
     {
         // Prevent multiple calls
@@ -294,6 +377,10 @@ public class IPGeolocationViewModel : ViewModelBase
         ConfigurationManager.Current.IPGeolocationTabCount--;
     }
 
+    /// <summary>
+    /// Adds the host to the history.
+    /// </summary>
+    /// <param name="host">The host to add.</param>
     private void AddHostToHistory(string host)
     {
         // Create the new list

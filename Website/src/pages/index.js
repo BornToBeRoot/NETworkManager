@@ -26,10 +26,6 @@ import ImageGalleryWhois from "@site/docs/img/whois.png";
 import ImageGalleryIPGeolocation from "@site/docs/img/ip-geolocation.png";
 import ImageGallerySubnetCalculatorCalculator from "@site/docs/img/subnet-calculator--calculator.png";
 
-import ImageGalleryProfilesOverView from "@site/docs/img/profiles--overview.png";
-import ImageGalleryProfilesProfileSettings from "@site/docs/img/profiles--profile-settings.png";
-import ImageGalleryProfilesGroupSettings from "@site/docs/img/profiles--group-settings.png";
-
 import Heading from "@theme/Heading";
 import styles from "./styles.module.css";
 
@@ -220,30 +216,6 @@ export default function Home() {
     },
   ];
 
-  const images2 = [
-    {
-      original: ImageGalleryProfilesOverView,
-      thumbnail: ImageGalleryProfilesOverView,
-      originalAlt: "Profiles - Overview",
-      thumbnailAlt: "Profiles - Overview",
-      description: "Profiles - Overview",
-    },
-    {
-      original: ImageGalleryProfilesProfileSettings,
-      thumbnail: ImageGalleryProfilesProfileSettings,
-      originalAlt: "Profiles - Profile settings",
-      thumbnailAlt: "Profiles - Profile settings",
-      description: "Profiles - Profile settings",
-    },
-    {
-      original: ImageGalleryProfilesGroupSettings,
-      thumbnail: ImageGalleryProfilesGroupSettings,
-      originalAlt: "Profiles - Group settings",
-      thumbnailAlt: "Profiles - Group settings",
-      description: "Profiles - Group settings",
-    },
-  ];
-
   return (
     <Layout
       title={`${siteConfig.title}`}
@@ -254,35 +226,34 @@ export default function Home() {
         <HomepageFeatures />
         <div className="container text--center margin-top--xl margin-bottom--xl">
           <Heading as="h2">
-            Explore the powerful features...
+            📷 Screenshots
           </Heading>
           <div className="gallery-container1">
             <ImageGallery
               autoPlay="true"
               items={images1}
-              additionalClass={styles.image}
+              additionalClass={styles.imageScreenshot}
             />
           </div>
-          <Heading as="h2" className="margin-top--xl">
-            ...with tabs, drag & drop...
-          </Heading>
+          <p>Overview of various features and tools in NETworkManager.</p>
+          <br />          
           <div className="gallery-container2">
             <img
               src="./img/preview_tabs_drag_drop.gif"
               alt="NETworkManager tabs and drag & drop preview"
-              className={styles.image}
+              className={styles.imageScreenshot}
             />
           </div>
-          <Heading as="h2" className="margin-top--xl">
-            ...and encrypted profiles...
-          </Heading>
+          <p>Preview of tabs and drag & drop functionality.</p>
+          <br />
           <div className="gallery-container3">
-            <ImageGallery
-              autoPlay="true"
-              items={images2}
-              additionalClass={styles.image}
+            <img
+              src="./img/preview-light-theme.png"
+              alt="NETworkManager tabs and drag & drop preview"
+              className={styles.imageScreenshot}
             />
           </div>
+          <p>Preview of tabs and drag & drop functionality.</p>
         </div>
       </main>
     </Layout>

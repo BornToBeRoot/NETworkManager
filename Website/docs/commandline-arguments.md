@@ -45,7 +45,6 @@ Start a specific application on startup.
 - `RemoteDesktop`
 - `PowerShell`
 - `PuTTY`
-- `AWSSessionManager`
 - `TigerVNC`
 - `WebConsole`
 - `SNMP`

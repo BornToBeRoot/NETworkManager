@@ -83,7 +83,6 @@ import styles from "./styles.module.css";
     <strong>Thank you for being part of the journey!</strong>
   </p>
 
-
   <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
     <Link
       className={`button button--info button--outline ${styles.additionalButton}`}
@@ -104,23 +103,26 @@ import styles from "./styles.module.css";
     <p>NETworkManager is available in three different versions:</p>
     <ul>
       <li>
-        <b>Setup</b> (MSI-Installer): Recommended for most users, installs
-        NETworkManager for all users on the system. Requires administrator
-        privileges. Settings and profiles are stored in the user profile
-        directory under <code>~\Documents\NETworkManager</code>.
+        <b>Setup</b> (MSI-Installer)<br />
+        Recommended for most users, installs NETworkManager for all users
+        on the system. Requires administrator privileges. Settings and profiles
+        are stored in the user profile directory under
+        <code>~\Documents\NETworkManager</code>. Can also be used for
+        centralized deployment via Intune, SCCM, etc.
       </li>
       <li>
-        <b>Portable</b> (ZIP-Archive): Run NETworkManager without installation,
-        e.g. from a USB stick or network share. Settings and profiles are stored
-        in the same directory as the executable. Upgrades are supported by
-        copying the <code>Profiles</code> and <code>Settings</code> directories
+        <b>Portable</b> (ZIP-Archive)<br />
+        Run NETworkManager without installation, e.g. from a USB stick or
+        network share. Settings and profiles are stored in the same directory
+        as the executable. Upgrades are supported by copying the
+        <code>Profiles</code> and <code>Settings</code> directories
         to the new version.
       </li>
       <li>
-        <b>Archive</b> (ZIP-Archive): Similar to Portable, but stores profiles
-        and settings in the user profile directory under{" "}
-        <code>~\Documents\NETworkManager</code>. This version might be useful
-        for custom deployment scenarios (e.g. Terminal Server, Intune, etc.).
+        <b>Archive</b> (ZIP-Archive)<br />
+        Similar to Portable, but stores profiles and settings in the user profile
+        directory under <code>~\Documents\NETworkManager</code>. This version might
+        be useful for custom deployment scenarios (e.g. Terminal Server, Intune, etc.).
       </li>
     </ul>
   </div>
@@ -145,7 +147,8 @@ import styles from "./styles.module.css";
         &#35; Linux
         sha256sum -c NETworkManager_&#123;VERSION&#125;_SHA256SUMS
       </code>
-    </pre>    
+    </pre>
+
   </div>
 </details>
 

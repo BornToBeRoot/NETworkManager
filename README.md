@@ -54,17 +54,12 @@
     </a>
   </p>
   <p>
-    <a href="#-download">Download</a> • <a href="#-donate">Donate</a> • <a href="#-changelog">Changelog</a> • <a href="#-documentation">Documentation</a> • <a href="#-contributing">Contributing</a> • <a href="#-build">Build</a> • <a href="#-thanks">Thanks</a> • <a href="#-license">License</a>
+    <a href="#-download">Download</a> • <a href="#-donate">Donate</a> • <a href="#-screenshots">Screenshots</a> • <a href="#-changelog">Changelog</a> • <a href="#-documentation">Documentation</a> • <a href="#-contributing">Contributing</a> • <a href="#-build">Build</a> • <a href="#-thanks">Thanks</a> • <a href="#-license">License</a>
   </p>
 </div>
 
 <div align="center">
   <img alt="NETworkManager Features Preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Website/static/img/preview-features.gif?raw=true" />
-  <details>
-    <summary>Click to see screenshots & GIFs of NETworkManager in action!</summary>
-    <img alt="NETworkManager tabs and drag & drop preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Website/static/img/preview_tabs_drag_drop.gif?raw=true" />
-    <img alt="NETworkManager dark/light theme preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Website/static/img/preview-light-theme.png?raw=true" />
-  </details>
 </div>
 
 ## 🚀 Why NETworkManager?
@@ -134,6 +129,22 @@ If you find it useful, here are ways to support the project:
   | Dogecoin (DOGE) | `DURnrWRpoE4ypCjD9fVaVnDrXJ1hfZrPjj`           |
 
 Thank you for helping keep NETworkManager thriving!
+
+## 📷 Screenshots
+
+<div align="center">
+
+<img alt="NETworkManager tabs and drag & drop preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Website/static/img/preview_tabs_drag_drop.gif?raw=true" />
+
+Preview of tabs and drag & drop functionality.
+
+---
+
+<img alt="NETworkManager dark/light theme preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Website/static/img/preview-light-theme.png?raw=true" />
+
+Customizable light/dark themes and accent colors.
+
+</div>
 
 ## 📃 Changelog
 

@@ -25,21 +25,36 @@ using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels;
 
+/// <summary>
+/// View model for the DNS lookup view.
+/// </summary>
 public class DNSLookupViewModel : ViewModelBase
 {
     #region Variables
     private static readonly ILog Log = LogManager.GetLogger(typeof(DNSLookupViewModel));
 
+    /// <summary>
+    /// The dialog coordinator instance.
+    /// </summary>
     private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly Guid _tabId;
     private bool _firstLoad = true;
     private bool _closed;
 
+    /// <summary>
+    /// Indicates whether the view model is loading.
+    /// </summary>
     private readonly bool _isLoading;
 
+    /// <summary>
+    /// Backing field for <see cref="Host"/>.
+    /// </summary>
     private string _host;
 
+    /// <summary>
+    /// Gets or sets the host to lookup.
+    /// </summary>
     public string Host
     {
         get => _host;
@@ -53,11 +68,24 @@ public class DNSLookupViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the collection view of host history.
+    /// </summary>
     public ICollectionView HostHistoryView { get; }
 
+    /// <summary>
+    /// Gets the collection view of DNS servers.
+    /// </summary>
     public ICollectionView DNSServers { get; }
 
+    /// <summary>
+    /// Backing field for <see cref="DNSServer"/>.
+    /// </summary>
     private DNSServerConnectionInfoProfile _dnsServer = new();
+
+    /// <summary>
+    /// Gets or sets the selected DNS server.
+    /// </summary>
     public DNSServerConnectionInfoProfile DNSServer
     {
         get => _dnsServer;
@@ -119,9 +147,15 @@ public class DNSLookupViewModel : ViewModelBase
             }
         }
     }
+    
+    /// <summary>
+    /// Backing field for <see cref="QueryTypes"/>.
+    /// </summary>
+    private List<QueryType> _queryTypes = new();
 
-    private List<QueryType> _queryTypes = [];
-
+    /// <summary>
+    /// Gets the list of available query types.
+    /// </summary>
     public List<QueryType> QueryTypes
     {
         get => _queryTypes;
@@ -135,8 +169,14 @@ public class DNSLookupViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="QueryType"/>.
+    /// </summary>
     private QueryType _queryType;
 
+    /// <summary>
+    /// Gets or sets the selected query type.
+    /// </summary>
     public QueryType QueryType
     {
         get => _queryType;
@@ -153,8 +193,14 @@ public class DNSLookupViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="IsRunning"/>.
+    /// </summary>
     private bool _isRunning;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the lookup is running.
+    /// </summary>
     public bool IsRunning
     {
         get => _isRunning;
@@ -168,8 +214,14 @@ public class DNSLookupViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="Results"/>.
+    /// </summary>
     private ObservableCollection<DNSLookupRecordInfo> _results = new();
 
+    /// <summary>
+    /// Gets or sets the collection of lookup results.
+    /// </summary>
     public ObservableCollection<DNSLookupRecordInfo> Results
     {
         get => _results;
@@ -182,10 +234,19 @@ public class DNSLookupViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the collection view for lookup results.
+    /// </summary>
     public ICollectionView ResultsView { get; }
 
+    /// <summary>
+    /// Backing field for <see cref="SelectedResult"/>.
+    /// </summary>
     private DNSLookupRecordInfo _selectedResult;
 
+    /// <summary>
+    /// Gets or sets the selected lookup result.
+    /// </summary>
     public DNSLookupRecordInfo SelectedResult
     {
         get => _selectedResult;
@@ -199,8 +260,14 @@ public class DNSLookupViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="SelectedResults"/>.
+    /// </summary>
     private IList _selectedResults = new ArrayList();
 
+    /// <summary>
+    /// Gets or sets the list of selected lookup results.
+    /// </summary>
     public IList SelectedResults
     {
         get => _selectedResults;
@@ -214,8 +281,14 @@ public class DNSLookupViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="IsStatusMessageDisplayed"/>.
+    /// </summary>
     private bool _isStatusMessageDisplayed;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the status message is displayed.
+    /// </summary>
     public bool IsStatusMessageDisplayed
     {
         get => _isStatusMessageDisplayed;
@@ -229,8 +302,14 @@ public class DNSLookupViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="StatusMessage"/>.
+    /// </summary>
     private string _statusMessage;
 
+    /// <summary>
+    /// Gets the status message.
+    /// </summary>
     public string StatusMessage
     {
         get => _statusMessage;
@@ -248,6 +327,12 @@ public class DNSLookupViewModel : ViewModelBase
 
     #region Contructor, load settings
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DNSLookupViewModel"/> class.
+    /// </summary>
+    /// <param name="instance">The dialog coordinator instance.</param>
+    /// <param name="tabId">The ID of the tab.</param>
+    /// <param name="host">The host to lookup.</param>
     public DNSLookupViewModel(IDialogCoordinator instance, Guid tabId, string host)
     {
         _isLoading = true;
@@ -287,6 +372,9 @@ public class DNSLookupViewModel : ViewModelBase
         _isLoading = false;
     }
 
+    /// <summary>
+    /// Called when the view is loaded.
+    /// </summary>
     public void OnLoaded()
     {
         if (!_firstLoad)
@@ -298,11 +386,17 @@ public class DNSLookupViewModel : ViewModelBase
         _firstLoad = false;
     }
 
+    /// <summary>
+    /// Loads the settings.
+    /// </summary>
     private void LoadSettings()
     {
         LoadTypes();
     }
 
+    /// <summary>
+    /// Loads the query types.
+    /// </summary>
     private void LoadTypes()
     {
         var queryTypes = (QueryType[])Enum.GetValues(typeof(QueryType));
@@ -324,8 +418,16 @@ public class DNSLookupViewModel : ViewModelBase
 
     #region ICommands & Actions
 
+    /// <summary>
+    /// Gets the command to start the query.
+    /// </summary>
     public ICommand QueryCommand => new RelayCommand(_ => QueryAction(), Query_CanExecute);
 
+    /// <summary>
+    /// Checks if the query command can be executed.
+    /// </summary>
+    /// <param name="parameter">The command parameter.</param>
+    /// <returns><c>true</c> if the command can be executed; otherwise, <c>false</c>.</returns>
     private bool Query_CanExecute(object parameter)
     {
         return Application.Current.MainWindow != null &&
@@ -333,14 +435,23 @@ public class DNSLookupViewModel : ViewModelBase
                !ConfigurationManager.Current.IsChildWindowOpen;
     }
 
+    /// <summary>
+    /// Action to start the query.
+    /// </summary>
     private void QueryAction()
     {
         if (!IsRunning)
             Query();
     }
 
+    /// <summary>
+    /// Gets the command to export the results.
+    /// </summary>
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
 
+    /// <summary>
+    /// Action to export the results.
+    /// </summary>
     private void ExportAction()
     {
         Export().ConfigureAwait(false);
@@ -350,6 +461,9 @@ public class DNSLookupViewModel : ViewModelBase
 
     #region Methods
 
+    /// <summary>
+    /// Performs the DNS query.
+    /// </summary>
     private void Query()
     {
         IsStatusMessageDisplayed = false;
@@ -393,6 +507,9 @@ public class DNSLookupViewModel : ViewModelBase
         dnsLookup.ResolveAsync([.. Host.Split(';').Select(x => x.Trim())]);
     }
 
+    /// <summary>
+    /// Called when the view is closed.
+    /// </summary>
     public void OnClose()
     {
         // Prevent multiple calls
@@ -405,6 +522,10 @@ public class DNSLookupViewModel : ViewModelBase
     }
 
     // Modify history list
+    /// <summary>
+    /// Adds the host to the history.
+    /// </summary>
+    /// <param name="host">The host to add.</param>
     private void AddHostToHistory(string host)
     {
         // Create the new list
@@ -420,6 +541,9 @@ public class DNSLookupViewModel : ViewModelBase
     }
 
 
+    /// <summary>
+    /// Exports the results.
+    /// </summary>
     private Task Export()
     {
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
@@ -476,12 +600,18 @@ public class DNSLookupViewModel : ViewModelBase
 
     #region Events
 
+    /// <summary>
+    /// Handles the RecordReceived event of the DNS lookup.
+    /// </summary>
     private void DNSLookup_RecordReceived(object sender, DNSLookupRecordReceivedArgs e)
     {
         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
             new Action(delegate { Results.Add(e.Args); }));
     }
 
+    /// <summary>
+    /// Handles the LookupError event of the DNS lookup.
+    /// </summary>
     private void DNSLookup_LookupError(object sender, DNSLookupErrorArgs e)
     {
         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
@@ -503,11 +633,17 @@ public class DNSLookupViewModel : ViewModelBase
         }));
     }
 
+    /// <summary>
+    /// Handles the LookupComplete event of the DNS lookup.
+    /// </summary>
     private void DNSLookup_LookupComplete(object sender, EventArgs e)
     {
         IsRunning = false;
     }
 
+    /// <summary>
+    /// Handles the PropertyChanged event of the SettingsManager.
+    /// </summary>
     private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
         switch (e.PropertyName)

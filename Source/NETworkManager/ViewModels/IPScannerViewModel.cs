@@ -31,6 +31,9 @@ using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels;
 
+/// <summary>
+/// ViewModel for the IP Scanner feature.
+/// </summary>
 public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 {
     #region Variables
@@ -46,6 +49,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private string _host;
 
+    /// <summary>
+    /// Gets or sets the host or IP range to scan.
+    /// </summary>
     public string Host
     {
         get => _host;
@@ -59,10 +65,16 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         }
     }
 
+    /// <summary>
+    /// Gets the collection view for the host history.
+    /// </summary>
     public ICollectionView HostHistoryView { get; }
 
     private bool _isSubnetDetectionRunning;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether subnet detection is running.
+    /// </summary>
     public bool IsSubnetDetectionRunning
     {
         get => _isSubnetDetectionRunning;
@@ -79,6 +91,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private bool _isRunning;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the scan is currently running.
+    /// </summary>
     public bool IsRunning
     {
         get => _isRunning;
@@ -94,6 +109,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private bool _isCanceling;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the scan is being canceled.
+    /// </summary>
     public bool IsCanceling
     {
         get => _isCanceling;
@@ -109,6 +127,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private ObservableCollection<IPScannerHostInfo> _results = [];
 
+    /// <summary>
+    /// Gets or sets the collection of scan results.
+    /// </summary>
     public ObservableCollection<IPScannerHostInfo> Results
     {
         get => _results;
@@ -121,10 +142,16 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         }
     }
 
+    /// <summary>
+    /// Gets the collection view for the scan results.
+    /// </summary>
     public ICollectionView ResultsView { get; }
 
     private IPScannerHostInfo _selectedResult;
 
+    /// <summary>
+    /// Gets or sets the currently selected scan result.
+    /// </summary>
     public IPScannerHostInfo SelectedResult
     {
         get => _selectedResult;
@@ -140,6 +167,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private IList _selectedResults = new ArrayList();
 
+    /// <summary>
+    /// Gets or sets the list of currently selected scan results (for multi-selection).
+    /// </summary>
     public IList SelectedResults
     {
         get => _selectedResults;
@@ -155,6 +185,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private int _hostsToScan;
 
+    /// <summary>
+    /// Gets or sets the total number of hosts to scan.
+    /// </summary>
     public int HostsToScan
     {
         get => _hostsToScan;
@@ -170,6 +203,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private int _hostsScanned;
 
+    /// <summary>
+    /// Gets or sets the number of hosts already scanned.
+    /// </summary>
     public int HostsScanned
     {
         get => _hostsScanned;
@@ -185,6 +221,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private bool _preparingScan;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the scan is being prepared.
+    /// </summary>
     public bool PreparingScan
     {
         get => _preparingScan;
@@ -200,6 +239,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private bool _isStatusMessageDisplayed;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the status message is displayed.
+    /// </summary>
     public bool IsStatusMessageDisplayed
     {
         get => _isStatusMessageDisplayed;
@@ -215,6 +257,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private string _statusMessage;
 
+    /// <summary>
+    /// Gets the status message to display.
+    /// </summary>
     public string StatusMessage
     {
         get => _statusMessage;
@@ -228,12 +273,21 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         }
     }
 
+    /// <summary>
+    /// Gets the available custom commands for the IP Scanner.
+    /// </summary>
     public static IEnumerable<CustomCommandInfo> CustomCommands => SettingsManager.Current.IPScanner_CustomCommands;
 
     #endregion
 
     #region Constructor, load settings, shutdown
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="IPScannerViewModel"/> class.
+    /// </summary>
+    /// <param name="instance">The dialog coordinator instance.</param>
+    /// <param name="tabId">The unique identifier for the tab.</param>
+    /// <param name="hostOrIPRange">The initial host or IP range to scan.</param>
     public IPScannerViewModel(IDialogCoordinator instance, Guid tabId, string hostOrIPRange)
     {
         _dialogCoordinator = instance;
@@ -254,6 +308,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             IPAddressHelper.CompareIPAddresses(x.PingInfo.IPAddress, y.PingInfo.IPAddress));
     }
 
+    /// <summary>
+    /// Called when the view is loaded. Starts the scan if it's the first load and a host is specified.
+    /// </summary>
     public void OnLoaded()
     {
         if (!_firstLoad)
@@ -269,6 +326,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     #region ICommands & Actions
 
+    /// <summary>
+    /// Gets the command to start or stop the scan.
+    /// </summary>
     public ICommand ScanCommand => new RelayCommand(_ => ScanAction(), Scan_CanExecute);
 
     private bool Scan_CanExecute(object parameter)
@@ -286,6 +346,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             Start().ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to detect the local subnet.
+    /// </summary>
     public ICommand DetectSubnetCommand => new RelayCommand(_ => DetectSubnetAction());
 
     private void DetectSubnetAction()
@@ -293,6 +356,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         DetectIPRange().ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to redirect the selected host to another application.
+    /// </summary>
     public ICommand RedirectDataToApplicationCommand => new RelayCommand(RedirectDataToApplicationAction);
 
     private void RedirectDataToApplicationAction(object name)
@@ -307,6 +373,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         EventSystem.RedirectToApplication(applicationName, host);
     }
 
+    /// <summary>
+    /// Gets the command to perform a DNS lookup for the selected IP address.
+    /// </summary>
     public ICommand PerformDNSLookupIPAddressCommand => new RelayCommand(_ => PerformDNSLookupIPAddressAction());
 
     private void PerformDNSLookupIPAddressAction()
@@ -314,6 +383,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         EventSystem.RedirectToApplication(ApplicationName.DNSLookup, SelectedResult.PingInfo.IPAddress.ToString());
     }
 
+    /// <summary>
+    /// Gets the command to perform a DNS lookup for the selected hostname.
+    /// </summary>
     public ICommand PerformDNSLookupHostnameCommand => new RelayCommand(_ => PerformDNSLookupHostnameAction());
 
     private void PerformDNSLookupHostnameAction()
@@ -321,6 +393,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         EventSystem.RedirectToApplication(ApplicationName.DNSLookup, SelectedResult.Hostname);
     }
 
+    /// <summary>
+    /// Gets the command to execute a custom command for the selected host.
+    /// </summary>
     public ICommand CustomCommandCommand => new RelayCommand(CustomCommandAction);
 
     private void CustomCommandAction(object guid)
@@ -328,6 +403,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         CustomCommand(guid).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to add the selected host as a profile.
+    /// </summary>
     public ICommand AddProfileSelectedHostCommand => new RelayCommand(_ => AddProfileSelectedHostAction());
 
     private async void AddProfileSelectedHostAction()
@@ -349,6 +427,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             ApplicationName.IPScanner);
     }
 
+    /// <summary>
+    /// Gets the command to copy the selected ports to the clipboard.
+    /// </summary>
     public ICommand CopySelectedPortsCommand => new RelayCommand(_ => CopySelectedPortsAction());
 
     private void CopySelectedPortsAction()
@@ -362,6 +443,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         ClipboardHelper.SetClipboard(stringBuilder.ToString());
     }
 
+    /// <summary>
+    /// Gets the command to export the scan results.
+    /// </summary>
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
 
     private void ExportAction()
@@ -373,6 +457,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     #region Methods
 
+    /// <summary>
+    /// Starts the IP scan.
+    /// </summary>
     private async Task Start()
     {
         IsStatusMessageDisplayed = false;
@@ -439,12 +526,18 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         ipScanner.ScanAsync(hosts.hosts, _cancellationTokenSource.Token);
     }
 
+    /// <summary>
+    /// Stops the IP scan.
+    /// </summary>
     private void Stop()
     {
         IsCanceling = true;
         _cancellationTokenSource.Cancel();
     }
 
+    /// <summary>
+    /// Detects the local IP subnet.
+    /// </summary>
     private async Task DetectIPRange()
     {
         IsSubnetDetectionRunning = true;
@@ -485,6 +578,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         IsSubnetDetectionRunning = false;
     }
 
+    /// <summary>
+    /// Executes a custom command.
+    /// </summary>
+    /// <param name="guid">The GUID of the custom command to execute.</param>
     private async Task CustomCommand(object guid)
     {
         if (guid is Guid id)
@@ -525,6 +622,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         }
     }
 
+    /// <summary>
+    /// Adds the scanned host/range to the history.
+    /// </summary>
+    /// <param name="ipRange">The host or IP range to add.</param>
     private void AddHostToHistory(string ipRange)
     {
         // Create the new list
@@ -539,6 +640,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         list.ForEach(SettingsManager.Current.IPScanner_HostHistory.Add);
     }
 
+    /// <summary>
+    /// Exports the scan results.
+    /// </summary>
+    /// <returns>A task that represents the asynchronous operation.</returns>
     private Task Export()
     {
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
@@ -589,6 +694,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         return window.ShowChildWindowAsync(childWindow);
     }
 
+    /// <summary>
+    /// Called when the tab is closed. Stops any running scan.
+    /// </summary>
     public void OnClose()
     {
         // Prevent multiple calls
@@ -608,17 +716,32 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     #region Events
 
+    /// <summary>
+    /// Handles the HostScanned event. Adds the result to the list.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="IPScannerHostScannedArgs"/> instance containing the event data.</param>
     private void HostScanned(object sender, IPScannerHostScannedArgs e)
     {
         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
             new Action(delegate { Results.Add(e.Args); }));
     }
 
+    /// <summary>
+    /// Handles the ProgressChanged event. Updates the progress.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="ProgressChangedArgs"/> instance containing the event data.</param>
     private void ProgressChanged(object sender, ProgressChangedArgs e)
     {
         HostsScanned = e.Value;
     }
 
+    /// <summary>
+    /// Handles the ScanComplete event.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
     private void ScanComplete(object sender, EventArgs e)
     {
         if (Results.Count == 0)
@@ -631,6 +754,11 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         IsRunning = false;
     }
 
+    /// <summary>
+    /// Handles the UserHasCanceled event.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
     private void UserHasCanceled(object sender, EventArgs e)
     {
         StatusMessage = Strings.CanceledByUserMessage;
