@@ -55,9 +55,9 @@ public static class HostRangeHelper
                     break;
 
                 // 192.168.0.0/24
-                case var _ when Regex.IsMatch(host, RegexHelper.IPv4AddressCidrRegex):
+                case var _ when RegexHelper.IPv4AddressCidrRegex().IsMatch(host):
                 // 192.168.0.0/255.255.255.0
-                case var _ when Regex.IsMatch(host, RegexHelper.IPv4AddressSubnetmaskRegex):
+                case var _ when RegexHelper.IPv4AddressSubnetmaskRegex().IsMatch(host):
                     var network = IPNetwork2.Parse(host);
 
                     Parallel.For(IPv4Address.ToInt32(network.Network), IPv4Address.ToInt32(network.Broadcast) + 1,
@@ -87,7 +87,7 @@ public static class HostRangeHelper
                     break;
 
                 // 192.168.[50-100].1
-                case var _ when Regex.IsMatch(host, RegexHelper.IPv4AddressSpecialRangeRegex):
+                case var _ when RegexHelper.IPv4AddressSpecialRangeRegex().IsMatch(host):
                     var octets = host.Split('.');
 
                     var list = new List<ConcurrentBag<int>>();

@@ -24,11 +24,11 @@ public class MultipleHostsRangeValidator : ValidationRule
                 continue;
 
             // 192.168.0.0/24
-            if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressCidrRegex))
+            if (RegexHelper.IPv4AddressCidrRegex().IsMatch(ipHostOrRange))
                 continue;
 
             // 192.168.0.0/255.255.255.0
-            if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressSubnetmaskRegex))
+            if (RegexHelper.IPv4AddressSubnetmaskRegex().IsMatch(ipHostOrRange))
                 continue;
 
             // 192.168.0.0 - 192.168.0.100
@@ -43,7 +43,7 @@ public class MultipleHostsRangeValidator : ValidationRule
             }
 
             // 192.168.[50-100].1
-            if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressSpecialRangeRegex))
+            if (RegexHelper.IPv4AddressSpecialRangeRegex().IsMatch(ipHostOrRange))
             {
                 var octets = ipHostOrRange.Split('.');
 
