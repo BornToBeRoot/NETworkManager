@@ -22,79 +22,60 @@ public static partial class RegexHelper
     private const string CidrRegexValues = @"([1-9]|[1-2][0-9]|3[0-2])";
      
     /// <summary>
-    /// Provides a compiled regular expression that matches valid IPv4 addresses in dot-decimal notation.
-    /// </summary>
-    /// <remarks>The returned regular expression is compiled for performance. Use this regex to validate or
-    /// extract IPv4 addresses from text. The pattern enforces correct octet ranges and dot separators.</remarks>
+    /// Provides a compiled regular expression that matches valid IPv4 addresses in dot-decimal notation like "192.168.178.0".
+    /// </summary>    
     /// <returns>A <see cref="Regex"/> instance that matches IPv4 addresses in the format "x.x.x.x", where each x is a number
     /// from 0 to 255.</returns>
     [GeneratedRegex($"^{IPv4AddressValues}$")]
     public static partial Regex IPv4AddressRegex();
 
     /// <summary>
-    /// Provides a compiled regular expression that matches valid IPv4 addresses within input text.
-    /// </summary>
-    /// <remarks>The returned regular expression matches IPv4 addresses in standard dotted-decimal notation
-    /// (e.g., "192.168.1.1"). The regular expression is compiled for improved performance when used
-    /// repeatedly.</remarks>
+    /// Provides a compiled regular expression that matches valid IPv4 addresses within input text like "192.168.178.0".
+    /// </summary>    
     /// <returns>A <see cref="Regex"/> instance that can be used to extract IPv4 addresses from strings.</returns>
     [GeneratedRegex(IPv4AddressValues)]
     public static partial Regex IPv4AddressExtractRegex();
 
     /// <summary>
-    /// Gets a regular expression that matches an IPv4 address range in the format "start-end", where both start and end
-    /// are valid IPv4 addresses.
-    /// </summary>
-    /// <remarks>The regular expression expects the input to consist of two IPv4 addresses separated by a
-    /// hyphen, with no additional whitespace or characters. Both addresses must be valid IPv4 addresses. This can be
-    /// used to validate or parse address range strings in network configuration scenarios.</remarks>
+    /// Provides a compiles regular expression that matches IPv4 address ranges in the format "start-end" like
+    /// "192.168.178.0-192.168.178.255".
+    /// </summary>    
     /// <returns>A <see cref="Regex"/> instance that matches strings representing IPv4 address ranges, such as
     /// "192.168.1.1-192.168.1.100".</returns>
     [GeneratedRegex($"^{IPv4AddressValues}-{IPv4AddressValues}$")]
     public static partial Regex IPv4AddressRangeRegex();
 
     /// <summary>
-    /// Provides a compiled regular expression that matches valid IPv4 subnet mask values.
-    /// </summary>
-    /// <remarks>The returned regular expression is generated at compile time and is optimized for
-    /// performance. Use this regex to validate or parse subnet mask strings in IPv4 networking scenarios.</remarks>
+    /// Provides a compiled regular expression that matches valid IPv4 subnet mask like "255.255.0.0".
+    /// </summary>    
     /// <returns>A <see cref="Regex"/> instance that matches strings representing valid IPv4 subnet masks.</returns>        
     [GeneratedRegex($"^{SubnetmaskValues}$")]
     public static partial Regex SubnetmaskRegex();
 
     /// <summary>
-    /// Provides a compiled regular expression that matches IPv4 addresses with subnet masks in CIDR notation, such as
+    /// Provides a compiled regular expression that matches IPv4 addresses with subnet masks like
     /// "192.168.178.0/255.255.255.0".
-    /// </summary>
-    /// <remarks>The returned regular expression validates both the IPv4 address and the subnet mask
-    /// components. Use this regex to verify input strings representing IPv4 subnets in formats like
-    /// "address/mask".</remarks>
+    /// </summary>    
     /// <returns>A <see cref="Regex"/> instance that matches strings containing an IPv4 address followed by a subnet mask,
     /// separated by a forward slash.</returns>    
     [GeneratedRegex($@"^{IPv4AddressValues}\/{SubnetmaskValues}$")]
     public static partial Regex IPv4AddressSubnetmaskRegex();
 
     /// <summary>
-    /// Provides a compiled regular expression that matches an IPv4 address in CIDR notation, such as 
+    /// Provides a compiled regular expression that matches an IPv4 address with CIDR like
     /// "192.168.178.0/24".
     /// </summary>
-    /// <remarks>The returned regular expression can be used to validate or extract IPv4 addresses with CIDR
-    /// notation, such as "192.168.1.0/24". The pattern enforces correct formatting for both the address and the prefix
-    /// length.</remarks>
     /// <returns>A <see cref="Regex"/> instance that matches strings containing an IPv4 address followed by a slash and a valid
     /// CIDR prefix length.</returns>
     [GeneratedRegex($@"^{IPv4AddressValues}\/{CidrRegexValues}$")]
     public static partial Regex IPv4AddressCidrRegex();
-        
+
     /// <summary>
-    /// Creates a regular expression that matches IPv4 addresses, allowing for a special range in one or more octets.
-    /// </summary>
-    /// <remarks>The returned regular expression matches standard IPv4 addresses and addresses where one or
-    /// more octets are defined by a custom range pattern. This is useful for validating or parsing addresses such as
-    /// "192.168.[50-100].1" where a range is specified in place of an octet. The format and behavior of the special
-    /// range are determined by the <c>SpecialRangeRegex</c> value.</remarks>
-    /// <returns>A <see cref="Regex"/> instance that matches IPv4 addresses with support for custom special ranges as defined by
-    /// <c>SpecialRangeRegex</c>.</returns>
+    /// Creates a regular expression that matches IPv4 addresses, allowing for a special range in one or more octets like
+    /// "192.168.[0-50].1".
+    /// </summary>    
+    /// <returns>A <see cref="Regex"/> instance that matches IPv4 addresses with support for custom special ranges like
+    /// "192.168.[0-50].1".</returns>
     [GeneratedRegex($@"^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|{SpecialRangeRegex})\.){{3}}((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|{SpecialRangeRegex})$")]
     public static partial Regex IPv4AddressSpecialRangeRegex();
 
