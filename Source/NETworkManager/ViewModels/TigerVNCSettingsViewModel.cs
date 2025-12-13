@@ -4,7 +4,6 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
@@ -14,8 +13,6 @@ namespace NETworkManager.ViewModels;
 public class TigerVNCSettingsViewModel : ViewModelBase
 {
     #region Variables
-
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly bool _isLoading;
 
@@ -76,11 +73,9 @@ public class TigerVNCSettingsViewModel : ViewModelBase
 
     #region Contructor, load settings
 
-    public TigerVNCSettingsViewModel(IDialogCoordinator instance)
+    public TigerVNCSettingsViewModel()
     {
         _isLoading = true;
-
-        _dialogCoordinator = instance;
 
         LoadSettings();
 
