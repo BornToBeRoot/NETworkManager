@@ -8,16 +8,31 @@ With the **DNS Lookup** you can query DNS servers for various resource records.
 
 Example inputs:
 
-- `server-01.borntoberoot.net` (`A` record)
-- `10.0.0.1` (`PTR` record)
+| Host                         | Type    | Description                                                          |
+| ---------------------------- | ------- | -------------------------------------------------------------------- |
+| `server-01.borntoberoot.net` | `A`     | To get the IPv4 address of the hostname.                             |
+| `server-01.borntoberoot.net` | `AAAA`  | To get the IPv6 address of the hostname.                             |
+| `server.borntoberoot.net`    | `CNAME` | To get the canonical name of the hostname.                           |
+| `borntoberoot.net`           | `MX`    | To get the mail exchange servers for the domain.                     |
+| `borntoberoot.net`           | `NS`    | To get the name servers for the domain.                              |
+| `10.0.0.1`                   | `PTR`   | To get the hostname associated with the IP address (reverse lookup). |
+
+| DNS server             | Description                                                                |
+| ---------------------- | -------------------------------------------------------------------------- |
+| `[Windows DNS]`        | Uses the DNS server configured in Windows.                                 |
+| `Cloudflare` (profile) | Uses Cloudflare's public DNS servers from a predefined profile.            |
+| `1.1.1.1:53` (input)   | Uses the custom DNS server `1.1.1.1` on port `53` from the input directly. |
+| `ns3.inwx.eu` (input)  | Uses the custom DNS server `ns3.inwx.eu` from the input directly.          |
 
 :::note
 
-Multiple inputs can be combined with a semicolon (`;`).
+Multiple inputs (host, DNS server) can be combined with a semicolon (`;`).
 
 Example: `server-01.borntoberoot.net; 10.0.0.1`
 
 :::
+
+The dns server can be selected from a list of configured servers or you can enter a custom dns server in the format `<hostname>|<ipadress>:<port>` (`<port>` is optional, to use a custom port with IPv6 enclose the address in square brackets: `[<ipv6adress>]:53`).
 
 ![DNS Lookup](../img/dns-lookup.png)
 
@@ -72,6 +87,7 @@ List of DNS server profiles. A profile can contain one or more DNS servers with 
 | DNS.Watch         | `84.200.69.80:53` | `84.200.70.40:53` |
 | Google Public DNS | `8.8.8.8:53`      | `8.8.4.4:53`      |
 | Level3            | `209.244.0.3:53`  | `209.244.0.4:53`  |
+| Quad9             | `9.9.9.9`         | `149.112.112.112` |
 | Verisign          | `64.6.64.6:53`    | `64.6.65.6:53`    |
 
 :::note

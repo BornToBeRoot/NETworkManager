@@ -137,52 +137,59 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
 
     private async Task AddServer()
     {
-        var customDialog = new CustomDialog
+        var childWindow = new ServerConnectionInfoProfileChildWindow();
+
+        var childWindowViewModel = new ServerConnectionInfoProfileViewModel(instance =>
         {
-            Title = Strings.AddSNTPServer
-        };
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
 
-        var viewModel = new ServerConnectionInfoProfileViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                SettingsManager.Current.SNTPLookup_SNTPServers.Add(
-                    new ServerConnectionInfoProfile(instance.Name, instance.Servers.ToList()));
-            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
+            SettingsManager.Current.SNTPLookup_SNTPServers.Add(
+                new ServerConnectionInfoProfile(instance.Name, [.. instance.Servers]));
+        }, _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        },
             (ServerInfoProfileNames, false, false), _profileDialogDefaultValues);
 
-        customDialog.Content = new ServerConnectionInfoProfileDialog
-        {
-            DataContext = viewModel
-        };
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.Title = Strings.AddSNTPServer;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     public async Task EditServer()
     {
-        var customDialog = new CustomDialog
+        var childWindow = new ServerConnectionInfoProfileChildWindow();
+
+        var childWindowViewModel = new ServerConnectionInfoProfileViewModel(instance =>
         {
-            Title = Strings.EditSNTPServer
-        };
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
 
-        var viewModel = new ServerConnectionInfoProfileViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                SettingsManager.Current.SNTPLookup_SNTPServers.Remove(SelectedSNTPServer);
-                SettingsManager.Current.SNTPLookup_SNTPServers.Add(
-                    new ServerConnectionInfoProfile(instance.Name, instance.Servers.ToList()));
-            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-            (ServerInfoProfileNames, true, false),
+            SettingsManager.Current.SNTPLookup_SNTPServers.Remove(SelectedSNTPServer);
+            SettingsManager.Current.SNTPLookup_SNTPServers.Add(
+                new ServerConnectionInfoProfile(instance.Name, [.. instance.Servers]));
+        }, _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        },
+        (ServerInfoProfileNames, true, false),
             _profileDialogDefaultValues, SelectedSNTPServer);
 
-        customDialog.Content = new ServerConnectionInfoProfileDialog
-        {
-            DataContext = viewModel
-        };
+        childWindow.Title = Strings.EditSNTPServer;
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     private async Task DeleteServer()

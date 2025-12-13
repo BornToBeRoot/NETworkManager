@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <ProjectGuid>{95CE4AD5-14C0-4486-9C11-5D6A5EC48176}</ProjectGuid>
         <OutputType>Library</OutputType>

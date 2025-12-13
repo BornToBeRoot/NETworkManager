@@ -12,6 +12,7 @@ public class ServerConnectionInfoProfile
     /// </summary>
     public ServerConnectionInfoProfile()
     {
+
     }
 
     /// <summary>
@@ -33,5 +34,10 @@ public class ServerConnectionInfoProfile
     /// <summary>
     ///     List of servers as <see cref="ServerConnectionInfo" />.
     /// </summary>
-    public List<ServerConnectionInfo> Servers { get; set; } = new();
+    public List<ServerConnectionInfo> Servers { get; set; } = [];
+
+    public override string ToString()
+    {
+        return Name;
+    }
 }

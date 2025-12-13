@@ -586,7 +586,7 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
     {
         SetIsExpandedForAllProfileGroups(false);
     }
-    
+
     /// <summary>
     /// Gets the callback for closing a tab item.
     /// </summary>
@@ -613,7 +613,7 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
         foreach (var group in Profiles.Groups.Cast<CollectionViewGroup>())
             GroupExpanderStateStore[group.Name.ToString()] = isExpanded;
     }
-    
+
     /// <summary>
     /// Resizes the profile view.
     /// </summary>

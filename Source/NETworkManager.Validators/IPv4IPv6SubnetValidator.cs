@@ -16,11 +16,11 @@ public class IPv4IPv6SubnetValidator : ValidationRule
             return new ValidationResult(false, Strings.EnterValidSubnet);
 
         // Check if it is a IPv4 address with a cidr like 192.168.0.0/24            
-        if (Regex.IsMatch(subnet, RegexHelper.IPv4AddressCidrRegex))
+        if (RegexHelper.IPv4AddressCidrRegex().IsMatch(subnet))
             return ValidationResult.ValidResult;
 
         // Check if it is a IPv4 address with a subnetmask like 255.255.255.0
-        if (Regex.IsMatch(subnet, RegexHelper.IPv4AddressSubnetmaskRegex))
+        if (RegexHelper.IPv4AddressSubnetmaskRegex().IsMatch(subnet))
             return ValidationResult.ValidResult;
 
         // check if it is a IPv6 address with a cidr like ::1/64

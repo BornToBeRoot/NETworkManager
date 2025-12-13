@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
-using System.Text.RegularExpressions;
 using System.Windows.Data;
 using NETworkManager.Models.Network;
 using NETworkManager.Utilities;
@@ -40,7 +39,7 @@ public sealed class ValidateSubnetCalculatorSubnettingConverter : IMultiValueCon
         };
 
         // Support subnetmask like 255.255.255.0
-        int newCidr = Regex.IsMatch(newSubnetmaskOrCidr, RegexHelper.SubnetmaskRegex)
+        int newCidr = RegexHelper.SubnetmaskRegex().IsMatch(newSubnetmaskOrCidr)
             ? System.Convert.ToByte(Subnetmask.ConvertSubnetmaskToCidr(IPAddress.Parse(newSubnetmaskOrCidr)))
             : System.Convert.ToByte(newSubnetmaskOrCidr.TrimStart('/'));
 

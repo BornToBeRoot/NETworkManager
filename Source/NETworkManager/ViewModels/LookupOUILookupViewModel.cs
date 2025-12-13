@@ -71,7 +71,7 @@ public class LookupOUILookupViewModel : ViewModelBase
     #endregion
 
     #region Variables
-    
+
     /// <summary>
     /// The logger.
     /// </summary>

@@ -367,7 +367,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     }
 
     #endregion
-    
+
     #region ICommand & Actions
 
     /// <summary>
@@ -418,27 +418,30 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     /// </summary>
     private async Task AddDNSServer()
     {
-        var customDialog = new CustomDialog
+        var childWindow = new ServerConnectionInfoProfileChildWindow();
+
+        var childWindowViewModel = new ServerConnectionInfoProfileViewModel(instance =>
         {
-            Title = Strings.AddDNSServer
-        };
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
 
-        var viewModel = new ServerConnectionInfoProfileViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                SettingsManager.Current.DNSLookup_DNSServers.Add(
-                    new DNSServerConnectionInfoProfile(instance.Name, instance.Servers.ToList()));
-            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-            (ServerInfoProfileNames, false, true),
+            SettingsManager.Current.DNSLookup_DNSServers.Add(
+                new DNSServerConnectionInfoProfile(instance.Name, [.. instance.Servers]));
+        }, _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        },
+            (ServerInfoProfileNames, false, false),
             _profileDialogDefaultValues);
 
-        customDialog.Content = new ServerConnectionInfoProfileDialog
-        {
-            DataContext = viewModel
-        };
+        childWindow.Title = Strings.AddDNSServer;
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     /// <summary>
@@ -446,28 +449,31 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     /// </summary>
     public async Task EditDNSServer()
     {
-        var customDialog = new CustomDialog
+        var childWindow = new ServerConnectionInfoProfileChildWindow();
+
+        var childWindowViewModel = new ServerConnectionInfoProfileViewModel(instance =>
         {
-            Title = Strings.EditDNSServer
-        };
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
 
-        var viewModel = new ServerConnectionInfoProfileViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                SettingsManager.Current.DNSLookup_DNSServers.Remove(SelectedDNSServer);
-                SettingsManager.Current.DNSLookup_DNSServers.Add(
-                    new DNSServerConnectionInfoProfile(instance.Name, instance.Servers.ToList()));
-            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-            (ServerInfoProfileNames, true, true),
+            SettingsManager.Current.DNSLookup_DNSServers.Remove(SelectedDNSServer);
+            SettingsManager.Current.DNSLookup_DNSServers.Add(
+                    new DNSServerConnectionInfoProfile(instance.Name, [.. instance.Servers]));
+        }, _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        },
+            (ServerInfoProfileNames, true, false),
             _profileDialogDefaultValues, SelectedDNSServer);
 
-        customDialog.Content = new ServerConnectionInfoProfileDialog
-        {
-            DataContext = viewModel
-        };
+        childWindow.Title = Strings.EditDNSServer;
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
     /// <summary>

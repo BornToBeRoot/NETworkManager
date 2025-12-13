@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Utilities;
@@ -10,7 +9,7 @@ public class SubnetmaskValidator : ValidationRule
 {
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
-        return value != null && Regex.IsMatch((string)value, RegexHelper.SubnetmaskRegex)
+        return value != null && RegexHelper.SubnetmaskRegex().IsMatch((string)value)
             ? ValidationResult.ValidResult
             : new ValidationResult(false, Strings.EnterValidSubnetmask);
     }

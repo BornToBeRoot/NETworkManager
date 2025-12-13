@@ -1,29 +1,89 @@
-﻿namespace NETworkManager.Utilities;
+﻿using System.Text.RegularExpressions;
 
-public static class RegexHelper
+namespace NETworkManager.Utilities;
+
+public static partial class RegexHelper
 {
     /// <summary>
-    ///     Match an IPv4-Address like 192.168.178.1
-    /// </summary>
-    // ReSharper disable once InconsistentNaming
+    /// Represents a regular expression pattern that matches valid IPv4 address values.
+    /// </summary>    
     private const string IPv4AddressValues =
         @"((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
 
     /// <summary>
-    ///     Match exactly an IPv4-Address like 192.168.178.1
-    /// </summary>
-    // ReSharper disable once InconsistentNaming
-    public const string IPv4AddressRegex = $"^{IPv4AddressValues}$";
+    /// Represents a regular expression pattern that matches valid IPv4 subnet mask values.
+    /// </summary>    
+    private const string SubnetmaskValues =
+        @"(((255\.){3}(255|254|252|248|240|224|192|128|0+))|((255\.){2}(255|254|252|248|240|224|192|128|0+)\.0)|((255\.)(255|254|252|248|240|224|192|128|0+)(\.0+){2})|((255|254|252|248|240|224|192|128|0+)(\.0+){3}))";
 
     /// <summary>
-    ///     Match IPv4-Address within a string
-    /// </summary>
-    // ReSharper disable once InconsistentNaming
-    public const string IPv4AddressExtractRegex = IPv4AddressValues;
+    /// Represents the regular expression pattern used to validate CIDR notation values for IPv4 subnet masks.
+    /// </summary>    
+    private const string CidrRegexValues = @"([1-9]|[1-2][0-9]|3[0-2])";
 
-    // Match IPv4-Address Range like 192.168.178.1-192.168.178.127
-    // ReSharper disable once InconsistentNaming
-    public const string IPv4AddressRangeRegex = $"^{IPv4AddressValues}-{IPv4AddressValues}$";
+    /// <summary>
+    /// Represents a regular expression pattern that matches valid hostnames or fully qualified domain names (FQDNs).
+    /// </summary>
+    private const string HostnameOrDomainValues =
+        @"(?=.{1,255}$)(?!-)[A-Za-z0-9-]{1,63}(?<!-)(\.[A-Za-z0-9-]{1,63})*\.?";
+
+    /// <summary>
+    /// Provides a compiled regular expression that matches valid IPv4 addresses in dot-decimal notation like "192.168.178.0".
+    /// </summary>    
+    /// <returns>A <see cref="Regex"/> instance that matches IPv4 addresses in the format "x.x.x.x", where each x is a number
+    /// from 0 to 255.</returns>
+    [GeneratedRegex($"^{IPv4AddressValues}$")]
+    public static partial Regex IPv4AddressRegex();
+
+    /// <summary>
+    /// Provides a compiled regular expression that matches valid IPv4 addresses within input text like "192.168.178.0".
+    /// </summary>    
+    /// <returns>A <see cref="Regex"/> instance that can be used to extract IPv4 addresses from strings.</returns>
+    [GeneratedRegex(IPv4AddressValues)]
+    public static partial Regex IPv4AddressExtractRegex();
+
+    /// <summary>
+    /// Provides a compiles regular expression that matches IPv4 address ranges in the format "start-end" like
+    /// "192.168.178.0-192.168.178.255".
+    /// </summary>    
+    /// <returns>A <see cref="Regex"/> instance that matches strings representing IPv4 address ranges, such as
+    /// "192.168.1.1-192.168.1.100".</returns>
+    [GeneratedRegex($"^{IPv4AddressValues}-{IPv4AddressValues}$")]
+    public static partial Regex IPv4AddressRangeRegex();
+
+    /// <summary>
+    /// Provides a compiled regular expression that matches valid IPv4 subnet mask like "255.255.0.0".
+    /// </summary>    
+    /// <returns>A <see cref="Regex"/> instance that matches strings representing valid IPv4 subnet masks.</returns>        
+    [GeneratedRegex($"^{SubnetmaskValues}$")]
+    public static partial Regex SubnetmaskRegex();
+
+    /// <summary>
+    /// Provides a compiled regular expression that matches IPv4 addresses with subnet masks like
+    /// "192.168.178.0/255.255.255.0".
+    /// </summary>    
+    /// <returns>A <see cref="Regex"/> instance that matches strings containing an IPv4 address followed by a subnet mask,
+    /// separated by a forward slash.</returns>    
+    [GeneratedRegex($@"^{IPv4AddressValues}\/{SubnetmaskValues}$")]
+    public static partial Regex IPv4AddressSubnetmaskRegex();
+
+    /// <summary>
+    /// Provides a compiled regular expression that matches an IPv4 address with CIDR like
+    /// "192.168.178.0/24".
+    /// </summary>
+    /// <returns>A <see cref="Regex"/> instance that matches strings containing an IPv4 address followed by a slash and a valid
+    /// CIDR prefix length.</returns>
+    [GeneratedRegex($@"^{IPv4AddressValues}\/{CidrRegexValues}$")]
+    public static partial Regex IPv4AddressCidrRegex();
+
+    /// <summary>
+    /// Provides a compiled regular expression that matches IPv4 addresses, allowing for a special range in one or more octets like
+    /// "192.168.[0-50].1".
+    /// </summary>    
+    /// <returns>A <see cref="Regex"/> instance that matches IPv4 addresses with support for custom special ranges like
+    /// "192.168.[0-50].1".</returns>
+    [GeneratedRegex($@"^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|{SpecialRangeRegex})\.){{3}}((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|{SpecialRangeRegex})$")]
+    public static partial Regex IPv4AddressSpecialRangeRegex();
 
     // Match a MAC-Address 000000000000 00:00:00:00:00:00, 00-00-00-00-00-00-00 or 0000.0000.0000
     public const string MACAddressRegex =
@@ -32,23 +92,6 @@ public static class RegexHelper
     // Match the first 3 bytes of a MAC-Address 000000, 00:00:00, 00-00-00
     public const string MACAddressFirst3BytesRegex =
         @"^[A-Fa-f0-9]{6}$|^[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}$|^[A-Fa-f0-9]{4}.[A-Fa-f0-9]{2}$";
-
-    // Private subnetmask / cidr values
-    private const string SubnetmaskValues =
-        @"(((255\.){3}(255|254|252|248|240|224|192|128|0+))|((255\.){2}(255|254|252|248|240|224|192|128|0+)\.0)|((255\.)(255|254|252|248|240|224|192|128|0+)(\.0+){2})|((255|254|252|248|240|224|192|128|0+)(\.0+){3}))";
-
-    private const string CidrRegex = @"([1-9]|[1-2][0-9]|3[0-2])";
-
-    // Match a Subnetmask like 255.255.255.0
-    public const string SubnetmaskRegex = @"^" + SubnetmaskValues + @"$";
-
-    // Match a subnet from 192.168.178.0/1 to 192.168.178.0/32
-    // ReSharper disable once InconsistentNaming
-    public const string IPv4AddressCidrRegex = $@"^{IPv4AddressValues}\/{CidrRegex}$";
-
-    // Match a subnet from 192.168.178.0/192.0.0.0 to 192.168.178.0/255.255.255.255
-    // ReSharper disable once InconsistentNaming
-    public const string IPv4AddressSubnetmaskRegex = $@"^{IPv4AddressValues}\/{SubnetmaskValues}$";
 
     // Match IPv6 address like ::1
     // ReSharper disable once InconsistentNaming
@@ -64,20 +107,18 @@ public static class RegexHelper
     public const string SpecialRangeRegex =
         @"\[((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)-(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)))([,]((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)-(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))))*\]";
 
-    // Match a IPv4-Address like 192.168.[50-100].1
-    // ReSharper disable once InconsistentNaming
-    public const string IPv4AddressSpecialRangeRegex =
-        $@"^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|{SpecialRangeRegex})\.){{3}}((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|{SpecialRangeRegex})$";
 
-    // Private hostname values
-    private const string HostnameOrDomainValues =
-        @"(?=.{1,255}$)(?!-)[A-Za-z0-9-]{1,63}(?<!-)(\.[A-Za-z0-9-]{1,63})*\.?";
 
-    // Hostname regex like server-01 or server-01.example.com
-    public const string HostnameOrDomainRegex = $@"^{HostnameOrDomainValues}$";
+    /// <summary>
+    /// Provides a compiled regular expression that matches valid hostnames or fully qualified domain names (FQDNs) like
+    /// server-01 or server-01.example.com.
+    /// </summary>
+    /// <returns> A <see cref="Regex"/> instance that matches valid hostnames or FQDNs.</returns>
+    [GeneratedRegex($@"^{HostnameOrDomainValues}$")]
+    public static partial Regex HostnameOrDomainRegex();
 
     // Match a hostname with cidr like server-01.example.com/24
-    public const string HostnameOrDomainWithCidrRegex = $@"^{HostnameOrDomainValues}\/{CidrRegex}$";
+    public const string HostnameOrDomainWithCidrRegex = $@"^{HostnameOrDomainValues}\/{CidrRegexValues}$";
 
     // Match a hostname with subnetmask like server-01.example.com/255.255.255.0
     public const string HostnameOrDomainWithSubnetmaskRegex = $@"^{HostnameOrDomainValues}\/{SubnetmaskValues}$";

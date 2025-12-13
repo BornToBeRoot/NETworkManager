@@ -15,7 +15,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
@@ -80,23 +82,42 @@ public class DNSLookupViewModel : ViewModelBase
     /// <summary>
     /// Backing field for <see cref="DNSServer"/>.
     /// </summary>
-    private DNSServerConnectionInfoProfile _dnsServer = new();
+    private string _dnsServer;
 
     /// <summary>
     /// Gets or sets the selected DNS server.
+    /// This can either be an ip/host:port or a profile name.
     /// </summary>
-    public DNSServerConnectionInfoProfile DNSServer
+    public string DNSServer
     {
         get => _dnsServer;
         set
         {
-            if (value == _dnsServer)
+            if (_dnsServer == value)
                 return;
 
+            // Try finding matching dns server profile by name, otherwise set to null (de-select)
+            SelectedDNSServer = SettingsManager.Current.DNSLookup_DNSServers
+                .FirstOrDefault(x => x.Name == value);
+
             if (!_isLoading)
-                SettingsManager.Current.DNSLookup_SelectedDNSServer = value;
+                SettingsManager.Current.DNSLookup_SelectedDNSServer_v2 = value;
 
             _dnsServer = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private DNSServerConnectionInfoProfile _selectedDNSServer;
+    public DNSServerConnectionInfoProfile SelectedDNSServer
+    {
+        get => _selectedDNSServer;
+        set
+        {
+            if (_selectedDNSServer == value)
+                return;
+
+            _selectedDNSServer = value;
             OnPropertyChanged();
         }
     }
@@ -104,7 +125,7 @@ public class DNSLookupViewModel : ViewModelBase
     /// <summary>
     /// Backing field for <see cref="QueryTypes"/>.
     /// </summary>
-    private List<QueryType> _queryTypes = new();
+    private List<QueryType> _queryTypes = [];
 
     /// <summary>
     /// Gets the list of available query types.
@@ -170,7 +191,7 @@ public class DNSLookupViewModel : ViewModelBase
     /// <summary>
     /// Backing field for <see cref="Results"/>.
     /// </summary>
-    private ObservableCollection<DNSLookupRecordInfo> _results = new();
+    private ObservableCollection<DNSLookupRecordInfo> _results = [];
 
     /// <summary>
     /// Gets or sets the collection of lookup results.
@@ -304,9 +325,10 @@ public class DNSLookupViewModel : ViewModelBase
             ListSortDirection.Descending));
         DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerConnectionInfoProfile.Name),
             ListSortDirection.Ascending));
-        DNSServer = DNSServers.SourceCollection.Cast<DNSServerConnectionInfoProfile>()
-                        .FirstOrDefault(x => x.Name == SettingsManager.Current.DNSLookup_SelectedDNSServer.Name) ??
-                    DNSServers.SourceCollection.Cast<DNSServerConnectionInfoProfile>().First();
+
+        DNSServer = string.IsNullOrEmpty(SettingsManager.Current.DNSLookup_SelectedDNSServer_v2)
+            ? SettingsManager.Current.DNSLookup_DNSServers.FirstOrDefault()?.Name
+            : SettingsManager.Current.DNSLookup_SelectedDNSServer_v2;
 
         ResultsView = CollectionViewSource.GetDefaultView(Results);
         ResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(DNSLookupRecordInfo.NameServerAsString)));
@@ -330,7 +352,7 @@ public class DNSLookupViewModel : ViewModelBase
             return;
 
         if (!string.IsNullOrEmpty(Host))
-            Query();
+            QueryAsync().ConfigureAwait(false);
 
         _firstLoad = false;
     }
@@ -390,7 +412,7 @@ public class DNSLookupViewModel : ViewModelBase
     private void QueryAction()
     {
         if (!IsRunning)
-            Query();
+            QueryAsync().ConfigureAwait(false);
     }
 
     /// <summary>
@@ -409,18 +431,16 @@ public class DNSLookupViewModel : ViewModelBase
     #endregion
 
     #region Methods
-
     /// <summary>
     /// Performs the DNS query.
     /// </summary>
-    private void Query()
+    private async Task QueryAsync()
     {
         IsStatusMessageDisplayed = false;
         StatusMessage = string.Empty;
 
         IsRunning = true;
 
-        // Reset the latest results
         Results.Clear();
 
         DragablzTabItem.SetTabHeader(_tabId, Host);
@@ -445,9 +465,82 @@ public class DNSLookupViewModel : ViewModelBase
             dnsSettings.CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix?.TrimStart('.');
         }
 
-        var dnsLookup = DNSServer.UseWindowsDNSServer
-            ? new DNSLookup(dnsSettings)
-            : new DNSLookup(dnsSettings, DNSServer.Servers);
+        // Try to find DNS server profile
+        var dnsServerProfile = SettingsManager.Current.DNSLookup_DNSServers
+            .FirstOrDefault(x => x.Name == DNSServer);
+
+        DNSLookup dnsLookup = null;
+        List<ServerConnectionInfo> dnsServersToResolve = [];
+
+        // Use DNS server profile if found
+        if (dnsServerProfile != null)
+        {
+            if (dnsServerProfile.UseWindowsDNSServer)
+                dnsLookup = new DNSLookup(dnsSettings);
+            else
+                dnsServersToResolve = dnsServerProfile.Servers;
+        }
+        // Parse DNS server input
+        else
+        {
+            foreach (var dnsServerInput in DNSServer.Split(';'))
+            {
+                if (ServerConnectionInfo.TryParse(dnsServerInput, out var serverInfo, 53, TransportProtocol.Udp))
+                    dnsServersToResolve.Add(serverInfo);
+                else
+                    AppendStatusMessage(Strings.DNSServer + ": " + string.Format(Strings.CouldNotParseX, dnsServerInput));
+            }
+        }
+
+        // Resolve DNS server hostnames (if any) - not required when using Windows DNS servers
+        if (dnsLookup == null)
+        {
+            List<ServerConnectionInfo> resolvedDNSServers = [];
+
+            foreach (var dnsServerToResolve in dnsServersToResolve)
+            {
+                // Check if already an IP address
+                if (IPAddress.TryParse(dnsServerToResolve.Server, out _))
+                {
+                    resolvedDNSServers.Add(dnsServerToResolve);
+
+                    continue;
+                }
+
+                // Resolve hostname to IP address
+                var dnsResult = await DNSClientHelper.ResolveAorAaaaAsync(dnsServerToResolve.Server,
+                    SettingsManager.Current.Network_ResolveHostnamePreferIPv4);
+
+                if (dnsResult.HasError)
+                {
+                    var dnsErrorMessage = DNSClientHelper.FormatDNSClientResultError(dnsServerToResolve.Server, dnsResult);
+
+                    AppendStatusMessage($"{Strings.DNSServer}: {dnsErrorMessage}");
+
+                    continue;
+                }
+
+                resolvedDNSServers.Add(new ServerConnectionInfo(
+                    dnsResult.Value.ToString(),
+                    dnsServerToResolve.Port,
+                    dnsServerToResolve.TransportProtocol)
+                );
+            }
+
+            // Create DNS lookup instance
+            if (resolvedDNSServers.Count > 0)
+            {
+                dnsLookup = new DNSLookup(dnsSettings, resolvedDNSServers);
+            }
+            else
+            {
+                AppendStatusMessage(Strings.CouldNotParseOrResolveDNSServers);
+
+                IsRunning = false;
+
+                return;
+            }
+        }
 
         dnsLookup.RecordReceived += DNSLookup_RecordReceived;
         dnsLookup.LookupError += DNSLookup_LookupError;
@@ -470,6 +563,19 @@ public class DNSLookupViewModel : ViewModelBase
         ConfigurationManager.Current.DNSLookupTabCount--;
     }
 
+    /// <summary>
+    /// Appends the specified message to the current status message, adding a new line if a message already exists.
+    /// </summary>
+    /// <param name="message">The status message text to append. Cannot be null.</param>
+    private void AppendStatusMessage(string message)
+    {
+        if (!string.IsNullOrEmpty(StatusMessage))
+            StatusMessage += Environment.NewLine;
+
+        StatusMessage += message;
+        IsStatusMessageDisplayed = true;
+    }
+
     // Modify history list
     /// <summary>
     /// Adds the host to the history.
@@ -478,7 +584,7 @@ public class DNSLookupViewModel : ViewModelBase
     private void AddHostToHistory(string host)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.DNSLookup_HostHistory.ToList(), host,
+        var list = ListHelper.Modify([.. SettingsManager.Current.DNSLookup_HostHistory], host,
             SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items

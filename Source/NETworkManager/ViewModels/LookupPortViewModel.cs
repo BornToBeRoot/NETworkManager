@@ -67,7 +67,7 @@ public class LookupPortLookupViewModel : ViewModelBase
     #endregion
 
     #region Variables
-    
+
     /// <summary>
     /// The logger.
     /// </summary>

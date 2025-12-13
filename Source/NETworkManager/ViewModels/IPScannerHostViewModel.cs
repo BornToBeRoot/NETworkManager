@@ -560,7 +560,7 @@ public class IPScannerHostViewModel : ViewModelBase, IProfileManager
         IsProfileFilterSet = false;
         ProfileFilterIsOpen = false;
     }
-    
+
     /// <summary>
     /// Gets the command to expand all profile groups.
     /// </summary>
@@ -613,7 +613,7 @@ public class IPScannerHostViewModel : ViewModelBase, IProfileManager
         foreach (var group in Profiles.Groups.Cast<CollectionViewGroup>())
             GroupExpanderStateStore[group.Name.ToString()] = isExpanded;
     }
-    
+
     /// <summary>
     /// Resizes the profile view.
     /// </summary>
