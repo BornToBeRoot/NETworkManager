@@ -651,8 +651,8 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         // Check if it is already running or canceling
         if (IsRunning || IsCanceling)
         {
-            _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
-                Strings.CannotSetHostWhileRunningMessage);
+            DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error,
+                Strings.CannotSetHostWhileRunningMessage, ChildWindowIcon.Error);
 
             return false;
         }
