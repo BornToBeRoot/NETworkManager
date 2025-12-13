@@ -5,7 +5,7 @@
 <meta name="generator" content="Docusaurus v3.9.2">
 <title data-rh="true">Next Release | NETworkManager</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://borntoberoot.net/NETworkManager/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://borntoberoot.net/NETworkManager/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://borntoberoot.net/NETworkManager/docs/changelog/next-release"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Next Release | NETworkManager"><meta data-rh="true" name="description" content="Version: Next release"><meta data-rh="true" property="og:description" content="Version: Next release"><link data-rh="true" rel="icon" href="/NETworkManager/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://borntoberoot.net/NETworkManager/docs/changelog/next-release"><link data-rh="true" rel="alternate" href="https://borntoberoot.net/NETworkManager/docs/changelog/next-release" hreflang="en"><link data-rh="true" rel="alternate" href="https://borntoberoot.net/NETworkManager/docs/changelog/next-release" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Changelog","item":"https://borntoberoot.net/NETworkManager/docs/category/changelog"},{"@type":"ListItem","position":2,"name":"Next Release","item":"https://borntoberoot.net/NETworkManager/docs/changelog/next-release"}]}</script><link rel="alternate" type="application/rss+xml" href="/NETworkManager/blog/rss.xml" title="NETworkManager RSS Feed">
 <link rel="alternate" type="application/atom+xml" href="/NETworkManager/blog/atom.xml" title="NETworkManager Atom Feed"><link rel="stylesheet" href="/NETworkManager/assets/css/styles.09474dcd.css">
-<script src="/NETworkManager/assets/js/runtime~main.20d624e1.js" defer="defer"></script>
+<script src="/NETworkManager/assets/js/runtime~main.7f2de4b7.js" defer="defer"></script>
 <script src="/NETworkManager/assets/js/main.d0dcc8d8.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -37,6 +37,11 @@ The Sync feature (EC2 instances -&gt; Profiles) has been removed as well, becaus
 <ul>
 <li class="">New language Ukrainian (<code>uk-UA</code>) has been added. Thanks to <a href="https://github.com/vadickkt" target="_blank" rel="noopener noreferrer" class="">@vadickkt</a> <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3240" target="_blank" rel="noopener noreferrer" class="">#3240</a></li>
 </ul>
+<p><strong>DNS Lookup</strong></p>
+<ul>
+<li class="">Allow direct dns server input (<code>&lt;hostname&gt;|&lt;ipadress&gt;:&lt;port&gt;</code> - <code>&lt;port&gt;</code> is optional) in the lookup view in addition to select from a list of configured servers. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3261" target="_blank" rel="noopener noreferrer" class="">#3261</a>
+See the <a class="" href="/NETworkManager/docs/application/dns-lookup">DNS Lookup</a> documentation for more information.</li>
+</ul>
 <p><strong>Remote Desktop</strong></p>
 <ul>
 <li class="">Flag to enable <code>Admin (console) session</code> added to the RDP connect, profile and group dialogs. This flag allows connecting to the console session of the remote computer. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3216" target="_blank" rel="noopener noreferrer" class="">#3216</a></li>
@@ -47,6 +52,12 @@ The Sync feature (EC2 instances -&gt; Profiles) has been removed as well, becaus
 <li class="">Profile file creation flow improved — when adding a new profile you are now prompted to enable profile-file encryption to protect stored credentials and settings. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3227" target="_blank" rel="noopener noreferrer" class="">#3227</a></li>
 <li class="">Profile file dialog migrated to a child window to improve usability. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3227" target="_blank" rel="noopener noreferrer" class="">#3227</a></li>
 <li class="">Credential dialogs migrated to child windows to improve usability. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3231" target="_blank" rel="noopener noreferrer" class="">#3231</a></li>
+</ul>
+<p><strong>DNS Lookup</strong></p>
+<ul>
+<li class="">Allow hostname as server address in addition to IP address in the add/edit server dialog. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3261" target="_blank" rel="noopener noreferrer" class="">#3261</a></li>
+<li class="">Add <code>quad9</code> to the predefined DNS server list. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3261" target="_blank" rel="noopener noreferrer" class="">#3261</a></li>
+<li class="">Redesign add/edit server dialog (migrated from dialog to child window). <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3261" target="_blank" rel="noopener noreferrer" class="">#3261</a></li>
 </ul>
 <p><strong>Remote Desktop</strong></p>
 <ul>
@@ -64,6 +75,10 @@ The Sync feature (EC2 instances -&gt; Profiles) has been removed as well, becaus
 <ul>
 <li class="">Redesign Web Console connect dialog (migrated from dialog to child window). <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3234" target="_blank" rel="noopener noreferrer" class="">#3234</a></li>
 </ul>
+<p><strong>SNTP Lookup</strong></p>
+<ul>
+<li class="">Redesign add/edit server dialog (migrated from dialog to child window). <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3261" target="_blank" rel="noopener noreferrer" class="">#3261</a></li>
+</ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="bug-fixes">Bug Fixes<a href="#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes" translate="no">​</a></h2>
 <p><strong>PowerShell</strong></p>
 <ul>
@@ -80,6 +95,7 @@ The Sync feature (EC2 instances -&gt; Profiles) has been removed as well, becaus
 <li class="">Code cleanup &amp; refactoring<!-- -->
 <ul>
 <li class="">Introduced a new DialogHelper utility to centralize creation of <code>OK</code> and <code>OK/Cancel</code> dialogs. This reduces duplication and enforces a consistent layout. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3231" target="_blank" rel="noopener noreferrer" class="">#3231</a></li>
+<li class="">Migrate RegexHelper to precompiled Regex patterns for improved performance. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3261" target="_blank" rel="noopener noreferrer" class="">#3261</a></li>
 </ul>
 </li>
 <li class="">Migrated existing credential and profile dialogs to use DialogHelper, improving usability, accessibility and maintainability across the app. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3231" target="_blank" rel="noopener noreferrer" class="">#3231</a></li>
