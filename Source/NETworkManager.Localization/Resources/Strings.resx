@@ -3949,6 +3949,6 @@ If you click Cancel, the profile file will remain unencrypted.</value>
     <value>Could not parse or resolve any of the specified DNS servers.</value>
   </data>
   <data name="CouldNotParseX" xml:space="preserve">
-    <value>Could not parse DNS server "{0}".</value>
+    <value>Could not parse "{0}".</value>
   </data>
 </root>

@@ -2176,7 +2176,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Could not parse DNS server &quot;{0}&quot;. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Could not parse &quot;{0}&quot;. ähnelt.
         /// </summary>
         public static string CouldNotParseX {
             get {
