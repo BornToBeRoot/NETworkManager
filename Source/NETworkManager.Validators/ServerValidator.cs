@@ -13,11 +13,13 @@ public partial class ServerValidator : ValidationRule
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
         var allowOnlyIPAddress = Wrapper.AllowOnlyIPAddress;
+
         var genericErrorResult =
             allowOnlyIPAddress ? Strings.EnterValidIPAddress : Strings.EnterValidHostnameOrIPAddress;
 
         var input = (value as string)?.Trim();
 
+        // Empty input is considered invalid
         if (string.IsNullOrEmpty(input))
             return new ValidationResult(false, genericErrorResult);
 
@@ -30,7 +32,7 @@ public partial class ServerValidator : ValidationRule
             return ValidationResult.ValidResult;
 
         // Check if it is a valid hostname like server-01 or server-01.example.com
-        if (Regex.IsMatch(input, RegexHelper.HostnameOrDomainRegex) && !allowOnlyIPAddress)
+        if(RegexHelper.HostnameOrDomainRegex().IsMatch(input) && !allowOnlyIPAddress)
             return ValidationResult.ValidResult;
 
         return new ValidationResult(false, genericErrorResult);

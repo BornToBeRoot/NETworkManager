@@ -20,7 +20,13 @@ public static partial class RegexHelper
     /// Represents the regular expression pattern used to validate CIDR notation values for IPv4 subnet masks.
     /// </summary>    
     private const string CidrRegexValues = @"([1-9]|[1-2][0-9]|3[0-2])";
-     
+
+    /// <summary>
+    /// Represents a regular expression pattern that matches valid hostnames or fully qualified domain names (FQDNs).
+    /// </summary>
+    private const string HostnameOrDomainValues =
+        @"(?=.{1,255}$)(?!-)[A-Za-z0-9-]{1,63}(?<!-)(\.[A-Za-z0-9-]{1,63})*\.?";
+
     /// <summary>
     /// Provides a compiled regular expression that matches valid IPv4 addresses in dot-decimal notation like "192.168.178.0".
     /// </summary>    
@@ -71,7 +77,7 @@ public static partial class RegexHelper
     public static partial Regex IPv4AddressCidrRegex();
 
     /// <summary>
-    /// Creates a regular expression that matches IPv4 addresses, allowing for a special range in one or more octets like
+    /// Provides a compiled regular expression that matches IPv4 addresses, allowing for a special range in one or more octets like
     /// "192.168.[0-50].1".
     /// </summary>    
     /// <returns>A <see cref="Regex"/> instance that matches IPv4 addresses with support for custom special ranges like
@@ -101,12 +107,15 @@ public static partial class RegexHelper
     public const string SpecialRangeRegex =
         @"\[((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)-(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)))([,]((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)-(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))))*\]";
 
-    // Private hostname values
-    private const string HostnameOrDomainValues =
-        @"(?=.{1,255}$)(?!-)[A-Za-z0-9-]{1,63}(?<!-)(\.[A-Za-z0-9-]{1,63})*\.?";
+    
 
-    // Hostname regex like server-01 or server-01.example.com
-    public const string HostnameOrDomainRegex = $@"^{HostnameOrDomainValues}$";
+    /// <summary>
+    /// Provides a compiled regular expression that matches valid hostnames or fully qualified domain names (FQDNs) like
+    /// server-01 or server-01.example.com.
+    /// </summary>
+    /// <returns> A <see cref="Regex"/> instance that matches valid hostnames or FQDNs.</returns>
+    [GeneratedRegex($@"^{HostnameOrDomainValues}$")]
+    public static partial Regex HostnameOrDomainRegex();
 
     // Match a hostname with cidr like server-01.example.com/24
     public const string HostnameOrDomainWithCidrRegex = $@"^{HostnameOrDomainValues}\/{CidrRegexValues}$";

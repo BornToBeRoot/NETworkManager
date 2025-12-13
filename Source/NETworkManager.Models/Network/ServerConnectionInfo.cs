@@ -10,6 +10,7 @@ public class ServerConnectionInfo
     /// </summary>
     public ServerConnectionInfo()
     {
+
     }
 
     /// <summary>
@@ -51,6 +52,20 @@ public class ServerConnectionInfo
     ///     Transport protocol used for the connection.
     /// </summary>
     public TransportProtocol TransportProtocol { get; set; }
+
+   // public static ServerConnectionInfo Parse (string input)
+   // {
+        
+
+   //     return null;
+   // }
+
+   //public static bool TryParse (string input, out ServerConnectionInfo serverConnectionInfo)
+   // {
+   //     serverConnectionInfo = null;
+     
+   //     return false;
+   // }
 
     /// <summary>
     ///     Returns a string that represents the current object.

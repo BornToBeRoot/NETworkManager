@@ -2,7 +2,6 @@
 using NETworkManager.Utilities;
 using System.Diagnostics;
 using System.Globalization;
-using System.Text.RegularExpressions;
 using System.Windows.Controls;
 
 namespace NETworkManager.Validators;
@@ -19,7 +18,7 @@ public class HostsFileEntryHostnameValidator : ValidationRule
 
         foreach (var hostname in input.Split(' '))
         {
-            if (Regex.IsMatch(hostname, RegexHelper.HostnameOrDomainRegex) == false)
+            if (RegexHelper.HostnameOrDomainRegex().IsMatch(hostname) == false)
             {
                 isValid = false;
                 break;

@@ -15,6 +15,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -120,7 +121,7 @@ public class DNSLookupViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+
     /// <summary>
     /// Backing field for <see cref="QueryTypes"/>.
     /// </summary>
@@ -324,7 +325,7 @@ public class DNSLookupViewModel : ViewModelBase
             ListSortDirection.Descending));
         DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerConnectionInfoProfile.Name),
             ListSortDirection.Ascending));
-        
+
         DNSServer = string.IsNullOrEmpty(SettingsManager.Current.DNSLookup_SelectedDNSServer_v2)
             ? SettingsManager.Current.DNSLookup_DNSServers.FirstOrDefault()?.Name
             : SettingsManager.Current.DNSLookup_SelectedDNSServer_v2;
@@ -351,7 +352,7 @@ public class DNSLookupViewModel : ViewModelBase
             return;
 
         if (!string.IsNullOrEmpty(Host))
-            QueryAsync();
+            QueryAsync().ConfigureAwait(false);
 
         _firstLoad = false;
     }
@@ -411,7 +412,7 @@ public class DNSLookupViewModel : ViewModelBase
     private void QueryAction()
     {
         if (!IsRunning)
-            QueryAsync();
+            QueryAsync().ConfigureAwait(false);
     }
 
     /// <summary>
@@ -466,43 +467,174 @@ public class DNSLookupViewModel : ViewModelBase
             dnsSettings.CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix?.TrimStart('.');
         }
 
-
-        DNSLookup dnsLookup;
-
         // Try find existing dns server profile
         var dnsServerProfile = SettingsManager.Current.DNSLookup_DNSServers
             .FirstOrDefault(x => x.Name == DNSServer);
 
+        DNSLookup dnsLookup = null;
+
+        List<ServerConnectionInfo> dnsServersToResolve = [];
+
         // Use profile if found
         if (dnsServerProfile != null)
         {
-            dnsLookup = dnsServerProfile.UseWindowsDNSServer 
-                ? new DNSLookup(dnsSettings) 
-                : new DNSLookup(dnsSettings, dnsServerProfile.Servers);
+            // Use windows dns server
+            if (dnsServerProfile.UseWindowsDNSServer)
+                dnsLookup = new DNSLookup(dnsSettings);
+            // Use custom dns servers from profile
+            else
+                dnsServersToResolve = dnsServerProfile.Servers;
         }
-        // Otherwise try to parse custom server string
+        // Parse custom dns server from input
         else
-        {            
-            List<ServerConnectionInfo> customDNSServers = [];
+        {
+            foreach (var dnsServer in DNSServer.Split(';').Select(x => x.Trim()))
+            {
+                Debug.WriteLine("PARSE: " + dnsServer);
 
-            foreach (var customDNSServer in DNSServer.Split(';').Select(x => x.Trim()))
-            {                
-                var customDNSServerArgs = customDNSServer.Split(':');
-
-                var server = customDNSServerArgs[0];
-                var port = customDNSServerArgs.Length == 2 && int.TryParse(customDNSServerArgs[1], out var p) ? p : 53;
-
-                // Resolve hostname to IP address
-                if (!IPAddress.TryParse(server, out _))
+                // [IPv6]:Port
+                if (dnsServer.StartsWith('[') && dnsServer.Contains("]:"))
                 {
-                    var dnsResult = await DNSClientHelper.ResolveAorAaaaAsync(server,
-                    SettingsManager.Current.Network_ResolveHostnamePreferIPv4);
+                    var endIndex = dnsServer.IndexOf("]:", StringComparison.Ordinal);
+
+                    var ipPart = dnsServer[1..endIndex];
+                    var portPart = dnsServer[(endIndex + 2)..];
+
+                    Debug.WriteLine($"IPV6 with port detected. IP: {ipPart}, Port: {portPart}");
+
+                    // Validate IPv6 and port
+                    if (IPAddress.TryParse(ipPart, out IPAddress ip) && ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6 &&
+                        int.TryParse(portPart, out int port) && port > 0 && port <= 65535)
+                    {
+                        dnsServersToResolve.Add(new ServerConnectionInfo(ip.ToString(), port));
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(StatusMessage))
+                            StatusMessage += Environment.NewLine;
+
+                        StatusMessage += $"{Strings.DNSServer}: Could not parse DNS server '{dnsServer}'";
+                        IsStatusMessageDisplayed = true;
+
+                        continue;
+                    }
+                }
+                // [IPv6]
+                else if (dnsServer.StartsWith('[') && dnsServer.EndsWith(']'))
+                {
+                    var ipPart = dnsServer[1..^1];
+
+                    Debug.WriteLine($"IPV6 without port detected. IP: {ipPart}");
+
+                    // Validate IPv6
+                    if (IPAddress.TryParse(ipPart, out IPAddress ip) && ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+                    {
+                        dnsServersToResolve.Add(new ServerConnectionInfo(ip.ToString(), 53));
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(StatusMessage))
+                            StatusMessage += Environment.NewLine;
+
+                        StatusMessage += $"{Strings.DNSServer}: Could not parse DNS server '{dnsServer}'";
+                        IsStatusMessageDisplayed = true;
+
+                        continue;
+                    }
+                }
+                // IPv6
+                else if (dnsServer.Count(c => c == ':') > 1)
+                {
+                    Debug.WriteLine($"IPv6 without port detected. IP: {dnsServer}");
+
+                    // Validate IPv6
+                    if (IPAddress.TryParse(dnsServer, out IPAddress ip) && ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+                    {
+                        dnsServersToResolve.Add(new ServerConnectionInfo(ip.ToString(), 53));
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(StatusMessage))
+                            StatusMessage += Environment.NewLine;
+
+                        StatusMessage += $"{Strings.DNSServer}: Could not parse DNS server '{dnsServer}'";
+                        IsStatusMessageDisplayed = true;
+
+                        continue;
+                    }
+                }
+                // IPv4/hostname:port
+                else if (dnsServer.Contains(':'))
+                {
+                    var parts = dnsServer.Split([':'], 2);
+
+                    Debug.WriteLine($"IPv4 or Hostname with port detected. Host: {parts[0]}, Port: {parts[1]}");
+
+                    // Validate IPv4/Hostname and port
+                    if ((RegexHelper.IPv4AddressRegex().IsMatch(parts[0]) || RegexHelper.HostnameOrDomainRegex().IsMatch(parts[0])) && int.TryParse(parts[1], out int port) && port > 0 && port <= 65535)
+                    {
+                        dnsServersToResolve.Add(new ServerConnectionInfo(parts[0], port));
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(StatusMessage))
+                            StatusMessage += Environment.NewLine;
+
+                        StatusMessage += $"{Strings.DNSServer}: Could not parse DNS server '{dnsServer}'";
+                        IsStatusMessageDisplayed = true;
+
+                        continue;
+                    }
+                }
+                // IPv4/hostname
+                else
+                {
+                    Debug.WriteLine($"IPv4 or Hostname without port detected. Host: {dnsServer}");
+                    // Validate IPv4/Hostname
+
+                    if (RegexHelper.IPv4AddressRegex().IsMatch(dnsServer) || RegexHelper.HostnameOrDomainRegex().IsMatch(dnsServer))
+                    {
+                        dnsServersToResolve.Add(new ServerConnectionInfo(dnsServer, 53));
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(StatusMessage))
+                            StatusMessage += Environment.NewLine;
+
+                        StatusMessage += $"{Strings.DNSServer}: Could not parse DNS server '{dnsServer}'";
+                        IsStatusMessageDisplayed = true;
+
+                        continue;
+                    }
+                }
+            }
+        }
+
+        // DNS Lookup instance not created yet (not using Windows DNS server), need to resolve dns servers first
+        if (dnsLookup == null)
+        {
+            List<ServerConnectionInfo> resolvedDNSServers = [];
+
+            foreach (var dnsServerToResolve in dnsServersToResolve)
+            {
+                Debug.WriteLine("RESOLVE: " + dnsServerToResolve.Server);
+
+                // Check if already an IP address
+                if (IPAddress.TryParse(dnsServerToResolve.Server, out _))
+                {
+                    resolvedDNSServers.Add(dnsServerToResolve);
+                }
+                // Need to resolve hostname to IP address
+                else
+                {
+                    var dnsResult = await DNSClientHelper.ResolveAorAaaaAsync(dnsServerToResolve.Server,
+                        SettingsManager.Current.Network_ResolveHostnamePreferIPv4);
 
                     if (dnsResult.HasError)
                     {
-                        var dnsErrorMessage = DNSClientHelper.FormatDNSClientResultError(server, dnsResult);
+                        var dnsErrorMessage = DNSClientHelper.FormatDNSClientResultError(dnsServerToResolve.Server, dnsResult);
 
-                        if(!string.IsNullOrEmpty(StatusMessage))
+                        if (!string.IsNullOrEmpty(StatusMessage))
                             StatusMessage += Environment.NewLine;
 
                         StatusMessage += $"{Strings.DNSServer}: {dnsErrorMessage}";
@@ -511,21 +643,32 @@ public class DNSLookupViewModel : ViewModelBase
                         continue; // Skip this server, try next one
                     }
 
-                    server = dnsResult.Value.ToString();
+                    resolvedDNSServers.Add(new ServerConnectionInfo(
+                        dnsResult.Value.ToString(),
+                        dnsServerToResolve.Port,
+                        dnsServerToResolve.TransportProtocol)
+                    );
                 }
-
-                customDNSServers.Add(new ServerConnectionInfo(server, port, TransportProtocol.Udp));
             }
 
-            // Check if we have any valid custom dns servers
-            if (customDNSServers.Count == 0)
+            // Create DNS lookup instance if we have any resolved dns servers
+            if (resolvedDNSServers.Count > 0)
             {
+                dnsLookup = new DNSLookup(dnsSettings, resolvedDNSServers);
+            }
+            // No valid dns servers, return with error
+            else
+            {
+                if (!string.IsNullOrEmpty(StatusMessage))
+                    StatusMessage += Environment.NewLine;
+
+                StatusMessage += "Could not parse / resolve any of the specified DNS servers.";
+                IsStatusMessageDisplayed = true;
+
                 IsRunning = false;
-                
+
                 return;
             }
-
-            dnsLookup = new DNSLookup(dnsSettings, customDNSServers);
         }
 
         dnsLookup.RecordReceived += DNSLookup_RecordReceived;
@@ -557,7 +700,7 @@ public class DNSLookupViewModel : ViewModelBase
     private void AddHostToHistory(string host)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.DNSLookup_HostHistory.ToList(), host,
+        var list = ListHelper.Modify([.. SettingsManager.Current.DNSLookup_HostHistory], host,
             SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items

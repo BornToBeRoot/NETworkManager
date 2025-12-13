@@ -1,6 +1,7 @@
 ﻿using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Network;
 using NETworkManager.Utilities;
+using System.DirectoryServices.ActiveDirectory;
 using System.Globalization;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -74,7 +75,7 @@ public class MultipleHostsRangeValidator : ValidationRule
                 continue;
 
             // server-01.example.com
-            if (Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameOrDomainRegex))
+            if (RegexHelper.HostnameOrDomainRegex().IsMatch(ipHostOrRange))
                 continue;
 
             // server-01.example.com/24

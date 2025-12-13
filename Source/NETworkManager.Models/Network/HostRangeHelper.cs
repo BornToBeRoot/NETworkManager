@@ -1,5 +1,4 @@
-﻿using ControlzEx.Standard;
-using NETworkManager.Utilities;
+﻿using NETworkManager.Utilities;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -148,7 +147,7 @@ public static class HostRangeHelper
                     break;
 
                 // example.com
-                case var _ when Regex.IsMatch(host, RegexHelper.HostnameOrDomainRegex):
+                case var _ when RegexHelper.HostnameOrDomainRegex().IsMatch(host):
                     using (var dnsResolverTask =
                            DNSClientHelper.ResolveAorAaaaAsync(host, dnsResolveHostnamePreferIPv4))
                     {
