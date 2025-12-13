@@ -75,7 +75,7 @@ public static class ApplicationManager
                 break;
             case ApplicationName.PuTTY:
                 canvas.Children.Add(new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.TerminalSolid });
-                break;            
+                break;
             case ApplicationName.TigerVNC:
                 canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.EyeOutline });
                 break;

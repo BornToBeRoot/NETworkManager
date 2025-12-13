@@ -52,7 +52,7 @@ public static class SettingsViewManager
         new SettingsViewInfo(SettingsName.PowerShell, ApplicationManager.GetIcon(ApplicationName.PowerShell),
             SettingsGroup.Application),
         new SettingsViewInfo(SettingsName.PuTTY, ApplicationManager.GetIcon(ApplicationName.PuTTY),
-            SettingsGroup.Application),        
+            SettingsGroup.Application),
         new SettingsViewInfo(SettingsName.TigerVNC, ApplicationManager.GetIcon(ApplicationName.TigerVNC),
             SettingsGroup.Application),
         new SettingsViewInfo(SettingsName.WebConsole, ApplicationManager.GetIcon(ApplicationName.WebConsole),

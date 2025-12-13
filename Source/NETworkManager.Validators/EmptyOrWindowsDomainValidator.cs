@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Utilities;
@@ -19,7 +18,7 @@ public class EmptyOrWindowsDomainValidator : ValidationRule
         if (domain.Equals("."))
             return ValidationResult.ValidResult;
 
-        return Regex.IsMatch(domain, RegexHelper.HostnameOrDomainRegex)
+        return RegexHelper.HostnameOrDomainRegex().IsMatch(domain)
             ? ValidationResult.ValidResult
             : new ValidationResult(false, Strings.EnterValidDomain);
     }

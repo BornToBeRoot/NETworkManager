@@ -19,11 +19,11 @@ public static class ApplicationHelper
     {
         var path = Environment.GetEnvironmentVariable("PATH");
 
-        if (path == null) 
+        if (path == null)
             return null;
-        
+
         var directories = path.Split(';');
-        
+
         if (!fileName.EndsWith(".exe"))
             fileName += ".exe";
 

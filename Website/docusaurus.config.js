@@ -154,28 +154,27 @@ const config = {
       "@docusaurus/plugin-client-redirects",
       {
         redirects: [
-          { 
-            // Redirect latest changelog to the newest version           
+          {
+            // Redirect latest changelog to the newest version
             from: ["/docs/changelog/latest"],
             to: "/docs/changelog/2025-10-18-0",
           },
           // Redirect pre-versions to the corresponding new versions
-          {           
-            from: ["/docs/changelog/2025-11-1-0"],
+          {
+            from: [
+              "/docs/changelog/2025-11-1-0",
+              "/docs/changelog/2025-11-30-0",
+            ],
             to: "/docs/changelog/next-release",
           },
-          {           
-            from: ["/docs/changelog/2025-6-13-0"],
-            to: "/docs/changelog/2025-8-10-0",
-          },          
           {
-            from: ["/docs/changelog/2025-7-9-0"],
+            from: [
+              "/docs/changelog/2025-6-13-0",
+              "/docs/changelog/2025-7-9-0",
+              "/docs/changelog/2025-6-13-0",
+            ],
             to: "/docs/changelog/2025-8-10-0",
           },
-          {           
-            from: ["/docs/changelog/2025-6-13-0"],
-            to: "/docs/changelog/2025-8-10-0",
-          },          
         ],
       },
     ],

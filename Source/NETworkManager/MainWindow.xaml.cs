@@ -493,7 +493,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 SettingsManager.Current.General_ApplicationList = [.. ApplicationManager.GetDefaultList()];
                 SettingsManager.Current.IPScanner_CustomCommands = [.. IPScannerCustomCommand.GetDefaultList()];
                 SettingsManager.Current.PortScanner_PortProfiles = [.. PortProfile.GetDefaultList()];
-                SettingsManager.Current.DNSLookup_DNSServers = [.. DNSServer.GetDefaultList()];                
+                SettingsManager.Current.DNSLookup_DNSServers = [.. DNSServer.GetDefaultList()];
                 SettingsManager.Current.SNMP_OidProfiles = [.. SNMPOIDProfile.GetDefaultList()];
                 SettingsManager.Current.SNTPLookup_SNTPServers = [.. SNTPServer.GetDefaultList()];
                 SettingsManager.Current.WelcomeDialog_Show = false;
@@ -688,7 +688,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     private DNSLookupHostView _dnsLookupHostView;
     private RemoteDesktopHostView _remoteDesktopHostView;
     private PowerShellHostView _powerShellHostView;
-    private PuTTYHostView _puttyHostView;    
+    private PuTTYHostView _puttyHostView;
     private TigerVNCHostView _tigerVNCHostView;
     private WebConsoleHostView _webConsoleHostView;
     private SNMPHostView _snmpHostView;
@@ -803,7 +803,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                     _puttyHostView.OnViewVisible();
 
                 ContentControlApplication.Content = _puttyHostView;
-                break;            
+                break;
             case ApplicationName.TigerVNC:
                 if (_tigerVNCHostView == null)
                     _tigerVNCHostView = new TigerVNCHostView();
@@ -967,7 +967,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 break;
             case ApplicationName.PuTTY:
                 _puttyHostView?.OnViewHide();
-                break;            
+                break;
             case ApplicationName.TigerVNC:
                 _tigerVNCHostView?.OnViewHide();
                 break;
@@ -1095,7 +1095,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 break;
             case ApplicationName.PuTTY:
                 _puttyHostView.AddTab(data.Args);
-                break;            
+                break;
             case ApplicationName.TigerVNC:
                 _tigerVNCHostView.AddTab(data.Args);
                 break;
@@ -1481,7 +1481,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private void OnProfilesLoaded(ApplicationName name)
     {
-        
+
     }
 
     /// <summary>

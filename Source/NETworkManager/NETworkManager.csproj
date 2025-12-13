@@ -1,8 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net10.0-windows10.0.22621.0</TargetFramework>
+		<RootNamespace>NETworkManager</RootNamespace>
+		<AssemblyName>NETworkManager</AssemblyName>
+		<TargetFramework>net10.0-windows10.0.22621.0</TargetFramework>
         <RuntimeIdentifier>win-x64</RuntimeIdentifier>
         <PlatformTarget>x64</PlatformTarget>
         <SelfContained>false</SelfContained>
@@ -10,9 +12,7 @@
         <PublishSingleFile>true</PublishSingleFile>
         <PublishReadyToRun>true</PublishReadyToRun>
         -->		
-        <CsWinRTWindowsMetadata>sdk</CsWinRTWindowsMetadata>
-        <RootNamespace>NETworkManager</RootNamespace>
-        <AssemblyName>NETworkManager</AssemblyName>
+        <CsWinRTWindowsMetadata>sdk</CsWinRTWindowsMetadata>        
         <UseWPF>true</UseWPF>
         <UseWindowsForms>true</UseWindowsForms>		
         <StartupObject>NETworkManager.App</StartupObject>
@@ -63,21 +63,22 @@
         <PackageReference Include="DnsClient" Version="1.8.0" />
         <PackageReference Include="gong-wpf-dragdrop" Version="4.0.0" />
         <PackageReference Include="IPNetwork2" Version="3.4.832" />
-        <PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.6" />
+        <PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.7" />
         <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
         <PackageReference Include="log4net" Version="3.2.0" />
         <PackageReference Include="MahApps.Metro" Version="2.4.11" />
-        <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="6.1.0" />
-        <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="6.1.0" />
-        <PackageReference Include="MahApps.Metro.IconPacks.MaterialLight" Version="6.1.0" />
-        <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="6.1.0" />
-        <PackageReference Include="MahApps.Metro.IconPacks.Octicons" Version="6.1.0" />
+        <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="6.2.1" />
+        <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="6.2.1" />
+        <PackageReference Include="MahApps.Metro.IconPacks.MaterialLight" Version="6.2.1" />
+        <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="6.2.1" />
+        <PackageReference Include="MahApps.Metro.IconPacks.Octicons" Version="6.2.1" />
         <PackageReference Include="MahApps.Metro.SimpleChildWindow" Version="2.2.1" />
-        <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3537.50" />
+        <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3595.46" />
         <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
+        
         <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-        <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.4.12" />
+        <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.5.4" />
         <PackageReference Include="nulastudio.NetBeauty" Version="2.1.5" />
         <Reference Include="AxMSTSCLib">
             <HintPath>$(TargetDir)\lib\AxMSTSCLib.dll</HintPath>
@@ -150,4 +151,3 @@
         <Exec Command="PowerShell.exe -ExecutionPolicy Bypass -NoProfile -File &quot;$(ProjectDir)..\..\Scripts\PreBuildEventCommandLine.ps1&quot; &quot;$(TargetDir)&quot;" />
     </Target>
 </Project>
-

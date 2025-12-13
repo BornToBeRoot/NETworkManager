@@ -137,7 +137,7 @@ public class SettingsViewModel : ViewModelBase
     private DNSLookupSettingsView _dnsLookupSettingsViewModel;
     private RemoteDesktopSettingsView _remoteDesktopSettingsView;
     private PowerShellSettingsView _powerShellSettingsView;
-    private PuTTYSettingsView _puTTYSettingsView;    
+    private PuTTYSettingsView _puTTYSettingsView;
     private TigerVNCSettingsView _tigerVNCSettingsView;
     private WebConsoleSettingsView _webConsoleSettingsView;
     private SNMPSettingsView _snmpSettingsView;
@@ -314,7 +314,7 @@ public class SettingsViewModel : ViewModelBase
                 _puTTYSettingsView ??= new PuTTYSettingsView();
 
                 SettingsContent = _puTTYSettingsView;
-                break;            
+                break;
             case SettingsName.TigerVNC:
                 _tigerVNCSettingsView ??= new TigerVNCSettingsView();
 

@@ -1,10 +1,11 @@
-﻿using System.Globalization;
+﻿using NETworkManager.Localization.Resources;
+using NETworkManager.Models.Network;
+using NETworkManager.Utilities;
+using System.DirectoryServices.ActiveDirectory;
+using System.Globalization;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
-using NETworkManager.Localization.Resources;
-using NETworkManager.Models.Network;
-using NETworkManager.Utilities;
 
 namespace NETworkManager.Validators;
 
@@ -20,19 +21,19 @@ public class MultipleHostsRangeValidator : ValidationRule
         foreach (var ipHostOrRange in ((string)value).Replace(" ", "").Split(';'))
         {
             // 192.168.0.1
-            if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressRegex))
+            if (RegexHelper.IPv4AddressRegex().IsMatch(ipHostOrRange))
                 continue;
 
             // 192.168.0.0/24
-            if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressCidrRegex))
+            if (RegexHelper.IPv4AddressCidrRegex().IsMatch(ipHostOrRange))
                 continue;
 
             // 192.168.0.0/255.255.255.0
-            if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressSubnetmaskRegex))
+            if (RegexHelper.IPv4AddressSubnetmaskRegex().IsMatch(ipHostOrRange))
                 continue;
 
             // 192.168.0.0 - 192.168.0.100
-            if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressRangeRegex))
+            if (RegexHelper.IPv4AddressRangeRegex().IsMatch(ipHostOrRange))
             {
                 var range = ipHostOrRange.Split('-');
 
@@ -43,7 +44,7 @@ public class MultipleHostsRangeValidator : ValidationRule
             }
 
             // 192.168.[50-100].1
-            if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressSpecialRangeRegex))
+            if (RegexHelper.IPv4AddressSpecialRangeRegex().IsMatch(ipHostOrRange))
             {
                 var octets = ipHostOrRange.Split('.');
 
@@ -74,7 +75,7 @@ public class MultipleHostsRangeValidator : ValidationRule
                 continue;
 
             // server-01.example.com
-            if (Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameOrDomainRegex))
+            if (RegexHelper.HostnameOrDomainRegex().IsMatch(ipHostOrRange))
                 continue;
 
             // server-01.example.com/24

@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Utilities;
@@ -15,10 +14,10 @@ public class IPv4SubnetValidator : ValidationRule
         if (string.IsNullOrEmpty(subnet))
             return new ValidationResult(false, Strings.EnterValidSubnet);
 
-        if (Regex.IsMatch(subnet, RegexHelper.IPv4AddressCidrRegex))
+        if (RegexHelper.IPv4AddressCidrRegex().IsMatch(subnet))
             return ValidationResult.ValidResult;
 
-        if (Regex.IsMatch(subnet, RegexHelper.IPv4AddressSubnetmaskRegex))
+        if (RegexHelper.IPv4AddressSubnetmaskRegex().IsMatch(subnet))
             return ValidationResult.ValidResult;
 
         return new ValidationResult(false, Strings.EnterValidSubnet);

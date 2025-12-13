@@ -11,6 +11,6 @@ public interface IEmbeddedWindow
     /// </summary>
     public void FocusEmbeddedWindow()
     {
-        
+
     }
 }

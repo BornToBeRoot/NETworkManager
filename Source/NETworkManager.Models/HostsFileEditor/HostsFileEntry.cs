@@ -25,7 +25,7 @@ public class HostsFileEntry
     /// Comment of the host.
     /// </summary>
     public string Comment { get; init; }
-    
+
     /// <summary>
     /// Line of the entry in the hosts file.
     /// </summary>
@@ -52,17 +52,17 @@ public class HostsFileEntry
         IPAddress = ipAddress;
         Hostname = hostname;
         Comment = comment;
-        
+
         var line = isEnabled ? "" : "# ";
 
         line += $"{ipAddress}    {hostname}";
 
         if (!string.IsNullOrWhiteSpace(comment))
             line += $"        # {comment}";
-        
+
         Line = line;
     }
-    
+
     /// <summary>
     /// Creates a new instance of <see cref="HostsFileEntry" /> with parameters.
     /// </summary>
@@ -79,7 +79,7 @@ public class HostsFileEntry
         Comment = comment;
         Line = line;
     }
-    
+
     /// <summary>
     /// Overrides the ToString method to return the line of the entry in the hosts file.
     /// </summary>

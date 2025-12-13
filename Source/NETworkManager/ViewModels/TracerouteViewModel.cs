@@ -26,6 +26,9 @@ using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels;
 
+/// <summary>
+/// ViewModel for the Traceroute feature.
+/// </summary>
 public class TracerouteViewModel : ViewModelBase
 {
     #region Variables
@@ -40,6 +43,9 @@ public class TracerouteViewModel : ViewModelBase
 
     private string _host;
 
+    /// <summary>
+    /// Gets or sets the host address or hostname to trace.
+    /// </summary>
     public string Host
     {
         get => _host;
@@ -53,10 +59,16 @@ public class TracerouteViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the collection view for the host history.
+    /// </summary>
     public ICollectionView HostHistoryView { get; }
 
     private bool _isRunning;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether a traceroute is currently running.
+    /// </summary>
     public bool IsRunning
     {
         get => _isRunning;
@@ -72,6 +84,9 @@ public class TracerouteViewModel : ViewModelBase
 
     private bool _cancelTrace;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the trace should be cancelled.
+    /// </summary>
     public bool CancelTrace
     {
         get => _cancelTrace;
@@ -87,6 +102,9 @@ public class TracerouteViewModel : ViewModelBase
 
     private ObservableCollection<TracerouteHopInfo> _results = new();
 
+    /// <summary>
+    /// Gets or sets the collection of traceroute hop results.
+    /// </summary>
     public ObservableCollection<TracerouteHopInfo> Results
     {
         get => _results;
@@ -99,10 +117,16 @@ public class TracerouteViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the collection view for the traceroute results.
+    /// </summary>
     public ICollectionView ResultsView { get; }
 
     private TracerouteHopInfo _selectedResult;
 
+    /// <summary>
+    /// Gets or sets the currently selected traceroute result hop.
+    /// </summary>
     public TracerouteHopInfo SelectedResult
     {
         get => _selectedResult;
@@ -118,6 +142,9 @@ public class TracerouteViewModel : ViewModelBase
 
     private IList _selectedResults = new ArrayList();
 
+    /// <summary>
+    /// Gets or sets the list of currently selected traceroute result hops (for multi-selection).
+    /// </summary>
     public IList SelectedResults
     {
         get => _selectedResults;
@@ -135,6 +162,9 @@ public class TracerouteViewModel : ViewModelBase
 
     private bool _isStatusMessageDisplayed;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the status message is displayed.
+    /// </summary>
     public bool IsStatusMessageDisplayed
     {
         get => _isStatusMessageDisplayed;
@@ -150,6 +180,9 @@ public class TracerouteViewModel : ViewModelBase
 
     private string _statusMessage;
 
+    /// <summary>
+    /// Gets the status message to display.
+    /// </summary>
     public string StatusMessage
     {
         get => _statusMessage;
@@ -167,6 +200,12 @@ public class TracerouteViewModel : ViewModelBase
 
     #region Constructor, load settings
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="TracerouteViewModel"/> class.
+    /// </summary>
+    /// <param name="instance">The dialog coordinator instance.</param>
+    /// <param name="tabId">The unique identifier for the tab.</param>
+    /// <param name="host">The initial host to trace.</param>
     public TracerouteViewModel(IDialogCoordinator instance, Guid tabId, string host)
     {
         _dialogCoordinator = instance;
@@ -187,6 +226,9 @@ public class TracerouteViewModel : ViewModelBase
         LoadSettings();
     }
 
+    /// <summary>
+    /// Called when the view is loaded. Starts the trace if it's the first load and a host is specified.
+    /// </summary>
     public void OnLoaded()
     {
         if (!_firstLoad)
@@ -206,6 +248,9 @@ public class TracerouteViewModel : ViewModelBase
 
     #region ICommands & Actions
 
+    /// <summary>
+    /// Gets the command to start or stop the traceroute.
+    /// </summary>
     public ICommand TraceCommand => new RelayCommand(_ => TraceAction(), Trace_CanExecute);
 
     private bool Trace_CanExecute(object parameter)
@@ -223,6 +268,9 @@ public class TracerouteViewModel : ViewModelBase
             StartTrace().ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to redirect the selected result's data to another application.
+    /// </summary>
     public ICommand RedirectDataToApplicationCommand => new RelayCommand(RedirectDataToApplicationAction);
 
     private void RedirectDataToApplicationAction(object name)
@@ -237,6 +285,9 @@ public class TracerouteViewModel : ViewModelBase
         EventSystem.RedirectToApplication(applicationName, host);
     }
 
+    /// <summary>
+    /// Gets the command to perform a DNS lookup for the selected hop.
+    /// </summary>
     public ICommand PerformDNSLookupCommand => new RelayCommand(PerformDNSLookupAction);
 
     private void PerformDNSLookupAction(object data)
@@ -244,6 +295,9 @@ public class TracerouteViewModel : ViewModelBase
         EventSystem.RedirectToApplication(ApplicationName.DNSLookup, data.ToString());
     }
 
+    /// <summary>
+    /// Gets the command to copy the round-trip time to the clipboard.
+    /// </summary>
     public ICommand CopyTimeToClipboardCommand => new RelayCommand(CopyTimeToClipboardAction);
 
     private void CopyTimeToClipboardAction(object timeIdentifier)
@@ -259,6 +313,9 @@ public class TracerouteViewModel : ViewModelBase
         ClipboardHelper.SetClipboard(time);
     }
 
+    /// <summary>
+    /// Gets the command to export the traceroute results.
+    /// </summary>
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
 
     private void ExportAction()

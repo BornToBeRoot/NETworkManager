@@ -4,8 +4,18 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
+/// <summary>
+/// Represents the ViewModel for a message dialog with an OK option.
+/// </summary>
 public class OKMessageViewModel : ViewModelBase
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="OKMessageViewModel"/> class.
+    /// </summary>
+    /// <param name="okCommand">The action to execute when the OK button is clicked.</param>
+    /// <param name="message">The message to display.</param>
+    /// <param name="icon">The icon to display in the message window.</param>
+    /// <param name="okButtonText">The text for the OK button.</param>
     public OKMessageViewModel(Action<OKMessageViewModel> okCommand, string message, ChildWindowIcon icon = ChildWindowIcon.Info, string okButtonText = null)
     {
         OKCommand = new RelayCommand(_ => okCommand(this));
@@ -16,9 +26,16 @@ public class OKMessageViewModel : ViewModelBase
         Icon = icon;
     }
 
+    /// <summary>
+    /// Gets the command for the OK button.
+    /// </summary>
     public ICommand OKCommand { get; }
 
     private readonly string _message;
+
+    /// <summary>
+    /// Gets the message to display.
+    /// </summary>
     public string Message
     {
         get => _message;
@@ -33,6 +50,10 @@ public class OKMessageViewModel : ViewModelBase
     }
 
     private readonly string _okButtonText;
+
+    /// <summary>
+    /// Gets the text for the OK button.
+    /// </summary>
     public string OKButtonText
     {
         get => _okButtonText;
@@ -47,6 +68,10 @@ public class OKMessageViewModel : ViewModelBase
     }
 
     private ChildWindowIcon _icon;
+
+    /// <summary>
+    /// Gets the icon to display.
+    /// </summary>
     public ChildWindowIcon Icon
     {
         get => _icon;

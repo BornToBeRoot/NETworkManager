@@ -4,25 +4,26 @@ import styles from "./styles.module.css";
 
 const FeatureList = [
   {
-    title: "Network Analysis",
+    title: "In-Depth Network Analysis",
     Svg: require("@site/static/img/undraw_connected_world_wuay.svg").default,
     description: (
       <>
-        Analyze your network and gather detailed information using built-in
-        tools such as the WiFi Analyzer, IP Scanner, Port Scanner, Traceroute,
-        DNS Lookup, Ping Monitor, LLDP Capture, and many more.
+        Analyze your network and perform in-depth diagnostics using built-in
+        tools such as WiFi Analyzer, IP Scanner, Port Scanner, Traceroute,
+        DNS Lookup, Ping Monitor, LLDP Capture, and many more - all in a unified
+        interface.
       </>
     ),
   },
   {
-    title: "Remote System Management",
+    title: "Remote Access & Server Management",
     Svg: require("@site/static/img/undraw_server_cluster_jwwq.svg").default,
     description: (
       <>
-        Connect to remote systems and manage your network and server
+        Connect, monitor and troubleshoot your network and server
         infrastructure with integrated clients such as Remote Desktop (RDP),
-        PuTTY (SSH, Telnet, Serial), PowerShell (WinRM, WSL, Custom Tools),
-        TigerVNC (VNC), and AWS SSM.
+        PuTTY (SSH, Serial, etc.), PowerShell (WSL, K9s, etc.)
+        and TigerVNC (VNC).
       </>
     ),
   },
@@ -32,9 +33,10 @@ const FeatureList = [
       .default,
     description: (
       <>
-        Save hosts and networks with custom configurations in encrypted 
-        profile files to protect sensitive data, organize them by customers
-        or environments, and use them seamlessly across features.        
+        Organize hosts and networks in profiles with specific configurations,
+        and use them seamlessly across all features. Keep your sensitive
+        data secure with encrypted profile files, and manage customers
+        or environments by using different profile files.
       </>
     ),
   },
@@ -44,7 +46,9 @@ const FeatureList = [
     description: (
       <>
         Diagnose and resolve issues effectively with a comprehensive suite of
-        tools within a unified application.
+        tools in one place. It's enterprise-ready — includes an MSI installer for
+        centralized deployment, signed binaries, translations in 16+ languages,
+        and distribution via package managers like winget and Chocolatey.
       </>
     ),
   },  
@@ -53,8 +57,9 @@ const FeatureList = [
     Svg: require("@site/static/img/undraw_version_control_re_mg66.svg").default,
     description: (
       <>
-        NETworkManager is fully open source on GitHub. Review the code, build it
-        yourself, or contribute to make it even better.
+        NETworkManager is fully open source on GitHub — no ads, no subscriptions,
+        no selling your data. Review the code, build it yourself, or contribute
+        to make it even better.
       </>
     ),
   },

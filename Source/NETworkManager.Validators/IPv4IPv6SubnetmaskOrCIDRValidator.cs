@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Utilities;
@@ -16,7 +15,7 @@ public class IPv4IPv6SubnetmaskOrCIDRValidator : ValidationRule
             return new ValidationResult(false, Strings.EnterValidSubnetmaskOrCIDR);
 
         // Check if it is a subnetmask like 255.255.255.0
-        if (Regex.IsMatch(subnetmaskOrCidr, RegexHelper.SubnetmaskRegex))
+        if (RegexHelper.SubnetmaskRegex().IsMatch(subnetmaskOrCidr))
             return ValidationResult.ValidResult;
 
         // Check if it is a CIDR like /24

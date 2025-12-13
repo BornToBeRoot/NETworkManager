@@ -83,7 +83,7 @@ Apply the current application theme to the PowerShell console global profile(s).
 
 If enabled, the PowerShell console global profile(s) are modified in the registry under `Computer\HKEY_CURRENT_USER\Console` (`HKCU:\Console`). This adjusts the background of the console and some other settings so that the console window integrates better with the NETworkManager application.
 
-The profiles are changed for the PowerShell consoles configured in the PowerShell and AWS Session Manager tools. Both Windows PowerShell and PowerShell 7 and later are supported.
+The profiles are changed for the PowerShell consoles configured in the PowerShell tools. Both Windows PowerShell and PowerShell 7 and later are supported.
 
 Example paths under `HKCU:\Console`:
 

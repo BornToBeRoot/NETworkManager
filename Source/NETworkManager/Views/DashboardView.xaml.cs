@@ -9,7 +9,7 @@ public partial class DashboardView
     private readonly NetworkConnectionWidgetView _networkConnectionWidgetView = new();
     private readonly IPApiIPGeolocationWidgetView _ipApiIPGeolocationWidgetView = new();
     private readonly IPApiDNSResolverWidgetView _ipApiDNSResolverWidgetView = new();
-    
+
 
     public DashboardView()
     {
@@ -20,15 +20,15 @@ public partial class DashboardView
         ContentControlNetworkConnection.Content = _networkConnectionWidgetView;
         ContentControlIPApiIPGeolocation.Content = _ipApiIPGeolocationWidgetView;
         ContentControlIPApiDNSResolver.Content = _ipApiDNSResolverWidgetView;
-        
+
         // Check all widgets
         Check();
     }
-    
+
     public void OnViewVisible()
     {
         _viewModel.OnViewVisible();
-        
+
         // Check all widgets
         Check();
     }
@@ -37,7 +37,7 @@ public partial class DashboardView
     {
         _viewModel.OnViewHide();
     }
-    
+
     /// <summary>
     /// Check all widgets
     /// </summary>

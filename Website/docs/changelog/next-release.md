@@ -33,6 +33,11 @@ Release date: **xx.xx.2025**
 
 - New language Ukrainian (`uk-UA`) has been added. Thanks to [@vadickkt](https://github.com/vadickkt) [#3240](https://github.com/BornToBeRoot/NETworkManager/pull/3240)
 
+**DNS Lookup**
+
+- Allow direct dns server input (`<hostname>|<ipadress>:<port>` - `<port>` is optional) in the lookup view in addition to select from a list of configured servers. [#3261](https://github.com/BornToBeRoot/NETworkManager/pull/3261)
+  See the [DNS Lookup](../application/dns-lookup.md) documentation for more information.
+
 **Remote Desktop**
 
 - Flag to enable `Admin (console) session` added to the RDP connect, profile and group dialogs. This flag allows connecting to the console session of the remote computer. [#3216](https://github.com/BornToBeRoot/NETworkManager/pull/3216)
@@ -44,6 +49,12 @@ Release date: **xx.xx.2025**
 - Profile file creation flow improved — when adding a new profile you are now prompted to enable profile-file encryption to protect stored credentials and settings. [#3227](https://github.com/BornToBeRoot/NETworkManager/pull/3227)
 - Profile file dialog migrated to a child window to improve usability. [#3227](https://github.com/BornToBeRoot/NETworkManager/pull/3227)
 - Credential dialogs migrated to child windows to improve usability. [#3231](https://github.com/BornToBeRoot/NETworkManager/pull/3231)
+
+**DNS Lookup**
+
+- Allow hostname as server address in addition to IP address in the add/edit server dialog. [#3261](https://github.com/BornToBeRoot/NETworkManager/pull/3261)
+- Add `quad9` to the predefined DNS server list. [#3261](https://github.com/BornToBeRoot/NETworkManager/pull/3261)
+- Redesign add/edit server dialog (migrated from dialog to child window). [#3261](https://github.com/BornToBeRoot/NETworkManager/pull/3261)
 
 **Remote Desktop**
 
@@ -61,6 +72,10 @@ Release date: **xx.xx.2025**
 
 - Redesign Web Console connect dialog (migrated from dialog to child window). [#3234](https://github.com/BornToBeRoot/NETworkManager/pull/3234)
 
+**SNTP Lookup**
+
+- Redesign add/edit server dialog (migrated from dialog to child window). [#3261](https://github.com/BornToBeRoot/NETworkManager/pull/3261)
+
 ## Bug Fixes
 
 **PowerShell**
@@ -77,6 +92,9 @@ Release date: **xx.xx.2025**
 - Documentation updated
 - Code cleanup & refactoring
   - Introduced a new DialogHelper utility to centralize creation of `OK` and `OK/Cancel` dialogs. This reduces duplication and enforces a consistent layout. [#3231](https://github.com/BornToBeRoot/NETworkManager/pull/3231)
+  - Migrate RegexHelper to precompiled Regex patterns for improved performance. [#3261](https://github.com/BornToBeRoot/NETworkManager/pull/3261)
 - Migrated existing credential and profile dialogs to use DialogHelper, improving usability, accessibility and maintainability across the app. [#3231](https://github.com/BornToBeRoot/NETworkManager/pull/3231)
 - Language files updated via [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration)
 - Dependencies updated via [#dependabot](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot)
+- Add Junie/Gemini 3 generated XML documentation headers for roughly half of the ViewModels. This might help with readability. [#3251](https://github.com/BornToBeRoot/NETworkManager/pull/3251)
+- Generate project guidelines for Rider's coding agent Junie using itself as generator. [#3250](https://github.com/BornToBeRoot/NETworkManager/pull/3250)

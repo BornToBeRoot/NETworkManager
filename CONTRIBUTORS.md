@@ -12,6 +12,7 @@ List of all contributors.
 - Freeman2016
 - EBWeist
 - mdawsonuk
+- labre_rdc
 
 ## Translators / reviewers on Transifex
 

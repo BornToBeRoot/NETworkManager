@@ -1,5 +1,5 @@
 ---
-sidebar_position: 6
+sidebar_position: 5
 ---
 
 # Command Line Arguments
@@ -45,7 +45,6 @@ Start a specific application on startup.
 - `RemoteDesktop`
 - `PowerShell`
 - `PuTTY`
-- `AWSSessionManager`
 - `TigerVNC`
 - `WebConsole`
 - `SNMP`

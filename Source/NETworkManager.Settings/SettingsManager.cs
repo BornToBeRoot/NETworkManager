@@ -337,6 +337,16 @@ public static class SettingsManager
     {
         Log.Info($"Apply upgrade to {version}...");
 
+        // DNS Lookup
+
+        Log.Info("Migrate DNS Lookup settings to new structure...");
+
+        Current.DNSLookup_SelectedDNSServer_v2 = Current.DNSLookup_SelectedDNSServer?.Name;
+
+        Log.Info($"Selected DNS server set to \"{Current.DNSLookup_SelectedDNSServer_v2}\"");
+
+        // AWS Session Manager
+
         Log.Info("Removing deprecated app \"AWS Session Manager\", if it exists...");
 
         var appToRemove = Current.General_ApplicationList

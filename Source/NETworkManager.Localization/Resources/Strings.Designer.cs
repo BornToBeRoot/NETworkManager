@@ -2158,11 +2158,29 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Could not parse or resolve any of the specified DNS servers. ähnelt.
+        /// </summary>
+        public static string CouldNotParseOrResolveDNSServers {
+            get {
+                return ResourceManager.GetString("CouldNotParseOrResolveDNSServers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Could not parse public ip address from &quot;{0}&quot;! Try another service or use the default...  ähnelt.
         /// </summary>
         public static string CouldNotParsePublicIPAddressFromXXXMessage {
             get {
                 return ResourceManager.GetString("CouldNotParsePublicIPAddressFromXXXMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Could not parse &quot;{0}&quot;. ähnelt.
+        /// </summary>
+        public static string CouldNotParseX {
+            get {
+                return ResourceManager.GetString("CouldNotParseX", resourceCulture);
             }
         }
         

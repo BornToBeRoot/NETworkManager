@@ -21,6 +21,9 @@ using NETworkManager.Controls;
 
 namespace NETworkManager.ViewModels;
 
+/// <summary>
+/// ViewModel for the Wake on LAN feature.
+/// </summary>
 public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
@@ -33,6 +36,9 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     private bool _isRunning;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the Wake on LAN operation is running.
+    /// </summary>
     public bool IsRunning
     {
         get => _isRunning;
@@ -46,10 +52,16 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
         }
     }
 
+    /// <summary>
+    /// Gets the collection view for the MAC address history.
+    /// </summary>
     public ICollectionView MACAddressHistoryView { get; }
 
     private string _macAddress;
 
+    /// <summary>
+    /// Gets or sets the MAC address to wake up.
+    /// </summary>
     public string MACAddress
     {
         get => _macAddress;
@@ -63,10 +75,16 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
         }
     }
 
+    /// <summary>
+    /// Gets the collection view for the broadcast address history.
+    /// </summary>
     public ICollectionView BroadcastHistoryView { get; }
 
     private string _broadcast;
 
+    /// <summary>
+    /// Gets or sets the broadcast address.
+    /// </summary>
     public string Broadcast
     {
         get => _broadcast;
@@ -82,6 +100,9 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     private bool _isStatusMessageDisplayed;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the status message is displayed.
+    /// </summary>
     public bool IsStatusMessageDisplayed
     {
         get => _isStatusMessageDisplayed;
@@ -97,6 +118,9 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     private string _statusMessage;
 
+    /// <summary>
+    /// Gets the status message to display.
+    /// </summary>
     public string StatusMessage
     {
         get => _statusMessage;
@@ -114,6 +138,9 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     private ICollectionView _profiles;
 
+    /// <summary>
+    /// Gets the collection view for the profiles.
+    /// </summary>
     public ICollectionView Profiles
     {
         get => _profiles;
@@ -129,6 +156,9 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     private ProfileInfo _selectedProfile = new();
 
+    /// <summary>
+    /// Gets or sets the currently selected profile.
+    /// </summary>
     public ProfileInfo SelectedProfile
     {
         get => _selectedProfile;
@@ -150,6 +180,9 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     private string _search;
 
+    /// <summary>
+    /// Gets or sets the search text for filtering profiles.
+    /// </summary>
     public string Search
     {
         get => _search;
@@ -173,6 +206,9 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     private bool _isSearching;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether a search operation is in progress.
+    /// </summary>
     public bool IsSearching
     {
         get => _isSearching;
@@ -188,6 +224,9 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     private bool _profileFilterIsOpen;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the profile filter flyout is open.
+    /// </summary>
     public bool ProfileFilterIsOpen
     {
         get => _profileFilterIsOpen;
@@ -201,6 +240,9 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
         }
     }
 
+    /// <summary>
+    /// Gets the collection view for the profile filter tags.
+    /// </summary>
     public ICollectionView ProfileFilterTagsView { get; }
 
     private ObservableCollection<ProfileFilterTagsInfo> ProfileFilterTags { get; } = [];
@@ -249,7 +291,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-    
+
     private readonly GroupExpanderStateStore _groupExpanderStateStore = new();
     public GroupExpanderStateStore GroupExpanderStateStore => _groupExpanderStateStore;
 
@@ -307,6 +349,9 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     #region Constructor, load settings
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="WakeOnLANViewModel"/> class.
+    /// </summary>
     public WakeOnLANViewModel()
     {
         _isLoading = true;
@@ -349,6 +394,9 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     #region ICommands & Actions
 
+    /// <summary>
+    /// Gets the command to wake up the target.
+    /// </summary>
     public ICommand WakeUpCommand => new RelayCommand(_ => WakeUpAction(), WakeUpAction_CanExecute);
 
     private bool WakeUpAction_CanExecute(object parameter)
@@ -373,6 +421,9 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
         WakeUp(info).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to wake up the selected profile.
+    /// </summary>
     public ICommand WakeUpProfileCommand => new RelayCommand(_ => WakeUpProfileAction());
 
     private void WakeUpProfileAction()
@@ -380,6 +431,9 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
         WakeUp(NETworkManager.Profiles.Application.WakeOnLAN.CreateInfo(SelectedProfile)).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to add a new profile.
+    /// </summary>
     public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
 
     private void AddProfileAction()
@@ -394,6 +448,9 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
         return SelectedProfile is { IsDynamic: false };
     }
 
+    /// <summary>
+    /// Gets the command to edit the selected profile.
+    /// </summary>
     public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
     private void EditProfileAction()
@@ -402,6 +459,9 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to copy the selected profile as a new profile.
+    /// </summary>
     public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
     private void CopyAsProfileAction()
@@ -410,6 +470,9 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to delete the selected profile.
+    /// </summary>
     public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
 
     private void DeleteProfileAction()
@@ -419,6 +482,9 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to edit a profile group.
+    /// </summary>
     public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
     private void EditGroupAction(object group)
@@ -428,6 +494,9 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to open the profile filter flyout.
+    /// </summary>
     public ICommand OpenProfileFilterCommand => new RelayCommand(_ => OpenProfileFilterAction());
 
     private void OpenProfileFilterAction()
@@ -435,6 +504,9 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
         ProfileFilterIsOpen = true;
     }
 
+    /// <summary>
+    /// Gets the command to apply the profile filter.
+    /// </summary>
     public ICommand ApplyProfileFilterCommand => new RelayCommand(_ => ApplyProfileFilterAction());
 
     private void ApplyProfileFilterAction()
@@ -444,6 +516,9 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
         ProfileFilterIsOpen = false;
     }
 
+    /// <summary>
+    /// Gets the command to clear the profile filter.
+    /// </summary>
     public ICommand ClearProfileFilterCommand => new RelayCommand(_ => ClearProfileFilterAction());
 
     private void ClearProfileFilterAction()
@@ -451,7 +526,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
         _searchDisabled = true;
         Search = string.Empty;
         _searchDisabled = false;
-        
+
         foreach (var tag in ProfileFilterTags)
             tag.IsSelected = false;
 
@@ -461,6 +536,9 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
         ProfileFilterIsOpen = false;
     }
 
+    /// <summary>
+    /// Gets the command to expand all profile groups.
+    /// </summary>
     public ICommand ExpandAllProfileGroupsCommand => new RelayCommand(_ => ExpandAllProfileGroupsAction());
 
     private void ExpandAllProfileGroupsAction()
@@ -468,6 +546,9 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
         SetIsExpandedForAllProfileGroups(true);
     }
 
+    /// <summary>
+    /// Gets the command to collapse all profile groups.
+    /// </summary>
     public ICommand CollapseAllProfileGroupsCommand => new RelayCommand(_ => CollapseAllProfileGroupsAction());
 
     private void CollapseAllProfileGroupsAction()
@@ -535,7 +616,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
         foreach (var group in Profiles.Groups.Cast<CollectionViewGroup>())
             GroupExpanderStateStore[group.Name.ToString()] = isExpanded;
     }
-    
+
     private void ResizeProfile(bool dueToChangedSize)
     {
         _canProfileWidthChange = false;

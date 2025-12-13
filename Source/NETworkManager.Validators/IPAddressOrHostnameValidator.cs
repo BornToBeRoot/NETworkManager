@@ -1,8 +1,9 @@
-﻿using System.Globalization;
+﻿using NETworkManager.Localization.Resources;
+using NETworkManager.Utilities;
+using System.DirectoryServices.ActiveDirectory;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
-using NETworkManager.Localization.Resources;
-using NETworkManager.Utilities;
 
 namespace NETworkManager.Validators;
 
@@ -16,7 +17,7 @@ public class IPAddressOrHostnameValidator : ValidationRule
             return new ValidationResult(false, Strings.EnterValidHostnameOrIPAddress);
 
         // Check if it is a valid IPv4 address like 192.168.0.1
-        if (Regex.IsMatch(input, RegexHelper.IPv4AddressRegex))
+        if (RegexHelper.IPv4AddressRegex().IsMatch(input))
             return ValidationResult.ValidResult;
 
         // Check if it is a valid IPv6 address like ::1
@@ -24,7 +25,7 @@ public class IPAddressOrHostnameValidator : ValidationRule
             return ValidationResult.ValidResult;
 
         // Check if it is a valid hostname like server-01 or server-01.example.com
-        if (Regex.IsMatch(input, RegexHelper.HostnameOrDomainRegex))
+        if (RegexHelper.HostnameOrDomainRegex().IsMatch(input))
             return ValidationResult.ValidResult;
 
         return new ValidationResult(false, Strings.EnterValidHostnameOrIPAddress);

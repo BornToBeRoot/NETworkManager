@@ -20,18 +20,33 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
+/// <summary>
+/// View model for the hosts file editor.
+/// </summary>
 public class HostsFileEditorViewModel : ViewModelBase
 {
     #region Variables
 
     private static readonly ILog Log = LogManager.GetLogger(typeof(HostsFileEditorViewModel));
 
+    /// <summary>
+    /// The dialog coordinator instance.
+    /// </summary>
     private readonly IDialogCoordinator _dialogCoordinator;
 
+    /// <summary>
+    /// Indicates whether the view model is loading.
+    /// </summary>
     private readonly bool _isLoading;
 
+    /// <summary>
+    /// Backing field for <see cref="Search"/>.
+    /// </summary>
     private string _search;
 
+    /// <summary>
+    /// Gets or sets the search text.
+    /// </summary>
     public string Search
     {
         get => _search;
@@ -48,8 +63,14 @@ public class HostsFileEditorViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="Results"/>.
+    /// </summary>
     private ObservableCollection<HostsFileEntry> _results = [];
 
+    /// <summary>
+    /// Gets or sets the collection of hosts file entries.
+    /// </summary>
     public ObservableCollection<HostsFileEntry> Results
     {
         get => _results;
@@ -63,10 +84,19 @@ public class HostsFileEditorViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the collection view for the hosts file entries.
+    /// </summary>
     public ICollectionView ResultsView { get; }
 
+    /// <summary>
+    /// Backing field for <see cref="SelectedResult"/>.
+    /// </summary>
     private HostsFileEntry _selectedResult;
 
+    /// <summary>
+    /// Gets or sets the selected hosts file entry.
+    /// </summary>
     public HostsFileEntry SelectedResult
     {
         get => _selectedResult;
@@ -80,8 +110,14 @@ public class HostsFileEditorViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="SelectedResults"/>.
+    /// </summary>
     private IList _selectedResults = new ArrayList();
 
+    /// <summary>
+    /// Gets or sets the list of selected hosts file entries.
+    /// </summary>
     public IList SelectedResults
     {
         get => _selectedResults;
@@ -95,8 +131,14 @@ public class HostsFileEditorViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="IsModifying"/>.
+    /// </summary>
     private bool _isModifying;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the view model is modifying an entry.
+    /// </summary>
     public bool IsModifying
     {
         get => _isModifying;
@@ -110,8 +152,14 @@ public class HostsFileEditorViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="IsRefreshing"/>.
+    /// </summary>
     private bool _isRefreshing;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the view model is currently refreshing.
+    /// </summary>
     public bool IsRefreshing
     {
         get => _isRefreshing;
@@ -125,8 +173,14 @@ public class HostsFileEditorViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="IsStatusMessageDisplayed"/>.
+    /// </summary>
     private bool _isStatusMessageDisplayed;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the status message is displayed.
+    /// </summary>
     public bool IsStatusMessageDisplayed
     {
         get => _isStatusMessageDisplayed;
@@ -140,8 +194,14 @@ public class HostsFileEditorViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Backing field for <see cref="StatusMessage"/>.
+    /// </summary>
     private string _statusMessage;
 
+    /// <summary>
+    /// Gets the status message.
+    /// </summary>
     public string StatusMessage
     {
         get => _statusMessage;
@@ -159,6 +219,10 @@ public class HostsFileEditorViewModel : ViewModelBase
 
     #region Constructor, LoadSettings
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="HostsFileEditorViewModel"/> class.
+    /// </summary>
+    /// <param name="instance">The dialog coordinator instance.</param>
     public HostsFileEditorViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
@@ -191,6 +255,9 @@ public class HostsFileEditorViewModel : ViewModelBase
         _isLoading = false;
     }
 
+    /// <summary>
+    /// Loads the settings.
+    /// </summary>
     private void LoadSettings()
     {
     }
@@ -199,8 +266,16 @@ public class HostsFileEditorViewModel : ViewModelBase
 
     #region ICommands & Actions
 
+    /// <summary>
+    /// Gets the command to refresh the entries.
+    /// </summary>
     public ICommand RefreshCommand => new RelayCommand(_ => RefreshAction().ConfigureAwait(false), Refresh_CanExecute);
 
+    /// <summary>
+    /// Checks if the refresh command can be executed.
+    /// </summary>
+    /// <param name="parameter">The command parameter.</param>
+    /// <returns><c>true</c> if the command can be executed; otherwise, <c>false</c>.</returns>
     private bool Refresh_CanExecute(object parameter)
     {
         return Application.Current.MainWindow != null &&
@@ -210,13 +285,22 @@ public class HostsFileEditorViewModel : ViewModelBase
                !IsModifying;
     }
 
+    /// <summary>
+    /// Action to refresh the entries.
+    /// </summary>
     private async Task RefreshAction()
     {
         await Refresh();
     }
 
+    /// <summary>
+    /// Gets the command to export the entries.
+    /// </summary>
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
 
+    /// <summary>
+    /// Action to export the entries.
+    /// </summary>
     private Task ExportAction()
     {
         var childWindow = new ExportChildWindow();
@@ -266,9 +350,15 @@ public class HostsFileEditorViewModel : ViewModelBase
         return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
+    /// <summary>
+    /// Gets the command to enable the selected entry.
+    /// </summary>
     public ICommand EnableEntryCommand =>
         new RelayCommand(_ => EnableEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
 
+    /// <summary>
+    /// Action to enable the selected entry.
+    /// </summary>
     private async Task EnableEntryAction()
     {
         IsModifying = true;
@@ -281,9 +371,15 @@ public class HostsFileEditorViewModel : ViewModelBase
         IsModifying = false;
     }
 
+    /// <summary>
+    /// Gets the command to disable the selected entry.
+    /// </summary>
     public ICommand DisableEntryCommand =>
         new RelayCommand(_ => DisableEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
 
+    /// <summary>
+    /// Action to disable the selected entry.
+    /// </summary>
     private async Task DisableEntryAction()
     {
         IsModifying = true;
@@ -296,9 +392,15 @@ public class HostsFileEditorViewModel : ViewModelBase
         IsModifying = false;
     }
 
+    /// <summary>
+    /// Gets the command to add a new entry.
+    /// </summary>
     public ICommand AddEntryCommand =>
         new RelayCommand(_ => AddEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
 
+    /// <summary>
+    /// Action to add a new entry.
+    /// </summary>
     private async Task AddEntryAction()
     {
         IsModifying = true;
@@ -340,9 +442,15 @@ public class HostsFileEditorViewModel : ViewModelBase
         await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
+    /// <summary>
+    /// Gets the command to edit the selected entry.
+    /// </summary>
     public ICommand EditEntryCommand =>
         new RelayCommand(_ => EditEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
 
+    /// <summary>
+    /// Action to edit the selected entry.
+    /// </summary>
     private async Task EditEntryAction()
     {
         IsModifying = true;
@@ -384,9 +492,15 @@ public class HostsFileEditorViewModel : ViewModelBase
         await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
+    /// <summary>
+    /// Gets the command to delete the selected entry.
+    /// </summary>
     public ICommand DeleteEntryCommand =>
         new RelayCommand(_ => DeleteEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
 
+    /// <summary>
+    /// Action to delete the selected entry.
+    /// </summary>
     private async Task DeleteEntryAction()
     {
         IsModifying = true;
@@ -415,6 +529,9 @@ public class HostsFileEditorViewModel : ViewModelBase
         IsModifying = false;
     }
 
+    /// <summary>
+    /// Checks if the entry modification commands can be executed.
+    /// </summary>
     private bool ModifyEntry_CanExecute(object obj)
     {
         return ConfigurationManager.Current.IsAdmin &&
@@ -425,6 +542,10 @@ public class HostsFileEditorViewModel : ViewModelBase
                !IsModifying;
     }
 
+    /// <summary>
+    /// Shows an error message for the given result.
+    /// </summary>
+    /// <param name="result">The result of the modification.</param>
     private async Task ShowErrorMessageAsync(HostsFileEntryModifyResult result)
     {
         var message = result switch
@@ -453,8 +574,14 @@ public class HostsFileEditorViewModel : ViewModelBase
         await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
     }
 
+    /// <summary>
+    /// Gets the command to restart the application as administrator.
+    /// </summary>
     public ICommand RestartAsAdminCommand => new RelayCommand(_ => RestartAsAdminAction().ConfigureAwait(false));
 
+    /// <summary>
+    /// Action to restart the application as administrator.
+    /// </summary>
     private async Task RestartAsAdminAction()
     {
         try
@@ -485,6 +612,10 @@ public class HostsFileEditorViewModel : ViewModelBase
 
     #region Methods
 
+    /// <summary>
+    /// Refreshes the hosts file entries.
+    /// </summary>
+    /// <param name="init">Indicates whether this is the initial refresh.</param>
     private async Task Refresh(bool init = false)
     {
         if (IsRefreshing)
@@ -534,10 +665,16 @@ public class HostsFileEditorViewModel : ViewModelBase
         IsRefreshing = false;
     }
 
+    /// <summary>
+    /// Called when the view becomes visible.
+    /// </summary>
     public void OnViewVisible()
     {
     }
 
+    /// <summary>
+    /// Called when the view is hidden.
+    /// </summary>
     public void OnViewHide()
     {
     }

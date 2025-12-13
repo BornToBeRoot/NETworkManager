@@ -23,6 +23,9 @@ using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels;
 
+/// <summary>
+///     ViewModel for the Ping Monitor Host view.
+/// </summary>
 public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
@@ -40,6 +43,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private string _host;
 
+    /// <summary>
+    ///     Gets or sets the host to ping.
+    /// </summary>
     public string Host
     {
         get => _host;
@@ -53,10 +59,16 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
+    /// <summary>
+    ///     Gets the view for the host history.
+    /// </summary>
     public ICollectionView HostHistoryView { get; }
 
     private bool _isRunning;
 
+    /// <summary>
+    ///     Gets or sets a value indicating whether the ping monitor is running.
+    /// </summary>
     public bool IsRunning
     {
         get => _isRunning;
@@ -72,6 +84,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private bool _isCanceling;
 
+    /// <summary>
+    ///     Gets or sets a value indicating whether the ping monitor is canceling.
+    /// </summary>
     public bool IsCanceling
     {
         get => _isCanceling;
@@ -87,6 +102,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private bool _isStatusMessageDisplayed;
 
+    /// <summary>
+    ///     Gets or sets a value indicating whether the status message is displayed.
+    /// </summary>
     public bool IsStatusMessageDisplayed
     {
         get => _isStatusMessageDisplayed;
@@ -102,6 +120,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private string _statusMessage;
 
+    /// <summary>
+    ///     Gets the status message.
+    /// </summary>
     public string StatusMessage
     {
         get => _statusMessage;
@@ -117,6 +138,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private ObservableCollection<PingMonitorView> _hosts = [];
 
+    /// <summary>
+    ///     Gets or sets the list of ping monitor views.
+    /// </summary>
     public ObservableCollection<PingMonitorView> Hosts
     {
         get => _hosts;
@@ -129,10 +153,16 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
+    /// <summary>
+    ///     Gets the view for the hosts.
+    /// </summary>
     public ICollectionView HostsView { get; }
 
     private PingMonitorView _selectedHost;
 
+    /// <summary>
+    ///     Gets or sets the selected host.
+    /// </summary>
     public PingMonitorView SelectedHost
     {
         get => _selectedHost;
@@ -150,6 +180,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private ICollectionView _profiles;
 
+    /// <summary>
+    ///     Gets the view for the profiles.
+    /// </summary>
     public ICollectionView Profiles
     {
         get => _profiles;
@@ -165,6 +198,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private ProfileInfo _selectedProfile;
 
+    /// <summary>
+    ///     Gets or sets the selected profile.
+    /// </summary>
     public ProfileInfo SelectedProfile
     {
         get => _selectedProfile;
@@ -180,6 +216,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private string _search;
 
+    /// <summary>
+    ///     Gets or sets the search text.
+    /// </summary>
     public string Search
     {
         get => _search;
@@ -203,6 +242,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private bool _isSearching;
 
+    /// <summary>
+    ///     Gets or sets a value indicating whether a search is in progress.
+    /// </summary>
     public bool IsSearching
     {
         get => _isSearching;
@@ -218,6 +260,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private bool _profileFilterIsOpen;
 
+    /// <summary>
+    ///     Gets or sets a value indicating whether the profile filter is open.
+    /// </summary>
     public bool ProfileFilterIsOpen
     {
         get => _profileFilterIsOpen;
@@ -231,12 +276,18 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
+    /// <summary>
+    ///     Gets the view for the profile filter tags.
+    /// </summary>
     public ICollectionView ProfileFilterTagsView { get; }
 
     private ObservableCollection<ProfileFilterTagsInfo> ProfileFilterTags { get; } = [];
 
     private bool _profileFilterTagsMatchAny = GlobalStaticConfiguration.Profile_TagsMatchAny;
 
+    /// <summary>
+    ///     Gets or sets a value indicating whether to match any profile filter tag.
+    /// </summary>
     public bool ProfileFilterTagsMatchAny
     {
         get => _profileFilterTagsMatchAny;
@@ -252,6 +303,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private bool _profileFilterTagsMatchAll;
 
+    /// <summary>
+    ///     Gets or sets a value indicating whether to match all profile filter tags.
+    /// </summary>
     public bool ProfileFilterTagsMatchAll
     {
         get => _profileFilterTagsMatchAll;
@@ -267,6 +321,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private bool _isProfileFilterSet;
 
+    /// <summary>
+    ///     Gets or sets a value indicating whether the profile filter is set.
+    /// </summary>
     public bool IsProfileFilterSet
     {
         get => _isProfileFilterSet;
@@ -281,6 +338,10 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     }
 
     private readonly GroupExpanderStateStore _groupExpanderStateStore = new();
+
+    /// <summary>
+    ///     Gets the group expander state store.
+    /// </summary>
     public GroupExpanderStateStore GroupExpanderStateStore => _groupExpanderStateStore;
 
     private bool _canProfileWidthChange = true;
@@ -288,6 +349,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private bool _expandProfileView;
 
+    /// <summary>
+    ///     Gets or sets a value indicating whether the profile view is expanded.
+    /// </summary>
     public bool ExpandProfileView
     {
         get => _expandProfileView;
@@ -310,6 +374,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private GridLength _profileWidth;
 
+    /// <summary>
+    ///     Gets or sets the width of the profile view.
+    /// </summary>
     public GridLength ProfileWidth
     {
         get => _profileWidth;
@@ -337,6 +404,10 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     #region Constructor, load settings
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="PingMonitorHostViewModel" /> class.
+    /// </summary>
+    /// <param name="instance">The dialog coordinator instance.</param>
     public PingMonitorHostViewModel(IDialogCoordinator instance)
     {
         _isLoading = true;
@@ -385,6 +456,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     #region ICommands & Actions
 
+    /// <summary>
+    ///     Gets the command to start or stop pinging the host.
+    /// </summary>
     public ICommand PingCommand => new RelayCommand(_ => PingAction(), Ping_CanExecute);
 
     private bool Ping_CanExecute(object parameter)
@@ -402,6 +476,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
             Start().ConfigureAwait(false);
     }
 
+    /// <summary>
+    ///     Gets the command to ping the selected profile.
+    /// </summary>
     public ICommand PingProfileCommand => new RelayCommand(_ => PingProfileAction(), PingProfile_CanExecute);
 
     private bool PingProfile_CanExecute(object obj)
@@ -415,6 +492,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
             Start().ConfigureAwait(false);
     }
 
+    /// <summary>
+    ///     Gets the command to close a group of hosts.
+    /// </summary>
     public ICommand CloseGroupCommand => new RelayCommand(CloseGroupAction);
 
     private void CloseGroupAction(object group)
@@ -422,6 +502,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         RemoveGroup(group.ToString());
     }
 
+    /// <summary>
+    ///     Gets the command to export the selected host's data.
+    /// </summary>
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
 
     private void ExportAction()
@@ -429,6 +512,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         SelectedHost?.Export();
     }
 
+    /// <summary>
+    ///     Gets the command to add a new profile.
+    /// </summary>
     public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
 
     private void AddProfileAction()
@@ -443,6 +529,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         return SelectedProfile is { IsDynamic: false };
     }
 
+    /// <summary>
+    ///     Gets the command to edit the selected profile.
+    /// </summary>
     public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
     private void EditProfileAction()
@@ -451,6 +540,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
+    /// <summary>
+    ///     Gets the command to copy the selected profile as a new profile.
+    /// </summary>
     public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
     private void CopyAsProfileAction()
@@ -459,6 +551,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
+    /// <summary>
+    ///     Gets the command to delete the selected profile.
+    /// </summary>
     public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
 
     private void DeleteProfileAction()
@@ -468,6 +563,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
+    /// <summary>
+    ///     Gets the command to edit a group.
+    /// </summary>
     public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
     private void EditGroupAction(object group)
@@ -477,6 +575,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
+    /// <summary>
+    ///     Gets the command to open the profile filter.
+    /// </summary>
     public ICommand OpenProfileFilterCommand => new RelayCommand(_ => OpenProfileFilterAction());
 
     private void OpenProfileFilterAction()
@@ -484,6 +585,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         ProfileFilterIsOpen = true;
     }
 
+    /// <summary>
+    ///     Gets the command to apply the profile filter.
+    /// </summary>
     public ICommand ApplyProfileFilterCommand => new RelayCommand(_ => ApplyProfileFilterAction());
 
     private void ApplyProfileFilterAction()
@@ -493,6 +597,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         ProfileFilterIsOpen = false;
     }
 
+    /// <summary>
+    ///     Gets the command to clear the profile filter.
+    /// </summary>
     public ICommand ClearProfileFilterCommand => new RelayCommand(_ => ClearProfileFilterAction());
 
     private void ClearProfileFilterAction()
@@ -510,6 +617,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         ProfileFilterIsOpen = false;
     }
 
+    /// <summary>
+    ///     Gets the command to expand all profile groups.
+    /// </summary>
     public ICommand ExpandAllProfileGroupsCommand => new RelayCommand(_ => ExpandAllProfileGroupsAction());
 
     private void ExpandAllProfileGroupsAction()
@@ -517,6 +627,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         SetIsExpandedForAllProfileGroups(true);
     }
 
+    /// <summary>
+    ///     Gets the command to collapse all profile groups.
+    /// </summary>
     public ICommand CollapseAllProfileGroupsCommand => new RelayCommand(_ => CollapseAllProfileGroupsAction());
 
     private void CollapseAllProfileGroupsAction()
@@ -552,6 +665,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         return true;
     }
 
+    /// <summary>
+    ///     Starts the ping monitor.
+    /// </summary>
     public async Task Start()
     {
         IsStatusMessageDisplayed = false;
@@ -695,6 +811,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         _canProfileWidthChange = true;
     }
 
+    /// <summary>
+    ///     Called when the view becomes visible.
+    /// </summary>
     public void OnViewVisible()
     {
         _isViewActive = true;
@@ -702,6 +821,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         RefreshProfiles();
     }
 
+    /// <summary>
+    ///     Called when the view is hidden.
+    /// </summary>
     public void OnViewHide()
     {
         _isViewActive = false;

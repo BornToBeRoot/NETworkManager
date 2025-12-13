@@ -79,9 +79,9 @@ public sealed class Traceroute
 
                     // Check results -> Get IP on success or TTL expired
                     var ipAddressHop = (from task in tasks
-                        where task.Result.Item1.Status != IPStatus.TimedOut
-                        where task.Result.Item1.Status is IPStatus.TtlExpired or IPStatus.Success
-                        select task.Result.Item1.Address).FirstOrDefault();
+                                        where task.Result.Item1.Status != IPStatus.TimedOut
+                                        where task.Result.Item1.Status is IPStatus.TtlExpired or IPStatus.Success
+                                        select task.Result.Item1.Address).FirstOrDefault();
 
                     // Resolve Hostname
                     var hostname = string.Empty;
