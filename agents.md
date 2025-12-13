@@ -2,13 +2,13 @@
 
 ## Repository Overview
 
-**NETworkManager** is a comprehensive, enterprise-ready network management and troubleshooting application built with C# and WPF. It provides a unified interface for network administrators and IT professionals to manage, monitor, and troubleshoot network infrastructure using tools like Remote Desktop, SSH, PowerShell, VNC, network scanners, and diagnostic utilities.
+**NETworkManager** is a comprehensive, enterprise-ready network management and troubleshooting application built with C# and WPF. It provides a unified interface for network administrators and IT professionals to manage, monitor, and troubleshoot network infrastructure using tools like Remote Desktop, PuTTY (SSH, Telnet, Serial, etc.), PowerShell (k9s, WSL, etc.), TigerVNC, network scanners (IP scanner, Port scanner, WiFi Analyzer), and diagnostic utilities (Ping monitor, traceroute, etc.).
 
 - **Repository**: https://github.com/BornToBeRoot/NETworkManager
 - **License**: GNU General Public License v3
 - **Primary Language**: C# (.NET 10)
-- **UI Framework**: WPF (Windows Presentation Foundation) with MahApps.Metro
-- **Documentation**: Docusaurus-based website
+- **UI Framework**: WPF (Windows Presentation Foundation) with `MahApps.Metro`
+- **Documentation**: Docusaurus-based website and documentation at https://borntoberoot.net/NETworkManager
 - **Platform**: Windows (x64)
 
 ## Project Structure
@@ -18,33 +18,34 @@
 The repository is organized into multiple C# projects following a modular architecture:
 
 ```
-/home/runner/work/NETworkManager/NETworkManager/
+REPOSITORY_ROOT/
 ├── Source/                           # Main source code directory
-│   ├── NETworkManager/              # Main WPF application (Views, ViewModels, Controls)
-│   ├── NETworkManager.Models/       # Business logic and data models
-│   ├── NETworkManager.Utilities/    # Helper classes and utilities
+│   ├── NETworkManager/               # Main WPF application (Views, ViewModels, Controls)
+│   ├── NETworkManager.Models/        # Business logic and data models
+│   ├── NETworkManager.Utilities/     # Helper classes and utilities
 │   ├── NETworkManager.Utilities.WPF/ # WPF-specific utilities
-│   ├── NETworkManager.Converters/   # WPF value converters
-│   ├── NETworkManager.Validators/   # Input validation logic
-│   ├── NETworkManager.Controls/     # Custom WPF controls
-│   ├── NETworkManager.Localization/ # Internationalization resources
-│   ├── NETworkManager.Settings/     # Application settings management
-│   ├── NETworkManager.Profiles/     # Profile management
-│   ├── NETworkManager.Update/       # Update checking functionality
+│   ├── NETworkManager.Converters/    # WPF value converters
+│   ├── NETworkManager.Validators/    # Input validation logic
+│   ├── NETworkManager.Controls/      # Custom WPF controls
+│   ├── NETworkManager.Localization/  # Internationalization resources
+│   ├── NETworkManager.Settings/      # Application settings management
+│   ├── NETworkManager.Profiles/      # Profile management
+│   ├── NETworkManager.Update/        # Update functionality
 │   ├── NETworkManager.Documentation/ # Documentation resources
-│   ├── NETworkManager.Setup/        # WiX installer project
-│   └── 3rdparty/                    # Third-party dependencies (e.g., Dragablz)
-├── Website/                         # Docusaurus documentation website
-├── Scripts/                         # Build and automation scripts
-├── Chocolatey/                      # Chocolatey package definition
-├── WinGet/                          # WinGet package manifest
-└── Images/                          # Application icons and images
+│   ├── NETworkManager.Setup/         # WiX installer project
+│   └── 3rdparty/                     # Third-party dependencies (e.g., Dragablz)
+│       └── (managed-manually)        # NOTE: Maintained manually — AI agents MUST NOT modify this directory
+├── Website/                          # Docusaurus documentation website
+├── Scripts/                          # Build and automation scripts
+├── Chocolatey/                       # Chocolatey package definition
+├── WinGet/                           # WinGet package manifest
+└── Images/                           # Application icons and images
 ```
 
 ### Key Statistics
 
-- **~645 C# source files** across multiple projects
-- **~149 XAML files** for UI definitions
+- **650+ C# source files** across multiple projects
+- **150+ XAML files** for UI definitions
 - **12 distinct project modules** in the solution
 - **64+ documentation pages** in Docusaurus format
 - **16+ supported languages** for localization
@@ -60,7 +61,7 @@ The repository is organized into multiple C# projects following a modular archit
 - **Target**: Windows 10.0.22621.0 (Windows 11)
 
 **UI Framework & Design**:
-- **MahApps.Metro 2.4.11** - Modern UI toolkit providing Metro-style controls and themes
+- **MahApps.Metro** - Modern UI toolkit providing Metro-style controls and themes
 - **MahApps.Metro.IconPacks** - Icon libraries (FontAwesome, Material, Modern, Octicons)
 - **MahApps.Metro.SimpleChildWindow** - Dialog windows
 - **Dragablz** - Tearable/draggable tab control
@@ -89,8 +90,8 @@ The repository is organized into multiple C# projects following a modular archit
 ### Website (Docusaurus)
 
 **Documentation Stack**:
-- **Docusaurus 3.9.2** - Static site generator
-- **React 19.2.1** - UI framework
+- **Docusaurus** - Static site generator
+- **React** - UI framework
 - **@mdx-js/react** - MDX support
 - **react-image-gallery** - Image galleries
 - **Prism** - Code syntax highlighting
@@ -98,17 +99,17 @@ The repository is organized into multiple C# projects following a modular archit
 **Website Structure**:
 ```
 Website/
-├── docs/                    # Documentation pages
+├── docs/                   # Documentation pages
 │   ├── application/        # Feature documentation
 │   ├── changelog/          # Version history
-│   ├── faq/               # Frequently asked questions
-│   └── settings/          # Settings documentation
+│   ├── faq/                # Frequently asked questions
+│   └── settings/           # Settings documentation
 ├── blog/                   # Blog posts
 ├── src/                    # React components and pages
 ├── static/                 # Static assets (images, files)
-├── docusaurus.config.js   # Site configuration
-├── sidebars.js            # Documentation sidebar structure
-└── package.json           # npm dependencies
+├── docusaurus.config.js    # Site configuration
+├── sidebars.js             # Documentation sidebar structure
+└── package.json            # npm dependencies
 ```
 
 ## Development Setup
@@ -149,7 +150,7 @@ dotnet build .\Source\NETworkManager.sln --configuration Release --no-restore
 
 ```bash
 cd Website
-npm install          # Install dependencies
+npm install         # Install dependencies
 npm start           # Start development server
 npm run build       # Build for production
 ```
@@ -179,8 +180,8 @@ The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkMana
 
 2. **Remote Access** (`Source/NETworkManager/Controls/`):
    - Remote Desktop (RDP) integration
-   - PuTTY (SSH, Serial) integration
-   - PowerShell and VNC controls
+   - PuTTY (SSH, Telnet, Serial) integration
+   - PowerShell and TigerVNC (VNC) controls
 
 3. **UI/UX** (`Source/NETworkManager/Views/` and `.xaml` files):
    - WPF views following MVVM pattern
@@ -259,7 +260,7 @@ The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkMana
 
 **Package Formats**:
 - **Setup (MSI)**: WiX installer in `Source/NETworkManager.Setup/`
-- **Portable**: Xcopy deployment
+- **Portable**: ZIP file
 - **Archive**: ZIP file
 
 ## Security Considerations
@@ -407,10 +408,10 @@ git diff
 
 ### Embedded Tools Integration
 
-- **Remote Desktop**: Native RDP using WPF control
-- **PuTTY**: Process integration with custom window hosting
-- **PowerShell**: Windows Terminal/PowerShell embedding
-- **VNC**: TigerVNC integration
+- **Remote Desktop**: Native RDP using `AxMSTSCLib`, `AxMsRdpClient10NotSafeForScripting` and `WindowsFormsHost`
+- **PuTTY**: PuTTY window embedding / process hosting with `WindowsFormsHost`
+- **PowerShell**: PowerShell window embedding / process hosting with `WindowsFormsHost`
+- **VNC**: TigerVNC window embedding / process hosting with `WindowsFormsHost`
 
 ## Tips for AI Agents
 
