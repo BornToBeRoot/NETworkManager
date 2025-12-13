@@ -19,7 +19,7 @@ namespace NETworkManager.ViewModels;
 public class NetworkConnectionWidgetViewModel : ViewModelBase
 {
     #region Variables
-    
+
     /// <summary>
     /// The logger.
     /// </summary>
@@ -657,7 +657,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     {
         CheckAsync().ConfigureAwait(false);
     }
-    
+
     /// <summary>
     /// The cancellation token source.
     /// </summary>
@@ -667,7 +667,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     /// The check task.
     /// </summary>
     private Task _checkTask = Task.CompletedTask;
-    
+
     /// <summary>
     /// Checks the network connections asynchronously.
     /// </summary>
@@ -714,7 +714,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
                 Log.Info("Network connection check completed.");
         }
     }
-    
+
     /// <summary>
     /// Runs the check tasks.
     /// </summary>
@@ -728,7 +728,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             CheckConnectionInternetAsync(ct)
         );
     }
-    
+
     /// <summary>
     /// Checks the computer connection.
     /// </summary>

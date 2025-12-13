@@ -505,7 +505,7 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
     {
         SetIsExpandedForAllProfileGroups(false);
     }
-    
+
     /// <summary>
     /// Gets the callback for closing a tab item.
     /// </summary>

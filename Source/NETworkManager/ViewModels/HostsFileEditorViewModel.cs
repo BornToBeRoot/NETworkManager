@@ -429,7 +429,7 @@ public class HostsFileEditorViewModel : ViewModelBase
         {
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
-            
+
             IsModifying = false;
         });
 

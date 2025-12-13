@@ -30,5 +30,5 @@ public class DNSServerConnectionInfoProfile : ServerConnectionInfoProfile
     /// <summary>
     ///     Use the DNS server from Windows.
     /// </summary>
-    public bool UseWindowsDNSServer { get; set; }        
+    public bool UseWindowsDNSServer { get; set; }
 }

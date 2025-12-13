@@ -53,6 +53,7 @@ Release date: **xx.xx.2025**
 **DNS Lookup**
 
 - Allow hostname as server address in addition to IP address in the add/edit server dialog. [#3261](https://github.com/BornToBeRoot/NETworkManager/pull/3261)
+- Add `quad9` to the predefined DNS server list. [#3261](https://github.com/BornToBeRoot/NETworkManager/pull/3261)
 - Redesign add/edit server dialog (migrated from dialog to child window). [#3261](https://github.com/BornToBeRoot/NETworkManager/pull/3261)
 
 **Remote Desktop**

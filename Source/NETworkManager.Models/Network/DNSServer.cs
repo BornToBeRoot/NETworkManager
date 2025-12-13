@@ -36,6 +36,11 @@ public static class DNSServer
                 new("209.244.0.3", 53, TransportProtocol.Udp),
                 new("209.244.0.4", 53, TransportProtocol.Udp)
             ]),
+            new("Quad9",
+            [
+                new ("9.9.9.9", 53, TransportProtocol.Udp),
+                new ("149.112.112.112", 53 , TransportProtocol.Udp)
+            ]),
             new("Verisign",
             [
                 new("64.6.64.6", 53, TransportProtocol.Udp),

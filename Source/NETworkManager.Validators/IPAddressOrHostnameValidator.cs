@@ -25,7 +25,7 @@ public class IPAddressOrHostnameValidator : ValidationRule
             return ValidationResult.ValidResult;
 
         // Check if it is a valid hostname like server-01 or server-01.example.com
-        if(RegexHelper.HostnameOrDomainRegex().IsMatch(input))
+        if (RegexHelper.HostnameOrDomainRegex().IsMatch(input))
             return ValidationResult.ValidResult;
 
         return new ValidationResult(false, Strings.EnterValidHostnameOrIPAddress);

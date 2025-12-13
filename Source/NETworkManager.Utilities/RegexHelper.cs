@@ -92,7 +92,7 @@ public static partial class RegexHelper
     // Match the first 3 bytes of a MAC-Address 000000, 00:00:00, 00-00-00
     public const string MACAddressFirst3BytesRegex =
         @"^[A-Fa-f0-9]{6}$|^[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}$|^[A-Fa-f0-9]{4}.[A-Fa-f0-9]{2}$";
-     
+
     // Match IPv6 address like ::1
     // ReSharper disable once InconsistentNaming
     public const string IPv6AddressRegex =
@@ -107,7 +107,7 @@ public static partial class RegexHelper
     public const string SpecialRangeRegex =
         @"\[((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)-(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)))([,]((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)-(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))))*\]";
 
-    
+
 
     /// <summary>
     /// Provides a compiled regular expression that matches valid hostnames or fully qualified domain names (FQDNs) like

@@ -338,7 +338,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     }
 
     private readonly GroupExpanderStateStore _groupExpanderStateStore = new();
-    
+
     /// <summary>
     ///     Gets the group expander state store.
     /// </summary>
