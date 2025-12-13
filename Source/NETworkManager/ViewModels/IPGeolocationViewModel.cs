@@ -1,6 +1,5 @@
 ﻿using log4net;
 using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
@@ -27,11 +26,6 @@ public class IPGeolocationViewModel : ViewModelBase
     #region Variables
 
     private static readonly ILog Log = LogManager.GetLogger(typeof(IPGeolocationViewModel));
-
-    /// <summary>
-    /// The dialog coordinator instance.
-    /// </summary>
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly Guid _tabId;
     private bool _firstLoad = true;
@@ -175,13 +169,10 @@ public class IPGeolocationViewModel : ViewModelBase
     /// <summary>
     /// Initializes a new instance of the <see cref="IPGeolocationViewModel"/> class.
     /// </summary>
-    /// <param name="instance">The dialog coordinator instance.</param>
     /// <param name="tabId">The ID of the tab.</param>
     /// <param name="host">The host to query.</param>
-    public IPGeolocationViewModel(IDialogCoordinator instance, Guid tabId, string host)
+    public IPGeolocationViewModel(Guid tabId, string host)
     {
-        _dialogCoordinator = instance;
-
         ConfigurationManager.Current.IPGeolocationTabCount++;
 
         _tabId = tabId;
@@ -335,12 +326,9 @@ public class IPGeolocationViewModel : ViewModelBase
             {
                 Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Strings.OK;
-
-                await _dialogCoordinator.ShowMessageAsync(window, Strings.Error,
-                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                await DialogHelper.ShowMessageAsync(window, Strings.Error,
+                   Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                   Environment.NewLine + ex.Message, ChildWindowIcon.Error);
             }
 
             SettingsManager.Current.IPGeolocation_ExportFileType = instance.FileType;

@@ -35,11 +35,6 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     private readonly ServerConnectionInfo _profileDialogDefaultValues = new("10.0.0.1", 53, TransportProtocol.Udp);
 
     /// <summary>
-    /// The dialog coordinator instance.
-    /// </summary>
-    private readonly IDialogCoordinator _dialogCoordinator;
-
-    /// <summary>
     /// Gets the collection view of DNS servers.
     /// </summary>
     public ICollectionView DNSServers { get; }
@@ -325,12 +320,9 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     /// <summary>
     /// Initializes a new instance of the <see cref="DNSLookupSettingsViewModel"/> class.
     /// </summary>
-    /// <param name="instance">The dialog coordinator instance.</param>
-    public DNSLookupSettingsViewModel(IDialogCoordinator instance)
+    public DNSLookupSettingsViewModel()
     {
         _isLoading = true;
-
-        _dialogCoordinator = instance;
 
         DNSServers = CollectionViewSource.GetDefaultView(SettingsManager.Current.DNSLookup_DNSServers);
         DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerConnectionInfoProfile.Name),

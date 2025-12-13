@@ -505,12 +505,7 @@ public class PuTTYSettingsViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            var settings = AppearanceManager.MetroDialog;
-
-            settings.AffirmativeButtonText = Strings.OK;
-
-            await _dialogCoordinator.ShowMessageAsync(this, Strings.Error, ex.Message,
-                MessageDialogStyle.Affirmative, settings);
+            await DialogHelper.ShowMessageAsync(System.Windows.Application.Current.MainWindow, Strings.Error, ex.Message, ChildWindowIcon.Error);
         }
     }
 

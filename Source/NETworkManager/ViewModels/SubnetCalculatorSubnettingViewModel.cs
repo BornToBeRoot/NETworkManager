@@ -1,6 +1,5 @@
 ﻿using log4net;
 using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
@@ -28,10 +27,8 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
 {
     #region Constructor, load settings
 
-    public SubnetCalculatorSubnettingViewModel(IDialogCoordinator instance)
+    public SubnetCalculatorSubnettingViewModel()
     {
-        _dialogCoordinator = instance;
-
         // Set collection view
         SubnetHistoryView =
             CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Subnetting_SubnetHistory);
@@ -47,8 +44,6 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
 
     #region Variables
     private static readonly ILog Log = LogManager.GetLogger(typeof(SubnetCalculatorSubnettingViewModel));
-
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     private string _subnet;
 
@@ -203,12 +198,9 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
             {
                 Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Strings.OK;
-
-                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
-                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error,
+                   Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                   Environment.NewLine + ex.Message, ChildWindowIcon.Error);
             }
 
             SettingsManager.Current.SubnetCalculator_Subnetting_ExportFileType = instance.FileType;
@@ -228,7 +220,7 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     #endregion
@@ -256,17 +248,8 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
         var baseCidr = ipNetwork.AddressFamily == AddressFamily.InterNetwork ? 32 : 128;
 
         if (65535 < Math.Pow(2, baseCidr - ipNetwork.Cidr) / Math.Pow(2, baseCidr - newCidr))
-        {
-            var settings = AppearanceManager.MetroDialog;
-
-            settings.AffirmativeButtonText = Strings.Continue;
-            settings.NegativeButtonText = Strings.Cancel;
-
-            settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
-
-            if (await _dialogCoordinator.ShowMessageAsync(this, Strings.AreYouSure,
-                    Strings.TheProcessCanTakeUpSomeTimeAndResources,
-                    MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
+        {           
+            if(!await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow, Strings.AreYouSure, Strings.TheProcessCanTakeUpSomeTimeAndResources))
             {
                 IsRunning = false;
 

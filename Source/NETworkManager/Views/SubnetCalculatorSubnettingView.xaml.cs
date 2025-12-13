@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
 public partial class SubnetCalculatorSubnettingView
 {
-    private readonly SubnetCalculatorSubnettingViewModel _viewModel = new(DialogCoordinator.Instance);
+    private readonly SubnetCalculatorSubnettingViewModel _viewModel = new();
 
     public SubnetCalculatorSubnettingView()
     {

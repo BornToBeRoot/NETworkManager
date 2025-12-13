@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
@@ -14,7 +13,7 @@ public partial class PingMonitorView
     {
         InitializeComponent();
 
-        _viewModel = new PingMonitorViewModel(DialogCoordinator.Instance, hostId, removeHostByGuid, host, group);
+        _viewModel = new PingMonitorViewModel(hostId, removeHostByGuid, host, group);
 
         DataContext = _viewModel;
 
