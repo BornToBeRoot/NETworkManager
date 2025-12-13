@@ -5,6 +5,7 @@ using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
+using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
@@ -27,7 +28,6 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using NETworkManager.Controls;
 using NetworkInterface = NETworkManager.Models.Network.NetworkInterface;
 
 namespace NETworkManager.ViewModels;
@@ -919,12 +919,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
                 {
                     Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-                    var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Strings.OK;
-
-                    await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                    await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error,
                         Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                        Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                        Environment.NewLine + ex.Message, ChildWindowIcon.Error);
                 }
 
                 SettingsManager.Current.NetworkInterface_ExportFileType = instance.FileType;
@@ -945,7 +942,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     /// <summary>
@@ -1476,8 +1473,8 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         }
         catch (Exception ex)
         {
-            await _dialogCoordinator.ShowMessageAsync(this, Strings.Error, ex.Message,
-                MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+            await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error, ex.Message,
+                ChildWindowIcon.Error);
         }
     }
 

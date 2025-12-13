@@ -26,11 +26,6 @@ public class BitCalculatorViewModel : ViewModelBase
 {
     #region Variables
 
-    /// <summary>
-    /// The dialog coordinator instance.
-    /// </summary>
-    private readonly IDialogCoordinator _dialogCoordinator;
-
     private static readonly ILog Log = LogManager.GetLogger(typeof(BitCalculatorViewModel));
 
     /// <summary>
@@ -180,11 +175,9 @@ public class BitCalculatorViewModel : ViewModelBase
     /// <summary>
     /// Initializes a new instance of the <see cref="BitCalculatorViewModel"/> class.
     /// </summary>
-    /// <param name="instance">The dialog coordinator instance.</param>
-    public BitCalculatorViewModel(IDialogCoordinator instance)
+    public BitCalculatorViewModel()
     {
         _isLoading = true;
-        _dialogCoordinator = instance;
 
         InputHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.BitCalculator_InputHistory);
 
@@ -258,12 +251,9 @@ public class BitCalculatorViewModel : ViewModelBase
             {
                 Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Strings.OK;
-
-                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
-                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error,
+                   Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                    Environment.NewLine + ex.Message, ChildWindowIcon.Error);
             }
 
             SettingsManager.Current.BitCalculator_ExportFileType = instance.FileType;
@@ -283,7 +273,7 @@ public class BitCalculatorViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     #endregion

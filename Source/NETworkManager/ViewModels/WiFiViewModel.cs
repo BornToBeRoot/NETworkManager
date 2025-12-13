@@ -953,12 +953,9 @@ public class WiFiViewModel : ViewModelBase
             {
                 Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Strings.OK;
-
-                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
-                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error,
+                   Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                   Environment.NewLine + ex.Message, ChildWindowIcon.Error);
             }
 
             SettingsManager.Current.WiFi_ExportFileType = instance.FileType;
@@ -978,7 +975,7 @@ public class WiFiViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     public void OnViewVisible()

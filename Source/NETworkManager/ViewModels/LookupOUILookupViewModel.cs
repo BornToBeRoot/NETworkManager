@@ -1,6 +1,5 @@
 ﻿using log4net;
 using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
@@ -32,11 +31,8 @@ public class LookupOUILookupViewModel : ViewModelBase
     /// <summary>
     /// Initializes a new instance of the <see cref="LookupOUILookupViewModel"/> class.
     /// </summary>
-    /// <param name="instance">The dialog coordinator instance.</param>
-    public LookupOUILookupViewModel(IDialogCoordinator instance)
+    public LookupOUILookupViewModel()
     {
-        _dialogCoordinator = instance;
-
         // Search history
         SearchHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Lookup_OUI_SearchHistory);
 
@@ -76,11 +72,6 @@ public class LookupOUILookupViewModel : ViewModelBase
     /// The logger.
     /// </summary>
     private static readonly ILog Log = LogManager.GetLogger(typeof(LookupOUILookupViewModel));
-
-    /// <summary>
-    /// The dialog coordinator.
-    /// </summary>
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     /// <summary>
     /// Backing field for <see cref="Search"/>.
@@ -338,12 +329,9 @@ public class LookupOUILookupViewModel : ViewModelBase
             {
                 Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Strings.OK;
-
-                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
-                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error,
+                   Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                   Environment.NewLine + ex.Message, ChildWindowIcon.Error);
             }
 
             SettingsManager.Current.Lookup_OUI_ExportFileType = instance.FileType;
@@ -363,7 +351,7 @@ public class LookupOUILookupViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     #endregion

@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace NETworkManager.ViewModels;
 
@@ -33,11 +34,8 @@ public class LookupPortLookupViewModel : ViewModelBase
     /// <summary>
     /// Initializes a new instance of the <see cref="LookupPortLookupViewModel"/> class.
     /// </summary>
-    /// <param name="instance">The dialog coordinator instance.</param>
-    public LookupPortLookupViewModel(IDialogCoordinator instance)
+    public LookupPortLookupViewModel()
     {
-        _dialogCoordinator = instance;
-
         SearchHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Lookup_Port_SearchHistory);
         ResultsView = CollectionViewSource.GetDefaultView(Results);
     }
@@ -72,11 +70,6 @@ public class LookupPortLookupViewModel : ViewModelBase
     /// The logger.
     /// </summary>
     private static readonly ILog Log = LogManager.GetLogger(typeof(LookupPortLookupViewModel));
-
-    /// <summary>
-    /// The dialog coordinator.
-    /// </summary>
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     /// <summary>
     /// Backing field for <see cref="Search"/>.
@@ -402,9 +395,9 @@ public class LookupPortLookupViewModel : ViewModelBase
                 var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = Strings.OK;
 
-                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
-                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error,
+                   Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                   Environment.NewLine + ex.Message, ChildWindowIcon.Error);
             }
 
             SettingsManager.Current.Lookup_Port_ExportFileType = instance.FileType;
@@ -424,7 +417,7 @@ public class LookupPortLookupViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     #endregion

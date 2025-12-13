@@ -5,7 +5,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
              xmlns:utilities="clr-namespace:NETworkManager.Utilities;assembly=NETworkManager.Utilities"
@@ -13,7 +12,6 @@
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:wpfHelper="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:networkManager="clr-namespace:NETworkManager"
-             dialog:DialogParticipation.Register="{Binding}"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ListenersViewModel}">
     <UserControl.InputBindings>
         <KeyBinding Key="F5" Command="{Binding RefreshCommand}" />

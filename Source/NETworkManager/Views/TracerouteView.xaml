@@ -11,11 +11,9 @@
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-             xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              xmlns:models="clr-namespace:NETworkManager.Models;assembly=NETworkManager.Models"
-             dialogs:DialogParticipation.Register="{Binding}"
              Loaded="UserControl_Loaded"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:TracerouteViewModel}">
     <UserControl.Resources>

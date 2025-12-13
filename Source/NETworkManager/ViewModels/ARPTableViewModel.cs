@@ -19,6 +19,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace NETworkManager.ViewModels;
 
@@ -517,7 +518,7 @@ public class ARPTableViewModel : ViewModelBase
             ConfigurationManager.Current.IsChildWindowOpen = false;
 
             try
-            {
+            {                
                 ExportManager.Export(instance.FilePath, instance.FileType,
                     instance.ExportAll
                         ? Results
@@ -527,12 +528,9 @@ public class ARPTableViewModel : ViewModelBase
             {
                 Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Strings.OK;
-
-                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
-                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error,
+                   Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                    Environment.NewLine + ex.Message, ChildWindowIcon.Error);
             }
 
             SettingsManager.Current.ARPTable_ExportFileType = instance.FileType;
@@ -552,7 +550,7 @@ public class ARPTableViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     #endregion

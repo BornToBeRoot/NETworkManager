@@ -33,12 +33,9 @@ public class ConnectionsViewModel : ViewModelBase
     /// <summary>
     /// Initializes a new instance of the <see cref="ConnectionsViewModel"/> class.
     /// </summary>
-    /// <param name="instance">The dialog coordinator instance.</param>
-    public ConnectionsViewModel(IDialogCoordinator instance)
+    public ConnectionsViewModel()
     {
         _isLoading = true;
-
-        _dialogCoordinator = instance;
 
         // Result view + search
         ResultsView = CollectionViewSource.GetDefaultView(Results);
@@ -107,11 +104,6 @@ public class ConnectionsViewModel : ViewModelBase
     #region Variables
 
     private static readonly ILog Log = LogManager.GetLogger(typeof(ConnectionsViewModel));
-
-    /// <summary>
-    /// The dialog coordinator instance.
-    /// </summary>
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     /// <summary>
     /// Indicates whether the view model is loading.
@@ -412,12 +404,9 @@ public class ConnectionsViewModel : ViewModelBase
             {
                 Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Strings.OK;
-
-                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
-                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error,
+                   Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                    Environment.NewLine + ex.Message, ChildWindowIcon.Error);
             }
 
             SettingsManager.Current.Connections_ExportFileType = instance.FileType;
@@ -438,7 +427,7 @@ public class ConnectionsViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     #endregion

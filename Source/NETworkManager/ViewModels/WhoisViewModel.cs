@@ -1,6 +1,5 @@
 ﻿using log4net;
 using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
@@ -22,9 +21,7 @@ namespace NETworkManager.ViewModels;
 public class WhoisViewModel : ViewModelBase
 {
     #region Variables
-    private static readonly ILog Log = LogManager.GetLogger(typeof(IPScannerViewModel));
-
-    private readonly IDialogCoordinator _dialogCoordinator;
+    private static readonly ILog Log = LogManager.GetLogger(typeof(WhoisViewModel));
 
     private readonly Guid _tabId;
     private bool _firstLoad = true;
@@ -126,10 +123,8 @@ public class WhoisViewModel : ViewModelBase
 
     #region Contructor, load settings
 
-    public WhoisViewModel(IDialogCoordinator instance, Guid tabId, string domain)
+    public WhoisViewModel(Guid tabId, string domain)
     {
-        _dialogCoordinator = instance;
-
         ConfigurationManager.Current.WhoisTabCount++;
 
         _tabId = tabId;
@@ -265,12 +260,9 @@ public class WhoisViewModel : ViewModelBase
             {
                 Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Strings.OK;
-
-                await _dialogCoordinator.ShowMessageAsync(window, Strings.Error,
-                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                    ex.Message, MessageDialogStyle.Affirmative, settings);
+                await DialogHelper.ShowMessageAsync(window, Strings.Error,
+                   Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                   Environment.NewLine + ex.Message, ChildWindowIcon.Error);
             }
 
             SettingsManager.Current.Whois_ExportFileType = instance.FileType;

@@ -30,11 +30,6 @@ public class HostsFileEditorViewModel : ViewModelBase
     private static readonly ILog Log = LogManager.GetLogger(typeof(HostsFileEditorViewModel));
 
     /// <summary>
-    /// The dialog coordinator instance.
-    /// </summary>
-    private readonly IDialogCoordinator _dialogCoordinator;
-
-    /// <summary>
     /// Indicates whether the view model is loading.
     /// </summary>
     private readonly bool _isLoading;
@@ -222,12 +217,10 @@ public class HostsFileEditorViewModel : ViewModelBase
     /// <summary>
     /// Initializes a new instance of the <see cref="HostsFileEditorViewModel"/> class.
     /// </summary>
-    /// <param name="instance">The dialog coordinator instance.</param>
-    public HostsFileEditorViewModel(IDialogCoordinator instance)
+    public HostsFileEditorViewModel()
     {
         _isLoading = true;
-        _dialogCoordinator = instance;
-
+        
         // Result view + search
         ResultsView = CollectionViewSource.GetDefaultView(Results);
         ResultsView.Filter = o =>
@@ -322,12 +315,9 @@ public class HostsFileEditorViewModel : ViewModelBase
                 {
                     Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-                    var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Strings.OK;
-
-                    await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                    await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error,
                         Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                        Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                        Environment.NewLine + ex.Message, ChildWindowIcon.Error);
                 }
 
                 SettingsManager.Current.HostsFileEditor_ExportFileType = instance.FileType;
@@ -347,7 +337,7 @@ public class HostsFileEditorViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     /// <summary>
