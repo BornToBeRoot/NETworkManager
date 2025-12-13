@@ -37,6 +37,12 @@ REPOSITORY_ROOT/
 │       └── (managed-manually)        # NOTE: Maintained manually — AI agents MUST NOT modify this directory
 ├── Website/                          # Docusaurus documentation website
 ├── Scripts/                          # Build and automation scripts
+│   ├── Create-FileHash.ps1           # Generate file hashes
+│   ├── Create-FlagFromSVG.ps1        # Create flag images
+│   ├── Create-OUIListFromWeb.ps1     # Update OUI (MAC vendor) list
+│   ├── Create-PortListFromWeb.ps1    # Update port list database
+│   ├── Create-WhoisServerListFromWebAndWhois.ps1  # Update WHOIS servers
+│   └── PreBuildEventCommandLine.ps1  # Pre-build automation
 ├── Chocolatey/                       # Chocolatey package definition
 ├── WinGet/                           # WinGet package manifest
 └── Images/                           # Application icons and images
@@ -48,7 +54,7 @@ REPOSITORY_ROOT/
 - **150+ XAML files** for UI definitions
 - **12 distinct project modules** in the solution
 - **64+ documentation pages** in Docusaurus format
-- **16+ supported languages** for localization
+- **17 supported languages** for localization
 
 ## Technology Stack
 
@@ -76,12 +82,17 @@ REPOSITORY_ROOT/
   - Models: Business logic in `Source/NETworkManager.Models/`
 
 **Key Libraries**:
-- **#SNMP Library** - SNMP protocol implementation
-- **DnsClient.NET** - DNS lookups
-- **IPNetwork** - Network and subnet calculations
-- **PSDiscoveryProtocol** - LLDP/CDP network discovery
+- **Lextm.SharpSnmpLib** - SNMP protocol implementation
+- **DnsClient** - DNS lookups
+- **IPNetwork2** - Network and subnet calculations
+- **PSDiscoveryProtocol** - LLDP/CDP network discovery (PowerShell module embedded)
 - **AirspaceFixer** - WPF/WinForms interop fixes
 - **log4net** - Logging framework
+- **LiveCharts.Wpf** - Charts and graphs
+- **Microsoft.Web.WebView2** - WebView2 control for web content
+- **Microsoft.PowerShell.SDK** - PowerShell integration
+- **Microsoft.Xaml.Behaviors.Wpf** - Behaviors for XAML
+- **Newtonsoft.Json** - JSON serialization and deserialization
 
 **Build Tools**:
 - **NetBeauty2** - Dependency organization
@@ -109,7 +120,8 @@ Website/
 ├── static/                 # Static assets (images, files)
 ├── docusaurus.config.js    # Site configuration
 ├── sidebars.js             # Documentation sidebar structure
-└── package.json            # npm dependencies
+├── package.json            # npm/yarn dependencies
+└── yarn.lock               # Yarn lockfile
 ```
 
 ## Development Setup
@@ -118,14 +130,14 @@ Website/
 
 1. **For Application Development**:
    - [.NET 10.x SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
-   - [Visual Studio 2026](https://visualstudio.microsoft.com/) with:
+   - [Visual Studio 2022](https://visualstudio.microsoft.com/) or later with:
      - `.NET desktop development` workload
      - `Universal Windows Platform development` workload
    - Alternative: [JetBrains Rider](https://www.jetbrains.com/rider/) (still requires UWP workload via VS Installer)
 
 2. **For Website Development**:
    - [Node.js](https://nodejs.org/) (LTS version recommended)
-   - npm or yarn package manager
+   - npm or yarn package manager (yarn is used in CI/CD)
 
 ### Building the Application
 
@@ -150,16 +162,16 @@ dotnet build .\Source\NETworkManager.sln --configuration Release --no-restore
 
 ```bash
 cd Website
-npm install         # Install dependencies
-npm start           # Start development server
-npm run build       # Build for production
+npm install         # Install dependencies (or use yarn install)
+npm start           # Start development server (or use yarn start)
+npm run build       # Build for production (or use yarn build)
 ```
 
 The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkManager
 
 ## CI/CD Pipeline
 
-**Build System**: AppVeyor (configuration in `appveyor.yml`)
+**Primary Build System**: AppVeyor (configuration in `appveyor.yml`)
 - Builds on Visual Studio 2022 image
 - Installs .NET 10.0.100 SDK
 - Restores NuGet packages
@@ -167,6 +179,35 @@ The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkMana
 - Version format: `yyyy.M.d.0` (date-based)
 - Artifacts are signed via [SignPath.io](https://signpath.io/)
 - Released to GitHub Releases
+
+**GitHub Actions Workflows**:
+- **CodeQL Analysis** (`.github/workflows/codeql.yml`):
+  - Automated security scanning
+  - Analyzes C# and JavaScript/TypeScript code
+  - Runs weekly and on-demand via workflow_dispatch
+  
+- **Website Deployment** (`.github/workflows/deploy_website.yml`):
+  - Builds and deploys Docusaurus website to GitHub Pages
+  - Triggers on changes to `Website/` directory
+  - Uses Node.js 20 with yarn for build
+
+**Automation & Bots**:
+- **Dependabot** (`.github/dependabot.yml`):
+  - Weekly updates for NuGet packages, .NET SDK, and npm packages
+  - Automatic PR creation for dependency updates
+  
+- **Mergify** (`.github/mergify.yml`):
+  - Auto-merges PRs with `LGTM` label after AppVeyor CI passes
+  - Auto-merges Dependabot, Transifex, and ImgBot PRs after CI success
+  
+- **Transifex Integration** (`.github/transifex.yml`):
+  - Automated translation synchronization
+  - Syncs RESX files between GitHub and Transifex
+  
+- **Stale Bot** (`.github/stale.yml`):
+  - Marks issues inactive for 30 days as stale
+  - Closes stale issues after 7 days
+  - Excludes bugs, feature requests, and documentation issues
 
 ## Contributing Areas
 
@@ -211,7 +252,9 @@ The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkMana
 
 - **Platform**: [Transifex](https://app.transifex.com/BornToBeRoot/NETworkManager/dashboard/)
 - **Resources**: `Source/NETworkManager.Localization/`
-- **16+ languages supported**
+- **17 languages supported**: cs-CZ, de-DE, es-ES, fr-FR, hu-HU, it-IT, ja-JP, ko-KR, nl-NL, pl-PL, pt-BR, ru-RU, sl-SI, sv-SE, uk-UA, zh-CN, zh-TW
+- **Format**: RESX files
+- **Integration**: Automated sync via `.github/transifex.yml`
 
 ## Code Style and Conventions
 
@@ -284,8 +327,16 @@ The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkMana
 
 - **`Source/NETworkManager.sln`**: Main Visual Studio solution
 - **`Source/GlobalAssemblyInfo.cs`**: Shared assembly version info
-- **`Source/global.json`**: .NET SDK version specification
-- **`appveyor.yml`**: CI/CD configuration
+- **`Source/global.json`**: .NET SDK version specification (10.0.100)
+- **`Source/.editorconfig`**: C# code style configuration
+- **`appveyor.yml`**: AppVeyor CI/CD configuration
+- **`.github/workflows/codeql.yml`**: CodeQL security analysis workflow
+- **`.github/workflows/deploy_website.yml`**: Website deployment workflow
+- **`.github/dependabot.yml`**: Dependabot configuration
+- **`.github/mergify.yml`**: Mergify auto-merge configuration
+- **`.github/transifex.yml`**: Transifex translation sync configuration
+- **`.github/stale.yml`**: Stale issue bot configuration
+- **`.gitmodules`**: Git submodule configuration (Dragablz)
 - **`Website/docusaurus.config.js`**: Documentation site configuration
 - **`CONTRIBUTING.md`**: Contribution guidelines
 - **`LICENSE`**: GPL v3 license
@@ -313,19 +364,19 @@ dotnet clean .\Source\NETworkManager.sln
 
 ```bash
 # Install dependencies
-cd Website && npm install
+cd Website && npm install  # or yarn install
 
 # Start dev server (http://localhost:3000)
-npm start
+npm start  # or yarn start
 
 # Build static site
-npm run build
+npm run build  # or yarn build
 
 # Serve production build
-npm run serve
+npm run serve  # or yarn serve
 
 # Clear cache
-npm run clear
+npm run clear  # or yarn clear
 ```
 
 ### Git Operations
@@ -422,7 +473,11 @@ git diff
 5. **Update Documentation**: Changes to features should include doc updates
 6. **Test on Real Networks**: Network tools require real network testing
 7. **Version Management**: Assembly version is auto-generated in CI/CD
-8. **Submodules**: Remember to init/update submodules (Dragablz)
+8. **Submodules**: Remember to init/update submodules (Dragablz in `Source/3rdparty/`)
+9. **DO NOT Modify 3rdparty**: The `Source/3rdparty/` directory contains the Dragablz submodule and is maintained manually — AI agents MUST NOT modify this directory
+10. **Automation Scripts**: Use scripts in `Scripts/` directory for updating lists (OUI, ports, WHOIS servers)
+11. **Check CI Status**: Both AppVeyor (main build) and GitHub Actions (CodeQL, website) must pass
+12. **Dependency Updates**: Dependabot automatically creates PRs for dependency updates
 
 ## Glossary
 
