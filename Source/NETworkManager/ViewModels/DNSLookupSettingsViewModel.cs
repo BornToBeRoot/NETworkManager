@@ -481,7 +481,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     /// </summary>
     private async Task DeleteDNSServer()
     {
-        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+        var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
             Strings.DeleteDNSServer,
             Strings.DeleteDNSServerMessage,
             ChildWindowIcon.Info,

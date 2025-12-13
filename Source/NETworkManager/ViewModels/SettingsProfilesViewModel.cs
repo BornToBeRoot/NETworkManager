@@ -141,7 +141,7 @@ public class SettingsProfilesViewModel : ViewModelBase
             .FirstOrDefault(p => p.Name.Equals(profileName, StringComparison.OrdinalIgnoreCase));
 
         // Ask the user if they want to enable encryption for the new profile file
-        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+        var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
             Strings.EnableEncryptionQuestion,
             Strings.EnableEncryptionForProfileFileMessage);
 
@@ -197,7 +197,7 @@ public class SettingsProfilesViewModel : ViewModelBase
 
     private async Task DeleteProfileFileAction()
     {
-        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+        var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
             Strings.DeleteProfileFile,
             string.Format(Strings.DeleteProfileFileXMessage, SelectedProfileFile.Name),
             ChildWindowIcon.Info,
@@ -217,7 +217,7 @@ public class SettingsProfilesViewModel : ViewModelBase
     private async Task EnableEncryptionAction()
     {
         // Show encryption disclaimer
-        if (!await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+        if (!await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
              Strings.Disclaimer,
              Strings.ProfileEncryptionDisclaimer))
             return;
@@ -237,7 +237,7 @@ public class SettingsProfilesViewModel : ViewModelBase
             }
             catch (Exception ex)
             {
-                await DialogHelper.ShowOKMessageAsync(Application.Current.MainWindow,
+                await DialogHelper.ShowMessageAsync(Application.Current.MainWindow,
                     Strings.EncryptionError,
                     $"{Strings.EncryptionErrorMessage}\n\n{ex.Message}",
                     ChildWindowIcon.Error).ConfigureAwait(false);
@@ -283,14 +283,14 @@ public class SettingsProfilesViewModel : ViewModelBase
             }
             catch (CryptographicException)
             {
-                await DialogHelper.ShowOKMessageAsync(Application.Current.MainWindow,
+                await DialogHelper.ShowMessageAsync(Application.Current.MainWindow,
                     Strings.WrongPassword,
                     Strings.WrongPasswordDecryptionFailedMessage,
                     ChildWindowIcon.Error).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                await DialogHelper.ShowOKMessageAsync(Application.Current.MainWindow,
+                await DialogHelper.ShowMessageAsync(Application.Current.MainWindow,
                     Strings.DecryptionError,
                     $"{Strings.DecryptionErrorMessage}\n\n{ex.Message}",
                     ChildWindowIcon.Error).ConfigureAwait(false);
@@ -336,14 +336,14 @@ public class SettingsProfilesViewModel : ViewModelBase
             }
             catch (CryptographicException)
             {
-                await DialogHelper.ShowOKMessageAsync(Application.Current.MainWindow,
+                await DialogHelper.ShowMessageAsync(Application.Current.MainWindow,
                     Strings.WrongPassword,
                     Strings.WrongPasswordDecryptionFailedMessage,
                     ChildWindowIcon.Error).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                await DialogHelper.ShowOKMessageAsync(Application.Current.MainWindow,
+                await DialogHelper.ShowMessageAsync(Application.Current.MainWindow,
                     Strings.DecryptionError,
                     $"{Strings.DecryptionErrorMessage}\n\n{ex.Message}",
                     ChildWindowIcon.Error).ConfigureAwait(false);

@@ -194,7 +194,7 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
 
     private async Task DeleteServer()
     {
-        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+        var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
             Strings.DeleteSNTPServer,
             Strings.DeleteSNTPServerMessage,
             ChildWindowIcon.Info,

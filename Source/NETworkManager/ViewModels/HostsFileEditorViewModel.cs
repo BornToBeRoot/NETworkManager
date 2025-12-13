@@ -505,7 +505,7 @@ public class HostsFileEditorViewModel : ViewModelBase
     {
         IsModifying = true;
 
-        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+        var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
             Strings.DeleteEntry,
             string.Format(Strings.DeleteHostsFileEntryMessage, SelectedResult.IPAddress, SelectedResult.Hostname,
                 string.IsNullOrEmpty(SelectedResult.Comment) ? "" : $"# {SelectedResult.Comment}"),
@@ -557,21 +557,8 @@ public class HostsFileEditorViewModel : ViewModelBase
             _ => Strings.UnkownError
         };
 
-        var childWindow = new OKMessageChildWindow();
-
-        var childWindowViewModel = new OKMessageViewModel(_ =>
-        {
-            childWindow.IsOpen = false;
-            ConfigurationManager.Current.IsChildWindowOpen = false;
-        }, message, ChildWindowIcon.Error, Strings.OK);
-
-        childWindow.Title = Strings.Error;
-
-        childWindow.DataContext = childWindowViewModel;
-
-        ConfigurationManager.Current.IsChildWindowOpen = true;
-
-        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error, message,
+            ChildWindowIcon.Error);
     }
 
     /// <summary>
@@ -590,21 +577,8 @@ public class HostsFileEditorViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            var childWindow = new OKMessageChildWindow();
-
-            var childWindowViewModel = new OKMessageViewModel(_ =>
-            {
-                childWindow.IsOpen = false;
-                ConfigurationManager.Current.IsChildWindowOpen = false;
-            }, ex.Message, ChildWindowIcon.Error, Strings.OK);
-
-            childWindow.Title = Strings.Error;
-
-            childWindow.DataContext = childWindowViewModel;
-
-            ConfigurationManager.Current.IsChildWindowOpen = true;
-
-            await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+            await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error, ex.Message,
+                ChildWindowIcon.Error);
         }
     }
 

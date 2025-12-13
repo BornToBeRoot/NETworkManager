@@ -203,7 +203,7 @@ public class SNMPSettingsViewModel : ViewModelBase
 
     private async Task DeleteOIDProfile()
     {
-        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+        var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
             Strings.DeleteOIDProfile,
             Strings.DeleteOIDProfileMessage,
             ChildWindowIcon.Info,

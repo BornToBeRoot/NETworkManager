@@ -3,9 +3,9 @@ using System.Windows.Threading;
 
 namespace NETworkManager.Views;
 
-public partial class OKCancelMessageChildWindow
+public partial class MessageConfirmationChildWindow
 {
-    public OKCancelMessageChildWindow()
+    public MessageConfirmationChildWindow()
     {
         InitializeComponent();
     }
@@ -14,7 +14,7 @@ public partial class OKCancelMessageChildWindow
     {
         Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate
         {
-            ButtonOK.Focus();
+            ButtonConfirm.Focus();
         }));
     }
 }

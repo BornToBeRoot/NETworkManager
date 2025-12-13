@@ -515,7 +515,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
     /// </summary>
     private async Task DeleteCustomCommand()
     {
-        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+        var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
             Strings.DeleteCustomCommand,
             Strings.DeleteCustomCommandMessage,
             ChildWindowIcon.Info,
