@@ -1,5 +1,4 @@
-﻿using MahApps.Metro.Controls.Dialogs;
-using MahApps.Metro.SimpleChildWindow;
+﻿using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
@@ -20,8 +19,6 @@ namespace NETworkManager.ViewModels;
 public class SettingsProfilesViewModel : ViewModelBase
 {
     #region Variables
-
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     public Action CloseAction { get; set; }
 
@@ -74,10 +71,8 @@ public class SettingsProfilesViewModel : ViewModelBase
 
     #region Constructor, LoadSettings
 
-    public SettingsProfilesViewModel(IDialogCoordinator instance)
+    public SettingsProfilesViewModel()
     {
-        _dialogCoordinator = instance;
-
         ProfileFiles = new CollectionViewSource { Source = ProfileManager.ProfileFiles }.View;
         ProfileFiles.SortDescriptions.Add(
             new SortDescription(nameof(ProfileFileInfo.Name), ListSortDirection.Ascending));

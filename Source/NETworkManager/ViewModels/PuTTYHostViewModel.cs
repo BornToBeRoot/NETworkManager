@@ -1,6 +1,5 @@
 ﻿using Dragablz;
 using log4net;
-using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
@@ -32,8 +31,6 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     #region Variables
 
     private static readonly ILog Log = LogManager.GetLogger(typeof(PuTTYHostViewModel));
-
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly DispatcherTimer _searchDispatcherTimer = new();
     private bool _searchDisabled;
@@ -313,11 +310,9 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
     #region Constructor, load settings
 
-    public PuTTYHostViewModel(IDialogCoordinator instance)
+    public PuTTYHostViewModel()
     {
         _isLoading = true;
-
-        _dialogCoordinator = instance;
 
         // Check if PuTTY executable is configured
         CheckExecutable();

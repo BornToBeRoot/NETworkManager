@@ -1,5 +1,4 @@
 ﻿using Dragablz;
-using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using Microsoft.Web.WebView2.Core;
 using NETworkManager.Controls;
@@ -28,8 +27,6 @@ namespace NETworkManager.ViewModels;
 public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
-
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly DispatcherTimer _searchDispatcherTimer = new();
     private bool _searchDisabled;
@@ -283,11 +280,9 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
 
     #region Constructor, load settings
 
-    public WebConsoleHostViewModel(IDialogCoordinator instance)
+    public WebConsoleHostViewModel()
     {
         _isLoading = true;
-
-        _dialogCoordinator = instance;
 
         try
         {

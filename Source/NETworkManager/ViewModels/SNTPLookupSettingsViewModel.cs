@@ -1,5 +1,4 @@
-﻿using MahApps.Metro.Controls.Dialogs;
-using MahApps.Metro.SimpleChildWindow;
+﻿using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
@@ -23,8 +22,6 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
 
     private readonly ServerConnectionInfo _profileDialogDefaultValues =
         new("time.example.com", 123, TransportProtocol.Tcp);
-
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly ICollectionView _sntpServers;
 
@@ -81,11 +78,9 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
 
     #region Constructor, load settings
 
-    public SNTPLookupSettingsViewModel(IDialogCoordinator instance)
+    public SNTPLookupSettingsViewModel()
     {
         _isLoading = true;
-
-        _dialogCoordinator = instance;
 
         SNTPServers = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNTPLookup_SNTPServers);
         SNTPServers.SortDescriptions.Add(new SortDescription(nameof(ServerConnectionInfoProfile.Name),
