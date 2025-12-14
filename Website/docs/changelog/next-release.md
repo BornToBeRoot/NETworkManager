@@ -93,6 +93,7 @@ Release date: **xx.xx.2025**
 - Code cleanup & refactoring
   - Introduced a new DialogHelper utility to centralize creation of `OK` and `OK/Cancel` dialogs. This reduces duplication and enforces a consistent layout. [#3231](https://github.com/BornToBeRoot/NETworkManager/pull/3231)
   - Migrate RegexHelper to precompiled Regex patterns for improved performance. [#3261](https://github.com/BornToBeRoot/NETworkManager/pull/3261)
+- Update Ports, OUIs, Whois servers [#3274](https://github.com/BornToBeRoot/NETworkManager/pull/3274)
 - Migrated existing credential and profile dialogs to use DialogHelper, improving usability, accessibility and maintainability across the app. [#3231](https://github.com/BornToBeRoot/NETworkManager/pull/3231)
 - Language files updated via [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration)
 - Dependencies updated via [#dependabot](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot)
