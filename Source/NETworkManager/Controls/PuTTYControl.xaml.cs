@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Settings;
@@ -29,8 +28,6 @@ public partial class PuTTYControl : UserControlBase, IDragablzTabItem, IEmbedded
 
     private bool _initialized;
     private bool _closed;
-
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly Guid _tabId;
     private readonly PuTTYSessionInfo _sessionInfo;
@@ -76,8 +73,6 @@ public partial class PuTTYControl : UserControlBase, IDragablzTabItem, IEmbedded
     {
         InitializeComponent();
         DataContext = this;
-
-        _dialogCoordinator = DialogCoordinator.Instance;
 
         ConfigurationManager.Current.PuTTYTabCount++;
 
@@ -213,17 +208,8 @@ public partial class PuTTYControl : UserControlBase, IDragablzTabItem, IEmbedded
         catch (Exception ex)
         {
             if (!_closed)
-            {
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Strings.OK;
-
-                ConfigurationManager.OnDialogOpen();
-
-                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
-                    ex.Message, MessageDialogStyle.Affirmative, settings);
-
-                ConfigurationManager.OnDialogClose();
-            }
+                // Use built-in message box because we have visual issues in the dragablz window
+                MessageBox.Show(ex.Message, Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         IsConnecting = false;

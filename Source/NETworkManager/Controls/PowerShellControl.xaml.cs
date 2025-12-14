@@ -191,8 +191,8 @@ public partial class PowerShellControl : UserControlBase, IDragablzTabItem, IEmb
         catch (Exception ex)
         {
             if (!_closed)
-                // ToDo: target the correct window
-                await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error, ex.Message, ChildWindowIcon.Error);
+                // Use built-in message box because we have visual issues in the dragablz window
+                MessageBox.Show(ex.Message, Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         IsConnecting = false;
