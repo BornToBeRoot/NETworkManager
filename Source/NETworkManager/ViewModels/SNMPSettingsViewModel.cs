@@ -1,6 +1,5 @@
 ﻿using Lextm.SharpSnmpLib.Messaging;
 using MahApps.Metro.Controls.Dialogs;
-using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
