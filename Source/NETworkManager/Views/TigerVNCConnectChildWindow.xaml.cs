@@ -4,9 +4,9 @@ using System.Windows.Threading;
 
 namespace NETworkManager.Views;
 
-public partial class PowerShellConnectChildWindow
+public partial class TigerVNCConnectChildWindow
 {
-    public PowerShellConnectChildWindow()
+    public TigerVNCConnectChildWindow()
     {
         InitializeComponent();
     }
@@ -15,10 +15,7 @@ public partial class PowerShellConnectChildWindow
     {
         Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate
         {
-            if (ComboBoxHost.Visibility == Visibility.Visible)
-                ComboBoxHost.Focus();
-            else
-                TextBoxCommand.Focus();
+            ComboBoxHost.Focus();
         }));
     }
 }

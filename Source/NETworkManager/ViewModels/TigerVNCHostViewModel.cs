@@ -1,5 +1,5 @@
 ﻿using Dragablz;
-using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
@@ -28,8 +28,6 @@ namespace NETworkManager.ViewModels;
 public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
-
-    private readonly IDialogCoordinator _dialogCoordinator;
     private readonly DispatcherTimer _searchDispatcherTimer = new();
     private bool _searchDisabled;
 
@@ -276,11 +274,9 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 
     #region Constructor, load settings
 
-    public TigerVNCHostViewModel(IDialogCoordinator instance)
+    public TigerVNCHostViewModel()
     {
         _isLoading = true;
-
-        _dialogCoordinator = instance;
 
         CheckSettings();
 
@@ -486,16 +482,15 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
                        File.Exists(SettingsManager.Current.TigerVNC_ApplicationFilePath);
     }
 
-    private async Task Connect(string host = null)
+    private Task Connect(string host = null)
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.Connect
-        };
+        var childWindow = new TigerVNCConnectChildWindow();
 
-        var connectViewModel = new TigerVNCConnectViewModel(async instance =>
+        var childWindowViewModel = new TigerVNCConnectViewModel(async instance =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
             ConfigurationManager.OnDialogClose();
 
             // Create profile info
@@ -515,17 +510,22 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
             Connect(sessionInfo);
         }, async _ =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
             ConfigurationManager.OnDialogClose();
         }, host);
 
-        customDialog.Content = new TigerVNCConnectDialog
-        {
-            DataContext = connectViewModel
-        };
+
+        childWindow.Title = Strings.Connect;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
 
         ConfigurationManager.OnDialogOpen();
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+
+        return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     private void ConnectProfile()
