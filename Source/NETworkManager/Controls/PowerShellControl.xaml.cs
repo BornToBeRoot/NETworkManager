@@ -191,6 +191,7 @@ public partial class PowerShellControl : UserControlBase, IDragablzTabItem, IEmb
         catch (Exception ex)
         {
             if (!_closed)
+                // ToDo: target the correct window
                 await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error, ex.Message, ChildWindowIcon.Error);
         }
 
