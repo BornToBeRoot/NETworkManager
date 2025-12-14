@@ -23,7 +23,7 @@ $RootNode = $Document.CreateNode("element", "WhoisServers", $null)
 $ProgressCount = 0
 
 foreach ($Tld in $IANA_TLDs) {
-    if ($Tld.StartsWith("#")) {
+    if ([string]::IsNullOrWhiteSpace($Tld) -or $Tld.TrimStart().StartsWith("#")) {
         continue
     }
 
