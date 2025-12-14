@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
@@ -11,8 +10,10 @@ public partial class WiFiView
 
     public WiFiView()
     {
-        _viewModel = new WiFiViewModel(DialogCoordinator.Instance);
+        _viewModel = new WiFiViewModel();
+
         InitializeComponent();
+        
         DataContext = _viewModel;
     }
 
