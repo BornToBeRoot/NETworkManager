@@ -1,12 +1,11 @@
 ﻿using System.Windows;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
 public partial class TigerVNCSettingsView
 {
-    private readonly TigerVNCSettingsViewModel _viewModel = new(DialogCoordinator.Instance);
+    private readonly TigerVNCSettingsViewModel _viewModel = new();
 
     public TigerVNCSettingsView()
     {
