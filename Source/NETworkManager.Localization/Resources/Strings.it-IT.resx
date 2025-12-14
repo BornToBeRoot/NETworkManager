@@ -4046,4 +4046,10 @@ Se selezioni 'Annulla', il file del profilo non verrà crittografato.</value>
   <data name="ToolTip_RestartRequired" xml:space="preserve">
     <value>Per applicare le modifiche come le impostazioni della lingua è necessario un riavvio.</value>
   </data>
+  <data name="CouldNotParseOrResolveDNSServers" xml:space="preserve">
+    <value>Impossibile analizzare o risolvere nessuno dei server DNS specificati.</value>
+  </data>
+  <data name="CouldNotParseX" xml:space="preserve">
+    <value>Impossibile analizzare "{0}".</value>
+  </data>
 </root>

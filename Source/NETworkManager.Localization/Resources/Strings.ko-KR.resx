@@ -3942,4 +3942,10 @@ Windows 설정 &gt; 개인정보 보호 및 보안 &gt; 위치를 열고 데스�
   <data name="ToolTip_RestartRequired" xml:space="preserve">
     <value>A restart is required to apply changes such as language settings.</value>
   </data>
+  <data name="CouldNotParseOrResolveDNSServers" xml:space="preserve">
+    <value>Could not parse or resolve any of the specified DNS servers.</value>
+  </data>
+  <data name="CouldNotParseX" xml:space="preserve">
+    <value>Could not parse "{0}".</value>
+  </data>
 </root>
