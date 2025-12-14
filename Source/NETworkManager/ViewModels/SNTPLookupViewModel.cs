@@ -148,7 +148,7 @@ public class SNTPLookupViewModel : ViewModelBase
     public SNTPLookupViewModel(Guid tabId)
     {
         _isLoading = true;
-                
+
         ConfigurationManager.Current.SNTPLookupTabCount++;
 
         _tabId = tabId;

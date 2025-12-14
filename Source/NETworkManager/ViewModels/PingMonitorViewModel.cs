@@ -501,7 +501,7 @@ public class PingMonitorViewModel : ViewModelBase
             catch (Exception ex)
             {
                 Log.Error("Error while exporting data as " + instance.FileType, ex);
-                                
+
                 await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error,
                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
                    Environment.NewLine + ex.Message, ChildWindowIcon.Error);

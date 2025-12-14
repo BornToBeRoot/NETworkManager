@@ -248,8 +248,8 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
         var baseCidr = ipNetwork.AddressFamily == AddressFamily.InterNetwork ? 32 : 128;
 
         if (65535 < Math.Pow(2, baseCidr - ipNetwork.Cidr) / Math.Pow(2, baseCidr - newCidr))
-        {           
-            if(!await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow, Strings.AreYouSure, Strings.TheProcessCanTakeUpSomeTimeAndResources))
+        {
+            if (!await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow, Strings.AreYouSure, Strings.TheProcessCanTakeUpSomeTimeAndResources))
             {
                 IsRunning = false;
 

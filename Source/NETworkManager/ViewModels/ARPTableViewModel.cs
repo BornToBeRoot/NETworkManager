@@ -517,7 +517,7 @@ public class ARPTableViewModel : ViewModelBase
             ConfigurationManager.Current.IsChildWindowOpen = false;
 
             try
-            {                
+            {
                 ExportManager.Export(instance.FilePath, instance.FileType,
                     instance.ExportAll
                         ? Results

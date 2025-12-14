@@ -220,7 +220,7 @@ public class HostsFileEditorViewModel : ViewModelBase
     public HostsFileEditorViewModel()
     {
         _isLoading = true;
-        
+
         // Result view + search
         ResultsView = CollectionViewSource.GetDefaultView(Results);
         ResultsView.Filter = o =>

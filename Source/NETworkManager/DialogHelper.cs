@@ -27,7 +27,7 @@ namespace NETworkManager
         /// <param name="confirmButtonText">The text to display on the confirm button. If null, a default value is used.</param>
         /// <returns>A task that completes when the user closes the message dialog.</returns>
         public static Task ShowMessageAsync(Window parentWindow, string title, string message, ChildWindowIcon icon = ChildWindowIcon.Info, string confirmButtonText = null)
-        {            
+        {
             confirmButtonText ??= Strings.OK;
 
             var childWindow = new MessageChildWindow();
