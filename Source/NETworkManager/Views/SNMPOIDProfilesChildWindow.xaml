@@ -43,10 +43,10 @@
                                 Binding="{Binding (network:SNMPOIDProfileInfo.Mode)}"
                                 SortMemberPath="Mode"
                                 Width="1*" />
-                </DataGrid.Columns>
+                </DataGrid.Columns>                
                 <DataGrid.InputBindings>
                     <KeyBinding Command="{Binding Path=OKCommand}" Key="Return" />
-                </DataGrid.InputBindings>
+                </DataGrid.InputBindings>                
                 <DataGrid.RowStyle>
                     <Style TargetType="{x:Type TypeName=DataGridRow}"
                    BasedOn="{StaticResource ResourceKey=MahApps.Styles.DataGridRow}">

@@ -655,9 +655,12 @@ public class SNMPViewModel : ViewModelBase
         {
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
+                        
+            if (instance.SelectedOIDProfile == null)
+                return;
 
             Mode = instance.SelectedOIDProfile.Mode;
-            Oid = instance.SelectedOIDProfile.OID;
+            Oid = instance.SelectedOIDProfile?.OID;
         }, async _ => {
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;

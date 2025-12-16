@@ -334,6 +334,8 @@ public class DNSLookupSettingsViewModel : ViewModelBase
             return !info.UseWindowsDNSServer;
         };
 
+        SelectedDNSServer = DNSServers.Cast<DNSServerConnectionInfoProfile>().FirstOrDefault(x => !x.UseWindowsDNSServer);
+        
         LoadSettings();
 
         _isLoading = false;
@@ -349,7 +351,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix;
         Recursion = SettingsManager.Current.DNSLookup_Recursion;
         UseCache = SettingsManager.Current.DNSLookup_UseCache;
-        QueryClasses = Enum.GetValues(typeof(QueryClass)).Cast<QueryClass>().OrderBy(x => x.ToString()).ToList();
+        QueryClasses = [.. Enum.GetValues<QueryClass>().Cast<QueryClass>().OrderBy(x => x.ToString())];
         QueryClass = QueryClasses.First(x => x == SettingsManager.Current.DNSLookup_QueryClass);
         //ShowOnlyMostCommonQueryTypes = SettingsManager.Current.DNSLookup_ShowOnlyMostCommonQueryTypes;
         UseTCPOnly = SettingsManager.Current.DNSLookup_UseTCPOnly;
