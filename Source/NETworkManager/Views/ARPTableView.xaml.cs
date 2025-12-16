@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Network;
 using NETworkManager.Utilities;
 using NETworkManager.ViewModels;
@@ -12,7 +11,7 @@ namespace NETworkManager.Views;
 
 public partial class ARPTableView
 {
-    private readonly ARPTableViewModel _viewModel = new(DialogCoordinator.Instance);
+    private readonly ARPTableViewModel _viewModel = new();
 
     public ARPTableView()
     {

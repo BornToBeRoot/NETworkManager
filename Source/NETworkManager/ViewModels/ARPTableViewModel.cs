@@ -1,6 +1,5 @@
 ﻿using log4net;
 using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
@@ -33,10 +32,9 @@ public class ARPTableViewModel : ViewModelBase
     /// Initializes a new instance of the <see cref="ARPTableViewModel"/> class.
     /// </summary>
     /// <param name="instance">The dialog coordinator instance.</param>
-    public ARPTableViewModel(IDialogCoordinator instance)
+    public ARPTableViewModel()
     {
         _isLoading = true;
-        _dialogCoordinator = instance;
 
         // Result view + search
         ResultsView = CollectionViewSource.GetDefaultView(Results);
@@ -80,11 +78,6 @@ public class ARPTableViewModel : ViewModelBase
     #region Variables
 
     private static readonly ILog Log = LogManager.GetLogger(typeof(ARPTableViewModel));
-
-    /// <summary>
-    /// The dialog coordinator instance.
-    /// </summary>
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     /// <summary>
     /// Indicates whether the view model is loading.
