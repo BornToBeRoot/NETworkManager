@@ -1,5 +1,5 @@
 ﻿using Lextm.SharpSnmpLib.Messaging;
-using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
@@ -21,8 +21,6 @@ public class SNMPSettingsViewModel : ViewModelBase
     #region Variables
 
     private readonly bool _isLoading;
-
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     public ICollectionView OIDProfiles { get; }
 
@@ -101,11 +99,9 @@ public class SNMPSettingsViewModel : ViewModelBase
 
     #region Contructor, load settings
 
-    public SNMPSettingsViewModel(IDialogCoordinator instance)
+    public SNMPSettingsViewModel()
     {
         _isLoading = true;
-
-        _dialogCoordinator = instance;
 
         OIDProfiles = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_OidProfiles);
         OIDProfiles.SortDescriptions.Add(new SortDescription(nameof(SNMPOIDProfileInfo.Name),
@@ -155,49 +151,57 @@ public class SNMPSettingsViewModel : ViewModelBase
 
     private async Task AddOIDProfile()
     {
-        var customDialog = new CustomDialog
+        var childWindow = new SNMPOIDProfileChildWindow();
+
+        var childWindowViewModel = new SNMPOIDProfileViewModel(async instance =>
         {
-            Title = Strings.AddOIDProfile
-        };
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
 
-        var viewModel = new SNMPOIDProfileViewModel(async instance =>
+            SettingsManager.Current.SNMP_OidProfiles.Add(new SNMPOIDProfileInfo(
+                instance.Name,
+                instance.OID,
+                instance.Mode)
+             );
+        }, async _ =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        });
 
-            SettingsManager.Current.SNMP_OidProfiles.Add(new SNMPOIDProfileInfo(instance.Name, instance.OID,
-                instance.Mode));
-        }, async _ => { await _dialogCoordinator.HideMetroDialogAsync(this, customDialog); });
+        childWindow.Title = Strings.AddOIDProfile;
 
-        customDialog.Content = new SNMPOIDProfileDialog
-        {
-            DataContext = viewModel
-        };
+        childWindow.DataContext = childWindowViewModel;
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     public async Task EditOIDProfile()
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.EditOIDProfile
-        };
+        var childWindow = new SNMPOIDProfileChildWindow();
 
-        var viewModel = new SNMPOIDProfileViewModel(async instance =>
+        var childWindowViewModel = new SNMPOIDProfileViewModel(async instance =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
 
             SettingsManager.Current.SNMP_OidProfiles.Remove(SelectedOIDProfile);
             SettingsManager.Current.SNMP_OidProfiles.Add(new SNMPOIDProfileInfo(instance.Name, instance.OID,
                 instance.Mode));
-        }, async _ => { await _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, true, SelectedOIDProfile);
+        }, async _ => {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        }, true, SelectedOIDProfile);
 
-        customDialog.Content = new SNMPOIDProfileDialog
-        {
-            DataContext = viewModel
-        };
+        childWindow.Title = Strings.EditOIDProfile;
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     private async Task DeleteOIDProfile()
