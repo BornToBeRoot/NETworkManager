@@ -1,6 +1,5 @@
 ﻿using log4net;
 using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization;
@@ -31,11 +30,9 @@ public class SNMPViewModel : ViewModelBase
 {
     #region Contructor, load settings
 
-    public SNMPViewModel(IDialogCoordinator instance, Guid tabId, SNMPSessionInfo sessionInfo)
+    public SNMPViewModel(Guid tabId, SNMPSessionInfo sessionInfo)
     {
         _isLoading = true;
-
-        _dialogCoordinator = instance;
 
         ConfigurationManager.Current.SNMPTabCount++;
 
@@ -57,11 +54,11 @@ public class SNMPViewModel : ViewModelBase
         Oid = sessionInfo?.OID;
 
         // Modes
-        Modes = new List<SNMPMode> { SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set };
+        Modes = [SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set];
         Mode = Modes.FirstOrDefault(x => x == sessionInfo?.Mode);
 
         // Versions (v1, v2c, v3)
-        Versions = Enum.GetValues(typeof(SNMPVersion)).Cast<SNMPVersion>().ToList();
+        Versions = Enum.GetValues<SNMPVersion>().Cast<SNMPVersion>().ToList();
         Version = Versions.FirstOrDefault(x => x == sessionInfo?.Version);
 
         // Community
@@ -69,8 +66,7 @@ public class SNMPViewModel : ViewModelBase
             Community = sessionInfo?.Community;
 
         // Security
-        Securities = new List<SNMPV3Security>
-            { SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv };
+        Securities = [SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv];
         Security = Securities.FirstOrDefault(x => x == sessionInfo?.Security);
 
         // Username
@@ -78,15 +74,14 @@ public class SNMPViewModel : ViewModelBase
             Username = sessionInfo?.Username;
 
         // Auth
-        AuthenticationProviders = Enum.GetValues(typeof(SNMPV3AuthenticationProvider))
-            .Cast<SNMPV3AuthenticationProvider>().ToList();
+        AuthenticationProviders = [.. Enum.GetValues<SNMPV3AuthenticationProvider>().Cast<SNMPV3AuthenticationProvider>()];
         AuthenticationProvider = AuthenticationProviders.FirstOrDefault(x => x == sessionInfo?.AuthenticationProvider);
 
         if (Version == SNMPVersion.V3 && Security != SNMPV3Security.NoAuthNoPriv)
             Auth = sessionInfo?.Auth;
 
         // Priv
-        PrivacyProviders = Enum.GetValues(typeof(SNMPV3PrivacyProvider)).Cast<SNMPV3PrivacyProvider>().ToList();
+        PrivacyProviders = [.. Enum.GetValues<SNMPV3PrivacyProvider>().Cast<SNMPV3PrivacyProvider>()];
         PrivacyProvider = PrivacyProviders.FirstOrDefault(x => x == sessionInfo?.PrivacyProvider);
 
         if (Version == SNMPVersion.V3 && Security == SNMPV3Security.AuthPriv)
@@ -99,8 +94,6 @@ public class SNMPViewModel : ViewModelBase
 
     #region Variables
     private static readonly ILog Log = LogManager.GetLogger(typeof(SNMPViewModel));
-
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     private CancellationTokenSource _cancellationTokenSource;
 
@@ -656,25 +649,27 @@ public class SNMPViewModel : ViewModelBase
     {
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.SelectOIDProfile
-        };
+        var childWindow = new SNMPOIDProfilesChildWindow(window);
 
-        var viewModel = new SNMPOIDProfilesViewModel(async instance =>
+        var childWindowViewModel = new SNMPOIDProfilesViewModel(async instance =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(window, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
 
             Mode = instance.SelectedOIDProfile.Mode;
             Oid = instance.SelectedOIDProfile.OID;
-        }, async _ => { await _dialogCoordinator.HideMetroDialogAsync(window, customDialog); });
+        }, async _ => {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        });
 
-        customDialog.Content = new SNMPOIDProfilesDialog
-        {
-            DataContext = viewModel
-        };
+        childWindow.Title = Strings.SelectOIDProfile;
 
-        await _dialogCoordinator.ShowMetroDialogAsync(window, customDialog);
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        await window.ShowChildWindowAsync(childWindow);
     }
 
     private void AddHostToHistory(string host)
