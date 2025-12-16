@@ -641,7 +641,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
         ConfigurationManager.OnDialogOpen();
 
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     private void ConnectProfile()

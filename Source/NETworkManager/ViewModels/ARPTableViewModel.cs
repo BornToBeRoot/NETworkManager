@@ -465,14 +465,13 @@ public class ARPTableViewModel : ViewModelBase
     {
         IsStatusMessageDisplayed = false;
 
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.AddEntry
-        };
+        var childWindow = new ARPTableAddEntryChildWindow();
 
-        var arpTableAddEntryViewModel = new ArpTableAddEntryViewModel(async instance =>
+
+        var childWindowViewModel = new ARPTableAddEntryViewModel(async instance =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
 
             try
             {
@@ -489,14 +488,18 @@ public class ARPTableViewModel : ViewModelBase
                 StatusMessage = ex.Message;
                 IsStatusMessageDisplayed = true;
             }
-        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); });
+        }, _ => {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        });
 
-        customDialog.Content = new ARPTableAddEntryDialog
-        {
-            DataContext = arpTableAddEntryViewModel
-        };
+        childWindow.Title = Strings.AddEntry;
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     /// <summary>

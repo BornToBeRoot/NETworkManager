@@ -155,7 +155,7 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     public async Task EditServer()
@@ -184,7 +184,7 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     private async Task DeleteServer()

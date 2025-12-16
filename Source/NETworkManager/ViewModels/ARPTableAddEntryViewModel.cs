@@ -7,7 +7,7 @@ namespace NETworkManager.ViewModels;
 /// <summary>
 /// View model for adding an ARP table entry.
 /// </summary>
-public class ArpTableAddEntryViewModel : ViewModelBase
+public class ARPTableAddEntryViewModel : ViewModelBase
 {
     /// <summary>
     /// Backing field for <see cref="IPAddress"/>.
@@ -20,12 +20,12 @@ public class ArpTableAddEntryViewModel : ViewModelBase
     private string _macAddress;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ArpTableAddEntryViewModel"/> class.
+    /// Initializes a new instance of the <see cref="ARPTableAddEntryViewModel"/> class.
     /// </summary>
     /// <param name="addCommand">The action to execute when the add command is invoked.</param>
     /// <param name="cancelHandler">The action to execute when the cancel command is invoked.</param>
-    public ArpTableAddEntryViewModel(Action<ArpTableAddEntryViewModel> addCommand,
-        Action<ArpTableAddEntryViewModel> cancelHandler)
+    public ARPTableAddEntryViewModel(Action<ARPTableAddEntryViewModel> addCommand,
+        Action<ARPTableAddEntryViewModel> cancelHandler)
     {
         AddCommand = new RelayCommand(_ => addCommand(this));
         CancelCommand = new RelayCommand(_ => cancelHandler(this));

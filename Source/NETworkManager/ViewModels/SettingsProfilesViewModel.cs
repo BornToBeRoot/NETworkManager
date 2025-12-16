@@ -126,7 +126,7 @@ public class SettingsProfilesViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
 
         // Re-select the profile file
         if (string.IsNullOrEmpty(profileName))
@@ -172,7 +172,7 @@ public class SettingsProfilesViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
 
         // Re-select the profile file
         if (string.IsNullOrEmpty(profileName))
@@ -249,7 +249,7 @@ public class SettingsProfilesViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
 
         // Re-select the profile file
         if (string.IsNullOrEmpty(profileFile))
@@ -302,7 +302,7 @@ public class SettingsProfilesViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
 
         // Re-select the profile file
         if (string.IsNullOrEmpty(profileName))
@@ -356,7 +356,7 @@ public class SettingsProfilesViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
 
         // Re-select the profile file
         if (string.IsNullOrEmpty(profileName))

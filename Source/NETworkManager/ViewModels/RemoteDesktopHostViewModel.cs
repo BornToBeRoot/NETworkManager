@@ -586,7 +586,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
         ConfigurationManager.OnDialogOpen();
 
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     // Connect via Profile
@@ -648,7 +648,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
         ConfigurationManager.OnDialogOpen();
 
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     private void Connect(RemoteDesktopSessionInfo sessionInfo, string header = null)
