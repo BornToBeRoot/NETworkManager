@@ -86,6 +86,8 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
         SNTPServers.SortDescriptions.Add(new SortDescription(nameof(ServerConnectionInfoProfile.Name),
             ListSortDirection.Ascending));
 
+        SelectedSNTPServer = SNTPServers.Cast<ServerConnectionInfoProfile>().FirstOrDefault();
+
         LoadSettings();
 
         _isLoading = false;

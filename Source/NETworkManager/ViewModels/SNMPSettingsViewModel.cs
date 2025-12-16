@@ -107,6 +107,8 @@ public class SNMPSettingsViewModel : ViewModelBase
         OIDProfiles.SortDescriptions.Add(new SortDescription(nameof(SNMPOIDProfileInfo.Name),
             ListSortDirection.Ascending));
 
+        SelectedOIDProfile = OIDProfiles.Cast<SNMPOIDProfileInfo>().FirstOrDefault();
+
         LoadSettings();
 
         _isLoading = false;
