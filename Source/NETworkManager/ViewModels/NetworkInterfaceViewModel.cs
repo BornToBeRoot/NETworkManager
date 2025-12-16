@@ -3,7 +3,6 @@ using LiveCharts.Configurations;
 using LiveCharts.Wpf;
 using log4net;
 using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
@@ -41,7 +40,6 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private static readonly ILog Log = LogManager.GetLogger(typeof(NetworkInterfaceViewModel));
 
-    private readonly IDialogCoordinator _dialogCoordinator;
     private readonly DispatcherTimer _searchDispatcherTimer = new();
     private bool _searchDisabled;
     private BandwidthMeter _bandwidthMeter;
@@ -761,11 +759,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     /// Initializes a new instance of the <see cref="NetworkInterfaceViewModel"/> class.
     /// </summary>
     /// <param name="instance">The dialog coordinator instance.</param>
-    public NetworkInterfaceViewModel(IDialogCoordinator instance)
+    public NetworkInterfaceViewModel()
     {
         _isLoading = true;
-
-        _dialogCoordinator = instance;
 
         LoadNetworkInterfaces().ConfigureAwait(false);
 
@@ -1219,24 +1215,26 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private async Task AddIPv4AddressAction()
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.AddIPv4Address
-        };
+        var childWindow = new IPAddressAndSubnetmaskChildWindow();
 
-        var ipAddressAndSubnetmaskViewModel = new IPAddressAndSubnetmaskViewModel(async instance =>
+        var childWindowViewModel = new IPAddressAndSubnetmaskViewModel(async instance =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
 
             await AddIPv4Address(instance.IPAddress, instance.Subnetmask);
-        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); });
+        }, _ => {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        });
 
-        customDialog.Content = new IPAddressAndSubnetmaskDialog
-        {
-            DataContext = ipAddressAndSubnetmaskViewModel
-        };
+        childWindow.Title = Strings.AddIPv4Address;
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     /// <summary>
@@ -1247,26 +1245,30 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private async Task RemoveIPv4AddressAction()
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.RemoveIPv4Address
-        };
+        var childWindow = new DropDownChildWindow();
 
-        var dropdownViewModel = new DropdownViewModel(async instance =>
+        var childWindowViewModel = new DropDownViewModel(async instance =>
             {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                childWindow.IsOpen = false;
+                ConfigurationManager.Current.IsChildWindowOpen = false;
 
                 await RemoveIPv4Address(instance.SelectedValue.Split("/")[0]);
-            }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-            SelectedNetworkInterface.IPv4Address.Select(x => $"{x.Item1}/{Subnetmask.ConvertSubnetmaskToCidr(x.Item2)}")
-                .ToList(), Strings.IPv4Address);
+            }, _ =>
+            {
+                childWindow.IsOpen = false;
+                ConfigurationManager.Current.IsChildWindowOpen = false;
+            },
+                [.. SelectedNetworkInterface.IPv4Address.Select(x => $"{x.Item1}/{Subnetmask.ConvertSubnetmaskToCidr(x.Item2)}")],
+                Strings.IPv4Address
+            );
 
-        customDialog.Content = new DropdownDialog
-        {
-            DataContext = dropdownViewModel
-        };
+        childWindow.Title = Strings.RemoveIPv4Address;
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     #endregion

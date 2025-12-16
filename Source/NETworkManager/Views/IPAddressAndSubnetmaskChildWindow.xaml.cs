@@ -3,9 +3,9 @@ using System.Windows.Threading;
 
 namespace NETworkManager.Views;
 
-public partial class ExportChildWindow
+public partial class IPAddressAndSubnetmaskChildWindow
 {
-    public ExportChildWindow()
+    public IPAddressAndSubnetmaskChildWindow()
     {
         InitializeComponent();
     }
@@ -14,7 +14,7 @@ public partial class ExportChildWindow
     {
         Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate
         {
-            TextBoxExportFilePath.Focus();
+            TextBoxIPAddress.Focus();
         }));
     }
 }

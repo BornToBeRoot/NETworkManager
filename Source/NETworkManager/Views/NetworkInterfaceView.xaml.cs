@@ -1,13 +1,12 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
 public partial class NetworkInterfaceView
 {
-    private readonly NetworkInterfaceViewModel _viewModel = new(DialogCoordinator.Instance);
+    private readonly NetworkInterfaceViewModel _viewModel = new();
 
     public NetworkInterfaceView()
     {

@@ -1,5 +1,4 @@
 ﻿using Dragablz;
-using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
@@ -27,8 +26,6 @@ namespace NETworkManager.ViewModels;
 public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
-
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly DispatcherTimer _searchDispatcherTimer = new();
     private bool _searchDisabled;
@@ -261,11 +258,9 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
     #region Constructor, load settings
 
-    public RemoteDesktopHostViewModel(IDialogCoordinator instance)
+    public RemoteDesktopHostViewModel()
     {
         _isLoading = true;
-
-        _dialogCoordinator = instance;
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.RemoteDesktop);
         InterTabPartition = nameof(ApplicationName.RemoteDesktop);

@@ -9,7 +9,7 @@ namespace NETworkManager.ViewModels;
 /// <summary>
 /// View model for a dropdown dialog.
 /// </summary>
-public class DropdownViewModel : ViewModelBase
+public class DropDownViewModel : ViewModelBase
 {
     /// <summary>
     /// Backing field for <see cref="ValueDescription"/>.
@@ -27,13 +27,13 @@ public class DropdownViewModel : ViewModelBase
     private string _selectedValue;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="DropdownViewModel"/> class.
+    /// Initializes a new instance of the <see cref="DropDownViewModel"/> class.
     /// </summary>
     /// <param name="okCommand">The action to execute when OK is clicked.</param>
     /// <param name="cancelHandler">The action to execute when Cancel is clicked.</param>
     /// <param name="values">The list of values to display in the dropdown.</param>
     /// <param name="valueDescription">The description of the value.</param>
-    public DropdownViewModel(Action<DropdownViewModel> okCommand, Action<DropdownViewModel> cancelHandler,
+    public DropDownViewModel(Action<DropDownViewModel> okCommand, Action<DropDownViewModel> cancelHandler,
         List<string> values, string valueDescription)
     {
         ValueDescription = valueDescription;
