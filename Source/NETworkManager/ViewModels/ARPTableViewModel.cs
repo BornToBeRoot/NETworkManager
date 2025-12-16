@@ -481,7 +481,8 @@ public class ARPTableViewModel : ViewModelBase
                 StatusMessage = ex.Message;
                 IsStatusMessageDisplayed = true;
             }
-        }, _ => {
+        }, _ =>
+        {
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
         });

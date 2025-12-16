@@ -14,8 +14,8 @@ public partial class WiFiConnectChildWindow
     private void ChildWindow_OnLoaded(object sender, RoutedEventArgs e)
     {
         Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate
-        {            
-            if(PasswordBoxPreSharedKey.Visibility == Visibility.Visible)
+        {
+            if (PasswordBoxPreSharedKey.Visibility == Visibility.Visible)
                 PasswordBoxPreSharedKey.Focus();
             else
                 PasswordBoxPreSharedKey.Focus();

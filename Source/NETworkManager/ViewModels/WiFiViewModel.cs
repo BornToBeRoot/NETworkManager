@@ -892,7 +892,8 @@ public class WiFiViewModel : ViewModelBase
             // Wait because an error may occur if a refresh is done directly after connecting.            
             await ScanAsync(SelectedAdapter, true, 5000);
         },
-            _ => {
+            _ =>
+            {
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
             }, (selectedAdapter, selectedNetwork),

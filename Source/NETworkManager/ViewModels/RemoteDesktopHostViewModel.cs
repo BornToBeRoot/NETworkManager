@@ -373,8 +373,8 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
         {
             ConfigurationManager.OnDialogOpen();
 
-           await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error,
-                $"{Strings.CouldNotSendKeystroke}\n\nMessage:\n{ex.Message}", ChildWindowIcon.Error);
+            await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error,
+                 $"{Strings.CouldNotSendKeystroke}\n\nMessage:\n{ex.Message}", ChildWindowIcon.Error);
 
             ConfigurationManager.OnDialogClose();
         }

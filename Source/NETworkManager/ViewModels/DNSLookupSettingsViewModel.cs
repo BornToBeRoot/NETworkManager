@@ -335,7 +335,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         };
 
         SelectedDNSServer = DNSServers.Cast<DNSServerConnectionInfoProfile>().FirstOrDefault(x => !x.UseWindowsDNSServer);
-        
+
         LoadSettings();
 
         _isLoading = false;

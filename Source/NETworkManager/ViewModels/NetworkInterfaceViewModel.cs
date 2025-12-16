@@ -1223,7 +1223,8 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
             ConfigurationManager.Current.IsChildWindowOpen = false;
 
             await AddIPv4Address(instance.IPAddress, instance.Subnetmask);
-        }, _ => {
+        }, _ =>
+        {
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
         });

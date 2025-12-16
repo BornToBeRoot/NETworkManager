@@ -38,7 +38,7 @@ public class SNMPOIDProfilesViewModel : ViewModelBase
             return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    info.OID.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
-                
+
         SelectedOIDProfile = OIDProfiles.Cast<SNMPOIDProfileInfo>().FirstOrDefault();
     }
 

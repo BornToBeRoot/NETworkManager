@@ -13,7 +13,7 @@ public partial class WiFiView
         _viewModel = new WiFiViewModel();
 
         InitializeComponent();
-        
+
         DataContext = _viewModel;
     }
 

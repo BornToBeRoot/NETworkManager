@@ -192,7 +192,8 @@ public class SNMPSettingsViewModel : ViewModelBase
             SettingsManager.Current.SNMP_OidProfiles.Remove(SelectedOIDProfile);
             SettingsManager.Current.SNMP_OidProfiles.Add(new SNMPOIDProfileInfo(instance.Name, instance.OID,
                 instance.Mode));
-        }, async _ => {
+        }, async _ =>
+        {
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
         }, true, SelectedOIDProfile);
