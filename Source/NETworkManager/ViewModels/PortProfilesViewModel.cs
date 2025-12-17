@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
@@ -16,9 +17,7 @@ namespace NETworkManager.ViewModels;
 /// </summary>
 public class PortProfilesViewModel : ViewModelBase
 {
-    private string _search;
-
-    private IList _selectedPortProfiles = new ArrayList();
+    #region Constructor
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PortProfilesViewModel"/> class.
@@ -47,7 +46,15 @@ public class PortProfilesViewModel : ViewModelBase
             return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    info.Ports.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
+
+        SelectedPortProfiles = new ArrayList {
+            PortProfiles.Cast<PortProfileInfo>().FirstOrDefault()
+        };
     }
+
+    #endregion
+
+    #region Variables
 
     /// <summary>
     /// Gets the command to confirm the selection.
@@ -58,6 +65,11 @@ public class PortProfilesViewModel : ViewModelBase
     /// Gets the command to cancel the operation.
     /// </summary>
     public ICommand CancelCommand { get; }
+
+    /// <summary>
+    /// Backing field for the Search property.
+    /// </summary>
+    private string _search;
 
     /// <summary>
     /// Gets or sets the search text to filter the port profiles.
@@ -74,6 +86,10 @@ public class PortProfilesViewModel : ViewModelBase
 
             PortProfiles.Refresh();
 
+            SelectedPortProfiles = new ArrayList {
+                PortProfiles.Cast<PortProfileInfo>().FirstOrDefault()
+            };
+
             OnPropertyChanged();
         }
     }
@@ -82,6 +98,11 @@ public class PortProfilesViewModel : ViewModelBase
     /// Gets the collection of port profiles.
     /// </summary>
     public ICollectionView PortProfiles { get; }
+
+    /// <summary>
+    /// Backing field for the SelectedPortProfiles property.
+    /// </summary>
+    private IList _selectedPortProfiles = new ArrayList();
 
     /// <summary>
     /// Gets or sets the list of selected port profiles.
@@ -98,13 +119,16 @@ public class PortProfilesViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+    #endregion
 
+    #region Methods
     /// <summary>
     /// Gets the selected port profiles as a typed collection.
     /// </summary>
     /// <returns>A collection of selected <see cref="PortProfileInfo"/>.</returns>
     public IEnumerable<PortProfileInfo> GetSelectedPortProfiles()
     {
-        return new List<PortProfileInfo>(SelectedPortProfiles.Cast<PortProfileInfo>());
+        return [.. SelectedPortProfiles.Cast<PortProfileInfo>()];
     }
+    #endregion
 }

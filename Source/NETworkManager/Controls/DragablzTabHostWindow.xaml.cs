@@ -1,5 +1,4 @@
 ﻿using Dragablz;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Localization;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
@@ -224,13 +223,13 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
         }
         catch (Exception ex)
         {
-            ConfigurationManager.OnDialogOpen();
+            //ConfigurationManager.OnDialogOpen();
 
-            await this.ShowMessageAsync(Strings.Error,
-                string.Format("{0}\n\nMessage:\n{1}",
-                    Strings.CouldNotSendKeystroke, ex.Message));
+            // Use built-in message box because we have visual issues in the dragablz window
+            System.Windows.MessageBox.Show(string.Format("{0}\n\nMessage:\n{1}",
+                    Strings.CouldNotSendKeystroke, ex.Message), Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 
-            ConfigurationManager.OnDialogClose();
+            //ConfigurationManager.OnDialogClose();
         }
     }
 

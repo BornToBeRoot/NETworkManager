@@ -251,12 +251,9 @@ public class SNTPLookupViewModel : ViewModelBase
             {
                 Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Strings.OK;
-
                 await DialogHelper.ShowMessageAsync(window, Strings.Error,
-                   Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                   Environment.NewLine + ex.Message, ChildWindowIcon.Error);
+                      Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                       Environment.NewLine + ex.Message, ChildWindowIcon.Error);
             }
 
             SettingsManager.Current.SNTPLookup_ExportFileType = instance.FileType;

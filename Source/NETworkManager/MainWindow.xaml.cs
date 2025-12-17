@@ -1,6 +1,5 @@
 ﻿using Dragablz;
 using log4net;
-using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Documentation;
@@ -34,6 +33,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Markup;
 using System.Windows.Threading;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 using Application = System.Windows.Application;
 using ContextMenu = System.Windows.Controls.ContextMenu;
 using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
@@ -460,12 +460,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         // Show a note if settings have been reset
         if (ConfigurationManager.Current.ShowSettingsResetNoteOnStartup)
         {
-            var settings = AppearanceManager.MetroDialog;
-            settings.AffirmativeButtonText = Strings.OK;
-
-            await this.ShowMessageAsync(Strings.SettingsHaveBeenReset,
-                Strings.SettingsFileFoundWasCorruptOrNotCompatibleMessage,
-                MessageDialogStyle.Affirmative, settings);
+            await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.SettingsHaveBeenReset,
+                   Strings.SettingsFileFoundWasCorruptOrNotCompatibleMessage, ChildWindowIcon.Error);
         }
 
         // Show welcome dialog
@@ -593,19 +589,14 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 if (WindowState == WindowState.Minimized)
                     BringWindowToFront();
 
-                var settings = AppearanceManager.MetroDialog;
-
-                settings.AffirmativeButtonText = Strings.Close;
-                settings.NegativeButtonText = Strings.Cancel;
-                settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
-
                 ConfigurationManager.OnDialogOpen();
-                var result = await this.ShowMessageAsync(Strings.ConfirmClose,
-                    Strings.ConfirmCloseMessage, MessageDialogStyle.AffirmativeAndNegative,
-                    settings);
+
+                var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow, Strings.ConfirmClose,
+                    Strings.ConfirmCloseMessage, ChildWindowIcon.Question, Strings.Close, Strings.Cancel);
+
                 ConfigurationManager.OnDialogClose();
 
-                if (result != MessageDialogResult.Affirmative)
+                if (!result)
                     return;
 
                 _isClosing = true;
@@ -1047,12 +1038,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         // Show error message if the application was not found
         if (application == null)
         {
-            var settings = AppearanceManager.MetroDialog;
-            settings.AffirmativeButtonText = Strings.OK;
-
-            await this.ShowMessageAsync(Strings.Error,
+            await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error,
                 string.Format(Strings.CouldNotFindApplicationXXXMessage,
-                    data.Application.ToString()));
+                $"{data.Application}"), ChildWindowIcon.Error);
 
             return;
         }
@@ -1464,16 +1452,10 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             ConfigurationManager.Current.ProfileManagerErrorMessage =
                 Strings.ProfileFileCouldNotBeLoaded;
 
-            var settings = AppearanceManager.MetroDialog;
-            settings.AffirmativeButtonText = Strings.OK;
-
-            settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
-
             ConfigurationManager.OnDialogOpen();
 
-            await this.ShowMessageAsync(Strings.ProfileFileCouldNotBeLoaded,
-                string.Format(Strings.ProfileFileCouldNotBeLoadedMessage, ex.Message),
-                MessageDialogStyle.Affirmative, settings);
+            await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.ProfileFileCouldNotBeLoaded,
+                   string.Format(Strings.ProfileFileCouldNotBeLoadedMessage, ex.Message), ChildWindowIcon.Error);
 
             ConfigurationManager.OnDialogClose();
         }

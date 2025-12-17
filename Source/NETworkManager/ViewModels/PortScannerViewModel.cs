@@ -1,6 +1,5 @@
 ﻿using log4net;
 using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
@@ -32,8 +31,6 @@ public class PortScannerViewModel : ViewModelBase
 {
     #region Variables
     private static readonly ILog Log = LogManager.GetLogger(typeof(PortScannerViewModel));
-
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     private CancellationTokenSource _cancellationTokenSource;
 
@@ -279,14 +276,11 @@ public class PortScannerViewModel : ViewModelBase
     /// <summary>
     /// Initializes a new instance of the <see cref="PortScannerViewModel"/> class.
     /// </summary>
-    /// <param name="instance">The dialog coordinator instance.</param>
     /// <param name="tabId">The unique identifier for the tab.</param>
     /// <param name="host">The initial host to scan.</param>
     /// <param name="port">The initial ports to scan.</param>
-    public PortScannerViewModel(IDialogCoordinator instance, Guid tabId, string host, string port)
+    public PortScannerViewModel(Guid tabId, string host, string port)
     {
-        _dialogCoordinator = instance;
-
         ConfigurationManager.Current.PortScannerTabCount++;
 
         _tabId = tabId;
@@ -385,24 +379,27 @@ public class PortScannerViewModel : ViewModelBase
     {
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.SelectPortProfile
-        };
+        var childWindow = new PortProfilesChildWindow(window);
 
-        var viewModel = new PortProfilesViewModel(async instance =>
+        var childWindowViewModel = new PortProfilesViewModel(async instance =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(window, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
 
             Ports = string.Join("; ", instance.GetSelectedPortProfiles().Select(x => x.Ports));
-        }, async _ => { await _dialogCoordinator.HideMetroDialogAsync(window, customDialog); });
-
-        customDialog.Content = new PortProfilesDialog
+        }, async _ =>
         {
-            DataContext = viewModel
-        };
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        });
 
-        await _dialogCoordinator.ShowMetroDialogAsync(window, customDialog);
+        childWindow.Title = Strings.SelectPortProfile;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        await window.ShowChildWindowAsync(childWindow);
     }
 
     private async Task Start()
@@ -498,12 +495,9 @@ public class PortScannerViewModel : ViewModelBase
             {
                 Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Strings.OK;
-
                 await DialogHelper.ShowMessageAsync(window, Strings.Error,
                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                   Environment.NewLine + ex.Message, ChildWindowIcon.Error);
+                    Environment.NewLine + ex.Message, ChildWindowIcon.Error);
             }
 
             SettingsManager.Current.PortScanner_ExportFileType = instance.FileType;

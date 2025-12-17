@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="NETworkManager.Views.PortProfilesDialog"
+﻿<simpleChildWindow:ChildWindow x:Class="NETworkManager.Views.PortProfilesChildWindow"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -7,9 +7,13 @@
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-             mc:Ignorable="d" Loaded="UserControl_Loaded"
-             d:DataContext="{d:DesignInstance viewModels:PortProfilesViewModel}">
-    <Grid Margin="0,20">
+             xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"             
+             CloseButtonCommand="{Binding Path=CancelCommand}"
+             Style="{StaticResource DefaultChildWindow}"
+             Loaded="ChildWindow_OnLoaded"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PortProfilesViewModel}">
+    <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="10" />
@@ -23,17 +27,17 @@
                  Style="{StaticResource ResourceKey=SearchTextBox}" />
         <Grid Grid.Column="0" Grid.Row="2">
             <controls:MultiSelectDataGrid x:Name="DataGridProfiles"
-                                          ItemsSource="{Binding Path=PortProfiles}"
-                                          SelectedItemsList="{Binding Path=SelectedPortProfiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                  ItemsSource="{Binding Path=PortProfiles}"
+                                  SelectedItemsList="{Binding Path=SelectedPortProfiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <controls:MultiSelectDataGrid.Columns>
                     <DataGridTextColumn Header="{x:Static Member=localization:Strings.Name}"
-                                        Binding="{Binding Path=(network:PortProfileInfo.Name)}"
-                                        SortMemberPath="Name"
-                                        Width="1*" />
+                                Binding="{Binding Path=(network:PortProfileInfo.Name)}"
+                                SortMemberPath="Name"
+                                Width="1*" />
                     <DataGridTextColumn Header="{x:Static Member=localization:Strings.Ports}"
-                                        Binding="{Binding Path=(network:PortProfileInfo.Ports)}"
-                                        SortMemberPath="Ports"
-                                        Width="2*" />
+                                Binding="{Binding Path=(network:PortProfileInfo.Ports)}"
+                                SortMemberPath="Ports"
+                                Width="2*" />
                 </controls:MultiSelectDataGrid.Columns>
                 <controls:MultiSelectDataGrid.InputBindings>
                     <KeyBinding Command="{Binding Path=OKCommand}" Key="Return" />
@@ -46,8 +50,10 @@
                 </controls:MultiSelectDataGrid.RowStyle>
             </controls:MultiSelectDataGrid>
         </Grid>
-        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="{x:Static Member=localization:Strings.OK}" Command="{Binding Path=OKCommand}"
+        <StackPanel Grid.Column="0" Grid.Row="4"
+                    Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="{x:Static Member=localization:Strings.OK}"
+                    Command="{Binding Path=OKCommand}"
                     IsDefault="True" Margin="0,0,10,0">
                 <Button.Style>
                     <Style TargetType="{x:Type TypeName=Button}"
@@ -68,8 +74,9 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button Content="{x:Static Member=localization:Strings.Cancel}" Command="{Binding Path=CancelCommand}"
+            <Button Content="{x:Static Member=localization:Strings.Cancel}" 
+                    Command="{Binding Path=CancelCommand}"
                     IsCancel="True" Style="{StaticResource ResourceKey=DefaultButton}" />
         </StackPanel>
     </Grid>
-</UserControl>
+</simpleChildWindow:ChildWindow>
