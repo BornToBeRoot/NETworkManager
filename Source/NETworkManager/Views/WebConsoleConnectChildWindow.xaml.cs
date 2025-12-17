@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace NETworkManager.Views;
@@ -15,7 +16,9 @@ public partial class WebConsoleConnectChildWindow
     {
         Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate
         {
-            ComboBoxUrl.Focus();
+            // Workaround to focus the editable part of the ComboBox
+            var textBox = (TextBox)ComboBoxUrl.Template.FindName("PART_EditableTextBox", ComboBoxUrl);
+            textBox?.Focus();
         }));
     }
 }

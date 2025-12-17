@@ -12,7 +12,7 @@
                                CloseButtonCommand="{Binding Path=CancelCommand}"
                                Style="{StaticResource DefaultChildWindow}"                               
                                Loaded="ChildWindow_OnLoaded"
-                               mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:WebConsoleConnectViewModel}">    
+                               mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:WebConsoleConnectViewModel}">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -34,12 +34,11 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.URL}" />
-            
             <ComboBox x:Name="ComboBoxUrl"
-               Grid.Column="2" Grid.Row="0"
-               ItemsSource="{Binding UrlHistoryView}"
-               mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleWebsiteUri}"
-               Style="{StaticResource EditableComboBox}">
+                      Grid.Column="2" Grid.Row="0"
+                      ItemsSource="{Binding UrlHistoryView}"
+                      mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleWebsiteUri}"
+                      Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Url" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>

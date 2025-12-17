@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace NETworkManager.Views;
@@ -15,7 +16,9 @@ public partial class TigerVNCConnectChildWindow
     {
         Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate
         {
-            ComboBoxHost.Focus();
+            // Workaround to focus the editable part of the ComboBox
+            var textBox = (TextBox)ComboBoxHost.Template.FindName("PART_EditableTextBox", ComboBoxHost);
+            textBox?.Focus();
         }));
     }
 }
