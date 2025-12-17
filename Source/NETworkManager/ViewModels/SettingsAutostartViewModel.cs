@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MahApps.Metro.Controls.Dialogs;
+using System.Windows;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
@@ -10,11 +11,9 @@ public class SettingsAutostartViewModel : ViewModelBase
 {
     #region Constructor
 
-    public SettingsAutostartViewModel(IDialogCoordinator instance)
+    public SettingsAutostartViewModel()
     {
         _isLoading = true;
-
-        _dialogCoordinator = instance;
 
         LoadSettings();
 
@@ -51,8 +50,8 @@ public class SettingsAutostartViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            await _dialogCoordinator.ShowMessageAsync(this, Strings.Error, ex.Message,
-                MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+            await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error,
+                ex.Message, ChildWindowIcon.Error);
         }
 
         ConfiguringAutostart = false;
@@ -61,9 +60,6 @@ public class SettingsAutostartViewModel : ViewModelBase
     #endregion
 
     #region Variables
-
-    private readonly IDialogCoordinator _dialogCoordinator;
-
     private readonly bool _isLoading;
 
     private bool _startWithWindows;

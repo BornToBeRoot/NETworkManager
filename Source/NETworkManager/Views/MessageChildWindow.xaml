@@ -1,4 +1,4 @@
-﻿<simpleChildWindow:ChildWindow x:Class="NETworkManager.Views.OKCancelMessageChildWindow"
+﻿<simpleChildWindow:ChildWindow x:Class="NETworkManager.Views.MessageChildWindow"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -7,15 +7,15 @@
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
+             xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"             
              Loaded="ChildWindow_OnLoaded"
-             CloseButtonCommand="{Binding Path=CancelCommand}"
-             Style="{StaticResource DefaultChildWindow}"                               
-             mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:OKCancelMessageViewModel}">
+             CloseButtonCommand="{Binding Path=ConfirmCommand}"
+             Style="{StaticResource DefaultChildWindow}"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:MessageViewModel}">
     <simpleChildWindow:ChildWindow.Resources>
         <converters:ChildWindowIconToRectangleStyleConverter x:Key="ChildWindowIconToRectangleStyleConverter" />
     </simpleChildWindow:ChildWindow.Resources>
-    <Grid Margin="10">
+    <Grid Margin="10">        
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="20" />
@@ -31,21 +31,18 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Rectangle Grid.Column="0" Grid.Row="0"
-           Width="32" Height="32"
-           Style="{Binding Icon, Converter={StaticResource ChildWindowIconToRectangleStyleConverter}}" />
+                           Width="32" Height="32"
+                           Style="{Binding Icon, Converter={StaticResource ChildWindowIconToRectangleStyleConverter}}" />
                 <TextBlock Grid.Column="2" Grid.Row="0"
                            VerticalAlignment="Center"
                            Text="{Binding Message}"
-                           Style="{StaticResource ResourceKey=WrapTextBlock}"/>
+                           Style="{StaticResource ResourceKey=WrapTextBlock}"/>                
             </Grid>
         </ScrollViewer>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="ButtonOK"
-                    Content="{Binding OKButtonText}" Command="{Binding Path=OKCommand}" IsDefault="True"
-                    Style="{StaticResource ResourceKey=HighlightedButton}" Margin="0,0,10,0" />
-            <Button x:Name="ButtonCancel"
-                    Content="{Binding CancelButtonText}" Command="{Binding Path=CancelCommand}" IsCancel="True"
-                    Style="{StaticResource ResourceKey=DefaultButton}" />
+            <Button x:Name="ButtonConfirm"
+                    Content="{Binding ConfirmButtonText}" Command="{Binding Path=ConfirmCommand}" IsDefault="True"
+                    Style="{StaticResource ResourceKey=HighlightedButton}" />            
         </StackPanel>
     </Grid>
 </simpleChildWindow:ChildWindow>

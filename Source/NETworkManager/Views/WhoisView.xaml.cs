@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
 using NETworkManager.ViewModels;
 
@@ -14,7 +13,7 @@ public partial class WhoisView : IDragablzTabItem
     {
         InitializeComponent();
 
-        _viewModel = new WhoisViewModel(DialogCoordinator.Instance, tabId, domain);
+        _viewModel = new WhoisViewModel(tabId, domain);
 
         DataContext = _viewModel;
 

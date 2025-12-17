@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
 using NETworkManager.ViewModels;
 
@@ -15,7 +14,7 @@ public partial class TracerouteView : IDragablzTabItem
     {
         InitializeComponent();
 
-        _viewModel = new TracerouteViewModel(DialogCoordinator.Instance, tabId, host);
+        _viewModel = new TracerouteViewModel(tabId, host);
 
         DataContext = _viewModel;
 

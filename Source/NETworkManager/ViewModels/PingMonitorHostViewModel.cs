@@ -1,5 +1,4 @@
 ﻿using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
@@ -30,7 +29,6 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
 
-    private readonly IDialogCoordinator _dialogCoordinator;
     private CancellationTokenSource _cancellationTokenSource;
 
     private readonly DispatcherTimer _searchDispatcherTimer = new();
@@ -407,12 +405,9 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     /// <summary>
     ///     Initializes a new instance of the <see cref="PingMonitorHostViewModel" /> class.
     /// </summary>
-    /// <param name="instance">The dialog coordinator instance.</param>
-    public PingMonitorHostViewModel(IDialogCoordinator instance)
+    public PingMonitorHostViewModel()
     {
         _isLoading = true;
-
-        _dialogCoordinator = instance;
 
         // Host history
         HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PingMonitor_HostHistory);
@@ -651,8 +646,8 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         // Check if it is already running or canceling
         if (IsRunning || IsCanceling)
         {
-            _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
-                Strings.CannotSetHostWhileRunningMessage);
+            DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error,
+                Strings.CannotSetHostWhileRunningMessage, ChildWindowIcon.Error);
 
             return false;
         }

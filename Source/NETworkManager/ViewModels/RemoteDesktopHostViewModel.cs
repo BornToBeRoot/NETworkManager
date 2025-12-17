@@ -1,5 +1,4 @@
 ﻿using Dragablz;
-using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
@@ -27,8 +26,6 @@ namespace NETworkManager.ViewModels;
 public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
-
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly DispatcherTimer _searchDispatcherTimer = new();
     private bool _searchDisabled;
@@ -261,11 +258,9 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
     #region Constructor, load settings
 
-    public RemoteDesktopHostViewModel(IDialogCoordinator instance)
+    public RemoteDesktopHostViewModel()
     {
         _isLoading = true;
-
-        _dialogCoordinator = instance;
 
         InterTabClient = new DragablzInterTabClient(ApplicationName.RemoteDesktop);
         InterTabPartition = nameof(ApplicationName.RemoteDesktop);
@@ -378,8 +373,8 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
         {
             ConfigurationManager.OnDialogOpen();
 
-            await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
-                $"{Strings.CouldNotSendKeystroke}\n\nMessage:\n{ex.Message}");
+            await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error,
+                 $"{Strings.CouldNotSendKeystroke}\n\nMessage:\n{ex.Message}", ChildWindowIcon.Error);
 
             ConfigurationManager.OnDialogClose();
         }
@@ -586,7 +581,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
         ConfigurationManager.OnDialogOpen();
 
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     // Connect via Profile
@@ -648,7 +643,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
         ConfigurationManager.OnDialogOpen();
 
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     private void Connect(RemoteDesktopSessionInfo sessionInfo, string header = null)

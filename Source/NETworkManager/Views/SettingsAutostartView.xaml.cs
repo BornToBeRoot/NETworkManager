@@ -1,11 +1,10 @@
-﻿using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.ViewModels;
+﻿using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
 public partial class SettingsAutostartView
 {
-    private readonly SettingsAutostartViewModel _viewModel = new(DialogCoordinator.Instance);
+    private readonly SettingsAutostartViewModel _viewModel = new();
 
     public SettingsAutostartView()
     {

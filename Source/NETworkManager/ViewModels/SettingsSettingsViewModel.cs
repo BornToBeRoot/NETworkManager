@@ -68,7 +68,7 @@ public class SettingsSettingsViewModel : ViewModelBase
 
     private async Task ResetSettings()
     {
-        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+        var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
             Strings.ResetSettingsQuestion,
             Strings.SettingsAreResetAndApplicationWillBeRestartedMessage,
             ChildWindowIcon.Question,

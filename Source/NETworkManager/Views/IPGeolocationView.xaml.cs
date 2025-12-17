@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
 using NETworkManager.ViewModels;
 
@@ -14,7 +13,7 @@ public partial class IPGeolocationView : IDragablzTabItem
     {
         InitializeComponent();
 
-        _viewModel = new IPGeolocationViewModel(DialogCoordinator.Instance, tabId, domain);
+        _viewModel = new IPGeolocationViewModel(tabId, domain);
 
         DataContext = _viewModel;
 

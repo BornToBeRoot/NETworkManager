@@ -108,7 +108,7 @@ public class WebConsoleSettingsViewModel : ViewModelBase
 
     private async Task DeleteBrowsingData()
     {
-        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+        var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
             Strings.DeleteBrowsingData,
             Strings.DeleteBrowsingDataMessage,
             ChildWindowIcon.Info,

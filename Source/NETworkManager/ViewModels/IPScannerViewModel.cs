@@ -1,6 +1,5 @@
 ﻿using log4net;
 using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization;
@@ -38,8 +37,6 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 {
     #region Variables
     private static readonly ILog Log = LogManager.GetLogger(typeof(IPScannerViewModel));
-
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     private CancellationTokenSource _cancellationTokenSource;
 
@@ -285,13 +282,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// <summary>
     /// Initializes a new instance of the <see cref="IPScannerViewModel"/> class.
     /// </summary>
-    /// <param name="instance">The dialog coordinator instance.</param>
     /// <param name="tabId">The unique identifier for the tab.</param>
     /// <param name="hostOrIPRange">The initial host or IP range to scan.</param>
-    public IPScannerViewModel(IDialogCoordinator instance, Guid tabId, string hostOrIPRange)
+    public IPScannerViewModel(Guid tabId, string hostOrIPRange)
     {
-        _dialogCoordinator = instance;
-
         ConfigurationManager.Current.IPScannerTabCount++;
 
         _tabId = tabId;
@@ -564,15 +558,17 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             }
 
             if (!subnetmaskDetected)
-                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
-                    Strings.CouldNotDetectSubnetmask, MessageDialogStyle.Affirmative,
-                    AppearanceManager.MetroDialog);
+            {
+                var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
+                await DialogHelper.ShowMessageAsync(window, Strings.Error, Strings.CouldNotDetectSubnetmask, ChildWindowIcon.Error);
+            }
         }
         else
         {
-            await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
-                Strings.CouldNotDetectLocalIPAddressMessage, MessageDialogStyle.Affirmative,
-                AppearanceManager.MetroDialog);
+            var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
+            await DialogHelper.ShowMessageAsync(window, Strings.Error, Strings.CouldNotDetectLocalIPAddressMessage, ChildWindowIcon.Error);
         }
 
         IsSubnetDetectionRunning = false;
@@ -614,10 +610,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             {
                 Log.Error("Error trying to run custom command", ex);
 
-                await _dialogCoordinator.ShowMessageAsync(this,
-                    Strings.ResourceManager.GetString("Error",
-                        LocalizationManager.GetInstance().Culture), ex.Message, MessageDialogStyle.Affirmative,
-                    AppearanceManager.MetroDialog);
+                var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
+                await DialogHelper.ShowMessageAsync(window, Strings.Error, ex.Message, ChildWindowIcon.Error);
             }
         }
     }
@@ -667,12 +662,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             {
                 Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Strings.OK;
-
-                await _dialogCoordinator.ShowMessageAsync(window, Strings.Error,
+                await DialogHelper.ShowMessageAsync(window, Strings.Error,
                     Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                    Environment.NewLine + ex.Message, ChildWindowIcon.Error);
             }
 
             SettingsManager.Current.IPScanner_ExportFileType = instance.FileType;

@@ -1,11 +1,10 @@
-﻿using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.ViewModels;
+﻿using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
 public partial class DiscoveryProtocolView
 {
-    private readonly DiscoveryProtocolViewModel _viewModel = new(DialogCoordinator.Instance);
+    private readonly DiscoveryProtocolViewModel _viewModel = new();
 
     public DiscoveryProtocolView()
     {

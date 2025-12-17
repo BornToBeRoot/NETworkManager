@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
@@ -9,7 +8,7 @@ public partial class PuTTYSettingsView
     /// <summary>
     ///     Variable to hold an instance of the view model.
     /// </summary>
-    private readonly PuTTYSettingsViewModel _viewModel = new(DialogCoordinator.Instance);
+    private readonly PuTTYSettingsViewModel _viewModel = new();
 
     /// <summary>
     ///     Create a new instance of <see cref="PuTTYSettingsView" />.

@@ -1,5 +1,4 @@
-﻿using MahApps.Metro.Controls.Dialogs;
-using MahApps.Metro.SimpleChildWindow;
+﻿using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
@@ -22,8 +21,6 @@ public class PortScannerSettingsViewModel : ViewModelBase
     #region Variables
 
     private readonly bool _isLoading;
-
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     /// <summary>
     /// Gets the collection view of port profiles.
@@ -160,12 +157,9 @@ public class PortScannerSettingsViewModel : ViewModelBase
     /// <summary>
     /// Initializes a new instance of the <see cref="PortScannerSettingsViewModel"/> class.
     /// </summary>
-    /// <param name="instance">The dialog coordinator instance.</param>
-    public PortScannerSettingsViewModel(IDialogCoordinator instance)
+    public PortScannerSettingsViewModel()
     {
         _isLoading = true;
-
-        _dialogCoordinator = instance;
 
         PortProfiles = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_PortProfiles);
         PortProfiles.SortDescriptions.Add(
@@ -216,56 +210,62 @@ public class PortScannerSettingsViewModel : ViewModelBase
 
     #region Methods
 
-    private async Task AddPortProfile()
+    private Task AddPortProfile()
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.AddPortProfile
-        };
+        var childWindow = new PortProfileChildWindow();
 
-        var viewModel = new PortProfileViewModel(async instance =>
+        var childWindowViewModel = new PortProfileViewModel(async instance =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
 
             SettingsManager.Current.PortScanner_PortProfiles.Add(new PortProfileInfo(instance.Name, instance.Ports));
-        }, async _ => { await _dialogCoordinator.HideMetroDialogAsync(this, customDialog); });
-
-        customDialog.Content = new PortProfileDialog
+        }, async _ =>
         {
-            DataContext = viewModel
-        };
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        });
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.Title = Strings.AddPortProfile;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
-    public async Task EditPortProfile()
+    public Task EditPortProfile()
     {
-        var customDialog = new CustomDialog
+        var childWindow = new PortProfileChildWindow();
+
+        var childWindowViewModel = new PortProfileViewModel(async instance =>
         {
-            Title = Strings.EditPortProfile
-        };
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
 
-        var viewModel = new PortProfileViewModel(async instance =>
-            {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                SettingsManager.Current.PortScanner_PortProfiles.Remove(SelectedPortProfile);
-                SettingsManager.Current.PortScanner_PortProfiles.Add(new PortProfileInfo(instance.Name,
-                    instance.Ports));
-            }, async _ => { await _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, true,
+            SettingsManager.Current.PortScanner_PortProfiles.Remove(SelectedPortProfile);
+            SettingsManager.Current.PortScanner_PortProfiles.Add(new PortProfileInfo(instance.Name,
+                instance.Ports));
+        }, async _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        }, true,
             SelectedPortProfile);
 
-        customDialog.Content = new PortProfileDialog
-        {
-            DataContext = viewModel
-        };
+        childWindow.Title = Strings.EditPortProfile;
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     private async Task DeletePortProfile()
     {
-        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+        var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
             Strings.DeletePortProfile,
             Strings.DeletePortProfileMessage,
             ChildWindowIcon.Info,

@@ -6,7 +6,6 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:networkManager="clr-namespace:NETworkManager"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
-             xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:hostsFileEditor="clr-namespace:NETworkManager.Models.HostsFileEditor;assembly=NETworkManager.Models"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
@@ -14,7 +13,6 @@
              xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:wpfHelper="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
-             dialog:DialogParticipation.Register="{Binding}"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:HostsFileEditorViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />

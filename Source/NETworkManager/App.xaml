@@ -35,7 +35,6 @@
                 <ResourceDictionary Source="/Resources/Styles/LoadingIndicatorArcsStyle.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/LoadingIndicatorPulseStyle.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/MenuItemStyles.xaml" />
-                <ResourceDictionary Source="/Resources/Styles/MetroDialogStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/NumericUpDownStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/RadioButtonStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ScrollBarStyles.xaml" />

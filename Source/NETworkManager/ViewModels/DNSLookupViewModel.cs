@@ -1,7 +1,6 @@
 ﻿using DnsClient;
 using log4net;
 using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
@@ -15,7 +14,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -33,11 +31,6 @@ public class DNSLookupViewModel : ViewModelBase
 {
     #region Variables
     private static readonly ILog Log = LogManager.GetLogger(typeof(DNSLookupViewModel));
-
-    /// <summary>
-    /// The dialog coordinator instance.
-    /// </summary>
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly Guid _tabId;
     private bool _firstLoad = true;
@@ -304,14 +297,11 @@ public class DNSLookupViewModel : ViewModelBase
     /// <summary>
     /// Initializes a new instance of the <see cref="DNSLookupViewModel"/> class.
     /// </summary>
-    /// <param name="instance">The dialog coordinator instance.</param>
     /// <param name="tabId">The ID of the tab.</param>
     /// <param name="host">The host to lookup.</param>
-    public DNSLookupViewModel(IDialogCoordinator instance, Guid tabId, string host)
+    public DNSLookupViewModel(Guid tabId, string host)
     {
         _isLoading = true;
-
-        _dialogCoordinator = instance;
 
         ConfigurationManager.Current.DNSLookupTabCount++;
 
@@ -622,12 +612,9 @@ public class DNSLookupViewModel : ViewModelBase
             {
                 Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Strings.OK;
-
-                await _dialogCoordinator.ShowMessageAsync(window, Strings.Error,
-                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                await DialogHelper.ShowMessageAsync(window, Strings.Error,
+                   Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                   Environment.NewLine + ex.Message, ChildWindowIcon.Error);
             }
 
             SettingsManager.Current.DNSLookup_ExportFileType = instance.FileType;

@@ -7,29 +7,29 @@ namespace NETworkManager.ViewModels;
 /// <summary>
 /// Represents the ViewModel for a message dialog with an OK option.
 /// </summary>
-public class OKMessageViewModel : ViewModelBase
+public class MessageViewModel : ViewModelBase
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="OKMessageViewModel"/> class.
+    /// Initializes a new instance of the <see cref="MessageViewModel"/> class.
     /// </summary>
-    /// <param name="okCommand">The action to execute when the OK button is clicked.</param>
+    /// <param name="confirmCommand">The action to execute when the confirm button is clicked.</param>
     /// <param name="message">The message to display.</param>
     /// <param name="icon">The icon to display in the message window.</param>
-    /// <param name="okButtonText">The text for the OK button.</param>
-    public OKMessageViewModel(Action<OKMessageViewModel> okCommand, string message, ChildWindowIcon icon = ChildWindowIcon.Info, string okButtonText = null)
+    /// <param name="confirmButtonText">The text for the OK button.</param>
+    public MessageViewModel(Action<MessageViewModel> confirmCommand, string message, ChildWindowIcon icon = ChildWindowIcon.Info, string confirmButtonText = null)
     {
-        OKCommand = new RelayCommand(_ => okCommand(this));
+        ConfirmCommand = new RelayCommand(_ => confirmCommand(this));
 
         Message = message;
 
-        OKButtonText = okButtonText ?? Localization.Resources.Strings.OK;
+        ConfirmButtonText = confirmButtonText ?? Localization.Resources.Strings.OK;
         Icon = icon;
     }
 
     /// <summary>
     /// Gets the command for the OK button.
     /// </summary>
-    public ICommand OKCommand { get; }
+    public ICommand ConfirmCommand { get; }
 
     private readonly string _message;
 
@@ -49,20 +49,20 @@ public class OKMessageViewModel : ViewModelBase
         }
     }
 
-    private readonly string _okButtonText;
+    private readonly string _confirmButtonText;
 
     /// <summary>
-    /// Gets the text for the OK button.
+    /// Gets the text for the confirm button.
     /// </summary>
-    public string OKButtonText
+    public string ConfirmButtonText
     {
-        get => _okButtonText;
+        get => _confirmButtonText;
         private init
         {
-            if (value == _okButtonText)
+            if (value == _confirmButtonText)
                 return;
 
-            _okButtonText = value;
+            _confirmButtonText = value;
             OnPropertyChanged();
         }
     }

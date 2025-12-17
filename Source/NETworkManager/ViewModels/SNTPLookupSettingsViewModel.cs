@@ -1,5 +1,4 @@
-﻿using MahApps.Metro.Controls.Dialogs;
-using MahApps.Metro.SimpleChildWindow;
+﻿using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
@@ -23,8 +22,6 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
 
     private readonly ServerConnectionInfo _profileDialogDefaultValues =
         new("time.example.com", 123, TransportProtocol.Tcp);
-
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly ICollectionView _sntpServers;
 
@@ -81,15 +78,15 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
 
     #region Constructor, load settings
 
-    public SNTPLookupSettingsViewModel(IDialogCoordinator instance)
+    public SNTPLookupSettingsViewModel()
     {
         _isLoading = true;
-
-        _dialogCoordinator = instance;
 
         SNTPServers = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNTPLookup_SNTPServers);
         SNTPServers.SortDescriptions.Add(new SortDescription(nameof(ServerConnectionInfoProfile.Name),
             ListSortDirection.Ascending));
+
+        SelectedSNTPServer = SNTPServers.Cast<ServerConnectionInfoProfile>().FirstOrDefault();
 
         LoadSettings();
 
@@ -160,7 +157,7 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     public async Task EditServer()
@@ -189,12 +186,12 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     private async Task DeleteServer()
     {
-        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+        var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
             Strings.DeleteSNTPServer,
             Strings.DeleteSNTPServerMessage,
             ChildWindowIcon.Info,

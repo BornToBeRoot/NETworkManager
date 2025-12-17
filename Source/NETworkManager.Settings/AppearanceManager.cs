@@ -1,5 +1,4 @@
 ﻿using ControlzEx.Theming;
-using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.Theming;
 using NETworkManager.Models.Appearance;
 using System;
@@ -43,11 +42,6 @@ public static class AppearanceManager
     private const string ThemeFolderName = "Themes";
 
     /// <summary>
-    ///     Contains the default settings for a new <see cref="BaseMetroDialog" />
-    /// </summary>
-    public static readonly MetroDialogSettings MetroDialog = new();
-
-    /// <summary>
     ///     List who contains all MahApps.Metro themes.
     /// </summary>
     public static List<ThemeColorInfo> Themes { get; set; }
@@ -83,15 +77,6 @@ public static class AppearanceManager
         ThemeManager.Current.ThemeChanged += Current_ThemeChanged;
 
         LoadCustomThemes();
-
-        MetroDialog.CustomResourceDictionary = new ResourceDictionary
-        {
-            Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml",
-                UriKind.RelativeOrAbsolute)
-        };
-
-        MetroDialog.DialogButtonFontSize = 14;
-        MetroDialog.DialogMessageFontSize = 14;
     }
     #endregion
 

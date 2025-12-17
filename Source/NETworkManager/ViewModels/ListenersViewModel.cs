@@ -1,6 +1,5 @@
 ﻿using log4net;
 using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
@@ -32,12 +31,9 @@ public class ListenersViewModel : ViewModelBase
     /// <summary>
     /// Initializes a new instance of the <see cref="ListenersViewModel"/> class.
     /// </summary>
-    /// <param name="instance">The dialog coordinator instance.</param>
-    public ListenersViewModel(IDialogCoordinator instance)
+    public ListenersViewModel()
     {
         _isLoading = true;
-
-        _dialogCoordinator = instance;
 
         // Result view + search
         ResultsView = CollectionViewSource.GetDefaultView(Results);
@@ -98,11 +94,6 @@ public class ListenersViewModel : ViewModelBase
     #region Variables
 
     private static readonly ILog Log = LogManager.GetLogger(typeof(ListenersViewModel));
-
-    /// <summary>
-    /// The dialog coordinator instance.
-    /// </summary>
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     /// <summary>
     /// Indicates whether the view model is loading.
@@ -402,12 +393,9 @@ public class ListenersViewModel : ViewModelBase
             {
                 Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Strings.OK;
-
-                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
-                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error,
+                   Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                   Environment.NewLine + ex.Message, ChildWindowIcon.Error);
             }
 
             SettingsManager.Current.Listeners_ExportFileType = instance.FileType;
@@ -426,7 +414,7 @@ public class ListenersViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     #endregion

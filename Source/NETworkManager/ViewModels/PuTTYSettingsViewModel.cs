@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Settings;
@@ -18,9 +17,6 @@ namespace NETworkManager.ViewModels;
 public class PuTTYSettingsViewModel : ViewModelBase
 {
     #region Variables
-
-    private readonly IDialogCoordinator _dialogCoordinator;
-
     public bool IsPortable => ConfigurationManager.Current.IsPortable;
 
     public string PortableLogPath => PuTTY.PortableLogPath;
@@ -393,11 +389,9 @@ public class PuTTYSettingsViewModel : ViewModelBase
 
     #region Contructor, load settings
 
-    public PuTTYSettingsViewModel(IDialogCoordinator instance)
+    public PuTTYSettingsViewModel()
     {
         _isLoading = true;
-
-        _dialogCoordinator = instance;
 
         LoadSettings();
 
@@ -505,12 +499,7 @@ public class PuTTYSettingsViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            var settings = AppearanceManager.MetroDialog;
-
-            settings.AffirmativeButtonText = Strings.OK;
-
-            await _dialogCoordinator.ShowMessageAsync(this, Strings.Error, ex.Message,
-                MessageDialogStyle.Affirmative, settings);
+            await DialogHelper.ShowMessageAsync(System.Windows.Application.Current.MainWindow, Strings.Error, ex.Message, ChildWindowIcon.Error);
         }
     }
 

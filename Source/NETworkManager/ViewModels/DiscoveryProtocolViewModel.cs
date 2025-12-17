@@ -1,5 +1,4 @@
 ﻿using log4net;
-using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
@@ -25,11 +24,6 @@ public class DiscoveryProtocolViewModel : ViewModelBase
 {
     #region Variables
     private static readonly ILog Log = LogManager.GetLogger(typeof(DiscoveryProtocolViewModel));
-
-    /// <summary>
-    /// The dialog coordinator instance.
-    /// </summary>
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     /// <summary>
     /// The discovery protocol capture instance.
@@ -296,11 +290,9 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     /// Initializes a new instance of the <see cref="DiscoveryProtocolViewModel"/> class.
     /// </summary>
     /// <param name="instance">The dialog coordinator instance.</param>
-    public DiscoveryProtocolViewModel(IDialogCoordinator instance)
+    public DiscoveryProtocolViewModel()
     {
         _isLoading = true;
-
-        _dialogCoordinator = instance;
 
         _discoveryProtocolCapture.PackageReceived += DiscoveryProtocol_PackageReceived;
         _discoveryProtocolCapture.ErrorReceived += DiscoveryProtocol_ErrorReceived;
@@ -351,8 +343,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            await _dialogCoordinator.ShowMessageAsync(this, Strings.Error, ex.Message,
-                MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+            await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error, ex.Message, ChildWindowIcon.Error);
         }
     }
 
@@ -392,8 +383,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         {
             Log.Error("Error while trying to capture", ex);
 
-            await _dialogCoordinator.ShowMessageAsync(this, Strings.Error, ex.Message,
-                MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+            await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error, ex.Message, ChildWindowIcon.Error);
         }
     }
 
@@ -423,12 +413,9 @@ public class DiscoveryProtocolViewModel : ViewModelBase
             {
                 Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Strings.OK;
-
-                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
-                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error,
+                   Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                   Environment.NewLine + ex.Message, ChildWindowIcon.Error);
             }
 
             SettingsManager.Current.DiscoveryProtocol_ExportFileType = instance.FileType;
@@ -449,7 +436,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     #endregion

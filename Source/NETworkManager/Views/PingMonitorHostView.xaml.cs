@@ -1,5 +1,4 @@
-﻿using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.ViewModels;
+﻿using NETworkManager.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -8,7 +7,7 @@ namespace NETworkManager.Views;
 
 public partial class PingMonitorHostView
 {
-    private readonly PingMonitorHostViewModel _viewModel = new(DialogCoordinator.Instance);
+    private readonly PingMonitorHostViewModel _viewModel = new();
 
     public PingMonitorHostView()
     {

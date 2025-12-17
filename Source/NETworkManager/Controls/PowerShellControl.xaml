@@ -8,8 +8,7 @@
                        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
                        xmlns:local="clr-namespace:NETworkManager.Controls"
                        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-                       xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
-                       mah:DialogParticipation.Register="{Binding}"
+                       xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"                       
                        mc:Ignorable="d" Loaded="UserControl_Loaded"
                        d:DataContext="{d:DesignInstance local:PowerShellControl}">
     <local:UserControlBase.Resources>

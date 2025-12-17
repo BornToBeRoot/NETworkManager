@@ -7,33 +7,33 @@ namespace NETworkManager.ViewModels;
 /// <summary>
 /// Represents the ViewModel for a message dialog with OK and Cancel options.
 /// </summary>
-public class OKCancelMessageViewModel : ViewModelBase
+public class MessageConfirmationViewModel : ViewModelBase
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="OKCancelMessageViewModel"/> class.
+    /// Initializes a new instance of the <see cref="MessageConfirmationViewModel"/> class.
     /// </summary>
-    /// <param name="okCommand">The action to execute when the OK button is clicked.</param>
+    /// <param name="confirmCommand">The action to execute when the confirm button is clicked.</param>
     /// <param name="cancelHandler">The action to execute when the Cancel button is clicked.</param>
     /// <param name="message">The message to display.</param>
     /// <param name="icon">The icon to display in the message window.</param>
-    /// <param name="okButtonText">The text for the OK button.</param>
-    /// <param name="cancelButtonText">The text for the Cancel button.</param>
-    public OKCancelMessageViewModel(Action<OKCancelMessageViewModel> okCommand,
-        Action<OKCancelMessageViewModel> cancelHandler, string message, ChildWindowIcon icon = ChildWindowIcon.Info, string okButtonText = null, string cancelButtonText = null)
+    /// <param name="confirmButtonText">The text for the confirm button.</param>
+    /// <param name="cancelButtonText">The text for the cancel button.</param>
+    public MessageConfirmationViewModel(Action<MessageConfirmationViewModel> confirmCommand,
+        Action<MessageConfirmationViewModel> cancelHandler, string message, ChildWindowIcon icon = ChildWindowIcon.Info, string confirmButtonText = null, string cancelButtonText = null)
     {
-        OKCommand = new RelayCommand(_ => okCommand(this));
+        ConfirmCommand = new RelayCommand(_ => confirmCommand(this));
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
         Message = message;
 
-        OKButtonText = okButtonText ?? Localization.Resources.Strings.OK;
+        ConfirmButtonText = confirmButtonText ?? Localization.Resources.Strings.OK;
         CancelButtonText = cancelButtonText ?? Localization.Resources.Strings.Cancel;
     }
 
     /// <summary>
     /// Gets the command for the OK button.
     /// </summary>
-    public ICommand OKCommand { get; }
+    public ICommand ConfirmCommand { get; }
 
     /// <summary>
     /// Gets the command for the Cancel button.
@@ -58,20 +58,20 @@ public class OKCancelMessageViewModel : ViewModelBase
         }
     }
 
-    private readonly string _okButtonText;
+    private readonly string _confirmButtonText;
 
     /// <summary>
-    /// Gets the text for the OK button.
+    /// Gets the text for the confirm button.
     /// </summary>
-    public string OKButtonText
+    public string ConfirmButtonText
     {
-        get => _okButtonText;
+        get => _confirmButtonText;
         private init
         {
-            if (value == _okButtonText)
+            if (value == _confirmButtonText)
                 return;
 
-            _okButtonText = value;
+            _confirmButtonText = value;
             OnPropertyChanged();
         }
     }
@@ -79,7 +79,7 @@ public class OKCancelMessageViewModel : ViewModelBase
     private readonly string _cancelButtonText;
 
     /// <summary>
-    /// Gets the text for the Cancel button.
+    /// Gets the text for the cancel button.
     /// </summary>
     public string CancelButtonText
     {

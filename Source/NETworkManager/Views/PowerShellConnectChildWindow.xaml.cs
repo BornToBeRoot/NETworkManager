@@ -15,7 +15,10 @@ public partial class PowerShellConnectChildWindow
     {
         Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate
         {
-            ComboBoxHost.Focus();
+            if (ComboBoxHost.Visibility == Visibility.Visible)
+                ComboBoxHost.Focus();
+            else
+                TextBoxCommand.Focus();
         }));
     }
 }

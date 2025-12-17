@@ -553,7 +553,7 @@ public static class ProfileDialogManager
 
         viewModel.OnProfileManagerDialogOpen();
 
-        var result = await DialogHelper.ShowOKCancelMessageAsync(parentWindow,
+        var result = await DialogHelper.ShowConfirmationMessageAsync(parentWindow,
             profiles.Count == 1 ? Strings.DeleteProfile : Strings.DeleteProfiles,
             profiles.Count == 1 ? Strings.DeleteProfileMessage : Strings.DeleteProfilesMessage,
             ChildWindowIcon.Info,
@@ -639,7 +639,7 @@ public static class ProfileDialogManager
     {
         viewModel.OnProfileManagerDialogOpen();
 
-        var result = await DialogHelper.ShowOKCancelMessageAsync(parentWindow,
+        var result = await DialogHelper.ShowConfirmationMessageAsync(parentWindow,
             Strings.DeleteGroup,
             Strings.DeleteGroupMessage,
             ChildWindowIcon.Info,

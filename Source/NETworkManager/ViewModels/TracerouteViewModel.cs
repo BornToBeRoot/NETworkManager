@@ -1,6 +1,5 @@
 ﻿using log4net;
 using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
@@ -34,7 +33,6 @@ public class TracerouteViewModel : ViewModelBase
     #region Variables
     private static readonly ILog Log = LogManager.GetLogger(typeof(TracerouteViewModel));
 
-    private readonly IDialogCoordinator _dialogCoordinator;
     private CancellationTokenSource _cancellationTokenSource;
 
     private readonly Guid _tabId;
@@ -203,13 +201,10 @@ public class TracerouteViewModel : ViewModelBase
     /// <summary>
     /// Initializes a new instance of the <see cref="TracerouteViewModel"/> class.
     /// </summary>
-    /// <param name="instance">The dialog coordinator instance.</param>
     /// <param name="tabId">The unique identifier for the tab.</param>
     /// <param name="host">The initial host to trace.</param>
-    public TracerouteViewModel(IDialogCoordinator instance, Guid tabId, string host)
+    public TracerouteViewModel(Guid tabId, string host)
     {
-        _dialogCoordinator = instance;
-
         ConfigurationManager.Current.TracerouteTabCount++;
 
         _tabId = tabId;
@@ -417,12 +412,9 @@ public class TracerouteViewModel : ViewModelBase
             {
                 Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Strings.OK;
-
-                await _dialogCoordinator.ShowMessageAsync(window, Strings.Error,
-                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                await DialogHelper.ShowMessageAsync(window, Strings.Error,
+                   Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                   Environment.NewLine + ex.Message, ChildWindowIcon.Error);
             }
 
             SettingsManager.Current.Traceroute_ExportFileType = instance.FileType;

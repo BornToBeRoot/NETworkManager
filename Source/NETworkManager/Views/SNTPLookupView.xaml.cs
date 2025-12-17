@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
 using NETworkManager.ViewModels;
 
@@ -15,7 +14,7 @@ public partial class SNTPLookupView : IDragablzTabItem
     {
         InitializeComponent();
 
-        _viewModel = new SNTPLookupViewModel(DialogCoordinator.Instance, tabId);
+        _viewModel = new SNTPLookupViewModel(tabId);
 
         DataContext = _viewModel;
 

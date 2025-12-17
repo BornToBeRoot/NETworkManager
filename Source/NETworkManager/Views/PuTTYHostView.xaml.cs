@@ -3,14 +3,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
 public partial class PuTTYHostView
 {
-    private readonly PuTTYHostViewModel _viewModel = new(DialogCoordinator.Instance);
+    private readonly PuTTYHostViewModel _viewModel = new();
 
     private bool _loaded;
 

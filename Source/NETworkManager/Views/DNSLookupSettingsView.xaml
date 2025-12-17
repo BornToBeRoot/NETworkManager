@@ -10,8 +10,6 @@
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-             dialogs:DialogParticipation.Register="{Binding}"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:DNSLookupSettingsViewModel}">
     <UserControl.Resources>
         <converters:ListServerConnectionInfoToStringConverter x:Key="ListServerConnectionInfoToStringConverter" />

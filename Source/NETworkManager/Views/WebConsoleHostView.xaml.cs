@@ -1,14 +1,13 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
 public partial class WebConsoleHostView
 {
-    private readonly WebConsoleHostViewModel _viewModel = new(DialogCoordinator.Instance);
+    private readonly WebConsoleHostViewModel _viewModel = new();
 
     public WebConsoleHostView()
     {

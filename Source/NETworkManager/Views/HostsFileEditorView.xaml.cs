@@ -1,5 +1,4 @@
-﻿using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.ViewModels;
+﻿using NETworkManager.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -7,7 +6,7 @@ namespace NETworkManager.Views;
 
 public partial class HostsFileEditorView
 {
-    private readonly HostsFileEditorViewModel _viewModel = new(DialogCoordinator.Instance);
+    private readonly HostsFileEditorViewModel _viewModel = new();
 
     public HostsFileEditorView()
     {

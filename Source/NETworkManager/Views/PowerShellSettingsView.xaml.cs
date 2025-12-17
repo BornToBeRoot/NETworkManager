@@ -1,12 +1,11 @@
 ﻿using System.Windows;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
 public partial class PowerShellSettingsView
 {
-    private readonly PowerShellSettingsViewModel _viewModel = new(DialogCoordinator.Instance);
+    private readonly PowerShellSettingsViewModel _viewModel = new();
 
     public PowerShellSettingsView()
     {

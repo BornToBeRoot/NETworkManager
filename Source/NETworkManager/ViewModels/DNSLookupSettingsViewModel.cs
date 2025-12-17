@@ -1,5 +1,4 @@
 ﻿using DnsClient;
-using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Network;
@@ -33,11 +32,6 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     /// Default values for the profile dialog.
     /// </summary>
     private readonly ServerConnectionInfo _profileDialogDefaultValues = new("10.0.0.1", 53, TransportProtocol.Udp);
-
-    /// <summary>
-    /// The dialog coordinator instance.
-    /// </summary>
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     /// <summary>
     /// Gets the collection view of DNS servers.
@@ -325,12 +319,9 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     /// <summary>
     /// Initializes a new instance of the <see cref="DNSLookupSettingsViewModel"/> class.
     /// </summary>
-    /// <param name="instance">The dialog coordinator instance.</param>
-    public DNSLookupSettingsViewModel(IDialogCoordinator instance)
+    public DNSLookupSettingsViewModel()
     {
         _isLoading = true;
-
-        _dialogCoordinator = instance;
 
         DNSServers = CollectionViewSource.GetDefaultView(SettingsManager.Current.DNSLookup_DNSServers);
         DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerConnectionInfoProfile.Name),
@@ -342,6 +333,8 @@ public class DNSLookupSettingsViewModel : ViewModelBase
 
             return !info.UseWindowsDNSServer;
         };
+
+        SelectedDNSServer = DNSServers.Cast<DNSServerConnectionInfoProfile>().FirstOrDefault(x => !x.UseWindowsDNSServer);
 
         LoadSettings();
 
@@ -358,7 +351,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix;
         Recursion = SettingsManager.Current.DNSLookup_Recursion;
         UseCache = SettingsManager.Current.DNSLookup_UseCache;
-        QueryClasses = Enum.GetValues(typeof(QueryClass)).Cast<QueryClass>().OrderBy(x => x.ToString()).ToList();
+        QueryClasses = [.. Enum.GetValues<QueryClass>().Cast<QueryClass>().OrderBy(x => x.ToString())];
         QueryClass = QueryClasses.First(x => x == SettingsManager.Current.DNSLookup_QueryClass);
         //ShowOnlyMostCommonQueryTypes = SettingsManager.Current.DNSLookup_ShowOnlyMostCommonQueryTypes;
         UseTCPOnly = SettingsManager.Current.DNSLookup_UseTCPOnly;
@@ -441,7 +434,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     /// <summary>
@@ -473,7 +466,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     /// <summary>
@@ -481,7 +474,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     /// </summary>
     private async Task DeleteDNSServer()
     {
-        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+        var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
             Strings.DeleteDNSServer,
             Strings.DeleteDNSServerMessage,
             ChildWindowIcon.Info,

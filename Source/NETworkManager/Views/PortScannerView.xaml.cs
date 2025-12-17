@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
 using NETworkManager.ViewModels;
 
@@ -15,7 +14,7 @@ public partial class PortScannerView : IDragablzTabItem
     {
         InitializeComponent();
 
-        _viewModel = new PortScannerViewModel(DialogCoordinator.Instance, tabId, host, ports);
+        _viewModel = new PortScannerViewModel(tabId, host, ports);
 
         DataContext = _viewModel;
 

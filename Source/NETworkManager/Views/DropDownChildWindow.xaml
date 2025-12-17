@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="NETworkManager.Views.DropdownDialog"
+﻿<simpleChildWindow:ChildWindow x:Class="NETworkManager.Views.DropDownChildWindow"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -6,12 +6,17 @@
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-             mc:Ignorable="d" Loaded="UserControl_Loaded"
-             d:DataContext="{d:DesignInstance viewModels:DropdownViewModel}">
-    <UserControl.Resources>
+             xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             CloseButtonCommand="{Binding Path=CancelCommand}"
+             Style="{StaticResource DefaultChildWindow}"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:DropDownViewModel}">
+    <simpleChildWindow:ChildWindow.Resources>
         <converters:StringIsNotNullOrEmptyToBooleanConverter x:Key="StringIsNotNullOrEmptyToBooleanConverter" />
-    </UserControl.Resources>
-    <Grid Margin="0,20">
+    </simpleChildWindow:ChildWindow.Resources>
+    <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="10" />
@@ -31,12 +36,14 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding ValueDescription}" />
-            <ComboBox Grid.Column="2" Grid.Row="0" ItemsSource="{Binding Values}"
+            <ComboBox Grid.Column="2" Grid.Row="0" 
+                      x:Name="ComboBoxValues"
+                      ItemsSource="{Binding Values}"
                       SelectedItem="{Binding SelectedValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         </Grid>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{x:Static localization:Strings.OK}" Command="{Binding OKCommand}" IsDefault="True"
-                    Margin="0,0,10,0">
+            Margin="0,0,10,0">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
                         <Setter Property="IsEnabled" Value="False" />
@@ -44,8 +51,8 @@
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition
-                                        Binding="{Binding SelectedValue, Converter={StaticResource StringIsNotNullOrEmptyToBooleanConverter}}"
-                                        Value="True" />
+                                Binding="{Binding SelectedValue, Converter={StaticResource StringIsNotNullOrEmptyToBooleanConverter}}"
+                                Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="True" />
@@ -56,7 +63,7 @@
                 </Button.Style>
             </Button>
             <Button Content="{x:Static localization:Strings.Cancel}" Command="{Binding CancelCommand}" IsCancel="True"
-                    Style="{StaticResource DefaultButton}" />
+            Style="{StaticResource DefaultButton}" />
         </StackPanel>
     </Grid>
-</UserControl>
+</simpleChildWindow:ChildWindow>

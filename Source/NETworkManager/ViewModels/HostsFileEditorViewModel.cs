@@ -1,6 +1,5 @@
 ﻿using log4net;
 using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
@@ -28,11 +27,6 @@ public class HostsFileEditorViewModel : ViewModelBase
     #region Variables
 
     private static readonly ILog Log = LogManager.GetLogger(typeof(HostsFileEditorViewModel));
-
-    /// <summary>
-    /// The dialog coordinator instance.
-    /// </summary>
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     /// <summary>
     /// Indicates whether the view model is loading.
@@ -222,11 +216,9 @@ public class HostsFileEditorViewModel : ViewModelBase
     /// <summary>
     /// Initializes a new instance of the <see cref="HostsFileEditorViewModel"/> class.
     /// </summary>
-    /// <param name="instance">The dialog coordinator instance.</param>
-    public HostsFileEditorViewModel(IDialogCoordinator instance)
+    public HostsFileEditorViewModel()
     {
         _isLoading = true;
-        _dialogCoordinator = instance;
 
         // Result view + search
         ResultsView = CollectionViewSource.GetDefaultView(Results);
@@ -322,12 +314,9 @@ public class HostsFileEditorViewModel : ViewModelBase
                 {
                     Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-                    var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Strings.OK;
-
-                    await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
+                    await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error,
                         Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                        Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                        Environment.NewLine + ex.Message, ChildWindowIcon.Error);
                 }
 
                 SettingsManager.Current.HostsFileEditor_ExportFileType = instance.FileType;
@@ -347,7 +336,7 @@ public class HostsFileEditorViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     /// <summary>
@@ -439,7 +428,7 @@ public class HostsFileEditorViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     /// <summary>
@@ -489,7 +478,7 @@ public class HostsFileEditorViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     /// <summary>
@@ -505,7 +494,7 @@ public class HostsFileEditorViewModel : ViewModelBase
     {
         IsModifying = true;
 
-        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+        var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
             Strings.DeleteEntry,
             string.Format(Strings.DeleteHostsFileEntryMessage, SelectedResult.IPAddress, SelectedResult.Hostname,
                 string.IsNullOrEmpty(SelectedResult.Comment) ? "" : $"# {SelectedResult.Comment}"),
@@ -557,21 +546,8 @@ public class HostsFileEditorViewModel : ViewModelBase
             _ => Strings.UnkownError
         };
 
-        var childWindow = new OKMessageChildWindow();
-
-        var childWindowViewModel = new OKMessageViewModel(_ =>
-        {
-            childWindow.IsOpen = false;
-            ConfigurationManager.Current.IsChildWindowOpen = false;
-        }, message, ChildWindowIcon.Error, Strings.OK);
-
-        childWindow.Title = Strings.Error;
-
-        childWindow.DataContext = childWindowViewModel;
-
-        ConfigurationManager.Current.IsChildWindowOpen = true;
-
-        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error, message,
+            ChildWindowIcon.Error);
     }
 
     /// <summary>
@@ -590,21 +566,8 @@ public class HostsFileEditorViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            var childWindow = new OKMessageChildWindow();
-
-            var childWindowViewModel = new OKMessageViewModel(_ =>
-            {
-                childWindow.IsOpen = false;
-                ConfigurationManager.Current.IsChildWindowOpen = false;
-            }, ex.Message, ChildWindowIcon.Error, Strings.OK);
-
-            childWindow.Title = Strings.Error;
-
-            childWindow.DataContext = childWindowViewModel;
-
-            ConfigurationManager.Current.IsChildWindowOpen = true;
-
-            await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+            await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error, ex.Message,
+                ChildWindowIcon.Error);
         }
     }
 

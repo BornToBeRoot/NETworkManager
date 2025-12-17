@@ -1,5 +1,4 @@
-﻿using MahApps.Metro.Controls.Dialogs;
-using MahApps.Metro.SimpleChildWindow;
+﻿using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
@@ -20,8 +19,6 @@ namespace NETworkManager.ViewModels;
 public class SettingsProfilesViewModel : ViewModelBase
 {
     #region Variables
-
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     public Action CloseAction { get; set; }
 
@@ -74,10 +71,8 @@ public class SettingsProfilesViewModel : ViewModelBase
 
     #region Constructor, LoadSettings
 
-    public SettingsProfilesViewModel(IDialogCoordinator instance)
+    public SettingsProfilesViewModel()
     {
-        _dialogCoordinator = instance;
-
         ProfileFiles = new CollectionViewSource { Source = ProfileManager.ProfileFiles }.View;
         ProfileFiles.SortDescriptions.Add(
             new SortDescription(nameof(ProfileFileInfo.Name), ListSortDirection.Ascending));
@@ -131,7 +126,7 @@ public class SettingsProfilesViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
 
         // Re-select the profile file
         if (string.IsNullOrEmpty(profileName))
@@ -141,7 +136,7 @@ public class SettingsProfilesViewModel : ViewModelBase
             .FirstOrDefault(p => p.Name.Equals(profileName, StringComparison.OrdinalIgnoreCase));
 
         // Ask the user if they want to enable encryption for the new profile file
-        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+        var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
             Strings.EnableEncryptionQuestion,
             Strings.EnableEncryptionForProfileFileMessage);
 
@@ -177,7 +172,7 @@ public class SettingsProfilesViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
 
         // Re-select the profile file
         if (string.IsNullOrEmpty(profileName))
@@ -197,7 +192,7 @@ public class SettingsProfilesViewModel : ViewModelBase
 
     private async Task DeleteProfileFileAction()
     {
-        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+        var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
             Strings.DeleteProfileFile,
             string.Format(Strings.DeleteProfileFileXMessage, SelectedProfileFile.Name),
             ChildWindowIcon.Info,
@@ -217,7 +212,7 @@ public class SettingsProfilesViewModel : ViewModelBase
     private async Task EnableEncryptionAction()
     {
         // Show encryption disclaimer
-        if (!await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+        if (!await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
              Strings.Disclaimer,
              Strings.ProfileEncryptionDisclaimer))
             return;
@@ -237,7 +232,7 @@ public class SettingsProfilesViewModel : ViewModelBase
             }
             catch (Exception ex)
             {
-                await DialogHelper.ShowOKMessageAsync(Application.Current.MainWindow,
+                await DialogHelper.ShowMessageAsync(Application.Current.MainWindow,
                     Strings.EncryptionError,
                     $"{Strings.EncryptionErrorMessage}\n\n{ex.Message}",
                     ChildWindowIcon.Error).ConfigureAwait(false);
@@ -254,7 +249,7 @@ public class SettingsProfilesViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
 
         // Re-select the profile file
         if (string.IsNullOrEmpty(profileFile))
@@ -283,14 +278,14 @@ public class SettingsProfilesViewModel : ViewModelBase
             }
             catch (CryptographicException)
             {
-                await DialogHelper.ShowOKMessageAsync(Application.Current.MainWindow,
+                await DialogHelper.ShowMessageAsync(Application.Current.MainWindow,
                     Strings.WrongPassword,
                     Strings.WrongPasswordDecryptionFailedMessage,
                     ChildWindowIcon.Error).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                await DialogHelper.ShowOKMessageAsync(Application.Current.MainWindow,
+                await DialogHelper.ShowMessageAsync(Application.Current.MainWindow,
                     Strings.DecryptionError,
                     $"{Strings.DecryptionErrorMessage}\n\n{ex.Message}",
                     ChildWindowIcon.Error).ConfigureAwait(false);
@@ -307,7 +302,7 @@ public class SettingsProfilesViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
 
         // Re-select the profile file
         if (string.IsNullOrEmpty(profileName))
@@ -336,14 +331,14 @@ public class SettingsProfilesViewModel : ViewModelBase
             }
             catch (CryptographicException)
             {
-                await DialogHelper.ShowOKMessageAsync(Application.Current.MainWindow,
+                await DialogHelper.ShowMessageAsync(Application.Current.MainWindow,
                     Strings.WrongPassword,
                     Strings.WrongPasswordDecryptionFailedMessage,
                     ChildWindowIcon.Error).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                await DialogHelper.ShowOKMessageAsync(Application.Current.MainWindow,
+                await DialogHelper.ShowMessageAsync(Application.Current.MainWindow,
                     Strings.DecryptionError,
                     $"{Strings.DecryptionErrorMessage}\n\n{ex.Message}",
                     ChildWindowIcon.Error).ConfigureAwait(false);
@@ -361,7 +356,7 @@ public class SettingsProfilesViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        await (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
 
         // Re-select the profile file
         if (string.IsNullOrEmpty(profileName))

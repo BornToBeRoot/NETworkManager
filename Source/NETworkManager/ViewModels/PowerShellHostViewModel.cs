@@ -1,6 +1,5 @@
 ﻿using Dragablz;
 using log4net;
-using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
@@ -699,7 +698,7 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
         ConfigurationManager.OnDialogOpen();
 
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     private void ConnectProfile()

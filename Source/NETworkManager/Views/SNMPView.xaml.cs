@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
 using NETworkManager.Models.Network;
 using NETworkManager.Utilities;
@@ -20,7 +19,7 @@ public partial class SNMPView : IDragablzTabItem
     {
         InitializeComponent();
 
-        _viewModel = new SNMPViewModel(DialogCoordinator.Instance, tabId, sessionInfo);
+        _viewModel = new SNMPViewModel(tabId, sessionInfo);
 
         DataContext = _viewModel;
 

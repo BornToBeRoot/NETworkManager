@@ -5,7 +5,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
 using NETworkManager.Models.Network;
 using NETworkManager.Utilities;
@@ -22,7 +21,7 @@ public partial class IPScannerView : IDragablzTabItem
     {
         InitializeComponent();
 
-        _viewModel = new IPScannerViewModel(DialogCoordinator.Instance, tabId, hostOrIPRange);
+        _viewModel = new IPScannerViewModel(tabId, hostOrIPRange);
 
         DataContext = _viewModel;
 

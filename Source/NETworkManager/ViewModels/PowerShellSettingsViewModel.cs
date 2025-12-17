@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.PowerShell;
 using NETworkManager.Settings;
@@ -17,9 +16,6 @@ namespace NETworkManager.ViewModels;
 public class PowerShellSettingsViewModel : ViewModelBase
 {
     #region Variables
-
-    private readonly IDialogCoordinator _dialogCoordinator;
-
     private readonly bool _isLoading;
 
     private string _applicationFilePath;
@@ -130,11 +126,9 @@ public class PowerShellSettingsViewModel : ViewModelBase
 
     #region Contructor, load settings
 
-    public PowerShellSettingsViewModel(IDialogCoordinator instance)
+    public PowerShellSettingsViewModel()
     {
         _isLoading = true;
-
-        _dialogCoordinator = instance;
 
         LoadSettings();
 
@@ -194,12 +188,7 @@ public class PowerShellSettingsViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            var settings = AppearanceManager.MetroDialog;
-
-            settings.AffirmativeButtonText = Strings.OK;
-
-            await _dialogCoordinator.ShowMessageAsync(this, Strings.Error, ex.Message,
-                MessageDialogStyle.Affirmative, settings);
+            await DialogHelper.ShowMessageAsync(System.Windows.Application.Current.MainWindow, Strings.Error, ex.Message, ChildWindowIcon.Error);
         }
     }
 

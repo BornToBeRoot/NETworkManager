@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
 using NETworkManager.Models.Network;
@@ -37,6 +38,8 @@ public class SNMPOIDProfilesViewModel : ViewModelBase
             return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    info.OID.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
+
+        SelectedOIDProfile = OIDProfiles.Cast<SNMPOIDProfileInfo>().FirstOrDefault();
     }
 
     public ICommand OKCommand { get; }
@@ -53,6 +56,8 @@ public class SNMPOIDProfilesViewModel : ViewModelBase
             _search = value;
 
             OIDProfiles.Refresh();
+
+            SelectedOIDProfile = OIDProfiles.Cast<SNMPOIDProfileInfo>().FirstOrDefault();
 
             OnPropertyChanged();
         }

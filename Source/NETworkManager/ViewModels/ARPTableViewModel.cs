@@ -1,6 +1,5 @@
 ﻿using log4net;
 using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
@@ -33,10 +32,9 @@ public class ARPTableViewModel : ViewModelBase
     /// Initializes a new instance of the <see cref="ARPTableViewModel"/> class.
     /// </summary>
     /// <param name="instance">The dialog coordinator instance.</param>
-    public ARPTableViewModel(IDialogCoordinator instance)
+    public ARPTableViewModel()
     {
         _isLoading = true;
-        _dialogCoordinator = instance;
 
         // Result view + search
         ResultsView = CollectionViewSource.GetDefaultView(Results);
@@ -80,11 +78,6 @@ public class ARPTableViewModel : ViewModelBase
     #region Variables
 
     private static readonly ILog Log = LogManager.GetLogger(typeof(ARPTableViewModel));
-
-    /// <summary>
-    /// The dialog coordinator instance.
-    /// </summary>
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     /// <summary>
     /// Indicates whether the view model is loading.
@@ -465,14 +458,13 @@ public class ARPTableViewModel : ViewModelBase
     {
         IsStatusMessageDisplayed = false;
 
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.AddEntry
-        };
+        var childWindow = new ARPTableAddEntryChildWindow();
 
-        var arpTableAddEntryViewModel = new ArpTableAddEntryViewModel(async instance =>
+
+        var childWindowViewModel = new ARPTableAddEntryViewModel(async instance =>
         {
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
 
             try
             {
@@ -489,14 +481,19 @@ public class ARPTableViewModel : ViewModelBase
                 StatusMessage = ex.Message;
                 IsStatusMessageDisplayed = true;
             }
-        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); });
-
-        customDialog.Content = new ARPTableAddEntryDialog
+        }, _ =>
         {
-            DataContext = arpTableAddEntryViewModel
-        };
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        });
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.Title = Strings.AddEntry;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     /// <summary>
@@ -527,12 +524,9 @@ public class ARPTableViewModel : ViewModelBase
             {
                 Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Strings.OK;
-
-                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
-                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error,
+                   Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                    Environment.NewLine + ex.Message, ChildWindowIcon.Error);
             }
 
             SettingsManager.Current.ARPTable_ExportFileType = instance.FileType;
@@ -552,7 +546,7 @@ public class ARPTableViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     #endregion

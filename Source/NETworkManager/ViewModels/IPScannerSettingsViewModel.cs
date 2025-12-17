@@ -1,5 +1,4 @@
-﻿using MahApps.Metro.Controls.Dialogs;
-using MahApps.Metro.SimpleChildWindow;
+﻿using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
@@ -23,11 +22,6 @@ public class IPScannerSettingsViewModel : ViewModelBase
     /// Indicates whether the view model is loading.
     /// </summary>
     private readonly bool _isLoading;
-
-    /// <summary>
-    /// The dialog coordinator instance.
-    /// </summary>
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     /// <summary>
     /// Backing field for <see cref="ShowAllResults"/>.
@@ -374,12 +368,9 @@ public class IPScannerSettingsViewModel : ViewModelBase
     /// <summary>
     /// Initializes a new instance of the <see cref="IPScannerSettingsViewModel"/> class.
     /// </summary>
-    /// <param name="instance">The dialog coordinator instance.</param>
-    public IPScannerSettingsViewModel(IDialogCoordinator instance)
+    public IPScannerSettingsViewModel()
     {
         _isLoading = true;
-
-        _dialogCoordinator = instance;
 
         CustomCommands = CollectionViewSource.GetDefaultView(SettingsManager.Current.IPScanner_CustomCommands);
         CustomCommands.SortDescriptions.Add(new SortDescription(nameof(CustomCommandInfo.Name),
@@ -458,56 +449,67 @@ public class IPScannerSettingsViewModel : ViewModelBase
     #region Methods
 
     /// <summary>
-    /// Adds a new custom command.
+    /// Add a new custom command.
     /// </summary>
-    private async void AddCustomCommand()
+    private Task AddCustomCommand()
     {
-        var customDialog = new CustomDialog
+        var childWindow = new CustomCommandChildWindow();
+
+        var childWindowViewModel = new CustomCommandViewModel(instance =>
         {
-            Title = Strings.AddCustomCommand
-        };
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
 
-        var customCommandViewModel = new CustomCommandViewModel(instance =>
+            SettingsManager.Current.IPScanner_CustomCommands.Add(new CustomCommandInfo(
+                instance.ID,
+                instance.Name,
+                instance.FilePath,
+                instance.Arguments)
+            );
+        }, _ =>
         {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        });
 
-            SettingsManager.Current.IPScanner_CustomCommands.Add(new CustomCommandInfo(instance.ID, instance.Name,
-                instance.FilePath, instance.Arguments));
-        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); });
+        childWindow.Title = Strings.AddCustomCommand;
 
-        customDialog.Content = new CustomCommandDialog
-        {
-            DataContext = customCommandViewModel
-        };
+        childWindow.DataContext = childWindowViewModel;
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     /// <summary>
-    /// Edits the selected custom command.
+    /// Edit the selected custom command.
     /// </summary>
-    public async void EditCustomCommand()
+    public Task EditCustomCommand()
     {
-        var customDialog = new CustomDialog
-        {
-            Title = Strings.EditCustomCommand
-        };
 
-        var customCommandViewModel = new CustomCommandViewModel(instance =>
+        var childWindow = new CustomCommandChildWindow();
+
+        var childWindowViewModel = new CustomCommandViewModel(instance =>
         {
-            _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
 
             SettingsManager.Current.IPScanner_CustomCommands.Remove(SelectedCustomCommand);
             SettingsManager.Current.IPScanner_CustomCommands.Add(new CustomCommandInfo(instance.ID, instance.Name,
                 instance.FilePath, instance.Arguments));
-        }, _ => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, true, SelectedCustomCommand);
-
-        customDialog.Content = new CustomCommandDialog
+        }, _ =>
         {
-            DataContext = customCommandViewModel
-        };
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        }, true, SelectedCustomCommand);
 
-        await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        childWindow.Title = Strings.EditCustomCommand;
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     /// <summary>
@@ -515,7 +517,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
     /// </summary>
     private async Task DeleteCustomCommand()
     {
-        var result = await DialogHelper.ShowOKCancelMessageAsync(Application.Current.MainWindow,
+        var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
             Strings.DeleteCustomCommand,
             Strings.DeleteCustomCommandMessage,
             ChildWindowIcon.Info,

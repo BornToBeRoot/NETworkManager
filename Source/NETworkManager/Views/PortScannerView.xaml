@@ -13,8 +13,6 @@
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
-             xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-             dialogs:DialogParticipation.Register="{Binding}"
              Loaded="UserControl_Loaded"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PortScannerViewModel}">
     <UserControl.Resources>

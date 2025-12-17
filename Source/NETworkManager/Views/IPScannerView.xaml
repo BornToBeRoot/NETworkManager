@@ -15,8 +15,6 @@
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:models="clr-namespace:NETworkManager.Models;assembly=NETworkManager.Models"
-             xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-             dialogs:DialogParticipation.Register="{Binding}"
              Loaded="UserControl_Loaded"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:IPScannerViewModel}">
     <UserControl.Resources>

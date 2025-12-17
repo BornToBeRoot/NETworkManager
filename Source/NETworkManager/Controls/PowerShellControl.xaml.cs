@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.PowerShell;
 using NETworkManager.Settings;
@@ -28,8 +27,6 @@ public partial class PowerShellControl : UserControlBase, IDragablzTabItem, IEmb
 
     private bool _initialized;
     private bool _closed;
-
-    private readonly IDialogCoordinator _dialogCoordinator;
 
     private readonly Guid _tabId;
     private readonly PowerShellSessionInfo _sessionInfo;
@@ -75,8 +72,6 @@ public partial class PowerShellControl : UserControlBase, IDragablzTabItem, IEmb
     {
         InitializeComponent();
         DataContext = this;
-
-        _dialogCoordinator = DialogCoordinator.Instance;
 
         ConfigurationManager.Current.PowerShellTabCount++;
 
@@ -196,17 +191,8 @@ public partial class PowerShellControl : UserControlBase, IDragablzTabItem, IEmb
         catch (Exception ex)
         {
             if (!_closed)
-            {
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Strings.OK;
-
-                ConfigurationManager.OnDialogOpen();
-
-                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
-                    ex.Message, MessageDialogStyle.Affirmative, settings);
-
-                ConfigurationManager.OnDialogClose();
-            }
+                // Use built-in message box because we have visual issues in the dragablz window
+                MessageBox.Show(ex.Message, Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         IsConnecting = false;

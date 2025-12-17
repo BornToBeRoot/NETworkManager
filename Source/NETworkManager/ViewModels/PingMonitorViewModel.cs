@@ -2,7 +2,6 @@
 using LiveCharts.Configurations;
 using LiveCharts.Wpf;
 using log4net;
-using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
@@ -34,16 +33,13 @@ public class PingMonitorViewModel : ViewModelBase
     /// <summary>
     /// Initializes a new instance of the <see cref="PingMonitorViewModel"/> class.
     /// </summary>
-    /// <param name="instance">The dialog coordinator instance.</param>
     /// <param name="hostId">The unique identifier for the host.</param>
     /// <param name="removeHostByGuid">Action to remove the host by its GUID.</param>
     /// <param name="host">Tuple containing the IP address and hostname.</param>
     /// <param name="group">The group name the host belongs to.</param>
-    public PingMonitorViewModel(IDialogCoordinator instance, Guid hostId, Action<Guid> removeHostByGuid,
+    public PingMonitorViewModel(Guid hostId, Action<Guid> removeHostByGuid,
         (IPAddress ipAddress, string hostname) host, string group)
     {
-        _dialogCoordinator = instance;
-
         HostId = hostId;
         _removeHostByGuid = removeHostByGuid;
 
@@ -63,7 +59,6 @@ public class PingMonitorViewModel : ViewModelBase
     #region Variables
     private static readonly ILog Log = LogManager.GetLogger(typeof(PingMonitorViewModel));
 
-    private readonly IDialogCoordinator _dialogCoordinator;
     private CancellationTokenSource _cancellationTokenSource;
 
     public readonly Guid HostId;
@@ -507,12 +502,9 @@ public class PingMonitorViewModel : ViewModelBase
             {
                 Log.Error("Error while exporting data as " + instance.FileType, ex);
 
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Strings.OK;
-
-                await _dialogCoordinator.ShowMessageAsync(this, Strings.Error,
-                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
-                    Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error,
+                   Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                   Environment.NewLine + ex.Message, ChildWindowIcon.Error);
             }
 
             SettingsManager.Current.PingMonitor_ExportFileType = instance.FileType;
@@ -533,7 +525,7 @@ public class PingMonitorViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        return (Application.Current.MainWindow as MainWindow).ShowChildWindowAsync(childWindow);
+        return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     #endregion
