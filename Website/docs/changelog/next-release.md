@@ -32,6 +32,7 @@ Release date: **xx.xx.2025**
 ## What's new?
 
 - New language Ukrainian (`uk-UA`) has been added. Thanks to [@vadickkt](https://github.com/vadickkt) [#3240](https://github.com/BornToBeRoot/NETworkManager/pull/3240)
+- Migrated all dialogs to child windows for improved usability and accessibility. [#3271](https://github.com/BornToBeRoot/NETworkManager/pull/3271)
 
 **DNS Lookup**
 
