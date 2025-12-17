@@ -76,7 +76,7 @@ public static class AppearanceManager
 
         ThemeManager.Current.ThemeChanged += Current_ThemeChanged;
 
-        LoadCustomThemes();        
+        LoadCustomThemes();
     }
     #endregion
 
