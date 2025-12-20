@@ -134,9 +134,15 @@ Thank you for helping keep NETworkManager thriving!
 
 <div align="center">
 
-<img alt="NETworkManager tabs and drag & drop preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Website/static/img/preview_tabs_drag_drop.gif?raw=true" />
+<img alt="NETworkManager tabs and drag & drop preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Website/static/img/preview-profiles.gif?raw=true" />
 
-Preview of tabs and drag & drop functionality.
+Encrypted profile files, group & profile management.
+
+---
+
+<img alt="NETworkManager tabs and drag & drop preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Website/static/img/preview-tabs-drag-drop.gif?raw=true" />
+
+Tabs and drag & drop functionality.
 
 ---
 
