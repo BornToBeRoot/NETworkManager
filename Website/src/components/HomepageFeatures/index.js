@@ -5,7 +5,7 @@ import styles from "./styles.module.css";
 const FeatureList = [
   {
     title: "In-Depth Network Analysis",
-    Svg: require("@site/static/img/undraw_connected_world_wuay.svg").default,
+    Svg: require("@site/static/img/undraw-connected-world-wuay.svg").default,
     description: (
       <>
         Analyze your network and perform in-depth diagnostics using built-in
@@ -17,7 +17,7 @@ const FeatureList = [
   },
   {
     title: "Remote Access & Server Management",
-    Svg: require("@site/static/img/undraw_server_cluster_jwwq.svg").default,
+    Svg: require("@site/static/img/undraw-server-cluster-jwwq.svg").default,
     description: (
       <>
         Connect, monitor and troubleshoot your network and server
@@ -29,7 +29,7 @@ const FeatureList = [
   },
   {
     title: "Profile Management",
-    Svg: require("@site/static/img/undraw_personal_settings_re_i6w4.svg")
+    Svg: require("@site/static/img/undraw-personal-settings-re-i6w4.svg")
       .default,
     description: (
       <>
@@ -42,7 +42,7 @@ const FeatureList = [
   },
   {
     title: "Effortless Troubleshooting",
-    Svg: require("@site/static/img/undraw_server_down_s-4-lk.svg").default,
+    Svg: require("@site/static/img/undraw-server-down-s-4-lk.svg").default,
     description: (
       <>
         Diagnose and resolve issues effectively with a comprehensive suite of
@@ -54,7 +54,7 @@ const FeatureList = [
   },  
   {
     title: "Open Source",
-    Svg: require("@site/static/img/undraw_version_control_re_mg66.svg").default,
+    Svg: require("@site/static/img/undraw-version-control-re-mg66.svg").default,
     description: (
       <>
         NETworkManager is fully open source on GitHub — no ads, no subscriptions,

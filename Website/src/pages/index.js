@@ -225,9 +225,7 @@ export default function Home() {
       <main>
         <HomepageFeatures />
         <div className="container text--center margin-top--xl margin-bottom--xl">
-          <Heading as="h2">
-            📷 Screenshots
-          </Heading>
+          <Heading as="h2">📷 Screenshots</Heading>
           <div className="gallery-container1">
             <ImageGallery
               autoPlay="true"
@@ -236,24 +234,33 @@ export default function Home() {
             />
           </div>
           <p>Overview of various features and tools in NETworkManager.</p>
-          <br />          
+          <br />
           <div className="gallery-container2">
             <img
-              src="./img/preview_tabs_drag_drop.gif"
-              alt="NETworkManager tabs and drag & drop preview"
+              src="./img/preview-profiles.gif"
+              alt="NETworkManager profiles preview"
               className={styles.imageScreenshot}
             />
           </div>
-          <p>Preview of tabs and drag & drop functionality.</p>
+          <p>Encrypted profile files, group & profile management.</p>
           <br />
           <div className="gallery-container3">
             <img
-              src="./img/preview-light-theme.png"
+              src="./img/preview-tabs-drag-drop.gif"
               alt="NETworkManager tabs and drag & drop preview"
               className={styles.imageScreenshot}
             />
           </div>
-          <p>Preview of tabs and drag & drop functionality.</p>
+          <p>Tabs and drag & drop functionality.</p>
+          <br />
+          <div className="gallery-container4">
+            <img
+              src="./img/preview-light-theme.png"
+              alt="NETworkManager light theme preview"
+              className={styles.imageScreenshot}
+            />
+          </div>
+          <p>Customizable light/dark themes and accent colors.</p>
         </div>
       </main>
     </Layout>
