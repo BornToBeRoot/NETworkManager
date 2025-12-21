@@ -165,6 +165,7 @@ const config = {
               "/docs/changelog/2025-11-1-0",
               "/docs/changelog/2025-11-30-0",
               "/docs/changelog/2025-12-13-0",
+              "/docs/changelog/2025-12-20-0",
             ],
             to: "/docs/changelog/next-release",
           },
