@@ -3933,7 +3933,7 @@ $$hostname$$	--&gt;	主機名稱</value>
     <value>Profile file "{0}" will be deleted permanently.</value>
   </data>
   <data name="EnableEncryptionQuestion" xml:space="preserve">
-    <value>Enable encryption?</value>
+    <value>啟用加密?</value>
   </data>
   <data name="EnableEncryptionForProfileFileMessage" xml:space="preserve">
     <value>Do you want to enable profile file encryption to protect sensitive data such as hosts, IP addresses, URLs, and stored credentials?
