@@ -49,6 +49,17 @@ public static class SettingsManager
     /// </summary>
     public static bool HotKeysChanged { get; set; }
 
+    /// <summary>
+    ///     JSON serializer options for consistent serialization/deserialization.
+    /// </summary>
+    private static readonly JsonSerializerOptions JsonOptions = new()
+    {
+        WriteIndented = true,
+        PropertyNameCaseInsensitive = true,
+        DefaultIgnoreCondition = JsonIgnoreCondition.Never,
+        Converters = { new JsonStringEnumConverter() }
+    };
+
     #endregion
 
     #region Settings location, default paths and file names
@@ -145,8 +156,8 @@ public static class SettingsManager
             File.Copy(legacyFilePath, backupFilePath, true);
             Log.Info($"Legacy XML settings file backed up to: {backupFilePath}");
 
-            // Optionally, delete the original XML file after successful migration
-            // File.Delete(legacyFilePath);
+            // Note: The original XML file is intentionally not deleted to allow users to revert if needed.
+            // Users can manually delete Settings.xml after verifying the migration was successful.
 
             Log.Info("Settings migration from XML to JSON completed successfully.");
 
@@ -166,15 +177,12 @@ public static class SettingsManager
     {
         var jsonString = File.ReadAllText(filePath);
 
-        var options = new JsonSerializerOptions
-        {
-            WriteIndented = true,
-            PropertyNameCaseInsensitive = true,
-            DefaultIgnoreCondition = JsonIgnoreCondition.Never,
-            Converters = { new JsonStringEnumConverter() }
-        };
+        var settingsInfo = JsonSerializer.Deserialize<SettingsInfo>(jsonString, JsonOptions);
 
-        var settingsInfo = JsonSerializer.Deserialize<SettingsInfo>(jsonString, options);
+        if (settingsInfo == null)
+        {
+            throw new InvalidOperationException("Failed to deserialize settings from JSON file. The result was null.");
+        }
 
         return settingsInfo;
     }
@@ -216,14 +224,7 @@ public static class SettingsManager
     /// <param name="filePath">Path to the settings file.</param>
     private static void SerializeToFile(string filePath)
     {
-        var options = new JsonSerializerOptions
-        {
-            WriteIndented = true,
-            DefaultIgnoreCondition = JsonIgnoreCondition.Never,
-            Converters = { new JsonStringEnumConverter() }
-        };
-
-        var jsonString = JsonSerializer.Serialize(Current, options);
+        var jsonString = JsonSerializer.Serialize(Current, JsonOptions);
 
         File.WriteAllText(filePath, jsonString);
     }
