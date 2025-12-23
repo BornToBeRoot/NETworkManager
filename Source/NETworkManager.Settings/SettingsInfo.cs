@@ -13,7 +13,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Xml.Serialization;
+using System.Text.Json.Serialization;
 
 // ReSharper disable InconsistentNaming
 
@@ -42,7 +42,7 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #region Variables
 
-    [XmlIgnore] public bool SettingsChanged { get; set; }
+    [JsonIgnore] public bool SettingsChanged { get; set; }
 
     /// <summary>
     /// Private field for the <see cref="WelcomeDialog_Show" /> property.
