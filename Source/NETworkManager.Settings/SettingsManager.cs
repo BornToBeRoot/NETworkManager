@@ -152,9 +152,11 @@ public static class SettingsManager
             Save();
 
             // Backup the old XML file with timestamp to avoid overwriting existing backups
+            // If a backup with the same timestamp exists (unlikely), it will be overwritten
+            // since it represents the same migration attempt
             var backupFilePath = Path.Combine(GetSettingsFolderLocation(), 
                 $"{SettingsFileName}_{TimestampHelper.GetTimestamp()}{LegacySettingsFileExtension}.backup");
-            File.Copy(legacyFilePath, backupFilePath, false);
+            File.Copy(legacyFilePath, backupFilePath, true);
             Log.Info($"Legacy XML settings file backed up to: {backupFilePath}");
 
             // Note: The original XML file is intentionally not deleted to allow users to revert if needed.
