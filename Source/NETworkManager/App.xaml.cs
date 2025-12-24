@@ -93,15 +93,13 @@ public partial class App
         }
         catch (InvalidOperationException ex)
         {
-            Log.Error("Could not load application settings!");
-            Log.Error(ex.Message + "-" + ex.StackTrace);
-
+            Log.Error("Could not load application settings!", ex);
+            
             HandleCorruptedSettingsFile();
         }
         catch (JsonException ex)
         {
-            Log.Error("Could not load application settings! JSON file is corrupted or invalid.");
-            Log.Error(ex.Message + "-" + ex.StackTrace);
+            Log.Error("Could not load application settings! JSON file is corrupted or invalid.", ex);
 
             HandleCorruptedSettingsFile();
         }
@@ -225,8 +223,10 @@ public partial class App
         // Create backup of corrupted file
         var destinationFile =
             $"{TimestampHelper.GetTimestamp()}_corrupted_" + SettingsManager.GetSettingsFileName();
+
         File.Copy(SettingsManager.GetSettingsFilePath(),
             Path.Combine(SettingsManager.GetSettingsFolderLocation(), destinationFile));
+
         Log.Info($"A backup of the corrupted settings file has been saved under {destinationFile}");
 
         // Initialize default application settings
