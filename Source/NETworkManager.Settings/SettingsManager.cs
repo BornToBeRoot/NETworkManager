@@ -1,6 +1,7 @@
 ﻿using log4net;
 using NETworkManager.Models;
 using NETworkManager.Models.Network;
+using NETworkManager.Utilities;
 using System;
 using System.IO;
 using System.Linq;
@@ -150,10 +151,10 @@ public static class SettingsManager
             // Save in new JSON format
             Save();
 
-            // Backup the old XML file
+            // Backup the old XML file with timestamp to avoid overwriting existing backups
             var backupFilePath = Path.Combine(GetSettingsFolderLocation(), 
-                $"{SettingsFileName}{LegacySettingsFileExtension}.backup");
-            File.Copy(legacyFilePath, backupFilePath, true);
+                $"{SettingsFileName}_{TimestampHelper.GetTimestamp()}{LegacySettingsFileExtension}.backup");
+            File.Copy(legacyFilePath, backupFilePath, false);
             Log.Info($"Legacy XML settings file backed up to: {backupFilePath}");
 
             // Note: The original XML file is intentionally not deleted to allow users to revert if needed.
@@ -198,7 +199,12 @@ public static class SettingsManager
 
         using var fileStream = new FileStream(filePath, FileMode.Open);
 
-        var settingsInfo = (SettingsInfo)xmlSerializer.Deserialize(fileStream);
+        var settingsInfo = xmlSerializer.Deserialize(fileStream) as SettingsInfo;
+
+        if (settingsInfo == null)
+        {
+            throw new InvalidOperationException("Failed to deserialize settings from XML file. The result was null.");
+        }
 
         return settingsInfo;
     }
