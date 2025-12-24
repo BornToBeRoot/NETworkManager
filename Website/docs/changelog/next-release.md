@@ -51,6 +51,10 @@ Release date: **xx.xx.2025**
 - Profile file dialog migrated to a child window to improve usability. [#3227](https://github.com/BornToBeRoot/NETworkManager/pull/3227)
 - Credential dialogs migrated to child windows to improve usability. [#3231](https://github.com/BornToBeRoot/NETworkManager/pull/3231)
 
+**Settings**
+
+- Settings format migrated from `XML` to `JSON`. The settings file will be automatically converted on first start after the update. [#3282](https://github.com/BornToBeRoot/NETworkManager/pull/3282)
+
 **DNS Lookup**
 
 - Allow hostname as server address in addition to IP address in the add/edit server dialog. [#3261](https://github.com/BornToBeRoot/NETworkManager/pull/3261)
