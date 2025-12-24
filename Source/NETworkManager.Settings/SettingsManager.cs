@@ -1,9 +1,12 @@
 ﻿using log4net;
 using NETworkManager.Models;
 using NETworkManager.Models.Network;
+using NETworkManager.Utilities;
 using System;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
 namespace NETworkManager.Settings;
@@ -23,6 +26,11 @@ public static class SettingsManager
     private static string SettingsFolderName => "Settings";
 
     /// <summary>
+    ///     Settings backups directory name.
+    /// </summary>
+    private static string BackupFolderName => "Backups";
+
+    /// <summary>
     ///     Settings file name.
     /// </summary>
     private static string SettingsFileName => "Settings";
@@ -30,7 +38,13 @@ public static class SettingsManager
     /// <summary>
     ///     Settings file extension.
     /// </summary>
-    private static string SettingsFileExtension => ".xml";
+    private static string SettingsFileExtension => ".json";
+
+    /// <summary>
+    ///     Legacy XML settings file extension.
+    /// </summary>
+    [Obsolete("Legacy XML settings are no longer used, but the extension is kept for migration purposes.")]
+    private static string LegacySettingsFileExtension => ".xml";
 
     /// <summary>
     ///     Settings that are currently loaded.
@@ -41,6 +55,17 @@ public static class SettingsManager
     ///     Indicates if the HotKeys have changed. May need to be reworked if we add more HotKeys.
     /// </summary>
     public static bool HotKeysChanged { get; set; }
+
+    /// <summary>
+    ///     JSON serializer options for consistent serialization/deserialization.
+    /// </summary>
+    private static readonly JsonSerializerOptions JsonOptions = new()
+    {
+        WriteIndented = true,
+        PropertyNameCaseInsensitive = true,
+        DefaultIgnoreCondition = JsonIgnoreCondition.Never,
+        Converters = { new JsonStringEnumConverter() }
+    };
 
     #endregion
 
@@ -59,6 +84,15 @@ public static class SettingsManager
     }
 
     /// <summary>
+    ///     Method to get the path of the settings backup folder.
+    /// </summary>
+    /// <returns>Path to the settings backup folder.</returns>
+    public static string GetSettingsBackupFolderLocation()
+    {
+        return Path.Combine(GetSettingsFolderLocation(), BackupFolderName);
+    }
+
+    /// <summary>
     ///     Method to get the settings file name.
     /// </summary>
     /// <returns>Settings file name.</returns>
@@ -68,12 +102,32 @@ public static class SettingsManager
     }
 
     /// <summary>
+    ///     Method to get the legacy settings file name.
+    /// </summary>
+    /// <returns>Legacy settings file name.</returns>
+    [Obsolete("Legacy XML settings are no longer used, but the method is kept for migration purposes.")]
+    public static string GetLegacySettingsFileName()
+    {
+        return $"{SettingsFileName}{LegacySettingsFileExtension}";
+    }
+
+    /// <summary>
     ///     Method to get the settings file path.
     /// </summary>
     /// <returns>Settings file path.</returns>
     public static string GetSettingsFilePath()
     {
         return Path.Combine(GetSettingsFolderLocation(), GetSettingsFileName());
+    }
+
+    /// <summary>
+    ///     Method to get the legacy XML settings file path.
+    /// </summary>
+    /// <returns>Legacy XML settings file path.</returns>
+    [Obsolete("Legacy XML settings are no longer used, but the method is kept for migration purposes.")]
+    private static string GetLegacySettingsFilePath()
+    {
+        return Path.Combine(GetSettingsFolderLocation(), GetLegacySettingsFileName());
     }
 
     #endregion
@@ -99,7 +153,9 @@ public static class SettingsManager
     public static void Load()
     {
         var filePath = GetSettingsFilePath();
+        var legacyFilePath = GetLegacySettingsFilePath();
 
+        // Check if JSON file exists
         if (File.Exists(filePath))
         {
             Current = DeserializeFromFile(filePath);
@@ -109,22 +165,66 @@ public static class SettingsManager
             return;
         }
 
+        // Check if legacy XML file exists and migrate it
+        if (File.Exists(legacyFilePath))
+        {
+            Log.Info("Legacy XML settings file found. Migrating to JSON format...");
+
+            Current = DeserializeFromXmlFile(legacyFilePath);
+
+            Current.SettingsChanged = false;
+
+            // Save in new JSON format
+            Save();
+
+            // Create a backup of the legacy XML file and delete the original
+            Directory.CreateDirectory(GetSettingsBackupFolderLocation());
+
+            var backupFilePath = Path.Combine(GetSettingsBackupFolderLocation(),
+                $"{TimestampHelper.GetTimestamp()}_{GetLegacySettingsFileName()}");
+
+            File.Copy(legacyFilePath, backupFilePath, true);
+
+            File.Delete(legacyFilePath);
+
+            Log.Info($"Legacy XML settings file backed up to: {backupFilePath}");
+
+            Log.Info("Settings migration from XML to JSON completed successfully.");
+
+            return;
+        }
+
         // Initialize the default settings if there is no settings file.
         Initialize();
     }
 
     /// <summary>
-    ///     Method to deserialize the settings from a file.
+    ///     Method to deserialize the settings from a JSON file.
     /// </summary>
     /// <param name="filePath">Path to the settings file.</param>
     /// <returns>Settings as <see cref="SettingsInfo" />.</returns>
     private static SettingsInfo DeserializeFromFile(string filePath)
     {
+        var jsonString = File.ReadAllText(filePath);
+
+        var settingsInfo = JsonSerializer.Deserialize<SettingsInfo>(jsonString, JsonOptions);
+
+        return settingsInfo;
+    }
+
+    /// <summary>
+    ///     Method to deserialize the settings from a legacy XML file.
+    /// </summary>
+    /// <param name="filePath">Path to the XML settings file.</param>
+    /// <returns>Settings as <see cref="SettingsInfo" />.</returns>
+    [Obsolete("Legacy XML settings are no longer used, but the method is kept for migration purposes.")]
+    private static SettingsInfo DeserializeFromXmlFile(string filePath)
+    {
         var xmlSerializer = new XmlSerializer(typeof(SettingsInfo));
 
         using var fileStream = new FileStream(filePath, FileMode.Open);
 
-        var settingsInfo = (SettingsInfo)xmlSerializer.Deserialize(fileStream);
+        var settingsInfo = xmlSerializer.Deserialize(fileStream) as SettingsInfo;
 
         return settingsInfo;
     }
@@ -145,17 +245,28 @@ public static class SettingsManager
     }
 
     /// <summary>
-    ///     Method to serialize the settings to a file.
+    ///     Method to serialize the settings to a JSON file.
     /// </summary>
     /// <param name="filePath">Path to the settings file.</param>
     private static void SerializeToFile(string filePath)
     {
-        var xmlSerializer = new XmlSerializer(typeof(SettingsInfo));
+        var jsonString = JsonSerializer.Serialize(Current, JsonOptions);
 
-        using var fileStream = new FileStream(filePath, FileMode.Create);
-
-        xmlSerializer.Serialize(fileStream, Current);
+        File.WriteAllText(filePath, jsonString);
     }
+
+    #endregion
+
+    #region Backup
+    /*
+    private static void Backup()
+    {
+        Log.Info("Creating settings backup...");
+
+        // Create the backup directory if it does not exist
+        Directory.CreateDirectory(GetSettingsBackupFolderLocation());
+    }
+    */
 
     #endregion
 

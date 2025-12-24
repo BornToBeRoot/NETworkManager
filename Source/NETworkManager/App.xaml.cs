@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
@@ -92,21 +93,15 @@ public partial class App
         }
         catch (InvalidOperationException ex)
         {
-            Log.Error("Could not load application settings!");
-            Log.Error(ex.Message + "-" + ex.StackTrace);
+            Log.Error("Could not load application settings!", ex);
+            
+            HandleCorruptedSettingsFile();
+        }
+        catch (JsonException ex)
+        {
+            Log.Error("Could not load application settings! JSON file is corrupted or invalid.", ex);
 
-            // Create backup of corrupted file
-            var destinationFile =
-                $"{TimestampHelper.GetTimestamp()}_corrupted_" + SettingsManager.GetSettingsFileName();
-            File.Copy(SettingsManager.GetSettingsFilePath(),
-                Path.Combine(SettingsManager.GetSettingsFolderLocation(), destinationFile));
-            Log.Info($"A backup of the corrupted settings file has been saved under {destinationFile}");
-
-            // Initialize default application settings
-            Log.Info("Initialize default application settings...");
-
-            SettingsManager.Initialize();
-            ConfigurationManager.Current.ShowSettingsResetNoteOnStartup = true;
+            HandleCorruptedSettingsFile();
         }
 
         // Upgrade settings if necessary
@@ -218,6 +213,27 @@ public partial class App
             _singleInstanceClose = true;
             Shutdown();
         }
+    }
+
+    /// <summary>
+    ///     Handles a corrupted settings file by creating a backup and initializing default settings.
+    /// </summary>
+    private void HandleCorruptedSettingsFile()
+    {
+        // Create backup of corrupted file
+        var destinationFile =
+            $"{TimestampHelper.GetTimestamp()}_corrupted_" + SettingsManager.GetSettingsFileName();
+
+        File.Copy(SettingsManager.GetSettingsFilePath(),
+            Path.Combine(SettingsManager.GetSettingsFolderLocation(), destinationFile));
+
+        Log.Info($"A backup of the corrupted settings file has been saved under {destinationFile}");
+
+        // Initialize default application settings
+        Log.Info("Initialize default application settings...");
+
+        SettingsManager.Initialize();
+        ConfigurationManager.Current.ShowSettingsResetNoteOnStartup = true;
     }
 
     private void DispatcherTimer_Tick(object sender, EventArgs e)
