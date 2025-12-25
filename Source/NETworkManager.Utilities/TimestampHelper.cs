@@ -27,12 +27,12 @@ public static class TimestampHelper
     /// <remarks>This method checks only the first 14 characters of the file name for a valid timestamp and
     /// does not validate the remainder of the file name.</remarks>
     /// <param name="fileName">The file name to evaluate. The file name is expected to start with a 14-digit timestamp followed by an
-    /// underscore or other characters.</param>
+    /// underscore and at least one additional character.</param>
     /// <returns>true if the file name starts with a valid timestamp in the format "yyyyMMddHHmmss"; otherwise, false.</returns>
     public static bool IsTimestampedFilename(string fileName)
     {
-        // Ensure the filename is long enough to contain a timestamp
-        if (fileName.Length < 15)
+        // Ensure the filename is long enough to contain a timestamp, an underscore, and at least one character after it
+        if (fileName.Length < 16)
             return false;
 
         var timestampString = fileName.Substring(0, 14);
