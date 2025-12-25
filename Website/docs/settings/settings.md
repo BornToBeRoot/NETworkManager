@@ -18,9 +18,22 @@ Folder where the application settings are stored.
 | Portable       | `<APP_FOLDER>\Settings`                           |
 
 :::note
-It is recommended to backup the above files on a regular basis.
 
-To restore the settings, close the application and copy the files from the backup to the above location.
+**Recommendation**  
+It is strongly recommended to regularly back up your settings files.
+
+**Automatic backups**  
+NETworkManager automatically creates a backup of the settings files before applying any changes.
+- Location: `Settings\Backups` subfolder (relative to the main configuration directory)
+- Naming: timestamped (e.g. `yyyyMMddHHmmss_Settings.json`)
+- Frequency: **once per day** at most (even if multiple changes occur)
+- Retention: keeps the **10 most recent backups**
+
+**Restoring settings**  
+1. Completely close NETworkManager
+2. Locate the desired backup in `Settings\Backups`
+3. Copy the file(s) back to the original configuration folder (overwriting existing files)
+4. Restart the application
 
 :::
 

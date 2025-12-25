@@ -1,4 +1,6 @@
-﻿using NETworkManager.Settings;
+﻿using log4net;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
@@ -13,19 +15,8 @@ namespace NETworkManager.Profiles;
 
 public static class ProfileManager
 {
-    #region Constructor
-
-    /// <summary>
-    ///     Static constructor. Load all profile files on startup.
-    /// </summary>
-    static ProfileManager()
-    {
-        LoadProfileFiles();
-    }
-
-    #endregion
-
     #region Variables
+    private static readonly ILog Log = LogManager.GetLogger(typeof(ProfileManager));
 
     /// <summary>
     ///     Profiles directory name.
@@ -81,6 +72,18 @@ public static class ProfileManager
     ///     Indicates if profiles have changed.
     /// </summary>
     public static bool ProfilesChanged { get; set; }
+
+    #endregion
+
+    #region Constructor
+
+    /// <summary>
+    ///     Static constructor. Load all profile files on startup.
+    /// </summary>
+    static ProfileManager()
+    {
+        LoadProfileFiles();
+    }
 
     #endregion
 
@@ -202,7 +205,7 @@ public static class ProfileManager
 
         Directory.CreateDirectory(GetProfilesFolderLocation());
 
-        SerializeToFile(profileFileInfo.Path, new List<GroupInfo>());
+        SerializeToFile(profileFileInfo.Path, []);
 
         ProfileFiles.Add(profileFileInfo);
     }
@@ -219,7 +222,6 @@ public static class ProfileManager
         if (LoadedProfileFile != null && LoadedProfileFile.Equals(profileFileInfo))
         {
             Save();
-
             switchProfile = true;
         }
 
@@ -472,7 +474,12 @@ public static class ProfileManager
     public static void Save()
     {
         if (LoadedProfileFile == null)
+        {
+            Log.Warn("Cannot save profiles because no profile file is loaded. The profile file may be encrypted and not yet unlocked.");
+
             return;
+        }
+            
 
         Directory.CreateDirectory(GetProfilesFolderLocation());
 
