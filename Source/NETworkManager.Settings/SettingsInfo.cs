@@ -112,10 +112,10 @@ public class SettingsInfo : INotifyPropertyChanged
     /// <summary>
     /// Private field for the <see cref="LastBackup" /> property.
     /// </summary>
-    private DateTime _lastBackup = DateTime.Now.Date;
+    private DateTime _lastBackup = DateTime.MinValue;
 
     /// <summary>
-    /// Store the date and time of the last backup of the settings file.
+    /// Stores the date of the last backup of the settings file.
     /// </summary>
     public DateTime LastBackup
     {
