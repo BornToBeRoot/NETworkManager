@@ -180,7 +180,7 @@ public static class SettingsManager
             // Create a backup of the legacy XML file and delete the original
             Backup(legacyFilePath,
                 GetSettingsBackupFolderLocation(),
-                $"{TimestampHelper.GetTimestamp()}_{GetLegacySettingsFileName()}");
+                TimestampHelper.GetTimestampFilename(GetLegacySettingsFileName()));
 
             File.Delete(legacyFilePath);
 
@@ -279,7 +279,7 @@ public static class SettingsManager
             // Create backup
             Backup(GetSettingsFilePath(),
                 GetSettingsBackupFolderLocation(),
-                $"{TimestampHelper.GetTimestamp()}_{GetSettingsFileName()}");
+                TimestampHelper.GetTimestampFilename(GetSettingsFileName()));
 
             // Cleanup old backups
             CleanupBackups(GetSettingsBackupFolderLocation(),
@@ -302,14 +302,16 @@ public static class SettingsManager
     /// <param name="maxBackupFiles">The maximum number of backup files to retain. Must be greater than zero.</param>
     private static void CleanupBackups(string backupFolderPath, string settingsFileName, int maxBackupFiles)
     {
+        // Get all backup files sorted by timestamp (newest first)
         var backupFiles = Directory.GetFiles(backupFolderPath)
-            .Where(f => f.EndsWith(settingsFileName) || f.EndsWith(GetLegacySettingsFileName()))
-            .OrderByDescending(f => TimestampHelper.ExtractTimestampFromFilename(f))
+            .Where(f => (f.EndsWith(settingsFileName) || f.EndsWith(GetLegacySettingsFileName())) && TimestampHelper.IsTimestampedFilename(Path.GetFileName(f)))
+            .OrderByDescending(f => TimestampHelper.ExtractTimestampFromFilename(Path.GetFileName(f)))
             .ToList();
 
         if (backupFiles.Count > maxBackupFiles)
             Log.Info($"Cleaning up old backup files... Found {backupFiles.Count} backups, keeping the most recent {maxBackupFiles}.");
 
+        // Delete oldest backups until the maximum number is reached
         while (backupFiles.Count > maxBackupFiles)
         {
             var fileToDelete = backupFiles.Last();
