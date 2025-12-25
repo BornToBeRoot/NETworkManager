@@ -12,7 +12,7 @@ public static class TimestampHelper
     }
 
     /// <summary>
-    /// Generates a filename by prefixing the specified filename with a timestamp string.    
+    /// Generates a filename by prefixing the specified filename with a timestamp string.
     /// </summary>
     /// <param name="fileName">The original filename to be prefixed with a timestamp. Cannot be null or empty.</param>
     /// <returns>A string containing the timestamp followed by an underscore and the original filename.</returns>
