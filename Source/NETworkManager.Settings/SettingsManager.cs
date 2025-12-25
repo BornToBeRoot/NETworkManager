@@ -295,7 +295,7 @@ public static class SettingsManager
     /// specified maximum, are retained.
     /// </summary>
     /// <remarks>This method removes the oldest backup files first, keeping only the most recent backups as
-    /// determined by file creation time. It is intended to prevent excessive accumulation of backup files and manage
+    /// determined by the timestamp in the filename. It is intended to prevent excessive accumulation of backup files and manage
     /// disk space usage.</remarks>
     /// <param name="backupFolderPath">The full path to the directory containing the backup files to be managed. Cannot be null or empty.</param>
     /// <param name="settingsFileName">The file name pattern used to identify backup files for cleanup.</param>
@@ -304,7 +304,7 @@ public static class SettingsManager
     {
         var backupFiles = Directory.GetFiles(backupFolderPath)
             .Where(f => f.EndsWith(settingsFileName) || f.EndsWith(GetLegacySettingsFileName()))
-            .OrderByDescending(f => File.GetCreationTime(f))
+            .OrderByDescending(f => ExtractTimestampFromFilename(f))
             .ToList();
 
         if (backupFiles.Count > maxBackupFiles)
@@ -320,6 +320,42 @@ public static class SettingsManager
 
             Log.Info($"Backup deleted: {fileToDelete}");
         }
+    }
+
+    /// <summary>
+    /// Extracts the timestamp from a backup filename.
+    /// </summary>
+    /// <remarks>Backup filenames are formatted as yyyyMMddHHmmss_SettingsName.ext. This method extracts
+    /// the timestamp portion and parses it as a DateTime for ordering purposes. If the timestamp cannot be parsed,
+    /// DateTime.MinValue is returned.</remarks>
+    /// <param name="filePath">The full path to the backup file.</param>
+    /// <returns>The timestamp extracted from the filename, or DateTime.MinValue if parsing fails.</returns>
+    private static DateTime ExtractTimestampFromFilename(string filePath)
+    {
+        try
+        {
+            var fileName = Path.GetFileName(filePath);
+            
+            // Extract the timestamp prefix (yyyyMMddHHmmss format, 14 characters)
+            if (fileName.Length >= 14)
+            {
+                var timestampString = fileName.Substring(0, 14);
+                
+                // Parse the timestamp
+                if (DateTime.TryParseExact(timestampString, "yyyyMMddHHmmss", null, 
+                    System.Globalization.DateTimeStyles.None, out var timestamp))
+                {
+                    return timestamp;
+                }
+            }
+        }
+        catch
+        {
+            // If any error occurs, return MinValue to sort this file as oldest
+            Log.Warn($"Failed to extract timestamp from filename: {filePath}");
+        }
+
+        return DateTime.MinValue;
     }
 
     /// <summary>
