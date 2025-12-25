@@ -342,14 +342,15 @@ public static class SettingsManager
                 var timestampString = fileName.Substring(0, 14);
                 
                 // Parse the timestamp
-                if (DateTime.TryParseExact(timestampString, "yyyyMMddHHmmss", null, 
+                if (DateTime.TryParseExact(timestampString, "yyyyMMddHHmmss", 
+                    System.Globalization.CultureInfo.InvariantCulture, 
                     System.Globalization.DateTimeStyles.None, out var timestamp))
                 {
                     return timestamp;
                 }
             }
         }
-        catch
+        catch (ArgumentException)
         {
             // If any error occurs, return MinValue to sort this file as oldest
             Log.Warn($"Failed to extract timestamp from filename: {filePath}");
