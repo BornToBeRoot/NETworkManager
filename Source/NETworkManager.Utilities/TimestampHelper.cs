@@ -46,7 +46,7 @@ public static class TimestampHelper
     /// <remarks>Filenames are expected to start with yyyyMMddHHmmss format (14 characters). 
     /// This method extracts the timestamp portion and parses it as a DateTime. 
     /// If the timestamp cannot be parsed, DateTime.MinValue is returned.</remarks>
-    /// <param name="filePath">The full path to the file or just the filename.</param>
+    /// <param name="fileName">The full path to the file or just the filename.</param>
     /// <returns>The timestamp extracted from the filename, or DateTime.MinValue if parsing fails.</returns>
     public static DateTime ExtractTimestampFromFilename(string fileName)
     {
