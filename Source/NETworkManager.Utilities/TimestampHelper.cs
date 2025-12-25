@@ -41,7 +41,7 @@ public static class TimestampHelper
         }
         catch (ArgumentException)
         {
-            // If any error occurs, return MinValue to sort this file as oldest
+            // If an argument error occurs, return MinValue to sort this file as oldest
         }
 
         return DateTime.MinValue;
