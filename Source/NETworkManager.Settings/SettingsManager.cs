@@ -178,16 +178,11 @@ public static class SettingsManager
             Save();
 
             // Create a backup of the legacy XML file and delete the original
-            Directory.CreateDirectory(GetSettingsBackupFolderLocation());
-
-            var backupFilePath = Path.Combine(GetSettingsBackupFolderLocation(),
+            Backup(legacyFilePath,
+                GetSettingsBackupFolderLocation(),
                 $"{TimestampHelper.GetTimestamp()}_{GetLegacySettingsFileName()}");
-
-            File.Copy(legacyFilePath, backupFilePath, true);
-
+            
             File.Delete(legacyFilePath);
-
-            Log.Info($"Legacy XML settings file backed up to: {backupFilePath}");
 
             Log.Info("Settings migration from XML to JSON completed successfully.");
 
