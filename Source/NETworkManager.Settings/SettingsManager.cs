@@ -180,7 +180,7 @@ public static class SettingsManager
             // Create a backup of the legacy XML file and delete the original
             Backup(legacyFilePath,
                 GetSettingsBackupFolderLocation(),
-                $"{TimestampHelper.GetTimestamp()}_{GetLegacySettingsFileName()}");
+                TimestampHelper.GetTimestampFilename(GetLegacySettingsFileName()));
 
             File.Delete(legacyFilePath);
 
@@ -279,7 +279,7 @@ public static class SettingsManager
             // Create backup
             Backup(GetSettingsFilePath(),
                 GetSettingsBackupFolderLocation(),
-                $"{TimestampHelper.GetTimestamp()}_{GetSettingsFileName()}");
+                TimestampHelper.GetTimestampFilename(GetSettingsFileName()));
 
             // Cleanup old backups
             CleanupBackups(GetSettingsBackupFolderLocation(),
@@ -295,21 +295,23 @@ public static class SettingsManager
     /// specified maximum, are retained.
     /// </summary>
     /// <remarks>This method removes the oldest backup files first, keeping only the most recent backups as
-    /// determined by file creation time. It is intended to prevent excessive accumulation of backup files and manage
+    /// determined by the timestamp in the filename. It is intended to prevent excessive accumulation of backup files and manage
     /// disk space usage.</remarks>
     /// <param name="backupFolderPath">The full path to the directory containing the backup files to be managed. Cannot be null or empty.</param>
     /// <param name="settingsFileName">The file name pattern used to identify backup files for cleanup.</param>
     /// <param name="maxBackupFiles">The maximum number of backup files to retain. Must be greater than zero.</param>
     private static void CleanupBackups(string backupFolderPath, string settingsFileName, int maxBackupFiles)
     {
+        // Get all backup files sorted by timestamp (newest first)
         var backupFiles = Directory.GetFiles(backupFolderPath)
-            .Where(f => f.EndsWith(settingsFileName) || f.EndsWith(GetLegacySettingsFileName()))
-            .OrderByDescending(f => File.GetCreationTime(f))
+            .Where(f => (f.EndsWith(settingsFileName) || f.EndsWith(GetLegacySettingsFileName())) && TimestampHelper.IsTimestampedFilename(Path.GetFileName(f)))
+            .OrderByDescending(f => TimestampHelper.ExtractTimestampFromFilename(Path.GetFileName(f)))
             .ToList();
 
         if (backupFiles.Count > maxBackupFiles)
             Log.Info($"Cleaning up old backup files... Found {backupFiles.Count} backups, keeping the most recent {maxBackupFiles}.");
 
+        // Delete oldest backups until the maximum number is reached
         while (backupFiles.Count > maxBackupFiles)
         {
             var fileToDelete = backupFiles.Last();
