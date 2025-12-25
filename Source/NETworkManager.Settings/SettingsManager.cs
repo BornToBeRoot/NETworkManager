@@ -304,7 +304,7 @@ public static class SettingsManager
     {
         var backupFiles = Directory.GetFiles(backupFolderPath)
             .Where(f => f.EndsWith(settingsFileName) || f.EndsWith(GetLegacySettingsFileName()))
-            .OrderByDescending(f => ExtractTimestampFromFilename(f))
+            .OrderByDescending(f => TimestampHelper.ExtractTimestampFromFilename(f))
             .ToList();
 
         if (backupFiles.Count > maxBackupFiles)
@@ -320,43 +320,6 @@ public static class SettingsManager
 
             Log.Info($"Backup deleted: {fileToDelete}");
         }
-    }
-
-    /// <summary>
-    /// Extracts the timestamp from a backup filename.
-    /// </summary>
-    /// <remarks>Backup filenames are formatted as yyyyMMddHHmmss_SettingsName.ext. This method extracts
-    /// the timestamp portion and parses it as a DateTime for ordering purposes. If the timestamp cannot be parsed,
-    /// DateTime.MinValue is returned.</remarks>
-    /// <param name="filePath">The full path to the backup file.</param>
-    /// <returns>The timestamp extracted from the filename, or DateTime.MinValue if parsing fails.</returns>
-    private static DateTime ExtractTimestampFromFilename(string filePath)
-    {
-        try
-        {
-            var fileName = Path.GetFileName(filePath);
-            
-            // Extract the timestamp prefix (yyyyMMddHHmmss format, 14 characters)
-            if (fileName.Length >= 14)
-            {
-                var timestampString = fileName.Substring(0, 14);
-                
-                // Parse the timestamp
-                if (DateTime.TryParseExact(timestampString, "yyyyMMddHHmmss", 
-                    System.Globalization.CultureInfo.InvariantCulture, 
-                    System.Globalization.DateTimeStyles.None, out var timestamp))
-                {
-                    return timestamp;
-                }
-            }
-        }
-        catch (ArgumentException)
-        {
-            // If any error occurs, return MinValue to sort this file as oldest
-            Log.Warn($"Failed to extract timestamp from filename: {filePath}");
-        }
-
-        return DateTime.MinValue;
     }
 
     /// <summary>
