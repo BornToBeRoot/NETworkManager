@@ -760,7 +760,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     private void AddHostToHistory(string host)
     {
         // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.PingMonitor_HostHistory.ToList(), host,
+        var list = ListHelper.Modify([.. SettingsManager.Current.PingMonitor_HostHistory], host,
             SettingsManager.Current.General_HistoryListEntries);
 
         // Clear the old items
@@ -768,7 +768,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         OnPropertyChanged(nameof(Host)); // Raise property changed again, after the collection has been cleared
 
         // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.PingMonitor_HostHistory.Add(x));
+        list.ForEach(SettingsManager.Current.PingMonitor_HostHistory.Add);
     }
 
     private void SetIsExpandedForAllProfileGroups(bool isExpanded)

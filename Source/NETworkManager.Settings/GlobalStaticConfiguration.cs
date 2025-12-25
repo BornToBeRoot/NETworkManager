@@ -46,6 +46,9 @@ public static class GlobalStaticConfiguration
     public static string ZipFileExtensionFilter => "ZIP Archive (*.zip)|*.zip";
     public static string XmlFileExtensionFilter => "XML-File (*.xml)|*.xml";
 
+    // Backup settings
+    public static int Backup_MaximumNumberOfBackups => 10;
+
     #endregion
 
     #region Default settings
