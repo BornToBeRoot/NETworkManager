@@ -237,6 +237,9 @@ public static class SettingsManager
         // Create the directory if it does not exist
         Directory.CreateDirectory(GetSettingsFolderLocation());
 
+        // Create backup before modifying
+        CreateDailyBackupIfNeeded();
+
         // Serialize the settings to a file
         SerializeToFile(GetSettingsFilePath());
 
@@ -258,15 +261,91 @@ public static class SettingsManager
     #endregion
 
     #region Backup
-    /*
-    private static void Backup()
+    /// <summary>
+    /// Creates a backup of the settings file if a backup has not already been created for the current day.
+    /// </summary>
+    /// <remarks>This method checks whether a backup for the current date exists and, if not, creates a new
+    /// backup of the settings file. It also removes old backups according to the configured maximum number of backups.
+    /// If the settings file does not exist, no backup is created and a warning is logged. This method is intended to be
+    /// called as part of a daily maintenance routine.</remarks>
+    private static void CreateDailyBackupIfNeeded()
     {
-        Log.Info("Creating settings backup...");
+        var currentDate = DateTime.Now.Date;
 
-        // Create the backup directory if it does not exist
-        Directory.CreateDirectory(GetSettingsBackupFolderLocation());
+        if (Current.LastBackup < currentDate)
+        {
+            // Check if settings file exists
+            if (!File.Exists(GetSettingsFilePath()))
+            {
+                Log.Warn("Settings file does not exist yet. Skipping backup creation...");
+                return;
+            }
+
+            // Create backup
+            Backup(GetSettingsFilePath(),
+                GetSettingsBackupFolderLocation(),
+                $"{TimestampHelper.GetTimestamp()}_{GetSettingsFileName()}");
+
+            // Cleanup old backups
+            CleanupBackups(GetSettingsBackupFolderLocation(),
+                GetSettingsFileName(),
+                GlobalStaticConfiguration.Backup_MaximumNumberOfBackups);
+
+            Current.LastBackup = currentDate;
+        }
     }
-    */
+
+    /// <summary>
+    /// Deletes older backup files in the specified folder to ensure that only the most recent backups, up to the
+    /// specified maximum, are retained.
+    /// </summary>
+    /// <remarks>This method removes the oldest backup files first, keeping only the most recent backups as
+    /// determined by file creation time. It is intended to prevent excessive accumulation of backup files and manage
+    /// disk space usage.</remarks>
+    /// <param name="backupFolderPath">The full path to the directory containing the backup files to be managed. Cannot be null or empty.</param>
+    /// <param name="settingsFileName">The file name pattern used to identify backup files for cleanup.</param>
+    /// <param name="maxBackupFiles">The maximum number of backup files to retain. Must be greater than zero.</param>
+    private static void CleanupBackups(string backupFolderPath, string settingsFileName, int maxBackupFiles)
+    {
+        var backupFiles = Directory.GetFiles(backupFolderPath)
+            .Where(f => f.EndsWith(settingsFileName) || f.EndsWith(Path.Combine(GetLegacySettingsFileName())))
+            .OrderByDescending(f => File.GetCreationTime(f))
+            .ToList();
+
+        if (backupFiles.Count > maxBackupFiles)
+            Log.Info($"Cleaning up old backup files... Found {backupFiles.Count} backups, keeping the most recent {maxBackupFiles}.");
+
+        while (backupFiles.Count > maxBackupFiles)
+        {
+            var fileToDelete = backupFiles.Last();
+
+            File.Delete(fileToDelete);
+
+            backupFiles.RemoveAt(backupFiles.Count - 1);
+
+            Log.Info($"Backup deleted: {fileToDelete}");
+        }
+    }
+
+    /// <summary>
+    /// Creates a backup of the specified settings file in the given backup folder with the provided backup file name.
+    /// </summary>
+    /// <param name="setingsFilePath">The full path to the settings file to back up. Cannot be null or empty.</param>
+    /// <param name="backupFolderPath">The directory path where the backup file will be stored. If the directory does not exist, it will be created.</param>
+    /// <param name="backupFileName">The name to use for the backup file within the backup folder. Cannot be null or empty.</param>
+    private static void Backup(string setingsFilePath, string backupFolderPath, string backupFileName)
+    {
+        // Create the backup directory if it does not exist
+        Directory.CreateDirectory(backupFolderPath);
+
+        // Create the backup file path
+        var backupFilePath = Path.Combine(backupFolderPath, backupFileName);
+
+        // Copy the current settings file to the backup location
+        File.Copy(setingsFilePath, backupFilePath, true);
+
+        Log.Info($"Backup created: {backupFilePath}");
+    }
 
     #endregion
 

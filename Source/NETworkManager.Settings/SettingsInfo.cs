@@ -109,6 +109,27 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Private field for the <see cref="LastBackup" /> property.
+    /// </summary>
+    private DateTime _lastBackup = DateTime.Now.Date;
+
+    /// <summary>
+    /// Store the date and time of the last backup of the settings file.
+    /// </summary>
+    public DateTime LastBackup
+    {
+        get => _lastBackup;
+        set
+        {
+            if (value == _lastBackup)
+                return;
+     
+            _lastBackup = value;
+            OnPropertyChanged();
+        }
+    }
+
     #region General
 
     // General   
@@ -1400,7 +1421,7 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #region Ping Monitor
 
-    private ObservableCollection<string> _pingMonitor_HostHistory = new();
+    private ObservableCollection<string> _pingMonitor_HostHistory = [];
 
     public ObservableCollection<string> PingMonitor_HostHistory
     {
