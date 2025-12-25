@@ -94,7 +94,7 @@ public partial class App
         catch (InvalidOperationException ex)
         {
             Log.Error("Could not load application settings!", ex);
-            
+
             HandleCorruptedSettingsFile();
         }
         catch (JsonException ex)

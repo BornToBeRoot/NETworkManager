@@ -181,7 +181,7 @@ public static class SettingsManager
             Backup(legacyFilePath,
                 GetSettingsBackupFolderLocation(),
                 $"{TimestampHelper.GetTimestamp()}_{GetLegacySettingsFileName()}");
-            
+
             File.Delete(legacyFilePath);
 
             Log.Info("Settings migration from XML to JSON completed successfully.");

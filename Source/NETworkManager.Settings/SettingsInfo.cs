@@ -124,7 +124,7 @@ public class SettingsInfo : INotifyPropertyChanged
         {
             if (value == _lastBackup)
                 return;
-     
+
             _lastBackup = value;
             OnPropertyChanged();
         }
@@ -1237,7 +1237,7 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #region Port Scanner
 
-    private ObservableCollection<string> _portScanner_HostHistory = new();
+    private ObservableCollection<string> _portScanner_HostHistory = [];
 
     public ObservableCollection<string> PortScanner_HostHistory
     {
@@ -1252,7 +1252,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ObservableCollection<string> _portScanner_PortHistory = new();
+    private ObservableCollection<string> _portScanner_PortHistory = [];
 
     public ObservableCollection<string> PortScanner_PortHistory
     {
@@ -1267,7 +1267,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ObservableCollection<PortProfileInfo> _portScanner_PortProfiles = new();
+    private ObservableCollection<PortProfileInfo> _portScanner_PortProfiles = [];
 
     public ObservableCollection<PortProfileInfo> PortScanner_PortProfiles
     {
@@ -1590,7 +1590,7 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #region Traceroute
 
-    private ObservableCollection<string> _traceroute_HostHistory = new();
+    private ObservableCollection<string> _traceroute_HostHistory = [];
 
     public ObservableCollection<string> Traceroute_HostHistory
     {
@@ -2020,7 +2020,7 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #region Remote Desktop
 
-    private ObservableCollection<string> _remoteDesktop_HostHistory = new();
+    private ObservableCollection<string> _remoteDesktop_HostHistory = [];
 
     public ObservableCollection<string> RemoteDesktop_HostHistory
     {
@@ -2600,7 +2600,7 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #region PowerShell
 
-    private ObservableCollection<string> _powerShell_HostHistory = new();
+    private ObservableCollection<string> _powerShell_HostHistory = [];
 
     public ObservableCollection<string> PowerShell_HostHistory
     {
@@ -2710,7 +2710,7 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #region PuTTY
 
-    private ObservableCollection<string> _puTTY_HostHistory = new();
+    private ObservableCollection<string> _puTTY_HostHistory = [];
 
     public ObservableCollection<string> PuTTY_HostHistory
     {
@@ -2860,7 +2860,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ObservableCollection<string> _puTTY_SerialLineHistory = new();
+    private ObservableCollection<string> _puTTY_SerialLineHistory = [];
 
     public ObservableCollection<string> PuTTY_SerialLineHistory
     {
@@ -2875,7 +2875,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ObservableCollection<string> _puTTY_PortHistory = new();
+    private ObservableCollection<string> _puTTY_PortHistory = [];
 
     public ObservableCollection<string> PuTTY_PortHistory
     {
@@ -2890,7 +2890,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ObservableCollection<string> _puTTY_BaudHistory = new();
+    private ObservableCollection<string> _puTTY_BaudHistory = [];
 
     public ObservableCollection<string> PuTTY_BaudHistory
     {
@@ -2905,7 +2905,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ObservableCollection<string> _puTTY_UsernameHistory = new();
+    private ObservableCollection<string> _puTTY_UsernameHistory = [];
 
     public ObservableCollection<string> PuTTY_UsernameHistory
     {
@@ -2920,7 +2920,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ObservableCollection<string> _puTTY_PrivateKeyFileHistory = new();
+    private ObservableCollection<string> _puTTY_PrivateKeyFileHistory = [];
 
     public ObservableCollection<string> PuTTY_PrivateKeyFileHistory
     {
@@ -2935,7 +2935,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ObservableCollection<string> _puTTY_ProfileHistory = new();
+    private ObservableCollection<string> _puTTY_ProfileHistory = [];
 
     public ObservableCollection<string> PuTTY_ProfileHistory
     {
@@ -3090,7 +3090,7 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #region TigerVNC
 
-    private ObservableCollection<string> _tigerVNC_HostHistory = new();
+    private ObservableCollection<string> _tigerVNC_HostHistory = [];
 
     public ObservableCollection<string> TigerVNC_HostHistory
     {
@@ -3105,7 +3105,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ObservableCollection<int> _tigerVNC_PortHistory = new();
+    private ObservableCollection<int> _tigerVNC_PortHistory = [];
 
     public ObservableCollection<int> TigerVNC_PortHistory
     {
@@ -3184,7 +3184,7 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #region Web Console
 
-    private ObservableCollection<string> _webConsole_UrlHistory = new();
+    private ObservableCollection<string> _webConsole_UrlHistory = [];
 
     public ObservableCollection<string> WebConsole_UrlHistory
     {
@@ -3278,7 +3278,7 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #region SNMP
 
-    private ObservableCollection<string> _snmp_HostHistory = new();
+    private ObservableCollection<string> _snmp_HostHistory = [];
 
     public ObservableCollection<string> SNMP_HostHistory
     {
@@ -3293,7 +3293,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ObservableCollection<string> _snmp_OidHistory = new();
+    private ObservableCollection<string> _snmp_OidHistory = [];
 
     public ObservableCollection<string> SNMP_OidHistory
     {
@@ -3308,7 +3308,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ObservableCollection<SNMPOIDProfileInfo> _snmp_OidProfiles = new();
+    private ObservableCollection<SNMPOIDProfileInfo> _snmp_OidProfiles = [];
 
     public ObservableCollection<SNMPOIDProfileInfo> SNMP_OidProfiles
     {
@@ -3702,7 +3702,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ObservableCollection<string> _wakeOnLan_MACAddressHistory = new();
+    private ObservableCollection<string> _wakeOnLan_MACAddressHistory = [];
 
     public ObservableCollection<string> WakeOnLan_MACAddressHistory
     {
@@ -3717,7 +3717,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ObservableCollection<string> _wakeOnLan_BroadcastHistory = new();
+    private ObservableCollection<string> _wakeOnLan_BroadcastHistory = [];
 
     public ObservableCollection<string> WakeOnLan_BroadcastHistory
     {
@@ -3766,7 +3766,7 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #region Whois
 
-    private ObservableCollection<string> _whois_DomainHistory = new();
+    private ObservableCollection<string> _whois_DomainHistory = [];
 
     public ObservableCollection<string> Whois_DomainHistory
     {
@@ -3845,7 +3845,7 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #region IP Geolocation
 
-    private ObservableCollection<string> _ipGeolocation_HostHistory = new();
+    private ObservableCollection<string> _ipGeolocation_HostHistory = [];
 
     public ObservableCollection<string> IPGeolocation_HostHistory
     {
@@ -3926,7 +3926,7 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #region Calculator
 
-    private ObservableCollection<string> _subnetCalculator_Calculator_SubnetHistory = new();
+    private ObservableCollection<string> _subnetCalculator_Calculator_SubnetHistory = [];
 
     public ObservableCollection<string> SubnetCalculator_Calculator_SubnetHistory
     {
@@ -3945,7 +3945,7 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #region Subnetting
 
-    private ObservableCollection<string> _subnetCalculator_Subnetting_SubnetHistory = new();
+    private ObservableCollection<string> _subnetCalculator_Subnetting_SubnetHistory = [];
 
     public ObservableCollection<string> SubnetCalculator_Subnetting_SubnetHistory
     {
@@ -3960,7 +3960,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ObservableCollection<string> _subnetCalculator_Subnetting_NewSubnetmaskHistory = new();
+    private ObservableCollection<string> _subnetCalculator_Subnetting_NewSubnetmaskHistory = [];
 
     public ObservableCollection<string> SubnetCalculator_Subnetting_NewSubnetmaskHistory
     {
@@ -4010,7 +4010,7 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #region WideSubnet
 
-    private ObservableCollection<string> _subnetCalculator_WideSubnet_Subnet1 = new();
+    private ObservableCollection<string> _subnetCalculator_WideSubnet_Subnet1 = [];
 
     public ObservableCollection<string> SubnetCalculator_WideSubnet_Subnet1
     {
@@ -4025,7 +4025,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ObservableCollection<string> _subnetCalculator_WideSubnet_Subnet2 = new();
+    private ObservableCollection<string> _subnetCalculator_WideSubnet_Subnet2 = [];
 
     public ObservableCollection<string> SubnetCalculator_WideSubnet_Subnet2
     {
@@ -4046,7 +4046,7 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #region Bit Calculator
 
-    private ObservableCollection<string> _bitCalculator_InputHistory = new();
+    private ObservableCollection<string> _bitCalculator_InputHistory = [];
 
     public ObservableCollection<string> BitCalculator_InputHistory
     {
