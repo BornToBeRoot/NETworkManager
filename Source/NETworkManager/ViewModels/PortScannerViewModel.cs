@@ -565,14 +565,19 @@ public class PortScannerViewModel : ViewModelBase
 
     private void ScanComplete(object sender, EventArgs e)
     {
-        if (Results.Count == 0)
+        // Run in UI thread with lower priority than PortScanned event
+        // to ensure all results are added first #3285
+        Application.Current.Dispatcher.Invoke(() =>
         {
-            StatusMessage = Strings.NoOpenPortsFound;
-            IsStatusMessageDisplayed = true;
-        }
+            if (Results.Count == 0)
+            {
+                StatusMessage = Strings.NoOpenPortsFound;
+                IsStatusMessageDisplayed = true;
+            }
 
-        IsCanceling = false;
-        IsRunning = false;
+            IsCanceling = false;
+            IsRunning = false;
+        }, DispatcherPriority.Background);
     }
 
     private void UserHasCanceled(object sender, EventArgs e)

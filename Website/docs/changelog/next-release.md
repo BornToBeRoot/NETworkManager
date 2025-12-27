@@ -84,6 +84,14 @@ Release date: **xx.xx.2025**
 
 ## Bug Fixes
 
+**IP Scanner**
+
+- Fix race condition when scan is complete but not all results have been processed yet, causing a wrong error message to be displayed. [#3287](https://github.com/BornToBeRoot/NETworkManager/pull/3287)
+
+**Port Scanner**
+
+- Fix race condition when scan is complete but not all results have been processed yet, causing a wrong error message to be displayed. [#3287](https://github.com/BornToBeRoot/NETworkManager/pull/3287)
+
 **PowerShell**
 
 - Resolve the actual path to `pwsh.exe` under `C:\Program Files\WindowsApps\` instead of relying on the stub located at `%LocalAppData%\Microsoft\WindowsApps\`. The stub simply redirects to the real executable, and settings such as themes are applied only to the real binary via the registry. [#3246](https://github.com/BornToBeRoot/NETworkManager/pull/3246)

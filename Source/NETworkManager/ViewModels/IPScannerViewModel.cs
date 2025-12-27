@@ -536,7 +536,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         IsSubnetDetectionRunning = true;
 
-        var localIP = await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(IPAddress.Parse("1.1.1.1"));
+        var localIP = await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(IPAddress.Parse(GlobalStaticConfiguration.Dashboard_PublicIPv4Address));
 
         // Could not detect local ip address
         if (localIP != null)
@@ -716,7 +716,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private void HostScanned(object sender, IPScannerHostScannedArgs e)
     {
         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
-            new Action(delegate { Results.Add(e.Args); }));
+            new Action(delegate { 
+                Results.Add(e.Args); 
+            }));
     }
 
     /// <summary>
@@ -736,14 +738,19 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
     private void ScanComplete(object sender, EventArgs e)
     {
-        if (Results.Count == 0)
+        // Run in UI thread with lower priority than HostScanned event
+        // to ensure all results are added first #3285
+        Application.Current.Dispatcher.Invoke(() =>
         {
-            StatusMessage = Strings.NoReachableHostsFound;
-            IsStatusMessageDisplayed = true;
-        }
+            if (Results.Count == 0)
+            {
+                StatusMessage = Strings.NoReachableHostsFound;
+                IsStatusMessageDisplayed = true;
+            }
 
-        IsCanceling = false;
-        IsRunning = false;
+            IsCanceling = false;
+            IsRunning = false;
+        }, DispatcherPriority.Background);
     }
 
     /// <summary>
