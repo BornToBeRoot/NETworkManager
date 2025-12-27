@@ -231,7 +231,7 @@ public sealed class NetworkInterface
 
             if (socket.LocalEndPoint is IPEndPoint ipAddress)
                 return ipAddress.Address;
-        }
+        }        
         catch (SocketException) { }
 
         return null;
@@ -296,20 +296,18 @@ public sealed class NetworkInterface
         {
             // First try to get global or unique local addresses
             foreach (var networkInterface in networkInterfaces)
-            {
                 candidates.AddRange(networkInterface.IPv6Address);
-            }
 
             // Return first candidate if any found
             if (candidates.Count != 0)
                 return candidates.First();
 
             // Fallback to link-local addresses
-            foreach (var networkInterface in networkInterfaces)
-            {
-                if (networkInterface.IPv6AddressLinkLocal.Length != 0)
-                    return networkInterface.IPv6AddressLinkLocal.First();
-            }
+            var firstWithLinkLocal = networkInterfaces
+               .FirstOrDefault(ni => ni.IPv6AddressLinkLocal.Length != 0);
+
+            if (firstWithLinkLocal != null)
+                return firstWithLinkLocal.IPv6AddressLinkLocal.First();
         }
 
         return null;
