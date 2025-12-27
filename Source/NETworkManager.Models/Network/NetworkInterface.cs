@@ -288,7 +288,7 @@ public sealed class NetworkInterface
             });
 
             // Return first non-link-local or first candidate if none found (might be null - no addresses at all)
-            return nonLinkLocal.Any() ? nonLinkLocal.First() : candidates.First();
+            return nonLinkLocal.Any() ? nonLinkLocal.First() : candidates.FirstOrDefault();
         }
 
         // IPv6
