@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -13,8 +12,15 @@ using NETworkManager.Utilities;
 namespace NETworkManager.Models.Network;
 
 /// <summary>
-///     Provides functionality to manage network interfaces.
+/// Provides static and instance methods for retrieving information about network interfaces, detecting local IP
+/// addresses and gateways, and configuring network interface settings on the local machine.
 /// </summary>
+/// <remarks>The NetworkInterface class offers both synchronous and asynchronous methods for enumerating network
+/// interfaces, detecting routing and gateway information, and performing network configuration tasks such as setting IP
+/// addresses, DNS servers, and flushing the DNS cache. Most configuration operations require administrative privileges.
+/// Events are provided to notify when user-initiated cancellations occur, such as when a UAC prompt is dismissed. This
+/// class is intended for use in applications that need to query or modify network interface settings
+/// programmatically.</remarks>
 public sealed class NetworkInterface
 {
     #region Variables
@@ -37,18 +43,24 @@ public sealed class NetworkInterface
     #region Methods
 
     /// <summary>
-    ///     Gets a list of all available network interfaces asynchronously.
+    /// Asynchronously retrieves a list of available network interfaces on the local machine.
     /// </summary>
-    /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="NetworkInterfaceInfo"/>.</returns>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see
+    /// cref="NetworkInterfaceInfo"/> objects describing each detected network interface.</returns>
     public static Task<List<NetworkInterfaceInfo>> GetNetworkInterfacesAsync()
     {
         return Task.Run(GetNetworkInterfaces);
     }
 
     /// <summary>
-    ///     Gets a list of all available network interfaces.
+    /// Retrieves a list of network interfaces on the local machine, including detailed information about each interface
+    /// such as addresses, gateways, and DHCP settings.
     /// </summary>
-    /// <returns>A list of <see cref="NetworkInterfaceInfo"/> describing the available network interfaces.</returns>
+    /// <remarks>Only Ethernet, Wireless80211, and proprietary virtual/internal interfaces are included. The
+    /// returned information includes both IPv4 and IPv6 details, as well as DHCP and DNS configuration where available.
+    /// This method may require appropriate permissions to access network configuration data.</remarks>
+    /// <returns>A list of <see cref="NetworkInterfaceInfo"/> objects, each representing a network interface with its associated
+    /// properties. The list is empty if no matching interfaces are found.</returns>
     public static List<NetworkInterfaceInfo> GetNetworkInterfaces()
     {
         List<NetworkInterfaceInfo> listNetworkInterfaceInfo = [];
@@ -182,21 +194,29 @@ public sealed class NetworkInterface
     }
 
     /// <summary>
-    ///     Detects the local IP address from routing to a remote IP address asynchronously.
+    /// Asynchronously determines the local IP address that would be used to route traffic to the specified remote IP
+    /// address.
     /// </summary>
-    /// <param name="remoteIPAddress">The remote IP address to check routing against.</param>
-    /// <returns>A task that represents the asynchronous operation.
-    /// The task result contains the local <see cref="IPAddress"/> used to reach the remote address or null on error.</returns>
+    /// <remarks>This method is useful for identifying the local network interface that would be selected by
+    /// the system's routing table when communicating with a given remote address. The result may vary depending on the
+    /// current network configuration and routing rules.</remarks>
+    /// <param name="remoteIPAddress">The destination IP address for which to determine the corresponding local source IP address. Cannot be null.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the local IP address that would be
+    /// used to reach the specified remote IP address.</returns>
     public static Task<IPAddress> DetectLocalIPAddressBasedOnRoutingAsync(IPAddress remoteIPAddress)
     {
         return Task.Run(() => DetectLocalIPAddressFromRouting(remoteIPAddress));
     }
 
     /// <summary>
-    ///     Detects the local IP address from routing to a remote IP address.
+    /// Determines the local IP address that would be used to route traffic to the specified remote IP address.
     /// </summary>
-    /// <param name="remoteIPAddress">The remote IP address to check routing against.</param>
-    /// <returns>The local <see cref="IPAddress"/> used to reach the remote address or null on error.</returns>
+    /// <remarks>This method creates a UDP socket to determine the local IP address selected by the system's
+    /// routing table for the given remote address. No data is sent over the network. This method may return null if the
+    /// routing information is unavailable or an error occurs.</remarks>
+    /// <param name="remoteIPAddress">The destination IP address for which to determine the local routing address. Must not be null.</param>
+    /// <returns>An IPAddress representing the local address that would be used to reach the specified remote address; or null if
+    /// the local address cannot be determined.</returns>
     private static IPAddress DetectLocalIPAddressFromRouting(IPAddress remoteIPAddress)
     {
         var isIPv4 = remoteIPAddress.AddressFamily == AddressFamily.InterNetwork;
@@ -296,21 +316,26 @@ public sealed class NetworkInterface
     }
 
     /// <summary>
-    ///     Detects the gateway IP address from a local IP address asynchronously.
+    /// Asynchronously detects the default gateway address associated with the specified local IP address.
     /// </summary>
-    /// <param name="localIPAddress">The local IP address to find the gateway for.</param>
-    /// <returns>A task that represents the asynchronous operation.
-    /// The task result contains the gateway as <see cref="IPAddress"/> or null if not found.</returns>
+    /// <param name="localIPAddress">The local IP address for which to determine the corresponding default gateway. Cannot be null.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the IP address of the detected
+    /// default gateway, or null if no gateway is found.</returns>
     public static Task<IPAddress> DetectGatewayFromLocalIPAddressAsync(IPAddress localIPAddress)
     {
         return Task.Run(() => DetectGatewayFromLocalIPAddress(localIPAddress));
     }
 
     /// <summary>
-    ///     Detects the gateway IP address from a local IP address.
+    /// Attempts to determine the default gateway address associated with the specified local IP address.
     /// </summary>
-    /// <param name="localIPAddress">The local IP address to find the gateway for.</param>
-    /// <returns>The gateway as <see cref="IPAddress"/> or null if not found.</returns>    
+    /// <remarks>This method searches all available network interfaces to find one that has the specified
+    /// local IP address assigned. If found, it returns the first associated gateway address for that interface and
+    /// address family. Returns null if the local IP address is not assigned to any interface or if no gateway is
+    /// configured.</remarks>
+    /// <param name="localIPAddress">The local IP address for which to detect the corresponding gateway. Must be either an IPv4 or IPv6 address.</param>
+    /// <returns>An IPAddress representing the default gateway for the specified local IP address, or null if no matching gateway
+    /// is found.</returns>
     private static IPAddress DetectGatewayFromLocalIPAddress(IPAddress localIPAddress)
     {
         foreach (var networkInterface in GetNetworkInterfaces())
@@ -334,9 +359,9 @@ public sealed class NetworkInterface
     }
 
     /// <summary>
-    ///     Configures a network interface with the specified configuration asynchronously.
+    /// Asynchronously applies the specified network interface configuration.
     /// </summary>
-    /// <param name="config">The configuration to apply.</param>
+    /// <param name="config">The configuration settings to apply to the network interface. Cannot be null.</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
     public Task ConfigureNetworkInterfaceAsync(NetworkInterfaceConfig config)
     {
@@ -344,9 +369,13 @@ public sealed class NetworkInterface
     }
 
     /// <summary>
-    ///     Configures a network interface with the specified configuration.
+    /// Configures the network interface according to the specified settings.
     /// </summary>
-    /// <param name="config">The configuration to apply.</param>
+    /// <remarks>This method applies the provided network configuration by executing system commands. If
+    /// static IP or DNS settings are enabled in the configuration, the corresponding values are set; otherwise, DHCP is
+    /// used. The method may prompt for elevated permissions depending on system policy.</remarks>
+    /// <param name="config">An object containing the configuration parameters for the network interface, including IP address, subnet mask,
+    /// gateway, and DNS server settings. Cannot be null.</param>
     private void ConfigureNetworkInterface(NetworkInterfaceConfig config)
     {
         // IP
@@ -382,17 +411,21 @@ public sealed class NetworkInterface
     }
 
     /// <summary>
-    ///     Flush the DNS cache asynchronously.
+    /// Asynchronously flushes the system DNS resolver cache.
     /// </summary>
-    /// <returns>Running task.</returns>
+    /// <remarks>This method initiates the DNS cache flush operation on a background thread. The operation may
+    /// require elevated permissions depending on the system configuration.</remarks>
+    /// <returns>A task that represents the asynchronous flush operation.</returns>
     public static Task FlushDnsAsync()
     {
         return Task.Run(FlushDns);
     }
 
     /// <summary>
-    ///     Flush the DNS cache.
+    /// Clears the local DNS resolver cache on the system by executing the appropriate system command.
     /// </summary>
+    /// <remarks>This method requires administrative privileges to successfully flush the DNS cache. If the
+    /// application does not have sufficient permissions, the operation may fail.</remarks>
     private static void FlushDns()
     {
         const string command = "ipconfig /flushdns;";
@@ -401,21 +434,25 @@ public sealed class NetworkInterface
     }
 
     /// <summary>
-    ///     Release or renew the IP address of the specified network adapter asynchronously.
+    /// Asynchronously releases and renews the IP configuration for the specified network adapter using the given mode.
     /// </summary>
-    /// <param name="mode">ipconfig.exe modes which are used like /release(6) or /renew(6)</param>
-    /// <param name="adapterName">Name of the ethernet adapter.</param>
-    /// <returns>Running task.</returns>
+    /// <param name="mode">The release and renew operation mode to apply to the network adapter.</param>
+    /// <param name="adapterName">The name of the network adapter whose IP configuration will be released and renewed. Cannot be null or empty.</param>
+    /// <returns>A task that represents the asynchronous release and renew operation.</returns>
     public static Task ReleaseRenewAsync(IPConfigReleaseRenewMode mode, string adapterName)
     {
         return Task.Run(() => ReleaseRenew(mode, adapterName));
     }
 
     /// <summary>
-    ///     Release or renew the IP address of the specified network adapter.
+    /// Releases and/or renews the IP configuration for the specified network adapter using the given mode.
     /// </summary>
-    /// <param name="mode">ipconfig.exe modes which are used like /release(6) or /renew(6)</param>
-    /// <param name="adapterName">Name of the ethernet adapter.</param>
+    /// <remarks>This method executes the appropriate 'ipconfig' commands based on the specified mode. The
+    /// operation affects only the adapter identified by the provided name. Ensure that the caller has sufficient
+    /// privileges to modify network settings.</remarks>
+    /// <param name="mode">A value that specifies which IP configuration operation to perform. Determines whether to release, renew, or
+    /// perform both actions for IPv4 and/or IPv6 addresses.</param>
+    /// <param name="adapterName">The name of the network adapter to target for the release or renew operation. Cannot be null or empty.</param>
     private static void ReleaseRenew(IPConfigReleaseRenewMode mode, string adapterName)
     {
         var command = string.Empty;
@@ -436,19 +473,23 @@ public sealed class NetworkInterface
     }
 
     /// <summary>
-    ///     Add an IP address to a network interface asynchronously.
+    /// Asynchronously adds an IP address to the specified network interface using the provided configuration.
     /// </summary>
-    /// <param name="config">Ethernet adapter name, IP address and subnetmask.</param>
-    /// <returns>Running task.</returns>
+    /// <param name="config">The configuration settings that specify the network interface and IP address to add. Cannot be null.</param>
+    /// <returns>A task that represents the asynchronous operation.</returns>
     public static Task AddIPAddressToNetworkInterfaceAsync(NetworkInterfaceConfig config)
     {
         return Task.Run(() => AddIPAddressToNetworkInterface(config));
     }
 
     /// <summary>
-    ///     Add an IP address to a network interface.
+    /// Adds an IP address to the specified network interface using the provided configuration.
     /// </summary>
-    /// <param name="config">Ethernet adapter name, IP address and subnetmask.</param>
+    /// <remarks>If DHCP/static IP coexistence is enabled in the configuration, the method enables this
+    /// feature before adding the IP address. This method requires appropriate system permissions to modify network
+    /// interface settings.</remarks>
+    /// <param name="config">The network interface configuration containing the interface name, IP address, subnet mask, and DHCP/static
+    /// coexistence settings. Cannot be null.</param>
     private static void AddIPAddressToNetworkInterface(NetworkInterfaceConfig config)
     {
         var command = string.Empty;
@@ -462,19 +503,23 @@ public sealed class NetworkInterface
     }
 
     /// <summary>
-    ///     Remove an IP address from a network interface asynchronously.
+    /// Asynchronously removes the IP address specified in the configuration from the associated network interface.
     /// </summary>
-    /// <param name="config">Ethernet adapter name, IP address</param>
-    /// <returns>Running task.</returns>
+    /// <param name="config">The configuration object that specifies the network interface and IP address to remove. Cannot be null.</param>
+    /// <returns>A task that represents the asynchronous remove operation.</returns>
     public static Task RemoveIPAddressFromNetworkInterfaceAsync(NetworkInterfaceConfig config)
     {
         return Task.Run(() => RemoveIPAddressFromNetworkInterface(config));
     }
 
     /// <summary>
-    ///     Remove an IP address from a network interface.
+    /// Removes the specified IP address from the given network interface configuration.
     /// </summary>
-    /// <param name="config">Ethernet adapter name, IP address</param>
+    /// <remarks>This method removes the IP address from the network interface using a system command. The
+    /// operation requires appropriate system permissions and may fail if the interface or IP address does not
+    /// exist.</remarks>
+    /// <param name="config">The network interface configuration containing the name of the interface and the IP address to remove. Cannot be
+    /// null.</param>
     private static void RemoveIPAddressFromNetworkInterface(NetworkInterfaceConfig config)
     {
         var command = $"netsh interface ipv4 delete address '{config.Name}' {config.IPAddress};";
@@ -488,8 +533,8 @@ public sealed class NetworkInterface
     #region Events
 
     /// <summary>
-    ///     Occurs when the user has canceled an operation (e.g. UAC prompt).
-    /// </summary>
+    /// Occurs when the user cancels the current operation (e.g. UAC prompt).
+    /// </summary>    
     public event EventHandler UserHasCanceled;
 
     private void OnUserHasCanceled()
