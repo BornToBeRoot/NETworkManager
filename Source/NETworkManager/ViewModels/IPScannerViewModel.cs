@@ -729,8 +729,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private void HostScanned(object sender, IPScannerHostScannedArgs e)
     {
         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
-            new Action(delegate { 
-                Results.Add(e.Args); 
+            new Action(delegate
+            {
+                Results.Add(e.Args);
             }));
     }
 

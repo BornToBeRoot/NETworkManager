@@ -231,7 +231,7 @@ public sealed class NetworkInterface
 
             if (socket.LocalEndPoint is IPEndPoint ipAddress)
                 return ipAddress.Address;
-        }        
+        }
         catch (SocketException) { }
 
         return null;

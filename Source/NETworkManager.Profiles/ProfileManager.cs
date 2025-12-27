@@ -479,7 +479,7 @@ public static class ProfileManager
 
             return;
         }
-            
+
 
         Directory.CreateDirectory(GetProfilesFolderLocation());
 
