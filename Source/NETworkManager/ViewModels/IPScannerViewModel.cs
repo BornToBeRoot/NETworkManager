@@ -552,7 +552,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             // Get network interfaces, where local IP address is assigned
             var networkInterface = (await NetworkInterface.GetNetworkInterfacesAsync())
-                .First(x => x.IPv4Address.Any(y => y.Item1.Equals(localIP)));
+                .FirstOrDefault(x => x.IPv4Address.Any(y => y.Item1.Equals(localIP)));
 
             // If found, get subnetmask
             if (networkInterface != null)
