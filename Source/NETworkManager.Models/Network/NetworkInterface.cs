@@ -352,7 +352,7 @@ public sealed class NetworkInterface
             {
                 if (networkInterface.IPv6Address.Contains(localIPAddress))
                     return networkInterface.IPv6Gateway.FirstOrDefault();
-            }            
+            }
         }
 
         return null;
