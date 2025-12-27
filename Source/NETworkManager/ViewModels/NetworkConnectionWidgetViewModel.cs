@@ -901,7 +901,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
                 Log.Debug("CheckConnectionRouterAsync - Computer IPv4 address detected: " + detectedLocalIPv4Address);
 
                 var detectedRouterIPv4 =
-                    await NetworkInterface.DetectGatewayBasedOnLocalIPAddressAsync(
+                    await NetworkInterface.DetectGatewayFromLocalIPAddressAsync(
                         detectedLocalIPv4Address);
 
                 if (detectedRouterIPv4 != null)
@@ -944,7 +944,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
                 Log.Debug("CheckConnectionRouterAsync - Computer IPv6 address detected: " + detectedComputerIPv6);
 
                 var detectedRouterIPv6 =
-                    await NetworkInterface.DetectGatewayBasedOnLocalIPAddressAsync(detectedComputerIPv6);
+                    await NetworkInterface.DetectGatewayFromLocalIPAddressAsync(detectedComputerIPv6);
 
                 if (detectedRouterIPv6 != null)
                 {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -16,17 +17,20 @@ namespace NETworkManager.Models.Network;
 /// </summary>
 public sealed class NetworkInterface
 {
-    #region Events
+    #region Variables
 
-    /// <summary>
-    ///     Occurs when the user has canceled an operation (e.g. UAC prompt).
-    /// </summary>
-    public event EventHandler UserHasCanceled;
-
-    private void OnUserHasCanceled()
-    {
-        UserHasCanceled?.Invoke(this, EventArgs.Empty);
-    }
+    /* Ref #3286
+    private static List<string> NetworkInterfacesBlacklist =
+    [
+        "Hyper-V Virtual Switch Extension Filter",
+        "WFP Native MAC Layer LightWeight Filter",
+        "Npcap Packet Driver (NPCAP)",
+        "QoS Packet Scheduler",
+        "WFP 802.3 MAC Layer LightWeight Filter",
+        "Ethernet (Kerneldebugger)",
+        "Filter Driver"
+    ];
+    */
 
     #endregion
 
@@ -47,7 +51,7 @@ public sealed class NetworkInterface
     /// <returns>A list of <see cref="NetworkInterfaceInfo"/> describing the available network interfaces.</returns>
     public static List<NetworkInterfaceInfo> GetNetworkInterfaces()
     {
-        List<NetworkInterfaceInfo> listNetworkInterfaceInfo = new();
+        List<NetworkInterfaceInfo> listNetworkInterfaceInfo = [];
 
         foreach (var networkInterface in System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces())
         {
@@ -57,6 +61,13 @@ public sealed class NetworkInterface
                 networkInterface.NetworkInterfaceType != NetworkInterfaceType.Wireless80211 &&
                 (int)networkInterface.NetworkInterfaceType != 53)
                 continue;
+
+            // Check if part of the  Name is in blacklist Ref #3286
+            //if (NetworkInterfacesBlacklist.Any(networkInterface.Name.Contains))
+            //    continue;
+
+            //Debug.WriteLine(networkInterface.Name);
+            //Debug.WriteLine($"  Description: {networkInterface.Description}");
 
             var listIPv4Address = new List<Tuple<IPAddress, IPAddress>>();
             var listIPv6AddressLinkLocal = new List<IPAddress>();
@@ -107,7 +118,7 @@ public sealed class NetworkInterface
                 }
             }
 
-            // Check if autoconfiguration for DNS is enabled (only via registry key)
+            // Check if autoconfiguration for DNS is enabled (only possible via registry key)
             var nameServerKey =
                 Registry.LocalMachine.OpenSubKey(
                     $@"SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Interfaces\{networkInterface.Id}");
@@ -150,20 +161,20 @@ public sealed class NetworkInterface
                 IsOperational = networkInterface.OperationalStatus == OperationalStatus.Up,
                 Speed = networkInterface.Speed,
                 IPv4ProtocolAvailable = ipv4ProtocolAvailable,
-                IPv4Address = listIPv4Address.ToArray(),
-                IPv4Gateway = listIPv4Gateway.ToArray(),
+                IPv4Address = [.. listIPv4Address],
+                IPv4Gateway = [.. listIPv4Gateway],
                 DhcpEnabled = ipv4Properties is { IsDhcpEnabled: true },
-                DhcpServer = ipProperties.DhcpServerAddresses.Where(dhcpServerIPAddress =>
-                    dhcpServerIPAddress.AddressFamily == AddressFamily.InterNetwork).ToArray(),
+                DhcpServer = [.. ipProperties.DhcpServerAddresses.Where(dhcpServerIPAddress =>
+                    dhcpServerIPAddress.AddressFamily == AddressFamily.InterNetwork)],
                 DhcpLeaseObtained = dhcpLeaseObtained,
                 DhcpLeaseExpires = dhcpLeaseExpires,
                 IPv6ProtocolAvailable = ipv6ProtocolAvailable,
-                IPv6AddressLinkLocal = listIPv6AddressLinkLocal.ToArray(),
-                IPv6Address = listIPv6Address.ToArray(),
-                IPv6Gateway = listIPv6Gateway.ToArray(),
+                IPv6AddressLinkLocal = [.. listIPv6AddressLinkLocal],
+                IPv6Address = [.. listIPv6Address],
+                IPv6Gateway = [.. listIPv6Gateway],
                 DNSAutoconfigurationEnabled = dnsAutoconfigurationEnabled,
                 DNSSuffix = ipProperties.DnsSuffix,
-                DNSServer = ipProperties.DnsAddresses.ToArray()
+                DNSServer = [.. ipProperties.DnsAddresses]
             });
         }
 
@@ -171,26 +182,26 @@ public sealed class NetworkInterface
     }
 
     /// <summary>
-    ///     Detects the local IP address based on routing to a remote IP address asynchronously.
+    ///     Detects the local IP address from routing to a remote IP address asynchronously.
     /// </summary>
     /// <param name="remoteIPAddress">The remote IP address to check routing against.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains the local <see cref="IPAddress"/> used to reach the remote address.</returns>
+    /// <returns>A task that represents the asynchronous operation.
+    /// The task result contains the local <see cref="IPAddress"/> used to reach the remote address or null on error.</returns>
     public static Task<IPAddress> DetectLocalIPAddressBasedOnRoutingAsync(IPAddress remoteIPAddress)
     {
-        return Task.Run(() => DetectLocalIPAddressBasedOnRouting(remoteIPAddress));
+        return Task.Run(() => DetectLocalIPAddressFromRouting(remoteIPAddress));
     }
 
     /// <summary>
-    ///     Detects the local IP address based on routing to a remote IP address.
+    ///     Detects the local IP address from routing to a remote IP address.
     /// </summary>
     /// <param name="remoteIPAddress">The remote IP address to check routing against.</param>
-    /// <returns>The local <see cref="IPAddress"/> used to reach the remote address.</returns>
-    private static IPAddress DetectLocalIPAddressBasedOnRouting(IPAddress remoteIPAddress)
+    /// <returns>The local <see cref="IPAddress"/> used to reach the remote address or null on error.</returns>
+    private static IPAddress DetectLocalIPAddressFromRouting(IPAddress remoteIPAddress)
     {
         var isIPv4 = remoteIPAddress.AddressFamily == AddressFamily.InterNetwork;
 
-        using var socket = new Socket(isIPv4 ? AddressFamily.InterNetwork : AddressFamily.InterNetworkV6,
-            SocketType.Dgram, ProtocolType.Udp);
+        using var socket = new Socket(remoteIPAddress.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
 
         // return null on error...
         try
@@ -201,45 +212,123 @@ public sealed class NetworkInterface
             if (socket.LocalEndPoint is IPEndPoint ipAddress)
                 return ipAddress.Address;
         }
-        catch (SocketException)
+        catch (SocketException) { }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Asynchronously detects the local IP address associated with a network interface that matches the specified
+    /// address family.
+    /// </summary>
+    /// <param name="addressFamily">The address family to use when searching for a local IP address. Typically, use AddressFamily.InterNetwork for
+    /// IPv4 or AddressFamily.InterNetworkV6 for IPv6.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the detected local IP address, or
+    /// null if no suitable address is found.</returns>
+    public static Task<IPAddress> DetectLocalIPAddressFromNetworkInterfaceAsync(AddressFamily addressFamily)
+    {
+        return Task.Run(() => DetectLocalIPAddressFromNetworkInterface(addressFamily));
+    }
+
+    /// <summary>
+    /// Detects and returns the first local IP address assigned to an operational network interface that matches the
+    /// specified address family.
+    /// </summary>
+    /// <remarks>For IPv4, the method prefers non-link-local addresses but will return a link-local address if
+    /// no other is available. For IPv6, the method returns the first global or unique local address if present;
+    /// otherwise, it returns a link-local address if available. The returned address is selected from operational
+    /// network interfaces only.</remarks>
+    /// <param name="addressFamily">The address family to search for. Specify <see cref="AddressFamily.InterNetwork"/> for IPv4 addresses or <see
+    /// cref="AddressFamily.InterNetworkV6"/> for IPv6 addresses.</param>
+    /// <returns>An <see cref="IPAddress"/> representing the first detected local IP address for the specified address family, or
+    /// <see langword="null"/> if no suitable address is found.</returns>
+    public static IPAddress DetectLocalIPAddressFromNetworkInterface(AddressFamily addressFamily)
+    {
+        // Filter operational network interfaces
+        var networkInterfaces = GetNetworkInterfaces()
+            .Where(x => x.IsOperational);
+
+        var candidates = new List<IPAddress>();
+
+        // IPv4
+        if (addressFamily == AddressFamily.InterNetwork)
+        {           
+            foreach (var networkInterface in networkInterfaces)
+            {
+                foreach (var ipAddress in networkInterface.IPv4Address)
+                    candidates.Add(ipAddress.Item1);
+            }
+
+            // Prefer non-link-local addresses
+            var nonLinkLocal = candidates.Where(x =>
+            {
+                var bytes = x.GetAddressBytes();
+
+                return !(bytes[0] == 169 && bytes[1] == 254);
+            });
+
+            // Return first non-link-local or first candidate if none found (might be null - no addresses at all)
+            return nonLinkLocal.Any() ? nonLinkLocal.First() : candidates.First();
+        }
+
+        // IPv6
+        if (addressFamily == AddressFamily.InterNetworkV6)
         {
+            // First try to get global or unique local addresses
+            foreach (var networkInterface in networkInterfaces)
+            {
+                candidates.AddRange(networkInterface.IPv6Address);
+            }
+
+            // Return first candidate if any found
+            if (candidates.Count != 0)
+                return candidates.First();
+
+            // Fallback to link-local addresses
+            foreach (var networkInterface in networkInterfaces)
+            {
+                if (networkInterface.IPv6AddressLinkLocal.Length != 0)
+                    return networkInterface.IPv6AddressLinkLocal.First();
+            }
         }
 
         return null;
     }
 
     /// <summary>
-    ///     Detects the gateway IP address based on a local IP address asynchronously.
+    ///     Detects the gateway IP address from a local IP address asynchronously.
     /// </summary>
     /// <param name="localIPAddress">The local IP address to find the gateway for.</param>
-    /// <returns>A task that represents the asynchronous operation. The task result contains the gateway <see cref="IPAddress"/>.</returns>
-    public static Task<IPAddress> DetectGatewayBasedOnLocalIPAddressAsync(IPAddress localIPAddress)
+    /// <returns>A task that represents the asynchronous operation.
+    /// The task result contains the gateway as <see cref="IPAddress"/> or null if not found.</returns>
+    public static Task<IPAddress> DetectGatewayFromLocalIPAddressAsync(IPAddress localIPAddress)
     {
-        return Task.Run(() => DetectGatewayBasedOnLocalIPAddress(localIPAddress));
+        return Task.Run(() => DetectGatewayFromLocalIPAddress(localIPAddress));
     }
 
     /// <summary>
-    ///     Detects the gateway IP address based on a local IP address.
+    ///     Detects the gateway IP address from a local IP address.
     /// </summary>
     /// <param name="localIPAddress">The local IP address to find the gateway for.</param>
-    /// <returns>The gateway <see cref="IPAddress"/>.</returns>
-    private static IPAddress DetectGatewayBasedOnLocalIPAddress(IPAddress localIPAddress)
+    /// <returns>The gateway as <see cref="IPAddress"/> or null if not found.</returns>    
+    private static IPAddress DetectGatewayFromLocalIPAddress(IPAddress localIPAddress)
     {
         foreach (var networkInterface in GetNetworkInterfaces())
+        {
+            // IPv4
             if (localIPAddress.AddressFamily == AddressFamily.InterNetwork)
             {
                 if (networkInterface.IPv4Address.Any(x => x.Item1.Equals(localIPAddress)))
                     return networkInterface.IPv4Gateway.FirstOrDefault();
             }
-            else if (localIPAddress.AddressFamily == AddressFamily.InterNetworkV6)
+
+            // IPv6
+            if (localIPAddress.AddressFamily == AddressFamily.InterNetworkV6)
             {
                 if (networkInterface.IPv6Address.Contains(localIPAddress))
                     return networkInterface.IPv6Gateway.FirstOrDefault();
-            }
-            else
-            {
-                throw new Exception("IPv4 or IPv6 address is required to detect the gateway.");
-            }
+            }            
+        }
 
         return null;
     }
@@ -394,4 +483,20 @@ public sealed class NetworkInterface
     }
 
     #endregion
+
+
+    #region Events
+
+    /// <summary>
+    ///     Occurs when the user has canceled an operation (e.g. UAC prompt).
+    /// </summary>
+    public event EventHandler UserHasCanceled;
+
+    private void OnUserHasCanceled()
+    {
+        UserHasCanceled?.Invoke(this, EventArgs.Empty);
+    }
+
+    #endregion
+
 }
