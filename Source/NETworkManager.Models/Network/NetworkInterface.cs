@@ -272,7 +272,7 @@ public sealed class NetworkInterface
 
         // IPv4
         if (addressFamily == AddressFamily.InterNetwork)
-        {           
+        {
             foreach (var networkInterface in networkInterfaces)
             {
                 foreach (var ipAddress in networkInterface.IPv4Address)
