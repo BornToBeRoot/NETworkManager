@@ -555,7 +555,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 .First(x => x.IPv4Address.Any(y => y.Item1.Equals(localIP)));
 
             // If found, get subnetmask
-            if (networkInterface != null) {
+            if (networkInterface != null)
+            {
 
                 // Find the correct IP address and the associated subnetmask
                 var ipAddressWithSubnet = networkInterface.IPv4Address.First(x => x.Item1.Equals(localIP));
