@@ -501,6 +501,9 @@ public static class ProfileManager
                     Log.Info($"Legacy XML profile file found (encrypted): {profileFileInfo.Path}. Migrating to JSON format...");
                     groups = DeserializeFromXmlByteArray(decryptedBytes);
 
+                    // Store the original path before updating
+                    var originalPath = profileFileInfo.Path;
+
                     // Migrate to JSON format by saving the file
                     var newPath = Path.ChangeExtension(profileFileInfo.Path, ProfileFileExtension + ProfileFileExtensionEncrypted);
                     var newProfileFileInfo = new ProfileFileInfo(profileFileInfo.Name, newPath, true)
@@ -525,16 +528,13 @@ public static class ProfileManager
                     profileFileInfo = newProfileFileInfo;
 
                     // Delete the old XML file
-                    if (File.Exists(profileFileInfo.Path) && Path.GetExtension(profileFileInfo.Path) != newPath)
+                    try
                     {
-                        try
-                        {
-                            File.Delete(Path.ChangeExtension(newPath, LegacyProfileFileExtension + ProfileFileExtensionEncrypted));
-                        }
-                        catch
-                        {
-                            // Ignore if file doesn't exist or can't be deleted
-                        }
+                        File.Delete(originalPath);
+                    }
+                    catch
+                    {
+                        // Ignore if file doesn't exist or can't be deleted
                     }
 
                     Log.Info($"Profile migration from XML to JSON completed successfully: {newPath}");
@@ -616,7 +616,8 @@ public static class ProfileManager
         try
         {
             var text = Encoding.UTF8.GetString(data).TrimStart();
-            return text.StartsWith("<?xml") || text.StartsWith("<");
+            // Check for XML declaration or root element that matches profile structure
+            return text.StartsWith("<?xml") || text.StartsWith("<ArrayOfGroupInfoSerializable");
         }
         catch
         {
@@ -639,7 +640,7 @@ public static class ProfileManager
 
         Directory.CreateDirectory(GetProfilesFolderLocation());
 
-        // Write to an xml file.
+        // Write to a JSON file (encrypted or unencrypted).
         if (LoadedProfileFile.IsEncrypted)
         {
             // Only if the password provided earlier was valid...
