@@ -512,7 +512,7 @@ public static class ProfileManager
                         IsPasswordValid = true
                     };
 
-                    var jsonBytes = SerializeToByteArray([.. groups]);
+                    var jsonBytes = SerializeToByteArray(groups);
                     var encryptedJsonBytes = CryptoHelper.Encrypt(jsonBytes,
                         SecureStringHelper.ConvertToString(newProfileFileInfo.Password),
                         GlobalStaticConfiguration.Profile_EncryptionKeySize,
@@ -532,9 +532,9 @@ public static class ProfileManager
                     {
                         File.Delete(originalPath);
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                        // Ignore if file doesn't exist or can't be deleted
+                        Log.Warn($"Failed to delete old XML profile file: {originalPath}. Error: {ex.Message}");
                     }
 
                     Log.Info($"Profile migration from XML to JSON completed successfully: {newPath}");
@@ -849,7 +849,10 @@ public static class ProfileManager
     {
         XmlSerializer xmlSerializer = new(typeof(List<GroupInfoSerializable>));
 
-        var groupsSerializable = (List<GroupInfoSerializable>)xmlSerializer.Deserialize(stream);
+        var groupsSerializable = xmlSerializer.Deserialize(stream) as List<GroupInfoSerializable>;
+        
+        if (groupsSerializable == null)
+            throw new InvalidOperationException("Failed to deserialize XML profile file.");
 
         return DeserializeGroup(groupsSerializable);
     }
@@ -861,7 +864,10 @@ public static class ProfileManager
     /// <returns>List of groups as <see cref="GroupInfo" />.</returns>
     private static List<GroupInfo> DeserializeGroup(List<GroupInfoSerializable> groupsSerializable)
     {
-        return (from groupSerializable in groupsSerializable!
+        if (groupsSerializable == null)
+            throw new ArgumentNullException(nameof(groupsSerializable));
+
+        return (from groupSerializable in groupsSerializable
                 let profiles = groupSerializable.Profiles.Select(profileSerializable => new ProfileInfo(profileSerializable)
                 {
                     // Migrate old tags to new tags list
