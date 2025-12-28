@@ -88,13 +88,25 @@ Release date: **xx.xx.2025**
 
 ## Bug Fixes
 
+**WiFi**
+
+- Fix potential error in export logic if some data is null. [#3291](https://github.com/BornToBeRoot/NETworkManager/pull/3291)
+- Fix missing simicolon separators in CSV output. [#3291](https://github.com/BornToBeRoot/NETworkManager/pull/3291)
+
 **IP Scanner**
 
 - Fix race condition when scan is complete but not all results have been processed yet, causing a wrong error message to be displayed. [#3287](https://github.com/BornToBeRoot/NETworkManager/pull/3287)
+- Fix potential error in export logic if some data is null. [#3290](https://github.com/BornToBeRoot/NETworkManager/pull/3290)
+- Fix missing simicolon separators in CSV output. [#3290](https://github.com/BornToBeRoot/NETworkManager/pull/3290)
 
 **Port Scanner**
 
 - Fix race condition when scan is complete but not all results have been processed yet, causing a wrong error message to be displayed. [#3287](https://github.com/BornToBeRoot/NETworkManager/pull/3287)
+
+**Traceroute**
+
+- Fix potential error in export logic if some data is null. [#3291](https://github.com/BornToBeRoot/NETworkManager/pull/3291)
+- Fix missing simicolon separators in CSV output. [#3291](https://github.com/BornToBeRoot/NETworkManager/pull/3291)
 
 **PowerShell**
 
