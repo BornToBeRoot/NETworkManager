@@ -55,7 +55,7 @@ public static partial class ExportManager
     /// </summary>
     /// <param name="value">The string value to escape.</param>
     /// <returns>The escaped CSV value.</returns>
-    private static string EscapeCsvValue(string value)
+    internal static string EscapeCsvValue(string value)
     {
         if (string.IsNullOrEmpty(value))
             return value;
