@@ -800,7 +800,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             {
                 Log.Debug("CheckConnectionComputerAsync - Local IPv6 address detection via routing failed, trying network interfaces...");
 
-                detectedLocalIPv6Address ??= await NetworkInterface.DetectLocalIPAddressFromNetworkInterfaceAsync(
+                detectedLocalIPv6Address = await NetworkInterface.DetectLocalIPAddressFromNetworkInterfaceAsync(
                     AddressFamily.InterNetworkV6);
             }
 
