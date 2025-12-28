@@ -52,7 +52,7 @@ public static partial class ExportManager
 
         foreach (var info in collection)
             stringBuilder.AppendLine(
-                $"{info.Device},{info.DeviceDescription},{info.Port},{info.PortDescription},{info.Model},{info.VLAN},{info.IPAddress},{info.Protocol},{info.TimeToLive}");
+                $"{EscapeCsvValue(info.Device)},{EscapeCsvValue(info.DeviceDescription)},{EscapeCsvValue(info.Port)},{EscapeCsvValue(info.PortDescription)},{EscapeCsvValue(info.Model)},{info.VLAN},{info.IPAddress},{info.Protocol},{info.TimeToLive}");
 
         File.WriteAllText(filePath, stringBuilder.ToString());
     }

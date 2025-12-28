@@ -51,7 +51,7 @@ public static partial class ExportManager
 
         foreach (var info in collection)
             stringBuilder.AppendLine(
-                $"{DateTimeHelper.DateTimeToFullDateTimeString(info.Timestamp)},{info.IPAddress},{info.Hostname},{info.Bytes},{Ping.TimeToString(info.Status, info.Time, true)},{info.TTL},{info.Status}");
+                $"{DateTimeHelper.DateTimeToFullDateTimeString(info.Timestamp)},{info.IPAddress},{EscapeCsvValue(info.Hostname)},{info.Bytes},{Ping.TimeToString(info.Status, info.Time, true)},{info.TTL},{info.Status}");
 
         File.WriteAllText(filePath, stringBuilder.ToString());
     }

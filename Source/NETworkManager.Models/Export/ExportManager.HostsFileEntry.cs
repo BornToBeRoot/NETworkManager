@@ -49,7 +49,7 @@ public static partial class ExportManager
             $"{nameof(HostsFileEntry.IsEnabled)},{nameof(HostsFileEntry.IPAddress)},{nameof(HostsFileEntry.Hostname)},{nameof(HostsFileEntry.Comment)}");
 
         foreach (var info in collection)
-            stringBuilder.AppendLine($"{info.IsEnabled},{info.IPAddress},{info.Hostname},{info.Comment}");
+            stringBuilder.AppendLine($"{info.IsEnabled},{info.IPAddress},{EscapeCsvValue(info.Hostname)},{EscapeCsvValue(info.Comment)}");
 
         File.WriteAllText(filePath, stringBuilder.ToString());
     }

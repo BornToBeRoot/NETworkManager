@@ -51,7 +51,7 @@ public static partial class ExportManager
 
         foreach (var info in collection)
             stringBuilder.AppendLine(
-                $"{info.AvailableNetwork.Bssid},{info.AvailableNetwork.Ssid},{info.AvailableNetwork.ChannelCenterFrequencyInKilohertz},{info.AvailableNetwork.SignalBars},{info.AvailableNetwork.IsWiFiDirect},{info.AvailableNetwork.NetworkRssiInDecibelMilliwatts},{info.AvailableNetwork.PhyKind},{info.AvailableNetwork.NetworkKind},{info.AvailableNetwork.SecuritySettings.NetworkAuthenticationType},{info.AvailableNetwork.SecuritySettings.NetworkEncryptionType},{info.AvailableNetwork.BeaconInterval},{info.AvailableNetwork.Uptime}");
+                $"{EscapeCsvValue(info.AvailableNetwork.Bssid)},{EscapeCsvValue(info.AvailableNetwork.Ssid)},{info.AvailableNetwork.ChannelCenterFrequencyInKilohertz},{info.AvailableNetwork.SignalBars},{info.AvailableNetwork.IsWiFiDirect},{info.AvailableNetwork.NetworkRssiInDecibelMilliwatts},{info.AvailableNetwork.PhyKind},{info.AvailableNetwork.NetworkKind},{info.AvailableNetwork.SecuritySettings.NetworkAuthenticationType},{info.AvailableNetwork.SecuritySettings.NetworkEncryptionType},{info.AvailableNetwork.BeaconInterval},{info.AvailableNetwork.Uptime}");
 
         File.WriteAllText(filePath, stringBuilder.ToString());
     }
@@ -64,11 +64,11 @@ public static partial class ExportManager
     private static void CreateXml(IEnumerable<WiFiNetworkInfo> collection, string filePath)
     {
         var document = new XDocument(DefaultXDeclaration,
-            new XElement(ApplicationName.IPScanner.ToString(),
-                new XElement(nameof(IPScannerHostInfo) + "s",
+            new XElement(ApplicationName.WiFi.ToString(),
+                new XElement(nameof(WiFiNetworkInfo) + "s",
                     from info in collection
                     select
-                        new XElement(nameof(IPScannerHostInfo),
+                        new XElement(nameof(WiFiNetworkInfo),
                             new XElement(nameof(WiFiNetworkInfo.AvailableNetwork.Bssid), info.AvailableNetwork.Bssid),
                             new XElement(nameof(WiFiNetworkInfo.AvailableNetwork.Ssid), info.AvailableNetwork.Ssid),
                             new XElement(nameof(WiFiNetworkInfo.AvailableNetwork.ChannelCenterFrequencyInKilohertz),

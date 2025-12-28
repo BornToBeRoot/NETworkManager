@@ -50,8 +50,7 @@ public static partial class ExportManager
 
         foreach (var info in collection)
             stringBuilder.AppendLine(
-                $"{info.Id},{info.Name},{info.Description},{info.Type},{info.PhysicalAddress},{info.Status},{info.IsOperational},{info.Speed},{info.IPv4ProtocolAvailable},{IPv4Address.ConvertIPAddressWithSubnetmaskListToString(info.IPv4Address, ";")},{IPv4Address.ConvertIPAddressListToString(info.IPv4Gateway, ";")},{info.DhcpEnabled},{IPv4Address.ConvertIPAddressListToString(info.DhcpServer, ";")},{info.DhcpLeaseObtained},{info.DhcpLeaseExpires},{info.IPv6ProtocolAvailable},{IPv4Address.ConvertIPAddressListToString(info.IPv6Address, ";")},{IPv4Address.ConvertIPAddressListToString(info.IPv6AddressLinkLocal, ";")},{IPv4Address.ConvertIPAddressListToString(info.IPv6Gateway, ";")},{info.DNSAutoconfigurationEnabled},{info.DNSSuffix},{IPv4Address.ConvertIPAddressListToString(info.DNSServer, ";")}");
-
+                $"{info.Id},{EscapeCsvValue(info.Name)},{EscapeCsvValue(info.Description)},{info.Type},{info.PhysicalAddress},{info.Status},{info.IsOperational},{info.Speed},{info.IPv4ProtocolAvailable},{EscapeCsvValue(IPv4Address.ConvertIPAddressWithSubnetmaskListToString(info.IPv4Address, ";"))},{EscapeCsvValue(IPv4Address.ConvertIPAddressListToString(info.IPv4Gateway, ";"))},{info.DhcpEnabled},{EscapeCsvValue(IPv4Address.ConvertIPAddressListToString(info.DhcpServer, ";"))},{info.DhcpLeaseObtained},{info.DhcpLeaseExpires},{info.IPv6ProtocolAvailable},{EscapeCsvValue(IPv4Address.ConvertIPAddressListToString(info.IPv6Address, ";"))},{EscapeCsvValue(IPv4Address.ConvertIPAddressListToString(info.IPv6AddressLinkLocal, ";"))},{EscapeCsvValue(IPv4Address.ConvertIPAddressListToString(info.IPv6Gateway, ";"))},{info.DNSAutoconfigurationEnabled},{EscapeCsvValue(info.DNSSuffix)},{EscapeCsvValue(IPv4Address.ConvertIPAddressListToString(info.DNSServer, ";"))}");
         File.WriteAllText(filePath, stringBuilder.ToString());
     }
 

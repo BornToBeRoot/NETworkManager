@@ -49,7 +49,7 @@ public static partial class ExportManager
             $"{nameof(PortLookupInfo.Number)},{nameof(PortLookupInfo.Protocol)},{nameof(PortLookupInfo.Service)},{nameof(PortLookupInfo.Description)}");
 
         foreach (var info in collection)
-            stringBuilder.AppendLine($"{info.Number},{info.Protocol},{info.Service},\"{info.Description}\"");
+            stringBuilder.AppendLine($"{info.Number},{info.Protocol},{EscapeCsvValue(info.Service)},{EscapeCsvValue(info.Description)}");
 
         File.WriteAllText(filePath, stringBuilder.ToString());
     }

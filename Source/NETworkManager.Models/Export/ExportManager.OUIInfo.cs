@@ -48,7 +48,7 @@ public static partial class ExportManager
         stringBuilder.AppendLine($"{nameof(OUIInfo.MACAddress)},{nameof(OUIInfo.Vendor)}");
 
         foreach (var info in collection)
-            stringBuilder.AppendLine($"{info.MACAddress},\"{info.Vendor}\"");
+            stringBuilder.AppendLine($"{info.MACAddress},{EscapeCsvValue(info.Vendor)}");
 
         File.WriteAllText(filePath, stringBuilder.ToString());
     }

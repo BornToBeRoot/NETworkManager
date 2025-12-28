@@ -89,25 +89,25 @@ public static partial class ExportManager
             stringBuilder.AppendLine(
                 $"{info.IsReachable}," +
                 $"{info.PingInfo.IPAddress}," +
-                $"{info.Hostname}," +
+                $"{EscapeCsvValue(info.Hostname)}," +
                 $"{info.PingInfo.Status}," +
                 $"{DateTimeHelper.DateTimeToFullDateTimeString(info.PingInfo.Timestamp)}," +
                 $"{Ping.TimeToString(info.PingInfo.Status, info.PingInfo.Time, true)}," +
                 $"{info.PingInfo.TTL}," +
                 $"{info.PingInfo.Bytes}," +
                 $"{(info.IsAnyPortOpen ? PortState.Open : PortState.Closed)}," +
-                $"\"{stringBuilderPorts.ToString().TrimEnd(';')}\"," +
+                $"{EscapeCsvValue(stringBuilderPorts.ToString().TrimEnd(';'))}," +
                 $"{info.NetBIOSInfo?.IsReachable}," +
                 $"{info.NetBIOSInfo?.IPAddress}," +
-                $"{info.NetBIOSInfo?.ComputerName}," +
-                $"{info.NetBIOSInfo?.UserName}," +
-                $"{info.NetBIOSInfo?.GroupName}," +
+                $"{EscapeCsvValue(info.NetBIOSInfo?.ComputerName)}," +
+                $"{EscapeCsvValue(info.NetBIOSInfo?.UserName)}," +
+                $"{EscapeCsvValue(info.NetBIOSInfo?.GroupName)}," +
                 $"{info.NetBIOSInfo?.MACAddress}," +
-                $"{info.NetBIOSInfo?.Vendor}," +
+                $"{EscapeCsvValue(info.NetBIOSInfo?.Vendor)}," +
                 $"{info.MACAddress}," +
-                $"\"{info.Vendor}\"," +
+                $"{EscapeCsvValue(info.Vendor)}," +
                 $"{info.ARPMACAddress}," +
-                $"\"{info.ARPVendor}\""
+                $"{EscapeCsvValue(info.ARPVendor)}"
             );
         }
 

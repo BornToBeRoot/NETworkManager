@@ -49,4 +49,23 @@ public static partial class ExportManager
             _ => string.Empty
         };
     }
+
+    /// <summary>
+    ///     Escapes a string value for CSV format by wrapping it in quotes if it contains commas, quotes, or newlines.
+    /// </summary>
+    /// <param name="value">The string value to escape.</param>
+    /// <returns>The escaped CSV value.</returns>
+    private static string EscapeCsvValue(string value)
+    {
+        if (string.IsNullOrEmpty(value))
+            return value;
+
+        // If the value contains comma, quote, or newline, wrap it in quotes and escape internal quotes
+        if (value.Contains(',') || value.Contains('"') || value.Contains('\n') || value.Contains('\r'))
+        {
+            return $"\"{value.Replace("\"", "\"\"")}\"";
+        }
+
+        return value;
+    }
 }

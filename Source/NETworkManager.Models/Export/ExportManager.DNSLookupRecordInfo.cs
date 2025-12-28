@@ -51,7 +51,7 @@ public static partial class ExportManager
 
         foreach (var info in collection)
             stringBuilder.AppendLine(
-                $"{info.DomainName},{info.TTL},{info.RecordClass},{info.RecordType},{info.Result},{info.NameServerIPAddress},{info.NameServerHostName},{info.NameServerPort}");
+                $"{EscapeCsvValue(info.DomainName)},{info.TTL},{info.RecordClass},{info.RecordType},{EscapeCsvValue(info.Result)},{info.NameServerIPAddress},{EscapeCsvValue(info.NameServerHostName)},{info.NameServerPort}");
 
         File.WriteAllText(filePath, stringBuilder.ToString());
     }

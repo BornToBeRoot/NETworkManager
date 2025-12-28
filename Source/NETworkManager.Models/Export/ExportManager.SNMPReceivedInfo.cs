@@ -49,7 +49,7 @@ public static partial class ExportManager
         stringBuilder.AppendLine($"{nameof(SNMPInfo.OID)},{nameof(SNMPInfo.Data)}");
 
         foreach (var info in collection)
-            stringBuilder.AppendLine($"{info.OID},{info.Data}");
+            stringBuilder.AppendLine($"{EscapeCsvValue(info.OID)},{EscapeCsvValue(info.Data)}");
 
         File.WriteAllText(filePath, stringBuilder.ToString());
     }

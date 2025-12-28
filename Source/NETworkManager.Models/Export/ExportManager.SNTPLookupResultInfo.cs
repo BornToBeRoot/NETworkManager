@@ -52,7 +52,7 @@ public static partial class ExportManager
 
         foreach (var info in collection)
             stringBuilder.AppendLine(
-                $"{info.Server},{info.IPEndPoint},{DateTimeHelper.DateTimeToFullDateTimeString(info.DateTime.NetworkTime)},{DateTimeHelper.DateTimeToFullDateTimeString(info.DateTime.LocalStartTime)},{DateTimeHelper.DateTimeToFullDateTimeString(info.DateTime.LocalEndTime)},{info.DateTime.Offset} s,{info.DateTime.RoundTripDelay} ms");
+                $"{EscapeCsvValue(info.Server)},{info.IPEndPoint},{DateTimeHelper.DateTimeToFullDateTimeString(info.DateTime.NetworkTime)},{DateTimeHelper.DateTimeToFullDateTimeString(info.DateTime.LocalStartTime)},{DateTimeHelper.DateTimeToFullDateTimeString(info.DateTime.LocalEndTime)},{info.DateTime.Offset} s,{info.DateTime.RoundTripDelay} ms");
 
         File.WriteAllText(filePath, stringBuilder.ToString());
     }
@@ -65,7 +65,7 @@ public static partial class ExportManager
     private static void CreateXml(IEnumerable<SNTPLookupInfo> collection, string filePath)
     {
         var document = new XDocument(DefaultXDeclaration,
-            new XElement(ApplicationName.SNMP.ToString(),
+            new XElement(ApplicationName.SNTPLookup.ToString(),
                 new XElement(nameof(SNTPLookupInfo) + "s",
                     from info in collection
                     select

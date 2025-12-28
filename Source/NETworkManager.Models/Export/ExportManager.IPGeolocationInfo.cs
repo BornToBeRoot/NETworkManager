@@ -50,7 +50,7 @@ public static partial class ExportManager
 
         foreach (var info in collection)
             stringBuilder.AppendLine(
-                $"{info.Status},{info.Continent},{info.ContinentCode},{info.Country},{info.CountryCode},{info.Region},{info.RegionName},{info.City},{info.District},{info.Zip},{info.Lat},{info.Lon},{info.Timezone},{info.Offset},{info.Currency},{info.Isp},{info.Org},{info.As},{info.Asname},{info.Reverse},{info.Mobile},{info.Proxy},{info.Hosting},{info.Query}");
+                $"{info.Status},{EscapeCsvValue(info.Continent)},{info.ContinentCode},{EscapeCsvValue(info.Country)},{info.CountryCode},{EscapeCsvValue(info.Region)},{EscapeCsvValue(info.RegionName)},{EscapeCsvValue(info.City)},{EscapeCsvValue(info.District)},{info.Zip},{info.Lat},{info.Lon},{EscapeCsvValue(info.Timezone)},{info.Offset},{EscapeCsvValue(info.Currency)},{EscapeCsvValue(info.Isp)},{EscapeCsvValue(info.Org)},{EscapeCsvValue(info.As)},{EscapeCsvValue(info.Asname)},{EscapeCsvValue(info.Reverse)},{info.Mobile},{info.Proxy},{info.Hosting},{info.Query}");
 
         File.WriteAllText(filePath, stringBuilder.ToString());
     }
