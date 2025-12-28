@@ -65,7 +65,7 @@ public static partial class ExportManager
     private static void CreateXml(IEnumerable<SNTPLookupInfo> collection, string filePath)
     {
         var document = new XDocument(DefaultXDeclaration,
-            new XElement(ApplicationName.SNMP.ToString(),
+            new XElement(ApplicationName.SNTPLookup.ToString(),
                 new XElement(nameof(SNTPLookupInfo) + "s",
                     from info in collection
                     select
