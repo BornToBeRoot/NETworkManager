@@ -64,11 +64,11 @@ public static partial class ExportManager
     private static void CreateXml(IEnumerable<WiFiNetworkInfo> collection, string filePath)
     {
         var document = new XDocument(DefaultXDeclaration,
-            new XElement(ApplicationName.IPScanner.ToString(),
-                new XElement(nameof(IPScannerHostInfo) + "s",
+            new XElement(ApplicationName.WiFi.ToString(),
+                new XElement(nameof(WiFiNetworkInfo) + "s",
                     from info in collection
                     select
-                        new XElement(nameof(IPScannerHostInfo),
+                        new XElement(nameof(WiFiNetworkInfo),
                             new XElement(nameof(WiFiNetworkInfo.AvailableNetwork.Bssid), info.AvailableNetwork.Bssid),
                             new XElement(nameof(WiFiNetworkInfo.AvailableNetwork.Ssid), info.AvailableNetwork.Ssid),
                             new XElement(nameof(WiFiNetworkInfo.AvailableNetwork.ChannelCenterFrequencyInKilohertz),
@@ -111,7 +111,7 @@ public static partial class ExportManager
             {
                 collection[i].AvailableNetwork.Bssid,
                 collection[i].AvailableNetwork.Ssid,
-                ChannelCenterFrequencyInKilohertz = collection[i].AvailableNetwork.ChannelCenterFrequencyInKilohertz,
+                collection[i].AvailableNetwork.ChannelCenterFrequencyInKilohertz,
                 SignalBars = collection[i].AvailableNetwork.SignalBars.ToString(),
                 IsWiFiDirect = collection[i].AvailableNetwork.IsWiFiDirect.ToString(),
                 NetworkRssiInDecibelMilliwatts = collection[i].AvailableNetwork.NetworkRssiInDecibelMilliwatts
