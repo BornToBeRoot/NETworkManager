@@ -180,10 +180,11 @@ public static partial class ExportManager
         for (var i = 0; i < validCollection.Count; i++)
         {
             var info = validCollection[i];
-            var jsonDataPorts = new object[info.Ports?.Count ?? 0];
+            object[] jsonDataPorts;
 
-            if (info.Ports != null)
+            if (info.Ports != null && info.Ports.Count > 0)
             {
+                jsonDataPorts = new object[info.Ports.Count];
                 for (var j = 0; j < info.Ports.Count; j++)
                     jsonDataPorts[j] = new
                     {
@@ -193,6 +194,10 @@ public static partial class ExportManager
                         info.Ports[j].LookupInfo.Description,
                         State = info.Ports[j].State.ToString()
                     };
+            }
+            else
+            {
+                jsonDataPorts = Array.Empty<object>();
             }
 
             jsonData[i] = new
