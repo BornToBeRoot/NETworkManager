@@ -571,7 +571,14 @@ public static class ProfileManager
                     ProfileFiles.Add(newProfileFileInfo);
 
                     // Delete the old XML file
-                    File.Delete(profileFileInfo.Path);
+                    try
+                    {
+                        File.Delete(profileFileInfo.Path);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Warn($"Failed to delete old XML profile file: {profileFileInfo.Path}. Error: {ex.Message}");
+                    }
 
                     // Update the reference
                     profileFileInfo = newProfileFileInfo;
@@ -835,6 +842,9 @@ public static class ProfileManager
     private static List<GroupInfo> DeserializeFromJson(string jsonString)
     {
         var groupsSerializable = JsonSerializer.Deserialize<List<GroupInfoSerializable>>(jsonString, JsonOptions);
+
+        if (groupsSerializable == null)
+            throw new InvalidOperationException("Failed to deserialize JSON profile file.");
 
         return DeserializeGroup(groupsSerializable);
     }
