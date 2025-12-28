@@ -92,6 +92,7 @@ Release date: **xx.xx.2025**
 
 - Fix potential error in export logic if some data is null. [#3291](https://github.com/BornToBeRoot/NETworkManager/pull/3291)
 - Fix missing simicolon separators in CSV output. [#3291](https://github.com/BornToBeRoot/NETworkManager/pull/3291)
+- Fix wrong name in xml export [#3293](https://github.com/BornToBeRoot/NETworkManager/pull/3293)
 
 **IP Scanner**
 
@@ -120,6 +121,14 @@ Release date: **xx.xx.2025**
 **SNMP**
 
 - Fix `NullReferenceException` when no SNMP profile is selected in the DataGrid and `Return` key is pressed. [#3271](https://github.com/BornToBeRoot/NETworkManager/pull/3271)
+
+**SNTP Lookup**
+
+- Fix wrong name in xml export [#3293](https://github.com/BornToBeRoot/NETworkManager/pull/3293)
+
+**Subnet Calculator**
+
+- Fix wrong name in xml export [#3293](https://github.com/BornToBeRoot/NETworkManager/pull/3293)
 
 ## Dependencies, Refactoring & Documentation
 
