@@ -165,9 +165,11 @@ public static class ProfileManager
     private static string GetJsonProfilePath(string originalPath, bool encrypted)
     {
         var basePath = Path.ChangeExtension(originalPath, null);
-        return encrypted 
-            ? basePath + ProfileFileExtension + ProfileFileExtensionEncrypted
-            : basePath + ProfileFileExtension;
+        
+        if (encrypted)
+            return basePath + ProfileFileExtension + ProfileFileExtensionEncrypted;
+        
+        return basePath + ProfileFileExtension;
     }
 
     /// <summary>
@@ -636,7 +638,9 @@ public static class ProfileManager
 
         try
         {
-            var text = Encoding.UTF8.GetString(data).TrimStart();
+            // Only check the first 200 bytes for performance
+            var bytesToCheck = Math.Min(200, data.Length);
+            var text = Encoding.UTF8.GetString(data, 0, bytesToCheck).TrimStart();
             // Check for XML declaration or root element that matches profile structure
             return text.StartsWith("<?xml") || text.StartsWith("<ArrayOfGroupInfoSerializable");
         }
@@ -892,7 +896,7 @@ public static class ProfileManager
             throw new ArgumentNullException(nameof(groupsSerializable));
 
         return (from groupSerializable in groupsSerializable
-                let profiles = groupSerializable.Profiles.Select(profileSerializable => new ProfileInfo(profileSerializable)
+                let profiles = (groupSerializable.Profiles ?? []).Select(profileSerializable => new ProfileInfo(profileSerializable)
                 {
                     // Migrate old tags to new tags list
                     // if TagsList is null or empty and Tags is not null or empty, split Tags by ';' and create a new ObservableSetCollection
