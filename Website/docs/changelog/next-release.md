@@ -56,6 +56,10 @@ Release date: **xx.xx.2025**
 - Settings format migrated from `XML` to `JSON`. The settings file will be automatically converted on first start after the update. [#3282](https://github.com/BornToBeRoot/NETworkManager/pull/3282)
 - Create a daily backup of the settings file before saving changes. Up to `10` backup files are kept in the `Backups` subfolder of the settings directory. [#3283](https://github.com/BornToBeRoot/NETworkManager/pull/3283)
 
+**IP Scanner**
+
+- Improved local subnet detection: If local IP cannot be determined via routing, now iterates over active network adapters and selects the first valid IPv4 address (with link-local addresses (`169.254.x.x`) given lower priority). [#3288](https://github.com/BornToBeRoot/NETworkManager/pull/3288)
+
 **DNS Lookup**
 
 - Allow hostname as server address in addition to IP address in the add/edit server dialog. [#3261](https://github.com/BornToBeRoot/NETworkManager/pull/3261)

@@ -27,7 +27,16 @@ Example: `10.0.0.0/24; 10.0.[10-20]1`
 
 :::
 
-The button to the left of the `Scan` button determines the IP address and subnet mask of the network interface currently in use in order to scan the local subnet for active devices.
+The button to the left of the `Scan` button determines the IP address and subnet mask of the network interface
+currently in use in order to scan the local subnet for active devices.
+
+:::note
+
+The local IP address (and subnet mask) is determined by trying to route to a public IP address. If this fails (e.g. 
+no network connection), NETworkManager iterates over active network adapters and selects the first valid IPv4 address,
+with link-local addresses (`169.254.x.x`) given lower priority.
+
+:::
 
 If you right-click on a selected result, you can forward the device information to other applications (e.g. Port Scanner, Remote Desktop, etc), create a new profile with this information or execute a [custom command](#custom-commands).
 

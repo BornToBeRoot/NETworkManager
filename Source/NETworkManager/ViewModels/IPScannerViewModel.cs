@@ -347,7 +347,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private void DetectSubnetAction()
     {
-        DetectIPRange().ConfigureAwait(false);
+        DetectSubnet().ConfigureAwait(false);
     }
 
     /// <summary>
@@ -530,34 +530,47 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
-    /// Detects the local IP subnet.
+    /// Attempts to detect the local subnet and updates the host information accordingly.
     /// </summary>
-    private async Task DetectIPRange()
+    /// <remarks>If the subnet or local IP address cannot be detected, an error message is displayed to the
+    /// user. The method updates the Host property with the detected subnet in CIDR notation when successful.</remarks>
+    /// <returns>A task that represents the asynchronous subnet detection operation.</returns>
+    private async Task DetectSubnet()
     {
         IsSubnetDetectionRunning = true;
 
+        // Try to detect local IP address based on routing to public IP
         var localIP = await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(IPAddress.Parse(GlobalStaticConfiguration.Dashboard_PublicIPv4Address));
 
-        // Could not detect local ip address
+        // Fallback: Try to detect local IP address from network interfaces -> Prefer non link-local addresses
+        localIP ??= await NetworkInterface.DetectLocalIPAddressFromNetworkInterfaceAsync(System.Net.Sockets.AddressFamily.InterNetwork);
+
+        // If local IP address detected, try to find subnetmask from network interfaces
         if (localIP != null)
         {
-            var subnetmaskDetected = false;
+            var subnetDetected = false;
 
-            // Get subnetmask, based on ip address
-            foreach (var networkInterface in (await NetworkInterface.GetNetworkInterfacesAsync()).Where(
-                         networkInterface => networkInterface.IPv4Address.Any(x => x.Item1.Equals(localIP))))
+            // Get network interfaces, where local IP address is assigned
+            var networkInterface = (await NetworkInterface.GetNetworkInterfacesAsync())
+                .FirstOrDefault(x => x.IPv4Address.Any(y => y.Item1.Equals(localIP)));
+
+            // If found, get subnetmask
+            if (networkInterface != null)
             {
-                subnetmaskDetected = true;
 
-                Host = $"{localIP}/{Subnetmask.ConvertSubnetmaskToCidr(networkInterface.IPv4Address.First().Item2)}";
+                // Find the correct IP address and the associated subnetmask
+                var ipAddressWithSubnet = networkInterface.IPv4Address.First(x => x.Item1.Equals(localIP));
+
+                Host = $"{ipAddressWithSubnet.Item1}/{Subnetmask.ConvertSubnetmaskToCidr(ipAddressWithSubnet.Item2)}";
+
+                subnetDetected = true;
 
                 // Fix: If the user clears the TextBox and then clicks again on the button, the TextBox remains empty...
                 OnPropertyChanged(nameof(Host));
-
-                break;
             }
 
-            if (!subnetmaskDetected)
+            // Show error message if subnet could not be detected
+            if (!subnetDetected)
             {
                 var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
@@ -716,8 +729,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private void HostScanned(object sender, IPScannerHostScannedArgs e)
     {
         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
-            new Action(delegate { 
-                Results.Add(e.Args); 
+            new Action(delegate
+            {
+                Results.Add(e.Args);
             }));
     }
 
