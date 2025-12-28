@@ -147,7 +147,7 @@ public static partial class ExportManager
                                       new XElement(nameof(PortInfo.LookupInfo.Service), port.LookupInfo.Service),
                                       new XElement(nameof(PortInfo.LookupInfo.Description), port.LookupInfo.Description),
                                       new XElement(nameof(PortInfo.State), port.State))
-                                : null,
+                                : Enumerable.Empty<XElement>(),
                             new XElement("NetBIOSIsReachable", info.NetBIOSInfo?.IsReachable),
                             new XElement("NetBIOSIPAddress", info.NetBIOSInfo?.IPAddress),
                             new XElement("NetBIOSComputerName", info.NetBIOSInfo?.ComputerName),
