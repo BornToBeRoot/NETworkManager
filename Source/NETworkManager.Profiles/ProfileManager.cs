@@ -157,6 +157,20 @@ public static class ProfileManager
     }
 
     /// <summary>
+    ///     Method to get a JSON profile file path with optional encryption extension.
+    /// </summary>
+    /// <param name="originalPath">Original file path.</param>
+    /// <param name="encrypted">Whether the file should have the encrypted extension.</param>
+    /// <returns>JSON profile file path.</returns>
+    private static string GetJsonProfilePath(string originalPath, bool encrypted)
+    {
+        var basePath = Path.ChangeExtension(originalPath, null);
+        return encrypted 
+            ? basePath + ProfileFileExtension + ProfileFileExtensionEncrypted
+            : basePath + ProfileFileExtension;
+    }
+
+    /// <summary>
     ///     Method to get the default profile file name.
     /// </summary>
     /// <returns>Default profile file name.</returns>
@@ -303,7 +317,7 @@ public static class ProfileManager
 
         // Create a new profile info with the encryption infos
         var newProfileFileInfo = new ProfileFileInfo(profileFileInfo.Name,
-            Path.ChangeExtension(Path.ChangeExtension(profileFileInfo.Path, null), ProfileFileExtension + ProfileFileExtensionEncrypted), true)
+            GetJsonProfilePath(profileFileInfo.Path, true), true)
         {
             Password = password,
             IsPasswordValid = true
@@ -366,7 +380,7 @@ public static class ProfileManager
 
         // Create a new profile info with the encryption infos
         var newProfileFileInfo = new ProfileFileInfo(profileFileInfo.Name,
-            Path.ChangeExtension(Path.ChangeExtension(profileFileInfo.Path, null), ProfileFileExtension + ProfileFileExtensionEncrypted), true)
+            GetJsonProfilePath(profileFileInfo.Path, true), true)
         {
             Password = newPassword,
             IsPasswordValid = true
@@ -431,7 +445,7 @@ public static class ProfileManager
 
         // Create a new profile info
         var newProfileFileInfo = new ProfileFileInfo(profileFileInfo.Name,
-            Path.ChangeExtension(Path.ChangeExtension(profileFileInfo.Path, null), ProfileFileExtension));
+            GetJsonProfilePath(profileFileInfo.Path, false));
 
         // Load and decrypt the profiles from the profile file
         var encryptedBytes = File.ReadAllBytes(profileFileInfo.Path);
@@ -860,7 +874,7 @@ public static class ProfileManager
         XmlSerializer xmlSerializer = new(typeof(List<GroupInfoSerializable>));
 
         var groupsSerializable = xmlSerializer.Deserialize(stream) as List<GroupInfoSerializable>;
-        
+
         if (groupsSerializable == null)
             throw new InvalidOperationException("Failed to deserialize XML profile file.");
 
