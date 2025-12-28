@@ -63,7 +63,7 @@ public static partial class ExportManager
     private static void CreateXml(IEnumerable<IPNetworkInfo> collection, string filePath)
     {
         var document = new XDocument(DefaultXDeclaration,
-            new XElement(ApplicationName.SNMP.ToString(),
+            new XElement(ApplicationName.SubnetCalculator.ToString(),
                 new XElement(nameof(IPNetworkInfo) + "s",
                     from info in collection
                     select
