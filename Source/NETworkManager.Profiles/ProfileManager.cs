@@ -9,6 +9,8 @@ using System.IO;
 using System.Linq;
 using System.Security;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
 namespace NETworkManager.Profiles;
@@ -31,12 +33,29 @@ public static class ProfileManager
     /// <summary>
     ///     Profile file extension.
     /// </summary>
-    private const string ProfileFileExtension = ".xml";
+    private const string ProfileFileExtension = ".json";
+
+    /// <summary>
+    ///     Legacy XML profile file extension.
+    /// </summary>
+    [Obsolete("Legacy XML profile files are no longer used, but the extension is kept for migration purposes.")]
+    private const string LegacyProfileFileExtension = ".xml";
 
     /// <summary>
     ///     Profile file extension for encrypted files.
     /// </summary>
     private const string ProfileFileExtensionEncrypted = ".encrypted";
+
+    /// <summary>
+    ///     JSON serializer options for consistent serialization/deserialization.
+    /// </summary>
+    private static readonly JsonSerializerOptions JsonOptions = new()
+    {
+        WriteIndented = true,
+        PropertyNameCaseInsensitive = true,
+        DefaultIgnoreCondition = JsonIgnoreCondition.Never,
+        Converters = { new JsonStringEnumConverter() }
+    };
 
     /// <summary>
     ///     ObservableCollection of all profile files.
@@ -160,15 +179,17 @@ public static class ProfileManager
     #region Get and load profile files
 
     /// <summary>
-    ///     Get all files in the folder with the extension <see cref="ProfileFileExtension" /> or
-    ///     <see cref="ProfileFileExtensionEncrypted" />.
+    ///     Get all files in the folder with the extension <see cref="ProfileFileExtension" />,
+    ///     <see cref="LegacyProfileFileExtension" /> or <see cref="ProfileFileExtensionEncrypted" />.
     /// </summary>
     /// <param name="location">Path of the profile folder.</param>
     /// <returns>List of profile files.</returns>
     private static IEnumerable<string> GetProfileFiles(string location)
     {
         return Directory.GetFiles(location).Where(x =>
-            Path.GetExtension(x) == ProfileFileExtension || Path.GetExtension(x) == ProfileFileExtensionEncrypted);
+            Path.GetExtension(x) == ProfileFileExtension || 
+            Path.GetExtension(x) == LegacyProfileFileExtension || 
+            Path.GetExtension(x) == ProfileFileExtensionEncrypted);
     }
 
     /// <summary>
@@ -282,16 +303,24 @@ public static class ProfileManager
 
         // Create a new profile info with the encryption infos
         var newProfileFileInfo = new ProfileFileInfo(profileFileInfo.Name,
-            Path.ChangeExtension(profileFileInfo.Path, ProfileFileExtensionEncrypted), true)
+            Path.ChangeExtension(Path.ChangeExtension(profileFileInfo.Path, null), ProfileFileExtension + ProfileFileExtensionEncrypted), true)
         {
             Password = password,
             IsPasswordValid = true
         };
 
-        // Load the profiles from the profile file
-        var profiles = DeserializeFromFile(profileFileInfo.Path);
+        // Load the profiles from the profile file (handle both XML and JSON)
+        List<GroupInfo> profiles;
+        if (Path.GetExtension(profileFileInfo.Path) == LegacyProfileFileExtension)
+        {
+            profiles = DeserializeFromXmlFile(profileFileInfo.Path);
+        }
+        else
+        {
+            profiles = DeserializeFromFile(profileFileInfo.Path);
+        }
 
-        // Save the encrypted file
+        // Save the encrypted file in JSON format
         var decryptedBytes = SerializeToByteArray(profiles);
         var encryptedBytes = CryptoHelper.Encrypt(decryptedBytes,
             SecureStringHelper.ConvertToString(newProfileFileInfo.Password),
@@ -337,7 +366,7 @@ public static class ProfileManager
 
         // Create a new profile info with the encryption infos
         var newProfileFileInfo = new ProfileFileInfo(profileFileInfo.Name,
-            Path.ChangeExtension(profileFileInfo.Path, ProfileFileExtensionEncrypted), true)
+            Path.ChangeExtension(Path.ChangeExtension(profileFileInfo.Path, null), ProfileFileExtension + ProfileFileExtensionEncrypted), true)
         {
             Password = newPassword,
             IsPasswordValid = true
@@ -348,9 +377,19 @@ public static class ProfileManager
         var decryptedBytes = CryptoHelper.Decrypt(encryptedBytes, SecureStringHelper.ConvertToString(password),
             GlobalStaticConfiguration.Profile_EncryptionKeySize,
             GlobalStaticConfiguration.Profile_EncryptionIterations);
-        var profiles = DeserializeFromByteArray(decryptedBytes);
 
-        // Save the encrypted file
+        // Check if decrypted content is XML or JSON and deserialize accordingly
+        List<GroupInfo> profiles;
+        if (IsXmlContent(decryptedBytes))
+        {
+            profiles = DeserializeFromXmlByteArray(decryptedBytes);
+        }
+        else
+        {
+            profiles = DeserializeFromByteArray(decryptedBytes);
+        }
+
+        // Save the encrypted file in JSON format
         decryptedBytes = SerializeToByteArray(profiles);
         encryptedBytes = CryptoHelper.Encrypt(decryptedBytes,
             SecureStringHelper.ConvertToString(newProfileFileInfo.Password),
@@ -392,16 +431,26 @@ public static class ProfileManager
 
         // Create a new profile info
         var newProfileFileInfo = new ProfileFileInfo(profileFileInfo.Name,
-            Path.ChangeExtension(profileFileInfo.Path, ProfileFileExtension));
+            Path.ChangeExtension(Path.ChangeExtension(profileFileInfo.Path, null), ProfileFileExtension));
 
         // Load and decrypt the profiles from the profile file
         var encryptedBytes = File.ReadAllBytes(profileFileInfo.Path);
         var decryptedBytes = CryptoHelper.Decrypt(encryptedBytes, SecureStringHelper.ConvertToString(password),
             GlobalStaticConfiguration.Profile_EncryptionKeySize,
             GlobalStaticConfiguration.Profile_EncryptionIterations);
-        var profiles = DeserializeFromByteArray(decryptedBytes);
 
-        // Save the decrypted profiles to the profile file
+        // Check if decrypted content is XML or JSON and deserialize accordingly
+        List<GroupInfo> profiles;
+        if (IsXmlContent(decryptedBytes))
+        {
+            profiles = DeserializeFromXmlByteArray(decryptedBytes);
+        }
+        else
+        {
+            profiles = DeserializeFromByteArray(decryptedBytes);
+        }
+
+        // Save the decrypted profiles to the profile file in JSON format
         SerializeToFile(newProfileFileInfo.Path, profiles);
 
         // Add the new profile
@@ -433,6 +482,9 @@ public static class ProfileManager
 
         if (File.Exists(profileFileInfo.Path))
         {
+            // Detect if the file is a legacy XML file and needs migration
+            var isLegacyXmlFile = Path.GetExtension(profileFileInfo.Path) == LegacyProfileFileExtension;
+
             if (profileFileInfo.IsEncrypted)
             {
                 var encryptedBytes = File.ReadAllBytes(profileFileInfo.Path);
@@ -441,7 +493,58 @@ public static class ProfileManager
                     GlobalStaticConfiguration.Profile_EncryptionKeySize,
                     GlobalStaticConfiguration.Profile_EncryptionIterations);
 
-                AddGroups(DeserializeFromByteArray(decryptedBytes));
+                List<GroupInfo> groups;
+
+                // Check if decrypted content is XML or JSON
+                if (IsXmlContent(decryptedBytes))
+                {
+                    Log.Info($"Legacy XML profile file found (encrypted): {profileFileInfo.Path}. Migrating to JSON format...");
+                    groups = DeserializeFromXmlByteArray(decryptedBytes);
+
+                    // Migrate to JSON format by saving the file
+                    var newPath = Path.ChangeExtension(profileFileInfo.Path, ProfileFileExtension + ProfileFileExtensionEncrypted);
+                    var newProfileFileInfo = new ProfileFileInfo(profileFileInfo.Name, newPath, true)
+                    {
+                        Password = profileFileInfo.Password,
+                        IsPasswordValid = true
+                    };
+
+                    var jsonBytes = SerializeToByteArray([.. groups]);
+                    var encryptedJsonBytes = CryptoHelper.Encrypt(jsonBytes,
+                        SecureStringHelper.ConvertToString(newProfileFileInfo.Password),
+                        GlobalStaticConfiguration.Profile_EncryptionKeySize,
+                        GlobalStaticConfiguration.Profile_EncryptionIterations);
+
+                    File.WriteAllBytes(newPath, encryptedJsonBytes);
+
+                    // Update ProfileFiles collection
+                    ProfileFiles.Remove(profileFileInfo);
+                    ProfileFiles.Add(newProfileFileInfo);
+
+                    // Update the reference
+                    profileFileInfo = newProfileFileInfo;
+
+                    // Delete the old XML file
+                    if (File.Exists(profileFileInfo.Path) && Path.GetExtension(profileFileInfo.Path) != newPath)
+                    {
+                        try
+                        {
+                            File.Delete(Path.ChangeExtension(newPath, LegacyProfileFileExtension + ProfileFileExtensionEncrypted));
+                        }
+                        catch
+                        {
+                            // Ignore if file doesn't exist or can't be deleted
+                        }
+                    }
+
+                    Log.Info($"Profile migration from XML to JSON completed successfully: {newPath}");
+                }
+                else
+                {
+                    groups = DeserializeFromByteArray(decryptedBytes);
+                }
+
+                AddGroups(groups);
 
                 // Password is valid
                 ProfileFiles.FirstOrDefault(x => x.Equals(profileFileInfo))!.IsPasswordValid = true;
@@ -450,7 +553,39 @@ public static class ProfileManager
             }
             else
             {
-                AddGroups(DeserializeFromFile(profileFileInfo.Path));
+                List<GroupInfo> groups;
+
+                if (isLegacyXmlFile)
+                {
+                    Log.Info($"Legacy XML profile file found: {profileFileInfo.Path}. Migrating to JSON format...");
+                    groups = DeserializeFromXmlFile(profileFileInfo.Path);
+
+                    // Migrate to JSON format by saving the file
+                    var newPath = Path.ChangeExtension(profileFileInfo.Path, ProfileFileExtension);
+                    SerializeToFile(newPath, groups);
+
+                    var newProfileFileInfo = new ProfileFileInfo(profileFileInfo.Name, newPath);
+
+                    // Update ProfileFiles collection
+                    ProfileFiles.Remove(profileFileInfo);
+                    ProfileFiles.Add(newProfileFileInfo);
+
+                    // Delete the old XML file
+                    File.Delete(profileFileInfo.Path);
+
+                    // Update the reference
+                    profileFileInfo = newProfileFileInfo;
+
+                    Log.Info($"Profile migration from XML to JSON completed successfully: {newPath}");
+
+                    loadedProfileUpdated = true;
+                }
+                else
+                {
+                    groups = DeserializeFromFile(profileFileInfo.Path);
+                }
+
+                AddGroups(groups);
             }
         }
         else
@@ -466,6 +601,27 @@ public static class ProfileManager
 
         if (loadedProfileUpdated)
             LoadedProfileFileChanged(LoadedProfileFile, true);
+    }
+
+    /// <summary>
+    ///     Method to check if the byte array content is XML.
+    /// </summary>
+    /// <param name="data">Byte array to check.</param>
+    /// <returns>True if the content is XML.</returns>
+    private static bool IsXmlContent(byte[] data)
+    {
+        if (data == null || data.Length == 0)
+            return false;
+
+        try
+        {
+            var text = Encoding.UTF8.GetString(data).TrimStart();
+            return text.StartsWith("<?xml") || text.StartsWith("<");
+        }
+        catch
+        {
+            return false;
+        }
     }
 
     /// <summary>
@@ -539,17 +695,15 @@ public static class ProfileManager
     #region Serialize and deserialize
 
     /// <summary>
-    ///     Method to serialize a list of groups as <see cref="GroupInfo" /> to an xml file.
+    ///     Method to serialize a list of groups as <see cref="GroupInfo" /> to a JSON file.
     /// </summary>
-    /// <param name="filePath">Path to an xml file.</param>
+    /// <param name="filePath">Path to a JSON file.</param>
     /// <param name="groups">List of the groups as <see cref="GroupInfo" /> to serialize.</param>
     private static void SerializeToFile(string filePath, List<GroupInfo> groups)
     {
-        var xmlSerializer = new XmlSerializer(typeof(List<GroupInfoSerializable>));
+        var jsonString = JsonSerializer.Serialize(SerializeGroup(groups), JsonOptions);
 
-        using var fileStream = new FileStream(filePath, FileMode.Create);
-
-        xmlSerializer.Serialize(fileStream, SerializeGroup(groups));
+        File.WriteAllText(filePath, jsonString);
     }
 
     /// <summary>
@@ -559,15 +713,9 @@ public static class ProfileManager
     /// <returns>Serialized list of groups as <see cref="GroupInfo" /> as byte array.</returns>
     private static byte[] SerializeToByteArray(List<GroupInfo> groups)
     {
-        var xmlSerializer = new XmlSerializer(typeof(List<GroupInfoSerializable>));
+        var jsonString = JsonSerializer.Serialize(SerializeGroup(groups), JsonOptions);
 
-        using var memoryStream = new MemoryStream();
-
-        using var streamWriter = new StreamWriter(memoryStream, Encoding.UTF8);
-
-        xmlSerializer.Serialize(streamWriter, SerializeGroup(groups));
-
-        return memoryStream.ToArray();
+        return Encoding.UTF8.GetBytes(jsonString);
     }
 
     /// <summary>
@@ -629,39 +777,90 @@ public static class ProfileManager
     }
 
     /// <summary>
-    ///     Method to deserialize a list of groups as <see cref="GroupInfo" /> from an xml file.
+    ///     Method to deserialize a list of groups as <see cref="GroupInfo" /> from a JSON file.
     /// </summary>
-    /// <param name="filePath">Path to an xml file.</param>
+    /// <param name="filePath">Path to a JSON file.</param>
     /// <returns>List of groups as <see cref="GroupInfo" />.</returns>
     private static List<GroupInfo> DeserializeFromFile(string filePath)
     {
+        var jsonString = File.ReadAllText(filePath);
+
+        return DeserializeFromJson(jsonString);
+    }
+
+    /// <summary>
+    ///     Method to deserialize a list of groups as <see cref="GroupInfo" /> from a legacy XML file.
+    /// </summary>
+    /// <param name="filePath">Path to an XML file.</param>
+    /// <returns>List of groups as <see cref="GroupInfo" />.</returns>
+    [Obsolete("Legacy XML profile files are no longer used, but the method is kept for migration purposes.")]
+    private static List<GroupInfo> DeserializeFromXmlFile(string filePath)
+    {
         using FileStream fileStream = new(filePath, FileMode.Open);
 
-        return DeserializeGroup(fileStream);
+        return DeserializeFromXmlStream(fileStream);
     }
 
     /// <summary>
     ///     Method to deserialize a list of groups as <see cref="GroupInfo" /> from a byte array.
     /// </summary>
-    /// <param name="xml">Serialized list of groups as <see cref="GroupInfo" /> as byte array.</param>
+    /// <param name="data">Serialized list of groups as <see cref="GroupInfo" /> as byte array.</param>
     /// <returns>List of groups as <see cref="GroupInfo" />.</returns>
-    private static List<GroupInfo> DeserializeFromByteArray(byte[] xml)
+    private static List<GroupInfo> DeserializeFromByteArray(byte[] data)
+    {
+        var jsonString = Encoding.UTF8.GetString(data);
+
+        return DeserializeFromJson(jsonString);
+    }
+
+    /// <summary>
+    ///     Method to deserialize a list of groups as <see cref="GroupInfo" /> from a legacy XML byte array.
+    /// </summary>
+    /// <param name="xml">Serialized list of groups as <see cref="GroupInfo" /> as XML byte array.</param>
+    /// <returns>List of groups as <see cref="GroupInfo" />.</returns>
+    [Obsolete("Legacy XML profile files are no longer used, but the method is kept for migration purposes.")]
+    private static List<GroupInfo> DeserializeFromXmlByteArray(byte[] xml)
     {
         using MemoryStream memoryStream = new(xml);
 
-        return DeserializeGroup(memoryStream);
+        return DeserializeFromXmlStream(memoryStream);
+    }
+
+    /// <summary>
+    ///     Method to deserialize a list of groups as <see cref="GroupInfo" /> from JSON string.
+    /// </summary>
+    /// <param name="jsonString">JSON string to deserialize.</param>
+    /// <returns>List of groups as <see cref="GroupInfo" />.</returns>
+    private static List<GroupInfo> DeserializeFromJson(string jsonString)
+    {
+        var groupsSerializable = JsonSerializer.Deserialize<List<GroupInfoSerializable>>(jsonString, JsonOptions);
+
+        return DeserializeGroup(groupsSerializable);
+    }
+
+    /// <summary>
+    ///     Method to deserialize a list of groups as <see cref="GroupInfo" /> from an XML stream.
+    /// </summary>
+    /// <param name="stream">Stream to deserialize.</param>
+    /// <returns>List of groups as <see cref="GroupInfo" />.</returns>
+    [Obsolete("Legacy XML profile files are no longer used, but the method is kept for migration purposes.")]
+    private static List<GroupInfo> DeserializeFromXmlStream(Stream stream)
+    {
+        XmlSerializer xmlSerializer = new(typeof(List<GroupInfoSerializable>));
+
+        var groupsSerializable = (List<GroupInfoSerializable>)xmlSerializer.Deserialize(stream);
+
+        return DeserializeGroup(groupsSerializable);
     }
 
     /// <summary>
     ///     Method to deserialize a list of groups as <see cref="GroupInfo" />.
     /// </summary>
-    /// <param name="stream">Stream to deserialize.</param>
+    /// <param name="groupsSerializable">List of serializable groups to deserialize.</param>
     /// <returns>List of groups as <see cref="GroupInfo" />.</returns>
-    private static List<GroupInfo> DeserializeGroup(Stream stream)
+    private static List<GroupInfo> DeserializeGroup(List<GroupInfoSerializable> groupsSerializable)
     {
-        XmlSerializer xmlSerializer = new(typeof(List<GroupInfoSerializable>));
-
-        return (from groupSerializable in ((List<GroupInfoSerializable>)xmlSerializer.Deserialize(stream))!
+        return (from groupSerializable in groupsSerializable!
                 let profiles = groupSerializable.Profiles.Select(profileSerializable => new ProfileInfo(profileSerializable)
                 {
                     // Migrate old tags to new tags list
