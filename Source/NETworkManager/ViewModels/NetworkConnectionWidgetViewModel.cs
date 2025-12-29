@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using log4net;
 using NetworkInterface = NETworkManager.Models.Network.NetworkInterface;
+using System.Net.Sockets;
 
 namespace NETworkManager.ViewModels;
 
@@ -760,6 +761,14 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
                 await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(
                     IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv4Address));
 
+            if (detectedLocalIPv4Address == null)
+            {
+                Log.Debug("CheckConnectionComputerAsync - Local IPv4 address detection via routing failed, trying network interfaces...");
+
+                detectedLocalIPv4Address = await NetworkInterface.DetectLocalIPAddressFromNetworkInterfaceAsync(
+                    AddressFamily.InterNetwork);
+            }
+
             if (detectedLocalIPv4Address != null)
             {
                 Log.Debug("CheckConnectionComputerAsync - Local IPv4 address detected: " + detectedLocalIPv4Address);
@@ -786,6 +795,14 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             var detectedLocalIPv6Address =
                 await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(
                     IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv6Address));
+
+            if (detectedLocalIPv6Address == null)
+            {
+                Log.Debug("CheckConnectionComputerAsync - Local IPv6 address detection via routing failed, trying network interfaces...");
+
+                detectedLocalIPv6Address = await NetworkInterface.DetectLocalIPAddressFromNetworkInterfaceAsync(
+                    AddressFamily.InterNetworkV6);
+            }
 
             if (detectedLocalIPv6Address != null)
             {
@@ -896,6 +913,9 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
                 await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(
                     IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv4Address));
 
+            detectedLocalIPv4Address ??= await NetworkInterface.DetectLocalIPAddressFromNetworkInterfaceAsync(
+                AddressFamily.InterNetwork);
+
             if (detectedLocalIPv4Address != null)
             {
                 Log.Debug("CheckConnectionRouterAsync - Computer IPv4 address detected: " + detectedLocalIPv4Address);
@@ -938,6 +958,9 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             var detectedComputerIPv6 =
                 await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(
                     IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv6Address));
+
+            detectedComputerIPv6 ??= await NetworkInterface.DetectLocalIPAddressFromNetworkInterfaceAsync(
+                AddressFamily.InterNetworkV6);
 
             if (detectedComputerIPv6 != null)
             {
