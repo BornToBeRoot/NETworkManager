@@ -2,7 +2,7 @@ using System.Reflection;
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyCopyright("Copyright © 2016-2025 BornToBeRoot")]
+[assembly: AssemblyCopyright("Copyright © 2016-2026 BornToBeRoot")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
