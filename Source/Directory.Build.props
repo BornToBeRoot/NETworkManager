@@ -8,10 +8,13 @@
   </PropertyGroup>
 
   <!-- Target to generate GlobalAssemblyInfo.cs from template before build -->
-  <Target Name="GenerateGlobalAssemblyInfo" BeforeTargets="BeforeCompile" Condition="Exists('$(MSBuildThisFileDirectory)GlobalAssemblyInfo.cs.template')">
-    <Message Text="Generating GlobalAssemblyInfo.cs with year: $(CurrentYear)" Importance="high" />
+  <!-- Uses a PowerShell script with mutex for thread-safe generation in parallel builds -->
+  <Target Name="GenerateGlobalAssemblyInfo" 
+          BeforeTargets="BeforeCompile" 
+          Condition="Exists('$(MSBuildThisFileDirectory)GlobalAssemblyInfo.cs.template')">
+    <Message Text="Checking GlobalAssemblyInfo.cs for year: $(CurrentYear)" Importance="high" />
     
-    <!-- Use PowerShell to replace the token in the template file -->
-    <Exec Command="$(PowerShellExe) -NoProfile -ExecutionPolicy Bypass -Command &quot;(Get-Content '$(MSBuildThisFileDirectory)GlobalAssemblyInfo.cs.template') -replace '\{CURRENT_YEAR\}', '$(CurrentYear)' | Set-Content '$(MSBuildThisFileDirectory)GlobalAssemblyInfo.cs' -Encoding UTF8&quot;" />
+    <!-- Use PowerShell script with mutex for thread-safe file generation -->
+    <Exec Command="$(PowerShellExe) -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildThisFileDirectory)GenerateGlobalAssemblyInfo.ps1&quot; -TemplatePath &quot;$(MSBuildThisFileDirectory)GlobalAssemblyInfo.cs.template&quot; -OutputPath &quot;$(MSBuildThisFileDirectory)GlobalAssemblyInfo.cs&quot; -Year &quot;$(CurrentYear)&quot;" />
   </Target>
 </Project>
