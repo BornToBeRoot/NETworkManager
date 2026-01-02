@@ -524,6 +524,7 @@ public static class ProfileManager
 
                     // Store the original path before updating
                     var originalPath = profileFileInfo.Path;
+                    var oldProfileFileInfo = profileFileInfo;
 
                     // Migrate to JSON format by saving the file
                     var newPath = GetJsonProfilePath(profileFileInfo.Path, true);
@@ -541,8 +542,7 @@ public static class ProfileManager
 
                     File.WriteAllBytes(newPath, encryptedJsonBytes);
 
-                    // Update ProfileFiles collection
-                    ProfileFiles.Remove(profileFileInfo);
+                    // Add the new profile
                     ProfileFiles.Add(newProfileFileInfo);
 
                     // Update the reference
@@ -557,6 +557,9 @@ public static class ProfileManager
                     {
                         Log.Warn($"Failed to delete old XML profile file: {originalPath}. Error: {ex.Message}");
                     }
+
+                    // Remove the old profile file
+                    ProfileFiles.Remove(oldProfileFileInfo);
 
                     Log.Info($"Profile migration from XML to JSON completed successfully: {newPath}");
                 }
@@ -581,28 +584,34 @@ public static class ProfileManager
                     Log.Info($"Legacy XML profile file found: {profileFileInfo.Path}. Migrating to JSON format...");
                     groups = DeserializeFromXmlFile(profileFileInfo.Path);
 
+                    // Store the original path and profileFileInfo before updating
+                    var originalPath = profileFileInfo.Path;
+                    var oldProfileFileInfo = profileFileInfo;
+
                     // Migrate to JSON format by saving the file
                     var newPath = Path.ChangeExtension(profileFileInfo.Path, ProfileFileExtension);
                     SerializeToFile(newPath, groups);
 
                     var newProfileFileInfo = new ProfileFileInfo(profileFileInfo.Name, newPath);
 
-                    // Update ProfileFiles collection
-                    ProfileFiles.Remove(profileFileInfo);
+                    // Add the new profile
                     ProfileFiles.Add(newProfileFileInfo);
+
+                    // Update the reference
+                    profileFileInfo = newProfileFileInfo;
 
                     // Delete the old XML file
                     try
                     {
-                        File.Delete(profileFileInfo.Path);
+                        File.Delete(originalPath);
                     }
                     catch (Exception ex)
                     {
-                        Log.Warn($"Failed to delete old XML profile file: {profileFileInfo.Path}. Error: {ex.Message}");
+                        Log.Warn($"Failed to delete old XML profile file: {originalPath}. Error: {ex.Message}");
                     }
 
-                    // Update the reference
-                    profileFileInfo = newProfileFileInfo;
+                    // Remove the old profile file
+                    ProfileFiles.Remove(oldProfileFileInfo);
 
                     Log.Info($"Profile migration from XML to JSON completed successfully: {newPath}");
 
