@@ -1,0 +1,15 @@
+<Project>
+  <PropertyGroup>
+    <!-- Define the current year for dynamic copyright -->
+    <CurrentYear>$([System.DateTime]::Now.Year)</CurrentYear>
+  </PropertyGroup>
+
+  <!-- Target to generate GlobalAssemblyInfo.cs from template before build -->
+  <Target Name="GenerateGlobalAssemblyInfo" BeforeTargets="BeforeBuild;CoreCompile">
+    <Message Text="Generating GlobalAssemblyInfo.cs with year: $(CurrentYear)" Importance="high" />
+    
+    <!-- Use PowerShell to replace the token in the template file -->
+    <Exec Command="pwsh -NoProfile -ExecutionPolicy Bypass -Command &quot;(Get-Content '$(MSBuildThisFileDirectory)GlobalAssemblyInfo.cs.template') -replace '\{CURRENT_YEAR\}', '$(CurrentYear)' | Set-Content '$(MSBuildThisFileDirectory)GlobalAssemblyInfo.cs'&quot;" 
+          Condition="Exists('$(MSBuildThisFileDirectory)GlobalAssemblyInfo.cs.template')" />
+  </Target>
+</Project>

@@ -257,3 +257,6 @@ Build/
 .vscode/
 *.exe
 *.dll
+
+# Generated assembly info (generated from template at build time)
+Source/GlobalAssemblyInfo.cs
