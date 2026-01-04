@@ -1472,7 +1472,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void ProfileManager_OnLoadedProfileFileChangedEvent(object sender, ProfileFileInfoArgs e)
-    {
+    {        
         _isProfileFileUpdating = e.ProfileFileUpdating;
 
         SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>()
