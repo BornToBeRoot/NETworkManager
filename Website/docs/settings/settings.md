@@ -24,7 +24,7 @@ It is strongly recommended to regularly back up your settings files.
 
 **Automatic backups**  
 NETworkManager automatically creates a backup of the settings files before applying any changes.
-- Location: `Settings\Backups` subfolder (relative to the main configuration directory)
+- Location: `Settings\Backups` subfolder
 - Naming: timestamped (e.g. `yyyyMMddHHmmss_Settings.json`)
 - Frequency: **once per day** at most (even if multiple changes occur)
 - Retention: keeps the **10 most recent backups**
@@ -32,7 +32,7 @@ NETworkManager automatically creates a backup of the settings files before apply
 **Restoring settings**  
 1. Completely close NETworkManager
 2. Locate the desired backup in `Settings\Backups`
-3. Copy the file(s) back to the original configuration folder (overwriting existing files)
+3. Copy the file(s) back to the original folder (overwriting existing files)
 4. Restart the application
 
 :::
