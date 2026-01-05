@@ -33,7 +33,6 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Markup;
 using System.Windows.Threading;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using Application = System.Windows.Application;
 using ContextMenu = System.Windows.Controls.ContextMenu;
 using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
@@ -1376,6 +1375,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         _isProfileFilesLoading = false;
 
         ProfileManager.OnLoadedProfileFileChangedEvent += ProfileManager_OnLoadedProfileFileChangedEvent;
+        ProfileManager.OnProfileMigrationStarted += ProfileManager_OnProfileMigrationStarted;
+        ProfileManager.OnProfileMigrationCompleted += ProfileManager_OnProfileMigrationCompleted;
 
         SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>()
             .FirstOrDefault(x => x.Name == SettingsManager.Current.Profiles_LastSelected);
@@ -1479,6 +1480,16 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             .FirstOrDefault(x => x.Equals(e.ProfileFileInfo));
 
         _isProfileFileUpdating = false;
+    }
+
+    private void ProfileManager_OnProfileMigrationCompleted(object sender, EventArgs e)
+    {
+        _isProfileFileUpdating = false;
+    }
+
+    private void ProfileManager_OnProfileMigrationStarted(object sender, EventArgs e)
+    {
+        _isProfileFileUpdating = true;
     }
 
     #endregion

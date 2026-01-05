@@ -327,10 +327,10 @@ public static class SettingsManager
     /// <summary>
     /// Creates a backup of the specified settings file in the given backup folder with the provided backup file name.
     /// </summary>
-    /// <param name="settingsFilePath">The full path to the settings file to back up. Cannot be null or empty.</param>
+    /// <param name="filePath">The full path to the settings file to back up. Cannot be null or empty.</param>
     /// <param name="backupFolderPath">The directory path where the backup file will be stored. If the directory does not exist, it will be created.</param>
     /// <param name="backupFileName">The name to use for the backup file within the backup folder. Cannot be null or empty.</param>
-    private static void Backup(string settingsFilePath, string backupFolderPath, string backupFileName)
+    private static void Backup(string filePath, string backupFolderPath, string backupFileName)
     {
         // Create the backup directory if it does not exist
         Directory.CreateDirectory(backupFolderPath);
@@ -339,7 +339,7 @@ public static class SettingsManager
         var backupFilePath = Path.Combine(backupFolderPath, backupFileName);
 
         // Copy the current settings file to the backup location
-        File.Copy(settingsFilePath, backupFilePath, true);
+        File.Copy(filePath, backupFilePath, true);
 
         Log.Info($"Backup created: {backupFilePath}");
     }
