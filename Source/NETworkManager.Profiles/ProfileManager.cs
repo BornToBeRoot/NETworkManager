@@ -1,5 +1,4 @@
 ﻿using log4net;
-using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
@@ -133,6 +132,36 @@ public static class ProfileManager
     private static void LoadedProfileFileChanged(ProfileFileInfo profileFileInfo, bool profileFileUpdating = false)
     {
         OnLoadedProfileFileChangedEvent?.Invoke(null, new ProfileFileInfoArgs(profileFileInfo, profileFileUpdating));
+    }
+
+    /// <summary>
+    /// Occurs when the profile migration process begins.
+    /// </summary>    
+    [Obsolete("Will be removed after some time, as profile migration from legacy XML files is a one-time process.")]
+    public static event EventHandler OnProfileMigrationStarted;
+
+    /// <summary>
+    /// Raises the event indicating that the profile migration process from legacy XML files has started.
+    /// </summary>    
+    [Obsolete("Will be removed after some time, as profile migration from legacy XML files is a one-time process.")]
+    private static void ProfileMigrationStarted()
+    {
+        OnProfileMigrationStarted?.Invoke(null, EventArgs.Empty);
+    }
+
+    /// <summary>
+    /// Occurs when the profile migration from legacy XML files has completed.
+    /// </summary>    
+    [Obsolete("Will be removed after some time, as profile migration from legacy XML files is a one-time process.")]
+    public static event EventHandler OnProfileMigrationCompleted;
+
+    /// <summary>
+    /// Raises the event indicating that the profile migration from legacy XML files has completed.
+    /// </summary>    
+    [Obsolete("Will be removed after some time, as profile migration from legacy XML files is a one-time process.")]
+    private static void ProfileMigrationCompleted()
+    {
+        OnProfileMigrationCompleted?.Invoke(null, EventArgs.Empty);
     }
 
     /// <summary>
@@ -507,7 +536,30 @@ public static class ProfileManager
 
                 if (IsXmlContent(decryptedBytes))
                 {
-                    groups = new List<GroupInfo>(); // ToDo
+                    //
+                    // MIGRATION FROM LEGACY XML PROFILE FILE
+                    //
+
+                    Log.Info($"Legacy XML profile file detected inside encrypted profile: {profileFileInfo.Path}. Migration in progress...");
+
+                    // Load from legacy XML byte array
+                    groups = DeserializeFromXmlByteArray(decryptedBytes);
+
+                    // Create a backup of the legacy XML file
+                    Backup(profileFileInfo.Path,
+                        GetSettingsBackupFolderLocation(),
+                        TimestampHelper.GetTimestampFilename(Path.GetFileName(profileFileInfo.Path)));
+
+                    // Save encrypted profile file with new JSON format
+                    var newDecryptedBytes = SerializeToByteArray([.. groups]);
+                    var newEncryptedBytes = CryptoHelper.Encrypt(newDecryptedBytes,
+                        SecureStringHelper.ConvertToString(profileFileInfo.Password),
+                        GlobalStaticConfiguration.Profile_EncryptionKeySize,
+                        GlobalStaticConfiguration.Profile_EncryptionIterations);
+
+                    File.WriteAllBytes(profileFileInfo.Path, newEncryptedBytes);
+
+                    Log.Info($"Legacy XML profile file migration completed inside encrypted profile: {profileFileInfo.Path}.");
                 }
                 else
                 {
@@ -528,6 +580,9 @@ public static class ProfileManager
 
                 if (Path.GetExtension(profileFileInfo.Path) == LegacyProfileFileExtension)
                 {
+                    //
+                    // MIGRATION FROM LEGACY XML PROFILE FILE
+                    //
                     Log.Info($"Legacy XML profile file detected: {profileFileInfo.Path}. Migration in progress...");
 
                     // Load from legacy XML file
@@ -537,6 +592,11 @@ public static class ProfileManager
 
                     LoadedProfileFile = profileFileInfo;
 
+                    // Create a backup of the legacy XML file and delete the original
+                    Backup(profileFileInfo.Path,
+                        GetSettingsBackupFolderLocation(),
+                        TimestampHelper.GetTimestampFilename(Path.GetFileName(profileFileInfo.Path)));
+
                     // Create new profile file info with JSON extension
                     var newProfileFileInfo = new ProfileFileInfo(profileFileInfo.Name,
                         Path.ChangeExtension(profileFileInfo.Path, ProfileFileExtension));
@@ -544,15 +604,11 @@ public static class ProfileManager
                     // Save new JSON file
                     SerializeToFile(newProfileFileInfo.Path, groups);
 
-                    // Create a backup of the legacy XML file and delete the original
-                    Backup(profileFileInfo.Path,
-                        GetSettingsBackupFolderLocation(),
-                        TimestampHelper.GetTimestampFilename(Path.GetFileName(profileFileInfo.Path)));
-                                                            
+                    // Notify migration started
+                    ProfileMigrationStarted();
+
                     // Add the new profile
-                    Log.Info("Adding migrated profile file to the profile files list.");
                     ProfileFiles.Add(newProfileFileInfo);
-                    Log.Info("Migrated profile file added to the profile files list.");
 
                     // Switch profile
                     Log.Info($"Switching to migrated profile file: {newProfileFileInfo.Path}.");
@@ -562,6 +618,9 @@ public static class ProfileManager
                     // Remove the old profile file
                     File.Delete(profileFileInfo.Path);
                     ProfileFiles.Remove(profileFileInfo);
+
+                    // Notify migration completed
+                    ProfileMigrationCompleted();
 
                     Log.Info($"Legacy XML profile file migration completed: {profileFileInfo.Path}.");
                     return;
