@@ -428,10 +428,9 @@ public static class ProfileManager
 
         List<GroupInfo> profiles;
 
-        if (IsXmlContent(decryptedBytes))
-            profiles = DeserializeFromXmlByteArray(decryptedBytes);
-        else
-            profiles = DeserializeFromByteArray(decryptedBytes);
+        profiles = IsXmlContent(decryptedBytes)
+            ? DeserializeFromXmlByteArray(decryptedBytes)
+            : DeserializeFromByteArray(decryptedBytes);
 
         // Save the encrypted file
         decryptedBytes = SerializeToByteArray(profiles);
