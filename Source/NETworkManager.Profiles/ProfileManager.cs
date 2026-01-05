@@ -361,13 +361,9 @@ public static class ProfileManager
             IsPasswordValid = true
         };
 
-        List<GroupInfo> profiles;
-
-        if (Path.GetExtension(profileFileInfo.Path) == LegacyProfileFileExtension)
-            profiles = DeserializeFromXmlFile(profileFileInfo.Path);
-        else
-            profiles = DeserializeFromFile(profileFileInfo.Path);
-
+        List<GroupInfo> profiles = Path.GetExtension(profileFileInfo.Path) == LegacyProfileFileExtension
+            ? DeserializeFromXmlFile(profileFileInfo.Path)
+            : DeserializeFromFile(profileFileInfo.Path);
         // Save the encrypted file
         var decryptedBytes = SerializeToByteArray(profiles);
         var encryptedBytes = CryptoHelper.Encrypt(decryptedBytes,
