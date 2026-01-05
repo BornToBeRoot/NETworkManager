@@ -481,13 +481,9 @@ public static class ProfileManager
             GlobalStaticConfiguration.Profile_EncryptionKeySize,
             GlobalStaticConfiguration.Profile_EncryptionIterations);
 
-        List<GroupInfo> profiles;
-
-        if (IsXmlContent(decryptedBytes))
-            profiles = DeserializeFromXmlByteArray(decryptedBytes);
-        else
-            profiles = DeserializeFromByteArray(decryptedBytes);
-
+        List<GroupInfo> profiles = IsXmlContent(decryptedBytes)
+            ? DeserializeFromXmlByteArray(decryptedBytes)
+            : DeserializeFromByteArray(decryptedBytes);
         // Save the decrypted profiles to the profile file
         SerializeToFile(newProfileFileInfo.Path, profiles);
 
