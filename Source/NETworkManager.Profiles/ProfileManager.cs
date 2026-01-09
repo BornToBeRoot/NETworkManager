@@ -30,7 +30,7 @@ public static class ProfileManager
     private const string ProfilesDefaultFileName = "Default";
 
     /// <summary>
-    ///     Settings backups directory name.
+    ///     Profiles backups directory name.
     /// </summary>
     private static string BackupFolderName => "Backups";
 
@@ -199,7 +199,7 @@ public static class ProfileManager
     ///     Method to get the path of the profiles backup folder.
     /// </summary>
     /// <returns>Path to the profiles backup folder.</returns>
-    public static string GetSettingsBackupFolderLocation()
+    public static string GetProfilesBackupFolderLocation()
     {
         return Path.Combine(GetProfilesFolderLocation(), BackupFolderName);
     }
@@ -364,6 +364,7 @@ public static class ProfileManager
         List<GroupInfo> profiles = Path.GetExtension(profileFileInfo.Path) == LegacyProfileFileExtension
             ? DeserializeFromXmlFile(profileFileInfo.Path)
             : DeserializeFromFile(profileFileInfo.Path);
+
         // Save the encrypted file
         var decryptedBytes = SerializeToByteArray(profiles);
         var encryptedBytes = CryptoHelper.Encrypt(decryptedBytes,
@@ -538,7 +539,7 @@ public static class ProfileManager
 
                     // Create a backup of the legacy XML file
                     Backup(profileFileInfo.Path,
-                        GetSettingsBackupFolderLocation(),
+                        GetProfilesBackupFolderLocation(),
                         TimestampHelper.GetTimestampFilename(Path.GetFileName(profileFileInfo.Path)));
 
                     // Save encrypted profile file with new JSON format
@@ -585,7 +586,7 @@ public static class ProfileManager
 
                     // Create a backup of the legacy XML file and delete the original
                     Backup(profileFileInfo.Path,
-                        GetSettingsBackupFolderLocation(),
+                        GetProfilesBackupFolderLocation(),
                         TimestampHelper.GetTimestampFilename(Path.GetFileName(profileFileInfo.Path)));
 
                     // Create new profile file info with JSON extension
@@ -654,7 +655,7 @@ public static class ProfileManager
         // Ensure the profiles directory exists.
         Directory.CreateDirectory(GetProfilesFolderLocation());
 
-        // Write to an xml file.
+        // Write profiles to the profile file (JSON, optionally encrypted).
         if (LoadedProfileFile.IsEncrypted)
         {
             // Only if the password provided earlier was valid...
