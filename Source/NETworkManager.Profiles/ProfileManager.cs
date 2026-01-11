@@ -25,14 +25,14 @@ public static class ProfileManager
     private const string ProfilesFolderName = "Profiles";
 
     /// <summary>
-    ///     Default profile name.
-    /// </summary>
-    private const string ProfilesDefaultFileName = "Default";
-
-    /// <summary>
     ///     Profiles backups directory name.
     /// </summary>
     private static string BackupFolderName => "Backups";
+
+    /// <summary>
+    ///     Default profile name.
+    /// </summary>
+    private const string ProfilesDefaultFileName = "Default";
 
     /// <summary>
     ///     Profile file extension.
@@ -290,14 +290,21 @@ public static class ProfileManager
     /// <param name="newProfileName">New <see cref="ProfileFileInfo.Name" /> of the profile file.</param>
     public static void RenameProfileFile(ProfileFileInfo profileFileInfo, string newProfileName)
     {
+        // Check if the profile is currently in use
         var switchProfile = false;
-
+                
         if (LoadedProfileFile != null && LoadedProfileFile.Equals(profileFileInfo))
         {
             Save();
             switchProfile = true;
         }
 
+        // Create backup
+        Backup(profileFileInfo.Path,
+               GetProfilesBackupFolderLocation(),
+               TimestampHelper.GetTimestampFilename(Path.GetFileName(profileFileInfo.Path)));
+
+        // Create new profile info with the new name
         ProfileFileInfo newProfileFileInfo = new(newProfileName,
             Path.Combine(GetProfilesFolderLocation(), $"{newProfileName}{Path.GetExtension(profileFileInfo.Path)}"),
             profileFileInfo.IsEncrypted)
@@ -306,15 +313,18 @@ public static class ProfileManager
             IsPasswordValid = profileFileInfo.IsPasswordValid
         };
 
+        // Copy the profile file to the new location
         File.Copy(profileFileInfo.Path, newProfileFileInfo.Path);
         ProfileFiles.Add(newProfileFileInfo);
 
+        // Switch profile, if it was previously loaded
         if (switchProfile)
         {
             Switch(newProfileFileInfo, false);
             LoadedProfileFileChanged(LoadedProfileFile, true);
         }
 
+        // Remove the old profile file
         File.Delete(profileFileInfo.Path);
         ProfileFiles.Remove(profileFileInfo);
     }
@@ -353,6 +363,11 @@ public static class ProfileManager
             switchProfile = true;
         }
 
+        // Create backup
+        Backup(profileFileInfo.Path,
+               GetProfilesBackupFolderLocation(),
+               TimestampHelper.GetTimestampFilename(Path.GetFileName(profileFileInfo.Path)));
+
         // Create a new profile info with the encryption infos
         var newProfileFileInfo = new ProfileFileInfo(profileFileInfo.Name,
             Path.ChangeExtension(profileFileInfo.Path, ProfileFileExtensionEncrypted), true)
@@ -361,9 +376,9 @@ public static class ProfileManager
             IsPasswordValid = true
         };
 
-        List<GroupInfo> profiles = Path.GetExtension(profileFileInfo.Path) == LegacyProfileFileExtension
-            ? DeserializeFromXmlFile(profileFileInfo.Path)
-            : DeserializeFromFile(profileFileInfo.Path);
+        List<GroupInfo> profiles = Path.GetExtension(profileFileInfo.Path) == LegacyProfileFileExtension ?
+            DeserializeFromXmlFile(profileFileInfo.Path) :
+            DeserializeFromFile(profileFileInfo.Path);
 
         // Save the encrypted file
         var decryptedBytes = SerializeToByteArray(profiles);
@@ -409,7 +424,12 @@ public static class ProfileManager
             switchProfile = true;
         }
 
-        // Create a new profile info with the encryption infos
+        // Create backup
+        Backup(profileFileInfo.Path,
+               GetProfilesBackupFolderLocation(),
+               TimestampHelper.GetTimestampFilename(Path.GetFileName(profileFileInfo.Path)));
+
+        // Create new profile info with the encryption infos
         var newProfileFileInfo = new ProfileFileInfo(profileFileInfo.Name,
             Path.ChangeExtension(profileFileInfo.Path, ProfileFileExtensionEncrypted), true)
         {
@@ -423,11 +443,9 @@ public static class ProfileManager
             GlobalStaticConfiguration.Profile_EncryptionKeySize,
             GlobalStaticConfiguration.Profile_EncryptionIterations);
 
-        List<GroupInfo> profiles;
-
-        profiles = IsXmlContent(decryptedBytes)
-            ? DeserializeFromXmlByteArray(decryptedBytes)
-            : DeserializeFromByteArray(decryptedBytes);
+        List<GroupInfo> profiles = IsXmlContent(decryptedBytes) ?
+            DeserializeFromXmlByteArray(decryptedBytes) :
+            DeserializeFromByteArray(decryptedBytes);
 
         // Save the encrypted file
         decryptedBytes = SerializeToByteArray(profiles);
@@ -468,7 +486,12 @@ public static class ProfileManager
             switchProfile = true;
         }
 
-        // Create a new profile info
+        // Create backup
+        Backup(profileFileInfo.Path,
+            GetProfilesBackupFolderLocation(),
+            TimestampHelper.GetTimestampFilename(Path.GetFileName(profileFileInfo.Path)));
+
+        // Create new profile info
         var newProfileFileInfo = new ProfileFileInfo(profileFileInfo.Name,
             Path.ChangeExtension(profileFileInfo.Path, ProfileFileExtension));
 
@@ -478,9 +501,10 @@ public static class ProfileManager
             GlobalStaticConfiguration.Profile_EncryptionKeySize,
             GlobalStaticConfiguration.Profile_EncryptionIterations);
 
-        List<GroupInfo> profiles = IsXmlContent(decryptedBytes)
-            ? DeserializeFromXmlByteArray(decryptedBytes)
-            : DeserializeFromByteArray(decryptedBytes);
+        List<GroupInfo> profiles = IsXmlContent(decryptedBytes) ?
+            DeserializeFromXmlByteArray(decryptedBytes) :
+            DeserializeFromByteArray(decryptedBytes);
+
         // Save the decrypted profiles to the profile file
         SerializeToFile(newProfileFileInfo.Path, profiles);
 
