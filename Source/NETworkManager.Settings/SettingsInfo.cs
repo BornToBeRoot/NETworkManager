@@ -582,6 +582,37 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
+    private int _profiles_MaximumNumberOfBackups = GlobalStaticConfiguration.Profiles_MaximumNumberOfBackups;
+
+    public int Profiles_MaximumNumberOfBackups
+    {
+        get => _profiles_MaximumNumberOfBackups;
+        set
+        {
+            if (value == _profiles_MaximumNumberOfBackups)
+                return;
+
+            _profiles_MaximumNumberOfBackups = value;
+            OnPropertyChanged();
+        }
+    }
+
+    // Settings
+    private int _settings_MaximumNumberOfBackups = GlobalStaticConfiguration.Settings_MaximumNumberOfBackups;
+
+    public int Settings_MaximumNumberOfBackups
+    {
+        get => _settings_MaximumNumberOfBackups;
+        set
+        {
+            if (value == _settings_MaximumNumberOfBackups)
+                return;
+
+            _settings_MaximumNumberOfBackups = value;
+            OnPropertyChanged();
+        }
+    }
+
     #endregion
 
     #region Others

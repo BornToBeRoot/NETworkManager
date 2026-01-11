@@ -265,6 +265,16 @@ public static class SettingsManager
     /// called as part of a daily maintenance routine.</remarks>
     private static void CreateDailyBackupIfNeeded()
     {
+        var maxBackups = Current.Settings_MaximumNumberOfBackups;
+
+        // Check if backups are disabled
+        if (maxBackups == 0)
+        {
+            Log.Debug("Daily backups are disabled. Skipping backup creation...");
+
+            return;
+        }
+
         var currentDate = DateTime.Now.Date;
 
         if (Current.LastBackup < currentDate)
@@ -284,7 +294,7 @@ public static class SettingsManager
             // Cleanup old backups
             CleanupBackups(GetSettingsBackupFolderLocation(),
                 GetSettingsFileName(),
-                GlobalStaticConfiguration.Backup_MaximumNumberOfBackups);
+                maxBackups);
 
             Current.LastBackup = currentDate;
         }

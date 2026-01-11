@@ -22,6 +22,8 @@ public class SettingsProfilesViewModel : ViewModelBase
 
     public Action CloseAction { get; set; }
 
+    private readonly bool _isLoading;
+
     private string _location;
 
     public string Location
@@ -67,12 +69,31 @@ public class SettingsProfilesViewModel : ViewModelBase
         }
     }
 
+    private int _maximumNumberOfBackups;
+
+    public int MaximumNumberOfBackups
+    {
+        get => _maximumNumberOfBackups;
+        set
+        {
+            if (value == _maximumNumberOfBackups)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Profiles_MaximumNumberOfBackups = value;
+
+            _maximumNumberOfBackups = value;
+            OnPropertyChanged();
+        }
+    }
     #endregion
 
     #region Constructor, LoadSettings
 
     public SettingsProfilesViewModel()
     {
+        _isLoading = true;
+
         ProfileFiles = new CollectionViewSource { Source = ProfileManager.ProfileFiles }.View;
         ProfileFiles.SortDescriptions.Add(
             new SortDescription(nameof(ProfileFileInfo.Name), ListSortDirection.Ascending));
@@ -80,11 +101,14 @@ public class SettingsProfilesViewModel : ViewModelBase
         SelectedProfileFile = ProfileFiles.Cast<ProfileFileInfo>().FirstOrDefault();
 
         LoadSettings();
+
+        _isLoading = false;
     }
 
     private void LoadSettings()
     {
         Location = ProfileManager.GetProfilesFolderLocation();
+        MaximumNumberOfBackups = SettingsManager.Current.Profiles_MaximumNumberOfBackups;
     }
 
     #endregion

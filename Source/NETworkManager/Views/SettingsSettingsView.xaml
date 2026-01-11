@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
@@ -30,8 +31,23 @@
                 </Grid>
             </Button.Content>
         </Button>
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Backup}" />
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+            <TextBlock Text="{x:Static localization:Strings.MaximumNumberOfBackups}"
+                       Style="{StaticResource CenterTextBlock}"
+                       Margin="0,0,0,10" />
+            <mah:NumericUpDown Value="{Binding MaximumNumberOfBackups}" Minimum="0" Maximum="100" Interval="1"/>
+            <Rectangle Width="24" Height="24"
+                       ToolTip="{x:Static localization:Strings.HelpMessage_SettingsMaximumNumberOfBackups}"
+                       Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
+        </StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Reset}" />
         <Button Content="{x:Static localization:Strings.Reset}" Command="{Binding ResetSettingsCommand}"
-                IsEnabled="{Binding SettingsExists}" Style="{StaticResource DefaultButton}" HorizontalAlignment="Left" />
+                Style="{StaticResource DefaultButton}" HorizontalAlignment="Left" 
+                />
     </StackPanel>
 </UserControl>

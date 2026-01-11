@@ -4553,6 +4553,19 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The number of settings backups that are retained before the oldest one is deleted.
+        ///
+        ///An automatic backup is only created once a day, before saving a change.
+        ///
+        ///The value 0 disables the creation of automatic backups. Backups that have already been created are not deleted. ähnelt.
+        /// </summary>
+        public static string HelpMessage_SettingsMaximumNumberOfBackups {
+            get {
+                return ResourceManager.GetString("HelpMessage_SettingsMaximumNumberOfBackups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Displays the status bar in the bottom-left of the WebView when hovering over a link. ähnelt.
         /// </summary>
         public static string HelpMessage_ShowStatusBar {
@@ -5780,6 +5793,15 @@ namespace NETworkManager.Localization.Resources {
         public static string MaximumHops {
             get {
                 return ResourceManager.GetString("MaximumHops", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Maximum Number of Backups ähnelt.
+        /// </summary>
+        public static string MaximumNumberOfBackups {
+            get {
+                return ResourceManager.GetString("MaximumNumberOfBackups", resourceCulture);
             }
         }
         

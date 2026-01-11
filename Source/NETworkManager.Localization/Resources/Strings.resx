@@ -3951,4 +3951,14 @@ If you click Cancel, the profile file will remain unencrypted.</value>
   <data name="CouldNotParseX" xml:space="preserve">
     <value>Could not parse "{0}".</value>
   </data>
+  <data name="MaximumNumberOfBackups" xml:space="preserve">
+    <value>Maximum Number of Backups</value>
+  </data>
+  <data name="HelpMessage_SettingsMaximumNumberOfBackups" xml:space="preserve">
+    <value>The number of settings backups that are retained before the oldest one is deleted.
+
+An automatic backup is only created once a day, before saving a change.
+
+The value 0 disables the creation of automatic backups. Backups that have already been created are not deleted.</value>
+  </data>
 </root>
