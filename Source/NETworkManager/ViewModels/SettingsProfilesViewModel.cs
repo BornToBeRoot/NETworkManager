@@ -69,6 +69,24 @@ public class SettingsProfilesViewModel : ViewModelBase
         }
     }
 
+    private bool _isDailyBackupEnabled;
+
+    public bool IsDailyBackupEnabled
+    {
+        get => _isDailyBackupEnabled;
+        set
+        {
+            if (value == _isDailyBackupEnabled)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Profiles_IsDailyBackupEnabled = value;
+
+            _isDailyBackupEnabled = value;
+            OnPropertyChanged();
+        }
+    }
+
     private int _maximumNumberOfBackups;
 
     public int MaximumNumberOfBackups
@@ -108,6 +126,7 @@ public class SettingsProfilesViewModel : ViewModelBase
     private void LoadSettings()
     {
         Location = ProfileManager.GetProfilesFolderLocation();
+        IsDailyBackupEnabled = SettingsManager.Current.Profiles_IsDailyBackupEnabled;
         MaximumNumberOfBackups = SettingsManager.Current.Profiles_MaximumNumberOfBackups;
     }
 

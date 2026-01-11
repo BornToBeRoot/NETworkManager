@@ -81,9 +81,11 @@ public static class GlobalStaticConfiguration
     public static bool Experimental_EnableExperimentalFeatures => false;
 
     // Settings: Profiles
+    public static bool Profiles_IsDailyBackupEnabled => true;
     public static int Profiles_MaximumNumberOfBackups => 10;
 
     // Settings: Settings
+    public static bool Settings_IsDailyBackupEnabled => true;
     public static int Settings_MaximumNumberOfBackups => 10;
     
     // Application: Dashboard

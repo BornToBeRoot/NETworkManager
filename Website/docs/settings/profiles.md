@@ -19,9 +19,21 @@ Folder where the application profiles are stored.
 
 :::note
 
-It is recommended to backup the above files on a regular basis.
+**Recommendation**  
+It is strongly recommended to regularly back up your profile files.
 
-To restore the profiles, close the application and copy the files from the backup to the above location.
+**Automatic backups**  
+NETworkManager automatically creates a backup of the profile file before applying any changes. See [Create daily backup](#create-daily-backup) and [Maximum number of backups](#maximum-number-of-backups) for configuration options.
+- Location: `Profiles\Backups` subfolder (relative to the main configuration directory)
+- Naming: timestamped (e.g. `yyyyMMddHHmmss_<profile>.json`)
+- Frequency: **once per day** at most (even if multiple changes occur)
+- Retention: keeps the **10 most recent backups** (default)
+
+**Restoring profiles**  
+1. Completely close NETworkManager
+2. Locate the desired backup in `Profiles\Backups`
+3. Copy the file(s) back to the original folder (overwrite existing files or copy them under a different name)
+4. Restart the application
 
 :::
 
@@ -44,3 +56,27 @@ Profile files can be encrypted with a master password. See [FAQ > How to enable 
 At least one profile is required and must exist.
 
 :::
+
+### Create daily backup
+
+Create a daily backup of the profile file before applying any changes.
+
+**Type**: `Boolean`
+
+**Default:** `Enabled`
+
+:::note
+
+Backups are stored in the `Profiles\Backups` subfolder. See [Location](#location) for more details.
+
+Backups are created at most once per day, even if multiple changes occur.
+
+:::
+
+### Maximum number of backups
+
+Maximum number of backups to keep. Older backups will be deleted automatically once a new backup is created.
+
+**Type:** `Integer` [Min `1`, Max `365`]
+
+**Default:** `10`

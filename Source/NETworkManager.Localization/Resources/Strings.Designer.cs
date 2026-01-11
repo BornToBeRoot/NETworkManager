@@ -2221,6 +2221,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Create daily backup ähnelt.
+        /// </summary>
+        public static string CreateDailyBackup {
+            get {
+                return ResourceManager.GetString("CreateDailyBackup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Credential ähnelt.
         /// </summary>
         public static string Credential {
@@ -4451,6 +4460,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Number of backups that are retained before the oldest one is deleted. ähnelt.
+        /// </summary>
+        public static string HelpMessage_MaximumNumberOfBackups {
+            get {
+                return ResourceManager.GetString("HelpMessage_MaximumNumberOfBackups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Application that is displayed at startup. ähnelt.
         /// </summary>
         public static string HelpMessage_ParameterApplication {
@@ -4549,19 +4567,6 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_SaveCredentials {
             get {
                 return ResourceManager.GetString("HelpMessage_SaveCredentials", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The number of settings backups that are retained before the oldest one is deleted.
-        ///
-        ///An automatic backup is only created once a day, before saving a change.
-        ///
-        ///The value 0 disables the creation of automatic backups. Backups that have already been created are not deleted. ähnelt.
-        /// </summary>
-        public static string HelpMessage_SettingsMaximumNumberOfBackups {
-            get {
-                return ResourceManager.GetString("HelpMessage_SettingsMaximumNumberOfBackups", resourceCulture);
             }
         }
         
@@ -5797,7 +5802,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Maximum Number of Backups ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Maximum number of backups ähnelt.
         /// </summary>
         public static string MaximumNumberOfBackups {
             get {
