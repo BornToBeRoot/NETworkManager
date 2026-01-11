@@ -62,7 +62,7 @@
         <PackageReference Include="AirspaceFixer" Version="1.0.6" />
         <PackageReference Include="DnsClient" Version="1.8.0" />
         <PackageReference Include="gong-wpf-dragdrop" Version="4.0.0" />
-        <PackageReference Include="IPNetwork2" Version="3.4.832" />
+        <PackageReference Include="IPNetwork2" Version="3.4.851" />
         <PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.7" />
         <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
         <PackageReference Include="log4net" Version="3.2.0" />
@@ -73,7 +73,7 @@
         <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="6.2.1" />
         <PackageReference Include="MahApps.Metro.IconPacks.Octicons" Version="6.2.1" />
         <PackageReference Include="MahApps.Metro.SimpleChildWindow" Version="2.2.1" />
-        <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3595.46" />
+        <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3650.58" />
         <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
         
         <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
