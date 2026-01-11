@@ -582,6 +582,67 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
+    private bool _profiles_IsDailyBackupEnabled = GlobalStaticConfiguration.Profiles_IsDailyBackupEnabled;
+
+    public bool Profiles_IsDailyBackupEnabled
+    {
+        get => _profiles_IsDailyBackupEnabled;
+        set
+        {
+            if (value == _profiles_IsDailyBackupEnabled)
+                return;
+
+            _profiles_IsDailyBackupEnabled = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private int _profiles_MaximumNumberOfBackups = GlobalStaticConfiguration.Profiles_MaximumNumberOfBackups;
+
+    public int Profiles_MaximumNumberOfBackups
+    {
+        get => _profiles_MaximumNumberOfBackups;
+        set
+        {
+            if (value == _profiles_MaximumNumberOfBackups)
+                return;
+
+            _profiles_MaximumNumberOfBackups = value;
+            OnPropertyChanged();
+        }
+    }
+
+    // Settings
+    private bool _settings_IsDailyBackupEnabled = GlobalStaticConfiguration.Settings_IsDailyBackupEnabled;
+
+    public bool Settings_IsDailyBackupEnabled
+    {
+        get => _settings_IsDailyBackupEnabled;
+        set
+        {
+            if (value == _settings_IsDailyBackupEnabled)
+                return;
+
+            _settings_IsDailyBackupEnabled = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private int _settings_MaximumNumberOfBackups = GlobalStaticConfiguration.Settings_MaximumNumberOfBackups;
+
+    public int Settings_MaximumNumberOfBackups
+    {
+        get => _settings_MaximumNumberOfBackups;
+        set
+        {
+            if (value == _settings_MaximumNumberOfBackups)
+                return;
+
+            _settings_MaximumNumberOfBackups = value;
+            OnPropertyChanged();
+        }
+    }
+
     #endregion
 
     #region Others

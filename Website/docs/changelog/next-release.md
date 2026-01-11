@@ -65,7 +65,7 @@ Release date: **xx.xx.2025**
 **Settings**
 
 - Settings file format migrated from `XML` to `JSON`. The settings file will be automatically converted on first load after the update. [#3282](https://github.com/BornToBeRoot/NETworkManager/pull/3282)
-- Create a daily backup of the settings file before saving changes. Up to `10` backup files are kept in the `Backups` subfolder of the settings directory. [#3283](https://github.com/BornToBeRoot/NETworkManager/pull/3283)
+- Create a daily backup of the settings file before saving changes. By default, up to `10` backup files are kept in the `Backups` subfolder of the settings directory. [#3283](https://github.com/BornToBeRoot/NETworkManager/pull/3283) [#3302](https://github.com/BornToBeRoot/NETworkManager/pull/3302)
 
 **Dashboard**
 

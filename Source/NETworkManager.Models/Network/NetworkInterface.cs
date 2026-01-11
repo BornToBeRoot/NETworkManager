@@ -527,7 +527,6 @@ public sealed class NetworkInterface
 
     #endregion
 
-
     #region Events
 
     /// <summary>
