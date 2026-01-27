@@ -51,7 +51,7 @@ public class SettingsInfo : INotifyPropertyChanged
 
     /// <summary>
     /// Determines if the welcome dialog should be shown on application start.
-    /// </summary>
+    /// </summary>S
     public bool WelcomeDialog_Show
     {
         get => _welcomeDialog_Show;

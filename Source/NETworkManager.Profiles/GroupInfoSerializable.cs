@@ -10,6 +10,7 @@ public class GroupInfoSerializable : GroupInfo
 
     public GroupInfoSerializable(GroupInfo profileGroup) : base(profileGroup)
     {
+
     }
 
     /// <summary>

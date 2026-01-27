@@ -92,14 +92,31 @@ public static class ProfileManager
     }
 
     /// <summary>
-    ///     Currently loaded groups with profiles.
+    ///     Currently loaded profile file data (wrapper containing groups and metadata).
+    ///     This is updated during load/save operations.
     /// </summary>
-    public static List<GroupInfo> Groups { get; set; } = [];
+    private static ProfileFileData _loadedProfileFileData = new();
 
     /// <summary>
-    ///     Indicates if profiles have changed.
+    ///     Currently loaded profile file data (wrapper containing groups and metadata).
+    ///     This is updated during load/save operations.
     /// </summary>
-    public static bool ProfilesChanged { get; set; }
+    public static ProfileFileData LoadedProfileFileData
+    {
+        get => _loadedProfileFileData;
+        private set
+        {
+            if (Equals(value, _loadedProfileFileData))
+                return;
+
+            _loadedProfileFileData = value;
+        }
+    }
+
+    /// <summary>
+    ///     Currently loaded groups with profiles (working copy in memory).
+    /// </summary>
+    public static List<GroupInfo> Groups { get; set; } = [];
 
     #endregion
 
@@ -172,9 +189,9 @@ public static class ProfileManager
     /// <summary>
     ///     Method to fire the <see cref="OnProfilesUpdated" />.
     /// </summary>
-    private static void ProfilesUpdated()
+    private static void ProfilesUpdated(bool profilesChanged = true)
     {
-        ProfilesChanged = true;
+        LoadedProfileFileData?.ProfilesChanged = profilesChanged;
 
         OnProfilesUpdated?.Invoke(null, EventArgs.Empty);
     }
@@ -292,7 +309,7 @@ public static class ProfileManager
     {
         // Check if the profile is currently in use
         var switchProfile = false;
-                
+
         if (LoadedProfileFile != null && LoadedProfileFile.Equals(profileFileInfo))
         {
             Save();
@@ -582,7 +599,7 @@ public static class ProfileManager
                     groups = DeserializeFromByteArray(decryptedBytes);
                 }
 
-                AddGroups(groups);
+                AddGroups(groups, false);
 
                 // Password is valid
                 ProfileFiles.FirstOrDefault(x => x.Equals(profileFileInfo))!.IsPasswordValid = true;
@@ -603,8 +620,6 @@ public static class ProfileManager
 
                     // Load from legacy XML file
                     groups = DeserializeFromXmlFile(profileFileInfo.Path);
-
-                    ProfilesChanged = false;
 
                     LoadedProfileFile = profileFileInfo;
 
@@ -646,7 +661,7 @@ public static class ProfileManager
                     groups = DeserializeFromFile(profileFileInfo.Path);
                 }
 
-                AddGroups(groups);
+                AddGroups(groups, false);
             }
         }
         else
@@ -655,8 +670,6 @@ public static class ProfileManager
             if (profileFileInfo.Path != GetProfilesDefaultFilePath())
                 throw new FileNotFoundException($"{profileFileInfo.Path} could not be found!");
         }
-
-        ProfilesChanged = false;
 
         LoadedProfileFile = profileFileInfo;
 
@@ -671,13 +684,16 @@ public static class ProfileManager
     {
         if (LoadedProfileFile == null)
         {
-            Log.Warn("Cannot save profiles because no profile file is loaded. The profile file may be encrypted and not yet unlocked.");
+            Log.Warn("Cannot save profiles because no profile file is loaded or the profile file is encrypted and not yet unlocked.");
 
             return;
         }
 
         // Ensure the profiles directory exists.
         Directory.CreateDirectory(GetProfilesFolderLocation());
+
+        // Create backup before modifying
+        CreateDailyBackupIfNeeded();
 
         // Write profiles to the profile file (JSON, optionally encrypted).
         if (LoadedProfileFile.IsEncrypted)
@@ -699,7 +715,7 @@ public static class ProfileManager
             SerializeToFile(LoadedProfileFile.Path, [.. Groups]);
         }
 
-        ProfilesChanged = false;
+        LoadedProfileFileData?.ProfilesChanged = false;
     }
 
     /// <summary>
@@ -708,10 +724,11 @@ public static class ProfileManager
     /// <param name="saveLoadedProfiles">Save loaded profile file (default is true)</param>
     public static void Unload(bool saveLoadedProfiles = true)
     {
-        if (saveLoadedProfiles && LoadedProfileFile != null && ProfilesChanged)
+        if (saveLoadedProfiles && LoadedProfileFile != null && LoadedProfileFileData?.ProfilesChanged == true)
             Save();
 
         LoadedProfileFile = null;
+        LoadedProfileFileData = null;
 
         Groups.Clear();
 
@@ -741,7 +758,13 @@ public static class ProfileManager
     /// <param name="groups">List of the groups as <see cref="GroupInfo" /> to serialize.</param>
     private static void SerializeToFile(string filePath, List<GroupInfo> groups)
     {
-        var jsonString = JsonSerializer.Serialize(SerializeGroup(groups), JsonOptions);
+        // Ensure LoadedProfileFileData exists
+        LoadedProfileFileData ??= new ProfileFileData();
+
+        // Update LoadedProfileFileData with current groups
+        LoadedProfileFileData.Groups = SerializeGroup(groups);
+
+        var jsonString = JsonSerializer.Serialize(LoadedProfileFileData, JsonOptions);
 
         File.WriteAllText(filePath, jsonString);
     }
@@ -753,7 +776,13 @@ public static class ProfileManager
     /// <returns>Serialized list of groups as <see cref="GroupInfo" /> as byte array.</returns>
     private static byte[] SerializeToByteArray(List<GroupInfo> groups)
     {
-        var jsonString = JsonSerializer.Serialize(SerializeGroup(groups), JsonOptions);
+        // Ensure LoadedProfileFileData exists
+        LoadedProfileFileData ??= new ProfileFileData();
+
+        // Update LoadedProfileFileData with current groups
+        LoadedProfileFileData.Groups = SerializeGroup(groups);
+
+        var jsonString = JsonSerializer.Serialize(LoadedProfileFileData, JsonOptions);
 
         return Encoding.UTF8.GetBytes(jsonString);
     }
@@ -873,10 +902,35 @@ public static class ProfileManager
     /// <returns>List of groups as <see cref="GroupInfo" />.</returns>
     private static List<GroupInfo> DeserializeFromJson(string jsonString)
     {
+        try
+        {
+            var profileFileData = JsonSerializer.Deserialize<ProfileFileData>(jsonString, JsonOptions);
+
+            if (profileFileData?.Groups != null)
+            {
+                LoadedProfileFileData = profileFileData;
+
+                return DeserializeGroup(profileFileData.Groups);
+            }
+        }
+        catch (JsonException)
+        {
+            Log.Info("Failed to deserialize as ProfileFileData, trying legacy format (direct Groups array)...");
+        }
+
+        // Fallback: Try to deserialize as legacy format (direct array of GroupInfoSerializable)
         var groupsSerializable = JsonSerializer.Deserialize<List<GroupInfoSerializable>>(jsonString, JsonOptions);
 
         if (groupsSerializable == null)
             throw new InvalidOperationException("Failed to deserialize JSON profile file.");
+
+        // Create ProfileFileData wrapper for legacy format
+        LoadedProfileFileData = new ProfileFileData
+        {
+            Groups = groupsSerializable
+        };
+
+        Log.Info("Successfully loaded profile file in legacy format. It will be migrated to new format on next save.");
 
         return DeserializeGroup(groupsSerializable);
     }
@@ -997,23 +1051,24 @@ public static class ProfileManager
     ///     Method to add a list of <see cref="GroupInfo" /> to the <see cref="Groups" /> list.
     /// </summary>
     /// <param name="groups">List of groups as <see cref="GroupInfo" /> to add.</param>
-    private static void AddGroups(List<GroupInfo> groups)
+    private static void AddGroups(List<GroupInfo> groups, bool profilesChanged = true)
     {
         foreach (var group in groups)
             Groups.Add(group);
 
-        ProfilesUpdated();
+        ProfilesUpdated(profilesChanged);
     }
 
     /// <summary>
     ///     Method to add a <see cref="GroupInfo" /> to the <see cref="Groups" /> list.
     /// </summary>
     /// <param name="group">Group as <see cref="GroupInfo" /> to add.</param>
-    public static void AddGroup(GroupInfo group)
+    public static void AddGroup(GroupInfo group, bool profilesChanged = true)
+
     {
         Groups.Add(group);
 
-        ProfilesUpdated();
+        ProfilesUpdated(profilesChanged);
     }
 
     /// <summary>
@@ -1142,6 +1197,97 @@ public static class ProfileManager
     #endregion
 
     #region Backup
+
+    /// <summary>
+    ///     Creates a backup of the currently loaded profile file if a backup has not already been created for the current day.
+    /// </summary>
+    private static void CreateDailyBackupIfNeeded()
+    {
+        // Skip if daily backups are disabled
+        if (!SettingsManager.Current.Profiles_IsDailyBackupEnabled)
+        {
+            Log.Info("Daily profile backups are disabled. Skipping backup creation...");
+            return;
+        }
+
+        // Skip if no profile is loaded
+        if (LoadedProfileFile == null || LoadedProfileFileData == null)
+        {
+            Log.Info("No profile file is currently loaded. Skipping backup creation...");
+            return;
+        }
+
+        // Skip if the profile file doesn't exist yet
+        if (!File.Exists(LoadedProfileFile.Path))
+        {
+            Log.Warn($"Profile file does not exist yet: {LoadedProfileFile.Path}. Skipping backup creation...");
+            return;
+        }
+
+        // Create backup if needed        
+        var currentDate = DateTime.Now.Date;
+        var lastBackupDate = LoadedProfileFileData.LastBackup?.Date ?? DateTime.MinValue;
+        var profileFileName = Path.GetFileName(LoadedProfileFile.Path);
+
+        if (lastBackupDate < currentDate)
+        {
+            Log.Info($"Creating daily backup for profile: {profileFileName}");
+
+            // Create backup
+            Backup(LoadedProfileFile.Path,
+                GetProfilesBackupFolderLocation(),
+                TimestampHelper.GetTimestampFilename(profileFileName));
+
+            // Cleanup old backups
+            CleanupBackups(GetProfilesBackupFolderLocation(),
+                profileFileName,
+                SettingsManager.Current.Profiles_MaximumNumberOfBackups);
+
+            LoadedProfileFileData.LastBackup = currentDate;
+        }
+    }
+
+    /// <summary>
+    ///     Deletes older backup files in the specified folder to ensure that only the most recent backups, up to the
+    ///     specified maximum, are retained.
+    /// </summary>
+    /// <param name="backupFolderPath">The full path to the directory containing the backup files to be managed.</param>
+    /// <param name="profileFileName">The profile file name pattern used to identify backup files for cleanup.</param>
+    /// <param name="maxBackupFiles">The maximum number of backup files to retain. Must be greater than zero.</param>
+    private static void CleanupBackups(string backupFolderPath, string profileFileName, int maxBackupFiles)
+    {
+        // Extract profile name without extension to match all backup files regardless of extension
+        // (e.g., "Default" matches "2025-01-19_Default.json", "2025-01-19_Default.encrypted", etc.)
+        var profileNameWithoutExtension = Path.GetFileNameWithoutExtension(profileFileName);
+
+        // Get all backup files for this specific profile (any extension) sorted by timestamp (newest first)
+        var backupFiles = Directory.GetFiles(backupFolderPath)
+            .Where(f =>
+            {
+                var fileName = Path.GetFileName(f);
+
+                // Check if it's a timestamped backup and contains the profile name
+                return TimestampHelper.IsTimestampedFilename(fileName) &&
+                       fileName.Contains($"_{profileNameWithoutExtension}.");
+            })
+            .OrderByDescending(f => TimestampHelper.ExtractTimestampFromFilename(Path.GetFileName(f)))
+            .ToList();
+
+        if (backupFiles.Count > maxBackupFiles)
+            Log.Info($"Cleaning up old backup files for {profileNameWithoutExtension}... Found {backupFiles.Count} backups, keeping the most recent {maxBackupFiles}.");
+
+        // Delete oldest backups until the maximum number is reached
+        while (backupFiles.Count > maxBackupFiles)
+        {
+            var fileToDelete = backupFiles.Last();
+
+            File.Delete(fileToDelete);
+
+            backupFiles.RemoveAt(backupFiles.Count - 1);
+
+            Log.Info($"Backup deleted: {fileToDelete}");
+        }
+    }
 
     /// <summary>
     /// Creates a backup of the specified profile file in the given backup folder with the provided backup file name.
