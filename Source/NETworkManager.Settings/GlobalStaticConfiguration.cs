@@ -46,9 +46,6 @@ public static class GlobalStaticConfiguration
     public static string ZipFileExtensionFilter => "ZIP Archive (*.zip)|*.zip";
     public static string XmlFileExtensionFilter => "XML-File (*.xml)|*.xml";
 
-    // Backup settings
-    public static int Backup_MaximumNumberOfBackups => 10;
-
     #endregion
 
     #region Default settings
@@ -74,18 +71,23 @@ public static class GlobalStaticConfiguration
     public static bool Status_ShowWindowOnNetworkChange => true;
     public static int Status_WindowCloseTime => 10;
 
-    // HotKey
+    // Settings: HotKey
     public static int HotKey_ShowWindowKey => 79;
     public static int HotKey_ShowWindowModifier => 3;
 
-    // Update
+    // Settings: Update
     public static bool Update_CheckForUpdatesAtStartup => true;
-
     public static bool Update_CheckForPreReleases => false;
-
-    // Experimental
     public static bool Experimental_EnableExperimentalFeatures => false;
 
+    // Settings: Profiles
+    public static bool Profiles_IsDailyBackupEnabled => true;
+    public static int Profiles_MaximumNumberOfBackups => 10;
+
+    // Settings: Settings
+    public static bool Settings_IsDailyBackupEnabled => true;
+    public static int Settings_MaximumNumberOfBackups => 10;
+    
     // Application: Dashboard
     public static string Dashboard_PublicIPv4Address => "1.1.1.1";
     public static string Dashboard_PublicIPv6Address => "2606:4700:4700::1111";

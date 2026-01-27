@@ -2221,6 +2221,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Create daily backup ähnelt.
+        /// </summary>
+        public static string CreateDailyBackup {
+            get {
+                return ResourceManager.GetString("CreateDailyBackup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Credential ähnelt.
         /// </summary>
         public static string Credential {
@@ -4451,6 +4460,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Number of backups that are retained before the oldest one is deleted. ähnelt.
+        /// </summary>
+        public static string HelpMessage_MaximumNumberOfBackups {
+            get {
+                return ResourceManager.GetString("HelpMessage_MaximumNumberOfBackups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Application that is displayed at startup. ähnelt.
         /// </summary>
         public static string HelpMessage_ParameterApplication {
@@ -5780,6 +5798,15 @@ namespace NETworkManager.Localization.Resources {
         public static string MaximumHops {
             get {
                 return ResourceManager.GetString("MaximumHops", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Maximum number of backups ähnelt.
+        /// </summary>
+        public static string MaximumNumberOfBackups {
+            get {
+                return ResourceManager.GetString("MaximumNumberOfBackups", resourceCulture);
             }
         }
         

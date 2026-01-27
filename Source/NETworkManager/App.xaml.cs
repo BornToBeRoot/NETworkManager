@@ -271,16 +271,25 @@ public partial class App
 
     private void Save()
     {
+        // Save settings if they have changed
         if (SettingsManager.Current.SettingsChanged)
         {
             Log.Info("Save application settings...");
             SettingsManager.Save();
         }
 
-        if (ProfileManager.ProfilesChanged)
+        // Save profiles if they have changed
+        if (ProfileManager.LoadedProfileFile != null && ProfileManager.LoadedProfileFileData != null)
         {
-            Log.Info("Save current profiles...");
-            ProfileManager.Save();
+            if (ProfileManager.LoadedProfileFileData.ProfilesChanged)
+            {
+                Log.Info($"Save current profile file \"{ProfileManager.LoadedProfileFile.Name}\"...");
+                ProfileManager.Save();
+            }
+        }
+        else
+        {
+            Log.Warn("Cannot save profiles because no profile file is loaded or the profile file is encrypted and not yet unlocked.");
         }
     }
 }
