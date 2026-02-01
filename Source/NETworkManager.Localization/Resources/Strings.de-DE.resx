@@ -3952,12 +3952,12 @@ Wenn Sie auf „Abbrechen“ klicken, bleibt die Profildatei unverschlüsselt.</
     <value>"{0}" konnte nicht geparst werden.</value>
   </data>
   <data name="MaximumNumberOfBackups" xml:space="preserve">
-    <value>Maximum number of backups</value>
+    <value>Maximale Anzahl von Backups</value>
   </data>
   <data name="CreateDailyBackup" xml:space="preserve">
-    <value>Create daily backup</value>
+    <value>Tägliches Backup erstellen</value>
   </data>
   <data name="HelpMessage_MaximumNumberOfBackups" xml:space="preserve">
-    <value>Number of backups that are retained before the oldest one is deleted.</value>
+    <value>Anzahl der Backups, die aufbewahrt werden, bevor das älteste gelöscht wird.</value>
   </data>
 </root>
