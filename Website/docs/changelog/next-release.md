@@ -20,6 +20,8 @@ Release date: **xx.xx.2025**
 - Migrated from .NET 8.0 (LTS) to .NET 10.0 (LTS).
   Upgrade your [.NET Desktop Runtime to version 10.0 (LTS) - x64](https://dotnet.microsoft.com/en-us/download/dotnet/10.0/runtime) before you install this version. [#3229](https://github.com/BornToBeRoot/NETworkManager/pull/3229)
 
+- Starting with .NET 9.0, the behavior of `NetworkInterface.GetAllNetworkInterfaces()` changed — the API now returns all network interfaces (including virtual adapters, WAN Miniport, extensions/drivers, etc.), which can cause additional or unexpected adapters to appear in the `Network Interface` view. This is an intentional change by Microsoft; see [dotnet/runtime#122751](https://github.com/dotnet/runtime/issues/122751) for details. To reduce noise, NETworkManager maintains a blacklist of known unwanted adapters. If you encounter adapters that should be excluded, please report them via the [issue tracker](https://github.com/BornToBeRoot/NETworkManager/issues/new/choose). [#3286](https://github.com/BornToBeRoot/NETworkManager/issues/3286) [#3309](https://github.com/BornToBeRoot/NETworkManager/pull/3309)
+
 - `AWS Session Manager` feature has been removed. The [AWS Session Manager Plugin](https://github.com/aws/session-manager-plugin) is not actively maintained and contains several bugs (e.g. German / Spain keyboard layout issues). The current code base was also difficult to maintain and extend, and I currently have no test environment.
   The Sync feature (EC2 instances -> Profiles) has been removed as well, because it was limited to AWS Session Manager only. This will be re-introduced in a future release to support multiple providers (`AWS`, `Azure`, etc.) and more features like `Ping Monitor`, `PuTTY` or `Remote Desktop`.
 
