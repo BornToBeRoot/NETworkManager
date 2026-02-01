@@ -37,7 +37,7 @@
         <TextBlock Text="{x:Static localization:Strings.MaximumNumberOfBackups}"
            Style="{StaticResource CenterTextBlock}"
            Margin="0,0,0,10" />
-        <StackPanel Orientation="Horizontal" Margin="0,0,0,20">            
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
             <mah:NumericUpDown Value="{Binding MaximumNumberOfBackups}" 
                                IsEnabled="{Binding IsDailyBackupEnabled}"
                                Minimum="1" Maximum="365" Interval="1"/>
@@ -51,7 +51,6 @@
         </StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Reset}" />
         <Button Content="{x:Static localization:Strings.Reset}" Command="{Binding ResetSettingsCommand}"
-                Style="{StaticResource DefaultButton}" HorizontalAlignment="Left" 
-                />
+                Style="{StaticResource DefaultButton}" HorizontalAlignment="Left" />
     </StackPanel>
 </UserControl>
