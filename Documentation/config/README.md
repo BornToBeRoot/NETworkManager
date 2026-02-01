@@ -4,8 +4,8 @@ This directory contains an example `config.json` file that can be placed in the 
 
 ## Usage
 
-1. Copy `config.json.example` to the NETworkManager installation directory (where `NETworkManager.exe` is located)
-2. Rename it to `config.json`
+1. Copy the example configuration file to the NETworkManager installation directory (where `NETworkManager.exe` is located)
+2. Rename `config.json.example` to `config.json`
 3. Edit the settings as needed
 4. Restart NETworkManager
 
