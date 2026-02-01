@@ -1084,10 +1084,18 @@ public static class ProfileManager
     /// </summary>
     /// <param name="name">Name of the group</param>
     /// <returns>True if the group has no profiles.</returns>
+    /// <exception cref="ArgumentException">Thrown when name is null or empty.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when group with specified name is not found.</exception>
     public static bool IsGroupEmpty(string name)
     {
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        
         var group = LoadedProfileFileData.Groups.FirstOrDefault(x => x.Name == name);
-        return group?.Profiles.Count == 0;
+        
+        if (group == null)
+            throw new InvalidOperationException($"Group '{name}' not found.");
+        
+        return group.Profiles.Count == 0;
     }
 
     #endregion
