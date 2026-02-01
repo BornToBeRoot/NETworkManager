@@ -3951,4 +3951,13 @@ Se clicar em Cancelar, o arquivo de perfil permanecerá descriptografado.</value
   <data name="CouldNotParseX" xml:space="preserve">
     <value>Não foi possível analisar "{0}"</value>
   </data>
+  <data name="MaximumNumberOfBackups" xml:space="preserve">
+    <value>Número máximo de backups</value>
+  </data>
+  <data name="CreateDailyBackup" xml:space="preserve">
+    <value>Criar backup diário</value>
+  </data>
+  <data name="HelpMessage_MaximumNumberOfBackups" xml:space="preserve">
+    <value>Número de backups que são mantidos antes que o mais antigo seja excluído.</value>
+  </data>
 </root>

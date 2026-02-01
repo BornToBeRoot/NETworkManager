@@ -3935,4 +3935,13 @@ If you click Cancel, the profile file will remain unencrypted.</value>
   <data name="CouldNotParseX" xml:space="preserve">
     <value>Could not parse "{0}".</value>
   </data>
+  <data name="MaximumNumberOfBackups" xml:space="preserve">
+    <value>Maximum number of backups</value>
+  </data>
+  <data name="CreateDailyBackup" xml:space="preserve">
+    <value>Create daily backup</value>
+  </data>
+  <data name="HelpMessage_MaximumNumberOfBackups" xml:space="preserve">
+    <value>Number of backups that are retained before the oldest one is deleted.</value>
+  </data>
 </root>
