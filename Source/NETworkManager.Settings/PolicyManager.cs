@@ -7,17 +7,17 @@ using System.Text.Json.Serialization;
 namespace NETworkManager.Settings;
 
 /// <summary>
-///     Manager for system-wide configuration that is loaded from a config.json file 
-///     in the application directory. This configuration overrides user settings.
+///     Manager for system-wide policies that are loaded from a config.json file 
+///     in the application directory. These policies override user settings.
 /// </summary>
-public static class ConfigManager
+public static class PolicyManager
 {
     #region Variables
 
     /// <summary>
     ///     Logger for logging.
     /// </summary>
-    private static readonly ILog Log = LogManager.GetLogger(typeof(ConfigManager));
+    private static readonly ILog Log = LogManager.GetLogger(typeof(PolicyManager));
 
     /// <summary>
     ///     Config file name.
@@ -25,9 +25,9 @@ public static class ConfigManager
     private static string ConfigFileName => "config.json";
 
     /// <summary>
-    ///     System-wide configuration that is currently loaded.
+    ///     System-wide policies that are currently loaded.
     /// </summary>
-    public static ConfigInfo Current { get; private set; }
+    public static PolicyInfo Current { get; private set; }
 
     /// <summary>
     ///     JSON serializer options for consistent serialization/deserialization.
@@ -54,7 +54,7 @@ public static class ConfigManager
     }
 
     /// <summary>
-    ///     Method to load the system-wide configuration from config.json file in the application directory.
+    ///     Method to load the system-wide policies from config.json file in the application directory.
     /// </summary>
     public static void Load()
     {
@@ -65,29 +65,29 @@ public static class ConfigManager
         {
             try
             {
-                Log.Info($"Loading system-wide configuration from: {filePath}");
+                Log.Info($"Loading system-wide policies from: {filePath}");
                 
                 var jsonString = File.ReadAllText(filePath);
-                Current = JsonSerializer.Deserialize<ConfigInfo>(jsonString, JsonOptions);
+                Current = JsonSerializer.Deserialize<PolicyInfo>(jsonString, JsonOptions);
                 
-                Log.Info("System-wide configuration loaded successfully.");
+                Log.Info("System-wide policies loaded successfully.");
                 
                 // Log enabled settings
                 if (Current.Update_DisableUpdateCheck.HasValue)
                 {
-                    Log.Info($"System-wide setting - Update_DisableUpdateCheck: {Current.Update_DisableUpdateCheck.Value}");
+                    Log.Info($"System-wide policy - Update_DisableUpdateCheck: {Current.Update_DisableUpdateCheck.Value}");
                 }
             }
             catch (Exception ex)
             {
-                Log.Error($"Failed to load system-wide configuration from: {filePath}", ex);
-                Current = new ConfigInfo();
+                Log.Error($"Failed to load system-wide policies from: {filePath}", ex);
+                Current = new PolicyInfo();
             }
         }
         else
         {
-            Log.Debug($"No system-wide configuration file found at: {filePath}");
-            Current = new ConfigInfo();
+            Log.Debug($"No system-wide policy file found at: {filePath}");
+            Current = new PolicyInfo();
         }
     }
 

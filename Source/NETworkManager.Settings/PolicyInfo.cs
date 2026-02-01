@@ -3,10 +3,10 @@ using System.Text.Json.Serialization;
 namespace NETworkManager.Settings;
 
 /// <summary>
-///     Class that represents system-wide configuration that overrides user settings.
+///     Class that represents system-wide policies that override user settings.
 ///     This configuration is loaded from a config.json file in the application directory.
 /// </summary>
-public class ConfigInfo
+public class PolicyInfo
 {
     /// <summary>
     ///     Disable update check for all users. When set to true, the application will not check for updates at startup.
