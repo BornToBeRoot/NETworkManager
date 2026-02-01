@@ -1,4 +1,4 @@
-﻿namespace NETworkManager.ViewModels;
+namespace NETworkManager.ViewModels;
 
 /// <summary>
 /// ViewModel for the Dashboard view.

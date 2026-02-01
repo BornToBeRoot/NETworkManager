@@ -16,7 +16,7 @@ namespace NETworkManager.Profiles;
 
 public static class ProfileManager
 {
-    #region Variables
+    #region Variables    
     private static readonly ILog Log = LogManager.GetLogger(typeof(ProfileManager));
 
     /// <summary>
@@ -112,11 +112,6 @@ public static class ProfileManager
             _loadedProfileFileData = value;
         }
     }
-
-    /// <summary>
-    ///     Currently loaded groups with profiles (working copy in memory).
-    /// </summary>
-    public static List<GroupInfo> Groups { get; set; } = [];
 
     #endregion
 
@@ -287,15 +282,21 @@ public static class ProfileManager
     /// <summary>
     ///     Method to create a profile file.
     /// </summary>
-    /// <param name="profileName"></param>
+    /// <param name="profileName">Name of the profile file to create.</param>
+    /// <exception cref="ArgumentException">Thrown when profileName is null or empty.</exception>
     public static void CreateEmptyProfileFile(string profileName)
     {
+        ArgumentException.ThrowIfNullOrWhiteSpace(profileName);
+
         ProfileFileInfo profileFileInfo = new(profileName,
             Path.Combine(GetProfilesFolderLocation(), $"{profileName}{ProfileFileExtension}"));
 
         Directory.CreateDirectory(GetProfilesFolderLocation());
 
-        SerializeToFile(profileFileInfo.Path, []);
+        // Create and serialize empty ProfileFileData to new file (without loading it)
+        var emptyProfileFileData = new ProfileFileData();
+        var jsonString = JsonSerializer.Serialize(emptyProfileFileData, JsonOptions);
+        File.WriteAllText(profileFileInfo.Path, jsonString);
 
         ProfileFiles.Add(profileFileInfo);
     }
@@ -305,8 +306,14 @@ public static class ProfileManager
     /// </summary>
     /// <param name="profileFileInfo"><see cref="ProfileFileInfo" /> to rename.</param>
     /// <param name="newProfileName">New <see cref="ProfileFileInfo.Name" /> of the profile file.</param>
+    /// <exception cref="ArgumentNullException">Thrown when profileFileInfo is null.</exception>
+    /// <exception cref="ArgumentException">Thrown when newProfileName is null or empty.</exception>
     public static void RenameProfileFile(ProfileFileInfo profileFileInfo, string newProfileName)
     {
+        ArgumentNullException.ThrowIfNull(profileFileInfo);
+        ArgumentException.ThrowIfNullOrWhiteSpace(newProfileName);
+
+
         // Check if the profile is currently in use
         var switchProfile = false;
 
@@ -350,8 +357,12 @@ public static class ProfileManager
     ///     Method to delete a profile file.
     /// </summary>
     /// <param name="profileFileInfo"><see cref="ProfileFileInfo" /> to delete.</param>
+    /// <exception cref="ArgumentNullException">Thrown when profileFileInfo is null.</exception>
     public static void DeleteProfileFile(ProfileFileInfo profileFileInfo)
     {
+        ArgumentNullException.ThrowIfNull(profileFileInfo);
+
+
         // Trigger switch via UI (to get the password if the file is encrypted), if the selected profile file is deleted
         if (LoadedProfileFile != null && LoadedProfileFile.Equals(profileFileInfo))
             LoadedProfileFileChanged(ProfileFiles.FirstOrDefault(x => !x.Equals(profileFileInfo)));
@@ -369,8 +380,12 @@ public static class ProfileManager
     /// </summary>
     /// <param name="profileFileInfo"><see cref="ProfileFileInfo" /> which should be encrypted.</param>
     /// <param name="password">Password to encrypt the profile file.</param>
+    /// <exception cref="ArgumentNullException">Thrown when profileFileInfo or password is null.</exception>
     public static void EnableEncryption(ProfileFileInfo profileFileInfo, SecureString password)
     {
+        ArgumentNullException.ThrowIfNull(profileFileInfo);
+        ArgumentNullException.ThrowIfNull(password);
+
         // Check if the profile is currently in use
         var switchProfile = false;
 
@@ -393,18 +408,32 @@ public static class ProfileManager
             IsPasswordValid = true
         };
 
-        List<GroupInfo> profiles = Path.GetExtension(profileFileInfo.Path) == LegacyProfileFileExtension ?
-            DeserializeFromXmlFile(profileFileInfo.Path) :
-            DeserializeFromFile(profileFileInfo.Path);
+        // Save current state to prevent corruption
+        var previousLoadedProfileFileData = LoadedProfileFileData;
 
-        // Save the encrypted file
-        var decryptedBytes = SerializeToByteArray(profiles);
-        var encryptedBytes = CryptoHelper.Encrypt(decryptedBytes,
-            SecureStringHelper.ConvertToString(newProfileFileInfo.Password),
-            GlobalStaticConfiguration.Profile_EncryptionKeySize,
-            GlobalStaticConfiguration.Profile_EncryptionIterations);
+        try
+        {
+            // Load the existing profile data (temporarily overwrites LoadedProfileFileData)
+            if (Path.GetExtension(profileFileInfo.Path) == LegacyProfileFileExtension)
+                DeserializeFromXmlFile(profileFileInfo.Path);
+            else
+                DeserializeFromFile(profileFileInfo.Path);
 
-        File.WriteAllBytes(newProfileFileInfo.Path, encryptedBytes);
+            // Save the encrypted file
+            var decryptedBytes = SerializeToByteArray();
+            var encryptedBytes = CryptoHelper.Encrypt(decryptedBytes,
+                SecureStringHelper.ConvertToString(newProfileFileInfo.Password),
+                GlobalStaticConfiguration.Profile_EncryptionKeySize,
+                GlobalStaticConfiguration.Profile_EncryptionIterations);
+
+            File.WriteAllBytes(newProfileFileInfo.Path, encryptedBytes);
+        }
+        finally
+        {
+            // Restore previous state if this wasn't the currently loaded profile
+            if (!switchProfile)
+                LoadedProfileFileData = previousLoadedProfileFileData;
+        }
 
         // Add the new profile
         ProfileFiles.Add(newProfileFileInfo);
@@ -429,9 +458,14 @@ public static class ProfileManager
     /// <param name="profileFileInfo"><see cref="ProfileFileInfo" /> which should be changed.</param>
     /// <param name="password">Password to decrypt the profile file.</param>
     /// <param name="newPassword">Password to encrypt the profile file.</param>
+    /// <exception cref="ArgumentNullException">Thrown when profileFileInfo, password, or newPassword is null.</exception>
     public static void ChangeMasterPassword(ProfileFileInfo profileFileInfo, SecureString password,
         SecureString newPassword)
     {
+        ArgumentNullException.ThrowIfNull(profileFileInfo);
+        ArgumentNullException.ThrowIfNull(password);
+        ArgumentNullException.ThrowIfNull(newPassword);
+
         // Check if the profile is currently in use
         var switchProfile = false;
 
@@ -454,24 +488,37 @@ public static class ProfileManager
             IsPasswordValid = true
         };
 
-        // Load and decrypt the profiles from the profile file
-        var encryptedBytes = File.ReadAllBytes(profileFileInfo.Path);
-        var decryptedBytes = CryptoHelper.Decrypt(encryptedBytes, SecureStringHelper.ConvertToString(password),
-            GlobalStaticConfiguration.Profile_EncryptionKeySize,
-            GlobalStaticConfiguration.Profile_EncryptionIterations);
+        // Save current state to prevent corruption
+        var previousLoadedProfileFileData = LoadedProfileFileData;
 
-        List<GroupInfo> profiles = IsXmlContent(decryptedBytes) ?
-            DeserializeFromXmlByteArray(decryptedBytes) :
-            DeserializeFromByteArray(decryptedBytes);
+        try
+        {
+            // Load and decrypt the profiles from the profile file (temporarily overwrites LoadedProfileFileData)
+            var encryptedBytes = File.ReadAllBytes(profileFileInfo.Path);
+            var decryptedBytes = CryptoHelper.Decrypt(encryptedBytes, SecureStringHelper.ConvertToString(password),
+                GlobalStaticConfiguration.Profile_EncryptionKeySize,
+                GlobalStaticConfiguration.Profile_EncryptionIterations);
 
-        // Save the encrypted file
-        decryptedBytes = SerializeToByteArray(profiles);
-        encryptedBytes = CryptoHelper.Encrypt(decryptedBytes,
-            SecureStringHelper.ConvertToString(newProfileFileInfo.Password),
-            GlobalStaticConfiguration.Profile_EncryptionKeySize,
-            GlobalStaticConfiguration.Profile_EncryptionIterations);
+            if (IsXmlContent(decryptedBytes))
+                DeserializeFromXmlByteArray(decryptedBytes);
+            else
+                DeserializeFromByteArray(decryptedBytes);
 
-        File.WriteAllBytes(newProfileFileInfo.Path, encryptedBytes);
+            // Save the encrypted file with new password
+            decryptedBytes = SerializeToByteArray();
+            encryptedBytes = CryptoHelper.Encrypt(decryptedBytes,
+                SecureStringHelper.ConvertToString(newProfileFileInfo.Password),
+                GlobalStaticConfiguration.Profile_EncryptionKeySize,
+                GlobalStaticConfiguration.Profile_EncryptionIterations);
+
+            File.WriteAllBytes(newProfileFileInfo.Path, encryptedBytes);
+        }
+        finally
+        {
+            // Restore previous state if this wasn't the currently loaded profile
+            if (!switchProfile)
+                LoadedProfileFileData = previousLoadedProfileFileData;
+        }
 
         // Add the new profile
         ProfileFiles.Add(newProfileFileInfo);
@@ -492,8 +539,12 @@ public static class ProfileManager
     /// </summary>
     /// <param name="profileFileInfo"><see cref="ProfileFileInfo" /> which should be decrypted.</param>
     /// <param name="password">Password to decrypt the profile file.</param>
+    /// <exception cref="ArgumentNullException">Thrown when profileFileInfo or password is null.</exception>
     public static void DisableEncryption(ProfileFileInfo profileFileInfo, SecureString password)
     {
+        ArgumentNullException.ThrowIfNull(profileFileInfo);
+        ArgumentNullException.ThrowIfNull(password);
+
         // Check if the profile is currently in use
         var switchProfile = false;
 
@@ -512,18 +563,31 @@ public static class ProfileManager
         var newProfileFileInfo = new ProfileFileInfo(profileFileInfo.Name,
             Path.ChangeExtension(profileFileInfo.Path, ProfileFileExtension));
 
-        // Load and decrypt the profiles from the profile file
-        var encryptedBytes = File.ReadAllBytes(profileFileInfo.Path);
-        var decryptedBytes = CryptoHelper.Decrypt(encryptedBytes, SecureStringHelper.ConvertToString(password),
-            GlobalStaticConfiguration.Profile_EncryptionKeySize,
-            GlobalStaticConfiguration.Profile_EncryptionIterations);
+        // Save current state to prevent corruption
+        var previousLoadedProfileFileData = LoadedProfileFileData;
 
-        List<GroupInfo> profiles = IsXmlContent(decryptedBytes) ?
-            DeserializeFromXmlByteArray(decryptedBytes) :
-            DeserializeFromByteArray(decryptedBytes);
+        try
+        {
+            // Load and decrypt the profiles from the profile file (temporarily overwrites LoadedProfileFileData)
+            var encryptedBytes = File.ReadAllBytes(profileFileInfo.Path);
+            var decryptedBytes = CryptoHelper.Decrypt(encryptedBytes, SecureStringHelper.ConvertToString(password),
+                GlobalStaticConfiguration.Profile_EncryptionKeySize,
+                GlobalStaticConfiguration.Profile_EncryptionIterations);
 
-        // Save the decrypted profiles to the profile file
-        SerializeToFile(newProfileFileInfo.Path, profiles);
+            if (IsXmlContent(decryptedBytes))
+                DeserializeFromXmlByteArray(decryptedBytes);
+            else
+                DeserializeFromByteArray(decryptedBytes);
+
+            // Save the decrypted profiles to the profile file
+            SerializeToFile(newProfileFileInfo.Path);
+        }
+        finally
+        {
+            // Restore previous state if this wasn't the currently loaded profile
+            if (!switchProfile)
+                LoadedProfileFileData = previousLoadedProfileFileData;
+        }
 
         // Add the new profile
         ProfileFiles.Add(newProfileFileInfo);
@@ -565,8 +629,6 @@ public static class ProfileManager
                     GlobalStaticConfiguration.Profile_EncryptionKeySize,
                     GlobalStaticConfiguration.Profile_EncryptionIterations);
 
-                List<GroupInfo> groups;
-
                 if (IsXmlContent(decryptedBytes))
                 {
                     //
@@ -576,7 +638,7 @@ public static class ProfileManager
                     Log.Info($"Legacy XML profile file detected inside encrypted profile: {profileFileInfo.Path}. Migration in progress...");
 
                     // Load from legacy XML byte array
-                    groups = DeserializeFromXmlByteArray(decryptedBytes);
+                    DeserializeFromXmlByteArray(decryptedBytes);
 
                     // Create a backup of the legacy XML file
                     Backup(profileFileInfo.Path,
@@ -584,7 +646,7 @@ public static class ProfileManager
                         TimestampHelper.GetTimestampFilename(Path.GetFileName(profileFileInfo.Path)));
 
                     // Save encrypted profile file with new JSON format
-                    var newDecryptedBytes = SerializeToByteArray([.. groups]);
+                    var newDecryptedBytes = SerializeToByteArray();
                     var newEncryptedBytes = CryptoHelper.Encrypt(newDecryptedBytes,
                         SecureStringHelper.ConvertToString(profileFileInfo.Password),
                         GlobalStaticConfiguration.Profile_EncryptionKeySize,
@@ -596,10 +658,8 @@ public static class ProfileManager
                 }
                 else
                 {
-                    groups = DeserializeFromByteArray(decryptedBytes);
+                    DeserializeFromByteArray(decryptedBytes);
                 }
-
-                AddGroups(groups, false);
 
                 // Password is valid
                 ProfileFiles.FirstOrDefault(x => x.Equals(profileFileInfo))!.IsPasswordValid = true;
@@ -609,8 +669,6 @@ public static class ProfileManager
             // Unencrypted profile file
             else
             {
-                List<GroupInfo> groups;
-
                 if (Path.GetExtension(profileFileInfo.Path) == LegacyProfileFileExtension)
                 {
                     //
@@ -619,7 +677,7 @@ public static class ProfileManager
                     Log.Info($"Legacy XML profile file detected: {profileFileInfo.Path}. Migration in progress...");
 
                     // Load from legacy XML file
-                    groups = DeserializeFromXmlFile(profileFileInfo.Path);
+                    DeserializeFromXmlFile(profileFileInfo.Path);
 
                     LoadedProfileFile = profileFileInfo;
 
@@ -633,7 +691,7 @@ public static class ProfileManager
                         Path.ChangeExtension(profileFileInfo.Path, ProfileFileExtension));
 
                     // Save new JSON file
-                    SerializeToFile(newProfileFileInfo.Path, groups);
+                    SerializeToFile(newProfileFileInfo.Path);
 
                     // Notify migration started
                     ProfileMigrationStarted();
@@ -658,10 +716,8 @@ public static class ProfileManager
                 }
                 else
                 {
-                    groups = DeserializeFromFile(profileFileInfo.Path);
+                    DeserializeFromFile(profileFileInfo.Path);
                 }
-
-                AddGroups(groups, false);
             }
         }
         else
@@ -675,6 +731,9 @@ public static class ProfileManager
 
         if (loadedProfileUpdated)
             LoadedProfileFileChanged(LoadedProfileFile, true);
+        
+        // Notify subscribers that profiles have been loaded/updated
+        ProfilesUpdated(false);
     }
 
     /// <summary>
@@ -701,7 +760,7 @@ public static class ProfileManager
             // Only if the password provided earlier was valid...
             if (LoadedProfileFile.IsPasswordValid)
             {
-                var decryptedBytes = SerializeToByteArray([.. Groups]);
+                var decryptedBytes = SerializeToByteArray();
                 var encryptedBytes = CryptoHelper.Encrypt(decryptedBytes,
                     SecureStringHelper.ConvertToString(LoadedProfileFile.Password),
                     GlobalStaticConfiguration.Profile_EncryptionKeySize,
@@ -712,7 +771,7 @@ public static class ProfileManager
         }
         else
         {
-            SerializeToFile(LoadedProfileFile.Path, [.. Groups]);
+            SerializeToFile(LoadedProfileFile.Path);
         }
 
         LoadedProfileFileData?.ProfilesChanged = false;
@@ -728,11 +787,10 @@ public static class ProfileManager
             Save();
 
         LoadedProfileFile = null;
-        LoadedProfileFileData = null;
+        LoadedProfileFileData = new ProfileFileData();
 
-        Groups.Clear();
-
-        ProfilesUpdated();
+        // Don't mark as changed since we just unloaded
+        ProfilesUpdated(false);
     }
 
     /// <summary>
@@ -752,17 +810,13 @@ public static class ProfileManager
     #region Serialize and deserialize
 
     /// <summary>
-    ///     Method to serialize a list of groups as <see cref="GroupInfo" /> to a JSON file.
+    ///     Method to serialize profile data to a JSON file.
     /// </summary>
     /// <param name="filePath">Path to a JSON file.</param>
-    /// <param name="groups">List of the groups as <see cref="GroupInfo" /> to serialize.</param>
-    private static void SerializeToFile(string filePath, List<GroupInfo> groups)
+    private static void SerializeToFile(string filePath)
     {
         // Ensure LoadedProfileFileData exists
         LoadedProfileFileData ??= new ProfileFileData();
-
-        // Update LoadedProfileFileData with current groups
-        LoadedProfileFileData.Groups = SerializeGroup(groups);
 
         var jsonString = JsonSerializer.Serialize(LoadedProfileFileData, JsonOptions);
 
@@ -770,17 +824,13 @@ public static class ProfileManager
     }
 
     /// <summary>
-    ///     Method to serialize a list of groups as <see cref="GroupInfo" /> to a byte array.
+    ///     Method to serialize profile data to a byte array.
     /// </summary>
-    /// <param name="groups">List of the groups as <see cref="GroupInfo" /> to serialize.</param>
-    /// <returns>Serialized list of groups as <see cref="GroupInfo" /> as byte array.</returns>
-    private static byte[] SerializeToByteArray(List<GroupInfo> groups)
+    /// <returns>Serialized profile data as byte array.</returns>
+    private static byte[] SerializeToByteArray()
     {
         // Ensure LoadedProfileFileData exists
         LoadedProfileFileData ??= new ProfileFileData();
-
-        // Update LoadedProfileFileData with current groups
-        LoadedProfileFileData.Groups = SerializeGroup(groups);
 
         var jsonString = JsonSerializer.Serialize(LoadedProfileFileData, JsonOptions);
 
@@ -788,129 +838,65 @@ public static class ProfileManager
     }
 
     /// <summary>
-    ///     Method to serialize a list of groups as <see cref="GroupInfo" />.
-    /// </summary>
-    /// <param name="groups">List of the groups as <see cref="GroupInfo" /> to serialize.</param>
-    /// <returns>Serialized list of groups as <see cref="GroupInfoSerializable" />.</returns>
-    private static List<GroupInfoSerializable> SerializeGroup(List<GroupInfo> groups)
-    {
-        List<GroupInfoSerializable> groupsSerializable = [];
-
-        foreach (var group in groups)
-        {
-            // Don't save temp groups
-            if (group.IsDynamic)
-                continue;
-
-            var profilesSerializable = (from profile in @group.Profiles
-                                        where !profile.IsDynamic
-                                        select new ProfileInfoSerializable(profile)
-                                        {
-                                            RemoteDesktop_Password = profile.RemoteDesktop_Password != null
-                                                ? SecureStringHelper.ConvertToString(profile.RemoteDesktop_Password)
-                                                : string.Empty,
-                                            RemoteDesktop_GatewayServerPassword = profile.RemoteDesktop_GatewayServerPassword != null
-                                                ? SecureStringHelper.ConvertToString(profile.RemoteDesktop_GatewayServerPassword)
-                                                : string.Empty,
-                                            SNMP_Community = profile.SNMP_Community != null
-                                                ? SecureStringHelper.ConvertToString(profile.SNMP_Community)
-                                                : string.Empty,
-                                            SNMP_Auth = profile.SNMP_Auth != null
-                                                ? SecureStringHelper.ConvertToString(profile.SNMP_Auth)
-                                                : string.Empty,
-                                            SNMP_Priv = profile.SNMP_Priv != null
-                                                ? SecureStringHelper.ConvertToString(profile.SNMP_Priv)
-                                                : string.Empty
-                                        }).ToList();
-
-            groupsSerializable.Add(new GroupInfoSerializable(group)
-            {
-                Profiles = profilesSerializable,
-                RemoteDesktop_Password = group.RemoteDesktop_Password != null
-                    ? SecureStringHelper.ConvertToString(group.RemoteDesktop_Password)
-                    : string.Empty,
-                RemoteDesktop_GatewayServerPassword = group.RemoteDesktop_GatewayServerPassword != null
-                    ? SecureStringHelper.ConvertToString(group.RemoteDesktop_GatewayServerPassword)
-                    : string.Empty,
-                SNMP_Community = group.SNMP_Community != null
-                    ? SecureStringHelper.ConvertToString(group.SNMP_Community)
-                    : string.Empty,
-                SNMP_Auth =
-                    group.SNMP_Auth != null ? SecureStringHelper.ConvertToString(group.SNMP_Auth) : string.Empty,
-                SNMP_Priv =
-                    group.SNMP_Priv != null ? SecureStringHelper.ConvertToString(group.SNMP_Priv) : string.Empty
-            });
-        }
-
-        return groupsSerializable;
-    }
-
-    /// <summary>
-    ///     Method to deserialize a list of groups as <see cref="GroupInfo" /> from a JSON file.
+    ///     Method to deserialize profile data from a JSON file.
     /// </summary>
     /// <param name="filePath">Path to a JSON file.</param>
-    /// <returns>List of groups as <see cref="GroupInfo" />.</returns>
-    private static List<GroupInfo> DeserializeFromFile(string filePath)
+    private static void DeserializeFromFile(string filePath)
     {
         var jsonString = File.ReadAllText(filePath);
 
-        return DeserializeFromJson(jsonString);
+        DeserializeFromJson(jsonString);
     }
 
     /// <summary>
     ///     Method to deserialize a list of groups as <see cref="GroupInfo" /> from a legacy XML file.
     /// </summary>
     /// <param name="filePath">Path to an XML file.</param>
-    /// <returns>List of groups as <see cref="GroupInfo" />.</returns>
     [Obsolete("Legacy XML profile files are no longer used, but the method is kept for migration purposes.")]
-    private static List<GroupInfo> DeserializeFromXmlFile(string filePath)
+    private static void DeserializeFromXmlFile(string filePath)
     {
         using FileStream fileStream = new(filePath, FileMode.Open);
 
-        return DeserializeFromXmlStream(fileStream);
+        DeserializeFromXmlStream(fileStream);
     }
 
     /// <summary>
-    ///     Method to deserialize a list of groups as <see cref="GroupInfo" /> from a byte array.
+    ///     Method to deserialize profile data from a byte array.
     /// </summary>
-    /// <param name="data">Serialized list of groups as <see cref="GroupInfo" /> as byte array.</param>
-    /// <returns>List of groups as <see cref="GroupInfo" />.</returns>
-    private static List<GroupInfo> DeserializeFromByteArray(byte[] data)
+    /// <param name="data">Serialized profile data as byte array.</param>
+    private static void DeserializeFromByteArray(byte[] data)
     {
         var jsonString = Encoding.UTF8.GetString(data);
 
-        return DeserializeFromJson(jsonString);
+        DeserializeFromJson(jsonString);
     }
 
     /// <summary>
     ///     Method to deserialize a list of groups as <see cref="GroupInfo" /> from a legacy XML byte array.
     /// </summary>
     /// <param name="xml">Serialized list of groups as <see cref="GroupInfo" /> as XML byte array.</param>
-    /// <returns>List of groups as <see cref="GroupInfo" />.</returns>
     [Obsolete("Legacy XML profile files are no longer used, but the method is kept for migration purposes.")]
-    private static List<GroupInfo> DeserializeFromXmlByteArray(byte[] xml)
+    private static void DeserializeFromXmlByteArray(byte[] xml)
     {
         using MemoryStream memoryStream = new(xml);
 
-        return DeserializeFromXmlStream(memoryStream);
+        DeserializeFromXmlStream(memoryStream);
     }
 
     /// <summary>
-    ///     Method to deserialize a list of groups as <see cref="GroupInfo" /> from JSON string.
+    ///     Method to deserialize profile data from JSON string.
     /// </summary>
     /// <param name="jsonString">JSON string to deserialize.</param>
-    /// <returns>List of groups as <see cref="GroupInfo" />.</returns>
-    private static List<GroupInfo> DeserializeFromJson(string jsonString)
+    private static void DeserializeFromJson(string jsonString)
     {
         try
         {
             var profileFileData = JsonSerializer.Deserialize<ProfileFileData>(jsonString, JsonOptions);
 
-            if (profileFileData?.Groups != null)
+            if (profileFileData != null)
             {
                 LoadedProfileFileData = profileFileData;
-
-                return DeserializeGroup(profileFileData.Groups);
+                return;
             }
         }
         catch (JsonException)
@@ -927,21 +913,18 @@ public static class ProfileManager
         // Create ProfileFileData wrapper for legacy format
         LoadedProfileFileData = new ProfileFileData
         {
-            Groups = groupsSerializable
+            GroupsSerializable = groupsSerializable
         };
 
         Log.Info("Successfully loaded profile file in legacy format. It will be migrated to new format on next save.");
-
-        return DeserializeGroup(groupsSerializable);
     }
 
     /// <summary>
     ///     Method to deserialize a list of groups as <see cref="GroupInfo" /> from an XML stream.
     /// </summary>
     /// <param name="stream">Stream to deserialize.</param>
-    /// <returns>List of groups as <see cref="GroupInfo" />.</returns>
     [Obsolete("Legacy XML profile files are no longer used, but the method is kept for migration purposes.")]
-    private static List<GroupInfo> DeserializeFromXmlStream(Stream stream)
+    private static void DeserializeFromXmlStream(Stream stream)
     {
         XmlSerializer xmlSerializer = new(typeof(List<GroupInfoSerializable>));
 
@@ -950,7 +933,10 @@ public static class ProfileManager
         if (groupsSerializable == null)
             throw new InvalidOperationException("Failed to deserialize XML profile file.");
 
-        return DeserializeGroup(groupsSerializable);
+        LoadedProfileFileData = new ProfileFileData
+        {
+            GroupsSerializable = groupsSerializable
+        };
     }
 
     /// <summary>
@@ -978,95 +964,47 @@ public static class ProfileManager
         }
     }
 
-    /// <summary>
-    ///     Method to deserialize a list of groups as <see cref="GroupInfo" />.
-    /// </summary>
-    /// <param name="groupsSerializable">List of serializable groups to deserialize.</param>
-    /// <returns>List of groups as <see cref="GroupInfo" />.</returns>
-    private static List<GroupInfo> DeserializeGroup(List<GroupInfoSerializable> groupsSerializable)
-    {
-        if (groupsSerializable == null)
-            throw new ArgumentNullException(nameof(groupsSerializable));
-
-        return [.. from groupSerializable in groupsSerializable
-                let profiles = (groupSerializable.Profiles ?? new List<ProfileInfoSerializable>()).Select(profileSerializable => new ProfileInfo(profileSerializable)
-                {
-                    // Migrate old tags to new tags list
-                    // if TagsList is null or empty and Tags is not null or empty, split Tags by ';' and create a new ObservableSetCollection
-                    // else use the existing TagsList
-                    TagsCollection = (profileSerializable.TagsCollection == null || profileSerializable.TagsCollection.Count == 0) && !string.IsNullOrEmpty(profileSerializable.Tags) ?
-                        new Controls.ObservableSetCollection<string>(profileSerializable.Tags.Split([';'], StringSplitOptions.RemoveEmptyEntries)) :
-                        profileSerializable.TagsCollection,
-
-                    // Convert passwords to secure strings
-                    RemoteDesktop_Password = !string.IsNullOrEmpty(profileSerializable.RemoteDesktop_Password)
-                            ? SecureStringHelper.ConvertToSecureString(profileSerializable.RemoteDesktop_Password)
-                            : null,
-                    RemoteDesktop_GatewayServerPassword =
-                            !string.IsNullOrEmpty(profileSerializable.RemoteDesktop_GatewayServerPassword)
-                                ? SecureStringHelper.ConvertToSecureString(profileSerializable
-                                    .RemoteDesktop_GatewayServerPassword)
-                                : null,
-                    SNMP_Community = !string.IsNullOrEmpty(profileSerializable.SNMP_Community)
-                            ? SecureStringHelper.ConvertToSecureString(profileSerializable.SNMP_Community)
-                            : null,
-                    SNMP_Auth = !string.IsNullOrEmpty(profileSerializable.SNMP_Auth)
-                            ? SecureStringHelper.ConvertToSecureString(profileSerializable.SNMP_Auth)
-                            : null,
-                    SNMP_Priv = !string.IsNullOrEmpty(profileSerializable.SNMP_Priv)
-                            ? SecureStringHelper.ConvertToSecureString(profileSerializable.SNMP_Priv)
-                            : null
-                })
-                    .ToList()
-                select new GroupInfo(groupSerializable)
-                {
-                    Profiles = profiles,
-
-                    // Convert passwords to secure strings
-                    RemoteDesktop_Password = !string.IsNullOrEmpty(groupSerializable.RemoteDesktop_Password)
-                        ? SecureStringHelper.ConvertToSecureString(groupSerializable.RemoteDesktop_Password)
-                        : null,
-                    RemoteDesktop_GatewayServerPassword =
-                        !string.IsNullOrEmpty(groupSerializable.RemoteDesktop_GatewayServerPassword)
-                            ? SecureStringHelper.ConvertToSecureString(
-                                groupSerializable.RemoteDesktop_GatewayServerPassword)
-                            : null,
-                    SNMP_Community = !string.IsNullOrEmpty(groupSerializable.SNMP_Community)
-                        ? SecureStringHelper.ConvertToSecureString(groupSerializable.SNMP_Community)
-                        : null,
-                    SNMP_Auth = !string.IsNullOrEmpty(groupSerializable.SNMP_Auth)
-                        ? SecureStringHelper.ConvertToSecureString(groupSerializable.SNMP_Auth)
-                        : null,
-                    SNMP_Priv = !string.IsNullOrEmpty(groupSerializable.SNMP_Priv)
-                        ? SecureStringHelper.ConvertToSecureString(groupSerializable.SNMP_Priv)
-                        : null
-                }];
-    }
-
     #endregion
 
     #region Add, remove, replace group(s) and more.
 
     /// <summary>
-    ///     Method to add a list of <see cref="GroupInfo" /> to the <see cref="Groups" /> list.
+    ///     Method to add a list of <see cref="GroupInfo" /> to the loaded profile data.
     /// </summary>
     /// <param name="groups">List of groups as <see cref="GroupInfo" /> to add.</param>
+    /// <exception cref="ArgumentNullException">Thrown when groups collection is null.</exception>
     private static void AddGroups(List<GroupInfo> groups, bool profilesChanged = true)
     {
+        ArgumentNullException.ThrowIfNull(groups);
+
+        var skippedCount = 0;
         foreach (var group in groups)
-            Groups.Add(group);
+        {
+            if (group is null)
+            {
+                skippedCount++;
+                continue;
+            }
+
+            LoadedProfileFileData.Groups.Add(group);
+        }
+
+        if (skippedCount > 0)
+            Log.Warn($"AddGroups skipped {skippedCount} null group(s) in collection.");
 
         ProfilesUpdated(profilesChanged);
     }
-
+    
     /// <summary>
-    ///     Method to add a <see cref="GroupInfo" /> to the <see cref="Groups" /> list.
+    ///     Method to add a <see cref="GroupInfo" /> to the loaded profile data.
     /// </summary>
     /// <param name="group">Group as <see cref="GroupInfo" /> to add.</param>
+    /// <exception cref="ArgumentNullException">Thrown when group is null.</exception>
     public static void AddGroup(GroupInfo group, bool profilesChanged = true)
-
     {
-        Groups.Add(group);
+        ArgumentNullException.ThrowIfNull(group);
+
+        LoadedProfileFileData.Groups.Add(group);
 
         ProfilesUpdated(profilesChanged);
     }
@@ -1076,9 +1014,19 @@ public static class ProfileManager
     /// </summary>
     /// <param name="name">Name of the group.</param>
     /// <returns>Group as <see cref="GroupInfo" />.</returns>
+    /// <exception cref="ArgumentException">Thrown when name is null or empty.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when group with specified name is not found.</exception>
     public static GroupInfo GetGroupByName(string name)
     {
-        return Groups.First(x => x.Name.Equals(name));
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+
+
+        var group = LoadedProfileFileData.Groups.FirstOrDefault(x => x.Name.Equals(name));
+        
+        if (group == null)
+            throw new InvalidOperationException($"Group '{name}' not found.");
+
+        return group;
     }
 
     /// <summary>
@@ -1086,10 +1034,14 @@ public static class ProfileManager
     /// </summary>
     /// <param name="oldGroup">Old group as <see cref="GroupInfo" />.</param>
     /// <param name="newGroup">New group as <see cref="GroupInfo" />.</param>
+    /// <exception cref="ArgumentNullException">Thrown when oldGroup or newGroup is null.</exception>
     public static void ReplaceGroup(GroupInfo oldGroup, GroupInfo newGroup)
     {
-        Groups.Remove(oldGroup);
-        Groups.Add(newGroup);
+        ArgumentNullException.ThrowIfNull(oldGroup);
+        ArgumentNullException.ThrowIfNull(newGroup);
+
+        LoadedProfileFileData.Groups.Remove(oldGroup);
+        LoadedProfileFileData.Groups.Add(newGroup);
 
         ProfilesUpdated();
     }
@@ -1098,9 +1050,12 @@ public static class ProfileManager
     ///     Method to remove a group.
     /// </summary>
     /// <param name="group">Group as <see cref="GroupInfo" /> to remove</param>
+    /// <exception cref="ArgumentNullException">Thrown when group is null.</exception>
     public static void RemoveGroup(GroupInfo group)
     {
-        Groups.Remove(group);
+        ArgumentNullException.ThrowIfNull(group);
+
+        LoadedProfileFileData.Groups.Remove(group);
 
         ProfilesUpdated();
     }
@@ -1111,7 +1066,7 @@ public static class ProfileManager
     /// <returns>List of group names.</returns>
     public static IReadOnlyCollection<string> GetGroupNames()
     {
-        return (from groups in Groups where !groups.IsDynamic select groups.Name).ToList();
+        return (from groups in LoadedProfileFileData.Groups where !groups.IsDynamic select groups.Name).ToList();
     }
 
     /// <summary>
@@ -1121,7 +1076,7 @@ public static class ProfileManager
     /// <returns>True if the profile exists.</returns>
     public static bool GroupExists(string name)
     {
-        return Groups.Any(group => group.Name == name);
+        return LoadedProfileFileData.Groups.Any(group => group.Name == name);
     }
 
     /// <summary>
@@ -1131,7 +1086,8 @@ public static class ProfileManager
     /// <returns>True if the group has no profiles.</returns>
     public static bool IsGroupEmpty(string name)
     {
-        return Groups.FirstOrDefault(x => x.Name == name)!.Profiles.Count == 0;
+        var group = LoadedProfileFileData.Groups.FirstOrDefault(x => x.Name == name);
+        return group?.Profiles.Count == 0;
     }
 
     #endregion
@@ -1142,12 +1098,23 @@ public static class ProfileManager
     ///     Method to add a profile to a group.
     /// </summary>
     /// <param name="profile">Profile as <see cref="ProfileInfo" /> to add.</param>
+    /// <exception cref="ArgumentNullException">Thrown when profile is null.</exception>
+    /// <exception cref="ArgumentException">Thrown when profile.Group is null or empty.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when profile's group is not found after creation attempt.</exception>
     public static void AddProfile(ProfileInfo profile)
     {
+        ArgumentNullException.ThrowIfNull(profile);
+        ArgumentException.ThrowIfNullOrWhiteSpace(profile.Group, nameof(profile));
+
         if (!GroupExists(profile.Group))
             AddGroup(new GroupInfo(profile.Group));
 
-        Groups.First(x => x.Name.Equals(profile.Group)).Profiles.Add(profile);
+        var group = LoadedProfileFileData.Groups.FirstOrDefault(x => x.Name.Equals(profile.Group));
+        
+        if (group == null)
+            throw new InvalidOperationException($"Group '{profile.Group}' not found for profile after creation attempt.");
+
+        group.Profiles.Add(profile);
 
         ProfilesUpdated();
     }
@@ -1157,16 +1124,34 @@ public static class ProfileManager
     /// </summary>
     /// <param name="oldProfile">Old profile as <see cref="ProfileInfo" />.</param>
     /// <param name="newProfile">New profile as <see cref="ProfileInfo" />.</param>
+    /// <exception cref="ArgumentNullException">Thrown when oldProfile or newProfile is null.</exception>
+    /// <exception cref="ArgumentException">Thrown when profile groups are null or empty.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when old profile's group is not found.</exception>
     public static void ReplaceProfile(ProfileInfo oldProfile, ProfileInfo newProfile)
     {
-        // Remove
-        Groups.First(x => x.Name.Equals(oldProfile.Group)).Profiles.Remove(oldProfile);
+        ArgumentNullException.ThrowIfNull(oldProfile);
+        ArgumentNullException.ThrowIfNull(newProfile);
+        ArgumentException.ThrowIfNullOrWhiteSpace(oldProfile.Group, nameof(oldProfile));
+        ArgumentException.ThrowIfNullOrWhiteSpace(newProfile.Group, nameof(newProfile));
 
-        // Add
+        // Remove from old group
+        var oldGroup = LoadedProfileFileData.Groups.FirstOrDefault(x => x.Name.Equals(oldProfile.Group));
+        
+        if (oldGroup == null)
+            throw new InvalidOperationException($"Group '{oldProfile.Group}' not found for old profile.");
+
+        oldGroup.Profiles.Remove(oldProfile);
+
+        // Add to new group (create if doesn't exist)
         if (!GroupExists(newProfile.Group))
             AddGroup(new GroupInfo(newProfile.Group));
 
-        Groups.First(x => x.Name.Equals(newProfile.Group)).Profiles.Add(newProfile);
+        var newGroup = LoadedProfileFileData.Groups.FirstOrDefault(x => x.Name.Equals(newProfile.Group));
+        
+        if (newGroup == null)
+            throw new InvalidOperationException($"Group '{newProfile.Group}' not found for new profile after creation attempt.");
+
+        newGroup.Profiles.Add(newProfile);
 
         ProfilesUpdated();
     }
@@ -1175,9 +1160,20 @@ public static class ProfileManager
     ///     Method to remove a profile from a group.
     /// </summary>
     /// <param name="profile">Profile as <see cref="ProfileInfo" /> to remove.</param>
+    /// <exception cref="ArgumentNullException">Thrown when profile is null.</exception>
+    /// <exception cref="ArgumentException">Thrown when profile.Group is null or empty.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when profile's group is not found.</exception>
     public static void RemoveProfile(ProfileInfo profile)
     {
-        Groups.First(x => x.Name.Equals(profile.Group)).Profiles.Remove(profile);
+        ArgumentNullException.ThrowIfNull(profile);
+        ArgumentException.ThrowIfNullOrWhiteSpace(profile.Group, nameof(profile));
+
+        var group = LoadedProfileFileData.Groups.FirstOrDefault(x => x.Name.Equals(profile.Group));
+        
+        if (group == null)
+            throw new InvalidOperationException($"Group '{profile.Group}' not found.");
+
+        group.Profiles.Remove(profile);
 
         ProfilesUpdated();
     }
@@ -1186,10 +1182,34 @@ public static class ProfileManager
     ///     Method to remove a list of profiles from a group.
     /// </summary>
     /// <param name="profiles">List of profiles as <see cref="ProfileInfo" /> to remove.</param>
+    /// <exception cref="ArgumentNullException">Thrown when profiles collection is null.</exception>
     public static void RemoveProfiles(IEnumerable<ProfileInfo> profiles)
     {
+        ArgumentNullException.ThrowIfNull(profiles);
+
+        var skippedCount = 0;
         foreach (var profile in profiles)
-            Groups.First(x => x.Name.Equals(profile.Group)).Profiles.Remove(profile);
+        {
+            if (profile is null || string.IsNullOrWhiteSpace(profile.Group))
+            {
+                skippedCount++;
+                continue;
+            }
+
+            var group = LoadedProfileFileData.Groups.FirstOrDefault(x => x.Name.Equals(profile.Group));
+            
+            if (group == null)
+            {
+                Log.Warn($"RemoveProfiles: Group '{profile.Group}' not found for profile '{profile.Name ?? "<unnamed>"}'.");
+                skippedCount++;
+                continue;
+            }
+
+            group.Profiles.Remove(profile);
+        }
+
+        if (skippedCount > 0)
+            Log.Warn($"RemoveProfiles skipped {skippedCount} null or invalid profile(s) in collection.");
 
         ProfilesUpdated();
     }
@@ -1256,6 +1276,13 @@ public static class ProfileManager
     /// <param name="maxBackupFiles">The maximum number of backup files to retain. Must be greater than zero.</param>
     private static void CleanupBackups(string backupFolderPath, string profileFileName, int maxBackupFiles)
     {
+        // Skip if backup directory doesn't exist
+        if (!Directory.Exists(backupFolderPath))
+        {
+            Log.Error($"Backup directory does not exist: {backupFolderPath}. Cannot cleanup old backups.");
+            return;
+        }
+
         // Extract profile name without extension to match all backup files regardless of extension
         // (e.g., "Default" matches "2025-01-19_Default.json", "2025-01-19_Default.encrypted", etc.)
         var profileNameWithoutExtension = Path.GetFileNameWithoutExtension(profileFileName);

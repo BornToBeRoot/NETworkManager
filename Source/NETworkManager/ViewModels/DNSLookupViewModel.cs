@@ -1,4 +1,4 @@
-﻿using DnsClient;
+using DnsClient;
 using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;

@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using NETworkManager.Models.IPApi;
 using NETworkManager.Settings;

@@ -1,4 +1,4 @@
-﻿using log4net;
+using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;

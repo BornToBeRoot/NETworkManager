@@ -1,4 +1,4 @@
-﻿using LiveCharts;
+using LiveCharts;
 using LiveCharts.Wpf;
 using log4net;
 using MahApps.Metro.SimpleChildWindow;

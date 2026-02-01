@@ -1,4 +1,4 @@
-﻿namespace NETworkManager.ViewModels;
+namespace NETworkManager.ViewModels;
 
 /// <summary>
 /// View model for the lookup host view.

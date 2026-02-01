@@ -1,4 +1,4 @@
-﻿using NETworkManager.Models.HostsFileEditor;
+using NETworkManager.Models.HostsFileEditor;
 using NETworkManager.Utilities;
 using System;
 using System.Windows.Input;

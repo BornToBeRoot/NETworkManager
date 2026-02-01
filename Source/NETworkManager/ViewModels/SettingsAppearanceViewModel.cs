@@ -1,4 +1,4 @@
-﻿using NETworkManager.Models.Appearance;
+using NETworkManager.Models.Appearance;
 using NETworkManager.Settings;
 using System.ComponentModel;
 using System.Linq;
