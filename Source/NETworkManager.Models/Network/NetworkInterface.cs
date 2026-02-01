@@ -81,7 +81,7 @@ public sealed class NetworkInterface
             // Filter out virtual/filter adapters introduced in .NET 9/10
             // Check if the adapter name contains any blacklisted pattern
             // See: https://github.com/dotnet/runtime/issues/122751
-            if (NetworkInterfacesBlacklist.Any(networkInterface.Name.Contains))
+            if (NetworkInterfacesBlacklist.Any(pattern => networkInterface.Name.Contains(pattern)))
                 continue;
 
             var listIPv4Address = new List<Tuple<IPAddress, IPAddress>>();
