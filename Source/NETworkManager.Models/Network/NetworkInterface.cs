@@ -25,18 +25,25 @@ public sealed class NetworkInterface
 {
     #region Variables
 
-    /* Ref #3286
-    private static List<string> NetworkInterfacesBlacklist =
+    /// <summary>
+    /// List of network interface name patterns to filter out virtual/filter adapters
+    /// introduced in .NET 9/10. These are typically not actual network interfaces but rather
+    /// drivers, filters, or extensions attached to real network interfaces.
+    /// See: https://github.com/dotnet/runtime/issues/122751
+    /// </summary>
+    private static readonly List<string> NetworkInterfaceFilteredPatterns =
     [
         "Hyper-V Virtual Switch Extension Filter",
+        "Hyper-V Virtual Switch Extension Adapter",
         "WFP Native MAC Layer LightWeight Filter",
         "Npcap Packet Driver (NPCAP)",
         "QoS Packet Scheduler",
         "WFP 802.3 MAC Layer LightWeight Filter",
-        "Ethernet (Kerneldebugger)",
-        "Filter Driver"
+        "Ethernet (Kerneldebugger)",        
+        "Filter Driver",
+        "WAN Miniport",
+        "Microsoft Wi-Fi Direct Virtual Adapter"
     ];
-    */
 
     #endregion
 
@@ -74,12 +81,13 @@ public sealed class NetworkInterface
                 (int)networkInterface.NetworkInterfaceType != 53)
                 continue;
 
-            // Check if part of the  Name is in blacklist Ref #3286
-            //if (NetworkInterfacesBlacklist.Any(networkInterface.Name.Contains))
-            //    continue;
-
-            //Debug.WriteLine(networkInterface.Name);
-            //Debug.WriteLine($"  Description: {networkInterface.Description}");
+            // Filter out virtual/filter adapters introduced in .NET 9/10
+            // Check if the adapter name or description contains any filtered pattern
+            // See: https://github.com/dotnet/runtime/issues/122751
+            if (NetworkInterfaceFilteredPatterns.Any(pattern => 
+                networkInterface.Name.Contains(pattern) || 
+                networkInterface.Description.Contains(pattern)))
+                continue;
 
             var listIPv4Address = new List<Tuple<IPAddress, IPAddress>>();
             var listIPv6AddressLinkLocal = new List<IPAddress>();
