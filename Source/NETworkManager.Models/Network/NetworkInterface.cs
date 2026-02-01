@@ -25,8 +25,13 @@ public sealed class NetworkInterface
 {
     #region Variables
 
-    /* Ref #3286
-    private static List<string> NetworkInterfacesBlacklist =
+    /// <summary>
+    /// Blacklist of network interface name patterns to filter out virtual/filter adapters
+    /// introduced in .NET 9/10. These are typically not actual network interfaces but rather
+    /// drivers, filters, or extensions attached to real network interfaces.
+    /// See: https://github.com/dotnet/runtime/issues/122751
+    /// </summary>
+    private static readonly List<string> NetworkInterfacesBlacklist =
     [
         "Hyper-V Virtual Switch Extension Filter",
         "WFP Native MAC Layer LightWeight Filter",
@@ -36,7 +41,6 @@ public sealed class NetworkInterface
         "Ethernet (Kerneldebugger)",
         "Filter Driver"
     ];
-    */
 
     #endregion
 
@@ -74,12 +78,11 @@ public sealed class NetworkInterface
                 (int)networkInterface.NetworkInterfaceType != 53)
                 continue;
 
-            // Check if part of the  Name is in blacklist Ref #3286
-            //if (NetworkInterfacesBlacklist.Any(networkInterface.Name.Contains))
-            //    continue;
-
-            //Debug.WriteLine(networkInterface.Name);
-            //Debug.WriteLine($"  Description: {networkInterface.Description}");
+            // Filter out virtual/filter adapters introduced in .NET 9/10
+            // Check if the adapter name contains any blacklisted pattern
+            // See: https://github.com/dotnet/runtime/issues/122751
+            if (NetworkInterfacesBlacklist.Any(networkInterface.Name.Contains))
+                continue;
 
             var listIPv4Address = new List<Tuple<IPAddress, IPAddress>>();
             var listIPv6AddressLinkLocal = new List<IPAddress>();
