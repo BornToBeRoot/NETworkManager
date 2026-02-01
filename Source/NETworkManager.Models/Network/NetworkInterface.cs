@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -34,11 +35,12 @@ public sealed class NetworkInterface
     private static readonly List<string> NetworkInterfaceFilteredPatterns =
     [
         "Hyper-V Virtual Switch Extension Filter",
+        "Hyper-V Virtual Switch Extension Adapter",
         "WFP Native MAC Layer LightWeight Filter",
         "Npcap Packet Driver (NPCAP)",
         "QoS Packet Scheduler",
         "WFP 802.3 MAC Layer LightWeight Filter",
-        "Ethernet (Kerneldebugger)",
+        "Ethernet (Kerneldebugger)",        
         "Filter Driver",
         "WAN Miniport",
         "Microsoft Wi-Fi Direct Virtual Adapter"
