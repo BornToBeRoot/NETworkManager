@@ -39,7 +39,9 @@ public sealed class NetworkInterface
         "QoS Packet Scheduler",
         "WFP 802.3 MAC Layer LightWeight Filter",
         "Ethernet (Kerneldebugger)",
-        "Filter Driver"
+        "Filter Driver",
+        "WAN Miniport",
+        "Microsoft Wi-Fi Direct Virtual Adapter"
     ];
 
     #endregion
