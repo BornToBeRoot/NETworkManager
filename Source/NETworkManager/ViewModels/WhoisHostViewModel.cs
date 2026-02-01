@@ -1,4 +1,4 @@
-﻿using Dragablz;
+using Dragablz;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
@@ -484,7 +484,7 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
 
     private void CreateTags()
     {
-        var tags = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.Whois_Enabled)
+        var tags = ProfileManager.LoadedProfileFileData.Groups.SelectMany(x => x.Profiles).Where(x => x.Whois_Enabled)
             .SelectMany(x => x.TagsCollection).Distinct().ToList();
 
         var tagSet = new HashSet<string>(tags);
@@ -507,7 +507,7 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
     {
         Profiles = new CollectionViewSource
         {
-            Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.Whois_Enabled && (
+            Source = ProfileManager.LoadedProfileFileData.Groups.SelectMany(x => x.Profiles).Where(x => x.Whois_Enabled && (
                     string.IsNullOrEmpty(filter.Search) ||
                     x.Name.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                     x.Whois_Domain.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) > -1) && (

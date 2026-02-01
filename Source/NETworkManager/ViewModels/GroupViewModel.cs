@@ -1,4 +1,4 @@
-﻿using NETworkManager.Models.Network;
+using NETworkManager.Models.Network;
 using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;

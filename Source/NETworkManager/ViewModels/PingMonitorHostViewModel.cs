@@ -1,4 +1,4 @@
-﻿using MahApps.Metro.Controls;
+using MahApps.Metro.Controls;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
@@ -826,7 +826,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private void CreateTags()
     {
-        var tags = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.PingMonitor_Enabled)
+        var tags = ProfileManager.LoadedProfileFileData.Groups.SelectMany(x => x.Profiles).Where(x => x.PingMonitor_Enabled)
             .SelectMany(x => x.TagsCollection).Distinct().ToList();
 
         var tagSet = new HashSet<string>(tags);
@@ -849,7 +849,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     {
         Profiles = new CollectionViewSource
         {
-            Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.PingMonitor_Enabled && (
+            Source = ProfileManager.LoadedProfileFileData.Groups.SelectMany(x => x.Profiles).Where(x => x.PingMonitor_Enabled && (
                     string.IsNullOrEmpty(filter.Search) ||
                     x.Name.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                     x.PingMonitor_Host.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) > -1) && (

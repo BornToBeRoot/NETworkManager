@@ -1,4 +1,4 @@
-﻿using Lextm.SharpSnmpLib.Messaging;
+using Lextm.SharpSnmpLib.Messaging;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Network;

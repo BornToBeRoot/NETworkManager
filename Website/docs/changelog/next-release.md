@@ -31,11 +31,11 @@ Release date: **xx.xx.2025**
 
 - Profile and settings files have been migrated from `XML` to `JSON`. Existing files will be automatically converted to `JSON` on first load after the update. [#3282](https://github.com/BornToBeRoot/NETworkManager/pull/3282) [#3299](https://github.com/BornToBeRoot/NETworkManager/pull/3299)
 
-  :::info
+  :::note
 
   Starting with this release, new profile and settings files are created in `JSON` format. Existing `XML` files will be converted automatically on first load after upgrading. Automatic support for the migration will be provided until at least `2027`; after that only `JSON` files will be supported and very old installations may require an interim update.
 
-  The migration process creates a backup of the original files in the `Backups` subfolder of the settings and profiles directories. You can restore the originals from that folder if needed, but it's recommended to make a separate backup of your profile and settings files before updating.
+  The migration process creates a backup of the original files in the `Backups` subfolder of the settings and profiles directories. You can restore the originals from that folder if needed (they will work with the privous version), but it's **recommended to make a separate backup of your profile and settings files before updating**. If you encounter any issues during or after the migration, please report them via the [issue tracker](https://github.com/BornToBeRoot/NETworkManager/issues/new/choose).
   
   :::
 
@@ -58,6 +58,7 @@ Release date: **xx.xx.2025**
 **Profiles**
 
 - Profile file format migrated from `XML` to `JSON`. The profile file will be automatically converted on first load after the update. [#3299](https://github.com/BornToBeRoot/NETworkManager/pull/3299)
+- Create a daily backup of profile files before saving changes. By default, up to `10` backup files are kept in the `Backups` subfolder of the profiles directory. [#3302](https://github.com/BornToBeRoot/NETworkManager/pull/3302)
 - Profile file creation flow improved — when adding a new profile you are now prompted to enable profile-file encryption to protect stored credentials and settings. [#3227](https://github.com/BornToBeRoot/NETworkManager/pull/3227)
 - Profile file dialog migrated to a child window to improve usability. [#3227](https://github.com/BornToBeRoot/NETworkManager/pull/3227)
 - Credential dialogs migrated to child windows to improve usability. [#3231](https://github.com/BornToBeRoot/NETworkManager/pull/3231)
@@ -65,7 +66,7 @@ Release date: **xx.xx.2025**
 **Settings**
 
 - Settings file format migrated from `XML` to `JSON`. The settings file will be automatically converted on first load after the update. [#3282](https://github.com/BornToBeRoot/NETworkManager/pull/3282)
-- Create a daily backup of the settings file before saving changes. Up to `10` backup files are kept in the `Backups` subfolder of the settings directory. [#3283](https://github.com/BornToBeRoot/NETworkManager/pull/3283)
+- Create a daily backup of the settings file before saving changes. By default, up to `10` backup files are kept in the `Backups` subfolder of the settings directory. [#3283](https://github.com/BornToBeRoot/NETworkManager/pull/3283) [#3302](https://github.com/BornToBeRoot/NETworkManager/pull/3302)
 
 **Dashboard**
 

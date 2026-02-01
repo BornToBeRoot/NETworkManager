@@ -1,4 +1,4 @@
-﻿using DnsClient;
+using DnsClient;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Network;

@@ -228,7 +228,7 @@ public static class SettingsManager
     ///     Method to save the currently loaded settings (to a file).
     /// </summary>
     public static void Save()
-    {
+    {        
         // Create the directory if it does not exist
         Directory.CreateDirectory(GetSettingsFolderLocation());
 
@@ -265,16 +265,27 @@ public static class SettingsManager
     /// called as part of a daily maintenance routine.</remarks>
     private static void CreateDailyBackupIfNeeded()
     {
-        var currentDate = DateTime.Now.Date;
-
-        if (Current.LastBackup < currentDate)
+        // Skip if daily backups are disabled
+        if (!Current.Settings_IsDailyBackupEnabled)
         {
-            // Check if settings file exists
-            if (!File.Exists(GetSettingsFilePath()))
-            {
-                Log.Warn("Settings file does not exist yet. Skipping backup creation...");
-                return;
-            }
+            Log.Info("Daily backups are disabled. Skipping backup creation...");
+            return;
+        }
+
+        // Skip if settings file doesn't exist yet
+        if (!File.Exists(GetSettingsFilePath()))
+        {
+            Log.Warn("Settings file does not exist yet. Skipping backup creation...");
+            return;
+        }
+
+        // Create backup if needed
+        var currentDate = DateTime.Now.Date;
+        var lastBackupDate = Current.LastBackup.Date;
+                
+        if (lastBackupDate < currentDate)
+        {
+            Log.Info("Creating daily backup of settings...");
 
             // Create backup
             Backup(GetSettingsFilePath(),
@@ -284,7 +295,7 @@ public static class SettingsManager
             // Cleanup old backups
             CleanupBackups(GetSettingsBackupFolderLocation(),
                 GetSettingsFileName(),
-                GlobalStaticConfiguration.Backup_MaximumNumberOfBackups);
+                Current.Settings_MaximumNumberOfBackups);
 
             Current.LastBackup = currentDate;
         }
@@ -302,14 +313,25 @@ public static class SettingsManager
     /// <param name="maxBackupFiles">The maximum number of backup files to retain. Must be greater than zero.</param>
     private static void CleanupBackups(string backupFolderPath, string settingsFileName, int maxBackupFiles)
     {
-        // Get all backup files sorted by timestamp (newest first)
+        // Extract settings name without extension to match all backup files regardless of extension
+        // (e.g., "Settings" matches "2025-01-19_Settings.json", "2025-01-19_Settings.xml")
+        var settingsNameWithoutExtension = Path.GetFileNameWithoutExtension(settingsFileName);
+
+        // Get all backup files for settings (any extension) sorted by timestamp (newest first)
         var backupFiles = Directory.GetFiles(backupFolderPath)
-            .Where(f => (f.EndsWith(settingsFileName) || f.EndsWith(GetLegacySettingsFileName())) && TimestampHelper.IsTimestampedFilename(Path.GetFileName(f)))
+            .Where(f =>
+            {
+                var fileName = Path.GetFileName(f);
+
+                // Check if it's a timestamped backup and contains the settings name
+                return TimestampHelper.IsTimestampedFilename(fileName) &&
+                       fileName.Contains($"_{settingsNameWithoutExtension}.");
+            })
             .OrderByDescending(f => TimestampHelper.ExtractTimestampFromFilename(Path.GetFileName(f)))
             .ToList();
 
         if (backupFiles.Count > maxBackupFiles)
-            Log.Info($"Cleaning up old backup files... Found {backupFiles.Count} backups, keeping the most recent {maxBackupFiles}.");
+            Log.Info($"Cleaning up old backup files for {settingsNameWithoutExtension}... Found {backupFiles.Count} backups, keeping the most recent {maxBackupFiles}.");
 
         // Delete oldest backups until the maximum number is reached
         while (backupFiles.Count > maxBackupFiles)
@@ -356,6 +378,11 @@ public static class SettingsManager
     public static void Upgrade(Version fromVersion, Version toVersion)
     {
         Log.Info($"Start settings upgrade from {fromVersion} to {toVersion}...");
+
+        // Create backup
+        Backup(GetSettingsFilePath(),
+            GetSettingsBackupFolderLocation(),
+            TimestampHelper.GetTimestampFilename(GetSettingsFileName()));
 
         // 2023.3.7.0
         if (fromVersion < new Version(2023, 3, 7, 0))

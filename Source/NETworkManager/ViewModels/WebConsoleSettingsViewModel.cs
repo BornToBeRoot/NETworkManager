@@ -1,4 +1,4 @@
-﻿using MahApps.Metro.SimpleChildWindow;
+using MahApps.Metro.SimpleChildWindow;
 using Microsoft.Web.WebView2.Core;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Settings;

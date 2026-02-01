@@ -23,19 +23,43 @@ Folder where the application settings are stored.
 It is strongly recommended to regularly back up your settings files.
 
 **Automatic backups**  
-NETworkManager automatically creates a backup of the settings files before applying any changes.
-- Location: `Settings\Backups` subfolder (relative to the main configuration directory)
+NETworkManager automatically creates a backup of the settings files before applying any changes. See [Create daily backup](#create-daily-backup) and [Maximum number of backups](#maximum-number-of-backups) for configuration options.
+- Location: `Settings\Backups` subfolder
 - Naming: timestamped (e.g. `yyyyMMddHHmmss_Settings.json`)
 - Frequency: **once per day** at most (even if multiple changes occur)
-- Retention: keeps the **10 most recent backups**
+- Retention: keeps the **10 most recent backups** (default)
 
 **Restoring settings**  
 1. Completely close NETworkManager
 2. Locate the desired backup in `Settings\Backups`
-3. Copy the file(s) back to the original configuration folder (overwriting existing files)
+3. Copy the file(s) back to the original folder (overwriting existing files)
 4. Restart the application
 
 :::
+
+### Create daily backup
+
+Create a daily backup of the application settings before applying any changes.
+
+**Type**: `Boolean`
+
+**Default:** `Enabled`
+
+:::note
+
+Backups are stored in the `Settings\Backups` subfolder. See [Location](#location) for more details.
+
+Backups are created at most once per day, even if multiple changes occur.
+
+:::
+
+### Maximum number of backups
+
+Maximum number of backups to keep. Older backups will be deleted automatically once a new backup is created.
+
+**Type:** `Integer` [Min `1`, Max `365`]
+
+**Default:** `10`
 
 ### Reset
 

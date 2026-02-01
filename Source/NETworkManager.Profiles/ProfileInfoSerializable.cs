@@ -2,12 +2,21 @@
 
 public class ProfileInfoSerializable : ProfileInfo
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ProfileInfoSerializable"/> class.
+    /// </summary>
     public ProfileInfoSerializable()
     {
+
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ProfileInfoSerializable"/> class using the specified profile information.
+    /// </summary>
+    /// <param name="profile">The <see cref="ProfileInfo" /> object that contains the profile data to be serialized. Cannot be null.</param>
     public ProfileInfoSerializable(ProfileInfo profile) : base(profile)
     {
+
     }
 
     /// <summary>

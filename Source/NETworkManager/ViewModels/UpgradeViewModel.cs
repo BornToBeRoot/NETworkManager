@@ -1,4 +1,4 @@
-﻿using NETworkManager.Documentation;
+using NETworkManager.Documentation;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;

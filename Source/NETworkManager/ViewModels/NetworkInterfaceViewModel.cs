@@ -1,4 +1,4 @@
-﻿using LiveCharts;
+using LiveCharts;
 using LiveCharts.Configurations;
 using LiveCharts.Wpf;
 using log4net;
@@ -1679,7 +1679,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void CreateTags()
     {
-        var tags = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.NetworkInterface_Enabled)
+        var tags = ProfileManager.LoadedProfileFileData.Groups.SelectMany(x => x.Profiles).Where(x => x.NetworkInterface_Enabled)
             .SelectMany(x => x.TagsCollection).Distinct().ToList();
 
         var tagSet = new HashSet<string>(tags);
@@ -1702,7 +1702,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     {
         Profiles = new CollectionViewSource
         {
-            Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.NetworkInterface_Enabled && (
+            Source = ProfileManager.LoadedProfileFileData.Groups.SelectMany(x => x.Profiles).Where(x => x.NetworkInterface_Enabled && (
                     string.IsNullOrEmpty(filter.Search) ||
                     x.Name.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) > -1) && (
                     // If no tags are selected, show all profiles

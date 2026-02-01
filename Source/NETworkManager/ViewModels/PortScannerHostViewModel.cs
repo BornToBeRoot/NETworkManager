@@ -1,4 +1,4 @@
-﻿using Dragablz;
+using Dragablz;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
@@ -595,7 +595,7 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
 
     private void CreateTags()
     {
-        var tags = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.PortScanner_Enabled)
+        var tags = ProfileManager.LoadedProfileFileData.Groups.SelectMany(x => x.Profiles).Where(x => x.PortScanner_Enabled)
             .SelectMany(x => x.TagsCollection).Distinct().ToList();
 
         var tagSet = new HashSet<string>(tags);
@@ -618,7 +618,7 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
     {
         Profiles = new CollectionViewSource
         {
-            Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.PortScanner_Enabled && (
+            Source = ProfileManager.LoadedProfileFileData.Groups.SelectMany(x => x.Profiles).Where(x => x.PortScanner_Enabled && (
                     string.IsNullOrEmpty(filter.Search) ||
                     x.Name.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                     x.PortScanner_Host.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) > -1) && (

@@ -1,4 +1,4 @@
-﻿using NETworkManager.Profiles;
+using NETworkManager.Profiles;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
@@ -365,7 +365,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
         Groups = new CollectionViewSource
         {
-            Source = ProfileManager.Groups.Where(x => !x.IsDynamic).OrderBy(x => x.Name)
+            Source = ProfileManager.LoadedProfileFileData.Groups.Where(x => !x.IsDynamic).OrderBy(x => x.Name)
         }.View;
 
         // Set to null, so even when the same group is selected, the profiles get refreshed
@@ -384,7 +384,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     private void CreateTags()
     {
         // Get all tags from profiles in the selected group
-        var tags = ProfileManager.Groups.First(x => x.Name == SelectedGroup.Name).Profiles
+        var tags = ProfileManager.LoadedProfileFileData.Groups.First(x => x.Name == SelectedGroup.Name).Profiles
             .SelectMany(x => x.TagsCollection).Distinct().ToList();
 
         var tagSet = new HashSet<string>(tags);
@@ -407,7 +407,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     {
         Profiles = new CollectionViewSource
         {
-            Source = ProfileManager.Groups.FirstOrDefault(x => x.Equals(group))?.Profiles.Where(x => !x.IsDynamic && (
+            Source = ProfileManager.LoadedProfileFileData.Groups.FirstOrDefault(x => x.Equals(group))?.Profiles.Where(x => !x.IsDynamic && (
                 string.IsNullOrEmpty(Search) || x.Name.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) > -1) && (
                     // If no tags are selected, show all profiles
                     (!filter.Tags.Any()) ||

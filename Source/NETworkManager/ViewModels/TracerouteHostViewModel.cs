@@ -1,4 +1,4 @@
-﻿using Dragablz;
+using Dragablz;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
@@ -490,7 +490,7 @@ public class TracerouteHostViewModel : ViewModelBase, IProfileManager
 
     private void CreateTags()
     {
-        var tags = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.Traceroute_Enabled)
+        var tags = ProfileManager.LoadedProfileFileData.Groups.SelectMany(x => x.Profiles).Where(x => x.Traceroute_Enabled)
             .SelectMany(x => x.TagsCollection).Distinct().ToList();
 
         var tagSet = new HashSet<string>(tags);
@@ -513,7 +513,7 @@ public class TracerouteHostViewModel : ViewModelBase, IProfileManager
     {
         Profiles = new CollectionViewSource
         {
-            Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.Traceroute_Enabled && (
+            Source = ProfileManager.LoadedProfileFileData.Groups.SelectMany(x => x.Profiles).Where(x => x.Traceroute_Enabled && (
                     string.IsNullOrEmpty(filter.Search) ||
                     x.Name.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                     x.Traceroute_Host.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) > -1) && (

@@ -1,4 +1,4 @@
-﻿using MahApps.Metro.SimpleChildWindow;
+using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
@@ -21,6 +21,8 @@ public class SettingsProfilesViewModel : ViewModelBase
     #region Variables
 
     public Action CloseAction { get; set; }
+
+    private readonly bool _isLoading;
 
     private string _location;
 
@@ -67,12 +69,49 @@ public class SettingsProfilesViewModel : ViewModelBase
         }
     }
 
+    private bool _isDailyBackupEnabled;
+
+    public bool IsDailyBackupEnabled
+    {
+        get => _isDailyBackupEnabled;
+        set
+        {
+            if (value == _isDailyBackupEnabled)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Profiles_IsDailyBackupEnabled = value;
+
+            _isDailyBackupEnabled = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private int _maximumNumberOfBackups;
+
+    public int MaximumNumberOfBackups
+    {
+        get => _maximumNumberOfBackups;
+        set
+        {
+            if (value == _maximumNumberOfBackups)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Profiles_MaximumNumberOfBackups = value;
+
+            _maximumNumberOfBackups = value;
+            OnPropertyChanged();
+        }
+    }
     #endregion
 
     #region Constructor, LoadSettings
 
     public SettingsProfilesViewModel()
     {
+        _isLoading = true;
+
         ProfileFiles = new CollectionViewSource { Source = ProfileManager.ProfileFiles }.View;
         ProfileFiles.SortDescriptions.Add(
             new SortDescription(nameof(ProfileFileInfo.Name), ListSortDirection.Ascending));
@@ -80,11 +119,15 @@ public class SettingsProfilesViewModel : ViewModelBase
         SelectedProfileFile = ProfileFiles.Cast<ProfileFileInfo>().FirstOrDefault();
 
         LoadSettings();
+
+        _isLoading = false;
     }
 
     private void LoadSettings()
     {
         Location = ProfileManager.GetProfilesFolderLocation();
+        IsDailyBackupEnabled = SettingsManager.Current.Profiles_IsDailyBackupEnabled;
+        MaximumNumberOfBackups = SettingsManager.Current.Profiles_MaximumNumberOfBackups;
     }
 
     #endregion

@@ -35,7 +35,7 @@ public static class TimestampHelper
         if (fileName.Length < 16)
             return false;
 
-        var timestampString = fileName.Substring(0, 14);
+        var timestampString = fileName[..14];
 
         return DateTime.TryParseExact(timestampString, "yyyyMMddHHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
     }

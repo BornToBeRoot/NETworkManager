@@ -1,4 +1,4 @@
-﻿using NETworkManager.Settings;
+using NETworkManager.Settings;
 
 namespace NETworkManager.ViewModels;
 
