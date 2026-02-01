@@ -4053,12 +4053,12 @@ Se selezioni 'Annulla', il file del profilo non verrà crittografato.</value>
     <value>Impossibile analizzare "{0}".</value>
   </data>
   <data name="MaximumNumberOfBackups" xml:space="preserve">
-    <value>Maximum number of backups</value>
+    <value>Numero massimo di backup</value>
   </data>
   <data name="CreateDailyBackup" xml:space="preserve">
-    <value>Create daily backup</value>
+    <value>Crea backup giornaliero</value>
   </data>
   <data name="HelpMessage_MaximumNumberOfBackups" xml:space="preserve">
-    <value>Number of backups that are retained before the oldest one is deleted.</value>
+    <value>Numero di backup conservati prima che quello più vecchio venga eliminato.</value>
   </data>
 </root>
