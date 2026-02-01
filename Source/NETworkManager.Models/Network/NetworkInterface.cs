@@ -81,9 +81,11 @@ public sealed class NetworkInterface
                 continue;
 
             // Filter out virtual/filter adapters introduced in .NET 9/10
-            // Check if the adapter name contains any filtered pattern
+            // Check if the adapter name or description contains any filtered pattern
             // See: https://github.com/dotnet/runtime/issues/122751
-            if (NetworkInterfaceFilteredPatterns.Any(pattern => networkInterface.Name.Contains(pattern)))
+            if (NetworkInterfaceFilteredPatterns.Any(pattern => 
+                networkInterface.Name.Contains(pattern) || 
+                networkInterface.Description.Contains(pattern)))
                 continue;
 
             var listIPv4Address = new List<Tuple<IPAddress, IPAddress>>();
