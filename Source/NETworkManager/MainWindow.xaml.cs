@@ -561,7 +561,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         NetworkChange.NetworkAddressChanged += (_, _) => OnNetworkHasChanged();
 
         // Search for updates... 
-        if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
+        if (SettingsManager.ShouldCheckForUpdatesAtStartup)
             CheckForUpdates();
     }
 

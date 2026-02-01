@@ -57,6 +57,25 @@ public static class SettingsManager
     public static bool HotKeysChanged { get; set; }
 
     /// <summary>
+    ///     Gets whether update check should be performed at startup.
+    ///     This respects the system-wide configuration (config.json) which takes precedence over user settings.
+    /// </summary>
+    public static bool ShouldCheckForUpdatesAtStartup
+    {
+        get
+        {
+            // System-wide config takes precedence - if it explicitly disables updates, honor it
+            if (ConfigManager.Current?.Update_DisableUpdateCheck == true)
+            {
+                return false;
+            }
+
+            // Otherwise, use the user's setting
+            return Current.Update_CheckForUpdatesAtStartup;
+        }
+    }
+
+    /// <summary>
     ///     JSON serializer options for consistent serialization/deserialization.
     /// </summary>
     private static readonly JsonSerializerOptions JsonOptions = new()
@@ -152,6 +171,9 @@ public static class SettingsManager
     /// </summary>
     public static void Load()
     {
+        // Load system-wide configuration first (from app directory)
+        ConfigManager.Load();
+
         var filePath = GetSettingsFilePath();
         var legacyFilePath = GetLegacySettingsFilePath();
 
