@@ -3952,12 +3952,12 @@ Se clicar em Cancelar, o arquivo de perfil permanecerá descriptografado.</value
     <value>Não foi possível analisar "{0}"</value>
   </data>
   <data name="MaximumNumberOfBackups" xml:space="preserve">
-    <value>Maximum number of backups</value>
+    <value>Número máximo de backups</value>
   </data>
   <data name="CreateDailyBackup" xml:space="preserve">
-    <value>Create daily backup</value>
+    <value>Criar backup diário</value>
   </data>
   <data name="HelpMessage_MaximumNumberOfBackups" xml:space="preserve">
-    <value>Number of backups that are retained before the oldest one is deleted.</value>
+    <value>Número de backups que são mantidos antes que o mais antigo seja excluído.</value>
   </data>
 </root>
