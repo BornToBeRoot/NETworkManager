@@ -51,7 +51,6 @@
         </StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Reset}" />
         <Button Content="{x:Static localization:Strings.Reset}" Command="{Binding ResetSettingsCommand}"
-                Style="{StaticResource DefaultButton}" HorizontalAlignment="Left" 
-                />
+                Style="{StaticResource DefaultButton}" HorizontalAlignment="Left" />
     </StackPanel>
 </UserControl>
