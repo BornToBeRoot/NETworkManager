@@ -3931,33 +3931,33 @@ Windows の「設定」&gt;「プライバシーとセキュリティ」&gt;「�
     <value>管理者 (コンソール) セッション</value>
   </data>
   <data name="DeleteProfileFileXMessage" xml:space="preserve">
-    <value>Profile file "{0}" will be deleted permanently.</value>
+    <value>プロファイルファイル "{0}" は完全に削除されます。</value>
   </data>
   <data name="EnableEncryptionQuestion" xml:space="preserve">
-    <value>Enable encryption?</value>
+    <value>暗号化を有効にしますか?</value>
   </data>
   <data name="EnableEncryptionForProfileFileMessage" xml:space="preserve">
-    <value>Do you want to enable profile file encryption to protect sensitive data such as hosts, IP addresses, URLs, and stored credentials?
+    <value>hosts、IPアドレス、URL、保存された認証情報などの機密データを保護するために、プロファイルファイルの暗号化を有効にしますか?
 
-You can enable or disable encryption later at any time by right-clicking the profile file to manage encryption settings.
-If you click Cancel, the profile file will remain unencrypted.</value>
+プロファイルファイルを右クリックして暗号化設定を管理することで、いつでも暗号化を有効または無効にすることができます。
+「キャンセル」をクリックすると、プロファイルファイルは暗号化されません。</value>
   </data>
   <data name="ToolTip_RestartRequired" xml:space="preserve">
-    <value>A restart is required to apply changes such as language settings.</value>
+    <value>言語設定などの変更を適用するには再起動が必要です。</value>
   </data>
   <data name="CouldNotParseOrResolveDNSServers" xml:space="preserve">
-    <value>Could not parse or resolve any of the specified DNS servers.</value>
+    <value>指定された DNS サーバーを解析または解決できませんでした。</value>
   </data>
   <data name="CouldNotParseX" xml:space="preserve">
-    <value>Could not parse "{0}".</value>
+    <value>"{0}" を解析できませんでした。</value>
   </data>
   <data name="MaximumNumberOfBackups" xml:space="preserve">
-    <value>Maximum number of backups</value>
+    <value>バックアップの最大数</value>
   </data>
   <data name="CreateDailyBackup" xml:space="preserve">
-    <value>Create daily backup</value>
+    <value>毎日バックアップを作成する</value>
   </data>
   <data name="HelpMessage_MaximumNumberOfBackups" xml:space="preserve">
-    <value>Number of backups that are retained before the oldest one is deleted.</value>
+    <value>最も古いものが削除されるまで保持されるバックアップの数。</value>
   </data>
 </root>
