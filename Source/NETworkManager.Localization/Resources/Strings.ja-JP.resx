@@ -679,7 +679,7 @@
     <value>適用</value>
   </data>
   <data name="ApplyWindowsKeyCombinationsLikeAltTab" xml:space="preserve">
-    <value>Apply Windows key combinations (e.g., ALT+TAB):</value>
+    <value>Windows のキー割り当てを適用 (例: ALT+TAB) :</value>
   </data>
   <data name="Auth" xml:space="preserve">
     <value>認証</value>
@@ -1367,16 +1367,16 @@
     <value>有効な IPv4 アドレスを入力してください!</value>
   </data>
   <data name="EnterValidMACAddress" xml:space="preserve">
-    <value>Enter a valid MAC address (e.g., 00:F1:23:AB:F2:35)!</value>
+    <value>有効な MACアドレスを入力してください (例: 00:F1:23:AB:F2:35)!</value>
   </data>
   <data name="EnterValidPort" xml:space="preserve">
     <value>有効なポートを入力してください (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnetmask" xml:space="preserve">
-    <value>Enter a valid subnetmask (e.g., 255.255.255.0)!</value>
+    <value>有効なサブネットマスクを入力してください (例: 255.255.255.0)!</value>
   </data>
   <data name="EnterValidSubnetmaskOrCIDR" xml:space="preserve">
-    <value>Enter a valid subnetmask or CIDR (e.g., 255.255.255.0 or /24)!</value>
+    <value>有効なサブネットマスクまたは CIDR を入力してください (例: 255.255.255.0 または /24)!</value>
   </data>
   <data name="FieldCannotBeEmpty" xml:space="preserve">
     <value>フィールドを空にすることはできません!</value>
@@ -1448,10 +1448,10 @@
     <value>有効なポートまたはポート範囲を入力してください (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnet" xml:space="preserve">
-    <value>Enter a valid subnet (e.g., 192.168.178.133/26)!</value>
+    <value>有効なサブネットを入力してください (例: 192.168.178.133/26)!</value>
   </data>
   <data name="EnterValidWebsiteUri" xml:space="preserve">
-    <value>Enter a valid website (e.g., https://example.com/index.html)</value>
+    <value>有効なウェブサイトを入力してください (例: https://example.com/index.html)</value>
   </data>
   <data name="Green" xml:space="preserve">
     <value>緑</value>
@@ -1742,7 +1742,7 @@
     <value>whois を照会するためのタブを追加...</value>
   </data>
   <data name="EnterValidDomain" xml:space="preserve">
-    <value>Enter a valid domain (e.g., "example.com")!</value>
+    <value>有効なドメインを入力してください (例: "example.com")!</value>
   </data>
   <data name="WhoisServerNotFoundForTheDomain" xml:space="preserve">
     <value>ドメインのWhoisサーバーが見つかりません : "{0}"</value>
@@ -1929,9 +1929,9 @@
     <value>パブリックIPアドレスの確認</value>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
-    <value>Thank you for using NETworkManager!
+    <value>NETworkManager をご利用いただきありがとうございます！
 
-If you enjoy it, please consider supporting its development — whether by leaving a star on GitHub, making a donation, or simply sharing it with others. Your support helps keep the project going and growing.</value>
+もし気に入っていただけましたら、GitHub でスターを付けたり、寄付をしたり、あるいは他の人と共有したりして、開発へのご支援をお願いいたします。皆様のご支援は、プロジェクトの継続と成長につながります。</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>プログラムを起動すると、バックグラウンドで GitHub 上に新しいバージョンがあるかどうかがチェックされます。
@@ -2032,7 +2032,7 @@ URL: https://api.ipify.org and https://api6.ipify.org</value>
     <value>カスタム IPv4 アドレス API を使用する</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv4AddressAPI" xml:space="preserve">
-    <value>URL to a web service that can be reached via http or https and returns an IPv4 address e.g., "xx.xx.xx.xx" as response.</value>
+    <value>http または https経由でアクセスでき、応答として IPv4アドレス 例: "xx.xx.xx.xx" を返す Webサービスの URL。</value>
   </data>
   <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
     <value>"{0}" からパブリック IP アドレスを解析できませんでした! 別のサービスを試すか、デフォルトを使用してください... </value>
