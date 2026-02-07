@@ -26,6 +26,11 @@ public class SettingsUpdateViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    ///     Gets whether the "Check for updates at startup" setting is managed by system-wide policy.
+    /// </summary>
+    public bool IsUpdateCheckManagedByPolicy => PolicyManager.Current?.Update_DisableUpdateCheck.HasValue == true;
+
     private bool _checkForPreReleases;
 
     public bool CheckForPreReleases
