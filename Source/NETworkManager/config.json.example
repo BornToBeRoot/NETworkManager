@@ -1,3 +1,14 @@
 {
   "Update_DisableUpdateCheck": true
 }
+
+NOTE: This is an example configuration file for system-wide policies.
+To use it:
+1. Rename this file from config.json.example to config.json
+2. Adjust the settings as needed
+3. Place it in the same directory as NETworkManager.exe
+4. Restart NETworkManager
+
+Setting "Update_DisableUpdateCheck" to true will disable the automatic update check
+at startup for all users on this machine. Users will see a message in the settings
+that this option is managed by the administrator.
