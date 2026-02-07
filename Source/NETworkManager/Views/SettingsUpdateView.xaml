@@ -30,7 +30,7 @@
                 </Rectangle.Resources>
             </Rectangle>
         </StackPanel>
-        <TextBlock Text="This setting is managed by your administrator."
+        <TextBlock Text="{x:Static localization:Strings.SettingManagedByAdministrator}"
                    Foreground="Orange"
                    Margin="0,0,0,10"
                    Visibility="{Binding IsUpdateCheckManagedByPolicy, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
