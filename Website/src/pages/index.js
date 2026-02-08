@@ -5,6 +5,7 @@ import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
 import HomepageFeatures from "@site/src/components/HomepageFeatures";
 import ImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/image-gallery.css";
 
 import ImageGalleryDashboard from "@site/docs/img/dashboard.png";
 import ImageGalleryNetworkInterfaceInformation from "@site/docs/img/network-interface--information.png";
