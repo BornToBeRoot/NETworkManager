@@ -46,7 +46,6 @@
     </PropertyGroup>
     <ItemGroup>
         <None Remove="log4net.config" />
-        <None Remove="config.json.example" />
         <None Remove="NETworkManager.ico" />
         <None Remove="SplashScreen.png" />
         <None Include="..\.editorconfig" Link=".editorconfig" />
@@ -56,9 +55,6 @@
     </ItemGroup>
     <ItemGroup>
         <Content Include="log4net.config">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Include="config.json.example">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
