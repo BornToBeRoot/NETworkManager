@@ -228,7 +228,7 @@ public static class SettingsManager
     ///     Method to save the currently loaded settings (to a file).
     /// </summary>
     public static void Save()
-    {        
+    {
         // Create the directory if it does not exist
         Directory.CreateDirectory(GetSettingsFolderLocation());
 
@@ -282,7 +282,7 @@ public static class SettingsManager
         // Create backup if needed
         var currentDate = DateTime.Now.Date;
         var lastBackupDate = Current.LastBackup.Date;
-                
+
         if (lastBackupDate < currentDate)
         {
             Log.Info("Creating daily backup of settings...");

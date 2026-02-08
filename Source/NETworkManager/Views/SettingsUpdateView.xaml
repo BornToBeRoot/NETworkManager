@@ -6,13 +6,20 @@
              xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsUpdateViewModel}">
+    <UserControl.Resources>
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+    </UserControl.Resources>
     <StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}"
                    Text="{x:Static localization:Strings.Update}" />
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
             <mah:ToggleSwitch Header="{x:Static localization:Strings.CheckForUpdatesAtStartup}"
-                              IsOn="{Binding CheckForUpdatesAtStartup}" />
+                              IsOn="{Binding CheckForUpdatesAtStartup}"
+                              IsEnabled="{Binding IsUpdateCheckManagedByPolicy, Converter={StaticResource BooleanReverseConverter}}" />
             <Rectangle Width="24" Height="24"
                        VerticalAlignment="Top"
                        ToolTip="{x:Static localization:Strings.HelpMessage_CheckForUpdatesAtStartup}"
@@ -23,6 +30,17 @@
                            BasedOn="{StaticResource HelpToolTip}" />
                 </Rectangle.Resources>
             </Rectangle>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10"
+                    Visibility="{Binding IsUpdateCheckManagedByPolicy, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+            <Rectangle Width="24" Height="24" Fill="{DynamicResource MahApps.Brushes.Accent}" VerticalAlignment="Center" Margin="0,0,5,0">
+                <Rectangle.OpacityMask>
+                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ShieldLock}" />
+                </Rectangle.OpacityMask>
+            </Rectangle>
+            <TextBlock Text="{x:Static localization:Strings.SettingManagedByAdministrator}"                       
+                       Style="{StaticResource AccentTextBlock}"
+                       VerticalAlignment="Center" />
         </StackPanel>
         <mah:ToggleSwitch Header="{x:Static localization:Strings.CheckForPreReleases}"
                           IsOn="{Binding CheckForPreReleases}"

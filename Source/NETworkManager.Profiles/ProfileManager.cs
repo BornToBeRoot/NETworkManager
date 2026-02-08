@@ -731,7 +731,7 @@ public static class ProfileManager
 
         if (loadedProfileUpdated)
             LoadedProfileFileChanged(LoadedProfileFile, true);
-        
+
         // Notify subscribers that profiles have been loaded/updated
         ProfilesUpdated(false);
     }
@@ -994,7 +994,7 @@ public static class ProfileManager
 
         ProfilesUpdated(profilesChanged);
     }
-    
+
     /// <summary>
     ///     Method to add a <see cref="GroupInfo" /> to the loaded profile data.
     /// </summary>
@@ -1022,7 +1022,7 @@ public static class ProfileManager
 
 
         var group = LoadedProfileFileData.Groups.FirstOrDefault(x => x.Name.Equals(name));
-        
+
         if (group == null)
             throw new InvalidOperationException($"Group '{name}' not found.");
 
@@ -1089,12 +1089,12 @@ public static class ProfileManager
     public static bool IsGroupEmpty(string name)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(name);
-        
+
         var group = LoadedProfileFileData.Groups.FirstOrDefault(x => x.Name == name);
-        
+
         if (group == null)
             throw new InvalidOperationException($"Group '{name}' not found.");
-        
+
         return group.Profiles.Count == 0;
     }
 
@@ -1118,7 +1118,7 @@ public static class ProfileManager
             AddGroup(new GroupInfo(profile.Group));
 
         var group = LoadedProfileFileData.Groups.FirstOrDefault(x => x.Name.Equals(profile.Group));
-        
+
         if (group == null)
             throw new InvalidOperationException($"Group '{profile.Group}' not found for profile after creation attempt.");
 
@@ -1144,7 +1144,7 @@ public static class ProfileManager
 
         // Remove from old group
         var oldGroup = LoadedProfileFileData.Groups.FirstOrDefault(x => x.Name.Equals(oldProfile.Group));
-        
+
         if (oldGroup == null)
             throw new InvalidOperationException($"Group '{oldProfile.Group}' not found for old profile.");
 
@@ -1155,7 +1155,7 @@ public static class ProfileManager
             AddGroup(new GroupInfo(newProfile.Group));
 
         var newGroup = LoadedProfileFileData.Groups.FirstOrDefault(x => x.Name.Equals(newProfile.Group));
-        
+
         if (newGroup == null)
             throw new InvalidOperationException($"Group '{newProfile.Group}' not found for new profile after creation attempt.");
 
@@ -1177,7 +1177,7 @@ public static class ProfileManager
         ArgumentException.ThrowIfNullOrWhiteSpace(profile.Group, nameof(profile));
 
         var group = LoadedProfileFileData.Groups.FirstOrDefault(x => x.Name.Equals(profile.Group));
-        
+
         if (group == null)
             throw new InvalidOperationException($"Group '{profile.Group}' not found.");
 
@@ -1205,7 +1205,7 @@ public static class ProfileManager
             }
 
             var group = LoadedProfileFileData.Groups.FirstOrDefault(x => x.Name.Equals(profile.Group));
-            
+
             if (group == null)
             {
                 Log.Warn($"RemoveProfiles: Group '{profile.Group}' not found for profile '{profile.Name ?? "<unnamed>"}'.");

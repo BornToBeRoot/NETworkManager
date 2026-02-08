@@ -45,6 +45,7 @@ Release date: **xx.xx.2025**
 
 - New language Ukrainian (`uk-UA`) has been added. Thanks to [@vadickkt](https://github.com/vadickkt) [#3240](https://github.com/BornToBeRoot/NETworkManager/pull/3240)
 - Migrated all dialogs to child windows for improved usability and accessibility. [#3271](https://github.com/BornToBeRoot/NETworkManager/pull/3271)
+- System-wide policies can now be configured via a `config.json` file in the application directory to control settings for all users. Currently supports controlling the "Check for updates at startup" setting. This is useful for enterprise deployments where administrators need centralized control over update behavior. See [System-Wide Policies](../system-wide-policies.md) documentation for more information. [#3313](https://github.com/BornToBeRoot/NETworkManager/pull/3313)
 
 **DNS Lookup**
 
