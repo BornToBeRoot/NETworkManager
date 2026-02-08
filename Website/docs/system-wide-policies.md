@@ -40,9 +40,11 @@ The `config.json` file uses a simple JSON structure to define policy values. An 
 }
 ```
 
+Property names generally follow the pattern `Section_SettingName` (see each setting's documentation). Ensure values use the correct JSON type (boolean, string, number, etc.).
+
 :::note
 
-- The file must be named exactly `config.json` (case-sensitive)
+- The file must be named exactly `config.json`
 - The file must contain valid JSON syntax
 - Changes to the file require restarting the application to take effect
 - If the file doesn't exist or contains invalid JSON, it will be ignored and user settings will apply
@@ -64,15 +66,16 @@ For enterprise deployments:
    - For portable installations, place it next to the executable
 
 3. **Deploy methods**:
-   - Group Policy (copy file to installation directory)
-   - Configuration management tools (SCCM, Intune, etc.)
-   - Scripts/Deployment tools (PowerShell, PSAppDeployToolkit, etc.)   
+   - Group Policy — copy the `config.json` file to the installation directory (use Group Policy preferences or a startup script)
+   - Configuration management tools — SCCM/ConfigMgr, Microsoft Intune, Ansible, etc.
+   - Scripts and deployment toolkits — PowerShell scripts, PSAppDeployToolkit (recommended for scripted MSI/App deployments)
+   - Manual deployment — hand-copy for small-scale rollouts
 
 4. **Verification**:
    - Launch the application
-   - Navigate to a setting that is controlled by the policy (e.g., "Check for updates at startup")
-   - Verify the shield icon and administrator message appear
-   - Confirm the toggle reflects the policy value and is disabled
+   - Navigate to Settings > Update (e.g., "Check for updates at startup")
+   - Verify the shield icon and the administrator message appear and that the control is disabled
+   - Confirm the displayed value matches the policy
 
 :::warning
 
