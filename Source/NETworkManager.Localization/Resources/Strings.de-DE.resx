@@ -3960,4 +3960,7 @@ Wenn Sie auf „Abbrechen“ klicken, bleibt die Profildatei unverschlüsselt.</
   <data name="HelpMessage_MaximumNumberOfBackups" xml:space="preserve">
     <value>Anzahl der Backups, die aufbewahrt werden, bevor das älteste gelöscht wird.</value>
   </data>
+  <data name="SettingManagedByAdministrator" xml:space="preserve">
+    <value>Diese Einstellung wird von Ihrem Administrator verwaltet.</value>
+  </data>
 </root>
