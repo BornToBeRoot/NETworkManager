@@ -564,6 +564,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         if (PolicyManager.Current?.Update_CheckForUpdatesAtStartup
             ?? SettingsManager.Current.Update_CheckForUpdatesAtStartup)
             CheckForUpdates();
+        else
+            Log.Info("Skipping update check at startup because it is disabled in the settings or via policy");
     }
 
     private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)
