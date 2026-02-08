@@ -84,7 +84,7 @@ public class SettingsUpdateViewModel : ViewModelBase
     private void LoadSettings()
     {
         // If policy is set, show the policy value; otherwise show the user's setting
-        CheckForUpdatesAtStartup = PolicyManager.Current?.Update_CheckForUpdatesAtStartup 
+        CheckForUpdatesAtStartup = PolicyManager.Current?.Update_CheckForUpdatesAtStartup
                                     ?? SettingsManager.Current.Update_CheckForUpdatesAtStartup;
         CheckForPreReleases = SettingsManager.Current.Update_CheckForPreReleases;
         EnableExperimentalFeatures = SettingsManager.Current.Experimental_EnableExperimentalFeatures;

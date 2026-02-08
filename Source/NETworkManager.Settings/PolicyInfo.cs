@@ -7,7 +7,7 @@ namespace NETworkManager.Settings;
 ///     This configuration is loaded from a config.json file in the application directory.
 /// </summary>
 public class PolicyInfo
-{ 
+{
     [JsonPropertyName("Update_CheckForUpdatesAtStartup")]
     public bool? Update_CheckForUpdatesAtStartup { get; set; }
 }

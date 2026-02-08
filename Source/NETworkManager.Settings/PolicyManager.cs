@@ -68,7 +68,7 @@ public static class PolicyManager
                 Log.Info($"Loading system-wide policies from: {filePath}");
 
                 var jsonString = File.ReadAllText(filePath);
-                
+
                 // Treat empty or JSON "null" as "no policies" instead of crashing
                 if (string.IsNullOrWhiteSpace(jsonString))
                 {
@@ -78,7 +78,7 @@ public static class PolicyManager
                 else
                 {
                     Current = JsonSerializer.Deserialize<PolicyInfo>(jsonString, JsonOptions) ?? new PolicyInfo();
-                    
+
                     Log.Info("System-wide policies loaded successfully.");
 
                     // Log enabled settings

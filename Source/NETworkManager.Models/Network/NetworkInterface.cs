@@ -39,7 +39,7 @@ public sealed class NetworkInterface
         "Npcap Packet Driver (NPCAP)",
         "QoS Packet Scheduler",
         "WFP 802.3 MAC Layer LightWeight Filter",
-        "Ethernet (Kerneldebugger)",        
+        "Ethernet (Kerneldebugger)",
         "Filter Driver",
         "WAN Miniport",
         "Microsoft Wi-Fi Direct Virtual Adapter"
@@ -84,8 +84,8 @@ public sealed class NetworkInterface
             // Filter out virtual/filter adapters introduced in .NET 9/10
             // Check if the adapter name or description contains any filtered pattern
             // See: https://github.com/dotnet/runtime/issues/122751
-            if (NetworkInterfaceFilteredPatterns.Any(pattern => 
-                networkInterface.Name.Contains(pattern) || 
+            if (NetworkInterfaceFilteredPatterns.Any(pattern =>
+                networkInterface.Name.Contains(pattern) ||
                 networkInterface.Description.Contains(pattern)))
                 continue;
 

@@ -87,7 +87,7 @@ public static class GlobalStaticConfiguration
     // Settings: Settings
     public static bool Settings_IsDailyBackupEnabled => true;
     public static int Settings_MaximumNumberOfBackups => 10;
-    
+
     // Application: Dashboard
     public static string Dashboard_PublicIPv4Address => "1.1.1.1";
     public static string Dashboard_PublicIPv6Address => "2606:4700:4700::1111";

@@ -40,10 +40,10 @@ public class SettingsSettingsViewModel : ViewModelBase
         {
             if (value == _isDailyBackupEnabled)
                 return;
-     
+
             if (!_isLoading)
                 SettingsManager.Current.Settings_IsDailyBackupEnabled = value;
-            
+
             _isDailyBackupEnabled = value;
             OnPropertyChanged();
         }
