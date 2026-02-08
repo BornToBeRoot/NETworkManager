@@ -4,6 +4,9 @@
  * work well for content-centric websites.
  */
 
+/* Import react-image-gallery styles */
+@import 'react-image-gallery/styles/css/image-gallery.css';
+
 /* You can override the default Infima variables here. */
 :root {
   --ifm-color-primary: #00d4aa;

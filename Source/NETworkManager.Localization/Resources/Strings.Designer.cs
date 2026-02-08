@@ -9272,6 +9272,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die This setting is managed by your administrator. ähnelt.
+        /// </summary>
+        public static string SettingManagedByAdministrator {
+            get {
+                return ResourceManager.GetString("SettingManagedByAdministrator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Appearance ähnelt.
         /// </summary>
         public static string SettingsName_Appearance {

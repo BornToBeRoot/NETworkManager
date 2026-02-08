@@ -152,6 +152,9 @@ public static class SettingsManager
     /// </summary>
     public static void Load()
     {
+        // Load system-wide policies first (from app directory)
+        PolicyManager.Load();
+
         var filePath = GetSettingsFilePath();
         var legacyFilePath = GetLegacySettingsFilePath();
 
