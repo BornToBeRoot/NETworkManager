@@ -14,7 +14,22 @@ Check for new program versions on GitHub when the application is launched.
 
 :::info System-Wide Policy
 
-This setting can be controlled by administrators using a system-wide policy. See [System-Wide Policies](../system-wide-policies.md) for more information on how to configure the `Update_CheckForUpdatesAtStartup` policy.
+This setting can be controlled by administrators using a system-wide policy. See [System-Wide Policies](../system-wide-policies.md) for more information.
+
+**Policy Property:** `Update_CheckForUpdatesAtStartup`
+
+**Values:**
+- `true` - Force enable automatic update checks at startup for all users
+- `false` - Force disable automatic update checks at startup for all users
+- Omit the property - Allow users to control this setting themselves
+
+**Example:**
+
+```json
+{
+  "Update_CheckForUpdatesAtStartup": false
+}
+```
 
 :::
 

@@ -49,21 +49,6 @@ The `config.json` file uses a simple JSON structure to define policy values. An 
 
 :::
 
-## Available Policies
-
-### Update_CheckForUpdatesAtStartup
-
-Controls whether the application checks for updates at startup for all users.
-
-**Type:** `Boolean` (true/false)
-
-**Default:** Not set (users control this setting)
-
-**Values:**
-- `true` - Force enable automatic update checks at startup for all users
-- `false` - Force disable automatic update checks at startup for all users
-- Omit the property - Allow users to control this setting themselves
-
 ## Deployment
 
 For enterprise deployments:
@@ -105,7 +90,7 @@ Ensure the `config.json` file has appropriate permissions so that regular users 
 - Check the application logs for any error messages related to policy loading
 
 **Policy values not showing in UI:**
-- Ensure the property name matches exactly: `Update_CheckForUpdatesAtStartup`
+- Ensure the property name matches exactly (see the corresponding setting's documentation for the property name)
 - Verify the value is a boolean (`true` or `false`), not a string (`"true"` or `"false"`)
 - Check that there are no syntax errors in the JSON file
 
