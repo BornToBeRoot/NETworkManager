@@ -86,6 +86,9 @@ public partial class App
         {
             Log.Info("Application settings are being loaded...");
 
+            // Load system-wide policies first (from app directory)
+            PolicyManager.Load();
+
             if (CommandLineManager.Current.ResetSettings)
                 SettingsManager.Initialize();
             else
