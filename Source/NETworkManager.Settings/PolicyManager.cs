@@ -66,17 +66,14 @@ public static class PolicyManager
             try
             {
                 Log.Info($"Loading system-wide policies from: {filePath}");
-                
+
                 var jsonString = File.ReadAllText(filePath);
                 Current = JsonSerializer.Deserialize<PolicyInfo>(jsonString, JsonOptions);
-                
+
                 Log.Info("System-wide policies loaded successfully.");
-                
+
                 // Log enabled settings
-                if (Current.Update_CheckForUpdatesAtStartup.HasValue)
-                {
-                    Log.Info($"System-wide policy - Update_CheckForUpdatesAtStartup: {Current.Update_CheckForUpdatesAtStartup.Value}");
-                }
+                Log.Info($"System-wide policy - Update_CheckForUpdatesAtStartup: {Current.Update_CheckForUpdatesAtStartup?.ToString() ?? "Not set"}");
             }
             catch (Exception ex)
             {

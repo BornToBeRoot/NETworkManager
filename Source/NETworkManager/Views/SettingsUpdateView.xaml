@@ -33,13 +33,13 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10"
                     Visibility="{Binding IsUpdateCheckManagedByPolicy, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-            <Rectangle Width="16" Height="16" Fill="Orange" VerticalAlignment="Center" Margin="0,0,5,0">
+            <Rectangle Width="24" Height="24" Fill="{DynamicResource MahApps.Brushes.Accent}" VerticalAlignment="Center" Margin="0,0,5,0">
                 <Rectangle.OpacityMask>
                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ShieldLock}" />
                 </Rectangle.OpacityMask>
             </Rectangle>
-            <TextBlock Text="{x:Static localization:Strings.SettingManagedByAdministrator}"
-                       Foreground="Orange"
+            <TextBlock Text="{x:Static localization:Strings.SettingManagedByAdministrator}"                       
+                       Style="{StaticResource AccentTextBlock}"
                        VerticalAlignment="Center" />
         </StackPanel>
         <mah:ToggleSwitch Header="{x:Static localization:Strings.CheckForPreReleases}"
