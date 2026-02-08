@@ -64,10 +64,10 @@ public static class SettingsManager
     {
         get
         {
-            // System-wide policy takes precedence - if it explicitly disables updates, honor it
-            if (PolicyManager.Current?.Update_DisableUpdateCheck == true)
+            // System-wide policy takes precedence - if set, use the policy value
+            if (PolicyManager.Current?.Update_CheckForUpdatesAtStartup.HasValue == true)
             {
-                return false;
+                return PolicyManager.Current.Update_CheckForUpdatesAtStartup.Value;
             }
 
             // Otherwise, use the user's setting

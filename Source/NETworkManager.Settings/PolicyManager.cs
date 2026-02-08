@@ -73,9 +73,9 @@ public static class PolicyManager
                 Log.Info("System-wide policies loaded successfully.");
                 
                 // Log enabled settings
-                if (Current.Update_DisableUpdateCheck.HasValue)
+                if (Current.Update_CheckForUpdatesAtStartup.HasValue)
                 {
-                    Log.Info($"System-wide policy - Update_DisableUpdateCheck: {Current.Update_DisableUpdateCheck.Value}");
+                    Log.Info($"System-wide policy - Update_CheckForUpdatesAtStartup: {Current.Update_CheckForUpdatesAtStartup.Value}");
                 }
             }
             catch (Exception ex)

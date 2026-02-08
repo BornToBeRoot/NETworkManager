@@ -9,9 +9,10 @@ namespace NETworkManager.Settings;
 public class PolicyInfo
 {
     /// <summary>
-    ///     Disable update check for all users. When set to true, the application will not check for updates at startup.
-    ///     This overrides the user's "Update_CheckForUpdatesAtStartup" setting.
+    ///     Controls the "Check for updates at startup" setting for all users.
+    ///     When set, this value overrides the user's "Update_CheckForUpdatesAtStartup" setting.
+    ///     Set to true to enable update checks, false to disable them.
     /// </summary>
-    [JsonPropertyName("Update_DisableUpdateCheck")]
-    public bool? Update_DisableUpdateCheck { get; set; }
+    [JsonPropertyName("Update_CheckForUpdatesAtStartup")]
+    public bool? Update_CheckForUpdatesAtStartup { get; set; }
 }
