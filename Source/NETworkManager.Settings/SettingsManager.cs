@@ -57,25 +57,6 @@ public static class SettingsManager
     public static bool HotKeysChanged { get; set; }
 
     /// <summary>
-    ///     Gets whether update check should be performed at startup.
-    ///     This respects the system-wide policies (config.json) which take precedence over user settings.
-    /// </summary>
-    public static bool ShouldCheckForUpdatesAtStartup
-    {
-        get
-        {
-            // System-wide policy takes precedence - if set, use the policy value
-            if (PolicyManager.Current?.Update_CheckForUpdatesAtStartup.HasValue == true)
-            {
-                return PolicyManager.Current.Update_CheckForUpdatesAtStartup.Value;
-            }
-
-            // Otherwise, use the user's setting
-            return Current.Update_CheckForUpdatesAtStartup;
-        }
-    }
-
-    /// <summary>
     ///     JSON serializer options for consistent serialization/deserialization.
     /// </summary>
     private static readonly JsonSerializerOptions JsonOptions = new()
