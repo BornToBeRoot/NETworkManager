@@ -12,6 +12,12 @@ Check for new program versions on GitHub when the application is launched.
 
 **Default:** `Enabled`
 
+:::info System-Wide Policy
+
+This setting can be controlled by administrators using a system-wide policy. See [System-Wide Policies](../system-wide-policies.md) for more information on how to configure the `Update_CheckForUpdatesAtStartup` policy.
+
+:::
+
 :::note
 
 The URL `https://api.github.com/` must be reachable to check for updates.
