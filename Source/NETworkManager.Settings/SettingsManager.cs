@@ -139,6 +139,9 @@ public static class SettingsManager
     /// </summary>
     public static void Initialize()
     {
+        // Load system-wide policies first (from app directory)
+        PolicyManager.Load();
+
         Current = new SettingsInfo
         {
             Version = AssemblyManager.Current.Version.ToString()
