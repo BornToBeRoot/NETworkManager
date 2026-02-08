@@ -3957,4 +3957,7 @@ Windows 설정 &gt; 개인정보 보호 및 보안 &gt; 위치를 열고 데스�
   <data name="HelpMessage_MaximumNumberOfBackups" xml:space="preserve">
     <value>Number of backups that are retained before the oldest one is deleted.</value>
   </data>
+  <data name="SettingManagedByAdministrator" xml:space="preserve">
+    <value>This setting is managed by your administrator.</value>
+  </data>
 </root>
