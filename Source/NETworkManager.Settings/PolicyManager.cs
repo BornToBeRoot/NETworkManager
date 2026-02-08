@@ -68,12 +68,22 @@ public static class PolicyManager
                 Log.Info($"Loading system-wide policies from: {filePath}");
 
                 var jsonString = File.ReadAllText(filePath);
-                Current = JsonSerializer.Deserialize<PolicyInfo>(jsonString, JsonOptions);
+                
+                // Treat empty or JSON "null" as "no policies" instead of crashing
+                if (string.IsNullOrWhiteSpace(jsonString))
+                {
+                    Current = new PolicyInfo();
+                    Log.Info("Config file is empty, no system-wide policies loaded.");
+                }
+                else
+                {
+                    Current = JsonSerializer.Deserialize<PolicyInfo>(jsonString, JsonOptions) ?? new PolicyInfo();
+                    
+                    Log.Info("System-wide policies loaded successfully.");
 
-                Log.Info("System-wide policies loaded successfully.");
-
-                // Log enabled settings
-                Log.Info($"System-wide policy - Update_CheckForUpdatesAtStartup: {Current.Update_CheckForUpdatesAtStartup?.ToString() ?? "Not set"}");
+                    // Log enabled settings
+                    Log.Info($"System-wide policy - Update_CheckForUpdatesAtStartup: {Current.Update_CheckForUpdatesAtStartup?.ToString() ?? "Not set"}");
+                }
             }
             catch (Exception ex)
             {
