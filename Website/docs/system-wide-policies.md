@@ -41,8 +41,6 @@ The `config.json` file uses a simple JSON structure to define policy values. An 
 }
 ```
 
-For a complete list of available policies, see the [Available Policies](#available-policies) section below.
-
 Property names generally follow the pattern `Section_SettingName` (see each setting's documentation). Ensure values use the correct JSON type (boolean, string, number, etc.).
 
 :::note
