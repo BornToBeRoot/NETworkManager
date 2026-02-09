@@ -34,7 +34,7 @@ Policies are defined in a simple `config.json` file placed in the same directory
 }
 ```
 
-A `config.json.example` file is included in the application directory for reference. Simply rename it to `config.json` and set your desired policy values. Property names follow the pattern `Section_SettingName` — see the [settings documentation](https://borntoberoot.net/NETworkManager/docs/category/settings) for available policy names.
+A `config.json.example` file is included in the application directory for reference. Simply rename it to `config.json` and set your desired policy values. See the [system-wide policies documentation](https://borntoberoot.net/NETworkManager/docs/system-wide-policies) for more details on the configuration file format and deployment.
 
 :::note
 
