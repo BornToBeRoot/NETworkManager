@@ -31,6 +31,11 @@ public class SettingsSettingsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    ///     Gets whether the settings folder location is managed by system-wide policy.
+    /// </summary>
+    public bool IsLocationManagedByPolicy => !string.IsNullOrWhiteSpace(PolicyManager.Current?.SettingsFolderLocation);
+
     private bool _isDailyBackupEnabled;
 
     public bool IsDailyBackupEnabled

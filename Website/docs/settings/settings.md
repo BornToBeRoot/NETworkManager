@@ -17,9 +17,25 @@ Folder where the application settings are stored.
 | Setup / Archiv | `%UserProfile%\Documents\NETworkManager\Settings` |
 | Portable       | `<APP_FOLDER>\Settings`                           |
 
-**Policy Override**: `SettingsFolderLocation`
+:::info System-Wide Policy
 
-This setting can be overridden by a [system-wide policy](../system-wide-policies.md). When a policy is configured, it takes precedence over the default location, allowing administrators to specify a custom settings folder path for all users.
+This setting can be controlled by administrators using a system-wide policy. See [System-Wide Policies](../system-wide-policies.md) for more information.
+
+**Policy Property:** `SettingsFolderLocation`
+
+**Values:**
+- Absolute path (e.g., `C:\\CustomPath\\NETworkManager\\Settings`) - Force a custom settings folder location for all users
+- Omit the property - Allow the default location logic to apply (portable vs. non-portable)
+
+**Example:**
+
+```json
+{
+  "SettingsFolderLocation": "C:\\CustomPath\\NETworkManager\\Settings"
+}
+```
+
+:::
 
 :::note
 

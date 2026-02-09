@@ -7,12 +7,27 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+             xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              mc:Ignorable="d" Loaded="UserControl_Loaded"
              d:DataContext="{d:DesignInstance viewModels:SettingsSettingsViewModel}">
+    <UserControl.Resources>
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+    </UserControl.Resources>
     <StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Location}" />
         <TextBox x:Name="TextBoxLocation" Text="{Binding Location}" Style="{StaticResource ReadOnlyTextBox}"
                  IsEnabled="False" Margin="0,0,0,10" />
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10"
+                    Visibility="{Binding IsLocationManagedByPolicy, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+            <Rectangle Width="24" Height="24" Fill="{DynamicResource MahApps.Brushes.Accent}" VerticalAlignment="Center" Margin="0,0,5,0">
+                <Rectangle.OpacityMask>
+                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ShieldLock}" />
+                </Rectangle.OpacityMask>
+            </Rectangle>
+            <TextBlock Text="{x:Static localization:Strings.SettingManagedByAdministrator}"                       
+                       Style="{StaticResource AccentTextBlock}"
+                       VerticalAlignment="Center" />
+        </StackPanel>
         <Button Command="{Binding OpenLocationCommand}" Style="{StaticResource ImageWithTextButton}"
                 HorizontalAlignment="Right" Margin="0,0,0,20">
             <Button.Content>

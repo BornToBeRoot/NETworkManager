@@ -94,8 +94,17 @@ public static class SettingsManager
                 try
                 {
                     // This will throw ArgumentException, NotSupportedException, or SecurityException if the path is invalid
-                    _ = Path.GetFullPath(policyPath);
-                    return policyPath;
+                    var fullPath = Path.GetFullPath(policyPath);
+                    
+                    // Check if the path is a directory (not a file)
+                    if (File.Exists(fullPath))
+                    {
+                        Log.Error($"Policy-provided SettingsFolderLocation is a file, not a directory: {policyPath}. Falling back to default location.");
+                    }
+                    else
+                    {
+                        return fullPath;
+                    }
                 }
                 catch (ArgumentException ex)
                 {
