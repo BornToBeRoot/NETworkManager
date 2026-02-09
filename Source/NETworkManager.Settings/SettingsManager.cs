@@ -92,13 +92,17 @@ public static class SettingsManager
                 // Validate that the path doesn't contain invalid characters
                 try
                 {
-                    // This will throw if the path contains invalid characters
+                    // This will throw ArgumentException or NotSupportedException if the path contains invalid characters
                     _ = Path.GetFullPath(policyPath);
                     return policyPath;
                 }
-                catch (Exception ex)
+                catch (ArgumentException ex)
                 {
                     Log.Error($"Policy-provided SettingsFolderLocation contains invalid characters: {policyPath}. Falling back to default location.", ex);
+                }
+                catch (NotSupportedException ex)
+                {
+                    Log.Error($"Policy-provided SettingsFolderLocation format is not supported: {policyPath}. Falling back to default location.", ex);
                 }
             }
         }
