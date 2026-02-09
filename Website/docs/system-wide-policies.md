@@ -32,7 +32,7 @@ The `config.json` file uses a simple JSON structure to define policy values. An 
 ```
 
 
-**Example with available policies:**
+**Example:**
 
 ```json
 {
