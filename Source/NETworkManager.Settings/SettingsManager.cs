@@ -5,6 +5,7 @@ using NETworkManager.Utilities;
 using System;
 using System.IO;
 using System.Linq;
+using System.Security;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Xml.Serialization;
@@ -104,7 +105,7 @@ public static class SettingsManager
                 {
                     Log.Error($"Policy-provided SettingsFolderLocation format is not supported: {policyPath}. Falling back to default location.", ex);
                 }
-                catch (System.Security.SecurityException ex)
+                catch (SecurityException ex)
                 {
                     Log.Error($"Insufficient permissions to access policy-provided SettingsFolderLocation: {policyPath}. Falling back to default location.", ex);
                 }

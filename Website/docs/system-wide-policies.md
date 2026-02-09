@@ -139,8 +139,8 @@ See [Location](./settings/settings.md#location) for more details.
 :::warning
 
 When configuring a custom settings folder location, ensure:
-- The path **must be an absolute path** (e.g., `C:\\Path\\To\\Folder`, not `.\\RelativePath`)
-- The path uses double backslashes (`\\`) in JSON format
+- The path **must be an absolute path** (e.g., `C:\\Path\\To\\Folder` or `C:/Path/To/Folder`, not `.\\RelativePath`)
+- For Windows paths, use either double backslashes (`\\`) or forward slashes (`/`) in JSON format (both `C:\\Path\\Folder` and `C:/Path/Folder` are valid)
 - The path does not contain invalid characters for the file system
 - The application has read/write permissions to the specified directory
 - The directory exists or the application has permissions to create it
