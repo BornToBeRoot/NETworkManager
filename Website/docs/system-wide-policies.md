@@ -36,7 +36,8 @@ The `config.json` file uses a simple JSON structure to define policy values. An 
 
 ```json
 {
-  "Update_CheckForUpdatesAtStartup": false
+  "Update_CheckForUpdatesAtStartup": false,
+  "SettingsFolderLocation": "C:\\ProgramData\\NETworkManager\\Settings"
 }
 ```
 
@@ -96,6 +97,52 @@ Ensure the `config.json` file has appropriate permissions so that regular users 
 - Ensure the property name matches exactly (see the corresponding setting's documentation for the property name)
 - Verify the value is a boolean (`true` or `false`), not a string (`"true"` or `"false"`)
 - Check that there are no syntax errors in the JSON file
+
+## Available Policies
+
+### Update_CheckForUpdatesAtStartup
+
+Control whether the application checks for updates at startup.
+
+**Type**: `Boolean` (true/false)
+
+**Default**: User setting applies
+
+**Example**:
+```json
+{
+  "Update_CheckForUpdatesAtStartup": false
+}
+```
+
+See [Check for updates at startup](./settings/update.md#check-for-updates-at-startup) for more details.
+
+### SettingsFolderLocation
+
+Override the default location where application settings are stored.
+
+**Type**: `String` (absolute path)
+
+**Default**: User Documents folder or portable location
+
+**Example**:
+```json
+{
+  "SettingsFolderLocation": "C:\\ProgramData\\NETworkManager\\Settings"
+}
+```
+
+See [Location](./settings/settings.md#location) for more details.
+
+:::warning
+
+When configuring a custom settings folder location, ensure:
+- The path uses double backslashes (`\\`) in JSON format
+- The application has read/write permissions to the specified directory
+- The directory exists or the application has permissions to create it
+- All users have appropriate access to the folder if using a shared location
+
+:::
 
 ## Future Policies
 

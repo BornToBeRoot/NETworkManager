@@ -77,6 +77,11 @@ public static class SettingsManager
     /// <returns>Path to the settings folder.</returns>
     public static string GetSettingsFolderLocation()
     {
+        // Policy override takes precedence
+        if (!string.IsNullOrWhiteSpace(PolicyManager.Current?.SettingsFolderLocation))
+            return PolicyManager.Current.SettingsFolderLocation;
+
+        // Fall back to existing logic
         return ConfigurationManager.Current.IsPortable
             ? Path.Combine(AssemblyManager.Current.Location, SettingsFolderName)
             : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
