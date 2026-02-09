@@ -79,7 +79,29 @@ public static class SettingsManager
     {
         // Policy override takes precedence
         if (!string.IsNullOrWhiteSpace(PolicyManager.Current?.SettingsFolderLocation))
-            return PolicyManager.Current.SettingsFolderLocation;
+        {
+            var policyPath = PolicyManager.Current.SettingsFolderLocation;
+
+            // Validate that the policy-provided path is rooted (absolute)
+            if (!Path.IsPathRooted(policyPath))
+            {
+                Log.Error($"Policy-provided SettingsFolderLocation is not an absolute path: {policyPath}. Falling back to default location.");
+            }
+            else
+            {
+                // Validate that the path doesn't contain invalid characters
+                try
+                {
+                    // This will throw if the path contains invalid characters
+                    _ = Path.GetFullPath(policyPath);
+                    return policyPath;
+                }
+                catch (Exception ex)
+                {
+                    Log.Error($"Policy-provided SettingsFolderLocation contains invalid characters: {policyPath}. Falling back to default location.", ex);
+                }
+            }
+        }
 
         // Fall back to existing logic
         return ConfigurationManager.Current.IsPortable

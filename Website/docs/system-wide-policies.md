@@ -137,10 +137,14 @@ See [Location](./settings/settings.md#location) for more details.
 :::warning
 
 When configuring a custom settings folder location, ensure:
+- The path **must be an absolute path** (e.g., `C:\\Path\\To\\Folder`, not `.\\RelativePath`)
 - The path uses double backslashes (`\\`) in JSON format
+- The path does not contain invalid characters for the file system
 - The application has read/write permissions to the specified directory
 - The directory exists or the application has permissions to create it
 - All users have appropriate access to the folder if using a shared location
+
+If the policy-provided path is invalid (not absolute or contains invalid characters), the application will log an error and fall back to the default location.
 
 :::
 
