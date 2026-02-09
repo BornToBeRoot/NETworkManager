@@ -3961,6 +3961,6 @@ Se clicar em Cancelar, o arquivo de perfil permanecerá descriptografado.</value
     <value>Número de backups que são mantidos antes que o mais antigo seja excluído.</value>
   </data>
   <data name="SettingManagedByAdministrator" xml:space="preserve">
-    <value>This setting is managed by your administrator.</value>
+    <value>Esta configuração é gerenciada pelo seu administrador.</value>
   </data>
 </root>
