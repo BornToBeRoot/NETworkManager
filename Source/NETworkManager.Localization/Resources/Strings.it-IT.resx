@@ -4061,4 +4061,7 @@ Se selezioni 'Annulla', il file del profilo non verrà crittografato.</value>
   <data name="HelpMessage_MaximumNumberOfBackups" xml:space="preserve">
     <value>Numero di backup conservati prima che quello più vecchio venga eliminato.</value>
   </data>
+  <data name="SettingManagedByAdministrator" xml:space="preserve">
+    <value>This setting is managed by your administrator.</value>
+  </data>
 </root>

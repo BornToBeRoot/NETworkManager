@@ -3960,4 +3960,7 @@ Windows の「設定」&gt;「プライバシーとセキュリティ」&gt;「�
   <data name="HelpMessage_MaximumNumberOfBackups" xml:space="preserve">
     <value>最も古いものが削除されるまで保持されるバックアップの数。</value>
   </data>
+  <data name="SettingManagedByAdministrator" xml:space="preserve">
+    <value>This setting is managed by your administrator.</value>
+  </data>
 </root>
