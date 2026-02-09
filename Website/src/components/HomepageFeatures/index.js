@@ -47,8 +47,9 @@ const FeatureList = [
       <>
         Diagnose and resolve issues effectively with a comprehensive suite of
         tools in one place. It's enterprise-ready — includes an MSI installer for
-        centralized deployment, signed binaries, translations in 16+ languages,
-        and distribution via package managers like winget and Chocolatey.
+        centralized deployment, signed binaries, system-wide policies for
+        centralized configuration, translations in 16+ languages, and
+        distribution via package managers like winget and Chocolatey.
       </>
     ),
   },  
