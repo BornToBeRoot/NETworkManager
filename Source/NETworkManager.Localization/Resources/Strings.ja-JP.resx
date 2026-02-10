@@ -3961,6 +3961,6 @@ Windows の「設定」&gt;「プライバシーとセキュリティ」&gt;「�
     <value>最も古いものが削除されるまで保持されるバックアップの数。</value>
   </data>
   <data name="SettingManagedByAdministrator" xml:space="preserve">
-    <value>This setting is managed by your administrator.</value>
+    <value>この設定は管理者によって管理されています。</value>
   </data>
 </root>
