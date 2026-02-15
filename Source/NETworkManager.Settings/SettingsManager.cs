@@ -9,6 +9,7 @@ using System.Security;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Xml.Serialization;
+using Windows.Gaming.Input.Custom;
 
 namespace NETworkManager.Settings;
 
@@ -78,54 +79,85 @@ public static class SettingsManager
     /// <returns>Path to the settings folder.</returns>
     public static string GetSettingsFolderLocation()
     {
-        // Policy override takes precedence
+        // 1. Policy override takes precedence (for IT administrators)
         if (!string.IsNullOrWhiteSpace(PolicyManager.Current?.SettingsFolderLocation))
         {
-            var policyPath = PolicyManager.Current.SettingsFolderLocation;
+            var validatedPath = ValidateSettingsFolderPath(
+                PolicyManager.Current.SettingsFolderLocation,
+                "Policy-provided",
+                "next priority");
 
-            // Validate that the policy-provided path is rooted (absolute)
-            if (!Path.IsPathRooted(policyPath))
-            {
-                Log.Error($"Policy-provided SettingsFolderLocation is not an absolute path: {policyPath}. Falling back to default location.");
-            }
-            else
-            {
-                // Validate that the path doesn't contain invalid characters
-                try
-                {
-                    // This will throw ArgumentException, NotSupportedException, or SecurityException if the path is invalid
-                    var fullPath = Path.GetFullPath(policyPath);
-                    
-                    // Check if the path is a directory (not a file)
-                    if (File.Exists(fullPath))
-                    {
-                        Log.Error($"Policy-provided SettingsFolderLocation is a file, not a directory: {policyPath}. Falling back to default location.");
-                    }
-                    else
-                    {
-                        return fullPath;
-                    }
-                }
-                catch (ArgumentException ex)
-                {
-                    Log.Error($"Policy-provided SettingsFolderLocation contains invalid characters: {policyPath}. Falling back to default location.", ex);
-                }
-                catch (NotSupportedException ex)
-                {
-                    Log.Error($"Policy-provided SettingsFolderLocation format is not supported: {policyPath}. Falling back to default location.", ex);
-                }
-                catch (SecurityException ex)
-                {
-                    Log.Error($"Insufficient permissions to access policy-provided SettingsFolderLocation: {policyPath}. Falling back to default location.", ex);
-                }
-            }
+            if (validatedPath != null)
+                return validatedPath;
         }
 
-        // Fall back to existing logic
-        return ConfigurationManager.Current.IsPortable
-            ? Path.Combine(AssemblyManager.Current.Location, SettingsFolderName)
-            : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                AssemblyManager.Current.Name, SettingsFolderName);
+        // 2. Custom user-configured path (not available in portable mode)
+        if (!ConfigurationManager.Current.IsPortable &&
+            !string.IsNullOrWhiteSpace(LocalSettingsManager.Current?.SettingsFolderLocation))
+        {
+            var validatedPath = ValidateSettingsFolderPath(
+                LocalSettingsManager.Current.SettingsFolderLocation,
+                "Custom",
+                "default location");
+
+            if (validatedPath != null)
+                return validatedPath;
+        }
+
+        // 3. Fall back to portable or default location
+        if (ConfigurationManager.Current.IsPortable)
+            return Path.Combine(AssemblyManager.Current.Location, SettingsFolderName);
+        else
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                    AssemblyManager.Current.Name, SettingsFolderName);
+    }
+
+    /// <summary>
+    ///     Validates a settings folder path for correctness and accessibility.
+    /// </summary>
+    /// <param name="path">The path to validate.</param>
+    /// <param name="pathSource">Description of the path source for logging (e.g., "Policy-provided", "Custom").</param>
+    /// <param name="fallbackMessage">Message describing what happens on validation failure (e.g., "next priority", "default location").</param>
+    /// <returns>The validated full path if valid; otherwise, null.</returns>
+    private static string ValidateSettingsFolderPath(string path, string pathSource, string fallbackMessage)
+    {
+        // Validate that the path is rooted (absolute)
+        if (!Path.IsPathRooted(path))
+        {
+            Log.Error($"{pathSource} SettingsFolderLocation is not an absolute path: {path}. Falling back to {fallbackMessage}.");
+            return null;
+        }
+
+        // Validate that the path doesn't contain invalid characters
+        try
+        {
+            // This will throw ArgumentException, NotSupportedException, or SecurityException if the path is invalid
+            var fullPath = Path.GetFullPath(path);
+
+            // Check if the path is a directory (not a file)
+            if (File.Exists(fullPath))
+            {
+                Log.Error($"{pathSource} SettingsFolderLocation is a file, not a directory: {path}. Falling back to {fallbackMessage}.");
+                return null;
+            }
+
+            return fullPath;
+        }
+        catch (ArgumentException ex)
+        {
+            Log.Error($"{pathSource} SettingsFolderLocation contains invalid characters: {path}. Falling back to {fallbackMessage}.", ex);
+            return null;
+        }
+        catch (NotSupportedException ex)
+        {
+            Log.Error($"{pathSource} SettingsFolderLocation format is not supported: {path}. Falling back to {fallbackMessage}.", ex);
+            return null;
+        }
+        catch (SecurityException ex)
+        {
+            Log.Error($"Insufficient permissions to access {pathSource} SettingsFolderLocation: {path}. Falling back to {fallbackMessage}.", ex);
+            return null;
+        }
     }
 
     /// <summary>
@@ -174,7 +206,6 @@ public static class SettingsManager
     {
         return Path.Combine(GetSettingsFolderLocation(), GetLegacySettingsFileName());
     }
-
     #endregion
 
     #region Initialize, load and save
@@ -184,6 +215,8 @@ public static class SettingsManager
     /// </summary>
     public static void Initialize()
     {
+        Log.Info("Initializing new settings.");
+
         Current = new SettingsInfo
         {
             Version = AssemblyManager.Current.Version.ToString()
@@ -203,7 +236,11 @@ public static class SettingsManager
         // Check if JSON file exists
         if (File.Exists(filePath))
         {
+            Log.Info($"Loading settings from: {filePath}");
+
             Current = DeserializeFromFile(filePath);
+
+            Log.Info("Settings loaded successfully.");
 
             Current.SettingsChanged = false;
 
@@ -280,24 +317,18 @@ public static class SettingsManager
         // Create backup before modifying
         CreateDailyBackupIfNeeded();
 
-        // Serialize the settings to a file
-        SerializeToFile(GetSettingsFilePath());
+        // Serialize to file
+        var filePath = GetSettingsFilePath();
 
-        // Set the setting changed to false after saving them as file...
-        Current.SettingsChanged = false;
-    }
-
-    /// <summary>
-    ///     Method to serialize the settings to a JSON file.
-    /// </summary>
-    /// <param name="filePath">Path to the settings file.</param>
-    private static void SerializeToFile(string filePath)
-    {
         var jsonString = JsonSerializer.Serialize(Current, JsonOptions);
 
         File.WriteAllText(filePath, jsonString);
-    }
 
+        Log.Info($"Settings saved to {filePath}");
+
+        // Reset change tracking
+        Current.SettingsChanged = false;
+    }
     #endregion
 
     #region Backup

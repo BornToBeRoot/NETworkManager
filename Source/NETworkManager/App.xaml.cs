@@ -21,12 +21,13 @@ namespace NETworkManager;
  * 2) Detect current configuration
  * 3) Get assembly info 
  * 4) Load system-wide policies
- * 5) Load settings
- * 6) Load localization / language
+ * 5) Load local settings
+ * 6) Load settings
+ * 7) Load localization / language
  *
  * Class: MainWindow
- * 7) Load appearance
- * 8) Load profiles
+ * 8) Load appearance
+ * 9) Load profiles
  */
 
 public partial class App
@@ -85,11 +86,12 @@ public partial class App
         // Load system-wide policies
         PolicyManager.Load();
 
+        // Load (or initialize) local settings
+        LocalSettingsManager.Load();
+
         // Load (or initialize) settings
         try
         {
-            Log.Info("Application settings are being loaded...");
-
             if (CommandLineManager.Current.ResetSettings)
                 SettingsManager.Initialize();
             else
@@ -112,21 +114,13 @@ public partial class App
         var settingsVersion = Version.Parse(SettingsManager.Current.Version);
 
         if (settingsVersion < AssemblyManager.Current.Version)
-        {
-            Log.Info(
-                $"Application settings are on version {settingsVersion} and will be upgraded to {AssemblyManager.Current.Version}");
-
             SettingsManager.Upgrade(settingsVersion, AssemblyManager.Current.Version);
-
-            Log.Info($"Application settings upgraded to version {AssemblyManager.Current.Version}");
-        }
         else
-        {
             Log.Info($"Application settings are already on version {AssemblyManager.Current.Version}.");
-        }
 
         // Initialize localization
         var localizationManager = LocalizationManager.GetInstance(SettingsManager.Current.Localization_CultureCode);
+
         Strings.Culture = localizationManager.Culture;
 
         Log.Info(
@@ -305,6 +299,13 @@ public partial class App
     /// file is encrypted and not unlocked, profile data will not be saved and a warning is logged.</remarks>
     private void Save()
     {
+        // Save local settings if they have changed
+        if (LocalSettingsManager.Current.SettingsChanged)
+        {
+            Log.Info("Save local settings...");
+            LocalSettingsManager.Save();
+        }
+
         // Save settings if they have changed
         if (SettingsManager.Current.SettingsChanged)
         {

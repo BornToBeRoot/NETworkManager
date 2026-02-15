@@ -19,6 +19,16 @@ using System.Text.Json.Serialization;
 
 namespace NETworkManager.Settings;
 
+/// <summary>
+/// Represents the application settings, user preferences, and configuration data for all supported features and
+/// modules. Supports property change notification for data binding and persistence scenarios.
+/// </summary>
+/// <remarks>The <see cref="SettingsInfo" /> class provides a centralized container for storing and managing user-configurable
+/// options, operational parameters, and history collections for various application modules, such as network tools,
+/// remote access, and calculators. It implements the INotifyPropertyChanged interface to enable data binding and
+/// automatic UI updates when settings change. Most properties raise the PropertyChanged event when modified, allowing
+/// consumers to track changes and persist settings as needed. This class is typically used as the main settings model
+/// in applications that require user customization and state management across sessions.</remarks>
 public class SettingsInfo : INotifyPropertyChanged
 {
     /// <summary>
